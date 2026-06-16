@@ -1,0 +1,19 @@
+project_id = "ojemqfexagnevqbaszop"
+
+[functions.send-booking-otp]
+verify_jwt = false
+
+[functions.verify-booking-otp]
+verify_jwt = false
+
+[functions.send-appointment-confirmation]
+verify_jwt = false
+
+[functions.send-enquiry-notification]
+verify_jwt = false
+
+[functions.setup-admin]
+verify_jwt = false
+
+[functions.signup-with-otp]
+verify_jwt = false

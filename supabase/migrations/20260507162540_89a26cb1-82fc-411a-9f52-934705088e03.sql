@@ -1,0 +1,1 @@
+ALTER TABLE public.materials ADD COLUMN IF NOT EXISTS material_type text NOT NULL DEFAULT 'inward';

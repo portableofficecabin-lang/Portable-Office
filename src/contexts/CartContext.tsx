@@ -1,0 +1,133 @@
+"use client";
+
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
+import { getProductById } from "@/data/products";
+import { getBestProductImage } from "@/data/productImages";
+
+interface CartItem {
+  id: string;
+  product_id: string;
+  quantity: number;
+  customization_notes: string | null;
+  product?: {
+    name: string;
+    price: number | null;
+    image_url: string | null;
+    category: string;
+  };
+}
+
+interface CartContextType {
+  items: CartItem[];
+  itemCount: number;
+  isLoading: boolean;
+  addToCart: (productId: string, quantity?: number) => Promise<void>;
+  removeFromCart: (itemId: string) => Promise<void>;
+  updateQuantity: (itemId: string, quantity: number) => Promise<void>;
+  clearCart: () => Promise<void>;
+  getCartTotal: () => number;
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+export function CartProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const enrichWithProductData = (cartRows: { id: string; product_id: string; quantity: number; customization_notes: string | null }[]): CartItem[] => {
+    return cartRows.map(row => {
+      const localProduct = getProductById(row.product_id);
+      return {
+        ...row,
+        product: localProduct ? {
+          name: localProduct.name,
+          price: localProduct.price || null,
+          image_url: getBestProductImage(localProduct.id, localProduct.categorySlug, localProduct.images?.[0], localProduct.sku),
+          category: localProduct.category,
+        } : undefined,
+      };
+    });
+  };
+
+  const fetchCart = useCallback(async () => {
+    if (!user) { setItems([]); return; }
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("cart_items")
+        .select("id, product_id, quantity, customization_notes")
+        .eq("user_id", user.id);
+      if (error) throw error;
+      setItems(enrichWithProductData(data || []));
+    } catch { /* silent */ }
+    setIsLoading(false);
+  }, [user]);
+
+  useEffect(() => { fetchCart(); }, [fetchCart]);
+
+  const addToCart = async (productId: string, quantity = 1) => {
+    if (!user) {
+      toast({ title: "Please log in", description: "You need an account to add items to cart.", variant: "destructive" });
+      return;
+    }
+    try {
+      const { error } = await supabase
+        .from("cart_items")
+        .upsert({ user_id: user.id, product_id: productId, quantity }, { onConflict: "user_id,product_id" });
+      if (error) throw error;
+      toast({ title: "Added to cart!", description: "Product has been added to your cart." });
+      fetchCart();
+    } catch {
+      toast({ title: "Error", description: "Could not add to cart.", variant: "destructive" });
+    }
+  };
+
+  const removeFromCart = async (itemId: string) => {
+    try {
+      await supabase.from("cart_items").delete().eq("id", itemId);
+      setItems(prev => prev.filter(i => i.id !== itemId));
+    } catch { /* silent */ }
+  };
+
+  const updateQuantity = async (itemId: string, quantity: number) => {
+    if (quantity < 1) return removeFromCart(itemId);
+    try {
+      await supabase.from("cart_items").update({ quantity }).eq("id", itemId);
+      setItems(prev => prev.map(i => i.id === itemId ? { ...i, quantity } : i));
+    } catch { /* silent */ }
+  };
+
+  const clearCart = async () => {
+    if (!user) return;
+    await supabase.from("cart_items").delete().eq("user_id", user.id);
+    setItems([]);
+  };
+
+  const getCartTotal = () => items.reduce((sum, i) => sum + (i.product?.price || 0) * i.quantity, 0);
+
+  return (
+    <CartContext.Provider value={{ items, itemCount: items.reduce((s, i) => s + i.quantity, 0), isLoading, addToCart, removeFromCart, updateQuantity, clearCart, getCartTotal }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+const defaultCart: CartContextType = {
+  items: [],
+  itemCount: 0,
+  isLoading: false,
+  addToCart: async () => {},
+  removeFromCart: async () => {},
+  updateQuantity: async () => {},
+  clearCart: async () => {},
+  getCartTotal: () => 0,
+};
+
+export function useCart(): CartContextType {
+  const ctx = useContext(CartContext);
+  return ctx ?? defaultCart;
+}

@@ -1,0 +1,279 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts are loaded non-blocking from index.html via preconnect + async stylesheet to protect mobile LCP. */
+
+/* Industrial E-commerce Design System
+   Primary: Deep Navy - Trust, Authority
+   Accent: Amber/Orange - Energy, Industrial
+   Clean, modern, professional aesthetic
+*/
+
+@layer base {
+  :root {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 32 95% 52%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 222 35% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 35% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 32 95% 52%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 35% 20%;
+    --input: 222 35% 20%;
+    --ring: 32 95% 52%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --navy-deep: 212 73% 15%;
+    --navy-medium: 212 60% 22%;
+    --navy-light: 212 45% 35%;
+    --amber: 32 95% 52%;
+    --amber-light: 38 92% 60%;
+    --amber-dark: 28 90% 45%;
+    --slate-50: 210 40% 98%;
+    --slate-100: 210 20% 96%;
+    --slate-200: 214 32% 91%;
+    --slate-600: 215 16% 47%;
+    --slate-800: 222 47% 11%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(222 35% 25%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(32 95% 52%) 0%, hsl(38 92% 60%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(222 47% 11% / 0.1), 0 2px 4px -2px hsl(222 47% 11% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(222 47% 11% / 0.1), 0 4px 6px -4px hsl(222 47% 11% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(222 47% 11% / 0.1), 0 8px 10px -6px hsl(222 47% 11% / 0.1);
+    --shadow-accent: 0 10px 30px -10px hsl(32 95% 52% / 0.4);
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .light {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 212 73% 15%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 32 95% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 212 73% 15%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 32 95% 52%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 222 35% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 35% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 32 95% 52%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 35% 20%;
+    --input: 222 35% 20%;
+    --ring: 32 95% 52%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent font-bold;
+    background-image: linear-gradient(135deg, hsl(32 95% 52%) 0%, hsl(45 93% 65%) 50%, hsl(32 95% 52%) 100%);
+  }
+
+  .card-elevated {
+    @apply bg-card rounded-xl;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card-premium {
+    @apply bg-gradient-to-br from-card via-card to-muted/30 rounded-2xl border border-border/50;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-premium:hover {
+    border-color: hsl(32 95% 52% / 0.3);
+    box-shadow: 0 25px 50px -12px hsl(32 95% 52% / 0.15), var(--shadow-xl);
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300;
+    background: var(--gradient-accent);
+    box-shadow: var(--shadow-accent);
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 35px -10px hsl(32 95% 52% / 0.5);
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Premium product name styling */
+  .product-name {
+    @apply font-display font-bold text-foreground;
+    text-shadow: 0 2px 4px hsl(222 47% 11% / 0.3);
+  }
+
+  /* Glow effect for premium elements */
+  .glow-accent {
+    box-shadow: 0 0 20px hsl(32 95% 52% / 0.3), 0 0 40px hsl(32 95% 52% / 0.1);
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
