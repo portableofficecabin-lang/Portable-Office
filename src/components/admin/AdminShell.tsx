@@ -48,6 +48,7 @@ const sidebarNav = [
   { name: "Appointments", href: "/admin/appointments", icon: Calendar, group: "CRM" },
   { name: "Sales & Quotation", href: "/admin/sales", icon: ShoppingCart, group: "ERP" },
   { name: "Quotation Pro", href: "/admin/quotation-pro", icon: FileText, group: "ERP" },
+  { name: "Labour Colony Calculator", href: "/admin/labour-colony-quotation", icon: Building2, group: "ERP", highlight: true },
   { name: "Orders & Invoices", href: "/admin/orders", icon: Receipt, group: "ERP" },
   { name: "Products", href: "/admin/products", icon: Package, group: "ERP" },
   { name: "Categories", href: "/admin/categories", icon: FolderOpen, group: "ERP" },

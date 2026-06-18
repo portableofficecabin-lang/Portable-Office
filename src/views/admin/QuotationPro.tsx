@@ -1,6 +1,7 @@
 "use client";
 
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import Link from "next/link";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { motion, AnimatePresence } from "framer-motion";
@@ -883,15 +884,26 @@ export default function QuotationPro() {
                     Craft GST-compliant quotations, proforma invoices, tax invoices & delivery challans with technical specifications and instant PDF export.
                   </p>
                 </div>
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <Button
-                    onClick={openNew}
-                    size="lg"
-                    className="gap-2 bg-gradient-to-r from-amber to-amber-light text-white border-0 shadow-2xl shadow-amber/40 hover:shadow-amber/60 px-7 py-6 text-base font-semibold rounded-2xl"
-                  >
-                    <Plus className="h-5 w-5" /> Create New Document
-                  </Button>
-                </motion.div>
+                <div className="flex flex-wrap gap-3">
+                  <Link href="/admin/labour-colony-quotation">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="gap-2 border-white/30 bg-white/10 text-white hover:bg-white/20 px-6 py-6 text-base font-semibold rounded-2xl backdrop-blur-sm"
+                    >
+                      <Building2 className="h-5 w-5" /> Labour Colony
+                    </Button>
+                  </Link>
+                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                    <Button
+                      onClick={openNew}
+                      size="lg"
+                      className="gap-2 bg-gradient-to-r from-amber to-amber-light text-white border-0 shadow-2xl shadow-amber/40 hover:shadow-amber/60 px-7 py-6 text-base font-semibold rounded-2xl"
+                    >
+                      <Plus className="h-5 w-5" /> Create New Document
+                    </Button>
+                  </motion.div>
+                </div>
               </div>
             </div>
 
