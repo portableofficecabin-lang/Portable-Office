@@ -1,12 +1,13 @@
 import type { NextConfig } from "next";
 
 // Content-Security-Policy.
-// A static (non-nonce) policy is used deliberately so that the site's
-// static/ISR rendering (revalidate + generateStaticParams) is preserved — a
-// per-request nonce would force every page into dynamic rendering. Because of
-// that, 'unsafe-inline' is required for scripts (inline gtag bootstrap in
-// app/layout.tsx + JSON-LD blocks) and styles (React inline styles, recharts).
-// External origins below are limited to the ones the app actually talks to.
+// A static (non-nonce) policy is used deliberately so the site's static/ISR
+// rendering is preserved — a per-request nonce would force every page into
+// dynamic rendering AND breaks Next.js chunk loading under strict-dynamic if the
+// nonce is not propagated perfectly. Because of that, 'unsafe-inline' is required
+// for scripts (inline gtag bootstrap in app/layout.tsx + JSON-LD blocks) and
+// styles (React inline styles, recharts). External origins are limited to the
+// ones the app actually talks to.
 const isDev = process.env.NODE_ENV !== "production";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://ojemqfexagnevqbaszop.supabase.co";
 const supabaseWs = supabaseUrl.replace(/^https:/, "wss:");
