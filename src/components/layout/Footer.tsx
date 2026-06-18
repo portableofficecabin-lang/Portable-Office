@@ -171,17 +171,17 @@ export function Footer() {
             © {new Date().getFullYear()} Portable Office Cabin. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
-            <a href="https://www.facebook.com/share/1ZMvxG4MGy/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
-              <Facebook className="h-5 w-5" />
+            <a href="https://www.facebook.com/share/1ZMvxG4MGy/" target="_blank" rel="noopener noreferrer" aria-label="Portable Office Cabin on Facebook" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
+              <Facebook className="h-5 w-5" aria-hidden="true" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
-              <Twitter className="h-5 w-5" />
+            <a href="#" aria-label="Portable Office Cabin on Twitter" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
+              <Twitter className="h-5 w-5" aria-hidden="true" />
             </a>
-            <a href="https://www.linkedin.com/in/portable-office-cabin-9b939a168?utm_source=share&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
-              <Linkedin className="h-5 w-5" />
+            <a href="https://www.linkedin.com/in/portable-office-cabin-9b939a168?utm_source=share&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="Portable Office Cabin on LinkedIn" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
+              <Linkedin className="h-5 w-5" aria-hidden="true" />
             </a>
-            <a href="https://www.instagram.com/portableofficecabin?igsh=d3Z5azNvM3o0ZDI3" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
-              <Instagram className="h-5 w-5" />
+            <a href="https://www.instagram.com/portableofficecabin?igsh=d3Z5azNvM3o0ZDI3" target="_blank" rel="noopener noreferrer" aria-label="Portable Office Cabin on Instagram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
+              <Instagram className="h-5 w-5" aria-hidden="true" />
             </a>
           </div>
         </div>
