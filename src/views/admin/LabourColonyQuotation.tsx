@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { NumberInput } from "@/components/admin/NumberInput";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { AdminCard, AdminCardContent } from "@/components/admin/AdminCard";
+import { LabourColonyDrawings } from "@/components/admin/LabourColonyDrawings";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import {
@@ -269,6 +270,10 @@ export default function LabourColonyQuotation() {
                 <Tile label="Built-up" value={`${n(result.area.builtUpTotalSqm)} sqm`} sub={`${n(result.area.builtUpTotalSqft)} sqft`} />
                 <Tile label="Approx weight" value={`${n(result.weight.totalTonnes)} t`} />
               </div>
+
+              <Section title="Drawings — Top View & Elevations" icon={LayoutGrid}>
+                <LabourColonyDrawings result={result} />
+              </Section>
 
               <Section title="1. Area" icon={LayoutGrid}>
                 <KV rows={[
