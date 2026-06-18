@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import { Providers } from "./providers";
 import "@/index.css";
+
+// Origin the app connects to early (Supabase data + auth); used for the
+// preconnect resource hint in <head> below.
+const SUPABASE_ORIGIN =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://ojemqfexagnevqbaszop.supabase.co";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,22 +36,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable} dark`} suppressHydrationWarning>
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0YKT0X980" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-B0YKT0X980');
-            `,
-          }}
-        />
+        {/* Resource hints: open the connection (DNS + TCP + TLS) to the origins
+            the app uses early — Supabase data/auth on the critical path, plus
+            analytics/geo — so requests don't pay the full handshake on first use. */}
+        <link rel="preconnect" href={SUPABASE_ORIGIN} crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href={SUPABASE_ORIGIN} />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://ipapi.co" />
         <meta name="google-site-verification" content="awkHO4TQHj5zzuD2nUNuaTOfQpuW7qb_7W_EQ-uGsC8" />
         <link rel="icon" href="/favicon.jpeg" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>{children}</Providers>
+        {/* Google Analytics — loaded via next/script with lazyOnload so gtag
+            downloads/parses/executes during browser idle time (after load),
+            keeping third-party JS off the main thread during the critical
+            loading window. Analytics is non-critical, so the slight delay is fine. */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-B0YKT0X980"
+          strategy="lazyOnload"
+        />
+        <Script id="gtag-init" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-B0YKT0X980');
+          `}
+        </Script>
       </body>
     </html>
   );
