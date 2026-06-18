@@ -42,6 +42,11 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
+  experimental: {
+    // Tree-shake large barrel packages so route chunks only include the icons /
+    // components actually used, reducing JS parsed and executed on the client.
+    optimizePackageImports: ["lucide-react", "framer-motion", "recharts"],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

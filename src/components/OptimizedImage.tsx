@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { lazyLoadConfig, createBlurPlaceholder } from "@/utils/imageOptimization";
 import { generateGeoAlt, generateImageTitle } from "@/utils/imageGeoTagging";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
@@ -48,34 +47,7 @@ export function OptimizedImage({
   // Auto geo-tag alt and title for image SEO
   const geoAlt = geoTag ? generateGeoAlt(alt) : alt;
   const imgTitle = title || (geoTag ? generateImageTitle(alt, productName) : undefined);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
-  const imgRef = useRef<HTMLDivElement>(null);
-
-  // Lazy loading with Intersection Observer
-  useEffect(() => {
-    if (priority || !imgRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      lazyLoadConfig
-    );
-
-    observer.observe(imgRef.current);
-
-    return () => observer.disconnect();
-  }, [priority]);
-
-  const handleLoad = () => {
-    setIsLoaded(true);
-    onLoad?.();
-  };
 
   const handleError = () => {
     setHasError(true);
@@ -94,7 +66,6 @@ export function OptimizedImage({
 
   return (
     <div
-      ref={imgRef}
       className={cn(
         "relative overflow-hidden bg-muted",
         aspectClass,
@@ -105,19 +76,10 @@ export function OptimizedImage({
         height: height ? `${height}px` : undefined,
       }}
     >
-      {/* Blur placeholder */}
-      {!isLoaded && !hasError && (
-        <div
-          className="absolute inset-0 animate-pulse bg-muted"
-          style={{
-            backgroundImage: `url(${createBlurPlaceholder()})`,
-            backgroundSize: "cover",
-          }}
-        />
-      )}
-
-      {/* Actual image */}
-      {isInView && !hasError && (
+      {/* Render the <img> directly in server HTML and defer off-screen images
+          with native loading="lazy" — no per-image IntersectionObserver/effect,
+          which removes that work from the main thread during hydration. */}
+      {!hasError && (
         <img
           src={resolvedSrc}
           alt={geoAlt}
@@ -127,13 +89,9 @@ export function OptimizedImage({
           loading={priority ? "eager" : "lazy"}
           decoding={priority ? "sync" : "async"}
           {...(priority ? { fetchPriority: "high" as any } : {})}
-          onLoad={handleLoad}
+          onLoad={onLoad}
           onError={handleError}
-          className={cn(
-            "w-full h-full transition-opacity duration-300",
-            objectFitClass,
-            isLoaded ? "opacity-100" : "opacity-0"
-          )}
+          className={cn("w-full h-full", objectFitClass)}
         />
       )}
 

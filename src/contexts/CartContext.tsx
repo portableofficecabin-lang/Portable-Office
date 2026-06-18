@@ -4,8 +4,6 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
-import { getProductById } from "@/data/products";
-import { getBestProductImage } from "@/data/productImages";
 
 interface CartItem {
   id: string;
@@ -38,7 +36,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const enrichWithProductData = (cartRows: { id: string; product_id: string; quantity: number; customization_notes: string | null }[]): CartItem[] => {
+  const enrichWithProductData = async (cartRows: { id: string; product_id: string; quantity: number; customization_notes: string | null }[]): Promise<CartItem[]> => {
+    // Lazy-load the product catalog + image map only when a logged-in user
+    // actually has cart rows, so the large @/data/products module is not parsed
+    // during hydration of every (anonymous) public page that mounts CartProvider.
+    const [{ getProductById }, { getBestProductImage }] = await Promise.all([
+      import("@/data/products"),
+      import("@/data/productImages"),
+    ]);
     return cartRows.map(row => {
       const localProduct = getProductById(row.product_id);
       return {
@@ -62,7 +67,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         .select("id, product_id, quantity, customization_notes")
         .eq("user_id", user.id);
       if (error) throw error;
-      setItems(enrichWithProductData(data || []));
+      setItems(await enrichWithProductData(data || []));
     } catch { /* silent */ }
     setIsLoading(false);
   }, [user]);
