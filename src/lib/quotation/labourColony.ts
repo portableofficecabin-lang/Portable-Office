@@ -69,6 +69,8 @@ export interface LabourColonyConfig {
   roomWidth: number;
   roomHeight: number;
   corridorWidth: number;
+  /** Where the corridor/passage sits. Default "center" (double-loaded). */
+  corridorPosition?: "center" | "top" | "bottom" | "left" | "right";
 
   panelType: PanelType;
   panelThicknessMm: number; // 30 / 40 / 50 / 60 / 75
@@ -367,10 +369,27 @@ export function calculateLabourColony(input: LabourColonyConfig): LabourColonyRe
   const roomArea = L * W;
   const roomsArea = roomArea * rooms;
   const roomsPerFloor = ceil(rooms / floors);
-  const roomsPerRow = ceil(roomsPerFloor / 2);
-  const footprintLength = roomsPerRow * L;
-  const footprintWidth = 2 * W + corridorWidth;
-  const corridorTotal = footprintLength * corridorWidth * floors;
+  const corridorPosition = input.corridorPosition ?? "center";
+  // Footprint + corridor run depend on where the corridor sits:
+  //   center        = double-loaded (two room rows, corridor between them)
+  //   top/bottom    = single-loaded, corridor along the length on that edge
+  //   left/right    = single-loaded, rotated, corridor along the depth on that edge
+  let footprintLength: number, footprintWidth: number, corridorRun: number;
+  if (corridorPosition === "center") {
+    const roomsPerRow = ceil(roomsPerFloor / 2);
+    corridorRun = roomsPerRow * L;
+    footprintLength = roomsPerRow * L;
+    footprintWidth = 2 * W + corridorWidth;
+  } else if (corridorPosition === "top" || corridorPosition === "bottom") {
+    corridorRun = roomsPerFloor * L;
+    footprintLength = roomsPerFloor * L;
+    footprintWidth = W + corridorWidth;
+  } else {
+    corridorRun = roomsPerFloor * L;
+    footprintWidth = roomsPerFloor * L;
+    footprintLength = W + corridorWidth;
+  }
+  const corridorTotal = corridorRun * corridorWidth * floors;
 
   const wc = fac.toilet ? Math.max(1, ceil(totalCapacity / norms.personsPerWC)) : 0;
   const urinals = fac.toilet ? Math.max(1, ceil(totalCapacity / norms.personsPerUrinal)) : 0;

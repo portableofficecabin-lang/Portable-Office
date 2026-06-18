@@ -4,62 +4,99 @@ import type { LabourColonyResult } from "@/lib/quotation/labourColony";
 
 /**
  * Schematic 2D drawings for the Labour Colony calculator:
- *  - Top view (floor plan): two rows of rooms along a central corridor, with
- *    door/window symbols + a utility wing (toilet/dining/office) when enabled.
- *  - Four elevations: Front, Rear, Left, Right with windows, floor lines and
- *    roof slope.
- * All geometry is derived from the same config the calculation uses, scaled to
- * pixels (S px per metre). These are schematic references for quotation /
- * client approval, not stamped construction drawings.
+ *  - Top view (floor plan): rooms + a corridor that can sit center (double-loaded)
+ *    or on any side (top / bottom / left / right, single-loaded), with door/window
+ *    symbols and a utility wing (toilet/dining/office) when enabled.
+ *  - Four elevations: Front, Rear, Left, Right with windows, floor lines, roof.
+ * Geometry is derived from the same config the calculation uses (scaled S px/m).
+ * Schematic reference for quotation / client approval, not stamped CAD.
  */
+
+type CorridorPosition = "center" | "top" | "bottom" | "left" | "right";
 
 const S = 26; // px per metre
 const PAD = 48;
-
 const COL = {
-  wall: "#334155",
-  room: "#f8fafc",
-  corridor: "#fef3c7",
-  util: "#e0f2fe",
-  roof: "#cbd5e1",
-  door: "#dc2626",
-  window: "#2563eb",
-  dim: "#64748b",
-  floor: "#94a3b8",
+  wall: "#334155", room: "#f8fafc", corridor: "#fef3c7", util: "#e0f2fe",
+  roof: "#cbd5e1", door: "#dc2626", window: "#2563eb", dim: "#64748b", floor: "#94a3b8",
 };
-
 const px = (m: number) => m * S;
+
+interface RoomRect { x: number; y: number; w: number; h: number; n: number; doorSide: Side; winSide: Side; }
+type Side = "top" | "bottom" | "left" | "right";
+
+function buildPlan(pos: CorridorPosition, L: number, W: number, C: number, rpf: number) {
+  const rooms: RoomRect[] = [];
+  let corridor: { x: number; y: number; w: number; h: number };
+  let footL: number, footW: number;
+  const add = (x: number, y: number, w: number, h: number, n: number, doorSide: Side, winSide: Side) =>
+    rooms.push({ x, y, w, h, n, doorSide, winSide });
+
+  if (pos === "center") {
+    const nCols = Math.ceil(rpf / 2);
+    const topRow = nCols, bottomRow = rpf - nCols;
+    footL = nCols * L; footW = 2 * W + C;
+    for (let i = 0; i < topRow; i++) add(i * L, 0, L, W, i + 1, "bottom", "top");
+    corridor = { x: 0, y: W, w: footL, h: C };
+    for (let i = 0; i < bottomRow; i++) add(i * L, W + C, L, W, topRow + i + 1, "top", "bottom");
+  } else if (pos === "top") {
+    footL = rpf * L; footW = W + C;
+    corridor = { x: 0, y: 0, w: footL, h: C };
+    for (let i = 0; i < rpf; i++) add(i * L, C, L, W, i + 1, "top", "bottom");
+  } else if (pos === "bottom") {
+    footL = rpf * L; footW = W + C;
+    for (let i = 0; i < rpf; i++) add(i * L, 0, L, W, i + 1, "bottom", "top");
+    corridor = { x: 0, y: W, w: footL, h: C };
+  } else if (pos === "left") {
+    footL = W + C; footW = rpf * L;
+    corridor = { x: 0, y: 0, w: C, h: footW };
+    for (let i = 0; i < rpf; i++) add(C, i * L, W, L, i + 1, "left", "right");
+  } else {
+    footL = W + C; footW = rpf * L;
+    for (let i = 0; i < rpf; i++) add(0, i * L, W, L, i + 1, "right", "left");
+    corridor = { x: W, y: 0, w: C, h: footW };
+  }
+  return { rooms, corridor, footL, footW };
+}
+
+function EdgeMark({ r, side, lenM, color, sw }: { r: RoomRect; side: Side; lenM: number; color: string; sw: number }) {
+  const x = px(r.x), y = px(r.y), w = px(r.w), h = px(r.h), len = px(lenM);
+  const cx = x + w / 2, cy = y + h / 2;
+  let x1 = cx, y1 = cy, x2 = cx, y2 = cy;
+  if (side === "top") { y1 = y2 = y; x1 = cx - len / 2; x2 = cx + len / 2; }
+  else if (side === "bottom") { y1 = y2 = y + h; x1 = cx - len / 2; x2 = cx + len / 2; }
+  else if (side === "left") { x1 = x2 = x; y1 = cy - len / 2; y2 = cy + len / 2; }
+  else { x1 = x2 = x + w; y1 = cy - len / 2; y2 = cy + len / 2; }
+  return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth={sw} />;
+}
 
 export function LabourColonyDrawings({ result }: { result: LabourColonyResult }) {
   const { roomLength: L, roomWidth: W, roomHeight: H, floors, corridorWidth: C } = result.config;
+  const pos: CorridorPosition = result.config.corridorPosition ?? "center";
   const rooms = result.occupancy.rooms;
-  const fac = result.config.facilities;
-
-  const roomsPerFloor = Math.ceil(rooms / Math.max(floors, 1));
-  const topRow = Math.max(1, Math.ceil(roomsPerFloor / 2));
-  const bottomRow = Math.max(0, roomsPerFloor - topRow);
-  const cols = Math.max(topRow, bottomRow, 1);
-  const footL = cols * L;
-  const footW = 2 * W + C;
+  const rpf = Math.max(1, Math.ceil(rooms / Math.max(floors, 1)));
+  const footL = result.area.footprintLengthM;
+  const footW = result.area.footprintWidthM;
+  const posLabel = { center: "Central (double-loaded)", top: "Top side", bottom: "Bottom side", left: "Left side", right: "Right side" }[pos];
 
   return (
     <div className="space-y-6">
-      <DrawingFrame title="Top View — Floor Plan (per floor)" caption={`Footprint ${footL.toFixed(1)} m × ${footW.toFixed(1)} m · ${roomsPerFloor} rooms/floor · ${floors === 1 ? "Ground floor" : floors === 2 ? "G+1" : "G+2"}`}>
-        <PlanSvg result={result} L={L} W={W} C={C} topRow={topRow} bottomRow={bottomRow} cols={cols} footL={footL} footW={footW} fac={fac} />
+      <DrawingFrame title="Top View — Floor Plan (per floor)" caption={`Footprint ${footL.toFixed(1)} m × ${footW.toFixed(1)} m · ${rpf} rooms/floor · corridor: ${posLabel}`}>
+        <PlanSvg result={result} L={L} W={W} C={C} rpf={rpf} pos={pos} />
       </DrawingFrame>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <DrawingFrame title="Front Elevation" caption={`Length ${footL.toFixed(1)} m · Height ${(floors * H).toFixed(1)} m + roof`}>
-          <LongElevation footL={footL} cols={cols} floors={floors} H={H} door />
+        <DrawingFrame title="Front Elevation" caption={`${footL.toFixed(1)} m wide · ${(floors * H).toFixed(1)} m high + roof`}>
+          <Elevation widthM={footL} floors={floors} H={H} roofType="long" door />
         </DrawingFrame>
-        <DrawingFrame title="Rear Elevation" caption={`Length ${footL.toFixed(1)} m`}>
-          <LongElevation footL={footL} cols={cols} floors={floors} H={H} />
+        <DrawingFrame title="Rear Elevation" caption={`${footL.toFixed(1)} m wide`}>
+          <Elevation widthM={footL} floors={floors} H={H} roofType="long" />
         </DrawingFrame>
-        <DrawingFrame title="Left Side Elevation" caption={`Width ${footW.toFixed(1)} m · gable roof`}>
-          <SideElevation footW={footW} floors={floors} H={H} door />
+        <DrawingFrame title="Left Side Elevation" caption={`${footW.toFixed(1)} m wide · gable roof`}>
+          <Elevation widthM={footW} floors={floors} H={H} roofType="gable" door />
         </DrawingFrame>
-        <DrawingFrame title="Right Side Elevation" caption={`Width ${footW.toFixed(1)} m · gable roof`}>
-          <SideElevation footW={footW} floors={floors} H={H} />
+        <DrawingFrame title="Right Side Elevation" caption={`${footW.toFixed(1)} m wide · gable roof`}>
+          <Elevation widthM={footW} floors={floors} H={H} roofType="gable" />
         </DrawingFrame>
       </div>
 
@@ -85,19 +122,19 @@ function Legend() {
     <div className="flex flex-wrap gap-4 text-xs text-slate-600">
       <span className="flex items-center gap-1"><span className="inline-block w-4 h-0.5" style={{ background: COL.door }} /> Door</span>
       <span className="flex items-center gap-1"><span className="inline-block w-4 h-0.5" style={{ background: COL.window }} /> Window</span>
-      <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.corridor }} /> Corridor / passage</span>
+      <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.corridor }} /> Corridor / passage / walkway</span>
       <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.util }} /> Toilet / dining / office</span>
       <span className="text-slate-400">Not to scale — schematic reference</span>
     </div>
   );
 }
 
-/* ---------------- PLAN (top view) ---------------- */
-function PlanSvg({ result, L, W, C, topRow, bottomRow, cols, footL, footW, fac }: {
-  result: LabourColonyResult; L: number; W: number; C: number;
-  topRow: number; bottomRow: number; cols: number; footL: number; footW: number;
-  fac: LabourColonyResult["config"]["facilities"];
+function PlanSvg({ result, L, W, C, rpf, pos }: {
+  result: LabourColonyResult; L: number; W: number; C: number; rpf: number; pos: CorridorPosition;
 }) {
+  const { rooms, corridor, footL, footW } = buildPlan(pos, L, W, C, rpf);
+  const fac = result.config.facilities;
+
   const utils: { label: string; sub: string }[] = [];
   if (fac.toilet) utils.push({ label: "Toilet & Bath", sub: `${result.area.toiletBlockSqm} sqm` });
   if (fac.diningKitchen) utils.push({ label: "Dining + Kitchen", sub: `${result.area.diningKitchenSqm} sqm` });
@@ -106,44 +143,34 @@ function PlanSvg({ result, L, W, C, topRow, bottomRow, cols, footL, footW, fac }
 
   const totalW = px(footL + wingW) + PAD * 2;
   const totalH = px(footW) + PAD * 2;
-  const doorLen = Math.min(0.9, L * 0.4);
-  const winLen = Math.min(1.4, L * 0.6);
-
-  const room = (i: number, rowTopY: number, isTop: boolean, n: number) => {
-    const x = px(i * L);
-    const y = px(rowTopY);
-    const cx = x + px(L) / 2;
-    const winY = isTop ? y : y + px(W);
-    const doorY = isTop ? y + px(W) : y;
-    return (
-      <g key={`${isTop ? "t" : "b"}-${i}`}>
-        <rect x={x} y={y} width={px(L)} height={px(W)} fill={COL.room} stroke={COL.wall} strokeWidth={1.5} />
-        <text x={cx} y={y + px(W) / 2} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.wall}>R{n}</text>
-        {/* window on outer wall */}
-        <line x1={cx - px(winLen) / 2} y1={winY} x2={cx + px(winLen) / 2} y2={winY} stroke={COL.window} strokeWidth={3} />
-        {/* door on corridor side */}
-        <line x1={cx - px(doorLen) / 2} y1={doorY} x2={cx + px(doorLen) / 2} y2={doorY} stroke={COL.door} strokeWidth={3} />
-      </g>
-    );
-  };
 
   return (
-    <svg viewBox={`0 0 ${totalW} ${totalH}`} className="w-full h-auto min-w-[640px]">
+    <svg viewBox={`0 0 ${totalW} ${totalH}`} className="w-full h-auto min-w-[620px]">
       <g transform={`translate(${PAD},${PAD})`}>
-        {/* corridor band */}
-        <rect x={0} y={px(W)} width={px(footL)} height={px(C)} fill={COL.corridor} stroke={COL.wall} strokeWidth={1} />
-        <text x={px(footL) / 2} y={px(W) + px(C) / 2} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}>
-          CORRIDOR / PASSAGE ({C} m)
+        {/* corridor */}
+        <rect x={px(corridor.x)} y={px(corridor.y)} width={px(corridor.w)} height={px(corridor.h)} fill={COL.corridor} stroke={COL.wall} strokeWidth={1} />
+        <text x={px(corridor.x + corridor.w / 2)} y={px(corridor.y + corridor.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}>
+          CORRIDOR / WALKWAY ({C} m)
         </text>
 
-        {/* top + bottom room rows */}
-        {Array.from({ length: topRow }, (_, i) => room(i, 0, true, i + 1))}
-        {Array.from({ length: bottomRow }, (_, i) => room(i, W + C, false, topRow + i + 1))}
+        {/* rooms */}
+        {rooms.map((r) => {
+          const doorSpan = r.doorSide === "top" || r.doorSide === "bottom" ? r.w : r.h;
+          const winSpan = r.winSide === "top" || r.winSide === "bottom" ? r.w : r.h;
+          return (
+            <g key={r.n}>
+              <rect x={px(r.x)} y={px(r.y)} width={px(r.w)} height={px(r.h)} fill={COL.room} stroke={COL.wall} strokeWidth={1.5} />
+              <text x={px(r.x + r.w / 2)} y={px(r.y + r.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.wall}>R{r.n}</text>
+              <EdgeMark r={r} side={r.winSide} lenM={Math.min(1.4, winSpan * 0.6)} color={COL.window} sw={3} />
+              <EdgeMark r={r} side={r.doorSide} lenM={Math.min(0.9, doorSpan * 0.5)} color={COL.door} sw={3} />
+            </g>
+          );
+        })}
 
-        {/* outer building outline */}
+        {/* outline */}
         <rect x={0} y={0} width={px(footL)} height={px(footW)} fill="none" stroke={COL.wall} strokeWidth={2.5} />
 
-        {/* utility wing */}
+        {/* utility wing (always appended on the right) */}
         {utils.length > 0 && (
           <g transform={`translate(${px(footL)},0)`}>
             {utils.map((u, i) => {
@@ -169,82 +196,42 @@ function PlanSvg({ result, L, W, C, topRow, bottomRow, cols, footL, footW, fac }
   );
 }
 
-/* ---------------- FRONT / REAR elevation (long side) ---------------- */
-function LongElevation({ footL, cols, floors, H, door }: { footL: number; cols: number; floors: number; H: number; door?: boolean }) {
-  const roof = 0.7;
-  const totalW = px(footL) + PAD * 2;
+function Elevation({ widthM, floors, H, roofType, door }: { widthM: number; floors: number; H: number; roofType: "long" | "gable"; door?: boolean }) {
+  const roof = roofType === "gable" ? 0.9 : 0.7;
+  const bays = Math.max(1, Math.round(widthM / 3));
   const bodyH = floors * H;
+  const totalW = px(widthM) + PAD * 2;
   const totalH = px(bodyH + roof) + PAD * 2;
-  const winW = Math.min(1.2, (footL / cols) * 0.5);
+  const winW = Math.min(1.2, (widthM / bays) * 0.5);
   const winH = 1.0;
+  const doorBay = Math.floor(bays / 2);
 
-  return (
-    <svg viewBox={`0 0 ${totalW} ${totalH}`} className="w-full h-auto min-w-[520px]">
-      <g transform={`translate(${PAD},${PAD})`}>
-        {/* roof (trapezoid with eaves) */}
-        <polygon points={`${px(-0.3)},${px(roof)} ${px(footL * 0.5)},0 ${px(footL + 0.3)},${px(roof)}`} fill={COL.roof} stroke={COL.wall} strokeWidth={1.5} />
-        {/* body */}
-        <rect x={0} y={px(roof)} width={px(footL)} height={px(bodyH)} fill={COL.room} stroke={COL.wall} strokeWidth={2} />
-        {/* floor lines */}
-        {Array.from({ length: floors - 1 }, (_, f) => (
-          <line key={f} x1={0} y1={px(roof + (f + 1) * H)} x2={px(footL)} y2={px(roof + (f + 1) * H)} stroke={COL.floor} strokeWidth={1} strokeDasharray="4 3" />
-        ))}
-        {/* windows per bay per floor */}
-        {Array.from({ length: floors }, (_, f) =>
-          Array.from({ length: cols }, (_, i) => {
-            const bayCx = px((i + 0.5) * (footL / cols));
-            const wy = px(roof + f * H + (H - winH) / 2);
-            const skipForDoor = door && f === floors - 1 && i === Math.floor(cols / 2);
-            if (skipForDoor) return null;
-            return <rect key={`${f}-${i}`} x={bayCx - px(winW) / 2} y={wy} width={px(winW)} height={px(winH)} fill="#dbeafe" stroke={COL.window} strokeWidth={1.5} />;
-          })
-        )}
-        {/* door (ground floor, centre bay) */}
-        {door && (
-          <rect
-            x={px((Math.floor(cols / 2) + 0.5) * (footL / cols)) - px(0.45)}
-            y={px(roof + (floors - 1) * H + (H - 2.1))}
-            width={px(0.9)} height={px(2.1)} fill="#fee2e2" stroke={COL.door} strokeWidth={1.5}
-          />
-        )}
-        {/* ground line + dims */}
-        <line x1={px(-0.3)} y1={px(roof + bodyH)} x2={px(footL + 0.3)} y2={px(roof + bodyH)} stroke={COL.wall} strokeWidth={2.5} />
-        <text x={px(footL) / 2} y={px(roof + bodyH) + 22} textAnchor="middle" fontSize={11} fill={COL.dim}>← {footL.toFixed(1)} m →</text>
-        <text x={px(footL) + 8} y={px(roof + bodyH / 2)} fontSize={10} fill={COL.dim}>{bodyH.toFixed(1)} m</text>
-      </g>
-    </svg>
-  );
-}
-
-/* ---------------- LEFT / RIGHT elevation (gable side) ---------------- */
-function SideElevation({ footW, floors, H, door }: { footW: number; floors: number; H: number; door?: boolean }) {
-  const ridge = 0.9;
-  const totalW = px(footW) + PAD * 2;
-  const bodyH = floors * H;
-  const totalH = px(bodyH + ridge) + PAD * 2;
+  const roofPts = roofType === "gable"
+    ? `${px(-0.3)},${px(roof)} ${px(widthM * 0.5)},0 ${px(widthM + 0.3)},${px(roof)}`
+    : `${px(-0.3)},${px(roof)} ${px(widthM * 0.15)},0 ${px(widthM * 0.85)},0 ${px(widthM + 0.3)},${px(roof)}`;
 
   return (
     <svg viewBox={`0 0 ${totalW} ${totalH}`} className="w-full h-auto min-w-[360px]">
       <g transform={`translate(${PAD},${PAD})`}>
-        {/* gable roof (two slopes) */}
-        <polygon points={`${px(-0.3)},${px(ridge)} ${px(footW * 0.5)},0 ${px(footW + 0.3)},${px(ridge)}`} fill={COL.roof} stroke={COL.wall} strokeWidth={1.5} />
-        {/* body */}
-        <rect x={0} y={px(ridge)} width={px(footW)} height={px(bodyH)} fill={COL.room} stroke={COL.wall} strokeWidth={2} />
-        {/* floor lines */}
+        <polygon points={roofPts} fill={COL.roof} stroke={COL.wall} strokeWidth={1.5} />
+        <rect x={0} y={px(roof)} width={px(widthM)} height={px(bodyH)} fill={COL.room} stroke={COL.wall} strokeWidth={2} />
         {Array.from({ length: floors - 1 }, (_, f) => (
-          <line key={f} x1={0} y1={px(ridge + (f + 1) * H)} x2={px(footW)} y2={px(ridge + (f + 1) * H)} stroke={COL.floor} strokeWidth={1} strokeDasharray="4 3" />
+          <line key={f} x1={0} y1={px(roof + (f + 1) * H)} x2={px(widthM)} y2={px(roof + (f + 1) * H)} stroke={COL.floor} strokeWidth={1} strokeDasharray="4 3" />
         ))}
-        {/* one window per floor */}
-        {Array.from({ length: floors }, (_, f) => (
-          <rect key={f} x={px(footW * 0.62)} y={px(ridge + f * H + (H - 1) / 2)} width={px(1.0)} height={px(1.0)} fill="#dbeafe" stroke={COL.window} strokeWidth={1.5} />
-        ))}
-        {/* door */}
-        {door && (
-          <rect x={px(footW * 0.2)} y={px(ridge + (floors - 1) * H + (H - 2.1))} width={px(0.9)} height={px(2.1)} fill="#fee2e2" stroke={COL.door} strokeWidth={1.5} />
+        {Array.from({ length: floors }, (_, f) =>
+          Array.from({ length: bays }, (_, i) => {
+            if (door && f === floors - 1 && i === doorBay) return null;
+            const bayCx = px((i + 0.5) * (widthM / bays));
+            const wy = px(roof + f * H + (H - winH) / 2);
+            return <rect key={`${f}-${i}`} x={bayCx - px(winW) / 2} y={wy} width={px(winW)} height={px(winH)} fill="#dbeafe" stroke={COL.window} strokeWidth={1.5} />;
+          })
         )}
-        {/* ground + dims */}
-        <line x1={px(-0.3)} y1={px(ridge + bodyH)} x2={px(footW + 0.3)} y2={px(ridge + bodyH)} stroke={COL.wall} strokeWidth={2.5} />
-        <text x={px(footW) / 2} y={px(ridge + bodyH) + 22} textAnchor="middle" fontSize={11} fill={COL.dim}>← {footW.toFixed(1)} m →</text>
+        {door && (
+          <rect x={px((doorBay + 0.5) * (widthM / bays)) - px(0.45)} y={px(roof + (floors - 1) * H + (H - 2.1))} width={px(0.9)} height={px(2.1)} fill="#fee2e2" stroke={COL.door} strokeWidth={1.5} />
+        )}
+        <line x1={px(-0.3)} y1={px(roof + bodyH)} x2={px(widthM + 0.3)} y2={px(roof + bodyH)} stroke={COL.wall} strokeWidth={2.5} />
+        <text x={px(widthM) / 2} y={px(roof + bodyH) + 22} textAnchor="middle" fontSize={11} fill={COL.dim}>← {widthM.toFixed(1)} m →</text>
+        <text x={px(widthM) + 8} y={px(roof + bodyH / 2)} fontSize={10} fill={COL.dim}>{bodyH.toFixed(1)} m</text>
       </g>
     </svg>
   );

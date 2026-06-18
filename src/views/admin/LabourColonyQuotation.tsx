@@ -47,6 +47,7 @@ const DEFAULT_CONFIG: LabourColonyConfig = {
   roomWidth: 3,
   roomHeight: 2.7,
   corridorWidth: 1.5,
+  corridorPosition: "center",
   panelType: "PUF",
   panelThicknessMm: 50,
   wastagePercent: 5,
@@ -223,6 +224,19 @@ export default function LabourColonyQuotation() {
               <div className="space-y-2">
                 <Label>Corridor width (m)</Label>
                 <NumberInput value={config.corridorWidth} onChange={setNum("corridorWidth")} />
+              </div>
+              <div className="space-y-2">
+                <Label>Corridor position (shift to any side)</Label>
+                <Select value={config.corridorPosition ?? "center"} onValueChange={(v) => setConfig((c) => ({ ...c, corridorPosition: v as LabourColonyConfig["corridorPosition"] }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="center">Center (double-loaded)</SelectItem>
+                    <SelectItem value="top">Top side</SelectItem>
+                    <SelectItem value="bottom">Bottom side</SelectItem>
+                    <SelectItem value="left">Left side</SelectItem>
+                    <SelectItem value="right">Right side</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
