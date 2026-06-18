@@ -75,7 +75,11 @@ const mergeCategories = (dbCategories: Category[], fallbackCategories: Category[
   return Array.from(merged.values());
 };
 
-export function useProducts() {
+export function useProducts(options?: { realtime?: boolean }) {
+  // realtime defaults to true to preserve existing behaviour; callers on
+  // statically-cached public pages can opt out to avoid opening Supabase
+  // realtime WebSockets during hydration.
+  const realtime = options?.realtime ?? true;
   const [products, setProducts] = useState<Product[]>(staticProducts);
   const [categories, setCategories] = useState<Category[]>(staticCategories);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,6 +87,10 @@ export function useProducts() {
 
   useEffect(() => {
     fetchData();
+
+    // Skip realtime subscriptions when not requested (e.g. the statically
+    // revalidated homepage), so hydration does not open two WebSockets.
+    if (!realtime) return;
 
     const productsChannel = supabase
       .channel("public-products-changes")
@@ -118,7 +126,7 @@ export function useProducts() {
       supabase.removeChannel(productsChannel);
       supabase.removeChannel(categoriesChannel);
     };
-  }, []);
+  }, [realtime]);
 
   const fetchData = async () => {
     try {
@@ -196,7 +204,9 @@ export function useProductsByCategory(categorySlug: string | null) {
 
 // Get featured products
 export function useFeaturedProducts() {
-  const { products, isLoading, isFromDatabase } = useProducts();
+  // Featured products on the homepage don't need live updates; skipping realtime
+  // avoids opening Supabase WebSockets during the initial hydration pass.
+  const { products, isLoading, isFromDatabase } = useProducts({ realtime: false });
 
   const featuredProducts = products.filter((p) => p.featured);
 

@@ -12,7 +12,10 @@ export function FeaturedProducts() {
   const { products: featuredProducts, isLoading } = useFeaturedProducts();
   const displayProducts = featuredProducts.slice(0, 6);
 
-  if (isLoading) {
+  // Static featured products are seeded synchronously (useProducts), so render
+  // them immediately and only show the spinner when there is genuinely nothing
+  // to display yet. Avoids blocking the section on the Supabase round-trip.
+  if (isLoading && displayProducts.length === 0) {
     return (
       <section className="section-padding bg-muted/50">
         <div className="container-custom">

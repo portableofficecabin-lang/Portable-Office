@@ -167,24 +167,16 @@ export function preloadImages(imageUrls: string[]): void {
  * @param color - Base color (hex)
  */
 export function createBlurPlaceholder(
-  width: number = 10,
-  height: number = 10,
-  color: string = "#f4f4f5"
+  _width: number = 10,
+  _height: number = 10,
+  _color: string = "#f4f4f5"
 ): string {
-  if (typeof document === "undefined") {
-    return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-  }
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext("2d");
-  
-  if (ctx) {
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, width, height);
-  }
-  
-  return canvas.toDataURL("image/jpeg", 0.1);
+  // Return a static 1x1 data URI instead of rasterizing a <canvas> with
+  // canvas.toDataURL() on every render. The canvas path ran synchronously on
+  // the main thread for each not-yet-loaded image (e.g. across a product grid),
+  // contributing to Total Blocking Time. The visible placeholder is the
+  // animate-pulse muted background, so the image data URI need only be a stub.
+  return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 }
 
 /**
