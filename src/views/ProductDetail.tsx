@@ -63,10 +63,12 @@ export default function ProductDetailPage({ slug: slugProp }: { slug?: string } 
   const staticProduct = getProductBySlug(slug || "");
   const { products: allProducts, isLoading: productsLoading } = useProducts();
   const normalizedSlug = (slug || "").replace(/\.html$/i, "");
-  const dbProduct = !staticProduct
-    ? allProducts.find((p) => getProductSlug(p) === normalizedSlug || p.id === normalizedSlug)
-    : undefined;
-  const product = staticProduct || dbProduct;
+  // DB-first: an admin edit saved to Supabase (merged into allProducts by
+  // useProducts) must OVERRIDE the static catalog entry, otherwise saved changes
+  // are silently discarded on render. Static remains the fallback for products
+  // not (yet) present in the database.
+  const dbProduct = allProducts.find((p) => getProductSlug(p) === normalizedSlug || p.id === normalizedSlug);
+  const product = dbProduct ?? staticProduct;
   const isStaticProduct = !!staticProduct;
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [approvedReviews, setApprovedReviews] = useState<ProductReview[]>([]);
