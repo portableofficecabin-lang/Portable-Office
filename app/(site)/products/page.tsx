@@ -1,8 +1,16 @@
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import ProductsPage from "@/views/Products";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const revalidate = 3600; // 1 hour
+
+export const metadata = buildPageMetadata({
+  title: "Portable Cabin & Container Product Range",
+  description:
+    "Browse our full range of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers with specs and prices.",
+  path: "/products",
+});
 
 type PageProps = {
   searchParams: Promise<{ category?: string; page?: string }>;
