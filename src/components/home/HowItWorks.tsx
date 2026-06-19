@@ -29,7 +29,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="section-padding relative overflow-hidden">
+    <section className="section-padding relative overflow-hidden cv-section">
       <div 
         className="absolute inset-0 z-0"
         style={{ background: "var(--gradient-hero)" }}

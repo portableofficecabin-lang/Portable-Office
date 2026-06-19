@@ -2,7 +2,13 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import { supabase } from "@/integrations/supabase/client";
+
+// Load the Supabase client lazily so its (~heavy) bundle is not parsed/executed
+// during initial page load. All analytics work already runs after the page is
+// interactive (see runWhenIdle below), so importing on demand keeps Supabase off
+// the critical JS-execution path.
+const getSupabase = () =>
+  import("@/integrations/supabase/client").then((m) => m.supabase);
 
 // Run non-critical work after the browser is idle so analytics (and the Supabase
 // client it pulls in) never contend with hydration / the LCP paint. Falls back to
@@ -82,6 +88,7 @@ export function useAnalyticsTracking() {
   const trackPageView = useCallback(async (path: string) => {
     try {
       const geo = await getVisitorGeo();
+      const supabase = await getSupabase();
       await supabase.from("page_views").insert({
         visitor_id: visitorId.current,
         page_path: path,
@@ -102,6 +109,7 @@ export function useAnalyticsTracking() {
   // Update page duration when leaving
   const updatePageDuration = useCallback(async (path: string, duration: number) => {
     try {
+      const supabase = await getSupabase();
       // Update the most recent page view for this visitor and path
       const { data } = await supabase
         .from("page_views")
@@ -141,6 +149,7 @@ export function useAnalyticsTracking() {
     if (!elementText) return;
 
     try {
+      const supabase = await getSupabase();
       await supabase.from("click_events").insert({
         visitor_id: visitorId.current,
         page_path: pathname,

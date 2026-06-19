@@ -216,6 +216,16 @@
     @apply py-16 md:py-24;
   }
 
+  /* Skip layout/paint of below-the-fold sections until they scroll near the
+     viewport. Cuts initial main-thread Style & Layout work (Total Blocking Time)
+     without removing any content from the DOM (SEO/markup unchanged). The `auto`
+     intrinsic size remembers each section's measured height after first render,
+     so revealing it on scroll does not shift layout (CLS-safe). */
+  .cv-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
+
   .hover-lift {
     @apply transition-all duration-300;
   }

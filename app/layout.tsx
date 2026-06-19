@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
 import { Providers } from "./providers";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import "@/index.css";
 
 // Origin the app connects to early (Supabase data + auth); used for the
@@ -67,22 +67,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>{children}</Providers>
-        {/* Google Analytics — loaded via next/script with lazyOnload so gtag
-            downloads/parses/executes during browser idle time (after load),
-            keeping third-party JS off the main thread during the critical
-            loading window. Analytics is non-critical, so the slight delay is fine. */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-B0YKT0X980"
-          strategy="lazyOnload"
-        />
-        <Script id="gtag-init" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-B0YKT0X980');
-          `}
-        </Script>
+        {/* Google Analytics — loaded on first user interaction (with a fallback
+            timer) so gtag.js (~155 kB) never executes during the initial load
+            window, keeping third-party main-thread blocking off the critical path.
+            Engaged visitors and idle/bounce sessions are both still tracked. */}
+        <GoogleAnalytics />
       </body>
     </html>
   );

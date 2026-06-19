@@ -79,7 +79,7 @@ const linkClusters = [
 
 export function InternalLinkingHub() {
   return (
-    <section className="section-padding bg-background border-t border-border/40">
+    <section className="section-padding bg-background border-t border-border/40 cv-section">
       <div className="container-custom">
         {/* Header */}
         <div className="text-center mb-12">

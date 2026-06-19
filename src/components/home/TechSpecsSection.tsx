@@ -11,7 +11,7 @@ const rows = [
 
 export function TechSpecsSection() {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-background cv-section">
       <div className="container-custom">
         <div className="text-center mb-10">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">

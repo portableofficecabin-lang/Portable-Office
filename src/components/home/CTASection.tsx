@@ -11,7 +11,7 @@ const ctaPoints = [
 
 export function CTASection() {
   return (
-    <section className="relative py-20 lg:py-28 overflow-hidden">
+    <section className="relative py-20 lg:py-28 overflow-hidden cv-section">
       <div 
         className="absolute inset-0 z-0"
         style={{ background: "var(--gradient-hero)" }}

@@ -4,7 +4,7 @@ import { CategoriesSection } from "@/components/home/CategoriesSection";
 import { ProductRangeSection } from "@/components/home/ProductRangeSection";
 import { TechSpecsSection } from "@/components/home/TechSpecsSection";
 import { ApplicationsSection } from "@/components/home/ApplicationsSection";
-import { FeaturedProducts } from "@/components/home/FeaturedProducts";
+import { FeaturedProductsLazy } from "@/components/home/FeaturedProductsLazy";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { WhatSetsUsApart } from "@/components/home/WhatSetsUsApart";
@@ -39,7 +39,7 @@ const Index = () => {
       <CategoriesSection />
       <ProductRangeSection />
       <WhyChooseUs />
-      <FeaturedProducts />
+      <FeaturedProductsLazy />
       <TechSpecsSection />
       <ApplicationsSection />
       <HowItWorks />

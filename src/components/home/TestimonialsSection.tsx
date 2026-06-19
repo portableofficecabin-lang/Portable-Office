@@ -23,7 +23,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-background cv-section">
       <div className="container-custom">
         <div className="text-center mb-14">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">

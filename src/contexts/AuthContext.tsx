@@ -1,8 +1,13 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { User, Session } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import type { User, Session } from "@supabase/supabase-js";
+
+// Load the Supabase client lazily. Auth setup is already deferred to browser idle
+// and the auth methods run on user action, so importing on demand keeps Supabase's
+// (~heavy) bundle off the initial JS-execution path on every page.
+const getSupabase = () =>
+  import("@/integrations/supabase/client").then((m) => m.supabase);
 
 interface AuthContextType {
   user: User | null;
@@ -24,6 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAdminRole = async (userId: string) => {
     try {
+      const supabase = await getSupabase();
       const { data, error } = await supabase
         .from("user_roles")
         .select("role")
@@ -44,8 +50,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+    // Defer Supabase auth setup to browser idle. Initializing the auth client +
+    // running getSession() during hydration adds significant main-thread JS to the
+    // critical path on every page (hurting Time to Interactive), yet no above-the-fold
+    // UI depends on the auth result. Static/public pages render immediately; auth
+    // resolves right after the page is interactive. Components already render a
+    // loading state while isLoading is true.
+    let subscription: { unsubscribe: () => void } | undefined;
+    let cancelled = false;
+
+    const init = async () => {
+      const supabase = await getSupabase();
+      if (cancelled) return;
+      const { data } = supabase.auth.onAuthStateChange((event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
 
@@ -56,27 +73,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           setIsAdmin(false);
         }
-      },
-    );
+      });
+      subscription = data.subscription;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
+        setUser(session?.user ?? null);
 
-      if (session?.user) {
-        checkAdminRole(session.user.id).then((result) => {
-          setIsAdmin(result);
+        if (session?.user) {
+          checkAdminRole(session.user.id).then((result) => {
+            setIsAdmin(result);
+            setIsLoading(false);
+          });
+        } else {
           setIsLoading(false);
-        });
-      } else {
-        setIsLoading(false);
-      }
-    });
+        }
+      });
+    };
 
-    return () => subscription.unsubscribe();
+    const ric = (window as any).requestIdleCallback as
+      | ((cb: () => void, opts?: { timeout: number }) => number)
+      | undefined;
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    if (ric) idleId = ric(init, { timeout: 2000 });
+    else timeoutId = window.setTimeout(init, 800);
+
+    return () => {
+      cancelled = true;
+      if (idleId !== undefined) (window as any).cancelIdleCallback?.(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      subscription?.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    const supabase = await getSupabase();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -89,6 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       process.env.NEXT_PUBLIC_SITE_URL ||
       (typeof window !== "undefined" ? window.location.origin : "");
 
+    const supabase = await getSupabase();
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -100,6 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    const supabase = await getSupabase();
     await supabase.auth.signOut();
     setIsAdmin(false);
   };

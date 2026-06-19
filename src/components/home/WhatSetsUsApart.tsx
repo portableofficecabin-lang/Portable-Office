@@ -26,7 +26,7 @@ const differentiators = [
 
 export function WhatSetsUsApart() {
   return (
-    <section className="section-padding bg-muted/50">
+    <section className="section-padding bg-muted/50 cv-section">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           {/* Content */}

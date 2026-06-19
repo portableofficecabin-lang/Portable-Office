@@ -1,9 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
+
+// Load Supabase lazily so its (~heavy) bundle stays off the initial JS-execution
+// path. Every cart operation is async and gated behind a logged-in user, so the
+// client is only fetched when a signed-in user actually touches their cart.
+const getSupabase = () =>
+  import("@/integrations/supabase/client").then((m) => m.supabase);
 
 interface CartItem {
   id: string;
@@ -62,6 +67,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!user) { setItems([]); return; }
     setIsLoading(true);
     try {
+      const supabase = await getSupabase();
       const { data, error } = await supabase
         .from("cart_items")
         .select("id, product_id, quantity, customization_notes")
@@ -80,6 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
     try {
+      const supabase = await getSupabase();
       const { error } = await supabase
         .from("cart_items")
         .upsert({ user_id: user.id, product_id: productId, quantity }, { onConflict: "user_id,product_id" });
@@ -93,6 +100,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const removeFromCart = async (itemId: string) => {
     try {
+      const supabase = await getSupabase();
       await supabase.from("cart_items").delete().eq("id", itemId);
       setItems(prev => prev.filter(i => i.id !== itemId));
     } catch { /* silent */ }
@@ -101,6 +109,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const updateQuantity = async (itemId: string, quantity: number) => {
     if (quantity < 1) return removeFromCart(itemId);
     try {
+      const supabase = await getSupabase();
       await supabase.from("cart_items").update({ quantity }).eq("id", itemId);
       setItems(prev => prev.map(i => i.id === itemId ? { ...i, quantity } : i));
     } catch { /* silent */ }
@@ -108,6 +117,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = async () => {
     if (!user) return;
+    const supabase = await getSupabase();
     await supabase.from("cart_items").delete().eq("user_id", user.id);
     setItems([]);
   };

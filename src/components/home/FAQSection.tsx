@@ -40,7 +40,7 @@ export function FAQSection() {
   };
 
   return (
-    <section className="section-padding bg-muted/50">
+    <section className="section-padding bg-muted/50 cv-section">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <div className="container-custom">
         <div className="max-w-3xl mx-auto">

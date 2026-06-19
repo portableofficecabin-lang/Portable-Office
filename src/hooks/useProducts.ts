@@ -1,9 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import type { DBProduct, DBCategory } from "@/types/database";
 import { products as staticProducts, categories as staticCategories, Product, Category, getProductSlug } from "@/data/products";
+
+// Load the Supabase client lazily so its (~heavy) bundle is parsed only when the
+// deferred fetch / realtime subscription actually runs (after the page is
+// interactive) instead of during initial page load.
+const getSupabase = () =>
+  import("@/integrations/supabase/client").then((m) => m.supabase);
 
 // Convert DB product to frontend Product type
 const convertDBProduct = (dbProduct: DBProduct): Product => ({
@@ -106,45 +111,51 @@ export function useProducts(options?: { realtime?: boolean }) {
     // revalidated homepage), so hydration does not open two WebSockets.
     if (!realtime) return cleanupIdle;
 
-    const productsChannel = supabase
-      .channel("public-products-changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "products",
-        },
-        () => {
-          fetchData();
-        }
-      )
-      .subscribe();
+    // Set up realtime channels lazily (after the Supabase client loads). A cancelled
+    // flag guards against the effect being torn down before the async import resolves.
+    let cancelled = false;
+    let teardown: (() => void) | undefined;
 
-    const categoriesChannel = supabase
-      .channel("public-categories-changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "categories",
-        },
-        () => {
-          fetchData();
-        }
-      )
-      .subscribe();
+    getSupabase().then((supabase) => {
+      if (cancelled) return;
+      const productsChannel = supabase
+        .channel("public-products-changes")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "products" },
+          () => {
+            fetchData();
+          }
+        )
+        .subscribe();
+
+      const categoriesChannel = supabase
+        .channel("public-categories-changes")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "categories" },
+          () => {
+            fetchData();
+          }
+        )
+        .subscribe();
+
+      teardown = () => {
+        supabase.removeChannel(productsChannel);
+        supabase.removeChannel(categoriesChannel);
+      };
+    });
 
     return () => {
+      cancelled = true;
       cleanupIdle();
-      supabase.removeChannel(productsChannel);
-      supabase.removeChannel(categoriesChannel);
+      teardown?.();
     };
   }, [realtime]);
 
   const fetchData = async () => {
     try {
+      const supabase = await getSupabase();
       const { data: dbProducts, error: productsError } = await supabase
         .from("products")
         .select("*")
