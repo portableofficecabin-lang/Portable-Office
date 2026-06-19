@@ -23,7 +23,7 @@ export function HeroSection() {
           width="1920"
           height="1080"
           fetchPriority="high"
-          decoding="sync"
+          decoding="async"
           loading="eager"
           className="w-full h-full object-cover object-center"
         />

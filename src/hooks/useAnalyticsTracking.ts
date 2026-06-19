@@ -4,6 +4,22 @@ import { useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 
+// Run non-critical work after the browser is idle so analytics (and the Supabase
+// client it pulls in) never contend with hydration / the LCP paint. Falls back to
+// a timeout where requestIdleCallback is unavailable (Safari/older browsers).
+const runWhenIdle = (cb: () => void): (() => void) => {
+  if (typeof window === "undefined") return () => {};
+  const ric = (window as any).requestIdleCallback as
+    | ((cb: () => void, opts?: { timeout: number }) => number)
+    | undefined;
+  if (ric) {
+    const id = ric(cb, { timeout: 3000 });
+    return () => (window as any).cancelIdleCallback?.(id);
+  }
+  const id = window.setTimeout(cb, 1200);
+  return () => window.clearTimeout(id);
+};
+
 // Generate or retrieve a persistent visitor ID
 const getVisitorId = (): string => {
   if (typeof window === "undefined") return "ssr_visitor";
@@ -138,26 +154,35 @@ export function useAnalyticsTracking() {
     }
   }, [pathname]);
 
-  // Track page views on route change
+  // Track page views on route change. Deferred to idle so the Supabase client +
+  // ipapi geo lookup load after the page is interactive, not during hydration.
   useEffect(() => {
     const now = Date.now();
-    
-    // Update duration for previous page
-    if (currentPath.current !== pathname) {
-      const duration = (now - pageEntryTime.current) / 1000;
-      updatePageDuration(currentPath.current, duration);
-    }
+    const prevPath = currentPath.current;
+    const prevEntry = pageEntryTime.current;
+    const pathChanged = prevPath !== pathname;
 
-    // Track new page view
-    trackPageView(pathname);
     pageEntryTime.current = now;
     currentPath.current = pathname;
+
+    return runWhenIdle(() => {
+      // Update duration for previous page
+      if (pathChanged) {
+        updatePageDuration(prevPath, (now - prevEntry) / 1000);
+      }
+      // Track new page view
+      trackPageView(pathname);
+    });
   }, [pathname, trackPageView, updatePageDuration]);
 
-  // Track click events
+  // Track click events. Listener attached after idle to keep it off the critical
+  // hydration path.
   useEffect(() => {
-    document.addEventListener("click", trackClick);
-    return () => document.removeEventListener("click", trackClick);
+    const cancel = runWhenIdle(() => document.addEventListener("click", trackClick));
+    return () => {
+      cancel();
+      document.removeEventListener("click", trackClick);
+    };
   }, [trackClick]);
 
   // Track duration on page unload

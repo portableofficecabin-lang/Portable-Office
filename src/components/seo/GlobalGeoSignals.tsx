@@ -147,39 +147,28 @@ export function GlobalGeoSignals() {
 
     const timer = window.setTimeout(syncMetadata, 0);
 
-    const applyEnhancements = () => {
-      if (skipPageOverrides) return;
-      enhanceImages(document);
-    };
-    applyEnhancements();
-
     if (skipPageOverrides) {
       return () => window.clearTimeout(timer);
     }
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (!(node instanceof HTMLElement)) return;
-
-          if (node.tagName === "IMG") {
-            enhanceImages(node.parentElement || document);
-            return;
-          }
-
-          enhanceImages(node);
-        });
-      });
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    // Geo-tagging image alt/title is non-critical SEO text and visually invisible,
+    // so run it once after the browser is idle. This keeps the previous full-document
+    // scan + setAttribute writes (which forced style/layout recalc over a large DOM
+    // during hydration) off the LCP critical path. A persistent document-wide
+    // MutationObserver is intentionally avoided for the same reason.
+    const ric = (window as any).requestIdleCallback as
+      | ((cb: () => void, opts?: { timeout: number }) => number)
+      | undefined;
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    const run = () => enhanceImages(document);
+    if (ric) idleId = ric(run, { timeout: 3000 });
+    else timeoutId = window.setTimeout(run, 1200);
 
     return () => {
       window.clearTimeout(timer);
-      observer.disconnect();
+      if (idleId !== undefined) (window as any).cancelIdleCallback?.(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
     };
   }, [pathname, skipPageOverrides]);
 

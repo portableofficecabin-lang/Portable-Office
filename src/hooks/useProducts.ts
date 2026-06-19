@@ -86,11 +86,25 @@ export function useProducts(options?: { realtime?: boolean }) {
   const [isFromDatabase, setIsFromDatabase] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    // Defer the Supabase fetch to browser idle so the client + network request do
+    // not run during hydration / the LCP window. Static products are already seeded
+    // into state, so the UI renders immediately and refreshes from the DB at idle.
+    const ric = (window as any).requestIdleCallback as
+      | ((cb: () => void, opts?: { timeout: number }) => number)
+      | undefined;
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    if (ric) idleId = ric(() => fetchData(), { timeout: 3000 });
+    else timeoutId = window.setTimeout(() => fetchData(), 1000);
+
+    const cleanupIdle = () => {
+      if (idleId !== undefined) (window as any).cancelIdleCallback?.(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
 
     // Skip realtime subscriptions when not requested (e.g. the statically
     // revalidated homepage), so hydration does not open two WebSockets.
-    if (!realtime) return;
+    if (!realtime) return cleanupIdle;
 
     const productsChannel = supabase
       .channel("public-products-changes")
@@ -123,6 +137,7 @@ export function useProducts(options?: { realtime?: boolean }) {
       .subscribe();
 
     return () => {
+      cleanupIdle();
       supabase.removeChannel(productsChannel);
       supabase.removeChannel(categoriesChannel);
     };
