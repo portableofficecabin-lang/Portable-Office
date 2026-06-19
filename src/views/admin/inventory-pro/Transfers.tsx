@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Trash2, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 
 type Line = { material_id: string; quantity: number };
 
@@ -86,7 +87,7 @@ export default function TransfersPage() {
             {items.map((it) => (
               <tr key={it.id} className="border-b hover:bg-muted/30">
                 <td className="p-3 font-mono font-semibold">{it.transfer_number}</td>
-                <td className="p-3 text-xs">{format(new Date(it.created_at), "dd MMM yyyy")}</td>
+                <td className="p-3 text-xs">{formatDateSafe(new Date(it.created_at), "dd MMM yyyy")}</td>
                 <td className="p-3 flex items-center gap-2">{it.from?.name} <ArrowRight className="h-3 w-3" /> {it.to?.name}</td>
                 <td className="p-3">{it.vehicle_number || "—"}</td>
                 <td className="p-3">{it.driver_name || "—"}</td>

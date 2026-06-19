@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { Loader2, Package, Search, FileText, IndianRupee, Receipt } from "lucide-react";
@@ -176,7 +177,7 @@ export default function AdminOrders() {
                   {filtered.map((o) => (
                     <motion.tr key={o.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b hover:bg-muted/40">
                       <td className="py-3 px-2 font-mono font-semibold">{o.order_number}</td>
-                      <td className="py-3 px-2 text-muted-foreground">{format(new Date(o.created_at), "MMM d, yyyy")}</td>
+                      <td className="py-3 px-2 text-muted-foreground">{formatDateSafe(new Date(o.created_at), "MMM d, yyyy")}</td>
                       <td className="py-3 px-2">{[o.shipping_city, o.shipping_state].filter(Boolean).join(", ") || "—"}</td>
                       <td className="py-3 px-2 text-right font-semibold">{inr(Number(o.total_amount || 0))}</td>
                       <td className="py-3 px-2 text-right">{inr(Number(o.paid_amount || 0))}</td>
@@ -242,7 +243,7 @@ th{background:#f8fafc;text-transform:uppercase;font-size:11px;letter-spacing:0.0
 </style></head><body>
 <div class="row">
 <div><h1 class="brand">Portable Office Cabin</h1><p class="muted">Bengaluru, Karnataka, India</p></div>
-<div style="text-align:right"><h2>INVOICE</h2><p><strong>${o.invoice_number}</strong></p><p class="muted">${format(new Date(), "MMM d, yyyy")}</p></div>
+<div style="text-align:right"><h2>INVOICE</h2><p><strong>${o.invoice_number}</strong></p><p class="muted">${formatDateSafe(new Date(), "MMM d, yyyy")}</p></div>
 </div>
 <div class="row">
 <div><strong>Bill To</strong><br/><p class="muted">${[o.shipping_city, o.shipping_state].filter(Boolean).join(", ") || "Customer"}</p></div>

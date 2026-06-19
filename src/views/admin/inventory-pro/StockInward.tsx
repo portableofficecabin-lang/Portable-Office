@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Trash2, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 
 type LineItem = { material_id: string; quantity: number; rate: number; gst_percent: number; qc_passed: boolean };
 
@@ -23,7 +24,7 @@ export default function StockInwardPage() {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [viewing, setViewing] = useState<any | null>(null);
-  const [form, setForm] = useState<any>({ factory_id: "", supplier_id: "", invoice_number: "", invoice_date: format(new Date(), "yyyy-MM-dd"), vehicle_number: "", qc_status: "approved", notes: "" });
+  const [form, setForm] = useState<any>({ factory_id: "", supplier_id: "", invoice_number: "", invoice_date: formatDateSafe(new Date(), "yyyy-MM-dd"), vehicle_number: "", qc_status: "approved", notes: "" });
   const [lines, setLines] = useState<LineItem[]>([]);
   const [supplierOpen, setSupplierOpen] = useState(false);
   const [newSupplier, setNewSupplier] = useState({ name: "", phone: "", email: "", gst_number: "", address: "" });
@@ -43,7 +44,7 @@ export default function StockInwardPage() {
   }
 
   function openNew() {
-    setForm({ factory_id: factories[0]?.id || "", supplier_id: "", invoice_number: "", invoice_date: format(new Date(), "yyyy-MM-dd"), vehicle_number: "", qc_status: "approved", notes: "" });
+    setForm({ factory_id: factories[0]?.id || "", supplier_id: "", invoice_number: "", invoice_date: formatDateSafe(new Date(), "yyyy-MM-dd"), vehicle_number: "", qc_status: "approved", notes: "" });
     setLines([{ material_id: "", quantity: 0, rate: 0, gst_percent: 18, qc_passed: true }]);
     setOpen(true);
   }
@@ -112,7 +113,7 @@ export default function StockInwardPage() {
             {items.map((it) => (
               <tr key={it.id} className="border-b hover:bg-muted/30">
                 <td className="p-3 font-mono font-semibold">{it.inward_number}</td>
-                <td className="p-3 text-xs">{it.invoice_date ? format(new Date(it.invoice_date), "dd MMM yyyy") : "—"}</td>
+                <td className="p-3 text-xs">{it.invoice_date ? formatDateSafe(new Date(it.invoice_date), "dd MMM yyyy") : "—"}</td>
                 <td className="p-3">{it.factories?.name}</td>
                 <td className="p-3">{it.suppliers?.name || "—"}</td>
                 <td className="p-3 text-xs">{it.invoice_number || "—"}</td>

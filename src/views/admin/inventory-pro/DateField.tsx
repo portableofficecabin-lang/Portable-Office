@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { CalendarIcon } from "lucide-react";
 import { format, parse, isValid } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
@@ -18,10 +19,10 @@ interface Props {
 /** Combined manual-entry + calendar picker. User can type dd/MM/yyyy or pick from calendar. */
 export function DateField({ value, onChange, placeholder = "dd/mm/yyyy" }: Props) {
   const [open, setOpen] = React.useState(false);
-  const [text, setText] = React.useState(value ? format(new Date(value), "dd/MM/yyyy") : "");
+  const [text, setText] = React.useState(value ? formatDateSafe(new Date(value), "dd/MM/yyyy") : "");
 
   React.useEffect(() => {
-    setText(value ? format(new Date(value), "dd/MM/yyyy") : "");
+    setText(value ? formatDateSafe(new Date(value), "dd/MM/yyyy") : "");
   }, [value]);
 
   const date = value ? new Date(value) : undefined;
@@ -30,7 +31,7 @@ export function DateField({ value, onChange, placeholder = "dd/mm/yyyy" }: Props
     if (!text) { onChange(""); return; }
     const parsed = parse(text, "dd/MM/yyyy", new Date());
     if (isValid(parsed)) onChange(format(parsed, "yyyy-MM-dd"));
-    else setText(value ? format(new Date(value), "dd/MM/yyyy") : "");
+    else setText(value ? formatDateSafe(new Date(value), "dd/MM/yyyy") : "");
   }
 
   return (

@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { format } from "date-fns";
+
 import {
   Plus,
   Search,
@@ -403,7 +404,7 @@ export default function AdminBlogPosts() {
                           /blog/{post.slug}
                         </p>
                         <p className="text-xs text-muted-foreground mt-1">
-                          {format(new Date(post.updated_at), "MMM d, yyyy")}
+                          {formatDateSafe(new Date(post.updated_at), "MMM d, yyyy")}
                         </p>
                       </div>
 

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { formatDateSafe } from "@/utils/formatDate";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { format } from "date-fns";
+
 import {
   Package,
   MessageSquare,
@@ -246,7 +247,7 @@ export default function AdminOverview() {
                       {enquiry.status}
                     </Badge>
                     <div className="text-xs text-muted-foreground mt-1">
-                      {format(new Date(enquiry.created_at), "MMM d, h:mm a")}
+                      {formatDateSafe(new Date(enquiry.created_at), "MMM d, h:mm a")}
                     </div>
                   </div>
                 </motion.div>
@@ -300,7 +301,7 @@ export default function AdminOverview() {
                     </Badge>
                     <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                       <Clock className="h-3 w-3" />
-                      {format(new Date(apt.appointment_date), "MMM d")} at {apt.appointment_time}
+                      {formatDateSafe(new Date(apt.appointment_date), "MMM d")} at {apt.appointment_time}
                     </div>
                   </div>
                 </motion.div>

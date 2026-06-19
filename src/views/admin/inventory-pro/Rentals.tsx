@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Edit, QrCode, Wrench } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import QRCode from "qrcode";
-import { format } from "date-fns";
+
 
 export default function RentalsPage() {
   const [assets, setAssets] = useState<any[]>([]);
@@ -27,7 +28,7 @@ export default function RentalsPage() {
 
   const [openAssign, setOpenAssign] = useState(false);
   const [assetForAssign, setAssetForAssign] = useState<any | null>(null);
-  const [assign, setAssign] = useState<any>({ customer_name: "", customer_phone: "", site_address: "", dispatch_date: format(new Date(), "yyyy-MM-dd"), expected_return_date: "", monthly_rate: 0, deposit_amount: 0, notes: "" });
+  const [assign, setAssign] = useState<any>({ customer_name: "", customer_phone: "", site_address: "", dispatch_date: formatDateSafe(new Date(), "yyyy-MM-dd"), expected_return_date: "", monthly_rate: 0, deposit_amount: 0, notes: "" });
 
   const [openMaint, setOpenMaint] = useState(false);
   const [maintAsset, setMaintAsset] = useState<any | null>(null);
@@ -74,7 +75,7 @@ export default function RentalsPage() {
     const active = assignments.find((x) => x.asset_id === asset.id);
     if (active) {
       await supabase.from("rental_assignments").update({
-        status: "returned", actual_return_date: format(new Date(), "yyyy-MM-dd"),
+        status: "returned", actual_return_date: formatDateSafe(new Date(), "yyyy-MM-dd"),
         damage_notes: damage || null, damage_charges: charges,
       }).eq("id", active.id);
     }
@@ -125,8 +126,8 @@ export default function RentalsPage() {
               {active && (
                 <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-3 text-xs space-y-1 mb-3">
                   <div><b>Customer:</b> {active.customer_name}</div>
-                  <div><b>Dispatched:</b> {active.dispatch_date && format(new Date(active.dispatch_date), "dd MMM yyyy")}</div>
-                  {active.expected_return_date && <div><b>Return Due:</b> {format(new Date(active.expected_return_date), "dd MMM yyyy")}</div>}
+                  <div><b>Dispatched:</b> {active.dispatch_date && formatDateSafe(new Date(active.dispatch_date), "dd MMM yyyy")}</div>
+                  {active.expected_return_date && <div><b>Return Due:</b> {formatDateSafe(new Date(active.expected_return_date), "dd MMM yyyy")}</div>}
                 </div>
               )}
               <div className="text-xs text-muted-foreground mb-2">Rent: ₹{Number(a.monthly_rent).toLocaleString("en-IN")}/mo</div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion, AnimatePresence } from "framer-motion";
 import { format } from "date-fns";
 import {
@@ -285,7 +286,7 @@ export default function AdminCustomers() {
                 <div className="mb-6">
                   <h2 className="font-display font-bold text-2xl">{selected.full_name || "Unnamed Customer"}</h2>
                   <p className="text-sm text-muted-foreground">
-                    Customer since {format(new Date(selected.created_at), "MMM d, yyyy")}
+                    Customer since {formatDateSafe(new Date(selected.created_at), "MMM d, yyyy")}
                   </p>
                 </div>
 
@@ -342,7 +343,7 @@ export default function AdminCustomers() {
                         <div key={o.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/40">
                           <div>
                             <div className="font-medium text-sm">{o.order_number}</div>
-                            <div className="text-xs text-muted-foreground">{format(new Date(o.created_at), "MMM d, yyyy")}</div>
+                            <div className="text-xs text-muted-foreground">{formatDateSafe(new Date(o.created_at), "MMM d, yyyy")}</div>
                           </div>
                           <div className="text-right">
                             <div className="font-semibold text-sm">{inr(Number(o.total_amount || 0))}</div>
@@ -367,7 +368,7 @@ export default function AdminCustomers() {
                     {selectedNotes.map((n) => (
                       <div key={n.id} className="p-3 rounded-lg bg-muted/40 text-sm">
                         <p className="whitespace-pre-wrap">{n.note}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{format(new Date(n.created_at), "MMM d, h:mm a")}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{formatDateSafe(new Date(n.created_at), "MMM d, h:mm a")}</p>
                       </div>
                     ))}
                   </div>

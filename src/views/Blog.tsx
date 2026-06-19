@@ -3,7 +3,7 @@
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
-import { format } from "date-fns";
+import { formatDateSafe } from "@/utils/formatDate";
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -134,7 +134,7 @@ export default function Blog() {
           title: p.title,
           description: p.excerpt || "",
           slug: p.slug,
-          date: format(new Date(p.published_at || p.created_at), "MMMM d, yyyy"),
+          date: formatDateSafe(p.published_at || p.created_at, "MMMM d, yyyy", ""),
           readTime: "5 min read",
           author: p.author || "Portable Office Cabin",
           category: p.category || "Industry Insights",

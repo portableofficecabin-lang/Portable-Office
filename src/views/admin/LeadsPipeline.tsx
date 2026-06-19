@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { Loader2, Mail, Phone, IndianRupee, Calendar as CalIcon } from "lucide-react";
@@ -134,11 +135,11 @@ export default function AdminLeadsPipeline() {
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border">
                       {l.email && <a href={`mailto:${l.email}`} className="text-muted-foreground hover:text-accent"><Mail className="h-3.5 w-3.5" /></a>}
                       {l.phone && <a href={`tel:${l.phone}`} className="text-muted-foreground hover:text-accent"><Phone className="h-3.5 w-3.5" /></a>}
-                      <span className="text-xs text-muted-foreground ml-auto">{format(new Date(l.created_at), "MMM d")}</span>
+                      <span className="text-xs text-muted-foreground ml-auto">{formatDateSafe(new Date(l.created_at), "MMM d")}</span>
                     </div>
                     {l.next_followup_at && (
                       <div className="flex items-center gap-1 text-xs text-amber-600 mt-1">
-                        <CalIcon className="h-3 w-3" /> {format(new Date(l.next_followup_at), "MMM d")}
+                        <CalIcon className="h-3 w-3" /> {formatDateSafe(new Date(l.next_followup_at), "MMM d")}
                       </div>
                     )}
                   </motion.div>

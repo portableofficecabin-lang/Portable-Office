@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { motion } from "framer-motion";
 import { format, differenceInMonths, differenceInDays } from "date-fns";
@@ -169,8 +170,8 @@ export default function AdminRentalContracts() {
       Cabin: r.rental_assets?.cabin_id || "",
       Type: r.rental_assets?.cabin_type || "",
       Site: r.site_address || "",
-      Dispatched: r.dispatch_date ? format(new Date(r.dispatch_date), "dd/MM/yyyy") : "",
-      "Return Due": r.expected_return_date ? format(new Date(r.expected_return_date), "dd/MM/yyyy") : "",
+      Dispatched: r.dispatch_date ? formatDateSafe(new Date(r.dispatch_date), "dd/MM/yyyy") : "",
+      "Return Due": r.expected_return_date ? formatDateSafe(new Date(r.expected_return_date), "dd/MM/yyyy") : "",
       "Monthly Rate": Number(r.monthly_rate || 0),
       Deposit: Number(r.deposit_amount || 0),
       "Deposit Status": r.deposit_status || "held",
@@ -258,9 +259,9 @@ export default function AdminRentalContracts() {
                               <div className="text-xs text-muted-foreground">{r.rental_assets?.cabin_type} {r.rental_assets?.size && `· ${r.rental_assets.size}`}</div>
                             </TableCell>
                             <TableCell className="text-xs max-w-[180px] truncate">{r.site_address || "—"}</TableCell>
-                            <TableCell className="text-xs">{r.dispatch_date ? format(new Date(r.dispatch_date), "dd MMM yy") : "—"}<div className="text-muted-foreground">{months}mo</div></TableCell>
+                            <TableCell className="text-xs">{r.dispatch_date ? formatDateSafe(new Date(r.dispatch_date), "dd MMM yy") : "—"}<div className="text-muted-foreground">{months}mo</div></TableCell>
                             <TableCell className="text-xs">
-                              {r.expected_return_date ? format(new Date(r.expected_return_date), "dd MMM yy") : "—"}
+                              {r.expected_return_date ? formatDateSafe(new Date(r.expected_return_date), "dd MMM yy") : "—"}
                               {overdue && <Badge variant="destructive" className="ml-1 text-[10px]">Overdue</Badge>}
                             </TableCell>
                             <TableCell className="text-right">{inr(r.monthly_rate || 0)}</TableCell>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion, AnimatePresence } from "framer-motion";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, addMonths, subMonths } from "date-fns";
 import {
@@ -198,7 +199,7 @@ export default function AdminAppointments() {
 
       toast({
         title: "Appointment Postponed",
-        description: `Rescheduled to ${format(new Date(newDate), "MMM d, yyyy")} at ${newTime}`,
+        description: `Rescheduled to ${formatDateSafe(new Date(newDate), "MMM d, yyyy")} at ${newTime}`,
       });
 
       setPostponeModalOpen(false);
@@ -463,7 +464,7 @@ export default function AdminAppointments() {
                             <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1.5">
                                 <Calendar className="h-4 w-4 text-accent" />
-                                {format(new Date(apt.appointment_date), "MMM d")}
+                                {formatDateSafe(new Date(apt.appointment_date), "MMM d")}
                               </span>
                               <span className="flex items-center gap-1.5">
                                 <Clock className="h-4 w-4 text-accent" />
@@ -654,7 +655,7 @@ export default function AdminAppointments() {
                             <Calendar className="h-5 w-5 text-accent" />
                           </div>
                           <span className="font-medium">
-                            {format(new Date(selectedAppointment.appointment_date), "EEEE, MMMM d, yyyy")}
+                            {formatDateSafe(new Date(selectedAppointment.appointment_date), "EEEE, MMMM d, yyyy")}
                           </span>
                         </motion.div>
                         <motion.div
@@ -770,7 +771,7 @@ export default function AdminAppointments() {
                 type="date"
                 value={newDate}
                 onChange={(e) => setNewDate(e.target.value)}
-                min={format(new Date(), "yyyy-MM-dd")}
+                min={formatDateSafe(new Date(), "yyyy-MM-dd")}
               />
             </div>
             <div className="space-y-2">

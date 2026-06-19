@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import {
@@ -280,7 +281,7 @@ export default function AdminParties() {
   const exportLedger = (kind: "pdf" | "excel") => {
     if (!selected) return;
     const rows = ledgerRows.map(r => ({
-      Date: format(new Date(r.date), "dd/MM/yyyy"),
+      Date: formatDateSafe(new Date(r.date), "dd/MM/yyyy"),
       Reference: r.ref, Type: r.type, Project: r.project,
       Debit: r.debit, Credit: r.credit, Status: r.status,
     }));
@@ -354,7 +355,7 @@ export default function AdminParties() {
               <div className="flex items-start justify-between mb-6">
                 <div>
                   <h2 className="font-display font-bold text-2xl">{selected.name}</h2>
-                  <p className="text-sm text-muted-foreground">{selected.company || "Individual"} · since {format(new Date(selected.created_at), "MMM yyyy")}</p>
+                  <p className="text-sm text-muted-foreground">{selected.company || "Individual"} · since {formatDateSafe(new Date(selected.created_at), "MMM yyyy")}</p>
                 </div>
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline" onClick={() => { setEditing(selected); setDialogOpen(true); }}><Edit className="h-4 w-4" /></Button>
@@ -434,8 +435,8 @@ export default function AdminParties() {
                           <TableRow key={p.id}>
                             <TableCell className="font-medium">{p.project_name}</TableCell>
                             <TableCell><Badge variant="outline">{p.status}</Badge></TableCell>
-                            <TableCell>{p.start_date ? format(new Date(p.start_date), "dd/MM/yyyy") : "—"}</TableCell>
-                            <TableCell>{p.end_date ? format(new Date(p.end_date), "dd/MM/yyyy") : "—"}</TableCell>
+                            <TableCell>{p.start_date ? formatDateSafe(new Date(p.start_date), "dd/MM/yyyy") : "—"}</TableCell>
+                            <TableCell>{p.end_date ? formatDateSafe(new Date(p.end_date), "dd/MM/yyyy") : "—"}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -486,7 +487,7 @@ export default function AdminParties() {
                           <TableRow><TableCell colSpan={8} className="text-center py-6 text-muted-foreground">No ledger entries yet. Click "Add Credit / Debit Entry" to record payments or charges.</TableCell></TableRow>
                         ) : ledgerRows.map((r, i) => (
                           <TableRow key={i}>
-                            <TableCell>{format(new Date(r.date), "dd/MM/yyyy")}</TableCell>
+                            <TableCell>{formatDateSafe(new Date(r.date), "dd/MM/yyyy")}</TableCell>
                             <TableCell className="font-medium">{r.ref}</TableCell>
                             <TableCell>{r.type}</TableCell>
                             <TableCell className="text-xs">{r.project}</TableCell>

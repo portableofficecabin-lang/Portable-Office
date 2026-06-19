@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { Plus, Loader2, Printer } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -11,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { format } from "date-fns";
+
 import jsPDF from "jspdf";
 import { addLegalFooter } from "@/lib/pdfFooter";
 
@@ -20,7 +21,7 @@ export default function GatePassPage() {
   const [factories, setFactories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<any>({ pass_type: "outward", factory_id: "", pass_date: format(new Date(), "yyyy-MM-dd"), vehicle_number: "", driver_name: "", driver_phone: "", destination: "", customer_name: "", purpose: "", status: "pending", notes: "" });
+  const [form, setForm] = useState<any>({ pass_type: "outward", factory_id: "", pass_date: formatDateSafe(new Date(), "yyyy-MM-dd"), vehicle_number: "", driver_name: "", driver_phone: "", destination: "", customer_name: "", purpose: "", status: "pending", notes: "" });
 
   useEffect(() => { load(); }, []);
 
@@ -50,7 +51,7 @@ export default function GatePassPage() {
     const doc = new jsPDF();
     doc.setFont("helvetica", "bold").setFontSize(20).text("GATE PASS", 105, 20, { align: "center" });
     doc.setFontSize(12).text(`No: ${gp.gate_pass_number}`, 14, 32);
-    doc.text(`Date: ${format(new Date(gp.pass_date), "dd MMM yyyy")}`, 150, 32);
+    doc.text(`Date: ${formatDateSafe(new Date(gp.pass_date), "dd MMM yyyy")}`, 150, 32);
     doc.setFontSize(11).setFont("helvetica", "normal");
     let y = 50;
     [
@@ -75,7 +76,7 @@ export default function GatePassPage() {
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
-        <Button onClick={() => { setForm({ pass_type: "outward", factory_id: factories[0]?.id || "", pass_date: format(new Date(), "yyyy-MM-dd"), vehicle_number: "", driver_name: "", driver_phone: "", destination: "", customer_name: "", purpose: "", status: "pending", notes: "" }); setOpen(true); }} className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-lg">
+        <Button onClick={() => { setForm({ pass_type: "outward", factory_id: factories[0]?.id || "", pass_date: formatDateSafe(new Date(), "yyyy-MM-dd"), vehicle_number: "", driver_name: "", driver_phone: "", destination: "", customer_name: "", purpose: "", status: "pending", notes: "" }); setOpen(true); }} className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-lg">
           <Plus className="h-4 w-4 mr-2" />New Gate Pass
         </Button>
       </div>
@@ -89,7 +90,7 @@ export default function GatePassPage() {
             {items.map((it) => (
               <tr key={it.id} className="border-b hover:bg-muted/30">
                 <td className="p-3 font-mono font-semibold">{it.gate_pass_number}</td>
-                <td className="p-3 text-xs">{format(new Date(it.pass_date), "dd MMM yyyy")}</td>
+                <td className="p-3 text-xs">{formatDateSafe(new Date(it.pass_date), "dd MMM yyyy")}</td>
                 <td className="p-3"><Badge variant="outline">{it.pass_type}</Badge></td>
                 <td className="p-3">{it.vehicle_number || "—"}</td>
                 <td className="p-3 text-xs">{it.driver_name || "—"}<br />{it.driver_phone}</td>

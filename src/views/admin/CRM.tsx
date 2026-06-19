@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion, AnimatePresence } from "framer-motion";
 import { format, isPast, isToday, isTomorrow, addDays } from "date-fns";
 import {
@@ -399,7 +400,7 @@ function LeadManagement({
                           {lead.lead_source}
                         </Badge>
                         <span className="text-xs text-muted-foreground">
-                          {format(new Date(lead.created_at), "MMM d, yyyy")}
+                          {formatDateSafe(new Date(lead.created_at), "MMM d, yyyy")}
                         </span>
                       </div>
                     </motion.div>
@@ -421,7 +422,7 @@ function LeadManagement({
                       {selectedLead.name}
                     </motion.h2>
                     <p className="text-sm text-muted-foreground">
-                      Lead since {format(new Date(selectedLead.created_at), "EEEE, MMMM d, yyyy")}
+                      Lead since {formatDateSafe(new Date(selectedLead.created_at), "EEEE, MMMM d, yyyy")}
                     </p>
                   </div>
                   <Button variant="ghost" size="icon" className="rounded-xl" onClick={() => setSelectedLead(null)}>
@@ -495,7 +496,7 @@ function LeadManagement({
                   {selectedLead.next_followup_at && (
                     <div className="flex items-center gap-3 text-sm">
                       <span className="text-muted-foreground font-medium w-28">Next Follow-up:</span>
-                      <span className="font-medium">{format(new Date(selectedLead.next_followup_at), "MMM d, yyyy 'at' h:mm a")}</span>
+                      <span className="font-medium">{formatDateSafe(new Date(selectedLead.next_followup_at), "MMM d, yyyy 'at' h:mm a")}</span>
                     </div>
                   )}
                 </motion.div>
@@ -637,7 +638,7 @@ function FollowUpManagement({
           {fu.scheduled_at && (
             <div className={cn("text-xs font-medium", isOverdue ? "text-rose-600" : "text-muted-foreground")}>
               {isOverdue && <AlertCircle className="h-3 w-3 inline mr-1" />}
-              {format(new Date(fu.scheduled_at), "MMM d, h:mm a")}
+              {formatDateSafe(new Date(fu.scheduled_at), "MMM d, h:mm a")}
             </div>
           )}
           <Badge variant="outline" className="text-xs mt-1 capitalize">{fu.follow_up_type}</Badge>
@@ -801,7 +802,7 @@ function SalesPipeline({ enquiries, setEnquiries }: { enquiries: Enquiry[]; setE
                       </div>
                     )}
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border">
-                      <span className="text-xs text-muted-foreground">{format(new Date(l.created_at), "MMM d")}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateSafe(new Date(l.created_at), "MMM d")}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -905,7 +906,7 @@ function CustomerDatabase({ profiles, orders }: { profiles: ProfileRow[]; orders
             {selected ? (
               <motion.div key={selected.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-6">
                 <h2 className="font-display font-bold text-xl mb-1">{selected.full_name || "Unnamed Customer"}</h2>
-                <p className="text-sm text-muted-foreground mb-5">Since {format(new Date(selected.created_at), "MMM d, yyyy")}</p>
+                <p className="text-sm text-muted-foreground mb-5">Since {formatDateSafe(new Date(selected.created_at), "MMM d, yyyy")}</p>
 
                 <div className="space-y-3 mb-6">
                   {selected.phone && (
@@ -937,7 +938,7 @@ function CustomerDatabase({ profiles, orders }: { profiles: ProfileRow[]; orders
                       <div key={o.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/40">
                         <div>
                           <div className="font-medium text-sm">{o.order_number}</div>
-                          <div className="text-xs text-muted-foreground">{format(new Date(o.created_at), "MMM d, yyyy")}</div>
+                          <div className="text-xs text-muted-foreground">{formatDateSafe(new Date(o.created_at), "MMM d, yyyy")}</div>
                         </div>
                         <div className="text-right">
                           <div className="font-semibold text-sm">{inr(Number(o.total_amount || 0))}</div>
@@ -1138,8 +1139,8 @@ function TaskReminder({ tasks, setTasks, enquiries }: { tasks: Task[]; setTasks:
                   {task.description && <p className="text-sm text-muted-foreground mt-1">{task.description}</p>}
                   <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                     {task.assigned_to && <span className="flex items-center gap-1"><Users className="h-3 w-3" />{task.assigned_to}</span>}
-                    {task.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{format(new Date(task.due_date), "dd MMM yyyy")}</span>}
-                    <span className="flex items-center gap-1"><Activity className="h-3 w-3" />{format(new Date(task.created_at), "dd MMM")}</span>
+                    {task.due_date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{formatDateSafe(new Date(task.due_date), "dd MMM yyyy")}</span>}
+                    <span className="flex items-center gap-1"><Activity className="h-3 w-3" />{formatDateSafe(new Date(task.created_at), "dd MMM")}</span>
                   </div>
                 </div>
                 <div className="flex gap-1">
@@ -1292,7 +1293,7 @@ function ServiceSupport({ serviceRequests, setServiceRequests }: { serviceReques
                   <p className="text-sm text-muted-foreground mt-1">{r.customer_name}{r.customer_phone ? ` · ${r.customer_phone}` : ""}{r.customer_email ? ` · ${r.customer_email}` : ""}</p>
                   {r.description && <p className="text-sm mt-1">{r.description}</p>}
                   {r.resolution_notes && <p className="text-sm text-emerald-600 mt-1">✅ {r.resolution_notes}</p>}
-                  <div className="text-xs text-muted-foreground mt-2">{format(new Date(r.created_at), "dd MMM yyyy, hh:mm a")}</div>
+                  <div className="text-xs text-muted-foreground mt-2">{formatDateSafe(new Date(r.created_at), "dd MMM yyyy, hh:mm a")}</div>
                 </div>
                 <div className="flex gap-1">
                   <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(r)}><Edit className="h-3.5 w-3.5" /></Button>
@@ -1337,7 +1338,7 @@ function ReportsAnalytics({ enquiries, orders, tasks, serviceRequests, profiles 
   const monthlyTrend = useMemo(() => {
     const months: Record<string, number> = {};
     enquiries.forEach(e => {
-      const m = format(new Date(e.created_at), "MMM yyyy");
+      const m = formatDateSafe(new Date(e.created_at), "MMM yyyy");
       months[m] = (months[m] || 0) + 1;
     });
     return Object.entries(months).slice(0, 6);

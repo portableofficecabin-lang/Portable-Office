@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 
 type Line = { material_id: string; quantity: number; rate: number };
 
@@ -23,7 +24,7 @@ export default function PurchaseOrdersPage() {
   const [recommendations, setRecommendations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<any>({ supplier_id: "", factory_id: "", po_date: format(new Date(), "yyyy-MM-dd"), expected_delivery_date: "", status: "pending", notes: "", terms: "" });
+  const [form, setForm] = useState<any>({ supplier_id: "", factory_id: "", po_date: formatDateSafe(new Date(), "yyyy-MM-dd"), expected_delivery_date: "", status: "pending", notes: "", terms: "" });
   const [lines, setLines] = useState<Line[]>([]);
 
   useEffect(() => { load(); }, []);
@@ -87,7 +88,7 @@ export default function PurchaseOrdersPage() {
       )}
 
       <div className="flex justify-end">
-        <Button onClick={() => { setForm({ supplier_id: "", factory_id: "", po_date: format(new Date(), "yyyy-MM-dd"), expected_delivery_date: "", status: "pending", notes: "", terms: "" }); setLines([{ material_id: "", quantity: 0, rate: 0 }]); setOpen(true); }} className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-lg">
+        <Button onClick={() => { setForm({ supplier_id: "", factory_id: "", po_date: formatDateSafe(new Date(), "yyyy-MM-dd"), expected_delivery_date: "", status: "pending", notes: "", terms: "" }); setLines([{ material_id: "", quantity: 0, rate: 0 }]); setOpen(true); }} className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:from-emerald-700 hover:to-emerald-600 shadow-lg">
           <Plus className="h-4 w-4 mr-2" />New PO
         </Button>
       </div>
@@ -101,10 +102,10 @@ export default function PurchaseOrdersPage() {
             {items.map((it) => (
               <tr key={it.id} className="border-b hover:bg-muted/30">
                 <td className="p-3 font-mono font-semibold">{it.po_number}</td>
-                <td className="p-3 text-xs">{format(new Date(it.po_date), "dd MMM yyyy")}</td>
+                <td className="p-3 text-xs">{formatDateSafe(new Date(it.po_date), "dd MMM yyyy")}</td>
                 <td className="p-3">{it.suppliers?.name || "—"}</td>
                 <td className="p-3">{it.factories?.name || "—"}</td>
-                <td className="p-3 text-xs">{it.expected_delivery_date ? format(new Date(it.expected_delivery_date), "dd MMM") : "—"}</td>
+                <td className="p-3 text-xs">{it.expected_delivery_date ? formatDateSafe(new Date(it.expected_delivery_date), "dd MMM") : "—"}</td>
                 <td className="p-3 text-center"><Badge variant={it.status === "received" ? "default" : "outline"}>{it.status}</Badge></td>
                 <td className="p-3 text-right font-semibold">₹{Number(it.total_amount).toLocaleString("en-IN")}</td>
               </tr>

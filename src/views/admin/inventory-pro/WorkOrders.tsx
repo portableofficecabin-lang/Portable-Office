@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Eye, FileText } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 import { DateField } from "./DateField";
 
 const PRIORITIES = ["low", "medium", "high", "urgent"];
@@ -123,7 +124,7 @@ export default function WorkOrdersPage() {
                 <td className="p-3">{it.product_type}</td>
                 <td className="p-3 text-center font-bold">{it.quantity}</td>
                 <td className="p-3 text-xs">{it.factories?.name || "—"}</td>
-                <td className="p-3 text-xs">{it.target_date ? format(new Date(it.target_date), "dd MMM yyyy") : "—"}</td>
+                <td className="p-3 text-xs">{it.target_date ? formatDateSafe(new Date(it.target_date), "dd MMM yyyy") : "—"}</td>
                 <td className="p-3 text-center">
                   <Badge variant={it.priority === "urgent" ? "destructive" : it.priority === "high" ? "default" : "outline"}>{it.priority}</Badge>
                 </td>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Hammer, CheckCircle2, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 
 const DEPARTMENTS = [
   { key: "welding", label: "Welding", color: "bg-orange-500" },
@@ -33,7 +34,7 @@ export default function ProductionPage() {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
   const [form, setForm] = useState<any>({
-    log_date: format(new Date(), "yyyy-MM-dd"), factory_id: "", product_type: "Office Cabin",
+    log_date: formatDateSafe(new Date(), "yyyy-MM-dd"), factory_id: "", product_type: "Office Cabin",
     quantity_produced: 0, shift: "Day", supervisor_name: "", project_name: "", notes: "",
     department_progress: { ...emptyProgress }, workflow_status: "in_progress", is_ready_for_dispatch: false,
   });
@@ -53,7 +54,7 @@ export default function ProductionPage() {
   function openNew() {
     setEditing(null);
     setForm({
-      log_date: format(new Date(), "yyyy-MM-dd"), factory_id: factories[0]?.id || "",
+      log_date: formatDateSafe(new Date(), "yyyy-MM-dd"), factory_id: factories[0]?.id || "",
       product_type: "Office Cabin", quantity_produced: 0, shift: "Day",
       supervisor_name: "", project_name: "", notes: "",
       department_progress: { ...emptyProgress }, workflow_status: "in_progress", is_ready_for_dispatch: false,
@@ -101,7 +102,7 @@ export default function ProductionPage() {
     setOpen(false); load();
   }
 
-  const today = format(new Date(), "yyyy-MM-dd");
+  const today = formatDateSafe(new Date(), "yyyy-MM-dd");
   const todayCount = items.filter((x) => x.log_date === today).reduce((s, x) => s + Number(x.quantity_produced), 0);
   const readyCount = items.filter((x) => x.is_ready_for_dispatch && x.workflow_status !== "dispatched").length;
 
@@ -147,7 +148,7 @@ export default function ProductionPage() {
                 <div>
                   <div className="font-bold text-lg">{it.project_name || it.product_type}</div>
                   <div className="text-xs text-muted-foreground">
-                    {format(new Date(it.log_date), "dd MMM yyyy")} • {it.factories?.name} • Qty: {it.quantity_produced}
+                    {formatDateSafe(new Date(it.log_date), "dd MMM yyyy")} • {it.factories?.name} • Qty: {it.quantity_produced}
                   </div>
                 </div>
                 {ready ? (

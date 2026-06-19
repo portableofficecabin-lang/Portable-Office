@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Trash2, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 import { DateField } from "./DateField";
 
 type Line = { material_id: string; planned_quantity: number; rate: number };
@@ -77,7 +78,7 @@ export default function ProjectsPage() {
                 <td className="p-3 font-medium">{it.project_name}</td>
                 <td className="p-3">{it.client_name || "—"}</td>
                 <td className="p-3">{it.factories?.name || "—"}</td>
-                <td className="p-3 text-xs">{it.start_date ? format(new Date(it.start_date), "dd MMM") : "—"} → {it.end_date ? format(new Date(it.end_date), "dd MMM yyyy") : "—"}</td>
+                <td className="p-3 text-xs">{it.start_date ? formatDateSafe(new Date(it.start_date), "dd MMM") : "—"} → {it.end_date ? formatDateSafe(new Date(it.end_date), "dd MMM yyyy") : "—"}</td>
                 <td className="p-3 text-center"><Badge variant={it.status === "completed" ? "default" : "outline"}>{it.status}</Badge></td>
                 <td className="p-3 text-right"><Button size="sm" variant="ghost" onClick={() => setViewing(it)}><Eye className="h-4 w-4" /></Button></td>
               </tr>

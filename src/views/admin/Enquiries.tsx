@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion, AnimatePresence } from "framer-motion";
-import { format } from "date-fns";
+
 import {
   MessageSquare,
   Mail,
@@ -286,7 +287,7 @@ export default function AdminEnquiries() {
                           {typeLabels[enq.enquiry_type]}
                         </Badge>
                         <span className="text-xs text-muted-foreground">
-                          {format(new Date(enq.created_at), "MMM d, h:mm a")}
+                          {formatDateSafe(new Date(enq.created_at), "MMM d, h:mm a")}
                         </span>
                       </div>
                     </motion.div>
@@ -318,7 +319,7 @@ export default function AdminEnquiries() {
                       {selectedEnquiry.name}
                     </motion.h2>
                     <p className="text-sm text-muted-foreground">
-                      {format(new Date(selectedEnquiry.created_at), "EEEE, MMMM d, yyyy 'at' h:mm a")}
+                      {formatDateSafe(new Date(selectedEnquiry.created_at), "EEEE, MMMM d, yyyy 'at' h:mm a")}
                     </p>
                   </div>
                   <Badge className={cn(

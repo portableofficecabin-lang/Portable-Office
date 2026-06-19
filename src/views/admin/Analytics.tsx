@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { motion } from "framer-motion";
-import { format, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import {
   BarChart3,
   TrendingUp,
@@ -379,10 +380,10 @@ export default function AdminAnalytics() {
                                 <span className="font-semibold text-accent">{formatDuration(v.totalDuration)}</span>
                               </td>
                               <td className="py-3 px-3 text-xs text-muted-foreground whitespace-nowrap">
-                                {format(new Date(v.firstSeen), "MMM d, h:mm a")}
+                                {formatDateSafe(new Date(v.firstSeen), "MMM d, h:mm a")}
                               </td>
                               <td className="py-3 px-3 text-xs text-muted-foreground whitespace-nowrap">
-                                {format(new Date(v.lastSeen), "MMM d, h:mm a")}
+                                {formatDateSafe(new Date(v.lastSeen), "MMM d, h:mm a")}
                               </td>
                               <td className="py-3 px-3 text-center">
                                 {expandedVisitor === v.visitor_id ? (
@@ -592,7 +593,7 @@ export default function AdminAnalytics() {
                             <td className="py-2.5 px-3 text-muted-foreground">{pv.country || "—"}</td>
                             <td className="py-2.5 px-3 text-center font-semibold text-accent">{formatDuration(pv.duration_seconds || 0)}</td>
                             <td className="py-2.5 px-3"><span className="text-xs text-muted-foreground font-mono">{pv.visitor_id.substring(0, 12)}…</span></td>
-                            <td className="py-2.5 px-3 text-xs text-muted-foreground whitespace-nowrap">{format(new Date(pv.created_at), "MMM d, h:mm a")}</td>
+                            <td className="py-2.5 px-3 text-xs text-muted-foreground whitespace-nowrap">{formatDateSafe(new Date(pv.created_at), "MMM d, h:mm a")}</td>
                           </tr>
                         ))}
                       </tbody>

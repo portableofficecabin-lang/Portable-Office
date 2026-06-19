@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { format } from "date-fns";
+import { formatDateSafe } from "@/utils/formatDate";
 import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -82,7 +82,7 @@ export default function DynamicBlogPost({ post }: DynamicBlogPostProps) {
 
             <div className="flex items-center gap-2 text-sm text-primary-foreground/75">
               <Calendar className="h-4 w-4 text-accent" />
-              {format(new Date(publishedDate), "MMMM d, yyyy")}
+              {formatDateSafe(publishedDate, "MMMM d, yyyy", "")}
             </div>
           </div>
         </section>

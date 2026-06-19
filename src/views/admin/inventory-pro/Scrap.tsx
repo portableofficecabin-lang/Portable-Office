@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Recycle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,14 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
+
 
 export default function ScrapPage() {
   const [items, setItems] = useState<any[]>([]);
   const [factories, setFactories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<any>({ scrap_date: format(new Date(), "yyyy-MM-dd"), factory_id: "", team_name: "", material_name: "", quantity: 0, unit: "kg", rate: 0, buyer_name: "", buyer_phone: "", status: "pending", notes: "" });
+  const [form, setForm] = useState<any>({ scrap_date: formatDateSafe(new Date(), "yyyy-MM-dd"), factory_id: "", team_name: "", material_name: "", quantity: 0, unit: "kg", rate: 0, buyer_name: "", buyer_phone: "", status: "pending", notes: "" });
 
   useEffect(() => { load(); }, []);
 
@@ -69,7 +70,7 @@ export default function ScrapPage() {
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={() => { setForm({ scrap_date: format(new Date(), "yyyy-MM-dd"), factory_id: factories[0]?.id || "", team_name: "", material_name: "", quantity: 0, unit: "kg", rate: 0, buyer_name: "", buyer_phone: "", status: "pending", notes: "" }); setOpen(true); }} className="bg-gradient-to-r from-yellow-500 to-amber-400 text-white hover:from-yellow-600 hover:to-amber-500 shadow-lg">
+        <Button onClick={() => { setForm({ scrap_date: formatDateSafe(new Date(), "yyyy-MM-dd"), factory_id: factories[0]?.id || "", team_name: "", material_name: "", quantity: 0, unit: "kg", rate: 0, buyer_name: "", buyer_phone: "", status: "pending", notes: "" }); setOpen(true); }} className="bg-gradient-to-r from-yellow-500 to-amber-400 text-white hover:from-yellow-600 hover:to-amber-500 shadow-lg">
           <Plus className="h-4 w-4 mr-2" />New Scrap Entry
         </Button>
       </div>
@@ -82,7 +83,7 @@ export default function ScrapPage() {
           <tbody>
             {items.map((it) => (
               <tr key={it.id} className="border-b hover:bg-muted/30">
-                <td className="p-3 text-xs">{format(new Date(it.scrap_date), "dd MMM yyyy")}</td>
+                <td className="p-3 text-xs">{formatDateSafe(new Date(it.scrap_date), "dd MMM yyyy")}</td>
                 <td className="p-3">{it.factories?.name || "—"}</td>
                 <td className="p-3 font-semibold text-amber-700">{it.team_name || "—"}</td>
                 <td className="p-3">{it.material_name}</td>

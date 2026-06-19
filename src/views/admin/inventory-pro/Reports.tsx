@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { Loader2, Download, FileText } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { exportToExcel, exportToPDF, formatINR } from "@/lib/exportUtils";
-import { format } from "date-fns";
+
 
 export default function ReportsPage() {
   const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ export default function ReportsPage() {
 
   // Consumption report
   const consumption = data.outItems.map((o: any) => ({
-    Date: format(new Date(o.stock_outwards?.created_at), "dd MMM yyyy"),
+    Date: formatDateSafe(new Date(o.stock_outwards?.created_at), "dd MMM yyyy"),
     Outward: o.stock_outwards?.outward_number,
     Factory: o.stock_outwards?.factories?.name,
     Project: o.stock_outwards?.project_name || "—",
@@ -51,13 +52,13 @@ export default function ReportsPage() {
   // Stock ledger
   const ledger = [
     ...data.inItems.map((i: any) => ({
-      Date: format(new Date(i.stock_inwards?.created_at), "dd MMM yyyy"),
+      Date: formatDateSafe(new Date(i.stock_inwards?.created_at), "dd MMM yyyy"),
       Type: "INWARD", Reference: i.stock_inwards?.inward_number,
       Factory: i.stock_inwards?.factories?.name, Material: i.materials?.name,
       In: Number(i.quantity), Out: 0, Amount: Number(i.amount),
     })),
     ...data.outItems.map((o: any) => ({
-      Date: format(new Date(o.stock_outwards?.created_at), "dd MMM yyyy"),
+      Date: formatDateSafe(new Date(o.stock_outwards?.created_at), "dd MMM yyyy"),
       Type: "OUTWARD", Reference: o.stock_outwards?.outward_number,
       Factory: o.stock_outwards?.factories?.name, Material: o.materials?.name,
       In: 0, Out: Number(o.quantity) + Number(o.wastage), Amount: Number(o.amount),
@@ -99,7 +100,7 @@ export default function ReportsPage() {
 
   // Scrap report
   const scrapReport = data.scrap.map((s: any) => ({
-    Date: format(new Date(s.scrap_date), "dd MMM yyyy"),
+    Date: formatDateSafe(new Date(s.scrap_date), "dd MMM yyyy"),
     Factory: s.factories?.name, Material: s.material_name, Quantity: s.quantity, Unit: s.unit,
     Rate: Number(s.rate), Total: Number(s.total_amount), Buyer: s.buyer_name || "—", Status: s.status,
   }));

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, Fragment } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { Plus, Loader2, Edit, Trash2, ArrowLeftRight, Search, ChevronDown, ChevronRight, Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -13,7 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { NumberInput } from "@/components/admin/NumberInput";
-import { format } from "date-fns";
+
 
 export default function MachineryPage() {
   return (
@@ -320,7 +321,7 @@ function MachineryList() {
                           <div><span className="text-muted-foreground">Brand:</span> <span className="font-medium">{m.brand || "—"}</span></div>
                           <div><span className="text-muted-foreground">Model:</span> <span className="font-medium">{m.model || "—"}</span></div>
                           <div><span className="text-muted-foreground">Serial:</span> <span className="font-mono">{m.serial_number || "—"}</span></div>
-                          <div><span className="text-muted-foreground">Purchase Date:</span> <span className="font-medium">{m.purchase_date ? format(new Date(m.purchase_date), "dd MMM yyyy") : "—"}</span></div>
+                          <div><span className="text-muted-foreground">Purchase Date:</span> <span className="font-medium">{m.purchase_date ? formatDateSafe(new Date(m.purchase_date), "dd MMM yyyy") : "—"}</span></div>
                           <div><span className="text-muted-foreground">Purchase Value:</span> <span className="font-medium">₹{Number(m.purchase_value || 0).toLocaleString("en-IN")}</span></div>
                           <div className="col-span-2 md:col-span-3"><span className="text-muted-foreground">Notes:</span> <span>{m.notes || "—"}</span></div>
                         </div>
@@ -342,12 +343,12 @@ function MachineryList() {
                             <tbody>
                               {rows.map((h: any) => (
                                 <tr key={h.id} className="border-t">
-                                  <td className="p-2">{h.issue_date ? format(new Date(h.issue_date), "dd MMM yyyy") : "—"}</td>
+                                  <td className="p-2">{h.issue_date ? formatDateSafe(new Date(h.issue_date), "dd MMM yyyy") : "—"}</td>
                                   <td className="p-2">{h.contractors?.name}{h.contractors?.company && <div className="text-muted-foreground">{h.contractors.company}</div>}</td>
                                   <td className="p-2 text-center font-semibold">{h.quantity}</td>
                                   <td className="p-2">{h.site_location || "—"}</td>
                                   <td className="p-2 text-center"><Badge variant={h.status === "returned" ? "default" : "outline"}>{h.status}</Badge></td>
-                                  <td className="p-2">{h.return_date ? format(new Date(h.return_date), "dd MMM yyyy") : "—"}</td>
+                                  <td className="p-2">{h.return_date ? formatDateSafe(new Date(h.return_date), "dd MMM yyyy") : "—"}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -409,7 +410,7 @@ function MachineryList() {
 /* -------- Handovers -------- */
 const emptyHandover = {
   machinery_id: "", contractor_id: "", section_id: "", quantity: 1,
-  issue_date: format(new Date(), "yyyy-MM-dd"), expected_return_date: "", return_date: "",
+  issue_date: formatDateSafe(new Date(), "yyyy-MM-dd"), expected_return_date: "", return_date: "",
   condition_out: "", condition_in: "", site_location: "", status: "issued",
   issued_by_name: "", received_by_name: "", notes: "",
 };
@@ -466,7 +467,7 @@ function HandoverList() {
   async function markReturned(h: any) {
     const condition = prompt("Return condition (e.g. Good / Damaged):") || "";
     await supabase.from("machinery_handovers").update({
-      status: "returned", return_date: format(new Date(), "yyyy-MM-dd"), condition_in: condition,
+      status: "returned", return_date: formatDateSafe(new Date(), "yyyy-MM-dd"), condition_in: condition,
     }).eq("id", h.id);
     await adjustMachineAvailable(h.machinery_id, Number(h.quantity || 1));
     toast({ title: "Marked returned" });
@@ -504,14 +505,14 @@ function HandoverList() {
           <tbody>
             {items.map((h) => (
               <tr key={h.id} className="border-b hover:bg-muted/30">
-                <td className="p-3 text-xs">{h.issue_date ? format(new Date(h.issue_date), "dd MMM yyyy") : "—"}</td>
+                <td className="p-3 text-xs">{h.issue_date ? formatDateSafe(new Date(h.issue_date), "dd MMM yyyy") : "—"}</td>
                 <td className="p-3 font-medium">{h.machinery?.name}{h.machinery?.code && <span className="ml-1 text-xs text-muted-foreground">({h.machinery.code})</span>}</td>
                 <td className="p-3">{h.contractors?.name}{h.contractors?.company && <div className="text-xs text-muted-foreground">{h.contractors.company}</div>}</td>
                 <td className="p-3"><Badge variant="outline">{h.machinery_sections?.name || "—"}</Badge></td>
                 <td className="p-3 text-center font-semibold">{h.quantity}</td>
                 <td className="p-3 text-xs">{h.site_location || "—"}</td>
                 <td className="p-3 text-center"><Badge variant={h.status === "returned" ? "default" : h.status === "issued" ? "outline" : "destructive"}>{h.status}</Badge></td>
-                <td className="p-3 text-xs">{h.return_date ? format(new Date(h.return_date), "dd MMM yyyy") : (h.expected_return_date ? `Exp ${format(new Date(h.expected_return_date), "dd MMM")}` : "—")}</td>
+                <td className="p-3 text-xs">{h.return_date ? formatDateSafe(new Date(h.return_date), "dd MMM yyyy") : (h.expected_return_date ? `Exp ${formatDateSafe(new Date(h.expected_return_date), "dd MMM")}` : "—")}</td>
                 <td className="p-3 text-right">
                   {h.status !== "returned" && <Button size="sm" variant="outline" onClick={() => markReturned(h)}>Mark Returned</Button>}
                   <Button size="sm" variant="ghost" onClick={() => remove(h.id)}><Trash2 className="h-4 w-4 text-rose-500" /></Button>

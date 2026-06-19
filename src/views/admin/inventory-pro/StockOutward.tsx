@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDateSafe } from "@/utils/formatDate";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { Plus, Loader2, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,7 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { format } from "date-fns";
+
 
 type Line = { material_id: string; quantity: number; wastage: number; rate: number };
 
@@ -109,7 +110,7 @@ export default function StockOutwardPage() {
             {items.map((it) => (
               <tr key={it.id} className="border-b hover:bg-muted/30">
                 <td className="p-3 font-mono font-semibold">{it.outward_number}</td>
-                <td className="p-3 text-xs">{format(new Date(it.created_at), "dd MMM yyyy")}</td>
+                <td className="p-3 text-xs">{formatDateSafe(new Date(it.created_at), "dd MMM yyyy")}</td>
                 <td className="p-3">{it.factories?.name}</td>
                 <td className="p-3">{it.project_name || "—"}</td>
                 <td className="p-3"><Badge variant="outline">{it.purpose}</Badge></td>

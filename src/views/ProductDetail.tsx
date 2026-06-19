@@ -327,7 +327,7 @@ export default function ProductDetailPage({ slug: slugProp }: { slug?: string } 
               <div className="border-t border-border pt-6">
                 <h3 className="font-display font-semibold text-lg mb-4">Key Features</h3>
                 <ul className="grid sm:grid-cols-2 gap-3">
-                  {product.features.map((feature) => (
+                  {(product.features || []).map((feature) => (
                     <li key={feature} className="flex items-start gap-2">
                       <Check className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{feature}</span>
@@ -346,7 +346,7 @@ export default function ProductDetailPage({ slug: slugProp }: { slug?: string } 
             <div className="bg-card rounded-xl shadow-card overflow-hidden">
               <table className="w-full">
                 <tbody>
-                  {product.specifications.map((spec, index) => (
+                  {(product.specifications || []).map((spec, index) => (
                     <tr
                       key={spec.label}
                       className={index % 2 === 0 ? "bg-muted/30" : "bg-card"}
