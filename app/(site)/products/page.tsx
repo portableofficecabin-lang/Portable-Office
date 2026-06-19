@@ -1,38 +1,63 @@
-import { Suspense } from "react";
-import { Loader2 } from "lucide-react";
+import type { Metadata } from "next";
 import ProductsPage from "@/views/Products";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
 
 export const revalidate = 3600; // 1 hour
 
-export const metadata = buildPageMetadata({
-  title: "Portable Cabin & Container Product Range",
-  description:
-    "Browse our full range of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers with specs and prices.",
-  path: "/products",
-});
+const SITE = "https://portableofficecabin.com";
 
 type PageProps = {
   searchParams: Promise<{ category?: string; page?: string }>;
 };
 
-function ProductsPageFallback() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <Loader2 className="h-8 w-8 animate-spin text-accent" />
-    </div>
-  );
+// Conditional canonical: when filtered via ?category=, point to the dedicated
+// path-based category page so SEO is consolidated there.
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const { category } = await searchParams;
+  if (category) {
+    const categories = await getMergedCategories();
+    const cat = categories.find((c) => c.slug === category);
+    return buildPageMetadata({
+      title: cat ? `${cat.name} | Portable Office Cabin` : "Products",
+      description:
+        cat?.description ||
+        "Browse our full range of portable cabins, container offices, prefab homes and more.",
+      path: `/products/category/${category}`,
+    });
+  }
+  return buildPageMetadata({
+    title: "Portable Cabin & Container Product Range",
+    description:
+      "Browse our full range of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers with specs and prices.",
+    path: "/products",
+  });
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const params = await searchParams;
+  const { category, page } = await searchParams;
+  const [products, categories] = await Promise.all([
+    getAllProductsMerged(),
+    getMergedCategories(),
+  ]);
 
   return (
-    <Suspense fallback={<ProductsPageFallback />}>
-      <ProductsPage
-        initialCategory={params.category}
-        initialPage={params.page}
+    <>
+      <JsonLd
+        data={generateBreadcrumbSchema([
+          { name: "Home", url: SITE },
+          { name: "Products", url: `${SITE}/products` },
+        ])}
       />
-    </Suspense>
+      <ProductsPage
+        products={products}
+        categories={categories}
+        activeCategory={category}
+        currentPage={page ? parseInt(page, 10) || 1 : 1}
+        basePath="/products"
+      />
+    </>
   );
 }

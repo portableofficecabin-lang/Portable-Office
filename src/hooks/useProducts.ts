@@ -3,82 +3,13 @@
 import { useState, useEffect } from "react";
 import type { DBProduct, DBCategory } from "@/types/database";
 import { products as staticProducts, categories as staticCategories, Product, Category, getProductSlug } from "@/data/products";
+import { convertDBProduct, convertDBCategory, mergeProducts, mergeCategories } from "@/lib/products/merge";
 
 // Load the Supabase client lazily so its (~heavy) bundle is parsed only when the
 // deferred fetch / realtime subscription actually runs (after the page is
 // interactive) instead of during initial page load.
 const getSupabase = () =>
   import("@/integrations/supabase/client").then((m) => m.supabase);
-
-// Convert DB product to frontend Product type
-const convertDBProduct = (dbProduct: DBProduct): Product => ({
-  id: dbProduct.id,
-  sku: `POC-${dbProduct.slug.toUpperCase().slice(0, 8)}`,
-  name: dbProduct.name,
-  category: dbProduct.category,
-  categorySlug: dbProduct.category_slug,
-  description: dbProduct.description || "",
-  shortDescription: dbProduct.short_description || "",
-  specifications: Object.entries(dbProduct.specifications || {}).map(([label, value]) => ({
-    label,
-    value: String(value),
-  })),
-  features: dbProduct.features || [],
-  images: dbProduct.image_url ? [dbProduct.image_url] : ["/placeholder.svg"],
-  price: dbProduct.price || undefined,
-  priceLabel: dbProduct.price ? "Starting from" : undefined,
-  featured: dbProduct.is_featured,
-  inStock: dbProduct.in_stock,
-});
-
-// Convert DB category to frontend Category type
-const convertDBCategory = (dbCategory: DBCategory, productCount: number): Category => ({
-  id: dbCategory.id,
-  name: dbCategory.name,
-  slug: dbCategory.slug,
-  description: dbCategory.description || "",
-  icon: "building",
-  productCount,
-});
-
-const mergeProducts = (dbProducts: Product[], fallbackProducts: Product[]) => {
-  const merged = new Map<string, Product>();
-
-  dbProducts.forEach((product) => {
-    merged.set(getProductSlug(product), product);
-  });
-
-  fallbackProducts.forEach((product) => {
-    const key = getProductSlug(product);
-    if (!merged.has(key)) {
-      merged.set(key, product);
-    }
-  });
-
-  return Array.from(merged.values());
-};
-
-const mergeCategories = (dbCategories: Category[], fallbackCategories: Category[], allProducts: Product[]) => {
-  const merged = new Map<string, Category>();
-
-  dbCategories.forEach((category) => {
-    merged.set(category.slug, {
-      ...category,
-      productCount: allProducts.filter((product) => product.categorySlug === category.slug).length,
-    });
-  });
-
-  fallbackCategories.forEach((category) => {
-    if (!merged.has(category.slug)) {
-      merged.set(category.slug, {
-        ...category,
-        productCount: allProducts.filter((product) => product.categorySlug === category.slug).length,
-      });
-    }
-  });
-
-  return Array.from(merged.values());
-};
 
 export function useProducts(options?: { realtime?: boolean }) {
   // realtime defaults to true to preserve existing behaviour; callers on

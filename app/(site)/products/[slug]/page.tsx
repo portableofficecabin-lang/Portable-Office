@@ -1,7 +1,8 @@
-import ProductDetailPage from "@/views/ProductDetail";
+import { ProductDetailServer } from "@/views/ProductDetailServer";
 import { products, getProductSlug } from "@/data/products";
 import { getProductSEO } from "@/data/productSEO";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getProductBySlugMerged, getApprovedReviews, getAllProductsMerged } from "@/lib/products/server";
 import { notFound } from "next/navigation";
 
 export const revalidate = 1800; // 30 minutes
@@ -28,7 +29,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const normalized = slug.replace(/\.html$/i, "");
+  // Preserve current behavior: only static-catalog slugs render (DB edits override
+  // a static product, but DB-only slugs are not exposed here).
   const exists = products.some((p) => getProductSlug(p) === normalized);
   if (!exists) notFound();
-  return <ProductDetailPage slug={normalized} />;
+
+  const [product, reviews, allProducts] = await Promise.all([
+    getProductBySlugMerged(normalized),
+    getApprovedReviews(normalized),
+    getAllProductsMerged(),
+  ]);
+  if (!product) notFound();
+
+  return (
+    <ProductDetailServer
+      product={product}
+      reviews={reviews}
+      allProducts={allProducts}
+      slug={normalized}
+    />
+  );
 }
