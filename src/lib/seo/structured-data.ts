@@ -82,6 +82,7 @@ export function generateProductStructuredData(product: {
   inStock?: boolean;
   slug?: string;
   keywords?: string;
+  category?: string;
   condition?: "new" | "used" | "refurbished";
   reviews?: Array<{
     rating: number;
@@ -138,6 +139,7 @@ export function generateProductStructuredData(product: {
     name: product.name,
     description: product.description,
     keywords: product.keywords,
+    category: product.category,
     image: product.image,
     sku: product.sku || "POC-GENERIC",
     mpn: product.sku || "POC-GENERIC",

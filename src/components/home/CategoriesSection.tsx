@@ -51,7 +51,7 @@ export function CategoriesSection() {
             return (
               <Link
                 key={category.id}
-                href={`/products?category=${category.slug}`}
+                href={`/products/category/${category.slug}`}
                 className="group relative bg-gradient-to-br from-card via-card to-muted/30 p-6 rounded-2xl border border-border/50 hover:border-accent/50 shadow-card hover:shadow-2xl transition-all duration-500 animate-fade-up overflow-hidden"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >

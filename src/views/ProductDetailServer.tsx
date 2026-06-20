@@ -101,6 +101,7 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
     inStock: product.inStock,
     slug: productSlug,
     keywords: productSEO.keywords,
+    category: product.category,
     condition: productSlug === "used-shipping-container-for-sale" ? "used" : "new",
     reviews,
   });
@@ -169,6 +170,22 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
                   {product.description}
                 </p>
               )}
+
+              {/* Steel Grade & Certification — shown on all product pages */}
+              <div className="border border-border/60 rounded-xl p-4 mb-6 bg-card/50">
+                <dl className="space-y-3 text-sm">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                    <dt className="font-semibold text-foreground sm:w-32 shrink-0">Steel Grade</dt>
+                    <dd className="text-muted-foreground">
+                      MS CR Sheet / CRCA Sheet — IS 513 &amp; IS 2062 · Corten · ISO-Grade
+                    </dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
+                    <dt className="font-semibold text-foreground sm:w-32 shrink-0">MSME Certified</dt>
+                    <dd className="text-muted-foreground font-mono">UDYAM-TN-11-0068545</dd>
+                  </div>
+                </dl>
+              </div>
 
               {product.price && (
                 <div className="bg-muted rounded-xl p-6 mb-6">
