@@ -388,13 +388,11 @@ export const products: Product[] = [
       "Common sitting area",
       "Emergency exit on both ends",
     ],
-    images: [
-      "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
-      "/images/products/portable-cabin-40ft-bunkhouse-angle.webp",
-      "/images/products/portable-cabin-40ft-bunkhouse-dimensions.webp",
-      "/images/products/portable-cabin-40ft-bunkhouse-rear-utilities.webp",
-      "/images/products/portable-cabin-40ft-bunkhouse-side.webp",
-    ],
+    // NOTE: the 5 new photos (…-front/-angle/-dimensions/-rear-utilities/-side.webp)
+    // are wired up but their files are not on disk yet. Until the source photos are
+    // placed and scripts/convert-bunkhouse-images.mjs is run, point at the existing
+    // image so the page renders. Swap back to the 5-image array after conversion.
+    images: ["/images/products/portable-cabin-40ft-bunkhouse.webp"],
     price: 2800000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: false,
