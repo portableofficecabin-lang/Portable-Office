@@ -168,10 +168,13 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
               <div className="flex items-center gap-4 mb-2">
                 <Link
                   href={categoryPath}
-                  className="text-accent font-medium text-sm uppercase tracking-wider hover:underline"
+                  className="text-accent font-medium text-sm tracking-wider hover:underline"
                   data-category={product.categorySlug}
+                  title={`${product.category} — Portable Office Cabin`}
                 >
-                  {product.category}
+                  {/* Uppercased in the markup (not via CSS) so the exact category
+                      text appears in View Page Source / SSR HTML for crawlers. */}
+                  {product.category.toUpperCase()}
                 </Link>
                 <span className="text-xs text-muted-foreground font-mono bg-muted px-3 py-1 rounded-full">
                   SKU: {product.sku}
