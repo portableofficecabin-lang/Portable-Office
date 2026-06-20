@@ -114,6 +114,11 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
 
   const cs = product.categorySlug;
 
+  // SEO image attributes derived from the page title (H1), primary keyword and
+  // category, so each product page's images carry unique, relevant alt/title text.
+  const imageAlt = `${productH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${product.category} manufacturer in India`;
+  const imageTitle = `${productH1} | ${product.category} — Portable Office Cabin`;
+
   return (
     <Layout>
       <JsonLd data={[structuredData, breadcrumb]} />
@@ -142,7 +147,8 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
             <ProductGallery
               galleryImages={galleryImages}
               productName={product.name}
-              productImageAlt={`${product.name} by Portable Office Cabin for industrial and modular building use in India`}
+              productImageAlt={imageAlt}
+              productImageTitle={imageTitle}
               featured={product.featured}
               inStock={product.inStock}
             />

@@ -8,6 +8,8 @@ interface ProductGalleryProps {
   galleryImages: string[];
   productName: string;
   productImageAlt: string;
+  /** SEO title attribute for images (page title / keyword related). Falls back to alt. */
+  productImageTitle?: string;
   featured?: boolean;
   inStock?: boolean;
 }
@@ -19,9 +21,11 @@ export function ProductGallery({
   galleryImages,
   productName,
   productImageAlt,
+  productImageTitle,
   featured,
   inStock,
 }: ProductGalleryProps) {
+  const imageTitle = productImageTitle || productImageAlt;
   const [activeImage, setActiveImage] = useState<string>(
     galleryImages[0] ? resolveImageUrl(galleryImages[0]) : "",
   );
@@ -39,7 +43,7 @@ export function ProductGallery({
           key={productImage}
           src={productImage}
           alt={productImageAlt}
-          title={productImageAlt}
+          title={imageTitle}
           productName={productName}
           aspectRatio="4/3"
           className="rounded-2xl"
@@ -61,7 +65,8 @@ export function ProductGallery({
             >
               <img
                 src={img}
-                alt={`${productName} view ${i + 1}`}
+                alt={`${productImageAlt} – view ${i + 1}`}
+                title={`${imageTitle} – view ${i + 1}`}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover"

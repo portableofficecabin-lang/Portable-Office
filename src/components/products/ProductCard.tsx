@@ -22,9 +22,10 @@ export function ProductCard({ product, onEnquire }: ProductCardProps) {
       {/* Image */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
-          <OptimizedImage 
-            src={productImage} 
-            alt={product.name}
+          <OptimizedImage
+            src={productImage}
+            alt={`${product.name} – ${product.category} by Portable Office Cabin, India`}
+            title={`${product.name} | ${product.category} – Portable Office Cabin`}
             aspectRatio="4/3"
             className="w-full h-full"
           />
