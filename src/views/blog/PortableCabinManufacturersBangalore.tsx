@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
+import { JsonLd } from "@/components/JsonLd";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, ChevronRight, CheckCircle, Building2, Factory, Zap, MapPin, Users, Shield, Wrench, Thermometer, Home, Layers, Truck, HardHat, IndianRupee, Clock, Star, Hammer, Leaf } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -77,13 +77,7 @@ const faqStructuredData = {
 export default function PortableCabinManufacturersBangalore() {
   return (
     <Layout>
-      <SEOHead
-        title="Portable Cabin Manufacturers in Bangalore | Portable Office Cabin"
-        description="Find reliable portable cabin manufacturers in Bangalore. Types, pricing (2025–2026), features, customization options, and step-by-step process from enquiry to installation across Bengaluru."
-        keywords="portable cabin manufacturers Bangalore, portable cabin Bengaluru, portable office cabin Bangalore, MS portable cabin, container office Bangalore, site office cabin, security cabin Bangalore, portable cabin price Bangalore"
-        canonicalUrl="https://portableofficecabin.com/blog/portable-cabin-manufacturers-in-bangalore"
-        structuredData={[articleStructuredData, faqStructuredData]}
-      />
+      <JsonLd data={[articleStructuredData, faqStructuredData]} />
 
       {/* Breadcrumb */}
       <div className="bg-muted/30 border-b border-border/40">

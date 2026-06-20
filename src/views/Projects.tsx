@@ -3,8 +3,6 @@
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
-import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import {
@@ -102,16 +100,6 @@ const whyChoose = [
 export default function Projects() {
   return (
     <Layout>
-      <SEOHead
-        title="Our Projects — Premium Portable & Prefab Structures"
-        description="Explore our portfolio of porta cabins, container offices, modified shipping containers, and prefab modular buildings across Karnataka & Tamil Nadu."
-        canonicalUrl="https://portableofficecabin.com/gallery"
-        structuredData={generateBreadcrumbSchema([
-          { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "Projects", url: "https://portableofficecabin.com/gallery" },
-        ])}
-      />
-
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
         <div

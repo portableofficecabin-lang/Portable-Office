@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
-import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import {
   Users,
   TrendingUp,
@@ -104,17 +102,6 @@ const openings = [
 export default function CareersPage() {
   return (
     <Layout>
-      <SEOHead
-        title="Careers | Join Our Team at Portable Office Cabin"
-        description="Explore exciting career opportunities at Portable Office Cabin. Join India's leading portable cabin and modular building manufacturer. We're hiring talented professionals who share our passion for quality."
-        keywords="portable cabin careers, modular building jobs, prefab construction careers, manufacturing jobs Bangalore, portable office cabin hiring"
-        canonicalUrl="https://portableofficecabin.com/careers"
-        structuredData={generateBreadcrumbSchema([
-          { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "Careers", url: "https://portableofficecabin.com/careers" },
-        ])}
-      />
-
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-primary via-primary to-navy-light overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--accent)/0.15),transparent_60%)]" />

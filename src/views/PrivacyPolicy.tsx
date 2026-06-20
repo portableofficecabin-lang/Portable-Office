@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
 import { Shield, ChevronRight, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -30,13 +29,6 @@ function Section({ title, children, index = 0 }: { title: string; children: Reac
 export default function PrivacyPolicyPage() {
   return (
     <Layout>
-      <SEOHead
-        title="Privacy Policy — Portable Office Cabin"
-        description="Read the privacy policy of Portable Office Cabin. Learn how we collect, use, and protect your personal information when you use our website or services."
-        keywords="privacy policy, data protection, portable cabin privacy, personal data policy India"
-        canonicalUrl="https://portableofficecabin.com/privacy-policy"
-      />
-
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
         <div className="container-custom text-center">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
+import { JsonLd } from "@/components/JsonLd";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, Calendar, ChevronRight, CheckCircle, Clock, Shield, IndianRupee, Wrench, Building2, Users, Factory, Truck, HardHat } from "lucide-react";
@@ -91,14 +91,7 @@ const articleStructuredData = {
 export default function LabourShedPrefabricatedStructures() {
   return (
     <Layout>
-      <SEOHead
-        title="Labour Shed Prefabricated Structures – Portable Cabin Manufacturer | Portable Office Cabin"
-        description="Prefabricated labour sheds for construction sites in India. 40–60% faster deployment, 8–15 year lifespan, modular design for 50–1000+ workers. Get a free quote!"
-        keywords="labour shed, prefabricated labour shed, labour camp prefab, worker accommodation prefab, construction labour shed, prefab labour colony, labour shed manufacturer India, portable labour shed"
-        canonicalUrl="https://portableofficecabin.com/blog/labour-shed-prefabricated-structures"
-        ogType="article"
-        structuredData={[faqStructuredData, articleStructuredData]}
-      />
+      <JsonLd data={[faqStructuredData, articleStructuredData]} />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

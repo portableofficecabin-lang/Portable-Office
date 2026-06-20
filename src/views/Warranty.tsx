@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
 import {
   Shield,
   CheckCircle2,
@@ -40,13 +39,6 @@ export default function WarrantyPage() {
 
   return (
     <Layout>
-      <SEOHead
-        title="Warranty Policy — Portable Office Cabin"
-        description="Our portable cabins come with industry-leading structural warranties up to 25 years. Learn about our warranty coverage, support services, and after-sales care."
-        keywords="portable cabin warranty, structural warranty, cabin support, after-sales service, PUF panel warranty"
-        canonicalUrl="https://portableofficecabin.com/warranty"
-      />
-
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
         <div className="container-custom text-center">

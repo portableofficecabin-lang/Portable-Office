@@ -26,8 +26,6 @@ import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { Layout } from "@/components/layout/Layout";
 import { OTPVerificationModal } from "@/components/booking/OTPVerificationModal";
-import { SEOHead } from "@/components/SEOHead";
-import { seoData } from "@/lib/seo/structured-data";
 
 const bookingSchema = z.object({
   customer_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -238,12 +236,6 @@ export default function BookAppointment() {
 
   return (
     <Layout>
-      <SEOHead
-        title={seoData.appointment.title}
-        description={seoData.appointment.description}
-        keywords={seoData.appointment.keywords}
-        canonicalUrl="https://portableofficecabin.com/book-appointment"
-      />
       <div className="container-custom py-12">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">

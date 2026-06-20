@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { seoPromotions } from "@/data/seoPromotions";
-import { products, getProductSlug } from "@/data/products";
+import { products, getProductSlug, categories } from "@/data/products";
 
 const SITE_URL = "https://portableofficecabin.com";
 const LAST_MOD = new Date("2026-06-15");
@@ -41,16 +41,14 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/blog/ms-portable-cabin-durable-mild-steel-modular-building", 0.8, "monthly"),
   entry("/blog/prefabricated-labor-colony-bengaluru", 0.8, "monthly"),
   entry("/blog/portable-cabin-manufacturers-in-bangalore", 0.8, "monthly"),
-  entry("/products?category=portable-cabins", 0.8),
-  entry("/products?category=site-office-containers", 0.8),
-  entry("/products?category=container-offices", 0.8),
-  entry("/products?category=prefab-homes", 0.8),
-  entry("/products?category=portable-toilet-cabins", 0.8),
-  entry("/products?category=security-cabins", 0.8),
-  entry("/products?category=cargo-storage-shipping-containers", 0.8),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Dedicated path-based category pages (SSR/ISR) — the canonical category URLs.
+  const categoryPages: MetadataRoute.Sitemap = categories.map((category) =>
+    entry(`/products/category/${category.slug}`, 0.8, "weekly"),
+  );
+
   const promotionPages: MetadataRoute.Sitemap = seoPromotions.map((promo) => ({
     url: promo.canonicalUrl,
     lastModified: LAST_MOD,
@@ -65,5 +63,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...STATIC_PAGES, ...promotionPages, ...productPages];
+  return [...STATIC_PAGES, ...categoryPages, ...promotionPages, ...productPages];
 }

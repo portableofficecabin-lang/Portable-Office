@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
+import { JsonLd } from "@/components/JsonLd";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, ChevronRight, CheckCircle, Building2, Factory, Zap, MapPin, Users, Shield, Wrench, Recycle, Home, Layers, Droplets, HardHat, LayoutGrid, Truck } from "lucide-react";
 import prefabColonyHero from "@/assets/blog/prefab-colony-hero.webp";
@@ -47,15 +47,7 @@ const articleStructuredData = {
 export default function PrefabLabourColonyBengaluru() {
   return (
     <Layout>
-      <SEOHead
-        title="Prefabricated Labor Colony in Bengaluru | Portable Office Cabin"
-        description="Turnkey prefabricated labour colonies in Bengaluru – modular worker accommodation for construction, infrastructure & industrial projects. Fast installation, relocatable, compliance-ready."
-        keywords="prefabricated labor colony Bengaluru, prefab labour camp Bangalore, modular worker accommodation Karnataka, labour colony construction site, prefab dormitory Bengaluru, worker housing Bangalore"
-        canonicalUrl="https://portableofficecabin.com/blog/prefabricated-labor-colony-bengaluru"
-        ogType="article"
-        structuredData={articleStructuredData}
-        geoPlacename="Bengaluru, Karnataka, India"
-      />
+      <JsonLd data={articleStructuredData} />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

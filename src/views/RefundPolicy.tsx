@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
 import { RotateCcw, ChevronRight, Mail, Phone, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -31,13 +30,6 @@ function Section({ title, children, index = 0 }: { title: string; children: Reac
 export default function RefundPolicyPage() {
   return (
     <Layout>
-      <SEOHead
-        title="Refund & Cancellation Policy — Portable Office Cabin"
-        description="Understand the refund and cancellation policy of Portable Office Cabin. Learn about order cancellation rules, advance payment terms, refund timelines, and damaged product handling."
-        keywords="refund policy, cancellation policy, portable cabin refund, order cancellation India, prefab refund terms"
-        canonicalUrl="https://portableofficecabin.com/refund-policy"
-      />
-
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
         <div className="container-custom text-center">

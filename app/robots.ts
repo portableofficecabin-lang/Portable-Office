@@ -6,7 +6,17 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/"],
+        disallow: [
+          "/admin/",
+          "/api/",
+          "/login",
+          "/register",
+          "/forgot-password",
+          "/reset-password",
+          "/cart",
+          "/checkout",
+          "/my-account",
+        ],
       },
     ],
     sitemap: "https://portableofficecabin.com/sitemap.xml",

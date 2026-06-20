@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
+import { JsonLd } from "@/components/JsonLd";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, ChevronRight, CheckCircle, Clock, Shield, IndianRupee, Wrench, Building2, Users, Factory, Truck, HardHat, MapPin, Star, Zap, Recycle, FileText } from "lucide-react";
 import portaCabinRentImage from "@/assets/blog/porta-cabins-on-rent.webp";
@@ -94,14 +94,7 @@ const articleStructuredData = {
 export default function PortaCabinsOnRent() {
   return (
     <Layout>
-      <SEOHead
-        title="Porta Cabins on Rent – Flexible Portable Space | Portable Office Cabin"
-        description="Rent porta cabins across India. Office cabins, security cabins, labour accommodation, container offices & portable toilets on hire. 3–7 day delivery. Get a free quote!"
-        keywords="porta cabin on rent, portable cabin rental India, site office on hire, container office rent, portable cabin rent Mumbai, porta cabin hire Pune, security cabin rental, labour camp rental India"
-        canonicalUrl="https://portableofficecabin.com/blog/porta-cabins-on-rent"
-        ogType="article"
-        structuredData={[faqStructuredData, articleStructuredData]}
-      />
+      <JsonLd data={[faqStructuredData, articleStructuredData]} />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

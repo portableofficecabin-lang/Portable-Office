@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 import { formatDateSafe } from "@/utils/formatDate";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
-import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, Calendar, Clock, User, Tag, BookOpen, Search,
@@ -176,17 +174,6 @@ export default function Blog() {
 
   return (
     <Layout>
-      <SEOHead
-        title="Blog – Portable Cabin & Prefab Industry Insights | Portable Office Cabin"
-        description="Expert articles on portable cabins, prefabricated structures, container offices, and modular building solutions in India. Industry insights, buying guides, and pricing information."
-        keywords="portable cabin blog, prefab structures India, container office articles, modular building guide, construction industry blog"
-        canonicalUrl="https://portableofficecabin.com/blog"
-        structuredData={generateBreadcrumbSchema([
-          { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "Blog", url: "https://portableofficecabin.com/blog" },
-        ])}
-      />
-
       {/* Hero Section */}
       <section className="relative py-16 md:py-20 overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
         <div className="absolute inset-0">

@@ -2,8 +2,6 @@ import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Users, Award, CheckCircle } from "lucide-react";
-import { SEOHead } from "@/components/SEOHead";
-import { seoData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export default function AboutPage() {
   const values = [
@@ -34,16 +32,6 @@ export default function AboutPage() {
 
   return (
     <Layout>
-      <SEOHead
-        title={seoData.about.title}
-        description={seoData.about.description}
-        keywords={seoData.about.keywords}
-        canonicalUrl="https://portableofficecabin.com/about-us"
-        structuredData={generateBreadcrumbSchema([
-          { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "About Us", url: "https://portableofficecabin.com/about-us" },
-        ])}
-      />
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-20">
         <div className="container-custom">

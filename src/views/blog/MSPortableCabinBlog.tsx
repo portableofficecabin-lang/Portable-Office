@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
+import { JsonLd } from "@/components/JsonLd";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Phone, ChevronRight, CheckCircle, Shield, Wrench, Building2, Factory, Zap, Recycle } from "lucide-react";
 import msPortableCabinHero from "@/assets/blog/ms-portable-cabin-hero.webp";
@@ -44,14 +44,7 @@ const articleStructuredData = {
 export default function MSPortableCabinBlog() {
   return (
     <Layout>
-      <SEOHead
-        title="MS Portable Cabin - Durable Mild Steel Modular Building | Portable Office Cabin"
-        description="Complete guide to MS portable cabins. Heavy-duty mild steel construction, advanced insulation, weather-resistant coatings, modular design for offices, security booths & site accommodation."
-        keywords="MS portable cabin, mild steel portable cabin, modular building solution, portable office cabin, steel portable cabin, prefabricated portable cabin, portable site office, MS porta cabin"
-        canonicalUrl="https://portableofficecabin.com/blog/ms-portable-cabin-durable-mild-steel-modular-building"
-        ogType="article"
-        structuredData={articleStructuredData}
-      />
+      <JsonLd data={articleStructuredData} />
 
       {/* Breadcrumb */}
       <div className="bg-secondary py-3">

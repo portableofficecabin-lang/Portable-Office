@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
 import {
   Truck,
   Clock,
@@ -67,13 +66,6 @@ function Bullet({ children }: { children: React.ReactNode }) {
 export default function ShippingDeliveryPage() {
   return (
     <Layout>
-      <SEOHead
-        title="Delivery & Shipping Policy — Portable Office Cabin"
-        description="Read the delivery and shipping policy of Portable Office Cabin. Covers manufacturing lead times, dispatch, transportation, delivery timelines, inspection, and installation."
-        keywords="delivery policy, shipping policy, portable cabin delivery, prefab delivery timeline, cabin installation policy India"
-        canonicalUrl="https://portableofficecabin.com/shipping"
-      />
-
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
         <div className="container-custom text-center">

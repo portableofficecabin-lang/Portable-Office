@@ -26,8 +26,6 @@ import { Badge } from "@/components/ui/badge";
 import { EnquiryModal } from "@/components/products/EnquiryModal";
 import { ShippingDeliveryModal } from "@/components/products/ShippingDeliveryModal";
 import { Product } from "@/data/products";
-import { SEOHead } from "@/components/SEOHead";
-import { seoData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import siteOfficeCabin20x10 from "@/assets/rental/site-office-cabin-20x10.webp";
 import siteOfficeCabin100sqft from "@/assets/rental/site-office-cabin-100sqft.webp";
 import portableSiteOffice400sqft from "@/assets/rental/portable-site-office-400sqft.webp";
@@ -472,16 +470,6 @@ export default function RentalServicePage() {
 
   return (
     <Layout>
-      <SEOHead
-        title={seoData.rental.title}
-        description={seoData.rental.description}
-        keywords={seoData.rental.keywords}
-        canonicalUrl="https://portableofficecabin.com/rental-service"
-        structuredData={generateBreadcrumbSchema([
-          { name: "Home", url: "https://portableofficecabin.com" },
-          { name: "Rental Service", url: "https://portableofficecabin.com/rental-service" },
-        ])}
-      />
       {/* Hero Section - Modern Clean Design */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         {/* Solid gradient background for readability */}

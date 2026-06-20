@@ -2,6 +2,8 @@ export const revalidate = 3600; // 1 hour
 
 import AboutPage from "@/views/About";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
   title: "About Our Company & Factory Units",
@@ -11,5 +13,15 @@ export const metadata = buildPageMetadata({
 });
 
 export default function Page() {
-  return <AboutPage />;
+  return (
+    <>
+      <JsonLd
+        data={generateBreadcrumbSchema([
+          { name: "Home", url: "https://portableofficecabin.com" },
+          { name: "About Us", url: "https://portableofficecabin.com/about-us" },
+        ])}
+      />
+      <AboutPage />
+    </>
+  );
 }

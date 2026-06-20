@@ -2,6 +2,8 @@ export const revalidate = 3600; // 1 hour
 
 import RentalServicePage from "@/views/RentalService";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { JsonLd } from "@/components/JsonLd";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
   title: "Portable Cabin & Container Rental Service",
@@ -11,5 +13,15 @@ export const metadata = buildPageMetadata({
 });
 
 export default function Page() {
-  return <RentalServicePage />;
+  return (
+    <>
+      <JsonLd
+        data={generateBreadcrumbSchema([
+          { name: "Home", url: "https://portableofficecabin.com" },
+          { name: "Rental Service", url: "https://portableofficecabin.com/rental-service" },
+        ])}
+      />
+      <RentalServicePage />
+    </>
+  );
 }

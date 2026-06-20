@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { SEOHead } from "@/components/SEOHead";
-import { seoData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { OTPVerificationModal } from "@/components/booking/OTPVerificationModal";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
@@ -297,19 +295,6 @@ export default function ContactPage() {
 
   return (
     <Layout>
-      <SEOHead
-        title={seoData.contact.title}
-        description={seoData.contact.description}
-        keywords={seoData.contact.keywords}
-        canonicalUrl="https://portableofficecabin.com/contact"
-        structuredData={[
-          generateBreadcrumbSchema([
-            { name: "Home", url: "https://portableofficecabin.com" },
-            { name: "Contact Us", url: "https://portableofficecabin.com/contact" },
-          ]),
-        ]}
-      />
-
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container-custom">
           <div className="max-w-3xl">

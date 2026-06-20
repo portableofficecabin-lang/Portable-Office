@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
 import { FileText, ChevronRight, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -30,13 +29,6 @@ function Section({ title, children, index = 0 }: { title: string; children: Reac
 export default function TermsConditionsPage() {
   return (
     <Layout>
-      <SEOHead
-        title="Terms & Conditions — Portable Office Cabin"
-        description="Read the terms and conditions for purchasing, renting, or using products and services from Portable Office Cabin. Covers pricing, orders, liability, and more."
-        keywords="terms and conditions, portable cabin terms, prefab purchase terms, order policy India"
-        canonicalUrl="https://portableofficecabin.com/terms-and-conditions"
-      />
-
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
         <div className="container-custom text-center">

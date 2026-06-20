@@ -13,8 +13,8 @@ import { TrustedClientsSection } from "@/components/home/TrustedClientsSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { CTASection } from "@/components/home/CTASection";
 import { InternalLinkingHub } from "@/components/home/InternalLinkingHub";
-import { SEOHead } from "@/components/SEOHead";
-import { seoData, organizationStructuredData, localBusinessStructuredData, serviceAreaStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationStructuredData, localBusinessStructuredData, serviceAreaStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 const Index = () => {
   const combinedStructuredData = [
@@ -28,13 +28,9 @@ const Index = () => {
 
   return (
     <Layout>
-      <SEOHead
-        title={seoData.home.title}
-        description={seoData.home.description}
-        keywords={`${seoData.home.keywords}, portable cabin Bangalore, container office Chennai, prefab home Hyderabad, portable cabin Mumbai, site office Delhi, container office Pune, portable cabin Ahmedabad, modular building Kolkata`}
-        canonicalUrl="https://portableofficecabin.com"
-        structuredData={combinedStructuredData}
-      />
+      {/* Server-rendered JSON-LD so schema is present in View Page Source (not JS-injected).
+          Title/description/canonical/OG/geo come from the route's metadata export. */}
+      <JsonLd data={combinedStructuredData} />
       <HeroSection />
       <CategoriesSection />
       <ProductRangeSection />

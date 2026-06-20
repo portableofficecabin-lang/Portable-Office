@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { formatDateSafe } from "@/utils/formatDate";
 import { Layout } from "@/components/layout/Layout";
-import { SEOHead } from "@/components/SEOHead";
-import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, ChevronRight } from "lucide-react";
 import type { DBBlogPost } from "@/types/database";
@@ -15,46 +13,9 @@ interface DynamicBlogPostProps {
 
 export default function DynamicBlogPost({ post }: DynamicBlogPostProps) {
   const publishedDate = post.published_at || post.created_at;
-  const canonicalUrl = `https://portableofficecabin.com/blog/${post.slug}`;
-
-  const articleStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.excerpt || post.meta_description,
-    image: post.featured_image_url,
-    author: {
-      "@type": "Organization",
-      name: "Portable Office Cabin",
-      url: "https://portableofficecabin.com",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Portable Office Cabin",
-      url: "https://portableofficecabin.com",
-    },
-    datePublished: publishedDate,
-    dateModified: post.updated_at,
-    mainEntityOfPage: canonicalUrl,
-  };
 
   return (
     <Layout>
-      <SEOHead
-        title={post.meta_title || `${post.title} | Portable Office Cabin Blog`}
-        description={post.meta_description || post.excerpt || post.title}
-        keywords={post.meta_keywords || undefined}
-        canonicalUrl={canonicalUrl}
-        structuredData={[
-          generateBreadcrumbSchema([
-            { name: "Home", url: "https://portableofficecabin.com" },
-            { name: "Blog", url: "https://portableofficecabin.com/blog" },
-            { name: post.title, url: canonicalUrl },
-          ]),
-          articleStructuredData,
-        ]}
-      />
-
       <article className="bg-background">
         <section className="relative py-12 md:py-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
           <div className="container mx-auto px-4 max-w-4xl relative z-10">
