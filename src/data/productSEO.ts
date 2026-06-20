@@ -11,7 +11,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Executive Portable Cabin 20ft
   "1": {
     title: "Executive Portable Cabin 20ft | Portable Office Cabin",
-    description: "Buy 20ft executive portable cabin with 50mm PUF insulation, complete wiring & AC provision. Ideal for site offices. Fast delivery across India. Get a free quote!",
+    description: "Buy 20ft executive portable cabin with 50mm PUF insulation, complete wiring & AC provision. Ideal for site offices. Fast delivery across India.",
     keywords: "executive portable cabin, 20ft portable cabin, portable site office, PUF insulated cabin, portable cabin price India, prefab office cabin, portable cabin manufacturer",
   },
   // Standard Site Office Container
@@ -22,7 +22,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // Modern Container Office — INTENT: Premium/designer 40ft variant with glass facade
   "3": {
-    title: "Modern Container Office 40ft – Glass Facade Design | Portable Office Cabin",
+    title: "Modern Container Office 40ft | Portable Office Cabin",
     description: "Designer 40ft modern container office with full glass facade, acoustic panels & split AC. Premium corporate workspace for startups. Turnkey install in India.",
     keywords: "modern container office design, 40ft glass container office, designer container office India, premium container workspace, acoustic container office, corporate container office",
   },
@@ -58,13 +58,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // Container Office — INTENT: Buy single standard unit (transactional)
   "10": {
-    title: "Container Office for Sale India – Buy 20ft & 40ft Units | Portable Office Cabin",
+    title: "Container Office for Sale in India | Portable Office Cabin",
     description: "Buy ready-to-deploy container offices in India — 20ft & 40ft units from ₹7L. Insulated, relocatable, 7–10 day delivery. PAN-India shipping. Get a free quote!",
     keywords: "container office for sale India, buy container office, 20ft container office price, 40ft container office price, ready container office, container office delivery India",
   },
   // Porta Cabin
   "9": {
-    title: "Porta Cabin – Portable Cabin Manufacturer | Portable Office Cabin",
+    title: "Porta Cabin Manufacturer India | Portable Office Cabin",
     description: "Buy porta cabin with MS steel frame, PUF insulated panels & quick 1–7 day installation. 30–40% cheaper than traditional construction. Free quote available!",
     keywords: "porta cabin, porta cabin price, porta cabin manufacturer India, portable cabin, prefab porta cabin, MS steel porta cabin, porta cabin for site office",
   },
@@ -76,7 +76,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // 20ft & 40ft Storage Container – Corten Steel
   "12": {
-    title: "20ft & 40ft Storage Container – Corten Steel | Portable Office Cabin",
+    title: "20ft & 40ft Storage Container | Portable Office Cabin",
     description: "Buy 20ft & 40ft Corten steel storage containers with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Get a quote!",
     keywords: "20ft storage container, 40ft storage container, Corten steel container, cargo storage container India, heavy duty storage container, site storage container price",
   },
@@ -88,14 +88,14 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // New & Used Shipping Container for Sale in India
   "14": {
-    title: "New & Used Shipping Container for Sale in India | Portable Office Cabin",
+    title: "Shipping Container for Sale in India | Portable Office Cabin",
     description: "Buy new or used shipping containers in India – 20 ft, 40 ft & high cube. Storage, offices & modular buildings with delivery, installation & conversion support.",
     keywords: "shipping container for sale India, new shipping container price, used shipping container for sale, 20 ft shipping container, 40 ft shipping container, buy shipping container India, container for sale near me",
   },
   // Construction Site Portable Office
   "15": {
     title: "Construction Site Portable Office",
-    description: "Portable construction site office cabins and container offices for Indian projects. Insulated, relocatable, and ready for meetings, planning, and site coordination.",
+    description: "Portable construction site office cabins & container offices for Indian projects. Insulated, relocatable & ready for meetings, planning & site coordination.",
     keywords: "construction site portable office, site office container India, portable site office cabin, construction office cabin, container site office, project office cabin, modular site office India",
   },
   // Used Shipping Container for Sale
@@ -106,14 +106,14 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // Cargo Container – Buy, Rent or Convert
   "17": {
-    title: "Cargo Container – Buy, Rent or Convert | Portable Office Cabin",
+    title: "Cargo Container – Buy, Rent, Convert | Portable Office Cabin",
     description: "Cargo containers on sale, rent or lease in India. 10 ft to 40 ft HC & reefer formats with in-house conversion for offices, homes & modular infrastructure.",
     keywords: "cargo container for sale, cargo container on rent India, container rental India, cargo container conversion, 20 ft cargo container price, 40 ft container rent, reefer container India, container lease India",
   },
   // Shipping Container Rental
   "18": {
     title: "Shipping Container Rental | Portable Office Cabin",
-    description: "Rent shipping containers in India for storage, site offices, labour accommodation, and modular spaces. 10 ft, 20 ft, 40 ft, and high cube units with delivery support.",
+    description: "Rent shipping containers in India for storage, site offices, labour accommodation & modular spaces. 10, 20, 40 ft & high cube units with delivery support.",
     keywords: "shipping container rental, container rental India, 20 ft container rental, 40 ft container rental, container office rental, storage container rental, shipping container on rent India",
   },
   // Site Office Container Manufacturers
@@ -124,14 +124,14 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // MS Container Office Cabin — INTENT: Mild-steel material variant (heavy-duty)
   "20": {
-    title: "MS Container Office Cabin – Mild Steel Heavy-Duty Build | Portable Office Cabin",
+    title: "MS Container Office Cabin | Portable Office Cabin",
     description: "Heavy-duty MS (mild steel) container office cabin with ISMB frame, 40–60mm insulation & corrugated cladding. Built for monsoons & repeat relocation. From ₹2.4L.",
     keywords: "MS container office cabin, mild steel container office, heavy duty container office cabin, ISMB frame office cabin, corrugated steel office cabin India, MS office cabin price",
   },
   // Office Portable Cabin
   "21": {
     title: "Office Portable Cabin",
-    description: "Office portable cabin in India with fast delivery, insulated panels, office-ready electricals, and flexible layouts for sites, factories, schools, and project offices.",
+    description: "Office portable cabin in India with fast delivery, insulated panels, office-ready electricals & flexible layouts for sites, factories & project offices.",
     keywords: "office portable cabin, portable office cabin India, site office cabin, prefab office cabin, modular office cabin, portable cabin office, office cabin manufacturer India",
   },
   // Prefabricated Labour Hutments & Staff Accommodation
@@ -155,30 +155,30 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Cabin Portable
   "25": {
     title: "Cabin Portable – Offices, Sites & Solutions",
-    description: "Complete guide to cabin portable solutions in India – site offices, worker accommodation, security cabins, toilets & containers. 40-60% cheaper than RCC. Get a quote!",
+    description: "Guide to portable cabin solutions in India — site offices, worker accommodation, security cabins, toilets & containers. 40–60% cheaper than RCC. Get a quote!",
     keywords: "cabin portable, portable cabin India, portable office cabin, site office cabin, container office, security cabin, portable toilet, labour accommodation cabin, prefab cabin",
   },
   // Security Cabin
   "26": {
-    title: "Security Cabin – Portable Guard & Watchman Cabin | Portable Office Cabin",
-    description: "Buy portable security cabins — MS, GI, FRP, ACP, PVC, PUF & steel guard cabins from ₹40,000. Police booths, toll booths, gate cabins with pan-India delivery in 7–15 days.",
+    title: "Portable Security Guard Cabin | Portable Office Cabin",
+    description: "Buy portable security & guard cabins — MS, GI, FRP, ACP, PVC & PUF from ₹40,000. Police, toll & gate booths with pan-India delivery in 7–15 days.",
     keywords: "security cabin, portable security cabin, security guard cabin, watchman cabin, GI security cabin, FRP security cabin, MS security cabin, steel security cabin, portable guard cabin, gate security cabin, toll booth cabin, police booth cabin, security cabin price, security cabin manufacturer India",
   },
   // Cabins in Office
   "27": {
-    title: "Cabins in Office – Modern Modular Workspaces | Portable Office Cabin",
-    description: "Modern modular office cabins for 2026 — glass partitions, acoustic booths, meeting pods & executive suites. 30–40 dB sound reduction. Install in a weekend. Get a quote!",
+    title: "Office Cabins – Modular Workspaces | Portable Office Cabin",
+    description: "Modern modular office cabins — glass partitions, acoustic booths, meeting pods & executive suites. 30–40 dB sound cut. Install in a weekend. Get a quote!",
     keywords: "cabins in office, office cabin, modular office cabin, glass office partition, acoustic office booth, phone booth office, meeting pod, prefab office cabin, office cabin price India, modular workspace",
   },
   // Steel Portable Office Container — INTENT: Portability + ISMC/RHS structural steel + stackable G+1
   "28": {
-    title: "Portable Steel Office Container – 10ft to 40ft Stackable G+1 | Portable Office Cabin",
+    title: "Steel Office Container 10–40ft | Portable Office Cabin",
     description: "Portable steel office containers in 10/20/30/40ft sizes with ISMC/RHS frame, stackable G+1 & G+2 setups, PUF insulation & 10–25 year design life. From ₹1.6L.",
     keywords: "portable steel office container, stackable container office, ISMC steel container office, G+1 container office, 10ft portable office container, RHS steel office container India",
   },
   "29": {
-    title: "Shipping Container in Koramangala Bangalore | Portable Office Cabin",
-    description: "Buy, rent or convert shipping containers in Koramangala — offices, cafés, homes & storage. 20 ft & 40 ft ISO containers with same-week delivery. Get a free quote!",
+    title: "Shipping Container in Koramangala | Portable Office Cabin",
+    description: "Buy, rent or convert shipping containers in Koramangala — offices, cafés, homes & storage. 20 & 40 ft ISO containers with same-week delivery.",
     keywords: "shipping container Koramangala, container office Koramangala, container café Bangalore, shipping container rental Koramangala, used container Bangalore, container home Koramangala, portable office Koramangala, container storage Bangalore",
   },
   "30": {
@@ -197,33 +197,33 @@ const productSEOMap: Record<string, ProductSEOData> = {
     keywords: "shipping container Chennai, container office Chennai, used shipping container Chennai, container rental Chennai, container home ECR, shipping container Ennore, container café OMR, modular container Sriperumbudur",
   },
   "33": {
-    title: "Shipping Container in Narsapura Industrial | Portable Office Cabin",
+    title: "Shipping Container in Narsapura | Portable Office Cabin",
     description: "Buy or rent shipping containers in Narsapura Industrial Area — storage, offices, labour colonies for KIADB plots. Used 20 ft from ₹95K. 7–15 day delivery!",
     keywords: "shipping container Narsapura, container office KIADB, shipping container Narsapura Industrial Area, container storage Kolar, portable office Narsapura, container Vemgal, container Malur, modular container Hoskote",
   },
   "34": {
-    title: "Shipping Container in Peenya Industrial | Portable Office Cabin",
-    description: "Buy or rent shipping containers in Peenya Industrial Area, Bengaluru — storage, offices, security cabins & modular solutions. Used 20 ft from ₹85K. 2–5 day setup!",
+    title: "Shipping Container in Peenya | Portable Office Cabin",
+    description: "Buy or rent shipping containers in Peenya, Bengaluru — storage, offices, security cabins & modular solutions. Used 20 ft from ₹85K. 2–5 day setup!",
     keywords: "shipping container Peenya, container office Peenya Industrial Area, shipping container Bengaluru, container storage Tumkur Road, portable office Peenya, container Peenya 2nd Stage, modular container Bengaluru, used shipping container Peenya",
   },
   "35": {
-    title: "Cargo Storage Containers – Complete Guide | Portable Office Cabin",
-    description: "Buy new or used cargo storage containers in India — 20 ft, 40 ft, HC. ISO-certified steel units for storage, offices, homes & modular buildings. Get a free quote!",
+    title: "Cargo Storage Containers | Portable Office Cabin",
+    description: "Buy new or used cargo storage containers in India — 20 ft, 40 ft & HC. ISO-certified steel units for storage, offices, homes & modular builds.",
     keywords: "cargo storage containers, cargo container India, 20 ft storage container, 40 ft container, shipping container for sale, used container India, container office, cargo container price, ISO container, corten steel container",
   },
   "36": {
     title: "Cargo Containers – Types, Uses & Modular Building",
-    description: "Complete guide to cargo containers — GP, High Cube, flat rack, open top, reefer & tank types. Buy, convert or rent for offices, homes & site infrastructure in India.",
+    description: "Guide to cargo containers — GP, High Cube, flat rack, open top, reefer & tank types. Buy, convert or rent for offices, homes & sites in India.",
     keywords: "cargo containers, cargo container types, shipping container guide, GP container, high cube container, flat rack container, open top container, reefer container, container office India, modular container building, cargo container price India",
   },
   "37": {
     title: "Pink Cargo Storage Containers | Buy or Rent",
-    description: "Pink cargo storage containers for retail pop-ups, cafés, offices & branding. 20ft & 40ft ISO containers in vibrant pink. Custom shades, full fit-out. Get a quote!",
+    description: "Pink cargo storage containers for retail pop-ups, cafés, offices & branding. 20ft & 40ft ISO containers in vibrant pink. Custom shades & fit-out.",
     keywords: "pink shipping container, pink cargo container, pink container shop, pink container café, pink storage container India, pink container office, pink pop-up store, pink modular building, pink container price",
   },
   "38": {
-    title: "Cargo Shipping Container for Sale in Bangalore | 20ft & 40ft Price",
-    description: "Buy 20ft & 40ft cargo shipping containers in Bangalore & across India. ISO certified, new & used units for storage, freight & office conversion. From ₹1.25L. Free quote.",
+    title: "Cargo Container for Sale Bangalore | Portable Office Cabin",
+    description: "Buy 20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. From ₹1.25L.",
     keywords: "cargo shipping container for sale Bangalore, buy cargo container India, 20ft shipping container price Bangalore, 40ft cargo container India, ISO shipping container Bangalore, used cargo container for sale, shipping container price India, cargo container manufacturer Bangalore",
   },
   "39": {

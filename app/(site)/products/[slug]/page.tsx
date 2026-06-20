@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!product) return {};
   const seo = getProductSEO(product.id, product.name);
   return buildPageMetadata({
-    title: seo?.title || product.name,
+    absoluteTitle: seo?.title || product.name,
     description: seo?.description || product.shortDescription,
     keywords: seo?.keywords,
     path: `/products/${normalized}`,
