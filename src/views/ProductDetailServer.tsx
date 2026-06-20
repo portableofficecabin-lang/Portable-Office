@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, ChevronRight } from "lucide-react";
+import { Check, ChevronRight, Star, Truck, Ruler } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/JsonLd";
@@ -119,6 +119,16 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
   const imageAlt = `${productH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${product.category} manufacturer in India`;
   const imageTitle = `${productH1} | ${product.category} — Portable Office Cabin`;
 
+  // Trust strip values: rating + review count, size (dimensions/area) and delivery.
+  const reviewCount = reviews.length;
+  const avgRating = reviewCount
+    ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviewCount) * 10) / 10
+    : 0;
+  const sizeSpec = (product.specifications || []).find((s) =>
+    /dimension|^size|floor area|total area|sq ?ft|carpet area/i.test(s.label),
+  );
+  const sizeText = sizeSpec?.value;
+
   return (
     <Layout>
       <JsonLd data={[structuredData, breadcrumb]} />
@@ -170,6 +180,44 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
               <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
                 {productH1}
               </h1>
+
+              {/* Trust & info strip — rating, size, Pan-India delivery + timeline */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-5 text-sm">
+                {/* Star rating + review count */}
+                <div className="flex items-center gap-1.5">
+                  <span className="flex" aria-label={reviewCount ? `Rated ${avgRating} out of 5 from ${reviewCount} reviews` : "No reviews yet"}>
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <Star
+                        key={n}
+                        className={`h-4 w-4 ${n <= Math.round(avgRating) && reviewCount ? "fill-amber-400 text-amber-400" : "fill-muted text-muted-foreground/30"}`}
+                      />
+                    ))}
+                  </span>
+                  {reviewCount > 0 ? (
+                    <span className="text-muted-foreground">
+                      <span className="font-semibold text-foreground">{avgRating.toFixed(1)}</span>{" "}
+                      ({reviewCount} review{reviewCount > 1 ? "s" : ""})
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground">Be the first to review</span>
+                  )}
+                </div>
+
+                {/* Size */}
+                {sizeText && (
+                  <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <Ruler className="h-4 w-4 text-accent" />
+                    <span className="font-medium text-foreground">Size:</span> {sizeText}
+                  </div>
+                )}
+
+                {/* Pan-India delivery + timeline (matches Product schema shippingDetails) */}
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <Truck className="h-4 w-4 text-accent" />
+                  <span className="font-medium text-foreground">Pan-India Delivery</span>
+                  <span>· Dispatch 7–15 days + 1–5 days transit</span>
+                </div>
+              </div>
               {/^\s*</.test(product.description || "") ? (
                 <div
                   className="prose prose-sm sm:prose-base max-w-none text-muted-foreground mb-6 prose-headings:text-foreground prose-strong:text-foreground prose-a:text-accent"
