@@ -150,9 +150,13 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
             {/* Info */}
             <div>
               <div className="flex items-center gap-4 mb-2">
-                <div className="text-accent font-medium text-sm uppercase tracking-wider">
+                <Link
+                  href={categoryPath}
+                  className="text-accent font-medium text-sm uppercase tracking-wider hover:underline"
+                  data-category={product.categorySlug}
+                >
                   {product.category}
-                </div>
+                </Link>
                 <span className="text-xs text-muted-foreground font-mono bg-muted px-3 py-1 rounded-full">
                   SKU: {product.sku}
                 </span>
