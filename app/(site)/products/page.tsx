@@ -21,7 +21,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     const categories = await getMergedCategories();
     const cat = categories.find((c) => c.slug === category);
     return buildPageMetadata({
-      title: cat ? `${cat.name} | Portable Office Cabin` : "Products",
+      title: cat ? cat.name : "Products",
       description:
         cat?.description ||
         "Browse our full range of portable cabins, container offices, prefab homes and more.",

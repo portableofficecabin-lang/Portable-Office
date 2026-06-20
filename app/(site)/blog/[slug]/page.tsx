@@ -38,12 +38,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .maybeSingle();
 
   if (!post) {
-    return { title: "Blog Post | Portable Office Cabin" };
+    return { title: "Blog Post" };
   }
 
   const url = `${SITE}/blog/${slug}`;
   return {
-    title: post.meta_title || `${post.title} | Portable Office Cabin Blog`,
+    // If an admin meta_title is set, use it verbatim (absolute, no template);
+    // otherwise let the root layout template append the brand once to post.title.
+    title: post.meta_title ? { absolute: post.meta_title } : post.title,
     description: post.meta_description || post.excerpt || post.title,
     keywords: post.meta_keywords || undefined,
     alternates: { canonical: url },

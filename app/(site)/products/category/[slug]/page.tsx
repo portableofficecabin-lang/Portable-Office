@@ -24,9 +24,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const categories = await getMergedCategories();
   const cat = categories.find((c) => c.slug === slug);
-  if (!cat) return { title: "Category | Portable Office Cabin" };
+  if (!cat) return { title: "Category" };
   return buildPageMetadata({
-    title: `${cat.name} — Models, Specs & Prices | Portable Office Cabin`,
+    // No brand suffix here — the root layout title template appends
+    // "| Portable Office Cabin" exactly once (avoids a doubled brand).
+    title: `${cat.name} — Models, Specs & Prices`,
     description:
       cat.description ||
       `Browse all ${cat.name} models, specifications and prices. Manufactured in-house and delivered installation-ready across India.`,
