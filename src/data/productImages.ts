@@ -12,7 +12,6 @@ import standardSiteOfficeContainer from "@/assets/products/standard-site-office-
 import luxuryPrefabVilla from "@/assets/products/luxury-prefab-villa.webp";
 import luxuryPrefabVillaG1 from "@/assets/products/luxury-prefab-villa-g1.webp";
 import portaCabin from "@/assets/products/porta-cabin.webp";
-import portableCabin40ftBunkhouse from "@/assets/products/portable-cabin-40ft-bunkhouse.webp";
 import familyPrefabHome2bhk from "@/assets/products/family-prefab-home-2bhk.webp";
 import msPortableCabin from "@/assets/products/ms-portable-cabin.webp";
 import cargoStorageContainer40ft from "@/assets/rental/cargo-storage-container-40ft.webp";
@@ -68,9 +67,9 @@ export const productImages: Record<string, string> = {
   "9": "/images/products/porta-cabin-front.webp",
   "POC-PC-PORTA": "/images/products/porta-cabin-front.webp",
   "porta-cabin": "/images/products/porta-cabin-front.webp",
-  "7": portableCabin40ftBunkhouse,
-  "POC-PC-40BH": portableCabin40ftBunkhouse,
-  "portable-cabin-40ft-bunkhouse": portableCabin40ftBunkhouse,
+  "7": "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
+  "POC-PC-40BH": "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
+  "portable-cabin-40ft-bunkhouse": "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
   "4": familyPrefabHome2bhk,
   "POC-PH-2BHK": familyPrefabHome2bhk,
   "family-prefab-home-2bhk": familyPrefabHome2bhk,

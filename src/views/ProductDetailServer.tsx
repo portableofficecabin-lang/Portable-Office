@@ -14,6 +14,7 @@ import {
   type Product,
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
+import { getImageCaption } from "@/data/productImageCaptions";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { getProductH1, getProductPrimaryKeyword, getProductSEO } from "@/data/productSEO";
@@ -119,6 +120,23 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
   const imageAlt = `${productH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${product.category} manufacturer in India`;
   const imageTitle = `${productH1} | ${product.category} — Portable Office Cabin`;
 
+  // Per-image descriptive alt/title (aligned with galleryImages). When an image
+  // has a caption (see productImageCaptions), build a unique, keyword-rich string;
+  // otherwise fall back to the generic alt/title with a "view N" suffix.
+  const imageMeta = galleryImages.map((img, i) => {
+    const caption = getImageCaption(img);
+    if (caption) {
+      return {
+        alt: `${productH1} — ${caption} | ${productPrimaryKeyword}, ${product.category} by Portable Office Cabin`,
+        title: `${productH1} — ${caption} | Portable Office Cabin`,
+      };
+    }
+    return {
+      alt: `${imageAlt} – view ${i + 1}`,
+      title: `${imageTitle} – view ${i + 1}`,
+    };
+  });
+
   // Trust strip values: rating + review count, size (dimensions/area) and delivery.
   const reviewCount = reviews.length;
   const avgRating = reviewCount
@@ -159,6 +177,7 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
               productName={product.name}
               productImageAlt={imageAlt}
               productImageTitle={imageTitle}
+              imageMeta={imageMeta}
               featured={product.featured}
               inStock={product.inStock}
             />

@@ -10,6 +10,9 @@ interface ProductGalleryProps {
   productImageAlt: string;
   /** SEO title attribute for images (page title / keyword related). Falls back to alt. */
   productImageTitle?: string;
+  /** Per-image alt/title, aligned by index with galleryImages. Overrides the
+   *  generic alt/title for that image when present (per-image descriptive SEO). */
+  imageMeta?: { alt: string; title: string }[];
   featured?: boolean;
   inStock?: boolean;
 }
@@ -22,6 +25,7 @@ export function ProductGallery({
   productName,
   productImageAlt,
   productImageTitle,
+  imageMeta,
   featured,
   inStock,
 }: ProductGalleryProps) {
@@ -36,14 +40,19 @@ export function ProductGallery({
 
   const productImage = activeImage || resolveImageUrl(galleryImages[0]);
 
+  // Per-image alt/title for the main image, based on which thumbnail is active.
+  const activeIndex = galleryImages.findIndex((img) => resolveImageUrl(img) === productImage);
+  const mainAlt = imageMeta?.[activeIndex]?.alt || productImageAlt;
+  const mainTitle = imageMeta?.[activeIndex]?.title || imageTitle;
+
   return (
     <div className="relative">
       <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden">
         <OptimizedImage
           key={productImage}
           src={productImage}
-          alt={productImageAlt}
-          title={imageTitle}
+          alt={mainAlt}
+          title={mainTitle}
           productName={productName}
           aspectRatio="4/3"
           className="rounded-2xl"
@@ -65,8 +74,8 @@ export function ProductGallery({
             >
               <img
                 src={img}
-                alt={`${productImageAlt} – view ${i + 1}`}
-                title={`${imageTitle} – view ${i + 1}`}
+                alt={imageMeta?.[i]?.alt || `${productImageAlt} – view ${i + 1}`}
+                title={imageMeta?.[i]?.title || `${imageTitle} – view ${i + 1}`}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover"
