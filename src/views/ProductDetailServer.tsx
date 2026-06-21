@@ -15,6 +15,7 @@ import {
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
 import { getImageCaption } from "@/data/productImageCaptions";
+import { getProductApplication } from "@/data/productApplications";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { getProductH1, getProductPrimaryKeyword, getProductSEO } from "@/data/productSEO";
@@ -251,10 +252,18 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
                 </p>
               )}
 
-              {/* Steel Grade & Certification — shown on all product pages */}
+              {/* Brand, Steel Grade & Certification — shown on all product pages */}
               <div className="border border-border/60 rounded-xl p-4 mb-6 bg-card/50">
                 <dl className="space-y-3 text-sm">
                   <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+                    <dt className="font-semibold text-foreground sm:w-32 shrink-0">Brand</dt>
+                    <dd className="text-muted-foreground">Portable Office Cabin</dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
+                    <dt className="font-semibold text-foreground sm:w-32 shrink-0">Application</dt>
+                    <dd className="text-muted-foreground">{getProductApplication(product.categorySlug)}</dd>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
                     <dt className="font-semibold text-foreground sm:w-32 shrink-0">Steel Grade</dt>
                     <dd className="text-muted-foreground">
                       MS CR Sheet / CRCA Sheet — IS 513 &amp; IS 2062 · Corten · ISO-Grade
