@@ -2,14 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { HeroSection } from "@/components/home/HeroSection";
 import { CategoriesSection } from "@/components/home/CategoriesSection";
 import { ProductRangeSection } from "@/components/home/ProductRangeSection";
-import { TechSpecsSection } from "@/components/home/TechSpecsSection";
-import { ApplicationsSection } from "@/components/home/ApplicationsSection";
-import { FeaturedProductsLazy } from "@/components/home/FeaturedProductsLazy";
-import { WhyChooseUs } from "@/components/home/WhyChooseUs";
-import { HowItWorks } from "@/components/home/HowItWorks";
-import { WhatSetsUsApart } from "@/components/home/WhatSetsUsApart";
-import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { TrustedClientsSection } from "@/components/home/TrustedClientsSection";
+import { HomeBelowFold } from "@/components/home/HomeBelowFold";
 import { FAQSection } from "@/components/home/FAQSection";
 import { CTASection } from "@/components/home/CTASection";
 import { InternalLinkingHub } from "@/components/home/InternalLinkingHub";
@@ -31,17 +24,13 @@ const Index = () => {
       {/* Server-rendered JSON-LD so schema is present in View Page Source (not JS-injected).
           Title/description/canonical/OG/geo come from the route's metadata export. */}
       <JsonLd data={combinedStructuredData} />
+      {/* SEO-critical, above-the-fold — server-rendered in page source */}
       <HeroSection />
       <CategoriesSection />
       <ProductRangeSection />
-      <WhyChooseUs />
-      <FeaturedProductsLazy />
-      <TechSpecsSection />
-      <ApplicationsSection />
-      <HowItWorks />
-      <WhatSetsUsApart />
-      <TrustedClientsSection />
-      <TestimonialsSection />
+      {/* Non-SEO-critical, below-the-fold — deferred to client (kept out of HTML) */}
+      <HomeBelowFold />
+      {/* SEO-critical — FAQ schema + internal links stay server-rendered */}
       <FAQSection />
       <InternalLinkingHub />
       <CTASection />
