@@ -94,7 +94,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // Construction Site Portable Office
   "15": {
-    title: "Construction Site Portable Office",
+    title: "Construction Site Portable Office | Prefab Site Cabin",
     description: "Portable construction site office cabins & container offices for Indian projects. Insulated, relocatable & ready for meetings, planning & site coordination.",
     keywords: "construction site portable office, site office container India, portable site office cabin, construction office cabin, container site office, project office cabin, modular site office India",
   },
@@ -130,7 +130,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // Office Portable Cabin
   "21": {
-    title: "Office Portable Cabin",
+    title: "Office Portable Cabin – Insulated Prefab Site Office",
     description: "Office portable cabin in India with fast delivery, insulated panels, office-ready electricals & flexible layouts for sites, factories & project offices.",
     keywords: "office portable cabin, portable office cabin India, site office cabin, prefab office cabin, modular office cabin, portable cabin office, office cabin manufacturer India",
   },

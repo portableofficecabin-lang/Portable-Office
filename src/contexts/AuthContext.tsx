@@ -56,6 +56,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // UI depends on the auth result. Static/public pages render immediately; auth
     // resolves right after the page is interactive. Components already render a
     // loading state while isLoading is true.
+    // Anonymous visitors (no Supabase auth cookie) make up ~all public/SEO
+    // traffic. For them we skip loading the Supabase client entirely — no auth
+    // request, no client bundle fetch on first load. Auth initialises normally
+    // the moment a session cookie exists (after login).
+    const hasSessionCookie =
+      typeof document !== "undefined" && /sb-[a-z0-9]+-auth-token/i.test(document.cookie);
+    if (!hasSessionCookie) {
+      setIsLoading(false);
+      return;
+    }
+
     let subscription: { unsubscribe: () => void } | undefined;
     let cancelled = false;
 

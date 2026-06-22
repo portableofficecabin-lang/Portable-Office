@@ -299,9 +299,12 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
   return baseFAQs;
 }
 
-const META_TITLE_MAX = 65;
-const META_DESC_MAX = 165;
+// SERP-safe limits: titles ≤ 60 chars, descriptions ≤ 158 chars (under 160).
+const META_TITLE_MAX = 60;
+const META_DESC_MAX = 158;
 
+// Mix of short and longer suffixes so each "<keyword> in <location>" title can be
+// padded toward the ideal 50–60 band without ever exceeding 60.
 const titleSuffixes = [
   " | Manufacturer",
   " | Supplier",
@@ -315,6 +318,11 @@ const titleSuffixes = [
   " | Factory Direct",
   " | Best Price",
   " | Free Quote",
+  " | Manufacturer & Supplier",
+  " | Best Price, Free Quote",
+  " | ISO-Grade, Fast Delivery",
+  " | Manufacturer in India",
+  " | Factory Direct Pricing",
 ];
 
 function truncateMeta(text: string, max: number): string {
@@ -325,14 +333,16 @@ function truncateMeta(text: string, max: number): string {
 }
 
 function generateMetaTitle(keyword: string, location: string, variation: number): string {
-  const mainKeyword = `${keyword} in ${location}`;
-
-  for (let i = 0; i < titleSuffixes.length; i++) {
-    const title = mainKeyword + titleSuffixes[(variation + i) % titleSuffixes.length];
-    if (title.length <= META_TITLE_MAX) return title;
-  }
-
-  return truncateMeta(mainKeyword, META_TITLE_MAX);
+  const base = `${keyword} in ${location}`;
+  const candidates = titleSuffixes
+    .map((s) => base + s)
+    .filter((t) => t.length <= META_TITLE_MAX);
+  // Prefer titles that land in the ideal 50–60 band (rotated by variation for
+  // uniqueness); otherwise use the longest title that still fits under 60.
+  const inRange = candidates.filter((t) => t.length >= 50);
+  if (inRange.length) return inRange[variation % inRange.length];
+  if (candidates.length) return candidates.reduce((a, b) => (b.length > a.length ? b : a));
+  return truncateMeta(base, META_TITLE_MAX);
 }
 
 function generateMetaDescription(keyword: string, location: string, variation: number): string {

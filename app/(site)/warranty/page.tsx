@@ -6,9 +6,9 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
-  title: "Product Warranty Details",
+  title: "Product Warranty & Coverage Details",
   description:
-    "Warranty coverage and terms for Portable Office Cabin products — structure, panels and fittings.",
+    "Warranty coverage and terms for Portable Office Cabin products — structure, PUF panels, doors, windows and fittings, plus what's covered and how to claim.",
   path: "/warranty",
 });
 

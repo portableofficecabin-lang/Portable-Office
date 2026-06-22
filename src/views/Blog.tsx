@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "@/components/ui/static-motion";
 import labourShedImage from "@/assets/blog/labour-shed-steel-frame-construction.webp";
 import portaCabinRentImage from "@/assets/blog/porta-cabins-on-rent.webp";
 import msPortableCabinHero from "@/assets/blog/ms-portable-cabin-hero.webp";

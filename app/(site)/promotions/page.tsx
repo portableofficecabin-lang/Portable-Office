@@ -7,7 +7,7 @@ import { ArrowRight, MapPin } from "lucide-react";
 export const metadata = buildPageMetadata({
   absoluteTitle: "Location Promotions | Portable Cabins Across India",
   description:
-    "Explore location-wise promotions for portable cabins, container offices, site offices & labour colonies in Bangalore, Chennai, Hyderabad, Mumbai & all major Indian cities.",
+    "Explore location-wise deals on portable cabins, container offices, site offices & labour colonies in Bangalore, Chennai, Hyderabad & more Indian cities.",
   keywords:
     "portable cabin promotions, location specific prefab offers, container office promotions India, site office deals by city",
   path: "/promotions",

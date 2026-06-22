@@ -4,9 +4,9 @@ import Index from "@/views/Index";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
-  absoluteTitle: "Portable Office Cabin Manufacturer in India — PUF Prefab Cabins & Containers",
+  absoluteTitle: "Portable Office Cabin Manufacturer in India | PUF Cabins",
   description:
-    "India's trusted manufacturer of portable office cabins, site offices, container offices, prefab homes and labour colonies. PUF-insulated, turnkey delivery across India.",
+    "Portable Office Cabin manufactures PUF portable cabins, site offices, container offices, prefab homes and labour colonies with turnkey delivery across India.",
   path: "/",
 });
 

@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
-  title: "Project Gallery — Cabin Installations",
+  title: "Portable Cabin Project Gallery",
   description:
     "See real installations of our portable cabins, container offices and prefab structures delivered across India — site offices, labour colonies and more.",
   path: "/gallery",

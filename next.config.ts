@@ -19,7 +19,7 @@ const cspDirectives = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "media-src 'self' https: data: blob:",
-  `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://ipapi.co${isDev ? " ws: wss:" : ""}`,
+  `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com${isDev ? " ws: wss:" : ""}`,
   "frame-src 'self'",
   "worker-src 'self' blob:",
   "object-src 'none'",

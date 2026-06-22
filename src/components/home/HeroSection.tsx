@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Zap, IndianRupee, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroCabin from "@/assets/hero-cabin.webp";
+import heroCabin from "@/assets/hero-cabin-900.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 const highlights = [

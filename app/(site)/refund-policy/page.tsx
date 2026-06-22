@@ -8,7 +8,7 @@ import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 export const metadata = buildPageMetadata({
   title: "Refund & Cancellation Policy",
   description:
-    "Understand the refund and cancellation policy of Portable Office Cabin — order cancellation rules, advance payment terms, refund timelines and damaged product handling.",
+    "Refund and cancellation policy of Portable Office Cabin — order cancellation rules, advance payment terms, refund timelines and damaged-product handling.",
   path: "/refund-policy",
 });
 
