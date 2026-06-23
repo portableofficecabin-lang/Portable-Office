@@ -29,6 +29,7 @@ import { AdminCard, AdminCardContent } from "@/components/admin/AdminCard";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import { imageToPngDataUrl } from "@/lib/pdf/imageToPng";
 import logoImg from "@/assets/logo.webp";
 import sealImg from "@/assets/signature-seal.webp";
 
@@ -2282,12 +2283,10 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
 
       // Logo box
       try {
-        const img = new Image();
-        img.src = logoImg;
-        await new Promise((r) => { img.onload = r; img.onerror = r; });
+        const logoData = await imageToPngDataUrl(logoImg);
         doc.setDrawColor(220, 225, 235); doc.setLineWidth(0.3);
         doc.roundedRect(M, y, 24, 24, 1.5, 1.5);
-        doc.addImage(img, "JPEG", M + 1, y + 1, 22, 22);
+        if (logoData) doc.addImage(logoData, "PNG", M + 1, y + 1, 22, 22);
       } catch {}
 
       // Company name (highlighted)
@@ -2711,10 +2710,8 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       // Signature — large real seal (~75mm × 45mm)
       if (y + 60 > 285) { doc.addPage(); y = 210; }
       try {
-        const seal = new Image();
-        seal.src = sealImg;
-        await new Promise((r) => { seal.onload = r; seal.onerror = r; });
-        doc.addImage(seal, "PNG", W - M - 78, y, 75, 45);
+        const sealData = await imageToPngDataUrl(sealImg);
+        if (sealData) doc.addImage(sealData, "PNG", W - M - 78, y, 75, 45);
       } catch {}
       doc.setFontSize(8); doc.setFont("helvetica", "normal");
       doc.text("For " + COMPANY.name, W - M - 2, y + 51, { align: "right" });

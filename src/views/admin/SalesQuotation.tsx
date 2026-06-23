@@ -25,6 +25,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import jsPDF from "jspdf";
 import { addLegalFooter } from "@/lib/pdfFooter";
 import logoImg from "@/assets/logo.webp";
+import { imageToPngDataUrl } from "@/lib/pdf/imageToPng";
 
 /* ─── helpers ─── */
 const fmt = (n: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n);
@@ -330,10 +331,8 @@ function QuotationTab() {
 
     // Header
     try {
-      const img = new Image();
-      img.src = logoImg;
-      await new Promise(r => { img.onload = r; img.onerror = r; });
-      doc.addImage(img, "PNG", 14, 10, 22, 22);
+      const logoData = await imageToPngDataUrl(logoImg);
+      if (logoData) doc.addImage(logoData, "PNG", 14, 10, 22, 22);
     } catch {}
     doc.setFontSize(16); doc.setFont("helvetica", "bold");
     doc.text("PORTABLE OFFICE CABIN", w / 2, 18, { align: "center" });
