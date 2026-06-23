@@ -170,7 +170,9 @@ export default function AdminParties() {
       p.name.toLowerCase().includes(q) ||
       (p.company || "").toLowerCase().includes(q) ||
       (p.phone || "").toLowerCase().includes(q) ||
+      (p.email || "").toLowerCase().includes(q) ||
       (p.gstin || "").toLowerCase().includes(q) ||
+      (p.site_location || "").toLowerCase().includes(q) ||
       (p.city || "").toLowerCase().includes(q));
   }, [parties, search]);
 
@@ -230,6 +232,21 @@ export default function AdminParties() {
     if (!editing.name?.trim()) {
       toast({ title: "Name required", variant: "destructive" }); return;
     }
+    // Duplicate guard for NEW parties: identify a client by mobile / email / GST.
+    if (!editing.id) {
+      const phone = (editing.phone || "").trim();
+      const email = (editing.email || "").trim().toLowerCase();
+      const gst = (editing.gstin || "").trim().toUpperCase();
+      const dupe = parties.find(p =>
+        (phone && (p.phone || "").trim() === phone) ||
+        (email && (p.email || "").trim().toLowerCase() === email) ||
+        (gst && (p.gstin || "").trim().toUpperCase() === gst)
+      );
+      if (dupe) {
+        toast({ title: "Client already saved", description: `${dupe.name} already exists (matched by mobile / email / GST).`, variant: "destructive" });
+        return;
+      }
+    }
     const payload = { ...editing };
     delete (payload as any).id; delete (payload as any).created_at;
     if (editing.id) {
@@ -256,6 +273,17 @@ export default function AdminParties() {
   const saveAddress = async () => {
     if (!selected || !addrForm.label?.trim()) {
       toast({ title: "Label required", variant: "destructive" }); return;
+    }
+    // Prevent duplicate site addresses under the same client (match on address line).
+    if (!addrForm.id) {
+      const normAddr = (addrForm.address_line1 || "").trim().toLowerCase();
+      const dupe = addresses.find(a =>
+        a.party_id === selected.id && normAddr && (a.address_line1 || "").trim().toLowerCase() === normAddr
+      );
+      if (dupe) {
+        toast({ title: "Shipping address already exists", description: `"${dupe.label}" already has this site address for ${selected.name}.`, variant: "destructive" });
+        return;
+      }
     }
     const payload: any = { ...addrForm, party_id: selected.id };
     delete payload.id;
@@ -308,7 +336,7 @@ export default function AdminParties() {
       <div className="flex flex-wrap gap-3 items-center">
         <div className="relative flex-1 min-w-[260px] max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input placeholder="Search by name, company, phone, GSTIN..." value={search} onChange={e => setSearch(e.target.value)} className="pl-11 h-12 rounded-xl border-2" />
+          <Input placeholder="Search by name, company, phone, email, GSTIN, project..." value={search} onChange={e => setSearch(e.target.value)} className="pl-11 h-12 rounded-xl border-2" />
         </div>
         <Button onClick={() => { setEditing(blankParty); setDialogOpen(true); }} className="h-12 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white">
           <Plus className="h-5 w-5 mr-2" /> New Party

@@ -1655,6 +1655,8 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
   const [clients, setClients] = useState<SavedClient[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
   const [shipPickId, setShipPickId] = useState<string>("");
+  const [clientPickerOpen, setClientPickerOpen] = useState(false);
+  const [editingShipId, setEditingShipId] = useState<string>("");
   const activeGstMode = gstModeForQuotation(q);
 
   // Load clients (parties + party_addresses) from Supabase on mount,
@@ -1775,6 +1777,7 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
       gst_mode: (c.state && c.state !== SELLER_STATE) ? "igst" : "cgst_sgst",
     });
     setShipPickId("");
+    setEditingShipId("");
     toast({ title: "Client loaded", description: c.name });
   };
 
@@ -1782,6 +1785,28 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
     if (!q.client_name.trim()) {
       toast({ title: "Client Name required", variant: "destructive" });
       return;
+    }
+    // Duplicate guard: a client is identified by mobile number / email / GST.
+    // When saving a NEW client (no existing selection), if any of these already
+    // match a saved client, don't create a duplicate — select the existing one.
+    if (!selectedId) {
+      const phone = (q.contact_number || "").trim();
+      const email = (q.client_email || "").trim().toLowerCase();
+      const gst = (q.client_gst || "").trim().toUpperCase();
+      const dupe = clients.find((c) =>
+        (phone && (c.contact_number || "").trim() === phone) ||
+        (email && (c.email || "").trim().toLowerCase() === email) ||
+        (gst && (c.gst || "").trim().toUpperCase() === gst)
+      );
+      if (dupe) {
+        toast({
+          title: "Client already saved",
+          description: `${dupe.name} already exists (matched by mobile / email / GST). Loaded the existing client.`,
+        });
+        setSelectedId(dupe.id);
+        pickClient(dupe.id);
+        return;
+      }
     }
     const payload: any = {
       name: q.client_name,
@@ -1849,11 +1874,8 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
       toast({ title: "Shipping address is empty", variant: "destructive" });
       return;
     }
-    const label = window.prompt("Label for this shipping address (e.g. Site - Hosur, Warehouse)", q.ship_to_name || "Site");
-    if (!label) return;
-    const { data, error } = await (supabase as any).from("party_addresses").insert({
-      party_id: selectedId,
-      label,
+
+    const fields = {
       consignee_name: q.ship_to_name || null,
       company: q.ship_to_company || null,
       contact_person: q.ship_to_contact || null,
@@ -1862,11 +1884,65 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
       address_line1: q.ship_to_address || null,
       state: q.ship_to_state || null,
       pincode: q.ship_to_pincode || null,
+    };
+
+    // Editing an existing site address → update it in place (no duplicate).
+    if (editingShipId) {
+      const { error } = await (supabase as any).from("party_addresses").update(fields).eq("id", editingShipId);
+      if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
+      await reloadClients();
+      toast({ title: "Site address updated" });
+      return;
+    }
+
+    // Duplicate guard: don't store the same site address twice under one client.
+    const client = clients.find((c) => c.id === selectedId);
+    const normAddr = (q.ship_to_address || "").trim().toLowerCase();
+    const dupe = (client?.shipping || []).find(
+      (s) => normAddr && (s.address || "").trim().toLowerCase() === normAddr
+    );
+    if (dupe) {
+      toast({ title: "Shipping address already exists", description: `"${dupe.label}" already has this site address for ${client?.name}.` });
+      setShipPickId(dupe.id);
+      return;
+    }
+
+    const label = window.prompt("Label for this site address (e.g. Site - Hosur, Warehouse)", q.ship_to_name || "Site");
+    if (!label) return;
+    const { data, error } = await (supabase as any).from("party_addresses").insert({
+      party_id: selectedId,
+      label,
+      ...fields,
     }).select("id").single();
     if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
     await reloadClients();
     setShipPickId(data.id);
-    toast({ title: "Shipping address saved", description: label });
+    toast({ title: "Site address saved", description: label });
+  };
+
+  const startEditShipping = (id: string) => {
+    const c = clients.find((x) => x.id === selectedId);
+    const s = c?.shipping.find((x) => x.id === id);
+    if (!s) return;
+    setEditingShipId(id);
+    setShipPickId(id);
+    set({
+      same_as_billing: false,
+      ship_to_name: s.name, ship_to_company: s.company, ship_to_address: s.address,
+      ship_to_state: s.state || "", ship_to_pincode: s.pincode || "",
+      ship_to_contact: s.contact, ship_to_phone: s.phone, ship_to_gst: s.gst,
+    });
+    toast({ title: "Editing site address", description: s.label });
+  };
+
+  const startNewShipping = () => {
+    setEditingShipId("");
+    setShipPickId("");
+    set({
+      same_as_billing: false,
+      ship_to_name: "", ship_to_company: "", ship_to_address: "",
+      ship_to_state: "", ship_to_pincode: "", ship_to_contact: "", ship_to_phone: "", ship_to_gst: "",
+    });
   };
 
   const removeShipping = async (id: string) => {
@@ -1876,6 +1952,7 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
     if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
     await reloadClients();
     if (shipPickId === id) setShipPickId("");
+    if (editingShipId === id) setEditingShipId("");
   };
 
   const currentClient = clients.find((c) => c.id === selectedId);
@@ -1893,18 +1970,48 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
           </div>
           <div className="grid md:grid-cols-[1fr_auto_auto] gap-2 items-end">
             <div>
-              <Label className="text-xs uppercase tracking-wide text-muted-foreground font-medium">Pick a saved client</Label>
-              <Select value={selectedId || "none"} onValueChange={(v) => pickClient(v === "none" ? "" : v)}>
-                <SelectTrigger><SelectValue placeholder="— Select saved client —" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">— New / clear selection —</SelectItem>
-                  {clients.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>
-                      {c.name}{c.company ? ` · ${c.company}` : ""}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label className="text-xs uppercase tracking-wide text-muted-foreground font-medium">Search / pick a saved client</Label>
+              <Popover open={clientPickerOpen} onOpenChange={setClientPickerOpen}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" role="combobox" className="w-full justify-between font-normal">
+                    <span className="truncate">
+                      {(() => {
+                        const c = clients.find((x) => x.id === selectedId);
+                        return c ? `${c.name}${c.company ? ` · ${c.company}` : ""}` : "— Select saved client —";
+                      })()}
+                    </span>
+                    <ChevronsUpDown className="h-4 w-4 opacity-50 shrink-0" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="p-0 w-[--radix-popover-trigger-width] min-w-[320px]" align="start">
+                  <Command>
+                    <CommandInput placeholder="Search name, phone, email, company, project…" />
+                    <CommandList>
+                      <CommandEmpty>No client found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem value="__new_clear__" onSelect={() => { pickClient(""); setClientPickerOpen(false); }}>
+                          ＋ New / clear selection
+                        </CommandItem>
+                        {clients.map((c) => (
+                          <CommandItem
+                            key={c.id}
+                            value={`${c.name} ${c.company} ${c.contact_number} ${c.email} ${c.site_location}`}
+                            onSelect={() => { pickClient(c.id); setClientPickerOpen(false); }}
+                          >
+                            <div className="flex flex-col min-w-0">
+                              <span className="font-medium truncate">{c.name}{c.company ? ` · ${c.company}` : ""}</span>
+                              <span className="text-[11px] text-muted-foreground truncate">
+                                {[c.contact_number, c.email, c.site_location].filter(Boolean).join(" · ")}
+                              </span>
+                            </div>
+                            {selectedId === c.id && <Check className="ml-auto h-4 w-4 shrink-0" />}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
             <Button variant="accent" onClick={saveAsClient} className="gap-2">
               <BookmarkPlus className="h-4 w-4" /> {selectedId ? "Update Client" : "Save Client"}
@@ -1993,33 +2100,52 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
 
           {!q.same_as_billing && (
             <>
-              {currentClient && currentClient.shipping.length > 0 && (
+              {currentClient && (
                 <div className="mb-4 p-3 rounded-xl bg-amber/5 border border-amber/20">
-                  <Label className="text-xs uppercase tracking-wide text-muted-foreground font-medium mb-2 block">
-                    Saved shipping addresses for {currentClient.name}
-                  </Label>
-                  <div className="flex flex-wrap gap-2">
-                    {currentClient.shipping.map((s) => (
-                      <div key={s.id} className={cn(
-                        "flex items-center gap-1 rounded-lg border-2 transition-all",
-                        shipPickId === s.id ? "border-amber bg-amber/10" : "border-border bg-card hover:border-amber/40"
-                      )}>
-                        <button
-                          onClick={() => pickShipping(s.id)}
-                          className="px-3 py-1.5 text-xs font-semibold"
-                        >
-                          📍 {s.label}
-                        </button>
-                        <button
-                          onClick={() => removeShipping(s.id)}
-                          className="p-1.5 text-destructive hover:bg-destructive/10 rounded-r-lg"
-                          title="Delete saved address"
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-                    ))}
+                  <div className="flex items-center justify-between mb-2 gap-2">
+                    <Label className="text-xs uppercase tracking-wide text-muted-foreground font-medium">
+                      Saved site addresses for {currentClient.name} ({currentClient.shipping.length})
+                    </Label>
+                    <Button size="sm" variant="outline" onClick={startNewShipping} className="h-7 gap-1 text-xs">
+                      <Plus className="h-3.5 w-3.5" /> Add New Site Address
+                    </Button>
                   </div>
+                  {currentClient.shipping.length === 0 ? (
+                    <p className="text-xs text-muted-foreground py-1">
+                      No site addresses yet. Fill the fields below and click “Save Site Address”.
+                    </p>
+                  ) : (
+                    <div className="max-h-56 overflow-y-auto space-y-2 pr-1">
+                      {currentClient.shipping.map((s) => (
+                        <div key={s.id} className={cn(
+                          "rounded-lg border-2 p-2.5 transition-all",
+                          shipPickId === s.id ? "border-amber bg-amber/10" : "border-border bg-card"
+                        )}>
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="min-w-0">
+                              <div className="text-sm font-semibold flex items-center gap-1.5">
+                                📍 {s.label}
+                                {editingShipId === s.id && <Badge variant="outline" className="text-[10px]">editing</Badge>}
+                              </div>
+                              <div className="text-[11px] text-muted-foreground truncate">
+                                {[s.name, s.address, s.state, s.pincode].filter(Boolean).join(", ")}
+                              </div>
+                              {(s.contact || s.phone) && (
+                                <div className="text-[11px] text-muted-foreground truncate">
+                                  {[s.contact, s.phone].filter(Boolean).join(" · ")}
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1 shrink-0">
+                              <Button size="sm" variant={shipPickId === s.id ? "accent" : "outline"} onClick={() => pickShipping(s.id)} className="h-7 px-2 text-xs">Select</Button>
+                              <Button size="sm" variant="outline" onClick={() => startEditShipping(s.id)} className="h-7 px-2 text-xs gap-1"><FileEdit className="h-3 w-3" /> Edit</Button>
+                              <Button size="sm" variant="outline" onClick={() => removeShipping(s.id)} className="h-7 px-2 text-xs text-destructive" title="Delete"><Trash2 className="h-3 w-3" /></Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -2058,8 +2184,13 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
 
               <div className="mt-4 flex flex-wrap gap-2 items-center">
                 <Button variant="accent" onClick={saveShipping} className="gap-2" disabled={!selectedId}>
-                  <BookmarkPlus className="h-4 w-4" /> Save Shipping Address
+                  <BookmarkPlus className="h-4 w-4" /> {editingShipId ? "Update Site Address" : "Save Site Address"}
                 </Button>
+                {editingShipId && (
+                  <Button variant="outline" onClick={startNewShipping} className="gap-2">
+                    <X className="h-4 w-4" /> Cancel Edit
+                  </Button>
+                )}
                 {!selectedId && (
                   <p className="text-xs text-muted-foreground">Save the client first to store multiple shipping addresses.</p>
                 )}
