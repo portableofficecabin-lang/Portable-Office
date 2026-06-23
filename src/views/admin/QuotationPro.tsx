@@ -2269,7 +2269,23 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
     "Operations Manager",
   ] as const;
   type ApprovalRole = typeof APPROVAL_ROLES[number];
-  const [approver, setApprover] = useState<ApprovalRole | null>(null);
+  // Persist the chosen approver per quotation (same approach as watermarks) so it
+  // is restored without rework when the quotation is reopened.
+  const apprKey = `poc_qp_appr_${q.id}`;
+  const [approver, setApproverState] = useState<ApprovalRole | null>(() => {
+    try {
+      const saved = typeof window !== "undefined" ? localStorage.getItem(apprKey) : null;
+      if (saved && (APPROVAL_ROLES as readonly string[]).includes(saved)) return saved as ApprovalRole;
+    } catch { /* ignore */ }
+    return null;
+  });
+  const setApprover = (role: ApprovalRole | null) => {
+    setApproverState(role);
+    try {
+      if (role) localStorage.setItem(apprKey, role);
+      else localStorage.removeItem(apprKey);
+    } catch { /* ignore */ }
+  };
   const [upiQr, setUpiQr] = useState<string>("");
   const upiNote = `${q.quotation_number} ${q.client_name || ""}`.trim();
   const upiUri = useMemo(() => buildUpiUri(totals.total, upiNote), [totals.total, upiNote]);
@@ -2823,6 +2839,18 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
 
   const printIt = () => window.print();
 
+  // Save PDF: persist the selected watermark + approver for this quotation (so they
+  // are remembered on reopen), then generate and download the PDF.
+  const saveSettingsAndDownload = async () => {
+    try {
+      localStorage.setItem(wmKey, JSON.stringify(watermarks));
+      if (approver) localStorage.setItem(apprKey, approver);
+      else localStorage.removeItem(apprKey);
+    } catch { /* ignore */ }
+    toast({ title: "Settings saved", description: "Watermark & approver will be remembered for this quotation." });
+    await downloadPdf();
+  };
+
   return (
     <div className="space-y-4">
       {/* Action bar */}
@@ -2861,6 +2889,10 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
           <Button variant="accent" onClick={downloadPdf} disabled={generating} className="gap-2">
             {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
             Download PDF
+          </Button>
+          <Button variant="outline" onClick={saveSettingsAndDownload} disabled={generating} className="gap-2">
+            {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            Save PDF
           </Button>
         </div>
       </div>
