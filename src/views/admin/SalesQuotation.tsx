@@ -326,12 +326,12 @@ function QuotationTab() {
 
   const downloadPdf = async (q: any) => {
     const { data: qItems } = await supabase.from("quotation_items").select("*").eq("quotation_id", q.id).order("sort_order");
-    const doc = new jsPDF("p", "mm", "a4");
+    const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4", compress: true });
     const w = 210;
 
     // Header
     try {
-      const logoData = await imageToPngDataUrl(logoImg);
+      const logoData = await imageToPngDataUrl(logoImg, { maxWidth: 220 });
       if (logoData) doc.addImage(logoData, "PNG", 14, 10, 22, 22);
     } catch {}
     doc.setFontSize(16); doc.setFont("helvetica", "bold");

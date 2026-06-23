@@ -2237,14 +2237,28 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
   const totals = calcTotals(q);
   const activeGstMode = gstModeForQuotation(q);
   const [generating, setGenerating] = useState(false);
-  const [watermarks, setWatermarks] = useState({
-    company: false,
-    draft: q.status === "draft",
-    approved: q.status === "approved",
-    paid: false,
+  // Persist the watermark choice per quotation so reopening it later restores the
+  // same watermarks without rework (no PDF size impact — watermarks are vector text).
+  const wmKey = `poc_qp_wm_${q.id}`;
+  const [watermarks, setWatermarks] = useState(() => {
+    const defaults = {
+      company: false,
+      draft: q.status === "draft",
+      approved: q.status === "approved",
+      paid: false,
+    };
+    try {
+      const saved = typeof window !== "undefined" ? localStorage.getItem(wmKey) : null;
+      if (saved) return { ...defaults, ...JSON.parse(saved) };
+    } catch { /* ignore */ }
+    return defaults;
   });
   const toggleWm = (k: keyof typeof watermarks) =>
-    setWatermarks((w) => ({ ...w, [k]: !w[k] }));
+    setWatermarks((w) => {
+      const next = { ...w, [k]: !w[k] };
+      try { localStorage.setItem(wmKey, JSON.stringify(next)); } catch { /* ignore */ }
+      return next;
+    });
   const APPROVAL_ROLES = [
     "Managing Director (MD) / Director",
     "CEO / General Manager",
@@ -2270,7 +2284,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
   const downloadPdf = async () => {
     setGenerating(true);
     try {
-      const doc = new jsPDF("p", "mm", "a4");
+      const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4", compress: true });
       const W = 210;
       const M = 12;
       let y = M;
@@ -2283,7 +2297,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
 
       // Logo box
       try {
-        const logoData = await imageToPngDataUrl(logoImg);
+        const logoData = await imageToPngDataUrl(logoImg, { maxWidth: 220 });
         doc.setDrawColor(220, 225, 235); doc.setLineWidth(0.3);
         doc.roundedRect(M, y, 24, 24, 1.5, 1.5);
         if (logoData) doc.addImage(logoData, "PNG", M + 1, y + 1, 22, 22);
@@ -2710,8 +2724,8 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       // Signature — large real seal (~75mm × 45mm)
       if (y + 60 > 285) { doc.addPage(); y = 210; }
       try {
-        const sealData = await imageToPngDataUrl(sealImg);
-        if (sealData) doc.addImage(sealData, "PNG", W - M - 78, y, 75, 45);
+        const sealData = await imageToPngDataUrl(sealImg, { maxWidth: 700, format: "jpeg", quality: 0.82, background: "#ffffff" });
+        if (sealData) doc.addImage(sealData, "JPEG", W - M - 78, y, 75, 45);
       } catch {}
       doc.setFontSize(8); doc.setFont("helvetica", "normal");
       doc.text("For " + COMPANY.name, W - M - 2, y + 51, { align: "right" });
