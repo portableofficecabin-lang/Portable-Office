@@ -93,6 +93,30 @@ export const EMBASSY_360_TEMPLATE: SpecTemplate = {
           "Frame shall be fabricated with required MS sections as per approved drawing.",
           "Cabin shall be rigid, stable, and suitable for transportation and relocation.",
         ]],
+        ["Structural Frame & Stiffeners", [
+          "Bottom / base frame: ISMC channel heavy-duty structure / MS tube, 100 x 50 mm, 6 mm thick.",
+          "Top / roof frame: MS square tube structure, 50 x 50 mm, 3 mm thick.",
+          "Floor frame / stiffeners: MS rectangular tube reinforcement, 100 x 50 / 50 x 50 mm, 3 mm thick.",
+          "Wall stiffeners: vertical and horizontal MS tube members, 50 x 50 mm, 3 mm thick.",
+          "Approved steel makes: Jindal / Apollo / JSW / Sriraj or equivalent.",
+          "All MS members treated with anti-corrosive primer and enamel paint (anti-rust finish).",
+          "Complete frame welded rigid, true to line and level, suitable for transportation and relocation.",
+        ]],
+        ["External Cladding & Roof", [
+          "External wall cladding: corrugated CR sheet, welded, mild steel, 1.2 mm (18 gauge).",
+          "Roof: MS sheet, 1.2 mm (18 gauge); flat roof provided for G+1 (stacked) container.",
+          "All sheet joints welded / sealed and made weather resistant.",
+        ]],
+        ["Insulation", [
+          "Thermal insulation: glass wool (50 kg density) / Hitlon.",
+          "Insulation thickness: 10 mm / 25 mm as required.",
+          "Provides heat insulation to walls and roof as applicable.",
+        ]],
+        ["Lifting Arrangement", [
+          "MS lifting hooks provided at top frame for crane lifting, shifting, and relocation.",
+          "Load-bearing stacking lugs / plates provided at bottom corners for G+1 (stacked) installation.",
+          "Lifting and stacking arrangement designed for safe handling of the container as a single piece.",
+        ]],
         ["Wall, Floor & Internal Finish", [
           "Internal wall panels shall be finished with prefinished laminated boards.",
           "Wet area wall portions shall be finished with waterproof cement board.",
@@ -697,6 +721,30 @@ export const EMBASSY_360_TEMPLATE: SpecTemplate = {
           "Structural MS frame shall be provided.",
           "Cabin shall be suitable for first floor installation.",
           "Complete fabrication shall be done as per approved drawing.",
+        ]],
+        ["Structural Frame & Stiffeners", [
+          "Bottom / base frame: ISMC channel heavy-duty structure / MS tube, 100 x 50 mm, 6 mm thick.",
+          "Top / roof frame: MS square tube structure, 50 x 50 mm, 3 mm thick.",
+          "Floor frame / stiffeners: MS rectangular tube reinforcement, 100 x 50 / 50 x 50 mm, 3 mm thick.",
+          "Wall stiffeners: vertical and horizontal MS tube members, 50 x 50 mm, 3 mm thick.",
+          "Approved steel makes: Jindal / Apollo / JSW / Sriraj or equivalent.",
+          "All MS members treated with anti-corrosive primer and enamel paint (anti-rust finish).",
+          "Complete frame welded rigid, true to line and level, suitable for transportation and relocation.",
+        ]],
+        ["External Cladding & Roof", [
+          "External wall cladding: corrugated CR sheet, welded, mild steel, 1.2 mm (18 gauge).",
+          "Roof: MS sheet, 1.2 mm (18 gauge); flat roof provided for first floor (G+1 stacked) container.",
+          "All sheet joints welded / sealed and made weather resistant.",
+        ]],
+        ["Insulation", [
+          "Thermal insulation: glass wool (50 kg density) / Hitlon.",
+          "Insulation thickness: 10 mm / 25 mm as required.",
+          "Provides heat insulation to walls and roof as applicable.",
+        ]],
+        ["Lifting Arrangement", [
+          "MS lifting hooks provided at top frame for crane lifting, shifting, and relocation.",
+          "Load-bearing stacking lugs / plates provided at bottom corners for G+1 (stacked) installation.",
+          "Lifting and stacking arrangement designed for safe handling of the container as a single piece.",
         ]],
         ["Internal Finish", [
           "Internal wall panels shall be prefinished laminate finish.",
