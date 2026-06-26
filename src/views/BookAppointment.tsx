@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar } from "@/components/ui/calendar";
+import dynamic from "next/dynamic";
 import {
   Popover,
   PopoverContent,
@@ -26,6 +26,13 @@ import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { Layout } from "@/components/layout/Layout";
 import { OTPVerificationModal } from "@/components/booking/OTPVerificationModal";
+
+// react-day-picker is only needed when the date Popover opens — defer its chunk
+// out of the /book-appointment first-load JS.
+const Calendar = dynamic(
+  () => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })),
+  { ssr: false },
+);
 
 const bookingSchema = z.object({
   customer_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),

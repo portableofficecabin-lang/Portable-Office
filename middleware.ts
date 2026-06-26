@@ -50,8 +50,13 @@ export async function middleware(request: NextRequest) {
   return updateSession(request);
 }
 
+// Scope middleware to the admin area ONLY. Its entire job is admin route
+// protection (Supabase getUser + role check) and the optional admin basic-auth
+// gate — none of which applies to public/SEO pages. Running it site-wide forced
+// every public request (incl. static/ISR HTML) through the Node origin and a
+// Supabase auth client instantiation, inflating TTFB and preventing the host/CDN
+// from serving cached HTML at the edge. Public pages now bypass middleware
+// entirely; client auth still refreshes via the browser Supabase client.
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff|woff2)$).*)",
-  ],
+  matcher: ["/admin/:path*"],
 };

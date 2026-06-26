@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createStaticClient } from "@/lib/supabase/static";
 import type { DBProduct, DBCategory } from "@/types/database";
 import {
@@ -17,8 +18,11 @@ import { convertDBProduct, convertDBCategory, mergeProducts, mergeCategories } f
 
 const normalizeSlug = (slug: string) => slug.replace(/\.html$/i, "");
 
-/** Full merged catalog (DB overrides static by slug; static fills the gaps). */
-export async function getAllProductsMerged(): Promise<Product[]> {
+/** Full merged catalog (DB overrides static by slug; static fills the gaps).
+ *  Wrapped in React cache() so the many call sites within a single ISR render
+ *  (page body + getProductBySlugMerged + getMergedCategories) share ONE Supabase
+ *  query instead of issuing 2-3 identical `select * from products` round-trips. */
+export const getAllProductsMerged = cache(async (): Promise<Product[]> => {
   try {
     const supabase = createStaticClient();
     const { data, error } = await supabase
@@ -34,10 +38,11 @@ export async function getAllProductsMerged(): Promise<Product[]> {
     console.error("getAllProductsMerged: falling back to static catalog:", err);
     return staticProducts;
   }
-}
+});
 
-/** Merged categories with product counts derived from the merged catalog. */
-export async function getMergedCategories(allProducts?: Product[]): Promise<Category[]> {
+/** Merged categories with product counts derived from the merged catalog.
+ *  cache()-wrapped so list/category pages don't re-fetch the catalog/categories. */
+export const getMergedCategories = cache(async (allProducts?: Product[]): Promise<Category[]> => {
   const products = allProducts ?? (await getAllProductsMerged());
   try {
     const supabase = createStaticClient();
@@ -56,7 +61,7 @@ export async function getMergedCategories(allProducts?: Product[]): Promise<Cate
     console.error("getMergedCategories: falling back to static categories:", err);
     return mergeCategories([], staticCategories, products);
   }
-}
+});
 
 /** Resolve a single product by slug (or id), DB-first, static fallback. */
 export async function getProductBySlugMerged(slug: string): Promise<Product | undefined> {

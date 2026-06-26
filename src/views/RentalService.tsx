@@ -3,7 +3,7 @@
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/components/ui/static-motion";
 import { 
   Building2, 
   Clock, 

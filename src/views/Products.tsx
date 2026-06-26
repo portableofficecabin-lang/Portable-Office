@@ -1,15 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Filter, Search, Grid, List, X, ArrowRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProductCard } from "@/components/products/ProductCard";
-import { EnquiryModal } from "@/components/products/EnquiryModal";
+import dynamic from "next/dynamic";
 import { Product, Category, getProductDetailPath } from "@/data/products";
 import { cn } from "@/lib/utils";
+
+// Enquiry form is click-only — defer its chunk out of the listing first-load JS.
+// (EnquiryModal already returns null when closed, so gating the mount loses no animation.)
+const EnquiryModal = dynamic(
+  () => import("@/components/products/EnquiryModal").then((m) => ({ default: m.EnquiryModal })),
+  { ssr: false },
+);
 
 const PAGE_SIZE = 12;
 
@@ -218,9 +225,15 @@ export function ProductsPageContent({
               {pagedProducts.length > 0 ? (
                 <>
                   <div className={cn("grid gap-6", viewMode === "grid" ? "sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1")}>
-                    {pagedProducts.map((product) => (
+                    {pagedProducts.map((product, index) => (
                       <div key={product.id}>
-                        <ProductCard product={product} onEnquire={handleEnquire} />
+                        {/* First card on the first page is the above-the-fold LCP
+                            candidate — load it eagerly at high priority. */}
+                        <ProductCard
+                          product={product}
+                          onEnquire={handleEnquire}
+                          priority={safePage === 1 && index === 0}
+                        />
                       </div>
                     ))}
                   </div>
@@ -398,11 +411,52 @@ export function ProductsPageContent({
         </div>
       </section>
 
-      <EnquiryModal product={selectedProduct} isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
+      {isEnquiryOpen && (
+        <EnquiryModal product={selectedProduct} isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
+      )}
     </Layout>
   );
 }
 
 export default function ProductsPage(props: ProductsPageProps) {
   return <ProductsPageContent {...props} />;
+}
+
+/**
+ * Client bridge for the /products listing route. The server page renders this
+ * with the DEFAULT (unfiltered, page 1) view, so the full catalogue — product
+ * cards, category links and the crawlable "All Products A–Z" index — is present
+ * in the static HTML for SEO. The ?category= / ?page= filters are then read from
+ * the URL in a client effect (window.location.search — NOT useSearchParams, which
+ * would force the content behind a Suspense fallback and strip it from the HTML)
+ * and applied after hydration. The page stays fully static/ISR. The path-based
+ * /products/category/[slug] route does NOT use this — it passes activeCategory as
+ * a prop and stays SSG with server-filtered content.
+ */
+export function ProductsListingWithParams({
+  products,
+  categories,
+}: {
+  products: Product[];
+  categories: Category[];
+}) {
+  const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    setActiveCategory(sp.get("category") || undefined);
+    const pageParam = sp.get("page");
+    setCurrentPage(pageParam ? parseInt(pageParam, 10) || 1 : 1);
+  }, []);
+
+  return (
+    <ProductsPageContent
+      products={products}
+      categories={categories}
+      activeCategory={activeCategory}
+      currentPage={currentPage}
+      basePath="/products"
+    />
+  );
 }

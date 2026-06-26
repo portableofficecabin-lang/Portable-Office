@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import ProductsPage from "@/views/Products";
+import { ProductsListingWithParams } from "@/views/Products";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -9,35 +8,20 @@ export const revalidate = 3600; // 1 hour
 
 const SITE = "https://portableofficecabin.com";
 
-type PageProps = {
-  searchParams: Promise<{ category?: string; page?: string }>;
-};
+// Static metadata (no searchParams) so this page renders as static/ISR rather
+// than dynamic. The ?category= filter is a client-side convenience; the
+// canonical SEO entry points for categories are the SSG /products/category/[slug]
+// routes (each with its own canonical/title), so /products canonicalises to itself.
+export const metadata = buildPageMetadata({
+  title: "Portable Cabin & Container Product Range",
+  description:
+    "Browse our full range of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers with specs and prices.",
+  path: "/products",
+});
 
-// Conditional canonical: when filtered via ?category=, point to the dedicated
-// path-based category page so SEO is consolidated there.
-export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
-  const { category } = await searchParams;
-  if (category) {
-    const categories = await getMergedCategories();
-    const cat = categories.find((c) => c.slug === category);
-    return buildPageMetadata({
-      title: cat ? cat.name : "Products",
-      description:
-        cat?.description ||
-        "Browse our full range of portable cabins, container offices, prefab homes and more.",
-      path: `/products/category/${category}`,
-    });
-  }
-  return buildPageMetadata({
-    title: "Portable Cabin & Container Product Range",
-    description:
-      "Browse our full range of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers with specs and prices.",
-    path: "/products",
-  });
-}
-
-export default async function Page({ searchParams }: PageProps) {
-  const { category, page } = await searchParams;
+// No searchParams in the page → fully static/ISR (was ƒ Dynamic). The ?category=
+// / ?page= filters are read client-side inside ProductsListingWithParams.
+export default async function Page() {
   const [products, categories] = await Promise.all([
     getAllProductsMerged(),
     getMergedCategories(),
@@ -51,13 +35,7 @@ export default async function Page({ searchParams }: PageProps) {
           { name: "Products", url: `${SITE}/products` },
         ])}
       />
-      <ProductsPage
-        products={products}
-        categories={categories}
-        activeCategory={category}
-        currentPage={page ? parseInt(page, 10) || 1 : 1}
-        basePath="/products"
-      />
+      <ProductsListingWithParams products={products} categories={categories} />
     </>
   );
 }

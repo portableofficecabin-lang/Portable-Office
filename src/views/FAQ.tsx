@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "@/components/ui/static-motion";
 import { Layout } from "@/components/layout/Layout";
 import { faqCategories } from "@/data/faqs";
 import { Button } from "@/components/ui/button";

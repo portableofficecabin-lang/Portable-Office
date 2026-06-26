@@ -53,6 +53,10 @@ export default function DynamicBlogPost({ post }: DynamicBlogPostProps) {
             <img
               src={post.featured_image_url}
               alt={post.title}
+              width={1600}
+              height={900}
+              fetchPriority="high"
+              decoding="async"
               className="w-full rounded-2xl shadow-xl border border-border/50 aspect-[16/9] object-cover"
             />
           </div>

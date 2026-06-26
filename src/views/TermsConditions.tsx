@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { FileText, ChevronRight, Mail, Phone } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "@/components/ui/static-motion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },

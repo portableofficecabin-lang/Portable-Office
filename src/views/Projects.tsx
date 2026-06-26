@@ -4,7 +4,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "@/components/ui/static-motion";
 import {
   ArrowRight,
   Phone,

@@ -11,9 +11,12 @@ import { useCart } from "@/contexts/CartContext";
 interface ProductCardProps {
   product: Product;
   onEnquire?: (product: Product) => void;
+  /** Eager-load + fetchPriority high for the first above-the-fold card so it can
+   *  be the LCP element on listing/category pages without a lazy-load round-trip. */
+  priority?: boolean;
 }
 
-export function ProductCard({ product, onEnquire }: ProductCardProps) {
+export function ProductCard({ product, onEnquire, priority = false }: ProductCardProps) {
   const { addToCart } = useCart();
   const productImage = getBestProductImage(product.id, product.categorySlug, product.images?.[0], product.sku);
 
@@ -28,6 +31,7 @@ export function ProductCard({ product, onEnquire }: ProductCardProps) {
             title={`${product.name} | ${product.category} – Portable Office Cabin`}
             aspectRatio="4/3"
             className="w-full h-full"
+            priority={priority}
           />
         </div>
         

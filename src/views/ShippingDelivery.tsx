@@ -16,7 +16,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "@/components/ui/static-motion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },

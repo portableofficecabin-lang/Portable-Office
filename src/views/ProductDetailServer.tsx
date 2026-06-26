@@ -149,8 +149,15 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
   const sizeText = sizeSpec?.value;
 
   return (
-    <Layout>
-      <JsonLd data={[structuredData, breadcrumb]} />
+    <>
+      {/* Preload the gallery hero (the eager, fetchPriority-high LCP image) so the
+          preload scanner starts it at <head> parse instead of after body markup. */}
+      {productImage && (
+        // @ts-expect-error fetchpriority is valid HTML, not yet in React's link types
+        <link rel="preload" as="image" href={productImage} fetchpriority="high" />
+      )}
+      <Layout>
+        <JsonLd data={[structuredData, breadcrumb]} />
 
       {/* Breadcrumb */}
       <section className="bg-muted/50 py-4 border-b border-border">
@@ -408,6 +415,7 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
           )}
         </div>
       </section>
-    </Layout>
+      </Layout>
+    </>
   );
 }
