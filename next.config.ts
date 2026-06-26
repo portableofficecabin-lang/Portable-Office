@@ -40,6 +40,35 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
 ];
 
+// Private/dynamic routes that must NEVER be cached by a browser, proxy or CDN
+// (they render per-user session/cart/admin data). These get an explicit no-store
+// at the edge AND most already export `dynamic = "force-dynamic"`. Keep this list
+// in sync with the Cloudflare "bypass cache" rule (see CLOUDFLARE_CACHE.md).
+const PRIVATE_PATHS = [
+  "/admin/:path*",
+  "/cart",
+  "/checkout",
+  "/login",
+  "/register",
+  "/my-account/:path*",
+  "/forgot-password",
+  "/reset-password",
+  "/auth/:path*",
+];
+const NO_STORE = "private, no-store, no-cache, must-revalidate, max-age=0";
+
+// Public/SEO HTML: the browser always revalidates (max-age=0) so users never see
+// stale HTML, but a shared cache / CDN MAY cache the document (s-maxage) and serve
+// it stale while it revalidates in the background. s-maxage is a sane default that
+// roughly mirrors the ISR `revalidate` windows used by the route segments (home /
+// listings 1h, product/category 30m, blog 24h); Cloudflare can refine per-path.
+const PUBLIC_HTML_CACHE = "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400";
+// Matches every path EXCEPT the private routes above, Next internals and API.
+// Errs on the safe side: anything starting with a private prefix is excluded, so a
+// session/cart/admin response can never receive the cacheable public header.
+const PUBLIC_HTML_MATCHER =
+  "/((?!admin|cart|checkout|login|register|my-account|forgot-password|reset-password|auth|api|_next).*)";
+
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
@@ -59,7 +88,15 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "portableofficecabin.com" },
       { protocol: "https", hostname: "ojemqfexagnevqbaszop.supabase.co" },
     ],
-    unoptimized: true,
+    // Next.js image optimization is ON (sharp is a prod dependency and is bundled
+    // with output:"standalone"). next/image call sites (Marketplace, promotion
+    // heroes) now get on-the-fly AVIF/WebP + responsive resizing; the first
+    // transform per (image,width,format) is cached on disk with a 1-year TTL and,
+    // behind Cloudflare, served from the edge thereafter. Raw <img> usages
+    // (hero, OptimizedImage, product/blog images) are unaffected and rely on the
+    // pre-resized static files instead.
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 31536000,
   },
   async redirects() {
     return [
@@ -69,6 +106,15 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
+    // ── Cache behaviour (route-wise) ───────────────────────────────────────────
+    // Cloudflare / CDN setup that pairs with these headers lives in
+    // CLOUDFLARE_CACHE.md. Summary of intent:
+    //   • /_next/static/*  → immutable, 1 year (content-hashed assets)
+    //   • /_next/image     → immutable, 1 year (optimized image variants)
+    //   • PRIVATE_PATHS    → no-store (never cached: admin, cart, checkout, login,
+    //                        register, my-account, forgot/reset-password, auth)
+    //   • everything else  → public, s-maxage + stale-while-revalidate (CDN-cacheable
+    //                        HTML, browser always revalidates)
     return [
       {
         source: "/:path*",
@@ -77,6 +123,23 @@ const nextConfig: NextConfig = {
       {
         source: "/_next/static/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        // Optimized image variants are content-addressed → safe to cache forever.
+        source: "/_next/image",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      // Private/dynamic routes — explicit no-store at the edge (defense-in-depth on
+      // top of force-dynamic). Listed before the public matcher; the public matcher
+      // excludes these prefixes so a route can never receive two Cache-Control values.
+      ...PRIVATE_PATHS.map((source) => ({
+        source,
+        headers: [{ key: "Cache-Control", value: NO_STORE }],
+      })),
+      // Public/SEO HTML — CDN-cacheable with background revalidation.
+      {
+        source: PUBLIC_HTML_MATCHER,
+        headers: [{ key: "Cache-Control", value: PUBLIC_HTML_CACHE }],
       },
     ];
   },

@@ -1,12 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { ShoppingCart, MessageSquare, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EnquiryModal } from "@/components/products/EnquiryModal";
 import { ShippingDeliveryModal } from "@/components/products/ShippingDeliveryModal";
 import { useCart } from "@/contexts/CartContext";
 import type { Product } from "@/data/products";
+
+// EnquiryModal is interaction-only and renders as a fixed overlay — defer its
+// chunk and mount it only when opened (it already returns null when closed), so
+// it leaves the /products/[slug] first-load JS without any layout shift.
+// ShippingDeliveryModal is kept statically imported because it renders an inline
+// trigger button that must be present in the SSR HTML (deferring it would pop the
+// button in after hydration and shift the content below — a CLS risk).
+const EnquiryModal = dynamic(
+  () => import("@/components/products/EnquiryModal").then((m) => ({ default: m.EnquiryModal })),
+  { ssr: false },
+);
 
 // Client island for the product CTAs (cart/enquiry are client-only). Kept minimal
 // so the surrounding product content stays server-rendered.
@@ -36,11 +47,13 @@ export function ProductActions({ product }: { product: Product }) {
         <ShippingDeliveryModal />
       </div>
 
-      <EnquiryModal
-        product={product}
-        isOpen={isEnquiryOpen}
-        onClose={() => setIsEnquiryOpen(false)}
-      />
+      {isEnquiryOpen && (
+        <EnquiryModal
+          product={product}
+          isOpen={isEnquiryOpen}
+          onClose={() => setIsEnquiryOpen(false)}
+        />
+      )}
     </>
   );
 }

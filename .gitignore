@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .next/
+
+# Originals of bulk-resized images (kept on disk for restore; not committed)
+image-backups/
