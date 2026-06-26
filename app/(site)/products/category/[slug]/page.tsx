@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ProductsPage from "@/views/Products";
+import { CategoryListingWithParams } from "@/views/Products";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -13,7 +13,6 @@ const SITE = "https://portableofficecabin.com";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page?: string }>;
 };
 
 export async function generateStaticParams() {
@@ -36,9 +35,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export default async function Page({ params, searchParams }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const { page } = await searchParams;
 
   const [products, categories] = await Promise.all([
     getAllProductsMerged(),
@@ -57,11 +55,13 @@ export default async function Page({ params, searchParams }: PageProps) {
           { name: category.name, url: `${SITE}/products/category/${slug}` },
         ])}
       />
-      <ProductsPage
+      {/* No searchParams in the page → static/ISR (revalidate=1800 now effective).
+          activeCategory comes from the path slug so content stays server-rendered
+          and crawlable; ?page deep-links are resolved client-side after hydration. */}
+      <CategoryListingWithParams
         products={products}
         categories={categories}
         activeCategory={slug}
-        currentPage={page ? parseInt(page, 10) || 1 : 1}
         basePath={`/products/category/${slug}`}
       />
     </>

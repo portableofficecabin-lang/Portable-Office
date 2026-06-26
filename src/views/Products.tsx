@@ -460,3 +460,41 @@ export function ProductsListingWithParams({
     />
   );
 }
+
+/**
+ * Client bridge for the /products/category/[slug] route. activeCategory comes from
+ * the path (a server prop), so the category's filtered content + crawlable A–Z index
+ * are present in the static HTML and the route stays SSG/ISR (revalidate honoured).
+ * Only ?page is read client-side after hydration — exactly like
+ * ProductsListingWithParams — so deep-linked pagination still works WITHOUT awaiting
+ * searchParams on the server (which would force the whole route into dynamic
+ * rendering and run Supabase round-trips on every request → TTFB tax).
+ */
+export function CategoryListingWithParams({
+  products,
+  categories,
+  activeCategory,
+  basePath,
+}: {
+  products: Product[];
+  categories: Category[];
+  activeCategory: string;
+  basePath: string;
+}) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const pageParam = new URLSearchParams(window.location.search).get("page");
+    setCurrentPage(pageParam ? parseInt(pageParam, 10) || 1 : 1);
+  }, []);
+
+  return (
+    <ProductsPageContent
+      products={products}
+      categories={categories}
+      activeCategory={activeCategory}
+      currentPage={currentPage}
+      basePath={basePath}
+    />
+  );
+}
