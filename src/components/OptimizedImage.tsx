@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { generateGeoAlt, generateImageTitle } from "@/utils/imageGeoTagging";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
@@ -12,7 +13,11 @@ interface OptimizedImageProps {
   className?: string;
   width?: number;
   height?: number;
-  priority?: boolean; // Load immediately without lazy loading
+  priority?: boolean; // Load immediately (eager + fetchpriority high) — LCP images only
+  /** Responsive `sizes` hint so next/image fetches a variant matched to the slot,
+   *  not the full-resolution file. Default biases slightly large (full-width on
+   *  mobile, half-width on desktop) to avoid under-fetch/blur on section images. */
+  sizes?: string;
   aspectRatio?: "square" | "video" | "portrait" | "auto" | string;
   objectFit?: "cover" | "contain" | "fill" | "none";
   geoTag?: boolean; // Auto-append geo-location to alt/title
@@ -36,6 +41,7 @@ export function OptimizedImage({
   width,
   height,
   priority = false,
+  sizes = "(max-width: 768px) 100vw, 50vw",
   aspectRatio = "auto",
   objectFit = "cover",
   geoTag = true,
@@ -64,6 +70,12 @@ export function OptimizedImage({
     none: "object-none",
   }[objectFit];
 
+  // Only a real aspect ratio reserves a fixed-size box. For those we can safely use
+  // next/image with `fill` (it needs a sized parent). For aspectRatio="auto" there
+  // is no reserved height, so `fill` would collapse the image — keep a plain <img>
+  // there (behavior unchanged; the underlying file is already pre-resized).
+  const isFixedBox = aspectRatio !== "auto";
+
   return (
     <div
       className={cn(
@@ -76,10 +88,27 @@ export function OptimizedImage({
         height: height ? `${height}px` : undefined,
       }}
     >
-      {/* Render the <img> directly in server HTML and defer off-screen images
-          with native loading="lazy" — no per-image IntersectionObserver/effect,
-          which removes that work from the main thread during hydration. */}
-      {!hasError && (
+      {/* For fixed-aspect slots, next/image (fill) serves AVIF/WebP sized to the
+          slot via `sizes` (fixes over-delivery) and the box is reserved by the
+          aspect-ratio wrapper (no layout shift). Visual output is identical to the
+          old <img>: fills the box with object-cover. Off-screen images stay lazy;
+          only `priority` ones are eager. */}
+      {!hasError && resolvedSrc && isFixedBox ? (
+        <Image
+          src={resolvedSrc}
+          alt={geoAlt}
+          title={imgTitle}
+          fill
+          sizes={sizes}
+          priority={priority}
+          onLoad={onLoad}
+          onError={handleError}
+          className={cn("w-full h-full", objectFitClass)}
+        />
+      ) : null}
+
+      {/* auto-height slots — plain <img> (no fixed box for fill). */}
+      {!hasError && resolvedSrc && !isFixedBox ? (
         <img
           src={resolvedSrc}
           alt={geoAlt}
@@ -88,12 +117,12 @@ export function OptimizedImage({
           height={height}
           loading={priority ? "eager" : "lazy"}
           decoding={priority ? "sync" : "async"}
-          {...(priority ? { fetchPriority: "high" as any } : {})}
+          {...(priority ? { fetchPriority: "high" as const } : {})}
           onLoad={onLoad}
           onError={handleError}
           className={cn("w-full h-full", objectFitClass)}
         />
-      )}
+      ) : null}
 
       {/* Error fallback */}
       {hasError && (

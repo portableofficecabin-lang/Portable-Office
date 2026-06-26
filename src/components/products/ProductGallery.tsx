@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
@@ -56,6 +57,7 @@ export function ProductGallery({
           productName={productName}
           aspectRatio="4/3"
           className="rounded-2xl"
+          sizes="(max-width: 1024px) 100vw, 50vw"
           priority
         />
       </div>
@@ -68,17 +70,19 @@ export function ProductGallery({
               type="button"
               onClick={() => setActiveImage(img)}
               aria-label={`View image ${i + 1} of ${productName}`}
-              className={`aspect-square rounded-lg overflow-hidden border-2 transition ${
+              className={`relative aspect-square rounded-lg overflow-hidden border-2 transition ${
                 activeImage === img ? "border-accent" : "border-transparent hover:border-muted-foreground/30"
               }`}
             >
-              <img
-                src={img}
+              {/* Thumbnails are tiny (~80px) — serve a matched variant via next/image
+                  so they aren't shipped at full resolution (fixes image-delivery). */}
+              <Image
+                src={resolveImageUrl(img)}
                 alt={imageMeta?.[i]?.alt || `${productImageAlt} – view ${i + 1}`}
                 title={imageMeta?.[i]?.title || `${imageTitle} – view ${i + 1}`}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 20vw, 110px"
+                className="object-cover"
               />
             </button>
           ))}

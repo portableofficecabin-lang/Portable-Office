@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,8 +11,16 @@ import { CartProvider } from "@/contexts/CartContext";
 
 function ScrollToTop() {
   const pathname = usePathname();
+  // Skip the initial mount: scrolling on first load is a no-op (the page already
+  // loads at the top) but the synchronous window.scrollTo forces a layout reflow
+  // during hydration (PSI "Forced reflow"). Only reset scroll on real route changes.
+  const isFirst = useRef(true);
 
   useEffect(() => {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 

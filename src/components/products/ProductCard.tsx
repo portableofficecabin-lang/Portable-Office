@@ -32,6 +32,7 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
             aspectRatio="4/3"
             className="w-full h-full"
             priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         </div>
         
