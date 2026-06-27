@@ -96,6 +96,13 @@ export function ProductsPageContent({
             </nav>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-1.5 h-10 bg-gradient-to-b from-accent to-amber-light rounded-full" />
+              {/* ▶ LCP ELEMENT (/products and /products/category/[slug], mobile):
+                  this H1 is the LCP — the page header is a pure CSS-gradient band with
+                  NO image, so the largest above-the-fold paint is this display-size
+                  heading text. It needs no image optimization; it paints as soon as
+                  the HTML + (display:swap) font fallback arrive, i.e. it is gated only
+                  by TTFB, not by any asset. The first product card image below is
+                  preloaded as a desktop LCP fallback (ProductCard `priority`). */}
               <h1 className="font-display text-4xl sm:text-5xl font-bold">
                 {activeCategoryObj ? activeCategoryObj.name : "Our Products"}
               </h1>

@@ -13,6 +13,22 @@ const highlights = [
 export function HeroSection() {
   return (
     <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      {/* ▶ LCP ELEMENT (home page, mobile): this full-bleed hero background image
+          (hero-bg-mobile.webp ≈ 26 KB on mobile / hero-bg.webp ≈ 74 KB desktop) is
+          the Largest Contentful Paint candidate. On wider viewports the H1 below can
+          win instead — both paint immediately.
+          It is intentionally a preloaded, art-directed <picture>/<img> (NOT a CSS
+          background-image and NOT next/image):
+            • <link rel=preload as=image fetchpriority=high> in app/layout.tsx makes
+              the preload scanner fetch the correct variant at <head> parse — same
+              priority next/image priority would give, but earlier.
+            • <picture media> art-directs a smaller, differently-cropped file to
+              mobile; next/image cannot do per-breakpoint art direction.
+            • Static pre-optimized webp → no request-time sharp on the origin.
+            • width/height set → zero CLS.
+          Do NOT "convert to next/image" — it would lose art direction and add origin
+          CPU for no LCP gain. The CSS-background anti-pattern this guards against is
+          already avoided. */}
       <picture className="absolute inset-0 z-0">
         <source media="(max-width: 768px)" srcSet="/assets/hero-bg-mobile.webp" type="image/webp" />
         <source srcSet="/assets/hero-bg.webp" type="image/webp" />
@@ -136,17 +152,21 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Hero Image */}
-          <div 
+          {/* Hero Image (decorative, DESKTOP ONLY — NOT the LCP element).
+              `hidden lg:block` + loading="lazy" means mobile browsers never download
+              this 900px cabin photo: a display:none lazy image is not fetched, so
+              mobile (the field-CWV audience) pays zero bytes for it. Keeping it lazy
+              is correct — the LCP is the full-bleed background above, not this. */}
+          <div
             className="hidden lg:block relative animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
             <div className="relative">
               <div className="absolute -inset-8 bg-gradient-to-r from-accent/30 to-amber-light/20 rounded-3xl blur-3xl" />
               <div className="relative bg-gradient-to-br from-white/12 to-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-2xl">
-                <img 
-                  src={resolveImageUrl(heroCabin)} 
-                  alt="Premium Portable Cabin - Ready to Deploy" 
+                <img
+                  src={resolveImageUrl(heroCabin)}
+                  alt="Premium Portable Cabin - Ready to Deploy"
                   loading="lazy"
                   decoding="async"
                   className="w-full h-auto rounded-xl object-cover shadow-xl"

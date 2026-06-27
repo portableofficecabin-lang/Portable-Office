@@ -150,8 +150,14 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
 
   return (
     <>
-      {/* Preload the gallery hero (the eager, fetchPriority-high LCP image) so the
-          preload scanner starts it at <head> parse instead of after body markup. */}
+      {/* ▶ LCP ELEMENT (product detail, mobile): the main product gallery image.
+          On mobile the lg:grid-cols-2 layout stacks, so this image is the first and
+          largest above-the-fold paint (the H1 sits below it). It is optimized three
+          ways: (1) this <link rel=preload as=image fetchpriority=high> starts the
+          fetch at <head> parse, before the gallery island markup; (2) ProductGallery
+          renders it via next/image with `priority` + `sizes="(max-width:1024px) 100vw,
+          50vw"` (AVIF/WebP, slot-sized); (3) the 4/3 aspect-ratio box reserves space
+          → no CLS. No further code change improves this element. */}
       {productImage && (
         // @ts-expect-error fetchpriority is valid HTML, not yet in React's link types
         <link rel="preload" as="image" href={productImage} fetchpriority="high" />
