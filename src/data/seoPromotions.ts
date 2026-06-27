@@ -134,7 +134,7 @@ const keywordImagePools: Record<string, string[]> = {
     "/images/products/labour-hutments-staff-accommodation-1.webp",
     "/images/products/labor-hutments-aerial.webp",
     "/images/products/workmen-accommodation-main.webp",
-    "/images/products/labour-colony-aerial.png",
+    "/images/products/labour-colony-aerial.webp",
     "/images/products/family-prefab-home-2bhk-rear.webp",
     "/images/products/family-prefab-home-2bhk-glass-facade.webp",
     "/images/products/portable-cabin-40ft-bunkhouse.webp",
