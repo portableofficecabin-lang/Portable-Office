@@ -5,12 +5,12 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 const footerLinks = {
   products: [
-    { name: "Portable Cabins", href: "/products?category=portable-cabins" },
-    { name: "Site Office Containers", href: "/products?category=site-office-containers" },
-    { name: "Container Offices", href: "/products?category=container-offices" },
-    { name: "Prefab Homes", href: "/products?category=prefab-homes" },
-    { name: "Portable Toilets", href: "/products?category=portable-toilet-cabins" },
-    { name: "Security Cabins", href: "/products?category=security-cabins" },
+    { name: "Portable Cabins", href: "/products/category/portable-cabins" },
+    { name: "Site Office Containers", href: "/products/category/site-office-containers" },
+    { name: "Container Offices", href: "/products/category/container-offices" },
+    { name: "Prefab Homes", href: "/products/category/prefab-homes" },
+    { name: "Portable Toilets", href: "/products/category/portable-toilet-cabins" },
+    { name: "Security Cabins", href: "/products/category/security-cabins" },
   ],
   company: [
     { name: "About Us", href: "/about-us" },

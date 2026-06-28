@@ -54,12 +54,12 @@ const routeLinks: Array<{ match: RegExp; links: InternalLinkItem[] }> = [
     links: [
       {
         label: "Cargo Storage Containers",
-        href: "/products?category=cargo-storage-shipping-containers",
+        href: "/products/category/cargo-storage-shipping-containers",
         description: "See sale, rental, and conversion-ready steel container options.",
       },
       {
         label: "Container Office Solutions",
-        href: "/products?category=container-offices",
+        href: "/products/category/container-offices",
         description: "Compare insulated, office-ready modular container workspaces.",
       },
       {

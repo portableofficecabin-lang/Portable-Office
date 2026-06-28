@@ -57,7 +57,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const productPages: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${SITE_URL}/products/${getProductSlug(product)}.html`,
+    // Clean canonical product URL (no `.html`) — matches the page's rel=canonical.
+    url: `${SITE_URL}/products/${getProductSlug(product)}`,
     lastModified: LAST_MOD,
     changeFrequency: "weekly",
     priority: 0.8,

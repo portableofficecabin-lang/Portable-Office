@@ -479,7 +479,7 @@ export default function AdminCategories() {
                 placeholder="portable-cabins"
               />
               <p className="text-xs text-muted-foreground">
-                Used in URLs: /products?category={formData.slug || "..."}
+                Used in URLs: /products/category/{formData.slug || "..."}
               </p>
             </div>
 

@@ -180,53 +180,57 @@ const keywordImagePools: Record<string, string[]> = {
   ],
 };
 
+// Internal links use the CANONICAL URL forms only: path-based category pages
+// (/products/category/<slug>) and clean product URLs (no `.html`). This avoids
+// emitting links to non-canonical URLs (the Ahrefs "non-canonical specified as
+// canonical" issue). Legacy `?category=`/`.html` URLs 301 here (see next.config.ts).
 const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
   "portable-cabins": [
-    { name: "Portable Cabins", href: "/products?category=portable-cabins" },
-    { name: "Porta Cabin", href: "/products/porta-cabin.html" },
-    { name: "MS Portable Cabin", href: "/products/ms-portable-cabins.html" },
+    { name: "Portable Cabins", href: "/products/category/portable-cabins" },
+    { name: "Porta Cabin", href: "/products/porta-cabin" },
+    { name: "MS Portable Cabin", href: "/products/ms-portable-cabins" },
     { name: "View All Products", href: "/products" },
   ],
   "container-offices": [
-    { name: "Container Offices", href: "/products?category=container-offices" },
-    { name: "Container Office", href: "/products/container-office.html" },
-    { name: "Cabins in Office", href: "/products/cabins-in-office.html" },
+    { name: "Container Offices", href: "/products/category/container-offices" },
+    { name: "Container Office", href: "/products/container-office" },
+    { name: "Cabins in Office", href: "/products/cabins-in-office" },
     { name: "View All Products", href: "/products" },
   ],
   "site-office-containers": [
-    { name: "Site Office Containers", href: "/products?category=site-office-containers" },
-    { name: "Standard Site Office", href: "/products/standard-site-office-container.html" },
-    { name: "Construction Site Office", href: "/products/construction-site-portable-office.html" },
+    { name: "Site Office Containers", href: "/products/category/site-office-containers" },
+    { name: "Standard Site Office", href: "/products/standard-site-office-container" },
+    { name: "Construction Site Office", href: "/products/construction-site-portable-office" },
     { name: "View All Products", href: "/products" },
   ],
   "cargo-storage-shipping-containers": [
-    { name: "Cargo Storage Containers", href: "/products?category=cargo-storage-shipping-containers" },
-    { name: "Cargo Containers", href: "/products/cargo-containers.html" },
-    { name: "Shipping Container", href: "/products/new-used-shipping-container-for-sale-in-india.html" },
+    { name: "Cargo Storage Containers", href: "/products/category/cargo-storage-shipping-containers" },
+    { name: "Cargo Containers", href: "/products/cargo-containers" },
+    { name: "Shipping Container", href: "/products/new-used-shipping-container-for-sale-in-india" },
     { name: "View All Products", href: "/products" },
   ],
   "labour-colony": [
-    { name: "Labour Colony", href: "/products/labour-colony.html" },
-    { name: "Labour Hutments", href: "/products/prefabricated-labour-hutments-staff-accommodation.html" },
-    { name: "Workmen Accommodation", href: "/products/workmen-accommodation.html" },
+    { name: "Labour Colony", href: "/products/labour-colony" },
+    { name: "Labour Hutments", href: "/products/prefabricated-labour-hutments-staff-accommodation" },
+    { name: "Workmen Accommodation", href: "/products/workmen-accommodation" },
     { name: "View All Products", href: "/products" },
   ],
   "bunker-bed-container-cabin": [
-    { name: "Bunkhouse Cabin", href: "/products/portable-cabin-40ft-bunkhouse.html" },
-    { name: "Workmen Accommodation", href: "/products/workmen-accommodation.html" },
-    { name: "Labour Hutments", href: "/products/labor-hutments.html" },
+    { name: "Bunkhouse Cabin", href: "/products/portable-cabin-40ft-bunkhouse" },
+    { name: "Workmen Accommodation", href: "/products/workmen-accommodation" },
+    { name: "Labour Hutments", href: "/products/labor-hutments" },
     { name: "View All Products", href: "/products" },
   ],
   "security-cabins": [
-    { name: "Security Cabins", href: "/products?category=security-cabins" },
-    { name: "Guard Security Cabin", href: "/products/guard-security-cabin.html" },
-    { name: "Security Cabin", href: "/products/security-cabin.html" },
+    { name: "Security Cabins", href: "/products/category/security-cabins" },
+    { name: "Guard Security Cabin", href: "/products/guard-security-cabin" },
+    { name: "Security Cabin", href: "/products/security-cabin" },
     { name: "View All Products", href: "/products" },
   ],
   "portable-toilet-cabins": [
-    { name: "Portable Toilet Cabins", href: "/products?category=portable-toilet-cabins" },
-    { name: "4-Unit Toilet Block", href: "/products/portable-toilet-block-4-unit.html" },
-    { name: "Portable Cabins", href: "/products?category=portable-cabins" },
+    { name: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+    { name: "4-Unit Toilet Block", href: "/products/portable-toilet-block-4-unit" },
+    { name: "Portable Cabins", href: "/products/category/portable-cabins" },
     { name: "View All Products", href: "/products" },
   ],
 };
@@ -397,9 +401,9 @@ function generateContent(
   const faqs = generateUniqueFAQs(keyword, location, variation);
   
   const relatedProductLinks = categoryRelatedLinks[categorySlug] ?? [
-    { name: "Portable Cabins", href: "/products?category=portable-cabins" },
-    { name: "Container Offices", href: "/products?category=container-offices" },
-    { name: "Site Office Containers", href: "/products?category=site-office-containers" },
+    { name: "Portable Cabins", href: "/products/category/portable-cabins" },
+    { name: "Container Offices", href: "/products/category/container-offices" },
+    { name: "Site Office Containers", href: "/products/category/site-office-containers" },
     { name: "View All Products", href: "/products" },
   ];
 

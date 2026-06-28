@@ -8,10 +8,10 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 const linkClusters = [
   {
     pillar: "Portable Cabins",
-    pillarHref: "/products?category=portable-cabins",
+    pillarHref: "/products/category/portable-cabins",
     description: "Our flagship portable cabin range covers site offices, worker accommodation, and custom structures for every budget.",
     links: [
-      { label: "All Portable Cabins", href: "/products?category=portable-cabins" },
+      { label: "All Portable Cabins", href: "/products/category/portable-cabins" },
       { label: "Executive Portable Cabin 20ft", href: "/products/executive-portable-cabin-20ft" },
       { label: "Porta Cabin (All Types)", href: "/products/porta-cabin" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
@@ -20,22 +20,22 @@ const linkClusters = [
   },
   {
     pillar: "Container Offices & Site Offices",
-    pillarHref: "/products?category=container-offices",
+    pillarHref: "/products/category/container-offices",
     description: "Heavy-duty container offices and site office containers built for real construction environments across India.",
     links: [
-      { label: "All Container Offices", href: "/products?category=container-offices" },
+      { label: "All Container Offices", href: "/products/category/container-offices" },
       { label: "Container Office", href: "/products/container-office" },
       { label: "Modern Container Office", href: "/products/modern-container-office" },
       { label: "Standard Site Office Container", href: "/products/standard-site-office-container" },
-      { label: "Site Office Containers (All)", href: "/products?category=site-office-containers" },
+      { label: "Site Office Containers (All)", href: "/products/category/site-office-containers" },
     ],
   },
   {
     pillar: "Prefab Homes & Villas",
-    pillarHref: "/products?category=prefab-homes",
+    pillarHref: "/products/category/prefab-homes",
     description: "Factory-built prefabricated homes installed in days — 2BHK, 3BHK, villas and resort accommodations.",
     links: [
-      { label: "All Prefab Homes", href: "/products?category=prefab-homes" },
+      { label: "All Prefab Homes", href: "/products/category/prefab-homes" },
       { label: "Family Prefab Home 2BHK", href: "/products/family-prefab-home-2bhk" },
       { label: "Luxury Prefab Villa G+1 Floors", href: "/products/luxury-prefab-villa-g-1-floors" },
       { label: "Labour Shed Prefabricated Structures", href: "/blog/labour-shed-prefabricated-structures" },
@@ -43,21 +43,21 @@ const linkClusters = [
   },
   {
     pillar: "Security & Toilet Cabins",
-    pillarHref: "/products?category=security-cabins",
+    pillarHref: "/products/category/security-cabins",
     description: "Compact guard cabins for 360° visibility and hygienic portable toilet blocks for sites and events.",
     links: [
-      { label: "All Security Cabins", href: "/products?category=security-cabins" },
+      { label: "All Security Cabins", href: "/products/category/security-cabins" },
       { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
       { label: "Portable Toilet Block - 4 Unit", href: "/products/portable-toilet-block-4-unit" },
-      { label: "Portable Toilet Cabins (All)", href: "/products?category=portable-toilet-cabins" },
+      { label: "Portable Toilet Cabins (All)", href: "/products/category/portable-toilet-cabins" },
     ],
   },
   {
     pillar: "Cargo Storage & Shipping Containers",
-    pillarHref: "/products?category=cargo-storage-shipping-containers",
+    pillarHref: "/products/category/cargo-storage-shipping-containers",
     description: "ISO-grade steel containers for material storage, warehousing, and secure logistics across India.",
     links: [
-      { label: "All Storage Solutions", href: "/products?category=cargo-storage-shipping-containers" },
+      { label: "All Storage Solutions", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "20ft / 40ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "New / Used Shipping Container", href: "/products/new-used-shipping-container-for-sale-in-india" },
       { label: "Container Rental Services", href: "/products/shipping-container-rental" },
@@ -90,11 +90,11 @@ export function InternalLinkingHub() {
             Explore Everything We Manufacture
           </h2>
           <p className="text-muted-foreground max-w-3xl mx-auto text-sm leading-relaxed">
-            India's most comprehensive range of <Link href="/products?category=portable-cabins" className="text-accent hover:underline font-medium">portable cabins</Link>,{" "}
-            <Link href="/products?category=container-offices" className="text-accent hover:underline font-medium">container offices</Link>,{" "}
-            <Link href="/products?category=prefab-homes" className="text-accent hover:underline font-medium">prefab homes</Link>,{" "}
-            <Link href="/products?category=security-cabins" className="text-accent hover:underline font-medium">security cabins</Link>, and{" "}
-            <Link href="/products?category=cargo-storage-shipping-containers" className="text-accent hover:underline font-medium">cargo storage containers</Link>.{" "}
+            India's most comprehensive range of <Link href="/products/category/portable-cabins" className="text-accent hover:underline font-medium">portable cabins</Link>,{" "}
+            <Link href="/products/category/container-offices" className="text-accent hover:underline font-medium">container offices</Link>,{" "}
+            <Link href="/products/category/prefab-homes" className="text-accent hover:underline font-medium">prefab homes</Link>,{" "}
+            <Link href="/products/category/security-cabins" className="text-accent hover:underline font-medium">security cabins</Link>, and{" "}
+            <Link href="/products/category/cargo-storage-shipping-containers" className="text-accent hover:underline font-medium">cargo storage containers</Link>.{" "}
             Manufactured at our Bangalore facility and delivered pan-India.
           </p>
         </div>
@@ -147,12 +147,12 @@ export function InternalLinkingHub() {
               <h3 className="font-display font-bold text-base text-foreground mb-3">Popular Searches</h3>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { label: "Portable Cabin Price", href: "/products?category=portable-cabins" },
+                  { label: "Portable Cabin Price", href: "/products/category/portable-cabins" },
                   { label: "Porta Cabin Manufacturer", href: "/products/porta-cabin" },
-                  { label: "Site Office Container", href: "/products?category=site-office-containers" },
-                  { label: "Prefab Home India", href: "/products?category=prefab-homes" },
-                  { label: "Container Office Bangalore", href: "/products?category=container-offices" },
-                  { label: "Security Cabin", href: "/products?category=security-cabins" },
+                  { label: "Site Office Container", href: "/products/category/site-office-containers" },
+                  { label: "Prefab Home India", href: "/products/category/prefab-homes" },
+                  { label: "Container Office Bangalore", href: "/products/category/container-offices" },
+                  { label: "Security Cabin", href: "/products/category/security-cabins" },
                 ].map((tag) => (
                   <Link
                     key={tag.label}
@@ -169,11 +169,11 @@ export function InternalLinkingHub() {
               <h3 className="font-display font-bold text-base text-foreground mb-3">Applications</h3>
               <ul className="space-y-1.5">
                 {[
-                  { label: "Construction Site Offices", href: "/products?category=site-office-containers" },
-                  { label: "Worker Accommodation Units", href: "/products?category=portable-cabins" },
-                  { label: "Industrial Security Cabins", href: "/products?category=security-cabins" },
-                  { label: "Event Portable Toilets", href: "/products?category=portable-toilet-cabins" },
-                  { label: "Farmhouse & Resort Homes", href: "/products?category=prefab-homes" },
+                  { label: "Construction Site Offices", href: "/products/category/site-office-containers" },
+                  { label: "Worker Accommodation Units", href: "/products/category/portable-cabins" },
+                  { label: "Industrial Security Cabins", href: "/products/category/security-cabins" },
+                  { label: "Event Portable Toilets", href: "/products/category/portable-toilet-cabins" },
+                  { label: "Farmhouse & Resort Homes", href: "/products/category/prefab-homes" },
                 ].map((item) => (
                   <li key={item.label}>
                     <Link

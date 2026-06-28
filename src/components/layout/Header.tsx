@@ -22,21 +22,21 @@ const navigation = [
 ];
 
 const productCategories = [
-  { name: "Portable Cabins", href: "/products?category=portable-cabins" },
-  { name: "Container Offices", href: "/products?category=container-offices" },
-  { name: "Site Office Containers", href: "/products?category=site-office-containers" },
-  { name: "Cargo & Shipping Containers", href: "/products?category=cargo-storage-shipping-containers" },
-  { name: "Prefab Homes", href: "/products?category=prefab-homes" },
-  { name: "Security Cabins", href: "/products?category=security-cabins" },
-  { name: "Portable Toilet Cabins", href: "/products?category=portable-toilet-cabins" },
-  { name: "G+1 Workmen Accommodation", href: "/products?category=g1-workmen-accommodation" },
-  { name: "Labour Colony", href: "/products?category=labour-colony" },
-  { name: "Bunker Bed Container Cabin", href: "/products?category=bunker-bed-container-cabin" },
-  { name: "PEB Buildings", href: "/products?category=peb-building" },
-  { name: "Storage Sheds", href: "/products?category=storage-shed" },
-  { name: "Fabrication", href: "/products?category=fabrication" },
-  { name: "Modular Furniture", href: "/products?category=modular-furniture" },
-  { name: "UPVC Windows & Doors", href: "/products?category=upvc-windows-doors" },
+  { name: "Portable Cabins", href: "/products/category/portable-cabins" },
+  { name: "Container Offices", href: "/products/category/container-offices" },
+  { name: "Site Office Containers", href: "/products/category/site-office-containers" },
+  { name: "Cargo & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+  { name: "Prefab Homes", href: "/products/category/prefab-homes" },
+  { name: "Security Cabins", href: "/products/category/security-cabins" },
+  { name: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+  { name: "G+1 Workmen Accommodation", href: "/products/category/g1-workmen-accommodation" },
+  { name: "Labour Colony", href: "/products/category/labour-colony" },
+  { name: "Bunker Bed Container Cabin", href: "/products/category/bunker-bed-container-cabin" },
+  { name: "PEB Buildings", href: "/products/category/peb-building" },
+  { name: "Storage Sheds", href: "/products/category/storage-shed" },
+  { name: "Fabrication", href: "/products/category/fabrication" },
+  { name: "Modular Furniture", href: "/products/category/modular-furniture" },
+  { name: "UPVC Windows & Doors", href: "/products/category/upvc-windows-doors" },
 ];
 
 export function Header() {

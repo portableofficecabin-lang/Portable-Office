@@ -59,7 +59,7 @@ export function ProductRangeSection() {
           {products.map((p) => (
             <Link
               key={p.slug}
-              href={`/products?category=${p.slug}`}
+              href={`/products/category/${p.slug}`}
               className="group block bg-card border border-border/50 rounded-2xl p-6 hover:border-accent/50 hover:shadow-lg transition-all"
             >
               <h3 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors">

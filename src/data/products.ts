@@ -1538,7 +1538,10 @@ export const getProductSlug = (product: Product): string => {
 };
 
 export const getProductDetailPath = (product: Product): string => {
-  return `/products/${getProductSlug(product)}.html`;
+  // Clean URL (no `.html`) — this is the single canonical product URL form used by
+  // internal links, the sitemap and JSON-LD, matching the `rel=canonical` tag.
+  // Legacy `.html` URLs 301-redirect here (see next.config.ts redirects).
+  return `/products/${getProductSlug(product)}`;
 };
 
 export const getProductBySlug = (slug: string): Product | undefined => {

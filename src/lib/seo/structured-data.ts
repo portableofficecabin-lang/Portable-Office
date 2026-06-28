@@ -99,7 +99,7 @@ export function generateProductStructuredData(product: {
         ? "https://schema.org/RefurbishedCondition"
         : "https://schema.org/NewCondition";
   const productUrl = product.slug
-    ? `https://portableofficecabin.com/products/${product.slug}.html`
+    ? `https://portableofficecabin.com/products/${product.slug}`
     : "https://portableofficecabin.com/products";
 
   const reviews = product.reviews ?? [];

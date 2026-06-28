@@ -103,6 +103,19 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/about-us", permanent: true },
       { source: "/projects", destination: "/gallery", permanent: true },
       { source: "/terms", destination: "/terms-and-conditions", permanent: true },
+      // ── SEO canonical consolidation ────────────────────────────────────────
+      // Product URLs are now the clean form (no `.html`); the page's rel=canonical,
+      // sitemap, internal links and JSON-LD all use it. 301 the legacy `.html`
+      // form to the clean URL so old/indexed/external links consolidate.
+      { source: "/products/:slug.html", destination: "/products/:slug", permanent: true },
+      // NOTE: legacy `/products?category=<x>` URLs are intentionally NOT redirected.
+      // All internal links now use the canonical path form (/products/category/<x>),
+      // so nothing advertises the query form. Old/external `?category=` links still
+      // work (the static /products page applies the filter client-side) and correctly
+      // canonicalise to /products. A redirect here can't be clean: Next.js always
+      // forwards the original query string, so `?category=x` → /products/category/x
+      // would land on `/products/category/x?category=x` (a new non-canonical URL),
+      // and redirecting to /products would loop. Client-side filter + canonical wins.
     ];
   },
   async headers() {
