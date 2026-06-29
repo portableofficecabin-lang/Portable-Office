@@ -243,6 +243,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Prefabricated labour colony for construction sites & industrial projects. G+1/G+2 modular camps for 50–500 workers. ₹350–1,000+/sq ft. Get a free quote!",
     keywords: "labour colony, prefab labour colony, labour camp India, worker accommodation, prefab dormitory, G+1 labour colony, construction worker housing, labour hutments, modular labour colony, portable camp",
   },
+  // VIP Container Office
+  "41": {
+    title: "VIP Container Office — Luxury Portable Office Cabin India",
+    h1: "VIP Container Office",
+    description: "Premium VIP container office for sale & rent in India. Fully furnished, AC, insulated, glass façade & executive interiors. Get a free quote from Portable Office Cabin.",
+    keywords: "VIP container office, luxury container office, VIP portable office cabin, executive container office, premium office container, VIP container office price, furnished container office, modern container office, VIP office cabin India",
+  },
 };
 
 export function getProductSEO(productId: string, productName: string): ProductSEOData {

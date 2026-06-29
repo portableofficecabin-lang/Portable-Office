@@ -27,9 +27,10 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/", 1.0),
   entry("/products", 0.9),
   // Dedicated product landing pages (static routes that win over /products/[slug]).
+  // NOTE: /products/vip-container-office is a real catalog product now, so it is
+  // emitted by the product loop below — do not list it here (avoids a duplicate).
   entry("/products/portable-cabin", 0.8, "weekly"),
   entry("/products/portable-toilet-cabin", 0.8, "weekly"),
-  entry("/products/vip-container-office", 0.8, "weekly"),
   entry("/marketplace", 0.85, "weekly"),
   entry("/promotions", 0.85, "weekly"),
   entry("/rental-service", 0.8, "monthly"),

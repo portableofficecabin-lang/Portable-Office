@@ -1,18 +1,17 @@
 import Link from "next/link";
 import {
-  Snowflake, Sparkles, Lightbulb, PanelsTopLeft, Sofa, Bath, Brush,
-  ShieldCheck, HardHat, Building2, Megaphone, Factory, PartyPopper,
+  Sparkles, ShieldCheck, HardHat, Building2, Megaphone, Factory, PartyPopper,
   CheckCircle2, Phone, MessageCircle, ChevronRight, Truck, IndianRupee,
   ClipboardList, CalendarCheck, PackageCheck, Headset,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { OptimizedImage } from "@/components/OptimizedImage";
+import { JsonLd } from "@/components/JsonLd";
+import { generateFAQSchema } from "@/lib/seo/structured-data";
 
-// Single source of truth for the page's images and FAQ — also consumed by the
-// route (app/(site)/products/vip-container-office/page.tsx) for the OG image and
-// the FAQPage JSON-LD, so the on-page accordion and the schema never drift.
-const IMG_DIR = "/images/products/vip-container-office";
-export const VIP_HERO_IMAGE = `${IMG_DIR}/vip-container-office.webp`;
+// Rich, non-duplicative marketing content for the VIP Container Office PRODUCT page.
+// The product template (ProductDetailServer) already renders the image gallery,
+// visible price, specifications and key-features list, so this component deliberately
+// omits those and adds the narrative sections + an FAQ (with FAQPage JSON-LD).
 
 const CONTACT = {
   tel: "+919731897976",
@@ -35,7 +34,7 @@ export const VIP_FAQS: { question: string; answer: string }[] = [
   {
     question: "How much does a VIP container office cost in India?",
     answer:
-      "Price depends on size, finish, furnishing, add-ons, and whether you buy or rent. We provide a free, transparent, itemised quote for your specific requirement.",
+      "Our standard 40×14×9 ft VIP container office starts at ₹8,00,000 (GST and transport extra). The final price depends on size, finish, furnishing, add-ons, and whether you buy or rent. We provide a free, transparent, itemised quote for your specific requirement.",
   },
   {
     question: "Is the VIP container office air-conditioned?",
@@ -59,7 +58,6 @@ export const VIP_FAQS: { question: string; answer: string }[] = [
   },
 ];
 
-// Small, reusable presentational bits keep the long page readable & consistent.
 function SectionHeading({ id, icon: Icon, children }: { id: string; icon: React.ElementType; children: React.ReactNode }) {
   return (
     <h2 id={id} className="scroll-mt-24 font-display text-2xl sm:text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
@@ -84,17 +82,6 @@ function QuoteCta({ label = "Get a Free Quote" }: { label?: string }) {
   );
 }
 
-const FEATURES = [
-  { icon: ShieldCheck, title: "High-grade thermal insulation", desc: "PUF or rockwool sandwich panels for year-round comfort." },
-  { icon: Sparkles, title: "Premium interiors", desc: "Laminated wall panelling, vinyl or wooden flooring, and a false ceiling with concealed lighting." },
-  { icon: Snowflake, title: "Climate control", desc: "Split air conditioning fitted as standard." },
-  { icon: Lightbulb, title: "Modern lighting & power", desc: "Ambient LED lighting and ample power points." },
-  { icon: PanelsTopLeft, title: "Glass façade / large windows", desc: "Natural light and a contemporary, high-end look." },
-  { icon: Sofa, title: "Executive furniture options", desc: "Desks, conference table, cabinets, and seating." },
-  { icon: Bath, title: "Attached washroom & pantry", desc: "Self-contained configurations available on request." },
-  { icon: Brush, title: "Branding-ready exterior", desc: "Wrapped or painted in your company colours." },
-];
-
 const USE_CASES = [
   { icon: HardHat, title: "Construction & infrastructure", desc: "Premium project offices for directors and client visits." },
   { icon: Building2, title: "Real estate", desc: "On-site booking offices and sales lounges that close deals." },
@@ -112,25 +99,6 @@ const COMPARISON = [
   { aspect: "Windows", standard: "Standard", vip: "Large glass / glass façade" },
   { aspect: "Furniture", standard: "Optional / basic", vip: "Executive options included" },
   { aspect: "Look & feel", standard: "Utilitarian", vip: "Modern & professional" },
-];
-
-const SPECS = [
-  { feature: "Structure", spec: "Heavy-gauge steel frame, corrosion-resistant" },
-  { feature: "Wall panels", spec: "Insulated PUF / rockwool sandwich panels" },
-  { feature: "Flooring", spec: "Anti-skid vinyl or laminated wooden finish" },
-  { feature: "Ceiling", spec: "False ceiling with concealed LED lighting" },
-  { feature: "Climate control", spec: "Split AC fitted as standard" },
-  { feature: "Windows & doors", spec: "Glass façade / sliding glass windows, secure door" },
-  { feature: "Sizes", spec: "20 ft, 40 ft & custom dimensions" },
-  { feature: "Add-ons", spec: "Washroom, pantry, partitions, furniture, branding" },
-];
-
-const PRICE_FACTORS = [
-  "Size and layout — larger and multi-room units cost more",
-  "Level of finish and furnishing — premium interiors, AC, and furniture",
-  "Sale or rental — buy outright or hire on a flexible monthly basis",
-  "Add-ons — washrooms, pantries, partitions, and custom branding",
-  "Delivery distance — transport and installation to your site location",
 ];
 
 const PROCESS = [
@@ -151,80 +119,28 @@ const WHY_US = [
   "End-to-end service — design, delivery, installation, and support handled for you",
 ];
 
-const TOC = [
-  { id: "what-is", label: "What is it" },
-  { id: "features", label: "Features" },
-  { id: "uses", label: "Where it's used" },
-  { id: "vs-standard", label: "VIP vs standard" },
-  { id: "specifications", label: "Specifications" },
-  { id: "price", label: "Price" },
-  { id: "buy-or-rent", label: "Buy or rent" },
-  { id: "process", label: "Process" },
-  { id: "why-us", label: "Why us" },
-  { id: "faq", label: "FAQ" },
-];
-
 export function VipContainerOfficeContent() {
   return (
     <div className="space-y-16">
-      {/* On-this-page quick nav — easy reading / jump-to-section */}
-      <nav aria-label="On this page" className="rounded-2xl border border-border bg-card/50 p-4">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">On this page</span>
-        <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-          {TOC.map((t) => (
-            <li key={t.id}>
-              <a href={`#${t.id}`} className="text-accent hover:underline">{t.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <JsonLd data={generateFAQSchema(VIP_FAQS)} />
 
       {/* What is it */}
       <section>
         <SectionHeading id="what-is" icon={Sparkles}>What Is a VIP Container Office?</SectionHeading>
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-4 text-muted-foreground leading-relaxed">
-            <p>
-              A <strong className="text-foreground">VIP container office</strong> is a premium grade of portable office cabin built on a durable steel frame and finished to executive standards. Unlike a basic site cabin meant only for shelter and storage, a VIP container office is engineered for comfort and presentation — high-grade insulation, modern interiors, climate control, and large glass windows that flood the space with natural light.
-            </p>
-            <p>
-              Because it&apos;s prefabricated and modular, a VIP container office can be transported on a truck, placed on almost any flat surface, and relocated when your needs change. It gives you the polish of a permanent office with the flexibility of a portable one.
-            </p>
-          </div>
-          <OptimizedImage
-            src={`${IMG_DIR}/vip-container-office-exterior.webp`}
-            alt="Premium VIP container office exterior with glass façade in India"
-            aspectRatio="3/2"
-            geoTag={false}
-            className="rounded-2xl shadow-lg"
-          />
-        </div>
-      </section>
-
-      {/* Features */}
-      <section>
-        <SectionHeading id="features" icon={Sparkles}>Features of Our VIP Container Office</SectionHeading>
-        <p className="text-muted-foreground mb-8 leading-relaxed">
-          Every VIP container office is built to a premium specification and can be customised to your brand and requirements:
-        </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {FEATURES.map((f) => (
-            <div key={f.title} className="bg-card border border-border rounded-xl p-5 hover:shadow-md transition-shadow">
-              <f.icon className="h-7 w-7 text-accent mb-3" />
-              <h3 className="font-semibold text-foreground text-sm mb-1.5">{f.title}</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-8">
-          <QuoteCta label="Enquire About a VIP Container Office" />
+        <div className="space-y-4 text-muted-foreground leading-relaxed max-w-3xl">
+          <p>
+            A <strong className="text-foreground">VIP container office</strong> is a premium grade of portable office cabin built on a durable steel frame and finished to executive standards. Unlike a basic site cabin meant only for shelter and storage, a VIP container office is engineered for comfort and presentation — high-grade insulation, modern interiors, climate control, and large glass windows that flood the space with natural light.
+          </p>
+          <p>
+            Because it&apos;s prefabricated and modular, a VIP container office can be transported on a truck, placed on almost any flat surface, and relocated when your needs change. It gives you the polish of a permanent office with the flexibility of a portable one.
+          </p>
         </div>
       </section>
 
       {/* Where used */}
       <section>
         <SectionHeading id="uses" icon={Building2}>Where a VIP Container Office Is Used</SectionHeading>
-        <p className="text-muted-foreground mb-8 leading-relaxed">
+        <p className="text-muted-foreground mb-8 leading-relaxed max-w-3xl">
           A VIP container office is the right choice anywhere presentation matters as much as function:
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -240,30 +156,6 @@ export function VipContainerOfficeContent() {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Exterior gallery */}
-      <section aria-label="VIP container office gallery" className="grid sm:grid-cols-2 gap-5">
-        <figure className="space-y-2">
-          <OptimizedImage
-            src={`${IMG_DIR}/vip-container-office-side.webp`}
-            alt="Side view of VIP container office with premium grey finish in India"
-            aspectRatio="3/2"
-            geoTag={false}
-            className="rounded-2xl shadow-lg"
-          />
-          <figcaption className="text-xs text-muted-foreground text-center italic">Clean, professional exterior — branding-ready in your company colours</figcaption>
-        </figure>
-        <figure className="space-y-2">
-          <OptimizedImage
-            src={`${IMG_DIR}/vip-container-office-entrance.webp`}
-            alt="VIP container office entrance with executive door and glass façade in India"
-            aspectRatio="3/2"
-            geoTag={false}
-            className="rounded-2xl shadow-lg"
-          />
-          <figcaption className="text-xs text-muted-foreground text-center italic">Executive entrance with secure door and full-height glazing</figcaption>
-        </figure>
       </section>
 
       {/* Comparison */}
@@ -289,58 +181,6 @@ export function VipContainerOfficeContent() {
             </tbody>
           </table>
         </div>
-      </section>
-
-      {/* Specifications */}
-      <section>
-        <SectionHeading id="specifications" icon={ClipboardList}>Key Specifications</SectionHeading>
-        <p className="text-muted-foreground mb-6 leading-relaxed">
-          While every unit can be tailored, our VIP container offices typically feature:
-        </p>
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          <div className="overflow-x-auto bg-card rounded-xl shadow-card border border-border">
-            <table className="w-full text-sm">
-              <tbody>
-                {SPECS.map((row, i) => (
-                  <tr key={row.feature} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                    <td className="px-5 py-3 font-medium text-foreground w-2/5">{row.feature}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{row.spec}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <OptimizedImage
-            src={`${IMG_DIR}/vip-container-office-interior.webp`}
-            alt="Furnished VIP container office interior with AC, desk and executive seating"
-            aspectRatio="3/2"
-            geoTag={false}
-            className="rounded-2xl shadow-lg"
-          />
-        </div>
-        <p className="text-xs text-muted-foreground mt-3 italic">
-          Specifications are indicative and can be tailored to your project requirements.
-        </p>
-      </section>
-
-      {/* Price */}
-      <section className="bg-muted/30 rounded-2xl p-6 lg:p-8">
-        <SectionHeading id="price" icon={IndianRupee}>VIP Container Office Price — What Affects the Cost?</SectionHeading>
-        <p className="text-muted-foreground mb-5 leading-relaxed">
-          The price of a VIP container office in India depends on a few key factors:
-        </p>
-        <ul className="space-y-3 mb-6">
-          {PRICE_FACTORS.map((f) => (
-            <li key={f} className="flex items-start gap-2.5">
-              <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-              <span className="text-sm text-muted-foreground">{f}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="text-muted-foreground mb-5 leading-relaxed">
-          Because every project is different, we provide a transparent, itemised quote with no hidden charges. Request your free, no-obligation quote and we&apos;ll respond promptly with the best price for your requirement.
-        </p>
-        <QuoteCta label="Request Your Free Quote" />
       </section>
 
       {/* Buy or rent */}

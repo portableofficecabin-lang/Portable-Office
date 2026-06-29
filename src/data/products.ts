@@ -1525,6 +1525,49 @@ export const products: Product[] = [
     featured: true,
     inStock: true,
   },
+  {
+    id: "41",
+    sku: "POC-VIP-40",
+    name: "VIP Container Office",
+    category: "Container Offices",
+    categorySlug: "container-offices",
+    slug: "vip-container-office",
+    description:
+      "The VIP Container Office is a premium, fully furnished portable office built on a heavy-gauge 40 ft steel container footprint and finished to executive standards. Air-conditioned, insulated and fitted with a glass façade, modern interiors and a false ceiling with concealed lighting, it delivers the polish of a permanent office with the flexibility of a relocatable one. Available for sale and on rent across India, every unit arrives ready to use — ideal for project offices, real estate sales lounges, corporate meeting rooms and executive cabins.",
+    shortDescription:
+      "Premium, fully furnished VIP container office — AC, insulated, glass façade and executive interiors. 40×14×9 ft. For sale & on rent across India.",
+    specifications: [
+      { label: "Overall Size", value: "40 ft (L) × 14 ft (W) × 9 ft (H)" },
+      { label: "Structure", value: "Heavy-gauge steel frame, corrosion-resistant" },
+      { label: "Wall Panels", value: "Insulated PUF / rockwool sandwich panels" },
+      { label: "Flooring", value: "Anti-skid vinyl or laminated wooden finish" },
+      { label: "Ceiling", value: "False ceiling with concealed LED lighting" },
+      { label: "Climate Control", value: "Split AC fitted as standard" },
+      { label: "Windows & Doors", value: "Glass façade / sliding glass windows, secure steel door" },
+      { label: "Add-ons", value: "Washroom, pantry, partitions, executive furniture, branding" },
+    ],
+    features: [
+      "High-grade thermal insulation — PUF or rockwool sandwich panels for year-round comfort",
+      "Premium interiors — laminated wall panelling, vinyl or wooden flooring, false ceiling with concealed lighting",
+      "Split air conditioning fitted as standard",
+      "Ambient LED lighting and ample power points",
+      "Glass façade / large windows for natural light and a contemporary, high-end look",
+      "Executive furniture options — desks, conference table, cabinets and seating",
+      "Attached washroom & pantry — self-contained configurations on request",
+      "Branding-ready exterior — wrapped or painted in your company colours",
+    ],
+    images: [
+      "/images/products/vip-container-office/vip-container-office.webp",
+      "/images/products/vip-container-office/vip-container-office-exterior.webp",
+      "/images/products/vip-container-office/vip-container-office-entrance.webp",
+      "/images/products/vip-container-office/vip-container-office-side.webp",
+      "/images/products/vip-container-office/vip-container-office-interior.webp",
+    ],
+    price: 800000,
+    priceLabel: "Starting Price (GST & Transport Extra)",
+    featured: true,
+    inStock: true,
+  },
 ];
 
 export const getProductsByCategory = (categorySlug: string): Product[] => {

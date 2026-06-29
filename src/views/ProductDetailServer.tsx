@@ -55,6 +55,7 @@ import { WorkmenAccommodationContent } from "@/components/products/WorkmenAccomm
 import { LabourColonyContent } from "@/components/products/LabourColonyContent";
 import { SiteOfficeContainerContent } from "@/components/products/SiteOfficeContainerContent";
 import { PortableCabinContent } from "@/components/products/PortableCabinContent";
+import { VipContainerOfficeContent } from "@/components/products/VipContainerOfficeContent";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -353,7 +354,8 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
           {cs === "container-offices" && slug === "container-office" && <div className="mt-16"><ContainerOfficeGenericContent /></div>}
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}
-          {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent /></div>}
+          {cs === "container-offices" && slug === "vip-container-office" && <div className="mt-16"><VipContainerOfficeContent /></div>}
+          {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-for-sale" && <div className="mt-16"><ShippingContainerForSaleContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent /></div>}
