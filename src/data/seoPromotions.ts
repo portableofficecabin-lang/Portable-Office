@@ -193,6 +193,7 @@ const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
   ],
   "container-offices": [
     { name: "Container Offices", href: "/products/category/container-offices" },
+    { name: "VIP Container Office", href: "/products/vip-container-office" },
     { name: "Container Office", href: "/products/container-office" },
     { name: "Cabins in Office", href: "/products/cabins-in-office" },
     { name: "View All Products", href: "/products" },

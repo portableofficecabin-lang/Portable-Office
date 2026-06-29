@@ -24,6 +24,7 @@ const linkClusters = [
     description: "Heavy-duty container offices and site office containers built for real construction environments across India.",
     links: [
       { label: "All Container Offices", href: "/products/category/container-offices" },
+      { label: "VIP Container Office", href: "/products/vip-container-office" },
       { label: "Container Office", href: "/products/container-office" },
       { label: "Modern Container Office", href: "/products/modern-container-office" },
       { label: "Standard Site Office Container", href: "/products/standard-site-office-container" },
