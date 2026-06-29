@@ -8,6 +8,11 @@ export interface Product {
   name: string;
   category: string;
   categorySlug: string;
+  /** Optional canonical slug override. When set, this is THE single URL form for the
+   *  product (used by static params, rel=canonical, sitemap, internal links and
+   *  JSON-LD) instead of the name-derived slug. Use it to give a product a short,
+   *  keyword-rich URL; 301 the old name-derived slug to it in next.config.ts. */
+  slug?: string;
   description: string;
   shortDescription: string;
   specifications: {
@@ -513,6 +518,7 @@ export const products: Product[] = [
     name: "MS Portable Cabins",
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
+    slug: "ms-portable-cabin",
     description: "Complete guide to MS portable cabins in India covering mild steel construction, standard sizes, price ranges, applications, customization options, and installation guidance for 2024–2025 buyers.",
     shortDescription: "Complete 2024–2025 guide to mild steel portable cabins in India",
     specifications: [
@@ -585,6 +591,7 @@ export const products: Product[] = [
     name: "New & Used Shipping Container for Sale in India",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
+    slug: "shipping-container-for-sale",
     description: "Shipping containers for sale in India for storage, site offices, and modular buildings. Available in 20 ft, 40 ft, and high cube options with delivery, installation, and custom conversion support.",
     shortDescription: "New and used shipping containers for storage, offices, and modular projects",
     specifications: [
@@ -617,6 +624,7 @@ export const products: Product[] = [
     name: "Cargo Container – Buy, Rent or Convert",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
+    slug: "cargo-container-for-sale",
     description: "Cargo containers for sale in India for storage, transport, rentals, and modular conversions. Available in 10 ft, 20 ft GP, 30 ft custom, 40 ft GP, 40 ft HC, and reefer formats with pan-India supply.",
     shortDescription: "Buy, rent, or convert cargo containers across India with delivery and fabrication support",
     specifications: [
@@ -1532,6 +1540,8 @@ export const getProductById = (id: string): Product | undefined => {
 };
 
 export const getProductSlug = (product: Product): string => {
+  // An explicit `slug` override always wins — it is the product's single canonical URL.
+  if (product.slug) return product.slug;
   const slug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const hasDuplicate = products.filter(p => p.name === product.name).length > 1;
   return hasDuplicate ? `${slug}-${product.id}` : slug;

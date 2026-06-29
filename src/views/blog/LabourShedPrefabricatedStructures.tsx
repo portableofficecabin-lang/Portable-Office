@@ -559,11 +559,11 @@ export default function LabourShedPrefabricatedStructures() {
           <h2 className="text-xl font-bold text-foreground mb-6">Related Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              { name: "Portable Cabins", slug: "portable-cabin" },
+              { name: "Portable Cabins", slug: "office-portable-cabin" },
               { name: "Container Offices", slug: "container-office" },
               { name: "Porta Cabins", slug: "porta-cabin" },
               { name: "Site Office Containers", slug: "standard-site-office-container" },
-              { name: "Portable Toilets", slug: "portable-toilet-cabin" },
+              { name: "Portable Toilets", slug: "portable-toilet-block-4-unit" },
               { name: "Security Cabins", slug: "security-cabin" }
             ].map((product) => (
               <Link

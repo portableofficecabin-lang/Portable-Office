@@ -57,6 +57,12 @@ export function buildPageMetadata({
     description,
     keywords,
     alternates: { canonical },
+    // Public SEO pages are explicitly indexable. This lives here (not on the root
+    // layout) so it applies ONLY to real content pages built via this helper — NOT
+    // to the not-found boundary or private routes. That prevents the layout's
+    // index,follow from colliding with Next's auto noindex on 404 renders (which
+    // produced the contradictory "index, follow" + "noindex" Ahrefs flagged).
+    robots: { index: true, follow: true },
     openGraph: {
       title: resolvedTitle,
       description,

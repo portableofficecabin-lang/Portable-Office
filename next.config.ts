@@ -100,22 +100,32 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/about", destination: "/about-us", permanent: true },
-      { source: "/projects", destination: "/gallery", permanent: true },
-      { source: "/terms", destination: "/terms-and-conditions", permanent: true },
-      // ── SEO canonical consolidation ────────────────────────────────────────
-      // Product URLs are now the clean form (no `.html`); the page's rel=canonical,
-      // sitemap, internal links and JSON-LD all use it. 301 the legacy `.html`
-      // form to the clean URL so old/indexed/external links consolidate.
-      { source: "/products/:slug.html", destination: "/products/:slug", permanent: true },
-      // NOTE: legacy `/products?category=<x>` URLs are intentionally NOT redirected.
-      // All internal links now use the canonical path form (/products/category/<x>),
-      // so nothing advertises the query form. Old/external `?category=` links still
-      // work (the static /products page applies the filter client-side) and correctly
-      // canonicalise to /products. A redirect here can't be clean: Next.js always
-      // forwards the original query string, so `?category=x` → /products/category/x
-      // would land on `/products/category/x?category=x` (a new non-canonical URL),
-      // and redirecting to /products would loop. Client-side filter + canonical wins.
+      { source: "/about", destination: "/about-us", statusCode: 301 },
+      { source: "/projects", destination: "/gallery", statusCode: 301 },
+      { source: "/terms", destination: "/terms-and-conditions", statusCode: 301 },
+      // ── Legacy .html → clean extensionless URLs ───────────────────────────
+      // Product `.html` URLs 301 to the clean form (the page's rel=canonical,
+      // sitemap, internal links and JSON-LD all use the clean form).
+      { source: "/products/:slug.html", destination: "/products/:slug", statusCode: 301 },
+      // Known legacy top-level `.html` landing pages → their clean product pages.
+      // Add more here if Search Console reports other indexed `.html` URLs.
+      { source: "/portable-cabin.html", destination: "/products/portable-cabin", statusCode: 301 },
+      { source: "/portable-toilet-cabin.html", destination: "/products/portable-toilet-cabin", statusCode: 301 },
+      // ── Canonical product-slug consolidation ──────────────────────────────
+      // Short, keyword-rich slugs are now the SINGLE canonical URL for these
+      // products (set via the `slug` override in src/data/products.ts). 301 the
+      // older name-derived slugs onto them so existing/indexed links consolidate.
+      { source: "/products/ms-portable-cabins", destination: "/products/ms-portable-cabin", statusCode: 301 },
+      { source: "/products/new-used-shipping-container-for-sale-in-india", destination: "/products/shipping-container-for-sale", statusCode: 301 },
+      { source: "/products/cargo-container-buy-rent-or-convert", destination: "/products/cargo-container-for-sale", statusCode: 301 },
+      // Other legacy aliases that point at the canonical short slugs / products.
+      { source: "/products/shipping-container", destination: "/products/shipping-container-for-sale", statusCode: 301 },
+      { source: "/products/cargo-storage-container-shipping-container", destination: "/products/20ft-40ft-storage-container-corten-steel", statusCode: 301 },
+      // NOTE: legacy `/products?category=<x>` URLs 301 → `/products/category/<x>`
+      // in middleware.ts. It is handled there (not here) because next.config
+      // redirects always forward the original query string, so a config redirect
+      // would land on `/products/category/x?category=x` (a new non-canonical URL).
+      // Middleware can build a clean Location with no query, which SEO requires.
     ];
   },
   async headers() {
@@ -145,9 +155,15 @@ const nextConfig: NextConfig = {
       // Private/dynamic routes — explicit no-store at the edge (defense-in-depth on
       // top of force-dynamic). Listed before the public matcher; the public matcher
       // excludes these prefixes so a route can never receive two Cache-Control values.
+      // Also send `X-Robots-Tag: noindex, nofollow` so these never get indexed even
+      // if linked/discovered (robots.txt only blocks crawling, not indexing of the
+      // URL). Public/SEO pages get NO X-Robots-Tag and keep their <meta robots> index.
       ...PRIVATE_PATHS.map((source) => ({
         source,
-        headers: [{ key: "Cache-Control", value: NO_STORE }],
+        headers: [
+          { key: "Cache-Control", value: NO_STORE },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
       })),
       // Public/SEO HTML — CDN-cacheable with background revalidation.
       {

@@ -5,6 +5,10 @@ interface ProductSEOData {
   title: string;
   description: string;
   keywords: string;
+  /** Optional H1 override. When omitted, the H1 is derived from `title` (brand
+   *  suffix stripped). Set it to decouple a short on-page H1 from a longer,
+   *  keyword-rich <title>. */
+  h1?: string;
 }
 
 const productSEOMap: Record<string, ProductSEOData> = {
@@ -70,9 +74,10 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // MS Portable Cabin
   "11": {
-    title: "MS Portable Cabins Guide (2024–2025) | Portable Office Cabin",
-    description: "Complete guide to MS portable cabins in India with sizes, specs, prices, applications, and material comparison for 2024–2025. Get a quote today.",
-    keywords: "MS portable cabins, mild steel portable cabins, MS portable cabin price India, MS cabin sizes, portable office cabin India, site office cabin, security cabin, labour accommodation cabin",
+    title: "MS Portable Cabin Manufacturer in India | Portable Office Cabin",
+    h1: "MS Portable Cabin",
+    description: "MS portable cabin manufacturer in India — mild steel site offices, security & accommodation cabins with PUF insulation, custom sizes and fast pan-India delivery.",
+    keywords: "MS portable cabin, MS portable cabin manufacturer India, mild steel portable cabin, MS portable cabin price India, MS cabin sizes, portable office cabin India, site office cabin, security cabin, labour accommodation cabin",
   },
   // 20ft & 40ft Storage Container – Corten Steel
   "12": {
@@ -89,6 +94,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // New & Used Shipping Container for Sale in India
   "14": {
     title: "Shipping Container for Sale in India | Portable Office Cabin",
+    h1: "Shipping Container for Sale",
     description: "Buy new or used shipping containers in India – 20 ft, 40 ft & high cube. Storage, offices & modular buildings with delivery, installation & conversion support.",
     keywords: "shipping container for sale India, new shipping container price, used shipping container for sale, 20 ft shipping container, 40 ft shipping container, buy shipping container India, container for sale near me",
   },
@@ -106,8 +112,9 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   // Cargo Container – Buy, Rent or Convert
   "17": {
-    title: "Cargo Container – Buy, Rent, Convert | Portable Office Cabin",
-    description: "Cargo containers on sale, rent or lease in India. 10 ft to 40 ft HC & reefer formats with in-house conversion for offices, homes & modular infrastructure.",
+    title: "Cargo Container for Sale in India | Portable Office Cabin",
+    h1: "Cargo Container for Sale",
+    description: "Cargo containers for sale, rent or lease in India. 10 ft to 40 ft HC & reefer formats with in-house conversion for offices, homes & modular infrastructure.",
     keywords: "cargo container for sale, cargo container on rent India, container rental India, cargo container conversion, 20 ft cargo container price, 40 ft container rent, reefer container India, container lease India",
   },
   // Shipping Container Rental
@@ -257,5 +264,6 @@ export function getProductPrimaryKeyword(productId: string, productName: string)
 }
 
 export function getProductH1(productId: string, productName: string): string {
-  return getProductSEOTitle(productId, productName) || productName;
+  const seo = getProductSEO(productId, productName);
+  return seo.h1 || getProductSEOTitle(productId, productName) || productName;
 }

@@ -59,7 +59,7 @@ const linkClusters = [
     links: [
       { label: "All Storage Solutions", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "20ft / 40ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
-      { label: "New / Used Shipping Container", href: "/products/new-used-shipping-container-for-sale-in-india" },
+      { label: "New / Used Shipping Container", href: "/products/shipping-container-for-sale" },
       { label: "Container Rental Services", href: "/products/shipping-container-rental" },
     ],
   },

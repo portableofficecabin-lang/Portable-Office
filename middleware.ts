@@ -43,20 +43,48 @@ function timingSafeEqual(a: string, b: string): boolean {
   return mismatch === 0;
 }
 
+// 301 the legacy query-category URL (/products?category=<slug>) to the canonical
+// path-based category URL (/products/category/<slug>), stripping the query so the
+// destination is clean. This is done in middleware — not in next.config redirects —
+// because config redirects always forward the original query string, which would
+// produce `/products/category/x?category=x` (a new non-canonical URL).
+function categoryQueryRedirect(request: NextRequest): NextResponse | null {
+  const { pathname, searchParams } = request.nextUrl;
+  if (pathname !== "/products") return null;
+  const category = searchParams.get("category");
+  if (!category) return null;
+
+  const url = request.nextUrl.clone();
+  url.search = ""; // drop ?category= (and any other query) → clean canonical URL
+  // Only well-formed slugs become a category path; anything else (empty/garbage)
+  // collapses to /products so we never 301 a real 200 into a 404.
+  url.pathname = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(category)
+    ? `/products/category/${category}`
+    : "/products";
+  return NextResponse.redirect(url, 301);
+}
+
 export async function middleware(request: NextRequest) {
+  // SEO: consolidate legacy ?category= URLs onto the canonical category path.
+  const categoryRedirect = categoryQueryRedirect(request);
+  if (categoryRedirect) return categoryRedirect;
+
+  // Plain /products (no category query) must NOT instantiate the Supabase auth
+  // client — keep public/SEO pages off the origin auth path so the CDN can serve
+  // cached HTML (TTFB). Only the admin area needs the session refresh below.
+  if (request.nextUrl.pathname === "/products") return NextResponse.next();
+
   const challenge = adminBasicAuthChallenge(request);
   if (challenge) return challenge;
 
   return updateSession(request);
 }
 
-// Scope middleware to the admin area ONLY. Its entire job is admin route
-// protection (Supabase getUser + role check) and the optional admin basic-auth
-// gate — none of which applies to public/SEO pages. Running it site-wide forced
-// every public request (incl. static/ISR HTML) through the Node origin and a
-// Supabase auth client instantiation, inflating TTFB and preventing the host/CDN
-// from serving cached HTML at the edge. Public pages now bypass middleware
-// entirely; client auth still refreshes via the browser Supabase client.
+// Middleware runs only for the admin area (Supabase getUser + role check + optional
+// basic-auth gate) and the exact `/products` path (for the ?category= 301 above).
+// Every other public/SEO page bypasses middleware entirely so static/ISR HTML can be
+// served from the edge without a Node origin round-trip; client auth still refreshes
+// via the browser Supabase client.
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/products"],
 };

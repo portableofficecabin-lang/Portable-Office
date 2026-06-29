@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   },
   description:
     "India's leading manufacturer of portable office cabins, site offices, container offices, prefab homes & labour colonies — PUF insulated, turnkey delivery.",
-  robots: { index: true, follow: true },
+  // NOTE: index/follow is intentionally NOT set here. The root layout applies to
+  // EVERY route including the not-found boundary, so a global index,follow collided
+  // with Next's auto noindex on 404 renders ("index, follow" + "noindex" conflict).
+  // Public SEO pages declare index,follow via buildPageMetadata instead; pages with
+  // no metadata (404, private routes) correctly get no index directive here.
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

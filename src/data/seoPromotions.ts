@@ -188,7 +188,7 @@ const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
   "portable-cabins": [
     { name: "Portable Cabins", href: "/products/category/portable-cabins" },
     { name: "Porta Cabin", href: "/products/porta-cabin" },
-    { name: "MS Portable Cabin", href: "/products/ms-portable-cabins" },
+    { name: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
     { name: "View All Products", href: "/products" },
   ],
   "container-offices": [
@@ -206,7 +206,7 @@ const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
   "cargo-storage-shipping-containers": [
     { name: "Cargo Storage Containers", href: "/products/category/cargo-storage-shipping-containers" },
     { name: "Cargo Containers", href: "/products/cargo-containers" },
-    { name: "Shipping Container", href: "/products/new-used-shipping-container-for-sale-in-india" },
+    { name: "Shipping Container", href: "/products/shipping-container-for-sale" },
     { name: "View All Products", href: "/products" },
   ],
   "labour-colony": [
