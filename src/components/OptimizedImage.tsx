@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { generateGeoAlt, generateImageTitle } from "@/utils/imageGeoTagging";
@@ -55,13 +55,28 @@ export function OptimizedImage({
   const imgTitle = title || (geoTag ? generateImageTitle(alt, productName) : undefined);
   const [hasError, setHasError] = useState(false);
 
+  // Reset the error state whenever the source changes, so switching the gallery's
+  // main image to a new (valid) URL is never hidden by a previous image's load
+  // failure. Without this, a transient error would "stick" until remount.
+  useEffect(() => {
+    setHasError(false);
+  }, [resolvedSrc]);
+
   const handleError = () => {
     setHasError(true);
     onError?.();
   };
 
-  const aspectClass =
-    aspectRatioClasses[aspectRatio] || `aspect-[${aspectRatio}]`;
+  // Known keyword ratios map to Tailwind classes. Arbitrary ratios (e.g. "4/3")
+  // use the native CSS `aspect-ratio` via inline style — NOT a runtime-built
+  // `aspect-[${aspectRatio}]` class. Tailwind only generates classes it can see as
+  // complete literals at build time, so a dynamically-constructed class may never
+  // exist in the CSS → the box collapses to 0 height and the image looks broken.
+  const keywordAspect = aspectRatioClasses[aspectRatio];
+  const arbitraryAspect =
+    keywordAspect === undefined && aspectRatio !== "auto"
+      ? aspectRatio.replace("/", " / ")
+      : undefined;
 
   const objectFitClass = {
     cover: "object-cover",
@@ -80,12 +95,13 @@ export function OptimizedImage({
     <div
       className={cn(
         "relative overflow-hidden bg-muted",
-        aspectClass,
+        keywordAspect,
         className
       )}
       style={{
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
+        aspectRatio: arbitraryAspect,
       }}
     >
       {/* For fixed-aspect slots, next/image (fill) serves AVIF/WebP sized to the

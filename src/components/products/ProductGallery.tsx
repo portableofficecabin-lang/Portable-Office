@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 interface ProductGalleryProps {
+  /** Image sources (string paths or static imports). Resolved + filtered here. */
   galleryImages: string[];
   productName: string;
   productImageAlt: string;
@@ -18,9 +19,11 @@ interface ProductGalleryProps {
   inStock?: boolean;
 }
 
-// Client island for the product image gallery. The first image is rendered
-// server-side (in HTML) by passing the resolved galleryImages; this island only
-// adds thumbnail-switching interactivity on top.
+// Client island for the product image gallery. Selection is INDEX-based so it is
+// immune to duplicate/normalised URL string-compare issues, and the main image is
+// updated in place (no `key` remount) so a thumbnail click switches it instantly
+// with no flash/reload. The first VALID image is selected on both server and client
+// (deterministic → no hydration mismatch).
 export function ProductGallery({
   galleryImages,
   productName,
@@ -30,28 +33,28 @@ export function ProductGallery({
   featured,
   inStock,
 }: ProductGalleryProps) {
+  // Normalise to real, non-empty URLs once. Empty/placeholder entries are dropped
+  // so they can never become the selected main image.
+  const images = galleryImages.map(resolveImageUrl).filter(Boolean);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  // Clamp in case the source list is shorter than a previously-selected index.
+  const index = activeIndex < images.length ? activeIndex : 0;
+
+  // No images at all → render nothing (the page layout handles the empty slot).
+  // We never show a "broken image" placeholder when real images exist.
+  if (images.length === 0) return null;
+
+  const mainSrc = images[index];
   const imageTitle = productImageTitle || productImageAlt;
-  const [activeImage, setActiveImage] = useState<string>(
-    galleryImages[0] ? resolveImageUrl(galleryImages[0]) : "",
-  );
-
-  useEffect(() => {
-    if (galleryImages[0]) setActiveImage(resolveImageUrl(galleryImages[0]));
-  }, [galleryImages]);
-
-  const productImage = activeImage || resolveImageUrl(galleryImages[0]);
-
-  // Per-image alt/title for the main image, based on which thumbnail is active.
-  const activeIndex = galleryImages.findIndex((img) => resolveImageUrl(img) === productImage);
-  const mainAlt = imageMeta?.[activeIndex]?.alt || productImageAlt;
-  const mainTitle = imageMeta?.[activeIndex]?.title || imageTitle;
+  const mainAlt = imageMeta?.[index]?.alt || productImageAlt;
+  const mainTitle = imageMeta?.[index]?.title || imageTitle;
 
   return (
     <div className="relative">
       <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden">
         <OptimizedImage
-          key={productImage}
-          src={productImage}
+          src={mainSrc}
           alt={mainAlt}
           title={mainTitle}
           productName={productName}
@@ -62,22 +65,23 @@ export function ProductGallery({
         />
       </div>
 
-      {galleryImages.length > 1 && (
+      {images.length > 1 && (
         <div className="mt-4 grid grid-cols-5 gap-2">
-          {galleryImages.map((img, i) => (
+          {images.map((src, i) => (
             <button
-              key={img}
+              key={`${i}-${src}`}
               type="button"
-              onClick={() => setActiveImage(img)}
+              onClick={() => setActiveIndex(i)}
               aria-label={`View image ${i + 1} of ${productName}`}
+              aria-current={i === index}
               className={`relative aspect-square rounded-lg overflow-hidden border-2 transition ${
-                activeImage === img ? "border-accent" : "border-transparent hover:border-muted-foreground/30"
+                i === index ? "border-accent" : "border-transparent hover:border-muted-foreground/30"
               }`}
             >
-              {/* Thumbnails are tiny (~80px) — serve a matched variant via next/image
-                  so they aren't shipped at full resolution (fixes image-delivery). */}
+              {/* Thumbnails are tiny (~110px) — serve a matched variant via next/image
+                  so they aren't shipped at full resolution (image-delivery budget). */}
               <Image
-                src={resolveImageUrl(img)}
+                src={src}
                 alt={imageMeta?.[i]?.alt || `${productImageAlt} – view ${i + 1}`}
                 title={imageMeta?.[i]?.title || `${imageTitle} – view ${i + 1}`}
                 fill

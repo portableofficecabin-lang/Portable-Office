@@ -111,6 +111,8 @@ interface Quotation {
   discount_before_type?: "percent" | "amount";
   discount_after_value?: number;
   discount_after_type?: "percent" | "amount";
+  advance_paid_value?: number;
+  advance_paid_type?: "percent" | "amount";
   notes: string;
   // Items
   items: ProductItem[];
@@ -366,6 +368,8 @@ const mapDbQuotation = (row: any, items: any[] = []): Quotation => ({
   client_email: row.client_email || "",
   subject: row.subject || "",
   gst_percent: Number(row.gst_percent ?? 18),
+  advance_paid_value: Number(row.advance_paid ?? 0),
+  advance_paid_type: "amount",
   terms: row.terms ? String(row.terms).split("\n").filter(Boolean) : [...DEFAULT_TERMS],
   notes: row.notes || "",
   status: (row.status || "draft") as Quotation["status"],
@@ -414,6 +418,8 @@ const saveRemoteQuotation = async (q: Quotation) => {
     subtotal: totals.subtotal,
     gst_amount: totals.gst,
     total_amount: totals.total,
+    advance_paid: totals.advancePaid,
+    balance_due: totals.balanceDue,
     gst_percent: q.gst_percent || 18,
     validity_days: parseInt(q.validity || "15", 10) || 15,
     terms: (q.terms || []).join("\n"),
@@ -605,6 +611,8 @@ const blankQuotation = (): Quotation => ({
   discount_before_type: "amount",
   discount_after_value: 0,
   discount_after_type: "amount",
+  advance_paid_value: 0,
+  advance_paid_type: "amount",
   notes: "",
   items: [emptyItem()],
   specs: DEFAULT_SPECS.map((s) => ({ ...s, id: uid() })),
@@ -642,7 +650,11 @@ const calcTotals = (q: Quotation) => {
   const daVal = Number(q.discount_after_value) || 0;
   const discountAfter = daType === "percent" ? (afterTaxBase * daVal) / 100 : daVal;
   const total = Math.max(0, afterTaxBase - discountAfter);
-  return { subtotal, discountBefore, taxable, gst: gstAmt, cgst, sgst, igst, discountAfter, total };
+  const apType = q.advance_paid_type || "amount";
+  const apVal = Number(q.advance_paid_value) || 0;
+  const advancePaid = Math.min(total, Math.max(0, apType === "percent" ? (total * apVal) / 100 : apVal));
+  const balanceDue = Math.max(0, total - advancePaid);
+  return { subtotal, discountBefore, taxable, gst: gstAmt, cgst, sgst, igst, discountAfter, total, advancePaid, balanceDue };
 };
 
 /* ============== GST/E-WAY BILL UQC (Unit Quantity Codes) ============== */
@@ -1366,6 +1378,28 @@ function QuotationForm({
                     </Select>
                   </div>
                 </Field>
+                <Field label="Advance Paid (on Grand Total)">
+                  <div className="flex gap-2">
+                    <NumberInput
+                      className="flex-1"
+                      min={0}
+                      value={q.advance_paid_value === 0 ? "" : q.advance_paid_value}
+                      placeholder="0"
+                      onChange={(e) => set({ advance_paid_value: parseFloat(e.target.value) || 0 })}
+                      onFocus={(e) => e.target.select()}
+                    />
+                    <Select
+                      value={q.advance_paid_type || "amount"}
+                      onValueChange={(v) => set({ advance_paid_type: v as "percent" | "amount" })}
+                    >
+                      <SelectTrigger className="w-24"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="amount">₹</SelectItem>
+                        <SelectItem value="percent">%</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </Field>
                 <div className="md:col-span-2"><Field label="Notes / Remarks"><Textarea rows={3} value={q.notes} onChange={(e) => set({ notes: e.target.value })} /></Field></div>
               </div>
             </AdminCardContent>
@@ -1449,7 +1483,7 @@ function QuotationForm({
               <div className="mt-6 border rounded-xl p-4 bg-muted/20">
                 <div className="flex items-center gap-2 mb-3">
                   <IndianRupee className="h-4 w-4 text-amber" />
-                  <h4 className="font-semibold text-sm">Discounts</h4>
+                  <h4 className="font-semibold text-sm">Discounts &amp; Advance</h4>
                   <span className="text-xs text-muted-foreground">(also editable in Basic › Commercial Details)</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1497,6 +1531,28 @@ function QuotationForm({
                       </Select>
                     </div>
                   </Field>
+                  <Field label="Advance Paid (on Grand Total)">
+                    <div className="flex gap-2">
+                      <NumberInput
+                        className="flex-1"
+                        min={0}
+                        value={q.advance_paid_value === 0 ? "" : q.advance_paid_value}
+                        placeholder="0"
+                        onChange={(e) => set({ advance_paid_value: parseFloat(e.target.value) || 0 })}
+                        onFocus={(e) => e.target.select()}
+                      />
+                      <Select
+                        value={q.advance_paid_type || "amount"}
+                        onValueChange={(v) => set({ advance_paid_type: v as "percent" | "amount" })}
+                      >
+                        <SelectTrigger className="w-24"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="amount">₹</SelectItem>
+                          <SelectItem value="percent">%</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </Field>
                 </div>
               </div>
 
@@ -1529,6 +1585,15 @@ function QuotationForm({
                 <div className="border-t pt-2 mt-2">
                   <Row label="Grand Total" value={fmt(totals.total)} bold />
                 </div>
+                {totals.advancePaid > 0 && (
+                  <>
+                    <Row
+                      label={`Advance Paid${q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}`}
+                      value={`- ${fmt(totals.advancePaid)}`}
+                    />
+                    <Row label="Balance Due" value={fmt(totals.balanceDue)} bold />
+                  </>
+                )}
               </div>
             </AdminCardContent>
           </AdminCard>
@@ -2235,6 +2300,8 @@ function Row({ label, value, bold }: { label: string; value: string; bold?: bool
 function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation: Quotation; onBack: () => void; onEdit: () => void; onConvert: (type: Quotation["doc_type"]) => void }) {
   const q = quotation;
   const totals = calcTotals(q);
+  // Once an advance is recorded, the customer only owes the balance — collect that via UPI.
+  const payable = totals.advancePaid > 0 ? totals.balanceDue : totals.total;
   const activeGstMode = gstModeForQuotation(q);
   const [generating, setGenerating] = useState(false);
   // Persist the watermark choice per quotation so reopening it later restores the
@@ -2288,7 +2355,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
   };
   const [upiQr, setUpiQr] = useState<string>("");
   const upiNote = `${q.quotation_number} ${q.client_name || ""}`.trim();
-  const upiUri = useMemo(() => buildUpiUri(totals.total, upiNote), [totals.total, upiNote]);
+  const upiUri = useMemo(() => buildUpiUri(payable, upiNote), [payable, upiNote]);
   useEffect(() => {
     let cancelled = false;
     QRCode.toDataURL(upiUri, { width: 320, margin: 1, errorCorrectionLevel: "M" })
@@ -2599,7 +2666,18 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       doc.setFillColor(232, 130, 38); doc.rect(totalsX - 2, y - 4, W - M - totalsX + 4, 7, "F");
       doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(10);
       doc.text("GRAND TOTAL:", totalsX, y + 1); doc.text(fmtPdf(totals.total), W - M - 2, y + 1, { align: "right" });
-      doc.setTextColor(0); y += 10;
+      doc.setTextColor(0); y += 8;
+      if (totals.advancePaid > 0) {
+        doc.setFont("helvetica", "normal"); doc.setFontSize(8.5);
+        const apLbl = `Advance Paid${q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}:`;
+        doc.text(apLbl, totalsX, y); doc.text("- " + fmtPdf(totals.advancePaid), W - M - 2, y, { align: "right" }); y += 5;
+        doc.setFillColor(30, 58, 95); doc.rect(totalsX - 2, y - 4, W - M - totalsX + 4, 7, "F");
+        doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(10);
+        doc.text("BALANCE DUE:", totalsX, y + 1); doc.text(fmtPdf(totals.balanceDue), W - M - 2, y + 1, { align: "right" });
+        doc.setTextColor(0); y += 10;
+      } else {
+        y += 2;
+      }
 
       // Tech Specs
       const filledSpecs = q.include_specs === false ? [] : q.specs.filter((s) => s.component || s.specification || s.material || s.thickness || s.brand);
@@ -2721,7 +2799,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         doc.text("UPI Payment (Scan & Pay)", M + 2, y + 24); doc.setTextColor(0);
         doc.setFont("helvetica", "normal"); doc.setFontSize(7.5);
         doc.text(`UPI ID: ${COMPANY.upi_id}`, M + 2, y + 28);
-        doc.text(`Payable: ${fmtPdf(totals.total)}`, M + 2, y + 32);
+        doc.text(`Payable: ${fmtPdf(payable)}`, M + 2, y + 32);
         doc.setFontSize(6.8); doc.setTextColor(100);
         doc.text("Works with GPay, PhonePe, Paytm, BHIM & all UPI apps", M + 2, y + 35);
         doc.setTextColor(0);
@@ -3203,6 +3281,14 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
             <div className="flex justify-between font-bold text-white px-2 py-1.5 mt-1" style={{ background: "#e88226" }}>
               <span>GRAND TOTAL:</span><span>{fmt(totals.total)}</span>
             </div>
+            {totals.advancePaid > 0 && (
+              <>
+                <div className="flex justify-between"><span>Advance Paid{q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}:</span><span>- {fmt(totals.advancePaid)}</span></div>
+                <div className="flex justify-between font-bold text-white px-2 py-1.5" style={{ background: "#1e3a5f" }}>
+                  <span>BALANCE DUE:</span><span>{fmt(totals.balanceDue)}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -3284,7 +3370,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
               <div className="mt-2 pt-2 border-t border-gray-300">
                 <div className="font-bold" style={{ color: "#1e3a5f" }}>UPI Payment</div>
                 <div>UPI ID: <b>{COMPANY.upi_id}</b></div>
-                <div>Payable Amount: <b>{fmt(totals.total)}</b></div>
+                <div>Payable Amount: <b>{fmt(payable)}</b></div>
                 <div className="text-gray-600">Scan QR with any UPI app (GPay, PhonePe, Paytm, BHIM)</div>
               </div>
             </div>
@@ -3292,7 +3378,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
               <div className="flex flex-col items-center justify-center px-2 border-l border-gray-300">
                 <img src={resolveImageUrl(upiQr)} alt="UPI Payment QR" className="w-24 h-24" />
                 <div className="text-[9px] font-bold mt-1" style={{ color: "#e88226" }}>SCAN & PAY</div>
-                <div className="text-[9px]">{fmt(totals.total)}</div>
+                <div className="text-[9px]">{fmt(payable)}</div>
               </div>
             )}
           </div>
