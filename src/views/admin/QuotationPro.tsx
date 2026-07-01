@@ -431,7 +431,16 @@ const saveRemoteQuotation = async (q: Quotation) => {
     ...(auth.user?.id ? { created_by: auth.user.id } : {}),
   };
 
-  const { error } = await supabase.from("quotations").upsert(payload as any, { onConflict: "id" });
+  let { error } = await supabase.from("quotations").upsert(payload as any, { onConflict: "id" });
+  // advance_paid / balance_due require the 20260630 migration. If the database
+  // hasn't been migrated yet, PostgREST rejects the whole upsert (PGRST204:
+  // "Could not find the 'advance_paid' column ... in the schema cache"). Retry
+  // without those two columns so the quotation still syncs — the advance stays in
+  // localStorage and will persist to the DB automatically once the migration runs.
+  if (error && (error.code === "PGRST204" || /schema cache|advance_paid|balance_due/i.test(error.message || ""))) {
+    const { advance_paid, balance_due, ...legacyPayload } = payload as Record<string, unknown>;
+    ({ error } = await supabase.from("quotations").upsert(legacyPayload as any, { onConflict: "id" }));
+  }
   if (error) throw error;
 
   await supabase.from("quotation_items").delete().eq("quotation_id", q.id);
