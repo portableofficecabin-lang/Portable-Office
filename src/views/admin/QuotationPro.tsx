@@ -129,6 +129,8 @@ interface Quotation {
 /* ==================== CONSTANTS ==================== */
 const COMPANY = {
   name: "PORTABLE OFFICE CABIN",
+  proprietor: "Shaikh Abdul Kalam",
+  trade_name: "Portable Office Cabin",
   address: "Door No. 2/149-6, Survey No. 222/1C, Addakurukki Village, Kamandoddi Post, Shoolagiri, Krishnagiri, Tamil Nadu – 635117",
   phone: "9019910931 / 9731897976",
   website: "portableofficecabin.com",
@@ -2401,8 +2403,13 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       const addrLines = doc.splitTextToSize(COMPANY.address, W - M - 32);
       addrLines.forEach((line: string, i: number) => doc.text(line, M + 28, y + 13.5 + i * 3));
 
+      // Proprietor / Trade name (GST legal-name vs trade-name compliance)
+      const propY = y + 13.5 + addrLines.length * 3 + 1.5;
+      doc.setFontSize(6.8); doc.setFont("helvetica", "normal"); doc.setTextColor(70);
+      doc.text(`Proprietor: ${COMPANY.proprietor}   |   Trade Name: ${COMPANY.trade_name}`, M + 28, propY);
+
       // Info pills row
-      const pillY = y + 20;
+      const pillY = propY + 3;
       doc.setFillColor(245, 247, 250); doc.roundedRect(M + 28, pillY, 42, 5, 1, 1, "F");
       doc.setFillColor(245, 247, 250); doc.roundedRect(M + 72, pillY, 36, 5, 1, 1, "F");
       doc.setFillColor(252, 240, 225); doc.roundedRect(M + 110, pillY, 50, 5, 1, 1, "F");
@@ -2412,7 +2419,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       doc.setTextColor(185, 94, 10);
       doc.text(`GSTIN: ${COMPANY.gst}`, M + 112, pillY + 3.4);
 
-      y += 28;
+      y = pillY + 8;
       // Subtle divider
       doc.setDrawColor(220, 225, 235); doc.setLineWidth(0.2); doc.line(M, y, W - M, y);
       y += 4;
@@ -3090,6 +3097,11 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: "#e88226" }}>Manufacturer · Supplier · Rental</p>
               </div>
               <p className="text-[10px] mt-2 text-gray-600 leading-relaxed max-w-[95%]">{COMPANY.address}</p>
+              <p className="text-[9.5px] mt-1 text-gray-700">
+                <span className="font-semibold" style={{ color: "#1e3a5f" }}>Proprietor:</span> {COMPANY.proprietor}
+                <span className="mx-1.5 text-gray-400">|</span>
+                <span className="font-semibold" style={{ color: "#1e3a5f" }}>Trade Name:</span> {COMPANY.trade_name}
+              </p>
 
               {/* Info pills */}
               <div className="flex flex-wrap gap-1.5 mt-2">
