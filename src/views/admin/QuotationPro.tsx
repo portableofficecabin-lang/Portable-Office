@@ -119,6 +119,10 @@ interface Quotation {
   specs: SpecRow[];
   include_specs?: boolean;
   include_gst?: boolean;
+  // When true, the document header leads with the proprietor's name
+  // (SHAIKH ABDUL KALAM) and shows the trade name "(Portable Office Cabin)" under
+  // it — the legal-name-first format a few customers ask for. Default false.
+  proprietor_first?: boolean;
   terms: string[];
   bank: BankDetails;
   status: "draft" | "pending" | "approved" | "rejected";
@@ -629,6 +633,7 @@ const blankQuotation = (): Quotation => ({
   specs: DEFAULT_SPECS.map((s) => ({ ...s, id: uid() })),
   include_specs: true,
   include_gst: true,
+  proprietor_first: false,
   terms: [...DEFAULT_TERMS],
   bank: {
     account_holder: "PORTABLE OFFICE CABIN",
@@ -1309,6 +1314,18 @@ function QuotationForm({
                     />
                     <label htmlFor="include-gst" className="text-sm cursor-pointer">
                       {q.include_gst !== false ? "GST applied to this document" : "GST disabled — totals exclude tax"}
+                    </label>
+                  </div>
+                </Field>
+                <Field label="Header: Owner Name First">
+                  <div className="flex items-center gap-3 h-10 px-3 border rounded-md bg-muted/20">
+                    <Switch
+                      id="proprietor-first"
+                      checked={q.proprietor_first === true}
+                      onCheckedChange={(v) => set({ proprietor_first: v })}
+                    />
+                    <label htmlFor="proprietor-first" className="text-sm cursor-pointer">
+                      {q.proprietor_first ? "SHAIKH ABDUL KALAM (Portable Office Cabin)" : `${COMPANY.name} (default)`}
                     </label>
                   </div>
                 </Field>
@@ -2397,11 +2414,21 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         if (logoData) doc.addImage(logoData, "PNG", M + 1, y + 1, 22, 22);
       } catch {}
 
-      // Company name (highlighted)
+      // Company name (highlighted). In owner-name-first mode the proprietor's name
+      // leads with the trade name in brackets on the SAME line, e.g.
+      // "SHAIKH ABDUL KALAM (Portable Office Cabin)".
       doc.setFontSize(20); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
-      doc.text(COMPANY.name.toUpperCase(), M + 28, y + 7);
+      if (q.proprietor_first) {
+        const ownerText = COMPANY.proprietor.toUpperCase();
+        doc.text(ownerText, M + 28, y + 7);
+        const ownerW = doc.getTextWidth(ownerText);
+        doc.setFontSize(10); doc.setFont("helvetica", "bold"); doc.setTextColor(90);
+        doc.text(`(${COMPANY.trade_name})`, M + 28 + ownerW + 2, y + 7);
+      } else {
+        doc.text(COMPANY.name.toUpperCase(), M + 28, y + 7);
+      }
 
-      // Tagline accent line + tagline
+      // Accent line + brand tagline
       doc.setDrawColor(232, 130, 38); doc.setLineWidth(0.6);
       doc.line(M + 28, y + 8.5, M + 36, y + 8.5);
       doc.setFontSize(6.5); doc.setFont("helvetica", "bold"); doc.setTextColor(232, 130, 38);
@@ -2412,13 +2439,18 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       const addrLines = doc.splitTextToSize(COMPANY.address, W - M - 32);
       addrLines.forEach((line: string, i: number) => doc.text(line, M + 28, y + 13.5 + i * 3));
 
-      // Proprietor / Trade name (GST legal-name vs trade-name compliance)
-      const propY = y + 13.5 + addrLines.length * 3 + 1.5;
-      doc.setFontSize(6.8); doc.setFont("helvetica", "normal"); doc.setTextColor(70);
-      doc.text(`Proprietor: ${COMPANY.proprietor}   |   Trade Name: ${COMPANY.trade_name}`, M + 28, propY);
+      // Proprietor / Trade name line (GST legal-name vs trade-name). Skipped in
+      // owner-name-first mode, where it's already the title + bracketed subtitle.
+      let belowAddr = y + 13.5 + addrLines.length * 3;
+      if (!q.proprietor_first) {
+        const propY = belowAddr + 1.5;
+        doc.setFontSize(6.8); doc.setFont("helvetica", "normal"); doc.setTextColor(70);
+        doc.text(`Proprietor: ${COMPANY.proprietor}   |   Trade Name: ${COMPANY.trade_name}`, M + 28, propY);
+        belowAddr = propY;
+      }
 
       // Info pills row
-      const pillY = propY + 3;
+      const pillY = belowAddr + 3;
       doc.setFillColor(245, 247, 250); doc.roundedRect(M + 28, pillY, 42, 5, 1, 1, "F");
       doc.setFillColor(245, 247, 250); doc.roundedRect(M + 72, pillY, 36, 5, 1, 1, "F");
       doc.setFillColor(252, 240, 225); doc.roundedRect(M + 110, pillY, 50, 5, 1, 1, "F");
@@ -3099,18 +3131,27 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
             {/* Company info */}
             <div className="flex-1 flex flex-col justify-center">
               <h1 className="text-[22px] font-bold leading-tight tracking-tight" style={{ color: "#1e3a5f", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
-                {COMPANY.name}
+                {q.proprietor_first ? (
+                  <>
+                    {COMPANY.proprietor.toUpperCase()}
+                    <span className="text-[14px] font-semibold text-gray-600 ml-1.5">({COMPANY.trade_name})</span>
+                  </>
+                ) : (
+                  COMPANY.name
+                )}
               </h1>
               <div className="flex items-center gap-1.5 mt-2">
                 <div className="h-[2px] w-8" style={{ background: "#e88226" }} />
                 <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: "#e88226" }}>Manufacturer · Supplier · Rental</p>
               </div>
               <p className="text-[10px] mt-2 text-gray-600 leading-relaxed max-w-[95%]">{COMPANY.address}</p>
-              <p className="text-[9.5px] mt-1 text-gray-700">
-                <span className="font-semibold" style={{ color: "#1e3a5f" }}>Proprietor:</span> {COMPANY.proprietor}
-                <span className="mx-1.5 text-gray-400">|</span>
-                <span className="font-semibold" style={{ color: "#1e3a5f" }}>Trade Name:</span> {COMPANY.trade_name}
-              </p>
+              {!q.proprietor_first && (
+                <p className="text-[9.5px] mt-1 text-gray-700">
+                  <span className="font-semibold" style={{ color: "#1e3a5f" }}>Proprietor:</span> {COMPANY.proprietor}
+                  <span className="mx-1.5 text-gray-400">|</span>
+                  <span className="font-semibold" style={{ color: "#1e3a5f" }}>Trade Name:</span> {COMPANY.trade_name}
+                </p>
+              )}
 
               {/* Info pills */}
               <div className="flex flex-wrap gap-1.5 mt-2">
