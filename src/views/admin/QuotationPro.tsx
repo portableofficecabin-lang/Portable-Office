@@ -135,6 +135,7 @@ const COMPANY = {
   name: "PORTABLE OFFICE CABIN",
   proprietor: "Shaikh Abdul Kalam",
   trade_name: "Portable Office Cabin",
+  firm_type: "Proprietorship Firm",
   address: "Door No. 2/149-6, Survey No. 222/1C, Addakurukki Village, Kamandoddi Post, Shoolagiri, Krishnagiri, Tamil Nadu – 635117",
   phone: "9019910931 / 9731897976",
   website: "portableofficecabin.com",
@@ -2439,18 +2440,26 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       const addrLines = doc.splitTextToSize(COMPANY.address, W - M - 32);
       addrLines.forEach((line: string, i: number) => doc.text(line, M + 28, y + 13.5 + i * 3));
 
-      // Proprietor / Trade name line (GST legal-name vs trade-name). Skipped in
-      // owner-name-first mode, where it's already the title + bracketed subtitle.
-      let belowAddr = y + 13.5 + addrLines.length * 3;
-      if (!q.proprietor_first) {
-        const propY = belowAddr + 1.5;
-        doc.setFontSize(6.8); doc.setFont("helvetica", "normal"); doc.setTextColor(70);
-        doc.text(`Proprietor: ${COMPANY.proprietor}   |   Trade Name: ${COMPANY.trade_name}`, M + 28, propY);
-        belowAddr = propY;
-      }
+      // Firm / proprietor legal-details block (below the address).
+      let by = y + 13.5 + addrLines.length * 3 + 2.5;
+      doc.setFontSize(7.5); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
+      doc.text(COMPANY.name, M + 28, by); by += 3.2;
+      doc.setFontSize(6.3); doc.setFont("helvetica", "italic"); doc.setTextColor(120);
+      doc.text(`(${COMPANY.firm_type})`, M + 28, by); by += 3.9;
+      doc.setFontSize(6.8);
+      doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
+      doc.text("Trade Name:", M + 28, by);
+      const tnW = doc.getTextWidth("Trade Name:");
+      doc.setFont("helvetica", "normal"); doc.setTextColor(70);
+      doc.text(` ${COMPANY.trade_name}`, M + 28 + tnW, by); by += 3;
+      doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
+      doc.text("Proprietor:", M + 28, by);
+      const pnW = doc.getTextWidth("Proprietor:");
+      doc.setFont("helvetica", "normal"); doc.setTextColor(70);
+      doc.text(` ${COMPANY.proprietor}`, M + 28 + pnW, by);
 
       // Info pills row
-      const pillY = belowAddr + 3;
+      const pillY = by + 4;
       doc.setFillColor(245, 247, 250); doc.roundedRect(M + 28, pillY, 42, 5, 1, 1, "F");
       doc.setFillColor(245, 247, 250); doc.roundedRect(M + 72, pillY, 36, 5, 1, 1, "F");
       doc.setFillColor(252, 240, 225); doc.roundedRect(M + 110, pillY, 50, 5, 1, 1, "F");
@@ -3145,13 +3154,12 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: "#e88226" }}>Manufacturer · Supplier · Rental</p>
               </div>
               <p className="text-[10px] mt-2 text-gray-600 leading-relaxed max-w-[95%]">{COMPANY.address}</p>
-              {!q.proprietor_first && (
-                <p className="text-[9.5px] mt-1 text-gray-700">
-                  <span className="font-semibold" style={{ color: "#1e3a5f" }}>Proprietor:</span> {COMPANY.proprietor}
-                  <span className="mx-1.5 text-gray-400">|</span>
-                  <span className="font-semibold" style={{ color: "#1e3a5f" }}>Trade Name:</span> {COMPANY.trade_name}
-                </p>
-              )}
+              <div className="mt-1.5 text-[10px] leading-snug">
+                <p className="font-bold" style={{ color: "#1e3a5f" }}>{COMPANY.name}</p>
+                <p className="italic text-gray-500 text-[9px]">({COMPANY.firm_type})</p>
+                <p className="mt-1 text-gray-700"><span className="font-semibold" style={{ color: "#1e3a5f" }}>Trade Name:</span> {COMPANY.trade_name}</p>
+                <p className="text-gray-700"><span className="font-semibold" style={{ color: "#1e3a5f" }}>Proprietor:</span> {COMPANY.proprietor}</p>
+              </div>
 
               {/* Info pills */}
               <div className="flex flex-wrap gap-1.5 mt-2">
