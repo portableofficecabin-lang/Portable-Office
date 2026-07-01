@@ -120,9 +120,13 @@ interface Quotation {
   include_specs?: boolean;
   include_gst?: boolean;
   // When true, the document header leads with the proprietor's name
-  // (SHAIKH ABDUL KALAM) and shows the trade name "(Portable Office Cabin)" under
-  // it — the legal-name-first format a few customers ask for. Default false.
+  // (SHAIKH ABDUL KALAM) and shows the trade name "(Portable Office Cabin)" — the
+  // legal-name-first format a few customers ask for. Default false.
   proprietor_first?: boolean;
+  // Only applies when proprietor_first is on: when true the trade name
+  // "(Portable Office Cabin)" sits on its OWN line below the owner name instead of
+  // on the same line. Default false (same line).
+  company_below_owner?: boolean;
   terms: string[];
   bank: BankDetails;
   status: "draft" | "pending" | "approved" | "rejected";
@@ -635,6 +639,7 @@ const blankQuotation = (): Quotation => ({
   include_specs: true,
   include_gst: true,
   proprietor_first: false,
+  company_below_owner: false,
   terms: [...DEFAULT_TERMS],
   bank: {
     account_holder: "PORTABLE OFFICE CABIN",
@@ -1327,6 +1332,23 @@ function QuotationForm({
                     />
                     <label htmlFor="proprietor-first" className="text-sm cursor-pointer">
                       {q.proprietor_first ? "SHAIKH ABDUL KALAM (Portable Office Cabin)" : `${COMPANY.name} (default)`}
+                    </label>
+                  </div>
+                </Field>
+                <Field label="Header: Company Name Below Owner">
+                  <div className="flex items-center gap-3 h-10 px-3 border rounded-md bg-muted/20">
+                    <Switch
+                      id="company-below-owner"
+                      checked={q.company_below_owner === true}
+                      disabled={!q.proprietor_first}
+                      onCheckedChange={(v) => set({ company_below_owner: v })}
+                    />
+                    <label htmlFor="company-below-owner" className="text-sm cursor-pointer">
+                      {!q.proprietor_first
+                        ? "Turn on “Owner Name First” to use this"
+                        : q.company_below_owner
+                          ? "(Portable Office Cabin) on a new line below"
+                          : "(Portable Office Cabin) on the same line"}
                     </label>
                   </div>
                 </Field>
@@ -2415,36 +2437,44 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         if (logoData) doc.addImage(logoData, "PNG", M + 1, y + 1, 22, 22);
       } catch {}
 
-      // Company name (highlighted). In owner-name-first mode the proprietor's name
-      // leads with the trade name in brackets on the SAME line, e.g.
-      // "SHAIKH ABDUL KALAM (Portable Office Cabin)".
-      doc.setFontSize(20); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
-      // Owner name and trade name share ONE font size. Auto-shrink from 20 only if
-      // the combined title would overflow the right margin, so both stay equal-sized.
-      const companyTitle = q.proprietor_first
-        ? `${COMPANY.proprietor.toUpperCase()} (${COMPANY.trade_name})`
-        : COMPANY.name.toUpperCase();
-      const companyTitleMaxW = W - M - (M + 28);
-      let companyTitleSize = 20;
-      while (companyTitleSize > 12 && doc.getTextWidth(companyTitle) > companyTitleMaxW) {
-        companyTitleSize -= 1;
-        doc.setFontSize(companyTitleSize);
+      // Header title — three layouts from two toggles:
+      //   default             → "PORTABLE OFFICE CABIN"
+      //   owner-first          → "SHAIKH ABDUL KALAM (Portable Office Cabin)" (1 line)
+      //   owner-first + below  → "SHAIKH ABDUL KALAM" / "(Portable Office Cabin)" (2 lines)
+      // Owner name and trade name share ONE font size; auto-shrink from 20 only if a
+      // line would overflow the right margin, so they always stay equal-sized. A cursor
+      // (coTitleBottom) keeps the tagline/address flowing below whatever the title uses.
+      const coTitleLines = q.proprietor_first
+        ? (q.company_below_owner
+            ? [COMPANY.proprietor.toUpperCase(), `(${COMPANY.trade_name})`]
+            : [`${COMPANY.proprietor.toUpperCase()} (${COMPANY.trade_name})`])
+        : [COMPANY.name.toUpperCase()];
+      doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
+      const coTitleMaxW = W - M - (M + 28);
+      let coTitleSize = 20;
+      doc.setFontSize(coTitleSize);
+      while (coTitleSize > 12 && coTitleLines.some((t: string) => doc.getTextWidth(t) > coTitleMaxW)) {
+        coTitleSize -= 1;
+        doc.setFontSize(coTitleSize);
       }
-      doc.text(companyTitle, M + 28, y + 7);
+      const coTitleH = coTitleSize * 0.35;
+      coTitleLines.forEach((line: string, i: number) => doc.text(line, M + 28, y + 7 + i * coTitleH));
+      const coTitleBottom = y + 7 + (coTitleLines.length - 1) * coTitleH;
 
-      // Accent line + brand tagline
+      // Accent line + brand tagline (positioned under the last title line)
       doc.setDrawColor(232, 130, 38); doc.setLineWidth(0.6);
-      doc.line(M + 28, y + 8.5, M + 36, y + 8.5);
+      doc.line(M + 28, coTitleBottom + 1.5, M + 36, coTitleBottom + 1.5);
       doc.setFontSize(6.5); doc.setFont("helvetica", "bold"); doc.setTextColor(232, 130, 38);
-      doc.text("MANUFACTURER  ·  SUPPLIER  ·  RENTAL", M + 38, y + 9.5);
+      doc.text("MANUFACTURER  ·  SUPPLIER  ·  RENTAL", M + 38, coTitleBottom + 2.5);
 
       // Address
       doc.setFontSize(7); doc.setFont("helvetica", "normal"); doc.setTextColor(90);
       const addrLines = doc.splitTextToSize(COMPANY.address, W - M - 32);
-      addrLines.forEach((line: string, i: number) => doc.text(line, M + 28, y + 13.5 + i * 3));
+      const addrY0 = coTitleBottom + 6.5;
+      addrLines.forEach((line: string, i: number) => doc.text(line, M + 28, addrY0 + i * 3));
 
       // Firm / proprietor legal-details block (below the address).
-      let by = y + 13.5 + addrLines.length * 3 + 2.5;
+      let by = addrY0 + addrLines.length * 3 + 2.5;
       doc.setFontSize(7.5); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
       doc.text(COMPANY.name, M + 28, by); by += 3.2;
       doc.setFontSize(6.3); doc.setFont("helvetica", "italic"); doc.setTextColor(120);
@@ -3146,7 +3176,9 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 {q.proprietor_first ? (
                   <>
                     {COMPANY.proprietor.toUpperCase()}
-                    <span className="ml-1.5">({COMPANY.trade_name})</span>
+                    {q.company_below_owner
+                      ? <span className="block">({COMPANY.trade_name})</span>
+                      : <span className="ml-1.5">({COMPANY.trade_name})</span>}
                   </>
                 ) : (
                   COMPANY.name
