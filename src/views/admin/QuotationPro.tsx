@@ -2419,15 +2419,18 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       // leads with the trade name in brackets on the SAME line, e.g.
       // "SHAIKH ABDUL KALAM (Portable Office Cabin)".
       doc.setFontSize(20); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
-      if (q.proprietor_first) {
-        const ownerText = COMPANY.proprietor.toUpperCase();
-        doc.text(ownerText, M + 28, y + 7);
-        const ownerW = doc.getTextWidth(ownerText);
-        doc.setFontSize(10); doc.setFont("helvetica", "bold"); doc.setTextColor(90);
-        doc.text(`(${COMPANY.trade_name})`, M + 28 + ownerW + 2, y + 7);
-      } else {
-        doc.text(COMPANY.name.toUpperCase(), M + 28, y + 7);
+      // Owner name and trade name share ONE font size. Auto-shrink from 20 only if
+      // the combined title would overflow the right margin, so both stay equal-sized.
+      const companyTitle = q.proprietor_first
+        ? `${COMPANY.proprietor.toUpperCase()} (${COMPANY.trade_name})`
+        : COMPANY.name.toUpperCase();
+      const companyTitleMaxW = W - M - (M + 28);
+      let companyTitleSize = 20;
+      while (companyTitleSize > 12 && doc.getTextWidth(companyTitle) > companyTitleMaxW) {
+        companyTitleSize -= 1;
+        doc.setFontSize(companyTitleSize);
       }
+      doc.text(companyTitle, M + 28, y + 7);
 
       // Accent line + brand tagline
       doc.setDrawColor(232, 130, 38); doc.setLineWidth(0.6);
@@ -3143,7 +3146,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 {q.proprietor_first ? (
                   <>
                     {COMPANY.proprietor.toUpperCase()}
-                    <span className="text-[14px] font-semibold text-gray-600 ml-1.5">({COMPANY.trade_name})</span>
+                    <span className="ml-1.5">({COMPANY.trade_name})</span>
                   </>
                 ) : (
                   COMPANY.name
