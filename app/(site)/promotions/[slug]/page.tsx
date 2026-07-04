@@ -7,10 +7,17 @@ import { notFound } from "next/navigation";
 
 export const dynamicParams = true;
 
+// Slugs that have a dedicated, rich static route (app/(site)/promotions/<slug>/) which
+// takes precedence over this [slug] route. Excluded here so the build does not also try
+// to pre-generate the same path under the dynamic route.
+const BESPOKE_SLUGS = new Set(["shipping-container-in-bangalore"]);
+
 export async function generateStaticParams() {
-  return seoPromotions.map(promo => ({
-    slug: `${promo.keyword.toLowerCase().replace(/\s+/g, "-")}-in-${promo.location.toLowerCase().replace(/\s+/g, "-")}`,
-  }));
+  return seoPromotions
+    .map(promo => ({
+      slug: `${promo.keyword.toLowerCase().replace(/\s+/g, "-")}-in-${promo.location.toLowerCase().replace(/\s+/g, "-")}`,
+    }))
+    .filter(({ slug }) => !BESPOKE_SLUGS.has(slug));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

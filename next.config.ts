@@ -100,6 +100,19 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // ── Canonical host: www → non-www ─────────────────────────────────────
+      // The canonical origin is the apex (https://portableofficecabin.com). If a
+      // request ever reaches this app on the www host, 301 it to the apex so www
+      // can never serve duplicate/slow content. NOTE: this only fires for traffic
+      // that actually hits THIS DO app — if www points at a separate/legacy origin
+      // at the DNS level, that must be repointed/redirected in the host/DNS config
+      // (see CLOUDFLARE_CACHE.md); a code redirect alone cannot reach it.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.portableofficecabin.com" }],
+        destination: "https://portableofficecabin.com/:path*",
+        statusCode: 301,
+      },
       { source: "/about", destination: "/about-us", statusCode: 301 },
       { source: "/projects", destination: "/gallery", statusCode: 301 },
       { source: "/terms", destination: "/terms-and-conditions", statusCode: 301 },

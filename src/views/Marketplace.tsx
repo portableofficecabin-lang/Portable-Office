@@ -30,10 +30,19 @@ export function MarketplacePage() {
                 className="group bg-card rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-border"
               >
                 <div className="relative h-48 overflow-hidden">
+                  {/* This grid renders ~100 cards. Routing every card through the
+                      Next image optimizer (/_next/image) means 100 on-the-fly AVIF
+                      transforms against an optimizer whose cache is cold after each
+                      deploy (.next/cache is not persisted) — the origin saturates and
+                      cards render blank until images slowly trickle in. The source
+                      files are already small webp (16–72KB), so we serve them directly
+                      (unoptimized) from the statically-cached /images path. Reliable and
+                      fast; no optimizer dependency. See memory: perf-image-cache-not-persisted. */}
                   <Image
                     src={promo.imageUrl}
                     alt={promo.imageAlt}
                     fill
+                    unoptimized
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
