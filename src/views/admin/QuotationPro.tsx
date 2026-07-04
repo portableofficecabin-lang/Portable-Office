@@ -2,7 +2,7 @@
 
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, Fragment } from "react";
 import { NumberInput } from "@/components/admin/NumberInput";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -46,6 +46,9 @@ interface ProductItem {
   quantity: number;
   unit: string;
   unit_rate: number;
+  // Optional grouping: which cabin section this item belongs to (see Quotation.cabins).
+  // Undefined = legacy/ungrouped; such items render flat exactly as before.
+  cabin_id?: string;
 }
 
 interface SpecRow {
@@ -56,6 +59,15 @@ interface SpecRow {
   material: string;
   thickness: string;
   brand: string;
+  cabin_id?: string;
+}
+
+// A named grouping section ("Cabin 1", "Cabin 2", …) that items/optional-items/specs
+// can be assigned to via their cabin_id. When a quotation has no cabins, everything
+// renders flat (legacy behaviour, fully backward compatible).
+interface CabinSection {
+  id: string;
+  name: string;
 }
 
 interface BankDetails {
@@ -116,6 +128,12 @@ interface Quotation {
   notes: string;
   // Items
   items: ProductItem[];
+  // Cabin sections for grouping items/optional-items/specs. Empty/undefined = flat.
+  cabins?: CabinSection[];
+  // Optional add-on items — shown as extras in the document but NEVER added to the
+  // Grand Total. Gated by include_optional_items.
+  optional_items?: ProductItem[];
+  include_optional_items?: boolean;
   specs: SpecRow[];
   include_specs?: boolean;
   include_gst?: boolean;
@@ -635,6 +653,9 @@ const blankQuotation = (): Quotation => ({
   advance_paid_type: "amount",
   notes: "",
   items: [emptyItem()],
+  cabins: [],
+  optional_items: [],
+  include_optional_items: false,
   specs: DEFAULT_SPECS.map((s) => ({ ...s, id: uid() })),
   include_specs: true,
   include_gst: true,
@@ -678,6 +699,26 @@ const calcTotals = (q: Quotation) => {
   const balanceDue = Math.max(0, total - advancePaid);
   return { subtotal, discountBefore, taxable, gst: gstAmt, cgst, sgst, igst, discountAfter, total, advancePaid, balanceDue };
 };
+
+// Groups a list (items / optional-items / specs) by cabin, in cabin order. Returns
+// null when the quotation has NO cabins, so callers fall back to the original flat
+// rendering (100% backward compatible). Entries whose cabin_id is missing or points
+// at a deleted cabin fall into the first cabin, so nothing is ever dropped. Original
+// order is preserved within each cabin.
+function groupByCabin<T extends { cabin_id?: string }>(
+  list: T[],
+  cabins?: CabinSection[],
+): { cabin: CabinSection; items: T[] }[] | null {
+  if (!cabins || cabins.length === 0) return null;
+  const ids = new Set(cabins.map((c) => c.id));
+  const firstId = cabins[0].id;
+  const buckets = new Map<string, T[]>(cabins.map((c) => [c.id, [] as T[]]));
+  for (const it of list) {
+    const cid = it.cabin_id && ids.has(it.cabin_id) ? it.cabin_id : firstId;
+    buckets.get(cid)!.push(it);
+  }
+  return cabins.map((c) => ({ cabin: c, items: buckets.get(c.id)! }));
+}
 
 /* ============== GST/E-WAY BILL UQC (Unit Quantity Codes) ============== */
 // Source: CBIC - Official Unit Quantity Codes for GST invoices & e-Way Bills
@@ -1175,11 +1216,43 @@ function QuotationForm({
 
   const totals = calcTotals(q);
   const activeGstMode = gstModeForQuotation(q);
+  const optionalItems = q.optional_items || [];
+  const optionalTotal = optionalItems.reduce((s, i) => s + itemAmount(i), 0);
+
+  // ── Cabin sections (grouping) ─────────────────────────────────────────────
+  const cabins = q.cabins || [];
+  const hasCabins = cabins.length > 0;
+  const addCabin = () => {
+    const newCabin: CabinSection = { id: uid(), name: `Cabin ${cabins.length + 1}` };
+    if (cabins.length === 0) {
+      // First cabin adopts all existing (untagged) rows so nothing is left orphaned.
+      set({
+        cabins: [newCabin],
+        items: q.items.map((x) => (x.cabin_id ? x : { ...x, cabin_id: newCabin.id })),
+        specs: q.specs.map((x) => (x.cabin_id ? x : { ...x, cabin_id: newCabin.id })),
+        optional_items: optionalItems.map((x) => (x.cabin_id ? x : { ...x, cabin_id: newCabin.id })),
+      });
+    } else {
+      set({ cabins: [...cabins, newCabin] });
+    }
+  };
+  const updateCabin = (id: string, name: string) =>
+    set({ cabins: cabins.map((c) => (c.id === id ? { ...c, name } : c)) });
+  const removeCabin = (id: string) => {
+    const remaining = cabins.filter((c) => c.id !== id);
+    const fallback = remaining[0]?.id; // reassign this cabin's rows to the first remaining cabin (undefined → flat when none left)
+    set({
+      cabins: remaining,
+      items: q.items.map((x) => (x.cabin_id === id ? { ...x, cabin_id: fallback } : x)),
+      specs: q.specs.map((x) => (x.cabin_id === id ? { ...x, cabin_id: fallback } : x)),
+      optional_items: optionalItems.map((x) => (x.cabin_id === id ? { ...x, cabin_id: fallback } : x)),
+    });
+  };
 
   const updateItem = (id: string, patch: Partial<ProductItem>) => {
     set({ items: q.items.map((it) => (it.id === id ? { ...it, ...patch } : it)) });
   };
-  const addItem = () => set({ items: [...q.items, emptyItem()] });
+  const addItem = (cabinId?: string) => set({ items: [...q.items, { ...emptyItem(), ...(cabinId ? { cabin_id: cabinId } : {}) }] });
   const removeItem = (id: string) => set({ items: q.items.filter((it) => it.id !== id) });
   const moveItem = (id: string, dir: -1 | 1) => {
     const arr = [...q.items];
@@ -1190,10 +1263,25 @@ function QuotationForm({
     set({ items: arr });
   };
 
+  // Optional items — mirror the item helpers but on q.optional_items.
+  const updateOptionalItem = (id: string, patch: Partial<ProductItem>) => {
+    set({ optional_items: optionalItems.map((it) => (it.id === id ? { ...it, ...patch } : it)) });
+  };
+  const addOptionalItem = (cabinId?: string) => set({ optional_items: [...optionalItems, { ...emptyItem(), ...(cabinId ? { cabin_id: cabinId } : {}) }] });
+  const removeOptionalItem = (id: string) => set({ optional_items: optionalItems.filter((it) => it.id !== id) });
+  const moveOptionalItem = (id: string, dir: -1 | 1) => {
+    const arr = [...optionalItems];
+    const i = arr.findIndex((x) => x.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    set({ optional_items: arr });
+  };
+
   const updateSpec = (id: string, patch: Partial<SpecRow>) => {
     set({ specs: q.specs.map((s) => (s.id === id ? { ...s, ...patch } : s)) });
   };
-  const addSpec = (cat = "General Details") => set({ specs: [...q.specs, emptySpec(cat)] });
+  const addSpec = (cat = "General Details", cabinId?: string) => set({ specs: [...q.specs, { ...emptySpec(cat), ...(cabinId ? { cabin_id: cabinId } : {}) }] });
   const removeSpec = (id: string) => set({ specs: q.specs.filter((s) => s.id !== id) });
   const moveSpec = (id: string, dir: -1 | 1) => {
     const arr = [...q.specs];
@@ -1466,13 +1554,37 @@ function QuotationForm({
         <TabsContent value="items">
           <AdminCard>
             <AdminCardContent>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
                 <SectionTitle icon={Package} title="Product / Cabin Details" className="!mb-0" />
-                <Button onClick={addItem} variant="accent" size="sm" className="gap-2"><Plus className="h-4 w-4" /> Add Item</Button>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-md border bg-muted/30">
+                    <Switch
+                      checked={q.include_optional_items === true}
+                      onCheckedChange={(v) => set({ include_optional_items: v })}
+                      id="include-optional"
+                    />
+                    <Label htmlFor="include-optional" className="text-xs cursor-pointer whitespace-nowrap">
+                      {q.include_optional_items ? "Optional Items: ON" : "Optional Items: OFF"}
+                    </Label>
+                  </div>
+                  <Button onClick={addCabin} variant="outline" size="sm" className="gap-2 border-primary/40 text-primary"><Plus className="h-4 w-4" /> Add Cabin</Button>
+                  <Button onClick={() => addItem()} variant="accent" size="sm" className="gap-2"><Plus className="h-4 w-4" /> Add Item</Button>
+                </div>
               </div>
 
-              <div className="space-y-4">
-                {q.items.map((it, idx) => (
+              {/* Items — grouped under cabin sections when cabins exist, else flat (legacy). */}
+              {(hasCabins ? groupByCabin(q.items, cabins)! : [{ cabin: null as CabinSection | null, items: q.items }]).map((g) => (
+                <div key={g.cabin?.id ?? "flat"} className={g.cabin ? "rounded-xl border-2 border-primary/20 overflow-hidden mb-4" : ""}>
+                  {g.cabin && (
+                    <div className="flex items-center gap-2 bg-primary/5 px-3 py-2.5 border-b">
+                      <span className="font-bold text-primary text-sm whitespace-nowrap flex items-center gap-1"><Package className="h-4 w-4" /> Cabin</span>
+                      <Input value={g.cabin.name} onChange={(e) => updateCabin(g.cabin!.id, e.target.value)} className="h-8 max-w-[220px] font-semibold" placeholder="Cabin name" />
+                      <span className="text-xs text-muted-foreground ml-auto">{g.items.length} item{g.items.length === 1 ? "" : "s"}</span>
+                      <Button size="icon" variant="ghost" className="text-destructive h-8 w-8" onClick={() => removeCabin(g.cabin!.id)} title="Delete this cabin"><Trash2 className="h-4 w-4" /></Button>
+                    </div>
+                  )}
+                  <div className={g.cabin ? "p-3 space-y-4" : "space-y-4"}>
+                {g.items.map((it, idx) => { const gi = q.items.indexOf(it); return (
                   <motion.div
                     key={it.id}
                     initial={{ opacity: 0, y: 10 }}
@@ -1480,12 +1592,19 @@ function QuotationForm({
                     className="border rounded-xl p-4 bg-muted/20 relative"
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <Badge variant="outline" className="font-mono">Item #{idx + 1}</Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="font-mono">Item #{idx + 1}</Badge>
+                        {hasCabins && (
+                          <select value={it.cabin_id || cabins[0].id} onChange={(e) => updateItem(it.id, { cabin_id: e.target.value })} className="h-7 text-xs bg-background border rounded px-2" title="Move to cabin">
+                            {cabins.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                          </select>
+                        )}
+                      </div>
                       <div className="flex items-center gap-1">
-                        <Button size="icon" variant="ghost" onClick={() => moveItem(it.id, -1)} disabled={idx === 0} className="h-8 w-8" title="Move up">
+                        <Button size="icon" variant="ghost" onClick={() => moveItem(it.id, -1)} disabled={gi === 0} className="h-8 w-8" title="Move up">
                           <ArrowUp className="h-4 w-4" />
                         </Button>
-                        <Button size="icon" variant="ghost" onClick={() => moveItem(it.id, 1)} disabled={idx === q.items.length - 1} className="h-8 w-8" title="Move down">
+                        <Button size="icon" variant="ghost" onClick={() => moveItem(it.id, 1)} disabled={gi === q.items.length - 1} className="h-8 w-8" title="Move down">
                           <ArrowDown className="h-4 w-4" />
                         </Button>
                         {q.items.length > 1 && (
@@ -1527,8 +1646,95 @@ function QuotationForm({
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                ); })}
+                    {g.cabin && (
+                      <Button onClick={() => addItem(g.cabin!.id)} variant="outline" size="sm" className="w-full gap-2 border-dashed"><Plus className="h-4 w-4" /> Add Item to {g.cabin.name}</Button>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* Add Item / Add Cabin at the bottom. In flat mode, a plain Add Item;
+                  in grouped mode each cabin has its own Add Item, so only Add Cabin here. */}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {!hasCabins && (
+                  <Button onClick={() => addItem()} variant="outline" size="sm" className="flex-1 gap-2 border-dashed"><Plus className="h-4 w-4" /> Add Item</Button>
+                )}
+                <Button onClick={addCabin} variant="outline" size="sm" className={`gap-2 border-dashed border-primary/40 text-primary ${hasCabins ? "w-full" : ""}`}><Plus className="h-4 w-4" /> Add Cabin</Button>
               </div>
+
+              {/* OPTIONAL ITEMS — add-on section, NOT included in the Grand Total */}
+              {q.include_optional_items && (
+                <div className="mt-6 border-2 border-dashed border-amber/40 rounded-xl p-4 bg-amber/5">
+                  <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4 text-amber" />
+                      <h4 className="font-semibold text-sm">
+                        Optional Items{" "}
+                        <span className="text-xs font-normal text-muted-foreground">(add-ons — NOT added to the Grand Total)</span>
+                      </h4>
+                    </div>
+                    <Button onClick={() => addOptionalItem()} variant="outline" size="sm" className="gap-2 border-amber/50 text-amber hover:bg-amber/10">
+                      <Plus className="h-4 w-4" /> Add Optional Item
+                    </Button>
+                  </div>
+                  {optionalItems.length === 0 ? (
+                    <div className="text-sm text-muted-foreground italic p-4 border border-dashed rounded-md text-center">
+                      No optional items yet. Click &ldquo;Add Optional Item&rdquo; to offer add-ons the customer can choose.
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {optionalItems.map((it, idx) => (
+                        <motion.div
+                          key={it.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="border rounded-xl p-4 bg-background relative"
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="font-mono bg-amber/10 border-amber/30 text-amber-700">Optional #{idx + 1}</Badge>
+                              {hasCabins && (
+                                <select value={it.cabin_id || cabins[0].id} onChange={(e) => updateOptionalItem(it.id, { cabin_id: e.target.value })} className="h-7 text-xs bg-background border rounded px-2" title="Assign to cabin">
+                                  {cabins.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                </select>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Button size="icon" variant="ghost" onClick={() => moveOptionalItem(it.id, -1)} disabled={idx === 0} className="h-8 w-8" title="Move up"><ArrowUp className="h-4 w-4" /></Button>
+                              <Button size="icon" variant="ghost" onClick={() => moveOptionalItem(it.id, 1)} disabled={idx === optionalItems.length - 1} className="h-8 w-8" title="Move down"><ArrowDown className="h-4 w-4" /></Button>
+                              <Button size="icon" variant="ghost" onClick={() => removeOptionalItem(it.id)} className="text-destructive h-8 w-8"><Trash2 className="h-4 w-4" /></Button>
+                            </div>
+                          </div>
+                          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <Field label="Product Name"><Input value={it.product_name} onChange={(e) => updateOptionalItem(it.id, { product_name: e.target.value })} placeholder="e.g. Extra split AC unit" /></Field>
+                            <Field label="Cabin Type"><Input value={it.cabin_type} onChange={(e) => updateOptionalItem(it.id, { cabin_type: e.target.value })} placeholder="—" /></Field>
+                            <Field label="Length (ft)"><Input value={it.length} onChange={(e) => updateOptionalItem(it.id, { length: e.target.value })} placeholder="" /></Field>
+                            <Field label="Width (ft)"><Input value={it.width} onChange={(e) => updateOptionalItem(it.id, { width: e.target.value })} placeholder="" /></Field>
+                            <Field label="Height (ft)"><Input value={it.height} onChange={(e) => updateOptionalItem(it.id, { height: e.target.value })} placeholder="" /></Field>
+                            <Field label="Quantity"><NumberInput min={0} value={it.quantity === 0 ? "" : it.quantity} placeholder="0" onChange={(e) => updateOptionalItem(it.id, { quantity: parseFloat(e.target.value) || 0 })} onFocus={(e) => e.target.select()} /></Field>
+                            <Field label="Unit (UQC)"><UnitPicker value={it.unit} onChange={(v) => updateOptionalItem(it.id, { unit: v })} /></Field>
+                            <Field label="Unit Rate (₹)"><NumberInput min={0} value={it.unit_rate === 0 ? "" : it.unit_rate} placeholder="0.00" onChange={(e) => updateOptionalItem(it.id, { unit_rate: parseFloat(e.target.value) || 0 })} onFocus={(e) => e.target.select()} /></Field>
+                            <Field label="HSN / SAC Code"><Input value={it.hsn_code} onChange={(e) => updateOptionalItem(it.id, { hsn_code: e.target.value })} placeholder="9406" /></Field>
+                            <Field label="Amount (₹)"><Input value={fmt(itemAmount(it))} readOnly className="bg-muted/40 font-semibold" /></Field>
+                          </div>
+                          <div className="mt-3">
+                            <Field label="Description Points (one per line — each line shown as a bullet)">
+                              <Textarea rows={3} value={it.description_points} onChange={(e) => updateOptionalItem(it.id, { description_points: e.target.value })} className="text-sm font-mono" />
+                            </Field>
+                          </div>
+                        </motion.div>
+                      ))}
+                      <div className="flex justify-end pt-1 border-t border-amber/20">
+                        <div className="text-right pt-2">
+                          <p className="text-xs text-muted-foreground">Optional Items Total (not in Grand Total)</p>
+                          <p className="text-lg font-display font-bold text-amber">{fmt(optionalTotal)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Discounts — quick edit, synced with Commercial Details */}
               <div className="mt-6 border rounded-xl p-4 bg-muted/20">
@@ -1665,6 +1871,7 @@ function QuotationForm({
                       {q.include_specs !== false ? "Included in document" : "Hidden from document"}
                     </Label>
                   </div>
+                  <Button onClick={() => addItem()} variant="outline" size="sm" className="gap-2"><Plus className="h-4 w-4" /> Add Item</Button>
                   <Button onClick={() => addSpec()} variant="accent" size="sm" className="gap-2" disabled={q.include_specs === false}><Plus className="h-4 w-4" /> Add Row</Button>
                 </div>
               </div>
@@ -1687,7 +1894,20 @@ function QuotationForm({
                     </tr>
                   </thead>
                   <tbody>
-                    {q.specs.map((s, sIdx) => (
+                    {(hasCabins ? groupByCabin(q.specs, cabins)! : [{ cabin: null as CabinSection | null, items: q.specs }]).map((g) => (
+                      <Fragment key={g.cabin?.id ?? "flat"}>
+                        {g.cabin && (
+                          <tr className="bg-primary/5 border-t">
+                            <td colSpan={7} className="p-2">
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-primary text-xs">{g.cabin.name} — Specifications</span>
+                                <span className="text-[11px] text-muted-foreground">{g.items.length} row{g.items.length === 1 ? "" : "s"}</span>
+                                <Button onClick={() => addSpec("General Details", g.cabin!.id)} size="sm" variant="outline" className="ml-auto h-7 gap-1 text-xs" disabled={q.include_specs === false}><Plus className="h-3.5 w-3.5" /> Add Row</Button>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                        {g.items.map((s) => { const sIdx = q.specs.indexOf(s); return (
                       <tr key={s.id} className="border-t hover:bg-muted/20">
                         <td className="p-1">
                           <select
@@ -1717,6 +1937,8 @@ function QuotationForm({
                           </div>
                         </td>
                       </tr>
+                        ); })}
+                      </Fragment>
                     ))}
                   </tbody>
                 </table>
@@ -2354,6 +2576,11 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
   // Once an advance is recorded, the customer only owes the balance — collect that via UPI.
   const payable = totals.advancePaid > 0 ? totals.balanceDue : totals.total;
   const activeGstMode = gstModeForQuotation(q);
+  const cabins = q.cabins || [];
+  const hasCabins = cabins.length > 0;
+  // Optional add-on items (never part of the Grand Total).
+  const optionalItems = q.include_optional_items ? (q.optional_items || []) : [];
+  const optionalTotal = optionalItems.reduce((s, i) => s + itemAmount(i), 0);
   const [generating, setGenerating] = useState(false);
   // Persist the watermark choice per quotation so reopening it later restores the
   // same watermarks without rework (no PDF size impact — watermarks are vector text).
@@ -2662,7 +2889,23 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       doc.setTextColor(0); doc.setFont("helvetica", "normal");
       y += 7;
 
-      q.items.forEach((it, idx) => {
+      // Items grouped by cabin section when cabins exist; otherwise one flat group
+      // (identical to the legacy single-table output). Continuous S.N across cabins.
+      const itemGroups = groupByCabin(q.items, q.cabins) ?? [{ cabin: null as CabinSection | null, items: q.items }];
+      let rowNo = 0;
+      itemGroups.forEach((grp) => {
+        if (grp.cabin) {
+          if (y + 7 > 270) { doc.addPage(); y = M; }
+          doc.setFillColor(44, 82, 130); doc.rect(M, y, W - 2 * M, 6, "F");
+          doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8);
+          doc.text(grp.cabin.name, M + 2, y + 4.2);
+          doc.setTextColor(0); doc.setFont("helvetica", "normal");
+          y += 6.5;
+        }
+        grp.items.forEach((it) => {
+        const stripe = rowNo % 2 === 0;
+        rowNo++;
+        const sn = rowNo;
         const descWidth = cols.hsn - cols.desc - 2;
         const nameLines = doc.splitTextToSize(it.product_name || "—", descWidth);
         const typeLines = it.cabin_type ? doc.splitTextToSize(it.cabin_type, descWidth) : [];
@@ -2679,9 +2922,9 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         const totalLines = nameLines.length + typeLines.length + bulletLines.length;
         const rh = Math.max(totalLines * 3.6 + 4, 8);
         if (y + rh > 270) { doc.addPage(); y = M; }
-        if (idx % 2 === 0) { doc.setFillColor(248, 250, 252); doc.rect(M, y, W - 2 * M, rh, "F"); }
+        if (stripe) { doc.setFillColor(248, 250, 252); doc.rect(M, y, W - 2 * M, rh, "F"); }
         doc.setFontSize(7.4);
-        doc.text(String(idx + 1), cols.sno, y + 4.5);
+        doc.text(String(sn), cols.sno, y + 4.5);
 
         // Product name — bold with underline (modern style)
         doc.setFont("helvetica", "bold"); doc.setFontSize(7.8); doc.setTextColor(20, 30, 60);
@@ -2726,6 +2969,17 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         doc.text(fmtPdf(it.unit_rate).replace("Rs. ", ""), cols.rate, y + 4.5);
         doc.text(fmtPdf(itemAmount(it)).replace("Rs. ", ""), cols.amt, y + 4.5, { align: "right" });
         y += rh;
+        });
+        if (grp.cabin && grp.items.length > 0) {
+          const sub = grp.items.reduce((s, it) => s + itemAmount(it), 0);
+          if (y + 6 > 270) { doc.addPage(); y = M; }
+          doc.setFillColor(238, 244, 251); doc.rect(M, y, W - 2 * M, 5.5, "F");
+          doc.setFont("helvetica", "bold"); doc.setFontSize(7.6); doc.setTextColor(30, 58, 95);
+          doc.text(`${grp.cabin.name} Subtotal`, cols.size, y + 3.8);
+          doc.text(fmtPdf(sub), cols.amt, y + 3.8, { align: "right" });
+          doc.setTextColor(0); doc.setFont("helvetica", "normal");
+          y += 6;
+        }
       });
 
       // Totals
@@ -2769,6 +3023,84 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         y += 2;
       }
 
+      // Optional Items (add-ons — informational only, NOT part of the Grand Total)
+      if (q.include_optional_items && optionalItems.length > 0) {
+        if (y + 26 > 270) { doc.addPage(); y = M; }
+        y += 2;
+        doc.setFillColor(232, 130, 38); doc.rect(M, y, W - 2 * M, 7, "F");
+        doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8);
+        doc.text("OPTIONAL ITEMS  —  Add-ons, NOT included in the total above", W / 2, y + 4.8, { align: "center" });
+        doc.setTextColor(0); y += 7;
+        doc.setFillColor(240, 244, 248); doc.rect(M, y, W - 2 * M, 6, "F");
+        doc.setFont("helvetica", "bold"); doc.setFontSize(7.2); doc.setTextColor(30, 40, 70);
+        doc.text("S.N", cols.sno, y + 4);
+        doc.text("Product / Description", cols.desc, y + 4);
+        doc.text("HSN/SAC", cols.hsn, y + 4);
+        doc.text("Size (L×W×H ft)", cols.size, y + 4);
+        doc.text("Qty", cols.qty, y + 4);
+        doc.text("Unit", cols.unit, y + 4);
+        doc.text("Rate", cols.rate, y + 4);
+        doc.text("Amount", cols.amt, y + 4, { align: "right" });
+        doc.setTextColor(0); doc.setFont("helvetica", "normal"); y += 6;
+
+        const optGroups = groupByCabin(optionalItems, q.cabins) ?? [{ cabin: null as CabinSection | null, items: optionalItems }];
+        let optNo = 0;
+        optGroups.forEach((grp) => {
+          if (grp.cabin && grp.items.length > 0) {
+            if (y + 6 > 272) { doc.addPage(); y = M; }
+            doc.setFillColor(180, 83, 9); doc.rect(M, y, W - 2 * M, 5.5, "F");
+            doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(7.6);
+            doc.text(grp.cabin.name, M + 2, y + 3.8);
+            doc.setTextColor(0); doc.setFont("helvetica", "normal");
+            y += 6;
+          }
+          grp.items.forEach((it) => {
+          const stripe = optNo % 2 === 0;
+          optNo++;
+          const sn = optNo;
+          const descWidth = cols.hsn - cols.desc - 2;
+          const nameLines = doc.splitTextToSize(it.product_name || "—", descWidth);
+          const typeLines = it.cabin_type ? doc.splitTextToSize(it.cabin_type, descWidth) : [];
+          const bulletLines: string[] = [];
+          if (it.description_points && it.description_points.trim()) {
+            it.description_points.split("\n").forEach((ln) => {
+              const t = ln.trim().replace(/^[-•*]\s*/, "");
+              if (t) doc.splitTextToSize("• " + t, descWidth - 2).forEach((w: string) => bulletLines.push(w));
+            });
+          }
+          const totalLines = nameLines.length + typeLines.length + bulletLines.length;
+          const rh = Math.max(totalLines * 3.6 + 4, 8);
+          if (y + rh > 272) { doc.addPage(); y = M; }
+          if (stripe) { doc.setFillColor(253, 243, 231); doc.rect(M, y, W - 2 * M, rh, "F"); }
+          doc.setFontSize(7.4); doc.setTextColor(0);
+          doc.text(String(sn), cols.sno, y + 4.5);
+          doc.setFont("helvetica", "bold"); doc.setFontSize(7.8); doc.setTextColor(20, 30, 60);
+          let descY = y + 4.5;
+          nameLines.forEach((ln: string) => { doc.text(ln, cols.desc, descY); descY += 3.6; });
+          if (typeLines.length) {
+            doc.setFont("helvetica", "italic"); doc.setFontSize(7); doc.setTextColor(37, 99, 235);
+            typeLines.forEach((ln: string) => { doc.text(ln, cols.desc, descY); descY += 3.4; });
+          }
+          doc.setFont("helvetica", "normal"); doc.setFontSize(7); doc.setTextColor(60, 60, 60);
+          if (bulletLines.length > 0) doc.text(bulletLines, cols.desc + 1, descY);
+          doc.setTextColor(0); doc.setFont("helvetica", "normal"); doc.setFontSize(7.4);
+          doc.text(it.hsn_code || q.default_hsn || "—", cols.hsn, y + 4.5);
+          const szParts = [it.length ? `L:${it.length}` : null, it.width ? `W:${it.width}` : null, it.height ? `H:${it.height}` : null].filter(Boolean) as string[];
+          doc.text(szParts.length ? szParts.join("×") + " ft" : "—", cols.size, y + 4.5);
+          doc.text(String(it.quantity), cols.qty, y + 4.5);
+          doc.text(it.unit, cols.unit, y + 4.5);
+          doc.text(fmtPdf(it.unit_rate).replace("Rs. ", ""), cols.rate, y + 4.5);
+          doc.text(fmtPdf(itemAmount(it)).replace("Rs. ", ""), cols.amt, y + 4.5, { align: "right" });
+          y += rh;
+          });
+        });
+        doc.setDrawColor(232, 130, 38); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); y += 4.5;
+        doc.setFont("helvetica", "bold"); doc.setFontSize(8); doc.setTextColor(180, 83, 9);
+        doc.text("Optional Items Total (not included in Grand Total):", W - M - 95, y);
+        doc.text(fmtPdf(optionalTotal), W - M - 2, y, { align: "right" });
+        doc.setTextColor(0); doc.setDrawColor(0); doc.setLineWidth(0.2); y += 6;
+      }
+
       // Tech Specs
       const filledSpecs = q.include_specs === false ? [] : q.specs.filter((s) => s.component || s.specification || s.material || s.thickness || s.brand);
       if (filledSpecs.length > 0) {
@@ -2792,7 +3124,20 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         y += 6;
         doc.setFont("helvetica", "normal"); doc.setFontSize(7);
 
-        filledSpecs.forEach((s, i) => {
+        const specGroups = groupByCabin(filledSpecs, q.cabins) ?? [{ cabin: null as CabinSection | null, items: filledSpecs }];
+        let specNo = 0;
+        specGroups.forEach((grp) => {
+          if (grp.cabin && grp.items.length > 0) {
+            if (y + 6 > 275) { doc.addPage(); y = M; }
+            doc.setFillColor(44, 82, 130); doc.rect(M, y, W - 2 * M, 5.5, "F");
+            doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(7.4);
+            doc.text(grp.cabin.name, sCols.cat, y + 3.8);
+            doc.setTextColor(0); doc.setFont("helvetica", "normal"); doc.setFontSize(7);
+            y += 6;
+          }
+          grp.items.forEach((s) => {
+          const stripe = specNo % 2 === 0;
+          specNo++;
           const catL = doc.splitTextToSize(s.category || "—", sW.cat);
           const compL = doc.splitTextToSize(s.component || "—", sW.comp);
           const specL = doc.splitTextToSize(s.specification || "—", sW.spec);
@@ -2801,7 +3146,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
           const brL = doc.splitTextToSize(s.brand || "—", sW.br);
           const rh = Math.max(catL.length, specL.length, compL.length, matL.length, thkL.length, brL.length) * 3.2 + 2;
           if (y + rh > 275) { doc.addPage(); y = M; }
-          if (i % 2 === 0) { doc.setFillColor(250, 251, 253); doc.rect(M, y, W - 2 * M, rh, "F"); }
+          if (stripe) { doc.setFillColor(250, 251, 253); doc.rect(M, y, W - 2 * M, rh, "F"); }
           doc.text(catL, sCols.cat, y + 3);
           doc.text(compL, sCols.comp, y + 3);
           doc.text(specL, sCols.spec, y + 3);
@@ -2809,6 +3154,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
           doc.text(thkL, sCols.thk, y + 3);
           doc.text(brL, sCols.br, y + 3);
           y += rh;
+          });
         });
         y += 4;
       }
@@ -3319,9 +3665,21 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
             </tr>
           </thead>
           <tbody>
-            {q.items.map((it, i) => (
-              <tr key={it.id} className={i % 2 ? "bg-gray-50" : ""}>
-                <td className="p-1.5 border-b">{i + 1}</td>
+            {(() => {
+              const groups = groupByCabin(q.items, cabins) ?? [{ cabin: null as CabinSection | null, items: q.items }];
+              let sn = 0;
+              return groups.map((g) => {
+                const gSubtotal = g.items.reduce((s, it) => s + itemAmount(it), 0);
+                return (
+              <Fragment key={g.cabin?.id ?? "flat"}>
+                {g.cabin && (
+                  <tr>
+                    <td colSpan={8} className="p-1.5 font-bold text-white text-[11px] tracking-wide" style={{ background: "#2c5282" }}>{g.cabin.name}</td>
+                  </tr>
+                )}
+                {g.items.map((it) => { sn++; const rowSn = sn; return (
+              <tr key={it.id} className={rowSn % 2 === 0 ? "bg-gray-50" : ""}>
+                <td className="p-1.5 border-b">{rowSn}</td>
                 <td className="p-1.5 border-b align-top">
                   <div className="font-semibold text-gray-900 inline-block border-b-2 border-blue-600 pb-0.5 leading-tight">
                     {it.product_name || "—"}
@@ -3356,7 +3714,17 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 <td className="p-1.5 border-b text-right">{fmt(it.unit_rate)}</td>
                 <td className="p-1.5 border-b text-right font-semibold">{fmt(itemAmount(it))}</td>
               </tr>
-            ))}
+                ); })}
+                {g.cabin && g.items.length > 0 && (
+                  <tr>
+                    <td colSpan={7} className="p-1.5 text-right text-[11px] font-semibold border-b" style={{ background: "#eef4fb" }}>{g.cabin.name} Subtotal</td>
+                    <td className="p-1.5 text-right text-[11px] font-bold border-b" style={{ background: "#eef4fb" }}>{fmt(gSubtotal)}</td>
+                  </tr>
+                )}
+              </Fragment>
+                );
+              });
+            })()}
           </tbody>
         </table>
 
@@ -3397,6 +3765,69 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
           </div>
         </div>
 
+        {/* Optional Items — add-ons, NOT included in the total above */}
+        {q.include_optional_items && optionalItems.length > 0 && (
+          <div className="mt-4">
+            <div className="text-white text-center font-bold text-xs py-1.5 tracking-wide" style={{ background: "#e88226" }}>
+              OPTIONAL ITEMS — Add-ons, not included in the total above
+            </div>
+            <table className="w-full text-xs border-collapse">
+              <thead>
+                <tr className="text-white" style={{ background: "#1e3a5f" }}>
+                  <th className="p-1.5 text-left">S.N</th>
+                  <th className="p-1.5 text-left">Product / Description</th>
+                  <th className="p-1.5 text-left">HSN/SAC</th>
+                  <th className="p-1.5 text-left">Size (L×W×H ft)</th>
+                  <th className="p-1.5 text-right">Qty</th>
+                  <th className="p-1.5 text-left">Unit</th>
+                  <th className="p-1.5 text-right">Rate</th>
+                  <th className="p-1.5 text-right">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(() => {
+                  const groups = groupByCabin(optionalItems, cabins) ?? [{ cabin: null as CabinSection | null, items: optionalItems }];
+                  let sn = 0;
+                  return groups.map((g) => (
+                  <Fragment key={g.cabin?.id ?? "flat"}>
+                    {g.cabin && g.items.length > 0 && (
+                      <tr><td colSpan={8} className="p-1.5 font-bold text-white text-[11px]" style={{ background: "#b45309" }}>{g.cabin.name}</td></tr>
+                    )}
+                    {g.items.map((it) => { sn++; const rowSn = sn; return (
+                  <tr key={it.id} className={rowSn % 2 === 0 ? "bg-gray-50" : ""}>
+                    <td className="p-1.5 border-b">{rowSn}</td>
+                    <td className="p-1.5 border-b align-top">
+                      <div className="font-semibold text-gray-900">{it.product_name || "—"}</div>
+                      {it.cabin_type && <div className="text-[10px] text-blue-700 font-medium mt-0.5">{it.cabin_type}</div>}
+                      {it.description_points && it.description_points.trim() && (
+                        <ul className="list-disc pl-4 mt-1 space-y-0.5 text-[10px] text-gray-700">
+                          {it.description_points.split("\n").map((ln, idx) => { const t = ln.trim().replace(/^[-•*]\s*/, ""); return t ? <li key={idx}>{t}</li> : null; })}
+                        </ul>
+                      )}
+                    </td>
+                    <td className="p-1.5 border-b font-mono text-[10px]">{it.hsn_code || q.default_hsn || "—"}</td>
+                    <td className="p-1.5 border-b whitespace-nowrap text-[10px]">
+                      {(() => { const parts = [it.length ? `L: ${it.length} ft` : null, it.width ? `W: ${it.width} ft` : null, it.height ? `H: ${it.height} ft` : null].filter(Boolean); return parts.length ? parts.join(" × ") : "—"; })()}
+                    </td>
+                    <td className="p-1.5 border-b text-right">{it.quantity}</td>
+                    <td className="p-1.5 border-b">{it.unit}</td>
+                    <td className="p-1.5 border-b text-right">{fmt(it.unit_rate)}</td>
+                    <td className="p-1.5 border-b text-right font-semibold">{fmt(itemAmount(it))}</td>
+                  </tr>
+                    ); })}
+                  </Fragment>
+                  ));
+                })()}
+              </tbody>
+            </table>
+            <div className="flex justify-end mt-1 text-xs">
+              <div className="flex justify-between gap-6 font-semibold px-3 py-1.5 rounded" style={{ background: "#fdf3e7", color: "#b45309" }}>
+                <span>Optional Items Total (not in Grand Total):</span><span>{fmt(optionalTotal)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Tech Specs */}
         {q.include_specs !== false && q.specs.some((s) => s.component || s.specification || s.material) && (
           <div className="mt-5">
@@ -3421,7 +3852,15 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 </tr>
               </thead>
               <tbody>
-                {q.specs.filter((s) => s.component || s.specification || s.material || s.thickness || s.brand).map((s) => (
+                {(() => {
+                  const filled = q.specs.filter((s) => s.component || s.specification || s.material || s.thickness || s.brand);
+                  const groups = groupByCabin(filled, cabins) ?? [{ cabin: null as CabinSection | null, items: filled }];
+                  return groups.map((g) => (
+                  <Fragment key={g.cabin?.id ?? "flat"}>
+                    {g.cabin && g.items.length > 0 && (
+                      <tr><td colSpan={6} className="p-1 border font-bold text-white text-[10px]" style={{ background: "#2c5282" }}>{g.cabin.name} — Specifications</td></tr>
+                    )}
+                    {g.items.map((s) => (
                   <tr key={s.id} className="align-top">
                     <td className="p-1 border font-medium align-top break-words" style={{ color: "#1e3a5f", wordBreak: "break-word" }}>{s.category}</td>
                     <td className="p-1 border align-top break-words" style={{ wordBreak: "break-word" }}>{s.component || "—"}</td>
@@ -3430,7 +3869,10 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                     <td className="p-1 border align-top break-words" style={{ wordBreak: "break-word" }}>{s.thickness || "—"}</td>
                     <td className="p-1 border align-top break-words" style={{ wordBreak: "break-word" }}>{s.brand || "—"}</td>
                   </tr>
-                ))}
+                    ))}
+                  </Fragment>
+                  ));
+                })()}
               </tbody>
             </table>
           </div>
