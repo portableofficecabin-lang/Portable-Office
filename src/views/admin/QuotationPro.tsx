@@ -70,6 +70,16 @@ interface CabinSection {
   name: string;
 }
 
+// An "Option Item" is a customer-requested CHANGE/variation (e.g. upgrade flooring,
+// change wall interior) that would raise or lower the price. It is shown separately
+// as a what-if line — the base quotation total is NEVER affected by it.
+interface OptionItem {
+  id: string;
+  description: string;
+  direction: "increase" | "decrease";
+  amount: number; // magnitude of the cost difference (always positive)
+}
+
 interface BankDetails {
   account_holder: string;
   bank_name: string;
@@ -134,6 +144,10 @@ interface Quotation {
   // Grand Total. Gated by include_optional_items.
   optional_items?: ProductItem[];
   include_optional_items?: boolean;
+  // Option Items — customer-requested change/variation options (increase or reduce
+  // vs the base total). Shown separately as what-if lines; never change the total.
+  option_items?: OptionItem[];
+  include_option_items?: boolean;
   specs: SpecRow[];
   include_specs?: boolean;
   include_gst?: boolean;
@@ -656,6 +670,8 @@ const blankQuotation = (): Quotation => ({
   cabins: [],
   optional_items: [],
   include_optional_items: false,
+  option_items: [],
+  include_option_items: false,
   specs: DEFAULT_SPECS.map((s) => ({ ...s, id: uid() })),
   include_specs: true,
   include_gst: true,
@@ -1278,6 +1294,22 @@ function QuotationForm({
     set({ optional_items: arr });
   };
 
+  // Option Items — customer-requested change options (increase/decrease vs base total).
+  const optionItems = q.option_items || [];
+  const updateOptionItem = (id: string, patch: Partial<OptionItem>) =>
+    set({ option_items: optionItems.map((o) => (o.id === id ? { ...o, ...patch } : o)) });
+  const addOptionItem = () =>
+    set({ option_items: [...optionItems, { id: uid(), description: "", direction: "increase", amount: 0 } as OptionItem] });
+  const removeOptionItem = (id: string) => set({ option_items: optionItems.filter((o) => o.id !== id) });
+  const moveOptionItem = (id: string, dir: -1 | 1) => {
+    const arr = [...optionItems];
+    const i = arr.findIndex((x) => x.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    set({ option_items: arr });
+  };
+
   const updateSpec = (id: string, patch: Partial<SpecRow>) => {
     set({ specs: q.specs.map((s) => (s.id === id ? { ...s, ...patch } : s)) });
   };
@@ -1567,6 +1599,16 @@ function QuotationForm({
                       {q.include_optional_items ? "Optional Items: ON" : "Optional Items: OFF"}
                     </Label>
                   </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-md border bg-muted/30">
+                    <Switch
+                      checked={q.include_option_items === true}
+                      onCheckedChange={(v) => set({ include_option_items: v })}
+                      id="include-option"
+                    />
+                    <Label htmlFor="include-option" className="text-xs cursor-pointer whitespace-nowrap">
+                      {q.include_option_items ? "Option Items: ON" : "Option Items: OFF"}
+                    </Label>
+                  </div>
                   <Button onClick={addCabin} variant="outline" size="sm" className="gap-2 border-primary/40 text-primary"><Plus className="h-4 w-4" /> Add Cabin</Button>
                   <Button onClick={() => addItem()} variant="accent" size="sm" className="gap-2"><Plus className="h-4 w-4" /> Add Item</Button>
                 </div>
@@ -1731,6 +1773,70 @@ function QuotationForm({
                           <p className="text-lg font-display font-bold text-amber">{fmt(optionalTotal)}</p>
                         </div>
                       </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* OPTION ITEMS — customer-requested change options (increase/decrease vs base total) */}
+              {q.include_option_items && (
+                <div className="mt-6 border-2 border-dashed border-primary/40 rounded-xl p-4 bg-primary/5">
+                  <div className="flex items-center justify-between mb-1 flex-wrap gap-3">
+                    <div className="flex items-center gap-2">
+                      <Wrench className="h-4 w-4 text-primary" />
+                      <h4 className="font-semibold text-sm">
+                        Option Items{" "}
+                        <span className="text-xs font-normal text-muted-foreground">(change options — base total stays the same)</span>
+                      </h4>
+                    </div>
+                    <Button onClick={addOptionItem} variant="outline" size="sm" className="gap-2 border-primary/50 text-primary hover:bg-primary/10">
+                      <Plus className="h-4 w-4" /> Add Option
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3">e.g. &ldquo;Upgrade flooring to premium vinyl (+₹5,000)&rdquo; or &ldquo;Standard wall interior instead of PVC (−₹3,000)&rdquo;. Each option shows the revised total if the customer picks it; the base Grand Total is not changed.</p>
+                  {optionItems.length === 0 ? (
+                    <div className="text-sm text-muted-foreground italic p-4 border border-dashed rounded-md text-center">
+                      No options yet. Click &ldquo;Add Option&rdquo; to list a change the customer can choose.
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {optionItems.map((o, idx) => {
+                        const delta = o.direction === "increase" ? (o.amount || 0) : -(o.amount || 0);
+                        const revised = totals.total + delta;
+                        return (
+                        <div key={o.id} className="border rounded-lg p-3 bg-background">
+                          <div className="flex items-center justify-between mb-2">
+                            <Badge variant="outline" className="font-mono">Option #{idx + 1}</Badge>
+                            <div className="flex items-center gap-1">
+                              <Button size="icon" variant="ghost" onClick={() => moveOptionItem(o.id, -1)} disabled={idx === 0} className="h-8 w-8" title="Move up"><ArrowUp className="h-4 w-4" /></Button>
+                              <Button size="icon" variant="ghost" onClick={() => moveOptionItem(o.id, 1)} disabled={idx === optionItems.length - 1} className="h-8 w-8" title="Move down"><ArrowDown className="h-4 w-4" /></Button>
+                              <Button size="icon" variant="ghost" onClick={() => removeOptionItem(o.id)} className="text-destructive h-8 w-8"><Trash2 className="h-4 w-4" /></Button>
+                            </div>
+                          </div>
+                          <div className="grid md:grid-cols-12 gap-3 items-start">
+                            <div className="md:col-span-6"><Field label="Change Description"><Input value={o.description} onChange={(e) => updateOptionItem(o.id, { description: e.target.value })} placeholder="e.g. Upgrade flooring to premium vinyl" /></Field></div>
+                            <div className="md:col-span-3"><Field label="Effect">
+                              <Select value={o.direction} onValueChange={(v) => updateOptionItem(o.id, { direction: v as "increase" | "decrease" })}>
+                                <SelectTrigger><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="increase">Increase (+)</SelectItem>
+                                  <SelectItem value="decrease">Reduction (−)</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </Field></div>
+                            <div className="md:col-span-3"><Field label="Cost Difference (₹)"><NumberInput min={0} value={o.amount === 0 ? "" : o.amount} placeholder="0" onChange={(e) => updateOptionItem(o.id, { amount: parseFloat(e.target.value) || 0 })} onFocus={(e) => e.target.select()} /></Field></div>
+                          </div>
+                          <div className="mt-2 flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-sm border-t pt-2">
+                            <span className={o.direction === "increase" ? "text-red-600 font-semibold" : "text-emerald-600 font-semibold"}>
+                              {o.direction === "increase" ? "+ " : "− "}{fmt(o.amount || 0)}
+                            </span>
+                            <span className="text-muted-foreground">Revised Total:</span>
+                            <span className="font-display font-bold text-primary">{fmt(revised)}</span>
+                          </div>
+                        </div>
+                        );
+                      })}
+                      <p className="text-[11px] text-muted-foreground text-right">Base Grand Total {fmt(totals.total)} — each option is applied to this base independently.</p>
                     </div>
                   )}
                 </div>
@@ -2581,6 +2687,8 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
   // Optional add-on items (never part of the Grand Total).
   const optionalItems = q.include_optional_items ? (q.optional_items || []) : [];
   const optionalTotal = optionalItems.reduce((s, i) => s + itemAmount(i), 0);
+  // Option Items — customer-requested change options (increase/decrease vs base total).
+  const optionItems = q.include_option_items ? (q.option_items || []) : [];
   const [generating, setGenerating] = useState(false);
   // Persist the watermark choice per quotation so reopening it later restores the
   // same watermarks without rework (no PDF size impact — watermarks are vector text).
@@ -3099,6 +3207,47 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         doc.text("Optional Items Total (not included in Grand Total):", W - M - 95, y);
         doc.text(fmtPdf(optionalTotal), W - M - 2, y, { align: "right" });
         doc.setTextColor(0); doc.setDrawColor(0); doc.setLineWidth(0.2); y += 6;
+      }
+
+      // Option Items — customer-requested change options (base Grand Total unchanged)
+      if (q.include_option_items && optionItems.length > 0) {
+        if (y + 24 > 270) { doc.addPage(); y = M; }
+        y += 2;
+        doc.setFillColor(44, 82, 130); doc.rect(M, y, W - 2 * M, 7, "F");
+        doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8);
+        doc.text(`OPTION ITEMS  —  Change Options (base Grand Total stays ${fmtPdf(totals.total)})`, W / 2, y + 4.8, { align: "center" });
+        doc.setTextColor(0); y += 7;
+        const oc = { num: M + 2, desc: M + 9, eff: M + 106, diffR: W - M - 40, revR: W - M - 2 };
+        doc.setFillColor(240, 244, 248); doc.rect(M, y, W - 2 * M, 6, "F");
+        doc.setFont("helvetica", "bold"); doc.setFontSize(7.2); doc.setTextColor(30, 40, 70);
+        doc.text("#", oc.num, y + 4);
+        doc.text("Change Requested", oc.desc, y + 4);
+        doc.text("Effect", oc.eff, y + 4);
+        doc.text("Cost Difference", oc.diffR, y + 4, { align: "right" });
+        doc.text("Revised Total", oc.revR, y + 4, { align: "right" });
+        doc.setTextColor(0); doc.setFont("helvetica", "normal"); y += 6;
+        optionItems.forEach((o, idx) => {
+          const inc = o.direction === "increase";
+          const delta = inc ? (o.amount || 0) : -(o.amount || 0);
+          const descLines = doc.splitTextToSize(o.description || "—", oc.eff - oc.desc - 3);
+          const rh = Math.max(descLines.length * 3.6 + 3, 7);
+          if (y + rh > 272) { doc.addPage(); y = M; }
+          if (idx % 2 === 0) { doc.setFillColor(245, 248, 252); doc.rect(M, y, W - 2 * M, rh, "F"); }
+          doc.setFontSize(7.4); doc.setTextColor(0); doc.setFont("helvetica", "normal");
+          doc.text(String(idx + 1), oc.num, y + 4.5);
+          doc.text(descLines, oc.desc, y + 4.5);
+          if (inc) doc.setTextColor(220, 38, 38); else doc.setTextColor(5, 150, 105);
+          doc.setFont("helvetica", "bold");
+          doc.text(inc ? "Increase" : "Reduction", oc.eff, y + 4.5);
+          doc.text(`${inc ? "+ " : "- "}${fmtPdf(o.amount || 0)}`, oc.diffR, y + 4.5, { align: "right" });
+          doc.setTextColor(0);
+          doc.text(fmtPdf(totals.total + delta), oc.revR, y + 4.5, { align: "right" });
+          doc.setFont("helvetica", "normal");
+          y += rh;
+        });
+        doc.setFontSize(6.5); doc.setTextColor(120); doc.setFont("helvetica", "italic");
+        doc.text("Each option is an alternative applied to the base Grand Total on its own — options are not added together and do not change the base total.", M + 2, y + 3);
+        doc.setTextColor(0); doc.setFont("helvetica", "normal"); y += 6;
       }
 
       // Tech Specs
@@ -3825,6 +3974,42 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 <span>Optional Items Total (not in Grand Total):</span><span>{fmt(optionalTotal)}</span>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Option Items — customer-requested change options; base total stays the same */}
+        {q.include_option_items && optionItems.length > 0 && (
+          <div className="mt-4">
+            <div className="text-white text-center font-bold text-xs py-1.5 tracking-wide" style={{ background: "#2c5282" }}>
+              OPTION ITEMS — Change Options (base Grand Total stays {fmt(totals.total)})
+            </div>
+            <table className="w-full text-xs border-collapse">
+              <thead>
+                <tr className="text-white" style={{ background: "#1e3a5f" }}>
+                  <th className="p-1.5 text-left">#</th>
+                  <th className="p-1.5 text-left">Change Requested</th>
+                  <th className="p-1.5 text-center">Effect</th>
+                  <th className="p-1.5 text-right">Cost Difference</th>
+                  <th className="p-1.5 text-right">Revised Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {optionItems.map((o, i) => {
+                  const inc = o.direction === "increase";
+                  const delta = inc ? (o.amount || 0) : -(o.amount || 0);
+                  return (
+                    <tr key={o.id} className={i % 2 ? "bg-gray-50" : ""}>
+                      <td className="p-1.5 border-b">{i + 1}</td>
+                      <td className="p-1.5 border-b">{o.description || "—"}</td>
+                      <td className="p-1.5 border-b text-center font-semibold" style={{ color: inc ? "#dc2626" : "#059669" }}>{inc ? "Increase" : "Reduction"}</td>
+                      <td className="p-1.5 border-b text-right font-semibold" style={{ color: inc ? "#dc2626" : "#059669" }}>{inc ? "+ " : "− "}{fmt(o.amount || 0)}</td>
+                      <td className="p-1.5 border-b text-right font-bold">{fmt(totals.total + delta)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <div className="text-[10px] text-gray-500 mt-1 italic">Each option is an alternative applied to the base Grand Total on its own — options are not added together and do not change the base total.</div>
           </div>
         )}
 
