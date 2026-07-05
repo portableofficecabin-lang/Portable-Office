@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { HeroSection } from "@/components/home/HeroSection";
+import { CabinCalculatorSection } from "@/components/home/CabinCalculatorSection";
 import { CategoriesSection } from "@/components/home/CategoriesSection";
 import { ProductRangeSection } from "@/components/home/ProductRangeSection";
 import { HomeBelowFold } from "@/components/home/HomeBelowFold";
@@ -26,6 +27,8 @@ const Index = () => {
       <JsonLd data={combinedStructuredData} />
       {/* SEO-critical, above-the-fold — server-rendered in page source */}
       <HeroSection />
+      {/* Highlighted conversion feature: customize & price your cabin */}
+      <CabinCalculatorSection />
       <CategoriesSection />
       <ProductRangeSection />
       {/* Non-SEO-critical, below-the-fold — deferred to client (kept out of HTML) */}
