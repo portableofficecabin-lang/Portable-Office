@@ -53,7 +53,22 @@ export default function AdminLogin() {
       const { error } = await signIn(email, password);
 
       if (error) {
-        if (error.message.includes("Invalid login credentials")) {
+        // A raw "Failed to fetch" / "NetworkError" from Supabase means the auth
+        // request never reached the backend (DNS/connection/CSP), NOT a bad
+        // password. Surface an actionable message instead of the cryptic default
+        // so this is diagnosable — most commonly the Supabase project is paused
+        // or offline and needs to be restored in the Supabase dashboard.
+        const isNetworkError = /failed to fetch|networkerror|network request failed|load failed/i.test(
+          error.message,
+        );
+        if (isNetworkError) {
+          toast({
+            title: "Can't reach the server",
+            description:
+              "The authentication backend is unreachable. It may be paused or offline — please try again shortly or contact the site administrator.",
+            variant: "destructive",
+          });
+        } else if (error.message.includes("Invalid login credentials")) {
           toast({
             title: "Login Failed",
             description: "Invalid email or password. Please try again.",
