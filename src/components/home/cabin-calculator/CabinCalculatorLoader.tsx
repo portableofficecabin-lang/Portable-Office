@@ -12,8 +12,13 @@ import { Button } from "@/components/ui/button";
 // banner above it is fully server-rendered for SEO.
 const CabinCalculator = dynamic(() => import("./CabinCalculator"), {
   ssr: false,
+  // The loading fallback reserves the SAME height as the placeholder/mounted calculator
+  // so the box never collapses (520px) while the ssr:false chunk streams in on slow 4G.
   loading: () => (
-    <div className="flex items-center justify-center rounded-2xl border border-border bg-card py-24">
+    <div
+      className="flex items-center justify-center rounded-2xl border border-border bg-card"
+      style={{ minHeight: 520 }}
+    >
       <Loader2 className="h-6 w-6 animate-spin text-accent" />
     </div>
   ),
@@ -41,7 +46,7 @@ export function CabinCalculatorLoader() {
   }, [show]);
 
   return (
-    <div ref={ref} id="cabin-calculator" className="scroll-mt-24" style={show ? undefined : { minHeight: "520px" }}>
+    <div ref={ref} id="cabin-calculator" className="scroll-mt-24" style={{ minHeight: 520 }}>
       {show ? (
         <CabinCalculator />
       ) : (

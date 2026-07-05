@@ -22,7 +22,7 @@ const iconMap: Record<string, React.ElementType> = {
 
 export function CategoriesSection() {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-background cv-section">
       <div className="container-custom">
         {/* Header */}
         <div className="text-center mb-12">

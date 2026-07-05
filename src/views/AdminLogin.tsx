@@ -71,7 +71,10 @@ export default function AdminLogin() {
           title: "Login Successful",
           description: "Welcome back!",
         });
-        router.push("/admin");
+        // Full-page navigation (not router.push) so AuthContext re-initialises from
+        // the freshly-set session cookie. It skips Supabase init for cookieless
+        // visitors, so an SPA push would leave user/isAdmin stale (logged-out shell).
+        window.location.assign("/admin");
       }
     } catch (err) {
       toast({

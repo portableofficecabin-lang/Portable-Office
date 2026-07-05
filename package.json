@@ -16,7 +16,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "seo:audit": "node scripts/seo-audit.mjs"
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "admin:reset-password": "node scripts/reset-admin-password.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -44,7 +44,7 @@ export function Footer() {
             <Link href="/" className="inline-flex items-center gap-4 mb-6 group">
               <div className="relative shrink-0">
                 <div className="absolute -inset-1 bg-gradient-to-r from-accent to-amber-light rounded-xl blur opacity-40 group-hover:opacity-60 transition-opacity" />
-                <img src={resolveImageUrl(logo)} alt="Portable Office Cabin" className="relative h-14 w-auto object-contain bg-white rounded-xl p-2 border-2 border-accent/50 shadow-xl" />
+                <img src={resolveImageUrl(logo)} alt="Portable Office Cabin" loading="lazy" decoding="async" className="relative h-14 w-auto object-contain bg-white rounded-xl p-2 border-2 border-accent/50 shadow-xl" />
               </div>
               <span className="font-display font-extrabold text-lg sm:text-xl md:text-2xl tracking-tight text-primary-foreground">
                 Portable Office <span className="text-white font-extrabold drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Cabin</span>

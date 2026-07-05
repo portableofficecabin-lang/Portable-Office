@@ -41,7 +41,7 @@ const products = [
 
 export function ProductRangeSection() {
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="section-padding bg-muted/30 cv-section">
       <div className="container-custom">
         <div className="text-center mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">

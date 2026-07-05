@@ -60,7 +60,7 @@ export function HeroSection() {
       <div className="container-custom relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-accent/15 backdrop-blur-sm rounded-full px-5 py-2.5 mb-6 animate-fade-up border border-accent/30">
+            <div className="inline-flex items-center gap-2 bg-accent/15 rounded-full px-5 py-2.5 mb-6 animate-fade-up border border-accent/30">
               <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
               <span className="text-accent font-semibold text-sm tracking-wide">
                 Revolutionising Modular Buildings
@@ -97,7 +97,7 @@ export function HeroSection() {
               style={{ animationDelay: "0.3s" }}
             >
               {highlights.map((item) => (
-                <div key={item.text} className="flex items-center gap-2.5 bg-white/5 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-white/10">
+                <div key={item.text} className="flex items-center gap-2.5 bg-white/[0.08] px-4 py-2.5 rounded-xl border border-white/10">
                   <item.icon className="h-5 w-5 text-accent" />
                   <span className="text-sm font-semibold text-white/90">{item.text}</span>
                 </div>
@@ -105,7 +105,7 @@ export function HeroSection() {
             </div>
 
             <div
-              className="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 mb-10 backdrop-blur-sm animate-fade-up lg:justify-start"
+              className="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 mb-10 animate-fade-up lg:justify-start"
               style={{ animationDelay: "0.34s" }}
             >
               <CheckCircle className="h-5 w-5 text-accent" />

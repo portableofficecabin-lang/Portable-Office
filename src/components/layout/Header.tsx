@@ -83,13 +83,27 @@ export function Header() {
         </div>
       </div>
 
-      <div className="bg-background/88 text-foreground backdrop-blur-xl">
+      {/* NOTE: the sticky <header> above already applies one backdrop-blur-xl pass
+          over the full-width bar. This inner bar previously ALSO had backdrop-blur-xl —
+          a redundant second full-width gaussian-blur pass that (because LCP is timed at
+          frame presentation, after the whole viewport composites) added compositor cost
+          to the hero-LCP frame on low-end mobile GPUs for no visual gain (bg is 88%
+          opaque). Dropped the second pass; the single header blur is kept. */}
+      <div className="bg-background/88 text-foreground">
         <div className="container-custom">
           <div className="flex h-14 items-center justify-between gap-2 lg:h-16">
             <Link href="/" className="flex min-w-0 items-center gap-2">
+              {/* loading="lazy" is deliberate: the logo is header chrome, NOT the LCP
+                  element. Without it, React auto-emits a <link rel=preload as=image> for
+                  this SSR'd <img> as the FIRST head hint, so on slow 4G the 8KB logo
+                  competes with the 26KB hero-bg for the critical connection during the
+                  exact LCP window. lazy suppresses that preload; the in-viewport logo
+                  still loads promptly, just at normal priority behind the hero. */}
               <img
                 src={resolveImageUrl(logo)}
                 alt="Portable Office Cabin"
+                loading="lazy"
+                decoding="async"
                 className="h-9 w-auto rounded-lg border border-accent/20 bg-card p-1 object-contain shadow-md lg:h-10"
               />
               <span className="truncate font-display text-sm font-extrabold tracking-tight text-foreground sm:text-base lg:text-lg">
