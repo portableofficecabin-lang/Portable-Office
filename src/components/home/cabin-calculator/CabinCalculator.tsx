@@ -15,13 +15,18 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesInsert } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
+import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import logo from "@/assets/logo.webp";
 import {
-  PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS,
+  PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS, INSULATION_OPTIONS,
   DOOR_TYPES, WINDOW_TYPES, ELECTRICAL_ITEMS, ADDONS,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
+  isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial,
+  FURNITURE_POSITIONS, PLUG_POINT_POSITIONS, MOBILITY_TYPES,
+  furniturePositionLabel, plugPointPositionLabel, mobilityTypeLabel,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
-  type CabinConfig, type Material, type Estimate,
+  type CabinConfig, type Material, type Estimate, type InsulationOption,
 } from "./pricing";
 
 // Steps a storage container customer sees — everything else (structure, interior,
@@ -229,6 +234,181 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, containe
 }
 
 /* ---------------------------------------------------------------- */
+/* 4-wall elevations (Front / Rear / Left / Right)                  */
+/* Openings are placed from the SAME data the floor plan uses, so    */
+/* the elevations always match the plan: the door wall (side) and    */
+/* each window position map to a specific wall + offset.             */
+/* ---------------------------------------------------------------- */
+type WallKey = "front" | "rear" | "left" | "right";
+
+// Floor-plan door side → which elevation it appears on.
+const DOOR_WALL: Record<string, WallKey> = { bottom: "front", top: "rear", left: "left", right: "right" };
+// Window position → wall + how far along that wall (0..1).
+const WINDOW_WALL: Record<string, { wall: WallKey; along: number }> = {
+  "top-left":   { wall: "rear",  along: 0.20 },
+  "top-center": { wall: "rear",  along: 0.50 },
+  "top-right":  { wall: "rear",  along: 0.80 },
+  "bottom":     { wall: "front", along: 0.70 },
+  "left":       { wall: "left",  along: 0.50 },
+  "right":      { wall: "right", along: 0.50 },
+};
+
+function Elevations({
+  length, width, height, doorPlacements, windowPositions, containerDoor,
+}: {
+  length: number; width: number; height: number;
+  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean;
+}) {
+  const L = Math.max(1, length), W = Math.max(1, width), H = Math.max(6, height);
+
+  // Gather openings per wall (fractions along each wall's own width).
+  const walls: Record<WallKey, { widthFt: number; doors: number[]; windows: number[] }> = {
+    front: { widthFt: L, doors: [], windows: [] },
+    rear:  { widthFt: L, doors: [], windows: [] },
+    left:  { widthFt: W, doors: [], windows: [] },
+    right: { widthFt: W, doors: [], windows: [] },
+  };
+  (doorPlacements ?? []).forEach((d) => {
+    const wall = DOOR_WALL[d.side];
+    if (!wall) return;
+    const span = wall === "front" || wall === "rear" ? L : W;
+    walls[wall].doors.push(Math.min(0.9, Math.max(0.1, d.offset / span)));
+  });
+  (windowPositions ?? []).forEach((id) => {
+    const m = WINDOW_WALL[id];
+    if (m) walls[m.wall].windows.push(m.along);
+  });
+
+  // Shared scale → proportions read correctly across all four walls in one viewBox.
+  const scale = Math.min(150 / Math.max(L, W), 96 / H);
+  const wallH = H * scale;
+  const roofH = 6, labelH = 18, cellPadX = 14, gap = 14;
+  const cellW = L * scale + cellPadX * 2; // the length walls are widest → set column width
+  const cellH = wallH + roofH + labelH + 8;
+  const vbW = cellW * 2 + gap, vbH = cellH * 2 + gap;
+
+  const acc = "hsl(var(--accent))";
+  const accSoft = "hsl(var(--accent) / 0.5)";
+  const glass = "hsl(var(--accent) / 0.18)";
+
+  const cells: { key: WallKey; label: string; ox: number; oy: number }[] = [
+    { key: "front", label: "Front", ox: 0, oy: 0 },
+    { key: "rear", label: "Rear", ox: cellW + gap, oy: 0 },
+    { key: "left", label: "Left", ox: 0, oy: cellH + gap },
+    { key: "right", label: "Right", ox: cellW + gap, oy: cellH + gap },
+  ];
+
+  const renderWall = (cell: (typeof cells)[number]) => {
+    const wdat = walls[cell.key];
+    const wallW = wdat.widthFt * scale;
+    const wx = cell.ox + (cellW - wallW) / 2;
+    const wy = cell.oy + roofH;
+    const ground = wy + wallH;
+    // Storage containers carry their double doors on the right (end) wall — mirrors the plan.
+    const containerEnd = containerDoor && cell.key === "right";
+
+    const ribs: React.ReactNode[] = [];
+    for (let x = wx + 9; x < wx + wallW - 2; x += 9) {
+      ribs.push(<line key={`rib${x}`} x1={x} y1={wy + 2} x2={x} y2={ground - 2} stroke={acc} strokeOpacity={0.12} strokeWidth={0.8} />);
+    }
+
+    const winSize = Math.max(7, Math.min(wallH * 0.24, wallW * 0.14, 18));
+    const winY = wy + wallH * 0.18;
+    const windows = wdat.windows.map((frac, i) => {
+      const cx = wx + wallW * frac, x = cx - winSize / 2;
+      return (
+        <g key={`w${i}`}>
+          <rect x={x} y={winY} width={winSize} height={winSize} rx={1} fill={glass} stroke={acc} strokeWidth={1} />
+          <line x1={cx} y1={winY} x2={cx} y2={winY + winSize} stroke={acc} strokeWidth={0.7} />
+          <line x1={x} y1={winY + winSize / 2} x2={x + winSize} y2={winY + winSize / 2} stroke={acc} strokeWidth={0.7} />
+        </g>
+      );
+    });
+
+    let doors: React.ReactNode;
+    if (containerEnd) {
+      const dW = Math.min(wallW * 0.72, wallW - 6), dH = wallH * 0.86;
+      const dx = wx + (wallW - dW) / 2, dy = ground - dH;
+      doors = (
+        <g>
+          <rect x={dx} y={dy} width={dW} height={dH} rx={1} fill={accSoft} stroke={acc} strokeWidth={1.2} />
+          <line x1={dx + dW / 2} y1={dy} x2={dx + dW / 2} y2={dy + dH} stroke={acc} strokeWidth={1.2} />
+          <line x1={dx + dW / 2 - 3} y1={dy + dH / 2} x2={dx + dW / 2 - 3} y2={dy + dH / 2 + 8} stroke={acc} strokeWidth={1.4} />
+          <line x1={dx + dW / 2 + 3} y1={dy + dH / 2} x2={dx + dW / 2 + 3} y2={dy + dH / 2 + 8} stroke={acc} strokeWidth={1.4} />
+        </g>
+      );
+    } else {
+      const dW = Math.max(9, Math.min(wallW * 0.14, 22)), dH = wallH * 0.62;
+      doors = wdat.doors.map((frac, i) => {
+        const cx = wx + wallW * frac, x = cx - dW / 2, y = ground - dH;
+        return (
+          <g key={`d${i}`}>
+            <rect x={x} y={y} width={dW} height={dH} rx={1} fill={acc} />
+            <circle cx={x + dW - 2.5} cy={y + dH / 2} r={1.2} fill="#fff" />
+          </g>
+        );
+      });
+    }
+
+    return (
+      <g key={cell.key}>
+        {/* flat roof cap */}
+        <rect x={wx - 4} y={wy - roofH} width={wallW + 8} height={roofH} rx={1} fill={accSoft} />
+        <rect x={wx} y={wy} width={wallW} height={wallH} rx={1.5} fill="hsl(var(--accent) / 0.06)" stroke={acc} strokeWidth={1.4} />
+        {ribs}
+        <line x1={wx - 6} y1={ground} x2={wx + wallW + 6} y2={ground} stroke="hsl(var(--muted-foreground))" strokeWidth={1} />
+        {windows}
+        {doors}
+        <text x={cell.ox + cellW / 2} y={ground + 13} textAnchor="middle" fontSize={9.5} fill="hsl(var(--muted-foreground))">
+          <tspan fontWeight="700" fill="hsl(var(--foreground))">{cell.label}</tspan> · {Math.round(wdat.widthFt)}×{Math.round(H)}ft
+        </text>
+      </g>
+    );
+  };
+
+  return (
+    <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img"
+      aria-label={`Four wall elevations — front, rear, left and right — of a ${length} by ${width} by ${height} foot cabin`}>
+      {cells.map(renderWall)}
+    </svg>
+  );
+}
+
+/** Preview with a Floor Plan / 4 Elevations toggle. */
+function CabinPreview({
+  length, width, height, doorPlacements, windowPositions, containerDoor, partitioned, room1Length, partitionDoor, caption,
+}: {
+  length: number; width: number; height: number;
+  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean;
+  partitioned?: boolean; room1Length?: number; partitionDoor?: boolean; caption?: string;
+}) {
+  const [view, setView] = useState<"plan" | "elevation">("plan");
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="inline-flex rounded-lg border border-border p-0.5">
+          {([["plan", "Floor Plan"], ["elevation", "4 Elevations"]] as const).map(([v, lbl]) => (
+            <button key={v} type="button" aria-pressed={view === v} onClick={() => setView(v)}
+              className={cn("rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors",
+                view === v ? "bg-accent text-white" : "text-muted-foreground hover:text-foreground")}>
+              {lbl}
+            </button>
+          ))}
+        </div>
+        {caption && <span className="text-[10px] text-muted-foreground">{caption}</span>}
+      </div>
+      {view === "plan" ? (
+        <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPositions={windowPositions}
+          containerDoor={containerDoor} partitioned={partitioned} room1Length={room1Length} partitionDoor={partitionDoor} />
+      ) : (
+        <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
+          windowPositions={windowPositions} containerDoor={containerDoor} />
+      )}
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------- */
 /* Estimate breakdown panel                                         */
 /* ---------------------------------------------------------------- */
 function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean; container?: boolean }) {
@@ -246,7 +426,9 @@ function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean
         <span>{est.area} sq.ft{est.quantity > 1 ? ` × ${est.quantity}` : ""}</span>
       </div>
       <Row label={container ? "Base Container Rate" : "Base Cabin"} value={est.contactRequired ? contactLabel : formatINR(est.base)} />
+      {est.heightSurcharge > 0 && <Row label={`Extra Height (${est.dimHeight}′)`} value={`+${formatINR(est.heightSurcharge)}`} positive />}
       {est.interior !== 0 && <Row label="Interior Upgrade" value={`${est.interior > 0 ? "+" : ""}${formatINR(est.interior)}`} positive={est.interior > 0} />}
+      {est.insulation > 0 && <Row label="Insulation" value={`+${formatINR(est.insulation)}`} positive />}
       {est.openings > 0 && <Row label="Doors & Windows" value={`+${formatINR(est.openings)}`} positive />}
       {est.ventilation > 0 && <Row label="Ventilation" value={`+${formatINR(est.ventilation)}`} positive />}
       {est.electrical > 0 && <Row label="Electrical" value={`+${formatINR(est.electrical)}`} positive />}
@@ -372,12 +554,17 @@ export default function CabinCalculator() {
     // start windowless — so for those products take the product-appropriate window /
     // ventilation defaults instead of carrying the previous product's window choice.
     const productDefinesOpenings = isToiletCabin(productId) || isStorageProduct(productId);
+    // The "Puf Panel Cabin" product IS a PUF panel build — force its structure (and the
+    // resulting "no wall lining" default) rather than carrying the previous product's.
+    const toPuf = productId === "puf-panel-cabin";
     setConfig((c) => ({
       ...fresh,
       // keep the user's structure / interior / add-on / quantity choices if they had any
       // (size resets to the new product's default, but unit count is orthogonal to product)
       quantity: c.quantity,
-      structureId: c.structureId, wallId: c.wallId, ceilingId: c.ceilingId, flooringId: c.flooringId,
+      structureId: toPuf ? fresh.structureId : c.structureId,
+      wallId: toPuf ? fresh.wallId : c.wallId,
+      ceilingId: c.ceilingId, flooringId: c.flooringId,
       doorTypeId: c.doorTypeId, doorQty: fresh.doorQty, doorPlacements: fresh.doorPlacements,
       windowTypeId: productDefinesOpenings ? fresh.windowTypeId : c.windowTypeId,
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
@@ -389,6 +576,25 @@ export default function CabinCalculator() {
       transport: c.transport, installation: c.installation, gst: c.gst,
     }));
   };
+
+  // Structure selection — switching to/from PUF panel adjusts the interior: a PUF panel IS
+  // the finished wall, so it defaults to "no wall lining" and drops the separate insulation
+  // (the panel is inherently insulated). Leaving PUF restores the standard wall finish so
+  // the estimate always has a valid lining for MS / GI / container cabins.
+  const selectStructure = (structureId: string) =>
+    setConfig((c) => {
+      const puf = isPufPanel(structureId);
+      return {
+        ...c,
+        structureId,
+        wallId: puf
+          ? WALL_NONE.id
+          : c.wallId === WALL_NONE.id
+            ? WALL_MATERIALS.find((m) => m.standard)?.id ?? WALL_MATERIALS[0].id
+            : c.wallId,
+        insulationId: puf ? "none" : c.insulationId,
+      };
+    });
 
   const toggleElectrical = (id: string) => {
     const item = ELECTRICAL_ITEMS.find((e) => e.id === id)!;
@@ -512,9 +718,10 @@ export default function CabinCalculator() {
       } else {
         configRows = [
           ["Structure", STRUCTURES.find((s) => s.id === config.structureId)?.label ?? ""],
-          ["Internal Wall", WALL_MATERIALS.find((m) => m.id === config.wallId)?.label ?? ""],
+          ["Internal Wall", findWallMaterial(config.wallId)?.label ?? ""],
           ["Ceiling", CEILING_MATERIALS.find((m) => m.id === config.ceilingId)?.label ?? ""],
           ["Flooring", FLOORING_MATERIALS.find((m) => m.id === config.flooringId)?.label ?? ""],
+          ["Insulation", isPufPanel(config.structureId) ? "Included (PUF panel — inherently insulated)" : (() => { const i = INSULATION_OPTIONS.find((o) => o.id === config.insulationId); return i && i.id !== "none" ? `${i.label} (${i.thickness})` : "None"; })()],
           ["Doors", `${config.doorQty} × ${DOOR_TYPES.find((d) => d.id === config.doorTypeId)?.label ?? ""}`],
         ];
         if (isToilet) {
@@ -526,6 +733,9 @@ export default function CabinCalculator() {
         }
         configRows.push(["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"]);
         configRows.push(["Add-ons", est.furnitureLines.map((l) => l.label).join(", ") || "—"]);
+        if (!isToilet) configRows.push(["Furniture Position", furniturePositionLabel(config.furniturePosition)]);
+        configRows.push(["Plug Point", plugPointPositionLabel(config.plugPointPosition)]);
+        configRows.push(["Shifting / Mobility", mobilityTypeLabel(config.mobilityType)]);
       }
 
       autoTable(doc, {
@@ -539,7 +749,9 @@ export default function CabinCalculator() {
 
       const contactTxt = isStorage ? "Contact for Rate" : "Contact us Directly";
       const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", est.contactRequired ? contactTxt : rsPdf(est.base)]];
+      if (est.heightSurcharge) rows.push([`Extra Height (${est.dimHeight} ft > 8'6")`, rsPdf(est.heightSurcharge)]);
       if (est.interior) rows.push(["Interior Upgrade", rsPdf(est.interior)]);
+      if (est.insulation) rows.push(["Insulation", rsPdf(est.insulation)]);
       if (est.openings) rows.push(["Doors & Windows", rsPdf(est.openings)]);
       if (est.ventilation) rows.push(["Ventilation", rsPdf(est.ventilation)]);
       if (est.electrical) rows.push(["Electrical", rsPdf(est.electrical)]);
@@ -642,6 +854,23 @@ export default function CabinCalculator() {
 
   return (
     <div ref={topRef} className="scroll-mt-24">
+      {/* Company logo + wordmark — brands the calculator (same treatment as the site header). */}
+      <div className="mb-5 flex items-center justify-center gap-3 lg:justify-start">
+        <img
+          src={resolveImageUrl(logo)}
+          alt="Portable Office Cabin"
+          loading="lazy"
+          decoding="async"
+          className="h-11 w-auto rounded-lg border border-accent/20 bg-card p-1 object-contain shadow-md lg:h-12"
+        />
+        <div className="leading-tight">
+          <p className="font-display text-base font-extrabold tracking-tight text-white sm:text-lg">
+            Portable Office <span className="text-accent">Cabin</span>
+          </p>
+          <p className="text-[11px] text-white/70">Cabin Cost Calculator</p>
+        </div>
+      </div>
+
       {/* Highlighted "Customized" banner — surfaces the live estimated price at the
           very top of the calculator so it is the first thing every visitor sees,
           on mobile and desktop. Updates in real time as the configuration changes. */}
@@ -782,10 +1011,13 @@ export default function CabinCalculator() {
                         <Label className="text-xs text-muted-foreground">Quantity</Label>
                         <Stepper value={config.quantity} min={1} max={500} label="Cabin quantity" onChange={(n) => patch({ quantity: n })} />
                       </div>
+                      <p className="col-span-2 text-[11px] text-muted-foreground">
+                        Standard height is <span className="font-semibold text-foreground">8′6″</span> — taller cabins add <span className="font-semibold text-foreground">8% per extra foot</span> on the base price.
+                      </p>
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <FloorPreview length={config.length} width={config.width} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
+                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -851,7 +1083,7 @@ export default function CabinCalculator() {
                     const active = config.structureId === s.id;
                     const rate = est.area * cabinRatePerSqft(est.area) * s.multiplier;
                     return (
-                      <button key={s.id} type="button" onClick={() => patch({ structureId: s.id })} aria-pressed={active}
+                      <button key={s.id} type="button" onClick={() => selectStructure(s.id)} aria-pressed={active}
                         className={cn("flex flex-col items-start gap-1 rounded-xl border p-4 text-left transition-all",
                           active ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50")}>
                         <span className="text-sm font-bold text-foreground">{s.label}</span>
@@ -872,9 +1104,18 @@ export default function CabinCalculator() {
                   </div>
                 ) : (
                   <div className="space-y-5">
-                    <MaterialGroup label="Internal Wall" items={WALL_MATERIALS} value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
+                    {isPufPanel(config.structureId) ? (
+                      <PufWallGroup value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
+                    ) : (
+                      <MaterialGroup label="Internal Wall" items={WALL_MATERIALS} value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
+                    )}
                     <MaterialGroup label="Ceiling" items={CEILING_MATERIALS} value={config.ceilingId} onSelect={(id) => patch({ ceilingId: id })} />
                     <MaterialGroup label="Flooring" items={FLOORING_MATERIALS} value={config.flooringId} onSelect={(id) => patch({ flooringId: id })} />
+                    {isPufPanel(config.structureId) ? (
+                      <PufPanelBuildup />
+                    ) : (
+                      <InsulationGroup value={config.insulationId} onSelect={(id) => patch({ insulationId: id })} />
+                    )}
                   </div>
                 )}
               </StepShell>
@@ -976,8 +1217,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <FloorPreview length={config.length} width={config.width} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
-                            <p className="mt-1 text-center text-[10px] text-muted-foreground">Live 2D plan · door + windows</p>
+                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} caption="Door + windows live" />
                           </div>
                         </div>
                       </div>
@@ -1023,6 +1263,16 @@ export default function CabinCalculator() {
                     </div>
                   </div>
                 </div>
+                {/* Plug point placement — spec only (no price) */}
+                <div className="mt-4">
+                  <SpecPills
+                    label="Plug Point Placement"
+                    hint="Where the plug / switch points go. Default: under the wall opposite to the work table."
+                    options={PLUG_POINT_POSITIONS}
+                    value={config.plugPointPosition}
+                    onSelect={(id) => patch({ plugPointPosition: id })}
+                  />
+                </div>
               </StepShell>
             )}
 
@@ -1033,18 +1283,37 @@ export default function CabinCalculator() {
                     Furniture add-ons aren&rsquo;t applicable to storage cabins. Need shelving or racking? Let our team know and we&rsquo;ll quote it separately.
                   </div>
                 ) : (
-                  <div className="grid gap-2.5 sm:grid-cols-2">
-                    {ADDONS.filter((a) => a.id !== "partition" && a.id !== "partition-door").map((a) => {
-                      const selected = !!config.addons[a.id];
-                      return (
-                        <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
-                          label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}`}>
-                          {selected && a.hasQty && (
-                            <Stepper value={config.addons[a.id]} min={1} max={200} label={`${a.label} quantity`} onChange={(n) => setAddonQty(a.id, n)} />
-                          )}
-                        </ToggleCard>
-                      );
-                    })}
+                  <div className="space-y-5">
+                    <div className="grid gap-2.5 sm:grid-cols-2">
+                      {ADDONS.filter((a) => a.id !== "partition" && a.id !== "partition-door").map((a) => {
+                        const selected = !!config.addons[a.id];
+                        return (
+                          <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
+                            label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}`}>
+                            {selected && a.hasQty && (
+                              <Stepper value={config.addons[a.id]} min={1} max={200} label={`${a.label} quantity`} onChange={(n) => setAddonQty(a.id, n)} />
+                            )}
+                          </ToggleCard>
+                        );
+                      })}
+                    </div>
+                    {/* Layout preferences — spec only (no price impact) */}
+                    <div className="grid gap-4 border-t border-border pt-4 sm:grid-cols-2">
+                      <SpecPills
+                        label="Furniture Position"
+                        hint="Table / workstation placement — against the wall or in the centre."
+                        options={FURNITURE_POSITIONS}
+                        value={config.furniturePosition}
+                        onSelect={(id) => patch({ furniturePosition: id })}
+                      />
+                      <SpecPills
+                        label="Shifting / Mobility Type"
+                        hint="How the cabin will be used — fully relocatable or fixed on site."
+                        options={MOBILITY_TYPES}
+                        value={config.mobilityType}
+                        onSelect={(id) => patch({ mobilityType: id })}
+                      />
+                    </div>
                   </div>
                 )}
               </StepShell>
@@ -1202,6 +1471,27 @@ function StepShell({ title, subtitle, children }: { title: string; subtitle: str
   );
 }
 
+/** Spec-only pill selector (no price impact) — placement / mobility choices. */
+function SpecPills({ label, hint, options, value, onSelect }: {
+  label: string; hint?: string; options: readonly { id: string; label: string }[]; value: string; onSelect: (id: string) => void;
+}) {
+  return (
+    <div>
+      <Label className="mb-1.5 block text-xs font-semibold text-muted-foreground">{label}</Label>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o) => (
+          <button key={o.id} type="button" aria-pressed={value === o.id} onClick={() => onSelect(o.id)}
+            className={cn("rounded-lg border px-3 py-2 text-xs font-medium transition-all",
+              value === o.id ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+      {hint && <p className="mt-1.5 text-[11px] text-muted-foreground">{hint}</p>}
+    </div>
+  );
+}
+
 function MaterialGroup({ label, items, value, onSelect }: { label: string; items: Material[]; value: string; onSelect: (id: string) => void }) {
   return (
     <div>
@@ -1211,6 +1501,152 @@ function MaterialGroup({ label, items, value, onSelect }: { label: string; items
           <MaterialChip key={m.id} item={m} selected={value === m.id} onSelect={() => onSelect(m.id)} />
         ))}
       </div>
+    </div>
+  );
+}
+
+/** Internal-wall selector for PUF panel cabins: the bare panel is the recommended finished
+ *  wall (₹0). Any interior lining is optional and priced as an ADD-ON over the panel (its
+ *  absolute rate), since a PUF cabin bundles no lining in the base. */
+function PufWallGroup({ value, onSelect }: { value: string; onSelect: (id: string) => void }) {
+  const items = pufWallOptions();
+  return (
+    <div>
+      <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+        <Label className="text-sm font-semibold">Internal Wall <span className="font-normal text-muted-foreground">(optional)</span></Label>
+      </div>
+      <div className="mb-2 rounded-lg border border-dashed border-emerald-500/40 bg-emerald-500/5 p-2.5 text-[11px] leading-snug text-muted-foreground">
+        <span className="font-semibold text-emerald-600 dark:text-emerald-400">Recommended: not required.</span> The insulated PUF panel is already a clean, finished interior wall — no extra lining needed. Add a lining below only if you specifically want one (charged as an add-on).
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {items.map((m) => (
+          <MaterialChip key={m.id} item={m} selected={value === m.id} onSelect={() => onSelect(m.id)} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** For PUF panel cabins the panel is inherently insulated (no corrugated body, no separate
+ *  insulation layer), so the Insulation selector is replaced with this explanatory build-up
+ *  + a sandwich-panel cross-section (shown INSTEAD of the corrugated one). */
+function PufPanelBuildup() {
+  return (
+    <div>
+      <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+        <Label className="text-sm font-semibold">Wall Build-up</Label>
+        <span className="text-[11px] text-muted-foreground">Insulated PUF sandwich panel</span>
+      </div>
+      <div className="grid gap-3 lg:grid-cols-[1fr_18rem] lg:items-start">
+        <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-3 text-[12px] leading-snug text-muted-foreground">
+          <p className="font-semibold text-foreground">No corrugated sheet · no separate insulation.</p>
+          <p className="mt-1">A PUF (polyurethane-foam) sandwich panel is a single factory-made wall — colour-coated steel skin, an insulating PUF core, and a steel skin. It is inherently thermally insulated, so there is <span className="font-medium text-foreground">no corrugated outer body</span> and <span className="font-medium text-foreground">no separate glass-wool / Hitlon layer</span> to add.</p>
+        </div>
+        <PufPanelCrossSection />
+      </div>
+    </div>
+  );
+}
+
+/** PUF sandwich-panel wall cross-section: steel skin → insulating PUF foam core → steel
+ *  skin. Shown for PUF panel cabins in place of the corrugated build-up. */
+function PufPanelCrossSection() {
+  return (
+    <div className="rounded-xl border border-border bg-background p-3">
+      <p className="mb-2 text-center text-[11px] font-medium text-muted-foreground">Wall build-up — insulated PUF sandwich panel</p>
+      <svg viewBox="0 0 340 132" className="mx-auto h-auto w-full max-w-xs" role="img"
+        aria-label="Wall cross-section: steel skin, PUF foam core, steel skin — no corrugated sheet">
+        <text x="30" y="12" textAnchor="middle" fontSize="9" fill="hsl(var(--muted-foreground))">Outside</text>
+        <text x="310" y="12" textAnchor="middle" fontSize="9" fill="hsl(var(--muted-foreground))">Inside</text>
+        {/* Outer colour-coated steel skin */}
+        <rect x="34" y="22" width="16" height="96" rx="2" fill="#94a3b8" stroke="rgba(0,0,0,0.25)" strokeWidth="1" />
+        {/* PUF foam core */}
+        <rect x="50" y="22" width="240" height="96" rx="2" fill="#f8d477" stroke="rgba(0,0,0,0.2)" strokeWidth="1" />
+        {Array.from({ length: 40 }).map((_, i) => (
+          <circle key={i} cx={62 + (i % 10) * 24} cy={34 + Math.floor(i / 10) * 22} r={2.4} fill="rgba(255,255,255,0.55)" />
+        ))}
+        {/* Inner colour-coated steel skin */}
+        <rect x="290" y="22" width="16" height="96" rx="2" fill="#94a3b8" stroke="rgba(0,0,0,0.25)" strokeWidth="1" />
+      </svg>
+      <div className="mt-1 flex items-center justify-center gap-3 text-[10px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1"><span className="h-2 w-3 rounded-[2px]" style={{ background: "#94a3b8" }} /> Steel skin</span>
+        <span className="inline-flex items-center gap-1"><span className="h-2 w-3 rounded-[2px] border border-black/20" style={{ background: "#f8d477" }} /> PUF foam core</span>
+        <span className="inline-flex items-center gap-1"><span className="h-2 w-3 rounded-[2px]" style={{ background: "#94a3b8" }} /> Steel skin</span>
+      </div>
+    </div>
+  );
+}
+
+/** Cross-section illustration of the wall build-up: corrugated outer body →
+ *  insulation core (coloured by the selected option) → plain inner lining. */
+function InsulationCrossSection({ option }: { option: InsulationOption }) {
+  const filled = option.id !== "none";
+  return (
+    <div className="rounded-xl border border-border bg-background p-3">
+      <p className="mb-2 text-center text-[11px] font-medium text-muted-foreground">
+        {filled ? `Wall build-up — ${option.label} ${option.thickness}` : "Wall build-up — no insulation"}
+      </p>
+      <svg viewBox="0 0 340 132" className="mx-auto h-auto w-full max-w-xs" role="img"
+        aria-label={`Wall cross-section: corrugated outer body, ${filled ? `${option.label} insulation` : "no insulation"}, plain inner wall`}>
+        <text x="26" y="12" textAnchor="middle" fontSize="9" fill="hsl(var(--muted-foreground))">Outside</text>
+        <text x="300" y="12" textAnchor="middle" fontSize="9" fill="hsl(var(--muted-foreground))">Inside</text>
+        {/* Corrugated outer steel skin */}
+        <path d="M18,22 L34,30 L18,38 L34,46 L18,54 L34,62 L18,70 L34,78 L18,86 L34,94 L18,102 L34,110 L18,118"
+          fill="none" stroke="#94a3b8" strokeWidth="4" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Insulation core */}
+        {filled ? (
+          <g>
+            <rect x="46" y="22" width="228" height="96" rx="3" fill={option.color} stroke="rgba(0,0,0,0.25)" strokeWidth="1" />
+            {Array.from({ length: 7 }).map((_, i) => (
+              <line key={i} x1="52" y1={30 + i * 13} x2="268" y2={30 + i * 13} stroke="rgba(0,0,0,0.12)" strokeWidth="1" strokeDasharray="5 4" />
+            ))}
+          </g>
+        ) : (
+          <rect x="46" y="22" width="228" height="96" rx="3" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="5 5" />
+        )}
+        {/* Plain inner wall lining */}
+        <rect x="282" y="22" width="18" height="96" rx="2" fill="hsl(var(--muted))" stroke="rgba(0,0,0,0.25)" strokeWidth="1" />
+      </svg>
+      <div className="mt-1 flex items-center justify-center gap-3 text-[10px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1"><span className="h-2 w-3 rounded-[2px]" style={{ background: "#94a3b8" }} /> Corrugated outer</span>
+        <span className="inline-flex items-center gap-1"><span className="h-2 w-3 rounded-[2px] border border-black/20" style={{ background: filled ? option.color : "transparent" }} /> {filled ? option.label : "No layer"}</span>
+        <span className="inline-flex items-center gap-1"><span className="h-2 w-3 rounded-[2px] bg-muted" /> Plain inner</span>
+      </div>
+    </div>
+  );
+}
+
+/** Insulation selector — chips for each option + the live wall cross-section. */
+function InsulationGroup({ value, onSelect }: { value: string; onSelect: (id: string) => void }) {
+  const selected = INSULATION_OPTIONS.find((o) => o.id === value) ?? INSULATION_OPTIONS[0];
+  return (
+    <div>
+      <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+        <Label className="text-sm font-semibold">Insulation</Label>
+        <span className="text-[11px] text-muted-foreground">Between the outer body &amp; inner wall — charged per sq.ft of wall + ceiling.</span>
+      </div>
+      <div className="grid gap-3 lg:grid-cols-[1fr_18rem] lg:items-start">
+        <div className="flex flex-wrap gap-2">
+          {INSULATION_OPTIONS.map((o) => {
+            const active = value === o.id;
+            return (
+              <button key={o.id} type="button" onClick={() => onSelect(o.id)} aria-pressed={active}
+                className={cn("flex flex-col items-start gap-0.5 rounded-xl border px-3.5 py-2.5 text-left transition-all",
+                  active ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50")}>
+                <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                  {o.id !== "none" && <span className="h-3 w-3 rounded-sm border border-black/20" style={{ background: o.color }} />}
+                  {o.label}{o.thickness !== "—" ? ` ${o.thickness}` : ""}
+                </span>
+                <span className={cn("text-[11px] font-medium", o.ratePerSqft > 0 ? "text-accent" : "text-muted-foreground")}>
+                  {o.ratePerSqft > 0 ? `+₹${o.ratePerSqft}/sqft` : "None"}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <InsulationCrossSection option={selected} />
+      </div>
+      {selected.id !== "none" && <p className="mt-2 text-[11px] text-muted-foreground">{selected.note}</p>}
     </div>
   );
 }

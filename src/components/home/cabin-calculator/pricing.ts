@@ -14,6 +14,10 @@
 export const GST_RATE = 0.18; // 18% GST
 export const TRANSPORT_BASE = 18000; // per cabin, local/regional; long-haul varies
 export const INSTALLATION_BASE = 15000; // per cabin, standard site install
+// Height: 8'6" (8.5 ft) is the standard, no-surcharge height. Each extra FOOT above
+// it adds 8% of the base cabin price (prorated for part-feet: 9'0" = +4%, 9'6" = +8%).
+export const STANDARD_HEIGHT_FT = 8.5;
+export const HEIGHT_SURCHARGE_PER_FT = 0.08;
 
 /** Format a number as Indian Rupees (₹1,23,456). Local copy so this module stays
  *  dependency-free — importing from lib/exportUtils would pull xlsx into the bundle. */
@@ -40,14 +44,16 @@ export interface ProductType {
 }
 
 export const PRODUCTS: ProductType[] = [
-  { id: "porta-cabin",     label: "Porta Cabin",         icon: "building",   baseRatePerSqft: 1700, def: { length: 20, width: 10, height: 9 }, badge: "Most Chosen", blurb: "All-purpose modular cabin" },
-  { id: "office-cabin",    label: "Office Cabin",        icon: "briefcase",  baseRatePerSqft: 1850, def: { length: 20, width: 10, height: 9 }, badge: "Best Value",  blurb: "Furnished workspace cabin" },
-  { id: "security-cabin",  label: "Security Cabin",      icon: "shield",     baseRatePerSqft: 2150, def: { length: 6,  width: 6,  height: 8 }, blurb: "Guard booth / gate post" },
-  { id: "toilet-cabin",    label: "Toilet Cabin",        icon: "bath",       baseRatePerSqft: 2450, def: { length: 8,  width: 6,  height: 8 }, blurb: "Portable washroom block" },
-  { id: "accommodation",   label: "Accommodation Cabin", icon: "bedDouble",  baseRatePerSqft: 1600, def: { length: 24, width: 10, height: 9 }, blurb: "Bunkhouse / staff stay" },
+  // Standard height is 8'6" (8.5 ft) for every product — the no-surcharge baseline.
+  // Customers can raise it in the Size step; each extra foot adds HEIGHT_SURCHARGE_PER_FT.
+  { id: "porta-cabin",     label: "Porta Cabin",         icon: "building",   baseRatePerSqft: 1700, def: { length: 20, width: 10, height: 8.5 }, badge: "Most Chosen", blurb: "All-purpose modular cabin" },
+  { id: "office-cabin",    label: "Office Cabin",        icon: "briefcase",  baseRatePerSqft: 1850, def: { length: 20, width: 10, height: 8.5 }, badge: "Best Value",  blurb: "Furnished workspace cabin" },
+  { id: "security-cabin",  label: "Security Cabin",      icon: "shield",     baseRatePerSqft: 2150, def: { length: 6,  width: 6,  height: 8.5 }, blurb: "Guard booth / gate post" },
+  { id: "toilet-cabin",    label: "Toilet Cabin",        icon: "bath",       baseRatePerSqft: 2450, def: { length: 8,  width: 6,  height: 8.5 }, blurb: "Portable washroom block" },
+  { id: "accommodation",   label: "Accommodation Cabin", icon: "bedDouble",  baseRatePerSqft: 1600, def: { length: 24, width: 10, height: 8.5 }, blurb: "Bunkhouse / staff stay" },
   { id: "container-office", label: "Container Office",   icon: "container",  baseRatePerSqft: 2000, def: { length: 20, width: 8,  height: 8.5 }, badge: "Premium", blurb: "Insulated container workspace" },
-  { id: "site-office",     label: "Site Office",         icon: "layout",     baseRatePerSqft: 1750, def: { length: 20, width: 10, height: 9 }, blurb: "On-site project office" },
-  { id: "puf-panel-cabin", label: "Puf Panel Cabin",     icon: "panels",     baseRatePerSqft: 2200, def: { length: 20, width: 10, height: 9 }, blurb: "PUF-insulated panel cabin" },
+  { id: "site-office",     label: "Site Office",         icon: "layout",     baseRatePerSqft: 1750, def: { length: 20, width: 10, height: 8.5 }, blurb: "On-site project office" },
+  { id: "puf-panel-cabin", label: "Puf Panel Cabin",     icon: "panels",     baseRatePerSqft: 2200, def: { length: 20, width: 10, height: 8.5 }, blurb: "PUF-insulated panel cabin" },
   { id: "storage-container", label: "Storage Container",  icon: "warehouse",  baseRatePerSqft: 1250, def: { length: 20, width: 8,  height: 8.5 }, blurb: "Shipping container for storage" },
 ];
 
@@ -67,6 +73,11 @@ export const STRUCTURES: StructureType[] = [
   { id: "puf",       label: "Insulated PUF Panel Wall",       multiplier: 1.25, note: "PUF sandwich-panel walls — insulated & thermally efficient" },
   { id: "container", label: "Shipping Container Conversion",  multiplier: 1.28, note: "Corten container base — most rugged" },
 ];
+
+/** The "Insulated PUF Panel Wall" structure: the sandwich panel IS the finished wall.
+ *  There is NO corrugated outer sheet and NO separate thermal-insulation layer (the panel
+ *  is inherently insulated), and an interior wall lining is OPTIONAL (recommended: none). */
+export const isPufPanel = (structureId: string) => structureId === "puf";
 
 /* ------------------------------------------------------------------ *
  * Base cabin rate — SIZE-BASED (INTERNAL). The ₹/sqft below is NEVER
@@ -137,6 +148,30 @@ export const WALL_MATERIALS: Material[] = [
   { id: "acp",      label: "ACP",            delta: 240 },
 ];
 
+/** Absolute ₹/sqft of the standard MDF wall lining. For MS/GI/container cabins this rate
+ *  is BUNDLED into the base price (so the WALL_MATERIALS deltas above are measured over
+ *  it). A PUF panel cabin bundles nothing — the panel itself is the finished wall — so if
+ *  the customer opts to add an interior lining, it is charged at this absolute base rate
+ *  PLUS the material's delta (e.g. MDF ≈ ₹40/sqft, PVC ≈ ₹108/sqft). */
+export const WALL_LINING_BASE_RATE = 40;
+
+/** Wall selection used only for PUF panel cabins — the recommended default: the bare PUF
+ *  panel is left as the finished interior wall (no extra lining, ₹0). */
+export const WALL_NONE: Material = { id: "none", label: "Not Required (PUF Panel Finish)", delta: 0 };
+
+/** Resolve a wall selection by id, including the PUF-only "none" option. Use this instead
+ *  of a raw WALL_MATERIALS lookup wherever a saved config's wallId may be "none". */
+export const findWallMaterial = (id: string): Material | undefined =>
+  id === WALL_NONE.id ? WALL_NONE : WALL_MATERIALS.find((m) => m.id === id);
+
+/** Wall options shown for PUF panel cabins: "Not Required" (recommended) first, then each
+ *  lining priced at its ABSOLUTE additional rate (base + delta) — the true cost of adding
+ *  that lining over the PUF panel, since nothing is bundled for PUF. */
+export const pufWallOptions = (): Material[] => [
+  WALL_NONE,
+  ...WALL_MATERIALS.map((m) => ({ ...m, delta: WALL_LINING_BASE_RATE + m.delta, standard: false })),
+];
+
 // Ceiling — MDF is the standard finish (~₹40/sqft, already in the base rate);
 // every other option's delta is ₹/sqft above (or below) that standard.
 export const CEILING_MATERIALS: Material[] = [
@@ -157,6 +192,30 @@ export const FLOORING_MATERIALS: Material[] = [
   { id: "spc",     label: "SPC",             delta: 480 },
   { id: "laminate", label: "Wooden Laminate", delta: 48 },
   { id: "tiles",   label: "Tiles",           delta: 210 },
+];
+
+/* ------------------------------------------------------------------ *
+ * Step 4b — Thermal insulation (sits BETWEEN the corrugated outer body
+ * and the plain inner wall/ceiling). Priced per running sq.ft of insulated
+ * surface = wall area + ceiling area. `color` is the fill used in the wall
+ * cross-section illustration shown in the Interior step.
+ * ------------------------------------------------------------------ */
+export interface InsulationOption {
+  id: string;
+  label: string;
+  /** ₹ per running sq.ft of insulated surface (walls + ceiling). 0 = none. */
+  ratePerSqft: number;
+  /** Layer thickness, for display. */
+  thickness: string;
+  /** Fill colour for the cross-section visual. */
+  color: string;
+  note: string;
+}
+
+export const INSULATION_OPTIONS: InsulationOption[] = [
+  { id: "none",      label: "No Insulation", ratePerSqft: 0,  thickness: "—",     color: "transparent", note: "Single-skin wall — no thermal layer" },
+  { id: "glasswool", label: "Glasswool",     ratePerSqft: 56, thickness: "25 mm", color: "#facc15",     note: "25 mm glass-wool — high thermal & acoustic insulation" },
+  { id: "hitlon",    label: "Hitlon",        ratePerSqft: 28, thickness: "12 mm", color: "#f5f5f5",     note: "12 mm Hitlon (XLPE foil foam) — moisture-safe & lightweight (white / black)" },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -274,6 +333,29 @@ export const LIGHT_COLORS = [{ id: "white", label: "White" }, { id: "warm", labe
 export const LED_SHAPES = [{ id: "square", label: "Square" }, { id: "round", label: "Round" }] as const;
 
 /* ------------------------------------------------------------------ *
+ * Spec-only placement / layout choices — NO price impact. Captured in
+ * the config, the WhatsApp summary and the PDF so the factory knows the
+ * intended layout. (Same pattern as LIGHT_COLORS / LED_SHAPES above.)
+ * ------------------------------------------------------------------ */
+export const FURNITURE_POSITIONS = [
+  { id: "wall", label: "Wall Attached" },
+  { id: "centre", label: "Centre" },
+] as const;
+export const PLUG_POINT_POSITIONS = [
+  { id: "opposite-table", label: "Opposite Table (under-wall)" },
+  { id: "near-door", label: "Near Door" },
+  { id: "both-sides", label: "Both Side Walls" },
+  { id: "as-per-site", label: "As Per Site" },
+] as const;
+export const MOBILITY_TYPES = [
+  { id: "movable", label: "100% Movable (fully relocatable)" },
+  { id: "fixed", label: "Fixed / Semi-permanent" },
+] as const;
+export const furniturePositionLabel = (id: string): string => FURNITURE_POSITIONS.find((o) => o.id === id)?.label ?? id;
+export const plugPointPositionLabel = (id: string): string => PLUG_POINT_POSITIONS.find((o) => o.id === id)?.label ?? id;
+export const mobilityTypeLabel = (id: string): string => MOBILITY_TYPES.find((o) => o.id === id)?.label ?? id;
+
+/* ------------------------------------------------------------------ *
  * Step 7 — Optional add-ons / furniture (price each; some take a quantity)
  * ------------------------------------------------------------------ */
 export interface AddonItem {
@@ -310,6 +392,8 @@ export interface CabinConfig {
   wallId: string;
   ceilingId: string;
   flooringId: string;
+  /** Thermal insulation between the outer body and inner wall/ceiling. "none" = none. */
+  insulationId: string;
   doorTypeId: string;
   doorQty: number;
   /** Per-door placement: side (top/bottom/left/right) + offset in ft from the start
@@ -328,6 +412,12 @@ export interface CabinConfig {
   /** Light colour (white / warm) and LED panel shape (square / round) — spec only. */
   lightColor: string;
   ledShape: string;
+  /** Spec-only placement choices (no price impact) — captured in the quote/PDF.
+   *  furniturePosition: wall | centre · plugPointPosition: opposite-table | near-door
+   *  | both-sides | as-per-site · mobilityType: movable | fixed. */
+  furniturePosition: string;
+  plugPointPosition: string;
+  mobilityType: string;
   /** id -> quantity. Presence with qty>0 means selected. */
   addons: Record<string, number>;
   /** Layout: false = single room; true = a partition splits the cabin into two rooms.
@@ -358,8 +448,12 @@ export interface Estimate {
   dimHeight: number;
   quantity: number;
   base: number;
+  /** Extra-height premium: base × 8% × (height − 8'6"), prorated. 0 at/below standard. */
+  heightSurcharge: number;
   interior: number;
   interiorLines: LineDelta[];
+  /** Thermal-insulation cost (wall + ceiling area × rate). 0 when none selected. */
+  insulation: number;
   openings: number;
   openingLines: LineDelta[];
   ventilation: number;
@@ -387,6 +481,9 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
   const product = findById(PRODUCTS, productId) ?? PRODUCTS[0];
   const area = product.def.length * product.def.width;
   const container = isStorageProduct(product.id);
+  // The "Puf Panel Cabin" product defaults to the PUF panel structure (its walls ARE PUF
+  // panels), which in turn defaults the interior wall to "Not Required".
+  const puf = product.id === "puf-panel-cabin";
   const electrical: Record<string, number> = {};
   // Storage containers are priced purely by grade — no pre-selected electricals.
   ELECTRICAL_ITEMS.forEach((e) => {
@@ -398,10 +495,11 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     width: product.def.width,
     height: product.def.height,
     quantity: 1,
-    structureId: STRUCTURES[0].id,
-    wallId: WALL_MATERIALS.find((m) => m.standard)!.id,
+    structureId: puf ? "puf" : STRUCTURES[0].id,
+    wallId: puf ? WALL_NONE.id : WALL_MATERIALS.find((m) => m.standard)!.id,
     ceilingId: CEILING_MATERIALS.find((m) => m.standard)!.id,
     flooringId: FLOORING_MATERIALS.find((m) => m.standard)!.id,
+    insulationId: "none",
     doorTypeId: DOOR_TYPES[0].id, // Steel Door (1 included in base)
     // Containers ship with their own doors — no separate door line.
     doorQty: container ? 0 : 1,
@@ -420,6 +518,9 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     electrical,
     lightColor: "white",
     ledShape: "square",
+    furniturePosition: "wall",
+    plugPointPosition: "opposite-table",
+    mobilityType: "movable",
     addons: {},
     // Layout — single room by default; the 2-room partition is opt-in in the Size step.
     partitioned: false,
@@ -456,19 +557,38 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     ? containerRate(length, width, cfg.containerGradeId)
     : round(cabinRatePerSqft(area) * area * structure.multiplier);
 
+  // Extra-height premium — 8% of the base cabin price per foot above the 8'6" standard
+  // (prorated). Not applied to storage containers (fixed ISO height, grade-priced).
+  const extraHeight = Math.max(0, height - STANDARD_HEIGHT_FT);
+  const heightSurcharge = container ? 0 : round(base * HEIGHT_SURCHARGE_PER_FT * extraHeight);
+
   // Interior deltas (₹/sqft over the standard finish)
-  const wall = findById(WALL_MATERIALS, cfg.wallId) ?? WALL_MATERIALS[0];
+  const puf = isPufPanel(cfg.structureId);
+  const wall = findWallMaterial(cfg.wallId) ?? WALL_MATERIALS[0];
   const ceiling = findById(CEILING_MATERIALS, cfg.ceilingId) ?? CEILING_MATERIALS[0];
   const flooring = findById(FLOORING_MATERIALS, cfg.flooringId) ?? FLOORING_MATERIALS[0];
-  const wallAmt = round(wall.delta * wallArea);
+  // Wall lining: MS/GI/container bundle the standard MDF lining in the base rate, so the
+  // material delta is measured OVER it. A PUF panel bundles nothing (the panel is the
+  // finished wall) → "Not Required" = ₹0, and any lining is an optional add-on charged at
+  // its ABSOLUTE rate (base + delta).
+  const wallAmt = puf
+    ? (cfg.wallId === WALL_NONE.id ? 0 : round((WALL_LINING_BASE_RATE + wall.delta) * wallArea))
+    : round(wall.delta * wallArea);
   const ceilAmt = round(ceiling.delta * area);
   const floorAmt = round(flooring.delta * area);
   const interior = wallAmt + ceilAmt + floorAmt;
   const interiorLines: LineDelta[] = [
-    { label: "Internal Wall", detail: wall.label, amount: wallAmt },
+    { label: "Internal Wall", detail: puf && cfg.wallId !== WALL_NONE.id ? `${wall.label} (add-on over PUF)` : wall.label, amount: wallAmt },
     { label: "Ceiling", detail: ceiling.label, amount: ceilAmt },
     { label: "Flooring", detail: flooring.label, amount: floorAmt },
   ].filter((l) => l.amount !== 0);
+
+  // Thermal insulation — priced per running sq.ft of insulated surface (walls +
+  // ceiling), sits between the corrugated outer body and the plain inner wall. NOT
+  // applicable to PUF panels: the sandwich panel is inherently insulated (no corrugated
+  // body / inner-lining cavity to fill), so no separate insulation is charged.
+  const insulationOpt = findById(INSULATION_OPTIONS, cfg.insulationId) ?? INSULATION_OPTIONS[0];
+  const insulation = puf ? 0 : round(insulationOpt.ratePerSqft * (wallArea + area));
 
   // Doors & windows — windows never apply to toilet cabins (ventilation instead).
   const toilet = isToiletCabin(cfg.productId);
@@ -527,7 +647,7 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   });
 
   // Containers price on the grade rate alone — no interior/openings/electrical/furniture.
-  const perCabin = container ? base : base + interior + openings + ventilation + electrical + furniture;
+  const perCabin = container ? base : base + heightSurcharge + interior + insulation + openings + ventilation + electrical + furniture;
   const cabinsSubtotal = perCabin * quantity;
   const transport = cfg.transport ? TRANSPORT_BASE * quantity : 0;
   const installation = cfg.installation ? INSTALLATION_BASE * quantity : 0;
@@ -543,8 +663,10 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     dimHeight: height,
     quantity,
     base,
+    heightSurcharge,
     interior: container ? 0 : interior,
     interiorLines: container ? [] : interiorLines,
+    insulation: container ? 0 : insulation,
     openings: container ? 0 : openings,
     openingLines: container ? [] : openingLines,
     ventilation: container ? 0 : ventilation,
@@ -597,9 +719,10 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
   }
 
   const structure = findById(STRUCTURES, cfg.structureId)?.label ?? "";
-  const wall = findById(WALL_MATERIALS, cfg.wallId)?.label ?? "";
+  const wall = findWallMaterial(cfg.wallId)?.label ?? "";
   const ceiling = findById(CEILING_MATERIALS, cfg.ceilingId)?.label ?? "";
   const flooring = findById(FLOORING_MATERIALS, cfg.flooringId)?.label ?? "";
+  const insul = findById(INSULATION_OPTIONS, cfg.insulationId);
   const door = findById(DOOR_TYPES, cfg.doorTypeId)?.label ?? "";
   const win = findById(WINDOW_TYPES, cfg.windowTypeId)?.label ?? "";
   const elec = est.electricalLines.map((l) => `${l.label} (${l.detail})`).join(", ") || "None";
@@ -613,6 +736,7 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     `Size: ${est.dimLength} × ${est.dimWidth} ft, H ${est.dimHeight} ft — ${est.area} sq.ft × ${est.quantity} unit(s)`,
     isStorage ? `Usage: Material Storage / Tool Room` : ``,
     `Interior: Wall ${wall}, Ceiling ${ceiling}, Flooring ${flooring}`,
+    insul && insul.id !== "none" ? `Insulation: ${insul.label} (${insul.thickness})` : ``,
     isToilet
       ? `Doors: ${cfg.doorQty} × ${door}`
       : `Doors/Windows: ${cfg.doorQty} × ${door}, ${cfg.windowQty} × ${win}${cfg.windowPositions?.length ? ` (${cfg.windowPositions.map(windowPositionLabel).join(", ")})` : ""}`,
@@ -620,10 +744,15 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     isToilet ? `Window: Not Applicable (toilet cabin)` : (isStorage && cfg.windowQty === 0 ? `Window: Not Applicable (add if required)` : ``),
     `Electrical: ${elec}`,
     `Add-ons: ${furn}`,
+    isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,
+    `Plug Point: ${plugPointPositionLabel(cfg.plugPointPosition)}`,
+    `Shifting / Mobility: ${mobilityTypeLabel(cfg.mobilityType)}`,
     `Delivery: Transport ${cfg.transport ? "Yes" : "No"}, Installation ${cfg.installation ? "Yes" : "No"}`,
     ``,
     `Base Cabin: ${formatINR(est.base)}`,
+    est.heightSurcharge ? `Extra Height (${est.dimHeight} ft > 8'6"): ${formatINR(est.heightSurcharge)}` : ``,
     est.interior ? `Interior: ${formatINR(est.interior)}` : ``,
+    est.insulation ? `Insulation: ${formatINR(est.insulation)}` : ``,
     est.openings ? `Doors & Windows: ${formatINR(est.openings)}` : ``,
     est.ventilation ? `Ventilation: ${formatINR(est.ventilation)}` : ``,
     est.electrical ? `Electrical: ${formatINR(est.electrical)}` : ``,
