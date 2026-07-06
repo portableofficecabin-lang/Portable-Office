@@ -398,6 +398,9 @@ export default function CabinCalculator() {
       type CellHookData = Parameters<NonNullable<Parameters<typeof autoTable>[1]["didParseCell"]>>[0];
       const doc = new jsPDF({ unit: "mm", format: "a4" }) as InstanceType<typeof jsPDF> & { lastAutoTable: { finalY: number } };
       const product = PRODUCTS.find((p) => p.id === config.productId)!;
+      // jsPDF's built-in fonts are Latin-1 only — the ₹ (U+20B9) glyph corrupts the
+      // whole cell. Use "Rs." for every amount printed into the PDF (screen keeps ₹).
+      const rsPdf = (n: number) => "Rs. " + new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(Math.round(Number(n) || 0));
       doc.setFillColor(15, 27, 45);
       doc.rect(0, 0, 210, 26, "F");
       doc.setTextColor(255, 255, 255);
@@ -422,7 +425,7 @@ export default function CabinCalculator() {
         configRows = [
           ["Container Size", size?.label ?? `${est.dimLength} × ${est.dimWidth} ft`],
           ["Container Grade", grade?.label ?? "—"],
-          ["Base Container Rate", rate > 0 ? formatINR(rate) : "Contact for Rate"],
+          ["Base Container Rate", rate > 0 ? rsPdf(rate) : "Contact for Rate"],
         ];
         if (grade?.note) configRows.push(["Note", grade.note]);
       } else {
@@ -454,18 +457,18 @@ export default function CabinCalculator() {
       });
 
       const contactTxt = isStorage ? "Contact for Rate" : "Contact us Directly";
-      const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", est.contactRequired ? contactTxt : formatINR(est.base)]];
-      if (est.interior) rows.push(["Interior Upgrade", formatINR(est.interior)]);
-      if (est.openings) rows.push(["Doors & Windows", formatINR(est.openings)]);
-      if (est.ventilation) rows.push(["Ventilation", formatINR(est.ventilation)]);
-      if (est.electrical) rows.push(["Electrical", formatINR(est.electrical)]);
-      if (est.furniture) rows.push(["Furniture / Add-ons", formatINR(est.furniture)]);
-      if (config.quantity > 1) rows.push([`Per-cabin subtotal × ${est.quantity}`, formatINR(est.cabinsSubtotal)]);
-      if (est.transport) rows.push(["Transport", formatINR(est.transport)]);
-      if (est.installation) rows.push(["Installation", formatINR(est.installation)]);
-      rows.push(["Subtotal", est.contactRequired ? contactTxt : formatINR(est.subtotal)]);
-      if (config.gst) rows.push(["GST (18%)", est.contactRequired ? "As applicable" : formatINR(est.gst)]);
-      rows.push(["Estimated Total", est.contactRequired ? contactTxt : formatINR(est.total)]);
+      const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", est.contactRequired ? contactTxt : rsPdf(est.base)]];
+      if (est.interior) rows.push(["Interior Upgrade", rsPdf(est.interior)]);
+      if (est.openings) rows.push(["Doors & Windows", rsPdf(est.openings)]);
+      if (est.ventilation) rows.push(["Ventilation", rsPdf(est.ventilation)]);
+      if (est.electrical) rows.push(["Electrical", rsPdf(est.electrical)]);
+      if (est.furniture) rows.push(["Furniture / Add-ons", rsPdf(est.furniture)]);
+      if (config.quantity > 1) rows.push([`Per-cabin subtotal × ${est.quantity}`, rsPdf(est.cabinsSubtotal)]);
+      if (est.transport) rows.push(["Transport", rsPdf(est.transport)]);
+      if (est.installation) rows.push(["Installation", rsPdf(est.installation)]);
+      rows.push(["Subtotal", est.contactRequired ? contactTxt : rsPdf(est.subtotal)]);
+      if (config.gst) rows.push(["GST (18%)", est.contactRequired ? "As applicable" : rsPdf(est.gst)]);
+      rows.push(["Estimated Total", est.contactRequired ? contactTxt : rsPdf(est.total)]);
 
       autoTable(doc, {
         startY: doc.lastAutoTable.finalY + 6,
