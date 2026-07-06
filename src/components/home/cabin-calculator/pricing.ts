@@ -260,12 +260,18 @@ export interface ElectricalItem {
 }
 
 export const ELECTRICAL_ITEMS: ElectricalItem[] = [
-  { id: "led",     label: "LED Lights",  unitPrice: 350,  defaultQty: (a) => Math.max(1, Math.ceil(a / 45)), preselect: true },
+  { id: "led",     label: "LED Panel Light", unitPrice: 350,  defaultQty: (a) => Math.max(1, Math.ceil(a / 45)), preselect: true },
+  { id: "tube",    label: "Tube Light",  unitPrice: 450,  defaultQty: (a) => Math.max(1, Math.ceil(a / 60)), preselect: false }, // SET: tube-light rate
   { id: "fan",     label: "Fan",         unitPrice: 1800, defaultQty: (a) => Math.max(1, Math.ceil(a / 120)), preselect: true },
   { id: "exhaust", label: "Exhaust Fan", unitPrice: 1200, defaultQty: () => 1, preselect: false },
   { id: "ac",      label: "AC Point",    unitPrice: 2500, defaultQty: () => 1, preselect: false },
   { id: "plug",    label: "Plug Points", unitPrice: 450,  defaultQty: (a) => Math.max(2, Math.ceil(a / 55)), preselect: true },
 ];
+
+/** Light colour + LED panel shape — spec choices in the Electrical step (apply to the LED
+ *  panel / tube lights). No price impact by default; wire a delta later if a shape costs more. */
+export const LIGHT_COLORS = [{ id: "white", label: "White" }, { id: "warm", label: "Warm" }] as const;
+export const LED_SHAPES = [{ id: "square", label: "Square" }, { id: "round", label: "Round" }] as const;
 
 /* ------------------------------------------------------------------ *
  * Step 7 — Optional add-ons / furniture (price each; some take a quantity)
@@ -306,6 +312,9 @@ export interface CabinConfig {
   flooringId: string;
   doorTypeId: string;
   doorQty: number;
+  /** Per-door placement: side (top/bottom/left/right) + offset in ft from the start
+   *  corner. Length mirrors doorQty. */
+  doorPlacements: { side: string; offset: number }[];
   windowTypeId: string;
   windowQty: number;
   /** Chosen window placements on the 2D plan; window count mirrors this list. */
@@ -316,6 +325,9 @@ export interface CabinConfig {
   containerGradeId: string;
   /** id -> quantity. Presence with qty>0 means selected. */
   electrical: Record<string, number>;
+  /** Light colour (white / warm) and LED panel shape (square / round) — spec only. */
+  lightColor: string;
+  ledShape: string;
   /** id -> quantity. Presence with qty>0 means selected. */
   addons: Record<string, number>;
   /** Layout: false = single room; true = a partition splits the cabin into two rooms.
@@ -393,6 +405,8 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     doorTypeId: DOOR_TYPES[0].id, // Steel Door (1 included in base)
     // Containers ship with their own doors — no separate door line.
     doorQty: container ? 0 : 1,
+    // Default door placement: one main door on the front (bottom) wall, ~30% along.
+    doorPlacements: container ? [] : [{ side: "bottom", offset: Math.round(product.def.length * 0.3) }],
     windowTypeId: WINDOW_TYPES[0].id, // Sliding
     // Toilet & storage products start windowless — toilet uses ventilation instead;
     // containers have no windows.
@@ -404,6 +418,8 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     // Default container grade (2024–2025). Ignored for non-container products.
     containerGradeId: "grade_2024_2025",
     electrical,
+    lightColor: "white",
+    ledShape: "square",
     addons: {},
     // Layout — single room by default; the 2-room partition is opt-in in the Size step.
     partitioned: false,

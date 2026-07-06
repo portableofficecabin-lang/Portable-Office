@@ -19,7 +19,7 @@ import {
   PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS,
   DOOR_TYPES, WINDOW_TYPES, ELECTRICAL_ITEMS, ADDONS,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
-  WINDOW_POSITIONS, windowPositionLabel, isToiletCabin, isStorageProduct,
+  WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate,
 } from "./pricing";
@@ -139,7 +139,7 @@ function PricedChip({
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorCount, windowPositions, containerDoor, partitioned, room1Length, partitionDoor }: { length: number; width: number; doorCount: number; windowPositions: string[]; containerDoor?: boolean; partitioned?: boolean; room1Length?: number; partitionDoor?: boolean }) {
+function FloorPreview({ length, width, doorPlacements, windowPositions, containerDoor, partitioned, room1Length, partitionDoor }: { length: number; width: number; doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean; partitioned?: boolean; room1Length?: number; partitionDoor?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
@@ -156,10 +156,26 @@ function FloorPreview({ length, width, doorCount, windowPositions, containerDoor
     "left":       { cx: pad,            cy: pad + h * 0.5,   horizontal: false },
     "right":      { cx: pad + w,        cy: pad + h * 0.5,   horizontal: false },
   };
+  // Corrugated (ribbed-sheet) wall outline — a shallow sawtooth along each wall.
+  const corr = (() => {
+    const amp = 2.2;
+    const seg = (x0: number, y0: number, x1: number, y1: number) => {
+      const dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy) || 1;
+      const nx = (-dy / len) * amp, ny = (dx / len) * amp; // inward normal (walking clockwise)
+      const teeth = Math.max(3, Math.round(len / 7));
+      let s = "";
+      for (let i = 1; i <= teeth; i++) {
+        const t = i / teeth, bx = x0 + dx * t, by = y0 + dy * t;
+        s += i % 2 ? ` L ${(bx + nx).toFixed(1)} ${(by + ny).toFixed(1)}` : ` L ${bx.toFixed(1)} ${by.toFixed(1)}`;
+      }
+      return s;
+    };
+    const x = pad, y = pad, x2 = pad + w, y2 = pad + h;
+    return `M ${x} ${y}${seg(x, y, x2, y)}${seg(x2, y, x2, y2)}${seg(x2, y2, x, y2)}${seg(x, y2, x, y)} Z`;
+  })();
   return (
     <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img" aria-label={`Floor plan ${length} by ${width} feet`}>
-      <rect x={pad} y={pad} width={w} height={h} rx={4}
-        fill="hsl(var(--accent) / 0.08)" stroke="hsl(var(--accent))" strokeWidth={2} />
+      <path d={corr} fill="hsl(var(--accent) / 0.08)" stroke="hsl(var(--accent))" strokeWidth={1.6} strokeLinejoin="round" />
       {/* Door: storage containers get a full-height DOUBLE door on the 8 ft end
           (right edge); cabins get a single door on the front (bottom) wall. */}
       {containerDoor ? (
@@ -171,7 +187,15 @@ function FloorPreview({ length, width, doorCount, windowPositions, containerDoor
           <line x1={pad + w + 5} y1={pad + h - 2} x2={pad + w + 17} y2={pad + h + 3} stroke="hsl(var(--accent) / 0.5)" strokeWidth={1.4} />
         </g>
       ) : (
-        doorCount > 0 && <rect x={pad + w * 0.30 - 9} y={pad + h - 3} width={18} height={6} rx={1} fill="hsl(var(--accent))" />
+        (doorPlacements ?? []).map((d, i) => {
+          const horiz = d.side === "top" || d.side === "bottom";
+          const along = horiz ? Math.min(Math.max(d.offset, 0), L) / L : Math.min(Math.max(d.offset, 0), W) / W;
+          const cx = d.side === "left" ? pad : d.side === "right" ? pad + w : pad + w * along;
+          const cy = d.side === "top" ? pad : d.side === "bottom" ? pad + h : pad + h * along;
+          return horiz
+            ? <rect key={i} x={cx - 9} y={cy - 3} width={18} height={6} rx={1} fill="hsl(var(--accent))" />
+            : <rect key={i} x={cx - 3} y={cy - 9} width={6} height={18} rx={1} fill="hsl(var(--accent))" />;
+        })
       )}
       {/* Windows at their chosen positions */}
       {windowPositions.map((id) => {
@@ -302,6 +326,8 @@ export default function CabinCalculator() {
             merged.windowPositions = base.windowPositions;
           }
           merged.windowQty = merged.windowPositions.length;
+          if (!Array.isArray(merged.doorPlacements)) merged.doorPlacements = base.doorPlacements;
+          merged.doorQty = merged.doorPlacements.length;
           // Keep the 2-room layout consistent with the Partition add-on (older configs
           // may carry the add-on but no layout flag).
           if (!merged.room1Length) merged.room1Length = base.room1Length;
@@ -352,7 +378,7 @@ export default function CabinCalculator() {
       // (size resets to the new product's default, but unit count is orthogonal to product)
       quantity: c.quantity,
       structureId: c.structureId, wallId: c.wallId, ceilingId: c.ceilingId, flooringId: c.flooringId,
-      doorTypeId: c.doorTypeId, doorQty: c.doorQty,
+      doorTypeId: c.doorTypeId, doorQty: fresh.doorQty, doorPlacements: fresh.doorPlacements,
       windowTypeId: productDefinesOpenings ? fresh.windowTypeId : c.windowTypeId,
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
       windowPositions: productDefinesOpenings ? fresh.windowPositions : c.windowPositions,
@@ -417,6 +443,19 @@ export default function CabinCalculator() {
   const setPartitionDoor = (door: boolean) => setConfig((c) => applyPartition(c, c.partitioned, door));
   const setRoom1Length = (n: number) =>
     setConfig((c) => ({ ...c, room1Length: Math.min(Math.max(Math.round(n) || 1, 1), Math.max(1, Math.round(c.length) - 1)) }));
+
+  // Doors — each door has a side + offset (ft). Count mirrors the placement list.
+  const setDoorCount = (n: number) =>
+    setConfig((c) => {
+      const target = Math.min(Math.max(Math.round(n), 0), 6);
+      const dp = c.doorPlacements.slice(0, target);
+      while (dp.length < target) dp.push({ side: "bottom", offset: Math.round((c.length || 10) * 0.3) });
+      return { ...c, doorPlacements: dp, doorQty: dp.length };
+    });
+  const setDoorSide = (i: number, side: string) =>
+    setConfig((c) => ({ ...c, doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, side } : d)) }));
+  const setDoorOffset = (i: number, offset: number) =>
+    setConfig((c) => ({ ...c, doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, offset: Math.max(0, Math.round(offset) || 0) } : d)) }));
 
   const startOver = () => {
     setConfig(buildDefaultConfig());
@@ -746,7 +785,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
+                    <FloorPreview length={config.length} width={config.width} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -851,7 +890,7 @@ export default function CabinCalculator() {
                     <div className="mb-2 flex items-center justify-between">
                       <Label className="text-sm font-semibold">Door Type</Label>
                       <div className="flex items-center gap-2"><span className="text-xs text-muted-foreground">Qty</span>
-                        <Stepper value={config.doorQty} min={0} max={50} label="Door quantity" onChange={(n) => patch({ doorQty: n })} /></div>
+                        <Stepper value={config.doorQty} min={0} max={6} label="Door quantity" onChange={setDoorCount} /></div>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {DOOR_TYPES.map((d) => (
@@ -860,6 +899,29 @@ export default function CabinCalculator() {
                           selected={config.doorTypeId === d.id} onSelect={() => patch({ doorTypeId: d.id })} />
                       ))}
                     </div>
+                    {config.doorPlacements.length > 0 && (
+                      <div className="mt-3 space-y-2">
+                        <Label className="text-xs font-semibold text-muted-foreground">Door Placement — side &amp; distance from corner</Label>
+                        {config.doorPlacements.map((d, i) => (
+                          <div key={i} className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2">
+                            <span className="w-12 text-xs font-semibold text-muted-foreground">Door {i + 1}</span>
+                            <div className="flex gap-1">
+                              {([["top", "Upper"], ["bottom", "Down"], ["left", "Left"], ["right", "Right"]] as const).map(([id, lbl]) => (
+                                <button key={id} type="button" onClick={() => setDoorSide(i, id)} aria-pressed={d.side === id}
+                                  className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", d.side === id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
+                              ))}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-[11px] text-muted-foreground">at</span>
+                              <input type="number" inputMode="numeric" min={0} aria-label={`Door ${i + 1} offset`} value={Number.isFinite(d.offset) ? d.offset : ""}
+                                onChange={(e) => setDoorOffset(i, parseFloat(e.target.value) || 0)}
+                                className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                              <span className="text-[11px] text-muted-foreground">ft from {d.side === "left" || d.side === "right" ? "top" : "left"}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <p className="mt-2 text-[11px] text-muted-foreground">
                       Standard door size: <span className="font-semibold text-foreground">6 ft × 30″</span> — custom sizes available on request.
                     </p>
@@ -914,7 +976,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
+                            <FloorPreview length={config.length} width={config.width} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
                             <p className="mt-1 text-center text-[10px] text-muted-foreground">Live 2D plan · door + windows</p>
                           </div>
                         </div>
@@ -939,6 +1001,27 @@ export default function CabinCalculator() {
                       </ToggleCard>
                     );
                   })}
+                </div>
+                {/* Light finish — colour + LED panel shape (applies to LED / tube lights) */}
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <Label className="mb-1.5 block text-xs font-semibold text-muted-foreground">Light Colour</Label>
+                    <div className="flex gap-2">
+                      {LIGHT_COLORS.map((c) => (
+                        <button key={c.id} type="button" aria-pressed={config.lightColor === c.id} onClick={() => patch({ lightColor: c.id })}
+                          className={cn("flex-1 rounded-lg border px-3 py-2 text-xs font-medium transition-all", config.lightColor === c.id ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>{c.label}</button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="mb-1.5 block text-xs font-semibold text-muted-foreground">LED Panel Shape</Label>
+                    <div className="flex gap-2">
+                      {LED_SHAPES.map((s) => (
+                        <button key={s.id} type="button" aria-pressed={config.ledShape === s.id} onClick={() => patch({ ledShape: s.id })}
+                          className={cn("flex-1 rounded-lg border px-3 py-2 text-xs font-medium transition-all", config.ledShape === s.id ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>{s.label}</button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </StepShell>
             )}
