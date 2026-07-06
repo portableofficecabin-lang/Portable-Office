@@ -1827,11 +1827,11 @@ function QuotationForm({
                             <div className="md:col-span-3"><Field label="Cost Difference (₹)"><NumberInput min={0} value={o.amount === 0 ? "" : o.amount} placeholder="0" onChange={(e) => updateOptionItem(o.id, { amount: parseFloat(e.target.value) || 0 })} onFocus={(e) => e.target.select()} /></Field></div>
                           </div>
                           <div className="mt-2 flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-sm border-t pt-2">
-                            <span className={o.direction === "increase" ? "text-red-600 font-semibold" : "text-emerald-600 font-semibold"}>
+                            <span className={o.direction === "increase" ? "text-emerald-600 font-semibold" : "text-red-600 font-semibold"}>
                               {o.direction === "increase" ? "+ " : "− "}{fmt(o.amount || 0)}
                             </span>
                             <span className="text-muted-foreground">Revised Total:</span>
-                            <span className="font-display font-bold text-primary">{fmt(revised)}</span>
+                            <span className="font-display font-bold text-[15px] px-2 py-0.5 rounded" style={{ background: "#fdf3e7", color: "#b45309" }}>{fmt(revised)}</span>
                           </div>
                         </div>
                         );
@@ -1844,7 +1844,7 @@ function QuotationForm({
                         return (
                           <div className="mt-1 flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-sm rounded-lg border-2 border-primary/40 bg-primary/10 p-3">
                             <span className="mr-auto font-semibold text-primary">All {optionItems.length} options applied together</span>
-                            <span className={up ? "text-red-600 font-semibold" : "text-emerald-600 font-semibold"}>
+                            <span className={up ? "text-emerald-600 font-semibold" : "text-red-600 font-semibold"}>
                               {up ? "+ " : "− "}{fmt(Math.abs(combinedDelta))}
                             </span>
                             <span className="text-muted-foreground">Combined Total:</span>
@@ -3235,12 +3235,13 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         doc.setTextColor(0); y += 7;
         const oc = { num: M + 2, desc: M + 9, eff: M + 106, diffR: W - M - 40, revR: W - M - 2 };
         doc.setFillColor(240, 244, 248); doc.rect(M, y, W - 2 * M, 6, "F");
+        doc.setFillColor(232, 130, 38); doc.rect(W - M - 38, y, 38, 6, "F"); // amber-highlight the Revised Total header cell
         doc.setFont("helvetica", "bold"); doc.setFontSize(7.2); doc.setTextColor(30, 40, 70);
         doc.text("#", oc.num, y + 4);
         doc.text("Change Requested", oc.desc, y + 4);
         doc.text("Effect", oc.eff, y + 4);
         doc.text("Cost Difference", oc.diffR, y + 4, { align: "right" });
-        doc.text("Revised Total", oc.revR, y + 4, { align: "right" });
+        doc.setTextColor(255); doc.text("Revised Total", oc.revR, y + 4, { align: "right" });
         doc.setTextColor(0); doc.setFont("helvetica", "normal"); y += 6;
         optionItems.forEach((o, idx) => {
           const inc = o.direction === "increase";
@@ -3252,13 +3253,15 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
           doc.setFontSize(7.4); doc.setTextColor(0); doc.setFont("helvetica", "normal");
           doc.text(String(idx + 1), oc.num, y + 4.5);
           doc.text(descLines, oc.desc, y + 4.5);
-          if (inc) doc.setTextColor(220, 38, 38); else doc.setTextColor(5, 150, 105);
+          if (inc) doc.setTextColor(5, 150, 105); else doc.setTextColor(220, 38, 38);
           doc.setFont("helvetica", "bold");
           doc.text(inc ? "Increase" : "Reduction", oc.eff, y + 4.5);
           doc.text(`${inc ? "+ " : "- "}${fmtPdf(o.amount || 0)}`, oc.diffR, y + 4.5, { align: "right" });
-          doc.setTextColor(0);
+          // Revised Total — highlighted amber cell so the customer spots the resulting total
+          doc.setFillColor(253, 243, 231); doc.rect(W - M - 38, y, 38, rh, "F");
+          doc.setTextColor(180, 83, 9); doc.setFontSize(8.4);
           doc.text(fmtPdf(totals.total + delta), oc.revR, y + 4.5, { align: "right" });
-          doc.setFont("helvetica", "normal");
+          doc.setFontSize(7.4); doc.setTextColor(0); doc.setFont("helvetica", "normal");
           y += rh;
         });
         doc.setFontSize(6.5); doc.setTextColor(120); doc.setFont("helvetica", "italic");
@@ -4006,7 +4009,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                   <th className="p-1.5 text-left">Change Requested</th>
                   <th className="p-1.5 text-center">Effect</th>
                   <th className="p-1.5 text-right">Cost Difference</th>
-                  <th className="p-1.5 text-right">Revised Total</th>
+                  <th className="p-1.5 text-right" style={{ background: "#e88226" }}>Revised Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -4017,9 +4020,9 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                     <tr key={o.id} className={i % 2 ? "bg-gray-50" : ""}>
                       <td className="p-1.5 border-b">{i + 1}</td>
                       <td className="p-1.5 border-b">{o.description || "—"}</td>
-                      <td className="p-1.5 border-b text-center font-semibold" style={{ color: inc ? "#dc2626" : "#059669" }}>{inc ? "Increase" : "Reduction"}</td>
-                      <td className="p-1.5 border-b text-right font-semibold" style={{ color: inc ? "#dc2626" : "#059669" }}>{inc ? "+ " : "− "}{fmt(o.amount || 0)}</td>
-                      <td className="p-1.5 border-b text-right font-bold">{fmt(totals.total + delta)}</td>
+                      <td className="p-1.5 border-b text-center font-semibold" style={{ color: inc ? "#059669" : "#dc2626" }}>{inc ? "Increase" : "Reduction"}</td>
+                      <td className="p-1.5 border-b text-right font-semibold" style={{ color: inc ? "#059669" : "#dc2626" }}>{inc ? "+ " : "− "}{fmt(o.amount || 0)}</td>
+                      <td className="p-1.5 border-b text-right font-bold text-[13px]" style={{ background: "#fdf3e7", color: "#b45309" }}>{fmt(totals.total + delta)}</td>
                     </tr>
                   );
                 })}
