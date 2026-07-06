@@ -7,7 +7,7 @@ import "@/index.css";
 // Origin the app connects to early (Supabase data + auth); used for the
 // preconnect resource hint in <head> below.
 const SUPABASE_ORIGIN =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://ojemqfexagnevqbaszop.supabase.co";
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://qsrlfsjtuymuhvwnsegq.supabase.co";
 
 const inter = Inter({
   subsets: ["latin"],

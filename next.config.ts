@@ -9,7 +9,7 @@ import type { NextConfig } from "next";
 // styles (React inline styles, recharts). External origins are limited to the
 // ones the app actually talks to.
 const isDev = process.env.NODE_ENV !== "production";
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://ojemqfexagnevqbaszop.supabase.co";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://qsrlfsjtuymuhvwnsegq.supabase.co";
 const supabaseWs = supabaseUrl.replace(/^https:/, "wss:");
 
 const cspDirectives = [
@@ -86,7 +86,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "portableofficecabin.com" },
-      { protocol: "https", hostname: "ojemqfexagnevqbaszop.supabase.co" },
+      { protocol: "https", hostname: "qsrlfsjtuymuhvwnsegq.supabase.co" },
     ],
     // Next.js image optimization is ON (sharp is a prod dependency and is bundled
     // with output:"standalone"). next/image call sites (Marketplace, promotion
