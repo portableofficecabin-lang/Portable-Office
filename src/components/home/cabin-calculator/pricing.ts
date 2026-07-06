@@ -47,6 +47,7 @@ export const PRODUCTS: ProductType[] = [
   { id: "accommodation",   label: "Accommodation Cabin", icon: "bedDouble",  baseRatePerSqft: 1600, def: { length: 24, width: 10, height: 9 }, blurb: "Bunkhouse / staff stay" },
   { id: "container-office", label: "Container Office",   icon: "container",  baseRatePerSqft: 2000, def: { length: 20, width: 8,  height: 8.5 }, badge: "Premium", blurb: "Insulated container workspace" },
   { id: "site-office",     label: "Site Office",         icon: "layout",     baseRatePerSqft: 1750, def: { length: 20, width: 10, height: 9 }, blurb: "On-site project office" },
+  { id: "puf-panel-cabin", label: "Puf Panel Cabin",     icon: "panels",     baseRatePerSqft: 2200, def: { length: 20, width: 10, height: 9 }, blurb: "PUF-insulated panel cabin" },
   { id: "storage-container", label: "Storage Container",  icon: "warehouse",  baseRatePerSqft: 1250, def: { length: 20, width: 8,  height: 8.5 }, blurb: "Shipping container for storage" },
 ];
 
@@ -65,6 +66,48 @@ export const STRUCTURES: StructureType[] = [
   { id: "gi",        label: "GI Cabin",                       multiplier: 1.12, note: "Galvanised — rust-resistant, longer life" },
   { id: "container", label: "Shipping Container Conversion",  multiplier: 1.28, note: "Corten container base — most rugged" },
 ];
+
+/* ------------------------------------------------------------------ *
+ * Base cabin rate — SIZE-BASED (INTERNAL). The ₹/sqft below is NEVER
+ * shown to customers; the calculator uses it to auto-compute the base
+ * price from the entered size. Rate falls as the cabin grows; sizes
+ * BETWEEN the sample points get a linearly-interpolated "similar" rate.
+ * Above MAX_AUTO_QUOTE_AREA (40×10 = 400 sq.ft) we can't auto-quote →
+ * 0 = "contact us directly". Tune the sample points here.
+ * ------------------------------------------------------------------ */
+export const MAX_AUTO_QUOTE_AREA = 400; // sq.ft (40 × 10). Bigger → contact us.
+// [floor area sq.ft, ₹/sqft] — ascending by area.
+const CABIN_RATE_POINTS: ReadonlyArray<readonly [number, number]> = [
+  [9,   4500], // 3×3
+  [16,  3750], // 4×4
+  [20,  2300], // 5×4
+  [35,  1900], // 7×5
+  [36,  1900], // 6×6
+  [64,  1565], // 8×8
+  [80,  1350], // 10×8
+  [100, 1180], // 10×10
+  [150, 1025], // 15×10
+  [200, 1000], // 20×10
+  [400, 1000], // 40×10 (flat ₹1,000 from 200–400 sq.ft)
+];
+
+/** ₹ per sq.ft for a built cabin of the given floor area. Exact sample sizes return
+ *  their listed rate; in-between sizes get a linearly-interpolated "similar" rate.
+ *  Returns 0 when the area exceeds MAX_AUTO_QUOTE_AREA (customer must contact us).
+ *  INTERNAL — this per-sqft figure is never displayed to customers. */
+export function cabinRatePerSqft(area: number): number {
+  if (!(area > 0) || area > MAX_AUTO_QUOTE_AREA) return 0;
+  const pts = CABIN_RATE_POINTS;
+  if (area <= pts[0][0]) return pts[0][1];
+  for (let i = 1; i < pts.length; i++) {
+    const [a1, r1] = pts[i];
+    if (area <= a1) {
+      const [a0, r0] = pts[i - 1];
+      return a1 === a0 ? r1 : r0 + ((area - a0) / (a1 - a0)) * (r1 - r0);
+    }
+  }
+  return pts[pts.length - 1][1];
+}
 
 /* ------------------------------------------------------------------ *
  * Step 4 — Interior finishes
@@ -309,6 +352,9 @@ export interface Estimate {
   subtotal: number; // before GST
   gst: number;
   total: number;
+  /** true when the price can't be auto-quoted (oversized cabin > 400 sq.ft, or a
+   *  container grade with no listed rate) — the UI shows "Contact us" not a number. */
+  contactRequired: boolean;
 }
 
 const findById = <T extends { id: string }>(list: T[], id: string): T | undefined =>
@@ -373,9 +419,11 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   // Base price: storage containers are priced by GRADE for the chosen size (flat
   // rate, 0 = "Contact for Rate"); built cabins use per-sqft × structure multiplier.
   const container = isStorageProduct(cfg.productId);
+  // Built cabins: base = size-based ₹/sqft × area × structure multiplier. The rate is
+  // 0 for oversized cabins (area > MAX_AUTO_QUOTE_AREA) → base 0 → "contact us".
   const base = container
     ? containerRate(length, width, cfg.containerGradeId)
-    : round(product.baseRatePerSqft * area * structure.multiplier);
+    : round(cabinRatePerSqft(area) * area * structure.multiplier);
 
   // Interior deltas (₹/sqft over the standard finish)
   const wall = findById(WALL_MATERIALS, cfg.wallId) ?? WALL_MATERIALS[0];
@@ -481,6 +529,7 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     subtotal,
     gst,
     total,
+    contactRequired: base <= 0,
   };
 }
 

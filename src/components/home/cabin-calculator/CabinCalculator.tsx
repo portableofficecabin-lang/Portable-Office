@@ -20,7 +20,7 @@ import {
   DOOR_TYPES, WINDOW_TYPES, ELECTRICAL_ITEMS, ADDONS,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   WINDOW_POSITIONS, windowPositionLabel, isToiletCabin, isStorageProduct,
-  buildDefaultConfig, computeEstimate, summariseConfig, formatINR,
+  buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate,
 } from "./pricing";
 
@@ -34,6 +34,7 @@ const STORAGE_KEY = "poc_cabin_config_v1";
 const ICONS: Record<string, React.ElementType> = {
   building: Building, briefcase: Briefcase, shield: Shield, bath: Bath,
   bedDouble: BedDouble, container: Container, layout: LayoutGrid, warehouse: Warehouse,
+  panels: PanelsTopLeft,
 };
 
 const STEPS = [
@@ -138,7 +139,7 @@ function PricedChip({
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorCount, windowPositions }: { length: number; width: number; doorCount: number; windowPositions: string[] }) {
+function FloorPreview({ length, width, doorCount, windowPositions, containerDoor }: { length: number; width: number; doorCount: number; windowPositions: string[]; containerDoor?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
@@ -159,8 +160,19 @@ function FloorPreview({ length, width, doorCount, windowPositions }: { length: n
     <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img" aria-label={`Floor plan ${length} by ${width} feet`}>
       <rect x={pad} y={pad} width={w} height={h} rx={4}
         fill="hsl(var(--accent) / 0.08)" stroke="hsl(var(--accent))" strokeWidth={2} />
-      {/* Door — bottom edge, left of centre */}
-      {doorCount > 0 && <rect x={pad + w * 0.30 - 9} y={pad + h - 3} width={18} height={6} rx={1} fill="hsl(var(--accent))" />}
+      {/* Door: storage containers get a full-height DOUBLE door on the 8 ft end
+          (right edge); cabins get a single door on the front (bottom) wall. */}
+      {containerDoor ? (
+        <g>
+          <rect x={pad + w - 2} y={pad + 1}         width={7} height={h / 2 - 2} rx={1} fill="hsl(var(--accent))" />
+          <rect x={pad + w - 2} y={pad + h / 2 + 1} width={7} height={h / 2 - 2} rx={1} fill="hsl(var(--accent))" />
+          {/* open-leaf hint — the two doors swing outward */}
+          <line x1={pad + w + 5} y1={pad + 2}     x2={pad + w + 17} y2={pad - 3}     stroke="hsl(var(--accent) / 0.5)" strokeWidth={1.4} />
+          <line x1={pad + w + 5} y1={pad + h - 2} x2={pad + w + 17} y2={pad + h + 3} stroke="hsl(var(--accent) / 0.5)" strokeWidth={1.4} />
+        </g>
+      ) : (
+        doorCount > 0 && <rect x={pad + w * 0.30 - 9} y={pad + h - 3} width={18} height={6} rx={1} fill="hsl(var(--accent))" />
+      )}
       {/* Windows at their chosen positions */}
       {windowPositions.map((id) => {
         const m = marks[id];
@@ -186,13 +198,14 @@ function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean
       <span className={cn("font-mono font-medium tabular-nums", positive ? "text-accent" : "text-foreground")}>{value}</span>
     </div>
   );
+  const contactLabel = container ? "Contact for Rate" : "Contact us Directly";
   return (
     <div className="space-y-0.5">
       <div className="flex items-baseline justify-between gap-3 py-1 text-xs uppercase tracking-wide text-muted-foreground">
         <span>Cabin Size</span>
         <span>{est.area} sq.ft{est.quantity > 1 ? ` × ${est.quantity}` : ""}</span>
       </div>
-      <Row label={container ? "Base Container Rate" : "Base Cabin"} value={container && est.base <= 0 ? "Contact for Rate" : formatINR(est.base)} />
+      <Row label={container ? "Base Container Rate" : "Base Cabin"} value={est.contactRequired ? contactLabel : formatINR(est.base)} />
       {est.interior !== 0 && <Row label="Interior Upgrade" value={`${est.interior > 0 ? "+" : ""}${formatINR(est.interior)}`} positive={est.interior > 0} />}
       {est.openings > 0 && <Row label="Doors & Windows" value={`+${formatINR(est.openings)}`} positive />}
       {est.ventilation > 0 && <Row label="Ventilation" value={`+${formatINR(est.ventilation)}`} positive />}
@@ -207,8 +220,8 @@ function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean
       {est.transport > 0 && <Row label="Transport" value={`+${formatINR(est.transport)}`} positive />}
       {est.installation > 0 && <Row label="Installation" value={`+${formatINR(est.installation)}`} positive />}
       <div className="mt-1 border-t border-border pt-1.5">
-        <Row label="Subtotal" value={container && est.base <= 0 ? "Contact for Rate" : formatINR(est.subtotal)} muted />
-        {gstOn && <Row label="GST (18%)" value={container && est.base <= 0 ? "As applicable" : `+${formatINR(est.gst)}`} muted />}
+        <Row label="Subtotal" value={est.contactRequired ? contactLabel : formatINR(est.subtotal)} muted />
+        {gstOn && <Row label="GST (18%)" value={est.contactRequired ? "As applicable" : `+${formatINR(est.gst)}`} muted />}
       </div>
     </div>
   );
@@ -440,7 +453,8 @@ export default function CabinCalculator() {
         styles: { fontSize: 9 },
       });
 
-      const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", isStorage && est.base <= 0 ? "Contact for Rate" : formatINR(est.base)]];
+      const contactTxt = isStorage ? "Contact for Rate" : "Contact us Directly";
+      const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", est.contactRequired ? contactTxt : formatINR(est.base)]];
       if (est.interior) rows.push(["Interior Upgrade", formatINR(est.interior)]);
       if (est.openings) rows.push(["Doors & Windows", formatINR(est.openings)]);
       if (est.ventilation) rows.push(["Ventilation", formatINR(est.ventilation)]);
@@ -449,9 +463,9 @@ export default function CabinCalculator() {
       if (config.quantity > 1) rows.push([`Per-cabin subtotal × ${est.quantity}`, formatINR(est.cabinsSubtotal)]);
       if (est.transport) rows.push(["Transport", formatINR(est.transport)]);
       if (est.installation) rows.push(["Installation", formatINR(est.installation)]);
-      rows.push(["Subtotal", isStorage && est.base <= 0 ? "Contact for Rate" : formatINR(est.subtotal)]);
-      if (config.gst) rows.push(["GST (18%)", isStorage && est.base <= 0 ? "As applicable" : formatINR(est.gst)]);
-      rows.push(["Estimated Total", isStorage && est.base <= 0 ? "Contact for Rate" : formatINR(est.total)]);
+      rows.push(["Subtotal", est.contactRequired ? contactTxt : formatINR(est.subtotal)]);
+      if (config.gst) rows.push(["GST (18%)", est.contactRequired ? "As applicable" : formatINR(est.gst)]);
+      rows.push(["Estimated Total", est.contactRequired ? contactTxt : formatINR(est.total)]);
 
       autoTable(doc, {
         startY: doc.lastAutoTable.finalY + 6,
@@ -537,9 +551,10 @@ export default function CabinCalculator() {
   const isFirstVisible = curPos === 0;
   const isLastVisible = curPos === visibleStepIdxs.length - 1;
   const progress = (curPos / Math.max(1, visibleStepIdxs.length - 1)) * 100;
-  // Containers on the "New / Current Year" grade (rate 0) have no computable price.
-  const containerContact = isContainer && est.base <= 0;
-  const totalText = containerContact ? "Contact for Rate" : formatINR(est.total);
+  // No auto-quotable price: container on a no-rate grade, OR a built cabin larger
+  // than 40×10 ft (400 sq.ft). Show a "contact us" message instead of a number.
+  const needsContact = est.contactRequired;
+  const totalText = needsContact ? (isContainer ? "Contact for Rate" : "Contact us Directly") : formatINR(est.total);
 
   return (
     <div ref={topRef} className="scroll-mt-24">
@@ -686,7 +701,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} />
+                    <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -694,7 +709,7 @@ export default function CabinCalculator() {
                       </div>
                       <div className="rounded-lg bg-accent/10 p-2">
                         <p className="text-[11px] text-muted-foreground">{isStorageProduct(config.productId) ? "Container Rate" : "Base Price"}</p>
-                        <p className="font-bold text-accent">{isStorageProduct(config.productId) && est.base <= 0 ? "Contact for Rate" : formatINR(est.base)}</p>
+                        <p className="font-bold text-accent">{est.contactRequired ? (isStorageProduct(config.productId) ? "Contact for Rate" : "Contact us") : formatINR(est.base)}</p>
                       </div>
                     </div>
                   </div>
@@ -707,14 +722,14 @@ export default function CabinCalculator() {
                 <div className="grid gap-3 sm:grid-cols-3">
                   {STRUCTURES.map((s) => {
                     const active = config.structureId === s.id;
-                    const rate = (est.area * (PRODUCTS.find((p) => p.id === config.productId)?.baseRatePerSqft ?? 0) * s.multiplier);
+                    const rate = est.area * cabinRatePerSqft(est.area) * s.multiplier;
                     return (
                       <button key={s.id} type="button" onClick={() => patch({ structureId: s.id })} aria-pressed={active}
                         className={cn("flex flex-col items-start gap-1 rounded-xl border p-4 text-left transition-all",
                           active ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50")}>
                         <span className="text-sm font-bold text-foreground">{s.label}</span>
                         <span className="text-[11px] leading-snug text-muted-foreground">{s.note}</span>
-                        <span className="mt-1 text-xs font-semibold text-accent">{formatINR(rate)}</span>
+                        <span className="mt-1 text-xs font-semibold text-accent">{rate > 0 ? formatINR(rate) : "Contact us"}</span>
                       </button>
                     );
                   })}
@@ -757,6 +772,9 @@ export default function CabinCalculator() {
                           selected={config.doorTypeId === d.id} onSelect={() => patch({ doorTypeId: d.id })} />
                       ))}
                     </div>
+                    <p className="mt-2 text-[11px] text-muted-foreground">
+                      Standard door size: <span className="font-semibold text-foreground">6 ft × 30″</span> — custom sizes available on request.
+                    </p>
                   </div>
                   {isToiletCabin(config.productId) ? (
                     <div>
@@ -808,7 +826,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} />
+                            <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} />
                             <p className="mt-1 text-center text-[10px] text-muted-foreground">Live 2D plan · door + windows</p>
                           </div>
                         </div>
@@ -903,7 +921,7 @@ export default function CabinCalculator() {
                       <Textarea id={notesId} rows={2} value={lead.notes} onChange={(e) => setLead({ ...lead, notes: e.target.value })} placeholder="Anything specific about your requirement…" />
                     </div>
                     <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-3 text-xs text-muted-foreground">
-                      <span className="font-semibold text-foreground">Estimated Total: {totalText}{config.gst || containerContact ? "" : " + GST"}</span> — this indicative price will be verified & approved by our sales team.
+                      <span className="font-semibold text-foreground">Estimated Total: {totalText}{config.gst || needsContact ? "" : " + GST"}</span> — this indicative price will be verified & approved by our sales team.
                     </div>
                     <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
                       {submitting ? <><Loader2 className="h-5 w-5 animate-spin" /> Sending…</> : <><Send className="h-5 w-5" /> Get My Official Quotation</>}
@@ -981,7 +999,7 @@ export default function CabinCalculator() {
             <button type="button" onClick={() => setShowMobileBreakdown((s) => !s)}
               aria-expanded={showMobileBreakdown} aria-controls="cabin-mobile-breakdown" className="flex-1 text-left">
               <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">Estimated Total <span aria-hidden="true">{showMobileBreakdown ? "▾" : "▴"}</span></span>
-              <span className="font-display text-lg font-extrabold text-foreground">{totalText}{!config.gst && !containerContact && <span className="text-xs font-medium text-muted-foreground"> +GST</span>}</span>
+              <span className="font-display text-lg font-extrabold text-foreground">{totalText}{!config.gst && !needsContact && <span className="text-xs font-medium text-muted-foreground"> +GST</span>}</span>
             </button>
             {!isLastVisible ? (
               <Button variant="hero" size="sm" onClick={gotoNext}>Next <ArrowRight className="h-4 w-4" /></Button>
@@ -1055,8 +1073,8 @@ function SwitchRow({ label, sub, checked, onChange }: { label: string; sub: stri
         <p className="text-[11px] text-muted-foreground">{sub}</p>
       </div>
       <button type="button" role="switch" aria-checked={checked} aria-label={label} onClick={() => onChange(!checked)}
-        className={cn("relative h-6 w-11 shrink-0 rounded-full transition-colors", checked ? "bg-accent" : "bg-muted-foreground/30")}>
-        <span className={cn("absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform", checked ? "translate-x-[22px]" : "translate-x-0.5")} />
+        className={cn("inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent p-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2", checked ? "bg-accent" : "bg-muted-foreground/30")}>
+        <span className={cn("pointer-events-none block h-5 w-5 rounded-full bg-white shadow transition-transform", checked ? "translate-x-5" : "translate-x-0")} />
       </button>
     </div>
   );
