@@ -64,6 +64,7 @@ export interface StructureType {
 export const STRUCTURES: StructureType[] = [
   { id: "ms",        label: "MS Cabin",                       multiplier: 1.0,  note: "Mild-steel frame — economical & sturdy" },
   { id: "gi",        label: "GI Cabin",                       multiplier: 1.12, note: "Galvanised — rust-resistant, longer life" },
+  { id: "puf",       label: "Insulated PUF Panel Wall",       multiplier: 1.25, note: "PUF sandwich-panel walls — insulated & thermally efficient" },
   { id: "container", label: "Shipping Container Conversion",  multiplier: 1.28, note: "Corten container base — most rugged" },
 ];
 
@@ -129,6 +130,7 @@ export const WALL_MATERIALS: Material[] = [
   { id: "pvc",      label: "PVC",            delta: 68 },
   { id: "mdf",      label: "MDF",            delta: 0, standard: true },
   { id: "hdhmr",    label: "HDHMR",          delta: 52 },
+  { id: "gypsum",   label: "Gypsum",         delta: 90 },
   { id: "wpc",      label: "WPC",            delta: 150 },
   { id: "spc",      label: "SPC",            delta: 460 },
   { id: "uv",       label: "UV Sheet",       delta: 395 },
@@ -141,6 +143,7 @@ export const CEILING_MATERIALS: Material[] = [
   { id: "pvc",   label: "PVC",      delta: 68 },
   { id: "mdf",   label: "MDF",      delta: 0, standard: true },
   { id: "hdhmr", label: "HDHMR",    delta: 52 },
+  { id: "gypsum", label: "Gypsum",  delta: 90 },
   { id: "wpc",   label: "WPC",      delta: 150 },
   { id: "spc",   label: "SPC",      delta: 460 },
   { id: "uv",    label: "UV Sheet", delta: 395 },
@@ -315,6 +318,13 @@ export interface CabinConfig {
   electrical: Record<string, number>;
   /** id -> quantity. Presence with qty>0 means selected. */
   addons: Record<string, number>;
+  /** Layout: false = single room; true = a partition splits the cabin into two rooms.
+   *  When true the Partition add-on (fixed / with-door) is applied automatically. */
+  partitioned: boolean;
+  /** Room 1's length (ft) along the cabin length; Room 2 = length − room1Length. */
+  room1Length: number;
+  /** Partition has a door (uses "Partition with Door" price) vs a plain fixed partition. */
+  partitionDoor: boolean;
   transport: boolean;
   installation: boolean;
   gst: boolean;
@@ -395,6 +405,10 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     containerGradeId: "grade_2024_2025",
     electrical,
     addons: {},
+    // Layout — single room by default; the 2-room partition is opt-in in the Size step.
+    partitioned: false,
+    room1Length: Math.round(product.def.length / 2),
+    partitionDoor: true,
     transport: false,
     installation: false,
     gst: true,

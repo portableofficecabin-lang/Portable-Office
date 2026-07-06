@@ -139,7 +139,7 @@ function PricedChip({
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorCount, windowPositions, containerDoor }: { length: number; width: number; doorCount: number; windowPositions: string[]; containerDoor?: boolean }) {
+function FloorPreview({ length, width, doorCount, windowPositions, containerDoor, partitioned, room1Length, partitionDoor }: { length: number; width: number; doorCount: number; windowPositions: string[]; containerDoor?: boolean; partitioned?: boolean; room1Length?: number; partitionDoor?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
@@ -181,6 +181,22 @@ function FloorPreview({ length, width, doorCount, windowPositions, containerDoor
           ? <rect key={id} x={m.cx - 10} y={m.cy - 3} width={20} height={6} rx={1} fill={win} />
           : <rect key={id} x={m.cx - 3} y={m.cy - 10} width={6} height={20} rx={1} fill={win} />;
       })}
+      {/* 2-room partition wall (with a door gap + swing when it has a door) */}
+      {partitioned && !!room1Length && room1Length > 0 && room1Length < L && (() => {
+        const r1 = Math.min(Math.max(room1Length, 1), L - 1);
+        const px = pad + w * (r1 / L);
+        const dTop = pad + h * 0.55, dH = Math.min(h * 0.34, 34);
+        return (
+          <g>
+            <line x1={px} y1={pad} x2={px} y2={partitionDoor ? dTop : pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
+            {partitionDoor && <line x1={px} y1={dTop + dH} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />}
+            {partitionDoor && <line x1={px} y1={dTop} x2={px + dH} y2={dTop} stroke="hsl(var(--accent))" strokeWidth={1.4} />}
+            {partitionDoor && <path d={`M ${px + dH} ${dTop} A ${dH} ${dH} 0 0 1 ${px} ${dTop + dH}`} fill="none" stroke="hsl(var(--accent) / 0.4)" strokeWidth={1} />}
+            <text x={pad + (px - pad) / 2} y={pad + 13} textAnchor="middle" fontSize={8.5} fill="hsl(var(--muted-foreground))">Room 1 · {Math.round(r1)}ft</text>
+            <text x={px + (pad + w - px) / 2} y={pad + 13} textAnchor="middle" fontSize={8.5} fill="hsl(var(--muted-foreground))">Room 2 · {Math.round(L - r1)}ft</text>
+          </g>
+        );
+      })()}
       <text x={pad + w / 2} y={pad + h + 16} textAnchor="middle" fontSize={11} fill="hsl(var(--muted-foreground))">{length} ft</text>
       <text x={pad - 10} y={pad + h / 2} textAnchor="middle" fontSize={11} fill="hsl(var(--muted-foreground))"
         transform={`rotate(-90 ${pad - 10} ${pad + h / 2})`}>{width} ft</text>
@@ -286,6 +302,15 @@ export default function CabinCalculator() {
             merged.windowPositions = base.windowPositions;
           }
           merged.windowQty = merged.windowPositions.length;
+          // Keep the 2-room layout consistent with the Partition add-on (older configs
+          // may carry the add-on but no layout flag).
+          if (!merged.room1Length) merged.room1Length = base.room1Length;
+          if (merged.addons?.["partition-door"] || merged.addons?.partition) {
+            merged.partitioned = true;
+            merged.partitionDoor = !!merged.addons["partition-door"];
+          } else {
+            merged.partitioned = false;
+          }
           setConfig(merged);
           setRestored(true);
         }
@@ -332,7 +357,10 @@ export default function CabinCalculator() {
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
       windowPositions: productDefinesOpenings ? fresh.windowPositions : c.windowPositions,
       ventilation: fresh.ventilation,
-      addons: c.addons, transport: c.transport, installation: c.installation, gst: c.gst,
+      // Reset partition on product switch (fresh provides partitioned:false + room defaults);
+      // strip any carried-over partition add-on so the layout stays consistent.
+      addons: (() => { const a = { ...c.addons }; delete a.partition; delete a["partition-door"]; return a; })(),
+      transport: c.transport, installation: c.installation, gst: c.gst,
     }));
   };
 
@@ -375,6 +403,20 @@ export default function CabinCalculator() {
       const windowPositions = has ? c.windowPositions.filter((p) => p !== id) : [...c.windowPositions, id];
       return { ...c, windowPositions, windowQty: windowPositions.length };
     });
+
+  // Rooms / partition — a 2-room layout auto-applies the Partition add-on (fixed / with-door),
+  // so its cost flows through the existing furniture pricing (no separate cost logic).
+  const applyPartition = (c: CabinConfig, partitioned: boolean, partitionDoor: boolean): CabinConfig => {
+    const addons = { ...c.addons };
+    delete addons["partition"];
+    delete addons["partition-door"];
+    if (partitioned) addons[partitionDoor ? "partition-door" : "partition"] = 1;
+    return { ...c, partitioned, partitionDoor, room1Length: c.room1Length || Math.round(c.length / 2), addons };
+  };
+  const setPartitioned = (on: boolean) => setConfig((c) => applyPartition(c, on, c.partitionDoor));
+  const setPartitionDoor = (door: boolean) => setConfig((c) => applyPartition(c, c.partitioned, door));
+  const setRoom1Length = (n: number) =>
+    setConfig((c) => ({ ...c, room1Length: Math.min(Math.max(Math.round(n) || 1, 1), Math.max(1, Math.round(c.length) - 1)) }));
 
   const startOver = () => {
     setConfig(buildDefaultConfig());
@@ -704,7 +746,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} />
+                    <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -717,12 +759,55 @@ export default function CabinCalculator() {
                     </div>
                   </div>
                 </div>
+                {/* Rooms / Partition — split the cabin into two rooms (built cabins only) */}
+                {!isStorageProduct(config.productId) && !isToiletCabin(config.productId) && (
+                  <div className="mt-4 rounded-xl border border-border p-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <Label className="text-sm font-semibold">Rooms / Partition</Label>
+                      <div className="flex gap-1.5">
+                        <button type="button" aria-pressed={!config.partitioned} onClick={() => setPartitioned(false)}
+                          className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition-all", !config.partitioned ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>Single Room</button>
+                        <button type="button" aria-pressed={config.partitioned} onClick={() => setPartitioned(true)}
+                          className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition-all", config.partitioned ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>2 Rooms</button>
+                      </div>
+                    </div>
+                    {config.partitioned && (
+                      <div className="space-y-3">
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          <DimField label={`Room 1 length (of ${Math.round(config.length)} ft)`} value={config.room1Length} onChange={setRoom1Length} />
+                          <div className="space-y-1.5">
+                            <Label className="text-xs text-muted-foreground">Room 2 length</Label>
+                            <div className="flex h-10 items-center rounded-md border border-border bg-muted/40 px-3 text-sm font-semibold">{Math.max(0, Math.round(config.length) - config.room1Length)} ft</div>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {[0.5, 0.45, 0.55, 0.4, 0.6].map((f) => Math.round(config.length * f)).filter((v, i, a) => v > 0 && v < config.length && a.indexOf(v) === i).map((v) => (
+                            <button key={v} type="button" onClick={() => setRoom1Length(v)}
+                              className={cn("rounded-md border px-2.5 py-1 text-[11px] font-medium", config.room1Length === v ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                              {v} / {Math.round(config.length) - v}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between rounded-lg border border-border bg-background p-3">
+                          <div>
+                            <p className="text-sm font-semibold text-foreground">Partition Door</p>
+                            <p className="text-[11px] text-muted-foreground">{config.partitionDoor ? "With door — ₹22,000" : "Fixed partition — ₹17,500"}</p>
+                          </div>
+                          <button type="button" role="switch" aria-checked={config.partitionDoor} aria-label="Partition door" onClick={() => setPartitionDoor(!config.partitionDoor)}
+                            className={cn("relative h-6 w-11 shrink-0 rounded-full transition-colors", config.partitionDoor ? "bg-accent" : "bg-muted-foreground/30")}>
+                            <span className={cn("absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform", config.partitionDoor ? "translate-x-[22px]" : "translate-x-0.5")} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </StepShell>
             )}
 
             {step === 2 && (
               <StepShell title="Select structure" subtitle="The frame material affects durability and price.">
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   {STRUCTURES.map((s) => {
                     const active = config.structureId === s.id;
                     const rate = est.area * cabinRatePerSqft(est.area) * s.multiplier;
@@ -829,7 +914,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} />
+                            <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} />
                             <p className="mt-1 text-center text-[10px] text-muted-foreground">Live 2D plan · door + windows</p>
                           </div>
                         </div>
@@ -866,7 +951,7 @@ export default function CabinCalculator() {
                   </div>
                 ) : (
                   <div className="grid gap-2.5 sm:grid-cols-2">
-                    {ADDONS.map((a) => {
+                    {ADDONS.filter((a) => a.id !== "partition" && a.id !== "partition-door").map((a) => {
                       const selected = !!config.addons[a.id];
                       return (
                         <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
