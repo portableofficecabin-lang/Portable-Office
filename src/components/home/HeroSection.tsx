@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Zap, IndianRupee, Leaf } from "lucide-react";
+import { ArrowRight, CheckCircle, Zap, IndianRupee, Leaf, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroCabin from "@/assets/hero-cabin-900.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { startingFromEstimate, formatINR } from "@/components/home/cabin-calculator/pricing";
 
 const highlights = [
   { icon: Zap, text: "Up & Running in Days" },
@@ -11,6 +12,11 @@ const highlights = [
 ];
 
 export function HeroSection() {
+  // Computed at render time from the calculator's pricing engine (single source of
+  // truth) — NOT a hardcoded number. Server-rendered into the HTML so it is present
+  // for anonymous/public visitors and search engines, with no backend dependency.
+  const fromPrice = startingFromEstimate();
+
   return (
     <section className="relative min-h-[92vh] flex items-center overflow-hidden">
       {/* ▶ LCP ELEMENT (home page, mobile): this full-bleed hero background image
@@ -91,8 +97,31 @@ export function HeroSection() {
               Ready in days, not months.
             </p>
 
+            {/* Customized cabin estimated price — highlighted, computed live from the
+                pricing engine (no hardcoded value). Tapping it jumps to the calculator. */}
+            <a
+              href="#cabin-calculator"
+              className="group mb-6 inline-flex w-full max-w-md items-center gap-4 rounded-2xl border border-accent/40 bg-gradient-to-r from-accent/20 to-amber-light/10 px-5 py-4 backdrop-blur-sm animate-fade-up transition-colors hover:border-accent/70 hover:from-accent/25"
+              style={{ animationDelay: "0.28s" }}
+            >
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent/25 ring-1 ring-accent/40">
+                <Calculator className="h-6 w-6 text-accent" />
+              </span>
+              <span className="flex-1 text-left">
+                <span className="block text-[11px] font-bold uppercase tracking-wider text-accent">
+                  Customized Cabin · Estimated Price
+                </span>
+                <span className="block font-display text-2xl font-extrabold leading-tight text-white lg:text-3xl">
+                  from {formatINR(fromPrice)}
+                  <span className="ml-1.5 text-sm font-medium text-white/60">incl. GST</span>
+                </span>
+                <span className="block text-xs text-white/60">Customize size &amp; features for your exact price</span>
+              </span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-accent transition-transform group-hover:translate-x-1" />
+            </a>
+
             {/* Highlights */}
-            <div 
+            <div
               className="flex flex-wrap justify-center lg:justify-start gap-5 mb-6 animate-fade-up"
               style={{ animationDelay: "0.3s" }}
             >

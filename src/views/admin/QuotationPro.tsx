@@ -1836,7 +1836,23 @@ function QuotationForm({
                         </div>
                         );
                       })}
-                      <p className="text-[11px] text-muted-foreground text-right">Base Grand Total {fmt(totals.total)} — each option is applied to this base independently.</p>
+                      {/* Combined: all options applied together (net of every increase/reduction) */}
+                      {optionItems.length >= 2 && (() => {
+                        const combinedDelta = optionItems.reduce((s, o) => s + (o.direction === "increase" ? (o.amount || 0) : -(o.amount || 0)), 0);
+                        const combinedTotal = totals.total + combinedDelta;
+                        const up = combinedDelta >= 0;
+                        return (
+                          <div className="mt-1 flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-sm rounded-lg border-2 border-primary/40 bg-primary/10 p-3">
+                            <span className="mr-auto font-semibold text-primary">All {optionItems.length} options applied together</span>
+                            <span className={up ? "text-red-600 font-semibold" : "text-emerald-600 font-semibold"}>
+                              {up ? "+ " : "− "}{fmt(Math.abs(combinedDelta))}
+                            </span>
+                            <span className="text-muted-foreground">Combined Total:</span>
+                            <span className="font-display font-bold text-primary">{fmt(combinedTotal)}</span>
+                          </div>
+                        );
+                      })()}
+                      <p className="text-[11px] text-muted-foreground text-right">Base Grand Total {fmt(totals.total)} — each option row is applied to this base independently; the combined row applies all options together.</p>
                     </div>
                   )}
                 </div>

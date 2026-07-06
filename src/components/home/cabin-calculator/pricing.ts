@@ -371,6 +371,15 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   };
 }
 
+/** Lowest indicative "starting from" total across all products at their default
+ *  configuration (incl. GST, single unit). Computed from the SAME engine the
+ *  calculator uses so the homepage hero can show a real, live figure — never
+ *  hardcode a price in the UI. If the sales team tunes rates above, this updates
+ *  automatically. Safe for public/anonymous rendering (no backend, pure function). */
+export function startingFromEstimate(): number {
+  return Math.min(...PRODUCTS.map((p) => computeEstimate(buildDefaultConfig(p.id)).total));
+}
+
 /** Human-readable configuration summary — reused for the lead message, the
  *  WhatsApp share text and the PDF. */
 export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
