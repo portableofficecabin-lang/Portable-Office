@@ -148,6 +148,9 @@ interface Quotation {
   // vs the base total). Shown separately as what-if lines; never change the total.
   option_items?: OptionItem[];
   include_option_items?: boolean;
+  // When true (and the quotation has cabins), each cabin is totalled as its own
+  // standalone quote (own Subtotal + GST + Grand Total) instead of one combined total.
+  separate_cabin_totals?: boolean;
   specs: SpecRow[];
   include_specs?: boolean;
   include_gst?: boolean;
@@ -672,6 +675,7 @@ const blankQuotation = (): Quotation => ({
   include_optional_items: false,
   option_items: [],
   include_option_items: false,
+  separate_cabin_totals: false,
   specs: DEFAULT_SPECS.map((s) => ({ ...s, id: uid() })),
   include_specs: true,
   include_gst: true,
@@ -715,6 +719,15 @@ const calcTotals = (q: Quotation) => {
   const balanceDue = Math.max(0, total - advancePaid);
   return { subtotal, discountBefore, taxable, gst: gstAmt, cgst, sgst, igst, discountAfter, total, advancePaid, balanceDue };
 };
+
+// Per-cabin totals for "separate cabin calculation" mode: each cabin is treated as
+// its own standalone quote, applying the SAME commercial terms (discounts, GST,
+// advance) to just that cabin's items. Returns null when the quotation has no cabins.
+const calcCabinTotals = (q: Quotation) =>
+  groupByCabin(q.items, q.cabins)?.map((g) => ({
+    cabin: g.cabin,
+    totals: calcTotals({ ...q, items: g.items }),
+  })) ?? null;
 
 // Groups a list (items / optional-items / specs) by cabin, in cabin order. Returns
 // null when the quotation has NO cabins, so callers fall back to the original flat
@@ -1238,6 +1251,50 @@ function QuotationForm({
   // ── Cabin sections (grouping) ─────────────────────────────────────────────
   const cabins = q.cabins || [];
   const hasCabins = cabins.length > 0;
+
+  // Renders the full totals ladder (Basic Value → GST → Grand Total → Advance/Balance)
+  // for a given totals object. Reused for the combined total and for each cabin when
+  // "Separate Cabin Totals" is on.
+  const totalsLadder = (t: ReturnType<typeof calcTotals>) => (
+    <>
+      <Row label="Basic Value" value={fmt(t.subtotal)} />
+      {t.discountBefore > 0 && (
+        <Row
+          label={`Discount (Before Tax)${q.discount_before_type === "percent" ? ` @ ${q.discount_before_value}%` : ""}`}
+          value={`- ${fmt(t.discountBefore)}`}
+        />
+      )}
+      {t.discountBefore > 0 && <Row label="Taxable Value" value={fmt(t.taxable)} />}
+      {q.include_gst === false ? (
+        <Row label="GST" value="Not Applicable" />
+      ) : activeGstMode === "cgst_sgst" ? (
+        <>
+          <Row label={`CGST (${(q.gst_percent / 2).toFixed(2)}%)`} value={fmt(t.cgst)} />
+          <Row label={`SGST (${(q.gst_percent / 2).toFixed(2)}%)`} value={fmt(t.sgst)} />
+        </>
+      ) : (
+        <Row label={`IGST (${q.gst_percent}%)`} value={fmt(t.igst)} />
+      )}
+      {t.discountAfter > 0 && (
+        <Row
+          label={`Discount (After Tax)${q.discount_after_type === "percent" ? ` @ ${q.discount_after_value}%` : ""}`}
+          value={`- ${fmt(t.discountAfter)}`}
+        />
+      )}
+      <div className="border-t pt-2 mt-2">
+        <Row label="Grand Total" value={fmt(t.total)} bold />
+      </div>
+      {t.advancePaid > 0 && (
+        <>
+          <Row
+            label={`Advance Paid${q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}`}
+            value={`- ${fmt(t.advancePaid)}`}
+          />
+          <Row label="Balance Due" value={fmt(t.balanceDue)} bold />
+        </>
+      )}
+    </>
+  );
   const addCabin = () => {
     const newCabin: CabinSection = { id: uid(), name: `Cabin ${cabins.length + 1}` };
     if (cabins.length === 0) {
@@ -1609,6 +1666,18 @@ function QuotationForm({
                       {q.include_option_items ? "Option Items: ON" : "Option Items: OFF"}
                     </Label>
                   </div>
+                  {hasCabins && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-md border bg-muted/30">
+                      <Switch
+                        checked={q.separate_cabin_totals === true}
+                        onCheckedChange={(v) => set({ separate_cabin_totals: v })}
+                        id="separate-cabin-totals"
+                      />
+                      <Label htmlFor="separate-cabin-totals" className="text-xs cursor-pointer whitespace-nowrap">
+                        {q.separate_cabin_totals ? "Separate Cabin Totals: ON" : "Separate Cabin Totals: OFF"}
+                      </Label>
+                    </div>
+                  )}
                   <Button onClick={addCabin} variant="outline" size="sm" className="gap-2 border-primary/40 text-primary"><Plus className="h-4 w-4" /> Add Cabin</Button>
                   <Button onClick={() => addItem()} variant="accent" size="sm" className="gap-2"><Plus className="h-4 w-4" /> Add Item</Button>
                 </div>
@@ -1935,45 +2004,22 @@ function QuotationForm({
                 </div>
               </div>
 
-              {/* Totals */}
-              <div className="mt-6 ml-auto max-w-sm border rounded-xl p-4 bg-gradient-to-br from-primary/5 to-amber/5 space-y-2">
-                <Row label="Basic Value" value={fmt(totals.subtotal)} />
-                {totals.discountBefore > 0 && (
-                  <Row
-                    label={`Discount (Before Tax)${q.discount_before_type === "percent" ? ` @ ${q.discount_before_value}%` : ""}`}
-                    value={`- ${fmt(totals.discountBefore)}`}
-                  />
-                )}
-                {totals.discountBefore > 0 && <Row label="Taxable Value" value={fmt(totals.taxable)} />}
-                {q.include_gst === false ? (
-                  <Row label="GST" value="Not Applicable" />
-                ) : activeGstMode === "cgst_sgst" ? (
-                  <>
-                    <Row label={`CGST (${(q.gst_percent / 2).toFixed(2)}%)`} value={fmt(totals.cgst)} />
-                    <Row label={`SGST (${(q.gst_percent / 2).toFixed(2)}%)`} value={fmt(totals.sgst)} />
-                  </>
-                ) : (
-                  <Row label={`IGST (${q.gst_percent}%)`} value={fmt(totals.igst)} />
-                )}
-                {totals.discountAfter > 0 && (
-                  <Row
-                    label={`Discount (After Tax)${q.discount_after_type === "percent" ? ` @ ${q.discount_after_value}%` : ""}`}
-                    value={`- ${fmt(totals.discountAfter)}`}
-                  />
-                )}
-                <div className="border-t pt-2 mt-2">
-                  <Row label="Grand Total" value={fmt(totals.total)} bold />
+              {/* Totals — one combined block, or one standalone quote per cabin when "Separate Cabin Totals" is on */}
+              {q.separate_cabin_totals && hasCabins ? (
+                <div className="mt-6 ml-auto max-w-sm space-y-4">
+                  {calcCabinTotals(q)!.map(({ cabin, totals: ct }) => (
+                    <div key={cabin.id} className="border rounded-xl p-4 bg-gradient-to-br from-primary/5 to-amber/5 space-y-2">
+                      <div className="text-sm font-semibold text-primary border-b pb-1.5 mb-1">{cabin.name} — separate quote</div>
+                      {totalsLadder(ct)}
+                    </div>
+                  ))}
+                  <p className="text-[11px] text-muted-foreground text-right">Each cabin is quoted separately — there is no combined grand total.</p>
                 </div>
-                {totals.advancePaid > 0 && (
-                  <>
-                    <Row
-                      label={`Advance Paid${q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}`}
-                      value={`- ${fmt(totals.advancePaid)}`}
-                    />
-                    <Row label="Balance Due" value={fmt(totals.balanceDue)} bold />
-                  </>
-                )}
-              </div>
+              ) : (
+                <div className="mt-6 ml-auto max-w-sm border rounded-xl p-4 bg-gradient-to-br from-primary/5 to-amber/5 space-y-2">
+                  {totalsLadder(totals)}
+                </div>
+              )}
             </AdminCardContent>
           </AdminCard>
 
@@ -3106,45 +3152,63 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         }
       });
 
-      // Totals
-      doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 5;
+      // Totals — one combined block, or one standalone quote per cabin when "Separate Cabin Totals" is on
       const totalsX = W - M - 70;
-      doc.setFontSize(8.5);
-      doc.setFont("helvetica", "normal");
-      doc.text("Basic Value:", totalsX, y); doc.text(fmtPdf(totals.subtotal), W - M - 2, y, { align: "right" }); y += 5;
-      if (totals.discountBefore > 0) {
-        const lbl = `Discount (Before Tax)${q.discount_before_type === "percent" ? ` @ ${q.discount_before_value}%` : ""}:`;
-        doc.text(lbl, totalsX, y); doc.text("- " + fmtPdf(totals.discountBefore), W - M - 2, y, { align: "right" }); y += 5;
-        doc.text("Taxable Value:", totalsX, y); doc.text(fmtPdf(totals.taxable), W - M - 2, y, { align: "right" }); y += 5;
-      }
-      if (q.include_gst === false) {
-        doc.text("GST:", totalsX, y); doc.text("Not Applicable", W - M - 2, y, { align: "right" }); y += 5;
-      } else if (activeGstMode === "cgst_sgst") {
-        doc.text(`CGST @ ${(q.gst_percent / 2).toFixed(2)}%:`, totalsX, y); doc.text(fmtPdf(totals.cgst), W - M - 2, y, { align: "right" }); y += 5;
-        doc.text(`SGST @ ${(q.gst_percent / 2).toFixed(2)}%:`, totalsX, y); doc.text(fmtPdf(totals.sgst), W - M - 2, y, { align: "right" }); y += 5;
-      } else {
-        doc.text(`IGST @ ${q.gst_percent}%:`, totalsX, y); doc.text(fmtPdf(totals.igst), W - M - 2, y, { align: "right" }); y += 5;
-      }
-      if (totals.discountAfter > 0) {
-        const lbl = `Discount (After Tax)${q.discount_after_type === "percent" ? ` @ ${q.discount_after_value}%` : ""}:`;
-        doc.text(lbl, totalsX, y); doc.text("- " + fmtPdf(totals.discountAfter), W - M - 2, y, { align: "right" }); y += 5;
-      }
-      y -= 3;
-      doc.line(totalsX - 2, y, W - M, y); y += 5;
-      doc.setFillColor(232, 130, 38); doc.rect(totalsX - 2, y - 4, W - M - totalsX + 4, 7, "F");
-      doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(10);
-      doc.text("GRAND TOTAL:", totalsX, y + 1); doc.text(fmtPdf(totals.total), W - M - 2, y + 1, { align: "right" });
-      doc.setTextColor(0); y += 8;
-      if (totals.advancePaid > 0) {
-        doc.setFont("helvetica", "normal"); doc.setFontSize(8.5);
-        const apLbl = `Advance Paid${q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}:`;
-        doc.text(apLbl, totalsX, y); doc.text("- " + fmtPdf(totals.advancePaid), W - M - 2, y, { align: "right" }); y += 5;
-        doc.setFillColor(30, 58, 95); doc.rect(totalsX - 2, y - 4, W - M - totalsX + 4, 7, "F");
+      const drawTotals = (t: ReturnType<typeof calcTotals>, grandLabel: string) => {
+        doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 5;
+        doc.setFontSize(8.5);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(0);
+        doc.text("Basic Value:", totalsX, y); doc.text(fmtPdf(t.subtotal), W - M - 2, y, { align: "right" }); y += 5;
+        if (t.discountBefore > 0) {
+          const lbl = `Discount (Before Tax)${q.discount_before_type === "percent" ? ` @ ${q.discount_before_value}%` : ""}:`;
+          doc.text(lbl, totalsX, y); doc.text("- " + fmtPdf(t.discountBefore), W - M - 2, y, { align: "right" }); y += 5;
+          doc.text("Taxable Value:", totalsX, y); doc.text(fmtPdf(t.taxable), W - M - 2, y, { align: "right" }); y += 5;
+        }
+        if (q.include_gst === false) {
+          doc.text("GST:", totalsX, y); doc.text("Not Applicable", W - M - 2, y, { align: "right" }); y += 5;
+        } else if (activeGstMode === "cgst_sgst") {
+          doc.text(`CGST @ ${(q.gst_percent / 2).toFixed(2)}%:`, totalsX, y); doc.text(fmtPdf(t.cgst), W - M - 2, y, { align: "right" }); y += 5;
+          doc.text(`SGST @ ${(q.gst_percent / 2).toFixed(2)}%:`, totalsX, y); doc.text(fmtPdf(t.sgst), W - M - 2, y, { align: "right" }); y += 5;
+        } else {
+          doc.text(`IGST @ ${q.gst_percent}%:`, totalsX, y); doc.text(fmtPdf(t.igst), W - M - 2, y, { align: "right" }); y += 5;
+        }
+        if (t.discountAfter > 0) {
+          const lbl = `Discount (After Tax)${q.discount_after_type === "percent" ? ` @ ${q.discount_after_value}%` : ""}:`;
+          doc.text(lbl, totalsX, y); doc.text("- " + fmtPdf(t.discountAfter), W - M - 2, y, { align: "right" }); y += 5;
+        }
+        y -= 3;
+        doc.line(totalsX - 2, y, W - M, y); y += 5;
+        doc.setFillColor(232, 130, 38); doc.rect(totalsX - 2, y - 4, W - M - totalsX + 4, 7, "F");
         doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(10);
-        doc.text("BALANCE DUE:", totalsX, y + 1); doc.text(fmtPdf(totals.balanceDue), W - M - 2, y + 1, { align: "right" });
-        doc.setTextColor(0); y += 10;
+        doc.text(grandLabel + ":", totalsX, y + 1); doc.text(fmtPdf(t.total), W - M - 2, y + 1, { align: "right" });
+        doc.setTextColor(0); y += 8;
+        if (t.advancePaid > 0) {
+          doc.setFont("helvetica", "normal"); doc.setFontSize(8.5);
+          const apLbl = `Advance Paid${q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}:`;
+          doc.text(apLbl, totalsX, y); doc.text("- " + fmtPdf(t.advancePaid), W - M - 2, y, { align: "right" }); y += 5;
+          doc.setFillColor(30, 58, 95); doc.rect(totalsX - 2, y - 4, W - M - totalsX + 4, 7, "F");
+          doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(10);
+          doc.text("BALANCE DUE:", totalsX, y + 1); doc.text(fmtPdf(t.balanceDue), W - M - 2, y + 1, { align: "right" });
+          doc.setTextColor(0); y += 10;
+        } else {
+          y += 2;
+        }
+      };
+
+      const perCabinTotals = q.separate_cabin_totals ? calcCabinTotals(q) : null;
+      if (perCabinTotals && perCabinTotals.length > 0) {
+        perCabinTotals.forEach(({ cabin, totals: ct }) => {
+          if (y + 52 > 280) { doc.addPage(); y = M; }
+          doc.setFont("helvetica", "bold"); doc.setFontSize(8.5); doc.setTextColor(44, 82, 130);
+          doc.text(`${cabin.name} — Separate Quote`, totalsX, y + 2); doc.setTextColor(0); y += 4;
+          drawTotals(ct, `${cabin.name} TOTAL`);
+        });
+        doc.setFont("helvetica", "italic"); doc.setFontSize(7); doc.setTextColor(120);
+        doc.text("Each cabin is quoted separately — there is no combined grand total.", M, y); doc.setTextColor(0);
+        doc.setFont("helvetica", "normal"); y += 4;
       } else {
-        y += 2;
+        drawTotals(totals, "GRAND TOTAL");
       }
 
       // Optional Items (add-ons — informational only, NOT part of the Grand Total)
@@ -3896,42 +3960,62 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
           </tbody>
         </table>
 
-        {/* Totals */}
-        <div className="flex justify-end mt-3">
-          <div className="w-72 text-xs space-y-1">
-            <div className="flex justify-between"><span>Basic Value:</span><span>{fmt(totals.subtotal)}</span></div>
-            {totals.discountBefore > 0 && (
-              <>
-                <div className="flex justify-between"><span>Discount (Before Tax){q.discount_before_type === "percent" ? ` @ ${q.discount_before_value}%` : ""}:</span><span>- {fmt(totals.discountBefore)}</span></div>
-                <div className="flex justify-between"><span>Taxable Value:</span><span>{fmt(totals.taxable)}</span></div>
-              </>
-            )}
-            {q.include_gst === false ? (
-              <div className="flex justify-between"><span>GST:</span><span>Not Applicable</span></div>
-            ) : activeGstMode === "cgst_sgst" ? (
-              <>
-                <div className="flex justify-between"><span>CGST @ {(q.gst_percent / 2).toFixed(2)}%:</span><span>{fmt(totals.cgst)}</span></div>
-                <div className="flex justify-between"><span>SGST @ {(q.gst_percent / 2).toFixed(2)}%:</span><span>{fmt(totals.sgst)}</span></div>
-              </>
-            ) : (
-              <div className="flex justify-between"><span>IGST @ {q.gst_percent}%:</span><span>{fmt(totals.igst)}</span></div>
-            )}
-            {totals.discountAfter > 0 && (
-              <div className="flex justify-between"><span>Discount (After Tax){q.discount_after_type === "percent" ? ` @ ${q.discount_after_value}%` : ""}:</span><span>- {fmt(totals.discountAfter)}</span></div>
-            )}
-            <div className="flex justify-between font-bold text-white px-2 py-1.5 mt-1" style={{ background: "#e88226" }}>
-              <span>GRAND TOTAL:</span><span>{fmt(totals.total)}</span>
+        {/* Totals — combined, or one standalone quote per cabin when "Separate Cabin Totals" is on */}
+        {(() => {
+          const ladder = (t: ReturnType<typeof calcTotals>) => (
+            <>
+              <div className="flex justify-between"><span>Basic Value:</span><span>{fmt(t.subtotal)}</span></div>
+              {t.discountBefore > 0 && (
+                <>
+                  <div className="flex justify-between"><span>Discount (Before Tax){q.discount_before_type === "percent" ? ` @ ${q.discount_before_value}%` : ""}:</span><span>- {fmt(t.discountBefore)}</span></div>
+                  <div className="flex justify-between"><span>Taxable Value:</span><span>{fmt(t.taxable)}</span></div>
+                </>
+              )}
+              {q.include_gst === false ? (
+                <div className="flex justify-between"><span>GST:</span><span>Not Applicable</span></div>
+              ) : activeGstMode === "cgst_sgst" ? (
+                <>
+                  <div className="flex justify-between"><span>CGST @ {(q.gst_percent / 2).toFixed(2)}%:</span><span>{fmt(t.cgst)}</span></div>
+                  <div className="flex justify-between"><span>SGST @ {(q.gst_percent / 2).toFixed(2)}%:</span><span>{fmt(t.sgst)}</span></div>
+                </>
+              ) : (
+                <div className="flex justify-between"><span>IGST @ {q.gst_percent}%:</span><span>{fmt(t.igst)}</span></div>
+              )}
+              {t.discountAfter > 0 && (
+                <div className="flex justify-between"><span>Discount (After Tax){q.discount_after_type === "percent" ? ` @ ${q.discount_after_value}%` : ""}:</span><span>- {fmt(t.discountAfter)}</span></div>
+              )}
+              <div className="flex justify-between font-bold text-white px-2 py-1.5 mt-1" style={{ background: "#e88226" }}>
+                <span>GRAND TOTAL:</span><span>{fmt(t.total)}</span>
+              </div>
+              {t.advancePaid > 0 && (
+                <>
+                  <div className="flex justify-between"><span>Advance Paid{q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}:</span><span>- {fmt(t.advancePaid)}</span></div>
+                  <div className="flex justify-between font-bold text-white px-2 py-1.5" style={{ background: "#1e3a5f" }}>
+                    <span>BALANCE DUE:</span><span>{fmt(t.balanceDue)}</span>
+                  </div>
+                </>
+              )}
+            </>
+          );
+          if (q.separate_cabin_totals && cabins.length > 0) {
+            return (
+              <div className="flex flex-col items-end gap-3 mt-3">
+                {calcCabinTotals(q)!.map(({ cabin, totals: ct }) => (
+                  <div key={cabin.id} className="w-72 text-xs space-y-1">
+                    <div className="text-[11px] font-bold text-white px-2 py-1" style={{ background: "#2c5282" }}>{cabin.name} — Separate Quote</div>
+                    {ladder(ct)}
+                  </div>
+                ))}
+                <div className="w-72 text-[10px] text-gray-500 italic text-right">Each cabin is quoted separately — no combined grand total.</div>
+              </div>
+            );
+          }
+          return (
+            <div className="flex justify-end mt-3">
+              <div className="w-72 text-xs space-y-1">{ladder(totals)}</div>
             </div>
-            {totals.advancePaid > 0 && (
-              <>
-                <div className="flex justify-between"><span>Advance Paid{q.advance_paid_type === "percent" ? ` @ ${q.advance_paid_value}%` : ""}:</span><span>- {fmt(totals.advancePaid)}</span></div>
-                <div className="flex justify-between font-bold text-white px-2 py-1.5" style={{ background: "#1e3a5f" }}>
-                  <span>BALANCE DUE:</span><span>{fmt(totals.balanceDue)}</span>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Optional Items — add-ons, NOT included in the total above */}
         {q.include_optional_items && optionalItems.length > 0 && (
