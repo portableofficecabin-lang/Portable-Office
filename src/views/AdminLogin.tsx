@@ -23,8 +23,17 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [mounted, setMounted] = useState(false);
   const { signIn, user, isAdmin, isLoading: authLoading } = useAuth();
   const router = useRouter();
+
+  // Auth state is resolved on the client (AuthProvider defers it to an effect), so
+  // the server always renders the loading branch. Reveal the form only AFTER mount
+  // so the first client render matches the SSR output — otherwise the server
+  // (spinner) and hydrated client (form) diverge → hydration mismatch.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!authLoading && user && isAdmin) {
@@ -102,7 +111,7 @@ export default function AdminLogin() {
     }
   };
 
-  if (authLoading) {
+  if (!mounted || authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-navy-medium to-navy-deep">
         <motion.div

@@ -217,6 +217,7 @@ export default function CabinCalculator() {
   const notesId = useId();
 
   const est = useMemo(() => computeEstimate(config), [config]);
+  const product = useMemo(() => PRODUCTS.find((p) => p.id === config.productId), [config.productId]);
 
   // Only render the body portal after mount (document is guaranteed available; the
   // island is ssr:false so there is no hydration pass, but this keeps it defensive).
@@ -442,6 +443,34 @@ export default function CabinCalculator() {
 
   return (
     <div ref={topRef} className="scroll-mt-24">
+      {/* Highlighted "Customized" banner — surfaces the live estimated price at the
+          very top of the calculator so it is the first thing every visitor sees,
+          on mobile and desktop. Updates in real time as the configuration changes. */}
+      <div className="mb-6 overflow-hidden rounded-2xl border border-accent/40 bg-gradient-to-r from-navy-medium to-navy-deep shadow-lg ring-1 ring-accent/20">
+        <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <div className="flex items-center gap-3">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/20 ring-1 ring-accent/40">
+              <Sparkles className="h-5 w-5 text-accent" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-accent">Customized Cabin</p>
+              <p className="truncate font-display text-base font-bold leading-tight text-white sm:text-lg">
+                {product?.label ?? "Your Cabin"}
+              </p>
+              <p className="text-[11px] text-white/60">
+                {est.dimLength} × {est.dimWidth} ft · {est.area} sq.ft{est.quantity > 1 ? ` × ${est.quantity}` : ""}
+              </p>
+            </div>
+          </div>
+          <div className="shrink-0 border-t border-white/10 pt-3 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0 sm:text-right">
+            <p className="text-[11px] uppercase tracking-wide text-white/70">Estimated Price</p>
+            <p className="font-display text-3xl font-extrabold leading-none text-white sm:text-4xl">
+              {formatINR(est.total)}
+            </p>
+            <p className="mt-1 text-[11px] text-white/60">{config.gst ? "incl. 18% GST" : "+ GST"} · sales-team verified</p>
+          </div>
+        </div>
+      </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
         {/* ---------------- Left: wizard ---------------- */}
         <div className="rounded-2xl border border-border bg-card p-5 sm:p-7 shadow-lg">
