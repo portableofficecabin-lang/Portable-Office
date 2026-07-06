@@ -11,6 +11,26 @@ import { convertDBProduct, convertDBCategory, mergeProducts, mergeCategories } f
 const getSupabase = () =>
   import("@/integrations/supabase/client").then((m) => m.supabase);
 
+// A raw Supabase PostgrestError serialises to "{}" in the console, which hides the
+// cause. Log its real fields instead. A missing table (PGRST205) / relation-not-found
+// (42P01) is an EXPECTED state before the Supabase migrations are applied — this hook
+// falls back to the bundled static catalogue, so surface that as an actionable warning
+// (not a red error overlay). Anything else is unexpected and logged as an error.
+const logFetchIssue = (
+  what: string,
+  error: { message?: string; code?: string } | null | undefined,
+) => {
+  const detail = `${error?.message ?? error} (code ${error?.code ?? "?"})`;
+  if (error?.code === "PGRST205" || error?.code === "42P01") {
+    console.warn(
+      `[products] Supabase "${what}" table not found — showing the bundled static ` +
+        `catalogue. Apply supabase/migrations to the project to enable live data. ${detail}`,
+    );
+  } else {
+    console.error(`[products] Error fetching ${what}: ${detail}`);
+  }
+};
+
 export function useProducts(options?: { realtime?: boolean }) {
   // realtime defaults to true to preserve existing behaviour; callers on
   // statically-cached public pages can opt out to avoid opening Supabase
@@ -94,7 +114,7 @@ export function useProducts(options?: { realtime?: boolean }) {
         .order("created_at", { ascending: false });
 
       if (productsError) {
-        console.error("Error fetching products:", productsError);
+        logFetchIssue("products", productsError);
         return;
       }
 
@@ -104,7 +124,7 @@ export function useProducts(options?: { realtime?: boolean }) {
         .order("sort_order", { ascending: true });
 
       if (categoriesError) {
-        console.error("Error fetching categories:", categoriesError);
+        logFetchIssue("categories", categoriesError);
         return;
       }
 
@@ -128,7 +148,10 @@ export function useProducts(options?: { realtime?: boolean }) {
         setIsFromDatabase(false);
       }
     } catch (err) {
-      console.error("Error fetching data:", err);
+      console.error(
+        "[products] Unexpected error fetching data:",
+        err instanceof Error ? err.message : err,
+      );
     } finally {
       setIsLoading(false);
     }
