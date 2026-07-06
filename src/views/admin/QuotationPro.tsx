@@ -876,8 +876,21 @@ export default function QuotationPro() {
           setList(merged);
         }
       } catch (error: any) {
-        console.error("Failed to load saved quotations", error);
-        toast({ title: "Saved quotations not loaded", description: error.message, variant: "destructive" });
+        console.error("Failed to load saved quotations from backend (using local cache)", error);
+        // The local cache was already loaded + shown above, so nothing is lost. When the
+        // backend quotations table simply isn't reachable/queryable yet — e.g. PostgREST's
+        // schema cache is stale after a project restore, or the table isn't migrated — do
+        // NOT alarm the user; just keep working from this device's saved quotations. Only
+        // genuinely unexpected failures get a soft, non-destructive notice.
+        const msg = String(error?.message || "");
+        const backendTableUnavailable =
+          error?.code === "PGRST205" ||
+          error?.code === "PGRST204" ||
+          error?.code === "42P01" ||
+          /schema cache|could not find the table|does not exist|relation .* does not exist/i.test(msg);
+        if (!backendTableUnavailable) {
+          toast({ title: "Showing quotations from this device", description: "Couldn't reach the backend just now — your saved quotations are still here." });
+        }
       }
     })();
   }, []);

@@ -18,9 +18,15 @@ import { cn } from "@/lib/utils";
 import {
   PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS,
   DOOR_TYPES, WINDOW_TYPES, ELECTRICAL_ITEMS, ADDONS,
+  STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
+  WINDOW_POSITIONS, windowPositionLabel, isToiletCabin, isStorageProduct,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR,
   type CabinConfig, type Material, type Estimate,
 } from "./pricing";
+
+// Steps a storage container customer sees — everything else (structure, interior,
+// doors/windows, electrical, add-ons) is irrelevant and skipped.
+const CONTAINER_STEP_KEYS = ["product", "size", "delivery", "quote"];
 
 const WHATSAPP_NUMBER = "919731897976";
 const STORAGE_KEY = "poc_cabin_config_v1";
@@ -115,8 +121,8 @@ function MaterialChip({
 }
 
 function PricedChip({
-  label, price, selected, onSelect,
-}: { label: string; price: number; selected: boolean; onSelect: () => void }) {
+  label, price, selected, onSelect, priceLabel,
+}: { label: string; price: number; selected: boolean; onSelect: () => void; priceLabel?: string }) {
   return (
     <button type="button" onClick={onSelect} aria-pressed={selected}
       className={cn(
@@ -124,7 +130,7 @@ function PricedChip({
         selected ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50",
       )}>
       <span className="text-sm font-semibold text-foreground">{label}</span>
-      <span className="text-[11px] font-medium text-accent">{formatINR(price)} each</span>
+      <span className="text-[11px] font-medium text-accent">{priceLabel ?? `${formatINR(price)} each`}</span>
     </button>
   );
 }
@@ -132,26 +138,36 @@ function PricedChip({
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doors, windows }: { length: number; width: number; doors: number; windows: number }) {
+function FloorPreview({ length, width, doorCount, windowPositions }: { length: number; width: number; doorCount: number; windowPositions: string[] }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
   const w = L * scale, h = W * scale;
   const pad = 26;
   const vbW = w + pad * 2, vbH = h + pad * 2;
-  const doorArr = Array.from({ length: Math.min(doors, 8) }, (_, i) => i);
-  const winArr = Array.from({ length: Math.min(windows, 12) }, (_, i) => i);
+  const win = "hsl(var(--accent) / 0.6)";
+  // Centre point + orientation for each window position along the wall edges.
+  const marks: Record<string, { cx: number; cy: number; horizontal: boolean }> = {
+    "top-left":   { cx: pad + w * 0.20, cy: pad,             horizontal: true },
+    "top-center": { cx: pad + w * 0.50, cy: pad,             horizontal: true },
+    "top-right":  { cx: pad + w * 0.80, cy: pad,             horizontal: true },
+    "bottom":     { cx: pad + w * 0.70, cy: pad + h,         horizontal: true },
+    "left":       { cx: pad,            cy: pad + h * 0.5,   horizontal: false },
+    "right":      { cx: pad + w,        cy: pad + h * 0.5,   horizontal: false },
+  };
   return (
     <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img" aria-label={`Floor plan ${length} by ${width} feet`}>
       <rect x={pad} y={pad} width={w} height={h} rx={4}
         fill="hsl(var(--accent) / 0.08)" stroke="hsl(var(--accent))" strokeWidth={2} />
-      {doorArr.map((i) => {
-        const x = pad + (w * (i + 0.5)) / Math.max(doors, 1);
-        return <rect key={`d${i}`} x={x - 9} y={pad + h - 3} width={18} height={6} rx={1} fill="hsl(var(--accent))" />;
-      })}
-      {winArr.map((i) => {
-        const x = pad + (w * (i + 0.5)) / Math.max(windows, 1);
-        return <rect key={`w${i}`} x={x - 10} y={pad - 3} width={20} height={6} rx={1} fill="hsl(var(--accent) / 0.55)" />;
+      {/* Door — bottom edge, left of centre */}
+      {doorCount > 0 && <rect x={pad + w * 0.30 - 9} y={pad + h - 3} width={18} height={6} rx={1} fill="hsl(var(--accent))" />}
+      {/* Windows at their chosen positions */}
+      {windowPositions.map((id) => {
+        const m = marks[id];
+        if (!m) return null;
+        return m.horizontal
+          ? <rect key={id} x={m.cx - 10} y={m.cy - 3} width={20} height={6} rx={1} fill={win} />
+          : <rect key={id} x={m.cx - 3} y={m.cy - 10} width={6} height={20} rx={1} fill={win} />;
       })}
       <text x={pad + w / 2} y={pad + h + 16} textAnchor="middle" fontSize={11} fill="hsl(var(--muted-foreground))">{length} ft</text>
       <text x={pad - 10} y={pad + h / 2} textAnchor="middle" fontSize={11} fill="hsl(var(--muted-foreground))"
@@ -163,7 +179,7 @@ function FloorPreview({ length, width, doors, windows }: { length: number; width
 /* ---------------------------------------------------------------- */
 /* Estimate breakdown panel                                         */
 /* ---------------------------------------------------------------- */
-function EstimateRows({ est, gstOn }: { est: Estimate; gstOn: boolean }) {
+function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean; container?: boolean }) {
   const Row = ({ label, value, positive, muted }: { label: string; value: string; positive?: boolean; muted?: boolean }) => (
     <div className="flex items-baseline justify-between gap-3 py-1 text-sm">
       <span className={cn(muted ? "text-muted-foreground" : "text-foreground/90")}>{label}</span>
@@ -176,9 +192,10 @@ function EstimateRows({ est, gstOn }: { est: Estimate; gstOn: boolean }) {
         <span>Cabin Size</span>
         <span>{est.area} sq.ft{est.quantity > 1 ? ` × ${est.quantity}` : ""}</span>
       </div>
-      <Row label="Base Cabin" value={formatINR(est.base)} />
+      <Row label={container ? "Base Container Rate" : "Base Cabin"} value={container && est.base <= 0 ? "Contact for Rate" : formatINR(est.base)} />
       {est.interior !== 0 && <Row label="Interior Upgrade" value={`${est.interior > 0 ? "+" : ""}${formatINR(est.interior)}`} positive={est.interior > 0} />}
       {est.openings > 0 && <Row label="Doors & Windows" value={`+${formatINR(est.openings)}`} positive />}
+      {est.ventilation > 0 && <Row label="Ventilation" value={`+${formatINR(est.ventilation)}`} positive />}
       {est.electrical > 0 && <Row label="Electrical" value={`+${formatINR(est.electrical)}`} positive />}
       {est.furniture > 0 && <Row label="Furniture / Add-ons" value={`+${formatINR(est.furniture)}`} positive />}
       {est.quantity > 1 && (
@@ -190,8 +207,8 @@ function EstimateRows({ est, gstOn }: { est: Estimate; gstOn: boolean }) {
       {est.transport > 0 && <Row label="Transport" value={`+${formatINR(est.transport)}`} positive />}
       {est.installation > 0 && <Row label="Installation" value={`+${formatINR(est.installation)}`} positive />}
       <div className="mt-1 border-t border-border pt-1.5">
-        <Row label="Subtotal" value={formatINR(est.subtotal)} muted />
-        {gstOn && <Row label="GST (18%)" value={`+${formatINR(est.gst)}`} muted />}
+        <Row label="Subtotal" value={container && est.base <= 0 ? "Contact for Rate" : formatINR(est.subtotal)} muted />
+        {gstOn && <Row label="GST (18%)" value={container && est.base <= 0 ? "As applicable" : `+${formatINR(est.gst)}`} muted />}
       </div>
     </div>
   );
@@ -241,9 +258,22 @@ export default function CabinCalculator() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const saved = JSON.parse(raw) as CabinConfig;
+        const saved = JSON.parse(raw) as Partial<CabinConfig>;
+        // Legacy id: the storage product was renamed storage-cabin → storage-container.
+        // Map it before the validity check so old saved configs still restore.
+        if (saved.productId === "storage-cabin") saved.productId = "storage-container";
         if (saved?.productId && PRODUCTS.some((p) => p.id === saved.productId)) {
-          setConfig({ ...buildDefaultConfig(saved.productId), ...saved });
+          const base = buildDefaultConfig(saved.productId);
+          const merged = { ...base, ...saved };
+          // Re-derive product-gated openings so a config saved by an OLDER build (e.g. a
+          // toilet with windows, or a pre-container storage cabin) can't leak windows into
+          // the toilet/container flow. Also keep the window count in sync with placements.
+          if (!Array.isArray(merged.windowPositions)) merged.windowPositions = base.windowPositions;
+          if (isToiletCabin(saved.productId) || isStorageProduct(saved.productId)) {
+            merged.windowPositions = base.windowPositions;
+          }
+          merged.windowQty = merged.windowPositions.length;
+          setConfig(merged);
           setRestored(true);
         }
       }
@@ -266,13 +296,29 @@ export default function CabinCalculator() {
   // re-seed the auto electrical quantities.
   const selectProduct = (productId: string) => {
     const fresh = buildDefaultConfig(productId);
+    // Storage containers keep ONLY size / grade / quantity / delivery — every cabin
+    // choice is irrelevant, so start from the bare container config rather than carrying
+    // the previous product's cabin options over.
+    if (isStorageProduct(productId)) {
+      setConfig((c) => ({ ...fresh, quantity: c.quantity, transport: c.transport, installation: c.installation, gst: c.gst }));
+      setStep((s) => (CONTAINER_STEP_KEYS.includes(STEPS[s].key) ? s : 0));
+      return;
+    }
+    // Windows don't apply to toilet cabins (ventilation instead) and storage cabins
+    // start windowless — so for those products take the product-appropriate window /
+    // ventilation defaults instead of carrying the previous product's window choice.
+    const productDefinesOpenings = isToiletCabin(productId) || isStorageProduct(productId);
     setConfig((c) => ({
       ...fresh,
       // keep the user's structure / interior / add-on / quantity choices if they had any
       // (size resets to the new product's default, but unit count is orthogonal to product)
       quantity: c.quantity,
       structureId: c.structureId, wallId: c.wallId, ceilingId: c.ceilingId, flooringId: c.flooringId,
-      doorTypeId: c.doorTypeId, doorQty: c.doorQty, windowTypeId: c.windowTypeId, windowQty: c.windowQty,
+      doorTypeId: c.doorTypeId, doorQty: c.doorQty,
+      windowTypeId: productDefinesOpenings ? fresh.windowTypeId : c.windowTypeId,
+      windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
+      windowPositions: productDefinesOpenings ? fresh.windowPositions : c.windowPositions,
+      ventilation: fresh.ventilation,
       addons: c.addons, transport: c.transport, installation: c.installation, gst: c.gst,
     }));
   };
@@ -298,6 +344,24 @@ export default function CabinCalculator() {
     });
   const setAddonQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, addons: { ...c.addons, [id]: Math.max(1, qty) } }));
+
+  const toggleVentilation = (id: string) =>
+    setConfig((c) => {
+      const next = { ...c.ventilation };
+      if (next[id]) delete next[id];
+      else next[id] = 1;
+      return { ...c, ventilation: next };
+    });
+  const setVentilationQty = (id: string, qty: number) =>
+    setConfig((c) => ({ ...c, ventilation: { ...c.ventilation, [id]: Math.max(1, qty) } }));
+
+  // Window placement — each toggled position is one window there; count mirrors the set.
+  const toggleWindowPosition = (id: string) =>
+    setConfig((c) => {
+      const has = c.windowPositions.includes(id);
+      const windowPositions = has ? c.windowPositions.filter((p) => p !== id) : [...c.windowPositions, id];
+      return { ...c, windowPositions, windowQty: windowPositions.length };
+    });
 
   const startOver = () => {
     setConfig(buildDefaultConfig());
@@ -335,35 +399,59 @@ export default function CabinCalculator() {
       doc.setTextColor(20, 20, 20); doc.setFont("helvetica", "bold"); doc.setFontSize(11);
       doc.text(`${product.label} — ${est.dimLength} × ${est.dimWidth} ft (${est.area} sq.ft) × ${est.quantity}`, 14, 36);
 
-      autoTable(doc, {
-        startY: 41,
-        head: [["Configuration", "Selection"]],
-        body: [
+      const isToilet = isToiletCabin(config.productId);
+      const isStorage = isStorageProduct(config.productId);
+      let configRows: [string, string][];
+      if (isStorage) {
+        const grade = CONTAINER_GRADES.find((g) => g.id === config.containerGradeId);
+        const size = STORAGE_SIZES.find((s) => s.length === est.dimLength && s.width === est.dimWidth);
+        const rate = containerRate(est.dimLength, est.dimWidth, config.containerGradeId);
+        configRows = [
+          ["Container Size", size?.label ?? `${est.dimLength} × ${est.dimWidth} ft`],
+          ["Container Grade", grade?.label ?? "—"],
+          ["Base Container Rate", rate > 0 ? formatINR(rate) : "Contact for Rate"],
+        ];
+        if (grade?.note) configRows.push(["Note", grade.note]);
+      } else {
+        configRows = [
           ["Structure", STRUCTURES.find((s) => s.id === config.structureId)?.label ?? ""],
           ["Internal Wall", WALL_MATERIALS.find((m) => m.id === config.wallId)?.label ?? ""],
           ["Ceiling", CEILING_MATERIALS.find((m) => m.id === config.ceilingId)?.label ?? ""],
           ["Flooring", FLOORING_MATERIALS.find((m) => m.id === config.flooringId)?.label ?? ""],
           ["Doors", `${config.doorQty} × ${DOOR_TYPES.find((d) => d.id === config.doorTypeId)?.label ?? ""}`],
-          ["Windows", `${config.windowQty} × ${WINDOW_TYPES.find((d) => d.id === config.windowTypeId)?.label ?? ""}`],
-          ["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"],
-          ["Add-ons", est.furnitureLines.map((l) => l.label).join(", ") || "—"],
-        ],
+        ];
+        if (isToilet) {
+          configRows.push(["Ventilation", est.ventilationLines.map((l) => `${l.label} (${l.detail.split(" ")[0]} no.)`).join(", ") || "Exhaust Fan (1 no.)"]);
+          configRows.push(["Window", "Not Applicable"]);
+        } else {
+          const winPlace = config.windowPositions?.length ? ` (${config.windowPositions.map(windowPositionLabel).join(", ")})` : "";
+          configRows.push(["Windows", `${config.windowQty} × ${WINDOW_TYPES.find((d) => d.id === config.windowTypeId)?.label ?? ""}${winPlace}`]);
+        }
+        configRows.push(["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"]);
+        configRows.push(["Add-ons", est.furnitureLines.map((l) => l.label).join(", ") || "—"]);
+      }
+
+      autoTable(doc, {
+        startY: 41,
+        head: [["Configuration", "Selection"]],
+        body: configRows,
         theme: "striped",
         headStyles: { fillColor: [30, 41, 59] },
         styles: { fontSize: 9 },
       });
 
-      const rows: [string, string][] = [["Base Cabin", formatINR(est.base)]];
+      const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", isStorage && est.base <= 0 ? "Contact for Rate" : formatINR(est.base)]];
       if (est.interior) rows.push(["Interior Upgrade", formatINR(est.interior)]);
       if (est.openings) rows.push(["Doors & Windows", formatINR(est.openings)]);
+      if (est.ventilation) rows.push(["Ventilation", formatINR(est.ventilation)]);
       if (est.electrical) rows.push(["Electrical", formatINR(est.electrical)]);
       if (est.furniture) rows.push(["Furniture / Add-ons", formatINR(est.furniture)]);
       if (config.quantity > 1) rows.push([`Per-cabin subtotal × ${est.quantity}`, formatINR(est.cabinsSubtotal)]);
       if (est.transport) rows.push(["Transport", formatINR(est.transport)]);
       if (est.installation) rows.push(["Installation", formatINR(est.installation)]);
-      rows.push(["Subtotal", formatINR(est.subtotal)]);
-      if (config.gst) rows.push(["GST (18%)", formatINR(est.gst)]);
-      rows.push(["Estimated Total", formatINR(est.total)]);
+      rows.push(["Subtotal", isStorage && est.base <= 0 ? "Contact for Rate" : formatINR(est.subtotal)]);
+      if (config.gst) rows.push(["GST (18%)", isStorage && est.base <= 0 ? "As applicable" : formatINR(est.gst)]);
+      rows.push(["Estimated Total", isStorage && est.base <= 0 ? "Contact for Rate" : formatINR(est.total)]);
 
       autoTable(doc, {
         startY: doc.lastAutoTable.finalY + 6,
@@ -439,7 +527,19 @@ export default function CabinCalculator() {
   };
 
   const StepIcon = STEPS[step].icon;
-  const progress = (step / (STEPS.length - 1)) * 100;
+  // Storage containers show a reduced wizard (Product → Size → Delivery → Quote); other
+  // products show all steps. Navigation, chips and progress all run over the visible set.
+  const isContainer = isStorageProduct(config.productId);
+  const visibleStepIdxs = STEPS.map((_, i) => i).filter((i) => !isContainer || CONTAINER_STEP_KEYS.includes(STEPS[i].key));
+  const curPos = Math.max(0, visibleStepIdxs.indexOf(step));
+  const gotoNext = () => goTo(visibleStepIdxs[Math.min(curPos + 1, visibleStepIdxs.length - 1)]);
+  const gotoPrev = () => goTo(visibleStepIdxs[Math.max(curPos - 1, 0)]);
+  const isFirstVisible = curPos === 0;
+  const isLastVisible = curPos === visibleStepIdxs.length - 1;
+  const progress = (curPos / Math.max(1, visibleStepIdxs.length - 1)) * 100;
+  // Containers on the "New / Current Year" grade (rate 0) have no computable price.
+  const containerContact = isContainer && est.base <= 0;
+  const totalText = containerContact ? "Contact for Rate" : formatINR(est.total);
 
   return (
     <div ref={topRef} className="scroll-mt-24">
@@ -465,7 +565,7 @@ export default function CabinCalculator() {
           <div className="shrink-0 border-t border-white/10 pt-3 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0 sm:text-right">
             <p className="text-[11px] uppercase tracking-wide text-white/70">Estimated Price</p>
             <p className="font-display text-3xl font-extrabold leading-none text-white sm:text-4xl">
-              {formatINR(est.total)}
+              {totalText}
             </p>
             <p className="mt-1 text-[11px] text-white/60">{config.gst ? "incl. 18% GST" : "+ GST"} · sales-team verified</p>
           </div>
@@ -479,7 +579,7 @@ export default function CabinCalculator() {
             <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 <StepIcon className="h-4 w-4 text-accent" />
-                <span>Step {step + 1} of {STEPS.length}</span>
+                <span>Step {curPos + 1} of {visibleStepIdxs.length}</span>
                 <span className="text-muted-foreground">— {STEPS[step].title}</span>
               </div>
               {restored && step === 0 && (
@@ -491,13 +591,16 @@ export default function CabinCalculator() {
             </div>
             {/* Clickable step chips (desktop) */}
             <div className="mt-3 hidden flex-wrap gap-1.5 lg:flex">
-              {STEPS.map((s, i) => (
+              {visibleStepIdxs.map((i) => {
+                const s = STEPS[i];
+                return (
                 <button key={s.key} type="button" onClick={() => goTo(i)}
                   className={cn("rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors",
                     i === step ? "bg-accent text-white" : i < step ? "bg-accent/15 text-accent hover:bg-accent/25" : "bg-muted text-muted-foreground hover:text-foreground")}>
                   {s.title}
                 </button>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -525,27 +628,73 @@ export default function CabinCalculator() {
             )}
 
             {step === 1 && (
-              <StepShell title="Enter the size" subtitle="Area and base price update live as you type.">
+              <StepShell
+                title={isStorageProduct(config.productId) ? "Choose the container size" : "Enter the size"}
+                subtitle={isStorageProduct(config.productId) ? "Standard storage sizes — pick the one that fits your material." : "Area and base price update live as you type."}
+              >
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="grid grid-cols-2 gap-3">
-                    <DimField label="Length" value={config.length} onChange={(n) => patch({ length: n })} />
-                    <DimField label="Width" value={config.width} onChange={(n) => patch({ width: n })} />
-                    <DimField label="Height" value={config.height} onChange={(n) => patch({ height: n })} optional />
-                    <div className="space-y-1.5">
-                      <Label className="text-xs text-muted-foreground">Quantity</Label>
-                      <Stepper value={config.quantity} min={1} max={500} label="Cabin quantity" onChange={(n) => patch({ quantity: n })} />
+                  {isStorageProduct(config.productId) ? (
+                    <div className="space-y-3">
+                      {STORAGE_SIZES.map((s) => {
+                        const active = config.length === s.length && config.width === s.width;
+                        return (
+                          <button key={s.id} type="button" aria-pressed={active}
+                            onClick={() => patch({ length: s.length, width: s.width })}
+                            className={cn("flex w-full flex-col items-start gap-0.5 rounded-xl border p-4 text-left transition-all",
+                              active ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50")}>
+                            <span className="text-sm font-bold text-foreground">{s.label}</span>
+                            <span className="text-[11px] leading-snug text-muted-foreground">{s.usage}</span>
+                          </button>
+                        );
+                      })}
+                      {/* Container grade — grade-wise price for the chosen size */}
+                      <div className="pt-1">
+                        <Label className="mb-1.5 block text-sm font-semibold">Container Grade</Label>
+                        <div className="space-y-2">
+                          {CONTAINER_GRADES.map((g) => {
+                            const rate = containerRate(config.length, config.width, g.id);
+                            const active = config.containerGradeId === g.id;
+                            return (
+                              <button key={g.id} type="button" aria-pressed={active}
+                                onClick={() => patch({ containerGradeId: g.id })}
+                                className={cn("flex w-full flex-col items-start gap-1 rounded-xl border p-3 text-left transition-all",
+                                  active ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50")}>
+                                <div className="flex w-full items-center justify-between gap-2">
+                                  <span className="text-sm font-bold text-foreground">{g.label}</span>
+                                  <span className="shrink-0 text-sm font-semibold text-accent">{rate > 0 ? formatINR(rate) : "Contact for Rate"}</span>
+                                </div>
+                                <span className="text-[11px] leading-snug text-muted-foreground">{g.description}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs text-muted-foreground">Quantity</Label>
+                        <Stepper value={config.quantity} min={1} max={500} label="Cabin quantity" onChange={(n) => patch({ quantity: n })} />
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-3">
+                      <DimField label="Length" value={config.length} onChange={(n) => patch({ length: n })} />
+                      <DimField label="Width" value={config.width} onChange={(n) => patch({ width: n })} />
+                      <DimField label="Height" value={config.height} onChange={(n) => patch({ height: n })} optional />
+                      <div className="space-y-1.5">
+                        <Label className="text-xs text-muted-foreground">Quantity</Label>
+                        <Stepper value={config.quantity} min={1} max={500} label="Cabin quantity" onChange={(n) => patch({ quantity: n })} />
+                      </div>
+                    </div>
+                  )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <FloorPreview length={config.length} width={config.width} doors={config.doorQty} windows={config.windowQty} />
+                    <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
                         <p className="font-bold text-foreground">{est.dimLength} × {est.dimWidth} = {est.area} sq.ft</p>
                       </div>
                       <div className="rounded-lg bg-accent/10 p-2">
-                        <p className="text-[11px] text-muted-foreground">Base Price</p>
-                        <p className="font-bold text-accent">{formatINR(est.base)}</p>
+                        <p className="text-[11px] text-muted-foreground">{isStorageProduct(config.productId) ? "Container Rate" : "Base Price"}</p>
+                        <p className="font-bold text-accent">{isStorageProduct(config.productId) && est.base <= 0 ? "Contact for Rate" : formatINR(est.base)}</p>
                       </div>
                     </div>
                   </div>
@@ -575,16 +724,25 @@ export default function CabinCalculator() {
 
             {step === 3 && (
               <StepShell title="Interior finish" subtitle="Standard finishes are included — upgrades and savings shown per material.">
-                <div className="space-y-5">
-                  <MaterialGroup label="Internal Wall" items={WALL_MATERIALS} value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
-                  <MaterialGroup label="Ceiling" items={CEILING_MATERIALS} value={config.ceilingId} onSelect={(id) => patch({ ceilingId: id })} />
-                  <MaterialGroup label="Flooring" items={FLOORING_MATERIALS} value={config.flooringId} onSelect={(id) => patch({ flooringId: id })} />
-                </div>
+                {isStorageProduct(config.productId) ? (
+                  <div className="rounded-xl border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground">
+                    Storage cabins ship with a standard hard-wearing interior — no finish upgrades are needed. Tell our team if you need a custom lining and we&rsquo;ll quote it separately.
+                  </div>
+                ) : (
+                  <div className="space-y-5">
+                    <MaterialGroup label="Internal Wall" items={WALL_MATERIALS} value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
+                    <MaterialGroup label="Ceiling" items={CEILING_MATERIALS} value={config.ceilingId} onSelect={(id) => patch({ ceilingId: id })} />
+                    <MaterialGroup label="Flooring" items={FLOORING_MATERIALS} value={config.flooringId} onSelect={(id) => patch({ flooringId: id })} />
+                  </div>
+                )}
               </StepShell>
             )}
 
             {step === 4 && (
-              <StepShell title="Doors & windows" subtitle="Choose type and quantity for each.">
+              <StepShell
+                title={isToiletCabin(config.productId) ? "Doors & ventilation" : "Doors & windows"}
+                subtitle={isToiletCabin(config.productId) ? "Toilet cabins use ventilation instead of windows." : "Choose type and quantity for each."}
+              >
                 <div className="space-y-5">
                   <div>
                     <div className="mb-2 flex items-center justify-between">
@@ -594,22 +752,69 @@ export default function CabinCalculator() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {DOOR_TYPES.map((d) => (
-                        <PricedChip key={d.id} label={d.label} price={d.price} selected={config.doorTypeId === d.id} onSelect={() => patch({ doorTypeId: d.id })} />
+                        <PricedChip key={d.id} label={d.label} price={d.price}
+                          priceLabel={d.includedQty ? `${d.includedQty} included · +${formatINR(d.price)} each extra` : undefined}
+                          selected={config.doorTypeId === d.id} onSelect={() => patch({ doorTypeId: d.id })} />
                       ))}
                     </div>
                   </div>
-                  <div>
-                    <div className="mb-2 flex items-center justify-between">
-                      <Label className="text-sm font-semibold">Window Type</Label>
-                      <div className="flex items-center gap-2"><span className="text-xs text-muted-foreground">Qty</span>
-                        <Stepper value={config.windowQty} min={0} max={100} label="Window quantity" onChange={(n) => patch({ windowQty: n })} /></div>
+                  {isToiletCabin(config.productId) ? (
+                    <div>
+                      <Label className="mb-2 block text-sm font-semibold">Ventilation / Exhaust</Label>
+                      <div className="grid gap-2.5 sm:grid-cols-2">
+                        {VENTILATION_ITEMS.map((v) => {
+                          const selected = !!config.ventilation[v.id];
+                          return (
+                            <ToggleCard key={v.id} selected={selected} onToggle={() => toggleVentilation(v.id)}
+                              label={v.label} sub={`${formatINR(v.price)} each`}>
+                              {selected && (
+                                <Stepper value={config.ventilation[v.id]} min={1} max={50} label={`${v.label} quantity`} onChange={(n) => setVentilationQty(v.id, n)} />
+                              )}
+                            </ToggleCard>
+                          );
+                        })}
+                      </div>
+                      <p className="mt-3 rounded-lg border border-dashed border-accent/40 bg-accent/5 p-3 text-[11px] leading-snug text-muted-foreground">
+                        <span className="font-semibold text-foreground">Toilet Cabin ventilation will be provided with exhaust fan / louver.</span> Window option is not applicable for toilet cabins.
+                      </p>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {WINDOW_TYPES.map((d) => (
-                        <PricedChip key={d.id} label={d.label} price={d.price} selected={config.windowTypeId === d.id} onSelect={() => patch({ windowTypeId: d.id })} />
-                      ))}
+                  ) : (
+                    <div className="space-y-4">
+                      <div>
+                        <Label className="mb-2 block text-sm font-semibold">Window Type</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {WINDOW_TYPES.map((d) => (
+                            <PricedChip key={d.id} label={d.label} price={d.price} selected={config.windowTypeId === d.id} onSelect={() => patch({ windowTypeId: d.id })} />
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="mb-1 flex items-center justify-between">
+                          <Label className="text-sm font-semibold">Window Placement</Label>
+                          <span className="text-xs text-muted-foreground">{config.windowPositions.length} window{config.windowPositions.length === 1 ? "" : "s"}</span>
+                        </div>
+                        <p className="mb-2 text-[11px] text-muted-foreground">Tap where you want windows — the 2D plan updates live.</p>
+                        <div className="grid gap-4 sm:grid-cols-2">
+                          <div className="flex flex-wrap gap-2 self-start">
+                            {WINDOW_POSITIONS.map((p) => {
+                              const active = config.windowPositions.includes(p.id);
+                              return (
+                                <button key={p.id} type="button" aria-pressed={active} onClick={() => toggleWindowPosition(p.id)}
+                                  className={cn("rounded-lg border px-3 py-2 text-xs font-medium transition-all",
+                                    active ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border bg-background text-foreground hover:border-accent/50")}>
+                                  {p.label}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <div className="rounded-xl border border-border bg-background p-3">
+                            <FloorPreview length={config.length} width={config.width} doorCount={config.doorQty} windowPositions={config.windowPositions} />
+                            <p className="mt-1 text-center text-[10px] text-muted-foreground">Live 2D plan · door + windows</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </StepShell>
             )}
@@ -634,19 +839,25 @@ export default function CabinCalculator() {
 
             {step === 6 && (
               <StepShell title="Optional add-ons" subtitle="Furniture & fittings — add only what you want.">
-                <div className="grid gap-2.5 sm:grid-cols-2">
-                  {ADDONS.map((a) => {
-                    const selected = !!config.addons[a.id];
-                    return (
-                      <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
-                        label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}`}>
-                        {selected && a.hasQty && (
-                          <Stepper value={config.addons[a.id]} min={1} max={200} label={`${a.label} quantity`} onChange={(n) => setAddonQty(a.id, n)} />
-                        )}
-                      </ToggleCard>
-                    );
-                  })}
-                </div>
+                {isStorageProduct(config.productId) ? (
+                  <div className="rounded-xl border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground">
+                    Furniture add-ons aren&rsquo;t applicable to storage cabins. Need shelving or racking? Let our team know and we&rsquo;ll quote it separately.
+                  </div>
+                ) : (
+                  <div className="grid gap-2.5 sm:grid-cols-2">
+                    {ADDONS.map((a) => {
+                      const selected = !!config.addons[a.id];
+                      return (
+                        <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
+                          label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}`}>
+                          {selected && a.hasQty && (
+                            <Stepper value={config.addons[a.id]} min={1} max={200} label={`${a.label} quantity`} onChange={(n) => setAddonQty(a.id, n)} />
+                          )}
+                        </ToggleCard>
+                      );
+                    })}
+                  </div>
+                )}
               </StepShell>
             )}
 
@@ -692,7 +903,7 @@ export default function CabinCalculator() {
                       <Textarea id={notesId} rows={2} value={lead.notes} onChange={(e) => setLead({ ...lead, notes: e.target.value })} placeholder="Anything specific about your requirement…" />
                     </div>
                     <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-3 text-xs text-muted-foreground">
-                      <span className="font-semibold text-foreground">Estimated Total: {formatINR(est.total)}{config.gst ? "" : " + GST"}</span> — this indicative price will be verified & approved by our sales team.
+                      <span className="font-semibold text-foreground">Estimated Total: {totalText}{config.gst || containerContact ? "" : " + GST"}</span> — this indicative price will be verified & approved by our sales team.
                     </div>
                     <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
                       {submitting ? <><Loader2 className="h-5 w-5 animate-spin" /> Sending…</> : <><Send className="h-5 w-5" /> Get My Official Quotation</>}
@@ -705,14 +916,14 @@ export default function CabinCalculator() {
 
           {/* Nav */}
           <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-            <Button variant="ghost" onClick={() => goTo(step - 1)} disabled={step === 0} className="text-muted-foreground">
+            <Button variant="ghost" onClick={gotoPrev} disabled={isFirstVisible} className="text-muted-foreground">
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
             <button type="button" onClick={startOver} className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-accent">
               <RotateCcw className="h-3 w-3" /> Start over
             </button>
-            {step < STEPS.length - 1 ? (
-              <Button variant="accent" onClick={() => goTo(step + 1)}>
+            {!isLastVisible ? (
+              <Button variant="accent" onClick={gotoNext}>
                 Next <ArrowRight className="h-4 w-4" />
               </Button>
             ) : (
@@ -728,17 +939,17 @@ export default function CabinCalculator() {
               <Sparkles className="h-4 w-4 text-accent" />
               <h3 className="text-sm font-bold uppercase tracking-wide text-foreground">Live Estimate</h3>
             </div>
-            <EstimateRows est={est} gstOn={config.gst} />
+            <EstimateRows est={est} gstOn={config.gst} container={isContainer} />
             <div className="mt-3 rounded-xl bg-gradient-to-r from-navy-medium to-navy-deep p-4 text-center">
               <p className="text-[11px] uppercase tracking-wide text-white/70">Estimated Total</p>
-              <p className="font-display text-2xl font-extrabold text-white">{formatINR(est.total)}</p>
+              <p className="font-display text-2xl font-extrabold text-white">{totalText}</p>
               {!config.gst && <p className="text-[11px] text-white/70">+ GST</p>}
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" onClick={downloadPDF}><Download className="h-4 w-4" /> PDF</Button>
               <Button variant="outline" size="sm" onClick={shareWhatsApp}><MessageCircle className="h-4 w-4" /> Share</Button>
             </div>
-            {step < STEPS.length - 1 && (
+            {!isLastVisible && (
               <Button variant="hero" className="mt-2 w-full" onClick={() => goTo(STEPS.length - 1)}>
                 Get Official Quotation
               </Button>
@@ -759,7 +970,7 @@ export default function CabinCalculator() {
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur px-4 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] lg:hidden">
           {showMobileBreakdown && (
             <div id="cabin-mobile-breakdown" className="mb-2 max-h-[45vh] overflow-y-auto rounded-xl border border-border bg-background p-3">
-              <EstimateRows est={est} gstOn={config.gst} />
+              <EstimateRows est={est} gstOn={config.gst} container={isContainer} />
               <div className="mt-2 grid grid-cols-2 gap-2">
                 <Button variant="outline" size="sm" onClick={downloadPDF}><Download className="h-4 w-4" /> PDF</Button>
                 <Button variant="outline" size="sm" onClick={shareWhatsApp}><MessageCircle className="h-4 w-4" /> Share</Button>
@@ -770,10 +981,10 @@ export default function CabinCalculator() {
             <button type="button" onClick={() => setShowMobileBreakdown((s) => !s)}
               aria-expanded={showMobileBreakdown} aria-controls="cabin-mobile-breakdown" className="flex-1 text-left">
               <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">Estimated Total <span aria-hidden="true">{showMobileBreakdown ? "▾" : "▴"}</span></span>
-              <span className="font-display text-lg font-extrabold text-foreground">{formatINR(est.total)}{!config.gst && <span className="text-xs font-medium text-muted-foreground"> +GST</span>}</span>
+              <span className="font-display text-lg font-extrabold text-foreground">{totalText}{!config.gst && !containerContact && <span className="text-xs font-medium text-muted-foreground"> +GST</span>}</span>
             </button>
-            {step < STEPS.length - 1 ? (
-              <Button variant="hero" size="sm" onClick={() => goTo(step + 1)}>Next <ArrowRight className="h-4 w-4" /></Button>
+            {!isLastVisible ? (
+              <Button variant="hero" size="sm" onClick={gotoNext}>Next <ArrowRight className="h-4 w-4" /></Button>
             ) : !submitted ? (
               <Button variant="hero" size="sm" onClick={() => topRef.current?.scrollIntoView({ behavior: "smooth" })}>Fill form ↑</Button>
             ) : (
