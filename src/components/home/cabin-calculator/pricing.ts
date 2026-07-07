@@ -150,7 +150,7 @@ export interface Material {
 // Internal Wall — MDF is the standard finish (~₹40/sqft, already in the base rate);
 // every other option's delta is ₹/sqft above that standard.
 export const WALL_MATERIALS: Material[] = [
-  { id: "particle", label: "Particle Board", delta: 35 },
+  { id: "particle", label: "Particle Board", delta: -2 }, // cheaper than the MDF standard → ₹2/sqft saving
   { id: "pvc",      label: "PVC",            delta: 68 },
   { id: "mdf",      label: "MDF",            delta: 0, standard: true },
   { id: "hdhmr",    label: "HDHMR",          delta: 52 },
@@ -251,12 +251,30 @@ export const DOOR_TYPES: Priced[] = [
   { id: "glass", label: "Glass / Aluminium / UPVC Door",  price: 28000 },
 ];
 
+// uPVC is the recommended best-value default (listed first). Prices are the BASE for a
+// standard 3×3 ft (9 sq.ft), 2-track window; larger sizes and 2.5-track scale up from here.
 export const WINDOW_TYPES: Priced[] = [
+  { id: "upvc",     label: "uPVC Window",        price: 5500 },
   { id: "sliding",  label: "Sliding Aluminium",  price: 7500 },
   { id: "openable", label: "Openable Aluminium", price: 8200 },
-  { id: "upvc",     label: "uPVC Window",        price: 5500 },
   { id: "fixed",    label: "Fixed Glass",        price: 3500 },
 ];
+
+/* Window size & track — the base window is 3×3 ft (9 sq.ft) with a 2-track frame. The price
+ * scales with the window AREA (bigger window ⇒ higher cost) and with the track type
+ * (2-track = base, 2.5-track = +12%). */
+export const WINDOW_BASE_AREA = 9; // 3 ft × 3 ft baseline
+export interface WindowTrack { id: string; label: string; mult: number; note?: string; }
+export const WINDOW_TRACKS: WindowTrack[] = [
+  { id: "2",   label: "2 Track",   mult: 1.0 },
+  { id: "2.5", label: "2.5 Track", mult: 1.12, note: "+12% over 2-track" },
+];
+export const findWindowTrack = (id: string): WindowTrack => WINDOW_TRACKS.find((t) => t.id === id) ?? WINDOW_TRACKS[0];
+/** Per-window price = base type price × (area ÷ 3×3 baseline) × track multiplier. */
+export function windowUnitPrice(basePrice: number, widthFt: number, heightFt: number, trackId: string): number {
+  const area = Math.max(1, widthFt || 3) * Math.max(1, heightFt || 3);
+  return Math.round(basePrice * (area / WINDOW_BASE_AREA) * findWindowTrack(trackId).mult);
+}
 
 /** Format a decimal-feet value as feet-and-inches, e.g. 8.5 → 8′6″, 20 → 20′,
  *  7.67 → 7′8″. Used on the plan/elevation dimension labels so 8'6" never rounds
@@ -273,7 +291,7 @@ export function formatFeet(ft: number): string {
  *  double-door opening is the ISO standard 7′8″ × 7′6″ (2.34 m × 2.29 m). */
 export interface OpeningSize { widthFt: number; heightFt: number; }
 export const DOOR_SIZE: OpeningSize = { widthFt: 3, heightFt: 7 };
-export const WINDOW_SIZE: OpeningSize = { widthFt: 4, heightFt: 4 };
+export const WINDOW_SIZE: OpeningSize = { widthFt: 3, heightFt: 3 }; // standard 3×3 ft window
 // ISO 668 standard 20ft/40ft container door opening: 7′8″ wide × 7′6″ high.
 export const CONTAINER_DOOR_SIZE: OpeningSize = { widthFt: 7 + 8 / 12, heightFt: 7.5 };
 /** Compact dimension label, e.g. "3′×7′" or "7′8″×7′6″". */
@@ -357,8 +375,9 @@ export const ELECTRICAL_ITEMS: ElectricalItem[] = [
   { id: "tube",    label: "Tube Light",  unitPrice: 450,  defaultQty: (a) => Math.max(1, Math.ceil(a / 60)), preselect: false }, // SET: tube-light rate
   { id: "fan",     label: "Fan",         unitPrice: 1800, defaultQty: (a) => Math.max(1, Math.ceil(a / 120)), preselect: true },
   { id: "exhaust", label: "Exhaust Fan", unitPrice: 1200, defaultQty: () => 1, preselect: false },
-  { id: "ac",      label: "AC Point",    unitPrice: 2500, defaultQty: () => 1, preselect: false },
+  { id: "ac",      label: "AC Provision", unitPrice: 2500, defaultQty: () => 1, preselect: false },
   { id: "plug",    label: "Plug Points", unitPrice: 450,  defaultQty: (a) => Math.max(2, Math.ceil(a / 55)), preselect: true },
+  { id: "popup-socket", label: "Pop-up Socket (table)", unitPrice: 3500, defaultQty: () => 1, preselect: false }, // table-mounted pop-up, e.g. conference table
 ];
 
 /** Light colour + LED panel shape — spec choices in the Electrical step (apply to the LED
@@ -376,8 +395,8 @@ export const FURNITURE_POSITIONS = [
   { id: "centre", label: "Centre" },
 ] as const;
 export const PLUG_POINT_POSITIONS = [
-  { id: "opposite-table", label: "Opposite Table (under-wall)" },
-  { id: "near-door", label: "Near Door" },
+  { id: "table-side", label: "Table Side" },
+  { id: "wall", label: "Wall Only" },
   { id: "both-sides", label: "Both Side Walls" },
   { id: "as-per-site", label: "As Per Site" },
 ] as const;
@@ -385,9 +404,39 @@ export const MOBILITY_TYPES = [
   { id: "movable", label: "100% Movable (fully relocatable)" },
   { id: "fixed", label: "Fixed / Semi-permanent" },
 ] as const;
+/** Work-table add-ons. Plug points are auto-placed at the table sides when any of these is
+ *  selected, and wall-only when none is (see the toggleAddon handler). */
+export const TABLE_ADDON_IDS = ["workstation", "manager", "conference"];
+/** Plug-point placements the app auto-manages from table presence (a user can still pick
+ *  "both-sides" / "as-per-site" and that explicit choice is preserved). */
+export const AUTO_PLUG_POSITIONS = ["table-side", "wall"];
 export const furniturePositionLabel = (id: string): string => FURNITURE_POSITIONS.find((o) => o.id === id)?.label ?? id;
 export const plugPointPositionLabel = (id: string): string => PLUG_POINT_POSITIONS.find((o) => o.id === id)?.label ?? id;
 export const mobilityTypeLabel = (id: string): string => MOBILITY_TYPES.find((o) => o.id === id)?.label ?? id;
+
+/* ------------------------------------------------------------------ *
+ * Exact material sizes — shown on the layout drawing so the customer & factory
+ * see the real size of each item (display / spec only, no price impact).
+ * ------------------------------------------------------------------ */
+export const FAN_SIZE = { shape: "round" as const, label: `12″` };        // 12" round ceiling fan
+export const LED_PANEL_SIZE = {
+  square: { shape: "square" as const, label: `10.5″` },                   // 10.5" square LED panel
+  round:  { shape: "round"  as const, label: `4″` },                      // 4" round LED panel
+};
+/** Every work table (workstation / manager / conference) is a standard 3.5 ft × 22″ × 30″. */
+export const TABLE_SIZE = { lengthFt: 3.5, depthIn: 22, heightIn: 30 };
+export const TABLE_SIZE_SHORT = `3.5ft×22″`;
+export const TABLE_SIZE_LABEL = `3.5 ft × 22″ × 30″`;
+
+/** Exact material size + shape for a layout item (for the drag drawing). `kind` = the
+ *  LayoutDesigner kind (fan/led/…); `id` = the addon id; `ledShape` = config.ledShape. */
+export function materialSpec(kind: string, id: string, ledShape: string):
+  { label: string; shape: "round" | "square" | "rect" } | null {
+  if (kind === "fan") return { label: FAN_SIZE.label, shape: "round" };
+  if (kind === "led") return ledShape === "round" ? { ...LED_PANEL_SIZE.round } : { ...LED_PANEL_SIZE.square };
+  if (TABLE_ADDON_IDS.includes(id)) return { label: TABLE_SIZE_SHORT, shape: "rect" };
+  return null;
+}
 
 /* ------------------------------------------------------------------ *
  * Step 7 — Optional add-ons / furniture (price each; some take a quantity)
@@ -437,6 +486,11 @@ export interface CabinConfig {
   doorPlacements: { side: string; offset: number }[];
   windowTypeId: string;
   windowQty: number;
+  /** Window size (ft) — default 3×3. Larger windows cost proportionally more. */
+  windowWidthFt: number;
+  windowHeightFt: number;
+  /** Sliding track: "2" (2-track, base) or "2.5" (2.5-track, +12%). */
+  windowTrackId: string;
   /** Chosen window placements on the 2D plan; window count mirrors this list. */
   windowPositions: string[];
   /** id -> quantity for ventilation (toilet cabins: exhaust fan / louver). */
@@ -449,28 +503,32 @@ export interface CabinConfig {
   lightColor: string;
   ledShape: string;
   /** Spec-only placement choices (no price impact) — captured in the quote/PDF.
-   *  furniturePosition: wall | centre · plugPointPosition: opposite-table | near-door
-   *  | both-sides | as-per-site · mobilityType: movable | fixed. */
+   *  furniturePosition: wall | centre · plugPointPosition: table-side | wall | both-sides
+   *  | as-per-site (auto-follows work-table presence) · mobilityType: movable | fixed. */
   furniturePosition: string;
   plugPointPosition: string;
   mobilityType: string;
-  /** Spec-only (no price impact): which room (1 or 2) each work-furniture add-on is placed
-   *  in, for 2-room layouts. addon id -> room number. Captured in the quote/PDF. */
-  furnitureRoom: Record<string, number>;
+  /** Spec-only (no price impact): per-room unit counts for each work-furniture add-on in a
+   *  multi-room layout. addon id -> [room1, room2, …] summing to the add-on quantity (rooms
+   *  1..roomCount-1 are stored; the last room is the derived remainder). Captured in quote/PDF. */
+  furnitureRoom: Record<string, number[]>;
   /** id -> quantity. Presence with qty>0 means selected. */
   addons: Record<string, number>;
   /** Spec-only (no price impact): free drag-and-drop positions for the customer's
    *  chosen items (doors, windows, lights, fans, furniture) on the floor plan.
-   *  Key = item instance id, value = fractional {x,y} (0..1) within the cabin.
-   *  Optional so older persisted configs stay valid. Captured in the WhatsApp
-   *  quote + PDF so the factory builds to the intended layout. */
-  layout?: Record<string, { x: number; y: number }>;
-  /** Layout: false = single room; true = a partition splits the cabin into two rooms.
-   *  When true the Partition add-on (fixed / with-door) is applied automatically. */
-  partitioned: boolean;
-  /** Room 1's length (ft) along the cabin length; Room 2 = length − room1Length. */
-  room1Length: number;
-  /** Partition has a door (uses "Partition with Door" price) vs a plain fixed partition. */
+   *  Key = item instance id, value = fractional {x,y} (0..1) within the cabin,
+   *  plus an optional rotation `r` in degrees (0/90/180/270). Optional so older
+   *  persisted configs stay valid. Captured in the WhatsApp quote + PDF so the
+   *  factory builds to the intended layout & orientation. */
+  layout?: Record<string, { x: number; y: number; r?: number }>;
+  /** Number of rooms (1..8). 1 = single room, no partitions; N rooms => N-1 partitions
+   *  (each priced via the "partition" / "partition-door" add-on with qty = N-1). */
+  roomCount: number;
+  /** Per-room lengths (ft) along the cabin length; roomLengths.length === roomCount and
+   *  the values sum to the cabin length. Room k occupies roomLengths[k-1]. */
+  roomLengths: number[];
+  /** Partitions have doors ("Partition with Door" price) vs plain fixed partitions.
+   *  Applies uniformly to all N-1 partitions. */
   partitionDoor: boolean;
   transport: boolean;
   installation: boolean;
@@ -555,7 +613,11 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     doorQty: container ? 0 : 1,
     // Default door placement: one main door on the front (bottom) wall, ~30% along.
     doorPlacements: container ? [] : [{ side: "bottom", offset: Math.round(product.def.length * 0.3) }],
-    windowTypeId: WINDOW_TYPES[0].id, // Sliding
+    windowTypeId: "upvc", // uPVC is the recommended best-value default
+    // Standard window is 3×3 ft on a 2-track frame; size & track drive the price.
+    windowWidthFt: 3,
+    windowHeightFt: 3,
+    windowTrackId: "2",
     // Toilet & storage products start windowless — toilet uses ventilation instead;
     // containers have no windows.
     windowQty: isToiletCabin(product.id) || container ? 0 : 2,
@@ -569,15 +631,15 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     lightColor: "white",
     ledShape: "square",
     furniturePosition: "wall",
-    plugPointPosition: "opposite-table",
+    plugPointPosition: "table-side",
     mobilityType: "movable",
     furnitureRoom: {},
     addons: {},
     // Drag-and-drop item positions (spec-only) — empty until the customer arranges them.
     layout: {},
-    // Layout — single room by default; the 2-room partition is opt-in in the Size step.
-    partitioned: false,
-    room1Length: Math.round(product.def.length / 2),
+    // Layout — single room by default; multi-room partitions are opt-in in the Size step.
+    roomCount: 1,
+    roomLengths: [Math.round(product.def.length)],
     partitionDoor: true,
     transport: false,
     installation: false,
@@ -656,11 +718,16 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   // Only doors beyond the included quantity (1 Steel Door) are charged.
   const doorChargeQty = Math.max(0, doorQty - (door.includedQty ?? 0));
   const doorAmt = round(door.price * doorChargeQty);
-  const winAmt = round(win.price * windowQty);
+  // Windows: base 3×3 ft, 2-track — price scales with area and track (2.5-track = +12%).
+  const winW = clamp(cfg.windowWidthFt ?? 3, 1, 12);
+  const winH = clamp(cfg.windowHeightFt ?? 3, 1, 12);
+  const winTrack = findWindowTrack(cfg.windowTrackId);
+  const winPerUnit = windowUnitPrice(win.price, winW, winH, cfg.windowTrackId);
+  const winAmt = round(winPerUnit * windowQty);
   const openings = doorAmt + winAmt;
   const openingLines: LineDelta[] = [
     { label: "Doors", detail: door.includedQty ? `${doorQty} × ${door.label} · ${door.includedQty} included` : `${doorQty} × ${door.label}`, amount: doorAmt },
-    { label: "Windows", detail: `${windowQty} × ${win.label}`, amount: winAmt },
+    { label: "Windows", detail: `${windowQty} × ${win.label} ${formatFeet(winW)}×${formatFeet(winH)} · ${winTrack.label}`, amount: winAmt },
   ].filter((l) => l.amount !== 0);
 
   // Ventilation (toilet cabins) — exhaust fan / louver, priced only when selected.
@@ -758,9 +825,45 @@ export function startingFromEstimate(): number {
  *  basin, urinal, pantry, partition) are excluded — they are not placed per-room this way. */
 export const ROOM_FURNITURE_IDS = ["workstation", "manager", "conference", "cupboard", "chairs"];
 
-/** Which room ("1" | "2") a work-furniture add-on is assigned to (default Room 1). */
-export const furnitureRoomOf = (cfg: CabinConfig, addonId: string): number =>
-  cfg.furnitureRoom?.[addonId] === 2 ? 2 : 1;
+/** Spec-only: per-room unit counts for a work-furniture add-on across the current rooms.
+ *  Returns an array of length roomCount (each ≥0) summing to `total`. Rooms 1..N-1 come from
+ *  the stored array (default: everything in Room 1); the last room absorbs the remainder, so
+ *  a quantity change can never leave a room over-filled. */
+export function furnitureRoomCounts(cfg: CabinConfig, addonId: string, total: number, roomCount: number): number[] {
+  const t = Math.max(0, Math.round(total) || 0);
+  const n = Math.max(1, Math.round(roomCount) || 1);
+  if (n === 1) return [t];
+  const stored = cfg.furnitureRoom?.[addonId];
+  const out: number[] = [];
+  let used = 0;
+  for (let i = 0; i < n - 1; i++) {
+    const def = i === 0 ? t : 0; // default: everything in Room 1
+    const raw = Array.isArray(stored) ? stored[i] : def;
+    const v = Math.max(0, Math.min(t - used, Math.round(Number(raw)) || 0));
+    out.push(v);
+    used += v;
+  }
+  out.push(Math.max(0, t - used));
+  return out;
+}
+
+/** Produce exactly `count` room lengths (each ≥1 ft) summing to `totalLength`; rooms 1..N-1
+ *  seed from `lengths`, the last room is the remainder. Caps count at 8 and at totalLength. */
+export function normalizeRoomLengths(totalLength: number, count: number, lengths: number[] = []): number[] {
+  const total = Math.max(1, Math.round(totalLength));
+  const n = Math.min(Math.max(Math.round(count) || 1, 1), 8, total);
+  if (n === 1) return [total];
+  const head: number[] = [];
+  for (let i = 0; i < n - 1; i++) head.push(Math.max(1, Math.round(lengths[i] ?? total / n)));
+  let used = head.reduce((a, b) => a + b, 0);
+  // Trim the head (from the last editable room back) so ≥1 ft is left for every remaining room.
+  for (let i = n - 2; i >= 0 && used > total - (n - 1 - i); i--) {
+    const reducible = Math.min(used - (total - (n - 1 - i)), head[i] - 1);
+    if (reducible > 0) { head[i] -= reducible; used -= reducible; }
+  }
+  head.push(Math.max(1, total - used));
+  return head;
+}
 
 /** Human-readable configuration summary — reused for the lead message, the
  *  WhatsApp share text and the PDF. */
@@ -798,11 +901,13 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
   const isStorage = isStorageProduct(cfg.productId);
   const vent = est.ventilationLines.map((l) => `${l.label} (${l.detail.split(" ")[0]} no.)`).join(", ");
   const roof = findRoof(cfg.roofId);
-  // Per-room furniture placement (only meaningful for a 2-room layout).
-  const roomFurn = cfg.partitioned
+  // Per-room furniture placement (only meaningful for a multi-room layout).
+  const roomFurn = cfg.roomCount > 1
     ? ROOM_FURNITURE_IDS.filter((id) => cfg.addons?.[id]).map((id) => {
         const a = ADDONS.find((x) => x.id === id);
-        return `${a?.label ?? id} → Room ${furnitureRoomOf(cfg, id)}`;
+        const counts = furnitureRoomCounts(cfg, id, cfg.addons[id], cfg.roomCount);
+        const where = counts.map((c, i) => (c > 0 ? `Room ${i + 1} × ${c}` : "")).filter(Boolean).join(" + ") || "—";
+        return `${a?.label ?? id} → ${where}`;
       }).join(", ")
     : "";
 
@@ -815,10 +920,13 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     insul && insul.id !== "none" ? `Insulation: ${insul.label} (${insul.thickness})` : ``,
     isToilet
       ? `Doors: ${cfg.doorQty} × ${door}`
-      : `Doors/Windows: ${cfg.doorQty} × ${door}, ${cfg.windowQty} × ${win}${cfg.windowPositions?.length ? ` (${cfg.windowPositions.map(windowPositionLabel).join(", ")})` : ""}`,
+      : `Doors/Windows: ${cfg.doorQty} × ${door}, ${cfg.windowQty} × ${win} ${formatFeet(cfg.windowWidthFt ?? 3)}×${formatFeet(cfg.windowHeightFt ?? 3)} ${findWindowTrack(cfg.windowTrackId).label}${cfg.windowPositions?.length ? ` (${cfg.windowPositions.map(windowPositionLabel).join(", ")})` : ""}`,
     isToilet ? `Ventilation: ${vent || "Exhaust Fan (1 no.)"}` : ``,
     isToilet ? `Window: Not Applicable (toilet cabin)` : (isStorage && cfg.windowQty === 0 ? `Window: Not Applicable (add if required)` : ``),
     `Electrical: ${elec}`,
+    cfg.roomCount > 1
+      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => `R${i + 1} ${Math.round(l)}ft`).join(" · ")}) — ${cfg.roomCount - 1} × ${cfg.partitionDoor ? "Partition w/ Door" : "Fixed Partition"}`
+      : `Rooms: Single`,
     `Add-ons: ${furn}`,
     isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,
     roomFurn ? `Furniture Layout: ${roomFurn}` : ``,

@@ -19,17 +19,18 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import logo from "@/assets/logo.webp";
 import {
   PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS, INSULATION_OPTIONS,
-  DOOR_TYPES, WINDOW_TYPES, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS,
+  DOOR_TYPES, WINDOW_TYPES, WINDOW_TRACKS, windowUnitPrice, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial,
-  ROOFS, findRoof, ROOM_FURNITURE_IDS, furnitureRoomOf,
+  ROOFS, findRoof, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, AUTO_PLUG_POSITIONS,
   FURNITURE_POSITIONS, PLUG_POINT_POSITIONS, MOBILITY_TYPES,
   furniturePositionLabel, plugPointPositionLabel, mobilityTypeLabel,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate, type InsulationOption,
 } from "./pricing";
 import { LayoutDesigner, summariseLayout } from "./LayoutDesigner";
+import { SocketSwitchDiagram } from "./ElectricalDiagram";
 
 // Steps a storage container customer sees — everything else (structure, interior,
 // doors/windows, electrical, add-ons) is irrelevant and skipped.
@@ -146,7 +147,7 @@ function PricedChip({
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorPlacements, windowPositions, containerDoor, partitioned, room1Length, partitionDoor, puf }: { length: number; width: number; doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean; partitioned?: boolean; room1Length?: number; partitionDoor?: boolean; puf?: boolean }) {
+function FloorPreview({ length, width, doorPlacements, windowPositions, containerDoor, roomLengths, partitionDoor, puf }: { length: number; width: number; doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
@@ -252,19 +253,33 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, containe
           </g>
         );
       })}
-      {/* 2-room partition wall (with a door gap + swing when it has a door) */}
-      {partitioned && !!room1Length && room1Length > 0 && room1Length < L && (() => {
-        const r1 = Math.min(Math.max(room1Length, 1), L - 1);
-        const px = pad + w * (r1 / L);
+      {/* Multi-room partition walls (door gap + swing when partitions have doors) */}
+      {roomLengths && roomLengths.length > 1 && (() => {
+        const n = roomLengths.length;
         const dTop = pad + h * 0.55, dH = Math.min(h * 0.34, 34);
+        const edges: number[] = [];   // svg x of each internal partition
+        const mids: number[] = [];    // svg x mid of each room (for labels)
+        let acc = 0, prevX = pad;
+        for (let i = 0; i < n; i++) {
+          acc += roomLengths[i];
+          const x = Math.min(pad + w * (acc / L), pad + w);
+          mids.push((prevX + x) / 2);
+          if (i < n - 1) edges.push(x);
+          prevX = x;
+        }
         return (
           <g>
-            <line x1={px} y1={pad} x2={px} y2={partitionDoor ? dTop : pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
-            {partitionDoor && <line x1={px} y1={dTop + dH} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />}
-            {partitionDoor && <line x1={px} y1={dTop} x2={px + dH} y2={dTop} stroke="hsl(var(--accent))" strokeWidth={1.4} />}
-            {partitionDoor && <path d={`M ${px + dH} ${dTop} A ${dH} ${dH} 0 0 1 ${px} ${dTop + dH}`} fill="none" stroke="hsl(var(--accent) / 0.4)" strokeWidth={1} />}
-            <text x={pad + (px - pad) / 2} y={pad + 13} textAnchor="middle" fontSize={8.5} fill="hsl(var(--muted-foreground))">Room 1 · {Math.round(r1)}ft</text>
-            <text x={px + (pad + w - px) / 2} y={pad + 13} textAnchor="middle" fontSize={8.5} fill="hsl(var(--muted-foreground))">Room 2 · {Math.round(L - r1)}ft</text>
+            {edges.map((px, i) => (
+              <g key={i}>
+                <line x1={px} y1={pad} x2={px} y2={partitionDoor ? dTop : pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
+                {partitionDoor && <line x1={px} y1={dTop + dH} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />}
+                {partitionDoor && <line x1={px} y1={dTop} x2={px + dH} y2={dTop} stroke="hsl(var(--accent))" strokeWidth={1.4} />}
+                {partitionDoor && <path d={`M ${px + dH} ${dTop} A ${dH} ${dH} 0 0 1 ${px} ${dTop + dH}`} fill="none" stroke="hsl(var(--accent) / 0.4)" strokeWidth={1} />}
+              </g>
+            ))}
+            {roomLengths.map((rl, i) => (
+              <text key={`r${i}`} x={mids[i]} y={pad + 13} textAnchor="middle" fontSize={8} fill="hsl(var(--muted-foreground))">R{i + 1} · {Math.round(rl)}ft</text>
+            ))}
           </g>
         );
       })()}
@@ -332,7 +347,11 @@ function Elevations({
   // Sloped 2-side roof is the default; "flat" opts out. Storage/shipping containers are
   // ALWAYS flat-roofed regardless of the roof value (defensive against stale saved configs).
   const sloped = roof !== "flat" && !containerDoor;
-  const peak = sloped ? Math.min(wallH * 0.42, 20) : 0; // roof rise above the wall top
+  // A real 2-side sloped/shed roof rises only ~6–8 inches above the wall top. Render
+  // that true, to-scale rise (8" = 0.667 ft, the max) instead of the old exaggerated
+  // 42%-of-wall gable. `scale` is px per foot; the small floor keeps it visible at big
+  // cabin sizes without ever exceeding the real 8-inch rise meaningfully.
+  const peak = sloped ? Math.max(2, (8 / 12) * scale) : 0; // roof rise above the wall top (~8")
   const roofH = 6, labelH = 18, cellPadX = 14, gap = 14;
   const cellW = L * scale + cellPadX * 2; // the length walls are widest → set column width
   const cellH = wallH + roofH + peak + labelH + 8;
@@ -439,11 +458,11 @@ function Elevations({
 
 /** Preview with a Floor Plan / 4 Elevations toggle. */
 function CabinPreview({
-  length, width, height, doorPlacements, windowPositions, containerDoor, partitioned, room1Length, partitionDoor, puf, roof, caption,
+  length, width, height, doorPlacements, windowPositions, containerDoor, roomLengths, partitionDoor, puf, roof, caption,
 }: {
   length: number; width: number; height: number;
   doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean;
-  partitioned?: boolean; room1Length?: number; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
+  roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
 }) {
   const [view, setView] = useState<"plan" | "elevation">("plan");
   return (
@@ -462,7 +481,7 @@ function CabinPreview({
       </div>
       {view === "plan" ? (
         <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPositions={windowPositions}
-          containerDoor={containerDoor} partitioned={partitioned} room1Length={room1Length} partitionDoor={partitionDoor} puf={puf} />
+          containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor} puf={puf} />
       ) : (
         <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
           windowPositions={windowPositions} containerDoor={containerDoor} roof={roof} />
@@ -474,31 +493,55 @@ function CabinPreview({
 /* ---------------------------------------------------------------- */
 /* Furniture-by-room layout (Add-ons step)                          */
 /* ---------------------------------------------------------------- */
-type FurnitureItem = { id: string; label: string; room: number; qty: number };
+// `id` is unique (React key); `type` is the base add-on id (workstation/manager/…)
+// used for placement + short-label lookup — a single item may be split across rooms.
+type FurnitureItem = { id: string; type: string; label: string; room: number; qty: number };
 const FURNITURE_SHORT: Record<string, string> = {
   workstation: "Workstation", manager: "Manager", conference: "Conference", cupboard: "Cupboard", chairs: "Chairs",
 };
-function FurniturePlan({ length, width, partitioned, room1Length, items }: {
-  length: number; width: number; partitioned?: boolean; room1Length?: number; items: FurnitureItem[];
+// Furniture placement within a room, as a fraction (fx across room width, fy top→bottom).
+// Conference table sits in the centre; desks/tables go against a wall by default, or toward
+// the centre when the customer picks "Centre" in Furniture Position.
+function furniturePlacement(id: string, centre: boolean): { fx: number; fy: number } {
+  switch (id) {
+    case "conference": return { fx: 0.5, fy: 0.48 };
+    case "manager":    return centre ? { fx: 0.42, fy: 0.42 } : { fx: 0.27, fy: 0.17 };
+    case "workstation": return centre ? { fx: 0.6, fy: 0.56 } : { fx: 0.5, fy: 0.85 };
+    case "cupboard":   return { fx: 0.86, fy: 0.17 };
+    case "chairs":     return { fx: 0.63, fy: 0.72 };
+    default:           return centre ? { fx: 0.5, fy: 0.5 } : { fx: 0.5, fy: 0.85 };
+  }
+}
+function FurniturePlan({ length, width, roomLengths, items, furniturePosition }: {
+  length: number; width: number; roomLengths?: number[]; items: FurnitureItem[]; furniturePosition?: string;
 }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const scale = Math.min(300 / L, 150 / W);
   const w = L * scale, h = W * scale, pad = 22;
   const vbW = w + pad * 2, vbH = h + pad * 2;
-  const split = !!partitioned && !!room1Length && room1Length > 0 && room1Length < L;
-  const r1 = split ? Math.min(Math.max(room1Length as number, 1), L - 1) : L;
-  const px = pad + w * (r1 / L);
-  const room1Items = items.filter((it) => !split || it.room !== 2);
-  const room2Items = split ? items.filter((it) => it.room === 2) : [];
+  const rooms = roomLengths && roomLengths.length > 0 ? roomLengths : [L];
+  const n = rooms.length;
+  const centre = furniturePosition === "centre";
+  // Cumulative svg x boundaries: edges[0]=pad … edges[n]=pad+w
+  const edges: number[] = [pad];
+  let acc = 0;
+  for (let i = 0; i < n; i++) { acc += rooms[i]; edges.push(Math.min(pad + w * (acc / L), pad + w)); }
+  // Draw each furniture item as a labelled box at its type's placement, clamped inside the room.
   const renderItems = (list: FurnitureItem[], x0: number, x1: number) => {
-    const cx = (x0 + x1) / 2;
-    return list.map((it, i) => {
-      const y = pad + 22 + i * 15;
-      if (y > pad + h - 4) return null; // clip overflow rather than draw outside the room
+    const rw = Math.max(1, x1 - x0);
+    const boxW = Math.min(48, rw * 0.7), boxH = 14;
+    return list.map((it) => {
+      const { fx, fy } = furniturePlacement(it.type, centre);
+      const cx = Math.max(x0 + boxW / 2 + 1, Math.min(x1 - boxW / 2 - 1, x0 + rw * fx));
+      const cy = Math.max(pad + boxH / 2 + 12, Math.min(pad + h - boxH / 2 - 2, pad + h * fy));
       return (
-        <text key={it.id} x={cx} y={y} textAnchor="middle" fontSize={8.5} fill="hsl(var(--foreground))">
-          {FURNITURE_SHORT[it.id] ?? it.label}{it.qty > 1 ? ` ×${it.qty}` : ""}
-        </text>
+        <g key={it.id}>
+          <rect x={cx - boxW / 2} y={cy - boxH / 2} width={boxW} height={boxH} rx={3}
+            fill="hsl(var(--accent) / 0.14)" stroke="hsl(var(--accent))" strokeWidth={1} />
+          <text x={cx} y={cy + 3} textAnchor="middle" fontSize={7} fontWeight={600} fill="hsl(var(--foreground))">
+            {FURNITURE_SHORT[it.type] ?? it.label}{it.qty > 1 ? ` ×${it.qty}` : ""}
+          </text>
+        </g>
       );
     });
   };
@@ -506,17 +549,22 @@ function FurniturePlan({ length, width, partitioned, room1Length, items }: {
     <div className="rounded-xl border border-border bg-background p-3">
       <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img" aria-label="Furniture layout by room">
         <rect x={pad} y={pad} width={w} height={h} rx={2} fill="hsl(var(--accent) / 0.06)" stroke="hsl(var(--accent))" strokeWidth={1.4} />
-        {split && <line x1={px} y1={pad} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />}
-        {split ? (
-          <>
-            <text x={pad + (px - pad) / 2} y={pad + 12} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(var(--muted-foreground))">Room 1 · {Math.round(r1)}ft</text>
-            <text x={px + (pad + w - px) / 2} y={pad + 12} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(var(--muted-foreground))">Room 2 · {Math.round(L - r1)}ft</text>
-            {renderItems(room1Items, pad, px)}
-            {renderItems(room2Items, px, pad + w)}
-          </>
-        ) : (
-          renderItems(room1Items, pad, pad + w)
-        )}
+        {edges.slice(1, n).map((x, i) => (
+          <line key={i} x1={x} y1={pad} x2={x} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
+        ))}
+        {rooms.map((rl, i) => {
+          const roomNo = i + 1;
+          const x0 = edges[i], x1 = edges[i + 1];
+          const roomItems = items.filter((it) => Math.min(Math.max(it.room, 1), n) === roomNo);
+          return (
+            <g key={i}>
+              {n > 1 && (
+                <text x={(x0 + x1) / 2} y={pad + 12} textAnchor="middle" fontSize={8} fontWeight={700} fill="hsl(var(--muted-foreground))">Room {roomNo} · {Math.round(rl)}ft</text>
+              )}
+              {renderItems(roomItems, x0, x1)}
+            </g>
+          );
+        })}
       </svg>
       <p className="mt-1 text-center text-[10px] text-muted-foreground">Furniture placement (indicative)</p>
     </div>
@@ -626,18 +674,44 @@ export default function CabinCalculator() {
           merged.windowQty = merged.windowPositions.length;
           if (!Array.isArray(merged.doorPlacements)) merged.doorPlacements = base.doorPlacements;
           merged.doorQty = merged.doorPlacements.length;
-          // Keep the 2-room layout consistent with the Partition add-on (older configs
-          // may carry the add-on but no layout flag).
-          if (!merged.room1Length) merged.room1Length = base.room1Length;
           // New fields — default them for configs saved by an older build.
           if (!merged.roofId) merged.roofId = base.roofId;
           if (!merged.furnitureRoom || typeof merged.furnitureRoom !== "object") merged.furnitureRoom = {};
-          if (merged.addons?.["partition-door"] || merged.addons?.partition) {
-            merged.partitioned = true;
-            merged.partitionDoor = !!merged.addons["partition-door"];
-          } else {
-            merged.partitioned = false;
+          // Plug-point ids were renamed (opposite-table/near-door → table-side/wall); reset
+          // any stale id from an older saved config to the default.
+          if (!PLUG_POINT_POSITIONS.some((p) => p.id === merged.plugPointPosition)) merged.plugPointPosition = base.plugPointPosition;
+          // Rooms: migrate legacy saved configs (partitioned:boolean + room1Length) →
+          // roomCount/roomLengths. Newer saves already carry roomCount/roomLengths.
+          const sv = saved as unknown as { partitioned?: boolean; room1Length?: number; roomCount?: number };
+          if (sv.roomCount === undefined) {
+            const wasPartitioned = !!sv.partitioned || !!merged.addons?.["partition-door"] || !!merged.addons?.partition;
+            if (wasPartitioned) {
+              const r1 = sv.room1Length || Math.round(merged.length / 2);
+              merged.roomCount = 2;
+              merged.roomLengths = normalizeRoomLengths(merged.length, 2, [r1]);
+              merged.partitionDoor = !!merged.addons?.["partition-door"] || merged.partitionDoor !== false;
+            } else {
+              merged.roomCount = 1;
+              merged.roomLengths = [Math.round(merged.length)];
+            }
           }
+          merged.roomCount = Math.min(Math.max(Math.round(merged.roomCount) || 1, 1), 8);
+          merged.roomLengths = normalizeRoomLengths(merged.length, merged.roomCount, merged.roomLengths);
+          // Keep the partition add-on qty (N-1) in sync with the room count.
+          delete merged.addons["partition"];
+          delete merged.addons["partition-door"];
+          if (merged.roomCount > 1) merged.addons[merged.partitionDoor ? "partition-door" : "partition"] = merged.roomCount - 1;
+          // Migrate furniture split: legacy stored a single number (Room-1 count) → wrap to a
+          // per-room array [count]; the last room derives the remainder.
+          for (const k of Object.keys(merged.furnitureRoom)) {
+            const v = merged.furnitureRoom[k] as unknown;
+            if (typeof v === "number") merged.furnitureRoom[k] = [Math.max(0, Math.round(v) || 0)];
+            else if (!Array.isArray(v)) delete merged.furnitureRoom[k];
+          }
+          // Drop obsolete legacy fields so they can't linger in the persisted config.
+          const legacyDel = merged as unknown as { partitioned?: boolean; room1Length?: number };
+          delete legacyDel.partitioned;
+          delete legacyDel.room1Length;
           setConfig(merged);
           setRestored(true);
         }
@@ -689,9 +763,10 @@ export default function CabinCalculator() {
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
       windowPositions: productDefinesOpenings ? fresh.windowPositions : c.windowPositions,
       ventilation: fresh.ventilation,
-      // Reset partition on product switch (fresh provides partitioned:false + room defaults);
-      // strip any carried-over partition add-on so the layout stays consistent.
+      // Reset rooms on product switch (fresh provides roomCount:1 + roomLengths); strip any
+      // carried-over partition add-on and per-room furniture so the layout stays consistent.
       addons: (() => { const a = { ...c.addons }; delete a.partition; delete a["partition-door"]; return a; })(),
+      furnitureRoom: {},
       transport: c.transport, installation: c.installation, gst: c.gst,
     }));
   };
@@ -732,13 +807,27 @@ export default function CabinCalculator() {
       const next = { ...c.addons };
       if (next[id]) delete next[id];
       else next[id] = 1;
-      return { ...c, addons: next };
+      // Plug points auto-follow work-table presence: table-side when a table (workstation /
+      // manager / conference) is present, wall-only when none is. An explicit choice
+      // (both-sides / as-per-site) is preserved.
+      const hasTable = TABLE_ADDON_IDS.some((t) => next[t]);
+      const plugPointPosition = AUTO_PLUG_POSITIONS.includes(c.plugPointPosition)
+        ? (hasTable ? "table-side" : "wall")
+        : c.plugPointPosition;
+      return { ...c, addons: next, plugPointPosition };
     });
   const setAddonQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, addons: { ...c.addons, [id]: Math.max(1, qty) } }));
-  // Assign a work-furniture add-on to Room 1 or Room 2 (2-room layouts only). Spec-only.
-  const setFurnitureRoom = (id: string, room: number) =>
-    setConfig((c) => ({ ...c, furnitureRoom: { ...c.furnitureRoom, [id]: room } }));
+  // Assign work-furniture units per room (multi-room layouts). Spec-only. Stores per-room
+  // counts (rooms 1..N-1); the last room absorbs the remainder. `roomIndex` is 0-based.
+  const setFurnitureRoomCount = (id: string, roomIndex: number, count: number) =>
+    setConfig((c) => {
+      const total = c.addons[id] || 0;
+      const cur = furnitureRoomCounts(c, id, total, c.roomCount);
+      const next = [...cur];
+      next[roomIndex] = Math.max(0, Math.round(count) || 0);
+      return { ...c, furnitureRoom: { ...c.furnitureRoom, [id]: next } };
+    });
 
   const toggleVentilation = (id: string) =>
     setConfig((c) => {
@@ -758,19 +847,32 @@ export default function CabinCalculator() {
       return { ...c, windowPositions, windowQty: windowPositions.length };
     });
 
-  // Rooms / partition — a 2-room layout auto-applies the Partition add-on (fixed / with-door),
-  // so its cost flows through the existing furniture pricing (no separate cost logic).
-  const applyPartition = (c: CabinConfig, partitioned: boolean, partitionDoor: boolean): CabinConfig => {
+  // Rooms / partitions — an N-room layout auto-applies the Partition add-on with qty = N-1,
+  // so its cost flows through the existing add-on pricing (no separate cost logic).
+  const applyRooms = (c: CabinConfig, roomCount: number, roomLengths: number[], partitionDoor: boolean): CabinConfig => {
+    const n = Math.min(Math.max(Math.round(roomCount) || 1, 1), 8);
+    const lengths = normalizeRoomLengths(c.length, n, roomLengths);
     const addons = { ...c.addons };
     delete addons["partition"];
     delete addons["partition-door"];
-    if (partitioned) addons[partitionDoor ? "partition-door" : "partition"] = 1;
-    return { ...c, partitioned, partitionDoor, room1Length: c.room1Length || Math.round(c.length / 2), addons };
+    if (n > 1) addons[partitionDoor ? "partition-door" : "partition"] = n - 1;
+    return { ...c, roomCount: n, roomLengths: lengths, partitionDoor, addons };
   };
-  const setPartitioned = (on: boolean) => setConfig((c) => applyPartition(c, on, c.partitionDoor));
-  const setPartitionDoor = (door: boolean) => setConfig((c) => applyPartition(c, c.partitioned, door));
-  const setRoom1Length = (n: number) =>
-    setConfig((c) => ({ ...c, room1Length: Math.min(Math.max(Math.round(n) || 1, 1), Math.max(1, Math.round(c.length) - 1)) }));
+  const setRoomCount = (n: number) => setConfig((c) => applyRooms(c, n, c.roomLengths, c.partitionDoor));
+  const setPartitionDoor = (door: boolean) => setConfig((c) => applyRooms(c, c.roomCount, c.roomLengths, door));
+  const distributeEqually = () =>
+    setConfig((c) => applyRooms(c, c.roomCount, Array.from({ length: c.roomCount }, () => c.length / c.roomCount), c.partitionDoor));
+  // Set the length of editable room index i (0-based; only rooms 0..N-2 are user-editable —
+  // the last room is the derived remainder).
+  const setRoomLength = (i: number, n: number) =>
+    setConfig((c) => {
+      const next = [...c.roomLengths];
+      next[i] = Math.max(1, Math.round(n) || 1);
+      return { ...c, roomLengths: normalizeRoomLengths(c.length, c.roomCount, next) };
+    });
+  // A cabin-length change must re-normalise the room split to the new total length.
+  const setLength = (n: number) =>
+    setConfig((c) => ({ ...c, length: n, roomLengths: normalizeRoomLengths(n, c.roomCount, c.roomLengths) }));
 
   // Doors — each door has a side + offset (ft). Count mirrors the placement list.
   const setDoorCount = (n: number) =>
@@ -811,14 +913,46 @@ export default function CabinCalculator() {
       // jsPDF's built-in fonts are Latin-1 only — the ₹ (U+20B9) glyph corrupts the
       // whole cell. Use "Rs." for every amount printed into the PDF (screen keeps ₹).
       const rsPdf = (n: number) => "Rs. " + new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(Math.round(Number(n) || 0));
+      // Load the company logo → PNG (via canvas) so jsPDF can embed it regardless of the
+      // webp source. Returns null if it can't load/decode → header falls back to text-only.
+      const loadImageData = (src: string) =>
+        new Promise<{ data: string; w: number; h: number } | null>((resolve) => {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            try {
+              const canvas = document.createElement("canvas");
+              canvas.width = img.naturalWidth;
+              canvas.height = img.naturalHeight;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return resolve(null);
+              ctx.drawImage(img, 0, 0);
+              resolve({ data: canvas.toDataURL("image/png"), w: img.naturalWidth, h: img.naturalHeight });
+            } catch { resolve(null); }
+          };
+          img.onerror = () => resolve(null);
+          img.src = src;
+        });
+
+      // ── Header band with the company logo ──────────────────────────────────
       doc.setFillColor(15, 27, 45);
       doc.rect(0, 0, 210, 26, "F");
+      const logoImg = await loadImageData(resolveImageUrl(logo));
+      let headerTextX = 14;
+      if (logoImg) {
+        const logoH = 16, logoW = Math.min(34, logoH * (logoImg.w / logoImg.h));
+        // white rounded chip behind the logo for contrast on the navy band
+        doc.setFillColor(255, 255, 255);
+        doc.roundedRect(12, 5, logoW + 3, logoH + 3, 1.5, 1.5, "F");
+        doc.addImage(logoImg.data, "PNG", 13.5, 6.5, logoW, logoH);
+        headerTextX = 12 + logoW + 3 + 4;
+      }
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold"); doc.setFontSize(15);
-      doc.text("Portable Office Cabin", 14, 12);
+      doc.text("Portable Office Cabin", headerTextX, 12);
       doc.setFont("helvetica", "normal"); doc.setFontSize(9);
       doc.setTextColor(245, 158, 11);
-      doc.text("Estimated Cabin Quotation", 14, 18);
+      doc.text("Estimated Cabin Quotation", headerTextX, 18);
       doc.setTextColor(255, 255, 255); doc.setFontSize(8);
       doc.text(new Date().toLocaleDateString("en-IN"), 196, 12, { align: "right" });
 
@@ -848,6 +982,12 @@ export default function CabinCalculator() {
           ["Insulation", isPufPanel(config.structureId) ? "Included (PUF panel — inherently insulated)" : (() => { const i = INSULATION_OPTIONS.find((o) => o.id === config.insulationId); return i && i.id !== "none" ? `${i.label} (${i.thickness})` : "None"; })()],
           ["Doors", `${config.doorQty} × ${DOOR_TYPES.find((d) => d.id === config.doorTypeId)?.label ?? ""}`],
         ];
+        if (config.roomCount > 1) {
+          configRows.push([
+            "Rooms",
+            `${config.roomCount} (${config.roomLengths.map((l, i) => `R${i + 1} ${Math.round(l)}ft`).join(" · ")}) — ${config.roomCount - 1} × ${config.partitionDoor ? "Partition w/ Door" : "Fixed Partition"}`,
+          ]);
+        }
         if (isToilet) {
           configRows.push(["Ventilation", est.ventilationLines.map((l) => `${l.label} (${l.detail.split(" ")[0]} no.)`).join(", ") || "Exhaust Fan (1 no.)"]);
           configRows.push(["Window", "Not Applicable"]);
@@ -1131,7 +1271,7 @@ export default function CabinCalculator() {
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 gap-3">
-                      <DimField label="Length" value={config.length} onChange={(n) => patch({ length: n })} />
+                      <DimField label="Length" value={config.length} onChange={setLength} />
                       <DimField label="Width" value={config.width} onChange={(n) => patch({ width: n })} />
                       <DimField label="Height" value={config.height} onChange={(n) => patch({ height: n })} optional />
                       <div className="space-y-1.5">
@@ -1144,7 +1284,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} />
+                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -1157,39 +1297,61 @@ export default function CabinCalculator() {
                     </div>
                   </div>
                 </div>
-                {/* Rooms / Partition — split the cabin into two rooms (built cabins only) */}
+                {/* Rooms / Partitions — split the cabin into multiple rooms (built cabins only).
+                    N rooms = N-1 partitions; each partition is priced via the Partition add-on. */}
                 {!isStorageProduct(config.productId) && !isToiletCabin(config.productId) && (
                   <div className="mt-4 rounded-xl border border-border p-4">
-                    <div className="mb-2 flex items-center justify-between">
-                      <Label className="text-sm font-semibold">Rooms / Partition</Label>
-                      <div className="flex gap-1.5">
-                        <button type="button" aria-pressed={!config.partitioned} onClick={() => setPartitioned(false)}
-                          className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition-all", !config.partitioned ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>Single Room</button>
-                        <button type="button" aria-pressed={config.partitioned} onClick={() => setPartitioned(true)}
-                          className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition-all", config.partitioned ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>2 Rooms</button>
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <div>
+                        <Label className="text-sm font-semibold">Rooms / Partitions</Label>
+                        <p className="text-[11px] text-muted-foreground">
+                          {config.roomCount > 1
+                            ? `${config.roomCount} rooms · ${config.roomCount - 1} × ${config.partitionDoor ? "partition with door" : "fixed partition"}`
+                            : "Single open room — add partitions to split it"}
+                        </p>
                       </div>
+                      <Stepper value={config.roomCount} min={1} max={Math.min(8, Math.max(1, Math.round(config.length)))} label="Number of rooms" onChange={setRoomCount} />
                     </div>
-                    {config.partitioned && (
+                    {/* Quick presets */}
+                    <div className="mb-3 flex flex-wrap gap-1.5">
+                      {[1, 2, 3, 4].filter((n) => n <= Math.min(8, Math.max(1, Math.round(config.length)))).map((n) => (
+                        <button key={n} type="button" onClick={() => setRoomCount(n)}
+                          className={cn("rounded-lg border px-3 py-1.5 text-xs font-medium transition-all", config.roomCount === n ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>
+                          {n === 1 ? "Single" : `${n} Rooms`}
+                        </button>
+                      ))}
+                    </div>
+                    {config.roomCount > 1 && (
                       <div className="space-y-3">
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          <DimField label={`Room 1 length (of ${Math.round(config.length)} ft)`} value={config.room1Length} onChange={setRoom1Length} />
-                          <div className="space-y-1.5">
-                            <Label className="text-xs text-muted-foreground">Room 2 length</Label>
-                            <div className="flex h-10 items-center rounded-md border border-border bg-muted/40 px-3 text-sm font-semibold">{Math.max(0, Math.round(config.length) - config.room1Length)} ft</div>
-                          </div>
+                        <div className="flex items-center justify-between">
+                          <Label className="text-xs text-muted-foreground">Room lengths (total {Math.round(config.length)} ft)</Label>
+                          <button type="button" onClick={distributeEqually}
+                            className="rounded-md border border-border px-2.5 py-1 text-[11px] font-medium text-muted-foreground hover:text-foreground hover:border-accent/50">
+                            Distribute equally
+                          </button>
                         </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {[0.5, 0.45, 0.55, 0.4, 0.6].map((f) => Math.round(config.length * f)).filter((v, i, a) => v > 0 && v < config.length && a.indexOf(v) === i).map((v) => (
-                            <button key={v} type="button" onClick={() => setRoom1Length(v)}
-                              className={cn("rounded-md border px-2.5 py-1 text-[11px] font-medium", config.room1Length === v ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
-                              {v} / {Math.round(config.length) - v}
-                            </button>
-                          ))}
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {config.roomLengths.map((len, i) =>
+                            i < config.roomCount - 1 ? (
+                              <DimField key={i} label={`Room ${i + 1} length`} value={Math.round(len)} onChange={(n) => setRoomLength(i, n)} />
+                            ) : (
+                              <div key={i} className="space-y-1.5">
+                                <Label className="text-xs text-muted-foreground">Room {i + 1} length</Label>
+                                <div className="flex h-10 items-center rounded-md border border-border bg-muted/40 px-3 text-sm font-semibold">
+                                  {Math.round(len)} ft <span className="ml-1 text-[10px] font-normal text-muted-foreground">(remainder)</span>
+                                </div>
+                              </div>
+                            )
+                          )}
                         </div>
                         <div className="flex items-center justify-between rounded-lg border border-border bg-background p-3">
                           <div>
-                            <p className="text-sm font-semibold text-foreground">Partition Door</p>
-                            <p className="text-[11px] text-muted-foreground">{config.partitionDoor ? "With door — ₹22,000" : "Fixed partition — ₹17,500"}</p>
+                            <p className="text-sm font-semibold text-foreground">Partition Doors</p>
+                            <p className="text-[11px] text-muted-foreground">
+                              {config.partitionDoor
+                                ? `With door — ₹22,000 each × ${config.roomCount - 1}`
+                                : `Fixed partition — ₹17,500 each × ${config.roomCount - 1}`}
+                            </p>
                           </div>
                           <button type="button" role="switch" aria-checked={config.partitionDoor} aria-label="Partition door" onClick={() => setPartitionDoor(!config.partitionDoor)}
                             className={cn("inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent p-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2", config.partitionDoor ? "bg-accent" : "bg-muted-foreground/30")}>
@@ -1345,12 +1507,23 @@ export default function CabinCalculator() {
                   ) : (
                     <div className="space-y-4">
                       <div>
-                        <Label className="mb-2 block text-sm font-semibold">Window Type</Label>
+                        <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                          <Label className="text-sm font-semibold">Window Type</Label>
+                          <span className="text-[11px] text-muted-foreground">uPVC recommended · price is per window at the size &amp; track below</span>
+                        </div>
                         <div className="flex flex-wrap gap-2">
                           {WINDOW_TYPES.map((d) => (
-                            <PricedChip key={d.id} label={d.label} price={d.price} selected={config.windowTypeId === d.id} onSelect={() => patch({ windowTypeId: d.id })} />
+                            <PricedChip key={d.id} label={d.label}
+                              price={windowUnitPrice(d.price, config.windowWidthFt ?? 3, config.windowHeightFt ?? 3, config.windowTrackId ?? "2")}
+                              selected={config.windowTypeId === d.id} onSelect={() => patch({ windowTypeId: d.id })} />
                           ))}
                         </div>
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-[auto_auto_1fr] sm:items-end">
+                        <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={(n) => patch({ windowWidthFt: n })} />
+                        <DimField label="Window Height" value={config.windowHeightFt ?? 3} onChange={(n) => patch({ windowHeightFt: n })} />
+                        <SpecPills label="Window Track" hint="2.5-track slides smoother — +12% over 2-track (price scales with window size)."
+                          options={WINDOW_TRACKS} value={config.windowTrackId ?? "2"} onSelect={(id) => patch({ windowTrackId: id })} />
                       </div>
                       <div>
                         <div className="mb-1 flex items-center justify-between">
@@ -1372,7 +1545,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} partitioned={config.partitioned} room1Length={config.room1Length} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} caption="Door + windows live" />
+                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} caption="Door + windows live" />
                           </div>
                         </div>
                       </div>
@@ -1397,6 +1570,18 @@ export default function CabinCalculator() {
                     );
                   })}
                 </div>
+                {/* Plug Point / AC Provision breakdown — each unit's sockets + switches,
+                    arrow-labelled so the customer & factory see what's included. */}
+                {(config.electrical.plug || config.electrical.ac) ? (
+                  <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
+                    {config.electrical.plug ? (
+                      <SocketSwitchDiagram title="Plug Point" sockets={2} switches={2} units={config.electrical.plug} />
+                    ) : null}
+                    {config.electrical.ac ? (
+                      <SocketSwitchDiagram title="AC Provision" sockets={1} switches={1} units={config.electrical.ac} />
+                    ) : null}
+                  </div>
+                ) : null}
                 {/* Light finish — colour + LED panel shape (applies to LED / tube lights) */}
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   <div>
@@ -1422,7 +1607,7 @@ export default function CabinCalculator() {
                 <div className="mt-4">
                   <SpecPills
                     label="Plug Point Placement"
-                    hint="Where the plug / switch points go. Default: under the wall opposite to the work table."
+                    hint="Placed at the table sides where you work; wall-only if there’s no table (auto-set from your furniture — override any time)."
                     options={PLUG_POINT_POSITIONS}
                     value={config.plugPointPosition}
                     onSelect={(id) => patch({ plugPointPosition: id })}
@@ -1452,47 +1637,65 @@ export default function CabinCalculator() {
                         );
                       })}
                     </div>
-                    {/* Furniture layout — which room each work item goes in (2-room layouts).
+                    {/* Furniture layout — which room each work item goes in (multi-room layouts).
                         Spec only (no price impact); flows into the summary + PDF. */}
                     {(() => {
                       const selectedFurniture = ADDONS.filter((a) => ROOM_FURNITURE_IDS.includes(a.id) && config.addons[a.id]);
                       if (selectedFurniture.length === 0) return null;
+                      const multiRoom = config.roomCount > 1;
                       return (
                         <div className="border-t border-border pt-4">
                           <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
                             <Label className="text-sm font-semibold">Furniture Layout</Label>
                             <span className="text-[11px] text-muted-foreground">
-                              {config.partitioned ? "Pick which room each item goes in" : "Where your furniture sits"}
+                              {multiRoom
+                                ? `Set how many of each item go in Rooms 1–${config.roomCount - 1} — the rest go to Room ${config.roomCount}`
+                                : "Where your furniture sits"}
                             </span>
                           </div>
                           <div className="grid gap-3 lg:grid-cols-[1fr_18rem] lg:items-start">
                             <div className="space-y-2">
-                              {config.partitioned ? (
-                                selectedFurniture.map((a) => (
-                                  <div key={a.id} className="flex items-center justify-between gap-2 rounded-lg border border-border bg-background p-2.5">
-                                    <span className="text-sm font-medium text-foreground">{a.label}{config.addons[a.id] > 1 ? ` × ${config.addons[a.id]}` : ""}</span>
-                                    <div className="flex gap-1">
-                                      {[1, 2].map((rm) => (
-                                        <button key={rm} type="button" aria-pressed={furnitureRoomOf(config, a.id) === rm}
-                                          onClick={() => setFurnitureRoom(a.id, rm)}
-                                          className={cn("rounded-md border px-2.5 py-1 text-[11px] font-semibold transition-all",
-                                            furnitureRoomOf(config, a.id) === rm ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-muted-foreground hover:text-foreground")}>
-                                          Room {rm}
-                                        </button>
-                                      ))}
+                              {multiRoom ? (
+                                selectedFurniture.map((a) => {
+                                  const total = config.addons[a.id];
+                                  const counts = furnitureRoomCounts(config, a.id, total, config.roomCount);
+                                  const last = counts[counts.length - 1];
+                                  return (
+                                    <div key={a.id} className="rounded-lg border border-border bg-background p-2.5">
+                                      <div className="mb-1.5 text-sm font-medium text-foreground">
+                                        {a.label}<span className="font-normal text-muted-foreground"> · {total} total</span>
+                                      </div>
+                                      <div className="flex flex-wrap items-center gap-2">
+                                        {counts.slice(0, -1).map((c, i) => (
+                                          <div key={i} className="flex items-center gap-1.5">
+                                            <span className="text-[11px] font-medium text-muted-foreground">Room {i + 1}</span>
+                                            <Stepper value={c} min={0} max={total} label={`${a.label} in Room ${i + 1}`} onChange={(n) => setFurnitureRoomCount(a.id, i, n)} />
+                                          </div>
+                                        ))}
+                                        <span className="rounded-md border border-border px-2 py-1 text-[11px] font-medium text-muted-foreground">
+                                          Room {config.roomCount}: <span className="text-foreground">{last}</span>
+                                        </span>
+                                      </div>
                                     </div>
-                                  </div>
-                                ))
+                                  );
+                                })
                               ) : (
                                 <p className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-3 text-[11px] leading-snug text-muted-foreground">
-                                  Single-room cabin — all furniture sits in the one room. Want a separate manager cabin and staff room? Split into <span className="font-semibold text-foreground">2 Rooms</span> in the Size step to place each item per room.
+                                  Single-room cabin — all furniture sits in the one room. Want a separate manager cabin and staff room? Add <span className="font-semibold text-foreground">2+ Rooms</span> in the Size step to place each item per room.
                                 </p>
                               )}
                             </div>
                             <FurniturePlan
                               length={config.length} width={config.width}
-                              partitioned={config.partitioned} room1Length={config.room1Length}
-                              items={selectedFurniture.map((a) => ({ id: a.id, label: a.label, room: furnitureRoomOf(config, a.id), qty: config.addons[a.id] }))}
+                              roomLengths={config.roomLengths}
+                              furniturePosition={config.furniturePosition}
+                              items={selectedFurniture.flatMap((a) => {
+                                const total = config.addons[a.id];
+                                const counts = furnitureRoomCounts(config, a.id, total, config.roomCount);
+                                return counts
+                                  .map((c, i) => (c > 0 ? { id: `${a.id}-r${i + 1}`, type: a.id, label: a.label, room: i + 1, qty: c } : null))
+                                  .filter((x): x is { id: string; type: string; label: string; room: number; qty: number } => x !== null);
+                              })}
                             />
                           </div>
                         </div>
