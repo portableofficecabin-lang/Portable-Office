@@ -24,6 +24,7 @@ import {
   ELECTRICAL_ITEMS, ADDONS, ROOM_FURNITURE_IDS, windowPositionLabel, materialSpec,
   type CabinConfig,
 } from "./pricing";
+import { ModulePlan } from "./ModulePlan";
 
 // `r` = rotation in degrees (0/90/180/270); undefined means 0 (upright).
 type Pos = { x: number; y: number; r?: number };
@@ -192,17 +193,14 @@ export function summariseLayout(config: CabinConfig): string {
     .join("; ");
 }
 
-/** Read-only "everything together" floor plan, shown right after the Add-ons step.
- *  Draws EVERY chosen door, window, light, fan, exhaust, AC, plug point and furniture
- *  item at its saved position (or the auto-arranged default) on one cabin plan, with a
- *  counted legend. Non-interactive — the LayoutDesigner below it is where the customer
- *  drags things around. Reuses the same deriveItems / defaultPositions / KIND_META so it
- *  always matches the editor exactly. */
+/** Read-only "everything together" architectural floor plan, shown right after the
+ *  Add-ons step. Renders the proper dimensioned ModulePlan — walls with length × width,
+ *  windows/doors on their walls, ceiling lights & fans, plug points, lifting hooks AND
+ *  furniture (desks, cupboards, conference table) drawn to scale with measurements — plus
+ *  a counted legend of everything chosen. Non-interactive; the LayoutDesigner below it is
+ *  where the customer can drag items around. */
 export function CompleteLayoutPreview({ config }: { config: CabinConfig }) {
   const items = useMemo(() => deriveItems(config), [config]);
-  const defaults = useMemo(() => defaultPositions(config, items), [config, items]);
-  const saved = config.layout ?? {};
-  const posOf = (id: string): Pos => saved[id] ?? defaults[id] ?? { x: 0.5, y: 0.5 };
 
   // Legend groups with how many of each are on the plan.
   const usedGroups = useMemo(() => {
@@ -216,95 +214,33 @@ export function CompleteLayoutPreview({ config }: { config: CabinConfig }) {
     return [...set.entries()];
   }, [items]);
 
-  if (items.length === 0) {
-    return (
-      <div className="rounded-xl border border-dashed border-border bg-muted/20 p-5 text-center text-xs text-muted-foreground">
-        Add doors, windows, electricals or furniture in the earlier steps and they&rsquo;ll all appear here together on one floor plan.
-      </div>
-    );
-  }
-
   return (
     <div className="rounded-xl border border-border bg-background p-3">
       <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
         <span className="text-sm font-semibold text-foreground">Complete Layout</span>
         <span className="text-[11px] text-muted-foreground">
-          Everything you&rsquo;ve chosen — doors, windows, lights, fans, plug points &amp; furniture — on one plan ({items.length} items)
+          Everything you&rsquo;ve chosen — doors, windows, lights, fans, plug points &amp; furniture — to scale on one dimensioned floor plan{items.length > 0 ? ` (${items.length} items)` : ""}
         </span>
       </div>
-      <div
-        className="relative w-full select-none overflow-hidden rounded-lg border-2 border-dashed border-accent/40 bg-muted/20"
-        style={{
-          aspectRatio: `${Math.max(config.length || 1, 1)} / ${Math.max(config.width || 1, 1)}`,
-          backgroundImage:
-            "linear-gradient(to right, hsl(var(--border)/0.4) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)/0.4) 1px, transparent 1px)",
-          backgroundSize: "12.5% 25%",
-        }}
-      >
-        {/* Partition walls for multi-room layouts */}
-        {config.roomCount > 1 && config.length > 0 && (() => {
-          const total = config.roomLengths.reduce((a, b) => a + b, 0) || config.length;
-          let acc = 0;
-          return config.roomLengths.slice(0, -1).map((rl, i) => {
-            acc += rl;
+
+      {/* Proper architectural 2D plan (dimensioned walls + furniture with sizes) */}
+      <ModulePlan config={config} />
+
+      {items.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+          {usedGroups.map(([label, m]) => {
+            const Icon = m.icon;
             return (
-              <div
-                key={i}
-                className="pointer-events-none absolute inset-y-0 w-px bg-accent/60"
-                style={{ left: `${clamp(acc / total, 0, 1) * 100}%` }}
-              />
+              <span key={label} className="inline-flex items-center gap-1 text-[10px] text-muted-foreground">
+                <span className={cn("grid h-4 w-4 place-items-center rounded border", m.cls)}>
+                  <Icon className="h-2.5 w-2.5" />
+                </span>
+                {label} <span className="font-semibold text-foreground">{m.count}</span>
+              </span>
             );
-          });
-        })()}
-
-        {items.map((it) => {
-          const p = posOf(it.id);
-          const meta = KIND_META[it.kind];
-          const Icon = it.kind === "led" ? (it.shape === "round" ? Circle : Square) : meta.icon;
-          const rot = p.r ?? 0;
-          return (
-            <span
-              key={it.id}
-              title={it.size ? `${it.label} · ${it.kind === "furniture" ? "3.5 ft × 22″ × 30″" : it.size}` : it.label}
-              className={cn(
-                "absolute flex items-center gap-1 border px-1.5 py-1 text-[10px] font-semibold shadow-sm",
-                it.shape === "round" ? "rounded-full" : "rounded-md",
-                meta.cls,
-              )}
-              style={{
-                left: `${p.x * 100}%`,
-                top: `${p.y * 100}%`,
-                transform: `translate(-50%, -50%) rotate(${rot}deg)`,
-              }}
-            >
-              <Icon className="h-3 w-3 shrink-0" />
-              <span className="flex flex-col items-start leading-none">
-                <span className="max-w-[92px] truncate">{it.short}</span>
-                {it.size && <span className="text-[8px] font-medium opacity-70">{it.size}</span>}
-              </span>
-            </span>
-          );
-        })}
-
-        <span className="pointer-events-none absolute bottom-1 right-2 text-[9px] font-medium text-muted-foreground/70">
-          {Math.round(config.length)} × {Math.round(config.width)} ft
-        </span>
-      </div>
-
-      {/* Legend with per-group counts */}
-      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
-        {usedGroups.map(([label, m]) => {
-          const Icon = m.icon;
-          return (
-            <span key={label} className="inline-flex items-center gap-1 text-[10px] text-muted-foreground">
-              <span className={cn("grid h-4 w-4 place-items-center rounded border", m.cls)}>
-                <Icon className="h-2.5 w-2.5" />
-              </span>
-              {label} <span className="font-semibold text-foreground">{m.count}</span>
-            </span>
-          );
-        })}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 }

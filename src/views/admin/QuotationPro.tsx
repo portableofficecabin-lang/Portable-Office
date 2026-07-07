@@ -179,7 +179,7 @@ const COMPANY = {
   phone: "9019910931 / 9731897976",
   website: "portableofficecabin.com",
   gst: "33FVKPK6238Q1ZT",
-  email: "info@portableofficecabin.com",
+  email: "sales@portableofficecabin.com / portableofficecabin@gmail.com",
   upi_id: "shaikhkalam63-5@okaxis",
   upi_name: "PORTABLE OFFICE CABIN",
 };
@@ -2912,7 +2912,11 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       doc.setTextColor(185, 94, 10);
       doc.text(`GSTIN: ${COMPANY.gst}`, M + 112, pillY + 3.4);
 
-      y = pillY + 8;
+      // Email line (full width — the two addresses don't fit in the pill row)
+      doc.setFontSize(6.5); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
+      doc.text(`Email: ${COMPANY.email}`, M + 28, pillY + 8.5);
+
+      y = pillY + 12;
       // Subtle divider
       doc.setDrawColor(220, 225, 235); doc.setLineWidth(0.2); doc.line(M, y, W - M, y);
       y += 4;
@@ -3531,9 +3535,11 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
 
       // Footer
       const ph = doc.internal.pageSize.height;
-      doc.setDrawColor(232, 130, 38); doc.setLineWidth(0.4); doc.line(M, ph - 10, W - M, ph - 10);
-      doc.setFontSize(7); doc.setTextColor(100); doc.setFont("helvetica", "normal");
-      doc.text(`${COMPANY.phone}  |  ${COMPANY.website}  |  GST: ${COMPANY.gst}`, W / 2, ph - 6, { align: "center" });
+      doc.setDrawColor(232, 130, 38); doc.setLineWidth(0.4); doc.line(M, ph - 12, W - M, ph - 12);
+      doc.setFontSize(6.8); doc.setTextColor(100); doc.setFont("helvetica", "normal");
+      doc.text(`Email: ${COMPANY.email}`, W / 2, ph - 8, { align: "center" });
+      doc.setFontSize(7);
+      doc.text(`${COMPANY.phone}  |  ${COMPANY.website}  |  GST: ${COMPANY.gst}`, W / 2, ph - 4.5, { align: "center" });
 
       // === WATERMARKS (all pages) ===
       try {
@@ -3794,6 +3800,9 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9.5px] font-medium" style={{ background: "#1e3a5f0d", color: "#1e3a5f" }}>
                   <span style={{ color: "#e88226" }}>🌐</span> {COMPANY.website}
+                </span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9.5px] font-medium" style={{ background: "#1e3a5f0d", color: "#1e3a5f" }}>
+                  <span style={{ color: "#e88226" }}>✉️</span> {COMPANY.email}
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9.5px] font-medium" style={{ background: "#e8822615", color: "#b95e0a" }}>
                   <span>GSTIN</span> <span className="font-mono font-bold">{COMPANY.gst}</span>
@@ -4260,7 +4269,8 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
 
         {/* Footer */}
         <div className="mt-5 pt-2 border-t-2 text-center text-[9px] text-gray-600" style={{ borderColor: "#e88226" }}>
-          {COMPANY.phone} | {COMPANY.website} | GST: {COMPANY.gst}
+          <div>Email: {COMPANY.email}</div>
+          <div>{COMPANY.phone} | {COMPANY.website} | GST: {COMPANY.gst}</div>
         </div>
         </div>{/* /relative z-10 */}
         <div className="text-center italic text-[9px] text-gray-500 mt-6 pt-2 border-t border-gray-200 px-4">

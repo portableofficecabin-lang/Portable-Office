@@ -176,9 +176,16 @@ function mainBoardBox(
   if (!door) return null;
   const cl = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
   const horiz = door.side === "top" || door.side === "bottom";
-  const along = horiz ? cl(door.offset, 0, L) / L : cl(door.offset, 0, W) / W;
-  const cx = door.side === "left" ? pad : door.side === "right" ? pad + w : pad + w * along;
-  const cy = door.side === "top" ? pad : door.side === "bottom" ? pad + h : pad + h * along;
+  // Match the floor-plan door: the offset is the near edge, the door spans `len` into the
+  // wall from there (start-from-corner). The MB sits beside the door's centre.
+  const scale = horiz ? w / Math.max(1, L) : h / Math.max(1, W);
+  const spanPx = horiz ? w : h;
+  const len = Math.max(12, Math.min(DOOR_SIZE.widthFt * scale, spanPx * 0.9));
+  const pipe = 3;
+  const startPx = Math.min(Math.max(cl(door.offset, 0, horiz ? L : W) * scale, pipe), Math.max(pipe, spanPx - pipe - len));
+  const centre = pad + startPx + len / 2;
+  const cx = door.side === "left" ? pad : door.side === "right" ? pad + w : centre;
+  const cy = door.side === "top" ? pad : door.side === "bottom" ? pad + h : centre;
   const bw = 12, bh = 7, gap = 16, inset = 8;
   if (door.side === "top")   return { x: cl(cx + gap, pad + 2, pad + w - bw - 2), y: pad + inset, bw, bh };
   if (door.side === "left")  return { x: pad + inset, y: cl(cy + gap, pad + 2, pad + h - bh - 2), bw, bh };
@@ -286,15 +293,23 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
       ) : (
         (doorPlacements ?? []).map((d, i) => {
           const horiz = d.side === "top" || d.side === "bottom";
-          const along = horiz ? Math.min(Math.max(d.offset, 0), L) / L : Math.min(Math.max(d.offset, 0), W) / W;
-          const cx = d.side === "left" ? pad : d.side === "right" ? pad + w : pad + w * along;
-          const cy = d.side === "top" ? pad : d.side === "bottom" ? pad + h : pad + h * along;
           const len = markLen(DOOR_SIZE.widthFt, horiz ? w : h);
+          const pipe = 3; // corner pipe / frame inset — the opening starts here at "0 ft"
+          // offset (ft from the near corner: left for top/bottom, top for left/right) is the
+          // door's NEAR edge; the opening then spans `len` INTO the wall. Clamp so it always
+          // sits between the two corner pipes (0 ft = flush to the corner pipe, not outside).
+          const startPx = horiz
+            ? Math.min(Math.max((Math.max(d.offset, 0) / L) * w, pipe), Math.max(pipe, w - pipe - len))
+            : Math.min(Math.max((Math.max(d.offset, 0) / W) * h, pipe), Math.max(pipe, h - pipe - len));
+          const wallX = d.side === "left" ? pad : pad + w;
+          const wallY = d.side === "top" ? pad : pad + h;
+          const cx = horiz ? pad + startPx + len / 2 : wallX; // door centre (for the size label)
+          const cy = horiz ? wallY : pad + startPx + len / 2;
           return (
             <g key={i}>
               {horiz
-                ? <rect x={cx - len / 2} y={cy - 3} width={len} height={6} rx={1} fill="hsl(var(--accent))" />
-                : <rect x={cx - 3} y={cy - len / 2} width={6} height={len} rx={1} fill="hsl(var(--accent))" />}
+                ? <rect x={pad + startPx} y={wallY - 3} width={len} height={6} rx={1} fill="hsl(var(--accent))" />
+                : <rect x={wallX - 3} y={pad + startPx} width={6} height={len} rx={1} fill="hsl(var(--accent))" />}
               {sizeText(d.side, cx, cy, sizeLabel(DOOR_SIZE), `dl${i}`)}
             </g>
           );

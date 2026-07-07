@@ -15,7 +15,7 @@
  * entangling the large CabinCalculator component.
  */
 
-import { DOOR_SIZE, type CabinConfig } from "./pricing";
+import { DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, type CabinConfig } from "./pricing";
 
 /** Feet → architectural label, e.g. 30 → 30'-0", 8.5 → 8'-6", 3 → 3'-0". */
 function ftLabel(f: number): string {
@@ -33,8 +33,164 @@ const C = {
   socket: "#f7f7f7", socketInk: "#333333",
   light: "#f2ecc6", lightEdge: "#bcae5a",
   fan: "#8aa9bb", fanEdge: "#4f7387", fanHub: "#3d5f72",
+  steel: "#5a5a5a",
+  wood: "#d9bb8f", woodEdge: "#a97c48",   // desks / tables (top view)
+  cab: "#cbb492", cabEdge: "#8f6c3f",     // cupboard / file cabinet
+  seat: "#aebfca", seatEdge: "#6c8494",   // chairs
   ink: "#333333", dim: "#444444",
 };
+
+/* ------------------------------------------------------------------ *
+ * Furniture (top-view) — drawn to scale with architectural dimensions.
+ * Sizes are the company's real product footprints. Each piece is a
+ * proper shape (desk + chair, cupboard, conference table) labelled with
+ * its size, not an icon chip.
+ * ------------------------------------------------------------------ */
+type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "cabinet" | "conf" | "chair" };
+// Work tables (workstation / manager / conference) all use the company's standard
+// TABLE_SIZE (3.5 ft × 22"), so the plan's dimensions match the quote & PDF exactly.
+const TW = TABLE_SIZE.lengthFt, TD = TABLE_SIZE.depthIn / 12;
+const FURN_SPEC: Record<string, Omit<FurnUnit, "id">> = {
+  workstation: { label: "WORKSTATION", wFt: TW, dFt: TD, kind: "desk" },
+  manager:     { label: "MANAGER TABLE", wFt: TW, dFt: TD, kind: "desk" },
+  conference:  { label: "CONFERENCE TABLE", wFt: TW, dFt: TD, kind: "conf" },
+  cupboard:    { label: "CUPBOARD / FILE CABINET", wFt: 3, dFt: 1.5, kind: "cabinet" },
+  chairs:      { label: "CHAIR", wFt: 1.5, dFt: 1.5, kind: "chair" },
+};
+const PER_TYPE_CAP = 8; // don't flood a room's plan with dozens of identical pieces
+
+/** Chair seen from above — seat with a back-rest strip. */
+function FurnChair({ cx, cy, s }: { cx: number; cy: number; s: number }) {
+  return (
+    <g>
+      <rect x={cx - s / 2} y={cy - s / 2} width={s} height={s} rx={s * 0.22} fill={C.seat} stroke={C.seatEdge} strokeWidth={0.8} />
+      <rect x={cx - s / 2} y={cy - s / 2} width={s} height={s * 0.3} rx={s * 0.14} fill={C.seatEdge} fillOpacity={0.5} />
+    </g>
+  );
+}
+
+/** Two-line caption (NAME + size) centred under a piece of furniture. */
+function FurnCaption({ cx, y, u }: { cx: number; y: number; u: FurnUnit }) {
+  return (
+    <>
+      <text x={cx} y={y} textAnchor="middle" fontSize={6.6} fontWeight={700} fill={C.ink}>{u.label}</text>
+      <text x={cx} y={y + 7.3} textAnchor="middle" fontSize={6.3} fill={C.ink}>{ftLabel(u.wFt)} X {ftLabel(u.dFt)}</text>
+    </>
+  );
+}
+
+/** Desk / table (top view) with a chair tucked on the interior side + caption. */
+function drawDesk(x: number, y: number, w: number, h: number, u: FurnUnit, key: string) {
+  const cx = x + w / 2;
+  const chairS = Math.min(Math.max(h * 0.8, 8), 14);
+  return (
+    <g key={key}>
+      <FurnChair cx={cx} cy={y + h + chairS * 0.6} s={chairS} />
+      <rect x={x} y={y} width={w} height={h} rx={2} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
+      <line x1={x + 2} y1={y + h * 0.34} x2={x + w - 2} y2={y + h * 0.34} stroke={C.woodEdge} strokeWidth={0.5} strokeOpacity={0.6} />
+      <FurnCaption cx={cx} y={y + h + chairS + 8} u={u} />
+    </g>
+  );
+}
+
+/** Cupboard / file cabinet (top view) — two-door box against a wall + caption. */
+function drawCabinet(x: number, y: number, w: number, h: number, u: FurnUnit, key: string) {
+  const cx = x + w / 2;
+  return (
+    <g key={key}>
+      <rect x={x} y={y} width={w} height={h} rx={1.5} fill={C.cab} stroke={C.cabEdge} strokeWidth={1} />
+      <line x1={cx} y1={y} x2={cx} y2={y + h} stroke={C.cabEdge} strokeWidth={0.6} strokeOpacity={0.7} />
+      <circle cx={cx - 3} cy={y + h / 2} r={0.9} fill={C.cabEdge} />
+      <circle cx={cx + 3} cy={y + h / 2} r={0.9} fill={C.cabEdge} />
+      <FurnCaption cx={cx} y={y + h + 8} u={u} />
+    </g>
+  );
+}
+
+/** Conference table (top view) — rounded table ringed by chairs + centred caption. */
+function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string) {
+  const cx = x + w / 2, cyc = y + h / 2;
+  const chairS = Math.min(h * 0.5, 11);
+  const perSide = Math.max(1, Math.min(3, Math.round(w / (chairS * 2.4))));
+  const seats: React.ReactNode[] = [];
+  for (let i = 0; i < perSide; i++) {
+    const chX = x + w * ((i + 0.5) / perSide);
+    seats.push(<FurnChair key={`t${i}`} cx={chX} cy={y - chairS * 0.62} s={chairS} />);
+    seats.push(<FurnChair key={`b${i}`} cx={chX} cy={y + h + chairS * 0.62} s={chairS} />);
+  }
+  return (
+    <g key={key}>
+      {seats}
+      <rect x={x} y={y} width={w} height={h} rx={Math.min(h / 2, 9)} fill={C.wood} stroke={C.woodEdge} strokeWidth={1.1} />
+      <text x={cx} y={cyc - 1} textAnchor="middle" fontSize={6.8} fontWeight={700} fill={C.ink}>{u.label}</text>
+      <text x={cx} y={cyc + 6.5} textAnchor="middle" fontSize={6.3} fill={C.ink}>{ftLabel(u.wFt)} X {ftLabel(u.dFt)}</text>
+    </g>
+  );
+}
+
+/** Lay out and draw one room's furniture: cupboards along the rear wall, a conference
+ *  table centred, then desks (each with a chair) flowing left→right, then loose chairs.
+ *  Everything is drawn to scale; positions are auto-arranged so it reads like a plan. */
+function roomFurnitureNodes(
+  units: FurnUnit[], x0: number, x1: number, yTop: number, ppf: number, keyPrefix: string,
+): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  const pad = Math.min(14, (x1 - x0) * 0.06);
+  const gapX = 8, gapY = 14, cap = 17;
+  const cabinets = units.filter((u) => u.kind === "cabinet");
+  const confs = units.filter((u) => u.kind === "conf");
+  const desks = units.filter((u) => u.kind === "desk");
+  const chairs = units.filter((u) => u.kind === "chair");
+  let cy = yTop + pad;
+
+  // Cupboards / file cabinets along the rear (top) wall.
+  if (cabinets.length) {
+    let cx = x0 + pad, rowH = 0;
+    cabinets.forEach((u, i) => {
+      const w = u.wFt * ppf, h = u.dFt * ppf;
+      if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; cy += rowH + cap + gapY; rowH = 0; }
+      nodes.push(drawCabinet(cx, cy, w, h, u, `${keyPrefix}-cab${i}`));
+      cx += w + gapX; rowH = Math.max(rowH, h);
+    });
+    cy += rowH + cap + gapY;
+  }
+
+  // Conference table(s) centred, with a chair ring.
+  confs.forEach((u, i) => {
+    const w = Math.min(u.wFt * ppf, (x1 - x0) - pad * 2), h = u.dFt * ppf;
+    const chairS = Math.min(h * 0.5, 11);
+    cy += chairS + 2;
+    nodes.push(drawConf((x0 + x1) / 2 - w / 2, cy, w, h, u, `${keyPrefix}-conf${i}`));
+    cy += h + chairS + cap + gapY;
+  });
+
+  // Desks (each with a chair) flowing left→right, wrapping within the room.
+  if (desks.length) {
+    let cx = x0 + pad, rowH = 0;
+    desks.forEach((u, i) => {
+      const w = u.wFt * ppf, h = u.dFt * ppf;
+      const chairS = Math.min(Math.max(h * 0.8, 8), 14);
+      const cellH = h + chairS + cap + 4;
+      if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; cy += rowH + gapY; rowH = 0; }
+      nodes.push(drawDesk(cx, cy, w, h, u, `${keyPrefix}-desk${i}`));
+      cx += w + gapX; rowH = Math.max(rowH, cellH);
+    });
+    cy += rowH + gapY;
+  }
+
+  // Loose chairs.
+  if (chairs.length) {
+    const s = Math.min(1.5 * ppf, 15);
+    let cx = x0 + pad;
+    chairs.forEach((u, i) => {
+      if (cx + s > x1 - pad && cx > x0 + pad) { cx = x0 + pad; cy += s + gapY; }
+      nodes.push(<FurnChair key={`${keyPrefix}-ch${i}`} cx={cx + s / 2} cy={cy + s / 2} s={s} />);
+      cx += s + gapX;
+    });
+  }
+
+  return nodes;
+}
 
 /** 3-blade round ceiling fan symbol (a 12" cabin fan). */
 function CeilingFan({ cx, cy, r }: { cx: number; cy: number; r: number }) {
@@ -72,6 +228,18 @@ function Socket({ cx, cy }: { cx: number; cy: number }) {
   );
 }
 
+/** Steel plate-bar lifting hook with a hole (for the crane hook / shackle), welded at a
+ *  cabin corner and protruding OUTWARD along `angle` (deg, 0 = +x / right). */
+function LiftHook({ x, y, angle }: { x: number; y: number; angle: number }) {
+  const len = 15, bw = 7;
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${angle})`}>
+      <rect x={-1} y={-bw / 2} width={len} height={bw} rx={2} fill={C.steel} stroke="#222222" strokeWidth={0.9} />
+      <circle cx={len - 4.5} cy={0} r={2.4} fill={C.paper} stroke="#222222" strokeWidth={1} />
+    </g>
+  );
+}
+
 // Window position → wall + fraction along that wall.
 const WIN_ON: Record<string, { wall: "top" | "bottom" | "left" | "right"; t: number }> = {
   "top-left": { wall: "top", t: 0.2 }, "top-center": { wall: "top", t: 0.5 }, "top-right": { wall: "top", t: 0.8 },
@@ -105,6 +273,8 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
   const winW = config.windowWidthFt ?? 3, winH = config.windowHeightFt ?? 3;
   const winLabel = `${ftLabel(winW)} X ${ftLabel(winH)}`;
   const doorLabel = `${ftLabel(DOOR_SIZE.widthFt)} X ${ftLabel(DOOR_SIZE.heightFt)}`;
+  // Plate-bar lifting hooks: 2 on a small cabin, 4 once the floor area exceeds 100 sq.ft.
+  const nHooks = L * W > 100 ? 4 : 2;
 
   // Partition walls (multi-room) — cumulative x boundaries, if any.
   const rooms = Array.isArray(config.roomLengths) && config.roomLengths.length > 1 ? config.roomLengths : null;
@@ -193,6 +363,29 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return <CeilingFan key={`f${i}`} cx={cx} cy={cy} r={r} />;
         })}
 
+        {/* ---- furniture (per room), drawn to scale with dimensions ---- */}
+        {(() => {
+          const roomList = rooms ?? [L];
+          const total = roomList.reduce((a, b) => a + b, 0) || L;
+          const edges = [ox];
+          let acc = 0;
+          roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / total)); });
+          const out: React.ReactNode[] = [];
+          roomList.forEach((rl, ri) => {
+            const units: FurnUnit[] = [];
+            ROOM_FURNITURE_IDS.forEach((id) => {
+              const spec = FURN_SPEC[id];
+              const t = config.addons?.[id] || 0;
+              if (!spec || !t) return;
+              const per = furnitureRoomCounts(config, id, t, roomList.length);
+              const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
+              for (let k = 0; k < cnt; k++) units.push({ id, ...spec });
+            });
+            if (units.length) out.push(...roomFurnitureNodes(units, edges[ri], edges[ri + 1], oy, ppf, `r${ri}`));
+          });
+          return out;
+        })()}
+
         {/* ---- windows ---- */}
         {(config.windowPositions ?? []).map((id) => {
           const m = WIN_ON[id];
@@ -229,21 +422,21 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
         {(config.doorPlacements ?? []).map((d, i) => {
           const side = d.side || "bottom";
           const horiz = side === "top" || side === "bottom";
-          const span = horiz ? L : W;
           const dw = Math.min(DOOR_SIZE.widthFt * ppf, (horiz ? planW : planH) * 0.6);
-          const t = Math.min(Math.max((d.offset || 0) / span, 0.1), 0.9);
-          // Hinge H, OUTWARD (exterior) unit vector, along-wall unit vector (swing toward the centre).
+          const spanPx = horiz ? planW : planH;
+          const pipe = 4; // corner pipe / frame inset — the opening starts here at "0 ft"
+          // offset (ft from the near corner: left for top/bottom, top for left/right) is the
+          // door's NEAR edge; the opening then spans dw INTO the wall. Clamp so it always sits
+          // between the two corner pipes (0 ft = flush to the corner pipe, never outside it).
+          const startPx = Math.min(Math.max((d.offset || 0) * ppf, pipe), Math.max(pipe, spanPx - pipe - dw));
+          // Hinge H at the near edge; OUTWARD (exterior) vector; along-wall vector (into the span).
           let H: [number, number]; let into: [number, number]; let along: [number, number];
           if (horiz) {
-            const cx = ox + planW * t;
             const wallY = side === "top" ? oy : by;
-            const ax = cx < ox + planW / 2 ? 1 : -1;
-            H = [cx - (ax * dw) / 2, wallY]; into = [0, side === "top" ? -1 : 1]; along = [ax, 0];
+            H = [ox + startPx, wallY]; into = [0, side === "top" ? -1 : 1]; along = [1, 0];
           } else {
-            const cy = oy + planH * t;
             const wallX = side === "left" ? ox : rx;
-            const ay = cy < oy + planH / 2 ? 1 : -1;
-            H = [wallX, cy - (ay * dw) / 2]; into = [side === "left" ? -1 : 1, 0]; along = [0, ay];
+            H = [wallX, oy + startPx]; into = [side === "left" ? -1 : 1, 0]; along = [0, 1];
           }
           const T: [number, number] = [H[0] + into[0] * dw, H[1] + into[1] * dw];   // open leaf tip (exterior)
           const Cc: [number, number] = [H[0] + along[0] * dw, H[1] + along[1] * dw]; // closed position
@@ -254,7 +447,7 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
             : <rect x={(side === "left" ? ox - wallT : rx) - 0.5} y={Math.min(H[1], Cc[1])} width={wallT + 1} height={dw} fill={C.room} />;
           const lblY1 = side === "top" ? oy - wallT - dw - 16 : by + wallT + dw + 12;
           const lx = side === "left" ? ox - wallT - dw - 6 : rx + wallT + dw + 6;
-          const cxm = ox + planW * (horiz ? t : 0), cym = oy + planH * (horiz ? 0 : t);
+          const cxm = (H[0] + Cc[0]) / 2, cym = (H[1] + Cc[1]) / 2;
           return (
             <g key={i}>
               {gap}
@@ -290,7 +483,19 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
             </g>
           ));
         })()}
+
+        {/* ---- plate-bar lifting hooks (with hole) for lift & shift ---- */}
+        {(() => {
+          const hooks = nHooks === 4
+            ? [{ x: ox - wallT, y: oy - wallT, a: 225 }, { x: rx + wallT, y: oy - wallT, a: 315 },
+               { x: ox - wallT, y: by + wallT, a: 135 }, { x: rx + wallT, y: by + wallT, a: 45 }]
+            : [{ x: ox - wallT, y: oy - wallT, a: 225 }, { x: rx + wallT, y: by + wallT, a: 45 }];
+          return hooks.map((h, i) => <LiftHook key={i} x={h.x} y={h.y} angle={h.a} />);
+        })()}
       </svg>
+      <p className="px-3 pb-1.5 text-center text-[10px] font-medium" style={{ color: C.steel }}>
+        Plate-bar lifting hooks (with hole) at {nHooks} corners — for lift &amp; shift
+      </p>
     </div>
   );
 }
