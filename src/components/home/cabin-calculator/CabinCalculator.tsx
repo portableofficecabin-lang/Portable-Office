@@ -67,6 +67,19 @@ const badgeStyles: Record<string, string> = {
 /* Small building blocks                                            */
 /* ---------------------------------------------------------------- */
 
+/** Controlled `type="number"` inputs leave a leading zero the browser doesn't strip
+ *  ("0654" stays), which then feeds a wrong value into pricing. This strips leading zeros
+ *  (keeping a single one for decimals like "0.5"), writes the cleaned string back into the
+ *  field so nothing sticks, and returns it for parsing. Applied to every numeric field. */
+function cleanNumericInput(el: HTMLInputElement): string {
+  const cleaned = el.value.replace(/^0+(?=\d)/, "");
+  if (cleaned !== el.value) el.value = cleaned;
+  return cleaned;
+}
+/** Select the field's contents on focus so typing over a default (e.g. "0" / "3") replaces
+ *  it rather than prepending — i.e. the "0 auto-deletes when you type a number" behaviour. */
+const selectOnFocus = (e: React.FocusEvent<HTMLInputElement>) => e.currentTarget.select();
+
 function Stepper({
   value, onChange, min = 0, max = 999, className, label,
 }: { value: number; onChange: (n: number) => void; min?: number; max?: number; className?: string; label: string }) {
@@ -77,7 +90,8 @@ function Stepper({
         className="h-9 w-9 grid place-items-center text-lg font-semibold text-muted-foreground hover:text-accent disabled:opacity-40"
         disabled={value <= min}>−</button>
       <input type="number" inputMode="numeric" aria-label={label} value={Number.isFinite(value) ? value : ""}
-        onChange={(e) => set(parseInt(e.target.value, 10) || min)}
+        onFocus={selectOnFocus}
+        onChange={(e) => set(parseInt(cleanNumericInput(e.currentTarget), 10) || min)}
         className="h-9 w-12 border-x border-border bg-transparent text-center text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
       <button type="button" aria-label={`Increase ${label}`} onClick={() => set(value + 1)}
         className="h-9 w-9 grid place-items-center text-lg font-semibold text-muted-foreground hover:text-accent disabled:opacity-40"
@@ -87,8 +101,8 @@ function Stepper({
 }
 
 function DimField({
-  label, value, onChange, suffix = "ft", optional,
-}: { label: string; value: number; onChange: (n: number) => void; suffix?: string; optional?: boolean }) {
+  label, value, onChange, suffix = "ft", optional, max,
+}: { label: string; value: number; onChange: (n: number) => void; suffix?: string; optional?: boolean; max?: number }) {
   const id = useId();
   return (
     <div className="space-y-1.5">
@@ -96,8 +110,10 @@ function DimField({
         {label} {optional && <span className="opacity-60">(optional)</span>}
       </Label>
       <div className="relative">
-        <Input id={id} type="number" inputMode="decimal" min={0} value={Number.isFinite(value) ? value : ""}
-          onChange={(e) => onChange(parseFloat(e.target.value) || 0)} className="pr-9" />
+        <Input id={id} type="number" inputMode="decimal" min={0} max={max} value={Number.isFinite(value) ? value : ""}
+          onFocus={selectOnFocus}
+          onChange={(e) => { const n = parseFloat(cleanNumericInput(e.currentTarget)) || 0; onChange(max != null ? Math.min(n, max) : n); }}
+          className="pr-9" />
         <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">{suffix}</span>
       </div>
     </div>
@@ -917,6 +933,28 @@ export default function CabinCalculator() {
       return { ...c, windowPositions, windowQty: windowPositions.length };
     });
 
+  // Window quantity — the customer can set a number directly and we auto-assign placements:
+  // raising the count fills the next free positions (in the on-screen order), lowering it
+  // drops the most-recently-added ones. Quantity is capped at the number of positions
+  // available (one window per position). Toggling a position updates the count too — so the
+  // stepper and the placement chips always stay in sync.
+  const setWindowCount = (n: number) =>
+    setConfig((c) => {
+      const max = WINDOW_POSITIONS.length;
+      const target = Math.min(Math.max(Math.round(n) || 0, 0), max);
+      const kept = c.windowPositions.filter((id) => WINDOW_POSITIONS.some((p) => p.id === id));
+      let windowPositions = [...kept];
+      if (target > windowPositions.length) {
+        for (const p of WINDOW_POSITIONS) {
+          if (windowPositions.length >= target) break;
+          if (!windowPositions.includes(p.id)) windowPositions.push(p.id);
+        }
+      } else if (target < windowPositions.length) {
+        windowPositions = windowPositions.slice(0, target);
+      }
+      return { ...c, windowPositions, windowQty: windowPositions.length };
+    });
+
   // Rooms / partitions — an N-room layout auto-applies the Partition add-on with qty = N-1,
   // so its cost flows through the existing add-on pricing (no separate cost logic).
   const applyRooms = (c: CabinConfig, roomCount: number, roomLengths: number[], partitionDoor: boolean): CabinConfig => {
@@ -1552,7 +1590,8 @@ export default function CabinCalculator() {
                             <div className="flex items-center gap-1">
                               <span className="text-[11px] text-muted-foreground">at</span>
                               <input type="number" inputMode="numeric" min={0} aria-label={`Door ${i + 1} offset`} value={Number.isFinite(d.offset) ? d.offset : ""}
-                                onChange={(e) => setDoorOffset(i, parseFloat(e.target.value) || 0)}
+                                onFocus={selectOnFocus}
+                                onChange={(e) => setDoorOffset(i, parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
                                 className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
                               <span className="text-[11px] text-muted-foreground">ft from {d.side === "left" || d.side === "right" ? "top" : "left"}</span>
                             </div>
@@ -1600,17 +1639,20 @@ export default function CabinCalculator() {
                         </div>
                       </div>
                       <div className="grid gap-3 sm:grid-cols-[auto_auto_1fr] sm:items-end">
-                        <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={(n) => patch({ windowWidthFt: n })} />
-                        <DimField label="Window Height" value={config.windowHeightFt ?? 3} onChange={(n) => patch({ windowHeightFt: n })} />
+                        <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={(n) => patch({ windowWidthFt: n })} max={12} />
+                        <DimField label="Window Height" value={config.windowHeightFt ?? 3} onChange={(n) => patch({ windowHeightFt: n })} max={12} />
                         <SpecPills label="Window Track" hint="2.5-track slides smoother — +12% over 2-track (price scales with window size)."
                           options={WINDOW_TRACKS} value={config.windowTrackId ?? "2"} onSelect={(id) => patch({ windowTrackId: id })} />
                       </div>
                       <div>
-                        <div className="mb-1 flex items-center justify-between">
+                        <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
                           <Label className="text-sm font-semibold">Window Placement</Label>
-                          <span className="text-xs text-muted-foreground">{config.windowPositions.length} window{config.windowPositions.length === 1 ? "" : "s"}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-muted-foreground">Qty</span>
+                            <Stepper value={config.windowPositions.length} min={0} max={WINDOW_POSITIONS.length} label="Window quantity" onChange={setWindowCount} />
+                          </div>
                         </div>
-                        <p className="mb-2 text-[11px] text-muted-foreground">Tap where you want windows — the 2D plan updates live.</p>
+                        <p className="mb-2 text-[11px] text-muted-foreground">Set a quantity above (positions fill in automatically) or tap exact positions below — the 2D plan updates live.</p>
                         <div className="grid gap-4 sm:grid-cols-2">
                           <div className="flex flex-wrap gap-2 self-start">
                             {WINDOW_POSITIONS.map((p) => {

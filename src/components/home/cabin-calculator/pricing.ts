@@ -264,8 +264,8 @@ export const DOOR_TYPES: Priced[] = [
 // standard 3×3 ft (9 sq.ft), 2-track window; larger sizes and 2.5-track scale up from here.
 export const WINDOW_TYPES: Priced[] = [
   { id: "upvc",     label: "uPVC Window",        price: 5500 },
-  { id: "sliding",  label: "Sliding Aluminium",  price: 7500 },
-  { id: "openable", label: "Openable Aluminium", price: 8200 },
+  { id: "sliding",  label: "Sliding Aluminium",  price: 9000 },
+  { id: "openable", label: "Openable UPVC Window", price: 8200 },
   { id: "fixed",    label: "Fixed Glass",        price: 3500 },
 ];
 

@@ -11,6 +11,16 @@
 
 create extension if not exists pgcrypto;  -- for gen_random_uuid()
 
+-- Ensure the shared updated_at trigger function exists, so this migration also works
+-- when run standalone in the SQL editor (not just as part of a full `db push`).
+create or replace function public.update_updated_at_column()
+returns trigger language plpgsql as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
 create table if not exists public.product_reviews (
   id                uuid primary key default gen_random_uuid(),
   product_id        uuid,                                   -- optional; reviews key off product_slug
@@ -49,6 +59,12 @@ create policy "Anyone can submit reviews" on public.product_reviews
 drop policy if exists "Admins manage reviews" on public.product_reviews;
 create policy "Admins manage reviews" on public.product_reviews
   for all to authenticated using (public.is_admin()) with check (public.is_admin());
+
+-- Table-level privileges: anon/authenticated submit reviews (RLS still gates to
+-- status='pending') and read the public columns. Explicit so this works even if the
+-- project's default privileges weren't configured. PII columns are re-hidden below.
+grant select, insert on public.product_reviews to anon, authenticated;
+revoke select (reviewer_email, reviewer_phone) on public.product_reviews from anon, authenticated;
 
 create index if not exists idx_reviews_slug   on public.product_reviews(product_slug);
 create index if not exists idx_reviews_status on public.product_reviews(status);
