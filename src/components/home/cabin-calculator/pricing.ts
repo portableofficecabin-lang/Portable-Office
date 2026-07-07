@@ -311,12 +311,14 @@ export const sizeLabel = (s: OpeningSize): string => `${formatFeet(s.widthFt)}×
  *  each selected position is one window there, and window count mirrors the selection. */
 export interface WindowPosition { id: string; label: string; }
 export const WINDOW_POSITIONS: WindowPosition[] = [
-  { id: "top-left",   label: "Left Corner" },
-  { id: "top-center", label: "Center" },
-  { id: "top-right",  label: "Right Corner" },
-  { id: "bottom",     label: "Rear (Down)" },
-  { id: "left",       label: "Left Side" },
-  { id: "right",      label: "Right Side" },
+  { id: "top-left",      label: "Left Corner" },
+  { id: "top-center",    label: "Center" },
+  { id: "top-right",     label: "Right Corner" },
+  { id: "bottom-left",   label: "Rear Left" },
+  { id: "bottom-center", label: "Rear Center" },
+  { id: "bottom-right",  label: "Rear Right" },
+  { id: "left",          label: "Left Side" },
+  { id: "right",         label: "Right Side" },
 ];
 export const windowPositionLabel = (id: string): string =>
   WINDOW_POSITIONS.find((p) => p.id === id)?.label ?? id;

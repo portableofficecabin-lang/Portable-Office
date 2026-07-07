@@ -30,6 +30,7 @@ import {
   type CabinConfig, type Material, type Estimate, type InsulationOption,
 } from "./pricing";
 import { LayoutDesigner, summariseLayout } from "./LayoutDesigner";
+import { ModulePlan } from "./ModulePlan";
 import { SocketSwitchDiagram } from "./ElectricalDiagram";
 
 // Steps a storage container customer sees — everything else (structure, interior,
@@ -215,12 +216,15 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
   const win = "hsl(var(--accent) / 0.6)";
   // Centre point + orientation for each window position along the wall edges.
   const marks: Record<string, { cx: number; cy: number; horizontal: boolean }> = {
-    "top-left":   { cx: pad + w * 0.20, cy: pad,             horizontal: true },
-    "top-center": { cx: pad + w * 0.50, cy: pad,             horizontal: true },
-    "top-right":  { cx: pad + w * 0.80, cy: pad,             horizontal: true },
-    "bottom":     { cx: pad + w * 0.70, cy: pad + h,         horizontal: true },
-    "left":       { cx: pad,            cy: pad + h * 0.5,   horizontal: false },
-    "right":      { cx: pad + w,        cy: pad + h * 0.5,   horizontal: false },
+    "top-left":      { cx: pad + w * 0.20, cy: pad,           horizontal: true },
+    "top-center":    { cx: pad + w * 0.50, cy: pad,           horizontal: true },
+    "top-right":     { cx: pad + w * 0.80, cy: pad,           horizontal: true },
+    "bottom-left":   { cx: pad + w * 0.20, cy: pad + h,       horizontal: true },
+    "bottom-center": { cx: pad + w * 0.50, cy: pad + h,       horizontal: true },
+    "bottom-right":  { cx: pad + w * 0.80, cy: pad + h,       horizontal: true },
+    "bottom":        { cx: pad + w * 0.50, cy: pad + h,       horizontal: true }, // legacy alias
+    "left":          { cx: pad,            cy: pad + h * 0.5, horizontal: false },
+    "right":         { cx: pad + w,        cy: pad + h * 0.5, horizontal: false },
   };
   // Corrugated (ribbed-sheet) wall outline — a shallow sawtooth along each wall.
   const corr = (() => {
@@ -369,12 +373,15 @@ type WallKey = "front" | "rear" | "left" | "right";
 const DOOR_WALL: Record<string, WallKey> = { bottom: "front", top: "rear", left: "left", right: "right" };
 // Window position → wall + how far along that wall (0..1).
 const WINDOW_WALL: Record<string, { wall: WallKey; along: number }> = {
-  "top-left":   { wall: "rear",  along: 0.20 },
-  "top-center": { wall: "rear",  along: 0.50 },
-  "top-right":  { wall: "rear",  along: 0.80 },
-  "bottom":     { wall: "front", along: 0.70 },
-  "left":       { wall: "left",  along: 0.50 },
-  "right":      { wall: "right", along: 0.50 },
+  "top-left":      { wall: "rear",  along: 0.20 },
+  "top-center":    { wall: "rear",  along: 0.50 },
+  "top-right":     { wall: "rear",  along: 0.80 },
+  "bottom-left":   { wall: "front", along: 0.20 },
+  "bottom-center": { wall: "front", along: 0.50 },
+  "bottom-right":  { wall: "front", along: 0.80 },
+  "bottom":        { wall: "front", along: 0.50 }, // legacy alias
+  "left":          { wall: "left",  along: 0.50 },
+  "right":         { wall: "right", along: 0.50 },
 };
 
 function Elevations({
@@ -533,19 +540,23 @@ function Elevations({
 /** Preview with a Floor Plan / 4 Elevations toggle. */
 function CabinPreview({
   length, width, height, doorPlacements, windowPositions, windowWidthFt, windowHeightFt,
-  containerDoor, roomLengths, partitionDoor, puf, roof, caption,
+  containerDoor, roomLengths, partitionDoor, puf, roof, caption, config,
 }: {
   length: number; width: number; height: number;
   doorPlacements?: { side: string; offset: number }[]; windowPositions: string[];
   windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean;
   roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
+  config?: CabinConfig;
 }) {
-  const [view, setView] = useState<"plan" | "elevation">("plan");
+  // "module" = the full architectural 2D plan (needs the whole config); default when available.
+  const [view, setView] = useState<"module" | "plan" | "elevation">(config ? "module" : "plan");
+  const tabs = ([["module", "2D Plan"], ["plan", "Floor Plan"], ["elevation", "4 Elevations"]] as const)
+    .filter(([v]) => v !== "module" || config);
   return (
     <div>
       <div className="mb-2 flex items-center justify-between gap-2">
         <div className="inline-flex rounded-lg border border-border p-0.5">
-          {([["plan", "Floor Plan"], ["elevation", "4 Elevations"]] as const).map(([v, lbl]) => (
+          {tabs.map(([v, lbl]) => (
             <button key={v} type="button" aria-pressed={view === v} onClick={() => setView(v)}
               className={cn("rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors",
                 view === v ? "bg-accent text-white" : "text-muted-foreground hover:text-foreground")}>
@@ -555,14 +566,16 @@ function CabinPreview({
         </div>
         {caption && <span className="text-[10px] text-muted-foreground">{caption}</span>}
       </div>
-      {view === "plan" ? (
-        <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPositions={windowPositions}
-          windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
-          containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor} puf={puf} />
-      ) : (
+      {view === "module" && config ? (
+        <ModulePlan config={config} />
+      ) : view === "elevation" ? (
         <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
           windowPositions={windowPositions} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
           containerDoor={containerDoor} roof={roof} />
+      ) : (
+        <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPositions={windowPositions}
+          windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
+          containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor} puf={puf} />
       )}
     </div>
   );
@@ -1392,7 +1405,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} />
+                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -1587,6 +1600,19 @@ export default function CabinCalculator() {
                                   className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", d.side === id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
                               ))}
                             </div>
+                            {/* Quick corner / centre presets — set the distance-from-corner along the
+                                chosen wall (length for Upper/Down, width for Left/Right). */}
+                            <div className="flex gap-1">
+                              {([["left", "Left Corner"], ["center", "Center"], ["right", "Right Corner"]] as const).map(([pos, lbl]) => {
+                                const span = d.side === "left" || d.side === "right" ? config.width : config.length;
+                                const target = pos === "left" ? 1 : pos === "right" ? Math.max(1, Math.round(span - 1)) : Math.max(1, Math.round(span / 2));
+                                const active = Math.round(d.offset) === target;
+                                return (
+                                  <button key={pos} type="button" onClick={() => setDoorOffset(i, target)} aria-pressed={active}
+                                    className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
+                                );
+                              })}
+                            </div>
                             <div className="flex items-center gap-1">
                               <span className="text-[11px] text-muted-foreground">at</span>
                               <input type="number" inputMode="numeric" min={0} aria-label={`Door ${i + 1} offset`} value={Number.isFinite(d.offset) ? d.offset : ""}
@@ -1667,7 +1693,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} caption="Door + windows live" />
+                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} caption="Door + windows live" />
                           </div>
                         </div>
                       </div>

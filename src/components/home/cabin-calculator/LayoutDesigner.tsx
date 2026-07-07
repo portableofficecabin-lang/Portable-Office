@@ -102,6 +102,7 @@ function doorDefault(side: string | undefined, offset: number | undefined, L: nu
 }
 const WINDOW_DEFAULT: Record<string, Pos> = {
   "top-left": { x: 0.2, y: 0.05 }, "top-center": { x: 0.5, y: 0.05 }, "top-right": { x: 0.8, y: 0.05 },
+  "bottom-left": { x: 0.2, y: 0.95 }, "bottom-center": { x: 0.5, y: 0.95 }, "bottom-right": { x: 0.8, y: 0.95 },
   "bottom": { x: 0.7, y: 0.95 }, "left": { x: 0.05, y: 0.5 }, "right": { x: 0.95, y: 0.5 },
 };
 // Furniture: the conference table sits in the centre; desks/tables go against a wall by
