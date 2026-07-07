@@ -22,7 +22,7 @@ import {
   DOOR_TYPES, WINDOW_TYPES, WINDOW_TRACKS, windowUnitPrice, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
-  isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial,
+  isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel,
   ROOFS, findRoof, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, AUTO_PLUG_POSITIONS,
   FURNITURE_POSITIONS, PLUG_POINT_POSITIONS, MOBILITY_TYPES,
   furniturePositionLabel, plugPointPositionLabel, mobilityTypeLabel,
@@ -125,6 +125,9 @@ function MaterialChip({
           {badge}
         </span>
       )}
+      {item.thickness && (
+        <span className="text-[10px] font-medium text-muted-foreground/80">{item.thickness} board</span>
+      )}
     </button>
   );
 }
@@ -145,10 +148,49 @@ function PricedChip({
 }
 
 /* ---------------------------------------------------------------- */
+/* Main electrical board (DB / MCB) — always mounted beside the door */
+/* ---------------------------------------------------------------- */
+// Given the main (first) door, return the svg box for the main electrical board,
+// mounted on the interior wall right beside the entry door. null if no usable door.
+function mainBoardBox(
+  door: { side: string; offset: number } | undefined,
+  L: number, W: number, w: number, h: number, pad: number,
+): { x: number; y: number; bw: number; bh: number } | null {
+  if (!door) return null;
+  const cl = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+  const horiz = door.side === "top" || door.side === "bottom";
+  const along = horiz ? cl(door.offset, 0, L) / L : cl(door.offset, 0, W) / W;
+  const cx = door.side === "left" ? pad : door.side === "right" ? pad + w : pad + w * along;
+  const cy = door.side === "top" ? pad : door.side === "bottom" ? pad + h : pad + h * along;
+  const bw = 12, bh = 7, gap = 16, inset = 8;
+  if (door.side === "top")   return { x: cl(cx + gap, pad + 2, pad + w - bw - 2), y: pad + inset, bw, bh };
+  if (door.side === "left")  return { x: pad + inset, y: cl(cy + gap, pad + 2, pad + h - bh - 2), bw, bh };
+  if (door.side === "right") return { x: pad + w - inset - bw, y: cl(cy + gap, pad + 2, pad + h - bh - 2), bw, bh };
+  return { x: cl(cx + gap, pad + 2, pad + w - bw - 2), y: pad + h - inset - bh, bw, bh }; // bottom / front
+}
+// Small "MB" plate + tooltip, drawn beside the door in the floor-plan drawings.
+function MainBoardMark({ box }: { box: { x: number; y: number; bw: number; bh: number } | null }) {
+  if (!box) return null;
+  const { x, y, bw, bh } = box;
+  return (
+    <g>
+      <title>Main Board — main electrical distribution / MCB board, mounted beside the entry door</title>
+      <rect x={x} y={y} width={bw} height={bh} rx={1} fill="hsl(var(--accent) / 0.9)" stroke="hsl(var(--background))" strokeWidth={0.7} />
+      <text x={x + bw / 2} y={y + bh / 2 + 2.4} textAnchor="middle" fontSize={4.8} fontWeight={800}
+        fill="hsl(var(--background))" style={{ pointerEvents: "none" }}>MB</text>
+    </g>
+  );
+}
+
+/* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorPlacements, windowPositions, containerDoor, roomLengths, partitionDoor, puf }: { length: number; width: number; doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean }) {
+function FloorPreview({ length, width, doorPlacements, windowPositions, windowWidthFt, windowHeightFt, containerDoor, roomLengths, partitionDoor, puf }: { length: number; width: number; doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
+  // The customer's chosen window size (falls back to the 3×3 default).
+  const winW = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
+  const winH = Math.min(Math.max(windowHeightFt ?? WINDOW_SIZE.heightFt, 1), 12);
+  const winLabel = sizeLabel({ widthFt: winW, heightFt: winH });
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
   const w = L * scale, h = W * scale;
@@ -238,18 +280,21 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, containe
           );
         })
       )}
+      {/* Main electrical board (DB/MCB) — interior wall, beside the main door */}
+      <MainBoardMark box={mainBoardBox(containerDoor ? { side: "right", offset: W / 2 } : doorPlacements?.[0], L, W, w, h, pad)} />
       {/* Windows at their chosen positions — drawn to scale and labelled with size */}
       {windowPositions.map((id) => {
         const m = marks[id];
         if (!m) return null;
         const edge = m.horizontal ? (m.cy <= pad + 1 ? "top" : "bottom") : (m.cx <= pad + 1 ? "left" : "right");
-        const len = markLen(WINDOW_SIZE.widthFt, m.horizontal ? w : h);
+        // Window is drawn along the wall to its real WIDTH (top-down view).
+        const len = markLen(winW, m.horizontal ? w : h);
         return (
           <g key={id}>
             {m.horizontal
               ? <rect x={m.cx - len / 2} y={m.cy - 3} width={len} height={6} rx={1} fill={win} />
               : <rect x={m.cx - 3} y={m.cy - len / 2} width={6} height={len} rx={1} fill={win} />}
-            {sizeText(edge, m.cx, m.cy, sizeLabel(WINDOW_SIZE), `wl${id}`)}
+            {sizeText(edge, m.cx, m.cy, winLabel, `wl${id}`)}
           </g>
         );
       })}
@@ -290,6 +335,7 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, containe
       <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-0.5 text-[9px] text-muted-foreground">
         <span className="inline-flex items-center gap-1"><span className="inline-block h-2 w-3 rounded-[1px] border border-accent bg-accent/15" /> {puf ? "PUF panel wall" : "Outer wall (sheet)"}</span>
         <span className="inline-flex items-center gap-1"><span className="inline-block h-0 w-3 border-t border-muted-foreground/70" /> Inner plain wall</span>
+        <span className="inline-flex items-center gap-1"><span className="inline-block h-2 w-2 rounded-[1px] bg-accent" /> Main Board (MB) — beside door</span>
       </div>
     </div>
   );
@@ -316,12 +362,16 @@ const WINDOW_WALL: Record<string, { wall: WallKey; along: number }> = {
 };
 
 function Elevations({
-  length, width, height, doorPlacements, windowPositions, containerDoor, roof,
+  length, width, height, doorPlacements, windowPositions, windowWidthFt, windowHeightFt, containerDoor, roof,
 }: {
   length: number; width: number; height: number;
-  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean; roof?: string;
+  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[];
+  windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roof?: string;
 }) {
   const L = Math.max(1, length), W = Math.max(1, width), H = Math.max(6, height);
+  // The customer's chosen window size (falls back to the 3×3 default).
+  const winWFt = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
+  const winHFt = Math.min(Math.max(windowHeightFt ?? WINDOW_SIZE.heightFt, 1), 12);
 
   // Gather openings per wall (fractions along each wall's own width).
   const walls: Record<WallKey, { widthFt: number; doors: number[]; windows: number[] }> = {
@@ -382,15 +432,21 @@ function Elevations({
       ribs.push(<line key={`rib${x}`} x1={x} y1={wy + 2} x2={x} y2={ground - 2} stroke={acc} strokeOpacity={0.12} strokeWidth={0.8} />);
     }
 
-    const winSize = Math.max(7, Math.min(wallH * 0.24, wallW * 0.14, 18));
-    const winY = wy + wallH * 0.18;
+    // Window drawn to its real size (width × height ft) via the shared px-per-ft
+    // `scale`, sat on a ~3 ft sill and kept inside the wall.
+    const winWpx = Math.max(7, Math.min(winWFt * scale, wallW - 6));
+    const winHpx = Math.max(7, Math.min(winHFt * scale, wallH - 6));
+    const sillPx = Math.min(3 * scale, Math.max(2, wallH - winHpx - 4));
+    const winY = ground - sillPx - winHpx;
     const windows = wdat.windows.map((frac, i) => {
-      const cx = wx + wallW * frac, x = cx - winSize / 2;
+      const cx = wx + wallW * frac;
+      const x = Math.min(Math.max(cx - winWpx / 2, wx + 3), wx + wallW - winWpx - 3);
+      const yc = winY + winHpx / 2;
       return (
         <g key={`w${i}`}>
-          <rect x={x} y={winY} width={winSize} height={winSize} rx={1} fill={glass} stroke={acc} strokeWidth={1} />
-          <line x1={cx} y1={winY} x2={cx} y2={winY + winSize} stroke={acc} strokeWidth={0.7} />
-          <line x1={x} y1={winY + winSize / 2} x2={x + winSize} y2={winY + winSize / 2} stroke={acc} strokeWidth={0.7} />
+          <rect x={x} y={winY} width={winWpx} height={winHpx} rx={1} fill={glass} stroke={acc} strokeWidth={1} />
+          <line x1={x + winWpx / 2} y1={winY} x2={x + winWpx / 2} y2={winY + winHpx} stroke={acc} strokeWidth={0.7} />
+          <line x1={x} y1={yc} x2={x + winWpx} y2={yc} stroke={acc} strokeWidth={0.7} />
         </g>
       );
     });
@@ -408,7 +464,9 @@ function Elevations({
         </g>
       );
     } else {
-      const dW = Math.max(9, Math.min(wallW * 0.14, 22)), dH = wallH * 0.62;
+      // Door to its real standard height (DOOR_SIZE, 6 ft) via the shared scale.
+      const dW = Math.max(9, Math.min(wallW * 0.14, 22));
+      const dH = Math.min(DOOR_SIZE.heightFt * scale, wallH - 3);
       doors = wdat.doors.map((frac, i) => {
         const cx = wx + wallW * frac, x = cx - dW / 2, y = ground - dH;
         return (
@@ -458,10 +516,12 @@ function Elevations({
 
 /** Preview with a Floor Plan / 4 Elevations toggle. */
 function CabinPreview({
-  length, width, height, doorPlacements, windowPositions, containerDoor, roomLengths, partitionDoor, puf, roof, caption,
+  length, width, height, doorPlacements, windowPositions, windowWidthFt, windowHeightFt,
+  containerDoor, roomLengths, partitionDoor, puf, roof, caption,
 }: {
   length: number; width: number; height: number;
-  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; containerDoor?: boolean;
+  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[];
+  windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean;
   roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
 }) {
   const [view, setView] = useState<"plan" | "elevation">("plan");
@@ -481,10 +541,12 @@ function CabinPreview({
       </div>
       {view === "plan" ? (
         <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPositions={windowPositions}
+          windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
           containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor} puf={puf} />
       ) : (
         <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
-          windowPositions={windowPositions} containerDoor={containerDoor} roof={roof} />
+          windowPositions={windowPositions} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
+          containerDoor={containerDoor} roof={roof} />
       )}
     </div>
   );
@@ -512,8 +574,9 @@ function furniturePlacement(id: string, centre: boolean): { fx: number; fy: numb
     default:           return centre ? { fx: 0.5, fy: 0.5 } : { fx: 0.5, fy: 0.85 };
   }
 }
-function FurniturePlan({ length, width, roomLengths, items, furniturePosition }: {
+function FurniturePlan({ length, width, roomLengths, items, furniturePosition, doorPlacements }: {
   length: number; width: number; roomLengths?: number[]; items: FurnitureItem[]; furniturePosition?: string;
+  doorPlacements?: { side: string; offset: number }[];
 }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   const scale = Math.min(300 / L, 150 / W);
@@ -565,8 +628,10 @@ function FurniturePlan({ length, width, roomLengths, items, furniturePosition }:
             </g>
           );
         })}
+        {/* Main electrical board (DB/MCB) — beside the main door */}
+        <MainBoardMark box={mainBoardBox(doorPlacements?.[0], L, W, w, h, pad)} />
       </svg>
-      <p className="mt-1 text-center text-[10px] text-muted-foreground">Furniture placement (indicative)</p>
+      <p className="mt-1 text-center text-[10px] text-muted-foreground">Furniture placement (indicative) · MB = Main Board</p>
     </div>
   );
 }
@@ -750,14 +815,19 @@ export default function CabinCalculator() {
     // The "Puf Panel Cabin" product IS a PUF panel build — force its structure (and the
     // resulting "no wall lining" default) rather than carrying the previous product's.
     const toPuf = productId === "puf-panel-cabin";
+    // Toilet cabins default to a washable ACP wall + ceiling lining — apply that fresh
+    // default rather than carrying the previous product's interior.
+    const toToilet = isToiletCabin(productId);
     setConfig((c) => ({
       ...fresh,
       // keep the user's structure / interior / add-on / quantity choices if they had any
       // (size resets to the new product's default, but unit count is orthogonal to product)
       quantity: c.quantity,
-      structureId: toPuf ? fresh.structureId : c.structureId,
-      wallId: toPuf ? fresh.wallId : c.wallId,
-      ceilingId: c.ceilingId, flooringId: c.flooringId,
+      // GI (galvanised) is recommended for wet toilet cabins (rustproof), so a switch
+      // TO a toilet cabin adopts its GI default rather than carrying the old structure.
+      structureId: toPuf || toToilet ? fresh.structureId : c.structureId,
+      wallId: toPuf || toToilet ? fresh.wallId : c.wallId,
+      ceilingId: toToilet ? fresh.ceilingId : c.ceilingId, flooringId: c.flooringId,
       doorTypeId: c.doorTypeId, doorQty: fresh.doorQty, doorPlacements: fresh.doorPlacements,
       windowTypeId: productDefinesOpenings ? fresh.windowTypeId : c.windowTypeId,
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
@@ -976,9 +1046,9 @@ export default function CabinCalculator() {
         configRows = [
           ["Structure", STRUCTURES.find((s) => s.id === config.structureId)?.label ?? ""],
           ["Roof", `${findRoof(config.roofId).label}${config.roofId === "flat" ? " (+6%)" : ""}`],
-          ["Internal Wall", findWallMaterial(config.wallId)?.label ?? ""],
-          ["Ceiling", CEILING_MATERIALS.find((m) => m.id === config.ceilingId)?.label ?? ""],
-          ["Flooring", FLOORING_MATERIALS.find((m) => m.id === config.flooringId)?.label ?? ""],
+          ["Internal Wall", materialLabel(findWallMaterial(config.wallId))],
+          ["Ceiling", materialLabel(CEILING_MATERIALS.find((m) => m.id === config.ceilingId))],
+          ["Flooring", materialLabel(FLOORING_MATERIALS.find((m) => m.id === config.flooringId))],
           ["Insulation", isPufPanel(config.structureId) ? "Included (PUF panel — inherently insulated)" : (() => { const i = INSULATION_OPTIONS.find((o) => o.id === config.insulationId); return i && i.id !== "none" ? `${i.label} (${i.thickness})` : "None"; })()],
           ["Doors", `${config.doorQty} × ${DOOR_TYPES.find((d) => d.id === config.doorTypeId)?.label ?? ""}`],
         ];
@@ -1284,7 +1354,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} />
+                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">Area</p>
@@ -1403,13 +1473,23 @@ export default function CabinCalculator() {
                       <button key={s.id} type="button" onClick={() => selectStructure(s.id)} aria-pressed={active}
                         className={cn("flex flex-col items-start gap-1 rounded-xl border p-4 text-left transition-all",
                           active ? "border-accent bg-accent/10 ring-1 ring-accent shadow-sm" : "border-border bg-background hover:border-accent/50")}>
-                        <span className="text-sm font-bold text-foreground">{s.label}</span>
+                        <span className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-sm font-bold text-foreground">{s.label}</span>
+                          {s.id === "gi" && isToiletCabin(config.productId) && (
+                            <span className="rounded-full bg-emerald-500/15 px-1.5 py-[1px] text-[9px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">Recommended</span>
+                          )}
+                        </span>
                         <span className="text-[11px] leading-snug text-muted-foreground">{s.note}</span>
                         <span className="mt-1 text-xs font-semibold text-accent">{rate > 0 ? formatINR(rate) : "Contact us"}</span>
                       </button>
                     );
                   })}
                 </div>
+                {isToiletCabin(config.productId) && (
+                  <p className="mt-3 rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5 text-[11px] leading-snug text-muted-foreground">
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">Recommended: GI (Galvanised) Cabin.</span> Toilet cabins are wet, humid spaces — galvanised steel resists rust and lasts far longer here than plain MS.
+                  </p>
+                )}
               </StepShell>
             )}
 
@@ -1545,7 +1625,7 @@ export default function CabinCalculator() {
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} caption="Door + windows live" />
+                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} caption="Door + windows live" />
                           </div>
                         </div>
                       </div>
@@ -1625,11 +1705,14 @@ export default function CabinCalculator() {
                 ) : (
                   <div className="space-y-5">
                     <div className="grid gap-2.5 sm:grid-cols-2">
-                      {ADDONS.filter((a) => a.id !== "partition" && a.id !== "partition-door").map((a) => {
+                      {ADDONS.filter((a) =>
+                        a.id !== "partition" && a.id !== "partition-door" &&
+                        (!a.onlyFor || a.onlyFor.includes(config.productId))
+                      ).map((a) => {
                         const selected = !!config.addons[a.id];
                         return (
                           <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
-                            label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}`}>
+                            label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}${a.hint ? ` · ${a.hint}` : ""}`}>
                             {selected && a.hasQty && (
                               <Stepper value={config.addons[a.id]} min={1} max={200} label={`${a.label} quantity`} onChange={(n) => setAddonQty(a.id, n)} />
                             )}
@@ -1689,6 +1772,7 @@ export default function CabinCalculator() {
                               length={config.length} width={config.width}
                               roomLengths={config.roomLengths}
                               furniturePosition={config.furniturePosition}
+                              doorPlacements={config.doorPlacements}
                               items={selectedFurniture.flatMap((a) => {
                                 const total = config.addons[a.id];
                                 const counts = furnitureRoomCounts(config, a.id, total, config.roomCount);

@@ -145,15 +145,23 @@ export interface Material {
   label: string;
   delta: number;
   standard?: boolean;
+  /** Board thickness for display / factory spec (e.g. "8 mm"). Only set on the
+   *  board finishes (Particle Board / MDF / HDHMR). */
+  thickness?: string;
 }
 
-// Internal Wall — MDF is the standard finish (~₹40/sqft, already in the base rate);
-// every other option's delta is ₹/sqft above that standard.
+/** Material label with its board thickness appended when present, e.g. "MDF · 8 mm". */
+export const materialLabel = (m?: Material | null): string =>
+  m ? `${m.label}${m.thickness ? ` · ${m.thickness}` : ""}` : "";
+
+// Internal Wall — MDF is the standard finish (₹50/sqft, already in the base rate);
+// every other option's delta is ₹/sqft above (or below) that standard. Particle
+// Board is ₹40/sqft → ₹10 below the MDF standard. Boards are 8 mm thick.
 export const WALL_MATERIALS: Material[] = [
-  { id: "particle", label: "Particle Board", delta: -2 }, // cheaper than the MDF standard → ₹2/sqft saving
+  { id: "particle", label: "Particle Board", delta: -10, thickness: "8 mm" }, // ₹40/sqft — ₹10 below the ₹50 MDF standard
   { id: "pvc",      label: "PVC",            delta: 68 },
-  { id: "mdf",      label: "MDF",            delta: 0, standard: true },
-  { id: "hdhmr",    label: "HDHMR",          delta: 52 },
+  { id: "mdf",      label: "MDF",            delta: 0, standard: true, thickness: "8 mm" },
+  { id: "hdhmr",    label: "HDHMR",          delta: 52, thickness: "8 mm" },
   { id: "gypsum",   label: "Gypsum",         delta: 90 },
   { id: "wpc",      label: "WPC",            delta: 150 },
   { id: "spc",      label: "SPC",            delta: 460 },
@@ -165,8 +173,8 @@ export const WALL_MATERIALS: Material[] = [
  *  is BUNDLED into the base price (so the WALL_MATERIALS deltas above are measured over
  *  it). A PUF panel cabin bundles nothing — the panel itself is the finished wall — so if
  *  the customer opts to add an interior lining, it is charged at this absolute base rate
- *  PLUS the material's delta (e.g. MDF ≈ ₹40/sqft, PVC ≈ ₹108/sqft). */
-export const WALL_LINING_BASE_RATE = 40;
+ *  PLUS the material's delta (e.g. MDF ≈ ₹50/sqft, Particle ≈ ₹40/sqft, PVC ≈ ₹118/sqft). */
+export const WALL_LINING_BASE_RATE = 50;
 
 /** Wall selection used only for PUF panel cabins — the recommended default: the bare PUF
  *  panel is left as the finished interior wall (no extra lining, ₹0). */
@@ -185,16 +193,17 @@ export const pufWallOptions = (): Material[] => [
   ...WALL_MATERIALS.map((m) => ({ ...m, delta: WALL_LINING_BASE_RATE + m.delta, standard: false })),
 ];
 
-// Ceiling — MDF is the standard finish (~₹40/sqft, already in the base rate);
-// every other option's delta is ₹/sqft above (or below) that standard.
+// Ceiling — MDF is the standard finish (₹50/sqft, already in the base rate);
+// every other option's delta is ₹/sqft above (or below) that standard. Boards are 8 mm.
 export const CEILING_MATERIALS: Material[] = [
   { id: "pvc",   label: "PVC",      delta: 68 },
-  { id: "mdf",   label: "MDF",      delta: 0, standard: true },
-  { id: "hdhmr", label: "HDHMR",    delta: 52 },
+  { id: "mdf",   label: "MDF",      delta: 0, standard: true, thickness: "8 mm" },
+  { id: "hdhmr", label: "HDHMR",    delta: 52, thickness: "8 mm" },
   { id: "gypsum", label: "Gypsum",  delta: 90 },
   { id: "wpc",   label: "WPC",      delta: 150 },
   { id: "spc",   label: "SPC",      delta: 460 },
   { id: "uv",    label: "UV Sheet", delta: 395 },
+  { id: "acp",   label: "ACP",      delta: 240 }, // washable — the default ceiling for toilet cabins
 ];
 
 // Flooring — Vinyl is the standard finish (~₹38/sqft, already in the base rate);
@@ -287,11 +296,12 @@ export function formatFeet(ft: number): string {
 }
 
 /** Standard opening sizes (feet, Width × Height) shown to scale on the 2D plan and
- *  elevations. Door 3′0″ × 7′0″, Window 4′0″ × 4′0″. A storage container's end
- *  double-door opening is the ISO standard 7′8″ × 7′6″ (2.34 m × 2.29 m). */
+ *  elevations. Door 3′0″ × 6′0″ (standard cabin door height). The window is drawn
+ *  from the customer's chosen Window Width × Height (WINDOW_SIZE is only the default).
+ *  A storage container's end double-door opening is the ISO standard 7′8″ × 7′6″. */
 export interface OpeningSize { widthFt: number; heightFt: number; }
-export const DOOR_SIZE: OpeningSize = { widthFt: 3, heightFt: 7 };
-export const WINDOW_SIZE: OpeningSize = { widthFt: 3, heightFt: 3 }; // standard 3×3 ft window
+export const DOOR_SIZE: OpeningSize = { widthFt: 3, heightFt: 6 };
+export const WINDOW_SIZE: OpeningSize = { widthFt: 3, heightFt: 3 }; // default 3×3 ft window
 // ISO 668 standard 20ft/40ft container door opening: 7′8″ wide × 7′6″ high.
 export const CONTAINER_DOOR_SIZE: OpeningSize = { widthFt: 7 + 8 / 12, heightFt: 7.5 };
 /** Compact dimension label, e.g. "3′×7′" or "7′8″×7′6″". */
@@ -446,6 +456,11 @@ export interface AddonItem {
   label: string;
   price: number;
   hasQty?: boolean;
+  /** Restrict this add-on to specific product ids. When set, the add-on only shows
+   *  (and is only ever charged) for those products. Omitted = available to all. */
+  onlyFor?: string[];
+  /** Optional helper line under the add-on card. */
+  hint?: string;
 }
 
 export const ADDONS: AddonItem[] = [
@@ -459,7 +474,13 @@ export const ADDONS: AddonItem[] = [
   { id: "manager",     label: "Manager Table",    price: 12000, hasQty: true },
   { id: "cupboard",    label: "Cupboard",         price: 8500,  hasQty: true },
   { id: "conference",  label: "Conference Table", price: 22000 },
+  // Basic office table — plain top vs one with a drawer box.
+  { id: "table",        label: "Table (Without Drawer)",  price: 2500, hasQty: true },
+  { id: "table-drawer", label: "Table (With Drawer Box)", price: 6000, hasQty: true, hint: "Table with a lockable drawer box" },
   { id: "chairs",      label: "Office Chairs",    price: 3500,  hasQty: true },
+  // Security-cabin only: an external stand/bracket fitted outside each window.
+  { id: "window-stand", label: "Exterior Window Stand", price: 4500, hasQty: true,
+    onlyFor: ["security-cabin"], hint: "One per window — fitted outside" },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -589,6 +610,9 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
   // The "Puf Panel Cabin" product defaults to the PUF panel structure (its walls ARE PUF
   // panels), which in turn defaults the interior wall to "Not Required".
   const puf = product.id === "puf-panel-cabin";
+  // Toilet cabins default to a fully washable ACP (Aluminium Composite Panel) lining on
+  // the walls and ceiling — the standard finish for wet areas.
+  const toilet = isToiletCabin(product.id);
   const electrical: Record<string, number> = {};
   // Storage containers are priced purely by grade — no pre-selected electricals.
   ELECTRICAL_ITEMS.forEach((e) => {
@@ -600,12 +624,12 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     width: product.def.width,
     height: product.def.height,
     quantity: 1,
-    structureId: puf ? "puf" : STRUCTURES[0].id,
+    structureId: puf ? "puf" : toilet ? "gi" : STRUCTURES[0].id,
     // Sloped 2-side roof is the standard default; flat is +6%. Storage containers are
     // ISO shipping containers → ALWAYS flat-roofed (no sloped option, no surcharge).
     roofId: container ? "flat" : "sloped",
-    wallId: puf ? WALL_NONE.id : WALL_MATERIALS.find((m) => m.standard)!.id,
-    ceilingId: CEILING_MATERIALS.find((m) => m.standard)!.id,
+    wallId: puf ? WALL_NONE.id : toilet ? "acp" : WALL_MATERIALS.find((m) => m.standard)!.id,
+    ceilingId: toilet ? "acp" : CEILING_MATERIALS.find((m) => m.standard)!.id,
     flooringId: FLOORING_MATERIALS.find((m) => m.standard)!.id,
     insulationId: "none",
     doorTypeId: DOOR_TYPES[0].id, // Steel Door (1 included in base)
@@ -697,9 +721,9 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   const floorAmt = round(flooring.delta * area);
   const interior = wallAmt + ceilAmt + floorAmt;
   const interiorLines: LineDelta[] = [
-    { label: "Internal Wall", detail: puf && cfg.wallId !== WALL_NONE.id ? `${wall.label} (add-on over PUF)` : wall.label, amount: wallAmt },
-    { label: "Ceiling", detail: ceiling.label, amount: ceilAmt },
-    { label: "Flooring", detail: flooring.label, amount: floorAmt },
+    { label: "Internal Wall", detail: puf && cfg.wallId !== WALL_NONE.id ? `${materialLabel(wall)} (add-on over PUF)` : materialLabel(wall), amount: wallAmt },
+    { label: "Ceiling", detail: materialLabel(ceiling), amount: ceilAmt },
+    { label: "Flooring", detail: materialLabel(flooring), amount: floorAmt },
   ].filter((l) => l.amount !== 0);
 
   // Thermal insulation — priced per running sq.ft of insulated surface (walls +
@@ -758,6 +782,9 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   const furnitureLines: LineDelta[] = [];
   let furniture = 0;
   ADDONS.forEach((a) => {
+    // Product-restricted add-ons (e.g. security-cabin window stand) are never charged
+    // on other products, even if a stale quantity lingers from a previous selection.
+    if (a.onlyFor && !a.onlyFor.includes(cfg.productId)) return;
     const qty = clamp(Math.round(cfg.addons[a.id] ?? 0), 0, 200);
     if (qty > 0) {
       const amt = round(a.price * qty);
@@ -889,9 +916,9 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
   }
 
   const structure = findById(STRUCTURES, cfg.structureId)?.label ?? "";
-  const wall = findWallMaterial(cfg.wallId)?.label ?? "";
-  const ceiling = findById(CEILING_MATERIALS, cfg.ceilingId)?.label ?? "";
-  const flooring = findById(FLOORING_MATERIALS, cfg.flooringId)?.label ?? "";
+  const wall = materialLabel(findWallMaterial(cfg.wallId));
+  const ceiling = materialLabel(findById(CEILING_MATERIALS, cfg.ceilingId));
+  const flooring = materialLabel(findById(FLOORING_MATERIALS, cfg.flooringId));
   const insul = findById(INSULATION_OPTIONS, cfg.insulationId);
   const door = findById(DOOR_TYPES, cfg.doorTypeId)?.label ?? "";
   const win = findById(WINDOW_TYPES, cfg.windowTypeId)?.label ?? "";
