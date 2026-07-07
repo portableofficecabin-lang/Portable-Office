@@ -80,6 +80,19 @@ export const STRUCTURES: StructureType[] = [
 export const isPufPanel = (structureId: string) => structureId === "puf";
 
 /* ------------------------------------------------------------------ *
+ * Roof type — the sloped 2-side roof (sheds to both width sides) is the
+ * STANDARD default (₹0). A flat roof is optional and costs +6% of the
+ * base cabin price.
+ * ------------------------------------------------------------------ */
+export const ROOF_FLAT_SURCHARGE = 0.06; // flat roof = +6% of base cabin price
+export interface RoofType { id: string; label: string; note: string; surchargePct: number; }
+export const ROOFS: RoofType[] = [
+  { id: "sloped", label: "Sloped Roof (2-side)", note: "Twin-slope roof shedding to both width sides — standard", surchargePct: 0 },
+  { id: "flat",   label: "Flat Roof",            note: "Single flat / mono-pitch roof — optional (+6%)",         surchargePct: ROOF_FLAT_SURCHARGE },
+];
+export const findRoof = (id: string): RoofType => ROOFS.find((r) => r.id === id) ?? ROOFS[0];
+
+/* ------------------------------------------------------------------ *
  * Base cabin rate — SIZE-BASED (INTERNAL). The ₹/sqft below is NEVER
  * shown to customers; the calculator uses it to auto-compute the base
  * price from the entered size. Rate falls as the cabin grows; sizes
@@ -245,6 +258,27 @@ export const WINDOW_TYPES: Priced[] = [
   { id: "fixed",    label: "Fixed Glass",        price: 3500 },
 ];
 
+/** Format a decimal-feet value as feet-and-inches, e.g. 8.5 → 8′6″, 20 → 20′,
+ *  7.67 → 7′8″. Used on the plan/elevation dimension labels so 8'6" never rounds
+ *  up to a misleading "9ft". */
+export function formatFeet(ft: number): string {
+  const total = Math.round(ft * 12); // work in whole inches
+  const whole = Math.floor(total / 12);
+  const inches = total % 12;
+  return inches === 0 ? `${whole}′` : `${whole}′${inches}″`;
+}
+
+/** Standard opening sizes (feet, Width × Height) shown to scale on the 2D plan and
+ *  elevations. Door 3′0″ × 7′0″, Window 4′0″ × 4′0″. A storage container's end
+ *  double-door opening is the ISO standard 7′8″ × 7′6″ (2.34 m × 2.29 m). */
+export interface OpeningSize { widthFt: number; heightFt: number; }
+export const DOOR_SIZE: OpeningSize = { widthFt: 3, heightFt: 7 };
+export const WINDOW_SIZE: OpeningSize = { widthFt: 4, heightFt: 4 };
+// ISO 668 standard 20ft/40ft container door opening: 7′8″ wide × 7′6″ high.
+export const CONTAINER_DOOR_SIZE: OpeningSize = { widthFt: 7 + 8 / 12, heightFt: 7.5 };
+/** Compact dimension label, e.g. "3′×7′" or "7′8″×7′6″". */
+export const sizeLabel = (s: OpeningSize): string => `${formatFeet(s.widthFt)}×${formatFeet(s.heightFt)}`;
+
 /** Where a window can be placed on the 2D floor plan. The customer toggles positions;
  *  each selected position is one window there, and window count mirrors the selection. */
 export interface WindowPosition { id: string; label: string; }
@@ -389,6 +423,8 @@ export interface CabinConfig {
   height: number;
   quantity: number;
   structureId: string;
+  /** Roof type: "sloped" (2-side, default, ₹0) or "flat" (+6% of base cabin price). */
+  roofId: string;
   wallId: string;
   ceilingId: string;
   flooringId: string;
@@ -418,8 +454,17 @@ export interface CabinConfig {
   furniturePosition: string;
   plugPointPosition: string;
   mobilityType: string;
+  /** Spec-only (no price impact): which room (1 or 2) each work-furniture add-on is placed
+   *  in, for 2-room layouts. addon id -> room number. Captured in the quote/PDF. */
+  furnitureRoom: Record<string, number>;
   /** id -> quantity. Presence with qty>0 means selected. */
   addons: Record<string, number>;
+  /** Spec-only (no price impact): free drag-and-drop positions for the customer's
+   *  chosen items (doors, windows, lights, fans, furniture) on the floor plan.
+   *  Key = item instance id, value = fractional {x,y} (0..1) within the cabin.
+   *  Optional so older persisted configs stay valid. Captured in the WhatsApp
+   *  quote + PDF so the factory builds to the intended layout. */
+  layout?: Record<string, { x: number; y: number }>;
   /** Layout: false = single room; true = a partition splits the cabin into two rooms.
    *  When true the Partition add-on (fixed / with-door) is applied automatically. */
   partitioned: boolean;
@@ -450,6 +495,8 @@ export interface Estimate {
   base: number;
   /** Extra-height premium: base × 8% × (height − 8'6"), prorated. 0 at/below standard. */
   heightSurcharge: number;
+  /** Flat-roof premium: base × 6% when roof = flat. 0 for the sloped default. */
+  roofSurcharge: number;
   interior: number;
   interiorLines: LineDelta[];
   /** Thermal-insulation cost (wall + ceiling area × rate). 0 when none selected. */
@@ -496,6 +543,9 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     height: product.def.height,
     quantity: 1,
     structureId: puf ? "puf" : STRUCTURES[0].id,
+    // Sloped 2-side roof is the standard default; flat is +6%. Storage containers are
+    // ISO shipping containers → ALWAYS flat-roofed (no sloped option, no surcharge).
+    roofId: container ? "flat" : "sloped",
     wallId: puf ? WALL_NONE.id : WALL_MATERIALS.find((m) => m.standard)!.id,
     ceilingId: CEILING_MATERIALS.find((m) => m.standard)!.id,
     flooringId: FLOORING_MATERIALS.find((m) => m.standard)!.id,
@@ -521,7 +571,10 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     furniturePosition: "wall",
     plugPointPosition: "opposite-table",
     mobilityType: "movable",
+    furnitureRoom: {},
     addons: {},
+    // Drag-and-drop item positions (spec-only) — empty until the customer arranges them.
+    layout: {},
     // Layout — single room by default; the 2-room partition is opt-in in the Size step.
     partitioned: false,
     room1Length: Math.round(product.def.length / 2),
@@ -561,6 +614,10 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   // (prorated). Not applied to storage containers (fixed ISO height, grade-priced).
   const extraHeight = Math.max(0, height - STANDARD_HEIGHT_FT);
   const heightSurcharge = container ? 0 : round(base * HEIGHT_SURCHARGE_PER_FT * extraHeight);
+
+  // Flat-roof premium — +6% of the base cabin price when a flat roof is chosen. The
+  // sloped 2-side roof is the ₹0 default. Not applied to storage containers.
+  const roofSurcharge = container ? 0 : round(base * findRoof(cfg.roofId).surchargePct);
 
   // Interior deltas (₹/sqft over the standard finish)
   const puf = isPufPanel(cfg.structureId);
@@ -647,7 +704,7 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   });
 
   // Containers price on the grade rate alone — no interior/openings/electrical/furniture.
-  const perCabin = container ? base : base + heightSurcharge + interior + insulation + openings + ventilation + electrical + furniture;
+  const perCabin = container ? base : base + heightSurcharge + roofSurcharge + interior + insulation + openings + ventilation + electrical + furniture;
   const cabinsSubtotal = perCabin * quantity;
   const transport = cfg.transport ? TRANSPORT_BASE * quantity : 0;
   const installation = cfg.installation ? INSTALLATION_BASE * quantity : 0;
@@ -664,6 +721,7 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     quantity,
     base,
     heightSurcharge,
+    roofSurcharge,
     interior: container ? 0 : interior,
     interiorLines: container ? [] : interiorLines,
     insulation: container ? 0 : insulation,
@@ -694,6 +752,15 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
 export function startingFromEstimate(): number {
   return Math.min(...PRODUCTS.map((p) => computeEstimate(buildDefaultConfig(p.id)).total));
 }
+
+/** Add-on ids that are "movable" work furniture and can be assigned to a specific room in
+ *  a 2-room layout (drives the Add-ons room picker + drawing). Fixtures (toilet, wash
+ *  basin, urinal, pantry, partition) are excluded — they are not placed per-room this way. */
+export const ROOM_FURNITURE_IDS = ["workstation", "manager", "conference", "cupboard", "chairs"];
+
+/** Which room ("1" | "2") a work-furniture add-on is assigned to (default Room 1). */
+export const furnitureRoomOf = (cfg: CabinConfig, addonId: string): number =>
+  cfg.furnitureRoom?.[addonId] === 2 ? 2 : 1;
 
 /** Human-readable configuration summary — reused for the lead message, the
  *  WhatsApp share text and the PDF. */
@@ -730,10 +797,19 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
   const isToilet = isToiletCabin(cfg.productId);
   const isStorage = isStorageProduct(cfg.productId);
   const vent = est.ventilationLines.map((l) => `${l.label} (${l.detail.split(" ")[0]} no.)`).join(", ");
+  const roof = findRoof(cfg.roofId);
+  // Per-room furniture placement (only meaningful for a 2-room layout).
+  const roomFurn = cfg.partitioned
+    ? ROOM_FURNITURE_IDS.filter((id) => cfg.addons?.[id]).map((id) => {
+        const a = ADDONS.find((x) => x.id === id);
+        return `${a?.label ?? id} → Room ${furnitureRoomOf(cfg, id)}`;
+      }).join(", ")
+    : "";
 
   return [
     `Product: ${product} (${structure})`,
     `Size: ${est.dimLength} × ${est.dimWidth} ft, H ${est.dimHeight} ft — ${est.area} sq.ft × ${est.quantity} unit(s)`,
+    `Roof: ${roof.label}${cfg.roofId === "flat" ? " (+6%)" : ""}`,
     isStorage ? `Usage: Material Storage / Tool Room` : ``,
     `Interior: Wall ${wall}, Ceiling ${ceiling}, Flooring ${flooring}`,
     insul && insul.id !== "none" ? `Insulation: ${insul.label} (${insul.thickness})` : ``,
@@ -745,12 +821,14 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     `Electrical: ${elec}`,
     `Add-ons: ${furn}`,
     isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,
+    roomFurn ? `Furniture Layout: ${roomFurn}` : ``,
     `Plug Point: ${plugPointPositionLabel(cfg.plugPointPosition)}`,
     `Shifting / Mobility: ${mobilityTypeLabel(cfg.mobilityType)}`,
     `Delivery: Transport ${cfg.transport ? "Yes" : "No"}, Installation ${cfg.installation ? "Yes" : "No"}`,
     ``,
     `Base Cabin: ${formatINR(est.base)}`,
     est.heightSurcharge ? `Extra Height (${est.dimHeight} ft > 8'6"): ${formatINR(est.heightSurcharge)}` : ``,
+    est.roofSurcharge ? `Flat Roof (+6%): ${formatINR(est.roofSurcharge)}` : ``,
     est.interior ? `Interior: ${formatINR(est.interior)}` : ``,
     est.insulation ? `Insulation: ${formatINR(est.insulation)}` : ``,
     est.openings ? `Doors & Windows: ${formatINR(est.openings)}` : ``,
