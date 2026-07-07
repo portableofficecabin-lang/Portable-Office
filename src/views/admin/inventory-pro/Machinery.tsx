@@ -233,6 +233,10 @@ function MachineryList() {
       available_quantity: Number(form.available_quantity || 0),
       purchase_value: Number(form.purchase_value || 0),
     };
+    // When editing, `form` carries the embedded `machinery_sections` join object from
+    // load()'s select("*, machinery_sections(name)") — not a machinery column, so
+    // PostgREST rejects the write. Strip it (mirrors WorkOrders.tsx's factories guard).
+    delete (payload as any).machinery_sections;
     const res = editId
       ? await supabase.from("machinery").update(payload).eq("id", editId)
       : await supabase.from("machinery").insert(payload);

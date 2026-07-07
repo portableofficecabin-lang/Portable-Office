@@ -23,13 +23,13 @@ import {
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel,
-  ROOFS, findRoof, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, AUTO_PLUG_POSITIONS,
+  ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, AUTO_PLUG_POSITIONS,
   FURNITURE_POSITIONS, PLUG_POINT_POSITIONS, MOBILITY_TYPES,
   furniturePositionLabel, plugPointPositionLabel, mobilityTypeLabel,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate, type InsulationOption,
 } from "./pricing";
-import { LayoutDesigner, summariseLayout } from "./LayoutDesigner";
+import { LayoutDesigner, CompleteLayoutPreview, summariseLayout } from "./LayoutDesigner";
 import { ModulePlan } from "./ModulePlan";
 import { SocketSwitchDiagram } from "./ElectricalDiagram";
 
@@ -684,7 +684,7 @@ function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean
       </div>
       <Row label={container ? "Base Container Rate" : "Base Cabin"} value={est.contactRequired ? contactLabel : formatINR(est.base)} />
       {est.heightSurcharge > 0 && <Row label={`Extra Height (${est.dimHeight}′)`} value={`+${formatINR(est.heightSurcharge)}`} positive />}
-      {est.roofSurcharge > 0 && <Row label="Flat Roof (+6%)" value={`+${formatINR(est.roofSurcharge)}`} positive />}
+      {est.roofSurcharge > 0 && <Row label={`Flat Roof (+${ROOF_FLAT_PCT})`} value={`+${formatINR(est.roofSurcharge)}`} positive />}
       {est.interior !== 0 && <Row label="Interior Upgrade" value={`${est.interior > 0 ? "+" : ""}${formatINR(est.interior)}`} positive={est.interior > 0} />}
       {est.insulation > 0 && <Row label="Insulation" value={`+${formatINR(est.insulation)}`} positive />}
       {est.openings > 0 && <Row label="Doors & Windows" value={`+${formatINR(est.openings)}`} positive />}
@@ -1096,7 +1096,7 @@ export default function CabinCalculator() {
       } else {
         configRows = [
           ["Structure", STRUCTURES.find((s) => s.id === config.structureId)?.label ?? ""],
-          ["Roof", `${findRoof(config.roofId).label}${config.roofId === "flat" ? " (+6%)" : ""}`],
+          ["Roof", `${findRoof(config.roofId).label}${config.roofId === "flat" ? ` (+${ROOF_FLAT_PCT})` : ""}`],
           ["Internal Wall", materialLabel(findWallMaterial(config.wallId))],
           ["Ceiling", materialLabel(CEILING_MATERIALS.find((m) => m.id === config.ceilingId))],
           ["Flooring", materialLabel(FLOORING_MATERIALS.find((m) => m.id === config.flooringId))],
@@ -1137,7 +1137,7 @@ export default function CabinCalculator() {
       const contactTxt = isStorage ? "Contact for Rate" : "Contact us Directly";
       const rows: [string, string][] = [[isStorage ? "Base Container Rate" : "Base Cabin", est.contactRequired ? contactTxt : rsPdf(est.base)]];
       if (est.heightSurcharge) rows.push([`Extra Height (${est.dimHeight} ft > 8'6")`, rsPdf(est.heightSurcharge)]);
-      if (est.roofSurcharge) rows.push(["Flat Roof (+6%)", rsPdf(est.roofSurcharge)]);
+      if (est.roofSurcharge) rows.push([`Flat Roof (+${ROOF_FLAT_PCT})`, rsPdf(est.roofSurcharge)]);
       if (est.interior) rows.push(["Interior Upgrade", rsPdf(est.interior)]);
       if (est.insulation) rows.push(["Insulation", rsPdf(est.insulation)]);
       if (est.openings) rows.push(["Doors & Windows", rsPdf(est.openings)]);
@@ -1483,7 +1483,7 @@ export default function CabinCalculator() {
                     )}
                   </div>
                 )}
-                {/* Roof type — sloped 2-side (default) vs flat (+6%). Applies to all built
+                {/* Roof type — sloped 2-side (default) vs flat (+8%). Applies to all built
                     cabins; the shape is reflected live in the "4 Elevations" view above. */}
                 {!isStorageProduct(config.productId) && (
                   <div className="mt-4 rounded-xl border border-border p-4">
@@ -1869,6 +1869,12 @@ export default function CabinCalculator() {
                         value={config.mobilityType}
                         onSelect={(id) => patch({ mobilityType: id })}
                       />
+                    </div>
+                    {/* Complete layout — a read-only floor plan combining EVERYTHING chosen
+                        so far (doors, windows, lights, fans, plug points & furniture) in one
+                        view, shown right after the add-ons. */}
+                    <div className="border-t border-border pt-4">
+                      <CompleteLayoutPreview config={config} />
                     </div>
                     {/* Optional drag-and-drop layout — position the chosen doors, windows,
                         lights, fans & furniture on the floor plan. Spec only (no price);

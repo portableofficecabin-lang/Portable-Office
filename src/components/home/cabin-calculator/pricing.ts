@@ -81,14 +81,15 @@ export const isPufPanel = (structureId: string) => structureId === "puf";
 
 /* ------------------------------------------------------------------ *
  * Roof type — the sloped 2-side roof (sheds to both width sides) is the
- * STANDARD default (₹0). A flat roof is optional and costs +6% of the
+ * STANDARD default (₹0). A flat roof is optional and costs +8% of the
  * base cabin price.
  * ------------------------------------------------------------------ */
-export const ROOF_FLAT_SURCHARGE = 0.06; // flat roof = +6% of base cabin price
+export const ROOF_FLAT_SURCHARGE = 0.08; // flat roof = +8% of base cabin price
 export interface RoofType { id: string; label: string; note: string; surchargePct: number; }
+export const ROOF_FLAT_PCT = `${Math.round(ROOF_FLAT_SURCHARGE * 100)}%`; // e.g. "8%" — single source for labels
 export const ROOFS: RoofType[] = [
   { id: "sloped", label: "Sloped Roof (2-side)", note: "Twin-slope roof shedding to both width sides — standard", surchargePct: 0 },
-  { id: "flat",   label: "Flat Roof",            note: "Single flat / mono-pitch roof — optional (+6%)",         surchargePct: ROOF_FLAT_SURCHARGE },
+  { id: "flat",   label: "Flat Roof",            note: `Single flat / mono-pitch roof — optional (+${ROOF_FLAT_PCT})`, surchargePct: ROOF_FLAT_SURCHARGE },
 ];
 export const findRoof = (id: string): RoofType => ROOFS.find((r) => r.id === id) ?? ROOFS[0];
 
@@ -495,7 +496,7 @@ export interface CabinConfig {
   height: number;
   quantity: number;
   structureId: string;
-  /** Roof type: "sloped" (2-side, default, ₹0) or "flat" (+6% of base cabin price). */
+  /** Roof type: "sloped" (2-side, default, ₹0) or "flat" (+8% of base cabin price). */
   roofId: string;
   wallId: string;
   ceilingId: string;
@@ -576,7 +577,7 @@ export interface Estimate {
   base: number;
   /** Extra-height premium: base × 8% × (height − 8'6"), prorated. 0 at/below standard. */
   heightSurcharge: number;
-  /** Flat-roof premium: base × 6% when roof = flat. 0 for the sloped default. */
+  /** Flat-roof premium: base × 8% when roof = flat. 0 for the sloped default. */
   roofSurcharge: number;
   interior: number;
   interiorLines: LineDelta[];
@@ -627,7 +628,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     height: product.def.height,
     quantity: 1,
     structureId: puf ? "puf" : toilet ? "gi" : STRUCTURES[0].id,
-    // Sloped 2-side roof is the standard default; flat is +6%. Storage containers are
+    // Sloped 2-side roof is the standard default; flat is +8%. Storage containers are
     // ISO shipping containers → ALWAYS flat-roofed (no sloped option, no surcharge).
     roofId: container ? "flat" : "sloped",
     wallId: puf ? WALL_NONE.id : toilet ? "acp" : WALL_MATERIALS.find((m) => m.standard)!.id,
@@ -703,7 +704,7 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   const extraHeight = Math.max(0, height - STANDARD_HEIGHT_FT);
   const heightSurcharge = container ? 0 : round(base * HEIGHT_SURCHARGE_PER_FT * extraHeight);
 
-  // Flat-roof premium — +6% of the base cabin price when a flat roof is chosen. The
+  // Flat-roof premium — +8% of the base cabin price when a flat roof is chosen. The
   // sloped 2-side roof is the ₹0 default. Not applied to storage containers.
   const roofSurcharge = container ? 0 : round(base * findRoof(cfg.roofId).surchargePct);
 
@@ -943,7 +944,7 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
   return [
     `Product: ${product} (${structure})`,
     `Size: ${est.dimLength} × ${est.dimWidth} ft, H ${est.dimHeight} ft — ${est.area} sq.ft × ${est.quantity} unit(s)`,
-    `Roof: ${roof.label}${cfg.roofId === "flat" ? " (+6%)" : ""}`,
+    `Roof: ${roof.label}${cfg.roofId === "flat" ? ` (+${ROOF_FLAT_PCT})` : ""}`,
     isStorage ? `Usage: Material Storage / Tool Room` : ``,
     `Interior: Wall ${wall}, Ceiling ${ceiling}, Flooring ${flooring}`,
     insul && insul.id !== "none" ? `Insulation: ${insul.label} (${insul.thickness})` : ``,
@@ -965,7 +966,7 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     ``,
     `Base Cabin: ${formatINR(est.base)}`,
     est.heightSurcharge ? `Extra Height (${est.dimHeight} ft > 8'6"): ${formatINR(est.heightSurcharge)}` : ``,
-    est.roofSurcharge ? `Flat Roof (+6%): ${formatINR(est.roofSurcharge)}` : ``,
+    est.roofSurcharge ? `Flat Roof (+${ROOF_FLAT_PCT}): ${formatINR(est.roofSurcharge)}` : ``,
     est.interior ? `Interior: ${formatINR(est.interior)}` : ``,
     est.insulation ? `Insulation: ${formatINR(est.insulation)}` : ``,
     est.openings ? `Doors & Windows: ${formatINR(est.openings)}` : ``,

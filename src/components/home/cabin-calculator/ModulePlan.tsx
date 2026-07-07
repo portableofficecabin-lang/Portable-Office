@@ -85,7 +85,15 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
   const ppf = Math.min(Math.max(760 / L, 15), 34); // pixels per foot
   const planW = L * ppf, planH = W * ppf;
   const wallT = 9;
-  const mL = 92, mT = 74, mR = 52, mB = 70;
+  // Doors open OUTWARD (to the exterior). Reserve enough margin on any wall that carries a
+  // door so its outward swing arc + label are never clipped by the paper edge.
+  const doorSides = new Set((config.doorPlacements ?? []).map((d) => d.side || "bottom"));
+  // Reserve wall thickness + the full swing arc (≈ door width) + the two-line DOOR label.
+  const doorReach = Math.round(DOOR_SIZE.widthFt * ppf) + wallT + 32;
+  const mL = Math.max(92, doorSides.has("left") ? doorReach : 0);
+  const mT = Math.max(74, doorSides.has("top") ? doorReach : 0);
+  const mR = Math.max(52, doorSides.has("right") ? doorReach : 0);
+  const mB = Math.max(70, doorSides.has("bottom") ? doorReach : 0);
   const ox = mL, oy = mT;               // inner room top-left
   const rx = ox + planW, by = oy + planH; // right / bottom inner edges
   const vbW = planW + mL + mR, vbH = planH + mT + mB;
@@ -217,35 +225,35 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           );
         })}
 
-        {/* ---- doors (leaf + quarter-circle swing arc, into the room) ---- */}
+        {/* ---- doors (leaf + quarter-circle swing arc, opening OUTWARD to the exterior) ---- */}
         {(config.doorPlacements ?? []).map((d, i) => {
           const side = d.side || "bottom";
           const horiz = side === "top" || side === "bottom";
           const span = horiz ? L : W;
           const dw = Math.min(DOOR_SIZE.widthFt * ppf, (horiz ? planW : planH) * 0.6);
           const t = Math.min(Math.max((d.offset || 0) / span, 0.1), 0.9);
-          // Hinge H, into-room unit vector, along-wall unit vector (swing toward the centre).
+          // Hinge H, OUTWARD (exterior) unit vector, along-wall unit vector (swing toward the centre).
           let H: [number, number]; let into: [number, number]; let along: [number, number];
           if (horiz) {
             const cx = ox + planW * t;
             const wallY = side === "top" ? oy : by;
             const ax = cx < ox + planW / 2 ? 1 : -1;
-            H = [cx - (ax * dw) / 2, wallY]; into = [0, side === "top" ? 1 : -1]; along = [ax, 0];
+            H = [cx - (ax * dw) / 2, wallY]; into = [0, side === "top" ? -1 : 1]; along = [ax, 0];
           } else {
             const cy = oy + planH * t;
             const wallX = side === "left" ? ox : rx;
             const ay = cy < oy + planH / 2 ? 1 : -1;
-            H = [wallX, cy - (ay * dw) / 2]; into = [side === "left" ? 1 : -1, 0]; along = [0, ay];
+            H = [wallX, cy - (ay * dw) / 2]; into = [side === "left" ? -1 : 1, 0]; along = [0, ay];
           }
-          const T: [number, number] = [H[0] + into[0] * dw, H[1] + into[1] * dw];   // open leaf tip
+          const T: [number, number] = [H[0] + into[0] * dw, H[1] + into[1] * dw];   // open leaf tip (exterior)
           const Cc: [number, number] = [H[0] + along[0] * dw, H[1] + along[1] * dw]; // closed position
           const cross = (T[0] - H[0]) * (Cc[1] - H[1]) - (T[1] - H[1]) * (Cc[0] - H[0]);
           const sweep = cross > 0 ? 1 : 0;
           const gap = horiz
             ? <rect x={Math.min(H[0], Cc[0])} y={(side === "top" ? oy - wallT : by) - 0.5} width={dw} height={wallT + 1} fill={C.room} />
             : <rect x={(side === "left" ? ox - wallT : rx) - 0.5} y={Math.min(H[1], Cc[1])} width={wallT + 1} height={dw} fill={C.room} />;
-          const lblY1 = side === "top" ? oy - wallT - 16 : by + wallT + 13;
-          const lx = side === "left" ? ox - wallT - 8 : rx + wallT + 8;
+          const lblY1 = side === "top" ? oy - wallT - dw - 16 : by + wallT + dw + 12;
+          const lx = side === "left" ? ox - wallT - dw - 6 : rx + wallT + dw + 6;
           const cxm = ox + planW * (horiz ? t : 0), cym = oy + planH * (horiz ? 0 : t);
           return (
             <g key={i}>

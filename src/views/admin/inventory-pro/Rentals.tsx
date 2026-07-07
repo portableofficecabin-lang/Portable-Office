@@ -53,6 +53,10 @@ export default function RentalsPage() {
   async function saveAsset() {
     if (!form.cabin_id || !form.cabin_type) { toast({ title: "Cabin ID & type required", variant: "destructive" }); return; }
     const payload = { ...form, current_factory_id: form.current_factory_id || null };
+    // `form` may carry the embedded `factories` join object from load()'s
+    // select("*, factories(name)") — it's not a rental_assets column, so PostgREST
+    // rejects the write ("Could not find the 'factories' column…"). Strip it.
+    delete (payload as any).factories;
     const res = editId ? await supabase.from("rental_assets").update(payload).eq("id", editId) : await supabase.from("rental_assets").insert(payload);
     if (res.error) { toast({ title: "Error", description: res.error.message, variant: "destructive" }); return; }
     toast({ title: editId ? "Updated" : "Created" });
