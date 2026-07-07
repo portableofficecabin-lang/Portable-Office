@@ -23,9 +23,9 @@ import {
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel,
-  ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, AUTO_PLUG_POSITIONS,
-  FURNITURE_POSITIONS, PLUG_POINT_POSITIONS, MOBILITY_TYPES,
-  furniturePositionLabel, plugPointPositionLabel, mobilityTypeLabel,
+  ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS,
+  FURNITURE_POSITIONS, PLUG_POINT_WALLS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
+  furniturePositionLabel, plugPointWallsLabel, mobilityTypeLabel,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate, type InsulationOption,
 } from "./pricing";
@@ -808,9 +808,10 @@ export default function CabinCalculator() {
           // New fields — default them for configs saved by an older build.
           if (!merged.roofId) merged.roofId = base.roofId;
           if (!merged.furnitureRoom || typeof merged.furnitureRoom !== "object") merged.furnitureRoom = {};
-          // Plug-point ids were renamed (opposite-table/near-door → table-side/wall); reset
-          // any stale id from an older saved config to the default.
-          if (!PLUG_POINT_POSITIONS.some((p) => p.id === merged.plugPointPosition)) merged.plugPointPosition = base.plugPointPosition;
+          // Plug points are now a MULTI-select array of walls. Migrate/repair: keep only valid
+          // ids; an older saved config (string plugPointPosition, or nothing) falls back to base.
+          if (!Array.isArray(merged.plugPointWalls)) merged.plugPointWalls = base.plugPointWalls;
+          else merged.plugPointWalls = merged.plugPointWalls.filter((id: string) => PLUG_POINT_WALL_IDS.includes(id));
           // Rooms: migrate legacy saved configs (partitioned:boolean + room1Length) →
           // roomCount/roomLengths. Newer saves already carry roomCount/roomLengths.
           const sv = saved as unknown as { partitioned?: boolean; room1Length?: number; roomCount?: number };
@@ -943,17 +944,25 @@ export default function CabinCalculator() {
       const next = { ...c.addons };
       if (next[id]) delete next[id];
       else next[id] = 1;
-      // Plug points auto-follow work-table presence: table-side when a table (workstation /
-      // manager / conference) is present, wall-only when none is. An explicit choice
-      // (both-sides / as-per-site) is preserved.
+      // Auto-tick "By Work Table" for plug points when the FIRST work table is added, and
+      // un-tick it when the LAST one is removed. Explicit wall choices are always preserved.
+      const hadTable = TABLE_ADDON_IDS.some((t) => c.addons[t]);
       const hasTable = TABLE_ADDON_IDS.some((t) => next[t]);
-      const plugPointPosition = AUTO_PLUG_POSITIONS.includes(c.plugPointPosition)
-        ? (hasTable ? "table-side" : "wall")
-        : c.plugPointPosition;
-      return { ...c, addons: next, plugPointPosition };
+      let plugPointWalls = c.plugPointWalls;
+      if (!hadTable && hasTable && !plugPointWalls.includes("table")) plugPointWalls = [...plugPointWalls, "table"];
+      else if (hadTable && !hasTable && plugPointWalls.includes("table")) plugPointWalls = plugPointWalls.filter((w) => w !== "table");
+      return { ...c, addons: next, plugPointWalls };
     });
   const setAddonQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, addons: { ...c.addons, [id]: Math.max(1, qty) } }));
+  // Plug-point placement is a multi-select of walls (+ "By Work Table") — toggle one on/off.
+  const togglePlugWall = (id: string) =>
+    setConfig((c) => ({
+      ...c,
+      plugPointWalls: c.plugPointWalls.includes(id)
+        ? c.plugPointWalls.filter((w) => w !== id)
+        : [...c.plugPointWalls, id],
+    }));
   // Assign work-furniture units per room (multi-room layouts). Spec-only. Stores per-room
   // counts (rooms 1..N-1); the last room absorbs the remainder. `roomIndex` is 0-based.
   const setFurnitureRoomCount = (id: string, roomIndex: number, count: number) =>
@@ -1156,7 +1165,7 @@ export default function CabinCalculator() {
         configRows.push(["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"]);
         configRows.push(["Add-ons", est.furnitureLines.map((l) => l.label).join(", ") || "—"]);
         if (!isToilet) configRows.push(["Furniture Position", furniturePositionLabel(config.furniturePosition)]);
-        configRows.push(["Plug Point", plugPointPositionLabel(config.plugPointPosition)]);
+        configRows.push(["Plug Point Placement", plugPointWallsLabel(config.plugPointWalls)]);
         configRows.push(["Shifting / Mobility", mobilityTypeLabel(config.mobilityType)]);
         const layoutSpec = summariseLayout(config);
         if (layoutSpec) configRows.push(["Layout Arrangement", layoutSpec]);
@@ -1788,24 +1797,38 @@ export default function CabinCalculator() {
                     </div>
                   </div>
                 </div>
-                {/* Plug point placement — spec only (no price) */}
+                {/* Plug point placement — MULTI-select of walls + by-table (spec only, no price) */}
                 <div className="mt-4">
-                  <SpecPills
-                    label="Plug Point Placement"
-                    hint="Placed at the table sides where you work; wall-only if there’s no table (auto-set from your furniture — override any time)."
-                    options={PLUG_POINT_POSITIONS}
-                    value={config.plugPointPosition}
-                    onSelect={(id) => patch({ plugPointPosition: id })}
-                  />
+                  <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <Label className="text-sm font-semibold">Plug Point Placement</Label>
+                    <span className="text-[11px] text-muted-foreground">Tick every wall you want sockets on — and/or beside the work tables. The 2D plan updates live.</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {PLUG_POINT_WALLS.map((p) => {
+                      const active = config.plugPointWalls.includes(p.id);
+                      return (
+                        <button key={p.id} type="button" aria-pressed={active} onClick={() => togglePlugWall(p.id)}
+                          className={cn("rounded-lg border px-3 py-2 text-xs font-medium transition-all",
+                            active ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border bg-background text-foreground hover:border-accent/50")}>
+                          {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {config.plugPointWalls.length === 0 && (
+                    <p className="mt-1.5 text-[11px] text-muted-foreground">None selected — plug points will be placed <span className="font-medium text-foreground">as per site</span>.</p>
+                  )}
                 </div>
               </StepShell>
             )}
 
             {step === 6 && (
               <StepShell title="Optional add-ons" subtitle="Furniture & fittings — add only what you want.">
-                {isStorageProduct(config.productId) ? (
+                {isStorageProduct(config.productId) || isToiletCabin(config.productId) ? (
                   <div className="rounded-xl border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground">
-                    Furniture add-ons aren&rsquo;t applicable to storage cabins. Need shelving or racking? Let our team know and we&rsquo;ll quote it separately.
+                    {isToiletCabin(config.productId)
+                      ? "Furniture add-ons aren’t applicable to a toilet cabin — it’s a complete, self-contained washroom unit."
+                      : "Furniture add-ons aren’t applicable to storage cabins. Need shelving or racking? Let our team know and we’ll quote it separately."}
                   </div>
                 ) : (
                   <div className="space-y-5">

@@ -15,7 +15,7 @@
  * entangling the large CabinCalculator component.
  */
 
-import { DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, type CabinConfig } from "./pricing";
+import { DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, plugPointWallsLabel, type CabinConfig } from "./pricing";
 
 /** Feet → architectural label, e.g. 30 → 30'-0", 8.5 → 8'-6", 3 → 3'-0". */
 function ftLabel(f: number): string {
@@ -207,12 +207,31 @@ function CeilingFan({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   );
 }
 
-/** LED panel light (small square with an inner square). */
-function LedLight({ cx, cy, s }: { cx: number; cy: number; s: number }) {
+/** LED panel light — square (10.5") or round (4") per the chosen LED Panel Shape. */
+function LedLight({ cx, cy, s, round }: { cx: number; cy: number; s: number; round?: boolean }) {
+  if (round) {
+    return (
+      <g>
+        <circle cx={cx} cy={cy} r={s / 2} fill={C.light} stroke={C.lightEdge} strokeWidth={1} />
+        <circle cx={cx} cy={cy} r={s / 2 - 2.4} fill="none" stroke={C.lightEdge} strokeWidth={0.7} strokeOpacity={0.7} />
+      </g>
+    );
+  }
   return (
     <g>
       <rect x={cx - s / 2} y={cy - s / 2} width={s} height={s} rx={1.5} fill={C.light} stroke={C.lightEdge} strokeWidth={1} />
       <rect x={cx - s / 2 + 2.5} y={cy - s / 2 + 2.5} width={s - 5} height={s - 5} rx={1} fill="none" stroke={C.lightEdge} strokeWidth={0.7} strokeOpacity={0.7} />
+    </g>
+  );
+}
+
+/** Tube light — an elongated fluorescent batten (distinct from an LED panel). */
+function TubeLight({ cx, cy, len }: { cx: number; cy: number; len: number }) {
+  const h = 5;
+  return (
+    <g>
+      <rect x={cx - len / 2} y={cy - h / 2} width={len} height={h} rx={h / 2} fill={C.light} stroke={C.lightEdge} strokeWidth={1} />
+      <line x1={cx - len / 2 + 3} y1={cy} x2={cx + len / 2 - 3} y2={cy} stroke={C.lightEdge} strokeWidth={0.6} strokeOpacity={0.7} />
     </g>
   );
 }
@@ -268,8 +287,9 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
 
   const e = config.electrical ?? {};
   const nFan = Math.min(Math.max(e.fan ?? 0, 0), 6);
-  const nLed = Math.min((e.led ?? 0) + (e.tube ?? 0), 12);
-  const nPlug = Math.min(Math.max(e.plug ?? 0, 0), 4);
+  const nLedPanel = Math.min(e.led ?? 0, 10);
+  const nTube = Math.min(e.tube ?? 0, 10);
+  const ledRound = config.ledShape === "round";
   const winW = config.windowWidthFt ?? 3, winH = config.windowHeightFt ?? 3;
   const winLabel = `${ftLabel(winW)} X ${ftLabel(winH)}`;
   const doorLabel = `${ftLabel(DOOR_SIZE.widthFt)} X ${ftLabel(DOOR_SIZE.heightFt)}`;
@@ -337,31 +357,8 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           );
         })()}
 
-        {/* ---- ceiling LED lights (grid) ---- */}
-        {(() => {
-          if (nLed <= 0) return null;
-          const rowsN = W >= 8 && nLed > 1 ? 2 : 1;
-          const cols = Math.ceil(nLed / rowsN);
-          const s = Math.min(Math.max(ppf * 0.5, 10), 18);
-          const cells: React.ReactNode[] = [];
-          let k = 0;
-          for (let r = 0; r < rowsN && k < nLed; r++) {
-            const cy = rowsN === 1 ? oy + planH * 0.5 : oy + planH * (r === 0 ? 0.26 : 0.74);
-            for (let c = 0; c < cols && k < nLed; c++, k++) {
-              const cx = ox + planW * ((c + 0.5) / cols);
-              cells.push(<LedLight key={`l${k}`} cx={cx} cy={cy} s={s} />);
-            }
-          }
-          return cells;
-        })()}
-
-        {/* ---- ceiling fans (centre line, 12" round) ---- */}
-        {Array.from({ length: nFan }).map((_, i) => {
-          const cx = ox + planW * ((i + 0.5) / nFan);
-          const cy = oy + planH * 0.5;
-          const r = Math.min(Math.max(ppf * 0.55, 15), 26);
-          return <CeilingFan key={`f${i}`} cx={cx} cy={cy} r={r} />;
-        })}
+        {/* Ceiling lights & fans are drawn AFTER the furniture (below) so they always stay
+            visible on top of desks/tables — see the "ceiling (RCP)" block. */}
 
         {/* ---- furniture (per room), drawn to scale with dimensions ---- */}
         {(() => {
@@ -385,6 +382,33 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           });
           return out;
         })()}
+
+        {/* ---- ceiling (RCP): LED panels (square/round) + tube lights — ON TOP of furniture ---- */}
+        {(() => {
+          const lights: ("led" | "tube")[] = [
+            ...Array.from({ length: nLedPanel }, () => "led" as const),
+            ...Array.from({ length: nTube }, () => "tube" as const),
+          ];
+          if (!lights.length) return null;
+          const rowsN = W >= 8 && lights.length > 1 ? 2 : 1;
+          const cols = Math.ceil(lights.length / rowsN);
+          const s = Math.min(Math.max(ppf * 0.5, 11), 18);
+          return lights.map((kind, k) => {
+            const cy = rowsN === 1 ? oy + planH * 0.5 : oy + planH * (Math.floor(k / cols) === 0 ? 0.24 : 0.76);
+            const cx = ox + planW * (((k % cols) + 0.5) / cols);
+            return kind === "tube"
+              ? <TubeLight key={`t${k}`} cx={cx} cy={cy} len={s * 2.2} />
+              : <LedLight key={`p${k}`} cx={cx} cy={cy} s={s} round={ledRound} />;
+          });
+        })()}
+
+        {/* ---- ceiling fans (12" round, 3-blade) on the centre line — ON TOP ---- */}
+        {Array.from({ length: nFan }).map((_, i) => {
+          const cx = ox + planW * ((i + 0.5) / nFan);
+          const cy = oy + planH * 0.5;
+          const r = Math.min(Math.max(ppf * 0.55, 15), 26);
+          return <CeilingFan key={`f${i}`} cx={cx} cy={cy} r={r} />;
+        })}
 
         {/* ---- windows ---- */}
         {(config.windowPositions ?? []).map((id) => {
@@ -466,22 +490,24 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           );
         })}
 
-        {/* ---- corner electrical sockets ---- */}
+        {/* ---- electrical sockets: spread along each chosen wall + one beside each work table ---- */}
         {(() => {
-          const corners: { x: number; y: number; lx: number; ly: number; anchor: "start" | "end" }[] = [
-            { x: ox + 12, y: oy + 12, lx: ox + 22, ly: oy + 34, anchor: "start" },
-            { x: rx - 12, y: oy + 12, lx: rx - 22, ly: oy + 34, anchor: "end" },
-            { x: ox + 12, y: by - 12, lx: ox + 22, ly: by - 24, anchor: "start" },
-            { x: rx - 12, y: by - 12, lx: rx - 22, ly: by - 24, anchor: "end" },
-          ];
-          return corners.slice(0, nPlug).map((c, i) => (
-            <g key={i}>
-              <Socket cx={c.x} cy={c.y} />
-              <line x1={c.x} y1={c.y} x2={c.lx} y2={c.ly - 8} stroke={C.socketInk} strokeWidth={0.5} strokeDasharray="2 2" />
-              <text x={c.lx} y={c.ly} textAnchor={c.anchor} fontSize={7} fontWeight={700} fill={C.ink}>ELECTRICAL SOCKET</text>
-              <text x={c.lx} y={c.ly + 8} textAnchor={c.anchor} fontSize={7} fill={C.ink}>(ON CORNER)</text>
-            </g>
-          ));
+          const plugWalls: string[] = config.plugPointWalls ?? [];
+          if (plugWalls.length === 0) return null;
+          const pts: { x: number; y: number }[] = [];
+          const ins = 12, frac = [0.34, 0.66]; // two spread points per wall (interior face)
+          if (plugWalls.includes("upper")) frac.forEach((f) => pts.push({ x: ox + planW * f, y: oy + ins }));
+          if (plugWalls.includes("down"))  frac.forEach((f) => pts.push({ x: ox + planW * f, y: by - ins }));
+          if (plugWalls.includes("left"))  frac.forEach((f) => pts.push({ x: ox + ins, y: oy + planH * f }));
+          if (plugWalls.includes("right")) frac.forEach((f) => pts.push({ x: rx - ins, y: oy + planH * f }));
+          if (plugWalls.includes("table")) {
+            const nT = Math.min(TABLE_ADDON_IDS.reduce((a, t) => a + (config.addons?.[t] ?? 0), 0), 4) || 1;
+            for (let i = 0; i < nT; i++) {
+              const f = nT === 1 ? 0.5 : 0.3 + (0.4 * i) / (nT - 1);
+              pts.push({ x: ox + planW * f, y: oy + planH * 0.52 }); // beside where a work table sits
+            }
+          }
+          return pts.map((p, i) => <Socket key={i} cx={p.x} cy={p.y} />);
         })()}
 
         {/* ---- plate-bar lifting hooks (with hole) for lift & shift ---- */}
@@ -493,6 +519,11 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return hooks.map((h, i) => <LiftHook key={i} x={h.x} y={h.y} angle={h.a} />);
         })()}
       </svg>
+      {(config.plugPointWalls?.length ?? 0) > 0 && (
+        <p className="px-3 pt-1.5 text-center text-[10px] font-medium" style={{ color: C.socketInk }}>
+          Electrical sockets — {plugPointWallsLabel(config.plugPointWalls)}
+        </p>
+      )}
       <p className="px-3 pb-1.5 text-center text-[10px] font-medium" style={{ color: C.steel }}>
         Plate-bar lifting hooks (with hole) at {nHooks} corners — for lift &amp; shift
       </p>

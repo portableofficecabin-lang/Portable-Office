@@ -413,24 +413,28 @@ export const FURNITURE_POSITIONS = [
   { id: "wall", label: "Wall Attached" },
   { id: "centre", label: "Centre" },
 ] as const;
-export const PLUG_POINT_POSITIONS = [
-  { id: "table-side", label: "Table Side" },
-  { id: "wall", label: "Wall Only" },
-  { id: "both-sides", label: "Both Side Walls" },
-  { id: "as-per-site", label: "As Per Site" },
+// Plug points can go on any combination of walls AND/OR beside the work tables — a
+// MULTI-select (stored as a string[] on the config). The 2D plan spreads sockets along
+// each chosen wall and puts one beside each work table.
+export const PLUG_POINT_WALLS = [
+  { id: "upper", label: "Upper Wall" },
+  { id: "down",  label: "Down Wall" },
+  { id: "left",  label: "Left Wall" },
+  { id: "right", label: "Right Wall" },
+  { id: "table", label: "By Work Table" },
 ] as const;
+export const PLUG_POINT_WALL_IDS: readonly string[] = PLUG_POINT_WALLS.map((w) => w.id);
 export const MOBILITY_TYPES = [
   { id: "movable", label: "100% Movable (fully relocatable)" },
   { id: "fixed", label: "Fixed / Semi-permanent" },
 ] as const;
-/** Work-table add-ons. Plug points are auto-placed at the table sides when any of these is
- *  selected, and wall-only when none is (see the toggleAddon handler). */
+/** Work-table add-ons. Adding the first one auto-ticks "By Work Table" for plug points;
+ *  removing the last one un-ticks it (see the toggleAddon handler). */
 export const TABLE_ADDON_IDS = ["workstation", "manager", "conference"];
-/** Plug-point placements the app auto-manages from table presence (a user can still pick
- *  "both-sides" / "as-per-site" and that explicit choice is preserved). */
-export const AUTO_PLUG_POSITIONS = ["table-side", "wall"];
 export const furniturePositionLabel = (id: string): string => FURNITURE_POSITIONS.find((o) => o.id === id)?.label ?? id;
-export const plugPointPositionLabel = (id: string): string => PLUG_POINT_POSITIONS.find((o) => o.id === id)?.label ?? id;
+/** Human label for the selected plug-point placements, e.g. "Upper Wall, Left Wall, By Work Table". */
+export const plugPointWallsLabel = (ids: string[] | undefined): string =>
+  (ids ?? []).map((id) => PLUG_POINT_WALLS.find((w) => w.id === id)?.label ?? id).join(", ") || "As Per Site";
 export const mobilityTypeLabel = (id: string): string => MOBILITY_TYPES.find((o) => o.id === id)?.label ?? id;
 
 /* ------------------------------------------------------------------ *
@@ -473,20 +477,23 @@ export interface AddonItem {
 }
 
 export const ADDONS: AddonItem[] = [
-  { id: "toilet",      label: "Toilet",           price: 22000 },
+  // Plumbing fittings for an ATTACHED washroom inside the cabin.
+  { id: "toilet",      label: "Toilet",           price: 22000, hint: "Attached WC / washroom in the cabin" },
   { id: "pantry",      label: "Pantry",           price: 18000 },
-  { id: "wash-basin",  label: "Wash Basin",       price: 4500 },
-  { id: "urinal",      label: "Urinal",           price: 6500 },
+  { id: "wash-basin",  label: "Wash Basin",       price: 4500,  hint: "Attached-washroom fitting" },
+  { id: "urinal",      label: "Urinal",           price: 6500,  hint: "Attached-washroom fitting" },
   { id: "partition",      label: "Fixed Partition",     price: 17500, hasQty: true },
   { id: "partition-door", label: "Partition with Door", price: 22000, hasQty: true },
-  { id: "workstation", label: "Workstation",      price: 9500,  hasQty: true },
-  { id: "manager",     label: "Manager Table",    price: 12000, hasQty: true },
-  { id: "cupboard",    label: "Cupboard",         price: 8500,  hasQty: true },
-  { id: "conference",  label: "Conference Table", price: 22000 },
+  // Work tables, cupboard & overhead cabinet — flat ₹5,000 per unit.
+  { id: "workstation", label: "Workstation",      price: 5000,  hasQty: true },
+  { id: "manager",     label: "Manager Table",    price: 5000,  hasQty: true },
+  { id: "conference",  label: "Conference Table", price: 5000,  hasQty: true },
+  { id: "cupboard",    label: "Cupboard",         price: 5000,  hasQty: true },
+  { id: "overhead",    label: "Overhead Cabinet", price: 5000,  hasQty: true },
   // Basic office table — plain top vs one with a drawer box.
   { id: "table",        label: "Table (Without Drawer)",  price: 2500, hasQty: true },
   { id: "table-drawer", label: "Table (With Drawer Box)", price: 6000, hasQty: true, hint: "Table with a lockable drawer box" },
-  { id: "chairs",      label: "Office Chairs",    price: 3500,  hasQty: true },
+  { id: "chairs",      label: "Office Chairs",    price: 5500,  hasQty: true },
   // Security-cabin only: an external stand/bracket fitted outside each window.
   { id: "window-stand", label: "Exterior Window Stand", price: 4500, hasQty: true,
     onlyFor: ["security-cabin"], hint: "One per window — fitted outside" },
@@ -533,10 +540,11 @@ export interface CabinConfig {
   lightColor: string;
   ledShape: string;
   /** Spec-only placement choices (no price impact) — captured in the quote/PDF.
-   *  furniturePosition: wall | centre · plugPointPosition: table-side | wall | both-sides
-   *  | as-per-site (auto-follows work-table presence) · mobilityType: movable | fixed. */
+   *  furniturePosition: wall | centre · mobilityType: movable | fixed. */
   furniturePosition: string;
-  plugPointPosition: string;
+  /** Plug-point placement — MULTI-select of PLUG_POINT_WALLS ids (upper/down/left/right/table).
+   *  The 2D plan spreads sockets along each chosen wall + one beside each work table. */
+  plugPointWalls: string[];
   mobilityType: string;
   /** Spec-only (no price impact): per-room unit counts for each work-furniture add-on in a
    *  multi-room layout. addon id -> [room1, room2, …] summing to the add-on quantity (rooms
@@ -664,7 +672,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     lightColor: "white",
     ledShape: "square",
     furniturePosition: "wall",
-    plugPointPosition: "table-side",
+    plugPointWalls: ["down"], // one wall by default; "By Work Table" auto-adds when a table is chosen
     mobilityType: "movable",
     furnitureRoom: {},
     addons: {},
@@ -966,7 +974,7 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     `Add-ons: ${furn}`,
     isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,
     roomFurn ? `Furniture Layout: ${roomFurn}` : ``,
-    `Plug Point: ${plugPointPositionLabel(cfg.plugPointPosition)}`,
+    `Plug Point Placement: ${plugPointWallsLabel(cfg.plugPointWalls)}`,
     `Shifting / Mobility: ${mobilityTypeLabel(cfg.mobilityType)}`,
     `Delivery: Transport ${cfg.transport ? "Yes" : "No"}, Installation ${cfg.installation ? "Yes" : "No"}`,
     ``,
