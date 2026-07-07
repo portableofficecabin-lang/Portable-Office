@@ -61,6 +61,7 @@ const STEPS = [
 const badgeStyles: Record<string, string> = {
   "Most Chosen": "bg-accent text-white",
   "Best Value": "bg-emerald-500 text-white",
+  "Budget Value": "bg-green-600 text-white",
   "Premium": "bg-navy-light text-white",
 };
 
@@ -399,6 +400,12 @@ const WINDOW_WALL: Record<string, { wall: WallKey; along: number }> = {
   "right":         { wall: "right", along: 0.50 },
 };
 
+// Each wall's [left-end, right-end] top corner as seen in its elevation, for the corner
+// lifting hooks. FL/FR/RL/RR = front|rear × left|right; each corner is shared by two walls.
+const WALL_TOP_CORNERS: Record<WallKey, [string, string]> = {
+  front: ["FL", "FR"], rear: ["RL", "RR"], left: ["FL", "RL"], right: ["FR", "RR"],
+};
+
 function Elevations({
   length, width, height, doorPlacements, windowPositions, windowWidthFt, windowHeightFt, containerDoor, roof,
 }: {
@@ -407,6 +414,9 @@ function Elevations({
   windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roof?: string;
 }) {
   const L = Math.max(1, length), W = Math.max(1, width), H = Math.max(6, height);
+  // Lifting hooks: 2 diagonal corners for ≤100 sq.ft, 4 corners above — mirrors the 2D plan.
+  const nHooks = L * W > 100 ? 4 : 2;
+  const hookCorners = new Set(nHooks === 4 ? ["FL", "FR", "RL", "RR"] : ["RL", "FR"]);
   // The customer's chosen window size (falls back to the 3×3 default).
   const winWFt = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
   const winHFt = Math.min(Math.max(windowHeightFt ?? WINDOW_SIZE.heightFt, 1), 12);
@@ -441,8 +451,9 @@ function Elevations({
   // cabin sizes without ever exceeding the real 8-inch rise meaningfully.
   const peak = sloped ? Math.max(2, (8 / 12) * scale) : 0; // roof rise above the wall top (~8")
   const roofH = 6, labelH = 18, cellPadX = 14, gap = 14;
+  const hookH = 13; // vertical room above the roof for the corner lifting hooks
   const cellW = L * scale + cellPadX * 2; // the length walls are widest → set column width
-  const cellH = wallH + roofH + peak + labelH + 8;
+  const cellH = wallH + roofH + peak + hookH + labelH + 8;
   const vbW = cellW * 2 + gap, vbH = cellH * 2 + gap;
 
   const acc = "hsl(var(--accent))";
@@ -460,7 +471,7 @@ function Elevations({
     const wdat = walls[cell.key];
     const wallW = wdat.widthFt * scale;
     const wx = cell.ox + (cellW - wallW) / 2;
-    const wy = cell.oy + roofH + peak;
+    const wy = cell.oy + roofH + peak + hookH;
     const ground = wy + wallH;
     // Storage containers carry their double doors on the right (end) wall — mirrors the plan.
     const containerEnd = containerDoor && cell.key === "right";
@@ -529,9 +540,20 @@ function Elevations({
       const inset = Math.min(wallW * 0.16, 26);
       roofNode = <polygon points={`${wx - 4},${wy} ${wx + inset},${wy - peak} ${wx + wallW - inset},${wy - peak} ${wx + wallW + 4},${wy}`} fill={accSoft} stroke={acc} strokeWidth={1.2} strokeLinejoin="round" />;
     }
+    // Corner lifting hooks (plate-bar with a shackle hole) rising above the roof at the
+    // wall's top corners — only where that corner actually carries a hook.
+    const [cL, cR] = WALL_TOP_CORNERS[cell.key];
+    const hook = (hx: number, k: string) => (
+      <g key={k}>
+        <rect x={hx - 1.8} y={wy - 13} width={3.6} height={13} rx={1.5} fill="none" stroke={acc} strokeWidth={1.2} />
+        <circle cx={hx} cy={wy - 9} r={1.7} fill="none" stroke={acc} strokeWidth={1.1} />
+      </g>
+    );
     return (
       <g key={cell.key}>
         {roofNode}
+        {hookCorners.has(cL) && hook(wx, "hkL")}
+        {hookCorners.has(cR) && hook(wx + wallW, "hkR")}
         <rect x={wx} y={wy} width={wallW} height={wallH} rx={1.5} fill="hsl(var(--accent) / 0.06)" stroke={acc} strokeWidth={1.4} />
         {ribs}
         <line x1={wx - 6} y1={ground} x2={wx + wallW + 6} y2={ground} stroke="hsl(var(--muted-foreground))" strokeWidth={1} />
@@ -1423,7 +1445,7 @@ export default function CabinCalculator() {
                     <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
-                        <p className="text-[11px] text-muted-foreground">Area</p>
+                        <p className="text-[11px] text-muted-foreground">{isStorageProduct(config.productId) ? "Area" : "Carpet Area"}</p>
                         <p className="font-bold text-foreground">{est.dimLength} × {est.dimWidth} = {est.area} sq.ft</p>
                       </div>
                       <div className="rounded-lg bg-accent/10 p-2">

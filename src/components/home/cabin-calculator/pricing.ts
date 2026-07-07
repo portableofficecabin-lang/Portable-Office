@@ -31,7 +31,7 @@ const round = (n: number) => Math.round(n);
  * baseRatePerSqft is for a standard-spec MS cabin; structure & interior
  * choices adjust from there.
  * ------------------------------------------------------------------ */
-export type BadgeType = "Most Chosen" | "Best Value" | "Premium";
+export type BadgeType = "Most Chosen" | "Best Value" | "Budget Value" | "Premium";
 
 export interface ProductType {
   id: string;
@@ -46,7 +46,7 @@ export interface ProductType {
 export const PRODUCTS: ProductType[] = [
   // Standard height is 8'6" (8.5 ft) for every product — the no-surcharge baseline.
   // Customers can raise it in the Size step; each extra foot adds HEIGHT_SURCHARGE_PER_FT.
-  { id: "porta-cabin",     label: "Porta Cabin",         icon: "building",   baseRatePerSqft: 1700, def: { length: 20, width: 10, height: 8.5 }, badge: "Most Chosen", blurb: "All-purpose modular cabin" },
+  { id: "porta-cabin",     label: "Porta Cabin",         icon: "building",   baseRatePerSqft: 1700, def: { length: 20, width: 10, height: 8.5 }, badge: "Budget Value", blurb: "All-purpose modular cabin" },
   { id: "office-cabin",    label: "Office Cabin",        icon: "briefcase",  baseRatePerSqft: 1850, def: { length: 20, width: 10, height: 8.5 }, badge: "Best Value",  blurb: "Furnished workspace cabin" },
   { id: "security-cabin",  label: "Security Cabin",      icon: "shield",     baseRatePerSqft: 2150, def: { length: 6,  width: 6,  height: 8.5 }, blurb: "Guard booth / gate post" },
   { id: "toilet-cabin",    label: "Toilet Cabin",        icon: "bath",       baseRatePerSqft: 2450, def: { length: 8,  width: 6,  height: 8.5 }, blurb: "Portable washroom block" },
@@ -94,27 +94,33 @@ export const ROOFS: RoofType[] = [
 export const findRoof = (id: string): RoofType => ROOFS.find((r) => r.id === id) ?? ROOFS[0];
 
 /* ------------------------------------------------------------------ *
- * Base cabin rate — SIZE-BASED (INTERNAL). The ₹/sqft below is NEVER
- * shown to customers; the calculator uses it to auto-compute the base
- * price from the entered size. Rate falls as the cabin grows; sizes
- * BETWEEN the sample points get a linearly-interpolated "similar" rate.
- * Above MAX_AUTO_QUOTE_AREA (40×10 = 400 sq.ft) we can't auto-quote →
- * 0 = "contact us directly". Tune the sample points here.
+ * Base cabin rate — SIZE-BASED, per CARPET-AREA sq.ft (INTERNAL). The
+ * ₹/sqft below is NEVER shown to customers; the calculator uses it to
+ * auto-compute the base price from the entered size. Rate falls as the
+ * cabin grows; sizes BETWEEN the sample points get a linearly-interpolated
+ * "similar" rate. Above MAX_AUTO_QUOTE_AREA (40×10 = 400 sq.ft) we can't
+ * auto-quote → 0 = "contact us directly". Tune the sample points here.
+ *
+ * Anchors set by the owner (carpet-area rates): 4×4 = ₹2300, 6×4 = ₹2000,
+ * 10×8 = ₹1100, 10×10 = ₹950, and a ₹900 basic rate across 100–400 sq.ft.
+ * The remaining sizes (5×4, 6×6, 8×6, 8×8, 15×10, 20×10) are interpolated
+ * onto a smooth descending curve.
  * ------------------------------------------------------------------ */
 export const MAX_AUTO_QUOTE_AREA = 400; // sq.ft (40 × 10). Bigger → contact us.
-// [floor area sq.ft, ₹/sqft] — ascending by area.
+// [carpet-area sq.ft, ₹/sqft] — ascending by area. Sizes below the first point
+// (4×4) use the 4×4 rate; 100–400 sq.ft settle at the ₹900 basic rate.
 const CABIN_RATE_POINTS: ReadonlyArray<readonly [number, number]> = [
-  [9,   4500], // 3×3
-  [16,  3750], // 4×4
-  [20,  2300], // 5×4
-  [35,  1900], // 7×5
-  [36,  1900], // 6×6
-  [64,  1565], // 8×8
-  [80,  1350], // 10×8
-  [100, 1180], // 10×10
-  [150, 1025], // 15×10
-  [200, 1000], // 20×10
-  [400, 1000], // 40×10 (flat ₹1,000 from 200–400 sq.ft)
+  [16,  2300], // 4×4  (owner rate)
+  [20,  2150], // 5×4  (interpolated)
+  [24,  2000], // 6×4  (owner rate)
+  [36,  1800], // 6×6  (interpolated)
+  [48,  1600], // 8×6  (interpolated)
+  [64,  1350], // 8×8  (interpolated)
+  [80,  1100], // 10×8 (owner rate)
+  [100, 950],  // 10×10 (owner rate)
+  [150, 900],  // 15×10 — porta-cabin ₹900 basic rate kicks in
+  [200, 900],  // 20×10
+  [400, 900],  // 40×10 (flat ₹900 basic across 100–400 sq.ft)
 ];
 
 /** ₹ per sq.ft for a built cabin of the given floor area. Exact sample sizes return
@@ -237,8 +243,8 @@ export interface InsulationOption {
 
 export const INSULATION_OPTIONS: InsulationOption[] = [
   { id: "none",      label: "No Insulation", ratePerSqft: 0,  thickness: "—",     color: "transparent", note: "Single-skin wall — no thermal layer" },
-  { id: "glasswool", label: "Glasswool",     ratePerSqft: 56, thickness: "25 mm", color: "#facc15",     note: "25 mm glass-wool — high thermal & acoustic insulation" },
-  { id: "hitlon",    label: "Hitlon",        ratePerSqft: 28, thickness: "12 mm", color: "#f5f5f5",     note: "12 mm Hitlon (XLPE foil foam) — moisture-safe & lightweight (white / black)" },
+  { id: "glasswool", label: "Glasswool",     ratePerSqft: 17, thickness: "25 mm", color: "#facc15",     note: "25 mm glass-wool — high thermal & acoustic insulation" },
+  { id: "hitlon",    label: "Hitlon",        ratePerSqft: 10, thickness: "12 mm", color: "#f5f5f5",     note: "12 mm Hitlon (XLPE foil foam) — moisture-safe & lightweight (white / black)" },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -384,9 +390,9 @@ export interface ElectricalItem {
 }
 
 export const ELECTRICAL_ITEMS: ElectricalItem[] = [
-  { id: "led",     label: "LED Panel Light", unitPrice: 350,  defaultQty: (a) => Math.max(1, Math.ceil(a / 45)), preselect: true },
-  { id: "tube",    label: "Tube Light",  unitPrice: 450,  defaultQty: (a) => Math.max(1, Math.ceil(a / 60)), preselect: false }, // SET: tube-light rate
-  { id: "fan",     label: "Fan",         unitPrice: 1800, defaultQty: (a) => Math.max(1, Math.ceil(a / 120)), preselect: true },
+  { id: "led",     label: "LED Panel Light", unitPrice: 800,  defaultQty: (a) => Math.max(1, Math.ceil(a / 45)), preselect: true },
+  { id: "tube",    label: "Tube Light",  unitPrice: 250,  defaultQty: (a) => Math.max(1, Math.ceil(a / 60)), preselect: false }, // SET: tube-light rate
+  { id: "fan",     label: "Fan",         unitPrice: 2500, defaultQty: (a) => Math.max(1, Math.ceil(a / 120)), preselect: true },
   { id: "exhaust", label: "Exhaust Fan", unitPrice: 1200, defaultQty: () => 1, preselect: false },
   { id: "ac",      label: "AC Provision", unitPrice: 2500, defaultQty: () => 1, preselect: false },
   { id: "plug",    label: "Plug Points", unitPrice: 450,  defaultQty: (a) => Math.max(2, Math.ceil(a / 55)), preselect: true },
