@@ -21,7 +21,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
-  ELECTRICAL_ITEMS, ADDONS, ROOM_FURNITURE_IDS, windowPositionLabel, materialSpec,
+  ELECTRICAL_ITEMS, ADDONS, ROOM_FURNITURE_IDS, materialSpec,
+  DOOR_SIZE, WINDOW_SIZE, sideSpanFt, openingWidthOn, clampOpeningOffset, placementLabel,
   type CabinConfig,
 } from "./pricing";
 import { ModulePlan } from "./ModulePlan";
@@ -60,8 +61,8 @@ function deriveItems(config: CabinConfig): Item[] {
   doors.forEach((_, i) =>
     items.push({ id: `door-${i}`, kind: "door", label: doors.length > 1 ? `Door ${i + 1}` : "Door", short: "Door" }));
 
-  (config.windowPositions ?? []).forEach((pos) =>
-    items.push({ id: `window-${pos}`, kind: "window", label: `Window · ${windowPositionLabel(pos)}`, short: "Window" }));
+  (config.windowPlacements ?? []).forEach((wp, i) =>
+    items.push({ id: `window-${i}`, kind: "window", label: `Window · ${placementLabel(wp)}`, short: "Window" }));
 
   Object.entries(config.electrical ?? {}).forEach(([eid, qty]) => {
     const n = Math.min(qty || 0, PER_TYPE_CAP);
@@ -92,29 +93,32 @@ const spreadFrac = (i: number, n: number, a: number, b: number) =>
 
 // Canvas convention: x runs along the LENGTH (0=left, 1=right), y along the WIDTH
 // (0=rear wall, 1=front/door wall) — matching the floor plan & elevations.
-function doorDefault(side: string | undefined, offset: number | undefined, L: number, W: number): Pos {
-  const along = (span: number) => clamp((offset ?? span / 2) / span, 0.1, 0.9);
-  switch (side) {
-    case "top": return { x: along(L), y: 0.05 };
-    case "left": return { x: 0.05, y: along(W) };
-    case "right": return { x: 0.95, y: along(W) };
-    default: return { x: along(L), y: 0.95 }; // bottom / front wall
+//
+// `offset` is an opening's NEAR EDGE (ft from the wall's start corner), so the chip's
+// centre fraction is (offset + openingWidth/2) / span.
+function openingDefault(side: string | undefined, offset: number | undefined, openWidthFt: number, L: number, W: number): Pos {
+  const s = side ?? "bottom";
+  const span = sideSpanFt(s, L, W);
+  const near = clampOpeningOffset(offset ?? 0, span, openWidthFt);
+  const along = clamp((near + openingWidthOn(span, openWidthFt) / 2) / span, 0.06, 0.94);
+  switch (s) {
+    case "top": return { x: along, y: 0.05 };
+    case "left": return { x: 0.05, y: along };
+    case "right": return { x: 0.95, y: along };
+    default: return { x: along, y: 0.95 }; // bottom / front wall
   }
 }
-const WINDOW_DEFAULT: Record<string, Pos> = {
-  "top-left": { x: 0.2, y: 0.05 }, "top-center": { x: 0.5, y: 0.05 }, "top-right": { x: 0.8, y: 0.05 },
-  "bottom-left": { x: 0.2, y: 0.95 }, "bottom-center": { x: 0.5, y: 0.95 }, "bottom-right": { x: 0.8, y: 0.95 },
-  "bottom": { x: 0.7, y: 0.95 }, "left": { x: 0.05, y: 0.5 }, "right": { x: 0.95, y: 0.5 },
-};
 // Furniture: the conference table sits in the centre; desks/tables go against a wall by
 // default, or toward the centre when the customer picks "Centre" in Furniture Position.
 function furnitureDefault(fid: string, i: number, n: number, centre: boolean): Pos {
   switch (fid) {
     case "conference": return { x: 0.5, y: 0.52 };
-    case "manager":    return centre ? { x: 0.42, y: 0.42 } : { x: spreadFrac(i, n, 0.2, 0.42), y: 0.12 };
+    case "manager":
+    case "manager-l":  return centre ? { x: 0.42, y: 0.42 } : { x: spreadFrac(i, n, 0.2, 0.42), y: 0.12 };
     case "workstation": return centre ? { x: spreadFrac(i, n, 0.34, 0.66), y: 0.56 } : { x: spreadFrac(i, n, 0.16, 0.84), y: 0.9 };
     case "cupboard":   return { x: 0.93, y: spreadFrac(i, n, 0.14, 0.42) };
-    case "chairs":     return { x: spreadFrac(i, n, 0.36, 0.64), y: 0.68 };
+    case "chair-headrest":
+    case "chair-backrest": return { x: spreadFrac(i, n, 0.36, 0.64), y: 0.68 };
     default:           return centre ? { x: 0.5, y: 0.5 } : { x: spreadFrac(i, n, 0.16, 0.84), y: 0.9 };
   }
 }
@@ -140,12 +144,15 @@ function defaultPositions(config: CabinConfig, items: Item[]): Layout {
       case "door": {
         const di = parseInt(it.id.split("-").pop() ?? "0", 10);
         const d = config.doorPlacements?.[di];
-        p = doorDefault(d?.side, d?.offset, L, W);
+        p = openingDefault(d?.side, d?.offset, DOOR_SIZE.widthFt, L, W);
         break;
       }
-      case "window":
-        p = WINDOW_DEFAULT[it.id.replace(/^window-/, "")] ?? { x: 0.5, y: 0.05 };
+      case "window": {
+        const wi = parseInt(it.id.split("-").pop() ?? "0", 10);
+        const wp = config.windowPlacements?.[wi];
+        p = openingDefault(wp?.side, wp?.offset, config.windowWidthFt ?? WINDOW_SIZE.widthFt, L, W);
         break;
+      }
       case "fan": case "exhaust":
         p = { x: spreadFrac(i, n, 0.35, 0.65), y: 0.5 }; // fan(s) in the centre
         break;

@@ -54,6 +54,10 @@ export const PRODUCTS: ProductType[] = [
   { id: "container-office", label: "Container Office",   icon: "container",  baseRatePerSqft: 2000, def: { length: 20, width: 8,  height: 8.5 }, badge: "Premium", blurb: "Insulated container workspace" },
   { id: "site-office",     label: "Site Office",         icon: "layout",     baseRatePerSqft: 1750, def: { length: 20, width: 10, height: 8.5 }, blurb: "On-site project office" },
   { id: "puf-panel-cabin", label: "Puf Panel Cabin",     icon: "panels",     baseRatePerSqft: 2200, def: { length: 20, width: 10, height: 8.5 }, blurb: "PUF-insulated panel cabin" },
+  // Living/home products. Default sizes stay under MAX_AUTO_QUOTE_AREA so they always get a
+  // real auto-quoted base price (and never drag startingFromEstimate() down to ~0).
+  { id: "container-home",  label: "Container Home",      icon: "container",  baseRatePerSqft: 2100, def: { length: 20, width: 8,  height: 8.5 }, blurb: "Insulated container living home" },
+  { id: "prefab-modular-home", label: "Prefab Modular Home", icon: "building", baseRatePerSqft: 1950, def: { length: 20, width: 10, height: 8.5 }, blurb: "Modular prefab home — turnkey living space" },
   { id: "storage-container", label: "Storage Container",  icon: "warehouse",  baseRatePerSqft: 1250, def: { length: 20, width: 8,  height: 8.5 }, blurb: "Shipping container for storage" },
 ];
 
@@ -314,21 +318,116 @@ export const CONTAINER_DOOR_SIZE: OpeningSize = { widthFt: 7 + 8 / 12, heightFt:
 /** Compact dimension label, e.g. "3′×7′" or "7′8″×7′6″". */
 export const sizeLabel = (s: OpeningSize): string => `${formatFeet(s.widthFt)}×${formatFeet(s.heightFt)}`;
 
-/** Where a window can be placed on the 2D floor plan. The customer toggles positions;
- *  each selected position is one window there, and window count mirrors the selection. */
-export interface WindowPosition { id: string; label: string; }
-export const WINDOW_POSITIONS: WindowPosition[] = [
-  { id: "top-left",      label: "Left Corner" },
-  { id: "top-center",    label: "Center" },
-  { id: "top-right",     label: "Right Corner" },
-  { id: "bottom-left",   label: "Rear Left" },
-  { id: "bottom-center", label: "Rear Center" },
-  { id: "bottom-right",  label: "Rear Right" },
-  { id: "left",          label: "Left Side" },
-  { id: "right",         label: "Right Side" },
-];
-export const windowPositionLabel = (id: string): string =>
-  WINDOW_POSITIONS.find((p) => p.id === id)?.label ?? id;
+/* ------------------------------------------------------------------ *
+ * Openings (doors & windows) — placement model.
+ *
+ * Every opening is { side, offset }. `offset` is the distance in FEET from
+ * the wall's start corner to the opening's NEAR EDGE (not its centre); the
+ * opening then spans its width INTO the wall. Upper/Down walls run along the
+ * cabin LENGTH, Left/Right walls along the WIDTH.
+ *
+ * These helpers are the SINGLE SOURCE OF TRUTH for the valid offset range, so
+ * the input, the presets, the 2D plan, the floor plan and the elevations all
+ * agree. Previously each renderer clamped on its own, which made offsets past
+ * the limit silently collapse to the same spot.
+ * ------------------------------------------------------------------ */
+export interface OpeningPlacement { side: string; offset: number; }
+
+export const OPENING_SIDES = [
+  { id: "top",    label: "Upper" },
+  { id: "bottom", label: "Down" },
+  { id: "left",   label: "Left" },
+  { id: "right",  label: "Right" },
+] as const;
+export const sideLabel = (side: string): string =>
+  OPENING_SIDES.find((s) => s.id === side)?.label ?? side;
+
+/** Wall span (ft) for a side: Upper/Down run along LENGTH, Left/Right along WIDTH. */
+export const sideSpanFt = (side: string, lengthFt: number, widthFt: number): number =>
+  side === "left" || side === "right" ? Math.max(1, widthFt) : Math.max(1, lengthFt);
+
+/** Effective opening width (ft) on a wall of `spanFt` — the real width, but never more
+ *  than 60% of a short wall (matches how the 2D plan draws it). */
+export const openingWidthOn = (spanFt: number, widthFt: number): number =>
+  Math.min(Math.max(widthFt, 0.5), Math.max(0.5, spanFt) * 0.6);
+
+/** Largest valid distance-from-corner (ft) for an opening's NEAR edge — the opening must
+ *  still fit inside the wall. e.g. a 3 ft door on a 10 ft wall → max 7 ft. */
+export const maxOpeningOffset = (spanFt: number, widthFt: number): number =>
+  Math.max(0, spanFt - openingWidthOn(spanFt, widthFt));
+
+/** Clamp an opening's distance-from-corner into [0, maxOpeningOffset]. */
+export const clampOpeningOffset = (offset: number, spanFt: number, widthFt: number): number =>
+  Math.min(Math.max(Number.isFinite(offset) ? offset : 0, 0), maxOpeningOffset(spanFt, widthFt));
+
+/** Corner / centre presets for an opening on a wall of `spanFt`. `offset` is the near edge,
+ *  so "centre" is (span - width)/2 and "far corner" is (span - width) — NOT span/2 / span-1. */
+export const openingPreset = (pos: "start" | "center" | "end", spanFt: number, widthFt: number): number => {
+  const max = maxOpeningOffset(spanFt, widthFt);
+  return pos === "start" ? 0 : pos === "end" ? max : max / 2;
+};
+
+/** Human label for a placement, e.g. "Upper @ 2′". */
+export const placementLabel = (p: OpeningPlacement): string =>
+  `${sideLabel(p.side)} @ ${formatFeet(p.offset)}`;
+
+/* ---- Door opening (hand + swing) ----------------------------------------------- *
+ * A door is fully specified by WHICH EDGE is hinged and WHICH WAY the leaf swings.
+ *   hand "left"  = hinged at the opening's start edge (the `offset` end)
+ *   hand "right" = hinged at the far edge
+ *   swing "out"  = leaf swings out to the exterior;  "in" = into the room
+ * The defaults (left / out) reproduce the original drawing exactly.
+ * ------------------------------------------------------------------------------- */
+export type DoorHand = "left" | "right";
+export type DoorSwing = "in" | "out";
+
+/** A main door: a placement plus how it opens. */
+export interface DoorPlacement extends OpeningPlacement {
+  hand?: DoorHand;
+  swing?: DoorSwing;
+}
+
+export const DOOR_HANDS = [
+  { id: "left",  label: "Hinge L" },
+  { id: "right", label: "Hinge R" },
+] as const;
+export const DOOR_SWINGS = [
+  { id: "out", label: "Opens Out" },
+  { id: "in",  label: "Opens In" },
+] as const;
+
+/** Partition doors. A partition runs across the cabin WIDTH, so its door is hinged at the
+ *  rear ("top") or front ("bottom") end of the opening, and swings into the left/right room. */
+export type PartitionHinge = "top" | "bottom";
+export type PartitionSwing = "left" | "right";
+export const PARTITION_HINGES = [
+  { id: "top",    label: "Hinge Rear" },
+  { id: "bottom", label: "Hinge Front" },
+] as const;
+export const PARTITION_SWINGS = [
+  { id: "left",  label: "Into Left Room" },
+  { id: "right", label: "Into Right Room" },
+] as const;
+
+/** e.g. "hinge left, opens out" — for the quote / WhatsApp / PDF. */
+export const doorOpeningLabel = (d: DoorPlacement): string =>
+  `hinge ${d.hand ?? "left"}, opens ${d.swing ?? "out"}`;
+export const partitionOpeningLabel = (hinge: PartitionHinge, swing: PartitionSwing): string =>
+  `hinge ${hinge === "top" ? "rear" : "front"}, opens into ${swing} room`;
+
+/** Legacy named window positions (the old toggle-chip model) → side + CENTRE fraction along
+ *  that wall. Kept ONLY to migrate saved configs onto the windowPlacements model. */
+export const LEGACY_WINDOW_POSITIONS: Record<string, { side: string; t: number }> = {
+  "top-left":      { side: "top",    t: 0.2 },
+  "top-center":    { side: "top",    t: 0.5 },
+  "top-right":     { side: "top",    t: 0.8 },
+  "bottom-left":   { side: "bottom", t: 0.2 },
+  "bottom-center": { side: "bottom", t: 0.5 },
+  "bottom-right":  { side: "bottom", t: 0.8 },
+  "bottom":        { side: "bottom", t: 0.5 },
+  "left":          { side: "left",   t: 0.5 },
+  "right":         { side: "right",  t: 0.5 },
+};
 
 /* ------------------------------------------------------------------ *
  * Product-wise behaviour — keeps irrelevant options off the calculator
@@ -428,9 +527,48 @@ export const MOBILITY_TYPES = [
   { id: "movable", label: "100% Movable (fully relocatable)" },
   { id: "fixed", label: "Fixed / Semi-permanent" },
 ] as const;
+
+/** Partition door type. Priced through the partition add-ons:
+ *   • no door  → "Fixed Partition"        ₹17,500 each
+ *   • hinged   → "Partition with Door"    ₹22,000 each (all-in)
+ *   • sliding  → Fixed Partition ₹17,500 + "Partition Sliding Door" ₹8,500 = ₹26,000 each */
+export const PARTITION_DOOR_TYPES = [
+  { id: "hinged",  label: "Hinged Door" },
+  { id: "sliding", label: "Sliding Door" },
+] as const;
+export const partitionDoorTypeLabel = (id: string): string =>
+  PARTITION_DOOR_TYPES.find((t) => t.id === id)?.label ?? id;
 /** Work-table add-ons. Adding the first one auto-ticks "By Work Table" for plug points;
  *  removing the last one un-ticks it (see the toggleAddon handler). */
-export const TABLE_ADDON_IDS = ["workstation", "manager", "conference"];
+export const TABLE_ADDON_IDS = ["workstation", "manager", "manager-l", "conference"];
+
+/** Manager-table footprints. Normal = a 5′ × 2′ rectangle. L-shaped = that same 5′ × 2′ main
+ *  run plus a 2′-wide return leg, giving a 5′ × 4′ bounding footprint. */
+export const MANAGER_TABLE_SIZE = { widthFt: 5, depthFt: 2 };
+export const MANAGER_L_SIZE = { widthFt: 5, depthFt: 4, returnWidthFt: 2 };
+/** Revolving chairs are supplied as Featherlite (or an equivalent brand). */
+export const CHAIR_BRAND_NOTE = "Featherlite or similar alternate";
+
+/** Where a work table can sit in the room — a wall run (staff sit on the room side of the
+ *  desk, with walking clearance), or free-standing in the CENTRE: back-to-back "opposite"
+ *  seating with a partition screen between each person. */
+export const TABLE_POSITIONS = [
+  { id: "top",    label: "Upper Wall" },
+  { id: "bottom", label: "Down Wall" },
+  { id: "left",   label: "Left Wall" },
+  { id: "right",  label: "Right Wall" },
+  { id: "centre", label: "Centre" },
+] as const;
+export const tablePositionLabel = (id: string): string =>
+  TABLE_POSITIONS.find((p) => p.id === id)?.label ?? id;
+
+/** Default wall for the i-th table when the customer hasn't picked one — spread them around
+ *  the room (upper → down → left → right). Conference tables, and everything when
+ *  "Furniture Position" is Centre, default to the centre pod. */
+const TABLE_WALL_CYCLE = ["top", "bottom", "left", "right"];
+export const defaultTablePosition = (i: number, centrePref = false): string =>
+  centrePref ? "centre" : TABLE_WALL_CYCLE[i % TABLE_WALL_CYCLE.length];
+
 export const furniturePositionLabel = (id: string): string => FURNITURE_POSITIONS.find((o) => o.id === id)?.label ?? id;
 /** Human label for the selected plug-point placements, e.g. "Upper Wall, Left Wall, By Work Table". */
 export const plugPointWallsLabel = (ids: string[] | undefined): string =>
@@ -486,14 +624,18 @@ export const ADDONS: AddonItem[] = [
   { id: "partition-door", label: "Partition with Door", price: 22000, hasQty: true },
   // Work tables, cupboard & overhead cabinet — flat ₹5,000 per unit.
   { id: "workstation", label: "Workstation",      price: 5000,  hasQty: true },
-  { id: "manager",     label: "Manager Table",    price: 5000,  hasQty: true },
+  // Manager table — a normal 5′×2′ rectangle, or the L-shaped desk (5′×2′ + a 2′ return).
+  { id: "manager",     label: "Manager Table (5′ × 2′ Rectangle)", price: 6500, hasQty: true },
+  { id: "manager-l",   label: "Manager Table (L-Shaped)",          price: 8000, hasQty: true, hint: "5′×2′ main run + 2′ return leg" },
   { id: "conference",  label: "Conference Table", price: 5000,  hasQty: true },
   { id: "cupboard",    label: "Cupboard",         price: 5000,  hasQty: true },
   { id: "overhead",    label: "Overhead Cabinet", price: 5000,  hasQty: true },
   // Basic office table — plain top vs one with a drawer box.
-  { id: "table",        label: "Table (Without Drawer)",  price: 2500, hasQty: true },
+  { id: "table",        label: "Table (Without Drawer)",  price: 3500, hasQty: true },
   { id: "table-drawer", label: "Table (With Drawer Box)", price: 6000, hasQty: true, hint: "Table with a lockable drawer box" },
-  { id: "chairs",      label: "Office Chairs",    price: 5500,  hasQty: true },
+  // Revolving office chairs — two options; brand Featherlite or an equivalent alternate.
+  { id: "chair-headrest", label: "Revolving Chair — Head Rest", price: 8500, hasQty: true, hint: CHAIR_BRAND_NOTE },
+  { id: "chair-backrest", label: "Revolving Chair — Back Rest", price: 5000, hasQty: true, hint: CHAIR_BRAND_NOTE },
   // Security-cabin only: an external stand/bracket fitted outside each window.
   { id: "window-stand", label: "Exterior Window Stand", price: 4500, hasQty: true,
     onlyFor: ["security-cabin"], hint: "One per window — fitted outside" },
@@ -519,8 +661,8 @@ export interface CabinConfig {
   doorTypeId: string;
   doorQty: number;
   /** Per-door placement: side (top/bottom/left/right) + offset in ft from the start
-   *  corner. Length mirrors doorQty. */
-  doorPlacements: { side: string; offset: number }[];
+   *  corner to the door's NEAR EDGE, plus how it opens (hand + swing). Mirrors doorQty. */
+  doorPlacements: DoorPlacement[];
   windowTypeId: string;
   windowQty: number;
   /** Window size (ft) — default 3×3. Larger windows cost proportionally more. */
@@ -528,8 +670,9 @@ export interface CabinConfig {
   windowHeightFt: number;
   /** Sliding track: "2" (2-track, base) or "2.5" (2.5-track, +12%). */
   windowTrackId: string;
-  /** Chosen window placements on the 2D plan; window count mirrors this list. */
-  windowPositions: string[];
+  /** Per-window placement: side + offset in ft from the start corner to the window's NEAR
+   *  EDGE — same model as doorPlacements. Window count mirrors this list. */
+  windowPlacements: OpeningPlacement[];
   /** id -> quantity for ventilation (toilet cabins: exhaust fan / louver). */
   ventilation: Record<string, number>;
   /** Selected container grade (storage containers only; ignored for other products). */
@@ -542,6 +685,9 @@ export interface CabinConfig {
   /** Spec-only placement choices (no price impact) — captured in the quote/PDF.
    *  furniturePosition: wall | centre · mobilityType: movable | fixed. */
   furniturePosition: string;
+  /** Per-table placement — addon id → array of TABLE_POSITIONS ids, one entry per unit.
+   *  Lets the customer put each individual table on a specific wall (or the centre pod). */
+  tablePlacements: Record<string, string[]>;
   /** Plug-point placement — MULTI-select of PLUG_POINT_WALLS ids (upper/down/left/right/table).
    *  The 2D plan spreads sockets along each chosen wall + one beside each work table. */
   plugPointWalls: string[];
@@ -568,6 +714,17 @@ export interface CabinConfig {
   /** Partitions have doors ("Partition with Door" price) vs plain fixed partitions.
    *  Applies uniformly to all N-1 partitions. */
   partitionDoor: boolean;
+  /** Door type on every partition when `partitionDoor` is true: "hinged" | "sliding".
+   *  Sliding is priced as a Fixed Partition + the "Partition Sliding Door" add-on. */
+  partitionDoorType: string;
+  /** Partition-door position: the door's NEAR-EDGE distance (ft) from the REAR (top) wall,
+   *  measured along the partition — which spans the cabin WIDTH. Clamped so it always fits.
+   *  Applies uniformly to all N-1 partitions. */
+  partitionDoorOffset: number;
+  /** Partition-door opening: which end of the opening is hinged (rear/front end of the
+   *  partition) and which room the leaf swings into. Applies to all N-1 partitions. */
+  partitionDoorHinge: PartitionHinge;
+  partitionDoorSwing: PartitionSwing;
   transport: boolean;
   installation: boolean;
   gst: boolean;
@@ -652,8 +809,14 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     doorTypeId: DOOR_TYPES[0].id, // Steel Door (1 included in base)
     // Containers ship with their own doors — no separate door line.
     doorQty: container ? 0 : 1,
-    // Default door placement: one main door on the front (bottom) wall, ~30% along.
-    doorPlacements: container ? [] : [{ side: "bottom", offset: Math.round(product.def.length * 0.3) }],
+    // Default door placement: one main door on the front (bottom) wall, ~30% along
+    // (offset = distance from the left corner to the door's near edge).
+    doorPlacements: container ? [] : [{
+      side: "bottom",
+      offset: clampOpeningOffset(Math.round(product.def.length * 0.3), product.def.length, DOOR_SIZE.widthFt),
+      hand: "left",
+      swing: "out",
+    }],
     windowTypeId: "upvc", // uPVC is the recommended best-value default
     // Standard window is 3×3 ft on a 2-track frame; size & track drive the price.
     windowWidthFt: 3,
@@ -662,8 +825,12 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     // Toilet & storage products start windowless — toilet uses ventilation instead;
     // containers have no windows.
     windowQty: isToiletCabin(product.id) || container ? 0 : 2,
-    // Default window placements (two front-corner windows); count mirrors this list.
-    windowPositions: isToiletCabin(product.id) || container ? [] : ["top-left", "top-right"],
+    // Default window placements: two windows on the rear (Upper) wall, set in symmetrically
+    // from each corner. `offset` is the distance to each window's near edge.
+    windowPlacements: isToiletCabin(product.id) || container ? [] : [
+      { side: "top", offset: clampOpeningOffset(Math.round(product.def.length * 0.2), product.def.length, WINDOW_SIZE.widthFt) },
+      { side: "top", offset: clampOpeningOffset(Math.round(product.def.length * 0.8) - WINDOW_SIZE.widthFt, product.def.length, WINDOW_SIZE.widthFt) },
+    ],
     // Toilet cabins default to one exhaust fan (ventilation replaces windows).
     ventilation: isToiletCabin(product.id) ? { exhaust: 1 } : {},
     // Default container grade (2024–2025). Ignored for non-container products.
@@ -672,6 +839,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     lightColor: "white",
     ledShape: "square",
     furniturePosition: "wall",
+    tablePlacements: {},
     plugPointWalls: ["down"], // one wall by default; "By Work Table" auto-adds when a table is chosen
     mobilityType: "movable",
     furnitureRoom: {},
@@ -682,6 +850,12 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     roomCount: 1,
     roomLengths: [Math.round(product.def.length)],
     partitionDoor: true,
+    partitionDoorType: "hinged",
+    // Centred on the partition (which spans the cabin WIDTH) by default.
+    partitionDoorOffset: openingPreset("center", product.def.width, DOOR_SIZE.widthFt),
+    // Opens like the original drawing: hinged at the rear end, swinging into the right room.
+    partitionDoorHinge: "top",
+    partitionDoorSwing: "right",
     transport: false,
     installation: false,
     gst: true,
@@ -867,7 +1041,18 @@ export function startingFromEstimate(): number {
 /** Add-on ids that are "movable" work furniture and can be assigned to a specific room in
  *  a 2-room layout (drives the Add-ons room picker + drawing). Fixtures (toilet, wash
  *  basin, urinal, pantry, partition) are excluded — they are not placed per-room this way. */
-export const ROOM_FURNITURE_IDS = ["workstation", "manager", "conference", "cupboard", "chairs"];
+export const ROOM_FURNITURE_IDS = ["workstation", "manager", "manager-l", "conference", "cupboard", "chair-headrest", "chair-backrest"];
+
+/** Per-unit placement for a table add-on: one TABLE_POSITIONS id per unit. Entries the
+ *  customer hasn't set fall back to the spread default (conference tables and the "Centre"
+ *  furniture position default to the centre pod). Always returns exactly `qty` entries, so
+ *  changing the quantity can never leave a table without a placement. */
+export function tablePlacementsOf(cfg: CabinConfig, addonId: string, qty: number): string[] {
+  const saved = cfg.tablePlacements?.[addonId] ?? [];
+  const centrePref = cfg.furniturePosition === "centre" || addonId === "conference";
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) => saved[i] ?? defaultTablePosition(i, centrePref));
+}
 
 /** Spec-only: per-room unit counts for a work-furniture add-on across the current rooms.
  *  Returns an array of length roomCount (each ≥0) summing to `total`. Rooms 1..N-1 come from
@@ -964,12 +1149,12 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     insul && insul.id !== "none" ? `Insulation: ${insul.label} (${insul.thickness})` : ``,
     isToilet
       ? `Doors: ${cfg.doorQty} × ${door}`
-      : `Doors/Windows: ${cfg.doorQty} × ${door}, ${cfg.windowQty} × ${win} ${formatFeet(cfg.windowWidthFt ?? 3)}×${formatFeet(cfg.windowHeightFt ?? 3)} ${findWindowTrack(cfg.windowTrackId).label}${cfg.windowPositions?.length ? ` (${cfg.windowPositions.map(windowPositionLabel).join(", ")})` : ""}`,
+      : `Doors/Windows: ${cfg.doorQty} × ${door}${cfg.doorPlacements?.length ? ` (${cfg.doorPlacements.map((d) => `${placementLabel(d)} · ${doorOpeningLabel(d)}`).join(", ")})` : ""}, ${cfg.windowQty} × ${win} ${formatFeet(cfg.windowWidthFt ?? 3)}×${formatFeet(cfg.windowHeightFt ?? 3)} ${findWindowTrack(cfg.windowTrackId).label}${cfg.windowPlacements?.length ? ` (${cfg.windowPlacements.map(placementLabel).join(", ")})` : ""}`,
     isToilet ? `Ventilation: ${vent || "Exhaust Fan (1 no.)"}` : ``,
     isToilet ? `Window: Not Applicable (toilet cabin)` : (isStorage && cfg.windowQty === 0 ? `Window: Not Applicable (add if required)` : ``),
     `Electrical: ${elec}`,
     cfg.roomCount > 1
-      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => `R${i + 1} ${Math.round(l)}ft`).join(" · ")}) — ${cfg.roomCount - 1} × ${cfg.partitionDoor ? "Partition w/ Door" : "Fixed Partition"}`
+      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => `R${i + 1} ${Math.round(l)}ft`).join(" · ")}) — ${cfg.roomCount - 1} × ${cfg.partitionDoor ? `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear${cfg.partitionDoorType === "hinged" ? ` (${partitionOpeningLabel(cfg.partitionDoorHinge, cfg.partitionDoorSwing)})` : ""}` : "Fixed Partition"}`
       : `Rooms: Single`,
     `Add-ons: ${furn}`,
     isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,

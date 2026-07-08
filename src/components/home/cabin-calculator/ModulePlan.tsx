@@ -15,7 +15,11 @@
  * entangling the large CabinCalculator component.
  */
 
-import { DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, plugPointWallsLabel, type CabinConfig } from "./pricing";
+import {
+  DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf, plugPointWallsLabel,
+  MANAGER_TABLE_SIZE, MANAGER_L_SIZE,
+  sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig,
+} from "./pricing";
 
 /** Feet → architectural label, e.g. 30 → 30'-0", 8.5 → 8'-6", 3 → 3'-0". */
 function ftLabel(f: number): string {
@@ -46,16 +50,19 @@ const C = {
  * proper shape (desk + chair, cupboard, conference table) labelled with
  * its size, not an icon chip.
  * ------------------------------------------------------------------ */
-type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "cabinet" | "conf" | "chair" };
+type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "deskL" | "cabinet" | "conf" | "chair"; pos?: string };
+const CHAIR_GAP = 3; // clearance between the desk edge and the chair, so staff can sit
 // Work tables (workstation / manager / conference) all use the company's standard
 // TABLE_SIZE (3.5 ft × 22"), so the plan's dimensions match the quote & PDF exactly.
 const TW = TABLE_SIZE.lengthFt, TD = TABLE_SIZE.depthIn / 12;
 const FURN_SPEC: Record<string, Omit<FurnUnit, "id">> = {
-  workstation: { label: "WORKSTATION", wFt: TW, dFt: TD, kind: "desk" },
-  manager:     { label: "MANAGER TABLE", wFt: TW, dFt: TD, kind: "desk" },
-  conference:  { label: "CONFERENCE TABLE", wFt: TW, dFt: TD, kind: "conf" },
-  cupboard:    { label: "CUPBOARD / FILE CABINET", wFt: 3, dFt: 1.5, kind: "cabinet" },
-  chairs:      { label: "CHAIR", wFt: 1.5, dFt: 1.5, kind: "chair" },
+  workstation:      { label: "WORKSTATION", wFt: TW, dFt: TD, kind: "desk" },
+  manager:          { label: "MANAGER TABLE", wFt: MANAGER_TABLE_SIZE.widthFt, dFt: MANAGER_TABLE_SIZE.depthFt, kind: "desk" },
+  "manager-l":      { label: "MANAGER TABLE (L)", wFt: MANAGER_L_SIZE.widthFt, dFt: MANAGER_L_SIZE.depthFt, kind: "deskL" },
+  conference:       { label: "CONFERENCE TABLE", wFt: TW, dFt: TD, kind: "conf" },
+  cupboard:         { label: "CUPBOARD / FILE CABINET", wFt: 3, dFt: 1.5, kind: "cabinet" },
+  "chair-headrest": { label: "CHAIR (HEAD REST)", wFt: 1.5, dFt: 1.5, kind: "chair" },
+  "chair-backrest": { label: "CHAIR (BACK REST)", wFt: 1.5, dFt: 1.5, kind: "chair" },
 };
 const PER_TYPE_CAP = 8; // don't flood a room's plan with dozens of identical pieces
 
@@ -79,16 +86,65 @@ function FurnCaption({ cx, y, u }: { cx: number; y: number; u: FurnUnit }) {
   );
 }
 
-/** Desk / table (top view) with a chair tucked on the interior side + caption. */
-function drawDesk(x: number, y: number, w: number, h: number, u: FurnUnit, key: string) {
-  const cx = x + w / 2;
-  const chairS = Math.min(Math.max(h * 0.8, 8), 14);
+/** Chair size that fits a desk of w×h, clamped so it always reads as a seat. */
+const chairFor = (w: number, h: number) => Math.min(Math.max(Math.min(w, h) * 0.7, 8), 13);
+
+/** Desk / table (top view) at (x,y,w,h) with the chair on `side` — always the ROOM-interior
+ *  side, offset by CHAIR_GAP so there is real clearance for a person to sit. The caption is
+ *  drawn INSIDE the desk (rotated for the vertical walls) so it never collides with a chair. */
+function drawDeskAt(
+  x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
+  side: "below" | "above" | "right" | "left",
+) {
+  const cx = x + w / 2, cyc = y + h / 2;
+  const cs = chairFor(w, h);
+  const chair =
+    side === "below" ? { cx, cy: y + h + CHAIR_GAP + cs / 2 } :
+    side === "above" ? { cx, cy: y - CHAIR_GAP - cs / 2 } :
+    side === "right" ? { cx: x + w + CHAIR_GAP + cs / 2, cy: cyc } :
+                       { cx: x - CHAIR_GAP - cs / 2, cy: cyc };
+  const vertical = side === "right" || side === "left";
+  const along = vertical ? h : w;          // the desk's long edge on screen
   return (
     <g key={key}>
-      <FurnChair cx={cx} cy={y + h + chairS * 0.6} s={chairS} />
+      <FurnChair cx={chair.cx} cy={chair.cy} s={cs} />
       <rect x={x} y={y} width={w} height={h} rx={2} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
-      <line x1={x + 2} y1={y + h * 0.34} x2={x + w - 2} y2={y + h * 0.34} stroke={C.woodEdge} strokeWidth={0.5} strokeOpacity={0.6} />
-      <FurnCaption cx={cx} y={y + h + chairS + 8} u={u} />
+      {along > 44 && (
+        <g transform={vertical ? `rotate(-90 ${cx} ${cyc})` : undefined}>
+          <text x={cx} y={cyc - 0.5} textAnchor="middle" fontSize={6} fontWeight={700} fill={C.ink}>{u.label}</text>
+          <text x={cx} y={cyc + 6.2} textAnchor="middle" fontSize={5.6} fill={C.ink}>{ftLabel(u.wFt)} X {ftLabel(u.dFt)}</text>
+        </g>
+      )}
+    </g>
+  );
+}
+
+/** L-shaped manager desk (top view): a 5′×2′ main run plus a 2′-wide return leg. The whole L
+ *  is rotated to face the wall it sits on, and the chair tucks into the L's inner corner —
+ *  which is exactly how a manager sits at one. `boxW`/`boxH` are the ROTATED bounding box. */
+function drawDeskLAt(
+  x: number, y: number, boxW: number, boxH: number, u: FurnUnit, key: string,
+  side: "below" | "above" | "right" | "left", ppf: number,
+) {
+  const Lw = u.wFt * ppf, Lh = u.dFt * ppf;              // local (unrotated) footprint
+  const mainD = MANAGER_TABLE_SIZE.depthFt * ppf;        // depth of the main run
+  const retW = MANAGER_L_SIZE.returnWidthFt * ppf;       // width of the return leg
+  // below → 0°, right → -90°, above → 180°, left → 90° (maps "chair below" onto each wall).
+  const angle = side === "below" ? 0 : side === "right" ? -90 : side === "above" ? 180 : 90;
+  const cs = chairFor(Lw - retW, Lh - mainD);
+  const chX = retW + (Lw - retW) / 2, chY = mainD + CHAIR_GAP + cs / 2;
+  const pts = `0,0 ${Lw},0 ${Lw},${mainD} ${retW},${mainD} ${retW},${Lh} 0,${Lh}`;
+  return (
+    <g key={key} transform={`translate(${x + boxW / 2} ${y + boxH / 2}) rotate(${angle}) translate(${-Lw / 2} ${-Lh / 2})`}>
+      <FurnChair cx={chX} cy={chY} s={cs} />
+      <polygon points={pts} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
+      {Lw > 44 && (
+        // counter-rotate so the caption stays upright whichever wall the desk faces
+        <g transform={`rotate(${-angle} ${Lw / 2} ${mainD / 2})`}>
+          <text x={Lw / 2} y={mainD / 2 - 0.5} textAnchor="middle" fontSize={5.8} fontWeight={700} fill={C.ink}>{u.label}</text>
+          <text x={Lw / 2} y={mainD / 2 + 5.8} textAnchor="middle" fontSize={5.4} fill={C.ink}>{ftLabel(u.wFt)} X {ftLabel(u.dFt)}</text>
+        </g>
+      )}
     </g>
   );
 }
@@ -128,64 +184,158 @@ function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: 
   );
 }
 
-/** Lay out and draw one room's furniture: cupboards along the rear wall, a conference
- *  table centred, then desks (each with a chair) flowing left→right, then loose chairs.
- *  Everything is drawn to scale; positions are auto-arranged so it reads like a plan. */
+/** Lay out one room's furniture so it reads like a real seating plan:
+ *   • Each work table sits on the wall the customer chose (upper / down / left / right) as a
+ *     run of adjacent desks, with the chair on the ROOM side + clearance — staff can sit.
+ *   • "Centre" tables form a back-to-back pod: two rows facing each other across a partition
+ *     screen, with a divider between each person.
+ *   • Cupboards hug a free wall from the right; conference tables sit centred with a chair
+ *     ring; loose chairs fill the leftover centre.
+ *  Runs wrap inward when a wall is full, and the left/right runs are inset past the
+ *  top/bottom runs so nothing collides in the corners. */
 function roomFurnitureNodes(
-  units: FurnUnit[], x0: number, x1: number, yTop: number, ppf: number, keyPrefix: string,
+  units: FurnUnit[], x0: number, x1: number, yTop: number, yBot: number, ppf: number, keyPrefix: string,
 ): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
-  const pad = Math.min(14, (x1 - x0) * 0.06);
-  const gapX = 8, gapY = 14, cap = 17;
+  const pad = 7, gap = 6;
+  const dW = (u: FurnUnit) => u.wFt * ppf;  // table length (along the wall)
+  const dD = (u: FurnUnit) => u.dFt * ppf;  // table depth (into the room)
+
   const cabinets = units.filter((u) => u.kind === "cabinet");
-  const confs = units.filter((u) => u.kind === "conf");
-  const desks = units.filter((u) => u.kind === "desk");
-  const chairs = units.filter((u) => u.kind === "chair");
-  let cy = yTop + pad;
-
-  // Cupboards / file cabinets along the rear (top) wall.
-  if (cabinets.length) {
-    let cx = x0 + pad, rowH = 0;
-    cabinets.forEach((u, i) => {
-      const w = u.wFt * ppf, h = u.dFt * ppf;
-      if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; cy += rowH + cap + gapY; rowH = 0; }
-      nodes.push(drawCabinet(cx, cy, w, h, u, `${keyPrefix}-cab${i}`));
-      cx += w + gapX; rowH = Math.max(rowH, h);
-    });
-    cy += rowH + cap + gapY;
-  }
-
-  // Conference table(s) centred, with a chair ring.
-  confs.forEach((u, i) => {
-    const w = Math.min(u.wFt * ppf, (x1 - x0) - pad * 2), h = u.dFt * ppf;
-    const chairS = Math.min(h * 0.5, 11);
-    cy += chairS + 2;
-    nodes.push(drawConf((x0 + x1) / 2 - w / 2, cy, w, h, u, `${keyPrefix}-conf${i}`));
-    cy += h + chairS + cap + gapY;
+  const looseChairs = units.filter((u) => u.kind === "chair");
+  const groups: Record<string, FurnUnit[]> = { top: [], bottom: [], left: [], right: [], centre: [] };
+  // Wall-placed conference tables are drawn as ordinary desks; centred ones get a chair ring.
+  const confsCentre: FurnUnit[] = [];
+  units.forEach((u) => {
+    if (u.kind !== "desk" && u.kind !== "deskL" && u.kind !== "conf") return;
+    const p = u.pos ?? (u.kind === "conf" ? "centre" : "top");
+    if (u.kind === "conf" && p === "centre") { confsCentre.push(u); return; }
+    (groups[p] ?? groups.top).push(u);
   });
 
-  // Desks (each with a chair) flowing left→right, wrapping within the room.
-  if (desks.length) {
-    let cx = x0 + pad, rowH = 0;
-    desks.forEach((u, i) => {
-      const w = u.wFt * ppf, h = u.dFt * ppf;
-      const chairS = Math.min(Math.max(h * 0.8, 8), 14);
-      const cellH = h + chairS + cap + 4;
-      if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; cy += rowH + gapY; rowH = 0; }
-      nodes.push(drawDesk(cx, cy, w, h, u, `${keyPrefix}-desk${i}`));
-      cx += w + gapX; rowH = Math.max(rowH, cellH);
+  /** Draw a table into a bounding box — L-shaped manager desks get their own polygon. */
+  const drawTable = (
+    x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
+    side: "below" | "above" | "right" | "left",
+  ) => (u.kind === "deskL" ? drawDeskLAt(x, y, w, h, u, key, side, ppf) : drawDeskAt(x, y, w, h, u, key, side));
+
+  // Vertical space a horizontal wall run consumes (deepest desk + its chair + clearance).
+  const band = (list: FurnUnit[]) =>
+    list.length ? Math.max(...list.map((u) => dD(u) + chairFor(dW(u), dD(u)))) + CHAIR_GAP + gap : 0;
+  const topBand = band(groups.top), bottomBand = band(groups.bottom);
+
+  // --- horizontal wall runs (upper / down) ---
+  const layH = (list: FurnUnit[], wall: "top" | "bottom") => {
+    let cx = x0 + pad, row = 0;
+    list.forEach((u, i) => {
+      const w = dW(u), h = dD(u), cs = chairFor(w, h);
+      if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; row++; }
+      const off = row * (h + cs + CHAIR_GAP + gap);
+      const y = wall === "top" ? yTop + pad + off : yBot - pad - h - off;
+      nodes.push(drawTable(cx, y, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "top" ? "below" : "above"));
+      cx += w + gap;
     });
-    cy += rowH + gapY;
+  };
+  layH(groups.top, "top");
+  layH(groups.bottom, "bottom");
+
+  // --- vertical wall runs (left / right), inset past the horizontal bands ---
+  const vTop = yTop + pad + topBand, vBot = yBot - pad - bottomBand;
+  const layV = (list: FurnUnit[], wall: "left" | "right") => {
+    let cy = vTop, col = 0;
+    list.forEach((u, i) => {
+      const w = dD(u), h = dW(u), cs = chairFor(w, h);  // rotated against the side wall
+      if (cy + h > vBot && cy > vTop) { cy = vTop; col++; }
+      const off = col * (w + cs + CHAIR_GAP + gap);
+      const x = wall === "left" ? x0 + pad + off : x1 - pad - w - off;
+      nodes.push(drawTable(x, cy, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "left" ? "right" : "left"));
+      cy += h + gap;
+    });
+  };
+  layV(groups.left, "left");
+  layV(groups.right, "right");
+
+  // --- what's left in the middle, after the four wall runs ---
+  const sideBand = (list: FurnUnit[]) =>
+    list.length ? Math.max(...list.map((u) => dD(u) + chairFor(dD(u), dW(u)))) + CHAIR_GAP + gap : 0;
+  const cx0 = x0 + pad + sideBand(groups.left), cx1 = x1 - pad - sideBand(groups.right);
+  let cursor = vTop;
+
+  // Conference table(s): centred with a chair ring.
+  confsCentre.forEach((u, i) => {
+    const w = Math.min(dW(u), cx1 - cx0 - 8), h = dD(u);
+    const cs = Math.min(h * 0.5, 11);
+    cursor += cs + 2;
+    nodes.push(drawConf((cx0 + cx1) / 2 - w / 2, cursor, w, h, u, `${keyPrefix}-conf${i}`));
+    cursor += h + cs + 14;
+  });
+
+  // Centre pod — two rows back-to-back across a partition screen, staff facing each other.
+  // Each desk keeps its OWN footprint, so a 5′×4′ L-desk can sit beside a workstation.
+  if (groups.centre.length) {
+    const list = groups.centre;
+    const rowA = list.slice(0, Math.ceil(list.length / 2));
+    const rowB = list.slice(Math.ceil(list.length / 2));
+    const runW = (r: FurnUnit[]) => (r.length ? r.reduce((s, u) => s + dW(u) + gap, -gap) : 0);
+    const rowW = Math.max(runW(rowA), runW(rowB));
+    const depthA = rowA.length ? Math.max(...rowA.map(dD)) : 0;
+    const depthB = rowB.length ? Math.max(...rowB.map(dD)) : 0;
+    const cs = chairFor(dW(list[0]), dD(list[0]));
+    const px = Math.max(cx0 + 2, (cx0 + cx1) / 2 - rowW / 2);
+    const spine = Math.max(cursor + cs + depthA + 4, (Math.max(cursor, vTop) + vBot) / 2);
+    // upper row sits above the spine (chairs above); lower row below (chairs below)
+    const bounds: number[] = [];
+    let ax = px;
+    rowA.forEach((u, i) => {
+      const w = dW(u), h = dD(u);
+      nodes.push(drawTable(ax, spine - h, w, h, u, `${keyPrefix}-cA${i}`, "above"));
+      ax += w; if (i < rowA.length - 1) bounds.push(ax + gap / 2);
+      ax += gap;
+    });
+    let bx = px;
+    rowB.forEach((u, i) => {
+      const w = dW(u), h = dD(u);
+      nodes.push(drawTable(bx, spine, w, h, u, `${keyPrefix}-cB${i}`, "below"));
+      bx += w + gap;
+    });
+    nodes.push(
+      <g key={`${keyPrefix}-pod`}>
+        {/* shared partition screen between the two facing rows */}
+        <line x1={px} y1={spine} x2={px + rowW} y2={spine} stroke={C.steel} strokeWidth={2.4} />
+        {/* a divider between each person along the row */}
+        {bounds.map((dx, i) => (
+          <line key={i} x1={dx} y1={spine - depthA} x2={dx} y2={spine + depthB} stroke={C.steel} strokeWidth={1.3} strokeOpacity={0.85} />
+        ))}
+        <text x={px + rowW / 2} y={spine - depthA - cs - 5} textAnchor="middle" fontSize={5.9} fontWeight={700} fill={C.steel}>
+          PARTITION SCREEN
+        </text>
+      </g>,
+    );
+    cursor = spine + depthB + cs + 10;
   }
 
-  // Loose chairs.
-  if (chairs.length) {
-    const s = Math.min(1.5 * ppf, 15);
-    let cx = x0 + pad;
-    chairs.forEach((u, i) => {
-      if (cx + s > x1 - pad && cx > x0 + pad) { cx = x0 + pad; cy += s + gapY; }
-      nodes.push(<FurnChair key={`${keyPrefix}-ch${i}`} cx={cx + s / 2} cy={cy + s / 2} s={s} />);
-      cx += s + gapX;
+  // Cupboards / file cabinets: hug a wall that has no desk run, from the right.
+  if (cabinets.length) {
+    const onTop = groups.top.length === 0;
+    let cxr = x1 - pad;
+    cabinets.forEach((u, i) => {
+      const w = dW(u), h = dD(u);
+      cxr -= w;
+      const y = onTop ? yTop + pad : yBot - pad - h;
+      nodes.push(drawCabinet(cxr, y, w, h, u, `${keyPrefix}-cab${i}`));
+      cxr -= gap;
+    });
+  }
+
+  // Loose chairs — a row in the leftover centre space.
+  if (looseChairs.length) {
+    const s = Math.min(1.5 * ppf, 14);
+    let cx = cx0 + 4;
+    const y = Math.min(Math.max(cursor, vTop) + s / 2, vBot - s / 2);
+    looseChairs.forEach((_, i) => {
+      if (cx + s > cx1) { cx = cx0 + 4; }
+      nodes.push(<FurnChair key={`${keyPrefix}-ch${i}`} cx={cx + s / 2} cy={y} s={s} />);
+      cx += s + gap;
     });
   }
 
@@ -259,13 +409,6 @@ function LiftHook({ x, y, angle }: { x: number; y: number; angle: number }) {
   );
 }
 
-// Window position → wall + fraction along that wall.
-const WIN_ON: Record<string, { wall: "top" | "bottom" | "left" | "right"; t: number }> = {
-  "top-left": { wall: "top", t: 0.2 }, "top-center": { wall: "top", t: 0.5 }, "top-right": { wall: "top", t: 0.8 },
-  "bottom-left": { wall: "bottom", t: 0.2 }, "bottom-center": { wall: "bottom", t: 0.5 }, "bottom-right": { wall: "bottom", t: 0.8 },
-  "bottom": { wall: "bottom", t: 0.5 }, "left": { wall: "left", t: 0.5 }, "right": { wall: "right", t: 0.5 },
-};
-
 export function ModulePlan({ config }: { config: CabinConfig }) {
   const L = Math.max(1, config.length || 1);
   const W = Math.max(1, config.width || 1);
@@ -316,14 +459,54 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
         <rect x={ox - wallT} y={oy - wallT} width={planW + wallT * 2} height={planH + wallT * 2} rx={2} fill={C.wall} />
         <rect x={ox} y={oy} width={planW} height={planH} fill={C.room} />
 
-        {/* ---- partitions (multi-room) ---- */}
+        {/* ---- partitions (multi-room): solid wall, or a wall with a door gap + swing arc
+               when the customer turns "Partition Doors" on ---- */}
         {rooms && (() => {
           const total = rooms.reduce((a, b) => a + b, 0) || L;
+          // The partition spans the cabin WIDTH; the door sits `partitionDoorOffset` ft from the
+          // rear wall (near edge), hinged at the rear/front end, swinging into the left/right room.
+          const pdw = openingWidthOn(W, DOOR_SIZE.widthFt) * ppf;
+          const startPx = clampOpeningOffset(config.partitionDoorOffset, W, DOOR_SIZE.widthFt) * ppf;
+          const gTop = oy + startPx, gBot = gTop + pdw;
+          const hinge = config.partitionDoorHinge ?? "top";
+          const swing = config.partitionDoorSwing ?? "right";
+          const sliding = config.partitionDoorType === "sliding";
+          const dir = swing === "right" ? 1 : -1; // +x = into the room on the right
           let acc = 0;
           return rooms.slice(0, -1).map((rl, i) => {
             acc += rl;
             const px = ox + planW * (acc / total);
-            return <line key={i} x1={px} y1={oy} x2={px} y2={by} stroke={C.wall} strokeWidth={4} />;
+            if (!config.partitionDoor) {
+              return <line key={i} x1={px} y1={oy} x2={px} y2={by} stroke={C.wall} strokeWidth={4} />;
+            }
+            const wallSegs = (
+              <>
+                <line x1={px} y1={oy} x2={px} y2={gTop} stroke={C.wall} strokeWidth={4} />
+                <line x1={px} y1={gBot} x2={px} y2={by} stroke={C.wall} strokeWidth={4} />
+              </>
+            );
+            // A sliding partition door parks alongside the opening — no swing arc.
+            if (sliding) {
+              return (
+                <g key={i}>
+                  {wallSegs}
+                  <line x1={px} y1={gTop} x2={px} y2={gBot} stroke={C.arc} strokeWidth={0.8} strokeDasharray="3 2" />
+                  <line x1={px + dir * 2.5} y1={gTop} x2={px + dir * 2.5} y2={gBot} stroke={C.door} strokeWidth={2.4} />
+                </g>
+              );
+            }
+            // Hinged: leaf pivots at the chosen end and swings perpendicular into the chosen room.
+            const hy = hinge === "top" ? gTop : gBot;  // hinge point on the partition
+            const cy = hinge === "top" ? gBot : gTop;  // closed leaf tip (other end of the gap)
+            const tipX = px + dir * pdw;               // open leaf tip
+            const sweep = dir * (cy - hy) > 0 ? 1 : 0;
+            return (
+              <g key={i}>
+                {wallSegs}
+                <line x1={px} y1={hy} x2={tipX} y2={hy} stroke={C.door} strokeWidth={2} />
+                <path d={`M ${tipX} ${hy} A ${pdw} ${pdw} 0 0 ${sweep} ${px} ${cy}`} fill="none" stroke={C.arc} strokeWidth={1} />
+              </g>
+            );
           });
         })()}
 
@@ -375,10 +558,14 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
               const t = config.addons?.[id] || 0;
               if (!spec || !t) return;
               const per = furnitureRoomCounts(config, id, t, roomList.length);
+              // Per-unit wall placement (work tables only). The placement array is indexed
+              // globally across rooms, so offset by the units already used by earlier rooms.
+              const places = TABLE_ADDON_IDS.includes(id) ? tablePlacementsOf(config, id, t) : null;
+              const offset = per.slice(0, ri).reduce((a, b) => a + b, 0);
               const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
-              for (let k = 0; k < cnt; k++) units.push({ id, ...spec });
+              for (let k = 0; k < cnt; k++) units.push({ id, ...spec, pos: places?.[offset + k] });
             });
-            if (units.length) out.push(...roomFurnitureNodes(units, edges[ri], edges[ri + 1], oy, ppf, `r${ri}`));
+            if (units.length) out.push(...roomFurnitureNodes(units, edges[ri], edges[ri + 1], oy, by, ppf, `r${ri}`));
           });
           return out;
         })()}
@@ -410,32 +597,38 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return <CeilingFan key={`f${i}`} cx={cx} cy={cy} r={r} />;
         })}
 
-        {/* ---- windows ---- */}
-        {(config.windowPositions ?? []).map((id) => {
-          const m = WIN_ON[id];
-          if (!m) return null;
-          const horiz = m.wall === "top" || m.wall === "bottom";
-          const len = Math.min((horiz ? winW : winH) * ppf, (horiz ? planW : planH) * 0.42);
-          const cx = m.wall === "top" || m.wall === "bottom" ? ox + planW * m.t : (m.wall === "left" ? ox : rx);
-          const cy = m.wall === "left" || m.wall === "right" ? oy + planH * m.t : (m.wall === "top" ? oy : by);
+        {/* ---- windows (side + distance-from-corner to the NEAR edge, same as doors) ---- */}
+        {(config.windowPlacements ?? []).map((wp, i) => {
+          const side = wp.side || "top";
+          const horiz = side === "top" || side === "bottom";
+          const spanFt = sideSpanFt(side, L, W);
+          // In a top-down plan a window's along-wall extent is its WIDTH on every wall (the
+          // height isn't visible). Clamped by the shared rule, so the plan matches the input.
+          const openFt = openingWidthOn(spanFt, winW);
+          const len = openFt * ppf;
+          const startPx = clampOpeningOffset(wp.offset, spanFt, winW) * ppf;
           if (horiz) {
-            const y0 = m.wall === "top" ? oy - wallT - 2 : by - 2;
-            const lblY = m.wall === "top" ? oy - wallT - 20 : by + wallT + 14;
+            const x0 = ox + startPx;
+            const cx = x0 + len / 2;
+            const y0 = side === "top" ? oy - wallT - 2 : by - 2;
+            const lblY = side === "top" ? oy - wallT - 20 : by + wallT + 14;
             return (
-              <g key={id}>
-                <rect x={cx - len / 2} y={y0} width={len} height={wallT + 4} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
-                <line x1={cx - len / 2} y1={y0 + (wallT + 4) / 2} x2={cx + len / 2} y2={y0 + (wallT + 4) / 2} stroke={C.winLine} strokeWidth={0.7} />
+              <g key={i}>
+                <rect x={x0} y={y0} width={len} height={wallT + 4} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
+                <line x1={x0} y1={y0 + (wallT + 4) / 2} x2={x0 + len} y2={y0 + (wallT + 4) / 2} stroke={C.winLine} strokeWidth={0.7} />
                 <text x={cx} y={lblY} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={C.ink}>WINDOW</text>
                 <text x={cx} y={lblY + 8.5} textAnchor="middle" fontSize={7.5} fill={C.ink}>{winLabel}</text>
               </g>
             );
           }
-          const x0 = m.wall === "left" ? ox - wallT - 2 : rx - 2;
-          const lblX = m.wall === "left" ? ox - wallT - 8 : rx + wallT + 8;
+          const yTop = oy + startPx;
+          const cy = yTop + len / 2;
+          const x0 = side === "left" ? ox - wallT - 2 : rx - 2;
+          const lblX = side === "left" ? ox - wallT - 8 : rx + wallT + 8;
           return (
-            <g key={id}>
-              <rect x={x0} y={cy - len / 2} width={wallT + 4} height={len} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
-              <line x1={x0 + (wallT + 4) / 2} y1={cy - len / 2} x2={x0 + (wallT + 4) / 2} y2={cy + len / 2} stroke={C.winLine} strokeWidth={0.7} />
+            <g key={i}>
+              <rect x={x0} y={yTop} width={wallT + 4} height={len} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
+              <line x1={x0 + (wallT + 4) / 2} y1={yTop} x2={x0 + (wallT + 4) / 2} y2={yTop + len} stroke={C.winLine} strokeWidth={0.7} />
               <text x={lblX} y={cy} textAnchor="middle" fontSize={7} fontWeight={700} fill={C.ink}
                 transform={`rotate(-90 ${lblX} ${cy})`}>WINDOW {winLabel}</text>
             </g>
@@ -446,24 +639,30 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
         {(config.doorPlacements ?? []).map((d, i) => {
           const side = d.side || "bottom";
           const horiz = side === "top" || side === "bottom";
-          const dw = Math.min(DOOR_SIZE.widthFt * ppf, (horiz ? planW : planH) * 0.6);
-          const spanPx = horiz ? planW : planH;
-          const pipe = 4; // corner pipe / frame inset — the opening starts here at "0 ft"
           // offset (ft from the near corner: left for top/bottom, top for left/right) is the
-          // door's NEAR edge; the opening then spans dw INTO the wall. Clamp so it always sits
-          // between the two corner pipes (0 ft = flush to the corner pipe, never outside it).
-          const startPx = Math.min(Math.max((d.offset || 0) * ppf, pipe), Math.max(pipe, spanPx - pipe - dw));
-          // Hinge H at the near edge; OUTWARD (exterior) vector; along-wall vector (into the span).
-          let H: [number, number]; let into: [number, number]; let along: [number, number];
-          if (horiz) {
-            const wallY = side === "top" ? oy : by;
-            H = [ox + startPx, wallY]; into = [0, side === "top" ? -1 : 1]; along = [1, 0];
-          } else {
-            const wallX = side === "left" ? ox : rx;
-            H = [wallX, oy + startPx]; into = [side === "left" ? -1 : 1, 0]; along = [0, 1];
-          }
-          const T: [number, number] = [H[0] + into[0] * dw, H[1] + into[1] * dw];   // open leaf tip (exterior)
-          const Cc: [number, number] = [H[0] + along[0] * dw, H[1] + along[1] * dw]; // closed position
+          // door's NEAR edge; the opening then spans dw INTO the wall. The shared helpers
+          // clamp it to exactly the range the offset input allows, so plan == input.
+          const spanFt = sideSpanFt(side, L, W);
+          const dw = openingWidthOn(spanFt, DOOR_SIZE.widthFt) * ppf;
+          const startPx = clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt) * ppf;
+          // The customer picks which edge is hinged (hand) and which way the leaf swings (swing).
+          const hand = d.hand ?? "left";
+          const swing = d.swing ?? "out";
+          // Along-wall unit vector (in the +offset direction) and the OUTWARD (exterior) normal.
+          const alongU: [number, number] = horiz ? [1, 0] : [0, 1];
+          const outU: [number, number] = horiz
+            ? [0, side === "top" ? -1 : 1]
+            : [side === "left" ? -1 : 1, 0];
+          // "out" swings to the exterior; "in" flips the leaf into the room.
+          const into: [number, number] = swing === "out" ? outU : [-outU[0], -outU[1]];
+          // The opening runs openStart → openEnd along the wall; `hand` picks the hinged edge.
+          const wallY = side === "top" ? oy : by;
+          const wallX = side === "left" ? ox : rx;
+          const openStart: [number, number] = horiz ? [ox + startPx, wallY] : [wallX, oy + startPx];
+          const openEnd: [number, number] = [openStart[0] + alongU[0] * dw, openStart[1] + alongU[1] * dw];
+          const H: [number, number] = hand === "left" ? openStart : openEnd;   // hinge
+          const Cc: [number, number] = hand === "left" ? openEnd : openStart;  // closed leaf tip
+          const T: [number, number] = [H[0] + into[0] * dw, H[1] + into[1] * dw]; // open leaf tip
           const cross = (T[0] - H[0]) * (Cc[1] - H[1]) - (T[1] - H[1]) * (Cc[0] - H[0]);
           const sweep = cross > 0 ? 1 : 0;
           const gap = horiz

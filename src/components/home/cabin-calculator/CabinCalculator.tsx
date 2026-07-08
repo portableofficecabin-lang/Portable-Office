@@ -21,13 +21,18 @@ import {
   PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS, INSULATION_OPTIONS,
   DOOR_TYPES, WINDOW_TYPES, WINDOW_TRACKS, windowUnitPrice, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
-  WINDOW_POSITIONS, windowPositionLabel, LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
+  LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel,
   ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS,
+  TABLE_POSITIONS, tablePlacementsOf,
   FURNITURE_POSITIONS, PLUG_POINT_WALLS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
   furniturePositionLabel, plugPointWallsLabel, mobilityTypeLabel,
+  OPENING_SIDES, sideSpanFt, openingWidthOn, maxOpeningOffset, clampOpeningOffset, openingPreset,
+  placementLabel, LEGACY_WINDOW_POSITIONS,
+  DOOR_HANDS, DOOR_SWINGS, PARTITION_HINGES, PARTITION_SWINGS, doorOpeningLabel,
+  type DoorHand, type DoorSwing, type PartitionHinge, type PartitionSwing,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
-  type CabinConfig, type Material, type Estimate, type InsulationOption,
+  type CabinConfig, type Material, type Estimate, type InsulationOption, type OpeningPlacement, type DoorPlacement,
 } from "./pricing";
 import { LayoutDesigner, CompleteLayoutPreview, summariseLayout } from "./LayoutDesigner";
 import { ModulePlan } from "./ModulePlan";
@@ -210,7 +215,7 @@ function MainBoardMark({ box }: { box: { x: number; y: number; bw: number; bh: n
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorPlacements, windowPositions, windowWidthFt, windowHeightFt, containerDoor, roomLengths, partitionDoor, puf }: { length: number; width: number; doorPlacements?: { side: string; offset: number }[]; windowPositions: string[]; windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean }) {
+function FloorPreview({ length, width, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt, containerDoor, roomLengths, partitionDoor, partitionDoorType, partitionDoorOffset, partitionDoorHinge, partitionDoorSwing, puf }: { length: number; width: number; doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[]; windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; partitionDoorType?: string; partitionDoorOffset?: number; partitionDoorHinge?: PartitionHinge; partitionDoorSwing?: PartitionSwing; puf?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   // The customer's chosen window size (falls back to the 3×3 default).
   const winW = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
@@ -222,18 +227,6 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
   const pad = 26;
   const vbW = w + pad * 2, vbH = h + pad * 2;
   const win = "hsl(var(--accent) / 0.6)";
-  // Centre point + orientation for each window position along the wall edges.
-  const marks: Record<string, { cx: number; cy: number; horizontal: boolean }> = {
-    "top-left":      { cx: pad + w * 0.20, cy: pad,           horizontal: true },
-    "top-center":    { cx: pad + w * 0.50, cy: pad,           horizontal: true },
-    "top-right":     { cx: pad + w * 0.80, cy: pad,           horizontal: true },
-    "bottom-left":   { cx: pad + w * 0.20, cy: pad + h,       horizontal: true },
-    "bottom-center": { cx: pad + w * 0.50, cy: pad + h,       horizontal: true },
-    "bottom-right":  { cx: pad + w * 0.80, cy: pad + h,       horizontal: true },
-    "bottom":        { cx: pad + w * 0.50, cy: pad + h,       horizontal: true }, // legacy alias
-    "left":          { cx: pad,            cy: pad + h * 0.5, horizontal: false },
-    "right":         { cx: pad + w,        cy: pad + h * 0.5, horizontal: false },
-  };
   // Corrugated (ribbed-sheet) wall outline — a shallow sawtooth along each wall.
   const corr = (() => {
     const amp = 2.2;
@@ -293,17 +286,16 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
         </g>
       ) : (
         (doorPlacements ?? []).map((d, i) => {
-          const horiz = d.side === "top" || d.side === "bottom";
-          const len = markLen(DOOR_SIZE.widthFt, horiz ? w : h);
-          const pipe = 3; // corner pipe / frame inset — the opening starts here at "0 ft"
+          const side = d.side || "bottom";
+          const horiz = side === "top" || side === "bottom";
           // offset (ft from the near corner: left for top/bottom, top for left/right) is the
-          // door's NEAR edge; the opening then spans `len` INTO the wall. Clamp so it always
-          // sits between the two corner pipes (0 ft = flush to the corner pipe, not outside).
-          const startPx = horiz
-            ? Math.min(Math.max((Math.max(d.offset, 0) / L) * w, pipe), Math.max(pipe, w - pipe - len))
-            : Math.min(Math.max((Math.max(d.offset, 0) / W) * h, pipe), Math.max(pipe, h - pipe - len));
-          const wallX = d.side === "left" ? pad : pad + w;
-          const wallY = d.side === "top" ? pad : pad + h;
+          // door's NEAR edge; the opening then spans `len` INTO the wall. The shared helpers
+          // clamp it to exactly the range the offset input allows, so preview == input.
+          const spanFt = sideSpanFt(side, L, W);
+          const len = Math.max(6, openingWidthOn(spanFt, DOOR_SIZE.widthFt) * scale);
+          const startPx = clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt) * scale;
+          const wallX = side === "left" ? pad : pad + w;
+          const wallY = side === "top" ? pad : pad + h;
           const cx = horiz ? pad + startPx + len / 2 : wallX; // door centre (for the size label)
           const cy = horiz ? wallY : pad + startPx + len / 2;
           return (
@@ -311,33 +303,49 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
               {horiz
                 ? <rect x={pad + startPx} y={wallY - 3} width={len} height={6} rx={1} fill="hsl(var(--accent))" />
                 : <rect x={wallX - 3} y={pad + startPx} width={6} height={len} rx={1} fill="hsl(var(--accent))" />}
-              {sizeText(d.side, cx, cy, sizeLabel(DOOR_SIZE), `dl${i}`)}
+              {sizeText(side, cx, cy, sizeLabel(DOOR_SIZE), `dl${i}`)}
             </g>
           );
         })
       )}
       {/* Main electrical board (DB/MCB) — interior wall, beside the main door */}
       <MainBoardMark box={mainBoardBox(containerDoor ? { side: "right", offset: W / 2 } : doorPlacements?.[0], L, W, w, h, pad)} />
-      {/* Windows at their chosen positions — drawn to scale and labelled with size */}
-      {windowPositions.map((id) => {
-        const m = marks[id];
-        if (!m) return null;
-        const edge = m.horizontal ? (m.cy <= pad + 1 ? "top" : "bottom") : (m.cx <= pad + 1 ? "left" : "right");
-        // Window is drawn along the wall to its real WIDTH (top-down view).
-        const len = markLen(winW, m.horizontal ? w : h);
+      {/* Windows — placed by side + distance-from-corner (near edge), drawn to scale */}
+      {(windowPlacements ?? []).map((wp, i) => {
+        const side = wp.side || "top";
+        const horiz = side === "top" || side === "bottom";
+        const spanFt = sideSpanFt(side, L, W);
+        // A window's along-wall extent in plan view is its WIDTH on every wall.
+        const openFt = openingWidthOn(spanFt, winW);
+        const len = Math.max(6, openFt * scale);
+        const startPx = clampOpeningOffset(wp.offset, spanFt, winW) * scale;
+        const wallX = side === "left" ? pad : pad + w;
+        const wallY = side === "top" ? pad : pad + h;
+        const cx = horiz ? pad + startPx + len / 2 : wallX;
+        const cy = horiz ? wallY : pad + startPx + len / 2;
         return (
-          <g key={id}>
-            {m.horizontal
-              ? <rect x={m.cx - len / 2} y={m.cy - 3} width={len} height={6} rx={1} fill={win} />
-              : <rect x={m.cx - 3} y={m.cy - len / 2} width={6} height={len} rx={1} fill={win} />}
-            {sizeText(edge, m.cx, m.cy, winLabel, `wl${id}`)}
+          <g key={i}>
+            {horiz
+              ? <rect x={pad + startPx} y={wallY - 3} width={len} height={6} rx={1} fill={win} />
+              : <rect x={wallX - 3} y={pad + startPx} width={6} height={len} rx={1} fill={win} />}
+            {sizeText(side, cx, cy, winLabel, `wl${i}`)}
           </g>
         );
       })}
-      {/* Multi-room partition walls (door gap + swing when partitions have doors) */}
+      {/* Multi-room partition walls (door gap + swing when partitions have doors). The door sits
+          `partitionDoorOffset` ft from the rear wall along the partition (which spans the WIDTH),
+          hinged at the rear/front end and swinging into the chosen room. */}
       {roomLengths && roomLengths.length > 1 && (() => {
         const n = roomLengths.length;
-        const dTop = pad + h * 0.55, dH = Math.min(h * 0.34, 34);
+        const dH = Math.max(8, openingWidthOn(W, DOOR_SIZE.widthFt) * scale);
+        const dTop = pad + clampOpeningOffset(partitionDoorOffset ?? 0, W, DOOR_SIZE.widthFt) * scale;
+        const dBot = dTop + dH;
+        const hinge = partitionDoorHinge ?? "top";
+        const dir = (partitionDoorSwing ?? "right") === "right" ? 1 : -1;
+        const sliding = partitionDoorType === "sliding";
+        const hy = hinge === "top" ? dTop : dBot;   // hinge point
+        const cy = hinge === "top" ? dBot : dTop;   // closed leaf tip
+        const sweep = dir * (cy - hy) > 0 ? 1 : 0;
         const edges: number[] = [];   // svg x of each internal partition
         const mids: number[] = [];    // svg x mid of each room (for labels)
         let acc = 0, prevX = pad;
@@ -350,14 +358,28 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
         }
         return (
           <g>
-            {edges.map((px, i) => (
-              <g key={i}>
-                <line x1={px} y1={pad} x2={px} y2={partitionDoor ? dTop : pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
-                {partitionDoor && <line x1={px} y1={dTop + dH} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />}
-                {partitionDoor && <line x1={px} y1={dTop} x2={px + dH} y2={dTop} stroke="hsl(var(--accent))" strokeWidth={1.4} />}
-                {partitionDoor && <path d={`M ${px + dH} ${dTop} A ${dH} ${dH} 0 0 1 ${px} ${dTop + dH}`} fill="none" stroke="hsl(var(--accent) / 0.4)" strokeWidth={1} />}
-              </g>
-            ))}
+            {edges.map((px, i) => {
+              if (!partitionDoor) {
+                return <line key={i} x1={px} y1={pad} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />;
+              }
+              return (
+                <g key={i}>
+                  <line x1={px} y1={pad} x2={px} y2={dTop} stroke="hsl(var(--accent))" strokeWidth={2} />
+                  <line x1={px} y1={dBot} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
+                  {sliding ? (
+                    <>
+                      <line x1={px} y1={dTop} x2={px} y2={dBot} stroke="hsl(var(--accent) / 0.4)" strokeWidth={0.8} strokeDasharray="3 2" />
+                      <line x1={px + dir * 2.5} y1={dTop} x2={px + dir * 2.5} y2={dBot} stroke="hsl(var(--accent))" strokeWidth={2} />
+                    </>
+                  ) : (
+                    <>
+                      <line x1={px} y1={hy} x2={px + dir * dH} y2={hy} stroke="hsl(var(--accent))" strokeWidth={1.4} />
+                      <path d={`M ${px + dir * dH} ${hy} A ${dH} ${dH} 0 0 ${sweep} ${px} ${cy}`} fill="none" stroke="hsl(var(--accent) / 0.4)" strokeWidth={1} />
+                    </>
+                  )}
+                </g>
+              );
+            })}
             {roomLengths.map((rl, i) => (
               <text key={`r${i}`} x={mids[i]} y={pad + 13} textAnchor="middle" fontSize={8} fill="hsl(var(--muted-foreground))">R{i + 1} · {Math.round(rl)}ft</text>
             ))}
@@ -383,22 +405,13 @@ function FloorPreview({ length, width, doorPlacements, windowPositions, windowWi
 /* the elevations always match the plan: the door wall (side) and    */
 /* each window position map to a specific wall + offset.             */
 /* ---------------------------------------------------------------- */
+/** Compact feet label for the offset range hint: 7 → "7", 3.5 → "3.5". */
+const formatFt = (n: number) => (Math.abs(n - Math.round(n)) < 0.05 ? String(Math.round(n)) : n.toFixed(1));
+
 type WallKey = "front" | "rear" | "left" | "right";
 
-// Floor-plan door side → which elevation it appears on.
+// Floor-plan opening side → which elevation it appears on (doors and windows alike).
 const DOOR_WALL: Record<string, WallKey> = { bottom: "front", top: "rear", left: "left", right: "right" };
-// Window position → wall + how far along that wall (0..1).
-const WINDOW_WALL: Record<string, { wall: WallKey; along: number }> = {
-  "top-left":      { wall: "rear",  along: 0.20 },
-  "top-center":    { wall: "rear",  along: 0.50 },
-  "top-right":     { wall: "rear",  along: 0.80 },
-  "bottom-left":   { wall: "front", along: 0.20 },
-  "bottom-center": { wall: "front", along: 0.50 },
-  "bottom-right":  { wall: "front", along: 0.80 },
-  "bottom":        { wall: "front", along: 0.50 }, // legacy alias
-  "left":          { wall: "left",  along: 0.50 },
-  "right":         { wall: "right", along: 0.50 },
-};
 
 // Each wall's [left-end, right-end] top corner as seen in its elevation, for the corner
 // lifting hooks. FL/FR/RL/RR = front|rear × left|right; each corner is shared by two walls.
@@ -407,10 +420,10 @@ const WALL_TOP_CORNERS: Record<WallKey, [string, string]> = {
 };
 
 function Elevations({
-  length, width, height, doorPlacements, windowPositions, windowWidthFt, windowHeightFt, containerDoor, roof,
+  length, width, height, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt, containerDoor, roof,
 }: {
   length: number; width: number; height: number;
-  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[];
+  doorPlacements?: DoorPlacement[]; windowPlacements?: OpeningPlacement[];
   windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roof?: string;
 }) {
   const L = Math.max(1, length), W = Math.max(1, width), H = Math.max(6, height);
@@ -422,21 +435,29 @@ function Elevations({
   const winHFt = Math.min(Math.max(windowHeightFt ?? WINDOW_SIZE.heightFt, 1), 12);
 
   // Gather openings per wall (fractions along each wall's own width).
-  const walls: Record<WallKey, { widthFt: number; doors: number[]; windows: number[] }> = {
+  const walls: Record<WallKey, { widthFt: number; doors: { frac: number; hand: DoorHand }[]; windows: number[] }> = {
     front: { widthFt: L, doors: [], windows: [] },
     rear:  { widthFt: L, doors: [], windows: [] },
     left:  { widthFt: W, doors: [], windows: [] },
     right: { widthFt: W, doors: [], windows: [] },
   };
+  // `offset` is the opening's NEAR EDGE; the elevation draws each opening CENTRED on its
+  // fraction, so convert near-edge → centre (offset + width/2) before dividing by the span.
+  // (Previously the near-edge fraction was used directly, shifting every door half a leaf.)
+  const centreFrac = (offset: number, side: string, openWidthFt: number) => {
+    const span = sideSpanFt(side, L, W);
+    const near = clampOpeningOffset(offset, span, openWidthFt);
+    return Math.min(0.95, Math.max(0.05, (near + openingWidthOn(span, openWidthFt) / 2) / span));
+  };
   (doorPlacements ?? []).forEach((d) => {
     const wall = DOOR_WALL[d.side];
     if (!wall) return;
-    const span = wall === "front" || wall === "rear" ? L : W;
-    walls[wall].doors.push(Math.min(0.9, Math.max(0.1, d.offset / span)));
+    walls[wall].doors.push({ frac: centreFrac(d.offset, d.side, DOOR_SIZE.widthFt), hand: d.hand ?? "left" });
   });
-  (windowPositions ?? []).forEach((id) => {
-    const m = WINDOW_WALL[id];
-    if (m) walls[m.wall].windows.push(m.along);
+  (windowPlacements ?? []).forEach((wp) => {
+    const wall = DOOR_WALL[wp.side];
+    if (!wall) return;
+    walls[wall].windows.push(centreFrac(wp.offset, wp.side, winWFt));
   });
 
   // Shared scale → proportions read correctly across all four walls in one viewBox.
@@ -516,12 +537,14 @@ function Elevations({
       // Door to its real standard height (DOOR_SIZE, 6 ft) via the shared scale.
       const dW = Math.max(9, Math.min(wallW * 0.14, 22));
       const dH = Math.min(DOOR_SIZE.heightFt * scale, wallH - 3);
-      doors = wdat.doors.map((frac, i) => {
+      doors = wdat.doors.map(({ frac, hand }, i) => {
         const cx = wx + wallW * frac, x = cx - dW / 2, y = ground - dH;
+        // Handle sits on the edge OPPOSITE the hinge (hinge left → handle right).
+        const hx = hand === "left" ? x + dW - 2.5 : x + 2.5;
         return (
           <g key={`d${i}`}>
             <rect x={x} y={y} width={dW} height={dH} rx={1} fill={acc} />
-            <circle cx={x + dW - 2.5} cy={y + dH / 2} r={1.2} fill="#fff" />
+            <circle cx={hx} cy={y + dH / 2} r={1.2} fill="#fff" />
           </g>
         );
       });
@@ -576,15 +599,16 @@ function Elevations({
 
 /** Preview with a Floor Plan / 4 Elevations toggle. */
 function CabinPreview({
-  length, width, height, doorPlacements, windowPositions, windowWidthFt, windowHeightFt,
+  length, width, height, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt,
   containerDoor, roomLengths, partitionDoor, puf, roof, caption, config,
 }: {
   length: number; width: number; height: number;
-  doorPlacements?: { side: string; offset: number }[]; windowPositions: string[];
+  doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[];
   windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean;
   roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
   config?: CabinConfig;
 }) {
+  const pd = config;
   // "module" = the full architectural 2D plan (needs the whole config); default when available.
   const [view, setView] = useState<"module" | "plan" | "elevation">(config ? "module" : "plan");
   const tabs = ([["module", "2D Plan"], ["plan", "Floor Plan"], ["elevation", "4 Elevations"]] as const)
@@ -607,12 +631,14 @@ function CabinPreview({
         <ModulePlan config={config} />
       ) : view === "elevation" ? (
         <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
-          windowPositions={windowPositions} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
+          windowPlacements={windowPlacements} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
           containerDoor={containerDoor} roof={roof} />
       ) : (
-        <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPositions={windowPositions}
+        <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPlacements={windowPlacements}
           windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
-          containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor} puf={puf} />
+          containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor}
+          partitionDoorType={pd?.partitionDoorType} partitionDoorOffset={pd?.partitionDoorOffset}
+          partitionDoorHinge={pd?.partitionDoorHinge} partitionDoorSwing={pd?.partitionDoorSwing} puf={puf} />
       )}
     </div>
   );
@@ -625,7 +651,8 @@ function CabinPreview({
 // used for placement + short-label lookup — a single item may be split across rooms.
 type FurnitureItem = { id: string; type: string; label: string; room: number; qty: number };
 const FURNITURE_SHORT: Record<string, string> = {
-  workstation: "Workstation", manager: "Manager", conference: "Conference", cupboard: "Cupboard", chairs: "Chairs",
+  workstation: "Workstation", manager: "Manager", "manager-l": "Manager (L)", conference: "Conference",
+  cupboard: "Cupboard", "chair-headrest": "Chair (Head)", "chair-backrest": "Chair (Back)",
 };
 // Furniture placement within a room, as a fraction (fx across room width, fy top→bottom).
 // Conference table sits in the centre; desks/tables go against a wall by default, or toward
@@ -633,10 +660,12 @@ const FURNITURE_SHORT: Record<string, string> = {
 function furniturePlacement(id: string, centre: boolean): { fx: number; fy: number } {
   switch (id) {
     case "conference": return { fx: 0.5, fy: 0.48 };
-    case "manager":    return centre ? { fx: 0.42, fy: 0.42 } : { fx: 0.27, fy: 0.17 };
+    case "manager":
+    case "manager-l":  return centre ? { fx: 0.42, fy: 0.42 } : { fx: 0.27, fy: 0.17 };
     case "workstation": return centre ? { fx: 0.6, fy: 0.56 } : { fx: 0.5, fy: 0.85 };
     case "cupboard":   return { fx: 0.86, fy: 0.17 };
-    case "chairs":     return { fx: 0.63, fy: 0.72 };
+    case "chair-headrest":
+    case "chair-backrest": return { fx: 0.63, fy: 0.72 };
     default:           return centre ? { fx: 0.5, fy: 0.5 } : { fx: 0.5, fy: 0.85 };
   }
 }
@@ -798,13 +827,46 @@ export default function CabinCalculator() {
           // Re-derive product-gated openings so a config saved by an OLDER build (e.g. a
           // toilet with windows, or a pre-container storage cabin) can't leak windows into
           // the toilet/container flow. Also keep the window count in sync with placements.
-          if (!Array.isArray(merged.windowPositions)) merged.windowPositions = base.windowPositions;
-          if (isToiletCabin(saved.productId) || isStorageProduct(saved.productId)) {
-            merged.windowPositions = base.windowPositions;
+          // Windows moved from named position chips (windowPositions: string[]) to the door-style
+          // placement model (windowPlacements: {side, offset}[]). Migrate legacy saved configs by
+          // mapping each named position to its wall + centre fraction, then to a near-edge offset.
+          const savedWin = saved as unknown as { windowPositions?: string[]; windowPlacements?: OpeningPlacement[] };
+          if (!Array.isArray(merged.windowPlacements)) {
+            if (Array.isArray(savedWin.windowPositions)) {
+              const wW = merged.windowWidthFt ?? WINDOW_SIZE.widthFt;
+              merged.windowPlacements = savedWin.windowPositions
+                .map((id) => LEGACY_WINDOW_POSITIONS[id])
+                .filter(Boolean)
+                .map(({ side, t }) => {
+                  const span = sideSpanFt(side, merged.length, merged.width);
+                  return { side, offset: clampOpeningOffset(t * span - wW / 2, span, wW) };
+                });
+            } else {
+              merged.windowPlacements = base.windowPlacements;
+            }
           }
-          merged.windowQty = merged.windowPositions.length;
+          if (isToiletCabin(saved.productId) || isStorageProduct(saved.productId)) {
+            merged.windowPlacements = base.windowPlacements;
+          }
+          merged.windowQty = merged.windowPlacements.length;
           if (!Array.isArray(merged.doorPlacements)) merged.doorPlacements = base.doorPlacements;
           merged.doorQty = merged.doorPlacements.length;
+          // Partition-door opening — default the new fields for configs saved by an older build.
+          if (typeof merged.partitionDoorOffset !== "number") merged.partitionDoorOffset = base.partitionDoorOffset;
+          if (merged.partitionDoorHinge !== "top" && merged.partitionDoorHinge !== "bottom") merged.partitionDoorHinge = base.partitionDoorHinge;
+          if (merged.partitionDoorSwing !== "left" && merged.partitionDoorSwing !== "right") merged.partitionDoorSwing = base.partitionDoorSwing;
+          merged.partitionDoorOffset = clampOpeningOffset(merged.partitionDoorOffset, merged.width, DOOR_SIZE.widthFt);
+          // Re-clamp every opening — an older config may hold an offset past its wall. Doors
+          // saved before the opening model get the default hand/swing (hinge left, opens out).
+          const wWid = merged.windowWidthFt ?? WINDOW_SIZE.widthFt;
+          merged.doorPlacements = merged.doorPlacements.map((d) => ({
+            hand: "left", swing: "out",
+            ...d, offset: clampOpeningOffset(d.offset, sideSpanFt(d.side, merged.length, merged.width), DOOR_SIZE.widthFt),
+          }));
+          merged.windowPlacements = merged.windowPlacements.map((wp) => ({
+            ...wp, offset: clampOpeningOffset(wp.offset, sideSpanFt(wp.side, merged.length, merged.width), wWid),
+          }));
+          delete (merged as unknown as { windowPositions?: string[] }).windowPositions;
           // New fields — default them for configs saved by an older build.
           if (!merged.roofId) merged.roofId = base.roofId;
           if (!merged.furnitureRoom || typeof merged.furnitureRoom !== "object") merged.furnitureRoom = {};
@@ -898,7 +960,7 @@ export default function CabinCalculator() {
       doorTypeId: c.doorTypeId, doorQty: fresh.doorQty, doorPlacements: fresh.doorPlacements,
       windowTypeId: productDefinesOpenings ? fresh.windowTypeId : c.windowTypeId,
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
-      windowPositions: productDefinesOpenings ? fresh.windowPositions : c.windowPositions,
+      windowPlacements: productDefinesOpenings ? fresh.windowPlacements : c.windowPlacements,
       ventilation: fresh.ventilation,
       // Reset rooms on product switch (fresh provides roomCount:1 + roomLengths); strip any
       // carried-over partition add-on and per-room furniture so the layout stays consistent.
@@ -955,6 +1017,14 @@ export default function CabinCalculator() {
     });
   const setAddonQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, addons: { ...c.addons, [id]: Math.max(1, qty) } }));
+  /** Put the i-th unit of a work table on a specific wall (or the centre pod). Spec-only —
+   *  it drives the 2D plan's seating layout, not the price. */
+  const setTablePlacement = (id: string, index: number, pos: string) =>
+    setConfig((c) => {
+      const next = [...tablePlacementsOf(c, id, c.addons[id] || 0)];
+      next[index] = pos;
+      return { ...c, tablePlacements: { ...(c.tablePlacements ?? {}), [id]: next } };
+    });
   // Plug-point placement is a multi-select of walls (+ "By Work Table") — toggle one on/off.
   const togglePlugWall = (id: string) =>
     setConfig((c) => ({
@@ -984,35 +1054,6 @@ export default function CabinCalculator() {
   const setVentilationQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, ventilation: { ...c.ventilation, [id]: Math.max(1, qty) } }));
 
-  // Window placement — each toggled position is one window there; count mirrors the set.
-  const toggleWindowPosition = (id: string) =>
-    setConfig((c) => {
-      const has = c.windowPositions.includes(id);
-      const windowPositions = has ? c.windowPositions.filter((p) => p !== id) : [...c.windowPositions, id];
-      return { ...c, windowPositions, windowQty: windowPositions.length };
-    });
-
-  // Window quantity — the customer can set a number directly and we auto-assign placements:
-  // raising the count fills the next free positions (in the on-screen order), lowering it
-  // drops the most-recently-added ones. Quantity is capped at the number of positions
-  // available (one window per position). Toggling a position updates the count too — so the
-  // stepper and the placement chips always stay in sync.
-  const setWindowCount = (n: number) =>
-    setConfig((c) => {
-      const max = WINDOW_POSITIONS.length;
-      const target = Math.min(Math.max(Math.round(n) || 0, 0), max);
-      const kept = c.windowPositions.filter((id) => WINDOW_POSITIONS.some((p) => p.id === id));
-      let windowPositions = [...kept];
-      if (target > windowPositions.length) {
-        for (const p of WINDOW_POSITIONS) {
-          if (windowPositions.length >= target) break;
-          if (!windowPositions.includes(p.id)) windowPositions.push(p.id);
-        }
-      } else if (target < windowPositions.length) {
-        windowPositions = windowPositions.slice(0, target);
-      }
-      return { ...c, windowPositions, windowQty: windowPositions.length };
-    });
 
   // Rooms / partitions — an N-room layout auto-applies the Partition add-on with qty = N-1,
   // so its cost flows through the existing add-on pricing (no separate cost logic).
@@ -1037,22 +1078,100 @@ export default function CabinCalculator() {
       next[i] = Math.max(1, Math.round(n) || 1);
       return { ...c, roomLengths: normalizeRoomLengths(c.length, c.roomCount, next) };
     });
-  // A cabin-length change must re-normalise the room split to the new total length.
+  /* ---- Openings (doors & windows) ------------------------------------------------
+     Every opening is { side, offset }, where offset = feet from that wall's start corner
+     to the opening's NEAR EDGE. Offsets are clamped to [0, span - openingWidth] on EVERY
+     mutation, so a number the customer types can never exceed the wall and silently
+     collapse onto the same spot in the drawing. `windowWidthFt` is the along-wall extent
+     of a window on any wall (its height isn't visible in a top-down plan). */
+  const winWidthOf = (c: CabinConfig) => c.windowWidthFt ?? WINDOW_SIZE.widthFt;
+  const doorMaxOffset = (c: CabinConfig, side: string) =>
+    maxOpeningOffset(sideSpanFt(side, c.length, c.width), DOOR_SIZE.widthFt);
+  const windowMaxOffset = (c: CabinConfig, side: string) =>
+    maxOpeningOffset(sideSpanFt(side, c.length, c.width), winWidthOf(c));
+
+  /** Re-clamp all openings — call after any change to cabin length/width or window width.
+   *  The partition door runs along the WIDTH, so a width change can push it out of range too. */
+  const reclampOpenings = (c: CabinConfig): CabinConfig => ({
+    ...c,
+    doorPlacements: c.doorPlacements.map((d) => ({
+      ...d, offset: clampOpeningOffset(d.offset, sideSpanFt(d.side, c.length, c.width), DOOR_SIZE.widthFt),
+    })),
+    windowPlacements: c.windowPlacements.map((wp) => ({
+      ...wp, offset: clampOpeningOffset(wp.offset, sideSpanFt(wp.side, c.length, c.width), winWidthOf(c)),
+    })),
+    partitionDoorOffset: clampOpeningOffset(c.partitionDoorOffset, c.width, DOOR_SIZE.widthFt),
+  });
+
+  // A cabin-length change re-normalises the room split AND re-clamps every opening.
   const setLength = (n: number) =>
-    setConfig((c) => ({ ...c, length: n, roomLengths: normalizeRoomLengths(n, c.roomCount, c.roomLengths) }));
+    setConfig((c) => reclampOpenings({ ...c, length: n, roomLengths: normalizeRoomLengths(n, c.roomCount, c.roomLengths) }));
+  const setWidth = (n: number) => setConfig((c) => reclampOpenings({ ...c, width: n }));
+  const setWindowWidth = (n: number) => setConfig((c) => reclampOpenings({ ...c, windowWidthFt: n }));
 
   // Doors — each door has a side + offset (ft). Count mirrors the placement list.
   const setDoorCount = (n: number) =>
     setConfig((c) => {
       const target = Math.min(Math.max(Math.round(n), 0), 6);
       const dp = c.doorPlacements.slice(0, target);
-      while (dp.length < target) dp.push({ side: "bottom", offset: Math.round((c.length || 10) * 0.3) });
+      while (dp.length < target) {
+        dp.push({ side: "bottom", offset: clampOpeningOffset(Math.round((c.length || 10) * 0.3), sideSpanFt("bottom", c.length, c.width), DOOR_SIZE.widthFt) });
+      }
       return { ...c, doorPlacements: dp, doorQty: dp.length };
     });
   const setDoorSide = (i: number, side: string) =>
-    setConfig((c) => ({ ...c, doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, side } : d)) }));
+    setConfig((c) => ({
+      ...c,
+      doorPlacements: c.doorPlacements.map((d, idx) =>
+        idx === i ? { ...d, side, offset: clampOpeningOffset(d.offset, sideSpanFt(side, c.length, c.width), DOOR_SIZE.widthFt) } : d),
+    }));
   const setDoorOffset = (i: number, offset: number) =>
-    setConfig((c) => ({ ...c, doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, offset: Math.max(0, Math.round(offset) || 0) } : d)) }));
+    setConfig((c) => ({
+      ...c,
+      doorPlacements: c.doorPlacements.map((d, idx) =>
+        idx === i ? { ...d, offset: clampOpeningOffset(offset, sideSpanFt(d.side, c.length, c.width), DOOR_SIZE.widthFt) } : d),
+    }));
+  // Door OPENING — which edge is hinged, and which way the leaf swings.
+  const setDoorHand = (i: number, hand: DoorHand) =>
+    setConfig((c) => ({ ...c, doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, hand } : d)) }));
+  const setDoorSwing = (i: number, swing: DoorSwing) =>
+    setConfig((c) => ({ ...c, doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, swing } : d)) }));
+
+  // Partition door — position along the partition (which spans the WIDTH) + how it opens.
+  const partitionDoorMax = (c: CabinConfig) => maxOpeningOffset(c.width, DOOR_SIZE.widthFt);
+  const setPartitionDoorOffset = (n: number) =>
+    setConfig((c) => ({ ...c, partitionDoorOffset: clampOpeningOffset(n, c.width, DOOR_SIZE.widthFt) }));
+  const setPartitionDoorHinge = (partitionDoorHinge: PartitionHinge) =>
+    setConfig((c) => ({ ...c, partitionDoorHinge }));
+  const setPartitionDoorSwing = (partitionDoorSwing: PartitionSwing) =>
+    setConfig((c) => ({ ...c, partitionDoorSwing }));
+
+  // Windows — identical placement model to doors (side + distance from corner).
+  const setWindowCount = (n: number) =>
+    setConfig((c) => {
+      const target = Math.min(Math.max(Math.round(n) || 0, 0), 12);
+      const wp = c.windowPlacements.slice(0, target);
+      const wW = winWidthOf(c);
+      while (wp.length < target) {
+        // Spread each new window evenly along the rear (Upper) wall instead of stacking.
+        const span = sideSpanFt("top", c.length, c.width);
+        const guess = ((wp.length + 1) / (target + 1)) * span - wW / 2;
+        wp.push({ side: "top", offset: clampOpeningOffset(Math.round(guess), span, wW) });
+      }
+      return { ...c, windowPlacements: wp, windowQty: wp.length };
+    });
+  const setWindowSide = (i: number, side: string) =>
+    setConfig((c) => ({
+      ...c,
+      windowPlacements: c.windowPlacements.map((wp, idx) =>
+        idx === i ? { side, offset: clampOpeningOffset(wp.offset, sideSpanFt(side, c.length, c.width), winWidthOf(c)) } : wp),
+    }));
+  const setWindowOffset = (i: number, offset: number) =>
+    setConfig((c) => ({
+      ...c,
+      windowPlacements: c.windowPlacements.map((wp, idx) =>
+        idx === i ? { ...wp, offset: clampOpeningOffset(offset, sideSpanFt(wp.side, c.length, c.width), winWidthOf(c)) } : wp),
+    }));
 
   const startOver = () => {
     setConfig(buildDefaultConfig());
@@ -1147,7 +1266,7 @@ export default function CabinCalculator() {
           ["Ceiling", materialLabel(CEILING_MATERIALS.find((m) => m.id === config.ceilingId))],
           ["Flooring", materialLabel(FLOORING_MATERIALS.find((m) => m.id === config.flooringId))],
           ["Insulation", isPufPanel(config.structureId) ? "Included (PUF panel — inherently insulated)" : (() => { const i = INSULATION_OPTIONS.find((o) => o.id === config.insulationId); return i && i.id !== "none" ? `${i.label} (${i.thickness})` : "None"; })()],
-          ["Doors", `${config.doorQty} × ${DOOR_TYPES.find((d) => d.id === config.doorTypeId)?.label ?? ""}`],
+          ["Doors", `${config.doorQty} × ${DOOR_TYPES.find((d) => d.id === config.doorTypeId)?.label ?? ""}${config.doorPlacements?.length ? ` (${config.doorPlacements.map((d) => `${placementLabel(d)} · ${doorOpeningLabel(d)}`).join(", ")})` : ""}`],
         ];
         if (config.roomCount > 1) {
           configRows.push([
@@ -1159,7 +1278,7 @@ export default function CabinCalculator() {
           configRows.push(["Ventilation", est.ventilationLines.map((l) => `${l.label} (${l.detail.split(" ")[0]} no.)`).join(", ") || "Exhaust Fan (1 no.)"]);
           configRows.push(["Window", "Not Applicable"]);
         } else {
-          const winPlace = config.windowPositions?.length ? ` (${config.windowPositions.map(windowPositionLabel).join(", ")})` : "";
+          const winPlace = config.windowPlacements?.length ? ` (${config.windowPlacements.map(placementLabel).join(", ")})` : "";
           configRows.push(["Windows", `${config.windowQty} × ${WINDOW_TYPES.find((d) => d.id === config.windowTypeId)?.label ?? ""}${winPlace}`]);
         }
         configRows.push(["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"]);
@@ -1439,7 +1558,7 @@ export default function CabinCalculator() {
                   ) : (
                     <div className="grid grid-cols-2 gap-3">
                       <DimField label="Length" value={config.length} onChange={setLength} />
-                      <DimField label="Width" value={config.width} onChange={(n) => patch({ width: n })} />
+                      <DimField label="Width" value={config.width} onChange={setWidth} />
                       <DimField label="Height" value={config.height} onChange={(n) => patch({ height: n })} optional />
                       <div className="space-y-1.5">
                         <Label className="text-xs text-muted-foreground">Quantity</Label>
@@ -1451,7 +1570,7 @@ export default function CabinCalculator() {
                     </div>
                   )}
                   <div className="rounded-xl border border-border bg-background p-4">
-                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} />
+                    <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPlacements={config.windowPlacements} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} />
                     <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                       <div className="rounded-lg bg-muted p-2">
                         <p className="text-[11px] text-muted-foreground">{isStorageProduct(config.productId) ? "Area" : "Carpet Area"}</p>
@@ -1525,6 +1644,64 @@ export default function CabinCalculator() {
                             <span className={cn("pointer-events-none block h-5 w-5 rounded-full bg-white shadow transition-transform", config.partitionDoor ? "translate-x-5" : "translate-x-0")} />
                           </button>
                         </div>
+                        {/* Partition door opening — position along the partition (which spans the
+                            cabin WIDTH), plus which end is hinged and which room it opens into. */}
+                        {config.partitionDoor && (() => {
+                          const pMax = partitionDoorMax(config);
+                          const sliding = config.partitionDoorType === "sliding";
+                          return (
+                            <div className="space-y-2 rounded-lg border border-border bg-background p-3">
+                              <div className="flex flex-wrap items-center justify-between gap-2">
+                                <p className="text-sm font-semibold text-foreground">Partition Door Opening</p>
+                                <span className="text-[11px] text-muted-foreground">Applies to all {config.roomCount - 1} partition{config.roomCount - 1 === 1 ? "" : "s"}</span>
+                              </div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="w-14 text-[11px] font-medium text-muted-foreground">Position</span>
+                                <div className="flex gap-1">
+                                  {([["start", "Rear"], ["center", "Center"], ["end", "Front"]] as const).map(([pos, lbl]) => {
+                                    const target = openingPreset(pos, config.width, DOOR_SIZE.widthFt);
+                                    const active = Math.abs(config.partitionDoorOffset - target) < 0.05;
+                                    return (
+                                      <button key={pos} type="button" onClick={() => setPartitionDoorOffset(target)} aria-pressed={active}
+                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
+                                    );
+                                  })}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <span className="text-[11px] text-muted-foreground">at</span>
+                                  <input type="number" inputMode="decimal" min={0} max={pMax} step={0.5}
+                                    aria-label="Partition door distance from rear wall"
+                                    value={Number.isFinite(config.partitionDoorOffset) ? config.partitionDoorOffset : ""}
+                                    onFocus={selectOnFocus}
+                                    onChange={(e) => setPartitionDoorOffset(parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
+                                    className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                  <span className="text-[11px] text-muted-foreground">
+                                    ft from rear <span className="text-muted-foreground/70">(0–{formatFt(pMax)})</span>
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="w-14 text-[11px] font-medium text-muted-foreground">Opens</span>
+                                {!sliding && (
+                                  <div className="flex gap-1">
+                                    {PARTITION_HINGES.map((hg) => (
+                                      <button key={hg.id} type="button" onClick={() => setPartitionDoorHinge(hg.id)} aria-pressed={config.partitionDoorHinge === hg.id}
+                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionDoorHinge === hg.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{hg.label}</button>
+                                    ))}
+                                  </div>
+                                )}
+                                <div className="flex gap-1">
+                                  {PARTITION_SWINGS.map((sw) => (
+                                    <button key={sw.id} type="button" onClick={() => setPartitionDoorSwing(sw.id)} aria-pressed={config.partitionDoorSwing === sw.id}
+                                      className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionDoorSwing === sw.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                      {sliding ? sw.label.replace("Into", "Slides to") : sw.label}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })()}
                       </div>
                     )}
                   </div>
@@ -1646,27 +1823,53 @@ export default function CabinCalculator() {
                                   className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", d.side === id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
                               ))}
                             </div>
-                            {/* Quick corner / centre presets — set the distance-from-corner along the
-                                chosen wall (length for Upper/Down, width for Left/Right). */}
-                            <div className="flex gap-1">
-                              {([["left", "Left Corner"], ["center", "Center"], ["right", "Right Corner"]] as const).map(([pos, lbl]) => {
-                                const span = d.side === "left" || d.side === "right" ? config.width : config.length;
-                                const target = pos === "left" ? 1 : pos === "right" ? Math.max(1, Math.round(span - 1)) : Math.max(1, Math.round(span / 2));
-                                const active = Math.round(d.offset) === target;
-                                return (
-                                  <button key={pos} type="button" onClick={() => setDoorOffset(i, target)} aria-pressed={active}
-                                    className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
-                                );
-                              })}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <span className="text-[11px] text-muted-foreground">at</span>
-                              <input type="number" inputMode="numeric" min={0} aria-label={`Door ${i + 1} offset`} value={Number.isFinite(d.offset) ? d.offset : ""}
-                                onFocus={selectOnFocus}
-                                onChange={(e) => setDoorOffset(i, parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
-                                className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                              <span className="text-[11px] text-muted-foreground">ft from {d.side === "left" || d.side === "right" ? "top" : "left"}</span>
-                            </div>
+                            {/* Quick corner / centre presets. `offset` is the door's NEAR edge, so the
+                                far corner is (span - doorWidth) and centre is (span - doorWidth)/2. */}
+                            {(() => {
+                              const span = sideSpanFt(d.side, config.length, config.width);
+                              const max = doorMaxOffset(config, d.side);
+                              return (
+                                <>
+                                  <div className="flex gap-1">
+                                    {([["start", "Left Corner"], ["center", "Center"], ["end", "Right Corner"]] as const).map(([pos, lbl]) => {
+                                      const target = openingPreset(pos, span, DOOR_SIZE.widthFt);
+                                      const active = Math.abs(d.offset - target) < 0.05;
+                                      return (
+                                        <button key={pos} type="button" onClick={() => setDoorOffset(i, target)} aria-pressed={active}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
+                                      );
+                                    })}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-[11px] text-muted-foreground">at</span>
+                                    <input type="number" inputMode="decimal" min={0} max={max} step={0.5} aria-label={`Door ${i + 1} offset`} value={Number.isFinite(d.offset) ? d.offset : ""}
+                                      onFocus={selectOnFocus}
+                                      onChange={(e) => setDoorOffset(i, parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
+                                      className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-[11px] text-muted-foreground">
+                                      ft from {d.side === "left" || d.side === "right" ? "top" : "left"}{" "}
+                                      <span className="text-muted-foreground/70">(0–{formatFt(max)})</span>
+                                    </span>
+                                  </div>
+                                  {/* Door opening — which edge is hinged & which way the leaf swings */}
+                                  <div className="flex w-full flex-wrap items-center gap-2 border-t border-dashed border-border pt-2">
+                                    <span className="text-[11px] font-medium text-muted-foreground">Opening</span>
+                                    <div className="flex gap-1">
+                                      {DOOR_HANDS.map((hnd) => (
+                                        <button key={hnd.id} type="button" onClick={() => setDoorHand(i, hnd.id)} aria-pressed={(d.hand ?? "left") === hnd.id}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", (d.hand ?? "left") === hnd.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{hnd.label}</button>
+                                      ))}
+                                    </div>
+                                    <div className="flex gap-1">
+                                      {DOOR_SWINGS.map((sw) => (
+                                        <button key={sw.id} type="button" onClick={() => setDoorSwing(i, sw.id)} aria-pressed={(d.swing ?? "out") === sw.id}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", (d.swing ?? "out") === sw.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{sw.label}</button>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })()}
                           </div>
                         ))}
                       </div>
@@ -1711,35 +1914,66 @@ export default function CabinCalculator() {
                         </div>
                       </div>
                       <div className="grid gap-3 sm:grid-cols-[auto_auto_1fr] sm:items-end">
-                        <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={(n) => patch({ windowWidthFt: n })} max={12} />
+                        <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={setWindowWidth} max={12} />
                         <DimField label="Window Height" value={config.windowHeightFt ?? 3} onChange={(n) => patch({ windowHeightFt: n })} max={12} />
                         <SpecPills label="Window Track" hint="2.5-track slides smoother — +12% over 2-track (price scales with window size)."
                           options={WINDOW_TRACKS} value={config.windowTrackId ?? "2"} onSelect={(id) => patch({ windowTrackId: id })} />
                       </div>
                       <div>
                         <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
-                          <Label className="text-sm font-semibold">Window Placement</Label>
+                          <Label className="text-sm font-semibold">Window Placement — side &amp; distance from corner</Label>
                           <div className="flex items-center gap-2">
                             <span className="text-xs text-muted-foreground">Qty</span>
-                            <Stepper value={config.windowPositions.length} min={0} max={WINDOW_POSITIONS.length} label="Window quantity" onChange={setWindowCount} />
+                            <Stepper value={config.windowPlacements.length} min={0} max={12} label="Window quantity" onChange={setWindowCount} />
                           </div>
                         </div>
-                        <p className="mb-2 text-[11px] text-muted-foreground">Set a quantity above (positions fill in automatically) or tap exact positions below — the 2D plan updates live.</p>
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <div className="flex flex-wrap gap-2 self-start">
-                            {WINDOW_POSITIONS.map((p) => {
-                              const active = config.windowPositions.includes(p.id);
+                        <p className="mb-2 text-[11px] text-muted-foreground">Set a quantity, then pick each window&rsquo;s wall and its distance from the corner — the 2D plan updates live.</p>
+                        <div className="grid gap-4 lg:grid-cols-2">
+                          <div className="space-y-2 self-start">
+                            {config.windowPlacements.length === 0 ? (
+                              <p className="rounded-lg border border-dashed border-border bg-muted/20 p-3 text-[11px] text-muted-foreground">
+                                No windows yet — raise the quantity above to add one.
+                              </p>
+                            ) : config.windowPlacements.map((wp, i) => {
+                              const span = sideSpanFt(wp.side, config.length, config.width);
+                              const max = windowMaxOffset(config, wp.side);
+                              const wW = config.windowWidthFt ?? 3;
                               return (
-                                <button key={p.id} type="button" aria-pressed={active} onClick={() => toggleWindowPosition(p.id)}
-                                  className={cn("rounded-lg border px-3 py-2 text-xs font-medium transition-all",
-                                    active ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border bg-background text-foreground hover:border-accent/50")}>
-                                  {p.label}
-                                </button>
+                                <div key={i} className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2">
+                                  <span className="w-16 text-xs font-semibold text-muted-foreground">Window {i + 1}</span>
+                                  <div className="flex gap-1">
+                                    {OPENING_SIDES.map((s) => (
+                                      <button key={s.id} type="button" onClick={() => setWindowSide(i, s.id)} aria-pressed={wp.side === s.id}
+                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", wp.side === s.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{s.label}</button>
+                                    ))}
+                                  </div>
+                                  <div className="flex gap-1">
+                                    {([["start", "Left Corner"], ["center", "Center"], ["end", "Right Corner"]] as const).map(([pos, lbl]) => {
+                                      const target = openingPreset(pos, span, wW);
+                                      const active = Math.abs(wp.offset - target) < 0.05;
+                                      return (
+                                        <button key={pos} type="button" onClick={() => setWindowOffset(i, target)} aria-pressed={active}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
+                                      );
+                                    })}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-[11px] text-muted-foreground">at</span>
+                                    <input type="number" inputMode="decimal" min={0} max={max} step={0.5} aria-label={`Window ${i + 1} offset`} value={Number.isFinite(wp.offset) ? wp.offset : ""}
+                                      onFocus={selectOnFocus}
+                                      onChange={(e) => setWindowOffset(i, parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
+                                      className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-[11px] text-muted-foreground">
+                                      ft from {wp.side === "left" || wp.side === "right" ? "top" : "left"}{" "}
+                                      <span className="text-muted-foreground/70">(0–{formatFt(max)})</span>
+                                    </span>
+                                  </div>
+                                </div>
                               );
                             })}
                           </div>
                           <div className="rounded-xl border border-border bg-background p-3">
-                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPositions={config.windowPositions} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} caption="Door + windows live" />
+                            <CabinPreview length={config.length} width={config.width} height={config.height} doorPlacements={config.doorPlacements} windowPlacements={config.windowPlacements} windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3} containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths} partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)} roof={config.roofId} config={config} caption="Door + windows live" />
                           </div>
                         </div>
                       </div>
@@ -1848,6 +2082,46 @@ export default function CabinCalculator() {
                         );
                       })}
                     </div>
+                    {/* Table placement — every table gets its own wall (or the centre pod), so the
+                        2D plan seats staff with real clearance. Spec only (no price impact). */}
+                    {(() => {
+                      const tables = ADDONS.filter((a) => TABLE_ADDON_IDS.includes(a.id) && config.addons[a.id]);
+                      if (!tables.length) return null;
+                      return (
+                        <div className="border-t border-border pt-4">
+                          <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                            <Label className="text-sm font-semibold">Table Placement</Label>
+                            <span className="text-[11px] text-muted-foreground">Where each table sits — staff seat on the room side</span>
+                          </div>
+                          <p className="mb-2.5 text-[11px] leading-snug text-muted-foreground">
+                            <span className="font-semibold text-foreground">Centre</span> puts tables back-to-back facing each other, with a partition screen between each person.
+                          </p>
+                          <div className="space-y-2">
+                            {tables.map((a) => {
+                              const qty = config.addons[a.id] || 0;
+                              const places = tablePlacementsOf(config, a.id, qty);
+                              return places.map((pos, i) => (
+                                <div key={`${a.id}-${i}`} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-background p-2.5">
+                                  <span className="text-sm font-medium text-foreground">
+                                    {a.label}{qty > 1 ? ` ${i + 1}` : ""}
+                                  </span>
+                                  <div className="flex flex-wrap gap-1">
+                                    {TABLE_POSITIONS.map((p) => (
+                                      <button key={p.id} type="button" aria-pressed={pos === p.id}
+                                        onClick={() => setTablePlacement(a.id, i, p.id)}
+                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-semibold transition-all",
+                                          pos === p.id ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                        {p.label}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              ));
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })()}
                     {/* Furniture layout — which room each work item goes in (multi-room layouts).
                         Spec only (no price impact); flows into the summary + PDF. */}
                     {(() => {
