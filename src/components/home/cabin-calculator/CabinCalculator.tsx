@@ -29,7 +29,7 @@ import {
   furniturePositionLabel, plugPointWallsLabel, mobilityTypeLabel,
   OPENING_SIDES, sideSpanFt, openingWidthOn, maxOpeningOffset, clampOpeningOffset, openingPreset,
   placementLabel, LEGACY_WINDOW_POSITIONS,
-  DOOR_HANDS, DOOR_SWINGS, PARTITION_HINGES, PARTITION_SWINGS, doorOpeningLabel,
+  DOOR_HANDS, DOOR_SWINGS, PARTITION_HINGES, PARTITION_SWINGS, PARTITION_DOOR_TYPES, doorOpeningLabel,
   type DoorHand, type DoorSwing, type PartitionHinge, type PartitionSwing,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate, type InsulationOption, type OpeningPlacement, type DoorPlacement,
@@ -870,6 +870,7 @@ export default function CabinCalculator() {
           // New fields — default them for configs saved by an older build.
           if (!merged.roofId) merged.roofId = base.roofId;
           if (!merged.furnitureRoom || typeof merged.furnitureRoom !== "object") merged.furnitureRoom = {};
+          merged.furnitureWallGap = Math.min(Math.max(Number(merged.furnitureWallGap) || 0, 0), 3);
           // Plug points are now a MULTI-select array of walls. Migrate/repair: keep only valid
           // ids; an older saved config (string plugPointPosition, or nothing) falls back to base.
           if (!Array.isArray(merged.plugPointWalls)) merged.plugPointWalls = base.plugPointWalls;
@@ -891,10 +892,20 @@ export default function CabinCalculator() {
           }
           merged.roomCount = Math.min(Math.max(Math.round(merged.roomCount) || 1, 1), 8);
           merged.roomLengths = normalizeRoomLengths(merged.length, merged.roomCount, merged.roomLengths);
-          // Keep the partition add-on qty (N-1) in sync with the room count.
+          // Default the partition door type for configs saved by an older build.
+          if (merged.partitionDoorType !== "sliding" && merged.partitionDoorType !== "hinged") merged.partitionDoorType = "hinged";
+          // Keep the partition add-on qty (N-1) in sync with the room count AND door type.
           delete merged.addons["partition"];
           delete merged.addons["partition-door"];
-          if (merged.roomCount > 1) merged.addons[merged.partitionDoor ? "partition-door" : "partition"] = merged.roomCount - 1;
+          delete merged.addons["partition-door-sliding"];
+          if (merged.roomCount > 1) {
+            const pid = !merged.partitionDoor
+              ? "partition"
+              : merged.partitionDoorType === "sliding"
+              ? "partition-door-sliding"
+              : "partition-door";
+            merged.addons[pid] = merged.roomCount - 1;
+          }
           // Migrate furniture split: legacy stored a single number (Room-1 count) → wrap to a
           // per-room array [count]; the last room derives the remainder.
           for (const k of Object.keys(merged.furnitureRoom)) {
@@ -964,7 +975,7 @@ export default function CabinCalculator() {
       ventilation: fresh.ventilation,
       // Reset rooms on product switch (fresh provides roomCount:1 + roomLengths); strip any
       // carried-over partition add-on and per-room furniture so the layout stays consistent.
-      addons: (() => { const a = { ...c.addons }; delete a.partition; delete a["partition-door"]; return a; })(),
+      addons: (() => { const a = { ...c.addons }; delete a.partition; delete a["partition-door"]; delete a["partition-door-sliding"]; return a; })(),
       furnitureRoom: {},
       transport: c.transport, installation: c.installation, gst: c.gst,
     }));
@@ -1025,6 +1036,9 @@ export default function CabinCalculator() {
       next[index] = pos;
       return { ...c, tablePlacements: { ...(c.tablePlacements ?? {}), [id]: next } };
     });
+  // Gap (ft) between wall-attached furniture and the wall — 0 = flush. Clamped to 0..3 ft.
+  const setFurnitureWallGap = (n: number) =>
+    setConfig((c) => ({ ...c, furnitureWallGap: Math.min(Math.max(Number.isFinite(n) ? n : 0, 0), 3) }));
   // Plug-point placement is a multi-select of walls (+ "By Work Table") — toggle one on/off.
   const togglePlugWall = (id: string) =>
     setConfig((c) => ({
@@ -1063,11 +1077,24 @@ export default function CabinCalculator() {
     const addons = { ...c.addons };
     delete addons["partition"];
     delete addons["partition-door"];
-    if (n > 1) addons[partitionDoor ? "partition-door" : "partition"] = n - 1;
+    delete addons["partition-door-sliding"];
+    // No door → fixed partition; hinged door → partition-door; sliding door → the sliding
+    // add-on (₹8,000 more). Each partition is one unit, so qty = N-1.
+    if (n > 1) {
+      const id = !partitionDoor
+        ? "partition"
+        : c.partitionDoorType === "sliding"
+        ? "partition-door-sliding"
+        : "partition-door";
+      addons[id] = n - 1;
+    }
     return { ...c, roomCount: n, roomLengths: lengths, partitionDoor, addons };
   };
   const setRoomCount = (n: number) => setConfig((c) => applyRooms(c, n, c.roomLengths, c.partitionDoor));
   const setPartitionDoor = (door: boolean) => setConfig((c) => applyRooms(c, c.roomCount, c.roomLengths, door));
+  // Switch the partition door between hinged and sliding — re-applies the priced add-on.
+  const setPartitionDoorType = (t: string) =>
+    setConfig((c) => applyRooms({ ...c, partitionDoorType: t }, c.roomCount, c.roomLengths, c.partitionDoor));
   const distributeEqually = () =>
     setConfig((c) => applyRooms(c, c.roomCount, Array.from({ length: c.roomCount }, () => c.length / c.roomCount), c.partitionDoor));
   // Set the length of editable room index i (0-based; only rooms 0..N-2 are user-editable —
@@ -1635,7 +1662,7 @@ export default function CabinCalculator() {
                             <p className="text-sm font-semibold text-foreground">Partition Doors</p>
                             <p className="text-[11px] text-muted-foreground">
                               {config.partitionDoor
-                                ? `With door — ₹22,000 each × ${config.roomCount - 1}`
+                                ? `${config.partitionDoorType === "sliding" ? "Sliding door — ₹30,000" : "Hinged door — ₹22,000"} each × ${config.roomCount - 1}`
                                 : `Fixed partition — ₹17,500 each × ${config.roomCount - 1}`}
                             </p>
                           </div>
@@ -1654,6 +1681,19 @@ export default function CabinCalculator() {
                               <div className="flex flex-wrap items-center justify-between gap-2">
                                 <p className="text-sm font-semibold text-foreground">Partition Door Opening</p>
                                 <span className="text-[11px] text-muted-foreground">Applies to all {config.roomCount - 1} partition{config.roomCount - 1 === 1 ? "" : "s"}</span>
+                              </div>
+                              {/* Door type — hinged (swings) vs sliding (saves space, +₹8,000) */}
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="w-14 text-[11px] font-medium text-muted-foreground">Type</span>
+                                <div className="flex gap-1">
+                                  {PARTITION_DOOR_TYPES.map((dt) => (
+                                    <button key={dt.id} type="button" onClick={() => setPartitionDoorType(dt.id)} aria-pressed={config.partitionDoorType === dt.id}
+                                      className={cn("rounded-md border px-2.5 py-1 text-[11px] font-medium", config.partitionDoorType === dt.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                      {dt.label}{dt.premium > 0 ? ` +${formatINR(dt.premium)}` : ""}
+                                    </button>
+                                  ))}
+                                </div>
+                                {sliding && <span className="text-[11px] font-medium text-emerald-500">Saves space — no door swing</span>}
                               </div>
                               <div className="flex flex-wrap items-center gap-2">
                                 <span className="w-14 text-[11px] font-medium text-muted-foreground">Position</span>
@@ -2073,7 +2113,7 @@ export default function CabinCalculator() {
                   <div className="space-y-5">
                     <div className="grid gap-2.5 sm:grid-cols-2">
                       {ADDONS.filter((a) =>
-                        a.id !== "partition" && a.id !== "partition-door" &&
+                        a.id !== "partition" && a.id !== "partition-door" && a.id !== "partition-door-sliding" &&
                         (!a.onlyFor || a.onlyFor.includes(config.productId))
                       ).map((a) => {
                         const selected = !!config.addons[a.id];
@@ -2094,12 +2134,24 @@ export default function CabinCalculator() {
                       if (!tables.length) return null;
                       return (
                         <div className="border-t border-border pt-4">
-                          <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                            <Label className="text-sm font-semibold">Table Placement</Label>
-                            <span className="text-[11px] text-muted-foreground">Where each table sits — staff seat on the room side</span>
+                          <div className="mb-1 flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5">
+                            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                              <Label className="text-sm font-semibold">Table Placement</Label>
+                              <span className="text-[11px] text-muted-foreground">Where each table sits — staff seat on the room side</span>
+                            </div>
+                            {/* Feet-based movement: push wall furniture off the wall for clearance (0 = flush). */}
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[11px] font-medium text-muted-foreground">Gap from wall</span>
+                              <input type="number" inputMode="decimal" min={0} max={3} step={0.5} aria-label="Furniture gap from wall (ft)"
+                                value={Number.isFinite(config.furnitureWallGap) ? config.furnitureWallGap : 0}
+                                onFocus={selectOnFocus}
+                                onChange={(e) => setFurnitureWallGap(parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
+                                className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                              <span className="text-[11px] text-muted-foreground">ft <span className="text-muted-foreground/70">(0 = flush)</span></span>
+                            </div>
                           </div>
                           <p className="mb-2.5 text-[11px] leading-snug text-muted-foreground">
-                            <span className="font-semibold text-foreground">Centre</span> puts tables back-to-back facing each other, with a partition screen between each person.
+                            <span className="font-semibold text-foreground">Centre</span> puts tables back-to-back facing each other, with a partition screen between each person. Tables now sit <span className="font-semibold text-foreground">flush against the wall</span> — raise the gap to add clearance behind them.
                           </p>
                           <div className="space-y-2">
                             {tables.map((a) => {

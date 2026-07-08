@@ -528,13 +528,17 @@ export const MOBILITY_TYPES = [
   { id: "fixed", label: "Fixed / Semi-permanent" },
 ] as const;
 
+/** A sliding partition door saves floor space (no swing arc) and costs +₹8,000 over a
+ *  regular hinged partition door. */
+export const PARTITION_SLIDING_PREMIUM = 8000;
+
 /** Partition door type. Priced through the partition add-ons:
- *   • no door  → "Fixed Partition"        ₹17,500 each
- *   • hinged   → "Partition with Door"    ₹22,000 each (all-in)
- *   • sliding  → Fixed Partition ₹17,500 + "Partition Sliding Door" ₹8,500 = ₹26,000 each */
+ *   • no door  → "Fixed Partition"             ₹17,500 each
+ *   • hinged   → "Partition with Door"         ₹22,000 each (all-in)
+ *   • sliding  → "Partition with Sliding Door" ₹30,000 each (₹22,000 + ₹8,000 sliding premium) */
 export const PARTITION_DOOR_TYPES = [
-  { id: "hinged",  label: "Hinged Door" },
-  { id: "sliding", label: "Sliding Door" },
+  { id: "hinged",  label: "Hinged Door",  premium: 0 },
+  { id: "sliding", label: "Sliding Door", premium: PARTITION_SLIDING_PREMIUM },
 ] as const;
 export const partitionDoorTypeLabel = (id: string): string =>
   PARTITION_DOOR_TYPES.find((t) => t.id === id)?.label ?? id;
@@ -622,6 +626,8 @@ export const ADDONS: AddonItem[] = [
   { id: "urinal",      label: "Urinal",           price: 6500,  hint: "Attached-washroom fitting" },
   { id: "partition",      label: "Fixed Partition",     price: 17500, hasQty: true },
   { id: "partition-door", label: "Partition with Door", price: 22000, hasQty: true },
+  // Sliding partition door = hinged door (₹22,000) + PARTITION_SLIDING_PREMIUM (₹8,000).
+  { id: "partition-door-sliding", label: "Partition with Sliding Door", price: 30000, hasQty: true },
   // Work tables, cupboard & overhead cabinet — flat ₹5,000 per unit.
   { id: "workstation", label: "Workstation",      price: 5000,  hasQty: true },
   // Manager table — a normal 5′×2′ rectangle, or the L-shaped desk (5′×2′ + a 2′ return).
@@ -688,6 +694,10 @@ export interface CabinConfig {
   /** Per-table placement — addon id → array of TABLE_POSITIONS ids, one entry per unit.
    *  Lets the customer put each individual table on a specific wall (or the centre pod). */
   tablePlacements: Record<string, string[]>;
+  /** Gap (ft) between wall-attached furniture and the wall it sits against. 0 = flush to the
+   *  wall (default). Lets the customer add walking / servicing clearance behind desks &
+   *  cupboards on the 2D plan — a spec-only layout adjustment (no price impact). */
+  furnitureWallGap: number;
   /** Plug-point placement — MULTI-select of PLUG_POINT_WALLS ids (upper/down/left/right/table).
    *  The 2D plan spreads sockets along each chosen wall + one beside each work table. */
   plugPointWalls: string[];
@@ -840,6 +850,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     ledShape: "square",
     furniturePosition: "wall",
     tablePlacements: {},
+    furnitureWallGap: 0, // furniture sits flush to the wall by default
     plugPointWalls: ["down"], // one wall by default; "By Work Table" auto-adds when a table is chosen
     mobilityType: "movable",
     furnitureRoom: {},

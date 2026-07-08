@@ -51,7 +51,11 @@ const C = {
  * its size, not an icon chip.
  * ------------------------------------------------------------------ */
 type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "deskL" | "cabinet" | "conf" | "chair"; pos?: string };
-const CHAIR_GAP = 3; // clearance between the desk edge and the chair, so staff can sit
+// Clearance between the desk edge and the chair — this is the seated person's leg/feet
+// space (room to tuck legs in, move their feet and pull the chair back to get up). It
+// drives BOTH the drawn chair position and every reserved-space calc below, so raising it
+// widens legroom everywhere while keeping the layout collision-free.
+const CHAIR_GAP = 7;
 // Work tables (workstation / manager / conference) all use the company's standard
 // TABLE_SIZE (3.5 ft × 22"), so the plan's dimensions match the quote & PDF exactly.
 const TW = TABLE_SIZE.lengthFt, TD = TABLE_SIZE.depthIn / 12;
@@ -244,10 +248,14 @@ function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: 
  *  Runs wrap inward when a wall is full, and the left/right runs are inset past the
  *  top/bottom runs so nothing collides in the corners. */
 function roomFurnitureNodes(
-  units: FurnUnit[], x0: number, x1: number, yTop: number, yBot: number, ppf: number, keyPrefix: string,
+  units: FurnUnit[], x0: number, x1: number, yTop: number, yBot: number, ppf: number, wallGapPx: number, keyPrefix: string,
 ): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
-  const pad = 7, gap = 6;
+  // `pad` = small margin from the perpendicular (corner) wall along a run. `wg` = the gap
+  // from the wall the furniture sits AGAINST — 0 by default so tables & cupboards TOUCH the
+  // wall; the customer can raise it (in feet) to add walking / servicing clearance behind them.
+  const pad = 3, gap = 6;
+  const wg = Math.max(0, wallGapPx);
   const dW = (u: FurnUnit) => u.wFt * ppf;  // table length (along the wall)
   const dD = (u: FurnUnit) => u.dFt * ppf;  // table depth (into the room)
 
@@ -286,7 +294,7 @@ function roomFurnitureNodes(
       const w = dW(u), h = dD(u), cs = chairFor(w, h);
       if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; row++; }
       const off = row * (h + cs + CHAIR_GAP + gap);
-      const y = wall === "top" ? yTop + pad + off : yBot - pad - h - off;
+      const y = wall === "top" ? yTop + wg + off : yBot - wg - h - off;
       nodes.push(drawTable(cx, y, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "top" ? "below" : "above", takeChair()));
       cx += w + gap;
     });
@@ -295,14 +303,14 @@ function roomFurnitureNodes(
   layH(groups.bottom, "bottom");
 
   // --- vertical wall runs (left / right), inset past the horizontal bands ---
-  const vTop = yTop + pad + topBand, vBot = yBot - pad - bottomBand;
+  const vTop = yTop + wg + topBand, vBot = yBot - wg - bottomBand;
   const layV = (list: FurnUnit[], wall: "left" | "right") => {
     let cy = vTop, col = 0;
     list.forEach((u, i) => {
       const w = dD(u), h = dW(u), cs = chairFor(w, h);  // rotated against the side wall
       if (cy + h > vBot && cy > vTop) { cy = vTop; col++; }
       const off = col * (w + cs + CHAIR_GAP + gap);
-      const x = wall === "left" ? x0 + pad + off : x1 - pad - w - off;
+      const x = wall === "left" ? x0 + wg + off : x1 - wg - w - off;
       nodes.push(drawTable(x, cy, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "left" ? "right" : "left", takeChair()));
       cy += h + gap;
     });
@@ -337,7 +345,7 @@ function roomFurnitureNodes(
     const depthB = rowB.length ? Math.max(...rowB.map(dD)) : 0;
     const cs = chairFor(dW(list[0]), dD(list[0]));
     const px = Math.max(cx0 + 2, (cx0 + cx1) / 2 - rowW / 2);
-    const spine = Math.max(cursor + cs + depthA + 4, (Math.max(cursor, vTop) + vBot) / 2);
+    const spine = Math.max(cursor + cs + depthA + CHAIR_GAP, (Math.max(cursor, vTop) + vBot) / 2);
     // upper row sits above the spine (chairs above); lower row below (chairs below)
     const bounds: number[] = [];
     let ax = px;
@@ -376,7 +384,7 @@ function roomFurnitureNodes(
     cabinets.forEach((u, i) => {
       const w = dW(u), h = dD(u);
       cxr -= w;
-      const y = onTop ? yTop + pad : yBot - pad - h;
+      const y = onTop ? yTop + wg : yBot - wg - h;
       nodes.push(drawCabinet(cxr, y, w, h, u, `${keyPrefix}-cab${i}`));
       cxr -= gap;
     });
@@ -606,6 +614,9 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           let acc = 0;
           roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / total)); });
           const out: React.ReactNode[] = [];
+          // Customer's "gap from wall" (ft) → px, clamped to a sane max so furniture never
+          // drifts off the plan. 0 = flush against the wall (default).
+          const wallGapPx = Math.min(Math.max(config.furnitureWallGap ?? 0, 0), 3) * ppf;
           roomList.forEach((rl, ri) => {
             const units: FurnUnit[] = [];
             ROOM_FURNITURE_IDS.forEach((id) => {
@@ -620,7 +631,7 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
               const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
               for (let k = 0; k < cnt; k++) units.push({ id, ...spec, pos: places?.[offset + k] });
             });
-            if (units.length) out.push(...roomFurnitureNodes(units, edges[ri], edges[ri + 1], oy, by, ppf, `r${ri}`));
+            if (units.length) out.push(...roomFurnitureNodes(units, edges[ri], edges[ri + 1], oy, by, ppf, wallGapPx, `r${ri}`));
           });
           return out;
         })()}
