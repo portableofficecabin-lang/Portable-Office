@@ -27,6 +27,7 @@ import {
   Target,
   Building2,
   ShieldAlert,
+  ShieldCheck,
   Calculator,
   Star,
   BookOpen,
@@ -60,6 +61,7 @@ const sidebarNav = [
   { name: "Rental Contracts", href: "/admin/rental-contracts", icon: Truck, group: "ERP", highlight: true },
   { name: "Suppliers", href: "/admin/suppliers", icon: Truck, group: "ERP" },
   { name: "Specifications", href: "/admin/specifications", icon: FileText, group: "Documents" },
+  { name: "Warranty Certificate", href: "/admin/warranty-certificate", icon: ShieldCheck, group: "Documents", highlight: true },
   { name: "Settings", href: "/admin/settings", icon: Settings, group: "System" },
 ];
 
