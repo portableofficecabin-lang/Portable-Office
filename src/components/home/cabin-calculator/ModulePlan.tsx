@@ -16,7 +16,8 @@
  */
 
 import {
-  DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf, plugPointWallsLabel,
+  DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf,
+  furnitureAdjustOf, type FurnitureAdjust, plugPointWallsLabel,
   MANAGER_TABLE_SIZE, MANAGER_L_SIZE,
   sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig,
 } from "./pricing";
@@ -50,7 +51,15 @@ const C = {
  * proper shape (desk + chair, cupboard, conference table) labelled with
  * its size, not an icon chip.
  * ------------------------------------------------------------------ */
-type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "deskL" | "cabinet" | "conf" | "chair"; pos?: string };
+type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "deskL" | "cabinet" | "conf" | "chair"; pos?: string; adj?: FurnitureAdjust };
+/** The customer's per-unit manual override as an SVG transform: rotate around the piece's
+ *  centre (cx,cy) + a fine shift in FEET (dx right, dy down). Returns undefined when the unit
+ *  is left at its auto placement, so the DOM stays clean. */
+const adjTransform = (u: FurnUnit, cx: number, cy: number, ppf: number): string | undefined => {
+  const a = u.adj;
+  if (!a || (!a.rot && !a.dx && !a.dy)) return undefined;
+  return `translate(${a.dx * ppf} ${a.dy * ppf}) rotate(${a.rot} ${cx} ${cy})`;
+};
 // Clearance between the desk edge and the chair — this is the seated person's leg/feet
 // space (room to tuck legs in, move their feet and pull the chair back to get up). It
 // drives BOTH the drawn chair position and every reserved-space calc below, so raising it
@@ -135,7 +144,7 @@ function deskOutlets(x: number, y: number, w: number, h: number, side: "below" |
  *  drawn INSIDE the desk (rotated for the vertical walls) so it never collides with a chair. */
 function drawDeskAt(
   x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
-  side: "below" | "above" | "right" | "left", drawChair: boolean,
+  side: "below" | "above" | "right" | "left", drawChair: boolean, ppf: number,
 ) {
   const cx = x + w / 2, cyc = y + h / 2;
   const cs = chairFor(w, h);
@@ -147,7 +156,7 @@ function drawDeskAt(
   const vertical = side === "right" || side === "left";
   const along = vertical ? h : w;          // the desk's long edge on screen
   return (
-    <g key={key}>
+    <g key={key} transform={adjTransform(u, cx, cyc, ppf)}>
       {/* Chair only when the customer has a chair to assign here (staff seat + clearance). */}
       {drawChair && <FurnChair cx={chair.cx} cy={chair.cy} s={cs} />}
       <rect x={x} y={y} width={w} height={h} rx={2} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
@@ -181,7 +190,7 @@ function drawDeskLAt(
   // 2 sockets + 2 switches along the main run's wall side (local top edge, y≈0).
   const og = 6.6, oSx = Lw / 2 - ((TABLE_OUTLETS.length - 1) * og) / 2;
   return (
-    <g key={key} transform={`translate(${x + boxW / 2} ${y + boxH / 2}) rotate(${angle}) translate(${-Lw / 2} ${-Lh / 2})`}>
+    <g key={key} transform={`${adjTransform(u, x + boxW / 2, y + boxH / 2, ppf) ?? ""} translate(${x + boxW / 2} ${y + boxH / 2}) rotate(${angle}) translate(${-Lw / 2} ${-Lh / 2})`}>
       {drawChair && <FurnChair cx={chX} cy={chY} s={cs} />}
       <polygon points={pts} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
       {TABLE_OUTLETS.map((t, i) => (t === "s"
@@ -199,10 +208,10 @@ function drawDeskLAt(
 }
 
 /** Cupboard / file cabinet (top view) — two-door box against a wall + caption. */
-function drawCabinet(x: number, y: number, w: number, h: number, u: FurnUnit, key: string) {
+function drawCabinet(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, ppf: number) {
   const cx = x + w / 2;
   return (
-    <g key={key}>
+    <g key={key} transform={adjTransform(u, cx, y + h / 2, ppf)}>
       <rect x={x} y={y} width={w} height={h} rx={1.5} fill={C.cab} stroke={C.cabEdge} strokeWidth={1} />
       <line x1={cx} y1={y} x2={cx} y2={y + h} stroke={C.cabEdge} strokeWidth={0.6} strokeOpacity={0.7} />
       <circle cx={cx - 3} cy={y + h / 2} r={0.9} fill={C.cabEdge} />
@@ -219,7 +228,7 @@ const confCapacity = (w: number, h: number) => {
 };
 /** Conference table (top view) — rounded table ringed by up to `chairCount` chairs (only the
  *  chairs the customer actually selected) + centred caption. */
-function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, chairCount: number) {
+function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, chairCount: number, ppf: number) {
   const cx = x + w / 2, cyc = y + h / 2;
   const chairS = Math.min(h * 0.5, 11);
   const perSide = Math.max(1, Math.min(3, Math.round(w / (chairS * 2.4))));
@@ -229,7 +238,7 @@ function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: 
   for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y + h + chairS * 0.62 });
   const seats = slots.slice(0, Math.max(0, chairCount)).map((s, i) => <FurnChair key={`c${i}`} cx={s.cx} cy={s.cy} s={chairS} />);
   return (
-    <g key={key}>
+    <g key={key} transform={adjTransform(u, cx, cyc, ppf)}>
       {seats}
       <rect x={x} y={y} width={w} height={h} rx={Math.min(h / 2, 9)} fill={C.wood} stroke={C.woodEdge} strokeWidth={1.1} />
       <text x={cx} y={cyc - 1} textAnchor="middle" fontSize={6.8} fontWeight={700} fill={C.ink}>{u.label}</text>
@@ -280,7 +289,7 @@ function roomFurnitureNodes(
   const drawTable = (
     x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
     side: "below" | "above" | "right" | "left", chair: boolean,
-  ) => (u.kind === "deskL" ? drawDeskLAt(x, y, w, h, u, key, side, ppf, chair) : drawDeskAt(x, y, w, h, u, key, side, chair));
+  ) => (u.kind === "deskL" ? drawDeskLAt(x, y, w, h, u, key, side, ppf, chair) : drawDeskAt(x, y, w, h, u, key, side, chair, ppf));
 
   // Vertical space a horizontal wall run consumes (deepest desk + its chair + clearance).
   const band = (list: FurnUnit[]) =>
@@ -329,7 +338,7 @@ function roomFurnitureNodes(
     const w = Math.min(dW(u), cx1 - cx0 - 8), h = dD(u);
     const cs = Math.min(h * 0.5, 11);
     cursor += cs + 2;
-    nodes.push(drawConf((cx0 + cx1) / 2 - w / 2, cursor, w, h, u, `${keyPrefix}-conf${i}`, takeChairs(confCapacity(w, h))));
+    nodes.push(drawConf((cx0 + cx1) / 2 - w / 2, cursor, w, h, u, `${keyPrefix}-conf${i}`, takeChairs(confCapacity(w, h)), ppf));
     cursor += h + cs + 14;
   });
 
@@ -385,7 +394,7 @@ function roomFurnitureNodes(
       const w = dW(u), h = dD(u);
       cxr -= w;
       const y = onTop ? yTop + wg : yBot - wg - h;
-      nodes.push(drawCabinet(cxr, y, w, h, u, `${keyPrefix}-cab${i}`));
+      nodes.push(drawCabinet(cxr, y, w, h, u, `${keyPrefix}-cab${i}`, ppf));
       cxr -= gap;
     });
   }
@@ -627,9 +636,11 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
               // Per-unit wall placement (work tables only). The placement array is indexed
               // globally across rooms, so offset by the units already used by earlier rooms.
               const places = TABLE_ADDON_IDS.includes(id) ? tablePlacementsOf(config, id, t) : null;
+              // Per-unit manual rotation + feet-shift override (every drawn furniture item).
+              const adjusts = furnitureAdjustOf(config, id, t);
               const offset = per.slice(0, ri).reduce((a, b) => a + b, 0);
               const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
-              for (let k = 0; k < cnt; k++) units.push({ id, ...spec, pos: places?.[offset + k] });
+              for (let k = 0; k < cnt; k++) units.push({ id, ...spec, pos: places?.[offset + k], adj: adjusts[offset + k] });
             });
             if (units.length) out.push(...roomFurnitureNodes(units, edges[ri], edges[ri + 1], oy, by, ppf, wallGapPx, `r${ri}`));
           });

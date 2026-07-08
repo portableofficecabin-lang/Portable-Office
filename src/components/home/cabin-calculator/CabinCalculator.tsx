@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import {
   Building, Briefcase, Shield, Bath, BedDouble, Container, LayoutGrid, Warehouse,
   ArrowLeft, ArrowRight, Check, Loader2, Send, Download, MessageCircle,
-  RotateCcw, Ruler, Zap, Sofa, Truck, DoorOpen, PanelsTopLeft, CheckCircle2, Sparkles,
+  RotateCcw, RotateCw, Ruler, Zap, Sofa, Truck, DoorOpen, PanelsTopLeft, CheckCircle2, Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,7 @@ import {
   LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel,
   ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS,
-  TABLE_POSITIONS, tablePlacementsOf,
+  TABLE_POSITIONS, tablePlacementsOf, furnitureAdjustOf,
   FURNITURE_POSITIONS, PLUG_POINT_WALLS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
   furniturePositionLabel, plugPointWallsLabel, mobilityTypeLabel,
   OPENING_SIDES, sideSpanFt, openingWidthOn, maxOpeningOffset, clampOpeningOffset, openingPreset,
@@ -1035,6 +1035,19 @@ export default function CabinCalculator() {
       const next = [...tablePlacementsOf(c, id, c.addons[id] || 0)];
       next[index] = pos;
       return { ...c, tablePlacements: { ...(c.tablePlacements ?? {}), [id]: next } };
+    });
+  /** Per-unit manual adjust (rotation 0/90/180/270° + feet shift dx/dy) for a furniture item. */
+  const patchFurnitureAdjust = (id: string, index: number, patch: Partial<{ rot: number; dx: number; dy: number }>) =>
+    setConfig((c) => {
+      const next = furnitureAdjustOf(c, id, c.addons[id] || 0);
+      next[index] = { ...next[index], ...patch };
+      return { ...c, furnitureAdjust: { ...(c.furnitureAdjust ?? {}), [id]: next } };
+    });
+  const rotateFurniture = (id: string, index: number) =>
+    setConfig((c) => {
+      const next = furnitureAdjustOf(c, id, c.addons[id] || 0);
+      next[index] = { ...next[index], rot: ((next[index].rot + 90) % 360) };
+      return { ...c, furnitureAdjust: { ...(c.furnitureAdjust ?? {}), [id]: next } };
     });
   // Gap (ft) between wall-attached furniture and the wall — 0 = flush. Clamped to 0..3 ft.
   const setFurnitureWallGap = (n: number) =>
@@ -2130,14 +2143,14 @@ export default function CabinCalculator() {
                     {/* Table placement — every table gets its own wall (or the centre pod), so the
                         2D plan seats staff with real clearance. Spec only (no price impact). */}
                     {(() => {
-                      const tables = ADDONS.filter((a) => TABLE_ADDON_IDS.includes(a.id) && config.addons[a.id]);
-                      if (!tables.length) return null;
+                      const items = ADDONS.filter((a) => (TABLE_ADDON_IDS.includes(a.id) || a.id === "cupboard") && config.addons[a.id]);
+                      if (!items.length) return null;
                       return (
                         <div className="border-t border-border pt-4">
                           <div className="mb-1 flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5">
                             <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                              <Label className="text-sm font-semibold">Table Placement</Label>
-                              <span className="text-[11px] text-muted-foreground">Where each table sits — staff seat on the room side</span>
+                              <Label className="text-sm font-semibold">Furniture Placement</Label>
+                              <span className="text-[11px] text-muted-foreground">Wall, rotation &amp; feet-shift for each item</span>
                             </div>
                             {/* Feet-based movement: push wall furniture off the wall for clearance (0 = flush). */}
                             <div className="flex items-center gap-1.5">
@@ -2154,23 +2167,48 @@ export default function CabinCalculator() {
                             <span className="font-semibold text-foreground">Centre</span> puts tables back-to-back facing each other, with a partition screen between each person. Tables now sit <span className="font-semibold text-foreground">flush against the wall</span> — raise the gap to add clearance behind them.
                           </p>
                           <div className="space-y-2">
-                            {tables.map((a) => {
+                            {items.map((a) => {
                               const qty = config.addons[a.id] || 0;
-                              const places = tablePlacementsOf(config, a.id, qty);
-                              return places.map((pos, i) => (
-                                <div key={`${a.id}-${i}`} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-background p-2.5">
-                                  <span className="text-sm font-medium text-foreground">
+                              const isTable = TABLE_ADDON_IDS.includes(a.id);
+                              const places = isTable ? tablePlacementsOf(config, a.id, qty) : [];
+                              const adjs = furnitureAdjustOf(config, a.id, qty);
+                              return Array.from({ length: qty }, (_, i) => (
+                                <div key={`${a.id}-${i}`} className="flex flex-wrap items-center gap-x-2 gap-y-1.5 rounded-lg border border-border bg-background p-2.5">
+                                  <span className="mr-auto text-sm font-medium text-foreground">
                                     {a.label}{qty > 1 ? ` ${i + 1}` : ""}
                                   </span>
-                                  <div className="flex flex-wrap gap-1">
-                                    {TABLE_POSITIONS.map((p) => (
-                                      <button key={p.id} type="button" aria-pressed={pos === p.id}
-                                        onClick={() => setTablePlacement(a.id, i, p.id)}
-                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-semibold transition-all",
-                                          pos === p.id ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-muted-foreground hover:text-foreground")}>
-                                        {p.label}
-                                      </button>
-                                    ))}
+                                  {isTable && (
+                                    <div className="flex flex-wrap gap-1">
+                                      {TABLE_POSITIONS.map((p) => (
+                                        <button key={p.id} type="button" aria-pressed={places[i] === p.id}
+                                          onClick={() => setTablePlacement(a.id, i, p.id)}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-semibold transition-all",
+                                            places[i] === p.id ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                          {p.label}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                  {/* rotate 90° per press */}
+                                  <button type="button" onClick={() => rotateFurniture(a.id, i)} title="Rotate 90°"
+                                    aria-label={`Rotate ${a.label} 90 degrees`}
+                                    className={cn("inline-flex items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-semibold transition-all",
+                                      adjs[i].rot ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                    <RotateCw className="h-3 w-3" /> {adjs[i].rot}°
+                                  </button>
+                                  {/* feet-distance shift */}
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-[11px] text-muted-foreground">Shift</span>
+                                    <input type="number" inputMode="decimal" step={0.5} aria-label={`${a.label} shift right (ft)`}
+                                      value={adjs[i].dx} onFocus={selectOnFocus}
+                                      onChange={(e) => patchFurnitureAdjust(a.id, i, { dx: parseFloat(cleanNumericInput(e.currentTarget)) || 0 })}
+                                      className="h-7 w-12 rounded-md border border-border bg-transparent px-1.5 text-center text-xs outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-[10px] text-muted-foreground">→</span>
+                                    <input type="number" inputMode="decimal" step={0.5} aria-label={`${a.label} shift down (ft)`}
+                                      value={adjs[i].dy} onFocus={selectOnFocus}
+                                      onChange={(e) => patchFurnitureAdjust(a.id, i, { dy: parseFloat(cleanNumericInput(e.currentTarget)) || 0 })}
+                                      className="h-7 w-12 rounded-md border border-border bg-transparent px-1.5 text-center text-xs outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-[10px] text-muted-foreground">↓ ft</span>
                                   </div>
                                 </div>
                               ));

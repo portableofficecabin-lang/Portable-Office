@@ -694,6 +694,10 @@ export interface CabinConfig {
   /** Per-table placement — addon id → array of TABLE_POSITIONS ids, one entry per unit.
    *  Lets the customer put each individual table on a specific wall (or the centre pod). */
   tablePlacements: Record<string, string[]>;
+  /** Per-unit manual adjust for EVERY furniture item — rotation (0/90/180/270°) and a
+   *  fine shift in FEET (dx = right, dy = down) from its auto-arranged spot. addon id →
+   *  one entry per unit. Empty entry = no adjust (auto placement). */
+  furnitureAdjust: Record<string, { rot: number; dx: number; dy: number }[]>;
   /** Gap (ft) between wall-attached furniture and the wall it sits against. 0 = flush to the
    *  wall (default). Lets the customer add walking / servicing clearance behind desks &
    *  cupboards on the 2D plan — a spec-only layout adjustment (no price impact). */
@@ -850,6 +854,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     ledShape: "square",
     furniturePosition: "wall",
     tablePlacements: {},
+    furnitureAdjust: {},
     furnitureWallGap: 0, // furniture sits flush to the wall by default
     plugPointWalls: ["down"], // one wall by default; "By Work Table" auto-adds when a table is chosen
     mobilityType: "movable",
@@ -1063,6 +1068,19 @@ export function tablePlacementsOf(cfg: CabinConfig, addonId: string, qty: number
   const centrePref = cfg.furniturePosition === "centre" || addonId === "conference";
   const n = Math.max(0, Math.round(qty) || 0);
   return Array.from({ length: n }, (_, i) => saved[i] ?? defaultTablePosition(i, centrePref));
+}
+
+/** Per-unit manual adjust (rotation + feet shift) for a furniture add-on. Always returns
+ *  exactly `qty` entries so a quantity change can never leave a unit without an entry. */
+export interface FurnitureAdjust { rot: number; dx: number; dy: number; }
+export function furnitureAdjustOf(cfg: CabinConfig, addonId: string, qty: number): FurnitureAdjust[] {
+  const saved = cfg.furnitureAdjust?.[addonId] ?? [];
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) => ({
+    rot: ((saved[i]?.rot ?? 0) % 360 + 360) % 360,
+    dx: saved[i]?.dx ?? 0,
+    dy: saved[i]?.dy ?? 0,
+  }));
 }
 
 /** Spec-only: per-room unit counts for a work-furniture add-on across the current rooms.

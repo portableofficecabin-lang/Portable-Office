@@ -78,10 +78,13 @@ export default function AdminEnquiries() {
       if (error) throw error;
       setEnquiries((data as Enquiry[]) || []);
     } catch (err) {
+      // Surface the REAL database error (e.g. an RLS-policy / permission problem) instead of a
+      // generic message — the enquiries SELECT is correct, so a failure here is server-side.
+      const msg = (err as { message?: string })?.message || "Unknown error";
       console.error("Error fetching enquiries:", err);
       toast({
-        title: "Error",
-        description: "Failed to load enquiries",
+        title: "Failed to load enquiries",
+        description: msg,
         variant: "destructive",
       });
     } finally {
