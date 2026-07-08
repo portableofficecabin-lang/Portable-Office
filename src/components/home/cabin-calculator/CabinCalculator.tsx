@@ -1874,9 +1874,14 @@ export default function CabinCalculator() {
                         ))}
                       </div>
                     )}
-                    <p className="mt-2 text-[11px] text-muted-foreground">
-                      Standard door size: <span className="font-semibold text-foreground">6 ft × 30″</span> — custom sizes available on request.
-                    </p>
+                    <div className="mt-2 space-y-1.5">
+                      <p className="text-[11px] text-muted-foreground">
+                        Standard door size: <span className="font-semibold text-foreground">6 ft × 30″</span> — custom sizes available on request.
+                      </p>
+                      <p className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-2 text-[11px] leading-snug text-muted-foreground">
+                        <span className="font-semibold text-foreground">Opening tip:</span> if the entrance is under a <span className="font-semibold text-foreground">shed / covered porch</span>, we suggest <span className="font-semibold text-foreground">Opens In</span> to avoid rain coming in. For an <span className="font-semibold text-foreground">open, exposed site</span>, we suggest <span className="font-semibold text-foreground">Opens Out</span> — it seals tighter against wind &amp; rain. Use <span className="font-semibold text-foreground">Hinge L / Hinge R</span> to set the handle side for a left- or right-hand opening.
+                      </p>
+                    </div>
                   </div>
                   {isToiletCabin(config.productId) ? (
                     <div>
