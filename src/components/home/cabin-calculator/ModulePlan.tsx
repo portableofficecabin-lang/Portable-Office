@@ -89,12 +89,49 @@ function FurnCaption({ cx, y, u }: { cx: number; y: number; u: FurnUnit }) {
 /** Chair size that fits a desk of w×h, clamped so it always reads as a seat. */
 const chairFor = (w: number, h: number) => Math.min(Math.max(Math.min(w, h) * 0.7, 8), 13);
 
+/** Small socket (2-pin) glyph for the standard per-table electrical cluster. */
+function MiniSocket({ cx, cy }: { cx: number; cy: number }) {
+  return (
+    <g>
+      <rect x={cx - 3.2} y={cy - 3.2} width={6.4} height={6.4} rx={1.2} fill={C.socket} stroke={C.socketInk} strokeWidth={0.7} />
+      <circle cx={cx - 1.2} cy={cy} r={0.6} fill={C.socketInk} />
+      <circle cx={cx + 1.2} cy={cy} r={0.6} fill={C.socketInk} />
+    </g>
+  );
+}
+/** Small switch (rocker) glyph — a switch plate with a toggle line. */
+function MiniSwitch({ cx, cy }: { cx: number; cy: number }) {
+  return (
+    <g>
+      <rect x={cx - 3.2} y={cy - 3.2} width={6.4} height={6.4} rx={1.2} fill="#ffffff" stroke={C.socketInk} strokeWidth={0.7} />
+      <line x1={cx} y1={cy - 1.9} x2={cx} y2={cy + 1.9} stroke={C.socketInk} strokeWidth={1.1} strokeLinecap="round" />
+    </g>
+  );
+}
+/** Standard per-table electrical, drawn by default on every work table: 2 sockets + 2 switches
+ *  on the table's WALL side (the edge opposite the chair). `side` is the CHAIR side, so the
+ *  outlets sit on the far edge — i.e. on the wall behind a wall-attached table. */
+const TABLE_OUTLETS = ["s", "s", "k", "k"] as const;
+function deskOutlets(x: number, y: number, w: number, h: number, side: "below" | "above" | "right" | "left", key: string) {
+  const g = 6.6, n = TABLE_OUTLETS.length;
+  const glyph = (t: "s" | "k", gx: number, gy: number, i: number) =>
+    t === "s" ? <MiniSocket key={`${key}-${i}`} cx={gx} cy={gy} /> : <MiniSwitch key={`${key}-${i}`} cx={gx} cy={gy} />;
+  if (side === "below" || side === "above") {
+    const ey = side === "below" ? y + 4.6 : y + h - 4.6;    // wall side = opposite the chair
+    const sx = x + w / 2 - ((n - 1) * g) / 2;
+    return TABLE_OUTLETS.map((t, i) => glyph(t, sx + i * g, ey, i));
+  }
+  const ex = side === "right" ? x + 4.6 : x + w - 4.6;
+  const sy = y + h / 2 - ((n - 1) * g) / 2;
+  return TABLE_OUTLETS.map((t, i) => glyph(t, ex, sy + i * g, i));
+}
+
 /** Desk / table (top view) at (x,y,w,h) with the chair on `side` — always the ROOM-interior
  *  side, offset by CHAIR_GAP so there is real clearance for a person to sit. The caption is
  *  drawn INSIDE the desk (rotated for the vertical walls) so it never collides with a chair. */
 function drawDeskAt(
   x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
-  side: "below" | "above" | "right" | "left",
+  side: "below" | "above" | "right" | "left", drawChair: boolean,
 ) {
   const cx = x + w / 2, cyc = y + h / 2;
   const cs = chairFor(w, h);
@@ -107,8 +144,11 @@ function drawDeskAt(
   const along = vertical ? h : w;          // the desk's long edge on screen
   return (
     <g key={key}>
-      <FurnChair cx={chair.cx} cy={chair.cy} s={cs} />
+      {/* Chair only when the customer has a chair to assign here (staff seat + clearance). */}
+      {drawChair && <FurnChair cx={chair.cx} cy={chair.cy} s={cs} />}
       <rect x={x} y={y} width={w} height={h} rx={2} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
+      {/* Standard workstation electrical: 2 sockets + 2 switches on the wall side. */}
+      {deskOutlets(x, y, w, h, side, `${key}-o`)}
       {along > 44 && (
         <g transform={vertical ? `rotate(-90 ${cx} ${cyc})` : undefined}>
           <text x={cx} y={cyc - 0.5} textAnchor="middle" fontSize={6} fontWeight={700} fill={C.ink}>{u.label}</text>
@@ -124,7 +164,7 @@ function drawDeskAt(
  *  which is exactly how a manager sits at one. `boxW`/`boxH` are the ROTATED bounding box. */
 function drawDeskLAt(
   x: number, y: number, boxW: number, boxH: number, u: FurnUnit, key: string,
-  side: "below" | "above" | "right" | "left", ppf: number,
+  side: "below" | "above" | "right" | "left", ppf: number, drawChair: boolean,
 ) {
   const Lw = u.wFt * ppf, Lh = u.dFt * ppf;              // local (unrotated) footprint
   const mainD = MANAGER_TABLE_SIZE.depthFt * ppf;        // depth of the main run
@@ -134,10 +174,15 @@ function drawDeskLAt(
   const cs = chairFor(Lw - retW, Lh - mainD);
   const chX = retW + (Lw - retW) / 2, chY = mainD + CHAIR_GAP + cs / 2;
   const pts = `0,0 ${Lw},0 ${Lw},${mainD} ${retW},${mainD} ${retW},${Lh} 0,${Lh}`;
+  // 2 sockets + 2 switches along the main run's wall side (local top edge, y≈0).
+  const og = 6.6, oSx = Lw / 2 - ((TABLE_OUTLETS.length - 1) * og) / 2;
   return (
     <g key={key} transform={`translate(${x + boxW / 2} ${y + boxH / 2}) rotate(${angle}) translate(${-Lw / 2} ${-Lh / 2})`}>
-      <FurnChair cx={chX} cy={chY} s={cs} />
+      {drawChair && <FurnChair cx={chX} cy={chY} s={cs} />}
       <polygon points={pts} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
+      {TABLE_OUTLETS.map((t, i) => (t === "s"
+        ? <MiniSocket key={`o${i}`} cx={oSx + i * og} cy={4.6} />
+        : <MiniSwitch key={`o${i}`} cx={oSx + i * og} cy={4.6} />))}
       {Lw > 44 && (
         // counter-rotate so the caption stays upright whichever wall the desk faces
         <g transform={`rotate(${-angle} ${Lw / 2} ${mainD / 2})`}>
@@ -163,17 +208,22 @@ function drawCabinet(x: number, y: number, w: number, h: number, u: FurnUnit, ke
   );
 }
 
-/** Conference table (top view) — rounded table ringed by chairs + centred caption. */
-function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string) {
+/** Ring capacity of a conference table (how many chairs fit around it). */
+const confCapacity = (w: number, h: number) => {
+  const chairS = Math.min(h * 0.5, 11);
+  return 2 * Math.max(1, Math.min(3, Math.round(w / (chairS * 2.4))));
+};
+/** Conference table (top view) — rounded table ringed by up to `chairCount` chairs (only the
+ *  chairs the customer actually selected) + centred caption. */
+function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, chairCount: number) {
   const cx = x + w / 2, cyc = y + h / 2;
   const chairS = Math.min(h * 0.5, 11);
   const perSide = Math.max(1, Math.min(3, Math.round(w / (chairS * 2.4))));
-  const seats: React.ReactNode[] = [];
-  for (let i = 0; i < perSide; i++) {
-    const chX = x + w * ((i + 0.5) / perSide);
-    seats.push(<FurnChair key={`t${i}`} cx={chX} cy={y - chairS * 0.62} s={chairS} />);
-    seats.push(<FurnChair key={`b${i}`} cx={chX} cy={y + h + chairS * 0.62} s={chairS} />);
-  }
+  // Ring slots (top row then bottom row); fill only as many as the customer has chairs for.
+  const slots: { cx: number; cy: number }[] = [];
+  for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y - chairS * 0.62 });
+  for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y + h + chairS * 0.62 });
+  const seats = slots.slice(0, Math.max(0, chairCount)).map((s, i) => <FurnChair key={`c${i}`} cx={s.cx} cy={s.cy} s={chairS} />);
   return (
     <g key={key}>
       {seats}
@@ -202,7 +252,11 @@ function roomFurnitureNodes(
   const dD = (u: FurnUnit) => u.dFt * ppf;  // table depth (into the room)
 
   const cabinets = units.filter((u) => u.kind === "cabinet");
-  const looseChairs = units.filter((u) => u.kind === "chair");
+  // Chairs are drawn ONLY for the chairs the customer selected. They're assigned to desks
+  // first (so staff can sit), then a conference ring, then any extras become loose chairs.
+  let chairPool = units.filter((u) => u.kind === "chair").length;
+  const takeChairs = (max: number) => { const t = Math.min(Math.max(max, 0), chairPool); chairPool -= t; return t; };
+  const takeChair = () => takeChairs(1) === 1;
   const groups: Record<string, FurnUnit[]> = { top: [], bottom: [], left: [], right: [], centre: [] };
   // Wall-placed conference tables are drawn as ordinary desks; centred ones get a chair ring.
   const confsCentre: FurnUnit[] = [];
@@ -213,11 +267,12 @@ function roomFurnitureNodes(
     (groups[p] ?? groups.top).push(u);
   });
 
-  /** Draw a table into a bounding box — L-shaped manager desks get their own polygon. */
+  /** Draw a table into a bounding box — L-shaped manager desks get their own polygon.
+   *  `chair` = whether a selected chair is assigned to this desk (staff seat). */
   const drawTable = (
     x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
-    side: "below" | "above" | "right" | "left",
-  ) => (u.kind === "deskL" ? drawDeskLAt(x, y, w, h, u, key, side, ppf) : drawDeskAt(x, y, w, h, u, key, side));
+    side: "below" | "above" | "right" | "left", chair: boolean,
+  ) => (u.kind === "deskL" ? drawDeskLAt(x, y, w, h, u, key, side, ppf, chair) : drawDeskAt(x, y, w, h, u, key, side, chair));
 
   // Vertical space a horizontal wall run consumes (deepest desk + its chair + clearance).
   const band = (list: FurnUnit[]) =>
@@ -232,7 +287,7 @@ function roomFurnitureNodes(
       if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; row++; }
       const off = row * (h + cs + CHAIR_GAP + gap);
       const y = wall === "top" ? yTop + pad + off : yBot - pad - h - off;
-      nodes.push(drawTable(cx, y, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "top" ? "below" : "above"));
+      nodes.push(drawTable(cx, y, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "top" ? "below" : "above", takeChair()));
       cx += w + gap;
     });
   };
@@ -248,7 +303,7 @@ function roomFurnitureNodes(
       if (cy + h > vBot && cy > vTop) { cy = vTop; col++; }
       const off = col * (w + cs + CHAIR_GAP + gap);
       const x = wall === "left" ? x0 + pad + off : x1 - pad - w - off;
-      nodes.push(drawTable(x, cy, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "left" ? "right" : "left"));
+      nodes.push(drawTable(x, cy, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "left" ? "right" : "left", takeChair()));
       cy += h + gap;
     });
   };
@@ -266,7 +321,7 @@ function roomFurnitureNodes(
     const w = Math.min(dW(u), cx1 - cx0 - 8), h = dD(u);
     const cs = Math.min(h * 0.5, 11);
     cursor += cs + 2;
-    nodes.push(drawConf((cx0 + cx1) / 2 - w / 2, cursor, w, h, u, `${keyPrefix}-conf${i}`));
+    nodes.push(drawConf((cx0 + cx1) / 2 - w / 2, cursor, w, h, u, `${keyPrefix}-conf${i}`, takeChairs(confCapacity(w, h))));
     cursor += h + cs + 14;
   });
 
@@ -288,14 +343,14 @@ function roomFurnitureNodes(
     let ax = px;
     rowA.forEach((u, i) => {
       const w = dW(u), h = dD(u);
-      nodes.push(drawTable(ax, spine - h, w, h, u, `${keyPrefix}-cA${i}`, "above"));
+      nodes.push(drawTable(ax, spine - h, w, h, u, `${keyPrefix}-cA${i}`, "above", takeChair()));
       ax += w; if (i < rowA.length - 1) bounds.push(ax + gap / 2);
       ax += gap;
     });
     let bx = px;
     rowB.forEach((u, i) => {
       const w = dW(u), h = dD(u);
-      nodes.push(drawTable(bx, spine, w, h, u, `${keyPrefix}-cB${i}`, "below"));
+      nodes.push(drawTable(bx, spine, w, h, u, `${keyPrefix}-cB${i}`, "below", takeChair()));
       bx += w + gap;
     });
     nodes.push(
@@ -327,16 +382,16 @@ function roomFurnitureNodes(
     });
   }
 
-  // Loose chairs — a row in the leftover centre space.
-  if (looseChairs.length) {
+  // Loose chairs — only the SELECTED chairs left over after seating every desk & conference.
+  if (chairPool > 0) {
     const s = Math.min(1.5 * ppf, 14);
     let cx = cx0 + 4;
     const y = Math.min(Math.max(cursor, vTop) + s / 2, vBot - s / 2);
-    looseChairs.forEach((_, i) => {
+    for (let i = 0; i < chairPool; i++) {
       if (cx + s > cx1) { cx = cx0 + 4; }
       nodes.push(<FurnChair key={`${keyPrefix}-ch${i}`} cx={cx + s / 2} cy={y} s={s} />);
       cx += s + gap;
-    });
+    }
   }
 
   return nodes;
@@ -607,6 +662,8 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           const openFt = openingWidthOn(spanFt, winW);
           const len = openFt * ppf;
           const startPx = clampOpeningOffset(wp.offset, spanFt, winW) * ppf;
+          // Sliding-track rails drawn inside the frame: 2-track → 2, 2.5-track → 3.
+          const winRails = (config.windowTrackId ?? "2") === "2.5" ? 3 : 2;
           if (horiz) {
             const x0 = ox + startPx;
             const cx = x0 + len / 2;
@@ -615,7 +672,10 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
             return (
               <g key={i}>
                 <rect x={x0} y={y0} width={len} height={wallT + 4} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
-                <line x1={x0} y1={y0 + (wallT + 4) / 2} x2={x0 + len} y2={y0 + (wallT + 4) / 2} stroke={C.winLine} strokeWidth={0.7} />
+                {Array.from({ length: winRails }, (_, k) => {
+                  const yy = y0 + (wallT + 4) * ((k + 1) / (winRails + 1));
+                  return <line key={k} x1={x0} y1={yy} x2={x0 + len} y2={yy} stroke={C.winLine} strokeWidth={0.7} />;
+                })}
                 <text x={cx} y={lblY} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={C.ink}>WINDOW</text>
                 <text x={cx} y={lblY + 8.5} textAnchor="middle" fontSize={7.5} fill={C.ink}>{winLabel}</text>
               </g>
@@ -628,7 +688,10 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return (
             <g key={i}>
               <rect x={x0} y={yTop} width={wallT + 4} height={len} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
-              <line x1={x0 + (wallT + 4) / 2} y1={yTop} x2={x0 + (wallT + 4) / 2} y2={yTop + len} stroke={C.winLine} strokeWidth={0.7} />
+              {Array.from({ length: winRails }, (_, k) => {
+                const xx = x0 + (wallT + 4) * ((k + 1) / (winRails + 1));
+                return <line key={k} x1={xx} y1={yTop} x2={xx} y2={yTop + len} stroke={C.winLine} strokeWidth={0.7} />;
+              })}
               <text x={lblX} y={cy} textAnchor="middle" fontSize={7} fontWeight={700} fill={C.ink}
                 transform={`rotate(-90 ${lblX} ${cy})`}>WINDOW {winLabel}</text>
             </g>
@@ -700,11 +763,22 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           if (plugWalls.includes("left"))  frac.forEach((f) => pts.push({ x: ox + ins, y: oy + planH * f }));
           if (plugWalls.includes("right")) frac.forEach((f) => pts.push({ x: rx - ins, y: oy + planH * f }));
           if (plugWalls.includes("table")) {
-            const nT = Math.min(TABLE_ADDON_IDS.reduce((a, t) => a + (config.addons?.[t] ?? 0), 0), 4) || 1;
-            for (let i = 0; i < nT; i++) {
-              const f = nT === 1 ? 0.5 : 0.3 + (0.4 * i) / (nT - 1);
-              pts.push({ x: ox + planW * f, y: oy + planH * 0.52 }); // beside where a work table sits
-            }
+            // One socket per work table, placed ON THE WALL that table sits against (a
+            // centre-positioned table falls back to the down / front wall) — sockets are
+            // always on a wall face, never floating in the middle of the room.
+            const tblPts: { x: number; y: number }[] = [];
+            TABLE_ADDON_IDS.forEach((tid) => {
+              const qty = Math.round(config.addons?.[tid] ?? 0);
+              if (qty <= 0) return;
+              tablePlacementsOf(config, tid, qty).forEach((pos, i) => {
+                const f = 0.28 + 0.44 * ((i + 0.5) / qty); // spread along the wall
+                if (pos === "top")        tblPts.push({ x: ox + planW * f, y: oy + ins });
+                else if (pos === "left")  tblPts.push({ x: ox + ins,       y: oy + planH * f });
+                else if (pos === "right") tblPts.push({ x: rx - ins,       y: oy + planH * f });
+                else                      tblPts.push({ x: ox + planW * f, y: by - ins }); // bottom / centre → down wall
+              });
+            });
+            tblPts.slice(0, 6).forEach((p) => pts.push(p));
           }
           return pts.map((p, i) => <Socket key={i} cx={p.x} cy={p.y} />);
         })()}
