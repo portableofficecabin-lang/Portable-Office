@@ -159,10 +159,22 @@ export default function BookAppointment() {
         }
       );
 
-      // Handle edge function invocation error
+      // Handle edge function invocation error — surface the REAL cause. supabase-js wraps a
+      // non-2xx response in a FunctionsHttpError whose body (with the actual message) is on
+      // `.context`; a network failure ("Failed to send a request to the Edge Function") means
+      // the function isn't deployed / reachable.
       if (verifyError) {
         console.error("Edge function error:", verifyError);
-        setOtpError("Verification service unavailable. Please try again.");
+        let detail = (verifyError as { message?: string })?.message || "";
+        try {
+          const body = await (verifyError as { context?: Response })?.context?.json?.();
+          if (body?.error) detail = body.error;
+        } catch { /* body not JSON */ }
+        setOtpError(
+          detail
+            ? `Couldn't verify the code: ${detail}`
+            : "Verification service is unavailable — the OTP function may not be deployed. Please try again or contact us.",
+        );
         return;
       }
 
