@@ -917,8 +917,8 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
   // The "Puf Panel Cabin" product defaults to the PUF panel structure (its walls ARE PUF
   // panels), which in turn defaults the interior wall to "Not Required".
   const puf = product.id === "puf-panel-cabin";
-  // Toilet cabins default to a waterproof APP Sheet lining on BOTH the walls and the
-  // ceiling — the standard wet-area finish (a toilet-only option, see WALL/CEILING_MATERIALS).
+  // Toilet cabins default to a waterproof APP Sheet lining on the WALLS (the wet-area
+  // finish; a toilet-only option, see WALL_MATERIALS) and a standard MDF ceiling.
   const toilet = isToiletCabin(product.id);
   const electrical: Record<string, number> = {};
   // Storage containers are priced purely by grade — no pre-selected electricals.
@@ -936,7 +936,8 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     // ISO shipping containers → ALWAYS flat-roofed (no sloped option, no surcharge).
     roofId: container ? "flat" : "sloped",
     wallId: puf ? WALL_NONE.id : toilet ? "app-sheet" : WALL_MATERIALS.find((m) => m.standard)!.id,
-    ceilingId: toilet ? "app-sheet" : CEILING_MATERIALS.find((m) => m.standard)!.id,
+    // Ceiling defaults to the standard MDF board for every product, toilet cabins included.
+    ceilingId: CEILING_MATERIALS.find((m) => m.standard)!.id,
     flooringId: FLOORING_MATERIALS.find((m) => m.standard)!.id,
     insulationId: "none",
     doorTypeId: DOOR_TYPES[0].id, // Steel Door (1 included in base)

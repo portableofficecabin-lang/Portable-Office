@@ -2583,21 +2583,22 @@ export default function CabinCalculator() {
                         onSelect={(id) => patch({ mobilityType: id })}
                       />
                     </div>
+                      </>
+                    )}
                     {/* Complete layout — a read-only floor plan combining EVERYTHING chosen
-                        so far (doors, windows, lights, fans, plug points & furniture) in one
-                        view, shown right after the add-ons. */}
+                        so far (doors, windows, lights, fans, plug points, fittings & furniture)
+                        in one view. Shown for EVERY product, incl. the toilet cabin — its plan
+                        with the selected toilet fittings appears here. */}
                     <div className="border-t border-border pt-4">
                       <CompleteLayoutPreview config={config} />
                     </div>
                     {/* Optional drag-and-drop layout — position the chosen doors, windows,
-                        lights, fans & furniture on the floor plan. Spec only (no price);
+                        lights, fans & fittings on the floor plan. Spec only (no price);
                         saved into the quote/PDF so the factory builds to the arrangement. */}
                     <LayoutDesigner
                       config={config}
                       onLayoutChange={(layout) => setConfig((c) => ({ ...c, layout }))}
                     />
-                      </>
-                    )}
                   </div>
                 )}
               </StepShell>
