@@ -134,13 +134,22 @@ export function HeroSection() {
             </div>
 
             <div
-              className="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 mb-10 animate-fade-up lg:justify-start"
+              className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 mb-10 animate-fade-up lg:justify-start"
               style={{ animationDelay: "0.34s" }}
             >
-              <CheckCircle className="h-5 w-5 text-accent" />
-              <span className="text-sm font-semibold text-white">GST Verified</span>
-              <span className="text-sm text-white/65">Our GST No:</span>
-              <span className="text-sm font-mono font-semibold text-white tracking-wide">33FVKPK6238Q1ZT</span>
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-accent shrink-0" />
+                <span className="text-sm font-semibold text-white">GST Verified</span>
+                <span className="text-sm text-white/65">GST No:</span>
+                <span className="text-sm font-mono font-semibold text-white tracking-wide">33FVKPK6238Q1ZT</span>
+              </span>
+              <span className="hidden h-4 w-px bg-white/20 sm:block" />
+              <span className="inline-flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-accent shrink-0" />
+                <span className="text-sm font-semibold text-white">MSME / Udyam</span>
+                <span className="text-sm text-white/65">Reg. No:</span>
+                <span className="text-sm font-mono font-semibold text-white tracking-wide">UDYAM-TN-11-0068545</span>
+              </span>
             </div>
 
             {/* CTAs */}
@@ -162,8 +171,8 @@ export function HeroSection() {
             </div>
 
             {/* Stats */}
-            <div 
-              className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-white/10 animate-fade-up"
+            <div
+              className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 pt-8 border-t border-white/10 animate-fade-up"
               style={{ animationDelay: "0.5s" }}
             >
               <div className="text-center lg:text-left">
@@ -173,6 +182,10 @@ export function HeroSection() {
               <div className="text-center lg:text-left">
                 <div className="font-display text-3xl lg:text-4xl font-bold text-accent">15+</div>
                 <div className="text-white/50 text-sm mt-1">Years in Business</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="font-display text-3xl lg:text-4xl font-bold text-accent">2</div>
+                <div className="text-white/50 text-sm mt-1">Factories</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="font-display text-3xl lg:text-4xl font-bold text-accent">98%</div>

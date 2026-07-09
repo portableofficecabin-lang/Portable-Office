@@ -239,6 +239,12 @@ export const organizationStructuredData = {
     "Leading manufacturer of portable cabins, container offices, and prefab solutions in India",
   url: "https://portableofficecabin.com",
   logo: "https://portableofficecabin.com/logo.jpeg",
+  taxID: "33FVKPK6238Q1ZT",
+  identifier: {
+    "@type": "PropertyValue",
+    propertyID: "Udyam Registration Number",
+    value: "UDYAM-TN-11-0068545",
+  },
   sameAs: [
     "https://www.facebook.com/portableofficecabin",
     "https://www.linkedin.com/company/portable-office-cabin",
@@ -281,6 +287,12 @@ export const localBusinessStructuredData = {
   email: "sales@portableofficecabin.com",
   priceRange: "₹₹₹",
   image: "https://portableofficecabin.com/logo.jpeg",
+  taxID: "33FVKPK6238Q1ZT",
+  identifier: {
+    "@type": "PropertyValue",
+    propertyID: "Udyam Registration Number",
+    value: "UDYAM-TN-11-0068545",
+  },
   sameAs: [
     "https://www.facebook.com/portableofficecabin",
     "https://www.linkedin.com/company/portable-office-cabin",

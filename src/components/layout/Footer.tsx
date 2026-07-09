@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, BadgeCheck } from "lucide-react";
 import logo from "@/assets/logo.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
@@ -166,7 +166,19 @@ export function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-accent/30 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-accent/30">
+          {/* Registration / trust identifiers */}
+          <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span className="inline-flex items-center gap-2 text-primary-foreground font-bold">
+              <BadgeCheck className="h-5 w-5 text-accent shrink-0" />
+              GST No: <span className="font-mono tracking-wide">33FVKPK6238Q1ZT</span>
+            </span>
+            <span className="inline-flex items-center gap-2 text-primary-foreground font-bold">
+              <BadgeCheck className="h-5 w-5 text-accent shrink-0" />
+              MSME / Udyam Reg. No: <span className="font-mono tracking-wide">UDYAM-TN-11-0068545</span>
+            </span>
+          </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-primary-foreground font-bold text-lg">
             © {new Date().getFullYear()} Portable Office Cabin. All rights reserved.
           </p>
@@ -183,6 +195,7 @@ export function Footer() {
             <a href="https://www.instagram.com/portableofficecabin?igsh=d3Z5azNvM3o0ZDI3" target="_blank" rel="noopener noreferrer" aria-label="Portable Office Cabin on Instagram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
               <Instagram className="h-5 w-5" aria-hidden="true" />
             </a>
+          </div>
           </div>
         </div>
       </div>
