@@ -26,6 +26,9 @@ import {
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel, materialAllowed,
   ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, MOVABLE_ADDON_IDS,
   TABLE_POSITIONS, tablePlacementsOf, furnitureAdjustOf,
+  FIXTURE_IDS, ENCLOSED_TOILET_IDS, FIXTURE_SIZING, PANTRY_MIN_FT, PANTRY_RATE_PER_FT,
+  TOILET_CORNERS, TOILET_DOOR_SIDES, FIXTURE_WALLS,
+  fixtureSizeOf, fixturePlacementOf, fixtureDoorSideOf, fixtureUnitPrice,
   FURNITURE_POSITIONS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
   furniturePositionLabel, mobilityTypeLabel,
   PLUG_WALLS, plugWallLabel, ROOM_PURPOSES, roomPurposeLabel, roomLabelFor,
@@ -853,6 +856,24 @@ export default function CabinCalculator() {
           if (isToiletCabin(saved.productId) || isStorageProduct(saved.productId)) {
             merged.windowPlacements = base.windowPlacements;
           }
+          // Migrate the legacy single `toilet` add-on → `toilet-wc` (the split Attached WC) across
+          // the add-on count, per-room split and per-unit adjust. MUST run before toiletAddonsOnly
+          // (which, post-split, would drop an un-renamed `toilet` key) and before the furnitureRoom
+          // number→array normalisation further below.
+          const renameMaps: Array<Record<string, unknown> | undefined> = [
+            merged.addons as unknown as Record<string, unknown>,
+            merged.furnitureRoom as unknown as Record<string, unknown>,
+            merged.furnitureAdjust as unknown as Record<string, unknown>,
+          ];
+          for (const map of renameMaps) {
+            if (!map || typeof map !== "object") continue;
+            if (map["toilet"] !== undefined && map["toilet-wc"] === undefined) map["toilet-wc"] = map["toilet"];
+            delete map["toilet"];
+          }
+          // Default the sized-fixture maps for configs saved by an older build.
+          if (!merged.fixtureSize || typeof merged.fixtureSize !== "object") merged.fixtureSize = {};
+          if (!merged.fixturePlacement || typeof merged.fixturePlacement !== "object") merged.fixturePlacement = {};
+          if (!merged.fixtureDoorSide || typeof merged.fixtureDoorSide !== "object") merged.fixtureDoorSide = {};
           // A toilet cabin has no office furniture — strip any furniture add-ons a previous
           // build (or a product switch) may have persisted, keeping only the plumbing fittings.
           if (isToiletCabin(saved.productId)) {
@@ -1061,6 +1082,18 @@ export default function CabinCalculator() {
     });
   const setAddonQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, addons: { ...c.addons, [id]: Math.max(1, qty) } }));
+  /* ---- Sized / placeable fixtures (toilet, washroom, pantry, wash-basin, urinal) ---- */
+  // Size drives the fixture's price (enclosed toilet by area, pantry by running foot); placement
+  // + door side are spec-only and drive the 2D plan.
+  const setFixtureSize = (id: string, size: Partial<{ wFt: number; dFt: number }>) =>
+    setConfig((c) => {
+      const cur = fixtureSizeOf(c, id);
+      return { ...c, fixtureSize: { ...(c.fixtureSize ?? {}), [id]: { wFt: cur.wFt, dFt: cur.dFt, ...size } } };
+    });
+  const setFixturePlacement = (id: string, place: string) =>
+    setConfig((c) => ({ ...c, fixturePlacement: { ...(c.fixturePlacement ?? {}), [id]: place } }));
+  const setFixtureDoorSide = (id: string, side: string) =>
+    setConfig((c) => ({ ...c, fixtureDoorSide: { ...(c.fixtureDoorSide ?? {}), [id]: side } }));
   /** Put the i-th unit of a work table on a specific wall (or the centre pod). Spec-only —
    *  it drives the 2D plan's seating layout, not the price. */
   const setTablePlacement = (id: string, index: number, pos: string) =>
@@ -2291,9 +2324,11 @@ export default function CabinCalculator() {
                     <div className="grid gap-2.5 sm:grid-cols-2">
                       {addonsForProduct(config.productId).map((a) => {
                         const selected = !!config.addons[a.id];
+                        // Sized fixtures show a live "from" price (base at the standard size).
+                        const sub = `${formatINR(fixtureUnitPrice(a.id, config))}${a.hasQty ? " each" : ""}${a.hint ? ` · ${a.hint}` : ""}`;
                         return (
                           <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
-                            label={a.label} sub={`${formatINR(a.price)}${a.hasQty ? " each" : ""}${a.hint ? ` · ${a.hint}` : ""}`}>
+                            label={a.label} sub={sub}>
                             {selected && a.hasQty && (
                               <Stepper value={config.addons[a.id]} min={1} max={200} label={`${a.label} quantity`} onChange={(n) => setAddonQty(a.id, n)} />
                             )}
@@ -2301,6 +2336,90 @@ export default function CabinCalculator() {
                         );
                       })}
                     </div>
+
+                    {/* Washroom, Pantry & Fittings — size, placement & door for the plumbing/pantry
+                        fixtures. Renders for ANY cabin (incl. toilet cabins) once a fixture is picked. */}
+                    {FIXTURE_IDS.some((id) => config.addons[id]) && (
+                      <div className="border-t border-border pt-4">
+                        <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                          <Label className="text-sm font-semibold">Washroom, Pantry &amp; Fittings</Label>
+                          <span className="text-[11px] text-muted-foreground">Size, placement &amp; door — the 2D plan updates live.</span>
+                        </div>
+                        <div className="grid gap-2.5 sm:grid-cols-2">
+                          {FIXTURE_IDS.filter((id) => config.addons[id]).map((id) => {
+                            const a = ADDONS.find((x) => x.id === id)!;
+                            const size = fixtureSizeOf(config, id);
+                            const enclosed = ENCLOSED_TOILET_IDS.includes(id);
+                            const isPantry = id === "pantry";
+                            const placeOpts = enclosed ? TOILET_CORNERS : FIXTURE_WALLS;
+                            return (
+                              <div key={id} className="rounded-lg border border-border bg-muted/10 p-2.5">
+                                <div className="mb-1.5 flex items-baseline justify-between gap-2">
+                                  <span className="text-xs font-semibold text-foreground">{a.label}</span>
+                                  <span className="text-xs font-semibold text-accent">{formatINR(fixtureUnitPrice(id, config))}</span>
+                                </div>
+                                {enclosed && (
+                                  <div className="mb-1.5 flex flex-wrap items-center gap-1.5 text-[11px]">
+                                    <span className="text-muted-foreground">Size</span>
+                                    <input type="number" inputMode="decimal" min={FIXTURE_SIZING[id].minW} step={0.5} aria-label={`${a.label} width (ft)`}
+                                      value={size.wFt} onFocus={selectOnFocus}
+                                      onChange={(e) => setFixtureSize(id, { wFt: parseFloat(cleanNumericInput(e.currentTarget)) || FIXTURE_SIZING[id].minW })}
+                                      className="h-7 w-14 rounded-md border border-border bg-transparent px-2 text-center outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-muted-foreground">×</span>
+                                    <input type="number" inputMode="decimal" min={FIXTURE_SIZING[id].minD} step={0.5} aria-label={`${a.label} depth (ft)`}
+                                      value={size.dFt} onFocus={selectOnFocus}
+                                      onChange={(e) => setFixtureSize(id, { dFt: parseFloat(cleanNumericInput(e.currentTarget)) || FIXTURE_SIZING[id].minD })}
+                                      className="h-7 w-14 rounded-md border border-border bg-transparent px-2 text-center outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-muted-foreground/70">ft (min {FIXTURE_SIZING[id].minW}×{FIXTURE_SIZING[id].minD})</span>
+                                  </div>
+                                )}
+                                {isPantry && (
+                                  <div className="mb-1.5 flex flex-wrap items-center gap-1.5 text-[11px]">
+                                    <span className="text-muted-foreground">Counter length</span>
+                                    <input type="number" inputMode="decimal" min={PANTRY_MIN_FT} step={0.5} aria-label="Pantry counter length (ft)"
+                                      value={size.wFt} onFocus={selectOnFocus}
+                                      onChange={(e) => setFixtureSize(id, { wFt: parseFloat(cleanNumericInput(e.currentTarget)) || PANTRY_MIN_FT })}
+                                      className="h-7 w-16 rounded-md border border-border bg-transparent px-2 text-center outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                    <span className="text-muted-foreground/70">ft (min {PANTRY_MIN_FT} · {formatINR(PANTRY_RATE_PER_FT)}/ft)</span>
+                                  </div>
+                                )}
+                                <div className="flex flex-wrap items-center gap-1">
+                                  <span className="text-[11px] text-muted-foreground">{enclosed ? "Corner" : "Wall"}</span>
+                                  {placeOpts.map((opt) => {
+                                    const active = fixturePlacementOf(config, id) === opt.id;
+                                    return (
+                                      <button key={opt.id} type="button" aria-pressed={active} onClick={() => setFixturePlacement(id, opt.id)}
+                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                        {opt.label}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                                {enclosed && (
+                                  <div className="mt-1.5 flex flex-wrap items-center gap-1">
+                                    <span className="text-[11px] text-muted-foreground">Door</span>
+                                    {TOILET_DOOR_SIDES.map((opt) => {
+                                      const active = fixtureDoorSideOf(config, id) === opt.id;
+                                      return (
+                                        <button key={opt.id} type="button" aria-pressed={active} onClick={() => setFixtureDoorSide(id, opt.id)}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                          {opt.label}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                                {id === "urinal" && <p className="mt-1.5 text-[10px] text-muted-foreground">Includes a separation partition.</p>}
+                                {id === "wash-basin" && <p className="mt-1.5 text-[10px] text-muted-foreground">Placed at the chosen wall — fine-tune in Customize Layout.</p>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
+                          Toilet &amp; washroom are drawn enclosed with a wall partition + door; larger sizes are priced by sq.ft, the pantry by running foot. All fittings sit inside the cabin.
+                        </p>
+                      </div>
+                    )}
                     {/* Toilet cabins are self-contained washrooms — the office-furniture layout,
                         placement and drag-designer tools below don't apply, so hide them. */}
                     {!isToiletCabin(config.productId) && (

@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
-import { ProductReviewsServer } from "@/components/products/ProductReviewsServer";
+import { ProductReviews } from "@/components/products/ProductReviews";
 import type { ProductReview } from "@/components/products/ProductReviews";
 import {
   getProductBySlug,
@@ -382,7 +382,7 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
           <FreshInsightSection slug={slug || ""} />
 
           {/* Customer Reviews (server-rendered list + client submit) */}
-          <ProductReviewsServer reviews={reviews} productSlug={slug} productName={productH1} />
+          <ProductReviews initialReviews={reviews} productSlug={slug} productName={productH1} />
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (

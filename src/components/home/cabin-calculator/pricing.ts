@@ -683,11 +683,14 @@ export interface AddonItem {
 }
 
 export const ADDONS: AddonItem[] = [
-  // Plumbing fittings for an ATTACHED washroom inside the cabin.
-  { id: "toilet",      label: "Toilet",           price: 22000, hint: "Attached WC / washroom in the cabin" },
-  { id: "pantry",      label: "Pantry",           price: 18000 },
-  { id: "wash-basin",  label: "Wash Basin",       price: 4500,  hint: "Attached-washroom fitting" },
-  { id: "urinal",      label: "Urinal",           price: 6500,  hint: "Attached-washroom fitting" },
+  // Plumbing / pantry fittings for an ATTACHED washroom inside the cabin. The toilet & pantry
+  // are SIZED (their price is size-based — see fixtureUnitPrice / FIXTURE_SIZING); `price` here
+  // is the base at the standard size, so flat-price fallbacks still work.
+  { id: "toilet-wc",       label: "Attached WC / Toilet (4′×4′)",       price: 25000, hint: "Enclosed WC inside the cabin — 4′×4′ standard, priced by sq.ft above" },
+  { id: "toilet-washroom", label: "Toilet with Bath / Washroom (6′×4′)", price: 35000, hint: "Enclosed washroom with WC + bath — 6′×4′ standard, priced by sq.ft above" },
+  { id: "pantry",      label: "Pantry",           price: 18000, hint: "Counter inside the cabin — 4 ft standard, priced by running foot" },
+  { id: "wash-basin",  label: "Wash Basin",       price: 4500,  hint: "Placeable at any wall/position inside the cabin" },
+  { id: "urinal",      label: "Urinal",           price: 6500,  hint: "Urinal fitting with a separation partition" },
   { id: "partition",      label: "Fixed Partition",     price: 17500, hasQty: true },
   { id: "partition-door", label: "Partition with Door", price: 22000, hasQty: true },
   // Sliding partition door = hinged door (₹22,000) + PARTITION_SLIDING_PREMIUM (₹8,000).
@@ -714,7 +717,7 @@ export const ADDONS: AddonItem[] = [
 /** Toilet / plumbing fittings — the ONLY optional add-ons offered for a toilet cabin (a
  *  complete, self-contained washroom), in display order. These same fittings are also
  *  offered as an attached-washroom option on the other, furniture-capable cabins. */
-export const TOILET_FITTING_IDS: string[] = ["toilet", "urinal", "wash-basin", "pantry"];
+export const TOILET_FITTING_IDS: string[] = ["toilet-wc", "toilet-washroom", "urinal", "wash-basin", "pantry"];
 
 /** The optional add-ons offered for a product, in display order. A TOILET CABIN gets ONLY the
  *  plumbing fittings above (no office furniture — it is a self-contained washroom). Every other
@@ -798,6 +801,15 @@ export interface CabinConfig {
    *  fine shift in FEET (dx = right, dy = down) from its auto-arranged spot. addon id →
    *  one entry per unit. Empty entry = no adjust (auto placement). */
   furnitureAdjust: Record<string, { rot: number; dx: number; dy: number }[]>;
+  /** Sized fixtures — chosen size per fixture add-on id. Enclosed toilets store {wFt,dFt} (area
+   *  drives price); the pantry stores {wFt=counter length} (running-foot price). Optional; the
+   *  fixtureSizeOf accessor clamps to each id's minimum. */
+  fixtureSize?: Record<string, { wFt: number; dFt: number }>;
+  /** Fixture placement (spec-only): a TOILET_CORNERS id for the enclosed toilets, a FIXTURE_WALLS
+   *  id for pantry / wash-basin / urinal. Optional; fixturePlacementOf provides a default. */
+  fixturePlacement?: Record<string, string>;
+  /** Enclosed-toilet door face (spec-only): a TOILET_DOOR_SIDES id. Optional. */
+  fixtureDoorSide?: Record<string, string>;
   /** Gap (ft) between wall-attached furniture and the wall it sits against. 0 = flush to the
    *  wall (default). Lets the customer add walking / servicing clearance behind desks &
    *  cupboards on the 2D plan — a spec-only layout adjustment (no price impact). */
@@ -963,6 +975,9 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     furniturePosition: "wall",
     tablePlacements: {},
     furnitureAdjust: {},
+    fixtureSize: {},
+    fixturePlacement: {},
+    fixtureDoorSide: {},
     furnitureWallGap: 0, // furniture sits flush to the wall by default
     plugPointWalls: ["down"], // legacy/migration only — superseded by socketPlan below
     // Room-wise socket placement (spec-only positioning). Single room by default: place the
@@ -1112,11 +1127,16 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     if (a.onlyFor && !a.onlyFor.includes(cfg.productId)) return;
     const qty = clamp(Math.round(cfg.addons[a.id] ?? 0), 0, 200);
     if (qty > 0) {
-      const amt = round(a.price * qty);
+      // Sized fixtures (enclosed toilets by area, pantry by running foot) price via
+      // fixtureUnitPrice; every other add-on uses its flat ADDONS price. Using the same unit
+      // for BOTH the amount and the printed detail keeps the line and the charge in lockstep.
+      const unit = fixtureUnitPrice(a.id, cfg);
+      const sizeLbl = fixtureSizeLabel(a.id, cfg);
+      const amt = round(unit * qty);
       furniture += amt;
       furnitureLines.push({
-        label: a.label,
-        detail: a.hasQty ? `${qty} × ${formatINR(a.price)}` : formatINR(a.price),
+        label: sizeLbl ? `${a.label} · ${sizeLbl}` : a.label,
+        detail: a.hasQty ? `${qty} × ${formatINR(unit)}` : formatINR(unit),
         amount: amt,
       });
     }
@@ -1181,7 +1201,48 @@ export const ROOM_FURNITURE_IDS = ["workstation", "manager", "manager-l", "confe
 /** Plumbing / pantry fixtures — drawn in the 2D plan for EVERY cabin (including the toilet
  *  cabin, whose fittings these are). Placed by their own fixtures block, not the per-room
  *  furniture layout. */
-export const FIXTURE_IDS = ["toilet", "wash-basin", "urinal", "pantry"];
+export const FIXTURE_IDS = ["toilet-wc", "toilet-washroom", "wash-basin", "urinal", "pantry"];
+
+/** The two ENCLOSED toilet/washroom fixtures — drawn as a partitioned corner sub-room (not a
+ *  loose glyph). Their price is size-based (area × ₹/sqft). */
+export const ENCLOSED_TOILET_IDS = ["toilet-wc", "toilet-washroom"];
+
+/** Size-based pricing config for the enclosed toilets. Base price is at the standard (minimum)
+ *  size; the ₹/sqft is derived from base ÷ standard-area so the standard size hits the base
+ *  price exactly (WC 4×4=₹25,000 · Washroom 6×4=₹35,000). */
+export const FIXTURE_SIZING: Record<string, { minW: number; minD: number; base: number; ratePerSqft: number }> = {
+  "toilet-wc":       { minW: 4, minD: 4, base: 25000, ratePerSqft: 25000 / 16 },
+  "toilet-washroom": { minW: 6, minD: 4, base: 35000, ratePerSqft: 35000 / 24 },
+};
+/** Pantry is a counter along a wall, priced by RUNNING FOOT (depth fixed). Base 4 ft = ₹18,000. */
+export const PANTRY_RATE_PER_FT = 4500;
+export const PANTRY_MIN_FT = 4;
+export const PANTRY_DEPTH_FT = 2;
+
+/** Corner a toilet/washroom is anchored to (relative to its room's band). rear = Upper wall,
+ *  front = Down wall. */
+export const TOILET_CORNERS = [
+  { id: "rear-left",   label: "Rear-Left" },
+  { id: "rear-right",  label: "Rear-Right" },
+  { id: "front-left",  label: "Front-Left" },
+  { id: "front-right", label: "Front-Right" },
+] as const;
+export const toiletCornerLabel = (id: string): string => TOILET_CORNERS.find((c) => c.id === id)?.label ?? id;
+/** The toilet/washroom door opens on ONE of the enclosure's two interior faces: the face running
+ *  along the cabin LENGTH ("length") or along the WIDTH ("width"). */
+export const TOILET_DOOR_SIDES = [
+  { id: "length", label: "Along length" },
+  { id: "width",  label: "Along width" },
+] as const;
+export const toiletDoorSideLabel = (id: string): string => TOILET_DOOR_SIDES.find((s) => s.id === id)?.label ?? id;
+/** Wall a pantry / wash-basin / urinal sits against inside the cabin. */
+export const FIXTURE_WALLS = [
+  { id: "top",    label: "Upper Wall" },
+  { id: "bottom", label: "Down Wall" },
+  { id: "left",   label: "Left Wall" },
+  { id: "right",  label: "Right Wall" },
+] as const;
+export const fixtureWallLabel = (id: string): string => FIXTURE_WALLS.find((w) => w.id === id)?.label ?? id;
 
 /** Add-ons drawn as individually-positioned floor pieces the customer can nudge in the plan
  *  (per-unit rotate + feet-shift): work tables + plain tables + cupboard + overhead cabinet +
@@ -1214,6 +1275,66 @@ export function furnitureAdjustOf(cfg: CabinConfig, addonId: string, qty: number
     dx: saved[i]?.dx ?? 0,
     dy: saved[i]?.dy ?? 0,
   }));
+}
+
+/* ---- Sized / placeable fixtures (toilet, washroom, pantry, wash-basin, urinal) ---------- *
+ * Size drives price (enclosed toilets by area, pantry by running foot); placement + door side
+ * are spec-only and drive the 2D plan. Accessors always return a valid, clamped value so a
+ * stale / missing entry can never break the drawing or the estimate. */
+
+/** Stored size for a sized fixture, clamped to its per-id minimum. Enclosed toilets use the
+ *  FIXTURE_SIZING minimums; the pantry is a counter (min length, fixed depth). */
+export function fixtureSizeOf(cfg: CabinConfig, id: string): { wFt: number; dFt: number } {
+  const s = cfg.fixtureSize?.[id];
+  if (id === "pantry") {
+    return { wFt: Math.max(PANTRY_MIN_FT, Math.round(Number(s?.wFt) || PANTRY_MIN_FT)), dFt: PANTRY_DEPTH_FT };
+  }
+  const spec = FIXTURE_SIZING[id];
+  if (!spec) return { wFt: Math.max(1, Number(s?.wFt) || 1), dFt: Math.max(1, Number(s?.dFt) || 1) };
+  return {
+    wFt: Math.max(spec.minW, Number(s?.wFt) || spec.minW),
+    dFt: Math.max(spec.minD, Number(s?.dFt) || spec.minD),
+  };
+}
+
+/** Default placement for a fixture: a corner for the enclosed toilets, a wall for pantry /
+ *  wash-basin / urinal. */
+export function fixturePlacementOf(cfg: CabinConfig, id: string): string {
+  const saved = cfg.fixturePlacement?.[id];
+  if (ENCLOSED_TOILET_IDS.includes(id)) {
+    return TOILET_CORNERS.some((c) => c.id === saved) ? saved! : "rear-left";
+  }
+  return FIXTURE_WALLS.some((w) => w.id === saved) ? saved! : "bottom";
+}
+
+/** Which interior face the enclosed toilet's door opens on. */
+export function fixtureDoorSideOf(cfg: CabinConfig, id: string): string {
+  const saved = cfg.fixtureDoorSide?.[id];
+  return TOILET_DOOR_SIDES.some((s) => s.id === saved) ? saved! : "length";
+}
+
+/** Per-UNIT price of an add-on. Sized fixtures scale with size (enclosed toilet by area, pantry
+ *  by running foot); everything else is its flat ADDONS price. This is the SINGLE source the
+ *  estimate and the UI both read, so the printed line always equals the charge. */
+export function fixtureUnitPrice(id: string, cfg: CabinConfig): number {
+  const spec = FIXTURE_SIZING[id];
+  if (spec) {
+    const { wFt, dFt } = fixtureSizeOf(cfg, id);
+    return Math.round(Math.max(spec.base, wFt * dFt * spec.ratePerSqft));
+  }
+  if (id === "pantry") {
+    const { wFt } = fixtureSizeOf(cfg, id);
+    return Math.round(Math.max(PANTRY_MIN_FT, wFt) * PANTRY_RATE_PER_FT);
+  }
+  return ADDONS.find((a) => a.id === id)?.price ?? 0;
+}
+
+/** Short size label for a sized fixture, for the quote / plan (e.g. "4′×4′" or "6′ counter"). */
+export function fixtureSizeLabel(id: string, cfg: CabinConfig): string {
+  const { wFt, dFt } = fixtureSizeOf(cfg, id);
+  if (id === "pantry") return `${formatFeet(wFt)} counter`;
+  if (FIXTURE_SIZING[id]) return `${formatFeet(wFt)}×${formatFeet(dFt)}`;
+  return "";
 }
 
 /** Spec-only: per-room unit counts for a work-furniture add-on across the current rooms.

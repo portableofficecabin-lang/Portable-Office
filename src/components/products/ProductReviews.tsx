@@ -18,6 +18,9 @@ export type ProductReview = {
 type Props = {
   productSlug: string;
   productName: string;
+  /** Reviews rendered on the server (ISR) for SEO + instant paint; the list then
+   *  refreshes live on mount so a just-approved review appears without a cache wait. */
+  initialReviews?: ProductReview[];
   onReviewsLoaded?: (reviews: ProductReview[]) => void;
 };
 
@@ -36,24 +39,25 @@ function Stars({ value, size = "h-4 w-4" }: { value: number; size?: string }) {
   );
 }
 
-export function ProductReviews({ productSlug, productName, onReviewsLoaded }: Props) {
-  const [reviews, setReviews] = useState<ProductReview[]>([]);
+export function ProductReviews({ productSlug, productName, initialReviews, onReviewsLoaded }: Props) {
+  const [reviews, setReviews] = useState<ProductReview[]>(initialReviews ?? []);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
 
+  // Refresh approved reviews live from the browser so a newly-approved review shows
+  // immediately, without waiting for the product page's ISR / CDN HTML cache to
+  // revalidate (~30–60 min). On error we keep the server-rendered list as-is.
   const load = useCallback(async () => {
-    setLoading(true);
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("product_reviews")
       .select("id, rating, title, body, reviewer_name, created_at")
       .eq("product_slug", productSlug)
       .eq("status", "approved")
       .order("created_at", { ascending: false })
       .limit(50);
+    if (error) return;
     const list = (data || []) as ProductReview[];
     setReviews(list);
     onReviewsLoaded?.(list);
-    setLoading(false);
   }, [productSlug, onReviewsLoaded]);
 
   useEffect(() => { load(); }, [load]);
@@ -88,9 +92,7 @@ export function ProductReviews({ productSlug, productName, onReviewsLoaded }: Pr
         </Button>
       </div>
 
-      {loading ? (
-        <div className="text-sm text-muted-foreground">Loading reviews…</div>
-      ) : reviews.length === 0 ? (
+      {reviews.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border p-8 text-center">
           <p className="text-muted-foreground">
             No verified reviews yet for {productName}.
