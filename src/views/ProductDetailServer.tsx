@@ -3,6 +3,7 @@ import { Check, ChevronRight, Star, Truck, Ruler } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/JsonLd";
+import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
 import { ProductReviewsServer } from "@/components/products/ProductReviewsServer";
@@ -255,6 +256,9 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
                   <span>· Dispatch 7–15 days + 1–5 days transit</span>
                 </div>
               </div>
+
+              {/* ISO 9001:2015 certification — premium trust badge (all product pages) */}
+              <IsoCertificationBadge className="mb-5" />
               {/^\s*</.test(product.description || "") ? (
                 <div
                   className="prose prose-sm sm:prose-base max-w-none text-muted-foreground mb-6 prose-headings:text-foreground prose-strong:text-foreground prose-a:text-accent"

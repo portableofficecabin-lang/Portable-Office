@@ -179,6 +179,9 @@ const COMPANY = {
   phone: "9019910931 / 9731897976",
   website: "portableofficecabin.com",
   gst: "33FVKPK6238Q1ZT",
+  iso: "ISO 9001:2015 Certified Company",
+  iso_scope: "Quality Management System",
+  iso_cert: "QT-99968/0726",
   email: "sales@portableofficecabin.com / portableofficecabin@gmail.com",
   upi_id: "shaikhkalam63-5@okaxis",
   upi_name: "PORTABLE OFFICE CABIN",
@@ -2916,7 +2919,14 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       doc.setFontSize(6.5); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 58, 95);
       doc.text(`Email: ${COMPANY.email}`, M + 28, pillY + 8.5);
 
-      y = pillY + 12;
+      // ISO 9001:2015 certification — highlighted cert line + normal supporting detail
+      doc.setFontSize(6.8); doc.setFont("helvetica", "bold"); doc.setTextColor(185, 94, 10);
+      doc.text(COMPANY.iso, M + 28, pillY + 12.5);
+      const isoW = doc.getTextWidth(COMPANY.iso);
+      doc.setFont("helvetica", "normal"); doc.setTextColor(110);
+      doc.text(`  ·  ${COMPANY.iso_scope}  ·  Certificate No.: ${COMPANY.iso_cert}`, M + 28 + isoW, pillY + 12.5);
+
+      y = pillY + 16;
       // Subtle divider
       doc.setDrawColor(220, 225, 235); doc.setLineWidth(0.2); doc.line(M, y, W - M, y);
       y += 4;
@@ -3791,6 +3801,7 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 <p className="italic text-gray-500 text-[9px]">({COMPANY.firm_type})</p>
                 <p className="mt-1 text-gray-700"><span className="font-semibold" style={{ color: "#1e3a5f" }}>Trade Name:</span> {COMPANY.trade_name}</p>
                 <p className="text-gray-700"><span className="font-semibold" style={{ color: "#1e3a5f" }}>Proprietor:</span> {COMPANY.proprietor}</p>
+                <p className="mt-1"><span className="font-bold" style={{ color: "#b95e0a" }}>{COMPANY.iso}</span> <span className="text-gray-600">· {COMPANY.iso_scope} · Certificate No.: {COMPANY.iso_cert}</span></p>
               </div>
 
               {/* Info pills */}

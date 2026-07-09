@@ -171,6 +171,11 @@ export function Footer() {
           <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2">
             <span className="inline-flex items-center gap-2 text-primary-foreground font-bold">
               <BadgeCheck className="h-5 w-5 text-accent shrink-0" />
+              ISO 9001:2015 Certified Company
+              <span className="font-normal text-primary-foreground/80">· QMS · Cert. No.: QT-99968/0726</span>
+            </span>
+            <span className="inline-flex items-center gap-2 text-primary-foreground font-bold">
+              <BadgeCheck className="h-5 w-5 text-accent shrink-0" />
               GST No: <span className="font-mono tracking-wide">33FVKPK6238Q1ZT</span>
             </span>
             <span className="inline-flex items-center gap-2 text-primary-foreground font-bold">

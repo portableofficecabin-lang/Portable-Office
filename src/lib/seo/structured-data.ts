@@ -240,6 +240,12 @@ export const organizationStructuredData = {
   url: "https://portableofficecabin.com",
   logo: "https://portableofficecabin.com/logo.jpeg",
   taxID: "33FVKPK6238Q1ZT",
+  hasCertification: {
+    "@type": "Certification",
+    name: "ISO 9001:2015",
+    about: "Quality Management System",
+    certificationIdentification: "QT-99968/0726",
+  },
   identifier: {
     "@type": "PropertyValue",
     propertyID: "Udyam Registration Number",
@@ -288,6 +294,12 @@ export const localBusinessStructuredData = {
   priceRange: "₹₹₹",
   image: "https://portableofficecabin.com/logo.jpeg",
   taxID: "33FVKPK6238Q1ZT",
+  hasCertification: {
+    "@type": "Certification",
+    name: "ISO 9001:2015",
+    about: "Quality Management System",
+    certificationIdentification: "QT-99968/0726",
+  },
   identifier: {
     "@type": "PropertyValue",
     propertyID: "Udyam Registration Number",
