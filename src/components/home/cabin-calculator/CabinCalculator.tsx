@@ -6,6 +6,7 @@ import {
   Building, Briefcase, Shield, Bath, BedDouble, Container, LayoutGrid, Warehouse,
   ArrowLeft, ArrowRight, Check, Loader2, Send, Download, MessageCircle,
   RotateCcw, RotateCw, Ruler, Zap, Sofa, Truck, DoorOpen, PanelsTopLeft, CheckCircle2, Sparkles,
+  ChevronLeft, ChevronRight, Plus, Minus, Plug,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,20 +20,22 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import logo from "@/assets/logo.webp";
 import {
   PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS, INSULATION_OPTIONS,
-  DOOR_TYPES, WINDOW_TYPES, WINDOW_TRACKS, windowUnitPrice, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS,
+  DOOR_TYPES, WINDOW_TYPES, WINDOW_TRACKS, WINDOW_OPENINGS, isOpenableWindow, windowOpeningLabel, windowUnitPrice, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS, addonsForProduct, toiletAddonsOnly,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
-  isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel,
-  ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS,
+  isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel, materialAllowed,
+  ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, MOVABLE_ADDON_IDS,
   TABLE_POSITIONS, tablePlacementsOf, furnitureAdjustOf,
-  FURNITURE_POSITIONS, PLUG_POINT_WALLS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
-  furniturePositionLabel, plugPointWallsLabel, mobilityTypeLabel,
+  FURNITURE_POSITIONS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
+  furniturePositionLabel, mobilityTypeLabel,
+  PLUG_WALLS, plugWallLabel, ROOM_PURPOSES, roomPurposeLabel, roomLabelFor,
+  plugPlanFor, totalPlacedPlugs, reconcileSocketPlan, withSocketPlan, socketPlanSummary,
   OPENING_SIDES, sideSpanFt, openingWidthOn, maxOpeningOffset, clampOpeningOffset, openingPreset,
   placementLabel, LEGACY_WINDOW_POSITIONS,
   DOOR_HANDS, DOOR_SWINGS, PARTITION_HINGES, PARTITION_SWINGS, PARTITION_DOOR_TYPES, doorOpeningLabel,
   type DoorHand, type DoorSwing, type PartitionHinge, type PartitionSwing,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
-  type CabinConfig, type Material, type Estimate, type InsulationOption, type OpeningPlacement, type DoorPlacement,
+  type CabinConfig, type Material, type Estimate, type InsulationOption, type OpeningPlacement, type DoorPlacement, type PlugGroup,
 } from "./pricing";
 import { LayoutDesigner, CompleteLayoutPreview, summariseLayout } from "./LayoutDesigner";
 import { ModulePlan } from "./ModulePlan";
@@ -780,6 +783,8 @@ export default function CabinCalculator() {
   const [config, setConfig] = useState<CabinConfig>(() => buildDefaultConfig());
   const [step, setStep] = useState(0);
   const [restored, setRestored] = useState(false);
+  // Which room's sockets the room-wise Socket Placement panel is editing (0-based).
+  const [socketRoom, setSocketRoom] = useState(0);
   const [showMobileBreakdown, setShowMobileBreakdown] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -848,6 +853,11 @@ export default function CabinCalculator() {
           if (isToiletCabin(saved.productId) || isStorageProduct(saved.productId)) {
             merged.windowPlacements = base.windowPlacements;
           }
+          // A toilet cabin has no office furniture — strip any furniture add-ons a previous
+          // build (or a product switch) may have persisted, keeping only the plumbing fittings.
+          if (isToiletCabin(saved.productId)) {
+            merged.addons = toiletAddonsOnly(merged.addons ?? {});
+          }
           merged.windowQty = merged.windowPlacements.length;
           if (!Array.isArray(merged.doorPlacements)) merged.doorPlacements = base.doorPlacements;
           merged.doorQty = merged.doorPlacements.length;
@@ -913,6 +923,15 @@ export default function CabinCalculator() {
             if (typeof v === "number") merged.furnitureRoom[k] = [Math.max(0, Math.round(v) || 0)];
             else if (!Array.isArray(v)) delete merged.furnitureRoom[k];
           }
+          // Room purposes (spec-only labels) — ensure a valid id per room (default "other").
+          const validPurpose = (p: unknown): string =>
+            typeof p === "string" && ROOM_PURPOSES.some((x) => x.id === p) ? p : "other";
+          merged.roomPurposes = Array.from({ length: merged.roomCount }, (_, i) =>
+            validPurpose((merged.roomPurposes as unknown[] | undefined)?.[i]));
+          // Room-wise socket plan — synthesise/repair via withSocketPlan (migrates from the legacy
+          // plugPointWalls + electrical.plug when absent). electrical.plug stays authoritative — it
+          // is what this saved quote was priced on — and the plan is reconciled to it.
+          merged.socketPlan = withSocketPlan(merged).socketPlan;
           // Drop obsolete legacy fields so they can't linger in the persisted config.
           const legacyDel = merged as unknown as { partitioned?: boolean; room1Length?: number };
           delete legacyDel.partitioned;
@@ -966,8 +985,14 @@ export default function CabinCalculator() {
       // GI (galvanised) is recommended for wet toilet cabins (rustproof), so a switch
       // TO a toilet cabin adopts its GI default rather than carrying the old structure.
       structureId: toPuf || toToilet ? fresh.structureId : c.structureId,
-      wallId: toPuf || toToilet ? fresh.wallId : c.wallId,
-      ceilingId: toToilet ? fresh.ceilingId : c.ceilingId, flooringId: c.flooringId,
+      // Carry the previous wall/ceiling choice UNLESS it's restricted to another product
+      // (e.g. toilet-only APP Sheet) — then fall back to the new product's default so it
+      // never leaks onto an office/storage/other cabin.
+      wallId: (toPuf || toToilet) ? fresh.wallId
+        : (materialAllowed(findWallMaterial(c.wallId), productId) ? c.wallId : fresh.wallId),
+      ceilingId: toToilet ? fresh.ceilingId
+        : (materialAllowed(CEILING_MATERIALS.find((m) => m.id === c.ceilingId), productId) ? c.ceilingId : fresh.ceilingId),
+      flooringId: c.flooringId,
       doorTypeId: c.doorTypeId, doorQty: fresh.doorQty, doorPlacements: fresh.doorPlacements,
       windowTypeId: productDefinesOpenings ? fresh.windowTypeId : c.windowTypeId,
       windowQty: productDefinesOpenings ? fresh.windowQty : c.windowQty,
@@ -975,7 +1000,13 @@ export default function CabinCalculator() {
       ventilation: fresh.ventilation,
       // Reset rooms on product switch (fresh provides roomCount:1 + roomLengths); strip any
       // carried-over partition add-on and per-room furniture so the layout stays consistent.
-      addons: (() => { const a = { ...c.addons }; delete a.partition; delete a["partition-door"]; delete a["partition-door-sliding"]; return a; })(),
+      // A toilet cabin offers ONLY plumbing fittings, so also drop any office furniture carried
+      // over from the previous product — it must never leak into the toilet cabin plan/quote.
+      addons: (() => {
+        const a = { ...c.addons };
+        delete a.partition; delete a["partition-door"]; delete a["partition-door-sliding"];
+        return toToilet ? toiletAddonsOnly(a) : a;
+      })(),
       furnitureRoom: {},
       transport: c.transport, installation: c.installation, gst: c.gst,
     }));
@@ -1006,25 +1037,27 @@ export default function CabinCalculator() {
       const next = { ...c.electrical };
       if (next[id]) delete next[id];
       else next[id] = item.defaultQty(c.length * c.width);
-      return { ...c, electrical: next };
+      const merged = { ...c, electrical: next };
+      // Plug points drive the room-wise socket plan: seed a default group when turned on, clear
+      // the plan when turned off. withSocketPlan keeps the plan's total === electrical.plug.
+      return id === "plug" ? withSocketPlan(merged) : merged;
     });
   };
   const setElectricalQty = (id: string, qty: number) =>
-    setConfig((c) => ({ ...c, electrical: { ...c.electrical, [id]: Math.max(1, qty) } }));
+    setConfig((c) => {
+      const v = Math.max(1, qty);
+      const merged = { ...c, electrical: { ...c.electrical, [id]: v } };
+      // Editing the priced Plug-Points count reconciles the room-wise plan to match (add to
+      // Room 1 / trim from the end) so the drawing and the price never disagree.
+      return id === "plug" ? { ...merged, socketPlan: reconcileSocketPlan(merged, v) } : merged;
+    });
 
   const toggleAddon = (id: string) =>
     setConfig((c) => {
       const next = { ...c.addons };
       if (next[id]) delete next[id];
       else next[id] = 1;
-      // Auto-tick "By Work Table" for plug points when the FIRST work table is added, and
-      // un-tick it when the LAST one is removed. Explicit wall choices are always preserved.
-      const hadTable = TABLE_ADDON_IDS.some((t) => c.addons[t]);
-      const hasTable = TABLE_ADDON_IDS.some((t) => next[t]);
-      let plugPointWalls = c.plugPointWalls;
-      if (!hadTable && hasTable && !plugPointWalls.includes("table")) plugPointWalls = [...plugPointWalls, "table"];
-      else if (hadTable && !hasTable && plugPointWalls.includes("table")) plugPointWalls = plugPointWalls.filter((w) => w !== "table");
-      return { ...c, addons: next, plugPointWalls };
+      return { ...c, addons: next };
     });
   const setAddonQty = (id: string, qty: number) =>
     setConfig((c) => ({ ...c, addons: { ...c.addons, [id]: Math.max(1, qty) } }));
@@ -1052,14 +1085,44 @@ export default function CabinCalculator() {
   // Gap (ft) between wall-attached furniture and the wall — 0 = flush. Clamped to 0..3 ft.
   const setFurnitureWallGap = (n: number) =>
     setConfig((c) => ({ ...c, furnitureWallGap: Math.min(Math.max(Number.isFinite(n) ? n : 0, 0), 3) }));
-  // Plug-point placement is a multi-select of walls (+ "By Work Table") — toggle one on/off.
-  const togglePlugWall = (id: string) =>
-    setConfig((c) => ({
-      ...c,
-      plugPointWalls: c.plugPointWalls.includes(id)
-        ? c.plugPointWalls.filter((w) => w !== id)
-        : [...c.plugPointWalls, id],
-    }));
+  /* ---- Room-wise socket (plug-point) placement — SPEC-ONLY positioning. Every edit resyncs
+     electrical.plug to the total placed, so the price (Electrical section) always matches the
+     drawing and no extra charge is ever added by placing/moving sockets. ---- */
+  const setRoomPurpose = (roomIndex: number, purposeId: string) =>
+    setConfig((c) => {
+      const purposes = [...(c.roomPurposes ?? [])];
+      while (purposes.length < c.roomCount) purposes.push("other");
+      purposes[roomIndex] = purposeId;
+      return { ...c, roomPurposes: purposes };
+    });
+  /** Apply a mutation to room `ri`'s socket groups, then resync electrical.plug to the new total
+   *  (capped at 200). Rejects an edit that would exceed the cap. */
+  const mutateSocketRoom = (ri: number, fn: (groups: PlugGroup[]) => PlugGroup[]) =>
+    setConfig((c) => {
+      const plan = plugPlanFor(c).map((room) => room.map((g) => ({ ...g })));
+      plan[ri] = fn(plan[ri] ?? []);
+      const total = plan.reduce((s, room) => s + room.reduce((a, g) => a + g.plugCount, 0), 0);
+      if (total > 200) return c;
+      const electrical = { ...c.electrical };
+      if (total > 0) electrical.plug = total; else delete electrical.plug;
+      return { ...c, socketPlan: plan, electrical };
+    });
+  // Add one plug point to (room ri, wall) — bumps an existing wall group or creates one.
+  const addSocket = (ri: number, wall: PlugGroup["wall"]) =>
+    mutateSocketRoom(ri, (groups) => {
+      const g = groups.find((x) => x.wall === wall);
+      return g
+        ? groups.map((x) => (x === g ? { ...x, plugCount: x.plugCount + 1 } : x))
+        : [...groups, { wall, plugCount: 1, pos: 0.5 }];
+    });
+  // Remove one plug point from (room ri, wall); drops the group at zero.
+  const removeSocket = (ri: number, wall: PlugGroup["wall"]) =>
+    mutateSocketRoom(ri, (groups) =>
+      groups.map((x) => (x.wall === wall ? { ...x, plugCount: x.plugCount - 1 } : x)).filter((x) => x.plugCount > 0));
+  // Nudge a wall group left/right along its wall (pos 0..1); clamps at the ends (no spill).
+  const nudgeSocket = (ri: number, wall: PlugGroup["wall"], delta: number) =>
+    mutateSocketRoom(ri, (groups) =>
+      groups.map((x) => (x.wall === wall ? { ...x, pos: Math.min(Math.max(x.pos + delta, 0), 1) } : x)));
   // Assign work-furniture units per room (multi-room layouts). Spec-only. Stores per-room
   // counts (rooms 1..N-1); the last room absorbs the remainder. `roomIndex` is 0-based.
   const setFurnitureRoomCount = (id: string, roomIndex: number, count: number) =>
@@ -1101,7 +1164,9 @@ export default function CabinCalculator() {
         : "partition-door";
       addons[id] = n - 1;
     }
-    return { ...c, roomCount: n, roomLengths: lengths, partitionDoor, addons };
+    // withSocketPlan resizes the room-wise socket plan to `n` rooms — folding any dropped rooms'
+    // sockets into the new last room so the priced plug count never silently drops.
+    return withSocketPlan({ ...c, roomCount: n, roomLengths: lengths, partitionDoor, addons });
   };
   const setRoomCount = (n: number) => setConfig((c) => applyRooms(c, n, c.roomLengths, c.partitionDoor));
   const setPartitionDoor = (door: boolean) => setConfig((c) => applyRooms(c, c.roomCount, c.roomLengths, door));
@@ -1311,7 +1376,7 @@ export default function CabinCalculator() {
         if (config.roomCount > 1) {
           configRows.push([
             "Rooms",
-            `${config.roomCount} (${config.roomLengths.map((l, i) => `R${i + 1} ${Math.round(l)}ft`).join(" · ")}) — ${config.roomCount - 1} × ${config.partitionDoor ? "Partition w/ Door" : "Fixed Partition"}`,
+            `${config.roomCount} (${config.roomLengths.map((l, i) => { const p = config.roomPurposes?.[i]; const nm = p && p !== "other" ? ` ${roomPurposeLabel(p)}` : ""; return `R${i + 1} ${Math.round(l)}ft${nm}`; }).join(" · ")}) — ${config.roomCount - 1} × ${config.partitionDoor ? "Partition w/ Door" : "Fixed Partition"}`,
           ]);
         }
         if (isToilet) {
@@ -1319,12 +1384,13 @@ export default function CabinCalculator() {
           configRows.push(["Window", "Not Applicable"]);
         } else {
           const winPlace = config.windowPlacements?.length ? ` (${config.windowPlacements.map(placementLabel).join(", ")})` : "";
-          configRows.push(["Windows", `${config.windowQty} × ${WINDOW_TYPES.find((d) => d.id === config.windowTypeId)?.label ?? ""}${winPlace}`]);
+          const winOpen = isOpenableWindow(config.windowTypeId) ? ` — ${windowOpeningLabel(config.windowOpening)}` : "";
+          configRows.push(["Windows", `${config.windowQty} × ${WINDOW_TYPES.find((d) => d.id === config.windowTypeId)?.label ?? ""}${winOpen}${winPlace}`]);
         }
         configRows.push(["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"]);
         configRows.push(["Add-ons", est.furnitureLines.map((l) => l.label).join(", ") || "—"]);
         if (!isToilet) configRows.push(["Furniture Position", furniturePositionLabel(config.furniturePosition)]);
-        configRows.push(["Plug Point Placement", plugPointWallsLabel(config.plugPointWalls)]);
+        { const s = socketPlanSummary(config); configRows.push(["Socket Placement", s || (config.electrical.plug ? `${config.electrical.plug} plug point(s) — as per site` : "—")]); }
         configRows.push(["Shifting / Mobility", mobilityTypeLabel(config.mobilityType)]);
         const layoutSpec = summariseLayout(config);
         if (layoutSpec) configRows.push(["Layout Arrangement", layoutSpec]);
@@ -1831,9 +1897,9 @@ export default function CabinCalculator() {
                     {isPufPanel(config.structureId) ? (
                       <PufWallGroup value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
                     ) : (
-                      <MaterialGroup label="Internal Wall" items={WALL_MATERIALS} value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
+                      <MaterialGroup label="Internal Wall" items={WALL_MATERIALS.filter((m) => materialAllowed(m, config.productId))} value={config.wallId} onSelect={(id) => patch({ wallId: id })} />
                     )}
-                    <MaterialGroup label="Ceiling" items={CEILING_MATERIALS} value={config.ceilingId} onSelect={(id) => patch({ ceilingId: id })} />
+                    <MaterialGroup label="Ceiling" items={CEILING_MATERIALS.filter((m) => materialAllowed(m, config.productId))} value={config.ceilingId} onSelect={(id) => patch({ ceilingId: id })} />
                     <MaterialGroup label="Flooring" items={FLOORING_MATERIALS} value={config.flooringId} onSelect={(id) => patch({ flooringId: id })} />
                     {isPufPanel(config.structureId) ? (
                       <PufPanelBuildup />
@@ -1970,6 +2036,22 @@ export default function CabinCalculator() {
                               selected={config.windowTypeId === d.id} onSelect={() => patch({ windowTypeId: d.id })} />
                           ))}
                         </div>
+                        {/* Openable (casement) window → which way it swings. Inside adds a safety
+                            grill; the 2D plan draws the swing + grill accordingly. */}
+                        {isOpenableWindow(config.windowTypeId) && (
+                          <div className="mt-2 flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2.5">
+                            <span className="text-[11px] font-medium text-muted-foreground">Opening direction</span>
+                            <div className="flex gap-1">
+                              {WINDOW_OPENINGS.map((o) => (
+                                <button key={o.id} type="button" onClick={() => patch({ windowOpening: o.id })} aria-pressed={config.windowOpening === o.id}
+                                  className={cn("rounded-md border px-2.5 py-1 text-[11px] font-medium", config.windowOpening === o.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{o.label}</button>
+                              ))}
+                            </div>
+                            <span className="text-[11px] text-muted-foreground">
+                              {config.windowOpening === "inside" ? "Opens into the room — a safety grill is fitted." : "Opens outward — saves space, no grill."}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="grid gap-3 sm:grid-cols-[auto_auto_1fr] sm:items-end">
                         <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={setWindowWidth} max={12} />
@@ -2089,46 +2171,120 @@ export default function CabinCalculator() {
                     </div>
                   </div>
                 </div>
-                {/* Plug point placement — MULTI-select of walls + by-table (spec only, no price) */}
-                <div className="mt-4">
-                  <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                    <Label className="text-sm font-semibold">Plug Point Placement</Label>
-                    <span className="text-[11px] text-muted-foreground">Tick every wall you want sockets on — and/or beside the work tables. The 2D plan updates live.</span>
+                {/* Room-wise socket placement — sockets per room/area on any wall, with left/right
+                    movement. SPEC-ONLY: the total placed sets the priced Plug Points (Electrical);
+                    placing / moving sockets here adds no extra charge. */}
+                {config.electrical.plug ? (() => {
+                  const plan = plugPlanFor(config);
+                  const rooms = Math.max(1, config.roomCount || 1);
+                  const ri = Math.min(Math.max(socketRoom, 0), rooms - 1);
+                  const groups = plan[ri] ?? [];
+                  const countOn = (wall: PlugGroup["wall"]) => groups.find((g) => g.wall === wall)?.plugCount ?? 0;
+                  const posOf = (wall: PlugGroup["wall"]) => groups.find((g) => g.wall === wall)?.pos ?? 0.5;
+                  const roomTotal = groups.reduce((a, g) => a + g.plugCount, 0);
+                  const grandTotal = totalPlacedPlugs(config); // === config.electrical.plug
+                  return (
+                    <div className="mt-4">
+                      <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                        <Label className="text-sm font-semibold">Socket Placement <span className="text-[11px] font-medium text-muted-foreground">· room-wise</span></Label>
+                        <span className="text-[11px] text-muted-foreground">Add sockets on any wall of each room and nudge them left/right — the 2D plan updates live.</span>
+                      </div>
+                      <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
+                        Positioning only — charges are the <span className="font-medium text-foreground">Plug Points</span> in Electrical above
+                        (₹450 each = 2 sockets + 2 switches). Moving or placing sockets here adds no extra cost.
+                        {" "}Total placed: <span className="font-semibold text-foreground">{grandTotal}</span>.
+                      </p>
+
+                      {/* Room tabs (multi-room) — each labelled by its purpose */}
+                      {rooms > 1 && (
+                        <div className="mb-2 flex flex-wrap gap-1.5">
+                          {Array.from({ length: rooms }).map((_, i) => {
+                            const active = i === ri;
+                            const n = (plan[i] ?? []).reduce((a, g) => a + g.plugCount, 0);
+                            return (
+                              <button key={i} type="button" onClick={() => setSocketRoom(i)} aria-pressed={active}
+                                className={cn("rounded-lg border px-2.5 py-1.5 text-[11px] font-medium transition-all",
+                                  active ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border text-foreground hover:border-accent/50")}>
+                                {roomLabelFor(config, i)}{n > 0 && <span className="ml-1 opacity-70">· {n}</span>}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {/* Purpose of the selected room */}
+                      <div className="mb-2 flex flex-wrap items-center gap-2">
+                        <span className="text-[11px] font-medium text-muted-foreground">Room type</span>
+                        <select value={config.roomPurposes?.[ri] ?? "other"} onChange={(e) => setRoomPurpose(ri, e.target.value)}
+                          aria-label={`Purpose of room ${ri + 1}`}
+                          className="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent">
+                          {ROOM_PURPOSES.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+                        </select>
+                        <span className="text-[11px] text-muted-foreground">· {roomTotal} socket{roomTotal === 1 ? "" : "s"} in this room</span>
+                      </div>
+
+                      {/* Per-wall rows: count (−/+) and left/right position nudge */}
+                      <div className="grid gap-1.5 sm:grid-cols-2">
+                        {PLUG_WALLS.map((w) => {
+                          const n = countOn(w.id);
+                          const on = n > 0;
+                          const vertical = w.id === "left" || w.id === "right";
+                          return (
+                            <div key={w.id} className={cn("flex items-center justify-between gap-2 rounded-lg border px-2.5 py-1.5",
+                              on ? "border-accent/60 bg-accent/5" : "border-border")}>
+                              <span className="flex items-center gap-1.5 text-xs font-medium text-foreground">
+                                <Plug className="h-3.5 w-3.5 text-accent" /> {w.label}
+                              </span>
+                              <div className="flex items-center gap-1">
+                                <button type="button" aria-label={`Remove a socket from ${w.label}`} onClick={() => removeSocket(ri, w.id)} disabled={!on}
+                                  className="grid h-7 w-7 place-items-center rounded-md border border-border text-foreground hover:border-accent disabled:opacity-30">
+                                  <Minus className="h-3.5 w-3.5" />
+                                </button>
+                                <span className="w-5 text-center text-xs font-semibold tabular-nums">{n}</span>
+                                <button type="button" aria-label={`Add a socket to ${w.label}`} onClick={() => addSocket(ri, w.id)}
+                                  className="grid h-7 w-7 place-items-center rounded-md border border-border text-foreground hover:border-accent">
+                                  <Plus className="h-3.5 w-3.5" />
+                                </button>
+                                <span className="mx-0.5 h-4 w-px bg-border" />
+                                <button type="button" aria-label={`Move ${w.label} sockets ${vertical ? "up" : "left"}`} onClick={() => nudgeSocket(ri, w.id, -0.08)} disabled={!on}
+                                  className="grid h-7 w-7 place-items-center rounded-md border border-border text-foreground hover:border-accent disabled:opacity-30">
+                                  <ChevronLeft className="h-3.5 w-3.5" />
+                                </button>
+                                <span className="w-8 text-center text-[10px] tabular-nums text-muted-foreground">{on ? `${Math.round(posOf(w.id) * 100)}%` : "—"}</span>
+                                <button type="button" aria-label={`Move ${w.label} sockets ${vertical ? "down" : "right"}`} onClick={() => nudgeSocket(ri, w.id, 0.08)} disabled={!on}
+                                  className="grid h-7 w-7 place-items-center rounded-md border border-border text-foreground hover:border-accent disabled:opacity-30">
+                                  <ChevronRight className="h-3.5 w-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })() : (
+                  <div className="mt-4 rounded-lg border border-dashed border-border bg-muted/20 px-3 py-2.5 text-[11px] text-muted-foreground">
+                    Turn on <span className="font-medium text-foreground">Plug Points</span> above to place sockets room-wise on the 2D plan.
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {PLUG_POINT_WALLS.map((p) => {
-                      const active = config.plugPointWalls.includes(p.id);
-                      return (
-                        <button key={p.id} type="button" aria-pressed={active} onClick={() => togglePlugWall(p.id)}
-                          className={cn("rounded-lg border px-3 py-2 text-xs font-medium transition-all",
-                            active ? "border-accent bg-accent/10 text-accent ring-1 ring-accent" : "border-border bg-background text-foreground hover:border-accent/50")}>
-                          {p.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {config.plugPointWalls.length === 0 && (
-                    <p className="mt-1.5 text-[11px] text-muted-foreground">None selected — plug points will be placed <span className="font-medium text-foreground">as per site</span>.</p>
-                  )}
-                </div>
+                )}
               </StepShell>
             )}
 
             {step === 6 && (
               <StepShell title="Optional add-ons" subtitle="Furniture & fittings — add only what you want.">
-                {isStorageProduct(config.productId) || isToiletCabin(config.productId) ? (
+                {isStorageProduct(config.productId) ? (
                   <div className="rounded-xl border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground">
-                    {isToiletCabin(config.productId)
-                      ? "Furniture add-ons aren’t applicable to a toilet cabin — it’s a complete, self-contained washroom unit."
-                      : "Furniture add-ons aren’t applicable to storage cabins. Need shelving or racking? Let our team know and we’ll quote it separately."}
+                    Furniture add-ons aren’t applicable to storage cabins. Need shelving or racking? Let our team know and we’ll quote it separately.
                   </div>
                 ) : (
                   <div className="space-y-5">
+                    {isToiletCabin(config.productId) && (
+                      <p className="rounded-xl border border-dashed border-accent/40 bg-accent/5 p-3 text-[11px] leading-snug text-muted-foreground">
+                        A toilet cabin is a complete, self-contained washroom — no office furniture. Choose the <span className="font-semibold text-foreground">plumbing fittings</span> you need: a full attached toilet, urinal, wash basin, or a compact pantry.
+                      </p>
+                    )}
                     <div className="grid gap-2.5 sm:grid-cols-2">
-                      {ADDONS.filter((a) =>
-                        a.id !== "partition" && a.id !== "partition-door" && a.id !== "partition-door-sliding" &&
-                        (!a.onlyFor || a.onlyFor.includes(config.productId))
-                      ).map((a) => {
+                      {addonsForProduct(config.productId).map((a) => {
                         const selected = !!config.addons[a.id];
                         return (
                           <ToggleCard key={a.id} selected={selected} onToggle={() => toggleAddon(a.id)}
@@ -2140,10 +2296,14 @@ export default function CabinCalculator() {
                         );
                       })}
                     </div>
+                    {/* Toilet cabins are self-contained washrooms — the office-furniture layout,
+                        placement and drag-designer tools below don't apply, so hide them. */}
+                    {!isToiletCabin(config.productId) && (
+                      <>
                     {/* Table placement — every table gets its own wall (or the centre pod), so the
                         2D plan seats staff with real clearance. Spec only (no price impact). */}
                     {(() => {
-                      const items = ADDONS.filter((a) => (TABLE_ADDON_IDS.includes(a.id) || a.id === "cupboard") && config.addons[a.id]);
+                      const items = ADDONS.filter((a) => MOVABLE_ADDON_IDS.includes(a.id) && config.addons[a.id]);
                       if (!items.length) return null;
                       return (
                         <div className="border-t border-border pt-4">
@@ -2312,6 +2472,8 @@ export default function CabinCalculator() {
                       config={config}
                       onLayoutChange={(layout) => setConfig((c) => ({ ...c, layout }))}
                     />
+                      </>
+                    )}
                   </div>
                 )}
               </StepShell>

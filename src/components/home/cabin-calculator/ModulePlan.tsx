@@ -17,10 +17,44 @@
 
 import {
   DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf,
-  furnitureAdjustOf, type FurnitureAdjust, plugPointWallsLabel,
-  MANAGER_TABLE_SIZE, MANAGER_L_SIZE,
+  furnitureAdjustOf, type FurnitureAdjust, plugPlanFor,
+  MANAGER_TABLE_SIZE, MANAGER_L_SIZE, findWindowTrack, isToiletCabin,
+  isOpenableWindow, type WindowOpening,
   sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig,
 } from "./pricing";
+
+/**
+ * Divider positions (fractions of the window depth) for a sliding window, so the
+ * number of visible channels drawn EQUALS the selected track count — never one more.
+ *   • "2"   → one divider at 0.5      → 2 equal channels  → reads "2 Track"
+ *   • "2.5" → dividers at 0.4 and 0.8 → 2 full + 1 half   → reads "2.5 Track"
+ *   • "3"   → dividers at 1/3, 2/3    → 3 equal channels
+ * No extra track is ever added (the previous code drew `count` dividers, which split
+ * the frame into count+1 channels → 2-track looked like 3, 2.5 like 4).
+ */
+function trackDividerFractions(trackId: string): number[] {
+  const t = parseFloat(trackId) || 2;              // 2 or 2.5
+  const full = Math.floor(t + 1e-6);               // whole tracks
+  const hasHalf = t - full >= 0.5 - 1e-6;          // a .5 (mesh / half) track present
+  const nDiv = hasHalf ? full : Math.max(0, full - 1);
+  return Array.from({ length: nDiv }, (_, k) => (k + 1) / t);
+}
+
+/** Split `total` electrical items across the rooms in proportion to each room's length,
+ *  so ceiling lights & fans are distributed room-by-room and never straddle a partition
+ *  wall. Floors the proportional share, then hands the remainder to the rooms with the
+ *  largest fractional part. Sums exactly to `total`. 1 room → [total] (layout unchanged). */
+function allocateAcrossRooms(total: number, roomLengths: number[]): number[] {
+  const n = roomLengths.length;
+  if (n <= 1) return [total];
+  const sum = roomLengths.reduce((a, b) => a + b, 0) || n;
+  const raw = roomLengths.map((rl) => (total * rl) / sum);
+  const base = raw.map((v) => Math.floor(v));
+  let rem = total - base.reduce((a, b) => a + b, 0);
+  const order = raw.map((v, i) => ({ i, frac: v - Math.floor(v) })).sort((a, b) => b.frac - a.frac);
+  for (let j = 0; j < order.length && rem > 0; j++, rem--) base[order[j].i]++;
+  return base;
+}
 
 /** Feet → architectural label, e.g. 30 → 30'-0", 8.5 → 8'-6", 3 → 3'-0". */
 function ftLabel(f: number): string {
@@ -51,7 +85,7 @@ const C = {
  * proper shape (desk + chair, cupboard, conference table) labelled with
  * its size, not an icon chip.
  * ------------------------------------------------------------------ */
-type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "deskL" | "cabinet" | "conf" | "chair"; pos?: string; adj?: FurnitureAdjust };
+type FurnUnit = { id: string; label: string; wFt: number; dFt: number; kind: "desk" | "deskL" | "cabinet" | "conf" | "chair" | "toilet" | "basin" | "urinal" | "pantry"; pos?: string; adj?: FurnitureAdjust };
 /** The customer's per-unit manual override as an SVG transform: rotate around the piece's
  *  centre (cx,cy) + a fine shift in FEET (dx right, dy down). Returns undefined when the unit
  *  is left at its auto placement, so the DOM stays clean. */
@@ -73,18 +107,45 @@ const FURN_SPEC: Record<string, Omit<FurnUnit, "id">> = {
   manager:          { label: "MANAGER TABLE", wFt: MANAGER_TABLE_SIZE.widthFt, dFt: MANAGER_TABLE_SIZE.depthFt, kind: "desk" },
   "manager-l":      { label: "MANAGER TABLE (L)", wFt: MANAGER_L_SIZE.widthFt, dFt: MANAGER_L_SIZE.depthFt, kind: "deskL" },
   conference:       { label: "CONFERENCE TABLE", wFt: TW, dFt: TD, kind: "conf" },
+  table:            { label: "TABLE", wFt: TW, dFt: TD, kind: "desk" },
+  "table-drawer":   { label: "TABLE (DRAWER)", wFt: TW, dFt: TD, kind: "desk" },
   cupboard:         { label: "CUPBOARD / FILE CABINET", wFt: 3, dFt: 1.5, kind: "cabinet" },
+  overhead:         { label: "OVERHEAD CABINET", wFt: 3, dFt: 1, kind: "cabinet" },
   "chair-headrest": { label: "CHAIR (HEAD REST)", wFt: 1.5, dFt: 1.5, kind: "chair" },
   "chair-backrest": { label: "CHAIR (BACK REST)", wFt: 1.5, dFt: 1.5, kind: "chair" },
 };
 const PER_TYPE_CAP = 8; // don't flood a room's plan with dozens of identical pieces
 
-/** Chair seen from above — seat with a back-rest strip. */
-function FurnChair({ cx, cy, s }: { cx: number; cy: number; s: number }) {
+/** Office chair, top view. Two clearly-different types:
+ *   • BACKREST (staff / workstation) — a simple seat + a plain back bar. Standard.
+ *   • HEADREST (MD / manager cabin)  — a taller back + a distinct headrest cap on top + two
+ *     armrests, so it reads as a bigger, premium executive chair.
+ *  Drawn facing "up" (toward a desk above), then rotated by `side` so the chair always FACES
+ *  the desk it belongs to and its back sits away from it. */
+function FurnChair({ cx, cy, s, type = "backrest", side = "below" }: {
+  cx: number; cy: number; s: number;
+  type?: "headrest" | "backrest";
+  side?: "below" | "above" | "right" | "left";
+}) {
+  // side = which side of the desk the chair sits on → rotate so the seat faces the desk.
+  const angle = side === "below" ? 0 : side === "above" ? 180 : side === "right" ? 270 : 90;
+  const head = type === "headrest";
+  const seatEdgeW = head ? 1.1 : 0.9;
   return (
-    <g>
-      <rect x={cx - s / 2} y={cy - s / 2} width={s} height={s} rx={s * 0.22} fill={C.seat} stroke={C.seatEdge} strokeWidth={0.8} />
-      <rect x={cx - s / 2} y={cy - s / 2} width={s} height={s * 0.3} rx={s * 0.14} fill={C.seatEdge} fillOpacity={0.5} />
+    <g transform={`rotate(${angle} ${cx} ${cy})`}>
+      {head && (
+        <>
+          {/* armrests — premium executive chair */}
+          <rect x={cx - s * 0.50} y={cy - s * 0.26} width={s * 0.11} height={s * 0.5} rx={s * 0.05} fill={C.seatEdge} fillOpacity={0.85} />
+          <rect x={cx + s * 0.39} y={cy - s * 0.26} width={s * 0.11} height={s * 0.5} rx={s * 0.05} fill={C.seatEdge} fillOpacity={0.85} />
+        </>
+      )}
+      {/* seat cushion (the part you sit on) */}
+      <rect x={cx - s * 0.40} y={cy - s * 0.42} width={s * 0.80} height={s * 0.72} rx={s * 0.16} fill={C.seat} stroke={C.seatEdge} strokeWidth={seatEdgeW} />
+      {/* back-rest bar */}
+      <rect x={cx - s * 0.44} y={cy + s * 0.22} width={s * 0.88} height={head ? s * 0.22 : s * 0.30} rx={s * 0.1} fill={C.seatEdge} stroke={C.seatEdge} strokeWidth={0.6} />
+      {/* headrest cap — the extra top element that makes it read as taller & premium */}
+      {head && <rect x={cx - s * 0.23} y={cy + s * 0.44} width={s * 0.46} height={s * 0.17} rx={s * 0.08} fill={C.seatEdge} stroke={C.socketInk} strokeWidth={0.6} />}
     </g>
   );
 }
@@ -100,7 +161,10 @@ function FurnCaption({ cx, y, u }: { cx: number; y: number; u: FurnUnit }) {
 }
 
 /** Chair size that fits a desk of w×h, clamped so it always reads as a seat. */
-const chairFor = (w: number, h: number) => Math.min(Math.max(Math.min(w, h) * 0.7, 8), 13);
+/** Chair footprint (px) — a standard ~1.45 ft office chair, clearly visible and proportionate
+ *  to the desk: never wider than the desk, never a tiny dot. Scales with the plan (ppf). */
+const chairFor = (w: number, h: number, ppf: number) =>
+  Math.max(16, Math.min(1.45 * ppf, Math.min(w, h) * 1.05));
 
 /** Small socket (2-pin) glyph for the standard per-table electrical cluster. */
 function MiniSocket({ cx, cy }: { cx: number; cy: number }) {
@@ -144,10 +208,10 @@ function deskOutlets(x: number, y: number, w: number, h: number, side: "below" |
  *  drawn INSIDE the desk (rotated for the vertical walls) so it never collides with a chair. */
 function drawDeskAt(
   x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
-  side: "below" | "above" | "right" | "left", drawChair: boolean, ppf: number,
+  side: "below" | "above" | "right" | "left", chairType: "headrest" | "backrest" | null, ppf: number,
 ) {
   const cx = x + w / 2, cyc = y + h / 2;
-  const cs = chairFor(w, h);
+  const cs = chairFor(w, h, ppf);
   const chair =
     side === "below" ? { cx, cy: y + h + CHAIR_GAP + cs / 2 } :
     side === "above" ? { cx, cy: y - CHAIR_GAP - cs / 2 } :
@@ -157,8 +221,9 @@ function drawDeskAt(
   const along = vertical ? h : w;          // the desk's long edge on screen
   return (
     <g key={key} transform={adjTransform(u, cx, cyc, ppf)}>
-      {/* Chair only when the customer has a chair to assign here (staff seat + clearance). */}
-      {drawChair && <FurnChair cx={chair.cx} cy={chair.cy} s={cs} />}
+      {/* Chair only when the customer selected one for here — headrest at MD/manager desks,
+          backrest at staff/workstation desks — facing the desk with real legroom. */}
+      {chairType && <FurnChair cx={chair.cx} cy={chair.cy} s={cs} type={chairType} side={side} />}
       <rect x={x} y={y} width={w} height={h} rx={2} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
       {/* Standard workstation electrical: 2 sockets + 2 switches on the wall side. */}
       {deskOutlets(x, y, w, h, side, `${key}-o`)}
@@ -177,21 +242,22 @@ function drawDeskAt(
  *  which is exactly how a manager sits at one. `boxW`/`boxH` are the ROTATED bounding box. */
 function drawDeskLAt(
   x: number, y: number, boxW: number, boxH: number, u: FurnUnit, key: string,
-  side: "below" | "above" | "right" | "left", ppf: number, drawChair: boolean,
+  side: "below" | "above" | "right" | "left", ppf: number, chairType: "headrest" | "backrest" | null,
 ) {
   const Lw = u.wFt * ppf, Lh = u.dFt * ppf;              // local (unrotated) footprint
   const mainD = MANAGER_TABLE_SIZE.depthFt * ppf;        // depth of the main run
   const retW = MANAGER_L_SIZE.returnWidthFt * ppf;       // width of the return leg
   // below → 0°, right → -90°, above → 180°, left → 90° (maps "chair below" onto each wall).
   const angle = side === "below" ? 0 : side === "right" ? -90 : side === "above" ? 180 : 90;
-  const cs = chairFor(Lw - retW, Lh - mainD);
+  const cs = chairFor(Lw - retW, Lh - mainD, ppf);
   const chX = retW + (Lw - retW) / 2, chY = mainD + CHAIR_GAP + cs / 2;
   const pts = `0,0 ${Lw},0 ${Lw},${mainD} ${retW},${mainD} ${retW},${Lh} 0,${Lh}`;
   // 2 sockets + 2 switches along the main run's wall side (local top edge, y≈0).
   const og = 6.6, oSx = Lw / 2 - ((TABLE_OUTLETS.length - 1) * og) / 2;
   return (
     <g key={key} transform={`${adjTransform(u, x + boxW / 2, y + boxH / 2, ppf) ?? ""} translate(${x + boxW / 2} ${y + boxH / 2}) rotate(${angle}) translate(${-Lw / 2} ${-Lh / 2})`}>
-      {drawChair && <FurnChair cx={chX} cy={chY} s={cs} />}
+      {/* Manager desk → the manager sits in the L's inner corner (chair faces the run above). */}
+      {chairType && <FurnChair cx={chX} cy={chY} s={cs} type={chairType} side="below" />}
       <polygon points={pts} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
       {TABLE_OUTLETS.map((t, i) => (t === "s"
         ? <MiniSocket key={`o${i}`} cx={oSx + i * og} cy={4.6} />
@@ -221,22 +287,85 @@ function drawCabinet(x: number, y: number, w: number, h: number, u: FurnUnit, ke
   );
 }
 
+/* ------------------------------------------------------------------ *
+ * Plumbing & pantry fixtures (top view) — toilet (WC), wash basin,
+ * urinal and a pantry counter. Real porcelain-white glyphs so an
+ * attached washroom / pantry reads clearly on the plan. Drawn to scale
+ * and movable via the same per-unit rotate + feet-shift (adjTransform).
+ * ------------------------------------------------------------------ */
+const FIXTURE_ORDER = ["toilet", "wash-basin", "urinal", "pantry"];
+const FIXTURE_SPEC: Record<string, Omit<FurnUnit, "id">> = {
+  toilet:       { label: "TOILET (WC)", wFt: 1.5, dFt: 2.5, kind: "toilet" },
+  "wash-basin": { label: "WASH BASIN",  wFt: 2,   dFt: 1.5, kind: "basin" },
+  urinal:       { label: "URINAL",      wFt: 1.5, dFt: 1.2, kind: "urinal" },
+  pantry:       { label: "PANTRY",      wFt: 4,   dFt: 2,   kind: "pantry" },
+};
+const PORCELAIN = "#eef2f4";
+/** One plumbing / pantry fixture, drawn to scale against the wall it sits on (default: the
+ *  down wall). `y` is the fixture's top; the piece faces INTO the room, label above it. */
+function drawFixture(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, ppf: number) {
+  const cx = x + w / 2, cy = y + h / 2;
+  let glyph: React.ReactNode;
+  if (u.kind === "toilet") {
+    glyph = (
+      <>
+        {/* cistern flush to the wall (top) + bowl facing into the room */}
+        <rect x={x} y={y} width={w} height={h * 0.26} rx={1.5} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.8} />
+        <ellipse cx={cx} cy={y + h * 0.63} rx={w * 0.38} ry={h * 0.33} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.9} />
+        <ellipse cx={cx} cy={y + h * 0.63} rx={w * 0.22} ry={h * 0.2} fill="none" stroke={C.socketInk} strokeWidth={0.6} />
+      </>
+    );
+  } else if (u.kind === "basin") {
+    glyph = (
+      <>
+        <rect x={x} y={y} width={w} height={h} rx={2} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.8} />
+        <ellipse cx={cx} cy={cy + h * 0.06} rx={w * 0.32} ry={h * 0.28} fill="#ffffff" stroke={C.socketInk} strokeWidth={0.7} />
+        <circle cx={cx} cy={y + h * 0.18} r={0.9} fill={C.socketInk} />
+      </>
+    );
+  } else if (u.kind === "urinal") {
+    glyph = (
+      <path d={`M ${x} ${y} H ${x + w} V ${y + h * 0.6} Q ${cx} ${y + h * 1.05} ${x} ${y + h * 0.6} Z`}
+        fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.9} />
+    );
+  } else {
+    // pantry counter — laminate top with a sink + two hobs
+    glyph = (
+      <>
+        <rect x={x} y={y} width={w} height={h} rx={2} fill={C.wood} stroke={C.woodEdge} strokeWidth={1} />
+        <rect x={x + w * 0.08} y={y + h * 0.26} width={w * 0.22} height={h * 0.48} rx={1.5} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.7} />
+        <circle cx={x + w * 0.6} cy={cy} r={Math.min(w, h) * 0.11} fill="none" stroke={C.socketInk} strokeWidth={0.8} />
+        <circle cx={x + w * 0.82} cy={cy} r={Math.min(w, h) * 0.11} fill="none" stroke={C.socketInk} strokeWidth={0.8} />
+      </>
+    );
+  }
+  return (
+    <g key={key} transform={adjTransform(u, cx, cy, ppf)}>
+      {glyph}
+      <text x={cx} y={y - 3} textAnchor="middle" fontSize={6} fontWeight={700} fill={C.ink}>{u.label}</text>
+    </g>
+  );
+}
+
 /** Ring capacity of a conference table (how many chairs fit around it). */
 const confCapacity = (w: number, h: number) => {
   const chairS = Math.min(h * 0.5, 11);
   return 2 * Math.max(1, Math.min(3, Math.round(w / (chairS * 2.4))));
 };
-/** Conference table (top view) — rounded table ringed by up to `chairCount` chairs (only the
- *  chairs the customer actually selected) + centred caption. */
-function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, chairCount: number, ppf: number) {
+/** Conference table (top view) — rounded table ringed by chairs (one per entry in `chairTypes`,
+ *  only the chairs the customer actually selected) + centred caption. Top-row chairs face down
+ *  toward the table, bottom-row face up. */
+function drawConf(x: number, y: number, w: number, h: number, u: FurnUnit, key: string, chairTypes: ("headrest" | "backrest")[], ppf: number) {
   const cx = x + w / 2, cyc = y + h / 2;
-  const chairS = Math.min(h * 0.5, 11);
-  const perSide = Math.max(1, Math.min(3, Math.round(w / (chairS * 2.4))));
-  // Ring slots (top row then bottom row); fill only as many as the customer has chairs for.
-  const slots: { cx: number; cy: number }[] = [];
-  for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y - chairS * 0.62 });
-  for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y + h + chairS * 0.62 });
-  const seats = slots.slice(0, Math.max(0, chairCount)).map((s, i) => <FurnChair key={`c${i}`} cx={s.cx} cy={s.cy} s={chairS} />);
+  const chairS = Math.max(14, Math.min(1.4 * ppf, h * 0.62));
+  const perSide = Math.max(1, Math.min(3, Math.round(w / (chairS * 1.5))));
+  // Ring slots (top row faces DOWN, bottom row faces UP); fill only as many as selected.
+  const slots: { cx: number; cy: number; side: "above" | "below" }[] = [];
+  for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y - chairS * 0.62, side: "above" });
+  for (let i = 0; i < perSide; i++) slots.push({ cx: x + w * ((i + 0.5) / perSide), cy: y + h + chairS * 0.62, side: "below" });
+  const seats = chairTypes.slice(0, slots.length).map((t, i) => (
+    <FurnChair key={`c${i}`} cx={slots[i].cx} cy={slots[i].cy} s={chairS} type={t} side={slots[i].side} />
+  ));
   return (
     <g key={key} transform={adjTransform(u, cx, cyc, ppf)}>
       {seats}
@@ -269,11 +398,21 @@ function roomFurnitureNodes(
   const dD = (u: FurnUnit) => u.dFt * ppf;  // table depth (into the room)
 
   const cabinets = units.filter((u) => u.kind === "cabinet");
-  // Chairs are drawn ONLY for the chairs the customer selected. They're assigned to desks
-  // first (so staff can sit), then a conference ring, then any extras become loose chairs.
-  let chairPool = units.filter((u) => u.kind === "chair").length;
-  const takeChairs = (max: number) => { const t = Math.min(Math.max(max, 0), chairPool); chairPool -= t; return t; };
-  const takeChair = () => takeChairs(1) === 1;
+  // Chairs are drawn ONLY for the chairs the customer selected. Two pools by type so the plan
+  // seats the RIGHT chair: HEADREST at manager/MD & conference desks (premium), BACKREST at
+  // staff/workstation desks (standard). A desk takes its preferred type first, then falls back
+  // to the other pool so a selected chair always appears; leftovers become loose chairs.
+  let headrestPool = units.filter((u) => u.id === "chair-headrest").length;
+  let backrestPool = units.filter((u) => u.id === "chair-backrest").length;
+  const wantsHeadrest = (deskId: string) => deskId === "manager" || deskId === "manager-l" || deskId === "conference";
+  const takeChairFor = (deskId: string): "headrest" | "backrest" | null => {
+    const order: ("headrest" | "backrest")[] = wantsHeadrest(deskId) ? ["headrest", "backrest"] : ["backrest", "headrest"];
+    for (const t of order) {
+      if (t === "headrest" && headrestPool > 0) { headrestPool--; return "headrest"; }
+      if (t === "backrest" && backrestPool > 0) { backrestPool--; return "backrest"; }
+    }
+    return null;
+  };
   const groups: Record<string, FurnUnit[]> = { top: [], bottom: [], left: [], right: [], centre: [] };
   // Wall-placed conference tables are drawn as ordinary desks; centred ones get a chair ring.
   const confsCentre: FurnUnit[] = [];
@@ -284,27 +423,51 @@ function roomFurnitureNodes(
     (groups[p] ?? groups.top).push(u);
   });
 
+  // Keep every piece INSIDE the container. Clamp a unit's manual rotate + feet-shift (adj) so
+  // its TRUE, rotation-aware bounding box never spills past a wall. This also catches any base
+  // auto-placement overflow (a rotated non-square table, or a run wider than a narrow room):
+  // the derived shift pulls the piece back in. A piece bigger than the room is centred (best
+  // effort). `w`/`h` are the piece's on-screen box (already oriented for its wall).
+  const M = 1; // hairline inset so a border never sits on the wall line
+  const clampUnit = (u: FurnUnit, x: number, y: number, w: number, h: number): FurnUnit => {
+    const a = u.adj ?? { rot: 0, dx: 0, dy: 0 };
+    const th = ((a.rot ?? 0) * Math.PI) / 180;
+    const halfW = (Math.abs(w * Math.cos(th)) + Math.abs(h * Math.sin(th))) / 2;
+    const halfH = (Math.abs(w * Math.sin(th)) + Math.abs(h * Math.cos(th))) / 2;
+    const baseCx = x + w / 2, baseCy = y + h / 2;
+    let cx = baseCx + (a.dx ?? 0) * ppf;
+    let cy = baseCy + (a.dy ?? 0) * ppf;
+    const loX = x0 + M + halfW, hiX = x1 - M - halfW;
+    const loY = yTop + M + halfH, hiY = yBot - M - halfH;
+    cx = hiX >= loX ? Math.min(Math.max(cx, loX), hiX) : (x0 + x1) / 2;
+    cy = hiY >= loY ? Math.min(Math.max(cy, loY), hiY) : (yTop + yBot) / 2;
+    return { ...u, adj: { rot: a.rot ?? 0, dx: (cx - baseCx) / ppf, dy: (cy - baseCy) / ppf } };
+  };
+
   /** Draw a table into a bounding box — L-shaped manager desks get their own polygon.
-   *  `chair` = whether a selected chair is assigned to this desk (staff seat). */
+   *  `chairType` = the chair drawn at this desk (null = none). */
   const drawTable = (
     x: number, y: number, w: number, h: number, u: FurnUnit, key: string,
-    side: "below" | "above" | "right" | "left", chair: boolean,
-  ) => (u.kind === "deskL" ? drawDeskLAt(x, y, w, h, u, key, side, ppf, chair) : drawDeskAt(x, y, w, h, u, key, side, chair, ppf));
+    side: "below" | "above" | "right" | "left", chairType: "headrest" | "backrest" | null,
+  ) => {
+    const uc = clampUnit(u, x, y, w, h);
+    return uc.kind === "deskL" ? drawDeskLAt(x, y, w, h, uc, key, side, ppf, chairType) : drawDeskAt(x, y, w, h, uc, key, side, chairType, ppf);
+  };
 
   // Vertical space a horizontal wall run consumes (deepest desk + its chair + clearance).
   const band = (list: FurnUnit[]) =>
-    list.length ? Math.max(...list.map((u) => dD(u) + chairFor(dW(u), dD(u)))) + CHAIR_GAP + gap : 0;
+    list.length ? Math.max(...list.map((u) => dD(u) + chairFor(dW(u), dD(u), ppf))) + CHAIR_GAP + gap : 0;
   const topBand = band(groups.top), bottomBand = band(groups.bottom);
 
   // --- horizontal wall runs (upper / down) ---
   const layH = (list: FurnUnit[], wall: "top" | "bottom") => {
     let cx = x0 + pad, row = 0;
     list.forEach((u, i) => {
-      const w = dW(u), h = dD(u), cs = chairFor(w, h);
+      const w = dW(u), h = dD(u), cs = chairFor(w, h, ppf);
       if (cx + w > x1 - pad && cx > x0 + pad) { cx = x0 + pad; row++; }
       const off = row * (h + cs + CHAIR_GAP + gap);
       const y = wall === "top" ? yTop + wg + off : yBot - wg - h - off;
-      nodes.push(drawTable(cx, y, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "top" ? "below" : "above", takeChair()));
+      nodes.push(drawTable(cx, y, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "top" ? "below" : "above", takeChairFor(u.id)));
       cx += w + gap;
     });
   };
@@ -316,11 +479,11 @@ function roomFurnitureNodes(
   const layV = (list: FurnUnit[], wall: "left" | "right") => {
     let cy = vTop, col = 0;
     list.forEach((u, i) => {
-      const w = dD(u), h = dW(u), cs = chairFor(w, h);  // rotated against the side wall
+      const w = dD(u), h = dW(u), cs = chairFor(w, h, ppf);  // rotated against the side wall
       if (cy + h > vBot && cy > vTop) { cy = vTop; col++; }
       const off = col * (w + cs + CHAIR_GAP + gap);
       const x = wall === "left" ? x0 + wg + off : x1 - wg - w - off;
-      nodes.push(drawTable(x, cy, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "left" ? "right" : "left", takeChair()));
+      nodes.push(drawTable(x, cy, w, h, u, `${keyPrefix}-${wall}${i}`, wall === "left" ? "right" : "left", takeChairFor(u.id)));
       cy += h + gap;
     });
   };
@@ -329,16 +492,19 @@ function roomFurnitureNodes(
 
   // --- what's left in the middle, after the four wall runs ---
   const sideBand = (list: FurnUnit[]) =>
-    list.length ? Math.max(...list.map((u) => dD(u) + chairFor(dD(u), dW(u)))) + CHAIR_GAP + gap : 0;
+    list.length ? Math.max(...list.map((u) => dD(u) + chairFor(dD(u), dW(u), ppf))) + CHAIR_GAP + gap : 0;
   const cx0 = x0 + pad + sideBand(groups.left), cx1 = x1 - pad - sideBand(groups.right);
   let cursor = vTop;
 
-  // Conference table(s): centred with a chair ring.
+  // Conference table(s): centred with a chair ring (headrest chairs preferred for meetings).
   confsCentre.forEach((u, i) => {
     const w = Math.min(dW(u), cx1 - cx0 - 8), h = dD(u);
     const cs = Math.min(h * 0.5, 11);
     cursor += cs + 2;
-    nodes.push(drawConf((cx0 + cx1) / 2 - w / 2, cursor, w, h, u, `${keyPrefix}-conf${i}`, takeChairs(confCapacity(w, h)), ppf));
+    const cxLeft = (cx0 + cx1) / 2 - w / 2;
+    const ringTypes: ("headrest" | "backrest")[] = [];
+    for (let j = 0; j < confCapacity(w, h); j++) { const t = takeChairFor("conference"); if (!t) break; ringTypes.push(t); }
+    nodes.push(drawConf(cxLeft, cursor, w, h, clampUnit(u, cxLeft, cursor, w, h), `${keyPrefix}-conf${i}`, ringTypes, ppf));
     cursor += h + cs + 14;
   });
 
@@ -352,7 +518,7 @@ function roomFurnitureNodes(
     const rowW = Math.max(runW(rowA), runW(rowB));
     const depthA = rowA.length ? Math.max(...rowA.map(dD)) : 0;
     const depthB = rowB.length ? Math.max(...rowB.map(dD)) : 0;
-    const cs = chairFor(dW(list[0]), dD(list[0]));
+    const cs = chairFor(dW(list[0]), dD(list[0]), ppf);
     const px = Math.max(cx0 + 2, (cx0 + cx1) / 2 - rowW / 2);
     const spine = Math.max(cursor + cs + depthA + CHAIR_GAP, (Math.max(cursor, vTop) + vBot) / 2);
     // upper row sits above the spine (chairs above); lower row below (chairs below)
@@ -360,14 +526,14 @@ function roomFurnitureNodes(
     let ax = px;
     rowA.forEach((u, i) => {
       const w = dW(u), h = dD(u);
-      nodes.push(drawTable(ax, spine - h, w, h, u, `${keyPrefix}-cA${i}`, "above", takeChair()));
+      nodes.push(drawTable(ax, spine - h, w, h, u, `${keyPrefix}-cA${i}`, "above", takeChairFor(u.id)));
       ax += w; if (i < rowA.length - 1) bounds.push(ax + gap / 2);
       ax += gap;
     });
     let bx = px;
     rowB.forEach((u, i) => {
       const w = dW(u), h = dD(u);
-      nodes.push(drawTable(bx, spine, w, h, u, `${keyPrefix}-cB${i}`, "below", takeChair()));
+      nodes.push(drawTable(bx, spine, w, h, u, `${keyPrefix}-cB${i}`, "below", takeChairFor(u.id)));
       bx += w + gap;
     });
     nodes.push(
@@ -394,21 +560,26 @@ function roomFurnitureNodes(
       const w = dW(u), h = dD(u);
       cxr -= w;
       const y = onTop ? yTop + wg : yBot - wg - h;
-      nodes.push(drawCabinet(cxr, y, w, h, u, `${keyPrefix}-cab${i}`, ppf));
+      nodes.push(drawCabinet(cxr, y, w, h, clampUnit(u, cxr, y, w, h), `${keyPrefix}-cab${i}`, ppf));
       cxr -= gap;
     });
   }
 
-  // Loose chairs — only the SELECTED chairs left over after seating every desk & conference.
-  if (chairPool > 0) {
-    const s = Math.min(1.5 * ppf, 14);
+  // Loose chairs — SELECTED chairs left over after seating every desk & conference, each drawn
+  // as its real type (headrest / backrest) at the standard size.
+  const looseTypes: ("headrest" | "backrest")[] = [
+    ...Array.from({ length: headrestPool }, () => "headrest" as const),
+    ...Array.from({ length: backrestPool }, () => "backrest" as const),
+  ];
+  if (looseTypes.length > 0) {
+    const s = Math.max(16, Math.min(1.45 * ppf, 30));
     let cx = cx0 + 4;
     const y = Math.min(Math.max(cursor, vTop) + s / 2, vBot - s / 2);
-    for (let i = 0; i < chairPool; i++) {
+    looseTypes.forEach((t, i) => {
       if (cx + s > cx1) { cx = cx0 + 4; }
-      nodes.push(<FurnChair key={`${keyPrefix}-ch${i}`} cx={cx + s / 2} cy={y} s={s} />);
+      nodes.push(<FurnChair key={`${keyPrefix}-ch${i}`} cx={cx + s / 2} cy={y} s={s} type={t} side="below" />);
       cx += s + gap;
-    }
+    });
   }
 
   return nodes;
@@ -481,6 +652,37 @@ function LiftHook({ x, y, angle }: { x: number; y: number; angle: number }) {
   );
 }
 
+/** Openable (casement) window symbol: the sash + its quarter-circle swing arc, opening INSIDE
+ *  (into the room) or OUTSIDE. When it opens inside, a SAFETY GRILL (barred band) is drawn on
+ *  the interior face; outside-opening needs no grill. `(ax,ay)` = hinge on the inner wall face,
+ *  `(ux,uy)` = along-wall unit vector, `(ex,ey)` = OUTWARD (exterior) unit vector. */
+function CasementWindow({ ax, ay, ux, uy, ex, ey, len, opening, keyBase }: {
+  ax: number; ay: number; ux: number; uy: number; ex: number; ey: number;
+  len: number; opening: WindowOpening; keyBase: string;
+}) {
+  const r = Math.min(len * 0.7, 40); // swing radius, capped so an outward swing stays on the paper
+  const inX = opening === "inside" ? -ex : ex; // sash swings into the room (inside) or out
+  const inY = opening === "inside" ? -ey : ey;
+  const Cx = ax + ux * r, Cy = ay + uy * r;    // closed sash tip (in the wall plane)
+  const Tx = ax + inX * r, Ty = ay + inY * r;  // open sash tip
+  const cross = (Tx - ax) * (Cy - ay) - (Ty - ay) * (Cx - ax);
+  const sweep = cross > 0 ? 1 : 0;
+  const nodes: React.ReactNode[] = [
+    <line key="leaf" x1={ax} y1={ay} x2={Tx} y2={Ty} stroke={C.winLine} strokeWidth={1.5} />,
+    <path key="arc" d={`M ${Tx} ${Ty} A ${r} ${r} 0 0 ${sweep} ${Cx} ${Cy}`} fill="none" stroke={C.arc} strokeWidth={0.8} strokeDasharray="2.5 1.5" />,
+  ];
+  if (opening === "inside") {
+    // Safety grill: vertical bars across the opening on the INTERIOR face.
+    const gd = Math.min(len * 0.16, 8), ix = -ex, iy = -ey, bars = 4;
+    for (let k = 0; k <= bars; k++) {
+      const t = k / bars, bx = ax + ux * len * t, by = ay + uy * len * t;
+      nodes.push(<line key={`g${k}`} x1={bx} y1={by} x2={bx + ix * gd} y2={by + iy * gd} stroke={C.socketInk} strokeWidth={0.7} />);
+    }
+    nodes.push(<line key="ge" x1={ax + ix * gd} y1={ay + iy * gd} x2={ax + ux * len + ix * gd} y2={ay + uy * len + iy * gd} stroke={C.socketInk} strokeWidth={0.8} />);
+  }
+  return <g key={keyBase}>{nodes}</g>;
+}
+
 export function ModulePlan({ config }: { config: CabinConfig }) {
   const L = Math.max(1, config.length || 1);
   const W = Math.max(1, config.width || 1);
@@ -506,7 +708,8 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
   const nTube = Math.min(e.tube ?? 0, 10);
   const ledRound = config.ledShape === "round";
   const winW = config.windowWidthFt ?? 3, winH = config.windowHeightFt ?? 3;
-  const winLabel = `${ftLabel(winW)} X ${ftLabel(winH)}`;
+  // Label shows the exact chosen size AND track, e.g. 3'-0" X 5'-0" · 2 Track.
+  const winLabel = `${ftLabel(winW)} X ${ftLabel(winH)} · ${findWindowTrack(config.windowTrackId ?? "2").label}`;
   const doorLabel = `${ftLabel(DOOR_SIZE.widthFt)} X ${ftLabel(DOOR_SIZE.heightFt)}`;
   // Plate-bar lifting hooks: 2 on a small cabin, 4 once the floor area exceeds 100 sq.ft.
   const nHooks = L * W > 100 ? 4 : 2;
@@ -617,6 +820,9 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
 
         {/* ---- furniture (per room), drawn to scale with dimensions ---- */}
         {(() => {
+          // A toilet cabin is a self-contained washroom — never draw office furniture in its
+          // plan, even if a stale add-on lingers from a previously-selected product.
+          if (isToiletCabin(config.productId)) return null;
           const roomList = rooms ?? [L];
           const total = roomList.reduce((a, b) => a + b, 0) || L;
           const edges = [ox];
@@ -647,6 +853,44 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return out;
         })()}
 
+        {/* ---- plumbing & pantry fixtures (toilet, wash basin, urinal, pantry) — drawn for
+               EVERY cabin (incl. the toilet cabin), flush along the down wall, per room ---- */}
+        {(() => {
+          const roomList = rooms ?? [L];
+          const totalLen = roomList.reduce((a, b) => a + b, 0) || L;
+          const edges = [ox];
+          let acc = 0;
+          roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / totalLen)); });
+          const wg = Math.min(Math.max(config.furnitureWallGap ?? 0, 0), 3) * ppf;
+          const out: React.ReactNode[] = [];
+          const gap = 8, pad = 4;
+          roomList.forEach((rl, ri) => {
+            const x0 = edges[ri], x1 = edges[ri + 1];
+            let cursorX = x0 + pad;
+            let rowBase = by - wg;   // baseline the current fixture row sits on; rows stack upward
+            let rowMaxH = 0;
+            FIXTURE_ORDER.forEach((id) => {
+              const spec = FIXTURE_SPEC[id];
+              const t = config.addons?.[id] || 0;
+              if (!spec || !t) return;
+              const per = furnitureRoomCounts(config, id, t, roomList.length);
+              const adjusts = furnitureAdjustOf(config, id, t);
+              const offset = per.slice(0, ri).reduce((a, b) => a + b, 0);
+              const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
+              for (let k = 0; k < cnt; k++) {
+                const w = Math.min(spec.wFt * ppf, Math.max(8, x1 - x0 - pad * 2));
+                const h = spec.dFt * ppf;
+                // wrap to a new row (stacked toward the room interior) when the wall is full
+                if (cursorX + w > x1 - pad && cursorX > x0 + pad) { cursorX = x0 + pad; rowBase -= rowMaxH + gap; rowMaxH = 0; }
+                out.push(drawFixture(cursorX, rowBase - h, w, h, { id, ...spec, adj: adjusts[offset + k] }, `fx-r${ri}-${id}-${k}`, ppf));
+                cursorX += w + gap;
+                rowMaxH = Math.max(rowMaxH, h);
+              }
+            });
+          });
+          return out;
+        })()}
+
         {/* ---- ceiling (RCP): LED panels (square/round) + tube lights — ON TOP of furniture ---- */}
         {(() => {
           const lights: ("led" | "tube")[] = [
@@ -654,25 +898,58 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
             ...Array.from({ length: nTube }, () => "tube" as const),
           ];
           if (!lights.length) return null;
-          const rowsN = W >= 8 && lights.length > 1 ? 2 : 1;
-          const cols = Math.ceil(lights.length / rowsN);
+          // Distribute lights PER ROOM (within each room's band between partitions) so a
+          // light is never drawn on/over a partition wall. 1 room → identical to before.
+          const roomList = rooms ?? [L];
+          const totalLen = roomList.reduce((a, b) => a + b, 0) || L;
+          const edges = [ox];
+          let acc = 0;
+          roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / totalLen)); });
+          const share = allocateAcrossRooms(lights.length, roomList);
           const s = Math.min(Math.max(ppf * 0.5, 11), 18);
-          return lights.map((kind, k) => {
-            const cy = rowsN === 1 ? oy + planH * 0.5 : oy + planH * (Math.floor(k / cols) === 0 ? 0.24 : 0.76);
-            const cx = ox + planW * (((k % cols) + 0.5) / cols);
-            return kind === "tube"
-              ? <TubeLight key={`t${k}`} cx={cx} cy={cy} len={s * 2.2} />
-              : <LedLight key={`p${k}`} cx={cx} cy={cy} s={s} round={ledRound} />;
+          const out: React.ReactNode[] = [];
+          let li = 0;
+          roomList.forEach((_rl, ri) => {
+            const cnt = share[ri];
+            if (!cnt) return;
+            const bx0 = edges[ri], bandW = (edges[ri + 1] ?? rx) - bx0;
+            const rowsN = W >= 8 && cnt > 1 ? 2 : 1;
+            const cols = Math.ceil(cnt / rowsN);
+            for (let k = 0; k < cnt; k++) {
+              const kind = lights[li++];
+              const cy = rowsN === 1 ? oy + planH * 0.5 : oy + planH * (Math.floor(k / cols) === 0 ? 0.24 : 0.76);
+              const cx = bx0 + bandW * (((k % cols) + 0.5) / cols);
+              out.push(kind === "tube"
+                ? <TubeLight key={`t-${ri}-${k}`} cx={cx} cy={cy} len={s * 2.2} />
+                : <LedLight key={`p-${ri}-${k}`} cx={cx} cy={cy} s={s} round={ledRound} />);
+            }
           });
+          return out;
         })()}
 
-        {/* ---- ceiling fans (12" round, 3-blade) on the centre line — ON TOP ---- */}
-        {Array.from({ length: nFan }).map((_, i) => {
-          const cx = ox + planW * ((i + 0.5) / nFan);
-          const cy = oy + planH * 0.5;
+        {/* ---- ceiling fans (12" round, 3-blade) — PER ROOM on the room's centre line so a
+               fan is never drawn on/over a partition wall. 1 room → identical to before. ---- */}
+        {(() => {
+          if (!nFan) return null;
+          const roomList = rooms ?? [L];
+          const totalLen = roomList.reduce((a, b) => a + b, 0) || L;
+          const edges = [ox];
+          let acc = 0;
+          roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / totalLen)); });
+          const share = allocateAcrossRooms(nFan, roomList);
           const r = Math.min(Math.max(ppf * 0.55, 15), 26);
-          return <CeilingFan key={`f${i}`} cx={cx} cy={cy} r={r} />;
-        })}
+          const cy = oy + planH * 0.5;
+          const out: React.ReactNode[] = [];
+          roomList.forEach((_rl, ri) => {
+            const cnt = share[ri];
+            const bx0 = edges[ri], bandW = (edges[ri + 1] ?? rx) - bx0;
+            for (let i = 0; i < cnt; i++) {
+              const cx = bx0 + bandW * ((i + 0.5) / cnt);
+              out.push(<CeilingFan key={`f-${ri}-${i}`} cx={cx} cy={cy} r={r} />);
+            }
+          });
+          return out;
+        })()}
 
         {/* ---- windows (side + distance-from-corner to the NEAR edge, same as doors) ---- */}
         {(config.windowPlacements ?? []).map((wp, i) => {
@@ -684,38 +961,59 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           const openFt = openingWidthOn(spanFt, winW);
           const len = openFt * ppf;
           const startPx = clampOpeningOffset(wp.offset, spanFt, winW) * ppf;
-          // Sliding-track rails drawn inside the frame: 2-track → 2, 2.5-track → 3.
-          const winRails = (config.windowTrackId ?? "2") === "2.5" ? 3 : 2;
+          // Window type drives what's drawn: sliding/uPVC → sliding-track channels; openable →
+          // a casement sash + swing arc (+ safety grill when it opens inside); fixed → an X.
+          const winType = config.windowTypeId ?? "upvc";
+          const openable = isOpenableWindow(winType);
+          const fixed = winType === "fixed";
+          const opening: WindowOpening = config.windowOpening === "inside" ? "inside" : "outside";
+          const trackFracs = openable || fixed ? [] : trackDividerFractions(config.windowTrackId ?? "2");
+          const openNote = openable ? (opening === "inside" ? "OPENS IN · GRILL" : "OPENS OUT") : "";
           if (horiz) {
             const x0 = ox + startPx;
             const cx = x0 + len / 2;
+            const wallInnerY = side === "top" ? oy : by;   // inner wall face
             const y0 = side === "top" ? oy - wallT - 2 : by - 2;
             const lblY = side === "top" ? oy - wallT - 20 : by + wallT + 14;
+            const exY = side === "top" ? -1 : 1;            // outward (exterior) unit
             return (
               <g key={i}>
                 <rect x={x0} y={y0} width={len} height={wallT + 4} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
-                {Array.from({ length: winRails }, (_, k) => {
-                  const yy = y0 + (wallT + 4) * ((k + 1) / (winRails + 1));
+                {trackFracs.map((f, k) => {
+                  const yy = y0 + (wallT + 4) * f;
                   return <line key={k} x1={x0} y1={yy} x2={x0 + len} y2={yy} stroke={C.winLine} strokeWidth={0.7} />;
                 })}
+                {fixed && <>
+                  <line x1={x0} y1={y0} x2={x0 + len} y2={y0 + wallT + 4} stroke={C.winLine} strokeWidth={0.7} />
+                  <line x1={x0 + len} y1={y0} x2={x0} y2={y0 + wallT + 4} stroke={C.winLine} strokeWidth={0.7} />
+                </>}
+                {openable && <CasementWindow ax={x0} ay={wallInnerY} ux={1} uy={0} ex={0} ey={exY} len={len} opening={opening} keyBase={`cw${i}`} />}
                 <text x={cx} y={lblY} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={C.ink}>WINDOW</text>
                 <text x={cx} y={lblY + 8.5} textAnchor="middle" fontSize={7.5} fill={C.ink}>{winLabel}</text>
+                {openNote && <text x={cx} y={lblY + (side === "top" ? -8.5 : 17)} textAnchor="middle" fontSize={6.6} fontWeight={700} fill={C.winLine}>{openNote}</text>}
               </g>
             );
           }
           const yTop = oy + startPx;
           const cy = yTop + len / 2;
+          const wallInnerX = side === "left" ? ox : rx;    // inner wall face
           const x0 = side === "left" ? ox - wallT - 2 : rx - 2;
           const lblX = side === "left" ? ox - wallT - 8 : rx + wallT + 8;
+          const exX = side === "left" ? -1 : 1;            // outward (exterior) unit
           return (
             <g key={i}>
               <rect x={x0} y={yTop} width={wallT + 4} height={len} fill={C.win} stroke={C.winLine} strokeWidth={0.8} />
-              {Array.from({ length: winRails }, (_, k) => {
-                const xx = x0 + (wallT + 4) * ((k + 1) / (winRails + 1));
+              {trackFracs.map((f, k) => {
+                const xx = x0 + (wallT + 4) * f;
                 return <line key={k} x1={xx} y1={yTop} x2={xx} y2={yTop + len} stroke={C.winLine} strokeWidth={0.7} />;
               })}
+              {fixed && <>
+                <line x1={x0} y1={yTop} x2={x0 + wallT + 4} y2={yTop + len} stroke={C.winLine} strokeWidth={0.7} />
+                <line x1={x0 + wallT + 4} y1={yTop} x2={x0} y2={yTop + len} stroke={C.winLine} strokeWidth={0.7} />
+              </>}
+              {openable && <CasementWindow ax={wallInnerX} ay={yTop} ux={0} uy={1} ex={exX} ey={0} len={len} opening={opening} keyBase={`cw${i}`} />}
               <text x={lblX} y={cy} textAnchor="middle" fontSize={7} fontWeight={700} fill={C.ink}
-                transform={`rotate(-90 ${lblX} ${cy})`}>WINDOW {winLabel}</text>
+                transform={`rotate(-90 ${lblX} ${cy})`}>WINDOW {winLabel}{openNote ? ` · ${openNote}` : ""}</text>
             </g>
           );
         })}
@@ -774,35 +1072,44 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           );
         })}
 
-        {/* ---- electrical sockets: spread along each chosen wall + one beside each work table ---- */}
+        {/* ---- electrical sockets: ROOM-WISE. Each room's plug points sit on its own chosen
+               walls, INSIDE that room's band, at the customer's left/right position (spec-only).
+               One marker = one Plug Point (= 2 sockets + 2 switches). ---- */}
         {(() => {
-          const plugWalls: string[] = config.plugPointWalls ?? [];
-          if (plugWalls.length === 0) return null;
-          const pts: { x: number; y: number }[] = [];
-          const ins = 12, frac = [0.34, 0.66]; // two spread points per wall (interior face)
-          if (plugWalls.includes("upper")) frac.forEach((f) => pts.push({ x: ox + planW * f, y: oy + ins }));
-          if (plugWalls.includes("down"))  frac.forEach((f) => pts.push({ x: ox + planW * f, y: by - ins }));
-          if (plugWalls.includes("left"))  frac.forEach((f) => pts.push({ x: ox + ins, y: oy + planH * f }));
-          if (plugWalls.includes("right")) frac.forEach((f) => pts.push({ x: rx - ins, y: oy + planH * f }));
-          if (plugWalls.includes("table")) {
-            // One socket per work table, placed ON THE WALL that table sits against (a
-            // centre-positioned table falls back to the down / front wall) — sockets are
-            // always on a wall face, never floating in the middle of the room.
-            const tblPts: { x: number; y: number }[] = [];
-            TABLE_ADDON_IDS.forEach((tid) => {
-              const qty = Math.round(config.addons?.[tid] ?? 0);
-              if (qty <= 0) return;
-              tablePlacementsOf(config, tid, qty).forEach((pos, i) => {
-                const f = 0.28 + 0.44 * ((i + 0.5) / qty); // spread along the wall
-                if (pos === "top")        tblPts.push({ x: ox + planW * f, y: oy + ins });
-                else if (pos === "left")  tblPts.push({ x: ox + ins,       y: oy + planH * f });
-                else if (pos === "right") tblPts.push({ x: rx - ins,       y: oy + planH * f });
-                else                      tblPts.push({ x: ox + planW * f, y: by - ins }); // bottom / centre → down wall
-              });
+          const plan = plugPlanFor(config);           // exactly roomCount lists of PlugGroups
+          const roomList = rooms ?? [L];
+          const totalLen = roomList.reduce((a, b) => a + b, 0) || L;
+          const edges = [ox];
+          let acc = 0;
+          roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / totalLen)); });
+          const ins = 12, marker = 12, minStep = marker + 3; // Socket glyph is 12px wide
+          const out: React.ReactNode[] = [];
+          plan.forEach((groups, ri) => {
+            const x0 = edges[ri] ?? ox;
+            const x1 = edges[ri + 1] ?? rx;
+            groups.forEach((g, gi) => {
+              const horizontal = g.wall === "top" || g.wall === "bottom";
+              const axisLen = horizontal ? x1 - x0 : planH;   // wall length within this room
+              const n = Math.max(1, Math.min(g.plugCount, 24)); // sane cap per wall group
+              // Spread step, shrunk so the whole run stays inside the wall (never spills out).
+              const step = n > 1 ? Math.min(minStep, Math.max(0, axisLen - 2 * ins - marker) / (n - 1)) : 0;
+              const run = step * (n - 1);
+              // Centre the run at pos (0..1) along the wall, clamped so it can't cross a corner.
+              const lo = ins + marker / 2 + run / 2;
+              const hi = axisLen - ins - marker / 2 - run / 2;
+              const centre = hi >= lo ? Math.min(Math.max(axisLen * g.pos, lo), hi) : axisLen / 2;
+              for (let k = 0; k < n; k++) {
+                const along = centre - run / 2 + k * step;
+                let x: number, y: number;
+                if (g.wall === "top")         { x = x0 + along; y = oy + ins; }
+                else if (g.wall === "bottom") { x = x0 + along; y = by - ins; }
+                else if (g.wall === "left")   { x = x0 + ins;   y = oy + along; }
+                else                          { x = x1 - ins;   y = oy + along; } // right wall of this room
+                out.push(<Socket key={`s-${ri}-${gi}-${k}`} cx={x} cy={y} />);
+              }
             });
-            tblPts.slice(0, 6).forEach((p) => pts.push(p));
-          }
-          return pts.map((p, i) => <Socket key={i} cx={p.x} cy={p.y} />);
+          });
+          return out;
         })()}
 
         {/* ---- plate-bar lifting hooks (with hole) for lift & shift ---- */}
@@ -814,11 +1121,11 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return hooks.map((h, i) => <LiftHook key={i} x={h.x} y={h.y} angle={h.a} />);
         })()}
       </svg>
-      {(config.plugPointWalls?.length ?? 0) > 0 && (
+      {config.electrical?.plug ? (
         <p className="px-3 pt-1.5 text-center text-[10px] font-medium" style={{ color: C.socketInk }}>
-          Electrical sockets — {plugPointWallsLabel(config.plugPointWalls)}
+          Plug points: {config.electrical.plug} (= {config.electrical.plug * 2} sockets + {config.electrical.plug * 2} switches) — placed room-wise
         </p>
-      )}
+      ) : null}
       <p className="px-3 pb-1.5 text-center text-[10px] font-medium" style={{ color: C.steel }}>
         Plate-bar lifting hooks (with hole) at {nHooks} corners — for lift &amp; shift
       </p>

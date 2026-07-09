@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
-  ELECTRICAL_ITEMS, ADDONS, ROOM_FURNITURE_IDS, materialSpec,
+  ELECTRICAL_ITEMS, ADDONS, ROOM_FURNITURE_IDS, FIXTURE_IDS, materialSpec,
   DOOR_SIZE, WINDOW_SIZE, sideSpanFt, openingWidthOn, clampOpeningOffset, placementLabel,
   type CabinConfig,
 } from "./pricing";
@@ -82,6 +82,16 @@ function deriveItems(config: CabinConfig): Item[] {
     const spec = materialSpec("furniture", fid, config.ledShape);
     for (let i = 0; i < n; i++)
       items.push({ id: `${fid}-${i}`, kind: "furniture", label: n > 1 ? `${name} ${i + 1}` : name, short: name, size: spec?.label, shape: spec?.shape });
+  });
+
+  // Plumbing / pantry fixtures (toilet, wash basin, urinal, pantry) — count them in the legend
+  // and make them draggable, same as furniture. Drawn to scale in the ModulePlan above.
+  FIXTURE_IDS.forEach((fid) => {
+    const n = Math.min(config.addons?.[fid] ?? 0, 6);
+    if (n <= 0) return;
+    const name = ADDONS.find((a) => a.id === fid)?.label ?? fid;
+    for (let i = 0; i < n; i++)
+      items.push({ id: `${fid}-${i}`, kind: "furniture", label: n > 1 ? `${name} ${i + 1}` : name, short: name });
   });
 
   return items;

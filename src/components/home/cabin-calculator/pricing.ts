@@ -159,11 +159,18 @@ export interface Material {
   /** Board thickness for display / factory spec (e.g. "8 mm"). Only set on the
    *  board finishes (Particle Board / MDF / HDHMR). */
   thickness?: string;
+  /** Restrict this finish to specific product ids (e.g. toilet-only APP Sheet).
+   *  When set, it only shows — and is only charged — for those products. */
+  onlyFor?: string[];
 }
 
 /** Material label with its board thickness appended when present, e.g. "MDF · 8 mm". */
 export const materialLabel = (m?: Material | null): string =>
   m ? `${m.label}${m.thickness ? ` · ${m.thickness}` : ""}` : "";
+
+/** Is finish `m` offered for product `productId`? (onlyFor gate — undefined = all products.) */
+export const materialAllowed = (m: Material | null | undefined, productId: string): boolean =>
+  !!m && (!m.onlyFor || m.onlyFor.includes(productId));
 
 // Internal Wall — MDF is the standard finish (₹50/sqft, already in the base rate);
 // every other option's delta is ₹/sqft above (or below) that standard. Particle
@@ -178,6 +185,9 @@ export const WALL_MATERIALS: Material[] = [
   { id: "spc",      label: "SPC",            delta: 460 },
   { id: "uv",       label: "UV Sheet",       delta: 395 },
   { id: "acp",      label: "ACP",            delta: 240 },
+  // Toilet cabins ONLY: waterproof APP Sheet lining — the toilet's default internal wall.
+  // +₹60/sqft over the standard (keep in sync with the ceiling APP Sheet entry below).
+  { id: "app-sheet", label: "APP Sheet",     delta: 60, onlyFor: ["toilet-cabin"] },
 ];
 
 /** Absolute ₹/sqft of the standard MDF wall lining. For MS/GI/container cabins this rate
@@ -201,7 +211,8 @@ export const findWallMaterial = (id: string): Material | undefined =>
  *  that lining over the PUF panel, since nothing is bundled for PUF. */
 export const pufWallOptions = (): Material[] => [
   WALL_NONE,
-  ...WALL_MATERIALS.map((m) => ({ ...m, delta: WALL_LINING_BASE_RATE + m.delta, standard: false })),
+  // Exclude product-restricted finishes (e.g. toilet-only APP Sheet) — PUF cabins are never toilets.
+  ...WALL_MATERIALS.filter((m) => !m.onlyFor).map((m) => ({ ...m, delta: WALL_LINING_BASE_RATE + m.delta, standard: false })),
 ];
 
 // Ceiling — MDF is the standard finish (₹50/sqft, already in the base rate);
@@ -214,7 +225,10 @@ export const CEILING_MATERIALS: Material[] = [
   { id: "wpc",   label: "WPC",      delta: 150 },
   { id: "spc",   label: "SPC",      delta: 460 },
   { id: "uv",    label: "UV Sheet", delta: 395 },
-  { id: "acp",   label: "ACP",      delta: 240 }, // washable — the default ceiling for toilet cabins
+  { id: "acp",   label: "ACP",      delta: 240 }, // washable panel
+  // Toilet cabins ONLY: waterproof APP Sheet — the toilet's default ceiling (+₹60/sqft,
+  // keep in sync with the wall APP Sheet rate above).
+  { id: "app-sheet", label: "APP Sheet", delta: 60, onlyFor: ["toilet-cabin"] },
 ];
 
 // Flooring — Vinyl is the standard finish (~₹38/sqft, already in the base rate);
@@ -279,6 +293,18 @@ export const WINDOW_TYPES: Priced[] = [
   { id: "openable", label: "Openable UPVC Window", price: 8200 },
   { id: "fixed",    label: "Fixed Glass",        price: 3500 },
 ];
+
+/** Only the "Openable UPVC Window" is a casement that swings — sliding/uPVC/fixed don't. */
+export const isOpenableWindow = (id: string) => id === "openable";
+/** An openable (casement) window opens OUTSIDE (space-saving, no grill) or INSIDE (a safety
+ *  grill is fitted so the opening stays secure). Drives the 2D-plan drawing. */
+export type WindowOpening = "inside" | "outside";
+export const WINDOW_OPENINGS = [
+  { id: "outside", label: "Opens Outside" },
+  { id: "inside",  label: "Opens Inside + Grill" },
+] as const;
+export const windowOpeningLabel = (id: string): string =>
+  id === "inside" ? "opens inside (safety grill)" : "opens outside";
 
 /* Window size & track — the base window is 3×3 ft (9 sq.ft) with a 2-track frame. The price
  * scales with the window AREA (bigger window ⇒ higher cost) and with the track type
@@ -523,6 +549,44 @@ export const PLUG_POINT_WALLS = [
   { id: "table", label: "By Work Table" },
 ] as const;
 export const PLUG_POINT_WALL_IDS: readonly string[] = PLUG_POINT_WALLS.map((w) => w.id);
+
+/* ---- Room-wise socket (plug-point) placement — SPEC-ONLY positioning ------------------- *
+ * Supersedes the global `plugPointWalls` above. Sockets are chosen PER ROOM, on any wall,
+ * with a left/right position. The priced count still lives in electrical.plug; the invariant
+ * totalPlacedPlugs(cfg) === (electrical.plug || 0) is held by withSocketPlan/reconcileSocketPlan
+ * so the drawing, the quote and the price never disagree. Wall ids match the 2D plan's
+ * coordinate convention (top = Upper/rear wall, bottom = Down/front wall).
+ * -------------------------------------------------------------------------------------- */
+export const PLUG_WALLS = [
+  { id: "top",    label: "Upper Wall" },
+  { id: "bottom", label: "Down Wall" },
+  { id: "left",   label: "Left Wall" },
+  { id: "right",  label: "Right Wall" },
+] as const;
+export type PlugWall = (typeof PLUG_WALLS)[number]["id"];
+export const plugWallLabel = (id: string): string => PLUG_WALLS.find((w) => w.id === id)?.label ?? id;
+
+/** A run of `plugCount` plug points on one wall of a room, centred at `pos` (0..1 along that
+ *  wall) — nudged left/right by the movement controls. Each plug point = 2 sockets + 2 switches
+ *  and is drawn as ONE marker, so plugCount maps 1:1 to the priced electrical.plug. */
+export interface PlugGroup { wall: PlugWall; plugCount: number; pos: number; }
+
+/** Room purposes — spec-only labels so the socket selector & 2D plan read "Office Room",
+ *  "Pantry Area", etc. instead of only "Room 2". "other" (or unset) renders as plain "Room N". */
+export const ROOM_PURPOSES = [
+  { id: "office",      label: "Office Room" },
+  { id: "workstation", label: "Workstation Area" },
+  { id: "manager",     label: "Manager Cabin" },
+  { id: "reception",   label: "Reception" },
+  { id: "meeting",     label: "Meeting Room" },
+  { id: "pantry",      label: "Pantry Area" },
+  { id: "toilet",      label: "Toilet Area" },
+  { id: "store",       label: "Store Room" },
+  { id: "other",       label: "Room" },
+] as const;
+export const roomPurposeLabel = (id: string | undefined): string =>
+  ROOM_PURPOSES.find((p) => p.id === id)?.label ?? "Room";
+
 export const MOBILITY_TYPES = [
   { id: "movable", label: "100% Movable (fully relocatable)" },
   { id: "fixed", label: "Fixed / Semi-permanent" },
@@ -647,6 +711,39 @@ export const ADDONS: AddonItem[] = [
     onlyFor: ["security-cabin"], hint: "One per window — fitted outside" },
 ];
 
+/** Toilet / plumbing fittings — the ONLY optional add-ons offered for a toilet cabin (a
+ *  complete, self-contained washroom), in display order. These same fittings are also
+ *  offered as an attached-washroom option on the other, furniture-capable cabins. */
+export const TOILET_FITTING_IDS: string[] = ["toilet", "urinal", "wash-basin", "pantry"];
+
+/** The optional add-ons offered for a product, in display order. A TOILET CABIN gets ONLY the
+ *  plumbing fittings above (no office furniture — it is a self-contained washroom). Every other
+ *  cabin gets the full add-on list minus the partition rows (those are driven by the Rooms
+ *  control in the Size step) and honouring each add-on's `onlyFor` product gate. */
+export function addonsForProduct(productId: string): AddonItem[] {
+  if (isToiletCabin(productId)) {
+    return TOILET_FITTING_IDS
+      .map((id) => ADDONS.find((a) => a.id === id))
+      .filter((a): a is AddonItem => !!a);
+  }
+  return ADDONS.filter(
+    (a) =>
+      a.id !== "partition" && a.id !== "partition-door" && a.id !== "partition-door-sliding" &&
+      (!a.onlyFor || a.onlyFor.includes(productId)),
+  );
+}
+
+/** Keep ONLY toilet/plumbing fittings in an add-ons map, dropping every office-furniture
+ *  entry. Used when switching to (or restoring) a toilet cabin so furniture chosen on a
+ *  previously-selected product can't leak into the toilet cabin's 2D plan, quote or price. */
+export function toiletAddonsOnly(addons: Record<string, number>): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const id of Object.keys(addons ?? {})) {
+    if (TOILET_FITTING_IDS.includes(id)) out[id] = addons[id];
+  }
+  return out;
+}
+
 /* ------------------------------------------------------------------ *
  * Calculator state + estimate engine
  * ------------------------------------------------------------------ */
@@ -670,6 +767,9 @@ export interface CabinConfig {
    *  corner to the door's NEAR EDGE, plus how it opens (hand + swing). Mirrors doorQty. */
   doorPlacements: DoorPlacement[];
   windowTypeId: string;
+  /** For an OPENABLE (casement) window: which way the sash swings — "outside" (no grill) or
+   *  "inside" (a safety grill is fitted). Ignored for sliding / uPVC / fixed windows. */
+  windowOpening: WindowOpening;
   windowQty: number;
   /** Window size (ft) — default 3×3. Larger windows cost proportionally more. */
   windowWidthFt: number;
@@ -702,9 +802,16 @@ export interface CabinConfig {
    *  wall (default). Lets the customer add walking / servicing clearance behind desks &
    *  cupboards on the 2D plan — a spec-only layout adjustment (no price impact). */
   furnitureWallGap: number;
-  /** Plug-point placement — MULTI-select of PLUG_POINT_WALLS ids (upper/down/left/right/table).
-   *  The 2D plan spreads sockets along each chosen wall + one beside each work table. */
+  /** @deprecated Legacy GLOBAL plug-point placement (upper/down/left/right/table). Kept only so
+   *  older saved configs can be migrated into the room-wise `socketPlan`; no longer edited/drawn. */
   plugPointWalls: string[];
+  /** Room-wise socket (plug-point) placement — one PlugGroup[] per room (index = room 0..N-1).
+   *  SPEC-ONLY positioning; the priced count lives in electrical.plug and equals the sum of every
+   *  plugCount here (held by withSocketPlan / totalPlacedPlugs). Optional so old saves stay valid. */
+  socketPlan?: PlugGroup[][];
+  /** Room purposes — one ROOM_PURPOSES id per room (spec-only), for the socket selector and 2D
+   *  plan captions ("Office Room", "Pantry Area", …). Optional; unset rooms read as "Room N". */
+  roomPurposes?: string[];
   mobilityType: string;
   /** Spec-only (no price impact): per-room unit counts for each work-furniture add-on in a
    *  multi-room layout. addon id -> [room1, room2, …] summing to the add-on quantity (rooms
@@ -798,8 +905,8 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
   // The "Puf Panel Cabin" product defaults to the PUF panel structure (its walls ARE PUF
   // panels), which in turn defaults the interior wall to "Not Required".
   const puf = product.id === "puf-panel-cabin";
-  // Toilet cabins default to a fully washable ACP (Aluminium Composite Panel) lining on
-  // the walls and ceiling — the standard finish for wet areas.
+  // Toilet cabins default to a waterproof APP Sheet lining on BOTH the walls and the
+  // ceiling — the standard wet-area finish (a toilet-only option, see WALL/CEILING_MATERIALS).
   const toilet = isToiletCabin(product.id);
   const electrical: Record<string, number> = {};
   // Storage containers are priced purely by grade — no pre-selected electricals.
@@ -816,8 +923,8 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     // Sloped 2-side roof is the standard default; flat is +8%. Storage containers are
     // ISO shipping containers → ALWAYS flat-roofed (no sloped option, no surcharge).
     roofId: container ? "flat" : "sloped",
-    wallId: puf ? WALL_NONE.id : toilet ? "acp" : WALL_MATERIALS.find((m) => m.standard)!.id,
-    ceilingId: toilet ? "acp" : CEILING_MATERIALS.find((m) => m.standard)!.id,
+    wallId: puf ? WALL_NONE.id : toilet ? "app-sheet" : WALL_MATERIALS.find((m) => m.standard)!.id,
+    ceilingId: toilet ? "app-sheet" : CEILING_MATERIALS.find((m) => m.standard)!.id,
     flooringId: FLOORING_MATERIALS.find((m) => m.standard)!.id,
     insulationId: "none",
     doorTypeId: DOOR_TYPES[0].id, // Steel Door (1 included in base)
@@ -832,6 +939,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
       swing: "out",
     }],
     windowTypeId: "upvc", // uPVC is the recommended best-value default
+    windowOpening: "outside", // casement default: opens out (space-saving, no grill)
     // Standard window is 3×3 ft on a 2-track frame; size & track drive the price.
     windowWidthFt: 3,
     windowHeightFt: 3,
@@ -856,7 +964,11 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     tablePlacements: {},
     furnitureAdjust: {},
     furnitureWallGap: 0, // furniture sits flush to the wall by default
-    plugPointWalls: ["down"], // one wall by default; "By Work Table" auto-adds when a table is chosen
+    plugPointWalls: ["down"], // legacy/migration only — superseded by socketPlan below
+    // Room-wise socket placement (spec-only positioning). Single room by default: place the
+    // preselected Plug Points on the Down (front) wall, centred. Sum === electrical.plug.
+    socketPlan: (electrical.plug ?? 0) > 0 ? [[{ wall: "bottom" as const, plugCount: electrical.plug, pos: 0.5 }]] : [],
+    roomPurposes: [],
     mobilityType: "movable",
     furnitureRoom: {},
     addons: {},
@@ -912,10 +1024,16 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
   // sloped 2-side roof is the ₹0 default. Not applied to storage containers.
   const roofSurcharge = container ? 0 : round(base * findRoof(cfg.roofId).surchargePct);
 
-  // Interior deltas (₹/sqft over the standard finish)
+  // Interior deltas (₹/sqft over the standard finish). A finish restricted to another
+  // product (e.g. a leftover toilet-only APP Sheet after switching product) falls back to
+  // the standard so it is never shown/charged on a product it doesn't belong to.
   const puf = isPufPanel(cfg.structureId);
-  const wall = findWallMaterial(cfg.wallId) ?? WALL_MATERIALS[0];
-  const ceiling = findById(CEILING_MATERIALS, cfg.ceilingId) ?? CEILING_MATERIALS[0];
+  const wallStd = WALL_MATERIALS.find((m) => m.standard) ?? WALL_MATERIALS[0];
+  const ceilStd = CEILING_MATERIALS.find((m) => m.standard) ?? CEILING_MATERIALS[0];
+  const wallSel = findWallMaterial(cfg.wallId) ?? wallStd;
+  const wall = materialAllowed(wallSel, cfg.productId) ? wallSel : wallStd;
+  const ceilingSel = findById(CEILING_MATERIALS, cfg.ceilingId) ?? ceilStd;
+  const ceiling = materialAllowed(ceilingSel, cfg.productId) ? ceilingSel : ceilStd;
   const flooring = findById(FLOORING_MATERIALS, cfg.flooringId) ?? FLOORING_MATERIALS[0];
   // Wall lining: MS/GI/container bundle the standard MDF lining in the base rate, so the
   // material delta is measured OVER it. A PUF panel bundles nothing (the panel is the
@@ -1054,10 +1172,25 @@ export function startingFromEstimate(): number {
   return Math.min(...PRODUCTS.map((p) => computeEstimate(buildDefaultConfig(p.id)).total));
 }
 
-/** Add-on ids that are "movable" work furniture and can be assigned to a specific room in
- *  a 2-room layout (drives the Add-ons room picker + drawing). Fixtures (toilet, wash
- *  basin, urinal, pantry, partition) are excluded — they are not placed per-room this way. */
-export const ROOM_FURNITURE_IDS = ["workstation", "manager", "manager-l", "conference", "cupboard", "chair-headrest", "chair-backrest"];
+/** Add-on ids that are office work furniture drawn per-room in the 2D plan and assignable to a
+ *  specific room in a multi-room layout (drives the Add-ons room picker + drawing). Plumbing/
+ *  pantry FIXTURES (see FIXTURE_IDS) and partitions are excluded — fixtures are drawn by their
+ *  own plan block, partitions by the Rooms control. */
+export const ROOM_FURNITURE_IDS = ["workstation", "manager", "manager-l", "conference", "table", "table-drawer", "cupboard", "overhead", "chair-headrest", "chair-backrest"];
+
+/** Plumbing / pantry fixtures — drawn in the 2D plan for EVERY cabin (including the toilet
+ *  cabin, whose fittings these are). Placed by their own fixtures block, not the per-room
+ *  furniture layout. */
+export const FIXTURE_IDS = ["toilet", "wash-basin", "urinal", "pantry"];
+
+/** Add-ons drawn as individually-positioned floor pieces the customer can nudge in the plan
+ *  (per-unit rotate + feet-shift): work tables + plain tables + cupboard + overhead cabinet +
+ *  the plumbing/pantry fixtures. Chairs are auto-seated at their desk, so they're not nudged
+ *  individually here. */
+export const MOVABLE_ADDON_IDS = [
+  "workstation", "manager", "manager-l", "conference", "table", "table-drawer",
+  "cupboard", "overhead", ...FIXTURE_IDS,
+];
 
 /** Per-unit placement for a table add-on: one TABLE_POSITIONS id per unit. Entries the
  *  customer hasn't set fall back to the spread default (conference tables and the "Centre"
@@ -1103,6 +1236,137 @@ export function furnitureRoomCounts(cfg: CabinConfig, addonId: string, total: nu
   }
   out.push(Math.max(0, t - used));
   return out;
+}
+
+/* ------------------------------------------------------------------ *
+ * Room-wise socket (plug-point) placement helpers. SPEC-ONLY positioning;
+ * the priced count is electrical.plug. Invariant held everywhere:
+ *   totalPlacedPlugs(cfg) === (electrical.plug || 0)
+ * ------------------------------------------------------------------ */
+
+/** Display label for room `i`: purpose-aware. "Office Room" (single room) / "Room 2 · Pantry
+ *  Area" (multi-room) / "Room 3" when no purpose is set. */
+export function roomLabelFor(cfg: CabinConfig, i: number): string {
+  const purpose = cfg.roomPurposes?.[i];
+  const multi = (Math.round(cfg.roomCount) || 1) > 1;
+  if (!purpose || purpose === "other") return `Room ${i + 1}`;
+  const label = roomPurposeLabel(purpose);
+  return multi ? `Room ${i + 1} · ${label}` : label;
+}
+
+/** Legacy wall id (upper/down/left/right/table) → new PlugWall. "table" folds onto the front wall. */
+const LEGACY_PLUG_WALL: Record<string, PlugWall> = {
+  upper: "top", down: "bottom", left: "left", right: "right", table: "bottom",
+};
+
+const clampPlugPos = (p: number): number => Math.min(Math.max(Number.isFinite(p) ? p : 0.5, 0), 1);
+
+/** Sum of every plug point placed across all rooms in the raw socketPlan. */
+export function totalPlacedPlugs(cfg: CabinConfig): number {
+  const plan = Array.isArray(cfg.socketPlan) ? cfg.socketPlan : [];
+  let n = 0;
+  for (const room of plan) for (const g of room ?? []) n += Math.max(0, Math.round(g?.plugCount) || 0);
+  return n;
+}
+
+/** Room-wise socket plan, ALWAYS exactly roomCount lists, sanitized (valid walls, ≥1 count,
+ *  0..1 pos). When socketPlan is absent (older saves), synthesise one from the legacy
+ *  plugPointWalls + electrical.plug so the plan still draws — spread across the chosen walls,
+ *  all in Room 1. Returns empty rooms when there are no plug points. */
+export function plugPlanFor(cfg: CabinConfig): PlugGroup[][] {
+  const n = Math.max(1, Math.round(cfg.roomCount) || 1);
+  const sanitize = (room: PlugGroup[] | undefined): PlugGroup[] =>
+    (Array.isArray(room) ? room : [])
+      .map((g) => ({
+        wall: (PLUG_WALLS.some((w) => w.id === g?.wall) ? g.wall : "bottom") as PlugWall,
+        plugCount: Math.max(0, Math.round(g?.plugCount) || 0),
+        pos: clampPlugPos(g?.pos),
+      }))
+      .filter((g) => g.plugCount > 0);
+
+  if (Array.isArray(cfg.socketPlan)) {
+    return Array.from({ length: n }, (_, i) => sanitize(cfg.socketPlan![i]));
+  }
+
+  // ---- migrate legacy global placement into Room 1 ----
+  const out: PlugGroup[][] = Array.from({ length: n }, () => []);
+  const total = Math.max(0, Math.round(cfg.electrical?.plug ?? 0) || 0);
+  if (total <= 0) return out;
+  const mapped = (cfg.plugPointWalls ?? []).map((w) => LEGACY_PLUG_WALL[w]).filter(Boolean) as PlugWall[];
+  const walls = mapped.length ? [...new Set(mapped)] : (["bottom"] as PlugWall[]);
+  walls.forEach((wall, k) => {
+    const cnt = Math.floor(total / walls.length) + (k < total % walls.length ? 1 : 0);
+    if (cnt > 0) out[0].push({ wall, plugCount: cnt, pos: 0.5 });
+  });
+  return out;
+}
+
+/** Return a socketPlan (roomCount lists) whose plug total equals `newTotal`, starting from the
+ *  current plan: trims from the end when reducing, tops up Room 1's last group (or a new Down-wall
+ *  group) when increasing. Used when the Electrical Plug-Points stepper sets the total directly. */
+export function reconcileSocketPlan(cfg: CabinConfig, newTotal: number): PlugGroup[][] {
+  const target = Math.min(Math.max(Math.round(newTotal) || 0, 0), 200);
+  const plan = plugPlanFor(cfg).map((room) => room.map((g) => ({ ...g })));
+  const cur = plan.reduce((s, room) => s + room.reduce((a, g) => a + g.plugCount, 0), 0);
+  if (target === cur) return plan;
+  if (target > cur) {
+    const add = target - cur;
+    const room0 = plan[0] ?? (plan[0] = []);
+    const last = room0[room0.length - 1];
+    if (last) last.plugCount += add;
+    else room0.push({ wall: "bottom", plugCount: add, pos: 0.5 });
+    return plan;
+  }
+  // target < cur — trim from the end (last room first, last group first).
+  let remove = cur - target;
+  for (let ri = plan.length - 1; ri >= 0 && remove > 0; ri--) {
+    const room = plan[ri];
+    for (let gi = room.length - 1; gi >= 0 && remove > 0; gi--) {
+      const take = Math.min(remove, room[gi].plugCount);
+      room[gi].plugCount -= take;
+      remove -= take;
+      if (room[gi].plugCount <= 0) room.splice(gi, 1);
+    }
+  }
+  return plan;
+}
+
+/** THE choke point for keeping socketPlan consistent after any structural change (room count,
+ *  plug on/off). Returns a cfg whose socketPlan has exactly roomCount lists — folding any dropped
+ *  rooms' groups into the new last room so the priced plug count never silently drops — and whose
+ *  total equals electrical.plug. Clears the plan when there are no plug points. */
+export function withSocketPlan(cfg: CabinConfig): CabinConfig {
+  const n = Math.max(1, Math.round(cfg.roomCount) || 1);
+  const plug = Math.max(0, Math.round(cfg.electrical?.plug ?? 0) || 0);
+  if (plug <= 0) return { ...cfg, socketPlan: [] };
+  const raw = Array.isArray(cfg.socketPlan) ? cfg.socketPlan : plugPlanFor(cfg);
+  const rooms: PlugGroup[][] = raw.map((room) => (Array.isArray(room) ? room : []).map((g) => ({ ...g })));
+  let plan: PlugGroup[][];
+  if (rooms.length > n) {
+    plan = rooms.slice(0, n);
+    const overflow = rooms.slice(n).flat();
+    plan[n - 1] = [...(plan[n - 1] ?? []), ...overflow];
+  } else {
+    plan = [...rooms];
+    while (plan.length < n) plan.push([]);
+  }
+  const synced = reconcileSocketPlan({ ...cfg, socketPlan: plan }, plug);
+  return { ...cfg, socketPlan: synced };
+}
+
+/** One-line room-wise socket summary for the WhatsApp quote / PDF, e.g.
+ *  "Office Room: 3 (Down×2, Left×1); Room 2 · Pantry Area: 1 (Right×1)". "" when none placed. */
+export function socketPlanSummary(cfg: CabinConfig): string {
+  const plan = plugPlanFor(cfg);
+  const parts: string[] = [];
+  plan.forEach((room, i) => {
+    const rn = room.reduce((a, g) => a + g.plugCount, 0);
+    if (rn <= 0) return;
+    const walls = room.map((g) => `${plugWallLabel(g.wall)}×${g.plugCount}`).join(", ");
+    const label = (Math.round(cfg.roomCount) || 1) > 1 ? roomLabelFor(cfg, i) : "Cabin";
+    parts.push(`${label}: ${rn} (${walls})`);
+  });
+  return parts.join("; ");
 }
 
 /** Produce exactly `count` room lengths (each ≥1 ft) summing to `totalLength`; rooms 1..N-1
@@ -1178,17 +1442,17 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     insul && insul.id !== "none" ? `Insulation: ${insul.label} (${insul.thickness})` : ``,
     isToilet
       ? `Doors: ${cfg.doorQty} × ${door}`
-      : `Doors/Windows: ${cfg.doorQty} × ${door}${cfg.doorPlacements?.length ? ` (${cfg.doorPlacements.map((d) => `${placementLabel(d)} · ${doorOpeningLabel(d)}`).join(", ")})` : ""}, ${cfg.windowQty} × ${win} ${formatFeet(cfg.windowWidthFt ?? 3)}×${formatFeet(cfg.windowHeightFt ?? 3)} ${findWindowTrack(cfg.windowTrackId).label}${cfg.windowPlacements?.length ? ` (${cfg.windowPlacements.map(placementLabel).join(", ")})` : ""}`,
+      : `Doors/Windows: ${cfg.doorQty} × ${door}${cfg.doorPlacements?.length ? ` (${cfg.doorPlacements.map((d) => `${placementLabel(d)} · ${doorOpeningLabel(d)}`).join(", ")})` : ""}, ${cfg.windowQty} × ${win} ${formatFeet(cfg.windowWidthFt ?? 3)}×${formatFeet(cfg.windowHeightFt ?? 3)} ${findWindowTrack(cfg.windowTrackId).label}${isOpenableWindow(cfg.windowTypeId) ? ` (${windowOpeningLabel(cfg.windowOpening)})` : ""}${cfg.windowPlacements?.length ? ` (${cfg.windowPlacements.map(placementLabel).join(", ")})` : ""}`,
     isToilet ? `Ventilation: ${vent || "Exhaust Fan (1 no.)"}` : ``,
     isToilet ? `Window: Not Applicable (toilet cabin)` : (isStorage && cfg.windowQty === 0 ? `Window: Not Applicable (add if required)` : ``),
     `Electrical: ${elec}`,
     cfg.roomCount > 1
-      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => `R${i + 1} ${Math.round(l)}ft`).join(" · ")}) — ${cfg.roomCount - 1} × ${cfg.partitionDoor ? `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear${cfg.partitionDoorType === "hinged" ? ` (${partitionOpeningLabel(cfg.partitionDoorHinge, cfg.partitionDoorSwing)})` : ""}` : "Fixed Partition"}`
+      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => { const p = cfg.roomPurposes?.[i]; const nm = p && p !== "other" ? ` ${roomPurposeLabel(p)}` : ""; return `R${i + 1} ${Math.round(l)}ft${nm}`; }).join(" · ")}) — ${cfg.roomCount - 1} × ${cfg.partitionDoor ? `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear${cfg.partitionDoorType === "hinged" ? ` (${partitionOpeningLabel(cfg.partitionDoorHinge, cfg.partitionDoorSwing)})` : ""}` : "Fixed Partition"}`
       : `Rooms: Single`,
     `Add-ons: ${furn}`,
     isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,
     roomFurn ? `Furniture Layout: ${roomFurn}` : ``,
-    `Plug Point Placement: ${plugPointWallsLabel(cfg.plugPointWalls)}`,
+    (() => { const s = socketPlanSummary(cfg); return s ? `Socket Placement (Plug Points): ${s}` : (cfg.electrical?.plug ? `Plug Points: ${cfg.electrical.plug} (placement as per site)` : ``); })(),
     `Shifting / Mobility: ${mobilityTypeLabel(cfg.mobilityType)}`,
     `Delivery: Transport ${cfg.transport ? "Yes" : "No"}, Installation ${cfg.installation ? "Yes" : "No"}`,
     ``,
