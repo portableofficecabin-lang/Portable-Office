@@ -686,11 +686,11 @@ export const ADDONS: AddonItem[] = [
   // Plumbing / pantry fittings for an ATTACHED washroom inside the cabin. The toilet & pantry
   // are SIZED (their price is size-based — see fixtureUnitPrice / FIXTURE_SIZING); `price` here
   // is the base at the standard size, so flat-price fallbacks still work.
-  { id: "toilet-wc",       label: "Attached WC / Toilet (4′×4′)",       price: 25000, hint: "Enclosed WC inside the cabin — 4′×4′ standard, priced by sq.ft above" },
-  { id: "toilet-washroom", label: "Toilet with Bath / Washroom (6′×4′)", price: 35000, hint: "Enclosed washroom with WC + bath — 6′×4′ standard, priced by sq.ft above" },
-  { id: "pantry",      label: "Pantry",           price: 18000, hint: "Counter inside the cabin — 4 ft standard, priced by running foot" },
-  { id: "wash-basin",  label: "Wash Basin",       price: 4500,  hint: "Placeable at any wall/position inside the cabin" },
-  { id: "urinal",      label: "Urinal",           price: 6500,  hint: "Urinal fitting with a separation partition" },
+  { id: "toilet-wc",       label: "Attached WC / Toilet (4′×4′)",       price: 25000, hasQty: true, hint: "Enclosed WC inside the cabin — 4′×4′ standard, priced by sq.ft above" },
+  { id: "toilet-washroom", label: "Toilet with Bath / Washroom (6′×4′)", price: 35000, hasQty: true, hint: "Enclosed washroom with WC + bath — 6′×4′ standard, priced by sq.ft above" },
+  { id: "pantry",      label: "Pantry",           price: 18000, hasQty: true, hint: "Counter inside the cabin — 4 ft standard, priced by running foot" },
+  { id: "wash-basin",  label: "Wash Basin",       price: 4500,  hasQty: true, hint: "Placeable at any wall/position inside the cabin" },
+  { id: "urinal",      label: "Urinal",           price: 6500,  hasQty: true, hint: "Urinal fitting with a separation partition" },
   { id: "partition",      label: "Fixed Partition",     price: 17500, hasQty: true },
   { id: "partition-door", label: "Partition with Door", price: 22000, hasQty: true },
   // Sliding partition door = hinged door (₹22,000) + PARTITION_SLIDING_PREMIUM (₹8,000).
@@ -808,8 +808,20 @@ export interface CabinConfig {
   /** Fixture placement (spec-only): a TOILET_CORNERS id for the enclosed toilets, a FIXTURE_WALLS
    *  id for pantry / wash-basin / urinal. Optional; fixturePlacementOf provides a default. */
   fixturePlacement?: Record<string, string>;
-  /** Enclosed-toilet door face (spec-only): a TOILET_DOOR_SIDES id. Optional. */
+  /** Enclosed-toilet door face (spec-only): a TOILET_DOOR_SIDES id. Optional. @deprecated by the
+   *  per-unit fields below (kept only to seed unit 0 when migrating an older saved config). */
   fixtureDoorSide?: Record<string, string>;
+  /** Per-UNIT fitting placement (spec-only) — one entry per unit of a fitting add-on, so multiple
+   *  attached toilets / basins / urinals / pantries can each sit on their own wall & spot.
+   *   • fixtureUnitWall   — FIXTURE_WALLS id (top/bottom/left/right) the unit sits against.
+   *   • fixtureUnitOffset — ft from that wall's start corner to the unit's near edge (<0 = auto-spread).
+   *   • fixtureUnitSwing  — enclosed toilets only: door swings "in" (into the toilet) or "out" (into
+   *                          the cabin room).
+   *  The fixtureUnit*Of accessors always return exactly `qty` entries, so a quantity change can
+   *  never leave a unit unplaced. */
+  fixtureUnitWall?: Record<string, string[]>;
+  fixtureUnitOffset?: Record<string, number[]>;
+  fixtureUnitSwing?: Record<string, string[]>;
   /** Gap (ft) between wall-attached furniture and the wall it sits against. 0 = flush to the
    *  wall (default). Lets the customer add walking / servicing clearance behind desks &
    *  cupboards on the 2D plan — a spec-only layout adjustment (no price impact). */
@@ -1283,18 +1295,26 @@ export function furnitureAdjustOf(cfg: CabinConfig, addonId: string, qty: number
  * are spec-only and drive the 2D plan. Accessors always return a valid, clamped value so a
  * stale / missing entry can never break the drawing or the estimate. */
 
-/** Stored size for a sized fixture, clamped to its per-id minimum. Enclosed toilets use the
- *  FIXTURE_SIZING minimums; the pantry is a counter (min length, fixed depth). */
+/** Stored size for a sized fixture, clamped to [per-id minimum … cabin size]. A fitting can
+ *  never exceed the cabin it sits in: its width runs along the cabin LENGTH and its depth along
+ *  the cabin WIDTH, so those are the upper bounds (applies to every product). Enclosed toilets
+ *  use the FIXTURE_SIZING minimums; the pantry is a counter (min length, fixed depth). */
 export function fixtureSizeOf(cfg: CabinConfig, id: string): { wFt: number; dFt: number } {
   const s = cfg.fixtureSize?.[id];
+  // Cabin interior bounds (never below the fitting's own minimum, so a tiny cabin can't force a
+  // sub-minimum size — the fitting just fills the cabin).
+  const maxW = Math.max(1, Math.floor(Number(cfg.length) || 1));
+  const maxD = Math.max(1, Math.floor(Number(cfg.width) || 1));
+  const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), Math.max(lo, hi));
   if (id === "pantry") {
-    return { wFt: Math.max(PANTRY_MIN_FT, Math.round(Number(s?.wFt) || PANTRY_MIN_FT)), dFt: PANTRY_DEPTH_FT };
+    const w = Math.round(Number(s?.wFt) || PANTRY_MIN_FT);
+    return { wFt: clamp(w, PANTRY_MIN_FT, maxW), dFt: PANTRY_DEPTH_FT };
   }
   const spec = FIXTURE_SIZING[id];
-  if (!spec) return { wFt: Math.max(1, Number(s?.wFt) || 1), dFt: Math.max(1, Number(s?.dFt) || 1) };
+  if (!spec) return { wFt: clamp(Number(s?.wFt) || 1, 1, maxW), dFt: clamp(Number(s?.dFt) || 1, 1, maxD) };
   return {
-    wFt: Math.max(spec.minW, Number(s?.wFt) || spec.minW),
-    dFt: Math.max(spec.minD, Number(s?.dFt) || spec.minD),
+    wFt: clamp(Number(s?.wFt) || spec.minW, spec.minW, maxW),
+    dFt: clamp(Number(s?.dFt) || spec.minD, spec.minD, maxD),
   };
 }
 
@@ -1313,6 +1333,62 @@ export function fixtureDoorSideOf(cfg: CabinConfig, id: string): string {
   const saved = cfg.fixtureDoorSide?.[id];
   return TOILET_DOOR_SIDES.some((s) => s.id === saved) ? saved! : "length";
 }
+
+/* ---- Per-UNIT fitting placement (wall + slide-offset + door swing) --------------------- *
+ * Every fitting can now be added multiple times, each unit on its own wall at its own spot.
+ * The accessors always return exactly `qty` entries so a quantity change never leaves a unit
+ * unplaced, and they seed unit 0 from the legacy per-id fields so older saved configs keep
+ * their chosen wall. */
+
+/** Legacy per-id placement (corner/wall) → a FIXTURE_WALLS wall, to seed unit 0. rear = Upper
+ *  (top) wall, front = Down (bottom) wall; a saved wall id passes through. */
+export function legacyFixtureWall(cfg: CabinConfig, id: string): string | undefined {
+  const p = cfg.fixturePlacement?.[id];
+  if (FIXTURE_WALLS.some((w) => w.id === p)) return p;
+  if (p === "rear-left" || p === "rear-right") return "top";
+  if (p === "front-left" || p === "front-right") return "bottom";
+  return undefined;
+}
+/** Default wall for the i-th unit — spread around the room so multiples don't stack on one wall. */
+const FIXTURE_WALL_CYCLE = ["bottom", "top", "left", "right"];
+export const defaultFixtureWall = (i: number): string => FIXTURE_WALL_CYCLE[i % FIXTURE_WALL_CYCLE.length];
+
+/** Per-unit wall (FIXTURE_WALLS id) for each unit of a fitting — exactly `qty` entries. */
+export function fixtureUnitWallsOf(cfg: CabinConfig, id: string, qty: number): string[] {
+  const saved = cfg.fixtureUnitWall?.[id] ?? [];
+  const legacy = legacyFixtureWall(cfg, id);
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) =>
+    FIXTURE_WALLS.some((w) => w.id === saved[i]) ? saved[i]
+      : i === 0 && legacy ? legacy
+      : defaultFixtureWall(i));
+}
+
+/** Per-unit distance (ft) from the wall's start corner to each unit's near edge. A negative value
+ *  means "auto" — the plan spreads the unit by its index so defaults don't overlap. Exactly `qty`. */
+export function fixtureUnitOffsetsOf(cfg: CabinConfig, id: string, qty: number): number[] {
+  const saved = cfg.fixtureUnitOffset?.[id] ?? [];
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) => {
+    const v = Number(saved[i]);
+    return Number.isFinite(v) ? v : -1; // -1 = auto-spread
+  });
+}
+
+/** Per-unit enclosed-toilet door swing: "in" (into the toilet) or "out" (into the cabin room).
+ *  Defaults to "out". Exactly `qty` entries. */
+export function fixtureUnitSwingsOf(cfg: CabinConfig, id: string, qty: number): string[] {
+  const saved = cfg.fixtureUnitSwing?.[id] ?? [];
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) => (saved[i] === "in" || saved[i] === "out" ? saved[i] : "out"));
+}
+
+/** Door swing options for an enclosed toilet — internal (opens into the toilet) vs external
+ *  (opens out into the cabin). */
+export const FIXTURE_DOOR_SWINGS = [
+  { id: "in",  label: "Opens In (internal)" },
+  { id: "out", label: "Opens Out (external)" },
+] as const;
 
 /** Per-UNIT price of an add-on. Sized fixtures scale with size (enclosed toilet by area, pantry
  *  by running foot); everything else is its flat ADDONS price. This is the SINGLE source the

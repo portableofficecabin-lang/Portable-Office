@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, ChevronRight, Star, Truck, Ruler } from "lucide-react";
+import { Check, ChevronRight, Truck, Ruler } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/JsonLd";
@@ -8,6 +8,8 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
 import { ProductReviews } from "@/components/products/ProductReviews";
 import type { ProductReview } from "@/components/products/ProductReviews";
+import { ProductRatingSummary } from "@/components/products/ProductRatingSummary";
+import type { RatingSummary } from "@/lib/reviews/summary";
 import {
   getProductBySlug,
   getProductDetailPath,
@@ -63,11 +65,12 @@ const SITE = "https://portableofficecabin.com";
 interface Props {
   product: Product;
   reviews: ProductReview[];
+  reviewSummary: RatingSummary;
   allProducts: Product[];
   slug: string; // normalized (no .html)
 }
 
-export function ProductDetailServer({ product, reviews, allProducts, slug }: Props) {
+export function ProductDetailServer({ product, reviews, reviewSummary, allProducts, slug }: Props) {
   const isStaticProduct = !!getProductBySlug(slug);
 
   const fallbackImage = getBestProductImage(
@@ -108,6 +111,7 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
     category: product.category,
     condition: productSlug === "used-shipping-container-for-sale" ? "used" : "new",
     reviews,
+    ratingSummary: reviewSummary,
   });
   const breadcrumb = generateBreadcrumbSchema([
     { name: "Home", url: SITE },
@@ -140,11 +144,9 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
     };
   });
 
-  // Trust strip values: rating + review count, size (dimensions/area) and delivery.
-  const reviewCount = reviews.length;
-  const avgRating = reviewCount
-    ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviewCount) * 10) / 10
-    : 0;
+  // Trust strip values: size (dimensions/area) + delivery. The rating + review count
+  // are rendered by <ProductRatingSummary> (a client island seeded with reviewSummary),
+  // so the top strip live-updates in lock-step with the reviews section below.
   const sizeSpec = (product.specifications || []).find((s) =>
     /dimension|^size|floor area|total area|sq ?ft|carpet area/i.test(s.label),
   );
@@ -221,25 +223,8 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
 
               {/* Trust & info strip — rating, size, Pan-India delivery + timeline */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-5 text-sm">
-                {/* Star rating + review count */}
-                <div className="flex items-center gap-1.5">
-                  <span className="flex" aria-label={reviewCount ? `Rated ${avgRating} out of 5 from ${reviewCount} reviews` : "No reviews yet"}>
-                    {[1, 2, 3, 4, 5].map((n) => (
-                      <Star
-                        key={n}
-                        className={`h-4 w-4 ${n <= Math.round(avgRating) && reviewCount ? "fill-amber-400 text-amber-400" : "fill-muted text-muted-foreground/30"}`}
-                      />
-                    ))}
-                  </span>
-                  {reviewCount > 0 ? (
-                    <span className="text-muted-foreground">
-                      <span className="font-semibold text-foreground">{avgRating.toFixed(1)}</span>{" "}
-                      ({reviewCount} review{reviewCount > 1 ? "s" : ""})
-                    </span>
-                  ) : (
-                    <span className="text-muted-foreground">Be the first to review</span>
-                  )}
-                </div>
+                {/* Star rating + review count (live-refreshing client island) */}
+                <ProductRatingSummary productSlug={slug} initialSummary={reviewSummary} />
 
                 {/* Size */}
                 {sizeText && (
@@ -382,7 +367,12 @@ export function ProductDetailServer({ product, reviews, allProducts, slug }: Pro
           <FreshInsightSection slug={slug || ""} />
 
           {/* Customer Reviews (server-rendered list + client submit) */}
-          <ProductReviews initialReviews={reviews} productSlug={slug} productName={productH1} />
+          <ProductReviews
+            initialReviews={reviews}
+            initialSummary={reviewSummary}
+            productSlug={slug}
+            productName={productH1}
+          />
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (

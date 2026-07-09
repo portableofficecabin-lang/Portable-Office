@@ -91,6 +91,10 @@ export function generateProductStructuredData(product: {
     reviewer_name: string;
     created_at: string;
   }>;
+  /** Authoritative aggregate over ALL approved reviews. When provided it drives
+   *  aggregateRating (so the count/average match the on-page trust strip exactly,
+   *  even when more reviews exist than are embedded in `reviews` below). */
+  ratingSummary?: { count: number; average: number };
 }) {
   const conditionUrl =
     product.condition === "used"
@@ -103,33 +107,46 @@ export function generateProductStructuredData(product: {
     : "https://portableofficecabin.com/products";
 
   const reviews = product.reviews ?? [];
-  const hasReviews = reviews.length > 0;
-  const avgRating = hasReviews
-    ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviews.length) * 10) / 10
-    : 0;
+  // Prefer the authoritative aggregate (all approved reviews); fall back to computing
+  // from the embedded sample. Google requires the aggregate to reflect every review and
+  // to match what the page shows — never emit an aggregateRating when the count is 0.
+  const totalCount = product.ratingSummary?.count ?? reviews.length;
+  const avgRating =
+    product.ratingSummary?.average ??
+    (reviews.length
+      ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviews.length) * 10) / 10
+      : 0);
+  const hasReviews = totalCount > 0;
 
   const reviewBlock = hasReviews
     ? {
         aggregateRating: {
           "@type": "AggregateRating",
           ratingValue: avgRating.toFixed(1),
-          reviewCount: reviews.length,
+          reviewCount: totalCount,
+          ratingCount: totalCount,
           bestRating: "5",
           worstRating: "1",
         },
-        review: reviews.slice(0, 20).map((r) => ({
-          "@type": "Review",
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: r.rating,
-            bestRating: "5",
-            worstRating: "1",
-          },
-          author: { "@type": "Person", name: r.reviewer_name },
-          datePublished: r.created_at,
-          ...(r.title ? { name: r.title } : {}),
-          ...(r.body ? { reviewBody: r.body } : {}),
-        })),
+        // Embed the individual reviews actually shown on the page (a sample of the
+        // aggregate). Omit the key entirely when none are available rather than emit [].
+        ...(reviews.length > 0
+          ? {
+              review: reviews.slice(0, 20).map((r) => ({
+                "@type": "Review",
+                reviewRating: {
+                  "@type": "Rating",
+                  ratingValue: r.rating,
+                  bestRating: "5",
+                  worstRating: "1",
+                },
+                author: { "@type": "Person", name: r.reviewer_name },
+                datePublished: r.created_at,
+                ...(r.title ? { name: r.title } : {}),
+                ...(r.body ? { reviewBody: r.body } : {}),
+              })),
+            }
+          : {}),
       }
     : {};
 

@@ -9,7 +9,8 @@ import {
   type Product,
   type Category,
 } from "@/data/products";
-import type { ProductReview } from "@/components/products/ProductReviews";
+import { fetchProductReviewData, type ProductReviewData } from "@/lib/reviews/data";
+import { EMPTY_RATING_SUMMARY } from "@/lib/reviews/summary";
 import { convertDBProduct, convertDBCategory, mergeProducts, mergeCategories } from "@/lib/products/merge";
 
 // Server-side product/category/review data, fetched at build / ISR-revalidate time
@@ -79,22 +80,15 @@ export async function getProductsByCategory(categorySlug: string): Promise<Produ
   return all.filter((p) => p.categorySlug === categorySlug);
 }
 
-/** Approved reviews for a product slug. Mirrors the original client query exactly
- *  (the slug value, incl. any ".html", must match how rows were stored). */
-export async function getApprovedReviews(productSlug: string): Promise<ProductReview[]> {
+/** Approved reviews for a product slug + the authoritative rating aggregate (count +
+ *  average over ALL approved reviews, not just the returned page). The same query is
+ *  re-run live in the browser, so the server HTML, JSON-LD and client stay consistent.
+ *  The slug value (incl. any ".html") must match how rows were stored. */
+export async function getProductReviewData(productSlug: string): Promise<ProductReviewData> {
   try {
-    const supabase = createStaticClient();
-    const { data, error } = await supabase
-      .from("product_reviews")
-      .select("id, rating, title, body, reviewer_name, created_at")
-      .eq("product_slug", productSlug)
-      .eq("status", "approved")
-      .order("created_at", { ascending: false })
-      .limit(50);
-    if (error) throw error;
-    return (data || []) as ProductReview[];
+    return await fetchProductReviewData(createStaticClient(), productSlug);
   } catch (err) {
-    console.error("getApprovedReviews: returning empty list:", err);
-    return [];
+    console.error("getProductReviewData: returning empty reviews:", err);
+    return { reviews: [], summary: EMPTY_RATING_SUMMARY };
   }
 }

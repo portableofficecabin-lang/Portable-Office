@@ -2,7 +2,7 @@ import { ProductDetailServer } from "@/views/ProductDetailServer";
 import { products, getProductSlug } from "@/data/products";
 import { getProductSEO } from "@/data/productSEO";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { getProductBySlugMerged, getApprovedReviews, getAllProductsMerged } from "@/lib/products/server";
+import { getProductBySlugMerged, getProductReviewData, getAllProductsMerged } from "@/lib/products/server";
 import { notFound } from "next/navigation";
 
 export const revalidate = 1800; // 30 minutes
@@ -34,9 +34,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const exists = products.some((p) => getProductSlug(p) === normalized);
   if (!exists) notFound();
 
-  const [product, reviews, allProducts] = await Promise.all([
+  const [product, reviewData, allProducts] = await Promise.all([
     getProductBySlugMerged(normalized),
-    getApprovedReviews(normalized),
+    getProductReviewData(normalized),
     getAllProductsMerged(),
   ]);
   if (!product) notFound();
@@ -44,7 +44,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <ProductDetailServer
       product={product}
-      reviews={reviews}
+      reviews={reviewData.reviews}
+      reviewSummary={reviewData.summary}
       allProducts={allProducts}
       slug={normalized}
     />

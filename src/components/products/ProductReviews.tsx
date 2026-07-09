@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Star, MessageSquarePlus } from "lucide-react";
+import { Star, MessageSquarePlus, BadgeCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { fetchProductReviewData } from "@/lib/reviews/data";
+import {
+  filledStars,
+  formatAverage,
+  EMPTY_RATING_SUMMARY,
+  type RatingSummary,
+} from "@/lib/reviews/summary";
 import { ReviewSubmitModal } from "./ReviewSubmitModal";
 
 export type ProductReview = {
@@ -12,6 +19,7 @@ export type ProductReview = {
   title: string | null;
   body: string | null;
   reviewer_name: string;
+  verified_purchase?: boolean;
   created_at: string;
 };
 
@@ -21,17 +29,19 @@ type Props = {
   /** Reviews rendered on the server (ISR) for SEO + instant paint; the list then
    *  refreshes live on mount so a just-approved review appears without a cache wait. */
   initialReviews?: ProductReview[];
-  onReviewsLoaded?: (reviews: ProductReview[]) => void;
+  /** Authoritative count + average (over ALL approved reviews) rendered on the server. */
+  initialSummary?: RatingSummary;
 };
 
 function Stars({ value, size = "h-4 w-4" }: { value: number; size?: string }) {
+  const filled = filledStars(value);
   return (
     <div className="flex" aria-label={`${value} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((n) => (
         <Star
           key={n}
           className={`${size} ${
-            n <= Math.round(value) ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30"
+            n <= filled ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30"
           }`}
         />
       ))}
@@ -39,31 +49,29 @@ function Stars({ value, size = "h-4 w-4" }: { value: number; size?: string }) {
   );
 }
 
-export function ProductReviews({ productSlug, productName, initialReviews, onReviewsLoaded }: Props) {
+export function ProductReviews({ productSlug, productName, initialReviews, initialSummary }: Props) {
   const [reviews, setReviews] = useState<ProductReview[]>(initialReviews ?? []);
+  const [summary, setSummary] = useState<RatingSummary>(initialSummary ?? EMPTY_RATING_SUMMARY);
   const [open, setOpen] = useState(false);
 
-  // Refresh approved reviews live from the browser so a newly-approved review shows
-  // immediately, without waiting for the product page's ISR / CDN HTML cache to
-  // revalidate (~30–60 min). On error we keep the server-rendered list as-is.
+  // Refresh approved reviews + the aggregate live from the browser so a newly-approved
+  // review shows immediately, without waiting for the product page's ISR / CDN HTML cache
+  // to revalidate (~30 min). The count/average come from the aggregate over ALL approved
+  // reviews (not just the cards below), keeping this section in step with the top strip
+  // and the JSON-LD. On error we keep the server-rendered values as-is.
   const load = useCallback(async () => {
-    const { data, error } = await supabase
-      .from("product_reviews")
-      .select("id, rating, title, body, reviewer_name, created_at")
-      .eq("product_slug", productSlug)
-      .eq("status", "approved")
-      .order("created_at", { ascending: false })
-      .limit(50);
-    if (error) return;
-    const list = (data || []) as ProductReview[];
-    setReviews(list);
-    onReviewsLoaded?.(list);
-  }, [productSlug, onReviewsLoaded]);
+    try {
+      const data = await fetchProductReviewData(supabase, productSlug);
+      setReviews(data.reviews);
+      setSummary(data.summary);
+    } catch {
+      /* keep server-rendered reviews/summary */
+    }
+  }, [productSlug]);
 
   useEffect(() => { load(); }, [load]);
 
-  const average =
-    reviews.length > 0 ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
+  const { count, average } = summary;
 
   return (
     <section className="mt-16" aria-labelledby="reviews-heading">
@@ -72,12 +80,12 @@ export function ProductReviews({ productSlug, productName, initialReviews, onRev
           <h2 id="reviews-heading" className="font-display text-2xl font-bold text-foreground">
             Customer Reviews
           </h2>
-          {reviews.length > 0 ? (
+          {count > 0 ? (
             <div className="flex items-center gap-3 mt-2">
               <Stars value={average} size="h-5 w-5" />
-              <span className="font-semibold text-foreground">{average.toFixed(1)}</span>
+              <span className="font-semibold text-foreground">{formatAverage(average)}</span>
               <span className="text-muted-foreground text-sm">
-                · {reviews.length} verified review{reviews.length === 1 ? "" : "s"}
+                · Based on {count} review{count === 1 ? "" : "s"}
               </span>
             </div>
           ) : (
@@ -95,7 +103,7 @@ export function ProductReviews({ productSlug, productName, initialReviews, onRev
       {reviews.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border p-8 text-center">
           <p className="text-muted-foreground">
-            No verified reviews yet for {productName}.
+            No reviews yet for {productName}.
           </p>
         </div>
       ) : (
@@ -116,9 +124,15 @@ export function ProductReviews({ productSlug, productName, initialReviews, onRev
               {r.body && (
                 <p className="text-sm text-muted-foreground whitespace-pre-line">{r.body}</p>
               )}
-              <p className="text-xs text-muted-foreground mt-3">
-                — {r.reviewer_name}
-              </p>
+              <div className="flex items-center gap-2 mt-3">
+                <p className="text-xs text-muted-foreground">— {r.reviewer_name}</p>
+                {r.verified_purchase && (
+                  <span className="inline-flex items-center gap-1 text-xs font-medium text-accent">
+                    <BadgeCheck className="h-3.5 w-3.5" />
+                    Verified Purchase
+                  </span>
+                )}
+              </div>
             </article>
           ))}
         </div>

@@ -21,7 +21,8 @@ import {
   MANAGER_TABLE_SIZE, MANAGER_L_SIZE, findWindowTrack, isToiletCabin,
   isOpenableWindow, type WindowOpening,
   ENCLOSED_TOILET_IDS, PANTRY_DEPTH_FT,
-  fixtureSizeOf, fixturePlacementOf, fixtureDoorSideOf, fixtureSizeLabel,
+  fixtureSizeOf, fixtureSizeLabel,
+  fixtureUnitWallsOf, fixtureUnitOffsetsOf, fixtureUnitSwingsOf,
   sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig,
 } from "./pricing";
 
@@ -320,11 +321,23 @@ function drawFixture(x: number, y: number, w: number, h: number, u: FurnUnit, ke
       </>
     );
   } else if (u.kind === "basin") {
+    // Water tap / mixer (top view): a body at the back edge with a spout reaching over the bowl
+    // to the water outlet, and a handle on each side.
+    const tapY = y + h * 0.15;
+    const bodyW = Math.min(w * 0.24, 5.5), bodyH = Math.max(2, h * 0.09);
+    const spoutEnd = cy - h * 0.04;
+    const hr = Math.max(0.8, w * 0.035), hOff = bodyW / 2 + hr + 0.8;
     glyph = (
       <>
         <rect x={x} y={y} width={w} height={h} rx={2} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.8} />
         <ellipse cx={cx} cy={cy + h * 0.06} rx={w * 0.32} ry={h * 0.28} fill="#ffffff" stroke={C.socketInk} strokeWidth={0.7} />
-        <circle cx={cx} cy={y + h * 0.18} r={0.9} fill={C.socketInk} />
+        {/* spout reaching over the bowl to the water outlet */}
+        <line x1={cx} y1={tapY} x2={cx} y2={spoutEnd} stroke={C.steel} strokeWidth={1.3} strokeLinecap="round" />
+        <circle cx={cx} cy={spoutEnd} r={Math.max(0.9, w * 0.03)} fill="#8fbfe0" stroke={C.socketInk} strokeWidth={0.5} />
+        {/* mixer body + hot/cold handles */}
+        <rect x={cx - bodyW / 2} y={tapY - bodyH / 2} width={bodyW} height={bodyH} rx={0.8} fill={C.steel} stroke={C.socketInk} strokeWidth={0.5} />
+        <circle cx={cx - hOff} cy={tapY} r={hr} fill="none" stroke={C.socketInk} strokeWidth={0.6} />
+        <circle cx={cx + hOff} cy={tapY} r={hr} fill="none" stroke={C.socketInk} strokeWidth={0.6} />
       </>
     );
   } else if (u.kind === "urinal") {
@@ -356,86 +369,100 @@ function drawFixture(x: number, y: number, w: number, h: number, u: FurnUnit, ke
   );
 }
 
-/** Enclosed toilet / washroom — a partitioned sub-room in a corner of its room band. Two sides
- *  are the cabin/partition walls of that corner; the other two are NEW partition walls, one of
- *  which carries the door (gap + swing arc). kind "toilet-wc" = WC only; "toilet-washroom" adds a
- *  bath + basin. Drawn opaque so it reads clearly over any auto-laid furniture. */
+/** Enclosed toilet / washroom — a partitioned box against the chosen WALL, slid along it by
+ *  `offsetFt` (ft from the wall's start corner to the box's near edge; <0 = auto-centre). The
+ *  wall side is the cabin wall; the two ends + the interior face are NEW partition walls, the
+ *  interior face carrying the door (gap + swing arc). `swing` = "in" (into the toilet) / "out"
+ *  (into the cabin room). kind "toilet-wc" = WC only; "toilet-washroom" adds a bath + basin. */
 function drawWashroom(
   bx0: number, bx1: number, roomTop: number, roomBot: number,
-  corner: string, wFt: number, dFt: number, doorSide: string, kind: string,
+  wall: string, offsetFt: number, wFt: number, dFt: number, swing: string, kind: string,
   ppf: number, key: string, sizeLbl: string,
 ) {
   const bandW = bx1 - bx0, bandH = roomBot - roomTop;
-  const w = Math.min(Math.max(wFt * ppf, 26), bandW - 2);
-  const d = Math.min(Math.max(dFt * ppf, 26), bandH - 2);
-  const left = corner.includes("left");
-  const rear = corner.includes("rear");
-  const rx0 = left ? bx0 : bx1 - w;
-  const ry0 = rear ? roomTop : roomBot - d;
-  const rx1 = rx0 + w, ry1 = ry0 + d;
+  const horizontal = wall === "top" || wall === "bottom";
+  // Along-wall length + depth into the room (px), clamped to the room band.
+  const along = Math.min(Math.max(wFt * ppf, 26), (horizontal ? bandW : bandH) - 2);
+  const depth = Math.min(Math.max(dFt * ppf, 24), (horizontal ? bandH : bandW) - 2);
+  // Near-edge position along the wall, clamped so the box always fits inside the band.
+  const spanPx = horizontal ? bandW : bandH;
+  const maxOff = Math.max(0, spanPx - along);
+  const offPx = offsetFt < 0 ? maxOff / 2 : Math.min(Math.max(offsetFt * ppf, 0), maxOff);
+  // Box rect for the chosen wall (width runs ALONG the wall, depth INTO the room).
+  let rx0: number, ry0: number, rw: number, rh: number;
+  if (wall === "top")         { rx0 = bx0 + offPx; ry0 = roomTop;         rw = along; rh = depth; }
+  else if (wall === "bottom") { rx0 = bx0 + offPx; ry0 = roomBot - depth; rw = along; rh = depth; }
+  else if (wall === "left")   { rx0 = bx0;         ry0 = roomTop + offPx; rw = depth; rh = along; }
+  else /* right */            { rx0 = bx1 - depth; ry0 = roomTop + offPx; rw = depth; rh = along; }
+  const rx1 = rx0 + rw, ry1 = ry0 + rh;
   const cx = (rx0 + rx1) / 2, cy = (ry0 + ry1) / 2;
-  const wt = 3.5;                          // partition thickness
-  const vX = left ? rx1 : rx0;             // interior vertical face (away from the corner)
-  const hY = rear ? ry1 : ry0;             // interior horizontal face (away from the corner)
-  const doorOnH = doorSide === "length";   // door on the horizontal interior face
-  const faceLen = doorOnH ? w : d;
-  const gap = Math.max(10, Math.min(DOOR_SIZE.widthFt * ppf, faceLen * 0.6));
-  const intoY = rear ? 1 : -1;             // +y points into the room from a rear washroom
-  const intoX = left ? 1 : -1;             // +x points into the room from a left washroom
-
+  const wt = 3.5;
+  const doorGap = Math.max(10, Math.min(DOOR_SIZE.widthFt * ppf, (horizontal ? rw : rh) * 0.6));
   const walls: React.ReactNode[] = [];
-  // horizontal interior wall (y = hY)
-  if (doorOnH) {
-    const gs = cx - gap / 2, ge = cx + gap / 2;
-    walls.push(<line key="hw1" x1={rx0} y1={hY} x2={gs} y2={hY} stroke={C.wall} strokeWidth={wt} />);
-    walls.push(<line key="hw2" x1={ge} y1={hY} x2={rx1} y2={hY} stroke={C.wall} strokeWidth={wt} />);
-    walls.push(<line key="hd" x1={gs} y1={hY} x2={gs} y2={hY + intoY * gap} stroke={C.door} strokeWidth={2} />);
-    walls.push(<path key="ha" d={`M ${gs} ${hY + intoY * gap} A ${gap} ${gap} 0 0 ${intoY > 0 ? 1 : 0} ${ge} ${hY}`} fill="none" stroke={C.arc} strokeWidth={0.9} />);
+  const solid = (x1: number, y1: number, x2: number, y2: number, k: string) =>
+    walls.push(<line key={k} x1={x1} y1={y1} x2={x2} y2={y2} stroke={C.wall} strokeWidth={wt} />);
+
+  if (horizontal) {
+    const faceY = wall === "top" ? ry1 : ry0;   // interior face (toward room centre) — carries the door
+    const wallY = wall === "top" ? ry0 : ry1;   // cabin-wall side
+    solid(rx0, wallY, rx1, wallY, "cw");
+    solid(rx0, ry0, rx0, ry1, "e0");
+    solid(rx1, ry0, rx1, ry1, "e1");
+    const gs = cx - doorGap / 2, ge = cx + doorGap / 2;
+    solid(rx0, faceY, gs, faceY, "f0");
+    solid(ge, faceY, rx1, faceY, "f1");
+    const intoRoom = wall === "top" ? 1 : -1;               // +y goes into the room from a top-wall box
+    const dir = swing === "out" ? intoRoom : -intoRoom;     // out → into room · in → into toilet
+    walls.push(<line key="dl" x1={gs} y1={faceY} x2={gs} y2={faceY + dir * doorGap} stroke={C.door} strokeWidth={2} />);
+    walls.push(<path key="da" d={`M ${gs} ${faceY + dir * doorGap} A ${doorGap} ${doorGap} 0 0 ${dir > 0 ? 1 : 0} ${ge} ${faceY}`} fill="none" stroke={C.arc} strokeWidth={0.9} />);
   } else {
-    walls.push(<line key="hw" x1={rx0} y1={hY} x2={rx1} y2={hY} stroke={C.wall} strokeWidth={wt} />);
-  }
-  // vertical interior wall (x = vX)
-  if (!doorOnH) {
-    const gs = cy - gap / 2, ge = cy + gap / 2;
-    walls.push(<line key="vw1" x1={vX} y1={ry0} x2={vX} y2={gs} stroke={C.wall} strokeWidth={wt} />);
-    walls.push(<line key="vw2" x1={vX} y1={ge} x2={vX} y2={ry1} stroke={C.wall} strokeWidth={wt} />);
-    walls.push(<line key="vd" x1={vX} y1={gs} x2={vX + intoX * gap} y2={gs} stroke={C.door} strokeWidth={2} />);
-    walls.push(<path key="va" d={`M ${vX + intoX * gap} ${gs} A ${gap} ${gap} 0 0 ${intoX > 0 ? 0 : 1} ${vX} ${ge}`} fill="none" stroke={C.arc} strokeWidth={0.9} />);
-  } else {
-    walls.push(<line key="vw" x1={vX} y1={ry0} x2={vX} y2={ry1} stroke={C.wall} strokeWidth={wt} />);
+    const faceX = wall === "left" ? rx1 : rx0;
+    const wallX = wall === "left" ? rx0 : rx1;
+    solid(wallX, ry0, wallX, ry1, "cw");
+    solid(rx0, ry0, rx1, ry0, "e0");
+    solid(rx0, ry1, rx1, ry1, "e1");
+    const gs = cy - doorGap / 2, ge = cy + doorGap / 2;
+    solid(faceX, ry0, faceX, gs, "f0");
+    solid(faceX, ge, faceX, ry1, "f1");
+    const intoRoom = wall === "left" ? 1 : -1;
+    const dir = swing === "out" ? intoRoom : -intoRoom;
+    walls.push(<line key="dl" x1={faceX} y1={gs} x2={faceX + dir * doorGap} y2={gs} stroke={C.door} strokeWidth={2} />);
+    walls.push(<path key="da" d={`M ${faceX + dir * doorGap} ${gs} A ${doorGap} ${doorGap} 0 0 ${dir > 0 ? 0 : 1} ${faceX} ${ge}`} fill="none" stroke={C.arc} strokeWidth={0.9} />);
   }
 
-  // fixtures inside — WC in the true corner; washroom adds a bath strip + a basin.
+  // Fixtures inside — a WC near the wall corner; a washroom adds a bath strip + basin.
   const inner: React.ReactNode[] = [];
-  const bw = Math.min(w * 0.42, 16), bh = Math.min(d * 0.5, 20);
-  const wcx = left ? rx0 + 3 : rx1 - 3 - bw;
-  const wcy = rear ? ry0 + 3 : ry1 - 3 - bh;
+  // Commode drawn to its real standard footprint (~370 mm wide × ~700 mm deep ≈ 1.2 ft × 2.25 ft)
+  // so it reads clearly instead of a fixed tiny cap. This is an internal drawing proportion only —
+  // never surfaced to the customer. Clamped to a fraction of the box so it can never overflow or
+  // overlap the washroom's basin (top-right) / bath (bottom). A plain WC has the box to itself, so
+  // it gets more room and is centred along the wall; a washroom stays corner-anchored.
+  const hasExtras = kind === "toilet-washroom";
+  const bw = Math.min(1.2 * ppf, rw * (hasExtras ? 0.44 : 0.62));
+  const bh = Math.min(2.25 * ppf, rh * (hasExtras ? 0.5 : 0.66));
+  const wcx = hasExtras ? rx0 + 3 : rx0 + (rw - bw) / 2, wcy = ry0 + 3;
   inner.push(
     <g key="wc">
-      <rect x={wcx} y={wcy} width={bw} height={bh * 0.28} rx={1.2} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.7} />
-      <ellipse cx={wcx + bw / 2} cy={wcy + bh * 0.62} rx={bw * 0.4} ry={bh * 0.34} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.8} />
+      <rect x={wcx} y={wcy} width={bw} height={bh * 0.28} rx={1.4} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.8} />
+      <ellipse cx={wcx + bw / 2} cy={wcy + bh * 0.62} rx={bw * 0.42} ry={bh * 0.34} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.9} />
+      <ellipse cx={wcx + bw / 2} cy={wcy + bh * 0.62} rx={bw * 0.26} ry={bh * 0.22} fill="none" stroke={C.socketInk} strokeWidth={0.55} />
     </g>,
   );
   if (kind === "toilet-washroom") {
-    const bathW = Math.max(14, w - 8), bathH = Math.min(d * 0.3, 13);
-    const bxr = rx0 + (w - bathW) / 2;
-    const byr = rear ? ry1 - 4 - bathH : ry0 + 4;
-    inner.push(<rect key="bath" x={bxr} y={byr} width={bathW} height={bathH} rx={3} fill="#dbe7ec" stroke={C.socketInk} strokeWidth={0.7} />);
-    inner.push(<circle key="bathd" cx={left ? bxr + 4 : bxr + bathW - 4} cy={byr + bathH / 2} r={1} fill={C.socketInk} />);
-    const bs = Math.min(w * 0.24, 12);
-    const nbx = left ? rx1 - 4 - bs : rx0 + 4;
-    const nby = rear ? ry0 + 4 : ry1 - 4 - bs;
+    const bathW = Math.max(12, rw - 8), bathH = Math.min(rh * 0.28, 12);
+    inner.push(<rect key="bath" x={rx0 + (rw - bathW) / 2} y={ry1 - 4 - bathH} width={bathW} height={bathH} rx={3} fill="#dbe7ec" stroke={C.socketInk} strokeWidth={0.7} />);
+    const bs = Math.min(rw * 0.24, 12);
     inner.push(
       <g key="basin">
-        <rect x={nbx} y={nby} width={bs} height={bs * 0.8} rx={2} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.6} />
-        <ellipse cx={nbx + bs / 2} cy={nby + bs * 0.44} rx={bs * 0.3} ry={bs * 0.24} fill="#fff" stroke={C.socketInk} strokeWidth={0.5} />
+        <rect x={rx1 - 4 - bs} y={ry0 + 4} width={bs} height={bs * 0.8} rx={2} fill={PORCELAIN} stroke={C.socketInk} strokeWidth={0.6} />
+        <ellipse cx={rx1 - 4 - bs / 2} cy={ry0 + 4 + bs * 0.44} rx={bs * 0.3} ry={bs * 0.24} fill="#fff" stroke={C.socketInk} strokeWidth={0.5} />
       </g>,
     );
   }
 
   return (
     <g key={key}>
-      <rect x={rx0} y={ry0} width={w} height={d} fill="#e7edf0" stroke="none" />
+      <rect x={rx0} y={ry0} width={rw} height={rh} fill="#e7edf0" stroke="none" />
       {walls}
       {inner}
       <text x={cx} y={cy - 1} textAnchor="middle" fontSize={5.6} fontWeight={700} fill={C.ink}>
@@ -952,9 +979,9 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           return out;
         })()}
 
-        {/* ---- loose plumbing / pantry fixtures (wash basin, urinal, pantry) — placed on each
-               fixture's CHOSEN wall of its room, oriented against that wall and clamped INSIDE the
-               cabin (fixes the pantry-outside bug). The enclosed toilet/washroom draw separately. ---- */}
+        {/* ---- loose plumbing / pantry fixtures (wash basin, urinal, pantry) — each UNIT on its
+               own chosen wall of its room, slid along it by its feet-offset (or auto-spread when
+               left on "auto"), oriented against that wall & clamped inside the cabin. ---- */}
         {(() => {
           const roomList = rooms ?? [L];
           const totalLen = roomList.reduce((a, b) => a + b, 0) || L;
@@ -963,59 +990,61 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           roomList.forEach((rl) => { acc += rl; edges.push(ox + planW * (acc / totalLen)); });
           const out: React.ReactNode[] = [];
           const gap = 8, pad = 5;
-          type FxU = { id: string; spec: (typeof FIXTURE_SPEC)[string]; alongFt: number; depthFt: number; key: string };
           roomList.forEach((rl, ri) => {
             const x0 = edges[ri], x1 = edges[ri + 1];
-            const byWall: Record<string, FxU[]> = { top: [], bottom: [], left: [], right: [] };
+            // Running cursor per wall for units left on "auto" offset (so they don't stack).
+            const autoCursor: Record<string, number> = { top: x0 + pad, bottom: x0 + pad, left: oy + pad, right: oy + pad };
             FIXTURE_ORDER.forEach((id) => {
               const spec = FIXTURE_SPEC[id];
               const t = config.addons?.[id] || 0;
               if (!spec || !t) return;
               const per = furnitureRoomCounts(config, id, t, roomList.length);
               const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
-              const wall = fixturePlacementOf(config, id);
+              const before = per.slice(0, ri).reduce((a, b) => a + b, 0); // units used by earlier rooms
+              const walls = fixtureUnitWallsOf(config, id, t);
+              const offsets = fixtureUnitOffsetsOf(config, id, t);
               const alongFt = id === "pantry" ? fixtureSizeOf(config, id).wFt : spec.wFt;
               const depthFt = id === "pantry" ? PANTRY_DEPTH_FT : spec.dFt;
-              for (let k = 0; k < cnt; k++) (byWall[wall] ?? byWall.bottom).push({ id, spec, alongFt, depthFt, key: `fx-r${ri}-${id}-${k}` });
-            });
-            (["top", "bottom", "left", "right"] as const).forEach((wall) => {
-              const list = byWall[wall];
-              if (!list.length) return;
-              const horizontal = wall === "top" || wall === "bottom";
-              const axisPx = (horizontal ? x1 - x0 : by - oy) - 2 * pad;   // room to spread along the wall
-              const crossPx = horizontal ? by - oy : x1 - x0;             // depth available into the room
-              const gaps = (list.length - 1) * gap;
-              const wantAlong = list.reduce((s, u) => s + u.alongFt * ppf, 0);
-              const scale = wantAlong + gaps > axisPx ? Math.max(0.35, (axisPx - gaps) / Math.max(1, wantAlong)) : 1;
-              let cursor = (horizontal ? x0 : oy) + pad;
-              list.forEach((u) => {
-                const along = Math.max(8, u.alongFt * ppf * scale);
-                const depth = Math.min(u.depthFt * ppf, crossPx * 0.5);
-                const c = cursor + along / 2;                             // centre along the wall
+              for (let k = 0; k < cnt; k++) {
+                const gi = before + k;                        // global unit index
+                const wall = walls[gi] ?? "bottom";
+                const horizontal = wall === "top" || wall === "bottom";
+                const spanStart = horizontal ? x0 : oy, spanEnd = horizontal ? x1 : by;
+                const along = Math.max(8, Math.min(alongFt * ppf, spanEnd - spanStart - 2 * pad));
+                const depth = Math.min(depthFt * ppf, (horizontal ? by - oy : x1 - x0) * 0.5);
+                const maxNear = Math.max(spanStart + pad, spanEnd - pad - along);
+                let near: number;
+                if (offsets[gi] >= 0) {
+                  near = Math.min(Math.max(spanStart + pad + offsets[gi] * ppf, spanStart + pad), maxNear);
+                } else {
+                  near = Math.min(autoCursor[wall], maxNear);
+                  autoCursor[wall] = near + along + gap;
+                }
+                const c = near + along / 2;                   // centre along the wall
                 let scx: number, scy: number, rot: number;
                 if (wall === "top")         { scx = c; scy = oy + depth / 2; rot = 0; }
                 else if (wall === "bottom") { scx = c; scy = by - depth / 2; rot = 180; }
                 else if (wall === "left")   { scx = x0 + depth / 2; scy = c; rot = 270; }
                 else                        { scx = x1 - depth / 2; scy = c; rot = 90; }
+                const key = `fx-r${ri}-${id}-${k}`;
                 out.push(
-                  <g key={u.key} transform={`rotate(${rot} ${scx} ${scy})`}>
-                    {drawFixture(scx - along / 2, scy - depth / 2, along, depth, { id: u.id, ...u.spec }, `${u.key}-g`, ppf)}
+                  <g key={key} transform={`rotate(${rot} ${scx} ${scy})`}>
+                    {drawFixture(scx - along / 2, scy - depth / 2, along, depth, { id, ...spec }, `${key}-g`, ppf)}
                   </g>,
                 );
-                // Label unrotated on the room-interior side (only for horizontal walls, to avoid sideways text).
                 if (horizontal) {
                   const ly = wall === "top" ? scy + depth / 2 + 7 : scy - depth / 2 - 4;
-                  out.push(<text key={`${u.key}-l`} x={scx} y={ly} textAnchor="middle" fontSize={5.6} fontWeight={700} fill={C.ink}>{u.spec.label}</text>);
+                  out.push(<text key={`${key}-l`} x={scx} y={ly} textAnchor="middle" fontSize={5.6} fontWeight={700} fill={C.ink}>{spec.label}</text>);
                 }
-                cursor += along + gap;
-              });
+              }
             });
           });
           return out;
         })()}
 
-        {/* ---- enclosed toilet / washroom — a partitioned corner sub-room per room (opaque, so it
-               reads over furniture). One enclosure per (id, room); qty>1 in a room draws once. ---- */}
+        {/* ---- enclosed toilet / washroom — one partitioned box PER UNIT, each against its chosen
+               wall at its feet-offset (auto-spread when left on "auto"), door swinging in/out.
+               Drawn opaque so it reads over furniture. ---- */}
         {(() => {
           const roomList = rooms ?? [L];
           const totalLen = roomList.reduce((a, b) => a + b, 0) || L;
@@ -1028,13 +1057,23 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
               const t = config.addons?.[id] || 0;
               if (!t) return;
               const per = furnitureRoomCounts(config, id, t, roomList.length);
-              if (!(per[ri] > 0)) return;
+              const cnt = Math.min(per[ri] || 0, PER_TYPE_CAP);
+              if (!(cnt > 0)) return;
+              const before = per.slice(0, ri).reduce((a, b) => a + b, 0);
               const { wFt, dFt } = fixtureSizeOf(config, id);
-              out.push(drawWashroom(
-                edges[ri], edges[ri + 1], oy, by,
-                fixturePlacementOf(config, id), wFt, dFt, fixtureDoorSideOf(config, id), id,
-                ppf, `wr-r${ri}-${id}`, fixtureSizeLabel(id, config),
-              ));
+              const walls = fixtureUnitWallsOf(config, id, t);
+              const offsets = fixtureUnitOffsetsOf(config, id, t);
+              const swings = fixtureUnitSwingsOf(config, id, t);
+              for (let k = 0; k < cnt; k++) {
+                const gi = before + k;
+                // "auto" offset (<0): spread by the unit's index so multiples don't stack.
+                const off = offsets[gi] >= 0 ? offsets[gi] : gi * (wFt + 0.5);
+                out.push(drawWashroom(
+                  edges[ri], edges[ri + 1], oy, by,
+                  walls[gi] ?? "bottom", off, wFt, dFt, swings[gi] ?? "out", id,
+                  ppf, `wr-r${ri}-${id}-${k}`, fixtureSizeLabel(id, config),
+                ));
+              }
             });
           });
           return out;

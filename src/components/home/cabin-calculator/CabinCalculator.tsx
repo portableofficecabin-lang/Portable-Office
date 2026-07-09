@@ -27,8 +27,8 @@ import {
   ROOFS, findRoof, ROOF_FLAT_PCT, ROOM_FURNITURE_IDS, furnitureRoomCounts, normalizeRoomLengths, TABLE_ADDON_IDS, MOVABLE_ADDON_IDS,
   TABLE_POSITIONS, tablePlacementsOf, furnitureAdjustOf,
   FIXTURE_IDS, ENCLOSED_TOILET_IDS, FIXTURE_SIZING, PANTRY_MIN_FT, PANTRY_RATE_PER_FT,
-  TOILET_CORNERS, TOILET_DOOR_SIDES, FIXTURE_WALLS,
-  fixtureSizeOf, fixturePlacementOf, fixtureDoorSideOf, fixtureUnitPrice,
+  FIXTURE_WALLS, FIXTURE_DOOR_SWINGS,
+  fixtureSizeOf, fixtureUnitPrice, fixtureUnitWallsOf, fixtureUnitOffsetsOf, fixtureUnitSwingsOf,
   FURNITURE_POSITIONS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
   furniturePositionLabel, mobilityTypeLabel,
   PLUG_WALLS, plugWallLabel, ROOM_PURPOSES, roomPurposeLabel, roomLabelFor,
@@ -1090,10 +1090,27 @@ export default function CabinCalculator() {
       const cur = fixtureSizeOf(c, id);
       return { ...c, fixtureSize: { ...(c.fixtureSize ?? {}), [id]: { wFt: cur.wFt, dFt: cur.dFt, ...size } } };
     });
-  const setFixturePlacement = (id: string, place: string) =>
-    setConfig((c) => ({ ...c, fixturePlacement: { ...(c.fixturePlacement ?? {}), [id]: place } }));
-  const setFixtureDoorSide = (id: string, side: string) =>
-    setConfig((c) => ({ ...c, fixtureDoorSide: { ...(c.fixtureDoorSide ?? {}), [id]: side } }));
+  // Per-UNIT fitting placement — each unit of a fitting gets its own wall, slide-offset (ft from
+  // the corner) and (enclosed toilets) door swing. Setters expand the array to the current qty
+  // first so a unit can never be left unset.
+  const setFixtureUnitWall = (id: string, i: number, wall: string) =>
+    setConfig((c) => {
+      const arr = [...fixtureUnitWallsOf(c, id, c.addons[id] || 0)];
+      arr[i] = wall;
+      return { ...c, fixtureUnitWall: { ...(c.fixtureUnitWall ?? {}), [id]: arr } };
+    });
+  const setFixtureUnitOffset = (id: string, i: number, val: number) =>
+    setConfig((c) => {
+      const arr = [...fixtureUnitOffsetsOf(c, id, c.addons[id] || 0)];
+      arr[i] = val;
+      return { ...c, fixtureUnitOffset: { ...(c.fixtureUnitOffset ?? {}), [id]: arr } };
+    });
+  const setFixtureUnitSwing = (id: string, i: number, val: string) =>
+    setConfig((c) => {
+      const arr = [...fixtureUnitSwingsOf(c, id, c.addons[id] || 0)];
+      arr[i] = val;
+      return { ...c, fixtureUnitSwing: { ...(c.fixtureUnitSwing ?? {}), [id]: arr } };
+    });
   /** Put the i-th unit of a work table on a specific wall (or the centre pod). Spec-only —
    *  it drives the 2D plan's seating layout, not the price. */
   const setTablePlacement = (id: string, index: number, pos: string) =>
@@ -2351,7 +2368,10 @@ export default function CabinCalculator() {
                             const size = fixtureSizeOf(config, id);
                             const enclosed = ENCLOSED_TOILET_IDS.includes(id);
                             const isPantry = id === "pantry";
-                            const placeOpts = enclosed ? TOILET_CORNERS : FIXTURE_WALLS;
+                            const qty = Math.max(1, Math.round(config.addons[id] || 1));
+                            const uWalls = fixtureUnitWallsOf(config, id, qty);
+                            const uOffsets = fixtureUnitOffsetsOf(config, id, qty);
+                            const uSwings = fixtureUnitSwingsOf(config, id, qty);
                             return (
                               <div key={id} className="rounded-lg border border-border bg-muted/10 p-2.5">
                                 <div className="mb-1.5 flex items-baseline justify-between gap-2">
@@ -2383,34 +2403,42 @@ export default function CabinCalculator() {
                                     <span className="text-muted-foreground/70">ft (min {PANTRY_MIN_FT} · {formatINR(PANTRY_RATE_PER_FT)}/ft)</span>
                                   </div>
                                 )}
-                                <div className="flex flex-wrap items-center gap-1">
-                                  <span className="text-[11px] text-muted-foreground">{enclosed ? "Corner" : "Wall"}</span>
-                                  {placeOpts.map((opt) => {
-                                    const active = fixturePlacementOf(config, id) === opt.id;
-                                    return (
-                                      <button key={opt.id} type="button" aria-pressed={active} onClick={() => setFixturePlacement(id, opt.id)}
-                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
-                                        {opt.label}
-                                      </button>
-                                    );
-                                  })}
+                                {/* Per-UNIT placement: each unit picks its wall, slides along it by a feet
+                                    distance (blank = auto-spread), and — for enclosed toilets — its door swing. */}
+                                <div className="space-y-1.5">
+                                  {Array.from({ length: qty }, (_, i) => (
+                                    <div key={i} className="rounded-md border border-border/70 bg-background/40 p-1.5">
+                                      {qty > 1 && <div className="mb-1 text-[10px] font-semibold text-muted-foreground">{a.label.split(" (")[0]} {i + 1}</div>}
+                                      <div className="flex flex-wrap items-center gap-1">
+                                        <span className="text-[11px] text-muted-foreground">Wall</span>
+                                        {FIXTURE_WALLS.map((opt) => (
+                                          <button key={opt.id} type="button" aria-pressed={uWalls[i] === opt.id} onClick={() => setFixtureUnitWall(id, i, opt.id)}
+                                            className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", uWalls[i] === opt.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                            {opt.label}
+                                          </button>
+                                        ))}
+                                        <span className="ml-1 text-[11px] text-muted-foreground">Slide</span>
+                                        <input type="number" inputMode="decimal" min={0} step={0.5} aria-label={`${a.label} ${i + 1} distance from corner (ft)`}
+                                          value={uOffsets[i] >= 0 ? uOffsets[i] : ""} placeholder="auto" onFocus={selectOnFocus}
+                                          onChange={(e) => { const v = cleanNumericInput(e.currentTarget); setFixtureUnitOffset(id, i, v === "" ? -1 : (parseFloat(v) || 0)); }}
+                                          className="h-7 w-14 rounded-md border border-border bg-transparent px-2 text-center text-[11px] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                        <span className="text-[10px] text-muted-foreground/70">ft</span>
+                                      </div>
+                                      {enclosed && (
+                                        <div className="mt-1 flex flex-wrap items-center gap-1">
+                                          <span className="text-[11px] text-muted-foreground">Door</span>
+                                          {FIXTURE_DOOR_SWINGS.map((opt) => (
+                                            <button key={opt.id} type="button" aria-pressed={uSwings[i] === opt.id} onClick={() => setFixtureUnitSwing(id, i, opt.id)}
+                                              className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", uSwings[i] === opt.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                              {opt.label}
+                                            </button>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  ))}
                                 </div>
-                                {enclosed && (
-                                  <div className="mt-1.5 flex flex-wrap items-center gap-1">
-                                    <span className="text-[11px] text-muted-foreground">Door</span>
-                                    {TOILET_DOOR_SIDES.map((opt) => {
-                                      const active = fixtureDoorSideOf(config, id) === opt.id;
-                                      return (
-                                        <button key={opt.id} type="button" aria-pressed={active} onClick={() => setFixtureDoorSide(id, opt.id)}
-                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", active ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
-                                          {opt.label}
-                                        </button>
-                                      );
-                                    })}
-                                  </div>
-                                )}
                                 {id === "urinal" && <p className="mt-1.5 text-[10px] text-muted-foreground">Includes a separation partition.</p>}
-                                {id === "wash-basin" && <p className="mt-1.5 text-[10px] text-muted-foreground">Placed at the chosen wall — fine-tune in Customize Layout.</p>}
                               </div>
                             );
                           })}
@@ -2585,6 +2613,48 @@ export default function CabinCalculator() {
                     </div>
                       </>
                     )}
+                    {/* Main door — surfaced here too so it can be placed alongside the fittings;
+                        edits stay in sync with the Doors & Windows step. Hidden for containers
+                        (they ship with their own doors → no door placement). */}
+                    {(config.doorPlacements?.length ?? 0) > 0 && (() => {
+                      const d = config.doorPlacements[0];
+                      const side = d.side || "bottom";
+                      const maxOff = maxOpeningOffset(sideSpanFt(side, config.length, config.width), DOOR_SIZE.widthFt);
+                      return (
+                        <div className="border-t border-border pt-4">
+                          <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                            <Label className="text-sm font-semibold">Main Door</Label>
+                            <span className="text-[11px] text-muted-foreground">Wall, slide &amp; opening — the 2D plan updates live.</span>
+                          </div>
+                          <div className="space-y-1.5 rounded-lg border border-border bg-muted/10 p-2.5">
+                            <div className="flex flex-wrap items-center gap-1">
+                              <span className="text-[11px] text-muted-foreground">Wall</span>
+                              {OPENING_SIDES.map((s) => (
+                                <button key={s.id} type="button" aria-pressed={side === s.id} onClick={() => setDoorSide(0, s.id)}
+                                  className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", side === s.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                  {s.label}
+                                </button>
+                              ))}
+                              <span className="ml-1 text-[11px] text-muted-foreground">Slide</span>
+                              <input type="number" inputMode="decimal" min={0} max={maxOff} step={0.5} aria-label="Main door distance from corner (ft)"
+                                value={Number.isFinite(d.offset) ? Math.round(d.offset * 10) / 10 : 0} onFocus={selectOnFocus}
+                                onChange={(e) => setDoorOffset(0, parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
+                                className="h-7 w-14 rounded-md border border-border bg-transparent px-2 text-center text-[11px] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                              <span className="text-[10px] text-muted-foreground/70">ft</span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-1">
+                              <span className="text-[11px] text-muted-foreground">Opening</span>
+                              {DOOR_SWINGS.map((sw) => (
+                                <button key={sw.id} type="button" aria-pressed={(d.swing ?? "out") === sw.id} onClick={() => setDoorSwing(0, sw.id)}
+                                  className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", (d.swing ?? "out") === sw.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                  {sw.label}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
                     {/* Complete layout — a read-only floor plan combining EVERYTHING chosen
                         so far (doors, windows, lights, fans, plug points, fittings & furniture)
                         in one view. Shown for EVERY product, incl. the toilet cabin — its plan
