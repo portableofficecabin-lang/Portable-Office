@@ -522,6 +522,9 @@ export const ELECTRICAL_ITEMS: ElectricalItem[] = [
   { id: "ac",      label: "AC Provision", unitPrice: 2500, defaultQty: () => 1, preselect: false },
   { id: "plug",    label: "Plug Points", unitPrice: 450,  defaultQty: (a) => Math.max(2, Math.ceil(a / 55)), preselect: true },
   { id: "popup-socket", label: "Pop-up Socket (table)", unitPrice: 3500, defaultQty: () => 1, preselect: false }, // table-mounted pop-up, e.g. conference table
+  // External / entrance light — a bulkhead light OUTSIDE the cabin over the entrance / walkway.
+  // Positioned along the door's wall via externalLightOffset (see the accessor below).
+  { id: "ext-light", label: "External / Entrance Light", unitPrice: 1200, defaultQty: () => 1, preselect: false },
 ];
 
 /** Light colour + LED panel shape — spec choices in the Electrical step (apply to the LED
@@ -729,9 +732,13 @@ export function addonsForProduct(productId: string): AddonItem[] {
       .map((id) => ADDONS.find((a) => a.id === id))
       .filter((a): a is AddonItem => !!a);
   }
+  // A security cabin is a compact guard booth — it has no attached washroom / pantry, so the
+  // plumbing & pantry FIXTURES (toilet, washroom, urinal, wash-basin, pantry) are not offered.
+  const noWetFittings = productId === "security-cabin";
   return ADDONS.filter(
     (a) =>
       a.id !== "partition" && a.id !== "partition-door" && a.id !== "partition-door-sliding" &&
+      !(noWetFittings && FIXTURE_IDS.includes(a.id)) &&
       (!a.onlyFor || a.onlyFor.includes(productId)),
   );
 }
@@ -791,6 +798,10 @@ export interface CabinConfig {
   /** Light colour (white / warm) and LED panel shape (square / round) — spec only. */
   lightColor: string;
   ledShape: string;
+  /** External / entrance light position: distance (ft) from the door wall's start corner to the
+   *  light, along that wall (the light sits just OUTSIDE the cabin over the entrance/walkway).
+   *  Optional; externalLightOffsetOf defaults it to sit beside the main door. */
+  externalLightOffset?: number;
   /** Spec-only placement choices (no price impact) — captured in the quote/PDF.
    *  furniturePosition: wall | centre · mobilityType: movable | fixed. */
   furniturePosition: string;
@@ -822,6 +833,15 @@ export interface CabinConfig {
   fixtureUnitWall?: Record<string, string[]>;
   fixtureUnitOffset?: Record<string, number[]>;
   fixtureUnitSwing?: Record<string, string[]>;
+  /** Per-UNIT EWC (commode) placement INSIDE an enclosed toilet's own partition — independent
+   *  of where the partition box itself sits. Enclosed toilets only; one entry per unit.
+   *   • fixtureUnitEwcWall — which of the partition's 4 walls (FIXTURE_WALLS id) the commode is
+   *      set out from. "auto"/absent = a sensible default (the toilet's back wall). The commode
+   *      is auto-centred along that wall and auto-nudged so it never blocks the door.
+   *   • fixtureUnitEwcDist — perpendicular gap (ft) FROM that wall to the commode (0 = flush).
+   *  Clamped in the plan so the commode always stays inside the partition. */
+  fixtureUnitEwcWall?: Record<string, string[]>;
+  fixtureUnitEwcDist?: Record<string, number[]>;
   /** Gap (ft) between wall-attached furniture and the wall it sits against. 0 = flush to the
    *  wall (default). Lets the customer add walking / servicing clearance behind desks &
    *  cupboards on the 2D plan — a spec-only layout adjustment (no price impact). */
@@ -1383,12 +1403,49 @@ export function fixtureUnitSwingsOf(cfg: CabinConfig, id: string, qty: number): 
   return Array.from({ length: n }, (_, i) => (saved[i] === "in" || saved[i] === "out" ? saved[i] : "out"));
 }
 
+/** Per-unit wall the EWC/commode is set out FROM, inside an enclosed toilet's partition. Each
+ *  entry is a FIXTURE_WALLS id (top/bottom/left/right) or "auto" (resolved to the toilet's back
+ *  wall when drawn). Exactly `qty` entries so a quantity change never leaves a unit unset. */
+export function fixtureUnitEwcWallsOf(cfg: CabinConfig, id: string, qty: number): string[] {
+  const saved = cfg.fixtureUnitEwcWall?.[id] ?? [];
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) => {
+    const v = saved[i];
+    return v === "top" || v === "bottom" || v === "left" || v === "right" ? v : "auto";
+  });
+}
+
+/** Per-unit perpendicular gap (ft, ≥0) from the chosen EWC wall to the commode. 0 = flush against
+ *  the wall. The plan clamps it so the commode can never leave the partition. Exactly `qty`. */
+export function fixtureUnitEwcDistsOf(cfg: CabinConfig, id: string, qty: number): number[] {
+  const saved = cfg.fixtureUnitEwcDist?.[id] ?? [];
+  const n = Math.max(0, Math.round(qty) || 0);
+  return Array.from({ length: n }, (_, i) => {
+    const v = Number(saved[i]);
+    return Number.isFinite(v) && v >= 0 ? v : 0;
+  });
+}
+
 /** Door swing options for an enclosed toilet — internal (opens into the toilet) vs external
  *  (opens out into the cabin). */
 export const FIXTURE_DOOR_SWINGS = [
   { id: "in",  label: "Opens In (internal)" },
   { id: "out", label: "Opens Out (external)" },
 ] as const;
+
+/** Resolved external / entrance-light position: distance (ft) along the MAIN door's wall from its
+ *  start corner. Defaults to beside the door (its centre) and is clamped to that wall's length.
+ *  The light itself is drawn just OUTSIDE that wall (over the entrance / walkway). */
+export function externalLightOffsetOf(cfg: CabinConfig): number {
+  const door = cfg.doorPlacements?.[0];
+  const side = door?.side || "bottom";
+  const span = sideSpanFt(side, cfg.length, cfg.width);
+  const dflt = door
+    ? clampOpeningOffset(door.offset ?? 0, span, DOOR_SIZE.widthFt) + DOOR_SIZE.widthFt / 2
+    : span / 2;
+  const v = Number(cfg.externalLightOffset);
+  return Math.min(Math.max(Number.isFinite(v) ? v : dflt, 0), Math.max(0, span));
+}
 
 /** Per-UNIT price of an add-on. Sized fixtures scale with size (enclosed toilet by area, pantry
  *  by running foot); everything else is its flat ADDONS price. This is the SINGLE source the

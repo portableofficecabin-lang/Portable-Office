@@ -28,7 +28,8 @@ import {
   TABLE_POSITIONS, tablePlacementsOf, furnitureAdjustOf,
   FIXTURE_IDS, ENCLOSED_TOILET_IDS, FIXTURE_SIZING, PANTRY_MIN_FT, PANTRY_RATE_PER_FT,
   FIXTURE_WALLS, FIXTURE_DOOR_SWINGS,
-  fixtureSizeOf, fixtureUnitPrice, fixtureUnitWallsOf, fixtureUnitOffsetsOf, fixtureUnitSwingsOf,
+  fixtureSizeOf, fixtureUnitPrice, fixtureUnitWallsOf, fixtureUnitOffsetsOf, fixtureUnitSwingsOf, externalLightOffsetOf,
+  fixtureUnitEwcWallsOf, fixtureUnitEwcDistsOf,
   FURNITURE_POSITIONS, PLUG_POINT_WALL_IDS, MOBILITY_TYPES,
   furniturePositionLabel, mobilityTypeLabel,
   PLUG_WALLS, plugWallLabel, ROOM_PURPOSES, roomPurposeLabel, roomLabelFor,
@@ -879,6 +880,14 @@ export default function CabinCalculator() {
           if (isToiletCabin(saved.productId)) {
             merged.addons = toiletAddonsOnly(merged.addons ?? {});
           }
+          // Drop carried/stale add-ons the restored product doesn't offer, so an attached
+          // toilet/pantry left over from a previous product can't linger on a security cabin.
+          // (Partition add-ons are excluded by addonsForProduct but re-applied by the rooms
+          //  logic below, so this MUST run before that re-add.)
+          if (merged.addons && typeof merged.addons === "object") {
+            const offered = new Set(addonsForProduct(merged.productId).map((x) => x.id));
+            for (const k of Object.keys(merged.addons)) if (!offered.has(k)) delete merged.addons[k];
+          }
           merged.windowQty = merged.windowPlacements.length;
           if (!Array.isArray(merged.doorPlacements)) merged.doorPlacements = base.doorPlacements;
           merged.doorQty = merged.doorPlacements.length;
@@ -1026,7 +1035,12 @@ export default function CabinCalculator() {
       addons: (() => {
         const a = { ...c.addons };
         delete a.partition; delete a["partition-door"]; delete a["partition-door-sliding"];
-        return toToilet ? toiletAddonsOnly(a) : a;
+        if (toToilet) return toiletAddonsOnly(a);
+        // Drop any carried-over add-on the new product doesn't offer, so e.g. an attached
+        // toilet / pantry can never leak onto a security cabin (guard booth).
+        const offered = new Set(addonsForProduct(productId).map((x) => x.id));
+        for (const k of Object.keys(a)) if (!offered.has(k)) delete a[k];
+        return a;
       })(),
       furnitureRoom: {},
       transport: c.transport, installation: c.installation, gst: c.gst,
@@ -1110,6 +1124,21 @@ export default function CabinCalculator() {
       const arr = [...fixtureUnitSwingsOf(c, id, c.addons[id] || 0)];
       arr[i] = val;
       return { ...c, fixtureUnitSwing: { ...(c.fixtureUnitSwing ?? {}), [id]: arr } };
+    });
+  // External / entrance-light distance (ft) along the main door's wall (spec drives the plan).
+  const setExternalLightOffset = (v: number) =>
+    setConfig((c) => ({ ...c, externalLightOffset: Math.max(0, v) }));
+  const setFixtureUnitEwcWall = (id: string, i: number, wall: string) =>
+    setConfig((c) => {
+      const arr = [...fixtureUnitEwcWallsOf(c, id, c.addons[id] || 0)];
+      arr[i] = wall;
+      return { ...c, fixtureUnitEwcWall: { ...(c.fixtureUnitEwcWall ?? {}), [id]: arr } };
+    });
+  const setFixtureUnitEwcDist = (id: string, i: number, val: number) =>
+    setConfig((c) => {
+      const arr = [...fixtureUnitEwcDistsOf(c, id, c.addons[id] || 0)];
+      arr[i] = val;
+      return { ...c, fixtureUnitEwcDist: { ...(c.fixtureUnitEwcDist ?? {}), [id]: arr } };
     });
   /** Put the i-th unit of a work table on a specific wall (or the centre pod). Spec-only —
    *  it drives the 2D plan's seating layout, not the price. */
@@ -2372,6 +2401,8 @@ export default function CabinCalculator() {
                             const uWalls = fixtureUnitWallsOf(config, id, qty);
                             const uOffsets = fixtureUnitOffsetsOf(config, id, qty);
                             const uSwings = fixtureUnitSwingsOf(config, id, qty);
+                            const uEwcWalls = fixtureUnitEwcWallsOf(config, id, qty);
+                            const uEwcDists = fixtureUnitEwcDistsOf(config, id, qty);
                             return (
                               <div key={id} className="rounded-lg border border-border bg-muted/10 p-2.5">
                                 <div className="mb-1.5 flex items-baseline justify-between gap-2">
@@ -2435,6 +2466,29 @@ export default function CabinCalculator() {
                                           ))}
                                         </div>
                                       )}
+                                      {/* EWC (commode) placement INSIDE this toilet's partition: pick a wall + set the
+                                          gap out from it. Auto-centres along the wall and stays clear of the door. */}
+                                      {id === "toilet-wc" && (() => {
+                                        const defEw = uWalls[i] ?? "bottom";
+                                        const effEwc = ["top", "bottom", "left", "right"].includes(uEwcWalls[i]) ? uEwcWalls[i] : defEw;
+                                        return (
+                                          <div className="mt-1 flex flex-wrap items-center gap-1">
+                                            <span className="text-[11px] text-muted-foreground">EWC wall</span>
+                                            {FIXTURE_WALLS.map((opt) => (
+                                              <button key={opt.id} type="button" aria-pressed={effEwc === opt.id} onClick={() => setFixtureUnitEwcWall(id, i, opt.id)}
+                                                className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", effEwc === opt.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                                {opt.label}
+                                              </button>
+                                            ))}
+                                            <span className="ml-1 text-[11px] text-muted-foreground">Gap</span>
+                                            <input type="number" inputMode="decimal" min={0} step={0.5} aria-label={`${a.label} ${i + 1} EWC gap from wall (ft)`}
+                                              value={uEwcDists[i] > 0 ? uEwcDists[i] : ""} placeholder="0" onFocus={selectOnFocus}
+                                              onChange={(e) => { const v = cleanNumericInput(e.currentTarget); setFixtureUnitEwcDist(id, i, v === "" ? 0 : Math.max(0, parseFloat(v) || 0)); }}
+                                              className="h-7 w-14 rounded-md border border-border bg-transparent px-2 text-center text-[11px] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                            <span className="text-[10px] text-muted-foreground/70">ft from wall</span>
+                                          </div>
+                                        );
+                                      })()}
                                     </div>
                                   ))}
                                 </div>
@@ -2455,7 +2509,10 @@ export default function CabinCalculator() {
                     {/* Table placement — every table gets its own wall (or the centre pod), so the
                         2D plan seats staff with real clearance. Spec only (no price impact). */}
                     {(() => {
-                      const items = ADDONS.filter((a) => MOVABLE_ADDON_IDS.includes(a.id) && config.addons[a.id]);
+                      // Furniture only — the plumbing/pantry FIXTURES are positioned by the
+                      // "Washroom, Pantry & Fittings" panel (wall + distance-along-wall), so they
+                      // must NOT appear here with rotate/shift controls the drawing ignores.
+                      const items = ADDONS.filter((a) => MOVABLE_ADDON_IDS.includes(a.id) && !FIXTURE_IDS.includes(a.id) && config.addons[a.id]);
                       if (!items.length) return null;
                       return (
                         <div className="border-t border-border pt-4">
@@ -2650,6 +2707,24 @@ export default function CabinCalculator() {
                                   {sw.label}
                                 </button>
                               ))}
+                            </div>
+                            {/* External / entrance light — mounted OUTSIDE over the doorway; slide it
+                                along the entrance wall by a feet-distance. */}
+                            <div className="flex flex-wrap items-center gap-1 border-t border-border/60 pt-1.5">
+                              <button type="button" aria-pressed={!!config.electrical?.["ext-light"]} onClick={() => toggleElectrical("ext-light")}
+                                className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.electrical?.["ext-light"] ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                {config.electrical?.["ext-light"] ? "✓ " : ""}External / Entrance Light
+                              </button>
+                              {config.electrical?.["ext-light"] ? (
+                                <>
+                                  <span className="ml-1 text-[11px] text-muted-foreground">Distance</span>
+                                  <input type="number" inputMode="decimal" min={0} step={0.5} aria-label="External light distance along the entrance wall (ft)"
+                                    value={Math.round(externalLightOffsetOf(config) * 10) / 10} onFocus={selectOnFocus}
+                                    onChange={(e) => setExternalLightOffset(parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
+                                    className="h-7 w-14 rounded-md border border-border bg-transparent px-2 text-center text-[11px] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                                  <span className="text-[10px] text-muted-foreground/70">ft along the entrance wall</span>
+                                </>
+                              ) : null}
                             </div>
                           </div>
                         </div>
