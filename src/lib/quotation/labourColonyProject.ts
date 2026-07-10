@@ -34,6 +34,12 @@ export interface ProjectMeta {
   mobile: string;
   email: string;
   location: string;
+  /** Customer billing address (from the linked party record). */
+  billingAddress: string;
+  /** Ship-to / site delivery address for the colony. */
+  shippingAddress: string;
+  /** When true, shipping mirrors billing. */
+  shippingSameAsBilling: boolean;
   colonyType: LabourColonyType;
   workers: number;
   durationMonths: number;
@@ -65,6 +71,9 @@ export function defaultProjectMeta(): ProjectMeta {
     mobile: "",
     email: "",
     location: "",
+    billingAddress: "",
+    shippingAddress: "",
+    shippingSameAsBilling: true,
     colonyType: "labour_camp",
     workers: 100,
     durationMonths: 12,

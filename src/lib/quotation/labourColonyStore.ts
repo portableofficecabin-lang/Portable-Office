@@ -206,3 +206,37 @@ export async function loadCustomers(): Promise<ColonyCustomer[]> {
 
   return out.sort((a, b) => a.name.localeCompare(b.name));
 }
+
+/** Format an address row into a single readable line. */
+function formatAddress(r: Record<string, any>): string {
+  return [r.address_line1, r.address_line2, r.city, r.state, r.pincode ? `- ${r.pincode}` : ""]
+    .filter(Boolean)
+    .join(", ")
+    .replace(/, - /, " - ");
+}
+
+/**
+ * Fetch a customer's default ship-to address from `party_addresses`
+ * (falls back to the first address). Returns null if none / table missing.
+ */
+export async function loadPartyShipTo(partyId: string): Promise<string | null> {
+  if (!partyId) return null;
+  try {
+    const { data, error } = await (supabase as any)
+      .from("party_addresses")
+      .select("label,contact_person,contact_phone,address_line1,address_line2,city,state,pincode,is_default")
+      .eq("party_id", partyId);
+    if (error) {
+      if (!isSchemaMissing(error)) console.warn("party_addresses load:", error.message);
+      return null;
+    }
+    if (!Array.isArray(data) || data.length === 0) return null;
+    const rows = data as Record<string, any>[];
+    const chosen = rows.find((r) => r.is_default) ?? rows[0];
+    const line = formatAddress(chosen);
+    return line || null;
+  } catch (e) {
+    if (!isSchemaMissing(e)) console.warn("party_addresses load failed:", e);
+    return null;
+  }
+}

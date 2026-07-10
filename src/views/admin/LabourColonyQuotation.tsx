@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
-  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon,
+  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -54,6 +54,7 @@ import {
   saveProject as storeSave,
   deleteProject as storeDelete,
   loadCustomers,
+  loadPartyShipTo,
   type ColonyCustomer,
 } from "@/lib/quotation/labourColonyStore";
 
@@ -233,16 +234,25 @@ export default function LabourColonyQuotation() {
     setTab("project");
   };
 
-  const pickCustomer = (c: ColonyCustomer) => {
+  const pickCustomer = async (c: ColonyCustomer) => {
+    const billing = c.address || "";
     setMeta({
       customerName: c.name,
       mobile: c.mobile,
       email: c.email || "",
       partyId: c.source === "parties" ? c.id : undefined,
+      billingAddress: billing,
+      // provisional: mirror billing until we fetch a dedicated ship-to
+      shippingAddress: billing,
     });
     if (!config.location && (c.city || c.address)) setConfig((cc) => ({ ...cc, location: c.address || c.city || "" }));
     setCustomerOpen(false);
     toast({ title: "Customer selected", description: c.name });
+    // pull the customer's default ship-to address (party_addresses), if any
+    if (c.source === "parties") {
+      const shipTo = await loadPartyShipTo(c.id);
+      if (shipTo) setMetaState((m) => ({ ...m, shippingAddress: shipTo, shippingSameAsBilling: false }));
+    }
   };
 
   const exportPdf = () => {
@@ -317,6 +327,38 @@ export default function LabourColonyQuotation() {
                   <Field label="Email address"><Input value={meta.email} onChange={(e) => setMeta({ email: e.target.value })} placeholder="name@example.com" /></Field>
                   <Field label="Project location"><Input value={config.location || ""} onChange={setStr("location")} placeholder="Site location / city" /></Field>
                 </div>
+
+                <div className="border-t pt-4 space-y-3">
+                  <h4 className="text-sm font-semibold flex items-center gap-2"><MapPin className="h-4 w-4 text-amber" /> Address</h4>
+                  <Field label="Billing address">
+                    <Textarea
+                      value={meta.billingAddress}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        setMetaState((m) => ({ ...m, billingAddress: v, shippingAddress: m.shippingSameAsBilling ? v : m.shippingAddress }));
+                      }}
+                      placeholder="Customer billing address"
+                      rows={2}
+                    />
+                  </Field>
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <Switch
+                      checked={meta.shippingSameAsBilling}
+                      onCheckedChange={(v) => setMetaState((m) => ({ ...m, shippingSameAsBilling: v, shippingAddress: v ? m.billingAddress : m.shippingAddress }))}
+                    />
+                    <span className="text-muted-foreground">Shipping / delivery address same as billing</span>
+                  </label>
+                  <Field label="Shipping / site delivery address">
+                    <Textarea
+                      value={meta.shippingSameAsBilling ? meta.billingAddress : meta.shippingAddress}
+                      onChange={(e) => setMeta({ shippingAddress: e.target.value })}
+                      disabled={meta.shippingSameAsBilling}
+                      placeholder="Delivery / site address for the labour colony"
+                      rows={2}
+                    />
+                  </Field>
+                </div>
+
                 {meta.partyId && <p className="text-xs text-emerald-600 flex items-center gap-1"><ShieldCheck className="h-3.5 w-3.5" /> Linked to existing customer record</p>}
               </AdminCardContent>
             </AdminCard>
@@ -772,10 +814,24 @@ function exportColonyPdf(result: LabourColonyResult, civil: CivilWorkResult | nu
   const proj = result.config.projectName || "—";
   const loc = result.config.location || "—";
   doc.text(`Project: ${proj}    Location: ${loc}    Date: ${today}`, margin, 124);
-  if (meta.customerName) doc.text(`Customer: ${meta.customerName}${meta.mobile ? "  |  " + meta.mobile : ""}${meta.email ? "  |  " + meta.email : ""}`, margin, 137);
+
+  let y = 138;
+  if (meta.customerName) {
+    doc.text(`Customer: ${meta.customerName}${meta.mobile ? "  |  " + meta.mobile : ""}${meta.email ? "  |  " + meta.email : ""}`, margin, y);
+    y += 13;
+  }
+  const shipAddr = meta.shippingSameAsBilling ? meta.billingAddress : meta.shippingAddress;
+  if (meta.billingAddress) {
+    const lines = doc.splitTextToSize(`Billing: ${meta.billingAddress}`, W - margin * 2);
+    doc.text(lines, margin, y); y += lines.length * 11 + 1;
+  }
+  if (shipAddr) {
+    const lines = doc.splitTextToSize(`Ship to: ${shipAddr}`, W - margin * 2);
+    doc.text(lines, margin, y); y += lines.length * 11 + 1;
+  }
+  y += 6;
 
   const kv = (rows: [string, string | number][]) => rows.map(([k, v]) => [k, String(v)]);
-  let y = meta.customerName ? 150 : 138;
   const tbl = (body: (string | number)[][], head?: string[]) => {
     autoTable(doc, {
       startY: y,

@@ -8,15 +8,17 @@
  * Cabin Quotation admin tool uses. Self-contained: no DB table required.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { ShieldCheck, Download, Printer, Plus, Trash2, RotateCcw, Award } from "lucide-react";
+import { ShieldCheck, Download, Printer, Plus, Trash2, RotateCcw, Award, Save, FolderOpen, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { addLegalFooter } from "@/lib/pdfFooter";
 import logo from "@/assets/logo.webp";
@@ -47,6 +49,41 @@ const blankShipping: WShipping = {
   deliveryAddress: "", dispatchDate: "", deliveryDate: "",
   transporter: "", vehicleNo: "", lrNo: "", units: "", contact: "",
 };
+
+// A saved certificate row (public.warranty_certificates) as returned by Supabase.
+type SavedRow = {
+  id: string;
+  cert_no: string | null;
+  issue_date: string | null;
+  customer_name: string | null;
+  customer_company: string | null;
+  customer_phone: string | null;
+  customer_address: string | null;
+  products: WProduct[] | null;
+  shipping: Partial<WShipping> | null;
+  coverage: WItem[] | null;
+  terms: string | null;
+  signatory: string | null;
+  updated_at: string;
+};
+const SAVED_COLS =
+  "id, cert_no, issue_date, customer_name, customer_company, customer_phone, customer_address, products, shipping, coverage, terms, signatory, updated_at";
+
+// Minimal typed handle for public.warranty_certificates — the table isn't in the generated
+// Supabase types yet, so we cast through `unknown` (no `any`) while keeping the builder chains
+// we use typed. Every builder method returns the builder, which is awaitable to { data, error }.
+interface WcBuilder<T> extends PromiseLike<{ data: T; error: { message?: string } | null }> {
+  select(cols?: string): WcBuilder<T>;
+  order(col: string, opts: { ascending: boolean }): WcBuilder<T>;
+  limit(n: number): WcBuilder<T>;
+  insert(payload: unknown): WcBuilder<T>;
+  update(payload: unknown): WcBuilder<T>;
+  delete(): WcBuilder<T>;
+  eq(col: string, val: string): WcBuilder<T>;
+  single(): WcBuilder<T>;
+}
+const wcTable = <T,>(): WcBuilder<T> =>
+  (supabase as unknown as { from(t: string): WcBuilder<T> }).from("warranty_certificates");
 
 // Common components — a click drops in a row (with the component pre-filled); the
 // admin still types the actual warranty duration/terms manually.
@@ -99,6 +136,11 @@ export default function WarrantyCertificate() {
   const [shipping, setShipping] = useState<WShipping>(blankShipping);
   const [items, setItems] = useState<WItem[]>([{ component: "", coverage: "", remarks: "" }]);
   const [busy, setBusy] = useState(false);
+  // Save / Edit persistence (public.warranty_certificates). savedId set ⇒ we're editing that row.
+  const [savedId, setSavedId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState<SavedRow[]>([]);
+  const [listErr, setListErr] = useState<string | null>(null);
   const printRef = useRef<HTMLDivElement>(null);
 
   // Populate date-derived defaults on the client only (avoids any SSR/client mismatch).
@@ -127,12 +169,94 @@ export default function WarrantyCertificate() {
   // Shipping / delivery (one shipment per certificate).
   const setShip = (k: keyof WShipping, v: string) => setShipping((s) => ({ ...s, [k]: v }));
 
+  // ---- Save / Edit (Supabase: public.warranty_certificates) ----
+  const fetchSaved = useCallback(async () => {
+    // `warranty_certificates` isn't in the generated Supabase types until they're regenerated,
+    // so cast to `any` for this table (same pattern used elsewhere in the admin, e.g. parties).
+    const { data, error } = await wcTable<SavedRow[] | null>()
+      .select(SAVED_COLS).order("updated_at", { ascending: false }).limit(100);
+    if (error) { setListErr(error.message ?? "Failed to load"); setSaved([]); return; }
+    setListErr(null);
+    setSaved(data ?? []);
+  }, []);
+  useEffect(() => { fetchSaved(); }, [fetchSaved]);
+
+  const saveCertificate = async () => {
+    if (!cert.customerName.trim()) {
+      toast({ title: "Customer name required", description: "Enter the customer name before saving.", variant: "destructive" });
+      return;
+    }
+    setSaving(true);
+    const payload = {
+      cert_no: cert.certNo,
+      issue_date: cert.issueDate || null,
+      customer_name: cert.customerName,
+      customer_company: cert.customerCompany,
+      customer_phone: cert.customerPhone,
+      customer_address: cert.customerAddress,
+      products,
+      shipping,
+      coverage: items,
+      terms: cert.terms,
+      signatory: cert.signatory,
+    };
+    const table = wcTable<{ id: string; cert_no: string | null }>();
+    const { data, error } = savedId
+      ? await table.update(payload).eq("id", savedId).select().single()
+      : await table.insert(payload).select().single();
+    setSaving(false);
+    if (error || !data) {
+      const missing = /warranty_certificates|schema cache|does not exist/i.test(error?.message || "");
+      toast({
+        title: "Save failed",
+        description: missing ? "Run the warranty_certificates migration on your database first, then try again." : (error?.message ?? "Please try again."),
+        variant: "destructive",
+      });
+      return;
+    }
+    setSavedId(data.id);
+    toast({ title: savedId ? "Certificate updated" : "Certificate saved", description: `${data.cert_no || "Certificate"} saved.` });
+    fetchSaved();
+  };
+
+  const loadCertificate = (row: SavedRow) => {
+    setCert({
+      certNo: row.cert_no || "",
+      issueDate: row.issue_date || "",
+      customerName: row.customer_name || "",
+      customerCompany: row.customer_company || "",
+      customerPhone: row.customer_phone || "",
+      customerAddress: row.customer_address || "",
+      terms: typeof row.terms === "string" ? row.terms : blankCert.terms,
+      signatory: row.signatory || "Authorised Signatory",
+    });
+    setProducts(Array.isArray(row.products) && row.products.length
+      ? row.products.map((p) => ({ ...blankProduct(), ...(p as Partial<WProduct>) }))
+      : [blankProduct()]);
+    setShipping({ ...blankShipping, ...(row.shipping || {}) });
+    setItems(Array.isArray(row.coverage) && row.coverage.length
+      ? row.coverage.map((r) => ({ component: "", coverage: "", remarks: "", ...(r as Partial<WItem>) }))
+      : [{ component: "", coverage: "", remarks: "" }]);
+    setSavedId(row.id);
+    toast({ title: "Loaded for editing", description: `Editing ${row.cert_no || "certificate"}.` });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const deleteCertificate = async (id: string) => {
+    const { error } = await wcTable<null>().delete().eq("id", id);
+    if (error) { toast({ title: "Delete failed", description: error.message ?? "Please try again.", variant: "destructive" }); return; }
+    if (id === savedId) setSavedId(null);
+    toast({ title: "Certificate deleted" });
+    fetchSaved();
+  };
+
   const resetAll = () => {
     const iso = todayISO();
     setCert({ ...blankCert, issueDate: iso, certNo: `POC/WC/${iso.slice(0, 4)}/001` });
     setProducts([{ ...blankProduct(), validFrom: iso }]);
     setShipping(blankShipping);
     setItems([{ component: "", coverage: "", remarks: "" }]);
+    setSavedId(null); // start a fresh, unsaved certificate
   };
 
   const rowsForDoc = items.filter((r) => r.component.trim() || r.coverage.trim());
@@ -195,7 +319,11 @@ export default function WarrantyCertificate() {
           <p className="text-sm text-muted-foreground">Type the customer, product & warranty coverage — a branded certificate PDF is generated instantly.</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={resetAll}><RotateCcw className="h-4 w-4 mr-2" />Reset</Button>
+          <Button variant="outline" onClick={resetAll}><RotateCcw className="h-4 w-4 mr-2" />New</Button>
+          <Button variant="outline" onClick={saveCertificate} disabled={saving}>
+            {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
+            {savedId ? "Update" : "Save"}
+          </Button>
           <Button variant="outline" onClick={() => window.print()}><Printer className="h-4 w-4 mr-2" />Print</Button>
           <Button onClick={downloadPDF} disabled={busy}><Download className="h-4 w-4 mr-2" />{busy ? "Generating…" : "Download PDF"}</Button>
         </div>
@@ -204,6 +332,43 @@ export default function WarrantyCertificate() {
       <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_1fr]">
         {/* ---------------- Form ---------------- */}
         <div className="space-y-5">
+          {/* Saved certificates — Load one to edit, or Delete it. */}
+          <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground flex items-center gap-2">
+                <FolderOpen className="h-4 w-4" /> Saved Certificates
+              </h3>
+              {savedId && <span className="text-[11px] font-medium text-accent">Editing a saved certificate</span>}
+            </div>
+            {listErr ? (
+              <p className="text-[11px] leading-snug text-muted-foreground">
+                Saving isn’t enabled yet — apply the <code className="rounded bg-muted px-1 text-foreground">warranty_certificates</code> migration
+                to your Supabase database (SQL editor or <code className="rounded bg-muted px-1 text-foreground">supabase db push</code>), then reload.
+              </p>
+            ) : saved.length === 0 ? (
+              <p className="text-[11px] text-muted-foreground">No saved certificates yet — fill the form and press <span className="font-medium text-foreground">Save</span>.</p>
+            ) : (
+              <div className="space-y-1.5 max-h-56 overflow-auto pr-0.5">
+                {saved.map((row) => (
+                  <div key={row.id} className={cn("flex items-center gap-2 rounded-lg border p-2", row.id === savedId ? "border-accent bg-accent/5" : "border-border")}>
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate text-sm font-medium text-foreground">{row.cert_no || "—"}</div>
+                      <div className="truncate text-[11px] text-muted-foreground">{row.customer_name || "—"} · {prettyDate(row.issue_date || "")}</div>
+                    </div>
+                    <button type="button" onClick={() => loadCertificate(row)}
+                      className="shrink-0 rounded-md border border-border px-2.5 py-1 text-[11px] font-medium text-muted-foreground hover:border-accent hover:text-accent">
+                      Load
+                    </button>
+                    <button type="button" aria-label="Delete certificate" onClick={() => deleteCertificate(row.id)}
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-border text-muted-foreground hover:border-red-400 hover:text-red-500">
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">Certificate</h3>
             <div className="grid grid-cols-2 gap-3">
@@ -363,15 +528,18 @@ export default function WarrantyCertificate() {
                   {cert.customerCompany ? <> ({cert.customerCompany})</> : null}, subject to the coverage and terms stated herein.
                 </p>
 
-                {/* customer details */}
+                {/* customer details — includes both the billing and the shipping/delivery address */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, border: "1px solid #d1d5db", fontSize: 12 }}>
                   {[
-                    ["Customer", cert.customerName || "—"],
-                    ["Company", cert.customerCompany || "—"],
-                    ["Phone", cert.customerPhone || "—"],
-                    ["Address", cert.customerAddress || "—"],
-                  ].map(([label, val], idx) => (
-                    <div key={idx} style={{ padding: "7px 10px", borderBottom: "1px solid #e5e7eb", borderRight: idx % 2 === 0 ? "1px solid #e5e7eb" : "none" }}>
+                    { label: "Customer", val: cert.customerName || "—", full: false },
+                    { label: "Company", val: cert.customerCompany || "—", full: false },
+                    { label: "Phone", val: cert.customerPhone || "—", full: false },
+                    { label: "Billing Address", val: cert.customerAddress || "—", full: false },
+                    // Shipping / delivery address shown under the customer block; falls back to the
+                    // billing address when no separate delivery address was entered below.
+                    { label: "Shipping Address", val: shipping.deliveryAddress || cert.customerAddress || "—", full: true },
+                  ].map(({ label, val, full }, idx) => (
+                    <div key={idx} style={{ padding: "7px 10px", borderBottom: "1px solid #e5e7eb", borderRight: !full && idx % 2 === 0 ? "1px solid #e5e7eb" : "none", gridColumn: full ? "1 / -1" : "auto" }}>
                       <div style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: 0.4 }}>{label}</div>
                       <div style={{ color: "#111827", fontWeight: 600 }}>{val}</div>
                     </div>
