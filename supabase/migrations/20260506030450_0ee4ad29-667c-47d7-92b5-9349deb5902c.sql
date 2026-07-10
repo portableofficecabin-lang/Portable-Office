@@ -1,6 +1,6 @@
 
 -- Parties (client master)
-CREATE TABLE public.parties (
+CREATE TABLE IF NOT EXISTS public.parties (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   company text,
@@ -22,18 +22,34 @@ CREATE TABLE public.parties (
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_parties_name ON public.parties(name);
-CREATE INDEX idx_parties_phone ON public.parties(phone);
+CREATE INDEX IF NOT EXISTS idx_parties_name
+ON public.parties(name);
+
+CREATE INDEX IF NOT EXISTS idx_parties_phone
+ON public.parties(phone);
 
 ALTER TABLE public.parties ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Admins manage parties" ON public.parties
-  FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE TRIGGER update_parties_updated_at BEFORE UPDATE ON public.parties
-  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+DROP POLICY IF EXISTS "Admins manage parties"
+ON public.parties;
+
+CREATE POLICY "Admins manage parties"
+ON public.parties
+FOR ALL
+TO authenticated
+USING (public.is_admin())
+WITH CHECK (public.is_admin());
+
+DROP TRIGGER IF EXISTS update_parties_updated_at
+ON public.parties;
+
+CREATE TRIGGER update_parties_updated_at
+BEFORE UPDATE ON public.parties
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();
 
 -- Multiple ship-to / project addresses per party
-CREATE TABLE public.party_addresses (
+CREATE TABLE IF NOT EXISTS public.party_addresses (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   party_id uuid NOT NULL REFERENCES public.parties(id) ON DELETE CASCADE,
   label text NOT NULL, -- e.g. "Site 1 - Hosur", "HO Office"
@@ -47,20 +63,50 @@ CREATE TABLE public.party_addresses (
   is_default boolean NOT NULL DEFAULT false,
   created_at timestamptz NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_party_addresses_party ON public.party_addresses(party_id);
+CREATE INDEX IF NOT EXISTS idx_party_addresses_party
+ON public.party_addresses(party_id);
 
 ALTER TABLE public.party_addresses ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Admins manage party addresses" ON public.party_addresses
-  FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
--- Link existing transactions to party (nullable, non-breaking)
-ALTER TABLE public.quotations          ADD COLUMN party_id uuid REFERENCES public.parties(id);
-ALTER TABLE public.sales_orders        ADD COLUMN party_id uuid REFERENCES public.parties(id);
-ALTER TABLE public.project_allocations ADD COLUMN party_id uuid REFERENCES public.parties(id);
-ALTER TABLE public.rental_assignments  ADD COLUMN party_id uuid REFERENCES public.parties(id);
-ALTER TABLE public.stock_outwards      ADD COLUMN party_id uuid REFERENCES public.parties(id);
+DROP POLICY IF EXISTS "Admins manage party addresses"
+ON public.party_addresses;
 
-CREATE INDEX idx_quotations_party  ON public.quotations(party_id);
-CREATE INDEX idx_so_party          ON public.sales_orders(party_id);
-CREATE INDEX idx_proj_alloc_party  ON public.project_allocations(party_id);
-CREATE INDEX idx_rentals_party     ON public.rental_assignments(party_id);
+CREATE POLICY "Admins manage party addresses"
+ON public.party_addresses
+FOR ALL
+TO authenticated
+USING (public.is_admin())
+WITH CHECK (public.is_admin());
+
+-- Link existing transactions to party
+ALTER TABLE public.quotations
+ADD COLUMN IF NOT EXISTS party_id uuid
+REFERENCES public.parties(id);
+
+ALTER TABLE public.sales_orders
+ADD COLUMN IF NOT EXISTS party_id uuid
+REFERENCES public.parties(id);
+
+ALTER TABLE public.project_allocations
+ADD COLUMN IF NOT EXISTS party_id uuid
+REFERENCES public.parties(id);
+
+ALTER TABLE public.rental_assignments
+ADD COLUMN IF NOT EXISTS party_id uuid
+REFERENCES public.parties(id);
+
+ALTER TABLE public.stock_outwards
+ADD COLUMN IF NOT EXISTS party_id uuid
+REFERENCES public.parties(id);
+
+CREATE INDEX IF NOT EXISTS idx_quotations_party
+ON public.quotations(party_id);
+
+CREATE INDEX IF NOT EXISTS idx_so_party
+ON public.sales_orders(party_id);
+
+CREATE INDEX IF NOT EXISTS idx_proj_alloc_party
+ON public.project_allocations(party_id);
+
+CREATE INDEX IF NOT EXISTS idx_rentals_party
+ON public.rental_assignments(party_id);

@@ -189,10 +189,12 @@ export default function ContactPage() {
       });
     } catch (err) {
       console.error("Error sending OTP:", err);
+      // The code may still have gone out (the function can time out after the email is sent), so
+      // keep the modal open for Resend — but don't falsely claim success when the send errored.
       setShowOTPModal(true);
       toast({
-        title: "Verification Code Sent",
-        description: "Please check your email. If you didn't receive it, tap Resend.",
+        title: "Check your email for the code",
+        description: "Didn't get it within a minute? Tap Resend below, or contact us and we'll help.",
       });
     } finally {
       setIsSubmitting(false);

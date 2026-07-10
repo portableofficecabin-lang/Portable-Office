@@ -97,8 +97,13 @@ CREATE POLICY "Anyone can submit reviews" ON public.product_reviews FOR INSERT W
 DROP POLICY IF EXISTS "Admins manage reviews" ON public.product_reviews;
 CREATE POLICY "Admins manage reviews" ON public.product_reviews FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE TRIGGER trg_reviews_updated BEFORE UPDATE ON public.product_reviews
-  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+DROP TRIGGER IF EXISTS trg_reviews_updated
+ON public.product_reviews;
+
+CREATE TRIGGER trg_reviews_updated
+BEFORE UPDATE ON public.product_reviews
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();
 
 -- Pages (CMS) table
 CREATE TABLE IF NOT EXISTS public.pages (

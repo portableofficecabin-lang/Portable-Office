@@ -131,12 +131,12 @@ export default function BookAppointment() {
       setShowOTPModal(true);
     } catch (err: any) {
       console.error("Error sending OTP:", err);
-      // Even if edge function times out, email might have been sent
-      // Show the modal anyway and let user try with the OTP they received
+      // The code may still have gone out (the function can time out after the email is sent), so
+      // keep the modal open for Resend — but don't falsely claim success when the send errored.
       setShowOTPModal(true);
       toast({
-        title: "Verification Code Sent",
-        description: "Please check your email. If you didn't receive it, you can resend.",
+        title: "Check your email for the code",
+        description: "Didn't get it within a minute? Tap Resend — or contact us and we'll help.",
       });
     } finally {
       setIsSendingOTP(false);

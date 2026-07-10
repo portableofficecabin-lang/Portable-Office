@@ -224,12 +224,30 @@ export default function AdminProducts() {
 
   const fetchProducts = async () => {
     try {
-      const { data, error } = await supabase.from("products").select("*")
+      // Preferred: ordered query.
+      let { data, error } = await supabase.from("products").select("*")
         .order("sort_order", { ascending: true }).order("created_at", { ascending: false });
-      if (error) throw error;
-      setProducts((data as DBProduct[]) || []);
-    } catch (err) {
-      toast({ title: "Error", description: "Failed to load products", variant: "destructive" });
+      // The live table may be missing a column used in ORDER BY (migration drift) —
+      // that rejects the whole query. Retry unordered so real products still load,
+      // then sort client-side.
+      if (error) {
+        console.warn("Products ordered query failed, retrying unordered:", (error as any)?.code, error.message);
+        const retry = await supabase.from("products").select("*");
+        if (retry.error) throw retry.error;
+        data = retry.data as any;
+      }
+      const rows = ((data as DBProduct[]) || []).slice();
+      rows.sort((a: any, b: any) => ((a.sort_order ?? 0) - (b.sort_order ?? 0)));
+      setProducts(rows);
+    } catch (err: any) {
+      // The catalog still renders from the bundled static products, so surface the real
+      // reason in the console (for diagnosis) with a clear, non-cryptic toast.
+      console.error("Products DB load failed — showing built-in catalog. Reason:", err?.code, err?.message || err);
+      toast({
+        title: "Live products unavailable",
+        description: "Showing the built-in catalog. Open the browser console for the exact reason.",
+        variant: "destructive",
+      });
     } finally { setIsLoading(false); }
   };
 

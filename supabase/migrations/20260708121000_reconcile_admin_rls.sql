@@ -22,7 +22,8 @@ set search_path = public
 as $$
   select exists (
     select 1 from public.user_roles
-    where user_id = _user_id and role = _role
+    WHERE user_id = _user_id
+  AND role::text = _role::text
   )
 $$;
 
