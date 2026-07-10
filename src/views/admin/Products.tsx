@@ -39,6 +39,7 @@ import { PageHeader } from "@/components/admin/PageHeader";
 import { AdminCard } from "@/components/admin/AdminCard";
 import { products as staticProducts, categories as staticCategories } from "@/data/products";
 import { getProductSEO } from "@/data/productSEO";
+import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 const generateSlug = (name: string) =>
@@ -447,7 +448,10 @@ export default function AdminProducts() {
       .map((sp) => {
         const slug = sp.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
         const seo = getProductSEO(sp.id, sp.name);
-        const img = sp.images?.[0] && !sp.images[0].includes("placeholder") ? sp.images[0] : null;
+        // sp.images[0] may be a StaticImageData object (imported asset), not a string —
+        // resolve to a URL string first, otherwise `.includes` throws and crashes the section.
+        const firstImg = resolveImageUrl(sp.images?.[0]);
+        const img = firstImg && !firstImg.includes("placeholder") ? firstImg : null;
         const specsObj: Record<string, string> = {};
         (sp.specifications || []).forEach((s) => { specsObj[s.label] = s.value; });
         return {
