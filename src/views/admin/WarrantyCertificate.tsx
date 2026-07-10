@@ -35,6 +35,18 @@ const NAVY = "#0f1b2d";
 const AMBER = "#f59e0b";
 
 type WItem = { component: string; coverage: string; remarks: string };
+// One warrantied product with its own validity — a certificate can list several.
+type WProduct = { product: string; serialNo: string; warrantyPeriod: string; validFrom: string; validUntil: string };
+const blankProduct = (): WProduct => ({ product: "", serialNo: "", warrantyPeriod: "", validFrom: "", validUntil: "" });
+// One shipment / delivery for the whole certificate.
+type WShipping = {
+  deliveryAddress: string; dispatchDate: string; deliveryDate: string;
+  transporter: string; vehicleNo: string; lrNo: string; units: string; contact: string;
+};
+const blankShipping: WShipping = {
+  deliveryAddress: "", dispatchDate: "", deliveryDate: "",
+  transporter: "", vehicleNo: "", lrNo: "", units: "", contact: "",
+};
 
 // Common components — a click drops in a row (with the component pre-filled); the
 // admin still types the actual warranty duration/terms manually.
@@ -62,11 +74,6 @@ const blankCert = {
   customerCompany: "",
   customerAddress: "",
   customerPhone: "",
-  product: "",
-  serialNo: "",
-  warrantyPeriod: "",
-  validFrom: "",
-  validUntil: "",
   terms:
     "1. Warranty covers manufacturing defects only, under normal use and proper maintenance.\n" +
     "2. Damage from misuse, unauthorised modification, relocation without company supervision, fire, flood or natural calamity is not covered.\n" +
@@ -88,6 +95,8 @@ function LField({ label, value, onChange, placeholder, type }: { label: string; 
 
 export default function WarrantyCertificate() {
   const [cert, setCert] = useState(blankCert);
+  const [products, setProducts] = useState<WProduct[]>([blankProduct()]);
+  const [shipping, setShipping] = useState<WShipping>(blankShipping);
   const [items, setItems] = useState<WItem[]>([{ component: "", coverage: "", remarks: "" }]);
   const [busy, setBusy] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
@@ -98,9 +107,9 @@ export default function WarrantyCertificate() {
     setCert((c) => ({
       ...c,
       issueDate: c.issueDate || iso,
-      validFrom: c.validFrom || iso,
       certNo: c.certNo || `POC/WC/${iso.slice(0, 4)}/001`,
     }));
+    setProducts((ps) => ps.map((p, i) => (i === 0 && !p.validFrom ? { ...p, validFrom: iso } : p)));
   }, []);
 
   const set = (k: keyof typeof cert, v: string) => setCert((c) => ({ ...c, [k]: v }));
@@ -109,13 +118,36 @@ export default function WarrantyCertificate() {
   const addItem = (component = "") => setItems((rows) => [...rows, { component, coverage: "", remarks: "" }]);
   const removeItem = (i: number) => setItems((rows) => (rows.length > 1 ? rows.filter((_, idx) => idx !== i) : rows));
 
+  // Products & Validity — multiple products, each with its own serial / warranty / validity.
+  const setProduct = (i: number, k: keyof WProduct, v: string) =>
+    setProducts((ps) => ps.map((p, idx) => (idx === i ? { ...p, [k]: v } : p)));
+  const addProduct = () => setProducts((ps) => [...ps, blankProduct()]);
+  const removeProduct = (i: number) => setProducts((ps) => (ps.length > 1 ? ps.filter((_, idx) => idx !== i) : ps));
+
+  // Shipping / delivery (one shipment per certificate).
+  const setShip = (k: keyof WShipping, v: string) => setShipping((s) => ({ ...s, [k]: v }));
+
   const resetAll = () => {
     const iso = todayISO();
-    setCert({ ...blankCert, issueDate: iso, validFrom: iso, certNo: `POC/WC/${iso.slice(0, 4)}/001` });
+    setCert({ ...blankCert, issueDate: iso, certNo: `POC/WC/${iso.slice(0, 4)}/001` });
+    setProducts([{ ...blankProduct(), validFrom: iso }]);
+    setShipping(blankShipping);
     setItems([{ component: "", coverage: "", remarks: "" }]);
   };
 
   const rowsForDoc = items.filter((r) => r.component.trim() || r.coverage.trim());
+  const productsForDoc = products.filter((p) => p.product.trim() || p.serialNo.trim() || p.warrantyPeriod.trim());
+  const shipHasAny = Object.values(shipping).some((v) => v.trim());
+  const shipEntries: [string, string][] = [
+    ["Delivery Address", shipping.deliveryAddress || "—"],
+    ["No. of Units / Packages", shipping.units || "—"],
+    ["Dispatch Date", prettyDate(shipping.dispatchDate)],
+    ["Delivery Date", prettyDate(shipping.deliveryDate)],
+    ["Transporter / Courier", shipping.transporter || "—"],
+    ["Vehicle No.", shipping.vehicleNo || "—"],
+    ["LR / Docket No.", shipping.lrNo || "—"],
+    ["Delivery Contact", shipping.contact || "—"],
+  ];
 
   const downloadPDF = async () => {
     if (!printRef.current) return;
@@ -193,17 +225,57 @@ export default function WarrantyCertificate() {
             </div>
           </div>
 
+          <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">Products & Validity</h3>
+              <Button size="sm" variant="outline" onClick={addProduct}><Plus className="h-3.5 w-3.5 mr-1" />Add product</Button>
+            </div>
+            <div className="space-y-3">
+              {products.map((p, i) => (
+                <div key={i} className="rounded-xl border border-border p-3 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-muted-foreground">Product {i + 1}</span>
+                    {products.length > 1 && (
+                      <button type="button" aria-label="Remove product" onClick={() => removeProduct(i)}
+                        className="grid h-7 w-7 place-items-center rounded-md border border-border text-muted-foreground hover:border-red-400 hover:text-red-500">
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                  </div>
+                  <LField label="Product / Cabin Description" value={p.product} placeholder="e.g. Portable Office Cabin 20 × 10 ft (PUF)" onChange={(v) => setProduct(i, "product", v)} />
+                  <div className="grid grid-cols-2 gap-3">
+                    <LField label="Serial / Invoice No. (optional)" value={p.serialNo} placeholder="INV / Sr. no." onChange={(v) => setProduct(i, "serialNo", v)} />
+                    <LField label="Warranty Period" value={p.warrantyPeriod} placeholder="e.g. 12 Months" onChange={(v) => setProduct(i, "warrantyPeriod", v)} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <LField label="Valid From" type="date" value={p.validFrom} onChange={(v) => setProduct(i, "validFrom", v)} />
+                    <LField label="Valid Until" type="date" value={p.validUntil} onChange={(v) => setProduct(i, "validUntil", v)} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-[11px] text-muted-foreground">Add a row per warrantied product — each keeps its own serial no., warranty period and validity dates.</p>
+          </div>
+
           <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">Product & Validity</h3>
-            {Field("Product / Cabin Description", "product", "e.g. Portable Office Cabin 20 × 10 ft (PUF)")}
-            <div className="grid grid-cols-2 gap-3">
-              {Field("Serial / Invoice No. (optional)", "serialNo", "INV / Sr. no.")}
-              {Field("Warranty Period", "warrantyPeriod", "e.g. 12 Months")}
+            <h3 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">Shipping / Delivery Details</h3>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Delivery / Site Address (optional)</Label>
+              <Textarea rows={2} value={shipping.deliveryAddress} placeholder="Delivery site address" onChange={(e) => setShip("deliveryAddress", e.target.value)} />
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {Field("Valid From", "validFrom", undefined, "date")}
-              {Field("Valid Until", "validUntil", undefined, "date")}
+              <LField label="Dispatch Date" type="date" value={shipping.dispatchDate} onChange={(v) => setShip("dispatchDate", v)} />
+              <LField label="Delivery Date" type="date" value={shipping.deliveryDate} onChange={(v) => setShip("deliveryDate", v)} />
             </div>
+            <div className="grid grid-cols-2 gap-3">
+              <LField label="Transporter / Courier" value={shipping.transporter} placeholder="Transport company" onChange={(v) => setShip("transporter", v)} />
+              <LField label="Vehicle No." value={shipping.vehicleNo} placeholder="e.g. TN 00 AB 0000" onChange={(v) => setShip("vehicleNo", v)} />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <LField label="LR / Docket No." value={shipping.lrNo} placeholder="LR / Docket" onChange={(v) => setShip("lrNo", v)} />
+              <LField label="No. of Units / Packages" value={shipping.units} placeholder="e.g. 2 units" onChange={(v) => setShip("units", v)} />
+            </div>
+            <LField label="Delivery Contact (optional)" value={shipping.contact} placeholder="Name & phone at site" onChange={(v) => setShip("contact", v)} />
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
@@ -285,23 +357,19 @@ export default function WarrantyCertificate() {
 
                 {/* intro */}
                 <p style={{ fontSize: 12.5, lineHeight: 1.6, color: "#374151", margin: "0 0 14px" }}>
-                  This is to certify that the product / equipment described below, manufactured and supplied by{" "}
+                  This is to certify that the product(s) / equipment described below, manufactured and supplied by{" "}
                   <strong>{COMPANY.name}</strong>, is covered under warranty in favour of{" "}
                   <strong>{cert.customerName || "the customer"}</strong>
                   {cert.customerCompany ? <> ({cert.customerCompany})</> : null}, subject to the coverage and terms stated herein.
                 </p>
 
-                {/* customer + product grid */}
+                {/* customer details */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, border: "1px solid #d1d5db", fontSize: 12 }}>
                   {[
                     ["Customer", cert.customerName || "—"],
-                    ["Product", cert.product || "—"],
                     ["Company", cert.customerCompany || "—"],
-                    ["Serial / Invoice No.", cert.serialNo || "—"],
                     ["Phone", cert.customerPhone || "—"],
-                    ["Warranty Period", cert.warrantyPeriod || "—"],
                     ["Address", cert.customerAddress || "—"],
-                    ["Valid", `${prettyDate(cert.validFrom)} — ${prettyDate(cert.validUntil)}`],
                   ].map(([label, val], idx) => (
                     <div key={idx} style={{ padding: "7px 10px", borderBottom: "1px solid #e5e7eb", borderRight: idx % 2 === 0 ? "1px solid #e5e7eb" : "none" }}>
                       <div style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: 0.4 }}>{label}</div>
@@ -309,6 +377,50 @@ export default function WarrantyCertificate() {
                     </div>
                   ))}
                 </div>
+
+                {/* products & validity */}
+                <div style={{ marginTop: 16 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: NAVY, marginBottom: 6 }}>Products &amp; Validity</div>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                    <thead>
+                      <tr style={{ background: NAVY, color: "#fff" }}>
+                        <th style={{ padding: "6px 8px", textAlign: "left", width: 26 }}>#</th>
+                        <th style={{ padding: "6px 8px", textAlign: "left" }}>Product / Description</th>
+                        <th style={{ padding: "6px 8px", textAlign: "left", width: 118 }}>Serial / Invoice</th>
+                        <th style={{ padding: "6px 8px", textAlign: "left", width: 92 }}>Warranty</th>
+                        <th style={{ padding: "6px 8px", textAlign: "left", width: 82 }}>Valid From</th>
+                        <th style={{ padding: "6px 8px", textAlign: "left", width: 82 }}>Valid Until</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(productsForDoc.length ? productsForDoc : [blankProduct()]).map((p, i) => (
+                        <tr key={i} style={{ background: i % 2 ? "#f9fafb" : "#fff" }}>
+                          <td style={{ padding: "6px 8px", border: "1px solid #e5e7eb", color: "#374151" }}>{i + 1}</td>
+                          <td style={{ padding: "6px 8px", border: "1px solid #e5e7eb", color: "#111827", fontWeight: 600 }}>{p.product || "—"}</td>
+                          <td style={{ padding: "6px 8px", border: "1px solid #e5e7eb", color: "#374151" }}>{p.serialNo || "—"}</td>
+                          <td style={{ padding: "6px 8px", border: "1px solid #e5e7eb", color: "#b45309", fontWeight: 700 }}>{p.warrantyPeriod || "—"}</td>
+                          <td style={{ padding: "6px 8px", border: "1px solid #e5e7eb", color: "#374151" }}>{prettyDate(p.validFrom)}</td>
+                          <td style={{ padding: "6px 8px", border: "1px solid #e5e7eb", color: "#374151" }}>{prettyDate(p.validUntil)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* shipping / delivery details (shown only when provided) */}
+                {shipHasAny && (
+                  <div style={{ marginTop: 16 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: NAVY, marginBottom: 6 }}>Shipping / Delivery Details</div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, border: "1px solid #d1d5db", fontSize: 12 }}>
+                      {shipEntries.map(([label, val], idx) => (
+                        <div key={idx} style={{ padding: "7px 10px", borderBottom: "1px solid #e5e7eb", borderRight: idx % 2 === 0 ? "1px solid #e5e7eb" : "none" }}>
+                          <div style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: 0.4 }}>{label}</div>
+                          <div style={{ color: "#111827", fontWeight: 600 }}>{val}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* coverage table */}
                 <div style={{ marginTop: 16 }}>
