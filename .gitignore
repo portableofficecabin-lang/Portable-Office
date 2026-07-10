@@ -26,3 +26,6 @@ dist-ssr
 
 # Originals of bulk-resized images (kept on disk for restore; not committed)
 image-backups/
+
+# Supabase CLI temporary files
+supabase/.temp/
