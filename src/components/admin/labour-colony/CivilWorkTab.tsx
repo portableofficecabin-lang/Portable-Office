@@ -87,6 +87,17 @@ export function CivilWorkTab({
               <Field label="PCC thk (mm)"><NumberInput value={num(config.foundation.pccThicknessMm, result.foundation.section.pccThicknessMm)} onChange={(e) => patchF({ pccThicknessMm: Number(e.target.value) || undefined })} /></Field>
               <Field label="Column c/c (m)"><NumberInput value={num(config.foundation.columnSpacingM, result.foundation.grid.spacingM)} onChange={(e) => patchF({ columnSpacingM: Number(e.target.value) || undefined })} /></Field>
             </div>
+            {/* Plinth-beam reinforcement (drives the beam schedule + section detail) */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold text-muted-foreground">Plinth-beam reinforcement</Label>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <Field label="Main bar (mm)"><NumberInput value={num(config.foundation.plinthBeamMainBarDiaMm, result.foundation.section.mainBarDiaMm)} onChange={(e) => patchF({ plinthBeamMainBarDiaMm: Number(e.target.value) || undefined })} /></Field>
+                <Field label="Top bars (no)"><NumberInput value={num(config.foundation.plinthBeamTopBars, result.foundation.section.topBars)} onChange={(e) => patchF({ plinthBeamTopBars: Number(e.target.value) || undefined })} /></Field>
+                <Field label="Bottom bars (no)"><NumberInput value={num(config.foundation.plinthBeamBottomBars, result.foundation.section.bottomBars)} onChange={(e) => patchF({ plinthBeamBottomBars: Number(e.target.value) || undefined })} /></Field>
+                <Field label="Stirrup (mm)"><NumberInput value={num(config.foundation.plinthBeamStirrupDiaMm, result.foundation.section.stirrupDiaMm)} onChange={(e) => patchF({ plinthBeamStirrupDiaMm: Number(e.target.value) || undefined })} /></Field>
+                <Field label="Stirrup c/c (mm)"><NumberInput value={num(config.foundation.plinthBeamStirrupSpacingMm, result.foundation.section.stirrupSpacingMm)} onChange={(e) => patchF({ plinthBeamStirrupSpacingMm: Number(e.target.value) || undefined })} /></Field>
+              </div>
+            </div>
           </div>
 
           {/* Site prep + raised plinth */}
@@ -136,6 +147,46 @@ export function CivilWorkTab({
         <FoundationPlan foundation={result.foundation} />
         <PlinthBeamSection foundation={result.foundation} />
       </div>
+
+      {/* ---------- BEAM SCHEDULE ---------- */}
+      {result.foundation.beams.length > 0 && (
+        <AdminCard>
+          <AdminCardContent>
+            <h3 className="font-display font-bold flex items-center gap-2 mb-3"><Ruler className="h-4 w-4 text-amber" /> Plinth-Beam Schedule</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b text-left text-muted-foreground">
+                    <th className="py-1.5 pr-3">Mark</th>
+                    <th className="py-1.5 pr-3">Type</th>
+                    <th className="py-1.5 pr-3">Size (mm)</th>
+                    <th className="py-1.5 pr-3">Grade</th>
+                    <th className="py-1.5 pr-3">Top bars</th>
+                    <th className="py-1.5 pr-3">Bottom bars</th>
+                    <th className="py-1.5 pr-3">Stirrups</th>
+                    <th className="py-1.5 pr-3">Length (m)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.foundation.beams.map((b) => (
+                    <tr key={b.mark} className="border-b last:border-0">
+                      <td className="py-1.5 pr-3 font-semibold text-foreground">{b.mark}</td>
+                      <td className="py-1.5 pr-3 text-muted-foreground">{b.role}</td>
+                      <td className="py-1.5 pr-3">{b.widthMm}×{b.depthMm}</td>
+                      <td className="py-1.5 pr-3">{b.grade}</td>
+                      <td className="py-1.5 pr-3">{b.topBars}</td>
+                      <td className="py-1.5 pr-3">{b.bottomBars}</td>
+                      <td className="py-1.5 pr-3">{b.stirrups}</td>
+                      <td className="py-1.5 pr-3">{b.lengthM}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">Fe500 TMT reinforcement (T = TMT bar). Total plinth-beam run {result.foundation.plinthBeamLengthM} m. Confirm bar sizes with the structural engineer for site loads / soil-bearing capacity.</p>
+          </AdminCardContent>
+        </AdminCard>
+      )}
 
       {/* ---------- COST SUMMARY ---------- */}
       <AdminCard>

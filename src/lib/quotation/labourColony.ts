@@ -55,6 +55,29 @@ export interface FacilityToggles {
   officeSecurity: boolean;
 }
 
+/** Per-room construction floor-plan overrides (drawing only — no effect on quantities/BOQ).
+ *  Each room's door + window sit on its veranda-facing wall; offsets are measured in FEET from the
+ *  room's left corner (as drawn) to the opening's near edge, and can be shifted independently per
+ *  room. Keyed by the global 1-based room number so they survive room-count changes. */
+export interface RoomOpeningOverride {
+  /** ft from the room's left corner to the DOOR's near edge. */
+  doorFromLeftFt?: number;
+  /** ft from the room's left corner to the WINDOW's near edge. */
+  windowFromLeftFt?: number;
+  /** Which jamb the door hinges on; the leaf always swings INTO the room. Default "left". */
+  doorHinge?: "left" | "right";
+}
+export interface RoomFloorPlanConfig {
+  /** Veranda / walkway depth in feet (both verandas). Default ≈ corridorWidth converted to ft. */
+  verandaWidthFt?: number;
+  /** Door leaf width, ft (drawing + schedule). Default 3. */
+  doorWidthFt?: number;
+  /** Window width, ft (drawing + schedule). Default 4. */
+  windowWidthFt?: number;
+  /** Per-room overrides keyed by global 1-based room number. */
+  rooms?: Record<number, RoomOpeningOverride>;
+}
+
 export interface LabourColonyConfig {
   projectName?: string;
   location?: string;
@@ -95,6 +118,9 @@ export interface LabourColonyConfig {
 
   /** Per-member MS section overrides. */
   sections?: Partial<MemberSections>;
+
+  /** Room-wise construction floor-plan (door/window positions & veranda). Drawing only. */
+  floorPlan?: RoomFloorPlanConfig;
 
   norms?: Partial<LabourColonyNorms>;
 }

@@ -91,6 +91,18 @@ export function FoundationPlan({ foundation }: { foundation: FoundationResult })
               }),
             )}
 
+            {/* plinth-beam marks (PB1 perimeter, PB2 internal) */}
+            {(() => {
+              const marks: React.ReactNode[] = [];
+              const xMid = (px(grid.xsM[0]) + px(grid.xsM[grid.xsM.length - 1])) / 2;
+              marks.push(<text key="pb1" x={xMid} y={px(grid.ysM[0]) - 5} textAnchor="middle" fontSize={9} fontWeight={700} fill={COL.beam}>PB1</text>);
+              if (grid.ysM.length > 2 && foundation.beams.length > 1) {
+                const midJ = Math.floor(grid.ysM.length / 2);
+                marks.push(<text key="pb2" x={xMid} y={px(grid.ysM[midJ]) - 5} textAnchor="middle" fontSize={9} fontWeight={700} fill={COL.beam}>PB2</text>);
+              }
+              return marks;
+            })()}
+
             {/* grid labels: columns C1.. on top, rows 1.. on left */}
             {grid.xsM.map((x, i) => (
               <text key={`gl${i}`} x={px(x)} y={-16} textAnchor="middle" fontSize={9} fill={COL.dim}>{String.fromCharCode(65 + i)}</text>
@@ -121,6 +133,11 @@ export function FoundationPlan({ foundation }: { foundation: FoundationResult })
         {hasPedestal && <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.pedestal, borderColor: COL.footingStroke }} /> Pedestal {section.pedestalSizeM} m</span>}
         <span className="flex items-center gap-1"><span className="inline-block w-4 h-1" style={{ background: COL.beam }} /> Plinth beam {section.plinthBeamWidthM}×{section.plinthBeamDepthM} m</span>
         <span className="flex items-center gap-1"><span className="inline-block w-2 h-2" style={{ background: COL.outline }} /> Column</span>
+        {foundation.beams[0] && (
+          <span className="basis-full text-[11px] text-slate-500">
+            Plinth beam {foundation.beams[0].widthMm}×{foundation.beams[0].depthMm} {section.grade}: {foundation.beams[0].topBars} top + {foundation.beams[0].bottomBars} bottom, stirrups {foundation.beams[0].stirrups}
+          </span>
+        )}
       </div>
     </div>
   );

@@ -162,6 +162,13 @@ export interface FoundationConfig {
   concreteCum?: number;
   /** Column grid spacing target (m); tunes the auto grid. */
   columnSpacingM?: number;
+
+  /** Plinth-beam reinforcement (drawing + beam schedule; all overridable). */
+  plinthBeamMainBarDiaMm?: number;      // main bar dia, e.g. 16
+  plinthBeamTopBars?: number;           // top main bars, e.g. 3
+  plinthBeamBottomBars?: number;        // bottom main bars, e.g. 3
+  plinthBeamStirrupDiaMm?: number;      // stirrup dia, e.g. 8
+  plinthBeamStirrupSpacingMm?: number;  // stirrup c/c spacing (mm), e.g. 150
 }
 
 export interface FlooringPlinthConfig {
@@ -267,6 +274,19 @@ export interface CivilHeadResult {
   cost: number;
 }
 
+/** One row of the plinth-beam schedule (mark + section + reinforcement + run). */
+export interface BeamScheduleRow {
+  mark: string;         // "PB1"
+  role: string;         // "Perimeter tie beam"
+  widthMm: number;
+  depthMm: number;
+  grade: RccGrade;
+  topBars: string;      // "3-T16"
+  bottomBars: string;   // "3-T16"
+  stirrups: string;     // "T8 @ 150 c/c"
+  lengthM: number;
+}
+
 export interface FoundationResult extends CivilHeadResult {
   footingCount: number;
   concreteCum: number;
@@ -276,7 +296,9 @@ export interface FoundationResult extends CivilHeadResult {
   backfillCum: number;
   plinthBeamLengthM: number;
   grid: FoundationGrid;
-  /** Section-detail dimensions (m) for the plinth-beam section drawing. */
+  /** Plinth-beam schedule (empty for foundation types without tie beams). */
+  beams: BeamScheduleRow[];
+  /** Section-detail dimensions (m) + reinforcement for the plinth-beam section drawing. */
   section: {
     footingLengthM: number;
     footingDepthM: number;
@@ -288,6 +310,11 @@ export interface FoundationResult extends CivilHeadResult {
     raisedPlinthHeightM: number;
     grade: RccGrade;
     type: FoundationType;
+    mainBarDiaMm: number;
+    topBars: number;
+    bottomBars: number;
+    stirrupDiaMm: number;
+    stirrupSpacingMm: number;
   };
 }
 
@@ -475,6 +502,13 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   const raisedPlinthHt = f.raisedPlinthHeightM ?? 0.45;
   const steelPerCum = f.steelKgPerCum ?? 85;
 
+  // Plinth-beam reinforcement (drawing + schedule).
+  const mainDia = f.plinthBeamMainBarDiaMm ?? 16;
+  const topBars = Math.max(2, f.plinthBeamTopBars ?? 3);
+  const botBars = Math.max(2, f.plinthBeamBottomBars ?? 3);
+  const stirDia = f.plinthBeamStirrupDiaMm ?? 8;
+  const stirSp = f.plinthBeamStirrupSpacingMm ?? 150;
+
   const fLines: CivilLine[] = [];
   const gradeRate = rates.rccByGrade[f.grade];
 
@@ -573,6 +607,26 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     fLines.push(line("plinth_fill", "Raised plinth filling", `${round(raisedPlinthHt * 1000)} mm, murrum/soil`, "cum", plinthFillCum, rates.earthFilling));
   }
 
+  // Plinth-beam schedule (only for foundation types that actually carry tie beams).
+  const beamTypes: FoundationType[] = ["rcc_isolated_footing", "rcc_pedestal", "rcc_strip_footing", "rcc_plinth_beam", "concrete_block"];
+  const hasPlinthBeam = beamTypes.includes(f.type);
+  const perimeterLen = round(2 * (L + W));
+  const internalLen = round(Math.max(0, beamLen - perimeterLen));
+  const wMm = Math.round(beamW * 1000), dMm = Math.round(beamD * 1000);
+  const stirStr = `T${stirDia} @ ${stirSp} c/c`;
+  const beams: BeamScheduleRow[] = [];
+  if (hasPlinthBeam) {
+    beams.push({
+      mark: "PB1", role: "Perimeter tie beam", widthMm: wMm, depthMm: dMm, grade: f.grade,
+      topBars: `${topBars}-T${mainDia}`, bottomBars: `${botBars}-T${mainDia}`, stirrups: stirStr, lengthM: perimeterLen,
+    });
+    if (internalLen > 0)
+      beams.push({
+        mark: "PB2", role: "Internal tie beam", widthMm: wMm, depthMm: dMm, grade: f.grade,
+        topBars: `${topBars}-T${mainDia}`, bottomBars: `${botBars}-T${mainDia}`, stirrups: stirStr, lengthM: internalLen,
+      });
+  }
+
   const foundationConcrete = f.concreteCum ?? concreteCum;
   const foundation: FoundationResult = {
     head: "Foundation",
@@ -586,10 +640,12 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     backfillCum,
     plinthBeamLengthM: beamLen,
     grid,
+    beams,
     section: {
       footingLengthM: footL, footingDepthM: footD, pedestalSizeM: pedSize, pedestalHeightM: pedHt,
       plinthBeamWidthM: beamW, plinthBeamDepthM: beamD, pccThicknessMm: pccThk, raisedPlinthHeightM: raisedPlinthHt,
       grade: f.grade, type: f.type,
+      mainBarDiaMm: mainDia, topBars, bottomBars: botBars, stirrupDiaMm: stirDia, stirrupSpacingMm: stirSp,
     },
   };
 

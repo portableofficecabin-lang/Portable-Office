@@ -21,6 +21,7 @@ import { NumberInput } from "@/components/admin/NumberInput";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { AdminCard, AdminCardContent } from "@/components/admin/AdminCard";
 import { LabourColonyDrawings } from "@/components/admin/LabourColonyDrawings";
+import { RoomFloorPlan } from "@/components/admin/labour-colony/RoomFloorPlan";
 import { CivilWorkTab } from "@/components/admin/labour-colony/CivilWorkTab";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -507,6 +508,14 @@ export default function LabourColonyQuotation() {
 
                   <Section title="Drawings — Top View & Elevations" icon={LayoutGrid}>
                     <LabourColonyDrawings result={result} />
+                  </Section>
+
+                  <Section title="Room-wise Floor Plan (doors, windows & verandas)" icon={DoorOpen}>
+                    <RoomFloorPlan
+                      result={result}
+                      floorPlan={config.floorPlan}
+                      onChange={(fp) => setConfig((c) => ({ ...c, floorPlan: fp }))}
+                    />
                   </Section>
 
                   <Section title="1. Area" icon={LayoutGrid}>

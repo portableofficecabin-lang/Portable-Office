@@ -76,11 +76,13 @@ export function PlinthBeamSection({ foundation }: { foundation: FoundationResult
   );
   function py(m: number) { return PADY + px(m); }
 
-  // rebar positions in the plinth beam
+  // rebar positions + reinforcement (from foundation config, drawing-driven)
   const rebarCover = 0.04;
-  const nBars = 3;
+  const dia = s.mainBarDiaMm, topBars = s.topBars, botBars = s.bottomBars;
+  const stirDia = s.stirrupDiaMm, stirSp = s.stirrupSpacingMm;
   const barY_top = yBeamTop + rebarCover;
   const barY_bot = yBeamBot - rebarCover;
+  const nStir = Math.max(4, Math.min(16, Math.round(totalWm / (stirSp / 1000))));
 
   return (
     <div className="rounded-2xl border bg-white p-4">
@@ -117,9 +119,9 @@ export function PlinthBeamSection({ foundation }: { foundation: FoundationResult
 
             {/* plinth beam (RCC) spanning full width */}
             <rect x={0} y={py(yBeamTop)} width={px(totalWm)} height={px(beamD)} fill={COL.rcc} stroke={COL.rccStroke} strokeWidth={1.4} />
-            {/* stirrups */}
-            {Array.from({ length: 6 }, (_, i) => {
-              const sx = (px(totalWm) / 6) * (i + 0.5);
+            {/* stirrups at configured spacing */}
+            {Array.from({ length: nStir }, (_, i) => {
+              const sx = (px(totalWm) / nStir) * (i + 0.5);
               return <rect key={`st${i}`} x={sx - beamPx / 2 + 3} y={py(barY_top) - 2} width={beamPx - 6} height={px(beamD) - px(rebarCover) * 2 + 4} fill="none" stroke={COL.rebar} strokeWidth={0.7} opacity={0.55} />;
             })}
             {/* top & bottom bars (drawn as a row of dots along the beam) */}
@@ -132,7 +134,7 @@ export function PlinthBeamSection({ foundation }: { foundation: FoundationResult
                 </g>
               );
             })}
-            <text x={px(totalWm) - 2} y={py(yBeamTop) - 4} textAnchor="end" fontSize={8} fill={COL.rebar}>plinth beam {Math.round(beamW * 1000)}×{Math.round(beamD * 1000)}, {nBars}-T bars T&B</text>
+            <text x={px(totalWm) - 2} y={py(yBeamTop) - 4} textAnchor="end" fontSize={7.5} fill={COL.rebar}>PB {Math.round(beamW * 1000)}×{Math.round(beamD * 1000)} {s.grade} · {topBars}-T{dia} top · {botBars}-T{dia} btm · T{stirDia}@{stirSp}</text>
 
             {/* pedestal */}
             {hasPedestal && pedH > 0 && (
