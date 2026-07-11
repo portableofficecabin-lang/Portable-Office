@@ -45,6 +45,49 @@ const ISO_CERT = {
 const NAVY = "#0f1b2d";
 const AMBER = "#f59e0b";
 
+// html2canvas 1.4.1's colour parser can't read modern CSS colour functions
+// (oklch/oklab/lab/lch/color()). If any computed style in the cloned subtree
+// uses one, the whole export throws "Attempting to parse an unsupported color
+// function 'oklch'". These helpers convert such values to plain rgb using the
+// browser's native canvas colour engine, applied in html2canvas's onclone hook.
+const UNSUPPORTED_COLOR = /(oklch|oklab|\blab\(|\blch\(|color\()/i;
+const COLOR_PROPS = [
+  "color", "background-color", "border-top-color", "border-right-color",
+  "border-bottom-color", "border-left-color", "outline-color",
+  "text-decoration-color", "column-rule-color", "fill", "stroke",
+];
+let _colorCanvas: HTMLCanvasElement | null = null;
+function toRenderableColor(value: string): string {
+  if (typeof document === "undefined") return value;
+  if (!_colorCanvas) _colorCanvas = document.createElement("canvas");
+  const ctx = _colorCanvas.getContext("2d");
+  if (!ctx) return value;
+  try {
+    ctx.fillStyle = "#000000";
+    ctx.fillStyle = value; // native canvas understands oklch/lab/etc.
+    return ctx.fillStyle as string; // normalised to #rrggbb / rgba()
+  } catch {
+    return "#000000";
+  }
+}
+function sanitizeUnsupportedColors(doc: Document) {
+  const win = doc.defaultView || window;
+  const root = doc.getElementById("warranty-print") || doc.body;
+  if (!root) return;
+  const targets: HTMLElement[] = [root as HTMLElement, ...Array.from(root.querySelectorAll<HTMLElement>("*"))];
+  for (const el of targets) {
+    const cs = win.getComputedStyle(el);
+    for (const prop of COLOR_PROPS) {
+      const val = cs.getPropertyValue(prop);
+      if (val && UNSUPPORTED_COLOR.test(val)) el.style.setProperty(prop, toRenderableColor(val));
+    }
+    const bgImg = cs.getPropertyValue("background-image");
+    if (bgImg && UNSUPPORTED_COLOR.test(bgImg)) el.style.setProperty("background-image", "none");
+    const boxShadow = cs.getPropertyValue("box-shadow");
+    if (boxShadow && UNSUPPORTED_COLOR.test(boxShadow)) el.style.setProperty("box-shadow", "none");
+  }
+}
+
 type WItem = { component: string; coverage: string; remarks: string };
 // One warrantied product with its own validity — a certificate can list several.
 type WProduct = { product: string; serialNo: string; warrantyPeriod: string; validFrom: string; validUntil: string };
@@ -310,6 +353,7 @@ export default function WarrantyCertificate() {
         allowTaint: false,
         imageTimeout: 20000,
         logging: false,
+        onclone: (doc) => sanitizeUnsupportedColors(doc),
       });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
