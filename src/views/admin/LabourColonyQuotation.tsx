@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
-  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin,
+  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -116,6 +116,7 @@ export default function LabourColonyQuotation() {
   const [customers, setCustomers] = useState<ColonyCustomer[]>([]);
   const [customerOpen, setCustomerOpen] = useState(false);
   const [customerSearch, setCustomerSearch] = useState("");
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
     listProjects().then(({ projects, remoteAvailable }) => {
@@ -295,6 +296,7 @@ export default function LabourColonyQuotation() {
         actions={
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={newProject} className="gap-2"><FilePlus2 className="h-4 w-4" /> New</Button>
+            <Button variant="outline" onClick={() => setPreviewOpen(true)} disabled={!result} className="gap-2"><Eye className="h-4 w-4" /> Preview</Button>
             <Button variant="outline" onClick={() => window.print()} className="gap-2"><Printer className="h-4 w-4" /> Print</Button>
             <Button variant="outline" onClick={save} className="gap-2"><Save className="h-4 w-4" /> Save</Button>
             <Button onClick={exportPdf} disabled={!result} className="gap-2 bg-gradient-to-r from-amber to-amber-light text-white border-0"><Download className="h-4 w-4" /> Export PDF</Button>
@@ -732,6 +734,38 @@ export default function LabourColonyQuotation() {
       </Tabs>
 
       {/* customer picker */}
+      {/* ---------------- 2D LAYOUT PREVIEW ---------------- */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-6xl max-h-[92vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2"><Eye className="h-4 w-4 text-amber" /> Labour Colony — 2D Layout Preview</DialogTitle>
+          </DialogHeader>
+          {result ? (
+            <div className="space-y-4">
+              <div className="rounded-xl border bg-muted/30 p-3 text-sm">
+                <div className="font-display font-bold text-base">{config.projectName || meta.projectName || "Untitled labour colony"}</div>
+                <div className="text-muted-foreground">
+                  {meta.customerName ? `${meta.customerName} · ` : ""}{config.location || meta.location || "—"}
+                </div>
+                <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs">
+                  <span><b>Capacity:</b> {n(result.occupancy.totalCapacity)} persons</span>
+                  <span><b>Rooms:</b> {n(result.occupancy.rooms)} ({floorsLabel(result.config.floors)})</span>
+                  <span><b>Built-up:</b> {n(result.area.builtUpTotalSqm)} sqm</span>
+                  <span><b>Corridor:</b> {result.config.corridorPosition ?? "center"} · {result.config.corridorWidth} m</span>
+                </div>
+              </div>
+              <LabourColonyDrawings result={result} />
+            </div>
+          ) : (
+            <div className="py-12 text-center text-muted-foreground">Enter capacity and room dimensions to preview the layout.</div>
+          )}
+          <div className="flex flex-wrap justify-end gap-2 pt-2 border-t">
+            <Button variant="outline" onClick={() => window.print()} className="gap-2"><Printer className="h-4 w-4" /> Print</Button>
+            <Button onClick={exportPdf} disabled={!result} className="gap-2 bg-gradient-to-r from-amber to-amber-light text-white border-0"><Download className="h-4 w-4" /> Download PDF</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={customerOpen} onOpenChange={setCustomerOpen}>
         <DialogContent className="max-w-lg">
           <DialogHeader><DialogTitle>Select an existing customer</DialogTitle></DialogHeader>

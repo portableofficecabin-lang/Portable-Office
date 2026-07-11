@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { applySafeColors } from "@/lib/pdf/sanitizeColors";
 import { ShieldCheck, Download, Printer, Plus, Trash2, RotateCcw, Award, Save, FolderOpen, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -345,6 +346,8 @@ export default function WarrantyCertificate() {
       return;
     }
     setBusy(true);
+    // Primary defence: rewrite live-DOM oklch/lab colours to rgb before capture, restore after.
+    const restoreColors = applySafeColors(printRef.current);
     try {
       const canvas = await html2canvas(printRef.current, {
         scale: 2,
@@ -379,6 +382,7 @@ export default function WarrantyCertificate() {
         variant: "destructive",
       });
     } finally {
+      restoreColors();
       setBusy(false);
     }
   };

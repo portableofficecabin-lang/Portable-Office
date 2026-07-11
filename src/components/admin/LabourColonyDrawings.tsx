@@ -129,11 +129,61 @@ function Legend() {
   );
 }
 
+/** Architectural door: an opening in the corridor-facing wall + a leaf and a
+ * quarter-circle swing arc that always opens INTO the corridor. */
+function Door({ r, side }: { r: RoomRect; side: Side }) {
+  const rx = px(r.x), ry = px(r.y), rw = px(r.w), rh = px(r.h);
+  const along = side === "top" || side === "bottom" ? rw : rh;
+  const d = Math.max(6, Math.min(px(0.9), along * 0.5)); // leaf length (px)
+  const cxp = rx + rw / 2, cyp = ry + rh / 2;
+  // hinge (h), closed end on the wall (c), open leaf end into corridor (o), arc sweep flag
+  let hx = 0, hy = 0, cx = 0, cy = 0, ox = 0, oy = 0, sweep = 1;
+  if (side === "bottom") { hx = cxp - d / 2; hy = ry + rh; cx = cxp + d / 2; cy = ry + rh; ox = cxp - d / 2; oy = ry + rh + d; sweep = 1; }
+  else if (side === "top") { hx = cxp - d / 2; hy = ry; cx = cxp + d / 2; cy = ry; ox = cxp - d / 2; oy = ry - d; sweep = 0; }
+  else if (side === "right") { hx = rx + rw; hy = cyp - d / 2; cx = rx + rw; cy = cyp + d / 2; ox = rx + rw + d; oy = cyp - d / 2; sweep = 0; }
+  else { hx = rx; hy = cyp - d / 2; cx = rx; cy = cyp + d / 2; ox = rx - d; oy = cyp - d / 2; sweep = 1; }
+  return (
+    <g>
+      {/* opening — white gap that "cuts" the wall between hinge and jamb */}
+      <line x1={hx} y1={hy} x2={cx} y2={cy} stroke="#ffffff" strokeWidth={3.5} />
+      {/* swing arc into the corridor */}
+      <path d={`M ${cx} ${cy} A ${d} ${d} 0 0 ${sweep} ${ox} ${oy}`} fill="none" stroke={COL.door} strokeWidth={1} opacity={0.75} />
+      {/* door leaf (open position) */}
+      <line x1={hx} y1={hy} x2={ox} y2={oy} stroke={COL.door} strokeWidth={2} />
+    </g>
+  );
+}
+
+/** Window on the outer wall: a double parallel line straddling the wall. */
+function Win({ r, side }: { r: RoomRect; side: Side }) {
+  const rx = px(r.x), ry = px(r.y), rw = px(r.w), rh = px(r.h);
+  const along = side === "top" || side === "bottom" ? rw : rh;
+  const len = Math.max(8, Math.min(px(1.4), along * 0.55));
+  const cxp = rx + rw / 2, cyp = ry + rh / 2, off = 1.6;
+  if (side === "top" || side === "bottom") {
+    const yy = side === "top" ? ry : ry + rh;
+    return (
+      <g>
+        <line x1={cxp - len / 2} y1={yy - off} x2={cxp + len / 2} y2={yy - off} stroke={COL.window} strokeWidth={1.4} />
+        <line x1={cxp - len / 2} y1={yy + off} x2={cxp + len / 2} y2={yy + off} stroke={COL.window} strokeWidth={1.4} />
+      </g>
+    );
+  }
+  const xx = side === "left" ? rx : rx + rw;
+  return (
+    <g>
+      <line x1={xx - off} y1={cyp - len / 2} x2={xx - off} y2={cyp + len / 2} stroke={COL.window} strokeWidth={1.4} />
+      <line x1={xx + off} y1={cyp - len / 2} x2={xx + off} y2={cyp + len / 2} stroke={COL.window} strokeWidth={1.4} />
+    </g>
+  );
+}
+
 function PlanSvg({ result, L, W, C, rpf, pos }: {
   result: LabourColonyResult; L: number; W: number; C: number; rpf: number; pos: CorridorPosition;
 }) {
   const { rooms, corridor, footL, footW } = buildPlan(pos, L, W, C, rpf);
   const fac = result.config.facilities;
+  const corridorHorizontal = corridor.w >= corridor.h;
 
   const utils: { label: string; sub: string }[] = [];
   if (fac.toilet) utils.push({ label: "Toilet & Bath", sub: `${result.area.toiletBlockSqm} sqm` });
@@ -144,33 +194,39 @@ function PlanSvg({ result, L, W, C, rpf, pos }: {
   const totalW = px(footL + wingW) + PAD * 2;
   const totalH = px(footW) + PAD * 2;
 
+  const corMidX = px(corridor.x + corridor.w / 2);
+  const corMidY = px(corridor.y + corridor.h / 2);
+
   return (
     <svg viewBox={`0 0 ${totalW} ${totalH}`} className="w-full h-auto min-w-[620px]">
       <g transform={`translate(${PAD},${PAD})`}>
-        {/* corridor */}
+        {/* corridor band */}
         <rect x={px(corridor.x)} y={px(corridor.y)} width={px(corridor.w)} height={px(corridor.h)} fill={COL.corridor} stroke={COL.wall} strokeWidth={1} />
-        <text x={px(corridor.x + corridor.w / 2)} y={px(corridor.y + corridor.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}>
+        {/* dashed centre-line to read as a continuous walkway */}
+        {corridorHorizontal ? (
+          <line x1={px(corridor.x)} y1={corMidY} x2={px(corridor.x + corridor.w)} y2={corMidY} stroke={COL.dim} strokeWidth={1} strokeDasharray="7 5" opacity={0.55} />
+        ) : (
+          <line x1={corMidX} y1={px(corridor.y)} x2={corMidX} y2={px(corridor.y + corridor.h)} stroke={COL.dim} strokeWidth={1} strokeDasharray="7 5" opacity={0.55} />
+        )}
+        <text x={corMidX} y={corMidY} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}
+          transform={corridorHorizontal ? undefined : `rotate(-90 ${corMidX} ${corMidY})`}>
           CORRIDOR / WALKWAY ({C} m)
         </text>
 
-        {/* rooms */}
-        {rooms.map((r) => {
-          const doorSpan = r.doorSide === "top" || r.doorSide === "bottom" ? r.w : r.h;
-          const winSpan = r.winSide === "top" || r.winSide === "bottom" ? r.w : r.h;
-          return (
-            <g key={r.n}>
-              <rect x={px(r.x)} y={px(r.y)} width={px(r.w)} height={px(r.h)} fill={COL.room} stroke={COL.wall} strokeWidth={1.5} />
-              <text x={px(r.x + r.w / 2)} y={px(r.y + r.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.wall}>R{r.n}</text>
-              <EdgeMark r={r} side={r.winSide} lenM={Math.min(1.4, winSpan * 0.6)} color={COL.window} sw={3} />
-              <EdgeMark r={r} side={r.doorSide} lenM={Math.min(0.9, doorSpan * 0.5)} color={COL.door} sw={3} />
-            </g>
-          );
-        })}
+        {/* rooms with corridor-facing doors + outer-wall windows */}
+        {rooms.map((r) => (
+          <g key={r.n}>
+            <rect x={px(r.x)} y={px(r.y)} width={px(r.w)} height={px(r.h)} fill={COL.room} stroke={COL.wall} strokeWidth={1.5} />
+            <text x={px(r.x + r.w / 2)} y={px(r.y + r.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.wall}>R{r.n}</text>
+            <Win r={r} side={r.winSide} />
+            <Door r={r} side={r.doorSide} />
+          </g>
+        ))}
 
-        {/* outline */}
+        {/* building outline */}
         <rect x={0} y={0} width={px(footL)} height={px(footW)} fill="none" stroke={COL.wall} strokeWidth={2.5} />
 
-        {/* utility wing (always appended on the right) */}
+        {/* utility wing (appended on the right) */}
         {utils.length > 0 && (
           <g transform={`translate(${px(footL)},0)`}>
             {utils.map((u, i) => {
@@ -187,9 +243,22 @@ function PlanSvg({ result, L, W, C, rpf, pos }: {
           </g>
         )}
 
-        {/* dimensions */}
-        <text x={px(footL) / 2} y={px(footW) + 24} textAnchor="middle" fontSize={11} fill={COL.dim}>← {footL.toFixed(1)} m →</text>
-        <text x={-24} y={px(footW) / 2} textAnchor="middle" fontSize={11} fill={COL.dim} transform={`rotate(-90 -24 ${px(footW) / 2})`}>← {footW.toFixed(1)} m →</text>
+        {/* corridor width dimension */}
+        {corridorHorizontal ? (
+          <g>
+            <line x1={px(footL) + 8} y1={px(corridor.y)} x2={px(footL) + 8} y2={px(corridor.y + corridor.h)} stroke={COL.dim} strokeWidth={1} />
+            <text x={px(footL) + 12} y={corMidY + 3} fontSize={9} fill={COL.dim}>{C} m</text>
+          </g>
+        ) : (
+          <g>
+            <line x1={px(corridor.x)} y1={px(footW) + 8} x2={px(corridor.x + corridor.w)} y2={px(footW) + 8} stroke={COL.dim} strokeWidth={1} />
+            <text x={corMidX} y={px(footW) + 20} textAnchor="middle" fontSize={9} fill={COL.dim}>{C} m</text>
+          </g>
+        )}
+
+        {/* overall dimensions */}
+        <text x={px(footL) / 2} y={px(footW) + 30} textAnchor="middle" fontSize={11} fill={COL.dim}>← {footL.toFixed(1)} m →</text>
+        <text x={-26} y={px(footW) / 2} textAnchor="middle" fontSize={11} fill={COL.dim} transform={`rotate(-90 -26 ${px(footW) / 2})`}>← {footW.toFixed(1)} m →</text>
         <text x={px(L) / 2} y={-8} textAnchor="middle" fontSize={9} fill={COL.dim}>room {L}×{W} m</text>
       </g>
     </svg>

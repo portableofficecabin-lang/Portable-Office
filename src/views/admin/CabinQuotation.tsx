@@ -3,9 +3,9 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Calculator, Save, Printer, FileText, Plus, Trash2 } from "lucide-react";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { addLegalFooter } from "@/lib/pdfFooter";
+import { captureElementToCanvas } from "@/lib/pdf/sanitizeColors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -264,14 +264,19 @@ export default function CabinQuotation() {
 
   const exportPDF = async () => {
     if (!printRef.current) return;
-    const canvas = await html2canvas(printRef.current, { scale: 2, backgroundColor: "#fff" });
-    const img = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-    const pdfW = 210;
-    const pdfH = (canvas.height * pdfW) / canvas.width;
-    pdf.addImage(img, "PNG", 0, 0, pdfW, pdfH);
-    addLegalFooter(pdf);
-    pdf.save(`${quotationNumber || "Quotation"}.pdf`);
+    try {
+      const canvas = await captureElementToCanvas(printRef.current, { scale: 2, backgroundColor: "#fff" });
+      const img = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      const pdfW = 210;
+      const pdfH = (canvas.height * pdfW) / canvas.width;
+      pdf.addImage(img, "PNG", 0, 0, pdfW, pdfH);
+      addLegalFooter(pdf);
+      pdf.save(`${quotationNumber || "Quotation"}.pdf`);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "";
+      toast({ title: "Could not generate PDF", description: msg ? msg.slice(0, 140) : "Please try again.", variant: "destructive" });
+    }
   };
 
   return (
