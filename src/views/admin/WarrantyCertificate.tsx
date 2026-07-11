@@ -20,6 +20,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { imageToPngDataUrl } from "@/lib/pdf/imageToPng";
 import { addLegalFooter } from "@/lib/pdfFooter";
 import logo from "@/assets/logo.webp";
 
@@ -142,6 +143,19 @@ export default function WarrantyCertificate() {
   const [saved, setSaved] = useState<SavedRow[]>([]);
   const [listErr, setListErr] = useState<string | null>(null);
   const printRef = useRef<HTMLDivElement>(null);
+
+  // Pre-render the .webp logo to an inline PNG data URL. html2canvas 1.4.1 is
+  // unreliable with webp / crossOrigin <img> (it can taint the canvas so
+  // toDataURL throws, breaking the whole PDF). An embedded data URL sidesteps
+  // that entirely and keeps the on-screen preview identical.
+  const [logoDataUrl, setLogoDataUrl] = useState<string>(resolveImageUrl(logo));
+  useEffect(() => {
+    let alive = true;
+    imageToPngDataUrl(logo, { format: "png" })
+      .then((url) => { if (alive && url) setLogoDataUrl(url); })
+      .catch(() => { /* keep the resolveImageUrl fallback */ });
+    return () => { alive = false; };
+  }, []);
 
   // Populate date-derived defaults on the client only (avoids any SSR/client mismatch).
   useEffect(() => {
@@ -281,7 +295,14 @@ export default function WarrantyCertificate() {
     }
     setBusy(true);
     try {
-      const canvas = await html2canvas(printRef.current, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
+      const canvas = await html2canvas(printRef.current, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        allowTaint: false,
+        imageTimeout: 20000,
+        logging: false,
+      });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
       const pageW = 210, pageH = 297;
@@ -298,8 +319,13 @@ export default function WarrantyCertificate() {
       const safe = (cert.customerName || "Customer").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
       pdf.save(`Warranty-Certificate-${safe}.pdf`);
       toast({ title: "Certificate ready", description: "The warranty certificate PDF has been downloaded." });
-    } catch {
-      toast({ title: "Could not generate PDF", description: "Please try again.", variant: "destructive" });
+    } catch (err: any) {
+      console.error("Warranty certificate PDF generation failed:", err);
+      toast({
+        title: "Could not generate PDF",
+        description: err?.message ? String(err.message).slice(0, 140) : "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setBusy(false);
     }
@@ -495,7 +521,7 @@ export default function WarrantyCertificate() {
               <div style={{ border: `2px solid ${AMBER}`, padding: "34px 40px" }}>
                 {/* header */}
                 <div style={{ display: "flex", alignItems: "center", gap: 16, borderBottom: `2px solid ${NAVY}`, paddingBottom: 16 }}>
-                  <img src={resolveImageUrl(logo)} alt="" crossOrigin="anonymous" style={{ height: 62, width: "auto", objectFit: "contain" }} />
+                  <img src={logoDataUrl} alt="" style={{ height: 62, width: "auto", objectFit: "contain" }} />
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 22, fontWeight: 800, color: NAVY, letterSpacing: 0.3 }}>{COMPANY.name}</div>
                     <div style={{ fontSize: 11, color: "#4b5563", marginTop: 2 }}>{COMPANY.address}</div>
