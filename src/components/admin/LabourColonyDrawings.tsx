@@ -12,7 +12,7 @@ import type { LabourColonyResult } from "@/lib/quotation/labourColony";
  * Schematic reference for quotation / client approval, not stamped CAD.
  */
 
-type CorridorPosition = "center" | "top" | "bottom" | "left" | "right";
+type CorridorPosition = "center" | "top" | "bottom" | "left" | "right" | "both";
 
 const S = 26; // px per metre
 const PAD = 48;
@@ -25,9 +25,12 @@ const px = (m: number) => m * S;
 interface RoomRect { x: number; y: number; w: number; h: number; n: number; doorSide: Side; winSide: Side; }
 type Side = "top" | "bottom" | "left" | "right";
 
+interface CorridorRect { x: number; y: number; w: number; h: number }
+
 function buildPlan(pos: CorridorPosition, L: number, W: number, C: number, rpf: number) {
   const rooms: RoomRect[] = [];
-  let corridor: { x: number; y: number; w: number; h: number };
+  let corridor: CorridorRect;
+  let corridor2: CorridorRect | undefined; // second veranda (peripheral / "both")
   let footL: number, footW: number;
   const add = (x: number, y: number, w: number, h: number, n: number, doorSide: Side, winSide: Side) =>
     rooms.push({ x, y, w, h, n, doorSide, winSide });
@@ -39,6 +42,15 @@ function buildPlan(pos: CorridorPosition, L: number, W: number, C: number, rpf: 
     for (let i = 0; i < topRow; i++) add(i * L, 0, L, W, i + 1, "bottom", "top");
     corridor = { x: 0, y: W, w: footL, h: C };
     for (let i = 0; i < bottomRow; i++) add(i * L, W + C, L, W, topRow + i + 1, "top", "bottom");
+  } else if (pos === "both") {
+    // peripheral verandas on BOTH the upper and lower sides (reference layout)
+    const nCols = Math.ceil(rpf / 2);
+    const topRow = nCols, bottomRow = rpf - nCols;
+    footL = nCols * L; footW = 2 * C + 2 * W;
+    corridor = { x: 0, y: 0, w: footL, h: C };            // top veranda
+    for (let i = 0; i < topRow; i++) add(i * L, C, L, W, i + 1, "top", "bottom");
+    for (let i = 0; i < bottomRow; i++) add(i * L, C + W, L, W, topRow + i + 1, "bottom", "top");
+    corridor2 = { x: 0, y: C + 2 * W, w: footL, h: C };   // bottom veranda
   } else if (pos === "top") {
     footL = rpf * L; footW = W + C;
     corridor = { x: 0, y: 0, w: footL, h: C };
@@ -56,7 +68,7 @@ function buildPlan(pos: CorridorPosition, L: number, W: number, C: number, rpf: 
     for (let i = 0; i < rpf; i++) add(0, i * L, W, L, i + 1, "right", "left");
     corridor = { x: W, y: 0, w: C, h: footW };
   }
-  return { rooms, corridor, footL, footW };
+  return { rooms, corridor, corridor2, footL, footW };
 }
 
 function EdgeMark({ r, side, lenM, color, sw }: { r: RoomRect; side: Side; lenM: number; color: string; sw: number }) {
@@ -77,7 +89,7 @@ export function LabourColonyDrawings({ result }: { result: LabourColonyResult })
   const rpf = Math.max(1, Math.ceil(rooms / Math.max(floors, 1)));
   const footL = result.area.footprintLengthM;
   const footW = result.area.footprintWidthM;
-  const posLabel = { center: "Central (double-loaded)", top: "Top side", bottom: "Bottom side", left: "Left side", right: "Right side" }[pos];
+  const posLabel = { center: "Central (double-loaded)", both: "Both sides (upper + lower)", top: "Top side", bottom: "Bottom side", left: "Left side", right: "Right side" }[pos];
 
   return (
     <div className="space-y-6">
@@ -181,7 +193,7 @@ function Win({ r, side }: { r: RoomRect; side: Side }) {
 function PlanSvg({ result, L, W, C, rpf, pos }: {
   result: LabourColonyResult; L: number; W: number; C: number; rpf: number; pos: CorridorPosition;
 }) {
-  const { rooms, corridor, footL, footW } = buildPlan(pos, L, W, C, rpf);
+  const { rooms, corridor, corridor2, footL, footW } = buildPlan(pos, L, W, C, rpf);
   const fac = result.config.facilities;
   const corridorHorizontal = corridor.w >= corridor.h;
 
@@ -210,8 +222,19 @@ function PlanSvg({ result, L, W, C, rpf, pos }: {
         )}
         <text x={corMidX} y={corMidY} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}
           transform={corridorHorizontal ? undefined : `rotate(-90 ${corMidX} ${corMidY})`}>
-          CORRIDOR / WALKWAY ({C} m)
+          {corridor2 ? "VERANDA" : "CORRIDOR / WALKWAY"} ({C} m)
         </text>
+
+        {/* second veranda band (peripheral / "both" layout) */}
+        {corridor2 && (
+          <g>
+            <rect x={px(corridor2.x)} y={px(corridor2.y)} width={px(corridor2.w)} height={px(corridor2.h)} fill={COL.corridor} stroke={COL.wall} strokeWidth={1} />
+            <line x1={px(corridor2.x)} y1={px(corridor2.y + corridor2.h / 2)} x2={px(corridor2.x + corridor2.w)} y2={px(corridor2.y + corridor2.h / 2)} stroke={COL.dim} strokeWidth={1} strokeDasharray="7 5" opacity={0.55} />
+            <text x={px(corridor2.x + corridor2.w / 2)} y={px(corridor2.y + corridor2.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}>
+              VERANDA ({C} m)
+            </text>
+          </g>
+        )}
 
         {/* rooms with corridor-facing doors + outer-wall windows */}
         {rooms.map((r) => (

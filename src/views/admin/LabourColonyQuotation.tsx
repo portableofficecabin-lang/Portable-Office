@@ -80,6 +80,7 @@ const DEFAULT_CONFIG: LabourColonyConfig = {
   roomHeight: 2.7,
   corridorWidth: 1.5,
   corridorPosition: "center",
+  staircasePosition: "both",
   panelType: "PUF",
   panelThicknessMm: 50,
   wastagePercent: 5,
@@ -459,11 +460,25 @@ export default function LabourColonyQuotation() {
                     <Select value={config.corridorPosition ?? "center"} onValueChange={(v) => setConfig((c) => ({ ...c, corridorPosition: v as LabourColonyConfig["corridorPosition"] }))}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="center">Center (double-loaded)</SelectItem>
-                        <SelectItem value="top">Top side</SelectItem>
-                        <SelectItem value="bottom">Bottom side</SelectItem>
+                        <SelectItem value="both">Both sides — upper + lower (veranda)</SelectItem>
+                        <SelectItem value="center">Center (double-loaded corridor)</SelectItem>
+                        <SelectItem value="top">Upper side only</SelectItem>
+                        <SelectItem value="bottom">Lower side only</SelectItem>
                         <SelectItem value="left">Left side</SelectItem>
                         <SelectItem value="right">Right side</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Staircase position</Label>
+                    <Select value={config.staircasePosition ?? "both"} onValueChange={(v) => setConfig((c) => ({ ...c, staircasePosition: v as LabourColonyConfig["staircasePosition"] }))}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="both">Both ends (left + right)</SelectItem>
+                        <SelectItem value="left">Left side</SelectItem>
+                        <SelectItem value="right">Right side</SelectItem>
+                        <SelectItem value="top">Upper side</SelectItem>
+                        <SelectItem value="bottom">Lower side</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

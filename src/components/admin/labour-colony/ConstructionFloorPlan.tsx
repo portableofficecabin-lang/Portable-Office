@@ -150,15 +150,19 @@ export function ConstructionFloorPlan({ plan }: { plan: ConstructionPlan }) {
               const sx = X(s.x), sy = Y(s.y), sw = L(s.w), sh = L(s.d);
               const treads = 6;
               const cx = sx + sw / 2, cy = sy + sh / 2;
+              const vertical = sh >= sw; // tall stair -> horizontal treads + rotated label
               return (
                 <g key={`stair-${i}`}>
                   <rect x={sx} y={sy} width={sw} height={sh} fill={COL.stair} stroke={COL.stairTread} strokeWidth={1.4} />
-                  {Array.from({ length: treads }, (_, t) => (
-                    <line key={t} x1={sx} y1={sy + (sh * (t + 1)) / (treads + 1)} x2={sx + sw} y2={sy + (sh * (t + 1)) / (treads + 1)}
-                      stroke={COL.stairTread} strokeWidth={0.8} />
-                  ))}
+                  {Array.from({ length: treads }, (_, t) =>
+                    vertical ? (
+                      <line key={t} x1={sx} y1={sy + (sh * (t + 1)) / (treads + 1)} x2={sx + sw} y2={sy + (sh * (t + 1)) / (treads + 1)} stroke={COL.stairTread} strokeWidth={0.8} />
+                    ) : (
+                      <line key={t} x1={sx + (sw * (t + 1)) / (treads + 1)} y1={sy} x2={sx + (sw * (t + 1)) / (treads + 1)} y2={sy + sh} stroke={COL.stairTread} strokeWidth={0.8} />
+                    ),
+                  )}
                   <text x={cx} y={cy} textAnchor="middle" dominantBaseline="middle" fontSize={fsStair} fontWeight={700}
-                    letterSpacing={1} fill={COL.stairLabel} transform={`rotate(-90 ${cx} ${cy})`}>
+                    letterSpacing={1} fill={COL.stairLabel} transform={vertical ? `rotate(-90 ${cx} ${cy})` : undefined}>
                     {s.label ?? "STAIRCASE"}
                   </text>
                 </g>
