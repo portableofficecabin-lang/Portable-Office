@@ -66,6 +66,10 @@ export interface RoomOpeningOverride {
   windowFromLeftFt?: number;
   /** Which jamb the door hinges on; the leaf always swings INTO the room. Default "left". */
   doorHinge?: "left" | "right";
+  /** Per-room DOOR width override, metres (0/undefined = global door width). */
+  doorWidthM?: number;
+  /** Per-room DOOR height override, metres (0/undefined = global door height). Schedule only (plan is 2D). */
+  doorHeightM?: number;
   /** Per-room length override ALONG the building, metres (0/undefined = use global roomLength). */
   lengthM?: number;
   /** Per-room depth override toward the veranda, metres (0/undefined = use global roomWidth). */
@@ -109,6 +113,8 @@ export interface RoomFloorPlanConfig {
   verandaWidthFt?: number;
   /** Door leaf width, ft (drawing + schedule). Default 3. */
   doorWidthFt?: number;
+  /** Default door height, metres (drawing caption + schedule; per-room override wins). Default 2.0. */
+  doorHeightM?: number;
   /** Window width, ft (drawing + schedule). Default 4. */
   windowWidthFt?: number;
   /** Per-room overrides keyed by global 1-based room number. */
@@ -121,6 +127,10 @@ export interface RoomFloorPlanConfig {
   staircase?: StaircaseDrawConfig;
   /** Show the panel / wall-thickness dimension callouts in the drawing. Default true. */
   showPanelDims?: boolean;
+  /** Minimum clearance (m) from a corner/partition AND between the door & window. Default 0.1524 (6"). */
+  minClearanceM?: number;
+  /** Draw the safety railing along the open (outer) veranda edges. Default true. */
+  showRailing?: boolean;
 }
 
 export interface LabourColonyConfig {

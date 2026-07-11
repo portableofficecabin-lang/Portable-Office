@@ -35,6 +35,7 @@ export interface FPRoom {
   doorFromLeftM: number;
   winFromLeftM: number;
   doorWM: number;
+  doorHM: number;      // door height (schedule/caption only; plan is 2D)
   winWM: number;
   hinge: "left" | "right";
 }
@@ -151,6 +152,7 @@ export function buildRoomFloorPlan(
   const verandaM = Math.max(0.6, conf.verandaWidthFt != null ? ft2m(conf.verandaWidthFt) : Math.max(0.9, cfg.corridorWidth || 0.9));
   const roomGapM = Math.max(0, conf.roomGapM ?? 0);
   const wallM = clamp((conf.wallThicknessMm ?? 100) / 1000, 0.02, Math.min(globalLenM, globalDepthM) / 3);
+  const minClearM = Math.max(0, conf.minClearanceM ?? 0.1524); // 6" default; keeps openings off corners & apart
 
   const overrideOf = (no: number): RoomOpeningOverride => conf.rooms?.[no] ?? {};
   const lenOf = (no: number) => { const o = overrideOf(no).lengthM; return o && o > 0 ? Math.max(1.0, o) : globalLenM; };
@@ -180,24 +182,38 @@ export function buildRoomFloorPlan(
   // openings — legacy door/window widths are stored in FEET; convert to metres
   const doorWBaseM = ft2m(conf.doorWidthFt ?? 3);
   const winWBaseM = ft2m(conf.windowWidthFt ?? 4);
+  const doorHBaseM = Math.max(1.5, conf.doorHeightM ?? 2.0);
 
   const rooms: FPRoom[] = [];
   const placeRoom = (no: number, x: number, row: "top" | "bottom") => {
     const L = lenOf(no);
     const dep = depthOf(no);
-    const doorWM = clamp(doorWBaseM, 0.6, Math.max(0.6, Math.min(L - 0.15, dep * 0.9)));
-    const winWM = clamp(winWBaseM, 0.5, Math.max(0.5, L - 0.15));
     const o = overrideOf(no);
-    const maxDoor = Math.max(0, L - doorWM);
-    const maxWin = Math.max(0, L - winWM);
-    const defWin = clamp(0.12 * L, 0, maxWin);
-    const defDoor = clamp(L - 0.12 * L - doorWM, 0, maxDoor);
-    const doorFromLeftM = clamp(o.doorFromLeftFt != null ? ft2m(o.doorFromLeftFt) : defDoor, 0, maxDoor);
-    const winFromLeftM = clamp(o.windowFromLeftFt != null ? ft2m(o.windowFromLeftFt) : defWin, 0, maxWin);
+    const wantDoorWM = o.doorWidthM && o.doorWidthM > 0 ? o.doorWidthM : doorWBaseM;
+    const doorWM = clamp(wantDoorWM, 0.4, Math.max(0.4, Math.min(L - 0.15, dep * 0.9)));
+    const doorHM = o.doorHeightM && o.doorHeightM > 0 ? o.doorHeightM : doorHBaseM;
+    const winWM = clamp(winWBaseM, 0.5, Math.max(0.5, L - 0.15));
+    // Keep each opening a minimum clearance `c` off the room's corners/partitions. Shrink c if the
+    // wall is too short to honour it on both sides of the widest opening.
+    const c = Math.max(0, Math.min(minClearM, (L - Math.max(doorWM, winWM)) / 2 - 1e-6));
+    const doorLo = c, doorHi = Math.max(c, L - doorWM - c);
+    const winLo = c, winHi = Math.max(c, L - winWM - c);
+    const defWin = clamp(Math.max(c, 0.1 * L), winLo, winHi);
+    const defDoor = clamp(L - 0.1 * L - doorWM, doorLo, doorHi);
+    let doorFromLeftM = clamp(o.doorFromLeftFt != null ? ft2m(o.doorFromLeftFt) : defDoor, doorLo, doorHi);
+    let winFromLeftM = clamp(o.windowFromLeftFt != null ? ft2m(o.windowFromLeftFt) : defWin, winLo, winHi);
+    // No door/window overlap: window sits left, door right, separated by clearance `c`.
+    // Try pushing the door right; else pull the window left; else (wall too short) spread to ends.
+    if (winFromLeftM + winWM + c > doorFromLeftM) {
+      if (winFromLeftM + winWM + c <= doorHi) doorFromLeftM = winFromLeftM + winWM + c;
+      else if (doorFromLeftM - c - winWM >= winLo) winFromLeftM = doorFromLeftM - c - winWM;
+      else { winFromLeftM = winLo; doorFromLeftM = doorHi; }
+    }
+    const hinge: "left" | "right" = o.doorHinge ?? "left";
     if (row === "top") {
-      rooms.push({ no, row, x, y: topBandY0, w: L, d: dep, wallY: topBandY0, into: 1, doorFromLeftM, winFromLeftM, doorWM, winWM, hinge: o.doorHinge ?? "left" });
+      rooms.push({ no, row, x, y: topBandY0, w: L, d: dep, wallY: topBandY0, into: 1, doorFromLeftM, winFromLeftM, doorWM, doorHM, winWM, hinge });
     } else {
-      rooms.push({ no, row, x, y: bottomBandY1 - dep, w: L, d: dep, wallY: bottomBandY1, into: -1, doorFromLeftM, winFromLeftM, doorWM, winWM, hinge: o.doorHinge ?? "left" });
+      rooms.push({ no, row, x, y: bottomBandY1 - dep, w: L, d: dep, wallY: bottomBandY1, into: -1, doorFromLeftM, winFromLeftM, doorWM, doorHM, winWM, hinge });
     }
   };
   topNos.forEach((no, i) => placeRoom(no, top.xs[i], "top"));

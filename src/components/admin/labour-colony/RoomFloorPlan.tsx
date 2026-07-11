@@ -40,6 +40,7 @@ const COL = {
   dim: "#475569",
   dimLine: "#94a3b8",
   overall: "#0369a1",
+  rail: "#059669",
   ink: "#0f172a",
 };
 
@@ -130,13 +131,29 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
             onChange={(m) => setTop({ wallThicknessMm: Math.round(m * 1000) })} />
           <LenField label="Spacing between rooms" m={geom.roomGapM} unit={unit} min={0}
             onChange={(m) => setTop({ roomGapM: Math.max(0, r1m(m)) })} />
-          <LenField label="Door width" m={(fp.doorWidthFt ?? 3) / M2FT} unit={unit} min={0.6}
+          <LenField label="Door width" m={(fp.doorWidthFt ?? 3) / M2FT} unit={unit} min={0.4}
             onChange={(m) => setTop({ doorWidthFt: r1(m * M2FT) })} />
+          <LenField label="Door height" m={fp.doorHeightM ?? 2.0} unit={unit} min={1.5}
+            onChange={(m) => setTop({ doorHeightM: r1m(m) })} />
           <LenField label="Window width" m={(fp.windowWidthFt ?? 4) / M2FT} unit={unit} min={0.5}
             onChange={(m) => setTop({ windowWidthFt: r1(m * M2FT) })} />
         </div>
+        <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-slate-600">
+          <label className="flex items-center gap-1.5">
+            Min clearance (corner &amp; door↔window)
+            <select value={fp.minClearanceM ?? 0.1524} onChange={(e) => setTop({ minClearanceM: Number(e.target.value) })}
+              className="h-7 rounded-md border border-slate-300 bg-white px-1.5 text-xs">
+              <option value={0.1524}>6 inches</option>
+              <option value={0.3048}>1 foot</option>
+            </select>
+          </label>
+          <label className="flex items-center gap-1.5">
+            <input type="checkbox" checked={fp.showRailing ?? true} onChange={(e) => setTop({ showRailing: e.target.checked })} />
+            Show safety railing
+          </label>
+        </div>
         <div className="mt-2 text-[11px] text-slate-500">
-          Room size ({fmt(result.config.roomLength)} × {fmt(result.config.roomWidth)}) &amp; corridor side are set on the left panel; door/window positions &amp; per-room sizes are in the schedule below.
+          Door &amp; window <b>width</b>, door <b>height</b> and corridor here are colony defaults; set <b>per-room</b> door width/height/position (in {LENGTH_UNITS.find((u) => u.id === unit)?.short}) in the schedule below. Openings are kept off partitions and apart by the min clearance. Room size &amp; corridor side are on the left panel.
         </div>
       </div>
 
@@ -225,6 +242,25 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
               {/* bold building outline (room block, excludes staircases) */}
               <rect x={X(0)} y={Y(0)} width={L(geom.blockWM)} height={L(geom.blockDM)} fill="none" stroke={COL.wall} strokeWidth={2.4} />
 
+              {/* safety railing along the open (outer) veranda edges */}
+              {(fp.showRailing ?? true) && geom.verandas.map((v, i) => {
+                const isTop = v.y < geom.blockDM / 2;
+                const yEdge = Y(isTop ? v.y : v.y + v.d);
+                const x0 = X(v.x), x1 = X(v.x + v.w);
+                const nPost = Math.max(2, Math.round((x1 - x0) / 16));
+                const out = isTop ? -3.5 : 3.5; // posts point away from the building
+                return (
+                  <g key={`rail-${i}`}>
+                    <line x1={x0} y1={yEdge} x2={x1} y2={yEdge} stroke={COL.rail} strokeWidth={2.8} strokeLinecap="round" />
+                    {Array.from({ length: nPost + 1 }, (_, k) => {
+                      const px = x0 + ((x1 - x0) * k) / nPost;
+                      return <line key={k} x1={px} y1={yEdge} x2={px} y2={yEdge + out} stroke={COL.rail} strokeWidth={0.9} />;
+                    })}
+                    <text x={x0 + 2} y={yEdge + (isTop ? 8 : -4)} fontSize={6.5} fontWeight={700} fill={COL.rail}>SAFETY RAILING</text>
+                  </g>
+                );
+              })}
+
               {/* openings drawn last so they paint over the outline */}
               {geom.rooms.map((p) => <RoomOpenings key={`op-${p.no}`} p={p} X={X} Y={Y} L={L} S={S} fmt={fmt} />)}
 
@@ -247,9 +283,9 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
 
       {/* ============ ROOM SCHEDULE ============ */}
       <div className="rounded-2xl border bg-white p-4">
-        <div className="mb-2 font-display font-bold text-sm text-slate-800">Room-wise schedule — {floorLabel(floorIdx)}</div>
+        <div className="mb-2 font-display font-bold text-sm text-slate-800">Room-wise schedule &amp; door measurements — {floorLabel(floorIdx)}</div>
         <div className="mb-3 text-[11px] text-slate-500">
-          Per-room size &amp; opening positions. Door/window offsets are measured from each room&apos;s <b>left corner</b>. Leave size blank to use the global room size.
+          Per-room size &amp; door/window measurements. <b>Door W / H</b> set each door&apos;s width &amp; height; <b>Door @</b> / <b>Window @</b> are offsets measured from the room&apos;s <b>left corner</b> — all in {LENGTH_UNITS.find((u) => u.id === unit)?.label.toLowerCase()}. Use ↺ to reset a value to the colony default.
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
@@ -258,8 +294,10 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
                 <th className="py-1.5 pr-2">Room</th>
                 <th className="py-1.5 pr-2">Length</th>
                 <th className="py-1.5 pr-2">Depth</th>
+                <th className="py-1.5 pr-2 text-fuchsia-700">Door W</th>
+                <th className="py-1.5 pr-2 text-fuchsia-700">Door H</th>
+                <th className="py-1.5 pr-2 text-fuchsia-700">Door @</th>
                 <th className="py-1.5 pr-2">Window @</th>
-                <th className="py-1.5 pr-2">Door @</th>
                 <th className="py-1.5 pr-2">Door swing</th>
               </tr>
             </thead>
@@ -268,6 +306,8 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
                 <RoomRow key={p.no} p={p} fp={fp} unit={unit}
                   onLen={(m) => setRoom(p.no, { lengthM: m })}
                   onDepth={(m) => setRoom(p.no, { depthM: m })}
+                  onDoorW={(m) => setRoom(p.no, { doorWidthM: m })}
+                  onDoorH={(m) => setRoom(p.no, { doorHeightM: m })}
                   onWin={(m) => setRoom(p.no, { windowFromLeftFt: r1(m * M2FT) })}
                   onDoor={(m) => setRoom(p.no, { doorFromLeftFt: r1(m * M2FT) })}
                   onHinge={(h) => setRoom(p.no, { doorHinge: h })} />
@@ -333,6 +373,7 @@ function RoomOpenings({ p, X, Y, L, fmt }: {
   const tipy = wallY + into * doorW;
   const insA = wallY + into * 12; // window offset dim
   const insB = wallY + into * 24; // door offset dim
+  const insDoorW = wallY + into * 36; // door WIDTH dim (across the opening)
   return (
     <g>
       {/* WINDOW */}
@@ -346,22 +387,24 @@ function RoomOpenings({ p, X, Y, L, fmt }: {
       <path d={swingPath(hx, wallY, doorW, tipx, tipy, jx, wallY)} fill="none" stroke={COL.doorArc} strokeWidth={1} strokeDasharray="3 2" />
       <text x={X(dOx) + doorW / 2} y={wallY + into * 9} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={COL.door}>D</text>
 
-      {/* offset dims from the left corner */}
+      {/* offset dims from the left corner + door WIDTH×HEIGHT measurement */}
       <OffsetDim x0={X(p.x)} x1={X(wOx)} y={insA} label={fmt(p.winFromLeftM)} />
       <OffsetDim x0={X(p.x)} x1={X(dOx)} y={insB} label={fmt(p.doorFromLeftM)} />
+      <OffsetDim x0={X(dOx)} x1={X(dOx) + doorW} y={insDoorW} label={`${fmt(p.doorWM)} × ${fmt(p.doorHM)} h`} color={COL.door} />
     </g>
   );
 }
 
-function OffsetDim({ x0, x1, y, label }: { x0: number; x1: number; y: number; label: string }) {
+function OffsetDim({ x0, x1, y, label, color }: { x0: number; x1: number; y: number; label: string; color?: string }) {
   if (Math.abs(x1 - x0) < 4) return null;
   const a = Math.min(x0, x1), b = Math.max(x0, x1);
+  const line = color ?? COL.dimLine;
   return (
     <g>
-      <line x1={a} y1={y} x2={b} y2={y} stroke={COL.dimLine} strokeWidth={0.8} />
-      <line x1={a} y1={y - 3} x2={a} y2={y + 3} stroke={COL.dimLine} strokeWidth={0.8} />
-      <line x1={b} y1={y - 3} x2={b} y2={y + 3} stroke={COL.dimLine} strokeWidth={0.8} />
-      <text x={(a + b) / 2} y={y - 2} textAnchor="middle" fontSize={7} fill={COL.dim}>{label}</text>
+      <line x1={a} y1={y} x2={b} y2={y} stroke={line} strokeWidth={0.8} />
+      <line x1={a} y1={y - 3} x2={a} y2={y + 3} stroke={line} strokeWidth={0.8} />
+      <line x1={b} y1={y - 3} x2={b} y2={y + 3} stroke={line} strokeWidth={0.8} />
+      <text x={(a + b) / 2} y={y - 2} textAnchor="middle" fontSize={7} fill={color ?? COL.dim}>{label}</text>
     </g>
   );
 }
@@ -530,6 +573,7 @@ function Legend() {
       <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm border" style={{ background: COL.wallBand, borderColor: COL.wall }} /> Wall / panel</span>
       <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: COL.door }} /> Door + swing (D)</span>
       <span className="flex items-center gap-1"><span className="inline-block h-2 w-4 border" style={{ background: COL.windowFill, borderColor: COL.window }} /> Window (W)</span>
+      <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: COL.rail }} /> Safety railing</span>
       <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: COL.overall }} /> Overall / total colony</span>
     </div>
   );
@@ -621,19 +665,23 @@ function SelField({ label, value, onChange, options }: { label: string; value: s
 }
 
 /* per-room schedule row */
-function RoomRow({ p, fp, unit, onLen, onDepth, onWin, onDoor, onHinge }: {
+function RoomRow({ p, fp, unit, onLen, onDepth, onDoorW, onDoorH, onWin, onDoor, onHinge }: {
   p: FPRoom; fp: RoomFloorPlanConfig; unit: LengthUnit;
   onLen: (m: number | undefined) => void; onDepth: (m: number | undefined) => void;
+  onDoorW: (m: number | undefined) => void; onDoorH: (m: number | undefined) => void;
   onWin: (m: number) => void; onDoor: (m: number) => void; onHinge: (h: "left" | "right") => void;
 }) {
   const ov = fp.rooms?.[p.no] ?? {};
+  const doorWMax = Math.max(0.4, Math.min(p.w - 0.15, p.d * 0.9));
   return (
     <tr className="border-b last:border-0">
       <td className="py-1.5 pr-2 font-semibold text-slate-700">ROOM {p.no}</td>
       <td className="py-1.5 pr-2"><SchedLen m={ov.lengthM ?? p.w} unit={unit} onChange={(m) => onLen(m)} onClear={() => onLen(undefined)} custom={ov.lengthM != null} /></td>
       <td className="py-1.5 pr-2"><SchedLen m={ov.depthM ?? p.d} unit={unit} onChange={(m) => onDepth(m)} onClear={() => onDepth(undefined)} custom={ov.depthM != null} /></td>
-      <td className="py-1.5 pr-2"><SchedLen m={p.winFromLeftM} unit={unit} onChange={onWin} max={p.w - p.winWM} /></td>
+      <td className="py-1.5 pr-2"><SchedLen m={p.doorWM} unit={unit} onChange={(m) => onDoorW(m)} onClear={() => onDoorW(undefined)} custom={ov.doorWidthM != null} max={doorWMax} /></td>
+      <td className="py-1.5 pr-2"><SchedLen m={p.doorHM} unit={unit} onChange={(m) => onDoorH(m)} onClear={() => onDoorH(undefined)} custom={ov.doorHeightM != null} /></td>
       <td className="py-1.5 pr-2"><SchedLen m={p.doorFromLeftM} unit={unit} onChange={onDoor} max={p.w - p.doorWM} /></td>
+      <td className="py-1.5 pr-2"><SchedLen m={p.winFromLeftM} unit={unit} onChange={onWin} max={p.w - p.winWM} /></td>
       <td className="py-1.5 pr-2">
         <div className="inline-flex overflow-hidden rounded-md border border-slate-300">
           {(["left", "right"] as const).map((h) => (
