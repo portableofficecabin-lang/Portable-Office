@@ -358,19 +358,45 @@ export default function WarrantyCertificate() {
         logging: false,
         onclone: (doc) => sanitizeUnsupportedColors(doc),
       });
-      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-      const pageW = 210, pageH = 297;
-      const imgW = pageW;
-      const imgH = (canvas.height * imgW) / canvas.width;
-      // Fit onto a single A4 page (scale down if the rendered certificate is taller).
-      if (imgH <= pageH) {
-        pdf.addImage(imgData, "PNG", 0, 0, imgW, imgH);
+      const pageW = 210, pageH = 297;            // A4 portrait
+      const margin = 9;                          // 8–10 mm margins all sides
+      const footerH = 12;                        // reserved band for the legal footer
+      const availW = pageW - margin * 2;             // WIDTH-FIRST: fill this, no side white space
+      const availH = pageH - margin * 2 - footerH;   // per-page content height when paginating
+      const singleMaxHmm = pageH - margin - footerH; // a lone page may run a little taller (still clears the footer)
+
+      // Scale by width: px→mm from the width fit, so the certificate fills availW and keeps
+      // its aspect ratio (never stretched).
+      const pxPerMm = canvas.width / availW;
+      const totalHmm = canvas.height / pxPerMm;
+
+      if (totalHmm <= singleMaxHmm) {
+        // Fits on one page — width-fit, top-aligned inside the margins.
+        pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, margin, availW, totalHmm);
       } else {
-        const scaledW = (canvas.width * pageH) / canvas.height;
-        pdf.addImage(imgData, "PNG", (pageW - scaledW) / 2, 0, scaledW, pageH);
+        // Taller than one page — paginate by slicing the canvas into page-height chunks
+        // (rather than shrinking the whole certificate). Each slice keeps the full width.
+        const pageSlicePx = Math.max(1, Math.floor(availH * pxPerMm));
+        let renderedPx = 0, first = true;
+        while (renderedPx < canvas.height) {
+          const sliceHpx = Math.min(pageSlicePx, canvas.height - renderedPx);
+          const slice = document.createElement("canvas");
+          slice.width = canvas.width;
+          slice.height = sliceHpx;
+          const sctx = slice.getContext("2d");
+          if (sctx) {
+            sctx.fillStyle = "#ffffff";
+            sctx.fillRect(0, 0, slice.width, slice.height);
+            sctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceHpx, 0, 0, canvas.width, sliceHpx);
+          }
+          if (!first) pdf.addPage();
+          pdf.addImage(slice.toDataURL("image/png"), "PNG", margin, margin, availW, sliceHpx / pxPerMm);
+          renderedPx += sliceHpx;
+          first = false;
+        }
       }
-      addLegalFooter(pdf);
+      addLegalFooter(pdf);   // on every page, inside the reserved footer band (no overlap)
       const safe = (cert.customerName || "Customer").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
       pdf.save(`Warranty-Certificate-${safe}.pdf`);
       toast({ title: "Certificate ready", description: "The warranty certificate PDF has been downloaded." });
@@ -393,6 +419,23 @@ export default function WarrantyCertificate() {
 
   return (
     <div className="space-y-6">
+      {/* Print (window.print) → a clean A4 certificate only: hide the rest of the page and fit
+          #warranty-print to the A4 content area with 9 mm margins; the browser paginates a tall
+          certificate onto extra pages. Scoped to this screen (the <style> mounts with this view). */}
+      <style>{`
+        @media print {
+          @page { size: A4 portrait; margin: 9mm; }
+          body * { visibility: hidden !important; }
+          #warranty-print, #warranty-print * { visibility: visible !important; }
+          #warranty-print {
+            position: absolute !important;
+            left: 0 !important; top: 0 !important;
+            width: 100% !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+          }
+        }
+      `}</style>
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">

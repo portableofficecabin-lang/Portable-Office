@@ -63,6 +63,7 @@ export interface PlanOptions {
   floorLabel?: string;
   stairWidthM?: number;
   wallThicknessM?: number;
+  staircasePosition?: "left" | "right" | "top" | "bottom" | "both";
 }
 
 /**
@@ -78,68 +79,86 @@ export function buildConstructionPlan(cfg: LabourColonyConfig, opts: PlanOptions
   const bayW = Math.max(1.5, cfg.roomLength);
   const roomD = Math.max(1.5, cfg.roomWidth);
   const verandaW = Math.max(0.6, cfg.corridorWidth);
-  const stairW = Math.max(0.9, opts.stairWidthM ?? Math.max(1.0, verandaW));
+  const stairW = Math.max(0.9, opts.stairWidthM ?? cfg.staircaseWidth ?? Math.max(1.0, verandaW));
   const wallM = opts.wallThicknessM ?? 0.115;
   const pos = cfg.corridorPosition ?? "center";
-  const double = pos === "center";
+  const stairPos = opts.staircasePosition ?? cfg.staircasePosition ?? "both";
+  const peripheral = pos === "both";   // verandas on BOTH long sides (reference)
+  const central = pos === "center";    // one corridor between the two room rows
+  const double = peripheral || central;
   const title = opts.floorLabel ?? "TYPICAL FLOOR PLAN";
 
   const rooms: PlanRoom[] = [];
   const verandas: PlanRect[] = [];
-  const stairs: PlanRect[] = [];
 
   if (double) {
     const bottomCount = ceil(rpf / 2);
     const topCount = rpf - bottomCount;
     const bays = Math.max(bottomCount, topCount, 1);
     const blockW = bays * bayW;
-    const yTopVer = 0;
-    const yTopRow = verandaW;
-    const yBotRow = verandaW + roomD;
-    const yBotVer = verandaW + 2 * roomD;
-    const blockD = 2 * verandaW + 2 * roomD;
 
-    // verandas (full block width)
-    verandas.push({ x: 0, y: yTopVer, w: blockW, d: verandaW, label: "VERANDA" });
-    verandas.push({ x: 0, y: yBotVer, w: blockW, d: verandaW, label: "VERANDA" });
+    let yTopRow: number, yBotRow: number, blockD: number;
+    let topDoor: PlanSide, botDoor: PlanSide;
+    let depthChain: DimTick[];
+    let rowYs: number[];
 
-    // bottom row rooms numbered first (start..), top row next — matches reference
+    if (peripheral) {
+      // VERANDA | top row | bottom row | VERANDA — doors face OUT to the verandas
+      const yTopVer = 0;
+      yTopRow = verandaW;
+      yBotRow = verandaW + roomD;
+      const yBotVer = verandaW + 2 * roomD;
+      blockD = 2 * verandaW + 2 * roomD;
+      verandas.push({ x: 0, y: yTopVer, w: blockW, d: verandaW, label: "VERANDA" });
+      verandas.push({ x: 0, y: yBotVer, w: blockW, d: verandaW, label: "VERANDA" });
+      topDoor = "top"; botDoor = "bottom";
+      depthChain = [
+        { start: yTopVer, len: verandaW, label: `${mm(verandaW)}` },
+        { start: yTopRow, len: roomD, label: `${mm(roomD)}` },
+        { start: yBotRow, len: roomD, label: `${mm(roomD)}` },
+        { start: yBotVer, len: verandaW, label: `${mm(verandaW)}` },
+      ];
+      rowYs = [yTopRow, yTopRow + roomD, yTopRow + 2 * roomD].map((y) => round(y, 3));
+    } else {
+      // top row | CORRIDOR | bottom row — doors face IN to the central corridor
+      yTopRow = 0;
+      const yCor = roomD;
+      yBotRow = roomD + verandaW;
+      blockD = 2 * roomD + verandaW;
+      verandas.push({ x: 0, y: yCor, w: blockW, d: verandaW, label: "CORRIDOR" });
+      topDoor = "bottom"; botDoor = "top";
+      depthChain = [
+        { start: 0, len: roomD, label: `${mm(roomD)}` },
+        { start: yCor, len: verandaW, label: `${mm(verandaW)}` },
+        { start: yBotRow, len: roomD, label: `${mm(roomD)}` },
+      ];
+      rowYs = [0, roomD, roomD + verandaW, 2 * roomD + verandaW].map((y) => round(y, 3));
+    }
+
+    // bottom row numbered first (start..), top row next — matches reference numbering
     for (let i = 0; i < bottomCount; i++) {
       const no = start + i;
-      rooms.push({ no, label: `ROOM - ${no}`, x: i * bayW, y: yBotRow, w: bayW, d: roomD, doorSide: "bottom", row: "bottom" });
+      rooms.push({ no, label: `ROOM - ${no}`, x: i * bayW, y: yBotRow, w: bayW, d: roomD, doorSide: botDoor, row: "bottom" });
     }
     for (let i = 0; i < topCount; i++) {
       const no = start + bottomCount + i;
-      rooms.push({ no, label: `ROOM - ${no}`, x: i * bayW, y: yTopRow, w: bayW, d: roomD, doorSide: "top", row: "top" });
+      rooms.push({ no, label: `ROOM - ${no}`, x: i * bayW, y: yTopRow, w: bayW, d: roomD, doorSide: topDoor, row: "top" });
     }
 
-    // staircases: bottom-left and top-right, outside the block (reference)
-    stairs.push({ x: -stairW, y: yBotRow, w: stairW, d: roomD, label: "STAIRCASE" });
-    stairs.push({ x: blockW, y: yTopRow, w: stairW, d: roomD, label: "STAIRCASE" });
+    const stairs = placeStairs(stairPos, { blockW, blockD, stairW, roomD, topRowY: yTopRow, bottomRowY: yBotRow });
+    const b = extent([...rooms, ...verandas, ...stairs]);
 
-    const overallW = blockW + 2 * stairW;
-    const overallD = blockD;
-
-    // dimension chains
     const widthChain: DimTick[] = [];
     for (let i = 0; i < bays; i++) widthChain.push({ start: i * bayW, len: bayW, label: `${mm(bayW)}` });
-    const depthChain: DimTick[] = [
-      { start: yTopVer, len: verandaW, label: `${mm(verandaW)}` },
-      { start: yTopRow, len: roomD, label: `${mm(roomD)}` },
-      { start: yBotRow, len: roomD, label: `${mm(roomD)}` },
-      { start: yBotVer, len: verandaW, label: `${mm(verandaW)}` },
-    ];
 
-    // beam grid: verticals at every bay line, horizontals at the 3 wall lines
     const colXs: number[] = [];
     for (let i = 0; i <= bays; i++) colXs.push(round(i * bayW, 3));
-    const rowYs = [yTopRow, yBotRow, yBotVer].map((y) => round(y, 3));
 
     const { beams, schedule } = buildBeams(colXs, rowYs, bayW, roomD, bays, opts.floorLabel);
 
     return {
       banked: "double", title, blockW: round(blockW), blockD: round(blockD),
-      overallW: round(overallW), overallD: round(overallD), bays, rows: 2,
+      overallW: round(b.maxX - b.minX), overallD: round(b.maxY - b.minY), bays, rows: 2,
       bayW: round(bayW), roomD: round(roomD), verandaW: round(verandaW), stairW: round(stairW), wallM,
       rooms, verandas, stairs, widthChain, depthChain, colXs, rowYs, beams, schedule,
     };
@@ -157,7 +176,7 @@ export function buildConstructionPlan(cfg: LabourColonyConfig, opts: PlanOptions
     const no = start + i;
     rooms.push({ no, label: `ROOM - ${no}`, x: i * bayW, y: yRoom, w: bayW, d: roomD, doorSide: verandaTop ? "top" : "bottom", row: "top" });
   }
-  stairs.push({ x: blockW, y: yRoom, w: stairW, d: roomD, label: "STAIRCASE" });
+  const stairs = placeStairs(stairPos, { blockW, blockD, stairW, roomD, topRowY: yRoom, bottomRowY: yRoom });
   const widthChain: DimTick[] = [];
   for (let i = 0; i < bays; i++) widthChain.push({ start: i * bayW, len: bayW, label: `${mm(bayW)}` });
   const depthChain: DimTick[] = verandaTop
@@ -167,12 +186,47 @@ export function buildConstructionPlan(cfg: LabourColonyConfig, opts: PlanOptions
   for (let i = 0; i <= bays; i++) colXs.push(round(i * bayW, 3));
   const rowYs = [round(yRoom, 3), round(yRoom + roomD, 3)];
   const { beams, schedule } = buildBeams(colXs, rowYs, bayW, roomD, bays, opts.floorLabel);
+  const bs = extent([...rooms, ...verandas, ...stairs]);
   return {
     banked: "single", title, blockW: round(blockW), blockD: round(blockD),
-    overallW: round(blockW + stairW), overallD: round(blockD), bays, rows: 1,
+    overallW: round(bs.maxX - bs.minX), overallD: round(bs.maxY - bs.minY), bays, rows: 1,
     bayW: round(bayW), roomD: round(roomD), verandaW: round(verandaW), stairW: round(stairW), wallM,
     rooms, verandas, stairs, widthChain, depthChain, colXs, rowYs, beams, schedule,
   };
+}
+
+/** Extent (bounding box) over a set of rects, tolerant of an empty set. */
+function extent(rects: Array<{ x: number; y: number; w: number; d: number }>) {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const r of rects) {
+    minX = Math.min(minX, r.x); minY = Math.min(minY, r.y);
+    maxX = Math.max(maxX, r.x + r.w); maxY = Math.max(maxY, r.y + r.d);
+  }
+  if (!isFinite(minX)) return { minX: 0, minY: 0, maxX: 1, maxY: 1 };
+  return { minX, minY, maxX, maxY };
+}
+
+type StairPos = "left" | "right" | "top" | "bottom" | "both";
+/** Place staircase block(s) OUTSIDE the room block on the chosen side(s). */
+function placeStairs(
+  pos: StairPos,
+  g: { blockW: number; blockD: number; stairW: number; roomD: number; topRowY: number; bottomRowY: number },
+): PlanRect[] {
+  const S = g.stairW;
+  const run = Math.max(3.0, g.roomD);
+  const mk = (x: number, y: number, w: number, d: number): PlanRect => ({ x, y, w, d, label: "STAIRCASE" });
+  const cxRun = Math.max(0, (g.blockW - run) / 2);
+  const cyRun = Math.max(0, (g.blockD - run) / 2);
+  switch (pos) {
+    case "left": return [mk(-S, cyRun, S, Math.min(run, g.blockD))];
+    case "right": return [mk(g.blockW, cyRun, S, Math.min(run, g.blockD))];
+    case "top": return [mk(cxRun, -S, Math.min(run, g.blockW), S)];
+    case "bottom": return [mk(cxRun, g.blockD, Math.min(run, g.blockW), S)];
+    case "both":
+    default:
+      // reference: left staircase at the lower row, right staircase at the upper row
+      return [mk(-S, g.bottomRowY, S, g.roomD), mk(g.blockW, g.topRowY, S, g.roomD)];
+  }
 }
 
 function buildBeams(colXs: number[], rowYs: number[], bayW: number, roomD: number, bays: number, floorLabel?: string) {

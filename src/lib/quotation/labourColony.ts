@@ -92,8 +92,12 @@ export interface LabourColonyConfig {
   roomWidth: number;
   roomHeight: number;
   corridorWidth: number;
-  /** Where the corridor/passage sits. Default "center" (double-loaded). */
-  corridorPosition?: "center" | "top" | "bottom" | "left" | "right";
+  /** Where the corridor/passage sits. "both" = verandas on upper AND lower sides (peripheral). Default "center". */
+  corridorPosition?: "center" | "top" | "bottom" | "left" | "right" | "both";
+  /** Where the staircase(s) sit. "both" = opposite ends (reference). Default "both". */
+  staircasePosition?: "left" | "right" | "top" | "bottom" | "both";
+  /** Staircase width (m). Default derived from corridor width. */
+  staircaseWidth?: number;
 
   panelType: PanelType;
   panelThicknessMm: number; // 30 / 40 / 50 / 60 / 75
@@ -400,12 +404,14 @@ export function calculateLabourColony(input: LabourColonyConfig): LabourColonyRe
   //   center        = double-loaded (two room rows, corridor between them)
   //   top/bottom    = single-loaded, corridor along the length on that edge
   //   left/right    = single-loaded, rotated, corridor along the depth on that edge
+  //   both          = double-banked, verandas on BOTH upper and lower sides (peripheral)
+  const doubleVeranda = corridorPosition === "both";
   let footprintLength: number, footprintWidth: number, corridorRun: number;
-  if (corridorPosition === "center") {
+  if (corridorPosition === "center" || corridorPosition === "both") {
     const roomsPerRow = ceil(roomsPerFloor / 2);
     corridorRun = roomsPerRow * L;
     footprintLength = roomsPerRow * L;
-    footprintWidth = 2 * W + corridorWidth;
+    footprintWidth = 2 * W + (doubleVeranda ? 2 : 1) * corridorWidth;
   } else if (corridorPosition === "top" || corridorPosition === "bottom") {
     corridorRun = roomsPerFloor * L;
     footprintLength = roomsPerFloor * L;
@@ -415,7 +421,8 @@ export function calculateLabourColony(input: LabourColonyConfig): LabourColonyRe
     footprintWidth = roomsPerFloor * L;
     footprintLength = W + corridorWidth;
   }
-  const corridorTotal = corridorRun * corridorWidth * floors;
+  // peripheral layout has two verandas -> twice the walkway area
+  const corridorTotal = corridorRun * corridorWidth * floors * (doubleVeranda ? 2 : 1);
 
   const wc = fac.toilet ? Math.max(1, ceil(totalCapacity / norms.personsPerWC)) : 0;
   const urinals = fac.toilet ? Math.max(1, ceil(totalCapacity / norms.personsPerUrinal)) : 0;
