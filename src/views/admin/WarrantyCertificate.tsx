@@ -34,6 +34,14 @@ const COMPANY = {
   gst: "33FVKPK6238Q1ZT",
 };
 
+// ISO certification — kept in sync with src/components/IsoCertificationBadge.tsx
+// (the single source of the certificate wording across the site).
+const ISO_CERT = {
+  standard: "ISO 9001:2015",
+  scope: "Quality Management System",
+  number: "QT-99968/0726",
+};
+
 const NAVY = "#0f1b2d";
 const AMBER = "#f59e0b";
 
@@ -532,8 +540,15 @@ export default function WarrantyCertificate() {
                   </div>
                 </div>
 
+                {/* ISO certification strip — wording kept in sync with IsoCertificationBadge (single source across the site) */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 8, marginTop: 12, padding: "7px 12px", border: `1px solid ${AMBER}`, borderRadius: 6, background: "#fffbeb" }}>
+                  <ShieldCheck style={{ color: AMBER, width: 16, height: 16 }} />
+                  <span style={{ fontSize: 12, fontWeight: 700, color: NAVY }}>ISO 9001:2015 Certified Company</span>
+                  <span style={{ fontSize: 11, color: "#6b7280" }}>· Quality Management System · Certificate No.: {ISO_CERT.number}</span>
+                </div>
+
                 {/* title */}
-                <div style={{ textAlign: "center", margin: "22px 0 10px" }}>
+                <div style={{ textAlign: "center", margin: "18px 0 10px" }}>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 26, fontWeight: 800, color: NAVY, letterSpacing: 2 }}>
                     <Award style={{ color: AMBER }} /> WARRANTY CERTIFICATE
                   </div>
