@@ -94,6 +94,10 @@ export interface RoomOpeningOverride {
   doorFromLeftFt?: number;
   /** ft from the room's left corner to the WINDOW's near edge. */
   windowFromLeftFt?: number;
+  /** Per-room WINDOW width override, metres (0/undefined = global window width). */
+  windowWidthM?: number;
+  /** Per-room WINDOW height override, metres (0/undefined = global window height). */
+  windowHeightM?: number;
   /** Which jamb the legacy door hinges on. Default "left". */
   doorHinge?: "left" | "right";
   /** Which wall the legacy DOOR sits on: "external" = veranda-facing wall (default), "internal" = spine wall. */
@@ -146,6 +150,8 @@ export interface StaircaseDrawConfig {
   entry?: "left" | "right";
   /** Ascent direction of the UP arrow: "up" = away from entry (default), "down" = toward entry. */
   direction?: "up" | "down";
+  /** Draw a hand railing along both sides of the flight. Default true. */
+  handrail?: boolean;
 }
 
 /**
@@ -171,6 +177,16 @@ export interface VerandaDrawConfig {
   railing?: boolean;
 }
 
+/** Roof profile for the ELEVATION drawings (drawing only — no BOQ effect). */
+export interface ElevationRoofConfig {
+  /** "gable" (ridge along length), "hip", "flat" or "mono" (single slope). Default "gable". */
+  type?: "gable" | "hip" | "flat" | "mono";
+  /** Ridge rise above the eave line, metres. Default 0.7. */
+  riseM?: number;
+  /** Eave overhang beyond the walls, metres. Default 0.3. */
+  overhangM?: number;
+}
+
 export interface RoomFloorPlanConfig {
   /** Veranda / walkway depth in feet (both verandas). Default ≈ corridorWidth converted to ft. */
   verandaWidthFt?: number;
@@ -184,6 +200,8 @@ export interface RoomFloorPlanConfig {
   doorSwing?: "in" | "out";
   /** Window width, ft (drawing + schedule). Default 4. */
   windowWidthFt?: number;
+  /** Default window height, metres (drawing caption + schedule; per-room override wins). Default 1.2. */
+  windowHeightM?: number;
   /** Per-room overrides keyed by global 1-based room number. */
   rooms?: Record<number, RoomOpeningOverride>;
   /** Drawn wall / panel thickness, mm (double-line walls + panel-dimension callouts). Default 100. */
@@ -200,6 +218,8 @@ export interface RoomFloorPlanConfig {
   showPanelDims?: boolean;
   /** Minimum clearance (m) from a corner/partition AND between the door & window. Default 0.1524 (6"). */
   minClearanceM?: number;
+  /** Elevation roof (drawing only): profile type + rise + eave overhang, metres. */
+  roof?: ElevationRoofConfig;
   /** Draw the safety railing along the open (outer) veranda edges. Default true. */
   showRailing?: boolean;
 }

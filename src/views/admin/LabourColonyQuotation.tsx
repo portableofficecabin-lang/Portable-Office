@@ -546,8 +546,14 @@ export default function LabourColonyQuotation() {
                     <Tile label="Approx weight" value={`${n(result.weight.totalTonnes)} t`} />
                   </div>
 
-                  <Section title="Drawings — Top View & Elevations" icon={LayoutGrid}>
-                    <LabourColonyDrawings result={result} unit={unit} />
+                  <Section title="Elevations — Front / Rear / Left / Right" icon={LayoutGrid}>
+                    <LabourColonyDrawings
+                      result={result}
+                      unit={unit}
+                      floorPlan={config.floorPlan}
+                      onFloorPlanChange={(fp) => setConfig((c) => ({ ...c, floorPlan: fp }))}
+                      plinthM={civilResult?.foundation.section.raisedPlinthHeightM}
+                    />
                   </Section>
 
                   <Section title="Room-wise Floor Plan (doors, windows, verandas & staircase)" icon={DoorOpen}>

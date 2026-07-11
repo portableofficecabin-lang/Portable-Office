@@ -59,6 +59,7 @@ export interface FPRoom {
   into: 1 | -1;       // interior direction from the external wall
   winFromLeftM: number;
   winWM: number;
+  winHM: number;      // window height (m) — schedule/caption only (plan is 2D)
   doors: FPDoor[];    // any number of fully-customizable doors, positions collision-resolved
 }
 
@@ -85,6 +86,7 @@ export interface FPStair {
   runM: number; widthM: number; landingM: number;
   steps: number; treadM: number; goingM: number; riserMm: number; gapM: number;
   stepEdges: FPStairStep[];
+  handrail: boolean;       // draw a hand railing along both sides of the flight
   offsetToWallM: number;   // gap from the stair to the building's OUTER edge on that side (0 = flush)
   offsetToCornerM: number; // gap from the stair's near end to the nearest block corner (along the wall)
   overlap: boolean;        // true if it still overlaps another element after auto-separation
@@ -142,7 +144,8 @@ export function resolveStair(
   const landingM = Math.max(0, s.landingM ?? Math.min(widthM, 1.0));
   const entry = s.entry ?? "left";
   const direction = s.direction ?? "up";
-  return { enabled, position, offsetM, dxM, dyM, widthM, steps, treadM, gapM, riserMm, runM, goingM, landingM, entry, direction, overridden };
+  const handrail = s.handrail ?? true;
+  return { enabled, position, offsetM, dxM, dyM, widthM, steps, treadM, gapM, riserMm, runM, goingM, landingM, entry, direction, handrail, overridden };
 }
 
 /** The effective, editable list of staircases (migrates the legacy single `staircase`). */
@@ -381,6 +384,7 @@ export function buildRoomFloorPlan(
   // openings — legacy door/window widths are stored in FEET; convert to metres
   const doorWBaseM = ft2m(conf.doorWidthFt ?? 3);
   const winWBaseM = ft2m(conf.windowWidthFt ?? 4);
+  const winHBaseM = Math.max(0.3, conf.windowHeightM ?? 1.2);
   const doorHBaseM = Math.max(1.5, conf.doorHeightM ?? 2.0);
 
   const swingDefault: "in" | "out" = conf.doorSwing === "out" ? "out" : "in";
@@ -393,7 +397,9 @@ export function buildRoomFloorPlan(
     const L = lenOf(no);
     const dep = depthOf(no);
     const o = overrideOf(no);
-    const winWM = clamp(winWBaseM, 0.5, Math.max(0.5, L - 0.15));
+    const winWReqM = o.windowWidthM && o.windowWidthM > 0 ? o.windowWidthM : winWBaseM;
+    const winWM = clamp(winWReqM, 0.5, Math.max(0.5, L - 0.15));
+    const winHM = o.windowHeightM && o.windowHeightM > 0 ? o.windowHeightM : winHBaseM;
     const wc = Math.max(0, Math.min(minClearM, (L - winWM) / 2 - 1e-6)); // off the corners
     const winLo = wc, winHi = Math.max(wc, L - winWM - wc);
     const defWin = clamp(Math.max(wc, 0.1 * L), winLo, winHi);           // default window: near the left
@@ -403,8 +409,8 @@ export function buildRoomFloorPlan(
     const oppWall: RoomWall = row === "top" ? "bottom" : "top";
     const specs = doorSpecsFor(o, windowWall, oppWall, doorWBaseM, doorHBaseM, swingDefault, sideDefault);
     const room: Omit<FPRoom, "doors"> = row === "top"
-      ? { no, row, x, y: topBandY0, w: L, d: dep, wallY: topBandY0, into: 1, winFromLeftM, winWM }
-      : { no, row, x, y: bottomBandY1 - dep, w: L, d: dep, wallY: bottomBandY1, into: -1, winFromLeftM, winWM };
+      ? { no, row, x, y: topBandY0, w: L, d: dep, wallY: topBandY0, into: 1, winFromLeftM, winWM, winHM }
+      : { no, row, x, y: bottomBandY1 - dep, w: L, d: dep, wallY: bottomBandY1, into: -1, winFromLeftM, winWM, winHM };
     roomSpecs.push({ room, specs, windowWall });
   };
   topNos.forEach((no, i) => placeRoom(no, top.xs[i], "top"));
@@ -495,7 +501,7 @@ export function buildRoomFloorPlan(
       entry: sr.entry, direction: sr.direction,
       runM: sr.runM, widthM: sr.widthM, landingM: sr.landingM,
       steps: sr.steps, treadM: sr.treadM, goingM: sr.goingM, riserMm: sr.riserMm, gapM: sr.gapM,
-      stepEdges: edges, offsetToWallM: round(offsetToWallM), offsetToCornerM: round(offsetToCornerM), overlap: false,
+      stepEdges: edges, handrail: sr.handrail, offsetToWallM: round(offsetToWallM), offsetToCornerM: round(offsetToCornerM), overlap: false,
     });
   });
 

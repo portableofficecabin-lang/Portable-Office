@@ -102,13 +102,13 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
   const floorLabel = (f: number) => (f === 0 ? "Ground Floor" : f === 1 ? "First Floor" : `Floor ${f + 1}`);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-slate-900">
       {/* ============ TOP CONTROL BAR ============ */}
       <div className="flex flex-wrap items-end gap-3 rounded-xl border bg-slate-50 p-3">
         <label className="text-xs font-medium text-slate-600">
           <span className="mb-1 block">Units (all dimensions)</span>
           <select value={unit} onChange={(e) => onUnitChange(e.target.value as LengthUnit)}
-            className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm">
+            className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900">
             {LENGTH_UNITS.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}
           </select>
         </label>
@@ -116,7 +116,7 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
           <label className="text-xs font-medium text-slate-600">
             <span className="mb-1 block">Floor</span>
             <select value={floorIdx} onChange={(e) => setFloor(Number(e.target.value))}
-              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm">
+              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900">
               {Array.from({ length: floorsWithRooms }, (_, f) => <option key={f} value={f}>{floorLabel(f)}</option>)}
             </select>
           </label>
@@ -147,10 +147,12 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
             onChange={(m) => setTop({ doorHeightM: r1m(m) })} />
           <LenField label="Window width" m={(fp.windowWidthFt ?? 4) / M2FT} unit={unit} min={0.5}
             onChange={(m) => setTop({ windowWidthFt: r1(m * M2FT) })} />
+          <LenField label="Window height" m={fp.windowHeightM ?? 1.2} unit={unit} min={0.3}
+            onChange={(m) => setTop({ windowHeightM: r1m(m) })} />
           <label className="text-xs font-medium text-slate-600">
             <span className="mb-1 block">Door side (default)</span>
             <select value={fp.doorSide ?? "external"} onChange={(e) => setTop({ doorSide: e.target.value as "external" | "internal" })}
-              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400">
+              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400">
               <option value="external">External (veranda)</option>
               <option value="internal">Internal (spine)</option>
             </select>
@@ -158,7 +160,7 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
           <label className="text-xs font-medium text-slate-600">
             <span className="mb-1 block">Door swing (default)</span>
             <select value={fp.doorSwing ?? "in"} onChange={(e) => setTop({ doorSwing: e.target.value as "in" | "out" })}
-              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400">
+              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400">
               <option value="in">Swings in</option>
               <option value="out">Swings out</option>
             </select>
@@ -168,7 +170,7 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
           <label className="flex items-center gap-1.5">
             Min clearance (corner &amp; door↔window)
             <select value={fp.minClearanceM ?? 0.1524} onChange={(e) => setTop({ minClearanceM: Number(e.target.value) })}
-              className="h-7 rounded-md border border-slate-300 bg-white px-1.5 text-xs">
+              className="h-7 rounded-md border border-slate-300 bg-white px-1.5 text-xs text-slate-900">
               <option value={0.1524}>6 inches</option>
               <option value={0.3048}>1 foot</option>
             </select>
@@ -276,7 +278,7 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
                 <th className="py-1.5 pr-2">Room</th>
                 <th className="py-1.5 pr-2">Length</th>
                 <th className="py-1.5 pr-2">Depth</th>
-                <th className="py-1.5 pr-2">Window @</th>
+                <th className="py-1.5 pr-2 text-sky-700">Window (W · H · @)</th>
                 <th className="py-1.5 pr-2 text-fuchsia-700">Doors (wall · W · H · offset · hinge · swing)</th>
               </tr>
             </thead>
@@ -286,6 +288,10 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
                   onLen={(m) => setRoom(p.no, { lengthM: m })}
                   onDepth={(m) => setRoom(p.no, { depthM: m })}
                   onWin={(m) => setRoom(p.no, { windowFromLeftFt: r1(m * M2FT) })}
+                  onWinW={(m) => setRoom(p.no, { windowWidthM: m })}
+                  onWinH={(m) => setRoom(p.no, { windowHeightM: m })}
+                  onWinWClear={() => setRoom(p.no, { windowWidthM: undefined })}
+                  onWinHClear={() => setRoom(p.no, { windowHeightM: undefined })}
                   onDoors={(list) => setRoom(p.no, { doors: list })} />
               ))}
             </tbody>
@@ -365,6 +371,8 @@ function RoomOpenings({ p, X, Y, L, fmt }: {
       <rect x={X(wOx)} y={wallY - 2.4} width={winW} height={4.8} fill={COL.windowFill} stroke={COL.window} strokeWidth={1.4} />
       <line x1={X(wOx)} y1={wallY} x2={X(wOx) + winW} y2={wallY} stroke={COL.window} strokeWidth={1} />
       <text x={X(wOx) + winW / 2} y={wallY + into * 9} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={COL.window}>W</text>
+      {/* window size (W×H) on the veranda side of the wall, clear of the interior offset/door dims */}
+      <text x={X(wOx) + winW / 2} y={wallY - into * 6} textAnchor="middle" fontSize={5.3} fill={COL.window}>{fmt(p.winWM)}×{fmt(p.winHM)}</text>
       <OffsetDim x0={X(p.x)} x1={X(wOx)} y={wallY + into * 12} label={fmt(p.winFromLeftM)} />
 
       {/* DOORS — any number, any wall, hinge start/end, swing in/out */}
@@ -520,6 +528,8 @@ function StairGlyph({ s, X, Y, L, S, fmt }: {
       {treadLines.map((c, i) => vertical
         ? <line key={i} x1={sx} y1={c} x2={sx + sw} y2={c} stroke={COL.stairTread} strokeWidth={0.8} />
         : <line key={i} x1={c} y1={sy} x2={c} y2={sy + sh} stroke={COL.stairTread} strokeWidth={0.8} />)}
+      {/* HAND RAILING along both sides of the flight */}
+      {s.handrail && <StairHandrail sx={sx} sy={sy} sw={sw} sh={sh} vertical={vertical} />}
       {/* UP arrow */}
       {vertical ? (
         <g>
@@ -553,6 +563,41 @@ function StairGlyph({ s, X, Y, L, S, fmt }: {
           <tspan x={cx} dy={9}>{capLines[1]}</tspan>
         </text>
       )}
+    </g>
+  );
+}
+
+/** Hand railing drawn along BOTH long sides of a staircase flight (green rails + inward posts). */
+function StairHandrail({ sx, sy, sw, sh, vertical }: { sx: number; sy: number; sw: number; sh: number; vertical: boolean }) {
+  const inset = 2.2, post = 3, rw = 1.5;
+  if (vertical) {
+    const xL = sx + inset, xR = sx + sw - inset;
+    const n = Math.max(2, Math.round(sh / 14));
+    return (
+      <g>
+        <line x1={xL} y1={sy} x2={xL} y2={sy + sh} stroke={COL.rail} strokeWidth={rw} strokeLinecap="round" />
+        <line x1={xR} y1={sy} x2={xR} y2={sy + sh} stroke={COL.rail} strokeWidth={rw} strokeLinecap="round" />
+        {Array.from({ length: n + 1 }, (_, k) => { const py = sy + (sh * k) / n; return (
+          <g key={k}>
+            <line x1={xL} y1={py} x2={xL + post} y2={py} stroke={COL.rail} strokeWidth={0.7} />
+            <line x1={xR} y1={py} x2={xR - post} y2={py} stroke={COL.rail} strokeWidth={0.7} />
+          </g>
+        ); })}
+      </g>
+    );
+  }
+  const yT = sy + inset, yB = sy + sh - inset;
+  const n = Math.max(2, Math.round(sw / 14));
+  return (
+    <g>
+      <line x1={sx} y1={yT} x2={sx + sw} y2={yT} stroke={COL.rail} strokeWidth={rw} strokeLinecap="round" />
+      <line x1={sx} y1={yB} x2={sx + sw} y2={yB} stroke={COL.rail} strokeWidth={rw} strokeLinecap="round" />
+      {Array.from({ length: n + 1 }, (_, k) => { const px = sx + (sw * k) / n; return (
+        <g key={k}>
+          <line x1={px} y1={yT} x2={px} y2={yT + post} stroke={COL.rail} strokeWidth={0.7} />
+          <line x1={px} y1={yB} x2={px} y2={yB - post} stroke={COL.rail} strokeWidth={0.7} />
+        </g>
+      ); })}
     </g>
   );
 }
@@ -704,12 +749,12 @@ function LenField({ label, m, unit, onChange, min = 0, allowNegative, preferMm }
           <input type="number" inputMode="decimal" step={1} min={0} value={ft}
             onChange={(e) => emit(neg ? -1 : 1, Math.abs(parseInt(e.target.value, 10) || 0), inch)}
             onFocus={(e) => e.currentTarget.select()}
-            className="h-8 w-14 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400" />
+            className="h-8 w-14 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400" />
           <span className="text-[10px] text-slate-400">ft</span>
           <input type="number" inputMode="decimal" step={1} min={0} max={11} value={inch}
             onChange={(e) => emit(neg ? -1 : 1, ft, clamp(Math.abs(parseInt(e.target.value, 10) || 0), 0, 11))}
             onFocus={(e) => e.currentTarget.select()}
-            className="h-8 w-14 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400" />
+            className="h-8 w-14 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400" />
           <span className="text-[10px] text-slate-400">in</span>
         </div>
       </div>
@@ -722,7 +767,7 @@ function LenField({ label, m, unit, onChange, min = 0, allowNegative, preferMm }
       <BufferedNumber shown={val} step={unitStep(effUnit)}
         onLive={(n) => onChange(fromUnit(n, effUnit))}
         onCommit={(n) => { const mm2 = fromUnit(n ?? 0, effUnit); onChange(allowNegative ? mm2 : Math.max(min, mm2)); }}
-        className="h-8 w-24 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400" />
+        className="h-8 w-24 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400" />
     </label>
   );
 }
@@ -734,7 +779,7 @@ function NumField({ label, value, step, min, onChange }: { label: string; value:
       <BufferedNumber shown={value} step={step}
         onLive={(n) => onChange(n)}
         onCommit={(n) => onChange(n == null ? min : Math.max(min, n))}
-        className="h-8 w-24 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400" />
+        className="h-8 w-24 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400" />
     </label>
   );
 }
@@ -744,7 +789,7 @@ function SelField({ label, value, onChange, options }: { label: string; value: s
     <label className="text-xs font-medium text-slate-600">
       <span className="mb-1 block">{label}</span>
       <select value={value} onChange={(e) => onChange(e.target.value)}
-        className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400">
+        className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 outline-none focus:border-amber-400">
         {options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
       </select>
     </label>
@@ -752,10 +797,11 @@ function SelField({ label, value, onChange, options }: { label: string; value: s
 }
 
 /* per-room schedule row */
-function RoomRow({ p, fp, unit, swingDefault, onLen, onDepth, onWin, onDoors }: {
+function RoomRow({ p, fp, unit, swingDefault, onLen, onDepth, onWin, onWinW, onWinH, onWinWClear, onWinHClear, onDoors }: {
   p: FPRoom; fp: RoomFloorPlanConfig; unit: LengthUnit; swingDefault: "in" | "out";
   onLen: (m: number | undefined) => void; onDepth: (m: number | undefined) => void;
-  onWin: (m: number) => void; onDoors: (list: RoomDoor[]) => void;
+  onWin: (m: number) => void; onWinW: (m: number) => void; onWinH: (m: number) => void;
+  onWinWClear: () => void; onWinHClear: () => void; onDoors: (list: RoomDoor[]) => void;
 }) {
   const ov = fp.rooms?.[p.no] ?? {};
   const defaultWall: RoomWall = p.row === "top" ? "top" : "bottom";
@@ -769,7 +815,16 @@ function RoomRow({ p, fp, unit, swingDefault, onLen, onDepth, onWin, onDoors }: 
       <td className="py-1.5 pr-2 font-semibold text-slate-700">ROOM {p.no}</td>
       <td className="py-1.5 pr-2"><SchedLen m={ov.lengthM ?? p.w} unit={unit} onChange={(m) => onLen(m)} onClear={() => onLen(undefined)} custom={ov.lengthM != null} /></td>
       <td className="py-1.5 pr-2"><SchedLen m={ov.depthM ?? p.d} unit={unit} onChange={(m) => onDepth(m)} onClear={() => onDepth(undefined)} custom={ov.depthM != null} /></td>
-      <td className="py-1.5 pr-2"><SchedLen m={p.winFromLeftM} unit={unit} onChange={onWin} max={p.w - p.winWM} /></td>
+      <td className="py-1.5 pr-2">
+        <div className="flex flex-wrap items-center gap-1">
+          <span className="text-[9px] text-slate-400" title="Window width">W</span>
+          <SchedLen compact m={p.winWM} unit={unit} onChange={onWinW} onClear={onWinWClear} custom={ov.windowWidthM != null} />
+          <span className="text-[9px] text-slate-400" title="Window height (elevation — not shown on the 2D plan)">H</span>
+          <SchedLen compact m={p.winHM} unit={unit} onChange={onWinH} onClear={onWinHClear} custom={ov.windowHeightM != null} />
+          <span className="text-[9px] text-slate-400" title="Offset from the room's left corner to the window's near edge">@</span>
+          <SchedLen compact m={p.winFromLeftM} unit={unit} onChange={onWin} max={p.w - p.winWM} />
+        </div>
+      </td>
       <td className="py-1.5 pr-2">
         <RoomDoorsCell list={editable} resolved={p.doors} unit={unit} defaultWall={defaultWall} swingDefault={swingDefault} onChange={onDoors} />
       </td>
@@ -800,7 +855,7 @@ function RoomDoorsCell({ list, resolved, unit, defaultWall, swingDefault, onChan
           <div key={d.id || i} className="flex flex-wrap items-center gap-1 rounded-md border border-fuchsia-100 bg-fuchsia-50/40 px-1.5 py-1">
             <span className="w-6 shrink-0 text-[10px] font-bold text-fuchsia-700">D{list.length > 1 ? i + 1 : ""}</span>
             <select value={wall} onChange={(e) => update(i, { wall: e.target.value as RoomWall })}
-              className="h-6 rounded border border-slate-300 bg-white px-1 text-[10px]" title="Wall">
+              className="h-6 rounded border border-slate-300 bg-white px-1 text-[10px] text-slate-900" title="Wall">
               {WALL_OPTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
             <span className="text-[9px] text-slate-400">W</span>
@@ -843,11 +898,11 @@ function SchedLen({ m, unit, onChange, onClear, custom, max, compact }: {
       <span className="inline-flex items-center gap-0.5">
         <input type="number" step={1} value={ft} onFocus={(e) => e.currentTarget.select()}
           onChange={(e) => onChange(clampMax(fromFeetInches(parseInt(e.target.value, 10) || 0, inch), max))}
-          className={`h-7 ${wFtIn} rounded-md border border-slate-300 bg-white px-1 text-center text-xs`} />
+          className={`h-7 ${wFtIn} rounded-md border border-slate-300 bg-white px-1 text-center text-xs text-slate-900`} />
         <span className="text-[9px] text-slate-400">′</span>
         <input type="number" step={1} min={0} max={11} value={inch} onFocus={(e) => e.currentTarget.select()}
           onChange={(e) => onChange(clampMax(fromFeetInches(ft, parseInt(e.target.value, 10) || 0), max))}
-          className={`h-7 ${wFtIn} rounded-md border border-slate-300 bg-white px-1 text-center text-xs`} />
+          className={`h-7 ${wFtIn} rounded-md border border-slate-300 bg-white px-1 text-center text-xs text-slate-900`} />
         {onClear && custom && <button type="button" onClick={onClear} className="text-[10px] text-slate-400 hover:text-slate-700" title="Reset to global">↺</button>}
       </span>
     );
@@ -856,7 +911,7 @@ function SchedLen({ m, unit, onChange, onClear, custom, max, compact }: {
     <span className="inline-flex items-center gap-1">
       <input type="number" step={unitStep(unit)} value={toUnit(m, unit)} onFocus={(e) => e.currentTarget.select()}
         onChange={(e) => { const v = parseFloat(e.target.value); onChange(clampMax(fromUnit(Number.isFinite(v) ? v : 0, unit), max)); }}
-        className={`h-7 ${wDec} rounded-md border border-slate-300 bg-white px-1.5 text-center text-xs`} />
+        className={`h-7 ${wDec} rounded-md border border-slate-300 bg-white px-1.5 text-center text-xs text-slate-900`} />
       {onClear && custom && <button type="button" onClick={onClear} className="text-[10px] text-slate-400 hover:text-slate-700" title="Reset to global">↺</button>}
     </span>
   );
@@ -945,7 +1000,7 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
     <div className={`mb-2 rounded-lg border p-2.5 ${placed?.overlap ? "border-red-300 bg-red-50" : "border-slate-200"}`}>
       <div className="mb-2 flex items-center gap-2">
         <input value={sc.label ?? "Staircase"} onChange={(e) => onChange({ label: e.target.value })}
-          className="h-7 flex-1 rounded-md border border-slate-300 bg-white px-2 text-xs font-semibold" />
+          className="h-7 flex-1 rounded-md border border-slate-300 bg-white px-2 text-xs font-semibold text-slate-900" />
         <label className="flex items-center gap-1 text-[11px] text-slate-600">
           <input type="checkbox" checked={sr.enabled} onChange={(e) => onChange({ enabled: e.target.checked })} /> Show
         </label>
@@ -962,6 +1017,9 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
             <SelField label="Up direction" value={sr.direction} onChange={(v) => onChange({ direction: v as "up" | "down" })}
               options={[["up", "Away from entry"], ["down", "Toward entry"]]} />
             <NumField label="Number of steps" value={sr.steps} step={1} min={2} onChange={(v) => onChange({ steps: Math.round(v) })} />
+            <label className="flex items-center gap-1.5 pb-1.5 text-xs font-medium text-slate-600">
+              <input type="checkbox" checked={sr.handrail} onChange={(e) => onChange({ handrail: e.target.checked })} /> Hand railing
+            </label>
           </div>
           <div className="mt-3 flex flex-wrap gap-3">
             <LenField label="Width" m={sr.widthM} unit={unit} min={0.6} onChange={(m) => onChange({ widthM: r1m(m) })} />
@@ -1043,7 +1101,7 @@ function VerandaCard({ vc, unit, verandaM, onChange, onDuplicate, onDelete }: {
     <div className="mb-2 rounded-lg border border-slate-200 p-2.5">
       <div className="mb-2 flex items-center gap-2">
         <input value={vc.label ?? "Veranda"} onChange={(e) => onChange({ label: e.target.value })}
-          className="h-7 flex-1 rounded-md border border-slate-300 bg-white px-2 text-xs font-semibold" />
+          className="h-7 flex-1 rounded-md border border-slate-300 bg-white px-2 text-xs font-semibold text-slate-900" />
         <label className="flex items-center gap-1 text-[11px] text-slate-600">
           <input type="checkbox" checked={enabled} onChange={(e) => onChange({ enabled: e.target.checked })} /> Show
         </label>
