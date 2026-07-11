@@ -10,6 +10,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import html2canvas from "html2canvas-pro"; // native oklch/lab support (Tailwind v4 palette)
 import { applySafeColors } from "@/lib/pdf/sanitizeColors";
 import { ShieldCheck, Download, Printer, Plus, Trash2, RotateCcw, Award, Save, FolderOpen, Loader2 } from "lucide-react";
@@ -22,7 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { imageToPngDataUrl } from "@/lib/pdf/imageToPng";
-import { addLegalFooter } from "@/lib/pdfFooter";
+import { addLegalFooter, LEGAL_FOOTER_TEXT } from "@/lib/pdfFooter";
 import logo from "@/assets/logo.webp";
 
 // Canonical company details (kept in sync with the site's structured data / header).
@@ -339,76 +340,184 @@ export default function WarrantyCertificate() {
     ["Delivery Contact", shipping.contact || "—"],
   ];
 
+  // Vector (jsPDF + autoTable) certificate. Unlike a rasterised DOM snapshot, autoTable
+  // paginates PROPERLY: it never splits a row, repeats the table header on every page,
+  // keeps each section heading with its header row, and flows with no blank gaps. A page
+  // border + fixed legal/disclaimer footer are stamped on every page at the end.
   const downloadPDF = async () => {
-    if (!printRef.current) return;
     if (!cert.customerName.trim()) {
       toast({ title: "Customer name required", description: "Enter the customer name before downloading.", variant: "destructive" });
       return;
     }
     setBusy(true);
-    // Primary defence: rewrite live-DOM oklch/lab colours to rgb before capture, restore after.
-    const restoreColors = applySafeColors(printRef.current);
     try {
-      const canvas = await html2canvas(printRef.current, {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        useCORS: true,
-        allowTaint: false,
-        imageTimeout: 20000,
-        logging: false,
-        onclone: (doc) => sanitizeUnsupportedColors(doc),
-      });
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-      const pageW = 210, pageH = 297;            // A4 portrait
-      const margin = 9;                          // 8–10 mm margins all sides
-      const footerH = 12;                        // reserved band for the legal footer
-      const availW = pageW - margin * 2;             // WIDTH-FIRST: fill this, no side white space
-      const availH = pageH - margin * 2 - footerH;   // per-page content height when paginating
-      const singleMaxHmm = pageH - margin - footerH; // a lone page may run a little taller (still clears the footer)
+      const PW = 210, PH = 297;
+      const LEFT = 15, RIGHT = 15, contentW = PW - LEFT - RIGHT;
+      const navy: [number, number, number] = [15, 27, 45];
+      const amber: [number, number, number] = [245, 158, 11];
+      const gray: [number, number, number] = [55, 65, 81];
+      const CONTENT_BOTTOM = PH - 20;                 // tables/text never cross this line
+      const TABLE_MARGIN = { top: 16, bottom: 20, left: LEFT, right: RIGHT };
+      const lastY = (): number => (pdf as unknown as { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ?? TABLE_MARGIN.top;
 
-      // Scale by width: px→mm from the width fit, so the certificate fills availW and keeps
-      // its aspect ratio (never stretched).
-      const pxPerMm = canvas.width / availW;
-      const totalHmm = canvas.height / pxPerMm;
+      const logoData = await imageToPngDataUrl(logo, { format: "png" }).catch(() => null);
 
-      if (totalHmm <= singleMaxHmm) {
-        // Fits on one page — width-fit, top-aligned inside the margins.
-        pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, margin, availW, totalHmm);
-      } else {
-        // Taller than one page — paginate by slicing the canvas into page-height chunks
-        // (rather than shrinking the whole certificate). Each slice keeps the full width.
-        const pageSlicePx = Math.max(1, Math.floor(availH * pxPerMm));
-        let renderedPx = 0, first = true;
-        while (renderedPx < canvas.height) {
-          const sliceHpx = Math.min(pageSlicePx, canvas.height - renderedPx);
-          const slice = document.createElement("canvas");
-          slice.width = canvas.width;
-          slice.height = sliceHpx;
-          const sctx = slice.getContext("2d");
-          if (sctx) {
-            sctx.fillStyle = "#ffffff";
-            sctx.fillRect(0, 0, slice.width, slice.height);
-            sctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceHpx, 0, 0, canvas.width, sliceHpx);
-          }
-          if (!first) pdf.addPage();
-          pdf.addImage(slice.toDataURL("image/png"), "PNG", margin, margin, availW, sliceHpx / pxPerMm);
-          renderedPx += sliceHpx;
-          first = false;
-        }
+      let y = 15;
+      // ---------- page-1 letterhead ----------
+      if (logoData) { try { pdf.addImage(logoData, "PNG", LEFT, y, 16, 16); } catch { /* skip */ } }
+      const tx = logoData ? LEFT + 20 : LEFT;
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(15); pdf.setTextColor(...navy);
+      pdf.text(COMPANY.name, tx, y + 5);
+      pdf.setFont("helvetica", "normal"); pdf.setFontSize(8); pdf.setTextColor(...gray);
+      const addr = pdf.splitTextToSize(COMPANY.address, contentW - (tx - LEFT)) as string[];
+      pdf.text(addr, tx, y + 10);
+      let hy = y + 10 + addr.length * 3.3;
+      pdf.text(`${COMPANY.phone}  |  ${COMPANY.email}  |  ${COMPANY.website}`, tx, hy);
+      pdf.text(`GSTIN: ${COMPANY.gst}`, tx, hy + 4);
+      y = Math.max(y + 16, hy + 4) + 4;
+
+      pdf.setDrawColor(...navy); pdf.setLineWidth(0.5); pdf.line(LEFT, y, PW - RIGHT, y); y += 6;
+
+      // ISO strip
+      pdf.setFillColor(255, 251, 235); pdf.setDrawColor(...amber); pdf.setLineWidth(0.3);
+      pdf.roundedRect(LEFT, y, contentW, 8, 1.5, 1.5, "FD");
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(9); pdf.setTextColor(...navy);
+      pdf.text(`${ISO_CERT.standard} Certified Company`, LEFT + 4, y + 5);
+      pdf.setFont("helvetica", "normal"); pdf.setFontSize(7.5); pdf.setTextColor(...gray);
+      pdf.text(`${ISO_CERT.scope} · Certificate No.: ${ISO_CERT.number}`, PW - RIGHT - 4, y + 5, { align: "right" });
+      y += 13;
+
+      // title
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(18); pdf.setTextColor(...navy);
+      pdf.text("WARRANTY CERTIFICATE", PW / 2, y, { align: "center" });
+      pdf.setDrawColor(...amber); pdf.setLineWidth(1); pdf.line(PW / 2 - 22, y + 2.5, PW / 2 + 22, y + 2.5);
+      y += 9;
+
+      // cert no + date
+      pdf.setFont("helvetica", "normal"); pdf.setFontSize(10); pdf.setTextColor(...gray);
+      pdf.setFont("helvetica", "bold"); pdf.text("Certificate No: ", LEFT, y);
+      pdf.setFont("helvetica", "normal"); pdf.text(cert.certNo || "—", LEFT + 26, y);
+      pdf.setFont("helvetica", "bold"); pdf.text(`Date: ${prettyDate(cert.issueDate)}`, PW - RIGHT, y, { align: "right" });
+      y += 6;
+
+      // intro
+      pdf.setFont("helvetica", "normal"); pdf.setFontSize(9.5); pdf.setTextColor(...gray);
+      const intro = `This is to certify that the product(s) / equipment described below, manufactured and supplied by ${COMPANY.name}, is covered under warranty in favour of ${cert.customerName || "the customer"}${cert.customerCompany ? ` (${cert.customerCompany})` : ""}, subject to the coverage and terms stated herein.`;
+      const introLines = pdf.splitTextToSize(intro, contentW) as string[];
+      pdf.text(introLines, LEFT, y); y += introLines.length * 4.1 + 3;
+
+      // ---------- customer details ----------
+      const lc = (t: string) => ({ content: t, styles: { fontStyle: "bold" as const, fillColor: [245, 247, 250] as [number, number, number], textColor: [107, 114, 128] as [number, number, number] } });
+      autoTable(pdf, {
+        startY: y, margin: TABLE_MARGIN, theme: "grid", rowPageBreak: "avoid",
+        styles: { fontSize: 9, cellPadding: 2, textColor: [17, 24, 39], lineColor: [209, 213, 219], lineWidth: 0.2 },
+        columnStyles: { 0: { cellWidth: 26 }, 2: { cellWidth: 26 } },
+        body: [
+          [lc("CUSTOMER"), cert.customerName || "—", lc("COMPANY"), cert.customerCompany || "—"],
+          [lc("PHONE"), cert.customerPhone || "—", lc("BILLING"), cert.customerAddress || "—"],
+          [lc("SHIP TO"), { content: shipping.deliveryAddress || cert.customerAddress || "—", colSpan: 3 }],
+        ],
+      });
+      y = lastY() + 7;
+
+      // ---------- reusable section (heading kept with its table header + first row) ----------
+      const section = (heading: string, head: string[], body: (string | number)[][], widths?: Record<number, number>) => {
+        if (y + 8 + 8 + 8 > CONTENT_BOTTOM) { pdf.addPage(); y = TABLE_MARGIN.top; }
+        pdf.setFont("helvetica", "bold"); pdf.setFontSize(11); pdf.setTextColor(...navy);
+        pdf.text(heading, LEFT, y);
+        autoTable(pdf, {
+          startY: y + 2.5, margin: TABLE_MARGIN, theme: "grid",
+          showHead: "everyPage", rowPageBreak: "avoid",
+          head: [head], body,
+          headStyles: { fillColor: navy, textColor: [255, 255, 255], fontSize: 9, fontStyle: "bold", lineColor: navy, lineWidth: 0.1 },
+          styles: { fontSize: 8.5, cellPadding: 2, lineColor: [229, 231, 235], lineWidth: 0.2, textColor: [55, 65, 81], overflow: "linebreak" },
+          alternateRowStyles: { fillColor: [249, 250, 251] },
+          columnStyles: widths ? Object.fromEntries(Object.entries(widths).map(([k, v]) => [k, { cellWidth: v }])) : undefined,
+        });
+        y = lastY() + 7;
+      };
+
+      section(
+        "Products & Validity",
+        ["#", "Product / Description", "Serial / Invoice", "Warranty", "Valid From", "Valid Until"],
+        (productsForDoc.length ? productsForDoc : [blankProduct()]).map((p, i) => [i + 1, p.product || "—", p.serialNo || "—", p.warrantyPeriod || "—", prettyDate(p.validFrom), prettyDate(p.validUntil)]),
+        { 0: 8, 2: 30, 3: 24, 4: 22, 5: 22 },
+      );
+
+      if (shipHasAny) {
+        section(
+          "Shipping / Delivery Details",
+          ["Detail", "Information", "Detail", "Information"],
+          [
+            [shipEntries[0][0], shipEntries[0][1], shipEntries[1][0], shipEntries[1][1]],
+            [shipEntries[2][0], shipEntries[2][1], shipEntries[3][0], shipEntries[3][1]],
+            [shipEntries[4][0], shipEntries[4][1], shipEntries[5][0], shipEntries[5][1]],
+            [shipEntries[6][0], shipEntries[6][1], shipEntries[7][0], shipEntries[7][1]],
+          ],
+          { 0: 34, 2: 34 },
+        );
       }
-      addLegalFooter(pdf);   // on every page, inside the reserved footer band (no overlap)
+
+      section(
+        "Warranty Coverage",
+        ["#", "Component / Scope", "Coverage / Duration", "Remarks"],
+        (rowsForDoc.length ? rowsForDoc : [{ component: "—", coverage: "—", remarks: "" }]).map((r, i) => [i + 1, r.component || "—", r.coverage || "—", r.remarks || "—"]),
+        { 0: 8, 2: 42 },
+      );
+
+      // ---------- terms (heading kept with first lines; wraps across pages cleanly) ----------
+      if (cert.terms.trim()) {
+        const termsLines = pdf.splitTextToSize(cert.terms, contentW) as string[];
+        if (y + 6 + Math.min(termsLines.length, 3) * 4 > CONTENT_BOTTOM) { pdf.addPage(); y = TABLE_MARGIN.top; }
+        pdf.setFont("helvetica", "bold"); pdf.setFontSize(11); pdf.setTextColor(...navy);
+        pdf.text("Terms & Conditions", LEFT, y); y += 5;
+        pdf.setFont("helvetica", "normal"); pdf.setFontSize(8.5); pdf.setTextColor(...gray);
+        for (const line of termsLines) {
+          if (y > CONTENT_BOTTOM) { pdf.addPage(); y = TABLE_MARGIN.top; }
+          pdf.text(line, LEFT, y); y += 4;
+        }
+        y += 3;
+      }
+
+      // ---------- signature + seal (never split) ----------
+      const sigH = 34;
+      if (y + sigH > CONTENT_BOTTOM) { pdf.addPage(); y = TABLE_MARGIN.top; }
+      y += 8;
+      pdf.setDrawColor(...amber); pdf.setLineWidth(0.5); pdf.setLineDashPattern([1, 1], 0);
+      pdf.circle(LEFT + 13, y + 11, 11, "S");
+      pdf.setLineDashPattern([], 0);
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(8); pdf.setTextColor(...amber);
+      pdf.text("SEAL", LEFT + 13, y + 12, { align: "center" });
+      const sigX = PW - RIGHT - 58, sigMid = (sigX + (PW - RIGHT)) / 2;
+      pdf.setDrawColor(150, 150, 150); pdf.setLineWidth(0.3); pdf.line(sigX, y + 18, PW - RIGHT, y + 18);
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(9.5); pdf.setTextColor(17, 24, 39);
+      pdf.text(cert.signatory || "Authorised Signatory", sigMid, y + 22.5, { align: "center" });
+      pdf.setFont("helvetica", "normal"); pdf.setFontSize(8); pdf.setTextColor(...gray);
+      pdf.text(`For ${COMPANY.name}`, sigMid, y + 26.5, { align: "center" });
+
+      // ---------- decorate every page: border + fixed footer + page number ----------
+      const total = pdf.getNumberOfPages();
+      for (let i = 1; i <= total; i++) {
+        pdf.setPage(i);
+        pdf.setDrawColor(...navy); pdf.setLineWidth(1.2); pdf.rect(7, 7, 196, 283);
+        pdf.setDrawColor(...amber); pdf.setLineWidth(0.5); pdf.rect(9, 9, 192, 279);
+        pdf.setDrawColor(...amber); pdf.setLineWidth(0.3); pdf.line(LEFT, 280, PW - RIGHT, 280);
+        pdf.setFont("helvetica", "italic"); pdf.setFontSize(7); pdf.setTextColor(110, 110, 110);
+        const disc = pdf.splitTextToSize(LEGAL_FOOTER_TEXT, contentW - 26) as string[];
+        pdf.text(disc, PW / 2, 284, { align: "center" });
+        pdf.setFont("helvetica", "normal"); pdf.setFontSize(7.5); pdf.setTextColor(120, 120, 120);
+        pdf.text(`Page ${i} of ${total}`, PW - RIGHT, 285.5, { align: "right" });
+      }
+
       const safe = (cert.customerName || "Customer").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
       pdf.save(`Warranty-Certificate-${safe}.pdf`);
       toast({ title: "Certificate ready", description: "The warranty certificate PDF has been downloaded." });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Warranty certificate PDF generation failed:", err);
-      toast({
-        title: "Could not generate PDF",
-        description: err?.message ? String(err.message).slice(0, 140) : "Please try again.",
-        variant: "destructive",
-      });
+      const msg = err instanceof Error ? err.message : "";
+      toast({ title: "Could not generate PDF", description: msg ? msg.slice(0, 140) : "Please try again.", variant: "destructive" });
     } finally {
-      restoreColors();
       setBusy(false);
     }
   };
@@ -434,6 +543,10 @@ export default function WarrantyCertificate() {
             margin: 0 !important;
             box-shadow: none !important;
           }
+          /* clean pagination: repeat table headers, never split a row / image / signature */
+          #warranty-print thead { display: table-header-group !important; }
+          #warranty-print tr { break-inside: avoid !important; page-break-inside: avoid !important; }
+          #warranty-print img { break-inside: avoid !important; page-break-inside: avoid !important; }
         }
       `}</style>
       <div className="flex items-center justify-between flex-wrap gap-3">

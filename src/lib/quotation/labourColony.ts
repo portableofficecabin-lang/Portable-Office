@@ -66,7 +66,44 @@ export interface RoomOpeningOverride {
   windowFromLeftFt?: number;
   /** Which jamb the door hinges on; the leaf always swings INTO the room. Default "left". */
   doorHinge?: "left" | "right";
+  /** Per-room length override ALONG the building, metres (0/undefined = use global roomLength). */
+  lengthM?: number;
+  /** Per-room depth override toward the veranda, metres (0/undefined = use global roomWidth). */
+  depthM?: number;
 }
+
+/**
+ * Full staircase customization for the room-wise floor plan drawing (drawing only — no
+ * effect on quantities/BOQ). Lengths are METRES; riser is mm; steps is a count. Every
+ * value is optional and falls back to a sensible default so partial configs stay valid.
+ */
+export interface StaircaseDrawConfig {
+  /** Draw the staircase(s). Default: true when floors > 1. */
+  enabled?: boolean;
+  /** Side(s) the staircase sits on. "both" = one at each opposite end (reference layout). Default "both". */
+  position?: "left" | "right" | "top" | "bottom" | "both";
+  /** Slide the staircase block along its wall from the default position, metres (+/-). */
+  offsetM?: number;
+  /** Flight width across the treads, metres. */
+  widthM?: number;
+  /** Explicit total run length of the flight (excludes landing), metres. Omitted = steps × (tread + gap). */
+  totalLengthM?: number;
+  /** Number of steps / treads. */
+  steps?: number;
+  /** Tread depth ("step width/tread") — horizontal run of one step, metres. */
+  treadM?: number;
+  /** Riser ("step height") — vertical rise of one step, mm. */
+  riserMm?: number;
+  /** Extra gap between consecutive steps beyond the tread, metres (usually 0). */
+  gapM?: number;
+  /** Landing depth at the top of the flight, metres (0 = none drawn). */
+  landingM?: number;
+  /** End the flight is entered from (first step / arrow start). Default "left". */
+  entry?: "left" | "right";
+  /** Ascent direction of the UP arrow: "up" = away from entry (default), "down" = toward entry. */
+  direction?: "up" | "down";
+}
+
 export interface RoomFloorPlanConfig {
   /** Veranda / walkway depth in feet (both verandas). Default ≈ corridorWidth converted to ft. */
   verandaWidthFt?: number;
@@ -76,6 +113,14 @@ export interface RoomFloorPlanConfig {
   windowWidthFt?: number;
   /** Per-room overrides keyed by global 1-based room number. */
   rooms?: Record<number, RoomOpeningOverride>;
+  /** Drawn wall / panel thickness, mm (double-line walls + panel-dimension callouts). Default 100. */
+  wallThicknessMm?: number;
+  /** Spacing between adjacent room modules along the building, metres. Default 0. */
+  roomGapM?: number;
+  /** Full staircase customization. */
+  staircase?: StaircaseDrawConfig;
+  /** Show the panel / wall-thickness dimension callouts in the drawing. Default true. */
+  showPanelDims?: boolean;
 }
 
 export interface LabourColonyConfig {
@@ -98,6 +143,9 @@ export interface LabourColonyConfig {
   staircasePosition?: "left" | "right" | "top" | "bottom" | "both";
   /** Staircase width (m). Default derived from corridor width. */
   staircaseWidth?: number;
+
+  /** Display + entry unit for all lengths (inputs + drawing labels). Storage stays metric. Default "ftin". */
+  lengthUnit?: "ft" | "ftin" | "m" | "cm" | "mm";
 
   panelType: PanelType;
   panelThicknessMm: number; // 30 / 40 / 50 / 60 / 75

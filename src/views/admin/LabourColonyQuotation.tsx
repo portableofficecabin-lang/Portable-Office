@@ -35,6 +35,11 @@ import {
   type FloorCount,
 } from "@/lib/quotation/labourColony";
 import {
+  LENGTH_UNITS, formatLen, unitSuffix, unitStep, toUnit, fromUnit, toFeetInches, fromFeetInches,
+  type LengthUnit,
+} from "@/lib/quotation/units";
+import { buildRoomFloorPlan } from "@/lib/quotation/roomFloorPlan";
+import {
   calculateCivilWork,
   DEFAULT_CIVIL_CONFIG,
   type CivilWorkConfig,
@@ -136,6 +141,11 @@ export default function LabourColonyQuotation() {
     setConfig((c) => ({ ...c, facilities: { ...c.facilities, [key]: checked } }));
   const setMeta = (p: Partial<ProjectMeta>) => setMetaState((m) => ({ ...m, ...p }));
 
+  const unit: LengthUnit = config.lengthUnit ?? "ftin";
+  const setUnit = (u: LengthUnit) => setConfig((c) => ({ ...c, lengthUnit: u }));
+  const fmtLen = (m: number) => formatLen(m, unit);
+  const setLenM = (key: keyof LabourColonyConfig) => (m: number) => setConfig((c) => ({ ...c, [key]: m }));
+
   const valid =
     config.personsPerRoom > 0 &&
     config.roomLength > 0 &&
@@ -154,6 +164,8 @@ export default function LabourColonyQuotation() {
       return null;
     }
   }, [config, sizeMode, valid]);
+
+  const colonyGeom = useMemo(() => (result ? buildRoomFloorPlan(result, config.floorPlan, 0) : null), [result, config.floorPlan]);
 
   const civilCtx = useMemo<CivilContext | null>(() => (result ? buildCivilCtx(result) : null), [result]);
   const civilResult = useMemo<CivilWorkResult | null>(
@@ -448,13 +460,22 @@ export default function LabourColonyQuotation() {
                 </div>
 
                 <div className="border-t pt-4 space-y-4">
-                  <h3 className="font-display font-bold flex items-center gap-2"><LayoutGrid className="h-4 w-4 text-amber" /> Room &amp; panel</h3>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="space-y-1"><Label className="text-xs">Length (m)</Label><NumberInput value={config.roomLength} onChange={setNum("roomLength")} /></div>
-                    <div className="space-y-1"><Label className="text-xs">Width (m)</Label><NumberInput value={config.roomWidth} onChange={setNum("roomWidth")} /></div>
-                    <div className="space-y-1"><Label className="text-xs">Height (m)</Label><NumberInput value={config.roomHeight} onChange={setNum("roomHeight")} /></div>
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-display font-bold flex items-center gap-2"><LayoutGrid className="h-4 w-4 text-amber" /> Room &amp; panel</h3>
+                    <div className="flex items-center gap-1.5">
+                      <Ruler className="h-3.5 w-3.5 text-amber" />
+                      <Select value={unit} onValueChange={(v) => setUnit(v as LengthUnit)}>
+                        <SelectTrigger className="h-8 w-[9.5rem] text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>{LENGTH_UNITS.map((u) => <SelectItem key={u.id} value={u.id}>{u.label}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  <div className="space-y-2"><Label>Corridor width (m)</Label><NumberInput value={config.corridorWidth} onChange={setNum("corridorWidth")} /></div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="space-y-1"><Label className="text-xs">Length</Label><UnitNumber m={config.roomLength} unit={unit} onChangeM={setLenM("roomLength")} /></div>
+                    <div className="space-y-1"><Label className="text-xs">Width</Label><UnitNumber m={config.roomWidth} unit={unit} onChangeM={setLenM("roomWidth")} /></div>
+                    <div className="space-y-1"><Label className="text-xs">Height</Label><UnitNumber m={config.roomHeight} unit={unit} onChangeM={setLenM("roomHeight")} /></div>
+                  </div>
+                  <div className="space-y-2"><Label>Corridor width</Label><UnitNumber m={config.corridorWidth} unit={unit} onChangeM={setLenM("corridorWidth")} /></div>
                   <div className="space-y-2">
                     <Label>Corridor position (shift to any side)</Label>
                     <Select value={config.corridorPosition ?? "center"} onValueChange={(v) => setConfig((c) => ({ ...c, corridorPosition: v as LabourColonyConfig["corridorPosition"] }))}>
@@ -526,27 +547,33 @@ export default function LabourColonyQuotation() {
                   </div>
 
                   <Section title="Drawings — Top View & Elevations" icon={LayoutGrid}>
-                    <LabourColonyDrawings result={result} />
+                    <LabourColonyDrawings result={result} unit={unit} />
                   </Section>
 
-                  <Section title="Room-wise Floor Plan (doors, windows & verandas)" icon={DoorOpen}>
+                  <Section title="Room-wise Floor Plan (doors, windows, verandas & staircase)" icon={DoorOpen}>
                     <RoomFloorPlan
                       result={result}
                       floorPlan={config.floorPlan}
                       onChange={(fp) => setConfig((c) => ({ ...c, floorPlan: fp }))}
+                      unit={unit}
+                      onUnitChange={setUnit}
                     />
                   </Section>
 
                   <Section title="1. Area" icon={LayoutGrid}>
                     <KV rows={[
-                      ["Room size", `${result.config.roomLength} x ${result.config.roomWidth} m = ${n(result.area.roomAreaSqm)} sqm`],
+                      ["Room size", `${fmtLen(result.config.roomLength)} × ${fmtLen(result.config.roomWidth)} = ${n(result.area.roomAreaSqm)} sqm`],
+                      ...(colonyGeom ? [
+                        ["Total colony length", fmtLen(colonyGeom.totalLengthM)] as [string, string],
+                        ["Total colony width", fmtLen(colonyGeom.totalWidthM)] as [string, string],
+                      ] : []),
                       ["Rooms total area", `${n(result.area.roomsAreaSqm)} sqm`],
                       ["Toilet block", `${n(result.area.toiletBlockSqm)} sqm`],
                       ["Dining + kitchen", `${n(result.area.diningKitchenSqm)} sqm`],
                       ["Office / security", `${n(result.area.officeSecuritySqm)} sqm`],
                       ["Corridor / passage", `${n(result.area.corridorSqm)} sqm`],
                       ["Staircase + walkway", `${n(result.area.staircaseWalkwaySqm)} sqm`],
-                      ["Footprint / floor", `${result.area.footprintLengthM} x ${result.area.footprintWidthM} m`],
+                      ["Footprint / floor", `${fmtLen(result.area.footprintLengthM)} × ${fmtLen(result.area.footprintWidthM)}`],
                       ["Roof area (sloped)", `${n(result.area.roofActualSqm)} sqm`],
                       ["Total built-up", `${n(result.area.builtUpTotalSqm)} sqm (${n(result.area.builtUpTotalSqft)} sqft)`],
                     ]} />
@@ -780,10 +807,11 @@ export default function LabourColonyQuotation() {
                   <span><b>Capacity:</b> {n(result.occupancy.totalCapacity)} persons</span>
                   <span><b>Rooms:</b> {n(result.occupancy.rooms)} ({floorsLabel(result.config.floors)})</span>
                   <span><b>Built-up:</b> {n(result.area.builtUpTotalSqm)} sqm</span>
-                  <span><b>Corridor:</b> {result.config.corridorPosition ?? "center"} · {result.config.corridorWidth} m</span>
+                  {colonyGeom && <span><b>Total colony:</b> {fmtLen(colonyGeom.totalLengthM)} × {fmtLen(colonyGeom.totalWidthM)}</span>}
+                  <span><b>Corridor:</b> {result.config.corridorPosition ?? "center"} · {fmtLen(result.config.corridorWidth)}</span>
                 </div>
               </div>
-              <LabourColonyDrawings result={result} />
+              <LabourColonyDrawings result={result} unit={unit} />
             </div>
           ) : (
             <div className="py-12 text-center text-muted-foreground">Enter capacity and room dimensions to preview the layout.</div>
@@ -820,6 +848,29 @@ export default function LabourColonyQuotation() {
 /* ---------------- small presentational helpers ---------------- */
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return <div className="space-y-1.5"><Label>{label}</Label>{children}</div>;
+}
+
+/** Unit-aware length input: stores/returns METRES, displays & accepts the selected unit
+ *  (two boxes for feet-inches, one box + suffix otherwise). */
+function UnitNumber({ m, unit, onChangeM, min = 0 }: { m: number; unit: LengthUnit; onChangeM: (m: number) => void; min?: number }) {
+  if (unit === "ftin") {
+    const { ft, inch } = toFeetInches(m);
+    return (
+      <div className="flex items-center gap-1">
+        <NumberInput value={ft} onChange={(e) => onChangeM(Math.max(min, fromFeetInches(parseInt(e.target.value, 10) || 0, inch)))} className="text-center" />
+        <span className="text-[10px] text-muted-foreground">ft</span>
+        <NumberInput value={inch} onChange={(e) => onChangeM(Math.max(min, fromFeetInches(ft, parseInt(e.target.value, 10) || 0)))} className="text-center" />
+        <span className="text-[10px] text-muted-foreground">in</span>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-1">
+      <NumberInput value={toUnit(m, unit)} step={unitStep(unit)}
+        onChange={(e) => { const v = parseFloat(e.target.value); onChangeM(Math.max(min, fromUnit(Number.isFinite(v) ? v : 0, unit))); }} />
+      <span className="w-6 text-[10px] text-muted-foreground">{unitSuffix(unit)}</span>
+    </div>
+  );
 }
 function FacilityToggle({ icon: Icon, label, checked, onChange }: { icon: any; label: string; checked: boolean; onChange: (c: boolean) => void }) {
   return (

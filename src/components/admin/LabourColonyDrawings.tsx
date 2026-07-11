@@ -1,6 +1,7 @@
 "use client";
 
 import type { LabourColonyResult } from "@/lib/quotation/labourColony";
+import { formatLen, type LengthUnit } from "@/lib/quotation/units";
 
 /**
  * Schematic 2D drawings for the Labour Colony calculator:
@@ -82,7 +83,7 @@ function EdgeMark({ r, side, lenM, color, sw }: { r: RoomRect; side: Side; lenM:
   return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth={sw} />;
 }
 
-export function LabourColonyDrawings({ result }: { result: LabourColonyResult }) {
+export function LabourColonyDrawings({ result, unit = "m" }: { result: LabourColonyResult; unit?: LengthUnit }) {
   const { roomLength: L, roomWidth: W, roomHeight: H, floors, corridorWidth: C } = result.config;
   const pos: CorridorPosition = result.config.corridorPosition ?? "center";
   const rooms = result.occupancy.rooms;
@@ -90,25 +91,26 @@ export function LabourColonyDrawings({ result }: { result: LabourColonyResult })
   const footL = result.area.footprintLengthM;
   const footW = result.area.footprintWidthM;
   const posLabel = { center: "Central (double-loaded)", both: "Both sides (upper + lower)", top: "Top side", bottom: "Bottom side", left: "Left side", right: "Right side" }[pos];
+  const fmt = (m: number) => formatLen(m, unit);
 
   return (
     <div className="space-y-6">
-      <DrawingFrame title="Top View — Floor Plan (per floor)" caption={`Footprint ${footL.toFixed(1)} m × ${footW.toFixed(1)} m · ${rpf} rooms/floor · corridor: ${posLabel}`}>
-        <PlanSvg result={result} L={L} W={W} C={C} rpf={rpf} pos={pos} />
+      <DrawingFrame title="Top View — Floor Plan (per floor)" caption={`Footprint ${fmt(footL)} × ${fmt(footW)} · ${rpf} rooms/floor · corridor: ${posLabel}`}>
+        <PlanSvg result={result} L={L} W={W} C={C} rpf={rpf} pos={pos} fmt={fmt} />
       </DrawingFrame>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <DrawingFrame title="Front Elevation" caption={`${footL.toFixed(1)} m wide · ${(floors * H).toFixed(1)} m high + roof`}>
-          <Elevation widthM={footL} floors={floors} H={H} roofType="long" door />
+        <DrawingFrame title="Front Elevation" caption={`${fmt(footL)} wide · ${fmt(floors * H)} high + roof`}>
+          <Elevation widthM={footL} floors={floors} H={H} roofType="long" door fmt={fmt} />
         </DrawingFrame>
-        <DrawingFrame title="Rear Elevation" caption={`${footL.toFixed(1)} m wide`}>
-          <Elevation widthM={footL} floors={floors} H={H} roofType="long" />
+        <DrawingFrame title="Rear Elevation" caption={`${fmt(footL)} wide`}>
+          <Elevation widthM={footL} floors={floors} H={H} roofType="long" fmt={fmt} />
         </DrawingFrame>
-        <DrawingFrame title="Left Side Elevation" caption={`${footW.toFixed(1)} m wide · gable roof`}>
-          <Elevation widthM={footW} floors={floors} H={H} roofType="gable" door />
+        <DrawingFrame title="Left Side Elevation" caption={`${fmt(footW)} wide · gable roof`}>
+          <Elevation widthM={footW} floors={floors} H={H} roofType="gable" door fmt={fmt} />
         </DrawingFrame>
-        <DrawingFrame title="Right Side Elevation" caption={`${footW.toFixed(1)} m wide · gable roof`}>
-          <Elevation widthM={footW} floors={floors} H={H} roofType="gable" />
+        <DrawingFrame title="Right Side Elevation" caption={`${fmt(footW)} wide · gable roof`}>
+          <Elevation widthM={footW} floors={floors} H={H} roofType="gable" fmt={fmt} />
         </DrawingFrame>
       </div>
 
@@ -190,8 +192,8 @@ function Win({ r, side }: { r: RoomRect; side: Side }) {
   );
 }
 
-function PlanSvg({ result, L, W, C, rpf, pos }: {
-  result: LabourColonyResult; L: number; W: number; C: number; rpf: number; pos: CorridorPosition;
+function PlanSvg({ result, L, W, C, rpf, pos, fmt }: {
+  result: LabourColonyResult; L: number; W: number; C: number; rpf: number; pos: CorridorPosition; fmt: (m: number) => string;
 }) {
   const { rooms, corridor, corridor2, footL, footW } = buildPlan(pos, L, W, C, rpf);
   const fac = result.config.facilities;
@@ -222,7 +224,7 @@ function PlanSvg({ result, L, W, C, rpf, pos }: {
         )}
         <text x={corMidX} y={corMidY} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}
           transform={corridorHorizontal ? undefined : `rotate(-90 ${corMidX} ${corMidY})`}>
-          {corridor2 ? "VERANDA" : "CORRIDOR / WALKWAY"} ({C} m)
+          {corridor2 ? "VERANDA" : "CORRIDOR / WALKWAY"} ({fmt(C)})
         </text>
 
         {/* second veranda band (peripheral / "both" layout) */}
@@ -231,7 +233,7 @@ function PlanSvg({ result, L, W, C, rpf, pos }: {
             <rect x={px(corridor2.x)} y={px(corridor2.y)} width={px(corridor2.w)} height={px(corridor2.h)} fill={COL.corridor} stroke={COL.wall} strokeWidth={1} />
             <line x1={px(corridor2.x)} y1={px(corridor2.y + corridor2.h / 2)} x2={px(corridor2.x + corridor2.w)} y2={px(corridor2.y + corridor2.h / 2)} stroke={COL.dim} strokeWidth={1} strokeDasharray="7 5" opacity={0.55} />
             <text x={px(corridor2.x + corridor2.w / 2)} y={px(corridor2.y + corridor2.h / 2)} textAnchor="middle" dominantBaseline="middle" fontSize={11} fill={COL.dim}>
-              VERANDA ({C} m)
+              VERANDA ({fmt(C)})
             </text>
           </g>
         )}
@@ -270,25 +272,25 @@ function PlanSvg({ result, L, W, C, rpf, pos }: {
         {corridorHorizontal ? (
           <g>
             <line x1={px(footL) + 8} y1={px(corridor.y)} x2={px(footL) + 8} y2={px(corridor.y + corridor.h)} stroke={COL.dim} strokeWidth={1} />
-            <text x={px(footL) + 12} y={corMidY + 3} fontSize={9} fill={COL.dim}>{C} m</text>
+            <text x={px(footL) + 12} y={corMidY + 3} fontSize={9} fill={COL.dim}>{fmt(C)}</text>
           </g>
         ) : (
           <g>
             <line x1={px(corridor.x)} y1={px(footW) + 8} x2={px(corridor.x + corridor.w)} y2={px(footW) + 8} stroke={COL.dim} strokeWidth={1} />
-            <text x={corMidX} y={px(footW) + 20} textAnchor="middle" fontSize={9} fill={COL.dim}>{C} m</text>
+            <text x={corMidX} y={px(footW) + 20} textAnchor="middle" fontSize={9} fill={COL.dim}>{fmt(C)}</text>
           </g>
         )}
 
         {/* overall dimensions */}
-        <text x={px(footL) / 2} y={px(footW) + 30} textAnchor="middle" fontSize={11} fill={COL.dim}>← {footL.toFixed(1)} m →</text>
-        <text x={-26} y={px(footW) / 2} textAnchor="middle" fontSize={11} fill={COL.dim} transform={`rotate(-90 -26 ${px(footW) / 2})`}>← {footW.toFixed(1)} m →</text>
-        <text x={px(L) / 2} y={-8} textAnchor="middle" fontSize={9} fill={COL.dim}>room {L}×{W} m</text>
+        <text x={px(footL) / 2} y={px(footW) + 30} textAnchor="middle" fontSize={11} fill={COL.dim}>← {fmt(footL)} →</text>
+        <text x={-26} y={px(footW) / 2} textAnchor="middle" fontSize={11} fill={COL.dim} transform={`rotate(-90 -26 ${px(footW) / 2})`}>← {fmt(footW)} →</text>
+        <text x={px(L) / 2} y={-8} textAnchor="middle" fontSize={9} fill={COL.dim}>room {fmt(L)}×{fmt(W)}</text>
       </g>
     </svg>
   );
 }
 
-function Elevation({ widthM, floors, H, roofType, door }: { widthM: number; floors: number; H: number; roofType: "long" | "gable"; door?: boolean }) {
+function Elevation({ widthM, floors, H, roofType, door, fmt }: { widthM: number; floors: number; H: number; roofType: "long" | "gable"; door?: boolean; fmt: (m: number) => string }) {
   const roof = roofType === "gable" ? 0.9 : 0.7;
   const bays = Math.max(1, Math.round(widthM / 3));
   const bodyH = floors * H;
@@ -322,8 +324,8 @@ function Elevation({ widthM, floors, H, roofType, door }: { widthM: number; floo
           <rect x={px((doorBay + 0.5) * (widthM / bays)) - px(0.45)} y={px(roof + (floors - 1) * H + (H - 2.1))} width={px(0.9)} height={px(2.1)} fill="#fee2e2" stroke={COL.door} strokeWidth={1.5} />
         )}
         <line x1={px(-0.3)} y1={px(roof + bodyH)} x2={px(widthM + 0.3)} y2={px(roof + bodyH)} stroke={COL.wall} strokeWidth={2.5} />
-        <text x={px(widthM) / 2} y={px(roof + bodyH) + 22} textAnchor="middle" fontSize={11} fill={COL.dim}>← {widthM.toFixed(1)} m →</text>
-        <text x={px(widthM) + 8} y={px(roof + bodyH / 2)} fontSize={10} fill={COL.dim}>{bodyH.toFixed(1)} m</text>
+        <text x={px(widthM) / 2} y={px(roof + bodyH) + 22} textAnchor="middle" fontSize={11} fill={COL.dim}>← {fmt(widthM)} →</text>
+        <text x={px(widthM) + 8} y={px(roof + bodyH / 2)} fontSize={10} fill={COL.dim}>{fmt(bodyH)}</text>
       </g>
     </svg>
   );
