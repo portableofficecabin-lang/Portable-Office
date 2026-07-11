@@ -10,7 +10,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro"; // native oklch/lab support (Tailwind v4 palette)
 import { applySafeColors } from "@/lib/pdf/sanitizeColors";
 import { ShieldCheck, Download, Printer, Plus, Trash2, RotateCcw, Award, Save, FolderOpen, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";

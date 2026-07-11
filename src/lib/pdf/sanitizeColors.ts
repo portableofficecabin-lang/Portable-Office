@@ -16,7 +16,10 @@
  * captureElementToCanvas() wires both together and is the one call sites should use.
  */
 
-import html2canvas from "html2canvas";
+// html2canvas-pro is a drop-in fork of html2canvas that parses CSS Color 4 functions
+// (oklch/oklab/lab/lch/color()) NATIVELY — so it renders Tailwind v4's oklch palette
+// (including pseudo-elements, which inline-style sanitising can't reach) without throwing.
+import html2canvas from "html2canvas-pro";
 
 const UNSUPPORTED_COLOR = /(oklch|oklab|\blab\(|\blch\(|color\()/i;
 const COLOR_PROPS = [

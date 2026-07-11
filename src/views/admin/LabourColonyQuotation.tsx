@@ -6,7 +6,7 @@ import autoTable from "jspdf-autotable";
 import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
-  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye,
+  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ import { AdminCard, AdminCardContent } from "@/components/admin/AdminCard";
 import { LabourColonyDrawings } from "@/components/admin/LabourColonyDrawings";
 import { RoomFloorPlan } from "@/components/admin/labour-colony/RoomFloorPlan";
 import { CivilWorkTab } from "@/components/admin/labour-colony/CivilWorkTab";
+import { ConstructionDrawingTab } from "@/components/admin/labour-colony/ConstructionDrawingTab";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { exportToExcel, formatINR } from "@/lib/exportUtils";
@@ -310,6 +311,7 @@ export default function LabourColonyQuotation() {
             <TabsTrigger value="project" className="gap-1.5"><Building2 className="h-4 w-4" /> Project</TabsTrigger>
             <TabsTrigger value="structure" className="gap-1.5"><LayoutGrid className="h-4 w-4" /> Structure &amp; Drawings</TabsTrigger>
             <TabsTrigger value="civil" className="gap-1.5"><HardHat className="h-4 w-4" /> Civil Work</TabsTrigger>
+            <TabsTrigger value="drawing" className="gap-1.5"><Ruler className="h-4 w-4" /> Construction Drawing</TabsTrigger>
             <TabsTrigger value="reports" className="gap-1.5"><FileText className="h-4 w-4" /> Reports &amp; Saved</TabsTrigger>
           </TabsList>
         </div>
@@ -674,6 +676,18 @@ export default function LabourColonyQuotation() {
             <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
               <HardHat className="h-10 w-10 mx-auto mb-3 opacity-40" />
               Complete the Structure tab (capacity + room size) to size the civil work.
+            </AdminCardContent></AdminCard>
+          )}
+        </TabsContent>
+
+        {/* ============ CONSTRUCTION DRAWING (§6/§7) ============ */}
+        <TabsContent value="drawing" className="mt-6">
+          {result && civilResult ? (
+            <ConstructionDrawingTab config={config} rooms={result.occupancy.rooms} floors={config.floors} civil={civilResult} />
+          ) : (
+            <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
+              <Building2 className="h-10 w-10 mx-auto mb-3 opacity-40" />
+              Complete the Structure tab (capacity + room size) and keep Civil Work enabled to generate the construction drawing.
             </AdminCardContent></AdminCard>
           )}
         </TabsContent>
