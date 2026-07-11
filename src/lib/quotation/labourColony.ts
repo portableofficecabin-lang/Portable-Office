@@ -82,12 +82,20 @@ export interface RoomOpeningOverride {
  * value is optional and falls back to a sensible default so partial configs stay valid.
  */
 export interface StaircaseDrawConfig {
+  /** Stable id for the managed list. */
+  id?: string;
+  /** Display label (e.g. "Staircase A"). */
+  label?: string;
   /** Draw the staircase(s). Default: true when floors > 1. */
   enabled?: boolean;
   /** Side(s) the staircase sits on. "both" = one at each opposite end (reference layout). Default "both". */
   position?: "left" | "right" | "top" | "bottom" | "both";
   /** Slide the staircase block along its wall from the default position, metres (+/-). */
   offsetM?: number;
+  /** Free horizontal shift (left − / right +) from the anchored position, metres. */
+  dxM?: number;
+  /** Free vertical shift (up − / down +) from the anchored position, metres. */
+  dyM?: number;
   /** Flight width across the treads, metres. */
   widthM?: number;
   /** Explicit total run length of the flight (excludes landing), metres. Omitted = steps × (tread + gap). */
@@ -108,6 +116,29 @@ export interface StaircaseDrawConfig {
   direction?: "up" | "down";
 }
 
+/**
+ * A single veranda / corridor / walkway band on one side of the room block (drawing only).
+ * Multiple may sit on the same side. Lengths are METRES. Every field optional with sane defaults.
+ */
+export interface VerandaDrawConfig {
+  /** Stable id for the managed list. */
+  id?: string;
+  /** Display label (e.g. "Front veranda"). */
+  label?: string;
+  /** Draw this veranda. Default true. */
+  enabled?: boolean;
+  /** Which side of the room block it sits on. Default "top". */
+  side?: "top" | "bottom" | "left" | "right";
+  /** Depth of the veranda from the block edge, metres. Default = colony veranda width. */
+  widthM?: number;
+  /** Length along the side, metres. 0/undefined = full block span on that side. */
+  lengthM?: number;
+  /** Shift along the side from the start corner, metres. Default 0. */
+  offsetM?: number;
+  /** Draw a safety railing along the open (outer) edge. Default true. */
+  railing?: boolean;
+}
+
 export interface RoomFloorPlanConfig {
   /** Veranda / walkway depth in feet (both verandas). Default ≈ corridorWidth converted to ft. */
   verandaWidthFt?: number;
@@ -123,8 +154,12 @@ export interface RoomFloorPlanConfig {
   wallThicknessMm?: number;
   /** Spacing between adjacent room modules along the building, metres. Default 0. */
   roomGapM?: number;
-  /** Full staircase customization. */
+  /** Full staircase customization (legacy single staircase; superseded by `staircases`). */
   staircase?: StaircaseDrawConfig;
+  /** Managed list of staircases, each fully customizable. Falls back to `staircase` / defaults when absent. */
+  staircases?: StaircaseDrawConfig[];
+  /** Managed list of verandas / corridors. Falls back to peripheral top + bottom defaults when absent. */
+  verandas?: VerandaDrawConfig[];
   /** Show the panel / wall-thickness dimension callouts in the drawing. Default true. */
   showPanelDims?: boolean;
   /** Minimum clearance (m) from a corner/partition AND between the door & window. Default 0.1524 (6"). */

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { LabourColonyResult, RoomFloorPlanConfig, RoomOpeningOverride, StaircaseDrawConfig } from "@/lib/quotation/labourColony";
+import type { LabourColonyResult, RoomFloorPlanConfig, RoomOpeningOverride, StaircaseDrawConfig, VerandaDrawConfig } from "@/lib/quotation/labourColony";
 import {
-  buildRoomFloorPlan, resolveStair,
-  type RoomFloorPlanGeom, type FPRoom, type FPStair, type FPBand,
+  buildRoomFloorPlan, resolveStair, effectiveStaircases, effectiveVerandas,
+  type FPRoom, type FPStair, type FPVeranda, type FPBand,
 } from "@/lib/quotation/roomFloorPlan";
 import {
   LENGTH_UNITS, type LengthUnit,
@@ -66,7 +66,9 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
   const floorIdx = Math.min(floor, floorsWithRooms - 1);
 
   const geom = buildRoomFloorPlan(result, fp, floorIdx);
-  const sr = resolveStair(fp.staircase, floors, geom.verandaM, result.config.staircasePosition, result.config.staircaseWidth);
+  const stairList = effectiveStaircases(fp, floors);
+  const verandaList = effectiveVerandas(fp, geom.hasBottom);
+  const stairById = new Map(geom.stairs.map((s) => [s.id, s]));
 
   const fmt = (m: number) => formatLen(m, unit);
 
@@ -86,8 +88,8 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
   const setTop = (patch: Partial<RoomFloorPlanConfig>) => onChange({ ...fp, ...patch });
   const setRoom = (no: number, patch: Partial<RoomOpeningOverride>) =>
     onChange({ ...fp, rooms: { ...(fp.rooms ?? {}), [no]: { ...(fp.rooms?.[no] ?? {}), ...patch } } });
-  const setStair = (patch: Partial<StaircaseDrawConfig>) =>
-    onChange({ ...fp, staircase: { ...(fp.staircase ?? {}), ...patch } });
+  const setStairs = (list: StaircaseDrawConfig[]) => onChange({ ...fp, staircases: list, staircase: undefined });
+  const setVerandas = (list: VerandaDrawConfig[]) => onChange({ ...fp, verandas: list });
 
   const floorLabel = (f: number) => (f === 0 ? "Ground Floor" : f === 1 ? "First Floor" : `Floor ${f + 1}`);
 
@@ -147,60 +149,26 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
               <option value={0.3048}>1 foot</option>
             </select>
           </label>
-          <label className="flex items-center gap-1.5">
-            <input type="checkbox" checked={fp.showRailing ?? true} onChange={(e) => setTop({ showRailing: e.target.checked })} />
-            Show safety railing
-          </label>
+          <span className="text-[11px] text-slate-400">Safety railing is now per-veranda (toggle it on each veranda below).</span>
         </div>
         <div className="mt-2 text-[11px] text-slate-500">
           Door &amp; window <b>width</b>, door <b>height</b> and corridor here are colony defaults; set <b>per-room</b> door width/height/position (in {LENGTH_UNITS.find((u) => u.id === unit)?.short}) in the schedule below. Openings are kept off partitions and apart by the min clearance. Room size &amp; corridor side are on the left panel.
         </div>
       </div>
 
-      {/* ============ STAIRCASE CONTROLS ============ */}
-      <div className="rounded-xl border bg-white p-3">
-        <div className="mb-2 flex items-center justify-between">
-          <div className="text-xs font-semibold text-slate-700">Staircase — 100% customizable</div>
-          <label className="flex items-center gap-2 text-[11px] text-slate-600">
-            <input type="checkbox" checked={sr.enabled} onChange={(e) => setStair({ enabled: e.target.checked })} />
-            Show staircase
-          </label>
+      {/* ============ STAIRCASE MANAGER ============ */}
+      <StairManager list={stairList} unit={unit} floors={floors} verandaM={geom.verandaM}
+        cfg={result.config} fmt={fmt} stairById={stairById} onChange={setStairs} />
+
+      {/* ============ VERANDA / CORRIDOR MANAGER ============ */}
+      <VerandaManager list={verandaList} unit={unit} verandaM={geom.verandaM} onChange={setVerandas} />
+
+      {/* overlap warnings */}
+      {geom.overlaps.length > 0 && (
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-2.5 text-[11px] text-amber-800">
+          <b>⚠ Overlap:</b> {geom.overlaps.join("; ")}. Move (shift x/y), resize, or change the side to resolve — staircases are already kept clear of the rooms automatically.
         </div>
-        {sr.enabled && (
-          <>
-            <div className="flex flex-wrap gap-3">
-              <SelField label="Position (any side)" value={sr.position} onChange={(v) => setStair({ position: v as StaircaseDrawConfig["position"] })}
-                options={[["both", "Both ends"], ["left", "Left side"], ["right", "Right side"], ["top", "Top side"], ["bottom", "Bottom side"]]} />
-              <SelField label="Entry side" value={sr.entry} onChange={(v) => setStair({ entry: v as "left" | "right" })}
-                options={[["left", "Left / near"], ["right", "Right / far"]]} />
-              <SelField label="Up direction" value={sr.direction} onChange={(v) => setStair({ direction: v as "up" | "down" })}
-                options={[["up", "Away from entry"], ["down", "Toward entry"]]} />
-              <NumField label="Number of steps" value={sr.steps} step={1} min={2}
-                onChange={(v) => setStair({ steps: Math.round(v) })} />
-            </div>
-            <div className="mt-3 flex flex-wrap gap-3">
-              <LenField label="Staircase width" m={sr.widthM} unit={unit} min={0.6}
-                onChange={(m) => setStair({ widthM: r1m(m) })} />
-              <LenField label="Total run length" m={sr.runM} unit={unit} min={0.6}
-                onChange={(m) => setStair({ totalLengthM: r1m(m) })} />
-              <LenField label="Step tread / going" m={sr.treadM} unit={unit} min={0.15}
-                onChange={(m) => setStair({ treadM: r1m(m), totalLengthM: undefined })} />
-              <NumField label="Step riser (mm)" value={sr.riserMm} step={5} min={80}
-                onChange={(v) => setStair({ riserMm: Math.round(v) })} />
-              <LenField label="Gap between steps" m={sr.gapM} unit={unit} min={0}
-                onChange={(m) => setStair({ gapM: Math.max(0, r1m(m)), totalLengthM: undefined })} />
-              <LenField label="Landing size" m={sr.landingM} unit={unit} min={0}
-                onChange={(m) => setStair({ landingM: Math.max(0, r1m(m)) })} />
-              <LenField label="Slide offset" m={sr.offsetM} unit={unit} min={-50} allowNegative
-                onChange={(m) => setStair({ offsetM: r1m(m) })} />
-            </div>
-            <div className="mt-2 text-[11px] text-slate-500">
-              Effective going {fmt(sr.goingM)} · riser {sr.riserMm} mm · {sr.steps} steps · run {fmt(sr.runM)}
-              {sr.landingM > 0 ? ` · landing ${fmt(sr.landingM)}` : ""}. Set <b>Total run length</b> to size the flight directly, or leave it and drive it from tread + gap × steps.
-            </div>
-          </>
-        )}
-      </div>
+      )}
 
       {/* ============ DRAWING ============ */}
       <div className="rounded-2xl border bg-white p-4">
@@ -223,43 +191,33 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
               </pattern>
             </defs>
             <g transform={`translate(${PAD},${PAD})`}>
-              {/* verandas */}
-              {geom.verandas.map((v, i) => (
-                <g key={`ver-${i}`}>
-                  <rect x={X(v.x)} y={Y(v.y)} width={L(v.w)} height={L(v.d)} fill="url(#rfp-veranda)" stroke={COL.wall} strokeWidth={1.1} />
-                  <text x={X(v.x + v.w / 2)} y={Y(v.y + v.d / 2) + 3} textAnchor="middle" fontSize={Math.max(8, S * 0.32)} fontWeight={700} fill={COL.stairStroke} letterSpacing={2}>
-                    VERANDA · {fmt(v.d)}
-                  </text>
-                </g>
-              ))}
+              {/* verandas / corridors — each drawn separately with its own label */}
+              {geom.verandas.map((v) => {
+                const horiz = v.side === "top" || v.side === "bottom";
+                const cx = X(v.x + v.w / 2), cy = Y(v.y + v.d / 2);
+                const depth = horiz ? v.d : v.w;
+                return (
+                  <g key={`ver-${v.id}`}>
+                    <rect x={X(v.x)} y={Y(v.y)} width={L(v.w)} height={L(v.d)} fill="url(#rfp-veranda)" stroke={COL.wall} strokeWidth={1.1} />
+                    <text x={cx} y={cy + (horiz ? 3 : 0)} textAnchor="middle" dominantBaseline="middle" fontSize={Math.max(7.5, S * 0.3)} fontWeight={700}
+                      fill={COL.stairStroke} letterSpacing={2} transform={horiz ? undefined : `rotate(-90 ${cx} ${cy})`}>
+                      {v.label.toUpperCase()} · {fmt(depth)}
+                    </text>
+                  </g>
+                );
+              })}
 
               {/* staircases */}
-              {geom.stairs.map((s, i) => <StairGlyph key={`stair-${i}`} s={s} X={X} Y={Y} L={L} S={S} fmt={fmt} />)}
+              {geom.stairs.map((s) => <StairGlyph key={`stair-${s.id}`} s={s} X={X} Y={Y} L={L} S={S} fmt={fmt} />)}
 
               {/* room bodies (with wall/panel band) */}
               {geom.rooms.map((p) => <RoomBody key={`body-${p.no}`} p={p} wallM={geom.wallM} X={X} Y={Y} L={L} S={S} fmt={fmt} />)}
 
-              {/* bold building outline (room block, excludes staircases) */}
+              {/* bold building outline (room block, excludes verandas beyond it & staircases) */}
               <rect x={X(0)} y={Y(0)} width={L(geom.blockWM)} height={L(geom.blockDM)} fill="none" stroke={COL.wall} strokeWidth={2.4} />
 
-              {/* safety railing along the open (outer) veranda edges */}
-              {(fp.showRailing ?? true) && geom.verandas.map((v, i) => {
-                const isTop = v.y < geom.blockDM / 2;
-                const yEdge = Y(isTop ? v.y : v.y + v.d);
-                const x0 = X(v.x), x1 = X(v.x + v.w);
-                const nPost = Math.max(2, Math.round((x1 - x0) / 16));
-                const out = isTop ? -3.5 : 3.5; // posts point away from the building
-                return (
-                  <g key={`rail-${i}`}>
-                    <line x1={x0} y1={yEdge} x2={x1} y2={yEdge} stroke={COL.rail} strokeWidth={2.8} strokeLinecap="round" />
-                    {Array.from({ length: nPost + 1 }, (_, k) => {
-                      const px = x0 + ((x1 - x0) * k) / nPost;
-                      return <line key={k} x1={px} y1={yEdge} x2={px} y2={yEdge + out} stroke={COL.rail} strokeWidth={0.9} />;
-                    })}
-                    <text x={x0 + 2} y={yEdge + (isTop ? 8 : -4)} fontSize={6.5} fontWeight={700} fill={COL.rail}>SAFETY RAILING</text>
-                  </g>
-                );
-              })}
+              {/* per-veranda safety railing along the open (outer) edge */}
+              {geom.verandas.filter((v) => v.railing).map((v) => <VerandaRailing key={`rail-${v.id}`} v={v} X={X} Y={Y} L={L} />)}
 
               {/* openings drawn last so they paint over the outline */}
               {geom.rooms.map((p) => <RoomOpenings key={`op-${p.no}`} p={p} X={X} Y={Y} L={L} S={S} fmt={fmt} />)}
@@ -453,10 +411,12 @@ function StairGlyph({ s, X, Y, L, S, fmt }: {
 
   const cx = sx + sw / 2, cy = sy + sh / 2;
   const cap = `W ${fmt(s.widthM)} · run ${fmt(s.runM)} · ${s.steps}T@${fmt(s.goingM)} · R${s.riserMm}mm${s.landingM > 0 ? ` · land ${fmt(s.landingM)}` : ""}`;
+  const offCap = `offset ${fmt(s.offsetToWallM)} from wall · ${fmt(s.offsetToCornerM)} from corner`;
+  const stroke = s.overlap ? "#dc2626" : COL.stairStroke;
 
   return (
     <g>
-      <rect x={sx} y={sy} width={sw} height={sh} fill={COL.stair} stroke={COL.stairStroke} strokeWidth={1.4} />
+      <rect x={sx} y={sy} width={sw} height={sh} fill={COL.stair} stroke={stroke} strokeWidth={s.overlap ? 2.4 : 1.4} />
       {/* landing */}
       {landing && <rect x={landing.x} y={landing.y} width={landing.w} height={landing.h} fill={COL.landing} stroke={COL.stairStroke} strokeWidth={1} />}
       {/* treads */}
@@ -477,11 +437,12 @@ function StairGlyph({ s, X, Y, L, S, fmt }: {
       )}
       {/* label */}
       <text x={cx} y={cy} textAnchor="middle" dominantBaseline="middle" fontSize={Math.max(7.5, S * 0.3)} fontWeight={700}
-        letterSpacing={1} fill={COL.stairStroke} transform={vertical ? `rotate(-90 ${cx} ${cy})` : undefined}>
-        STAIRCASE
+        letterSpacing={1} fill={stroke} transform={vertical ? `rotate(-90 ${cx} ${cy})` : undefined}>
+        {s.label.toUpperCase()}
       </text>
-      {/* dimension caption just outside the block */}
-      <text x={cx} y={vertical ? sy - 4 : sy + sh + 11} textAnchor="middle" fontSize={7.5} fill={COL.stairStroke}>{cap}</text>
+      {/* dimension + offset captions just outside the block */}
+      <text x={cx} y={vertical ? sy - 13 : sy + sh + 11} textAnchor="middle" fontSize={7.5} fill={COL.stairStroke}>{cap}</text>
+      <text x={cx} y={vertical ? sy - 4 : sy + sh + 20} textAnchor="middle" fontSize={7} fill={COL.dim}>{offCap}</text>
     </g>
   );
 }
@@ -606,21 +567,27 @@ function LenField({ label, m, unit, onChange, min = 0, allowNegative, preferMm }
 }) {
   // small thicknesses read better in mm even under ft/ft-in units
   const effUnit: LengthUnit = preferMm && (unit === "ft" || unit === "ftin") ? "mm" : unit;
-  // signed fields (e.g. slide offset) can't be represented in a two-box ft+in editor
-  // (a 0'-6" negative loses its sign), so fall back to a single decimal-feet box for them.
-  if (effUnit === "ftin" && !allowNegative) {
-    const { ft, inch } = toFeetInches(m);
+  if (effUnit === "ftin") {
+    // signed fields (movement) get a −/+ sign toggle so feet+inches stays unambiguous even for
+    // small negative offsets (a plain two-box editor loses the sign of a 0'-6" value).
+    const neg = m < -1e-9;
+    const { ft, inch } = toFeetInches(Math.abs(m));
+    const emit = (sign: number, f: number, i: number) => onChange(sign * fromFeetInches(f, i));
     return (
       <div className="text-xs font-medium text-slate-600">
         <span className="mb-1 block">{label}</span>
         <div className="flex items-center gap-1">
-          <input type="number" inputMode="decimal" step={1} value={ft}
-            onChange={(e) => onChange(fromFeetInches(parseInt(e.target.value, 10) || 0, inch))}
+          {allowNegative && (
+            <button type="button" onClick={() => emit(neg ? 1 : -1, ft, inch)}
+              className="h-8 w-7 rounded-md border border-slate-300 bg-white text-sm font-bold text-slate-600 hover:bg-slate-100">{neg ? "−" : "+"}</button>
+          )}
+          <input type="number" inputMode="decimal" step={1} min={0} value={ft}
+            onChange={(e) => emit(neg ? -1 : 1, Math.abs(parseInt(e.target.value, 10) || 0), inch)}
             onFocus={(e) => e.currentTarget.select()}
             className="h-8 w-14 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400" />
           <span className="text-[10px] text-slate-400">ft</span>
           <input type="number" inputMode="decimal" step={1} min={0} max={11} value={inch}
-            onChange={(e) => onChange(fromFeetInches(ft, parseInt(e.target.value, 10) || 0))}
+            onChange={(e) => emit(neg ? -1 : 1, ft, clamp(Math.abs(parseInt(e.target.value, 10) || 0), 0, 11))}
             onFocus={(e) => e.currentTarget.select()}
             className="h-8 w-14 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400" />
           <span className="text-[10px] text-slate-400">in</span>
@@ -727,4 +694,203 @@ function SchedLen({ m, unit, onChange, onClear, custom, max }: {
 function clampMax(v: number, max?: number) {
   if (max == null) return Math.max(0, v);
   return clamp(v, 0, Math.max(0, max));
+}
+
+const uid = () => "x" + Math.random().toString(36).slice(2, 8);
+
+/* ===================================================== veranda railing glyph */
+
+function VerandaRailing({ v, X, Y, L }: { v: FPVeranda; X: (m: number) => number; Y: (m: number) => number; L: (m: number) => number }) {
+  const horiz = v.side === "top" || v.side === "bottom";
+  if (horiz) {
+    const yEdge = Y(v.side === "top" ? v.y : v.y + v.d);
+    const x0 = X(v.x), x1 = X(v.x + v.w);
+    const n = Math.max(2, Math.round((x1 - x0) / 16));
+    const out = v.side === "top" ? -3.5 : 3.5;
+    return (
+      <g>
+        <line x1={x0} y1={yEdge} x2={x1} y2={yEdge} stroke={COL.rail} strokeWidth={2.8} strokeLinecap="round" />
+        {Array.from({ length: n + 1 }, (_, k) => { const px = x0 + ((x1 - x0) * k) / n; return <line key={k} x1={px} y1={yEdge} x2={px} y2={yEdge + out} stroke={COL.rail} strokeWidth={0.9} />; })}
+        <text x={x0 + 2} y={yEdge + (v.side === "top" ? 8 : -4)} fontSize={6.5} fontWeight={700} fill={COL.rail}>SAFETY RAILING</text>
+      </g>
+    );
+  }
+  const xEdge = X(v.side === "left" ? v.x : v.x + v.w);
+  const y0 = Y(v.y), y1 = Y(v.y + v.d);
+  const n = Math.max(2, Math.round((y1 - y0) / 16));
+  const out = v.side === "left" ? -3.5 : 3.5;
+  return (
+    <g>
+      <line x1={xEdge} y1={y0} x2={xEdge} y2={y1} stroke={COL.rail} strokeWidth={2.8} strokeLinecap="round" />
+      {Array.from({ length: n + 1 }, (_, k) => { const py = y0 + ((y1 - y0) * k) / n; return <line key={k} x1={xEdge} y1={py} x2={xEdge + out} y2={py} stroke={COL.rail} strokeWidth={0.9} />; })}
+    </g>
+  );
+}
+
+/* ===================================================== staircase manager */
+
+function StairManager({ list, unit, floors, verandaM, cfg, fmt, stairById, onChange }: {
+  list: StaircaseDrawConfig[]; unit: LengthUnit; floors: number; verandaM: number;
+  cfg: LabourColonyResult["config"]; fmt: (m: number) => string;
+  stairById: Map<string, FPStair>; onChange: (list: StaircaseDrawConfig[]) => void;
+}) {
+  const update = (i: number, patch: Partial<StaircaseDrawConfig>) => onChange(list.map((s, j) => (j === i ? { ...s, ...patch } : s)));
+  const remove = (i: number) => onChange(list.filter((_, j) => j !== i));
+  const duplicate = (i: number) => {
+    const src = list[i];
+    const isVert = (src.position ?? "right") === "left" || (src.position ?? "right") === "right";
+    const copy: StaircaseDrawConfig = {
+      ...src, id: uid(), label: `${src.label ?? "Staircase"} copy`,
+      dxM: (src.dxM ?? 0) + (isVert ? 0 : 1.0), dyM: (src.dyM ?? 0) + (isVert ? 1.0 : 0),
+    };
+    onChange([...list.slice(0, i + 1), copy, ...list.slice(i + 1)]);
+  };
+  const add = () => onChange([...list, { id: uid(), label: `Staircase ${list.length + 1}`, position: "right", enabled: true }]);
+
+  return (
+    <div className="rounded-xl border bg-white p-3">
+      <div className="mb-2 flex items-center justify-between">
+        <div className="text-xs font-semibold text-slate-700">Staircases — add / duplicate / edit / delete ({list.length})</div>
+        <button type="button" onClick={add} className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-[11px] font-semibold text-amber-800 hover:bg-amber-100">+ Add staircase</button>
+      </div>
+      {list.length === 0 && <div className="text-[11px] text-slate-500">No staircases. Click <b>+ Add staircase</b> to create one.</div>}
+      {list.map((s, i) => (
+        <StairCard key={s.id ?? i} sc={s} unit={unit} floors={floors} verandaM={verandaM} cfg={cfg} fmt={fmt}
+          placed={stairById.get(s.id ?? "")} onChange={(p) => update(i, p)} onDuplicate={() => duplicate(i)} onDelete={() => remove(i)} />
+      ))}
+    </div>
+  );
+}
+
+function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onDuplicate, onDelete }: {
+  sc: StaircaseDrawConfig; unit: LengthUnit; floors: number; verandaM: number;
+  cfg: LabourColonyResult["config"]; fmt: (m: number) => string; placed?: FPStair;
+  onChange: (patch: Partial<StaircaseDrawConfig>) => void; onDuplicate: () => void; onDelete: () => void;
+}) {
+  const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth);
+  const posVal = sr.position === "both" ? "right" : sr.position;
+  const nudge = 0.3048; // 1 ft
+  return (
+    <div className={`mb-2 rounded-lg border p-2.5 ${placed?.overlap ? "border-red-300 bg-red-50" : "border-slate-200"}`}>
+      <div className="mb-2 flex items-center gap-2">
+        <input value={sc.label ?? "Staircase"} onChange={(e) => onChange({ label: e.target.value })}
+          className="h-7 flex-1 rounded-md border border-slate-300 bg-white px-2 text-xs font-semibold" />
+        <label className="flex items-center gap-1 text-[11px] text-slate-600">
+          <input type="checkbox" checked={sr.enabled} onChange={(e) => onChange({ enabled: e.target.checked })} /> Show
+        </label>
+        <button type="button" onClick={onDuplicate} title="Duplicate" className="rounded-md border border-slate-300 px-2 py-1 text-[11px] hover:bg-slate-50">Duplicate</button>
+        <button type="button" onClick={onDelete} title="Delete" className="rounded-md border border-red-300 px-2 py-1 text-[11px] text-red-600 hover:bg-red-50">Delete</button>
+      </div>
+      {sr.enabled && (
+        <>
+          <div className="flex flex-wrap gap-3">
+            <SelField label="Position (side)" value={posVal} onChange={(v) => onChange({ position: v as StaircaseDrawConfig["position"] })}
+              options={[["left", "Left side"], ["right", "Right side"], ["top", "Top side"], ["bottom", "Bottom side"]]} />
+            <SelField label="Entry side" value={sr.entry} onChange={(v) => onChange({ entry: v as "left" | "right" })}
+              options={[["left", "Left / near"], ["right", "Right / far"]]} />
+            <SelField label="Up direction" value={sr.direction} onChange={(v) => onChange({ direction: v as "up" | "down" })}
+              options={[["up", "Away from entry"], ["down", "Toward entry"]]} />
+            <NumField label="Number of steps" value={sr.steps} step={1} min={2} onChange={(v) => onChange({ steps: Math.round(v) })} />
+          </div>
+          <div className="mt-3 flex flex-wrap gap-3">
+            <LenField label="Width" m={sr.widthM} unit={unit} min={0.6} onChange={(m) => onChange({ widthM: r1m(m) })} />
+            <LenField label="Total run length" m={sr.runM} unit={unit} min={0.6} onChange={(m) => onChange({ totalLengthM: r1m(m) })} />
+            <LenField label="Step tread / going" m={sr.treadM} unit={unit} min={0.15} onChange={(m) => onChange({ treadM: r1m(m), totalLengthM: undefined })} />
+            <NumField label="Step riser (mm)" value={sr.riserMm} step={5} min={80} onChange={(v) => onChange({ riserMm: Math.round(v) })} />
+            <LenField label="Gap between steps" m={sr.gapM} unit={unit} min={0} onChange={(m) => onChange({ gapM: Math.max(0, r1m(m)), totalLengthM: undefined })} />
+            <LenField label="Landing size" m={sr.landingM} unit={unit} min={0} onChange={(m) => onChange({ landingM: Math.max(0, r1m(m)) })} />
+          </div>
+          {/* movement */}
+          <div className="mt-3 flex flex-wrap items-end gap-3 rounded-md bg-slate-50 p-2">
+            <LenField label="Shift ← / → (horizontal)" m={sc.dxM ?? 0} unit={unit} allowNegative onChange={(m) => onChange({ dxM: r1m(m) })} />
+            <LenField label="Shift ↑ / ↓ (vertical)" m={sc.dyM ?? 0} unit={unit} allowNegative onChange={(m) => onChange({ dyM: r1m(m) })} />
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] text-slate-500">Nudge (1 ft)</span>
+              <div className="flex gap-1">
+                <NudgeBtn label="←" onClick={() => onChange({ dxM: r1m((sc.dxM ?? 0) - nudge) })} />
+                <NudgeBtn label="→" onClick={() => onChange({ dxM: r1m((sc.dxM ?? 0) + nudge) })} />
+                <NudgeBtn label="↑" onClick={() => onChange({ dyM: r1m((sc.dyM ?? 0) - nudge) })} />
+                <NudgeBtn label="↓" onClick={() => onChange({ dyM: r1m((sc.dyM ?? 0) + nudge) })} />
+                <NudgeBtn label="⌿" title="Reset movement" onClick={() => onChange({ dxM: 0, dyM: 0, offsetM: 0 })} />
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 text-[11px] text-slate-500">
+            going {fmt(sr.goingM)} · riser {sr.riserMm} mm · {sr.steps} steps · run {fmt(sr.runM)}{sr.landingM > 0 ? ` · landing ${fmt(sr.landingM)}` : ""}
+            {placed && <> · <span className="font-semibold text-slate-600">offset {fmt(placed.offsetToWallM)} from wall, {fmt(placed.offsetToCornerM)} from corner</span></>}
+            {placed?.overlap && <span className="font-semibold text-red-600"> · ⚠ overlaps another element</span>}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function NudgeBtn({ label, onClick, title }: { label: string; onClick: () => void; title?: string }) {
+  return (
+    <button type="button" onClick={onClick} title={title}
+      className="h-7 w-7 rounded-md border border-slate-300 bg-white text-sm leading-none text-slate-600 hover:bg-slate-100">{label}</button>
+  );
+}
+
+/* ===================================================== veranda / corridor manager */
+
+function VerandaManager({ list, unit, verandaM, onChange }: {
+  list: VerandaDrawConfig[]; unit: LengthUnit; verandaM: number; onChange: (list: VerandaDrawConfig[]) => void;
+}) {
+  const update = (i: number, patch: Partial<VerandaDrawConfig>) => onChange(list.map((v, j) => (j === i ? { ...v, ...patch } : v)));
+  const remove = (i: number) => onChange(list.filter((_, j) => j !== i));
+  const duplicate = (i: number) => {
+    const src = list[i];
+    const copy: VerandaDrawConfig = { ...src, id: uid(), label: `${src.label ?? "Veranda"} copy`, offsetM: (src.offsetM ?? 0) + 1.0 };
+    onChange([...list.slice(0, i + 1), copy, ...list.slice(i + 1)]);
+  };
+  const add = () => onChange([...list, { id: uid(), label: `Veranda ${list.length + 1}`, side: "top", railing: true, enabled: true }]);
+
+  return (
+    <div className="rounded-xl border bg-white p-3">
+      <div className="mb-2 flex items-center justify-between">
+        <div className="text-xs font-semibold text-slate-700">Verandas / corridors — add / duplicate / edit / delete ({list.length})</div>
+        <button type="button" onClick={add} className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-[11px] font-semibold text-amber-800 hover:bg-amber-100">+ Add veranda / corridor</button>
+      </div>
+      {list.length === 0 && <div className="text-[11px] text-slate-500">No verandas. Click <b>+ Add veranda / corridor</b> to create one.</div>}
+      {list.map((v, i) => (
+        <VerandaCard key={v.id ?? i} vc={v} unit={unit} verandaM={verandaM}
+          onChange={(p) => update(i, p)} onDuplicate={() => duplicate(i)} onDelete={() => remove(i)} />
+      ))}
+    </div>
+  );
+}
+
+function VerandaCard({ vc, unit, verandaM, onChange, onDuplicate, onDelete }: {
+  vc: VerandaDrawConfig; unit: LengthUnit; verandaM: number;
+  onChange: (patch: Partial<VerandaDrawConfig>) => void; onDuplicate: () => void; onDelete: () => void;
+}) {
+  const enabled = vc.enabled ?? true;
+  const depthM = vc.widthM && vc.widthM > 0 ? vc.widthM : verandaM;
+  return (
+    <div className="mb-2 rounded-lg border border-slate-200 p-2.5">
+      <div className="mb-2 flex items-center gap-2">
+        <input value={vc.label ?? "Veranda"} onChange={(e) => onChange({ label: e.target.value })}
+          className="h-7 flex-1 rounded-md border border-slate-300 bg-white px-2 text-xs font-semibold" />
+        <label className="flex items-center gap-1 text-[11px] text-slate-600">
+          <input type="checkbox" checked={enabled} onChange={(e) => onChange({ enabled: e.target.checked })} /> Show
+        </label>
+        <button type="button" onClick={onDuplicate} className="rounded-md border border-slate-300 px-2 py-1 text-[11px] hover:bg-slate-50">Duplicate</button>
+        <button type="button" onClick={onDelete} className="rounded-md border border-red-300 px-2 py-1 text-[11px] text-red-600 hover:bg-red-50">Delete</button>
+      </div>
+      {enabled && (
+        <div className="flex flex-wrap items-end gap-3">
+          <SelField label="Side" value={vc.side ?? "top"} onChange={(v) => onChange({ side: v as VerandaDrawConfig["side"] })}
+            options={[["top", "Top"], ["bottom", "Bottom"], ["left", "Left"], ["right", "Right"]]} />
+          <LenField label="Width / depth" m={depthM} unit={unit} min={0.3} onChange={(m) => onChange({ widthM: r1m(m) })} />
+          <LenField label="Length (0 = full)" m={vc.lengthM ?? 0} unit={unit} min={0} onChange={(m) => onChange({ lengthM: Math.max(0, r1m(m)) })} />
+          <LenField label="Position offset" m={vc.offsetM ?? 0} unit={unit} min={0} onChange={(m) => onChange({ offsetM: Math.max(0, r1m(m)) })} />
+          <label className="flex items-center gap-1.5 text-xs text-slate-600 pb-1.5">
+            <input type="checkbox" checked={vc.railing ?? true} onChange={(e) => onChange({ railing: e.target.checked })} /> Safety railing
+          </label>
+        </div>
+      )}
+    </div>
+  );
 }
