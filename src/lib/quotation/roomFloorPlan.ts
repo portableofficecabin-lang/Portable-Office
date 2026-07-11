@@ -18,6 +18,8 @@ import type {
   LabourColonyResult,
   RoomFloorPlanConfig,
   RoomOpeningOverride,
+  RoomDoor,
+  RoomWall,
   StaircaseDrawConfig,
   VerandaDrawConfig,
 } from "./labourColony";
@@ -31,18 +33,33 @@ type Side = "top" | "bottom" | "left" | "right";
 
 /* ------------------------------------------------------------------ types */
 
+/** A resolved door with absolute geometry, ready to draw. Its position has been auto-adjusted to
+ *  honour the minimum clearance from the window, other doors, wall corners/partitions & staircases. */
+export interface FPDoor {
+  id: string;
+  wall: RoomWall;      // which wall of the room rectangle (top/bottom/left/right)
+  posM: number;        // along-wall distance from the wall's START corner to the door's NEAR edge (m)
+  widthM: number;      // leaf width (m)
+  heightM: number;     // leaf height (m) — schedule/caption only (plan is 2D)
+  hinge: "start" | "end";
+  swing: "in" | "out"; // leaf swings into the room ("in") or away ("out")
+  into: 1 | -1;        // interior normal sign on the perpendicular axis (for the swing direction)
+  wallLenM: number;    // length of the wall the door is on
+  fromStartM: number;  // distance from the wall's start corner to the near edge (= posM)
+  fromEndM: number;    // distance from the far edge to the wall's end corner
+  fromNearCornerM: number; // min(fromStartM, fromEndM) — distance to the NEAREST corner
+  overlap: boolean;    // true when the wall was too crowded to fully clear (couldn't honour clearances)
+}
+
 export interface FPRoom {
   no: number;
   row: "top" | "bottom";
   x: number; y: number; w: number; d: number; // metres
-  wallY: number;      // veranda-facing wall (door/window sit here), metres
-  into: 1 | -1;       // interior direction from that wall
-  doorFromLeftM: number;
+  wallY: number;      // veranda-facing (external) wall — the WINDOW sits here, metres
+  into: 1 | -1;       // interior direction from the external wall
   winFromLeftM: number;
-  doorWM: number;
-  doorHM: number;      // door height (schedule/caption only; plan is 2D)
   winWM: number;
-  hinge: "left" | "right";
+  doors: FPDoor[];    // any number of fully-customizable doors, positions collision-resolved
 }
 
 export interface FPRect { x: number; y: number; w: number; d: number; label?: string; }
@@ -179,6 +196,122 @@ function stepEdges(steps: number, runM: number, treadM: number, gapM: number, ov
 const rectsOverlap = (a: FPRect, b: FPRect, tol = 1e-4) =>
   a.x + a.w > b.x + tol && b.x + b.w > a.x + tol && a.y + a.d > b.y + tol && b.y + b.d > a.y + tol;
 
+/* -------------------------------------- doors: geometry + collision helpers */
+
+/** Requested (pre-resolution) door on a specific wall of a room. */
+type DoorSpec = {
+  id: string; wall: RoomWall; desiredLocal: number | undefined;
+  widthM: number; heightM: number; hinge: "start" | "end"; swing: "in" | "out";
+};
+
+type RoomBox = { x: number; y: number; w: number; d: number };
+
+/** A wall's length, interior-normal sign, perpendicular room extent, its constant coordinate and
+ *  the absolute coordinate of its START corner (top→left edge, left→top edge). */
+function wallGeom(room: RoomBox, wall: RoomWall) {
+  const horiz = wall === "top" || wall === "bottom";                 // along-axis = x
+  const wallLen = horiz ? room.w : room.d;
+  const perp = horiz ? room.d : room.w;                              // room extent the leaf swings across
+  const into: 1 | -1 = wall === "top" || wall === "left" ? 1 : -1;   // toward the room interior
+  const linePerp = wall === "top" ? room.y : wall === "bottom" ? room.y + room.d
+    : wall === "left" ? room.x : room.x + room.w;
+  const alongStart = horiz ? room.x : room.y;
+  return { horiz, wallLen, perp, into, linePerp, alongStart };
+}
+
+function mergeIntervals(iv: [number, number][]): [number, number][] {
+  const s = iv.filter(([a, b]) => b > a).sort((p, q) => p[0] - q[0]);
+  const out: [number, number][] = [];
+  for (const [a, b] of s) {
+    const last = out[out.length - 1];
+    if (last && a <= last[1] + 1e-9) last[1] = Math.max(last[1], b);
+    else out.push([a, b]);
+  }
+  return out;
+}
+
+/** Place a door's NEAR EDGE along a wall of length `wallLen`, keeping clearance `c` from both
+ *  corners and from every `blocker` interval (each already ±c-expanded). Slides to the feasible
+ *  position nearest `desired`; when the wall is too crowded to fit, clamps & reports overlap. */
+function placeAlongWall(
+  desired: number, dw: number, wallLen: number, blockers: [number, number][], c: number,
+): { pos: number; overlap: boolean } {
+  const cc = Math.max(0, Math.min(c, (wallLen - dw) / 2 - 1e-6)); // shrink corner clearance on a short wall
+  const lo = cc, hi = Math.max(cc, wallLen - dw - cc);
+  const target = clamp(desired, lo, hi);
+  // a blocker [a,b] forbids near-edge positions p where [p, p+dw] overlaps it → p ∈ (a-dw, b)
+  const forb = mergeIntervals(blockers.map(([a, b]) => [a - dw, b] as [number, number]));
+  const inForbidden = (p: number) => forb.some(([a, b]) => p > a + 1e-9 && p < b - 1e-9);
+  if (!inForbidden(target)) return { pos: target, overlap: false };
+  // nearest feasible position sits at a forbidden-interval boundary (or the wall's own lo/hi)
+  const edges = [lo, hi, ...forb.flatMap(([a, b]) => [a, b])];
+  let best: number | null = null, bestD = Infinity;
+  for (const e of edges) {
+    const p = clamp(e, lo, hi);
+    if (inForbidden(p)) continue;
+    const d = Math.abs(p - target);
+    if (d < bestD) { bestD = d; best = p; }
+  }
+  return best != null ? { pos: best, overlap: false } : { pos: target, overlap: true };
+}
+
+/** Wall-local intervals (±c) occupied by any STAIRCASE that abuts the given wall from OUTSIDE — so a
+ *  door is never placed opening straight into a staircase. Verandas are the intended opening target,
+ *  so they are deliberately NOT blockers. */
+function stairBlockersForWall(room: RoomBox, wall: RoomWall, stairRects: FPRect[], c: number): [number, number][] {
+  const { horiz, linePerp, into, alongStart } = wallGeom(room, wall);
+  const alongEnd = alongStart + (horiz ? room.w : room.d);
+  const outward = -into;              // outward normal sign on the perpendicular axis
+  const eps = 1e-3;
+  const out: [number, number][] = [];
+  for (const s of stairRects) {
+    const sPerpLo = horiz ? s.y : s.x;
+    const sPerpHi = horiz ? s.y + s.d : s.x + s.w;
+    if (sPerpLo > linePerp + eps || sPerpHi < linePerp - eps) continue;         // must reach the wall line
+    const sCentre = (sPerpLo + sPerpHi) / 2;
+    if (outward < 0 ? sCentre > linePerp + eps : sCentre < linePerp - eps) continue; // …from the outward side
+    const sAlongLo = horiz ? s.x : s.y;
+    const sAlongHi = horiz ? s.x + s.w : s.y + s.d;
+    const lo = Math.max(alongStart, sAlongLo) - alongStart;
+    const hi = Math.min(alongEnd, sAlongHi) - alongStart;
+    if (hi > lo + eps) out.push([lo - c, hi + c]);
+  }
+  return out;
+}
+
+/** Build the requested door list for a room: the explicit `doors` array, else one migrated from the
+ *  legacy single-door fields. Widths/heights fall back to the colony defaults; the wall defaults to
+ *  the veranda wall (external) or the spine wall (internal). */
+function doorSpecsFor(
+  o: RoomOpeningOverride, vWall: RoomWall, oppWall: RoomWall,
+  doorWBaseM: number, doorHBaseM: number, swingDefault: "in" | "out", sideDefault: "external" | "internal",
+): DoorSpec[] {
+  const isWall = (w: unknown): w is RoomWall => w === "top" || w === "bottom" || w === "left" || w === "right";
+  // An explicit array (even empty, after deleting them all) is honoured; only migrate the legacy
+  // single door when `doors` is truly absent.
+  if (Array.isArray(o.doors)) {
+    return o.doors.map((rd: RoomDoor, i) => ({
+      id: rd.id ?? `d${i}`,
+      wall: isWall(rd.wall) ? rd.wall : vWall,
+      desiredLocal: rd.offsetM != null && Number.isFinite(rd.offsetM) && rd.offsetM >= 0 ? rd.offsetM : undefined,
+      widthM: rd.widthM && rd.widthM > 0 ? rd.widthM : doorWBaseM,
+      heightM: rd.heightM && rd.heightM > 0 ? rd.heightM : doorHBaseM,
+      hinge: rd.hinge === "end" ? "end" : "start",
+      swing: rd.swing === "out" ? "out" : rd.swing === "in" ? "in" : swingDefault,
+    }));
+  }
+  const side = o.doorSide ?? sideDefault;
+  return [{
+    id: "d0",
+    wall: side === "internal" ? oppWall : vWall,
+    desiredLocal: o.doorFromLeftFt != null ? ft2m(o.doorFromLeftFt) : undefined,
+    widthM: o.doorWidthM && o.doorWidthM > 0 ? o.doorWidthM : doorWBaseM,
+    heightM: o.doorHeightM && o.doorHeightM > 0 ? o.doorHeightM : doorHBaseM,
+    hinge: (o.doorHinge ?? "left") === "right" ? "end" : "start",
+    swing: swingDefault,
+  }];
+}
+
 /* ------------------------------------------------------------------ build */
 
 export function buildRoomFloorPlan(
@@ -250,44 +383,29 @@ export function buildRoomFloorPlan(
   const winWBaseM = ft2m(conf.windowWidthFt ?? 4);
   const doorHBaseM = Math.max(1.5, conf.doorHeightM ?? 2.0);
 
-  const rooms: FPRoom[] = [];
+  const swingDefault: "in" | "out" = conf.doorSwing === "out" ? "out" : "in";
+  const sideDefault: "external" | "internal" = conf.doorSide ?? "external";
+
+  // Build each room's box + WINDOW (kept off its corners) + the requested DOOR specs. Door positions
+  // are resolved AFTER staircases exist, so doors can be kept clear of them too (see below).
+  const roomSpecs: { room: Omit<FPRoom, "doors">; specs: DoorSpec[]; windowWall: RoomWall }[] = [];
   const placeRoom = (no: number, x: number, row: "top" | "bottom") => {
     const L = lenOf(no);
     const dep = depthOf(no);
     const o = overrideOf(no);
-    const wantDoorWM = o.doorWidthM && o.doorWidthM > 0 ? o.doorWidthM : doorWBaseM;
-    let doorWM = clamp(wantDoorWM, 0.4, Math.max(0.4, Math.min(L - 0.15, dep * 0.9)));
-    const doorHM = o.doorHeightM && o.doorHeightM > 0 ? o.doorHeightM : doorHBaseM;
-    let winWM = clamp(winWBaseM, 0.5, Math.max(0.5, L - 0.15));
-    // If the wall is too short to hold BOTH openings with clearance, shrink both proportionally so
-    // they can sit side-by-side without overlapping (degenerate very-narrow rooms only).
-    const needed = doorWM + winWM + 3 * minClearM;
-    if (needed > L && doorWM + winWM > 0) {
-      const avail = Math.max(0.2, L - 3 * minClearM);
-      const shrink = Math.min(1, avail / (doorWM + winWM));
-      doorWM *= shrink; winWM *= shrink;
-    }
-    // Keep each opening a minimum clearance `c` off the room's corners/partitions. Shrink c if the
-    // wall is too short to honour it on both sides of the widest opening.
-    const c = Math.max(0, Math.min(minClearM, (L - Math.max(doorWM, winWM)) / 2 - 1e-6));
-    const doorLo = c, doorHi = Math.max(c, L - doorWM - c);
-    const winLo = c, winHi = Math.max(c, L - winWM - c);
-    const defWin = clamp(Math.max(c, 0.1 * L), winLo, winHi);
-    const defDoor = clamp(L - 0.1 * L - doorWM, doorLo, doorHi);
-    let doorFromLeftM = clamp(o.doorFromLeftFt != null ? ft2m(o.doorFromLeftFt) : defDoor, doorLo, doorHi);
-    let winFromLeftM = clamp(o.windowFromLeftFt != null ? ft2m(o.windowFromLeftFt) : defWin, winLo, winHi);
-    // No door/window overlap: window sits left, door right, separated by clearance `c`.
-    if (winFromLeftM + winWM + c > doorFromLeftM) {
-      if (winFromLeftM + winWM + c <= doorHi) doorFromLeftM = winFromLeftM + winWM + c;
-      else if (doorFromLeftM - c - winWM >= winLo) winFromLeftM = doorFromLeftM - c - winWM;
-      else { winFromLeftM = winLo; doorFromLeftM = doorHi; }
-    }
-    const hinge: "left" | "right" = o.doorHinge ?? "left";
-    if (row === "top") {
-      rooms.push({ no, row, x, y: topBandY0, w: L, d: dep, wallY: topBandY0, into: 1, doorFromLeftM, winFromLeftM, doorWM, doorHM, winWM, hinge });
-    } else {
-      rooms.push({ no, row, x, y: bottomBandY1 - dep, w: L, d: dep, wallY: bottomBandY1, into: -1, doorFromLeftM, winFromLeftM, doorWM, doorHM, winWM, hinge });
-    }
+    const winWM = clamp(winWBaseM, 0.5, Math.max(0.5, L - 0.15));
+    const wc = Math.max(0, Math.min(minClearM, (L - winWM) / 2 - 1e-6)); // off the corners
+    const winLo = wc, winHi = Math.max(wc, L - winWM - wc);
+    const defWin = clamp(Math.max(wc, 0.1 * L), winLo, winHi);           // default window: near the left
+    const winFromLeftM = clamp(o.windowFromLeftFt != null ? ft2m(o.windowFromLeftFt) : defWin, winLo, winHi);
+    // The window sits on the veranda-facing wall: "top" for a top-row room, "bottom" for a bottom-row.
+    const windowWall: RoomWall = row === "top" ? "top" : "bottom";
+    const oppWall: RoomWall = row === "top" ? "bottom" : "top";
+    const specs = doorSpecsFor(o, windowWall, oppWall, doorWBaseM, doorHBaseM, swingDefault, sideDefault);
+    const room: Omit<FPRoom, "doors"> = row === "top"
+      ? { no, row, x, y: topBandY0, w: L, d: dep, wallY: topBandY0, into: 1, winFromLeftM, winWM }
+      : { no, row, x, y: bottomBandY1 - dep, w: L, d: dep, wallY: bottomBandY1, into: -1, winFromLeftM, winWM };
+    roomSpecs.push({ room, specs, windowWall });
   };
   topNos.forEach((no, i) => placeRoom(no, top.xs[i], "top"));
   bottomNos.forEach((no, i) => placeRoom(no, bottom.xs[i], "bottom"));
@@ -381,8 +499,45 @@ export function buildRoomFloorPlan(
     });
   });
 
+  /* ---------------- resolve every room's doors ----------------
+   * Each door is placed on its chosen wall (top/bottom/left/right), auto-centred/slid to keep the
+   * minimum clearance from: the window (same wall), every OTHER door on that wall, the wall corners
+   * (= partition junctions), and any STAIRCASE abutting that wall. Verandas are the intended opening
+   * target, so they don't block. The near-edge sits `posM` from the wall's start corner; the exact
+   * distance to the NEAREST corner is reported for the drawing/schedule. */
+  const rooms: FPRoom[] = roomSpecs.map(({ room, specs, windowWall }) => {
+    const perWall: Partial<Record<RoomWall, { pos: number; w: number }[]>> = {};
+    const doors: FPDoor[] = specs.map((spec) => {
+      const wall = spec.wall;
+      const { wallLen, perp, into } = wallGeom(room, wall);
+      const dw = clamp(spec.widthM, 0.4, Math.max(0.4, Math.min(wallLen - 0.15, perp * 0.9)));
+      const c = minClearM;
+      const blockers: [number, number][] = [];
+      if (wall === windowWall) blockers.push([room.winFromLeftM - c, room.winFromLeftM + room.winWM + c]);
+      for (const d of perWall[wall] ?? []) blockers.push([d.pos - c, d.pos + d.w + c]);
+      blockers.push(...stairBlockersForWall(room, wall, stairRects, c));
+      // default: door on the window wall goes to the far side (clear of the left-hand window); other
+      // walls default to centred. Any explicit offset wins.
+      const defaultDesired = wall === windowWall ? wallLen - 0.1 * wallLen - dw : (wallLen - dw) / 2;
+      const desired = spec.desiredLocal != null ? spec.desiredLocal : defaultDesired;
+      const { pos, overlap } = placeAlongWall(desired, dw, wallLen, blockers, c);
+      (perWall[wall] ??= []).push({ pos, w: dw });
+      const fromEnd = Math.max(0, wallLen - pos - dw);
+      return {
+        id: spec.id, wall, posM: round(pos), widthM: round(dw), heightM: round(spec.heightM),
+        hinge: spec.hinge, swing: spec.swing, into,
+        wallLenM: round(wallLen), fromStartM: round(pos), fromEndM: round(fromEnd),
+        fromNearCornerM: round(Math.min(pos, fromEnd)), overlap,
+      };
+    });
+    return { ...room, doors };
+  });
+
   /* ---------------- overlap detection (rooms never overlap by construction) ---------------- */
   const overlaps: string[] = [];
+  for (const rm of rooms) for (const d of rm.doors) {
+    if (d.overlap) overlaps.push(`Room ${rm.no} door can't keep clearance on the ${d.wall} wall`);
+  }
   // stair ↔ veranda and stair ↔ stair (cross-side corner cases), veranda ↔ veranda
   const named: { r: FPRect; name: string; kind: "stair" | "veranda" }[] = [
     ...stairs.map((s) => ({ r: s as FPRect, name: s.label, kind: "stair" as const })),

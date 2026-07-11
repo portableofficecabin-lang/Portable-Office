@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { LabourColonyResult, RoomFloorPlanConfig, RoomOpeningOverride, StaircaseDrawConfig, VerandaDrawConfig } from "@/lib/quotation/labourColony";
+import type { LabourColonyResult, RoomFloorPlanConfig, RoomOpeningOverride, RoomDoor, RoomWall, StaircaseDrawConfig, VerandaDrawConfig } from "@/lib/quotation/labourColony";
 import {
   buildRoomFloorPlan, resolveStair, effectiveStaircases, effectiveVerandas,
-  type FPRoom, type FPStair, type FPVeranda, type FPBand,
+  type FPRoom, type FPDoor, type FPStair, type FPVeranda, type FPBand,
 } from "@/lib/quotation/roomFloorPlan";
 import {
   LENGTH_UNITS, type LengthUnit,
@@ -46,6 +46,14 @@ const COL = {
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi);
 const r1 = (n: number) => Math.round(n * 10) / 10;
+
+/** Font size (px) that makes `text` fit within `maxW` px (≈0.56 em per char). Returns null when
+ *  that would be below `min` — so callers can HIDE illegible labels instead of overlapping them
+ *  (long millimetre strings are the usual culprit). */
+function fitFont(text: string, maxW: number, base: number, min: number): number | null {
+  const size = Math.min(base, maxW / (Math.max(1, text.length) * 0.56));
+  return size >= min ? size : null;
+}
 
 interface Props {
   result: LabourColonyResult;
@@ -139,6 +147,22 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
             onChange={(m) => setTop({ doorHeightM: r1m(m) })} />
           <LenField label="Window width" m={(fp.windowWidthFt ?? 4) / M2FT} unit={unit} min={0.5}
             onChange={(m) => setTop({ windowWidthFt: r1(m * M2FT) })} />
+          <label className="text-xs font-medium text-slate-600">
+            <span className="mb-1 block">Door side (default)</span>
+            <select value={fp.doorSide ?? "external"} onChange={(e) => setTop({ doorSide: e.target.value as "external" | "internal" })}
+              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400">
+              <option value="external">External (veranda)</option>
+              <option value="internal">Internal (spine)</option>
+            </select>
+          </label>
+          <label className="text-xs font-medium text-slate-600">
+            <span className="mb-1 block">Door swing (default)</span>
+            <select value={fp.doorSwing ?? "in"} onChange={(e) => setTop({ doorSwing: e.target.value as "in" | "out" })}
+              className="h-8 rounded-md border border-slate-300 bg-white px-2 text-sm outline-none focus:border-amber-400">
+              <option value="in">Swings in</option>
+              <option value="out">Swings out</option>
+            </select>
+          </label>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-slate-600">
           <label className="flex items-center gap-1.5">
@@ -241,9 +265,9 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
 
       {/* ============ ROOM SCHEDULE ============ */}
       <div className="rounded-2xl border bg-white p-4">
-        <div className="mb-2 font-display font-bold text-sm text-slate-800">Room-wise schedule &amp; door measurements — {floorLabel(floorIdx)}</div>
+        <div className="mb-2 font-display font-bold text-sm text-slate-800">Room-wise schedule &amp; door editor — {floorLabel(floorIdx)}</div>
         <div className="mb-3 text-[11px] text-slate-500">
-          Per-room size &amp; door/window measurements. <b>Door W / H</b> set each door&apos;s width &amp; height; <b>Door @</b> / <b>Window @</b> are offsets measured from the room&apos;s <b>left corner</b> — all in {LENGTH_UNITS.find((u) => u.id === unit)?.label.toLowerCase()}. Use ↺ to reset a value to the colony default.
+          Per-room size, window &amp; <b>doors</b>. Each room can have <b>any number of doors</b> on any wall — <b>Upper / Lower / Left / Right</b> — with its own <b>width, height, offset, hinge</b> &amp; <b>swing (in/out)</b>. Offsets are from the wall&apos;s start corner; the <b>distance from the nearest corner</b> is shown per door and on the plan. Doors auto-keep the minimum clearance from the window, other doors, wall corners/partitions &amp; staircases. All in {LENGTH_UNITS.find((u) => u.id === unit)?.label.toLowerCase()}; ↺ resets to the colony default.
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
@@ -252,23 +276,17 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
                 <th className="py-1.5 pr-2">Room</th>
                 <th className="py-1.5 pr-2">Length</th>
                 <th className="py-1.5 pr-2">Depth</th>
-                <th className="py-1.5 pr-2 text-fuchsia-700">Door W</th>
-                <th className="py-1.5 pr-2 text-fuchsia-700">Door H</th>
-                <th className="py-1.5 pr-2 text-fuchsia-700">Door @</th>
                 <th className="py-1.5 pr-2">Window @</th>
-                <th className="py-1.5 pr-2">Door swing</th>
+                <th className="py-1.5 pr-2 text-fuchsia-700">Doors (wall · W · H · offset · hinge · swing)</th>
               </tr>
             </thead>
             <tbody>
               {geom.rooms.slice().sort((a, b) => a.no - b.no).map((p) => (
-                <RoomRow key={p.no} p={p} fp={fp} unit={unit}
+                <RoomRow key={p.no} p={p} fp={fp} unit={unit} swingDefault={fp.doorSwing === "out" ? "out" : "in"}
                   onLen={(m) => setRoom(p.no, { lengthM: m })}
                   onDepth={(m) => setRoom(p.no, { depthM: m })}
-                  onDoorW={(m) => setRoom(p.no, { doorWidthM: m })}
-                  onDoorH={(m) => setRoom(p.no, { doorHeightM: m })}
                   onWin={(m) => setRoom(p.no, { windowFromLeftFt: r1(m * M2FT) })}
-                  onDoor={(m) => setRoom(p.no, { doorFromLeftFt: r1(m * M2FT) })}
-                  onHinge={(h) => setRoom(p.no, { doorHinge: h })} />
+                  onDoors={(list) => setRoom(p.no, { doors: list })} />
               ))}
             </tbody>
           </table>
@@ -293,8 +311,23 @@ function RoomBody({ p, wallM, X, Y, L, S, fmt }: {
       {/* wall band (outer) + clear room (inner) */}
       <rect x={rx} y={ry} width={rw} height={rh} fill={COL.wallBand} stroke={COL.wall} strokeWidth={1.6} />
       <rect x={rx + inset} y={ry + inset} width={rw - 2 * inset} height={rh - 2 * inset} fill={COL.room} stroke={COL.wall} strokeWidth={0.6} />
-      <text x={rx + rw / 2} y={ry + rh / 2 - 3} textAnchor="middle" fontSize={Math.max(8, S * 0.34)} fontWeight={700} fill={COL.ink}>ROOM {p.no}</text>
-      <text x={rx + rw / 2} y={ry + rh / 2 + 11} textAnchor="middle" fontSize={8.5} fill={COL.dim}>{fmt(p.w)} × {fmt(p.d)}</text>
+      {(() => {
+        const name = `ROOM ${p.no}`;
+        const size = `${fmt(p.w)} × ${fmt(p.d)}`;
+        const nameFs = fitFont(name, rw - 6, Math.max(8, S * 0.34), 5) ?? 5;
+        const sizeFs = fitFont(size, rw - 6, 8.5, 4.4);
+        // Bias the caption block AWAY from the opening (veranda-facing) wall so it can
+        // never collide with the door/window offset dims hanging inside that wall.
+        const midY = ry + rh / 2 + p.into * Math.min(rh * 0.15, 16);
+        return (
+          <>
+            <text x={rx + rw / 2} y={midY - 3} textAnchor="middle" fontSize={nameFs} fontWeight={700} fill={COL.ink}>{name}</text>
+            {sizeFs != null && (
+              <text x={rx + rw / 2} y={midY + 11} textAnchor="middle" fontSize={sizeFs} fill={COL.dim}>{size}</text>
+            )}
+          </>
+        );
+      })()}
     </g>
   );
 }
@@ -318,37 +351,82 @@ function swingPath(hx: number, hy: number, rad: number, tipx: number, tipy: numb
 function RoomOpenings({ p, X, Y, L, fmt }: {
   p: FPRoom; X: (m: number) => number; Y: (m: number) => number; L: (m: number) => number; S: number; fmt: (m: number) => string;
 }) {
-  const wallY = Y(p.wallY);
+  const wallY = Y(p.wallY);          // window wall (external, veranda-facing)
   const into = p.into;
-  const dOx = p.x + p.doorFromLeftM;
   const wOx = p.x + p.winFromLeftM;
-  const doorW = L(p.doorWM);
   const winW = L(p.winWM);
-  const hingeAtLeft = p.hinge === "left";
-  const hx = hingeAtLeft ? X(dOx) : X(dOx) + doorW;
-  const jx = hingeAtLeft ? X(dOx) + doorW : X(dOx);
-  const tipx = hx;
-  const tipy = wallY + into * doorW;
-  const insA = wallY + into * 12; // window offset dim
-  const insB = wallY + into * 24; // door offset dim
-  const insDoorW = wallY + into * 36; // door WIDTH dim (across the opening)
+  const windowWall: RoomWall = p.row === "top" ? "top" : "bottom";
+  const rx = X(p.x), ry = Y(p.y), rw = L(p.w), rh = L(p.d);
+  // stagger each opening's dimension tiers per wall so their labels don't stack on top of each other
+  const tierOnWall: Partial<Record<RoomWall, number>> = {};
   return (
     <g>
-      {/* WINDOW */}
+      {/* WINDOW (always on the external/veranda wall) */}
       <rect x={X(wOx)} y={wallY - 2.4} width={winW} height={4.8} fill={COL.windowFill} stroke={COL.window} strokeWidth={1.4} />
       <line x1={X(wOx)} y1={wallY} x2={X(wOx) + winW} y2={wallY} stroke={COL.window} strokeWidth={1} />
       <text x={X(wOx) + winW / 2} y={wallY + into * 9} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={COL.window}>W</text>
+      <OffsetDim x0={X(p.x)} x1={X(wOx)} y={wallY + into * 12} label={fmt(p.winFromLeftM)} />
 
-      {/* DOOR opening + leaf + swing */}
-      <line x1={X(dOx)} y1={wallY} x2={X(dOx) + doorW} y2={wallY} stroke="#ffffff" strokeWidth={3.6} />
-      <line x1={hx} y1={wallY} x2={tipx} y2={tipy} stroke={COL.door} strokeWidth={2.2} />
-      <path d={swingPath(hx, wallY, doorW, tipx, tipy, jx, wallY)} fill="none" stroke={COL.doorArc} strokeWidth={1} strokeDasharray="3 2" />
-      <text x={X(dOx) + doorW / 2} y={wallY + into * 9} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={COL.door}>D</text>
+      {/* DOORS — any number, any wall, hinge start/end, swing in/out */}
+      {p.doors.map((d, i) => {
+        const tier = (tierOnWall[d.wall] = (tierOnWall[d.wall] ?? -1) + 1);
+        return (
+          <DoorGlyph key={d.id || i} d={d} n={p.doors.length > 1 ? i + 1 : 0} tier={tier}
+            windowWall={windowWall} rx={rx} ry={ry} rw={rw} rh={rh} L={L} fmt={fmt} />
+        );
+      })}
+    </g>
+  );
+}
 
-      {/* offset dims from the left corner + door WIDTH×HEIGHT measurement */}
-      <OffsetDim x0={X(p.x)} x1={X(wOx)} y={insA} label={fmt(p.winFromLeftM)} />
-      <OffsetDim x0={X(p.x)} x1={X(dOx)} y={insB} label={fmt(p.doorFromLeftM)} />
-      <OffsetDim x0={X(dOx)} x1={X(dOx) + doorW} y={insDoorW} label={`${fmt(p.doorWM)} × ${fmt(p.doorHM)} h`} color={COL.door} />
+/** One fully-resolved door: opening + leaf + swing arc on any of the 4 walls, plus its
+ *  width, height, offset-from-nearest-corner and opening direction (IN/OUT) labels. */
+function DoorGlyph({ d, n, tier, windowWall, rx, ry, rw, rh, L, fmt }: {
+  d: FPDoor; n: number; tier: number; windowWall: RoomWall;
+  rx: number; ry: number; rw: number; rh: number; L: (m: number) => number; fmt: (m: number) => string;
+}) {
+  const horiz = d.wall === "top" || d.wall === "bottom";
+  const dwPx = L(d.widthM);
+  const wy = d.wall === "top" ? ry : ry + rh;   // wall line for horizontal walls
+  const wx = d.wall === "left" ? rx : rx + rw;  // wall line for vertical walls
+  const into = d.wall === "top" || d.wall === "left" ? 1 : -1; // interior normal sign
+  const posPx = L(d.posM);
+  // opening endpoints A (near/start-corner side) & B (far side) in screen space
+  const A: [number, number] = horiz ? [rx + posPx, wy] : [wx, ry + posPx];
+  const B: [number, number] = horiz ? [rx + posPx + dwPx, wy] : [wx, ry + posPx + dwPx];
+  const s = d.swing === "in" ? 1 : -1;
+  const hinge = d.hinge === "start" ? A : B;
+  const jamb = d.hinge === "start" ? B : A;
+  const tip: [number, number] = horiz ? [hinge[0], hinge[1] + into * s * dwPx] : [hinge[0] + into * s * dwPx, hinge[1]];
+  const mid: [number, number] = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2];
+  const label: [number, number] = horiz ? [mid[0], mid[1] + into * 10] : [mid[0] + into * 10, mid[1]];
+  const col = d.overlap ? "#dc2626" : COL.door;
+  // dimension tiers (drawn INTO the room, stacked; a window-wall door sits below the window's dim)
+  const level = (d.wall === windowWall ? 1 : 0) + tier;
+  const offOff = 12 + level * 22, widOff = 22 + level * 22;
+  const nearIsStart = d.fromStartM <= d.fromEndM;
+  const capY = horiz ? label[1] + (into > 0 ? 8 : -8) : label[1] + 8;
+  return (
+    <g>
+      {/* opening gap + leaf + swing arc */}
+      <line x1={A[0]} y1={A[1]} x2={B[0]} y2={B[1]} stroke="#ffffff" strokeWidth={3.6} />
+      <line x1={hinge[0]} y1={hinge[1]} x2={tip[0]} y2={tip[1]} stroke={col} strokeWidth={2.2} />
+      <path d={swingPath(hinge[0], hinge[1], dwPx, tip[0], tip[1], jamb[0], jamb[1])} fill="none" stroke={COL.doorArc} strokeWidth={1} strokeDasharray="3 2" />
+      {/* label + W×H + opening direction */}
+      <text x={label[0]} y={label[1]} textAnchor="middle" fontSize={7.5} fontWeight={700} fill={col}>D{n || ""}</text>
+      <text x={label[0]} y={capY} textAnchor="middle" fontSize={5.3} fill={col}>{fmt(d.widthM)}×{fmt(d.heightM)} · {d.swing === "in" ? "IN" : "OUT"}</text>
+      {/* offset-from-NEAREST-corner dim + width dim */}
+      {horiz ? (
+        <>
+          <OffsetDim x0={nearIsStart ? rx : B[0]} x1={nearIsStart ? A[0] : rx + rw} y={wy + into * offOff} label={fmt(d.fromNearCornerM)} />
+          <OffsetDim x0={A[0]} x1={B[0]} y={wy + into * widOff} label={fmt(d.widthM)} color={col} />
+        </>
+      ) : (
+        <>
+          <VDim y0={nearIsStart ? ry : B[1]} y1={nearIsStart ? A[1] : ry + rh} x={wx + into * offOff} label={fmt(d.fromNearCornerM)} />
+          <VDim y0={A[1]} y1={B[1]} x={wx + into * widOff} label={fmt(d.widthM)} color={col} />
+        </>
+      )}
     </g>
   );
 }
@@ -362,7 +440,24 @@ function OffsetDim({ x0, x1, y, label, color }: { x0: number; x1: number; y: num
       <line x1={a} y1={y} x2={b} y2={y} stroke={line} strokeWidth={0.8} />
       <line x1={a} y1={y - 3} x2={a} y2={y + 3} stroke={line} strokeWidth={0.8} />
       <line x1={b} y1={y - 3} x2={b} y2={y + 3} stroke={line} strokeWidth={0.8} />
-      <text x={(a + b) / 2} y={y - 2} textAnchor="middle" fontSize={7} fill={color ?? COL.dim}>{label}</text>
+      <text x={(a + b) / 2} y={y - 2} textAnchor="middle" fontSize={Math.min(7, Math.max(4.6, Math.max(b - a, 34) / (label.length * 0.56)))} fill={color ?? COL.dim}>{label}</text>
+    </g>
+  );
+}
+
+/** Vertical offset/width dimension (for doors on the left/right walls) — rotated label. */
+function VDim({ y0, y1, x, label, color }: { y0: number; y1: number; x: number; label: string; color?: string }) {
+  if (Math.abs(y1 - y0) < 4) return null;
+  const a = Math.min(y0, y1), b = Math.max(y0, y1);
+  const line = color ?? COL.dimLine;
+  const cy = (a + b) / 2;
+  return (
+    <g>
+      <line x1={x} y1={a} x2={x} y2={b} stroke={line} strokeWidth={0.8} />
+      <line x1={x - 3} y1={a} x2={x + 3} y2={a} stroke={line} strokeWidth={0.8} />
+      <line x1={x - 3} y1={b} x2={x + 3} y2={b} stroke={line} strokeWidth={0.8} />
+      <text x={x - 2} y={cy} textAnchor="middle" fontSize={Math.min(7, Math.max(4.6, Math.max(b - a, 34) / (label.length * 0.56)))}
+        fill={color ?? COL.dim} transform={`rotate(-90 ${x - 2} ${cy})`}>{label}</text>
     </g>
   );
 }
@@ -410,8 +505,10 @@ function StairGlyph({ s, X, Y, L, S, fmt }: {
   const dirSign = aTo >= aFrom ? 1 : -1;
 
   const cx = sx + sw / 2, cy = sy + sh / 2;
-  const cap = `W ${fmt(s.widthM)} · run ${fmt(s.runM)} · ${s.steps}T@${fmt(s.goingM)} · R${s.riserMm}mm${s.landingM > 0 ? ` · land ${fmt(s.landingM)}` : ""}`;
-  const offCap = `offset ${fmt(s.offsetToWallM)} from wall · ${fmt(s.offsetToCornerM)} from corner`;
+  const capLines = [
+    `W ${fmt(s.widthM)} · run ${fmt(s.runM)}`,
+    `${s.steps}T@${fmt(s.goingM)} · R${s.riserMm}mm${s.landingM > 0 ? ` · land ${fmt(s.landingM)}` : ""}`,
+  ];
   const stroke = s.overlap ? "#dc2626" : COL.stairStroke;
 
   return (
@@ -440,9 +537,22 @@ function StairGlyph({ s, X, Y, L, S, fmt }: {
         letterSpacing={1} fill={stroke} transform={vertical ? `rotate(-90 ${cx} ${cy})` : undefined}>
         {s.label.toUpperCase()}
       </text>
-      {/* dimension + offset captions just outside the block */}
-      <text x={cx} y={vertical ? sy - 13 : sy + sh + 11} textAnchor="middle" fontSize={7.5} fill={COL.stairStroke}>{cap}</text>
-      <text x={cx} y={vertical ? sy - 4 : sy + sh + 20} textAnchor="middle" fontSize={7} fill={COL.dim}>{offCap}</text>
+      {/* compact 2-line caption — rotated alongside vertical stairs (outer side) so it never
+          overflows into the rooms; stacked just below horizontal stairs. */}
+      {vertical ? (() => {
+        const capX = s.side === "right" ? sx + sw + 8 : sx - 8;
+        return (
+          <text x={capX} y={cy} textAnchor="middle" fontSize={6.5} fill={stroke} transform={`rotate(-90 ${capX} ${cy})`}>
+            <tspan x={capX} dy={-4}>{capLines[0]}</tspan>
+            <tspan x={capX} dy={9}>{capLines[1]}</tspan>
+          </text>
+        );
+      })() : (
+        <text x={cx} y={sy + sh + 10} textAnchor="middle" fontSize={6.5} fill={stroke}>
+          <tspan x={cx} dy={0}>{capLines[0]}</tspan>
+          <tspan x={cx} dy={9}>{capLines[1]}</tspan>
+        </text>
+      )}
     </g>
   );
 }
@@ -452,12 +562,14 @@ function PanelDim({ p, wallM, X, Y, L, fmt }: {
   p: FPRoom; wallM: number; X: (m: number) => number; Y: (m: number) => number; L: (m: number) => number; fmt: (m: number) => string;
 }) {
   const x0 = X(p.x), x1 = X(p.x) + L(wallM);
-  const y = Y(p.y) + L(p.d) * 0.5;
+  // Anchor near the NON-opening (spine) wall corner — clear of the opening dims (which hang
+  // off the veranda wall) AND of the room caption (biased toward the room centre).
+  const y = Y(p.y) + (p.into > 0 ? L(p.d) - 10 : 10);
   return (
     <g>
       <line x1={x0} y1={y - 8} x2={x0} y2={y + 8} stroke={COL.overall} strokeWidth={0.8} />
       <line x1={x1} y1={y - 8} x2={x1} y2={y + 8} stroke={COL.overall} strokeWidth={0.8} />
-      <text x={x1 + 3} y={y + 3} fontSize={7.5} fill={COL.overall}>panel {fmt(wallM)}</text>
+      <text x={x1 + 3} y={y + 3} fontSize={7} fill={COL.overall}>panel {fmt(wallM)}</text>
     </g>
   );
 }
@@ -476,12 +588,17 @@ function WidthChain({ bands, totalM, X, L, fmt }: {
     <g>
       <line x1={X(start)} y1={y} x2={X(end)} y2={y} stroke={COL.dimLine} strokeWidth={0.9} />
       {bounds.map((b, i) => <line key={i} x1={X(b)} y1={y - 4} x2={X(b)} y2={y + 4} stroke={COL.dimLine} strokeWidth={0.9} />)}
-      {bands.map((b, i) => (
-        <text key={i} x={X(b.start + b.len / 2)} y={y - 5} textAnchor="middle" fontSize={7.5}
-          fill={b.kind === "stair" ? COL.stairStroke : b.kind === "gap" ? COL.dim : COL.dim}>
-          {b.kind === "gap" ? "gap " : ""}{fmt(b.len)}
-        </text>
-      ))}
+      {bands.map((b, i) => {
+        const label = `${b.kind === "gap" ? "gap " : ""}${fmt(b.len)}`;
+        const fs = fitFont(label, L(b.len) + 8, 7.5, 4.6); // fit the band; hide when illegible
+        if (fs == null) return null;
+        return (
+          <text key={i} x={X(b.start + b.len / 2)} y={y - 5} textAnchor="middle" fontSize={fs}
+            fill={b.kind === "stair" ? COL.stairStroke : COL.dim}>
+            {label}
+          </text>
+        );
+      })}
       {/* overall */}
       <line x1={X(start)} y1={yOvr} x2={X(end)} y2={yOvr} stroke={COL.overall} strokeWidth={1} />
       <line x1={X(start)} y1={y} x2={X(start)} y2={yOvr} stroke={COL.overall} strokeWidth={0.6} />
@@ -507,10 +624,13 @@ function DepthChain({ bands, totalM, Y, L, fmt }: {
       {bounds.map((b, i) => <line key={i} x1={x - 4} y1={Y(b)} x2={x + 4} y2={Y(b)} stroke={COL.dimLine} strokeWidth={0.9} />)}
       {bands.map((b, i) => {
         const cy = Y(b.start + b.len / 2);
+        const label = fmt(b.len);
+        const fs = fitFont(label, L(b.len) + 8, 7.5, 4.6); // fit the band; hide when illegible
+        if (fs == null) return null;
         return (
-          <text key={i} x={x - 6} y={cy} textAnchor="middle" fontSize={7.5}
+          <text key={i} x={x - 6} y={cy} textAnchor="middle" fontSize={fs}
             fill={b.kind === "stair" ? COL.stairStroke : COL.dim} transform={`rotate(-90 ${x - 6} ${cy})`}>
-            {fmt(b.len)}
+            {label}
           </text>
         );
       })}
@@ -632,51 +752,102 @@ function SelField({ label, value, onChange, options }: { label: string; value: s
 }
 
 /* per-room schedule row */
-function RoomRow({ p, fp, unit, onLen, onDepth, onDoorW, onDoorH, onWin, onDoor, onHinge }: {
-  p: FPRoom; fp: RoomFloorPlanConfig; unit: LengthUnit;
+function RoomRow({ p, fp, unit, swingDefault, onLen, onDepth, onWin, onDoors }: {
+  p: FPRoom; fp: RoomFloorPlanConfig; unit: LengthUnit; swingDefault: "in" | "out";
   onLen: (m: number | undefined) => void; onDepth: (m: number | undefined) => void;
-  onDoorW: (m: number | undefined) => void; onDoorH: (m: number | undefined) => void;
-  onWin: (m: number) => void; onDoor: (m: number) => void; onHinge: (h: "left" | "right") => void;
+  onWin: (m: number) => void; onDoors: (list: RoomDoor[]) => void;
 }) {
   const ov = fp.rooms?.[p.no] ?? {};
-  const doorWMax = Math.max(0.4, Math.min(p.w - 0.15, p.d * 0.9));
+  const defaultWall: RoomWall = p.row === "top" ? "top" : "bottom";
+  // Editable door list: the explicit override, else seeded from the resolved doors (position kept;
+  // width/height left on the colony default so ↺ semantics survive). Ids are stable (from the engine).
+  const editable: RoomDoor[] = ov.doors ?? p.doors.map((d) => ({
+    id: d.id, wall: d.wall, offsetM: r1m(d.posM), hinge: d.hinge, swing: d.swing,
+  }));
   return (
-    <tr className="border-b last:border-0">
+    <tr className="border-b last:border-0 align-top">
       <td className="py-1.5 pr-2 font-semibold text-slate-700">ROOM {p.no}</td>
       <td className="py-1.5 pr-2"><SchedLen m={ov.lengthM ?? p.w} unit={unit} onChange={(m) => onLen(m)} onClear={() => onLen(undefined)} custom={ov.lengthM != null} /></td>
       <td className="py-1.5 pr-2"><SchedLen m={ov.depthM ?? p.d} unit={unit} onChange={(m) => onDepth(m)} onClear={() => onDepth(undefined)} custom={ov.depthM != null} /></td>
-      <td className="py-1.5 pr-2"><SchedLen m={p.doorWM} unit={unit} onChange={(m) => onDoorW(m)} onClear={() => onDoorW(undefined)} custom={ov.doorWidthM != null} max={doorWMax} /></td>
-      <td className="py-1.5 pr-2"><SchedLen m={p.doorHM} unit={unit} onChange={(m) => onDoorH(m)} onClear={() => onDoorH(undefined)} custom={ov.doorHeightM != null} /></td>
-      <td className="py-1.5 pr-2"><SchedLen m={p.doorFromLeftM} unit={unit} onChange={onDoor} max={p.w - p.doorWM} /></td>
       <td className="py-1.5 pr-2"><SchedLen m={p.winFromLeftM} unit={unit} onChange={onWin} max={p.w - p.winWM} /></td>
       <td className="py-1.5 pr-2">
-        <div className="inline-flex overflow-hidden rounded-md border border-slate-300">
-          {(["left", "right"] as const).map((h) => (
-            <button key={h} type="button" onClick={() => onHinge(h)}
-              className={`px-2 py-1 text-[11px] ${p.hinge === h ? "bg-amber-100 font-semibold text-amber-800" : "bg-white text-slate-500 hover:text-slate-700"}`}>
-              {h === "left" ? "Hinge L" : "Hinge R"}
-            </button>
-          ))}
-        </div>
+        <RoomDoorsCell list={editable} resolved={p.doors} unit={unit} defaultWall={defaultWall} swingDefault={swingDefault} onChange={onDoors} />
       </td>
     </tr>
   );
 }
 
-function SchedLen({ m, unit, onChange, onClear, custom, max }: {
-  m: number; unit: LengthUnit; onChange: (m: number) => void; onClear?: () => void; custom?: boolean; max?: number;
+const WALL_OPTS: [RoomWall, string][] = [["top", "Upper"], ["bottom", "Lower"], ["left", "Left"], ["right", "Right"]];
+
+/** Per-room door editor: any number of doors, each with wall, width, height, offset, hinge & swing,
+ *  plus a live "distance from nearest corner" readout and an overlap flag. */
+function RoomDoorsCell({ list, resolved, unit, defaultWall, swingDefault, onChange }: {
+  list: RoomDoor[]; resolved: FPDoor[]; unit: LengthUnit; defaultWall: RoomWall; swingDefault: "in" | "out";
+  onChange: (l: RoomDoor[]) => void;
 }) {
+  const update = (i: number, patch: Partial<RoomDoor>) => onChange(list.map((d, j) => (j === i ? { ...d, ...patch } : d)));
+  const remove = (i: number) => onChange(list.filter((_, j) => j !== i));
+  const add = () => onChange([...list, { id: uid(), wall: defaultWall, swing: swingDefault }]);
+  return (
+    <div className="min-w-[440px] space-y-1">
+      {list.length === 0 && <div className="text-[10px] italic text-slate-400">No doors on this room.</div>}
+      {list.map((d, i) => {
+        const rd = resolved[i];
+        const wall = d.wall ?? defaultWall;
+        const hinge = d.hinge ?? rd?.hinge ?? "start";
+        const swing = d.swing ?? rd?.swing ?? swingDefault;
+        return (
+          <div key={d.id || i} className="flex flex-wrap items-center gap-1 rounded-md border border-fuchsia-100 bg-fuchsia-50/40 px-1.5 py-1">
+            <span className="w-6 shrink-0 text-[10px] font-bold text-fuchsia-700">D{list.length > 1 ? i + 1 : ""}</span>
+            <select value={wall} onChange={(e) => update(i, { wall: e.target.value as RoomWall })}
+              className="h-6 rounded border border-slate-300 bg-white px-1 text-[10px]" title="Wall">
+              {WALL_OPTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+            <span className="text-[9px] text-slate-400">W</span>
+            <SchedLen compact m={rd?.widthM ?? 0.9} unit={unit} onChange={(m) => update(i, { widthM: m })} onClear={() => update(i, { widthM: undefined })} custom={d.widthM != null} />
+            <span className="text-[9px] text-slate-400">H</span>
+            <SchedLen compact m={rd?.heightM ?? 2.0} unit={unit} onChange={(m) => update(i, { heightM: m })} onClear={() => update(i, { heightM: undefined })} custom={d.heightM != null} />
+            <span className="text-[9px] text-slate-400" title="Offset from the wall's start corner (Upper/Lower → left; Left/Right → top)">@</span>
+            <SchedLen compact m={rd?.posM ?? d.offsetM ?? 0} unit={unit} onChange={(m) => update(i, { offsetM: Math.max(0, m) })} />
+            <button type="button" onClick={() => update(i, { hinge: hinge === "start" ? "end" : "start" })}
+              className="h-6 rounded border border-slate-300 bg-white px-1.5 text-[10px] font-medium text-slate-600 hover:bg-slate-50" title="Hinge at wall start / end corner">
+              Hinge {hinge === "start" ? "S" : "E"}
+            </button>
+            <button type="button" onClick={() => update(i, { swing: swing === "in" ? "out" : "in" })}
+              className={`h-6 rounded border px-1.5 text-[10px] font-semibold ${swing === "in" ? "border-emerald-300 bg-emerald-50 text-emerald-700" : "border-sky-300 bg-sky-50 text-sky-700"}`} title="Swing into / out of the room">
+              {swing === "in" ? "IN" : "OUT"}
+            </button>
+            {rd && (
+              <span className={`text-[9px] ${rd.overlap ? "font-semibold text-red-500" : "text-slate-400"}`} title="Distance from the nearest corner">
+                ⌐{formatLen(rd.fromNearCornerM, unit)}{rd.overlap ? " ⚠" : ""}
+              </span>
+            )}
+            <button type="button" onClick={() => remove(i)} className="ml-auto text-[12px] leading-none text-slate-400 hover:text-red-500" title="Delete door">✕</button>
+          </div>
+        );
+      })}
+      <button type="button" onClick={add}
+        className="rounded border border-fuchsia-300 bg-fuchsia-50 px-2 py-0.5 text-[10px] font-semibold text-fuchsia-700 hover:bg-fuchsia-100">+ Add door</button>
+    </div>
+  );
+}
+
+function SchedLen({ m, unit, onChange, onClear, custom, max, compact }: {
+  m: number; unit: LengthUnit; onChange: (m: number) => void; onClear?: () => void; custom?: boolean; max?: number; compact?: boolean;
+}) {
+  const wFtIn = compact ? "w-9" : "w-12";
+  const wDec = compact ? "w-14" : "w-20";
   if (unit === "ftin") {
     const { ft, inch } = toFeetInches(m);
     return (
-      <span className="inline-flex items-center gap-1">
+      <span className="inline-flex items-center gap-0.5">
         <input type="number" step={1} value={ft} onFocus={(e) => e.currentTarget.select()}
           onChange={(e) => onChange(clampMax(fromFeetInches(parseInt(e.target.value, 10) || 0, inch), max))}
-          className="h-7 w-12 rounded-md border border-slate-300 bg-white px-1 text-center text-xs" />
+          className={`h-7 ${wFtIn} rounded-md border border-slate-300 bg-white px-1 text-center text-xs`} />
         <span className="text-[9px] text-slate-400">′</span>
         <input type="number" step={1} min={0} max={11} value={inch} onFocus={(e) => e.currentTarget.select()}
           onChange={(e) => onChange(clampMax(fromFeetInches(ft, parseInt(e.target.value, 10) || 0), max))}
-          className="h-7 w-12 rounded-md border border-slate-300 bg-white px-1 text-center text-xs" />
+          className={`h-7 ${wFtIn} rounded-md border border-slate-300 bg-white px-1 text-center text-xs`} />
         {onClear && custom && <button type="button" onClick={onClear} className="text-[10px] text-slate-400 hover:text-slate-700" title="Reset to global">↺</button>}
       </span>
     );
@@ -685,7 +856,7 @@ function SchedLen({ m, unit, onChange, onClear, custom, max }: {
     <span className="inline-flex items-center gap-1">
       <input type="number" step={unitStep(unit)} value={toUnit(m, unit)} onFocus={(e) => e.currentTarget.select()}
         onChange={(e) => { const v = parseFloat(e.target.value); onChange(clampMax(fromUnit(Number.isFinite(v) ? v : 0, unit), max)); }}
-        className="h-7 w-20 rounded-md border border-slate-300 bg-white px-2 text-center text-xs" />
+        className={`h-7 ${wDec} rounded-md border border-slate-300 bg-white px-1.5 text-center text-xs`} />
       {onClear && custom && <button type="button" onClick={onClear} className="text-[10px] text-slate-400 hover:text-slate-700" title="Reset to global">↺</button>}
     </span>
   );

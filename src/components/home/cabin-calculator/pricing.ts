@@ -1396,11 +1396,13 @@ export function fixtureUnitOffsetsOf(cfg: CabinConfig, id: string, qty: number):
 }
 
 /** Per-unit enclosed-toilet door swing: "in" (into the toilet) or "out" (into the cabin room).
- *  Defaults to "out". Exactly `qty` entries. */
+ *  Defaults to "in" — how these prefab cabins are actually built: the attached-toilet door
+ *  swings INTO the toilet so its leaf never sweeps into the main space or over the entrance.
+ *  The customer can still override a unit to "out". Exactly `qty` entries. */
 export function fixtureUnitSwingsOf(cfg: CabinConfig, id: string, qty: number): string[] {
   const saved = cfg.fixtureUnitSwing?.[id] ?? [];
   const n = Math.max(0, Math.round(qty) || 0);
-  return Array.from({ length: n }, (_, i) => (saved[i] === "in" || saved[i] === "out" ? saved[i] : "out"));
+  return Array.from({ length: n }, (_, i) => (saved[i] === "in" || saved[i] === "out" ? saved[i] : "in"));
 }
 
 /** Per-unit wall the EWC/commode is set out FROM, inside an enclosed toilet's partition. Each

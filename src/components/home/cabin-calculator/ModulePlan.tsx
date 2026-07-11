@@ -1221,7 +1221,7 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
                 const off = washroomAvoidedOffset(edges[ri], edges[ri + 1], oy, by, walls[gi] ?? "bottom", off0, wFt, dFt, ppf, doorKeeps);
                 out.push(drawWashroom(
                   edges[ri], edges[ri + 1], oy, by,
-                  walls[gi] ?? "bottom", off, wFt, dFt, swings[gi] ?? "out", id,
+                  walls[gi] ?? "bottom", off, wFt, dFt, swings[gi] ?? "in", id,
                   ppf, `wr-r${ri}-${id}-${k}`, fixtureSizeLabel(id, config),
                   ewcWalls[gi] ?? "auto", ewcDists[gi] ?? 0,
                 ));

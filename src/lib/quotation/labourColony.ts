@@ -55,20 +55,52 @@ export interface FacilityToggles {
   officeSecurity: boolean;
 }
 
+/** Which wall of a room rectangle an opening sits on, in plan orientation:
+ *  "top"/"bottom" = the horizontal walls (upper / lower); "left"/"right" = the vertical side walls. */
+export type RoomWall = "top" | "bottom" | "left" | "right";
+
+/** A single fully-customizable DOOR on a room (drawing only — no BOQ effect). A room may carry any
+ *  number of these. Every field is optional with a sensible fallback so partial configs stay valid.
+ *  The engine auto-resolves each door's position to keep the configurable minimum clearance from the
+ *  window, other doors, wall corners/partitions and staircases (see roomFloorPlan.ts). */
+export interface RoomDoor {
+  /** Stable id for the managed list. */
+  id: string;
+  /** Wall the door sits on (plan orientation: top/bottom/left/right). Default = the veranda wall. */
+  wall?: RoomWall;
+  /** Distance from the wall's START corner (top→left, left→top) to the door's near edge, METRES.
+   *  Undefined = auto-place toward the far end. Auto-clamped to honour clearances. */
+  offsetM?: number;
+  /** Door leaf width, METRES (0/undefined = colony default door width). */
+  widthM?: number;
+  /** Door height, METRES (0/undefined = colony default door height). Schedule/caption only (plan is 2D). */
+  heightM?: number;
+  /** Hinge jamb along the wall: "start" (near the wall's start corner) or "end". Default "start". */
+  hinge?: "start" | "end";
+  /** Leaf swings "in" (into the room, default) or "out" (away from the room). */
+  swing?: "in" | "out";
+}
+
 /** Per-room construction floor-plan overrides (drawing only — no effect on quantities/BOQ).
- *  Each room's door + window sit on its veranda-facing wall; offsets are measured in FEET from the
- *  room's left corner (as drawn) to the opening's near edge, and can be shifted independently per
- *  room. Keyed by the global 1-based room number so they survive room-count changes. */
+ *  A room's window sits on its veranda-facing wall; doors can sit on ANY of the four walls, any
+ *  number of them. Legacy single-door fields are kept for back-compat (migrated to one RoomDoor
+ *  when `doors` is absent). Offsets in the legacy fields are FEET; new RoomDoor offsets are METRES.
+ *  Keyed by the global 1-based room number so they survive room-count changes. */
 export interface RoomOpeningOverride {
-  /** ft from the room's left corner to the DOOR's near edge. */
+  /** Multiple fully-customizable doors. When present it REPLACES the legacy single-door fields
+   *  below for this room; when absent, the legacy fields synthesize one door. */
+  doors?: RoomDoor[];
+  /** ft from the room's left corner to the DOOR's near edge (legacy single door). */
   doorFromLeftFt?: number;
   /** ft from the room's left corner to the WINDOW's near edge. */
   windowFromLeftFt?: number;
-  /** Which jamb the door hinges on; the leaf always swings INTO the room. Default "left". */
+  /** Which jamb the legacy door hinges on. Default "left". */
   doorHinge?: "left" | "right";
-  /** Per-room DOOR width override, metres (0/undefined = global door width). */
+  /** Which wall the legacy DOOR sits on: "external" = veranda-facing wall (default), "internal" = spine wall. */
+  doorSide?: "external" | "internal";
+  /** Per-room legacy DOOR width override, metres (0/undefined = global door width). */
   doorWidthM?: number;
-  /** Per-room DOOR height override, metres (0/undefined = global door height). Schedule only (plan is 2D). */
+  /** Per-room legacy DOOR height override, metres (0/undefined = global door height). */
   doorHeightM?: number;
   /** Per-room length override ALONG the building, metres (0/undefined = use global roomLength). */
   lengthM?: number;
@@ -146,6 +178,10 @@ export interface RoomFloorPlanConfig {
   doorWidthFt?: number;
   /** Default door height, metres (drawing caption + schedule; per-room override wins). Default 2.0. */
   doorHeightM?: number;
+  /** Default door wall placement: "external" = veranda-facing (default), "internal" = spine-facing. Per-room override wins. */
+  doorSide?: "external" | "internal";
+  /** Default door swing: "in" = leaf swings into the room (default), "out" = away. Per-door override wins. */
+  doorSwing?: "in" | "out";
   /** Window width, ft (drawing + schedule). Default 4. */
   windowWidthFt?: number;
   /** Per-room overrides keyed by global 1-based room number. */
