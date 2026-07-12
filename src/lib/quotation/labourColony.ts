@@ -136,11 +136,15 @@ export interface StaircaseDrawConfig {
   widthM?: number;
   /** Explicit total run length of the flight (excludes landing), metres. Omitted = steps × (tread + gap). */
   totalLengthM?: number;
-  /** Number of steps / treads. */
+  /** Derive the riser COUNT from the floor height so the flight lands exactly on the next floor
+   *  level (risers = round(floorHeight / riserMm), then the riser is solved back exactly).
+   *  Default true. Set false to pin an explicit `steps` count instead. */
+  autoRise?: boolean;
+  /** Number of risers. Ignored unless `autoRise` is false — otherwise it is derived. */
   steps?: number;
-  /** Tread depth ("step width/tread") — horizontal run of one step, metres. */
+  /** Tread depth ("going") — horizontal run of one step, metres. Default 0.25. */
   treadM?: number;
-  /** Riser ("step height") — vertical rise of one step, mm. */
+  /** PREFERRED riser height, mm (the target `autoRise` rounds to). Default 180. */
   riserMm?: number;
   /** Extra gap between consecutive steps beyond the tread, metres (usually 0). */
   gapM?: number;
@@ -263,6 +267,15 @@ export interface ElevationStructureConfig {
   showDecks?: boolean;
   /** Draw the bottom dimension chain (veranda | rooms | veranda) + height dims. Default true. */
   showDims?: boolean;
+  /**
+   * WHICH FACE IS THE "FRONT". Purely a naming/orientation choice — the geometry is identical
+   * either way, only the four titles move.
+   *   "length" (default) — Front/Rear = the LONG faces (they show the building length and carry the
+   *                        doors, windows and veranda); Left/Right = the short gable ends.
+   *   "width"            — Front/Rear = the SHORT gable ends (they show the building width);
+   *                        Left/Right = the long faces.
+   */
+  frontFace?: "length" | "width";
 }
 
 export interface LabourColonyConfig {

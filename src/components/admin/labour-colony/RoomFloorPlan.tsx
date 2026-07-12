@@ -993,7 +993,7 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
   cfg: LabourColonyResult["config"]; fmt: (m: number) => string; placed?: FPStair;
   onChange: (patch: Partial<StaircaseDrawConfig>) => void; onDuplicate: () => void; onDelete: () => void;
 }) {
-  const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth);
+  const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth, cfg.roomHeight);
   const posVal = sr.position === "both" ? "right" : sr.position;
   const nudge = 0.3048; // 1 ft
   return (
@@ -1016,7 +1016,12 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
               options={[["left", "Left / near"], ["right", "Right / far"]]} />
             <SelField label="Up direction" value={sr.direction} onChange={(v) => onChange({ direction: v as "up" | "down" })}
               options={[["up", "Away from entry"], ["down", "Toward entry"]]} />
-            <NumField label="Number of steps" value={sr.steps} step={1} min={2} onChange={(v) => onChange({ steps: Math.round(v) })} />
+            <NumField label={sr.autoRise ? "Risers (auto)" : "Risers"} value={sr.steps} step={1} min={2}
+              onChange={(v) => onChange({ steps: Math.round(v), autoRise: false })} />
+            <label className="flex items-center gap-1.5 pb-1.5 text-xs font-medium text-slate-600"
+              title="Derive the riser count from the floor height so the flight lands exactly on the next floor level">
+              <input type="checkbox" checked={sr.autoRise} onChange={(e) => onChange({ autoRise: e.target.checked })} /> Auto-fit to floor height
+            </label>
             <label className="flex items-center gap-1.5 pb-1.5 text-xs font-medium text-slate-600">
               <input type="checkbox" checked={sr.handrail} onChange={(e) => onChange({ handrail: e.target.checked })} /> Hand railing
             </label>
@@ -1025,7 +1030,8 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
             <LenField label="Width" m={sr.widthM} unit={unit} min={0.6} onChange={(m) => onChange({ widthM: r1m(m) })} />
             <LenField label="Total run length" m={sr.runM} unit={unit} min={0.6} onChange={(m) => onChange({ totalLengthM: r1m(m) })} />
             <LenField label="Step tread / going" m={sr.treadM} unit={unit} min={0.15} onChange={(m) => onChange({ treadM: r1m(m), totalLengthM: undefined })} />
-            <NumField label="Step riser (mm)" value={sr.riserMm} step={5} min={80} onChange={(v) => onChange({ riserMm: Math.round(v) })} />
+            <NumField label={sr.autoRise ? "Preferred riser (mm)" : "Step riser (mm)"} value={sr.autoRise ? sr.targetRiserMm : Math.round(sr.riserMm)}
+              step={5} min={80} onChange={(v) => onChange({ riserMm: Math.round(v) })} />
             <LenField label="Gap between steps" m={sr.gapM} unit={unit} min={0} onChange={(m) => onChange({ gapM: Math.max(0, r1m(m)), totalLengthM: undefined })} />
             <LenField label="Landing size" m={sr.landingM} unit={unit} min={0} onChange={(m) => onChange({ landingM: Math.max(0, r1m(m)) })} />
           </div>
@@ -1045,7 +1051,14 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
             </div>
           </div>
           <div className="mt-2 text-[11px] text-slate-500">
-            going {fmt(sr.goingM)} · riser {sr.riserMm} mm · {sr.steps} steps · run {fmt(sr.runM)}{sr.landingM > 0 ? ` · landing ${fmt(sr.landingM)}` : ""}
+            <span className={sr.reachesFloor ? "font-semibold text-emerald-700" : "font-semibold text-red-600"}>
+              {sr.steps} risers × {Math.round(sr.riserMm)} mm = {Math.round(sr.totalRiseM * 1000)} mm
+              {sr.reachesFloor
+                ? ` = floor height ✓`
+                : ` ≠ floor height ${Math.round(sr.floorRiseM * 1000)} mm ⚠ does not reach the floor`}
+            </span>
+            {" · "}{sr.treads} treads × {fmt(sr.treadM)} · going {fmt(sr.goingM)} · run {fmt(sr.runM)} · slope {sr.slopeDeg}°
+            {sr.landingM > 0 ? ` · landing ${fmt(sr.landingM)}` : ""}
             {placed && <> · <span className="font-semibold text-slate-600">offset {fmt(placed.offsetToWallM)} from wall, {fmt(placed.offsetToCornerM)} from corner</span></>}
             {placed?.overlap && <span className="font-semibold text-red-600"> · ⚠ overlaps another element</span>}
           </div>

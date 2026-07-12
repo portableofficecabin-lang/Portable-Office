@@ -63,10 +63,23 @@ export interface ElevRail {
 
 export interface ElevStairShape {
   x0: number; wM: number;     // extent along the elevation axis (m)
-  riseM: number;              // total rise of the flight (steps × riser)
+  /** The finished floor level the flight STARTS from (m above ground) — the plinth top, not grade. */
+  baseM: number;
+  riseM: number;              // total rise of the flight (risers × riser height)
+  /** Level the flight LANDS on (m above ground) = baseM + riseM. Must equal the next FFL. */
+  topM: number;
   lowAtStart: boolean;        // flight's LOW end is at x0 (profile faces only)
   profile: boolean;           // true = true stepped profile (side faces); false = end silhouette
-  steps: number; goingM: number; riserM: number; landingM: number;
+  /** Full schedule — every value the drawing annotates, straight from the plan's staircase config. */
+  steps: number;              // risers
+  treads: number;             // risers − 1 (the top riser lands on the floor slab)
+  goingM: number;             // tread depth / going
+  riserM: number;             // riser height
+  runM: number;               // horizontal run of the flight (treads × going)
+  widthM: number;             // flight width across the treads
+  landingM: number;
+  slopeDeg: number;
+  reachesFloor: boolean;      // false when a pinned step count fails to land on the floor
   handrail: boolean;
   label: string;
 }
@@ -175,6 +188,7 @@ export function resolveStructure(
     handrailHeightM: clamp(s.handrailHeightM && s.handrailHeightM > 0 ? s.handrailHeightM : 0.9, 0.5, 1.5),
     showDecks: s.showDecks ?? true,
     showDims: s.showDims ?? true,
+    frontFace: s.frontFace ?? "length",
   };
 }
 
@@ -300,47 +314,44 @@ export function buildElevation(
     }
   }
 
-  /* ---------- staircases ---------- */
+  /* ---------- staircases ----------
+   * A flight runs between two FINISHED FLOOR LEVELS: it starts on the ground-floor slab (the
+   * plinth top, NOT grade) and lands on the first-floor slab. So base = plinth, rise = one floor
+   * height, top = plinth + floorH === FFL 1 exactly. The riser count is derived from that same
+   * floor height in resolveStair(), so the flight can never fall short of the floor it serves. */
   const stairs: ElevStairShape[] = [];
+  const baseM = plinthM;
+  const common = (s: RoomFloorPlanGeom["stairs"][number]) => ({
+    baseM,
+    riseM: s.totalRiseM,
+    topM: round(baseM + s.totalRiseM),
+    steps: s.steps, treads: s.treads, goingM: s.goingM, riserM: s.riserMm / 1000,
+    runM: s.runM, widthM: s.widthM, landingM: s.landingM,
+    slopeDeg: s.slopeDeg, reachesFloor: s.reachesFloor,
+    handrail: s.handrail, label: s.label,
+  });
   for (const s of g0.stairs) {
-    const riseM = (s.steps * s.riserMm) / 1000;
     if ((face === "left" || face === "right") && s.side === face) {
       // true stepped profile: the flight runs along plan y (vertical stair) → along this face's axis
       const a0 = s.y, len = s.d;
       const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;              // entry end = low end
       const e0 = T(a0, len);
       const lowAtStart = mirrored ? !(lowPlanEnd === a0) : lowPlanEnd === a0;
-      stairs.push({
-        x0: e0, wM: len, riseM: Math.min(riseM, plinthM + floorH), lowAtStart,
-        profile: true, steps: s.steps, goingM: s.goingM, riserM: s.riserMm / 1000,
-        landingM: s.landingM, handrail: s.handrail, label: s.label,
-      });
+      stairs.push({ ...common(s), x0: e0, wM: len, lowAtStart, profile: true });
     } else if (alongX && (s.side === "left" || s.side === "right")) {
       // end silhouette on the long faces — true position + width from the plan
       const a0 = s.x, len = s.w;
-      stairs.push({
-        x0: T(a0, len), wM: len, riseM: Math.min(riseM, plinthM + floorH), lowAtStart: true,
-        profile: false, steps: s.steps, goingM: s.goingM, riserM: s.riserMm / 1000,
-        landingM: s.landingM, handrail: s.handrail, label: s.label,
-      });
+      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
     } else if (!alongX && (s.side === "top" || s.side === "bottom")) {
       const a0 = s.y, len = s.d;
-      stairs.push({
-        x0: T(a0, len), wM: len, riseM: Math.min(riseM, plinthM + floorH), lowAtStart: true,
-        profile: false, steps: s.steps, goingM: s.goingM, riserM: s.riserMm / 1000,
-        landingM: s.landingM, handrail: s.handrail, label: s.label,
-      });
+      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
     } else if (alongX && (s.side === "top" || s.side === "bottom") && s.side === sideOfFace) {
       // A top/bottom staircase is HORIZONTAL — its flight runs along plan x, which is this face's
       // own axis, so it lies IN the view plane and must show its true stepped profile.
       const a0 = s.x, len = s.w;
       const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;      // entry end = low end
       const lowAtStart = mirrored ? lowPlanEnd !== a0 : lowPlanEnd === a0;
-      stairs.push({
-        x0: T(a0, len), wM: len, riseM: Math.min(riseM, plinthM + floorH), lowAtStart,
-        profile: true, steps: s.steps, goingM: s.goingM, riserM: s.riserMm / 1000,
-        landingM: s.landingM, handrail: s.handrail, label: s.label,
-      });
+      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart, profile: true });
     }
   }
 

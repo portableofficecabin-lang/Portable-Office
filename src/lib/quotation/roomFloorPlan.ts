@@ -84,7 +84,10 @@ export interface FPStair {
   entry: "left" | "right";
   direction: "up" | "down";
   runM: number; widthM: number; landingM: number;
-  steps: number; treadM: number; goingM: number; riserMm: number; gapM: number;
+  steps: number; treads: number; treadM: number; goingM: number; riserMm: number; gapM: number;
+  /** Floor-to-floor rise the flight must climb, and the rise it actually achieves (equal when
+   *  `autoRise` is on — that is the whole point). `reachesFloor` is false if they disagree. */
+  floorRiseM: number; totalRiseM: number; reachesFloor: boolean; slopeDeg: number;
   stepEdges: FPStairStep[];
   handrail: boolean;       // draw a hand railing along both sides of the flight
   offsetToWallM: number;   // gap from the stair to the building's OUTER edge on that side (0 = flush)
@@ -118,13 +121,31 @@ export interface RoomFloorPlanGeom {
 
 /* ---------------------------------------------------------------- helpers */
 
-/** Effective, clamped staircase parameters from a (possibly partial) config. */
+/**
+ * Effective, clamped staircase parameters from a (possibly partial) config.
+ *
+ * RISER COUNT IS DERIVED FROM THE FLOOR HEIGHT, not a fixed default. A flight must land EXACTLY on
+ * the next finished floor level, so:
+ *
+ *     risers = round(floorHeight / targetRiser)     — nearest whole riser to the preferred height
+ *     riser  = floorHeight / risers                 — then solved back EXACTLY, so risers × riser
+ *                                                     === floorHeight to the millimetre
+ *
+ * e.g. a 2700 mm floor with a 180 mm target → 15 risers × 180.0 mm = 2700 mm exactly.
+ *      a 3000 mm floor with a 180 mm target → 17 risers × 176.5 mm = 3000 mm exactly.
+ *
+ * A straight flight has ONE FEWER TREAD than risers (the top riser lands on the floor itself), so
+ * treads = risers − 1 and the horizontal run = treads × tread depth. Set `autoRise: false` to pin
+ * an explicit step count instead (the flight may then not reach the floor — that is the caller's
+ * choice, and `reachesFloor` reports it).
+ */
 export function resolveStair(
   sc: StaircaseDrawConfig | undefined,
   floors: number,
   verandaM: number,
   fallbackPos?: StaircaseDrawConfig["position"],
   fallbackWidthM?: number,
+  floorHeightM?: number,
 ) {
   const s = sc ?? {};
   const enabled = s.enabled ?? floors > 1;
@@ -133,19 +154,42 @@ export function resolveStair(
   const dxM = Number.isFinite(s.dxM) ? (s.dxM as number) : 0;
   const dyM = Number.isFinite(s.dyM) ? (s.dyM as number) : 0;
   const widthM = Math.max(0.6, s.widthM ?? (fallbackWidthM && fallbackWidthM > 0 ? fallbackWidthM : Math.max(1.0, verandaM)));
-  const steps = clamp(Math.round(s.steps ?? 12), 2, 60);
-  const treadM = Math.max(0.15, s.treadM ?? 0.3);
+
+  // The floor-to-floor rise this flight has to climb.
+  const floorRiseM = Math.max(0.3, floorHeightM && floorHeightM > 0 ? floorHeightM : 2.7);
+  const autoRise = s.autoRise ?? true;
+  const targetRiserMm = clamp(Math.round(s.riserMm ?? 180), 80, 300);   // preferred riser height
+
+  let steps: number;
+  let riserMm: number;
+  if (autoRise) {
+    steps = clamp(Math.max(2, Math.round((floorRiseM * 1000) / targetRiserMm)), 2, 60);
+    riserMm = (floorRiseM * 1000) / steps;      // exact — the flight lands precisely on the next FFL
+  } else {
+    steps = clamp(Math.round(s.steps ?? 12), 2, 60);
+    riserMm = targetRiserMm;
+  }
+  const totalRiseM = (steps * riserMm) / 1000;
+  const reachesFloor = Math.abs(totalRiseM - floorRiseM) < 1e-6;
+
+  const treads = Math.max(1, steps - 1);          // a straight flight: the top riser lands on the floor
+  const treadM = Math.max(0.15, s.treadM ?? 0.25);
   const gapM = Math.max(0, s.gapM ?? 0);
-  const riserMm = clamp(Math.round(s.riserMm ?? 165), 80, 300);
-  const computedRun = steps * treadM + (steps - 1) * gapM;
+  const computedRun = treads * treadM + Math.max(0, treads - 1) * gapM;
   const overridden = !!(s.totalLengthM && s.totalLengthM > 0);
   const runM = overridden ? (s.totalLengthM as number) : computedRun;
-  const goingM = runM / steps;
+  const goingM = runM / treads;                   // horizontal going per tread
+  const slopeDeg = (Math.atan2(totalRiseM, runM) * 180) / Math.PI;
   const landingM = Math.max(0, s.landingM ?? Math.min(widthM, 1.0));
   const entry = s.entry ?? "left";
   const direction = s.direction ?? "up";
   const handrail = s.handrail ?? true;
-  return { enabled, position, offsetM, dxM, dyM, widthM, steps, treadM, gapM, riserMm, runM, goingM, landingM, entry, direction, handrail, overridden };
+  return {
+    enabled, position, offsetM, dxM, dyM, widthM,
+    steps, treads, treadM, gapM, riserMm, runM, goingM, landingM,
+    floorRiseM, totalRiseM, reachesFloor, autoRise, targetRiserMm, slopeDeg,
+    entry, direction, handrail, overridden,
+  };
 }
 
 /**
@@ -481,14 +525,15 @@ export function buildRoomFloorPlan(
   const stairs: FPStair[] = [];
   const stairRects: FPRect[] = []; // for same-side auto-separation
   stairCfgs.forEach((sc, i) => {
-    const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth);
+    const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth, cfg.roomHeight);
     if (!sr.enabled) return;
     const posSide: Side = sr.position === "both" ? (i % 2 === 0 ? "right" : "left") : sr.position;
     const vertical = posSide === "left" || posSide === "right";
     const longM = sr.runM + sr.landingM;
     const w = vertical ? sr.widthM : longM;
     const d = vertical ? longM : sr.widthM;
-    const edges = stepEdges(sr.steps, sr.runM, sr.treadM, sr.gapM, sr.overridden);
+    // The plan shows the TREADS (risers − 1); the top riser lands on the floor slab itself.
+    const edges = stepEdges(sr.treads, sr.runM, sr.treadM, sr.gapM, sr.overridden);
 
     // anchor OUTSIDE the room block, beyond any same-side veranda; centred on the wall.
     let x: number, y: number;
@@ -536,7 +581,9 @@ export function buildRoomFloorPlan(
       x, y, w, d, orientation: vertical ? "vertical" : "horizontal", side: posSide,
       entry: sr.entry, direction: sr.direction,
       runM: sr.runM, widthM: sr.widthM, landingM: sr.landingM,
-      steps: sr.steps, treadM: sr.treadM, goingM: sr.goingM, riserMm: sr.riserMm, gapM: sr.gapM,
+      steps: sr.steps, treads: sr.treads, treadM: sr.treadM, goingM: sr.goingM, riserMm: sr.riserMm, gapM: sr.gapM,
+      floorRiseM: round(sr.floorRiseM), totalRiseM: round(sr.totalRiseM),
+      reachesFloor: sr.reachesFloor, slopeDeg: round(sr.slopeDeg, 1),
       stepEdges: edges, handrail: sr.handrail, offsetToWallM: round(offsetToWallM), offsetToCornerM: round(offsetToCornerM), overlap: false,
     });
   });

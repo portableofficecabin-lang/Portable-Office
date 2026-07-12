@@ -39,12 +39,29 @@ const COL = {
   dim: "#475569", overall: "#0369a1", ink: "#0f172a", note: "#64748b",
 };
 
-const FACES: { face: ElevationFace; title: string }[] = [
-  { face: "front", title: "Front Elevation" },
-  { face: "rear", title: "Rear Elevation" },
-  { face: "left", title: "Left Side Elevation" },
-  { face: "right", title: "Right Side Elevation" },
-];
+/**
+ * Which geometric face carries which TITLE. The geometry is identical either way — only the names
+ * move — so this is a pure relabelling and cannot break a drawing.
+ *
+ *   frontFace "length" (default) → Front/Rear are the LONG faces (the building length, all the doors,
+ *                                  windows and veranda); Left/Right are the short gable ends.
+ *   frontFace "width"            → Front/Rear are the SHORT gable ends (the building width);
+ *                                  Left/Right are the long faces.
+ */
+const FACE_TITLES = (frontFace: "length" | "width"): { face: ElevationFace; title: string }[] =>
+  frontFace === "width"
+    ? [
+        { face: "left", title: "Front Elevation" },
+        { face: "right", title: "Rear Elevation" },
+        { face: "front", title: "Left Side Elevation" },
+        { face: "rear", title: "Right Side Elevation" },
+      ]
+    : [
+        { face: "front", title: "Front Elevation" },
+        { face: "rear", title: "Rear Elevation" },
+        { face: "left", title: "Left Side Elevation" },
+        { face: "right", title: "Right Side Elevation" },
+      ];
 
 export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChange, plinthM, projectName }: {
   result: LabourColonyResult;
@@ -95,6 +112,15 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
           <input type="number" step={0.05} min={0} value={roof.overhangM}
             onChange={(e) => setRoof({ overhangM: Math.max(0, parseFloat(e.target.value) || 0) })}
             onFocus={(e) => e.currentTarget.select()} disabled={!editable} className={numCls} />
+        </label>
+
+        <label className="font-medium text-slate-600">
+          <span className="mb-1 block">“Front” elevation is the…</span>
+          <select value={st.frontFace} onChange={(e) => setStruct({ frontFace: e.target.value as "length" | "width" })}
+            className={selCls} disabled={!editable}>
+            <option value="length">Long face — shows the building LENGTH</option>
+            <option value="width">Short/gable face — shows the building WIDTH</option>
+          </select>
         </label>
         <div className="ml-auto text-[11px] text-slate-500">
           Plinth {fmt(plinthM ?? 0.45)} (from Civil tab) · elevations derive from the room-wise floor plan — always in sync
@@ -214,7 +240,7 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {FACES.map(({ face, title }) => (
+        {FACE_TITLES(st.frontFace).map(({ face, title }) => (
           <ElevationCard key={face} face={face} title={title} projectName={projectName}
             g={buildElevation(result, floorPlan, face, { plinthM })} fmt={fmt} />
         ))}
@@ -310,7 +336,8 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
     const spanX = Math.max(1, g.x1 - g.x0);
     const S = Math.min(34, Math.max(9, 640 / spanX));   // px per metre
     const PAD_L = 78, PAD_R = 78, PAD_T = 30;
-    const PAD_B = g.structure.showDims ? 92 : 50;   // dim chain + overall + the room/footprint note
+    // stair run-dim + 2 schedule lines, then the dim chain + overall + the room/footprint note
+    const PAD_B = (g.structure.showDims ? 92 : 50) + (g.stairs.length ? 30 : 0);
 
     const H = g.plinthM + g.bodyHM;                     // wall height above ground
     const Ytop = g.roof.riseM;                          // roof band above the walls
@@ -495,7 +522,7 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
 
         {/* ---- staircases ---- */}
         {g.stairs.map((s, i) => (
-          <StairGlyph key={`s${i}`} s={s} X={X} Y={Y} S={S} groundY={groundY}
+          <StairGlyph key={`s${i}`} s={s} X={X} Y={Y} S={S} groundY={groundY} fmt={fmt}
             style={g.structure.stairStyle} hrH={g.structure.handrailHeightM}
             colW={g.structure.columnWidthM} />
         ))}
@@ -527,7 +554,8 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
             {/* ---- bottom dimension chain: veranda | rooms | veranda (from the plan's own bands) ---- */}
             <g>
               {(() => {
-                const dy = groundY + 26;
+                // drop below the stair run-dim + schedule lines when a staircase is on this face
+                const dy = groundY + 26 + (g.stairs.length ? 30 : 0);
                 return g.dimChain.map((b, i) => {
                   const a = X(b.x0), c = X(b.x0 + b.wM);
                   if (c - a < 8) return null;
@@ -551,7 +579,7 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
 
             {/* ---- overall BUILDING width (excludes the roof overhang) ---- */}
             {(() => {
-              const oy = groundY + 54, a = X(g.buildX0), c = X(g.buildX1);
+              const oy = groundY + 54 + (g.stairs.length ? 30 : 0), a = X(g.buildX0), c = X(g.buildX1);
               return (
                 <g>
                   <line x1={a} y1={oy} x2={c} y2={oy} stroke={COL.overall} strokeWidth={1.1} />
@@ -640,44 +668,56 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
  *
  * `style: "rcc"` falls back to the solid cast waist slab for anyone who actually wants concrete.
  */
-function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
+function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
   s: ElevationGeom["stairs"][number];
   X: (m: number) => number; Y: (m: number) => number; S: number; groundY: number;
-  style: "steel" | "rcc"; hrH: number; colW: number;
+  style: "steel" | "rcc"; hrH: number; colW: number; fmt: (m: number) => string;
 }) {
   const sx0 = X(Math.min(s.x0, s.x0 + s.wM));
   const wPx = Math.abs(s.wM) * S;
-  const caption = `${s.label} · ${s.steps} steps · R ${Math.round(s.riserM * 1000)} mm`;
+  const caption = `${s.label} · ${s.steps}R @ ${fmt(s.riserM)} · ${s.treads}T @ ${fmt(s.goingM)}`;
+  const base = s.baseM, top = s.topM;
 
   /* ---------- seen END-ON (the flight recedes from the viewer) ----------
    * You see the WIDTH of the flight, not its slope: an open steel frame — two posts, the
    * treads edge-on as horizontal lines, and the handrail rising with the flight. */
   if (!s.profile) {
-    const topY = Y(s.riseM);
+    const topY = Y(top);
     const postW = Math.max(2, colW * S * 0.8);
     const stepRise = s.riseM / Math.max(1, s.steps);
     return (
       <g>
         {/* flight envelope — open, so it never reads as a solid block */}
-        <rect x={sx0} y={topY} width={wPx} height={groundY - topY}
+        <rect x={sx0} y={topY} width={wPx} height={Y(base) - topY}
           fill={COL.steel} fillOpacity={0.06} stroke={COL.steel} strokeWidth={0.8} strokeDasharray="4 2.5" />
         {/* treads seen edge-on */}
         {Array.from({ length: s.steps }, (_, k) => {
-          const ty = Y((k + 1) * stepRise);
+          const ty = Y(base + (k + 1) * stepRise);
           return <line key={k} x1={sx0 + 1} y1={ty} x2={sx0 + wPx - 1} y2={ty} stroke={COL.stairTread} strokeWidth={0.9} />;
         })}
-        {/* the two stringer posts at the flight edges */}
+        {/* the two stringer posts at the flight edges, carried down to the ground */}
         <rect x={sx0 - postW / 2} y={topY} width={postW} height={groundY - topY} fill={COL.steel} />
         <rect x={sx0 + wPx - postW / 2} y={topY} width={postW} height={groundY - topY} fill={COL.steel} />
+        {/* the plinth the flight starts from */}
+        {base > 0.01 && (
+          <rect x={sx0} y={Y(base)} width={wPx} height={groundY - Y(base)} fill={COL.plinth} stroke={COL.wall} strokeWidth={0.8} />
+        )}
         {/* handrail across the top of the flight */}
         {s.handrail && (
           <g stroke={COL.stairRail} strokeLinecap="round">
-            <line x1={sx0} y1={Y(s.riseM + hrH)} x2={sx0 + wPx} y2={Y(s.riseM + hrH)} strokeWidth={1.8} />
-            <line x1={sx0} y1={Y(s.riseM + hrH)} x2={sx0} y2={topY} strokeWidth={1.4} />
-            <line x1={sx0 + wPx} y1={Y(s.riseM + hrH)} x2={sx0 + wPx} y2={topY} strokeWidth={1.4} />
+            <line x1={sx0} y1={Y(top + hrH)} x2={sx0 + wPx} y2={Y(top + hrH)} strokeWidth={1.8} />
+            <line x1={sx0} y1={Y(top + hrH)} x2={sx0} y2={topY} strokeWidth={1.4} />
+            <line x1={sx0 + wPx} y1={Y(top + hrH)} x2={sx0 + wPx} y2={topY} strokeWidth={1.4} />
           </g>
         )}
-        <text x={sx0 + wPx / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.steelDark}>{s.label}</text>
+        {/* flight WIDTH is the dimension you actually see in this view */}
+        <g stroke={COL.dim} strokeWidth={0.8}>
+          <line x1={sx0} y1={groundY + 15} x2={sx0 + wPx} y2={groundY + 15} />
+          <line x1={sx0} y1={groundY + 11} x2={sx0} y2={groundY + 19} />
+          <line x1={sx0 + wPx} y1={groundY + 11} x2={sx0 + wPx} y2={groundY + 19} />
+        </g>
+        <text x={sx0 + wPx / 2} y={groundY + 10} textAnchor="middle" fontSize={6} fill={COL.dim}>{fmt(s.widthM)}</text>
+        <text x={sx0 + wPx / 2} y={groundY + 26} textAnchor="middle" fontSize={6} fill={COL.steelDark}>{s.label}</text>
       </g>
     );
   }
@@ -688,18 +728,18 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
   const flightM = Math.max(0.05, s.wM - s.landingM);       // sloped run
   const topX = lowX + dir * flightM;                       // head of the flight
   const landX = lowX + dir * s.wM;                         // far edge of the landing
-  const steps = Math.max(1, s.steps);
-  const stepRise = s.riseM / steps;
+  const steps = Math.max(1, s.steps);                      // risers
+  const stepRise = s.riseM / steps;                        // riser height
   const going = flightM / steps;
   const slope = s.riseM / flightM;                         // rise per unit run
 
-  /** height of the nosing line at any x along the flight */
-  const nose = (x: number) => Math.abs(x - lowX) * slope;
+  /** height of the nosing line at any x along the flight, measured ABOVE GROUND (base + climb) */
+  const nose = (x: number) => base + Math.abs(x - lowX) * slope;
 
-  // ---- RCC fallback: the old solid waist slab -------------------------------------------
+  // ---- RCC fallback: the solid cast waist slab -------------------------------------------
   if (style === "rcc") {
     const pts: string[] = [];
-    let cx = lowX, cy = 0;
+    let cx = lowX, cy = base;
     pts.push(`${X(cx)},${Y(cy)}`);
     for (let k = 0; k < steps; k++) {
       cy += stepRise; pts.push(`${X(cx)},${Y(cy)}`);
@@ -711,9 +751,10 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
         <polygon points={`${pts.join(" ")} ${X(landX)},${Y(0)} ${X(lowX)},${Y(0)}`}
           fill={COL.stairFill} stroke={COL.stair} strokeWidth={1.2} />
         {s.handrail && (
-          <line x1={X(lowX)} y1={Y(hrH)} x2={X(landX)} y2={Y(s.riseM + hrH)} stroke={COL.rail} strokeWidth={1.8} />
+          <line x1={X(lowX)} y1={Y(base + hrH)} x2={X(landX)} y2={Y(top + hrH)} stroke={COL.rail} strokeWidth={1.8} />
         )}
-        <text x={sx0 + wPx / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.stair}>{caption}</text>
+        <StairSchedule s={s} X={X} Y={Y} groundY={groundY} sx0={sx0} wPx={wPx} caption={caption} fmt={fmt}
+          hrH={hrH} lowX={lowX} topX={topX} base={base} top={top} />
       </g>
     );
   }
@@ -722,15 +763,15 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
   // Stringer beam depth. Capped at 80% of the total rise so a very short flight can never push the
   // beam's top-inner corner (riseM - stringerD) below ground level.
   const stringerD = Math.min(Math.max(0.16, Math.min(0.3, going * 0.7)), s.riseM * 0.8);
-  // Where the stringer's UNDERSIDE meets the ground (it lands on a footing, not below grade).
+  // Where the stringer's UNDERSIDE meets its bearing level (it lands on a footing, not below it).
   const footRun = Math.min(flightM * 0.5, stringerD / Math.max(slope, 0.15));
   const footX = lowX + dir * footRun;
 
   const stringer = [
-    `${X(lowX)},${Y(0)}`,
-    `${X(topX)},${Y(s.riseM)}`,
-    `${X(topX)},${Y(s.riseM - stringerD)}`,
-    `${X(footX)},${Y(0)}`,
+    `${X(lowX)},${Y(base)}`,
+    `${X(topX)},${Y(top)}`,
+    `${X(topX)},${Y(top - stringerD)}`,
+    `${X(footX)},${Y(base)}`,
   ].join(" ");
 
   // Intermediate posts under the flight, ~every 1.8 m of run.
@@ -759,7 +800,7 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
       {Array.from({ length: steps }, (_, k) => {
         const a = lowX + dir * k * going;                 // this step's back edge
         const b = a + dir * going;                        // its nosing
-        const y = (k + 1) * stepRise;                     // tread level
+        const y = base + (k + 1) * stepRise;              // tread level (above ground)
         return (
           <g key={`t${k}`}>
             <line x1={X(a)} y1={Y(y)} x2={X(b)} y2={Y(y)} stroke={COL.stairTread} strokeWidth={treadT} strokeLinecap="square" />
@@ -768,13 +809,19 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
         );
       })}
 
+      {/* --- the plinth the flight starts from (its bottom step sits on the FFL, not on grade) --- */}
+      {base > 0.01 && (
+        <rect x={Math.min(X(lowX), X(footX))} y={Y(base)} width={Math.max(3, Math.abs(X(footX) - X(lowX)))}
+          height={groundY - Y(base)} fill={COL.plinth} stroke={COL.wall} strokeWidth={0.8} />
+      )}
+
       {/* --- landing platform at the head of the flight --- */}
       {s.landingM > 0.01 && (
         <>
-          <rect x={Math.min(X(topX), X(landX))} y={Y(s.riseM)} width={Math.abs(X(landX) - X(topX))} height={slabT}
+          <rect x={Math.min(X(topX), X(landX))} y={Y(top)} width={Math.abs(X(landX) - X(topX))} height={slabT}
             fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.7} />
-          <rect x={X(landX) - Math.max(1.8, colW * S * 0.6) / 2} y={Y(s.riseM)}
-            width={Math.max(1.8, colW * S * 0.6)} height={groundY - Y(s.riseM)}
+          <rect x={X(landX) - Math.max(1.8, colW * S * 0.6) / 2} y={Y(top)}
+            width={Math.max(1.8, colW * S * 0.6)} height={groundY - Y(top)}
             fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.5} />
         </>
       )}
@@ -783,8 +830,8 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
       {s.handrail && (
         <g stroke={COL.stairRail} strokeLinecap="round" fill="none">
           {/* top + mid rail, parallel to the nosing line, continuing level across the landing */}
-          <polyline points={`${X(lowX)},${Y(hrH)} ${X(topX)},${Y(s.riseM + hrH)} ${X(landX)},${Y(s.riseM + hrH)}`} strokeWidth={2} />
-          <polyline points={`${X(lowX)},${Y(hrH * 0.5)} ${X(topX)},${Y(s.riseM + hrH * 0.5)} ${X(landX)},${Y(s.riseM + hrH * 0.5)}`} strokeWidth={1} />
+          <polyline points={`${X(lowX)},${Y(base + hrH)} ${X(topX)},${Y(top + hrH)} ${X(landX)},${Y(top + hrH)}`} strokeWidth={2} />
+          <polyline points={`${X(lowX)},${Y(base + hrH * 0.5)} ${X(topX)},${Y(top + hrH * 0.5)} ${X(landX)},${Y(top + hrH * 0.5)}`} strokeWidth={1} />
           {/* balusters up the flight — foot on the nosing line, head on the top rail */}
           {Array.from({ length: nBal + 1 }, (_, k) => {
             const px = lowX + dir * (flightM * k) / nBal;
@@ -796,17 +843,79 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
             const nLand = Math.max(1, Math.round(s.landingM / 0.9));
             return Array.from({ length: nLand + 1 }, (_, k) => {
               const px = topX + dir * (s.landingM * k) / nLand;
-              return <line key={`lb${k}`} x1={X(px)} y1={Y(s.riseM)} x2={X(px)} y2={Y(s.riseM + hrH)} strokeWidth={0.9} />;
+              return <line key={`lb${k}`} x1={X(px)} y1={Y(top)} x2={X(px)} y2={Y(top + hrH)} strokeWidth={0.9} />;
             });
           })()}
           {/* newel posts — heavier, at the foot and at the landing */}
-          <line x1={X(lowX)} y1={Y(0)} x2={X(lowX)} y2={Y(hrH)} strokeWidth={2} />
-          <line x1={X(topX)} y1={Y(s.riseM)} x2={X(topX)} y2={Y(s.riseM + hrH)} strokeWidth={1.6} />
-          <line x1={X(landX)} y1={Y(s.riseM)} x2={X(landX)} y2={Y(s.riseM + hrH)} strokeWidth={2} />
+          <line x1={X(lowX)} y1={Y(base)} x2={X(lowX)} y2={Y(base + hrH)} strokeWidth={2} />
+          <line x1={X(topX)} y1={Y(top)} x2={X(topX)} y2={Y(top + hrH)} strokeWidth={1.6} />
+          <line x1={X(landX)} y1={Y(top)} x2={X(landX)} y2={Y(top + hrH)} strokeWidth={2} />
         </g>
       )}
 
-      <text x={sx0 + wPx / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.steelDark}>{caption}</text>
+      <StairSchedule s={s} X={X} Y={Y} groundY={groundY} sx0={sx0} wPx={wPx} caption={caption} fmt={fmt}
+        hrH={hrH} lowX={lowX} topX={topX} base={base} top={top} />
+    </g>
+  );
+}
+
+/**
+ * Everything a builder needs read off the flight itself: the total rise dimensioned against the two
+ * finished floor levels it connects, the horizontal run, the going, and a schedule line carrying the
+ * riser/tread counts, riser height, tread depth, flight width, landing width and handrail height.
+ */
+function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, topX, base, top }: {
+  s: ElevationGeom["stairs"][number];
+  X: (m: number) => number; Y: (m: number) => number; groundY: number;
+  sx0: number; wPx: number; caption: string; fmt: (m: number) => string; hrH: number;
+  lowX: number; topX: number; base: number; top: number;
+}) {
+  // Put the rise dimension on the OUTBOARD side of the flight, clear of the building.
+  const goingUp = X(topX) > X(lowX);
+  const rx = goingUp ? X(lowX) - 13 : X(lowX) + 13;
+  const yb = Y(base), yt = Y(top);
+  const runA = Math.min(X(lowX), X(topX)), runB = Math.max(X(lowX), X(topX));
+
+  return (
+    <g>
+      {/* ---- TOTAL RISE, dimensioned between the two floor levels it actually connects ---- */}
+      <g stroke={COL.overall} strokeWidth={0.9}>
+        <line x1={rx} y1={yb} x2={rx} y2={yt} />
+        <line x1={rx - 4} y1={yb} x2={rx + 4} y2={yb} />
+        <line x1={rx - 4} y1={yt} x2={rx + 4} y2={yt} />
+      </g>
+      <text x={rx + (goingUp ? -3 : 3)} y={(yb + yt) / 2} textAnchor={goingUp ? "end" : "start"}
+        fontSize={6.6} fontWeight={700} fill={COL.overall}>
+        <tspan>RISE {fmt(s.riseM)}</tspan>
+      </text>
+      {/* start / end level marks — the flight's true bottom and top levels */}
+      <g fontSize={5.6} fill={COL.dim}>
+        <text x={rx + (goingUp ? -3 : 3)} y={yb + 8} textAnchor={goingUp ? "end" : "start"}>start +{fmt(base)}</text>
+        <text x={rx + (goingUp ? -3 : 3)} y={yt - 5} textAnchor={goingUp ? "end" : "start"}>end +{fmt(top)}</text>
+      </g>
+      {!s.reachesFloor && (
+        <text x={(runA + runB) / 2} y={yt - 12} textAnchor="middle" fontSize={6} fontWeight={700} fill={COL.door}>
+          ⚠ does not reach the floor level
+        </text>
+      )}
+
+      {/* ---- horizontal RUN of the flight ---- */}
+      <g stroke={COL.dim} strokeWidth={0.8}>
+        <line x1={runA} y1={groundY + 15} x2={runB} y2={groundY + 15} />
+        <line x1={runA} y1={groundY + 11} x2={runA} y2={groundY + 19} />
+        <line x1={runB} y1={groundY + 11} x2={runB} y2={groundY + 19} />
+      </g>
+      <text x={(runA + runB) / 2} y={groundY + 10} textAnchor="middle" fontSize={6} fill={COL.dim}>
+        run {fmt(s.runM)}
+      </text>
+
+      {/* ---- full schedule ---- */}
+      <text x={sx0 + wPx / 2} y={groundY + 27} textAnchor="middle" fontSize={6.2} fontWeight={700} fill={COL.steelDark}>
+        {caption}
+      </text>
+      <text x={sx0 + wPx / 2} y={groundY + 35} textAnchor="middle" fontSize={5.7} fill={COL.note}>
+        width {fmt(s.widthM)} · landing {fmt(s.landingM)} · railing {fmt(hrH)} · slope {s.slopeDeg}°
+      </text>
     </g>
   );
 }
