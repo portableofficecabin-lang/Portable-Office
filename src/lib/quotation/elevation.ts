@@ -127,8 +127,8 @@ export interface ElevationGeom {
   decks: ElevDeck[];
   courses: number[];              // panel-course line heights, m above ground
   dimChain: { x0: number; wM: number; kind: FPBand["kind"] }[];
-  structure: Required<Omit<ElevationStructureConfig, "columnWidthM" | "braceThickM">> & {
-    columnWidthM: number; braceThickM: number;
+  structure: Required<Omit<ElevationStructureConfig, "columnWidthM" | "braceThickM" | "handrailHeightM">> & {
+    columnWidthM: number; braceThickM: number; handrailHeightM: number;
   };
 }
 
@@ -163,6 +163,8 @@ export function resolveStructure(
     braceThickM: clamp(s.braceThickM && s.braceThickM > 0 ? s.braceThickM : braceFromSection, 0.02, 0.3),
     braceClearOpenings: s.braceClearOpenings ?? true,
     panelCourseM: Math.max(0, s.panelCourseM ?? 1),
+    stairStyle: s.stairStyle ?? "steel",
+    handrailHeightM: clamp(s.handrailHeightM && s.handrailHeightM > 0 ? s.handrailHeightM : 0.9, 0.5, 1.5),
     showDecks: s.showDecks ?? true,
     showDims: s.showDims ?? true,
   };

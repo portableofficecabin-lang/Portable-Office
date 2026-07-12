@@ -34,6 +34,7 @@ const COL = {
   steel: "#1d4ed8", steelDark: "#1e3a8a", brace: "#2563eb",   // "blue-painted steel frame"
   door: "#dc2626", doorFill: "#fee2e2", window: "#2563eb", windowFill: "#dbeafe",
   floor: "#94a3b8", rail: "#059669", stair: "#b45309", stairFill: "#fde68a",
+  stairTread: "#475569", stairRail: "#1e3a8a",   // steel stair: tread plates + handrail
   deck: "#fef9c3", deckEdge: "#a16207",
   dim: "#475569", overall: "#0369a1", ink: "#0f172a", note: "#64748b",
 };
@@ -170,6 +171,22 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
             onFocus={(e) => e.currentTarget.select()} disabled={!editable} className={numCls} />
         </label>
 
+        <label className="font-medium text-slate-600">
+          <span className="mb-1 block">Staircase</span>
+          <select value={st.stairStyle} onChange={(e) => setStruct({ stairStyle: e.target.value as "steel" | "rcc" })}
+            className={selCls} disabled={!editable}>
+            <option value="steel">Steel — open stringer &amp; treads</option>
+            <option value="rcc">RCC — cast waist slab</option>
+          </select>
+        </label>
+
+        <label className="font-medium text-slate-600">
+          <span className="mb-1 block">Handrail height (m)</span>
+          <input type="number" step={0.05} min={0.5} max={1.5} value={st.handrailHeightM}
+            onChange={(e) => setStruct({ handrailHeightM: Math.max(0.5, parseFloat(e.target.value) || 0.9) })}
+            onFocus={(e) => e.currentTarget.select()} disabled={!editable} className={numCls} />
+        </label>
+
         <label className="flex items-center gap-1.5 font-medium text-slate-700">
           <input type="checkbox" checked={st.braceClearOpenings} disabled={!editable || st.bracePattern === "none"}
             onChange={(e) => setStruct({ braceClearOpenings: e.target.checked })} />
@@ -211,7 +228,8 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
         <span className="flex items-center gap-1"><span className="inline-block h-2 w-4 border" style={{ background: COL.doorFill, borderColor: COL.door }} /> Door</span>
         <span className="flex items-center gap-1"><span className="inline-block h-2 w-4 border" style={{ background: COL.deck, borderColor: COL.deckEdge }} /> Veranda / walkway</span>
         <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: COL.rail }} /> Safety railing</span>
-        <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm border" style={{ background: COL.stairFill, borderColor: COL.stair }} /> Staircase</span>
+        <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: COL.steel }} /> Steel stair (stringer + open treads)</span>
+        <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: COL.stairRail }} /> Stair handrail</span>
         <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm border" style={{ background: COL.plinth, borderColor: COL.wall }} /> Plinth</span>
         <span className="text-slate-400">Derived from the floor plan · schematic reference, not stamped CAD</span>
       </div>
@@ -468,55 +486,11 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
         })}
 
         {/* ---- staircases ---- */}
-        {g.stairs.map((s, i) => {
-          const sx0 = X(Math.min(s.x0, s.x0 + s.wM)), w = Math.abs(s.wM) * S;
-          if (!s.profile) {
-            const hy = Y(s.riseM);
-            return (
-              <g key={`s${i}`}>
-                <rect x={sx0} y={hy} width={w} height={groundY - hy} fill={COL.stairFill} stroke={COL.stair} strokeWidth={1.2} />
-                <line x1={sx0} y1={hy} x2={sx0 + w} y2={hy} stroke={COL.stair} strokeWidth={1.6} />
-                <text x={sx0 + w / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.stair}>{s.label}</text>
-              </g>
-            );
-          }
-          // true stepped profile — riser/going straight from the plan's staircase config
-          const flightW = Math.max(0.05, s.wM - s.landingM);
-          const dir = s.lowAtStart ? 1 : -1;
-          const startX = s.lowAtStart ? s.x0 : s.x0 + s.wM;
-          const stepRise = s.riseM / Math.max(1, s.steps);
-          const pts: string[] = [];
-          let cx = startX, cy = 0;
-          pts.push(`${X(cx)},${Y(cy)}`);
-          for (let k = 0; k < s.steps; k++) {
-            cy += stepRise;
-            pts.push(`${X(cx)},${Y(cy)}`);
-            cx += dir * (flightW / s.steps);
-            pts.push(`${X(cx)},${Y(cy)}`);
-          }
-          const landEnd = s.lowAtStart ? s.x0 + s.wM : s.x0;
-          pts.push(`${X(landEnd)},${Y(cy)}`);
-          const poly = `${pts.join(" ")} ${X(landEnd)},${Y(0)} ${X(startX)},${Y(0)}`;
-          return (
-            <g key={`s${i}`}>
-              <polygon points={poly} fill={COL.stairFill} stroke={COL.stair} strokeWidth={1.2} />
-              {s.handrail && (
-                <>
-                  <line x1={X(startX)} y1={Y(1.0)} x2={X(landEnd)} y2={Y(cy + 1.0)} stroke={COL.rail} strokeWidth={1.8} />
-                  {Array.from({ length: 5 }, (_, k) => {
-                    const t = (k + 0.5) / 5;
-                    const px = X(startX + (landEnd - startX) * t);
-                    const stepY = cy * t;
-                    return <line key={k} x1={px} y1={Y(stepY)} x2={px} y2={Y(stepY + 1.0)} stroke={COL.rail} strokeWidth={0.8} />;
-                  })}
-                </>
-              )}
-              <text x={sx0 + w / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.stair}>
-                {s.label} · {s.steps} steps · R {Math.round(s.riserM * 1000)} mm
-              </text>
-            </g>
-          );
-        })}
+        {g.stairs.map((s, i) => (
+          <StairGlyph key={`s${i}`} s={s} X={X} Y={Y} S={S} groundY={groundY}
+            style={g.structure.stairStyle} hrH={g.structure.handrailHeightM}
+            colW={g.structure.columnWidthM} />
+        ))}
 
         {/* ---- ground line (hatched) ---- */}
         <line x1={X(g.x0) - 14} y1={groundY} x2={X(g.x1) + 14} y2={groundY} stroke={COL.ink} strokeWidth={2.6} />
@@ -613,3 +587,189 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
     );
   },
 );
+
+/* ============================================================ staircase glyph */
+
+/**
+ * A STEEL staircase, drawn the way the reference detail shows it — not a cast concrete mass:
+ *   • an inclined STRINGER beam carrying the flight, landing on a footing at ground level
+ *   • OPEN treads (tread plates + open risers), so you can see through the flight
+ *   • a sloped HANDRAIL parallel to the nosing line, with a mid-rail, regular balusters and a
+ *     newel post at the bottom and at the landing
+ *   • intermediate SUPPORT POSTS from the underside of the stringer down to the ground
+ *   • a LANDING platform at the top, railed, with its own posts
+ * Every dimension (steps, going, riser, landing, width, handrail height) comes from the plan's
+ * staircase config, so the elevation and the floor plan can never disagree.
+ *
+ * `style: "rcc"` falls back to the solid cast waist slab for anyone who actually wants concrete.
+ */
+function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW }: {
+  s: ElevationGeom["stairs"][number];
+  X: (m: number) => number; Y: (m: number) => number; S: number; groundY: number;
+  style: "steel" | "rcc"; hrH: number; colW: number;
+}) {
+  const sx0 = X(Math.min(s.x0, s.x0 + s.wM));
+  const wPx = Math.abs(s.wM) * S;
+  const caption = `${s.label} · ${s.steps} steps · R ${Math.round(s.riserM * 1000)} mm`;
+
+  /* ---------- seen END-ON (the flight recedes from the viewer) ----------
+   * You see the WIDTH of the flight, not its slope: an open steel frame — two posts, the
+   * treads edge-on as horizontal lines, and the handrail rising with the flight. */
+  if (!s.profile) {
+    const topY = Y(s.riseM);
+    const postW = Math.max(2, colW * S * 0.8);
+    const stepRise = s.riseM / Math.max(1, s.steps);
+    return (
+      <g>
+        {/* flight envelope — open, so it never reads as a solid block */}
+        <rect x={sx0} y={topY} width={wPx} height={groundY - topY}
+          fill={COL.steel} fillOpacity={0.06} stroke={COL.steel} strokeWidth={0.8} strokeDasharray="4 2.5" />
+        {/* treads seen edge-on */}
+        {Array.from({ length: s.steps }, (_, k) => {
+          const ty = Y((k + 1) * stepRise);
+          return <line key={k} x1={sx0 + 1} y1={ty} x2={sx0 + wPx - 1} y2={ty} stroke={COL.stairTread} strokeWidth={0.9} />;
+        })}
+        {/* the two stringer posts at the flight edges */}
+        <rect x={sx0 - postW / 2} y={topY} width={postW} height={groundY - topY} fill={COL.steel} />
+        <rect x={sx0 + wPx - postW / 2} y={topY} width={postW} height={groundY - topY} fill={COL.steel} />
+        {/* handrail across the top of the flight */}
+        {s.handrail && (
+          <g stroke={COL.stairRail} strokeLinecap="round">
+            <line x1={sx0} y1={Y(s.riseM + hrH)} x2={sx0 + wPx} y2={Y(s.riseM + hrH)} strokeWidth={1.8} />
+            <line x1={sx0} y1={Y(s.riseM + hrH)} x2={sx0} y2={topY} strokeWidth={1.4} />
+            <line x1={sx0 + wPx} y1={Y(s.riseM + hrH)} x2={sx0 + wPx} y2={topY} strokeWidth={1.4} />
+          </g>
+        )}
+        <text x={sx0 + wPx / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.steelDark}>{s.label}</text>
+      </g>
+    );
+  }
+
+  /* ---------- TRUE PROFILE (the flight lies in the view plane) ---------- */
+  const dir = s.lowAtStart ? 1 : -1;
+  const lowX = s.lowAtStart ? s.x0 : s.x0 + s.wM;          // foot of the flight (m)
+  const flightM = Math.max(0.05, s.wM - s.landingM);       // sloped run
+  const topX = lowX + dir * flightM;                       // head of the flight
+  const landX = lowX + dir * s.wM;                         // far edge of the landing
+  const steps = Math.max(1, s.steps);
+  const stepRise = s.riseM / steps;
+  const going = flightM / steps;
+  const slope = s.riseM / flightM;                         // rise per unit run
+
+  /** height of the nosing line at any x along the flight */
+  const nose = (x: number) => Math.abs(x - lowX) * slope;
+
+  // ---- RCC fallback: the old solid waist slab -------------------------------------------
+  if (style === "rcc") {
+    const pts: string[] = [];
+    let cx = lowX, cy = 0;
+    pts.push(`${X(cx)},${Y(cy)}`);
+    for (let k = 0; k < steps; k++) {
+      cy += stepRise; pts.push(`${X(cx)},${Y(cy)}`);
+      cx += dir * going; pts.push(`${X(cx)},${Y(cy)}`);
+    }
+    pts.push(`${X(landX)},${Y(cy)}`);
+    return (
+      <g>
+        <polygon points={`${pts.join(" ")} ${X(landX)},${Y(0)} ${X(lowX)},${Y(0)}`}
+          fill={COL.stairFill} stroke={COL.stair} strokeWidth={1.2} />
+        {s.handrail && (
+          <line x1={X(lowX)} y1={Y(hrH)} x2={X(landX)} y2={Y(s.riseM + hrH)} stroke={COL.rail} strokeWidth={1.8} />
+        )}
+        <text x={sx0 + wPx / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.stair}>{caption}</text>
+      </g>
+    );
+  }
+
+  // ---- STEEL stair ------------------------------------------------------------------------
+  // Stringer beam depth. Capped at 80% of the total rise so a very short flight can never push the
+  // beam's top-inner corner (riseM - stringerD) below ground level.
+  const stringerD = Math.min(Math.max(0.16, Math.min(0.3, going * 0.7)), s.riseM * 0.8);
+  // Where the stringer's UNDERSIDE meets the ground (it lands on a footing, not below grade).
+  const footRun = Math.min(flightM * 0.5, stringerD / Math.max(slope, 0.15));
+  const footX = lowX + dir * footRun;
+
+  const stringer = [
+    `${X(lowX)},${Y(0)}`,
+    `${X(topX)},${Y(s.riseM)}`,
+    `${X(topX)},${Y(s.riseM - stringerD)}`,
+    `${X(footX)},${Y(0)}`,
+  ].join(" ");
+
+  // Intermediate posts under the flight, ~every 1.8 m of run.
+  const nPost = Math.max(1, Math.round(flightM / 1.8));
+  const posts = Array.from({ length: nPost }, (_, k) => lowX + dir * (flightM * (k + 1)) / (nPost + 1));
+
+  // Balusters up the flight — one every other tread, never fewer than 3.
+  const nBal = Math.max(3, Math.ceil(steps / 2));
+  const slabT = Math.max(2.5, 0.14 * S);
+  const treadT = Math.max(1.4, 0.05 * S);
+
+  return (
+    <g>
+      {/* --- inclined stringer beam (the flight's spine) --- */}
+      <polygon points={stringer} fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.8} />
+
+      {/* --- support posts from the stringer underside to the ground --- */}
+      {posts.map((px, k) => (
+        <rect key={`p${k}`} x={X(px) - Math.max(1.6, colW * S * 0.55) / 2}
+          y={Y(Math.max(0, nose(px) - stringerD))} width={Math.max(1.6, colW * S * 0.55)}
+          height={groundY - Y(Math.max(0, nose(px) - stringerD))}
+          fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.5} />
+      ))}
+
+      {/* --- open treads: a tread plate at each step, risers left open --- */}
+      {Array.from({ length: steps }, (_, k) => {
+        const a = lowX + dir * k * going;                 // this step's back edge
+        const b = a + dir * going;                        // its nosing
+        const y = (k + 1) * stepRise;                     // tread level
+        return (
+          <g key={`t${k}`}>
+            <line x1={X(a)} y1={Y(y)} x2={X(b)} y2={Y(y)} stroke={COL.stairTread} strokeWidth={treadT} strokeLinecap="square" />
+            <line x1={X(a)} y1={Y(y - stepRise)} x2={X(a)} y2={Y(y)} stroke={COL.stairTread} strokeWidth={0.7} strokeOpacity={0.55} />
+          </g>
+        );
+      })}
+
+      {/* --- landing platform at the head of the flight --- */}
+      {s.landingM > 0.01 && (
+        <>
+          <rect x={Math.min(X(topX), X(landX))} y={Y(s.riseM)} width={Math.abs(X(landX) - X(topX))} height={slabT}
+            fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.7} />
+          <rect x={X(landX) - Math.max(1.8, colW * S * 0.6) / 2} y={Y(s.riseM)}
+            width={Math.max(1.8, colW * S * 0.6)} height={groundY - Y(s.riseM)}
+            fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.5} />
+        </>
+      )}
+
+      {/* --- sloped handrail: top rail + mid rail + balusters + newel posts --- */}
+      {s.handrail && (
+        <g stroke={COL.stairRail} strokeLinecap="round" fill="none">
+          {/* top + mid rail, parallel to the nosing line, continuing level across the landing */}
+          <polyline points={`${X(lowX)},${Y(hrH)} ${X(topX)},${Y(s.riseM + hrH)} ${X(landX)},${Y(s.riseM + hrH)}`} strokeWidth={2} />
+          <polyline points={`${X(lowX)},${Y(hrH * 0.5)} ${X(topX)},${Y(s.riseM + hrH * 0.5)} ${X(landX)},${Y(s.riseM + hrH * 0.5)}`} strokeWidth={1} />
+          {/* balusters up the flight — foot on the nosing line, head on the top rail */}
+          {Array.from({ length: nBal + 1 }, (_, k) => {
+            const px = lowX + dir * (flightM * k) / nBal;
+            const ny = nose(px);
+            return <line key={`b${k}`} x1={X(px)} y1={Y(ny)} x2={X(px)} y2={Y(ny + hrH)} strokeWidth={0.9} />;
+          })}
+          {/* balusters along the landing */}
+          {s.landingM > 0.01 && (() => {
+            const nLand = Math.max(1, Math.round(s.landingM / 0.9));
+            return Array.from({ length: nLand + 1 }, (_, k) => {
+              const px = topX + dir * (s.landingM * k) / nLand;
+              return <line key={`lb${k}`} x1={X(px)} y1={Y(s.riseM)} x2={X(px)} y2={Y(s.riseM + hrH)} strokeWidth={0.9} />;
+            });
+          })()}
+          {/* newel posts — heavier, at the foot and at the landing */}
+          <line x1={X(lowX)} y1={Y(0)} x2={X(lowX)} y2={Y(hrH)} strokeWidth={2} />
+          <line x1={X(topX)} y1={Y(s.riseM)} x2={X(topX)} y2={Y(s.riseM + hrH)} strokeWidth={1.6} />
+          <line x1={X(landX)} y1={Y(s.riseM)} x2={X(landX)} y2={Y(s.riseM + hrH)} strokeWidth={2} />
+        </g>
+      )}
+
+      <text x={sx0 + wPx / 2} y={groundY + 11} textAnchor="middle" fontSize={6.5} fill={COL.steelDark}>{caption}</text>
+    </g>
+  );
+}

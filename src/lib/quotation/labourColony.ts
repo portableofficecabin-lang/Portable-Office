@@ -254,6 +254,11 @@ export interface ElevationStructureConfig {
   braceClearOpenings?: boolean;
   /** Horizontal sandwich-panel course (joint) spacing, m. 0 = no course lines. Default 1. */
   panelCourseM?: number;
+  /** Staircase appearance. "steel" (default) = open stringer + treads + baluster handrail, matching
+   *  the blue-painted steel frame; "rcc" = a solid cast waist slab. */
+  stairStyle?: "steel" | "rcc";
+  /** Handrail height above the stair nosing / landing, m. Default 0.9. */
+  handrailHeightM?: number;
   /** Draw the veranda/walkway deck edge + railing on the side (gable-end) elevations. Default true. */
   showDecks?: boolean;
   /** Draw the bottom dimension chain (veranda | rooms | veranda) + height dims. Default true. */
