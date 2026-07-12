@@ -16,7 +16,7 @@ import {
   User, Package, LogOut, Save, ShoppingCart, Clock, CheckCircle2,
   MapPin, Phone, Mail, Building2, ChevronRight, Star, Heart,
   TrendingUp, Bell, Settings, HelpCircle, MessageSquare, Sparkles,
-  Calendar, IndianRupee, Eye, Edit3, Shield, Award
+  Calendar, Eye, Edit3, Shield, Award
 } from "lucide-react";
 
 interface Profile {
@@ -25,7 +25,7 @@ interface Profile {
 }
 
 interface OrderSummary {
-  total: number; pending: number; delivered: number; totalSpent: number;
+  total: number; pending: number; delivered: number; totalItems: number;
 }
 
 type Tab = "overview" | "profile" | "orders" | "support";
@@ -41,7 +41,7 @@ export default function MyAccountPage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [profile, setProfile] = useState<Profile>({ full_name: "", phone: "", company: "", address_line1: "", address_line2: "", city: "", state: "", pincode: "" });
   const [saving, setSaving] = useState(false);
-  const [orderSummary, setOrderSummary] = useState<OrderSummary>({ total: 0, pending: 0, delivered: 0, totalSpent: 0 });
+  const [orderSummary, setOrderSummary] = useState<OrderSummary>({ total: 0, pending: 0, delivered: 0, totalItems: 0 });
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -68,8 +68,13 @@ export default function MyAccountPage() {
         const total = orders.length;
         const pending = orders.filter(o => !["delivered", "cancelled"].includes(o.status)).length;
         const delivered = orders.filter(o => o.status === "delivered").length;
-        const totalSpent = orders.reduce((sum, o) => sum + (o.total_amount || 0), 0);
-        setOrderSummary({ total, pending, delivered, totalSpent });
+        // Non-monetary: units across all quote requests. We never collect payment online,
+        // so no "spent"/"paid" figure may be shown here.
+        const totalItems = orders.reduce(
+          (sum, o) => sum + (o.order_items?.reduce((n: number, i: any) => n + (i.quantity || 0), 0) || 0),
+          0
+        );
+        setOrderSummary({ total, pending, delivered, totalItems });
         setRecentOrders(orders.slice(0, 3));
       }
       setLoading(false);
@@ -104,7 +109,7 @@ export default function MyAccountPage() {
   const tabs: { id: Tab; label: string; icon: any }[] = [
     { id: "overview", label: "Overview", icon: TrendingUp },
     { id: "profile", label: "Profile", icon: User },
-    { id: "orders", label: "Orders", icon: Package },
+    { id: "orders", label: "Quote Requests", icon: Package },
     { id: "support", label: "Support", icon: HelpCircle },
   ];
 
@@ -130,7 +135,7 @@ export default function MyAccountPage() {
 
   return (
     <Layout>
-      <SEOHead title="My Account | Portable Office Cabin" description="Manage your profile and view orders." />
+      <SEOHead title="My Account | Portable Office Cabin" description="Manage your profile and track your quote requests." />
 
       {/* Hero Banner */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/80">
@@ -209,10 +214,10 @@ export default function MyAccountPage() {
                 {/* Stats Cards */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {[
-                    { label: "Total Orders", value: orderSummary.total, icon: Package, color: "bg-blue-500/10 text-blue-600", border: "border-blue-200" },
-                    { label: "Active Orders", value: orderSummary.pending, icon: Clock, color: "bg-amber-500/10 text-amber-600", border: "border-amber-200" },
+                    { label: "Quote Requests", value: orderSummary.total, icon: Package, color: "bg-blue-500/10 text-blue-600", border: "border-blue-200" },
+                    { label: "In Progress", value: orderSummary.pending, icon: Clock, color: "bg-amber-500/10 text-amber-600", border: "border-amber-200" },
                     { label: "Delivered", value: orderSummary.delivered, icon: CheckCircle2, color: "bg-green-500/10 text-green-600", border: "border-green-200" },
-                    { label: "Total Spent", value: `₹${orderSummary.totalSpent.toLocaleString("en-IN")}`, icon: IndianRupee, color: "bg-accent/10 text-accent", border: "border-accent/20" },
+                    { label: "Units Requested", value: orderSummary.totalItems, icon: ShoppingCart, color: "bg-accent/10 text-accent", border: "border-accent/20" },
                   ].map((stat, i) => {
                     const Icon = stat.icon;
                     return (
@@ -275,8 +280,8 @@ export default function MyAccountPage() {
                       <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
                         <Package className="h-8 w-8 text-muted-foreground" />
                       </div>
-                      <h3 className="font-semibold text-foreground mb-2">No orders yet</h3>
-                      <p className="text-sm text-muted-foreground mb-4">Browse our products and place your first order!</p>
+                      <h3 className="font-semibold text-foreground mb-2">No quote requests yet</h3>
+                      <p className="text-sm text-muted-foreground mb-4">Browse our products and request your first quotation!</p>
                       <Button variant="accent" asChild><Link href="/products">Explore Products</Link></Button>
                     </div>
                   ) : (
@@ -299,7 +304,6 @@ export default function MyAccountPage() {
                             </div>
                             <p className="text-xs text-muted-foreground mt-0.5">
                               {new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
-                              {order.total_amount ? ` · ₹${order.total_amount.toLocaleString("en-IN")}` : ""}
                             </p>
                           </div>
                           <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-accent transition-colors" />
@@ -361,7 +365,7 @@ export default function MyAccountPage() {
                     <h2 className="font-display font-semibold text-lg mb-1 flex items-center gap-2">
                       <MapPin className="h-5 w-5 text-accent" /> Shipping Address
                     </h2>
-                    <p className="text-sm text-muted-foreground mb-5">Default delivery address for your orders</p>
+                    <p className="text-sm text-muted-foreground mb-5">Default delivery address used when we prepare your quotation</p>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
                         <Label className="text-xs uppercase tracking-wider text-muted-foreground">Address Line 1</Label>
@@ -402,17 +406,17 @@ export default function MyAccountPage() {
             {activeTab === "orders" && (
               <motion.div key="orders" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="font-display text-xl font-semibold">Your Orders</h2>
+                  <h2 className="font-display text-xl font-semibold">Your Quote Requests</h2>
                   <Button variant="accent" asChild>
-                    <Link href="/my-account/orders"><Eye className="mr-2 h-4 w-4" /> View Full Order History</Link>
+                    <Link href="/my-account/orders"><Eye className="mr-2 h-4 w-4" /> View All Quote Requests</Link>
                   </Button>
                 </div>
                 {recentOrders.length === 0 ? (
                   <div className="bg-card rounded-xl border border-border/50 p-12 text-center">
                     <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-semibold mb-2">No orders yet</h3>
-                    <p className="text-muted-foreground text-sm mb-6">Your order history will appear here</p>
-                    <Button variant="accent" asChild><Link href="/products">Start Shopping</Link></Button>
+                    <h3 className="font-semibold mb-2">No quote requests yet</h3>
+                    <p className="text-muted-foreground text-sm mb-6">Your quote requests will appear here</p>
+                    <Button variant="accent" asChild><Link href="/products">Browse Products</Link></Button>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -432,14 +436,23 @@ export default function MyAccountPage() {
                         {order.order_items?.map((item: any, idx: number) => (
                           <p key={idx} className="text-sm text-muted-foreground">{item.product_name} × {item.quantity}</p>
                         ))}
-                        {order.total_amount && (
-                          <p className="text-lg font-bold text-foreground mt-3">₹{order.total_amount.toLocaleString("en-IN")}</p>
-                        )}
+                        {/* Indicative only — no money is collected on this site. */}
+                        {order.total_amount ? (
+                          <div className="mt-3 pt-3 border-t border-border/50">
+                            <div className="flex items-baseline justify-between gap-3">
+                              <span className="text-sm font-semibold text-muted-foreground">Indicative Subtotal</span>
+                              <span className="text-lg font-bold text-foreground">₹{order.total_amount.toLocaleString("en-IN")}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                              Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation.
+                            </p>
+                          </div>
+                        ) : null}
                       </div>
                     ))}
                     <div className="text-center pt-3">
                       <Button variant="outline" asChild>
-                        <Link href="/my-account/orders">See All Orders <ChevronRight className="ml-1 h-4 w-4" /></Link>
+                        <Link href="/my-account/orders">See All Quote Requests <ChevronRight className="ml-1 h-4 w-4" /></Link>
                       </Button>
                     </div>
                   </div>
@@ -451,7 +464,7 @@ export default function MyAccountPage() {
             {activeTab === "support" && (
               <motion.div key="support" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-3xl space-y-4">
                 <h2 className="font-display text-xl font-semibold mb-2">Need Help?</h2>
-                <p className="text-muted-foreground mb-6">We're here to help you with any questions about your orders or products.</p>
+                <p className="text-muted-foreground mb-6">We're here to help you with any questions about your quote requests or products.</p>
                 {[
                   { icon: Phone, title: "Call Us", desc: "Speak to our team directly", action: "tel:+919731897976", cta: "+91 97318 97976" },
                   { icon: MessageSquare, title: "WhatsApp", desc: "Chat with us on WhatsApp", action: "https://wa.me/919731897976", cta: "Open WhatsApp" },

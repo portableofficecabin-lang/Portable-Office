@@ -82,7 +82,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addToCart = async (productId: string, quantity = 1) => {
     if (!user) {
-      toast({ title: "Please log in", description: "You need an account to add items to cart.", variant: "destructive" });
+      toast({ title: "Please log in", description: "You need an account to add items to your quote list.", variant: "destructive" });
       return;
     }
     try {
@@ -91,10 +91,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         .from("cart_items")
         .upsert({ user_id: user.id, product_id: productId, quantity }, { onConflict: "user_id,product_id" });
       if (error) throw error;
-      toast({ title: "Added to cart!", description: "Product has been added to your cart." });
+      toast({ title: "Added to your quote list", description: "Submit your quote list and our team will send you final pricing." });
       fetchCart();
     } catch {
-      toast({ title: "Error", description: "Could not add to cart.", variant: "destructive" });
+      toast({ title: "Error", description: "Could not add to your quote list.", variant: "destructive" });
     }
   };
 

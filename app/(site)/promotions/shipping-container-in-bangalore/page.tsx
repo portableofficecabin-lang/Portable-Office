@@ -5,7 +5,11 @@ import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
+import {
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+  generateProductStructuredData,
+} from "@/lib/seo/structured-data";
 import {
   ShippingContainerBangaloreContent,
   SHIPPING_BLR_FAQS,
@@ -48,25 +52,20 @@ export default function ShippingContainerBangalorePage() {
             { name: "Promotions", url: `${SITE}/promotions` },
             { name: "Shipping Container in Bangalore", url: `${SITE}${PATH}` },
           ]),
+          // Routed through the shared helper, which deliberately emits NO offers /
+          // price / availability: this is a quote-only business with no payment
+          // gateway, so any transactable price band or stock claim would be a
+          // misrepresentation. `url` is overridden because the helper defaults to
+          // /products/* and this Product lives on a promotions landing page.
           {
-            "@context": "https://schema.org",
-            "@type": "Product",
-            name: "Shipping Container in Bangalore",
-            description:
-              "New and used shipping containers in Bangalore for storage, site offices, accommodation and custom conversions — 10ft, 20ft & 40ft, manufactured at our Hoskote factory.",
-            image: HERO,
-            brand: { "@type": "Brand", name: "Portable Office Cabin" },
-            category: "Cargo Storage & Shipping Containers",
+            ...generateProductStructuredData({
+              name: "Shipping Container in Bangalore",
+              description:
+                "New and used shipping containers in Bangalore for storage, site offices, accommodation and custom conversions — 10ft, 20ft & 40ft, manufactured at our Hoskote factory.",
+              image: HERO,
+              category: "Cargo Storage & Shipping Containers",
+            }),
             url: `${SITE}${PATH}`,
-            offers: {
-              "@type": "AggregateOffer",
-              priceCurrency: "INR",
-              lowPrice: 150000,
-              highPrice: 800000,
-              availability: "https://schema.org/InStock",
-              areaServed: "Bangalore, Karnataka, India",
-              seller: { "@type": "Organization", name: "Portable Office Cabin" },
-            },
           },
           generateFAQSchema(SHIPPING_BLR_FAQS),
         ]}

@@ -139,7 +139,7 @@ export default function WarrantyPage() {
                 <h3 className="font-display text-lg font-bold text-foreground">After-Sales Support</h3>
               </div>
               <ul className="space-y-3">
-                <Bullet><strong>24/7 customer support</strong> — reach us anytime by phone, email, or WhatsApp.</Bullet>
+                <Bullet><strong>Customer support 7 days a week</strong> — reach us by phone, email, or WhatsApp, Mon-Sat 7:00 AM - 10:00 PM and Sunday 10:00 AM - 7:00 PM.</Bullet>
                 <Bullet><strong>On-site maintenance</strong> — our service team can visit your location for repairs and upkeep.</Bullet>
                 <Bullet><strong>Genuine spare parts</strong> — replacement parts are readily available and competitively priced.</Bullet>
               </ul>

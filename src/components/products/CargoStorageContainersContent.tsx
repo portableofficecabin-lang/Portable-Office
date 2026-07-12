@@ -49,7 +49,7 @@ const faqs = [
   { q: "What sizes of cargo containers are available in India?", a: "The most common are 20 ft GP (33 m³ internal volume) and 40 ft GP (67 m³). High cube variants add 30.5 cm height. Specialized sizes include 10 ft (for urban sites), 45 ft pallet-wide, and half-height units for dense bulk cargo." },
   { q: "How do I inspect a used container before buying?", a: "Check corner posts for bending, wall thickness with ultrasonic gauging, roof for pinholes, door alignment and seal compression, lock rod operation, and marine plywood floor for delamination or rot. Verify CSC plate details and manufacture date (post-2010 preferred)." },
   { q: "What maintenance does a cargo container need?", a: "Annual repainting with epoxy coating (80 μm minimum), rust treatment at first signs, lubricate hinges with lithium EP2 grease, roof inspection after monsoon, pest treatment for timber floors, and clear drainage around the base." },
-  { q: "Does Portable Office Cabin deliver across India?", a: "Yes. Portable Office Cabin provides PAN-India delivery with hydraulic ramps for safe transport, crane positioning, and grout foundations for installation. Over 10,000 projects completed with ISO 9001 quality management." },
+  { q: "Does Portable Office Cabin deliver across India?", a: "Yes. Portable Office Cabin provides PAN-India delivery with hydraulic ramps for safe transport, crane positioning, and grout foundations for installation. Over 500 projects completed with ISO 9001 quality management." },
 ];
 
 export function CargoStorageContainersContent() {
@@ -330,7 +330,7 @@ export function CargoStorageContainersContent() {
             </div>
             <div>
               <p className="font-medium text-foreground mb-1">Quality & Compliance</p>
-              <p>10,000+ projects, ISO 9001 quality management, NBC fire safety</p>
+              <p>500+ projects, ISO 9001 quality management, NBC fire safety</p>
             </div>
           </div>
         </div>
@@ -446,7 +446,7 @@ export function CargoStorageContainersContent() {
       {/* CTA */}
       <section className="bg-accent/10 border border-accent/20 rounded-2xl p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground mb-3">Ready to Source Your Cargo Storage Containers?</h2>
-        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India with 10,000+ completed projects.</p>
+        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India with 500+ completed projects.</p>
         <Link
           href="/contact"
           className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"

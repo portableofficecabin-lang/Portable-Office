@@ -1,4 +1,4 @@
-import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home, Star, Zap, Calendar, IndianRupee, Settings, Hammer, Lightbulb, TrendingUp } from "lucide-react";
+import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home, Zap, Calendar, IndianRupee, Settings, Hammer, Lightbulb, TrendingUp } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
 
@@ -481,34 +481,6 @@ export function PortaCabinContent() {
               <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Reviews & Testimonials */}
-      <section className="bg-muted/30 rounded-2xl p-8">
-        <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
-          <Star className="h-7 w-7 text-accent" />
-          Reviews and Testimonials from Real Customers
-        </h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-card rounded-xl p-6 border border-border">
-            <div className="flex gap-1 mb-3">
-              {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 text-accent fill-accent" />)}
-            </div>
-            <p className="text-muted-foreground text-sm italic leading-relaxed mb-4">
-              "The quick installation and easy relocation of our porta cabins made a huge difference for our construction site. We were able to get our operations up and running in record time, and the durability of the cabins has exceeded our expectations."
-            </p>
-            <p className="text-foreground font-semibold text-sm">— Project Manager, Infrastructure Company</p>
-          </div>
-          <div className="bg-card rounded-xl p-6 border border-border">
-            <div className="flex gap-1 mb-3">
-              {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 text-accent fill-accent" />)}
-            </div>
-            <p className="text-muted-foreground text-sm italic leading-relaxed mb-4">
-              "We needed a customized office cabin with specific electrical fittings and insulation. The team delivered exactly what we asked for, and the result was a high-quality, comfortable workspace that's easy to move as our site needs change."
-            </p>
-            <p className="text-foreground font-semibold text-sm">— Procurement Head, Manufacturing Firm</p>
-          </div>
         </div>
       </section>
 

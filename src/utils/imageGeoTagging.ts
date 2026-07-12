@@ -78,7 +78,7 @@ const pageGeoMeta: Record<string, Partial<ImageGeoMeta>> = {
     keywords: `portable cabin India, portable office cabin manufacturer, container office Bangalore, ${INDUSTRIAL_LOCATION_KEYWORDS}`,
   },
   products: {
-    title: "Portable Cabin Products – Buy Online South India",
+    title: "Portable Cabin Products – Manufacturer in South India",
     keywords: `portable cabin products, container office price India, prefab home manufacturer, ${INDUSTRIAL_LOCATION_KEYWORDS}`,
   },
   about: {

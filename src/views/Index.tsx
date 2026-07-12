@@ -8,10 +8,12 @@ import { FAQSection } from "@/components/home/FAQSection";
 import { CTASection } from "@/components/home/CTASection";
 import { InternalLinkingHub } from "@/components/home/InternalLinkingHub";
 import { JsonLd } from "@/components/JsonLd";
+import { websiteStructuredData } from "@/components/seo/WebsiteJsonLd";
 import { organizationStructuredData, localBusinessStructuredData, serviceAreaStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 const Index = () => {
   const combinedStructuredData = [
+    websiteStructuredData,
     organizationStructuredData,
     localBusinessStructuredData,
     serviceAreaStructuredData,

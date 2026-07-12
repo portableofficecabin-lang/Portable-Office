@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li><strong>Personal details:</strong> Your name, email address, phone number, and company name.</li>
               <li><strong>Project details:</strong> Site location, product requirements, and any specifications you share with us.</li>
-              <li><strong>Payment information:</strong> Bank transfer details or payment references (we do not store full card numbers).</li>
+              <li><strong>Payment references:</strong> Bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft references that you share with us offline after a written quotation is confirmed. No payment is collected on this website and we do not collect or store card details.</li>
               <li><strong>Technical data:</strong> Your IP address, browser type, device information, and pages visited on our website.</li>
               <li><strong>Communication records:</strong> Emails, WhatsApp messages, and call records related to your enquiry or order.</li>
             </ul>
@@ -115,7 +115,6 @@ export default function PrivacyPolicyPage() {
             <p>We do not sell or rent your personal information to anyone. We may share limited data with:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li><strong>Logistics partners:</strong> To coordinate delivery and installation at your site.</li>
-              <li><strong>Payment processors:</strong> To process transactions securely.</li>
               <li><strong>Analytics providers:</strong> Such as Google Analytics, to help us understand website usage.</li>
               <li><strong>Legal authorities:</strong> If required by law or to protect our rights.</li>
             </ul>
@@ -161,7 +160,7 @@ export default function PrivacyPolicyPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:admin@portableofficecabin.com" className="hover:text-accent">admin@portableofficecabin.com</a>
+                <a href="mailto:sales@portableofficecabin.com" className="hover:text-accent">sales@portableofficecabin.com</a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent" />

@@ -409,7 +409,7 @@ export function CargoStorageContainersPinkContent() {
         <h2 className="text-3xl font-bold text-foreground mb-6">Why Work with Portable Office Cabin?</h2>
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
-            Portable Office Cabin specialises in prefabricated and modular building solutions—portable cabins, container offices, labour colonies, PEB structures, and container homes—with 10+ years of experience and 2000+ units delivered across 20 Indian states.
+            Portable Office Cabin specialises in prefabricated and modular building solutions—portable cabins, container offices, labour colonies, PEB structures, and container homes—with 15+ years of experience and 500+ projects delivered across India.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[

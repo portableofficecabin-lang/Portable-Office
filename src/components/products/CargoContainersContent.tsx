@@ -748,7 +748,7 @@ export function CargoContainersContent() {
       <section className="bg-primary/5 rounded-2xl p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground mb-4">Ready to Get Started with Cargo Containers?</h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India. With 10,000+ completed projects, we bring engineering expertise and reliable execution to every project.
+          Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India. With 500+ completed projects, we bring engineering expertise and reliable execution to every project.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Link href="/contact">

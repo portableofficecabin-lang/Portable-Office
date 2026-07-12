@@ -273,8 +273,8 @@ function generateUniqueContent(keyword: string, location: string, variation: num
     `Every ${mainKeyword} we supply features 50mm PUF insulated panels, galvanized steel framing, and weatherproof construction suited to ${location}'s climate. Each unit is engineered for year-round comfort and long service life.`,
     `Clients across ${location} choose us because we handle design, manufacturing, delivery, and installation end to end. From layout planning to electrical fit-outs, our team supports your project at every stage.`,
     `We have delivered ${mainKeyword} throughout ${location} for contractors, infrastructure firms, factories, and government agencies. Whether you need a single unit or a multi-block setup, we scale to your requirements.`,
-    `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Most orders in ${location} are delivered and installed within 7-10 days, helping teams save time and reduce site disruption.`,
-    `If you are planning a project in ${location}, contact us for a free quote on ${mainKeyword}. We offer customization in size, interiors, branding, and utilities so your unit is ready for immediate use on site.`,
+    `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Standard units are dispatched within 7-15 working days of order confirmation, with transit to ${location} typically taking 1-5 days; larger or custom projects take longer.`,
+    `If you are planning a project in ${location}, contact us for a free written quotation on ${mainKeyword}. Every order starts with a quotation — we offer customization in size, interiors, branding, and utilities so your unit is ready for immediate use on site.`,
   ];
 }
 
@@ -282,11 +282,11 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
   const baseFAQs = [
     {
       question: `What is the starting price for ${keyword.toLowerCase()} in ${location}?`,
-      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. We provide detailed, transparent quotes with no hidden charges.`,
+      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport beyond 50 km, and installation. We provide a detailed written quotation with no hidden charges.`,
     },
     {
       question: `How long does delivery and installation take in ${location}?`,
-      answer: `For most orders in ${location}, we can deliver and install your ${keyword.toLowerCase()} within 7-10 days from order confirmation, depending on project complexity and site conditions.`,
+      answer: `Standard ${keyword.toLowerCase()} units are dispatched within 7-15 working days of order confirmation and receipt of the advance, with transit to ${location} typically taking 1-5 days. Larger or custom projects take longer; your written quotation confirms the exact timeline.`,
     },
     {
       question: `Can you customize ${keyword.toLowerCase()} to meet my specific needs in ${location}?`,
@@ -298,7 +298,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
     },
     {
       question: `Do you provide delivery and installation services throughout ${location}?`,
-      answer: `Yes! We offer complete door-to-door delivery and professional installation services across ${location} and all major cities in India. Our experienced team handles everything from transportation to final setup at your site in ${location}.`,
+      answer: `Yes. We offer door-to-door delivery and professional installation across ${location} and all major cities in India. Delivery is free within 50 km of our facility; beyond 50 km, transport is charged based on distance and confirmed in your written quotation.`,
     },
   ];
   return baseFAQs;
@@ -313,11 +313,11 @@ const META_DESC_MAX = 158;
 const titleSuffixes = [
   " | Manufacturer",
   " | Supplier",
-  " | Buy Online",
+  " | Get a Quote",
   " | From ₹1.5L",
   " | Fast Delivery",
   " | ISO Grade",
-  " | 7-10 Days",
+  " | 7-15 Day Dispatch",
   " | 10Y Warranty",
   " | Custom Built",
   " | Factory Direct",
@@ -353,8 +353,8 @@ function generateMetaTitle(keyword: string, location: string, variation: number)
 function generateMetaDescription(keyword: string, location: string, variation: number): string {
   const mainKeyword = `${keyword} in ${location}`;
   const templates = [
-    `Order ${mainKeyword} from India's trusted prefab maker. PUF insulated units, custom sizes & 7-10 day install in ${location}. Get a free quote today!`,
-    `Buy ${mainKeyword} with 10-year warranty. IS-grade steel, fast delivery & full customization across ${location}. Call +91 9731897976 now.`,
+    `Get a quote for ${mainKeyword} from India's trusted prefab maker. PUF insulated units, custom sizes & pan-India delivery to ${location}. Enquire today!`,
+    `Looking for ${mainKeyword}? 10-year warranty, IS-grade steel & full customization across ${location}. Call +91 9731897976 for a free quotation.`,
     `Need ${mainKeyword}? Factory-direct from ₹1.5L. Weatherproof PUF panels, on-site setup & expert support in ${location}. Request your quote.`,
     `${mainKeyword} supplier with 15+ years experience. Galvanized frames, turnkey delivery & flexible layouts for every site in ${location}. Enquire now.`,
     `Premium ${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics with local teams in ${location}. Book a site visit.`,
@@ -362,8 +362,8 @@ function generateMetaDescription(keyword: string, location: string, variation: n
     `Top-rated ${mainKeyword} manufacturer. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Free consultation.`,
     `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & on-time delivery throughout ${location}. Quote today.`,
     `Get ${mainKeyword} at the best price. Modular design, 10-year structural warranty & professional installation teams serving ${location}. Contact us.`,
-    `Quality ${mainKeyword} with fast turnaround. From design to delivery in 7-10 days, fully compliant electricals & finishes for ${location} projects.`,
-    `Expert ${mainKeyword} solutions for every budget. Rent or buy options, scalable layouts & after-sales support available in ${location}. Learn more.`,
+    `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Ask for a quote.`,
+    `Expert ${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,
     `Leading ${mainKeyword} provider. PUF sandwich panels, anti-corrosion coating & complete electrical fit-outs delivered across ${location}. Call now.`,
   ];
 
@@ -393,7 +393,7 @@ function generateContent(
     `IS-grade materials for superior quality`,
     `50mm PUF insulated panels for thermal comfort`,
     `Galvanized steel frame for corrosion resistance`,
-    `Fast installation in ${location} within 7-10 days`,
+    `Dispatch in 7-15 working days; transit to ${location} typically 1-5 days`,
     `Fully customizable layouts and finishes`,
     `10-year structural warranty`,
     `Pan-India delivery and installation support`,

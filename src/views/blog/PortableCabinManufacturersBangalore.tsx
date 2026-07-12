@@ -21,9 +21,9 @@ const articleStructuredData = {
     name: "Portable Office Cabin",
     url: "https://portableofficecabin.com",
     sameAs: [
-      "https://www.linkedin.com/company/portable-office-cabin",
       "https://www.facebook.com/portableofficecabin",
-      "https://www.indiamart.com/portable-office-cabin/"
+      "https://www.linkedin.com/in/portable-office-cabin-9b939a168",
+      "https://www.instagram.com/portableofficecabin"
     ]
   },
   publisher: {

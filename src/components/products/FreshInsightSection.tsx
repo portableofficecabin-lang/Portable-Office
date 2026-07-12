@@ -243,7 +243,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Email", note: "info@portableofficecabin.com — replies within 4 working hours on weekdays." },
+      { city: "Email", note: "sales@portableofficecabin.com — we respond within 24 hours." },
       { city: "WhatsApp", note: "Faster than email for short queries and live stock photos." },
       { city: "Factory call", note: "Use the projects desk for orders above 1,000 sq ft or multi-unit deployments." },
     ],

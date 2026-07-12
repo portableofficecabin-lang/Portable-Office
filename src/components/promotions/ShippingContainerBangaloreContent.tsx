@@ -23,7 +23,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "How long does delivery take in Bangalore?",
     answer:
-      "Most orders are delivered and installed within 7–10 days of confirmation. Standard storage containers from stock can often be delivered sooner. Our Hoskote factory location keeps Bangalore transport times short.",
+      "Standard units are dispatched within 7–15 working days of order confirmation and receipt of the advance, with transit typically taking 1–5 days. Larger or custom projects take longer. Our Hoskote factory location keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
   },
   {
     question: "Do you sell both new and used shipping containers?",
@@ -100,7 +100,7 @@ const PRICES = [
 ];
 
 const COMPARISON = [
-  ["Time to ready", "7–10 days", "2–3 months"],
+  ["Time to ready", "7–15 working days + transit", "2–3 months"],
   ["Relocatable", "Yes — moves with your project", "No"],
   ["Cost", "From ₹1.5 lakh, fixed quote", "Higher, prone to overruns"],
   ["Site disruption", "Minimal — built off-site", "High — months of on-site work"],
@@ -120,7 +120,7 @@ const DELIVERY_AREAS = ["Whitefield", "Electronic City", "Peenya", "Bommasandra"
 
 const WHY_US = [
   "Manufacturer, not middleman — factory-direct pricing from our Hoskote (Karnataka) and Kamandoddi (Tamil Nadu) plants",
-  "15+ years of manufacturing experience and 500+ clients across India",
+  "15+ years of manufacturing experience and 500+ projects delivered across India",
   "10-year structural warranty on every unit",
   "End-to-end service: design, fabrication, delivery, installation, and after-sales support",
   "GST-registered and verified (GSTIN: 33FVKPK6238Q1ZT) with transparent, written quotations",
@@ -129,8 +129,8 @@ const WHY_US = [
 
 const STEPS = [
   "Share your requirement — call " + CONTACT.telDisplay + " or send an enquiry with size, use case, and site location.",
-  "Get a free quote and drawing — we confirm specifications, layout, and an all-inclusive price.",
-  "Production — your container is fabricated and fitted at our factory; typical lead time is under a week for standard units.",
+  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and any transport beyond 50 km listed separately.",
+  "Production — your container is fabricated and fitted at our factory; standard units are dispatched within 7–15 working days of order confirmation and advance.",
   "Delivery and installation — we transport, place, and hand over the unit ready for use.",
 ];
 
@@ -287,7 +287,7 @@ export function ShippingContainerBangaloreContent() {
             <div key={c} className="flex items-start gap-2.5"><CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" /><span className="text-sm text-muted-foreground">{c}</span></div>
           ))}
         </div>
-        <p className="text-muted-foreground mt-6 leading-relaxed max-w-3xl">Share your floor-plan idea and we&apos;ll send a drawing and quote — or see finished work in our <Link href="/gallery" className="text-accent hover:underline">project gallery</Link>. You can also buy a ready model on our <Link href="/products/shipping-container-for-sale" className="text-accent hover:underline">shipping container for sale</Link> page.</p>
+        <p className="text-muted-foreground mt-6 leading-relaxed max-w-3xl">Share your floor-plan idea and we&apos;ll send a drawing and quote — or see finished work in our <Link href="/gallery" className="text-accent hover:underline">project gallery</Link>. You can also browse ready models on our <Link href="/products/shipping-container-for-sale" className="text-accent hover:underline">shipping container for sale</Link> page.</p>
       </section>
 
       {/* Delivery */}
@@ -297,7 +297,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our Karnataka factory is at Hoskote (Sy. No. 51, Mylapur Post, Mugabala), 30 minutes from Whitefield — so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Most orders are delivered and installed within 7–10 days.
+              Our Karnataka factory is at Hoskote (Sy. No. 51, Mylapur Post, Mugabala), 30 minutes from Whitefield — so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 days.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (
@@ -348,7 +348,7 @@ export function ShippingContainerBangaloreContent() {
       <section className="bg-gradient-to-br from-primary via-primary/95 to-secondary text-primary-foreground rounded-3xl p-8 lg:p-12 text-center">
         <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">Get a Free Quote Today</h2>
         <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-7">
-          Ready to buy a shipping container in Bangalore? Share your size, use case, and location, and we&apos;ll respond with a written quote and delivery timeline — usually the same day.
+          Planning a shipping container project in Bangalore? Share your size, use case, and location, and we&apos;ll respond with a written quotation and delivery timeline — usually within 24 hours.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-full hover:bg-white/90 transition-colors">Request a Free Quote</Link>

@@ -109,7 +109,6 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     slug: productSlug,
     keywords: productSEO.keywords,
     category: product.category,
-    condition: productSlug === "used-shipping-container-for-sale" ? "used" : "new",
     reviews,
     ratingSummary: reviewSummary,
   });
@@ -234,7 +233,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   </div>
                 )}
 
-                {/* Pan-India delivery + timeline (matches Product schema shippingDetails) */}
+                {/* Pan-India delivery + timeline */}
                 <div className="flex items-center gap-1.5 text-muted-foreground">
                   <Truck className="h-4 w-4 text-accent" />
                   <span className="font-medium text-foreground">Pan-India Delivery</span>

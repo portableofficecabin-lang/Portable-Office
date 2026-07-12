@@ -87,11 +87,11 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "Do you handle delivery and installation?",
-        a: "Yes, we take care of everything — from loading and transport to on-site placement and installation. Our experienced crew will set up the structure, connect basic utilities, and make sure everything is in order before handing it over.",
+        a: "Yes, we take care of everything — from loading and transport to on-site placement and installation. Our experienced crew will set up the structure, connect basic utilities, and make sure everything is in order before handing it over. Unloading (crane or hydra) and installation are charged separately unless they are included in your quotation.",
       },
       {
         q: "Is delivery free?",
-        a: "We offer free delivery within a 50 km radius of our facility. For locations beyond that, a nominal transport charge applies based on distance and the size of the structure. We'll always share the delivery cost upfront — no hidden charges.",
+        a: "Delivery is free within a 50 km radius of our facility — genuinely free, with no hidden charges. Beyond 50 km, transport is charged based on distance and the size of the structure, and the exact amount is confirmed in your written quotation before you place the order. We do not offer free delivery nationwide. Unloading (crane or hydra) and installation are charged separately unless your quotation includes them, and GST applies extra.",
       },
       {
         q: "Can the cabin be relocated later?",
@@ -121,11 +121,15 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "How is pricing determined?",
-        a: "Pricing depends on the type of structure, size, materials, and any custom features you need. We provide detailed, transparent quotes — no vague estimates. Once you share your requirements, we'll send a clear breakdown so you know exactly what you're paying for.",
+        a: "Pricing depends on the type of structure, size, materials, and any custom features you need. The prices shown on our website are indicative \"starting from\" prices, exclusive of GST, transport beyond the 50 km free delivery zone, and installation — GST is always charged extra. Once you share your requirements, we'll send a written quotation with a clear breakdown, and that quoted price is the binding one for your order.",
+      },
+      {
+        q: "Can I buy a cabin online through the website?",
+        a: "No. We do not collect payments on this website and nothing can be purchased online. Every order starts with a written quotation — add the units you're interested in to your quote list or call, WhatsApp, or email us, and we'll send you a quotation. The order is placed only after you confirm that quotation with us directly.",
       },
       {
         q: "What are your payment terms?",
-        a: "We typically require a 50% advance to begin production, with the remaining 50% due before delivery. For larger projects, we can discuss milestone-based payment plans. We accept bank transfers, UPI, and cheque payments.",
+        a: "We require a 40–50% advance to begin production, with the balance due before or at the time of dispatch/delivery. For larger projects, we can discuss milestone-based payment plans. Payments are accepted by bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft — there is no online card payment on the website. GST is charged extra and shown separately on the tax invoice.",
       },
     ],
   },
@@ -140,7 +144,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "How do I reach your support team?",
-        a: "You can call us, send a WhatsApp message, or email us at admin@portableofficecabin.com. Our team typically responds within a few hours on working days. For urgent issues, calling is always the fastest option.",
+        a: "You can call us on +91 97318 97976 or +91 90199 10931, send a WhatsApp message to +91 97318 97976, or email us at sales@portableofficecabin.com. Our business hours are Monday to Saturday, 7:00 AM to 10:00 PM, and Sunday, 10:00 AM to 7:00 PM. We respond to every enquiry within 24 hours, and calling is always the fastest option.",
       },
     ],
   },

@@ -45,6 +45,8 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/terms-and-conditions", 0.3, "yearly"),
   entry("/privacy-policy", 0.3, "yearly"),
   entry("/refund-policy", 0.3, "yearly"),
+  entry("/payment-policy", 0.3, "yearly"),
+  entry("/custom-product-policy", 0.3, "yearly"),
   entry("/blog", 0.7, "weekly"),
 ];
 

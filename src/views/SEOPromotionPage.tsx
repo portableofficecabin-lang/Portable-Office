@@ -194,7 +194,7 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                   ))}
                 </div>
                 <p className="text-foreground font-bold text-lg mb-4">
-                  Trusted by 500+ Clients Across India
+                  500+ Projects Delivered Across India
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-3 py-1 bg-card rounded-full text-sm font-medium border border-border text-muted-foreground">

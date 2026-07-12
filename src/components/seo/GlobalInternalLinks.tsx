@@ -18,7 +18,7 @@ const defaultLinks: InternalLinkItem[] = [
   },
   {
     label: "See Project Work",
-    href: "/projects",
+    href: "/gallery",
     description: "View real installations across construction, industrial, and institutional sites.",
   },
   {
@@ -70,7 +70,7 @@ const routeLinks: Array<{ match: RegExp; links: InternalLinkItem[] }> = [
     ],
   },
   {
-    match: /^\/projects/,
+    match: /^\/gallery/,
     links: [
       {
         label: "View Product Range",
@@ -79,7 +79,7 @@ const routeLinks: Array<{ match: RegExp; links: InternalLinkItem[] }> = [
       },
       {
         label: "About Portable Office Cabin",
-        href: "/about",
+        href: "/about-us",
         description: "Learn more about our manufacturing and installation capabilities.",
       },
       {
@@ -104,7 +104,7 @@ const routeLinks: Array<{ match: RegExp; links: InternalLinkItem[] }> = [
       },
       {
         label: "See Live Projects",
-        href: "/projects",
+        href: "/gallery",
         description: "Review real-world installations to compare layouts and finishes.",
       },
     ],
@@ -119,7 +119,7 @@ const routeLinks: Array<{ match: RegExp; links: InternalLinkItem[] }> = [
       },
       {
         label: "See Completed Projects",
-        href: "/projects",
+        href: "/gallery",
         description: "Understand the scale, quality, and applications we deliver.",
       },
       {

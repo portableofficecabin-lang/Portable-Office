@@ -15,7 +15,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Executive Portable Cabin 20ft
   "1": {
     title: "Executive Portable Cabin 20ft | Portable Office Cabin",
-    description: "Buy 20ft executive portable cabin with 50mm PUF insulation, complete wiring & AC provision. Ideal for site offices. Fast delivery across India.",
+    description: "Get a quote for a 20ft executive portable cabin with 50mm PUF insulation, complete wiring & AC provision. Ideal for site offices. Delivery across India.",
     keywords: "executive portable cabin, 20ft portable cabin, portable site office, PUF insulated cabin, portable cabin price India, prefab office cabin, portable cabin manufacturer",
   },
   // Standard Site Office Container
@@ -33,13 +33,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Family Prefab Home 2BHK
   "4": {
     title: "2BHK Prefab Home | Portable Office Cabin",
-    description: "Complete 2BHK prefab home with modular kitchen & bathroom. Installed in 5–7 days with 10-year warranty. Ideal for farmhouses & resorts. Get a free quote today!",
+    description: "Complete 2BHK prefab home with modular kitchen, bathroom & 10-year warranty. Ideal for farmhouses & resorts. Get a free quote today!",
     keywords: "2BHK prefab home, prefab house India, prefabricated home price, modular home 2BHK, quick build home, farmhouse prefab, prefab home manufacturer India",
   },
   // Portable Toilet Block - 4 Unit
   "5": {
     title: "4-Unit Portable Toilet Block | Portable Office Cabin",
-    description: "4-unit MS portable toilet block with ceramic fittings, exhaust fans & 500L water tank. Hygienic sanitation for construction sites & events. Order now!",
+    description: "4-unit MS portable toilet block with ceramic fittings, exhaust fans & 500L water tank. Hygienic sanitation for construction sites & events. Request a quote.",
     keywords: "portable toilet block, 4 unit portable toilet, MS toilet cabin, construction site toilet, mobile toilet India, portable sanitation unit, toilet cabin price",
   },
   // Guard Security Cabin
@@ -63,13 +63,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Container Office — INTENT: Buy single standard unit (transactional)
   "10": {
     title: "Container Office for Sale in India | Portable Office Cabin",
-    description: "Buy ready-to-deploy container offices in India — 20ft & 40ft units from ₹7L. Insulated, relocatable, 7–10 day delivery. PAN-India shipping. Get a free quote!",
+    description: "Ready-to-deploy container offices in India — 20ft & 40ft units from ₹7L. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Get a free quote!",
     keywords: "container office for sale India, buy container office, 20ft container office price, 40ft container office price, ready container office, container office delivery India",
   },
   // Porta Cabin
   "9": {
     title: "Porta Cabin Manufacturer India | Portable Office Cabin",
-    description: "Buy porta cabin with MS steel frame, PUF insulated panels & quick 1–7 day installation. 30–40% cheaper than traditional construction. Free quote available!",
+    description: "Porta cabin with MS steel frame, PUF insulated panels & quick on-site installation. 30–40% cheaper than traditional construction. Free quote available!",
     keywords: "porta cabin, porta cabin price, porta cabin manufacturer India, portable cabin, prefab porta cabin, MS steel porta cabin, porta cabin for site office",
   },
   // MS Portable Cabin
@@ -82,20 +82,20 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // 20ft & 40ft Storage Container – Corten Steel
   "12": {
     title: "20ft & 40ft Storage Container | Portable Office Cabin",
-    description: "Buy 20ft & 40ft Corten steel storage containers with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Get a quote!",
+    description: "20ft & 40ft Corten steel storage containers with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Get a quote!",
     keywords: "20ft storage container, 40ft storage container, Corten steel container, cargo storage container India, heavy duty storage container, site storage container price",
   },
   // Prefabricated Portable Cabin
   "13": {
     title: "Prefabricated Portable Cabin | Portable Office Cabin",
-    description: "Buy prefabricated portable cabins with quick 2-4 hour assembly, weather-resistant steel frame & PUF insulation. 60% cheaper than construction. Get a free quote!",
+    description: "Prefabricated portable cabins with quick 2-4 hour assembly, weather-resistant steel frame & PUF insulation. 60% cheaper than construction. Get a free quote!",
     keywords: "prefabricated portable cabin, prefab cabin India, portable cabin manufacturer, modular portable cabin, prefab site office, prefabricated cabin price, quick install cabin",
   },
   // New & Used Shipping Container for Sale in India
   "14": {
     title: "Shipping Container for Sale in India | Portable Office Cabin",
     h1: "Shipping Container for Sale",
-    description: "Buy new or used shipping containers in India – 20 ft, 40 ft & high cube. Storage, offices & modular buildings with delivery, installation & conversion support.",
+    description: "New or used shipping containers in India – 20 ft, 40 ft & high cube. Storage, offices & modular buildings with delivery, installation & conversion support.",
     keywords: "shipping container for sale India, new shipping container price, used shipping container for sale, 20 ft shipping container, 40 ft shipping container, buy shipping container India, container for sale near me",
   },
   // Construction Site Portable Office
@@ -107,7 +107,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Used Shipping Container for Sale
   "16": {
     title: "Used Shipping Container for Sale | Portable Office Cabin",
-    description: "Buy or rent used shipping containers in India for storage, site offices, labour rooms, and conversions. 20 ft, 40 ft, and high-cube units with delivery support.",
+    description: "Used shipping containers for sale or rent in India — storage, site offices, labour rooms & conversions. 20 ft, 40 ft and high-cube units with delivery support.",
     keywords: "used shipping container for sale, used shipping container price India, used container on rent, 20 ft used container, 40 ft used container, cargo worthy container, wind and watertight container",
   },
   // Cargo Container – Buy, Rent or Convert
@@ -168,7 +168,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Security Cabin
   "26": {
     title: "Portable Security Guard Cabin | Portable Office Cabin",
-    description: "Buy portable security & guard cabins — MS, GI, FRP, ACP, PVC & PUF from ₹40,000. Police, toll & gate booths with pan-India delivery in 7–15 days.",
+    description: "Portable security & guard cabins — MS, GI, FRP, ACP, PVC & PUF from ₹40,000. Police, toll & gate booths with pan-India dispatch in 7–15 days. Get a quote.",
     keywords: "security cabin, portable security cabin, security guard cabin, watchman cabin, GI security cabin, FRP security cabin, MS security cabin, steel security cabin, portable guard cabin, gate security cabin, toll booth cabin, police booth cabin, security cabin price, security cabin manufacturer India",
   },
   // Cabins in Office
@@ -185,52 +185,53 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "29": {
     title: "Shipping Container in Koramangala | Portable Office Cabin",
-    description: "Buy, rent or convert shipping containers in Koramangala — offices, cafés, homes & storage. 20 & 40 ft ISO containers with same-week delivery.",
+    description: "Shipping containers in Koramangala for sale, rent or conversion — offices, cafés, homes & storage. 20 & 40 ft ISO containers. Get a free quote.",
     keywords: "shipping container Koramangala, container office Koramangala, container café Bangalore, shipping container rental Koramangala, used container Bangalore, container home Koramangala, portable office Koramangala, container storage Bangalore",
   },
   "30": {
     title: "Shipping Container in Krishnagiri | Portable Office Cabin",
-    description: "Buy or rent 20 ft & 40 ft shipping containers in Krishnagiri — storage, offices, homes & modular solutions. Used containers from ₹1.5L. Get a free quote!",
+    description: "20 ft & 40 ft shipping containers in Krishnagiri for sale or rent — storage, offices, homes & modular solutions. Used units from ₹1.5L. Get a free quote!",
     keywords: "shipping container Krishnagiri, used shipping container Krishnagiri, container office Krishnagiri, container storage Hosur, shipping container Tamil Nadu, portable office Krishnagiri, container home Krishnagiri, modular container Krishnagiri",
   },
   "31": {
     title: "Shipping Container in SIPCOT | Portable Office Cabin",
-    description: "Buy or rent shipping containers for SIPCOT estates — Sriperumbudur, Oragadam, Hosur & Gummidipoondi. Storage, offices & labour camps from ₹1.5L. Get a quote!",
+    description: "Shipping containers for SIPCOT estates — Sriperumbudur, Oragadam, Hosur & Gummidipoondi. Storage, offices & labour camps from ₹1.5L. Get a free quote!",
     keywords: "shipping container SIPCOT, container office Sriperumbudur, container storage Oragadam, shipping container Hosur, SIPCOT container rental, prefab labour colony SIPCOT, portable office SIPCOT, container Gummidipoondi",
   },
   "32": {
     title: "Shipping Container in Chennai | Portable Office Cabin",
-    description: "Buy, rent or convert shipping containers in Chennai — storage, offices, homes & cafés. Used 20 ft from ₹80K. 24–72hr dispatch. Get a free quote!",
+    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. Used 20 ft from ₹80K. 7–15 day dispatch. Get a free quote!",
     keywords: "shipping container Chennai, container office Chennai, used shipping container Chennai, container rental Chennai, container home ECR, shipping container Ennore, container café OMR, modular container Sriperumbudur",
   },
   "33": {
     title: "Shipping Container in Narsapura | Portable Office Cabin",
-    description: "Buy or rent shipping containers in Narsapura Industrial Area — storage, offices, labour colonies for KIADB plots. Used 20 ft from ₹95K. 7–15 day delivery!",
+    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices, labour colonies for KIADB plots. Used 20 ft from ₹95K. 7–15 day dispatch.",
     keywords: "shipping container Narsapura, container office KIADB, shipping container Narsapura Industrial Area, container storage Kolar, portable office Narsapura, container Vemgal, container Malur, modular container Hoskote",
   },
   "34": {
     title: "Shipping Container in Peenya | Portable Office Cabin",
-    description: "Buy or rent shipping containers in Peenya, Bengaluru — storage, offices, security cabins & modular solutions. Used 20 ft from ₹85K. 2–5 day setup!",
+    description: "Shipping containers in Peenya, Bengaluru for sale or rent — storage, offices, security cabins & modular solutions. Used 20 ft from ₹85K. Get a free quote!",
     keywords: "shipping container Peenya, container office Peenya Industrial Area, shipping container Bengaluru, container storage Tumkur Road, portable office Peenya, container Peenya 2nd Stage, modular container Bengaluru, used shipping container Peenya",
   },
   "35": {
     title: "Cargo Storage Containers | Portable Office Cabin",
-    description: "Buy new or used cargo storage containers in India — 20 ft, 40 ft & HC. ISO-certified steel units for storage, offices, homes & modular builds.",
+    description: "New or used cargo storage containers in India — 20 ft, 40 ft & HC. ISO-certified steel units for storage, offices, homes & modular builds. Get a quote.",
     keywords: "cargo storage containers, cargo container India, 20 ft storage container, 40 ft container, shipping container for sale, used container India, container office, cargo container price, ISO container, corten steel container",
   },
   "36": {
     title: "Cargo Containers – Types, Uses & Modular Building",
-    description: "Guide to cargo containers — GP, High Cube, flat rack, open top, reefer & tank types. Buy, convert or rent for offices, homes & sites in India.",
+    description: "Guide to cargo containers — GP, High Cube, flat rack, open top, reefer & tank types. Available for sale, rent or conversion for offices, homes & sites in India.",
     keywords: "cargo containers, cargo container types, shipping container guide, GP container, high cube container, flat rack container, open top container, reefer container, container office India, modular container building, cargo container price India",
   },
   "37": {
-    title: "Pink Cargo Storage Containers | Buy or Rent",
+    title: "Pink Cargo Storage Containers | Portable Office Cabin",
+    h1: "Pink Cargo Storage Containers",
     description: "Pink cargo storage containers for retail pop-ups, cafés, offices & branding. 20ft & 40ft ISO containers in vibrant pink. Custom shades & fit-out.",
     keywords: "pink shipping container, pink cargo container, pink container shop, pink container café, pink storage container India, pink container office, pink pop-up store, pink modular building, pink container price",
   },
   "38": {
     title: "Cargo Container for Sale Bangalore | Portable Office Cabin",
-    description: "Buy 20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. From ₹1.25L.",
+    description: "20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. From ₹1.25L. Get a quote.",
     keywords: "cargo shipping container for sale Bangalore, buy cargo container India, 20ft shipping container price Bangalore, 40ft cargo container India, ISO shipping container Bangalore, used cargo container for sale, shipping container price India, cargo container manufacturer Bangalore",
   },
   "39": {
@@ -255,7 +256,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
 export function getProductSEO(productId: string, productName: string): ProductSEOData {
   return productSEOMap[productId] || {
     title: `${productName} | Portable Office Cabin`,
-    description: `Buy ${productName} – quality portable structure manufactured in India. Customizable, durable & delivered fast. Contact us for a free quote!`,
+    description: `${productName} – quality portable structure manufactured in India. Customizable, durable & delivered pan-India. Contact us for a free quote!`,
     keywords: `${productName}, portable cabin, portable office, prefab structure India, modular building`,
   };
 }

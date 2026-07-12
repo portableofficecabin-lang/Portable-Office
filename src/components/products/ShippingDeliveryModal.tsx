@@ -76,6 +76,7 @@ export function ShippingDeliveryModal() {
                 <AccordionContent>
                   <ul className="space-y-3">
                     <InfoItem icon={CheckCircle2} text="Free standard delivery within a 50 km radius" />
+                    <InfoItem icon={MapPin} text="Beyond 50 km, transport is charged based on distance — confirmed in your written quotation" />
                     <InfoItem icon={CheckCircle2} text="Express delivery available at an additional cost (optional)" />
                     <InfoItem icon={Wrench} text="Professional installation available upon request" />
                   </ul>
@@ -155,7 +156,7 @@ export function ShippingDeliveryModal() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-3">
-                    <InfoItem icon={Phone} text="24/7 customer support" />
+                    <InfoItem icon={Phone} text="Customer support 7 days a week — Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM" />
                     <InfoItem icon={Wrench} text="On-site maintenance service available" />
                     <InfoItem icon={CheckCircle2} text="Spare parts readily available" />
                   </ul>

@@ -28,13 +28,15 @@ export function ProductActions({ product }: { product: Product }) {
   return (
     <>
       <div className="flex flex-col sm:flex-row gap-4 mb-4">
-        <Button variant="accent" size="lg" className="flex-1" onClick={() => addToCart(product.id)}>
-          <ShoppingCart className="mr-2 h-5 w-5" />
-          Add to Cart
-        </Button>
-        <Button variant="outline" size="lg" onClick={() => setIsEnquiryOpen(true)}>
+        {/* Quoting is the real conversion path — there is no online payment — so the
+            enquiry CTA is the primary button and the quote list is secondary. */}
+        <Button variant="accent" size="lg" className="flex-1" onClick={() => setIsEnquiryOpen(true)}>
           <MessageSquare className="mr-2 h-5 w-5" />
           Request a Quote
+        </Button>
+        <Button variant="outline" size="lg" onClick={() => addToCart(product.id)}>
+          <ShoppingCart className="mr-2 h-5 w-5" />
+          Add to Quote List
         </Button>
         <Button variant="outline" size="lg" asChild>
           <a href="tel:+919731897976">

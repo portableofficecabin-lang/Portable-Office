@@ -146,7 +146,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
                 type="tel"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+1 (234) 567-890"
+                placeholder="+91 98765 43210"
               />
             </div>
             <div className="space-y-2">

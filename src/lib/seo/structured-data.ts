@@ -1,5 +1,14 @@
 // SEO data and JSON-LD helpers (server-safe — no "use client")
 
+export const SITE_URL = "https://portableofficecabin.com";
+
+/** Structured data must carry absolute URLs — a bundler-hashed relative asset path
+ *  (e.g. /_next/static/media/foo.webp) is unresolvable to a crawler. */
+function absoluteUrl(url: string): string {
+  if (!url) return url;
+  return url.startsWith("http") ? url : `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
 export const seoData = {
   home: {
     title: "Portable Office Cabin Manufacturer in Bangalore | India",
@@ -73,17 +82,24 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]) 
   };
 }
 
+/** Product schema for a QUOTE-ONLY business.
+ *  Deliberately emits NO `offers`: nothing on this site is transactable — displayed prices
+ *  are indicative "starting from" figures (GST, transport beyond 50 km and installation are
+ *  extra) and every enquiry goes through a quote request. An Offer here would assert a
+ *  purchasable price, an availability and a shipping rate that do not exist. A Product node
+ *  without offers is valid schema.org and is the honest representation. */
 export function generateProductStructuredData(product: {
   name: string;
   description: string;
+  /** Accepted from the catalog but intentionally NOT emitted — see the note above:
+   *  with no Offer, no price / availability leaves this function. */
   price?: number;
+  inStock?: boolean;
   image?: string;
   sku?: string;
-  inStock?: boolean;
   slug?: string;
   keywords?: string;
   category?: string;
-  condition?: "new" | "used" | "refurbished";
   reviews?: Array<{
     rating: number;
     title?: string | null;
@@ -96,15 +112,9 @@ export function generateProductStructuredData(product: {
    *  even when more reviews exist than are embedded in `reviews` below). */
   ratingSummary?: { count: number; average: number };
 }) {
-  const conditionUrl =
-    product.condition === "used"
-      ? "https://schema.org/UsedCondition"
-      : product.condition === "refurbished"
-        ? "https://schema.org/RefurbishedCondition"
-        : "https://schema.org/NewCondition";
   const productUrl = product.slug
-    ? `https://portableofficecabin.com/products/${product.slug}`
-    : "https://portableofficecabin.com/products";
+    ? `${SITE_URL}/products/${product.slug}`
+    : `${SITE_URL}/products`;
 
   const reviews = product.reviews ?? [];
   // Prefer the authoritative aggregate (all approved reviews); fall back to computing
@@ -157,9 +167,11 @@ export function generateProductStructuredData(product: {
     description: product.description,
     keywords: product.keywords,
     category: product.category,
-    image: product.image,
+    url: productUrl,
+    // Absolute — the catalog hands us bundler-hashed paths like
+    // /_next/static/media/….webp, which a crawler cannot resolve.
+    ...(product.image ? { image: absoluteUrl(product.image) } : {}),
     sku: product.sku || "POC-GENERIC",
-    mpn: product.sku || "POC-GENERIC",
     brand: {
       "@type": "Brand",
       name: "Portable Office Cabin",
@@ -167,57 +179,9 @@ export function generateProductStructuredData(product: {
     manufacturer: {
       "@type": "Organization",
       name: "Portable Office Cabin",
-      url: "https://portableofficecabin.com",
+      url: SITE_URL,
     },
     ...reviewBlock,
-    offers: {
-      "@type": "Offer",
-      url: productUrl,
-      price: product.price || 0,
-      priceCurrency: "INR",
-      priceValidUntil: "2026-12-31",
-      itemCondition: conditionUrl,
-      availability:
-        product.inStock !== false
-          ? "https://schema.org/InStock"
-          : "https://schema.org/OutOfStock",
-      seller: {
-        "@type": "Organization",
-        name: "Portable Office Cabin",
-      },
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        shippingRate: {
-          "@type": "MonetaryAmount",
-          value: "0",
-          currency: "INR",
-        },
-        shippingDestination: {
-          "@type": "DefinedRegion",
-          addressCountry: "IN",
-        },
-        deliveryTime: {
-          "@type": "ShippingDeliveryTime",
-          handlingTime: {
-            "@type": "QuantitativeValue",
-            minValue: 7,
-            maxValue: 15,
-            unitCode: "DAY",
-          },
-          transitTime: {
-            "@type": "QuantitativeValue",
-            minValue: 1,
-            maxValue: 5,
-            unitCode: "DAY",
-          },
-        },
-      },
-      hasMerchantReturnPolicy: {
-        "@type": "MerchantReturnPolicy",
-        applicableCountry: "IN",
-        returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
-      },
-    },
   };
 }
 
@@ -268,10 +232,12 @@ export const organizationStructuredData = {
     propertyID: "Udyam Registration Number",
     value: "UDYAM-TN-11-0068545",
   },
+  // Only profiles that actually exist — a sameAs pointing at a dead page is a bad
+  // entity-verification signal. There is no Twitter/X and no IndiaMart profile.
   sameAs: [
     "https://www.facebook.com/portableofficecabin",
-    "https://www.linkedin.com/company/portable-office-cabin",
-    "https://www.indiamart.com/portable-office-cabin",
+    "https://www.linkedin.com/in/portable-office-cabin-9b939a168",
+    "https://www.instagram.com/portableofficecabin",
   ],
   contactPoint: [
     {
@@ -322,10 +288,11 @@ export const localBusinessStructuredData = {
     propertyID: "Udyam Registration Number",
     value: "UDYAM-TN-11-0068545",
   },
+  // Same verified-real profiles as the Organization node.
   sameAs: [
     "https://www.facebook.com/portableofficecabin",
-    "https://www.linkedin.com/company/portable-office-cabin",
-    "https://www.indiamart.com/portable-office-cabin",
+    "https://www.linkedin.com/in/portable-office-cabin-9b939a168",
+    "https://www.instagram.com/portableofficecabin",
   ],
   address: {
     "@type": "PostalAddress",
@@ -438,10 +405,10 @@ export function generatePromotionStructuredData(content: {
   keyword: string;
 }) {
   const [latitude, longitude] = content.geoPosition.split(";").map((v) => v.trim());
-  const image = content.imageUrl.startsWith("http")
-    ? content.imageUrl
-    : `https://portableofficecabin.com${content.imageUrl}`;
+  const image = absoluteUrl(content.imageUrl);
 
+  // No `offers` — these are quote-request landing pages. Nothing here is transactable,
+  // so an Offer (price / availability) would be a misrepresentation.
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -474,16 +441,6 @@ export function generatePromotionStructuredData(content: {
         "@type": "PostalAddress",
         addressLocality: content.location,
         addressCountry: "IN",
-      },
-    },
-    offers: {
-      "@type": "Offer",
-      url: content.canonicalUrl,
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-      seller: {
-        "@type": "Organization",
-        name: "Portable Office Cabin",
       },
     },
   };

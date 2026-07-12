@@ -26,6 +26,7 @@ import jsPDF from "jspdf";
 import { addLegalFooter } from "@/lib/pdfFooter";
 import logoImg from "@/assets/logo.webp";
 import { imageToPngDataUrl } from "@/lib/pdf/imageToPng";
+import { COMPANY } from "@/lib/company";
 
 /* ─── helpers ─── */
 const fmt = (n: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n);
@@ -338,7 +339,7 @@ function QuotationTab() {
     doc.text("PORTABLE OFFICE CABIN", w / 2, 18, { align: "center" });
     doc.setFontSize(7); doc.setFont("helvetica", "normal");
     doc.text("Door No. 2/149-6, Survey No. 222/1C, Addakurukki Village, Kamandoddi Post", w / 2, 24, { align: "center" });
-    doc.text("Shoolagiri, Krishnagiri, Tamil Nadu – 635117 | GST: 33AJHPA8048R1ZS", w / 2, 28, { align: "center" });
+    doc.text(`Shoolagiri, Krishnagiri, Tamil Nadu – 635117 | GST: ${COMPANY.gstin}`, w / 2, 28, { align: "center" });
     doc.text("Phone: +91 80731 07943 | Email: portableofficecabin@gmail.com", w / 2, 32, { align: "center" });
     doc.setDrawColor(200); doc.line(14, 36, w - 14, 36);
 

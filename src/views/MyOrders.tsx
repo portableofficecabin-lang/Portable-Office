@@ -62,12 +62,12 @@ export default function MyOrdersPage() {
 
   return (
     <Layout>
-      <SEOHead title="My Orders | Portable Office Cabin" description="Track your orders and view order history." />
+      <SEOHead title="My Quote Requests | Portable Office Cabin" description="Track the status of the quote requests you have submitted." />
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <div className="flex items-center justify-between mb-8">
             <h1 className="font-display text-3xl font-bold flex items-center gap-3">
-              <Package className="h-8 w-8 text-accent" /> My Orders
+              <Package className="h-8 w-8 text-accent" /> My Quote Requests
             </h1>
             <Button variant="outline" asChild>
               <Link href="/my-account"><ArrowLeft className="mr-2 h-4 w-4" /> My Account</Link>
@@ -75,14 +75,14 @@ export default function MyOrdersPage() {
           </div>
 
           {loading ? (
-            <div className="text-center py-16 text-muted-foreground">Loading orders...</div>
+            <div className="text-center py-16 text-muted-foreground">Loading quote requests...</div>
           ) : orders.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
                 <Package className="h-10 w-10 text-muted-foreground" />
               </div>
-              <h2 className="font-display text-xl font-semibold mb-3">No orders yet</h2>
-              <p className="text-muted-foreground mb-6">Start shopping to place your first order.</p>
+              <h2 className="font-display text-xl font-semibold mb-3">No quote requests yet</h2>
+              <p className="text-muted-foreground mb-6">Browse our products and request your first quotation.</p>
               <Button variant="accent" asChild><Link href="/products">Browse Products</Link></Button>
             </div>
           ) : (
@@ -105,7 +105,6 @@ export default function MyOrdersPage() {
                         <p className="text-sm text-muted-foreground mt-0.5">
                           {new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                           {" · "}{order.order_items?.length || 0} item(s)
-                          {order.total_amount ? ` · ₹${order.total_amount.toLocaleString("en-IN")}` : ""}
                         </p>
                       </div>
                     </button>
@@ -117,15 +116,29 @@ export default function MyOrdersPage() {
                           {order.order_items?.map(item => (
                             <div key={item.id} className="flex justify-between text-sm py-2 border-b border-border/30 last:border-0">
                               <span>{item.product_name} × {item.quantity}</span>
-                              <span className="font-medium">{item.unit_price ? `₹${(item.unit_price * item.quantity).toLocaleString("en-IN")}` : "Quote"}</span>
+                              <span className="font-medium">{item.unit_price ? `₹${(item.unit_price * item.quantity).toLocaleString("en-IN")}` : "On request"}</span>
                             </div>
                           ))}
                         </div>
 
+                        {/* Indicative subtotal — NOT an amount charged or collected.
+                            There is no online payment; the binding price arrives in the written quotation. */}
+                        {order.total_amount ? (
+                          <div className="mt-4 rounded-lg bg-muted/40 border border-border/50 p-4">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm font-semibold">Indicative Subtotal</span>
+                              <span className="font-display font-bold text-accent">₹{order.total_amount.toLocaleString("en-IN")}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+                              Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation.
+                            </p>
+                          </div>
+                        ) : null}
+
                         {/* Timeline */}
                         {order.status !== "cancelled" && (
                           <div className="mt-6">
-                            <h4 className="font-semibold text-sm mb-4">Order Progress</h4>
+                            <h4 className="font-semibold text-sm mb-4">Progress</h4>
                             <div className="flex items-center gap-0">
                               {statusOrder.map((s, i) => {
                                 const stepCfg = statusConfig[s];

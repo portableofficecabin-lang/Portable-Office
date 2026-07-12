@@ -509,10 +509,10 @@ export function LabourHutmentsStaffAccommodationContent() {
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            "1M+ sqm supplied pan-India",
+            "15+ years of prefabrication experience",
             "In-house design, manufacturing & installation",
-            "100+ projects delivered yearly",
-            "48-hour preliminary quotation turnaround",
+            "500+ projects delivered",
+            "Enquiry response within 24 hours, with a written quotation for every order",
             "Track record in labour colonies, container offices, PEB structures",
             "Commitment to quality, worker well-being & sustainable construction",
           ].map((item) => (

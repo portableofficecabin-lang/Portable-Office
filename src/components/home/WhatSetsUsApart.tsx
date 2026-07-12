@@ -85,12 +85,12 @@ export function WhatSetsUsApart() {
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { value: "500+", label: "Projects Completed" },
-                    { value: "98%", label: "Client Satisfaction" },
                     { value: "15+", label: "Years Experience" },
-                    { value: "24/7", label: "Customer Support" },
+                    { value: "ISO 9001", label: "2015 Certified" },
+                    { value: "7 Days", label: "Support, Mon-Sun" },
                   ].map((stat) => (
                     <div key={stat.label} className="text-center p-5 bg-white/[0.08] rounded-xl border border-white/10 hover:border-accent/40 transition-all duration-300 hover:scale-[1.03]">
-                      <div className="font-display text-3xl lg:text-4xl font-bold text-accent mb-1.5">{stat.value}</div>
+                      <div className={`font-display ${stat.value.length > 6 ? "text-2xl lg:text-3xl" : "text-3xl lg:text-4xl"} font-bold text-accent mb-1.5`}>{stat.value}</div>
                       <div className="text-sm font-medium text-white/70">{stat.label}</div>
                     </div>
                   ))}

@@ -102,16 +102,18 @@ export default function ShippingDeliveryPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             <InfoCard icon={Truck} title="Delivery Options" index={0}>
               <ul className="space-y-3">
-                <Bullet>Free standard delivery within a 50 km radius of our facility — no hidden charges.</Bullet>
+                <Bullet>Standard delivery is <strong>free within a 50 km radius of our facility</strong> — genuinely free, with no hidden charges.</Bullet>
+                <Bullet>Beyond 50 km, transport is charged based on distance. The amount is worked out for your site and confirmed in your written quotation before you place the order — delivery is not free nationwide.</Bullet>
+                <Bullet>Unloading (crane or hydra) and on-site installation are charged separately unless they are expressly included in your quotation.</Bullet>
                 <Bullet>Need it faster? Express delivery is available at a small additional cost.</Bullet>
-                <Bullet>Professional on-site installation can be arranged upon request.</Bullet>
               </ul>
             </InfoCard>
 
             <InfoCard icon={Clock} title="Delivery Timelines" index={1}>
               <ul className="space-y-3">
-                <Bullet><strong>Standard delivery:</strong> 7 – 14 working days after dispatch.</Bullet>
-                <Bullet><strong>Express delivery:</strong> 3 – 7 working days after dispatch.</Bullet>
+                <Bullet><strong>Manufacturing &amp; dispatch:</strong> 7 – 15 working days after order confirmation and receipt of the advance payment. Larger or fully customised projects take longer — see Manufacturing &amp; Lead Time below.</Bullet>
+                <Bullet><strong>Transit:</strong> 1 – 5 days after dispatch, depending on the distance to your site.</Bullet>
+                <Bullet><strong>Express delivery:</strong> available on request at additional cost — see the expedited shipping policy below.</Bullet>
                 <Bullet>GPS shipment tracking is provided for every order so you always know where your cabin is.</Bullet>
               </ul>
             </InfoCard>
@@ -120,18 +122,36 @@ export default function ShippingDeliveryPage() {
               <ul className="space-y-3">
                 <Bullet>Every unit is securely packed using high-quality materials to prevent any transit damage.</Bullet>
                 <Bullet>Weather-protected transport ensures your cabin arrives in perfect condition — rain or shine.</Bullet>
-                <Bullet>Our damage-free guarantee means any item damaged during shipping is replaced or fully refunded.</Bullet>
+                <Bullet>
+                  If a unit is damaged in transit, notify us within 48 hours of delivery with photographs. Once our team confirms the damage occurred in transit, we will repair the unit at no cost, replace the affected components, or agree an appropriate compensation, as set out in our{" "}
+                  <Link href="/refund-policy" className="text-accent hover:underline">Refund &amp; Cancellation Policy</Link>.
+                </Bullet>
               </ul>
             </InfoCard>
 
             <InfoCard icon={MapPin} title="Delivery Coverage" index={3}>
               <ul className="space-y-3">
                 <Bullet>We deliver across Karnataka, Tamil Nadu, and neighbouring states.</Bullet>
-                <Bullet>Deliveries beyond the 50 km free zone may carry a nominal transport surcharge based on distance.</Bullet>
+                <Bullet>Deliveries beyond the 50 km free zone carry a transport charge based on distance and the size of the structure.</Bullet>
                 <Bullet>For remote or challenging site locations, our logistics team will coordinate the best route.</Bullet>
               </ul>
             </InfoCard>
           </div>
+
+          {/* Charges & Taxes */}
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+            className="text-sm text-muted-foreground leading-relaxed mb-12"
+          >
+            <strong className="text-foreground">Charges &amp; taxes:</strong> Prices shown on this website are indicative
+            starting prices and are <strong>exclusive of GST</strong>, transport beyond the 50 km free zone, unloading
+            (crane or hydra) and installation. GST is charged extra at the prevailing rate and is shown separately on the
+            tax invoice. The binding price for your project is the one stated in your written quotation.
+          </motion.p>
 
           {/* Expedited Shipping Policy */}
           <motion.div
@@ -152,7 +172,7 @@ export default function ShippingDeliveryPage() {
               Need your cabin or container sooner than the standard timeline? We offer an optional Expedited Shipping service for urgent project requirements.
             </p>
             <ul className="space-y-3 mb-5">
-              <Bullet><strong>Delivery window:</strong> 3 – 7 working days from dispatch (subject to ready stock or completed manufacturing).</Bullet>
+              <Bullet><strong>Delivery window:</strong> 3 – 7 working days for dispatch and delivery (subject to ready stock or completed manufacturing).</Bullet>
               <Bullet><strong>Availability:</strong> On request only — must be confirmed at the time of order.</Bullet>
               <Bullet><strong>Charges:</strong> Quoted case-by-case based on distance beyond the 50 km free zone, unit size (Small / Medium / Large), and site accessibility (crane or hydra requirement).</Bullet>
               <Bullet><strong>Priority dispatch:</strong> Orders are moved to the front of the production and loading queue wherever feasible.</Bullet>
@@ -161,7 +181,7 @@ export default function ShippingDeliveryPage() {
               <Bullet><strong>Important:</strong> Expedited shipping compresses dispatch and transit time only — it does not reduce the manufacturing lead time for custom-built units.</Bullet>
             </ul>
             <p className="text-sm text-muted-foreground italic">
-              To request expedited shipping, mention "Express Delivery" while confirming your order via phone, WhatsApp, or email — our team will share the applicable surcharge before invoicing.
+              To request expedited shipping, mention "Express Delivery" while confirming your order via phone, WhatsApp, or email — our team will share the applicable surcharge (plus GST) before invoicing.
             </p>
           </motion.div>
 
@@ -183,7 +203,7 @@ export default function ShippingDeliveryPage() {
               <h2 className="font-display text-xl font-bold text-foreground">Manufacturing & Lead Time</h2>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Once your order is confirmed, manufacturing begins immediately. Here's a general idea of timelines:
+              Manufacturing begins once your order is confirmed and the advance payment is received. Here's a general idea of timelines:
             </p>
             <ul className="space-y-3">
               <Bullet><strong>Small projects</strong> (security cabins, guard booths): 7 – 14 working days.</Bullet>
@@ -191,7 +211,7 @@ export default function ShippingDeliveryPage() {
               <Bullet><strong>Large projects</strong> (prefab homes, container complexes): 20 – 30 working days.</Bullet>
             </ul>
             <p className="text-sm text-muted-foreground mt-4 italic">
-              * Actual timelines depend on customisation requirements and material availability.
+              * Actual timelines depend on customisation requirements and material availability. Transit adds a further 1 – 5 days after dispatch, depending on distance.
             </p>
           </motion.div>
 
@@ -208,7 +228,7 @@ export default function ShippingDeliveryPage() {
               Installation Process
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl">
-              Our trained installation crew follows a clear three-step process to get your cabin ready for use — quickly and professionally.
+              Our trained installation crew follows a clear three-step process to get your cabin ready for use — quickly and professionally. Unloading (crane or hydra) and installation are charged separately unless your quotation states otherwise.
             </p>
             <div className="grid sm:grid-cols-3 gap-6 mb-12">
               {[
@@ -269,9 +289,10 @@ export default function ShippingDeliveryPage() {
             <ul className="space-y-3 mb-6">
               <Bullet>Please confirm all product details, dimensions, and customisations before placing your order.</Bullet>
               <Bullet>You can confirm your order through a phone call, email, WhatsApp, or by booking an appointment.</Bullet>
-              <Bullet>Delivery timelines begin only after we receive your order confirmation.</Bullet>
+              <Bullet>Delivery timelines begin only after we receive your order confirmation and the advance payment.</Bullet>
               <Bullet>Installation scheduling depends on crew availability and your site readiness.</Bullet>
-              <Bullet>Deliveries outside the 50 km free zone may have additional transport charges.</Bullet>
+              <Bullet>Deliveries beyond the 50 km free zone carry transport charges based on distance — these are confirmed in your written quotation before you place the order.</Bullet>
+              <Bullet>GST is charged extra on all prices, and unloading and installation are billed separately unless your quotation says otherwise.</Bullet>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="accent" size="lg" asChild>

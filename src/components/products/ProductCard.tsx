@@ -70,7 +70,7 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
           </Button>
           <Button size="sm" variant="accent" className="shadow-lg" onClick={() => addToCart(product.id)}>
             <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Cart
+            Add to Quote List
           </Button>
         </div>
       </div>
@@ -106,7 +106,7 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
           ) : (
             <span className="text-muted-foreground text-sm font-medium">Contact for price</span>
           )}
-          <Link 
+          <Link
             href={getProductDetailPath(product)}
             className="text-accent font-semibold text-sm flex items-center gap-1 hover:gap-3 transition-all bg-accent/10 px-4 py-2 rounded-full hover:bg-accent/20"
           >
@@ -114,6 +114,19 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+
+        {/* Primary conversion path: every order starts with a written quotation. */}
+        {onEnquire && (
+          <Button
+            variant="accent"
+            className="w-full mt-5"
+            onClick={() => onEnquire(product)}
+            aria-label={`Request a quote for ${product.name}`}
+          >
+            <MessageSquare className="mr-2 h-4 w-4" />
+            Request a Quote
+          </Button>
+        )}
       </div>
     </div>
   );

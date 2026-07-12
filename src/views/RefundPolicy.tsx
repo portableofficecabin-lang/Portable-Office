@@ -85,7 +85,8 @@ export default function RefundPolicyPage() {
               <div>
                 <h2 className="font-display text-lg font-bold text-foreground mb-2">No Returns Accepted</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  All products manufactured by Portable Office Cabin — including portable cabins, shipping containers, prefab homes, and modular structures — are <strong>custom-built to order</strong>. Due to the bespoke nature of our products, <strong>we do not accept returns</strong> once the product has been manufactured and delivered. Please review all specifications carefully before confirming your order.
+                  All products manufactured by Portable Office Cabin — including portable cabins, shipping containers, prefab homes, and modular structures — are <strong>custom-built to order</strong>. Due to the bespoke nature of our products, <strong>we do not accept returns</strong> once the product has been manufactured and delivered. Please review all specifications carefully before confirming your order. See our{" "}
+                  <Link href="/custom-product-policy" className="text-accent hover:underline">Custom Product Policy</Link> for full details.
                 </p>
               </div>
             </div>
@@ -105,10 +106,19 @@ export default function RefundPolicyPage() {
               <li>The advance payment confirms your order and reserves your production slot.</li>
               <li>The remaining balance must be paid before or at the time of dispatch/delivery.</li>
               <li>Failure to pay the balance within the agreed timeline may result in the order being put on hold or cancelled, with applicable deductions.</li>
+              <li>Payments are accepted by bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft. No payment is collected through this website — see our <Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link>.</li>
             </ul>
           </Section>
 
-          <Section title="3. Refund Eligibility" index={2}>
+          <Section title="3. Taxes & Transport Charges" index={2}>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>GST is charged in addition to the product price</strong> and is shown separately on the tax invoice. Prices displayed on the website are indicative starting prices, exclusive of GST.</li>
+              <li>Delivery is free within a 50 km radius of our facility. Beyond 50 km, transport is charged based on distance, as confirmed in your written quotation.</li>
+              <li>Freight or transport charges already incurred on an order that has been dispatched or is in transit are <strong>not refundable</strong>.</li>
+            </ul>
+          </Section>
+
+          <Section title="4. Refund Eligibility" index={3}>
             <p>You may be eligible for a refund in the following situations:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>The order is cancelled within 48 hours and no manufacturing has begun.</li>
@@ -117,10 +127,11 @@ export default function RefundPolicyPage() {
             </ul>
           </Section>
 
-          <Section title="4. Non-Refundable Scenarios" index={3}>
+          <Section title="5. Non-Refundable Scenarios" index={4}>
             <p>Refunds will not be provided in the following cases:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>Cancellation of custom-built units after manufacturing has started.</li>
+              <li>Freight or transport charges already incurred on an order that has been dispatched or is in transit.</li>
               <li>Delays caused by factors outside our control — such as natural disasters, transportation strikes, government restrictions, or site-related issues on your end.</li>
               <li>Damage caused during unloading, installation, or usage after delivery.</li>
               <li>Minor colour, texture, or dimensional variations that are within standard manufacturing tolerances.</li>
@@ -128,7 +139,7 @@ export default function RefundPolicyPage() {
             </ul>
           </Section>
 
-          <Section title="5. Refund Processing Time" index={4}>
+          <Section title="6. Refund Processing Time" index={5}>
             <ul className="list-disc pl-6 space-y-2">
               <li>Once a refund is approved, it will be processed within <strong>10–15 business days</strong>.</li>
               <li>Refunds will be credited to the same bank account or payment method used for the original transaction.</li>
@@ -136,7 +147,7 @@ export default function RefundPolicyPage() {
             </ul>
           </Section>
 
-          <Section title="6. Damaged or Defective Products" index={5}>
+          <Section title="7. Damaged or Defective Products" index={6}>
             <p>If you receive a product that is damaged or has manufacturing defects:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>Notify us within <strong>48 hours</strong> of delivery with photographs and a clear description of the issue.</li>
@@ -146,7 +157,7 @@ export default function RefundPolicyPage() {
             </ul>
           </Section>
 
-          <Section title="7. Rental Cancellations" index={6}>
+          <Section title="8. Rental Cancellations" index={7}>
             <ul className="list-disc pl-6 space-y-2">
               <li>Rental bookings can be cancelled up to 7 days before the scheduled delivery date for a full refund of the security deposit.</li>
               <li>Cancellations within 7 days of delivery may attract a partial deduction from the deposit.</li>
@@ -154,21 +165,23 @@ export default function RefundPolicyPage() {
             </ul>
           </Section>
 
-          <Section title="8. How to Request a Cancellation or Refund" index={7}>
-            <p>To initiate a cancellation or refund request, contact us through any of the following channels:</p>
+          <Section title="9. How to Request a Cancellation or Refund" index={8}>
+            <p>To initiate a cancellation or refund request, contact our customer-service team through any of the following channels:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
-              <li>Email us at <a href="mailto:admin@portableofficecabin.com" className="text-accent hover:underline">admin@portableofficecabin.com</a> with your order details.</li>
-              <li>Call us at <a href="tel:+919731897976" className="text-accent hover:underline">+91 9731897976</a> or <a href="tel:+919019910931" className="text-accent hover:underline">+91 90199 10931</a>.</li>
-              <li>Message us on WhatsApp with your order reference number.</li>
+              <li>Email us at <a href="mailto:sales@portableofficecabin.com" className="text-accent hover:underline">sales@portableofficecabin.com</a> with your order details (secondary: <a href="mailto:portableofficecabin@gmail.com" className="text-accent hover:underline">portableofficecabin@gmail.com</a>).</li>
+              <li>Call us at <a href="tel:+919731897976" className="text-accent hover:underline">+91 97318 97976</a> or <a href="tel:+919019910931" className="text-accent hover:underline">+91 90199 10931</a>.</li>
+              <li>Message us on <a href="https://wa.me/919731897976" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">WhatsApp (+91 97318 97976)</a> with your order reference number.</li>
+              <li><strong>Business hours:</strong> Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.</li>
+              <li>We respond to every cancellation or refund request <strong>within 24 hours</strong>.</li>
             </ul>
             <p className="mt-3">Please include your order number, the reason for cancellation, and any supporting documents or photos.</p>
           </Section>
 
-          <Section title="9. Dispute Resolution" index={8}>
+          <Section title="10. Dispute Resolution" index={9}>
             <p>If there is a disagreement regarding a refund or cancellation, both parties agree to resolve the matter through direct discussion first. If that does not lead to a resolution, the dispute will be referred to arbitration under the Arbitration and Conciliation Act, 1996. The seat of arbitration will be Krishnagiri, Tamil Nadu, India.</p>
           </Section>
 
-          <Section title="10. Governing Law" index={9}>
+          <Section title="11. Governing Law" index={10}>
             <p>This Refund & Cancellation Policy is governed by the laws of India. Any legal proceedings shall be subject to the exclusive jurisdiction of the courts in Krishnagiri, Tamil Nadu.</p>
           </Section>
 
@@ -187,7 +200,7 @@ export default function RefundPolicyPage() {
               </div>
               <h2 className="font-display text-xl font-bold text-foreground">Have Questions About a Refund?</h2>
             </div>
-            <p className="text-muted-foreground mb-6">Our team is here to help. Reach out and we'll guide you through the process.</p>
+            <p className="text-muted-foreground mb-6">Our team is here to help. Reach out and we'll guide you through the process — we reply within 24 hours.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="accent" size="lg" asChild>
                 <Link href="/contact">

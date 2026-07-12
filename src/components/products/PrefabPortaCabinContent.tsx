@@ -491,7 +491,7 @@ export function PrefabPortaCabinContent() {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            { title: "Experience", desc: "10+ years in the industry with documented projects" },
+            { title: "Experience", desc: "15+ years in the industry with documented projects" },
             { title: "Capabilities", desc: "In-house design and fabrication versus outsourced work" },
             { title: "Quality Evidence", desc: "Visit existing installations to assess weld quality, panel fitment, and finishes" },
             { title: "Detailed Quotations", desc: "Specifications covering panel thickness, paint system, and inclusions" },

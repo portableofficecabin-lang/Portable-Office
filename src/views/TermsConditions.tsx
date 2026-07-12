@@ -87,12 +87,13 @@ export default function TermsConditionsPage() {
 
           <Section title="3. Pricing & Payment" index={2}>
             <ul className="list-disc pl-6 space-y-2">
-              <li>All prices listed on our website are indicative and may change based on specifications, customisation, raw material costs, and delivery distance.</li>
-              <li>A final quotation will be shared before order confirmation. The quoted price is valid for 15 days from the date of issue unless stated otherwise.</li>
+              <li>All prices listed on our website are indicative <strong>starting prices</strong> and are <strong>exclusive of GST</strong>, transport beyond the 50 km free delivery zone, and installation. They may change based on specifications, customisation, raw material costs, and delivery distance.</li>
+              <li><strong>No payment is collected through this website and products cannot be purchased online.</strong> Every order begins with a written quotation — you send us your requirement, we send you a quotation, and the order is placed only after you confirm it.</li>
+              <li>A final quotation will be shared before order confirmation. The quoted price is valid for 15 days from the date of issue unless stated otherwise. <strong>The binding price for your order is the one stated in that written quotation</strong>, not the indicative price shown on the website.</li>
               <li>We accept payments via bank transfer (NEFT/RTGS/IMPS), UPI, cheque, and demand draft.</li>
               <li>A minimum advance payment (typically 40–50% of the total order value) is required to begin manufacturing.</li>
               <li>The remaining balance must be cleared before or at the time of dispatch/delivery.</li>
-              <li>GST and applicable taxes will be charged as per prevailing government rates.</li>
+              <li>GST and applicable taxes will be charged extra, as per prevailing government rates, and are shown separately on the tax invoice.</li>
             </ul>
           </Section>
 
@@ -163,7 +164,7 @@ export default function TermsConditionsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:admin@portableofficecabin.com" className="hover:text-accent">admin@portableofficecabin.com</a>
+                <a href="mailto:sales@portableofficecabin.com" className="hover:text-accent">sales@portableofficecabin.com</a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent" />

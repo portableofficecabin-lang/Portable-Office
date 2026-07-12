@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, BadgeCheck } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Linkedin, Instagram, BadgeCheck } from "lucide-react";
 import logo from "@/assets/logo.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
@@ -22,11 +22,17 @@ const footerLinks = {
   support: [
     { name: "Contact Us", href: "/contact" },
     { name: "FAQs", href: "/faq" },
-    { name: "Warranty", href: "/warranty" },
-    { name: "Shipping & Delivery", href: "/shipping" },
+    { name: "Shipping & Delivery Policy", href: "/shipping" },
+    { name: "Warranty Policy", href: "/warranty" },
+  ],
+  // The policy set required by Google Merchant Center — every one of these is
+  // publicly reachable from the footer with no login.
+  policies: [
+    { name: "Payment Policy", href: "/payment-policy" },
+    { name: "Return, Refund & Cancellation Policy", href: "/refund-policy" },
+    { name: "Customised Product Policy", href: "/custom-product-policy" },
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Terms & Conditions", href: "/terms-and-conditions" },
-    { name: "Refund Policy", href: "/refund-policy" },
   ],
 };
 
@@ -36,9 +42,9 @@ export function Footer() {
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full blur-2xl" />
-      
+
       <div className="container-custom section-padding relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-4 mb-6 group">
@@ -51,7 +57,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-primary-foreground mb-6 max-w-sm font-bold leading-relaxed">
-              Leading manufacturer of portable cabins, container offices, and prefab homes. 
+              Leading manufacturer of portable cabins, container offices, and prefab homes.
               Quality structures delivered to your site, ready for use.
             </p>
             <div className="space-y-4">
@@ -151,9 +157,30 @@ export function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-primary-foreground hover:text-black transition-colors font-bold flex items-center gap-2 group"
+                    className="text-primary-foreground hover:text-black transition-colors font-bold flex items-start gap-2 group"
                   >
-                    <span className="w-0 group-hover:w-4 h-0.5 bg-black transition-all duration-300 ease-out" />
+                    <span className="w-0 group-hover:w-4 h-0.5 bg-black transition-all duration-300 ease-out shrink-0 mt-3" />
+                    <span className="relative">
+                      {link.name}
+                      <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-300 ease-out" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Policies */}
+          <div>
+            <h4 className="font-display font-extrabold text-xl mb-5 text-black">Policies</h4>
+            <ul className="space-y-3">
+              {footerLinks.policies.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-primary-foreground hover:text-black transition-colors font-bold flex items-start gap-2 group"
+                  >
+                    <span className="w-0 group-hover:w-4 h-0.5 bg-black transition-all duration-300 ease-out shrink-0 mt-3" />
                     <span className="relative">
                       {link.name}
                       <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-300 ease-out" />
@@ -190,9 +217,6 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <a href="https://www.facebook.com/share/1ZMvxG4MGy/" target="_blank" rel="noopener noreferrer" aria-label="Portable Office Cabin on Facebook" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
               <Facebook className="h-5 w-5" aria-hidden="true" />
-            </a>
-            <a href="#" aria-label="Portable Office Cabin on Twitter" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
-              <Twitter className="h-5 w-5" aria-hidden="true" />
             </a>
             <a href="https://www.linkedin.com/in/portable-office-cabin-9b939a168?utm_source=share&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="Portable Office Cabin on LinkedIn" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/30 hover:text-accent transition-all duration-300">
               <Linkedin className="h-5 w-5" aria-hidden="true" />

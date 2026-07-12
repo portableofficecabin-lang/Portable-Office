@@ -71,8 +71,8 @@ const linkClusters = [
     links: [
       { label: "Portable Cabin Rental Service", href: "/rental-service" },
       { label: "Book a Free Consultation", href: "/book-appointment" },
-      { label: "Our Projects & Case Studies", href: "/projects" },
-      { label: "About Portable Office Cabin", href: "/about" },
+      { label: "Our Projects & Case Studies", href: "/gallery" },
+      { label: "About Portable Office Cabin", href: "/about-us" },
       { label: "Contact Us for a Free Quote", href: "/contact" },
     ],
   },
@@ -196,7 +196,7 @@ export function InternalLinkingHub() {
                   { label: "All Products Catalogue", href: "/products" },
                   { label: "Rental Services", href: "/rental-service" },
                   { label: "Blog – Industry Guides", href: "/blog" },
-                  { label: "Our Projects", href: "/projects" },
+                  { label: "Our Projects", href: "/gallery" },
                   { label: "Book Free Consultation", href: "/book-appointment" },
                   { label: "Get a Free Quote", href: "/contact" },
                 ].map((item) => (

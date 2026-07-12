@@ -421,13 +421,13 @@ const benefits = [
   },
   {
     icon: Truck,
-    title: "Free Delivery & Setup",
-    description: "We deliver and install at your site within 48 hours"
+    title: "Delivery & Setup",
+    description: "Delivery and installation by our own team. Ready-stock rental units are typically delivered within 48 hours of confirmation, subject to availability. Transport is charged as per distance and confirmed in your written quotation"
   },
   {
     icon: Wrench,
     title: "Maintenance Included",
-    description: "24/7 support with free maintenance during rental period"
+    description: "Support Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM, with free maintenance during the rental period"
   },
   {
     icon: Shield,
@@ -576,7 +576,7 @@ export default function RentalServicePage() {
               Portable Cabins for <span className="text-accent">Rent</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Choose from our range of well-maintained portable cabins. All prices include delivery within Bangalore.
+              Choose from our range of well-maintained portable cabins. Rental rates shown are indicative starting prices and exclude GST, transport and installation — your written quotation confirms the final amount.
             </p>
           </div>
 
