@@ -148,37 +148,73 @@ export function resolveStair(
   return { enabled, position, offsetM, dxM, dyM, widthM, steps, treadM, gapM, riserMm, runM, goingM, landingM, entry, direction, handrail, overridden };
 }
 
-/** The effective, editable list of staircases (migrates the legacy single `staircase`). */
+/**
+ * The effective, editable list of staircases (migrates the legacy single `staircase`).
+ *
+ * When the user has not hand-edited the staircase list, the defaults follow the calculator's
+ * STAIRCASE POSITION ("both" = one at each end, the reference layout), so changing it live-updates
+ * the plan AND the elevations. Previously the defaults hard-coded a left+right pair, which meant
+ * every default staircase carried an explicit `position` and resolveStair()'s fallback — the
+ * calculator's own staircasePosition — could never take effect.
+ * An explicit array (even empty, after deleting them all) is always honored.
+ */
 export function effectiveStaircases(
   conf: RoomFloorPlanConfig,
   floors: number,
+  staircasePosition?: StaircaseDrawConfig["position"],
 ): StaircaseDrawConfig[] {
-  // An explicit array (even empty, after deleting them all) is honored; only migrate when truly absent.
   if (Array.isArray(conf.staircases)) return conf.staircases;
   const s = conf.staircase;
   if (s) {
-    if ((s.position ?? "both") === "both") {
+    if ((s.position ?? staircasePosition ?? "both") === "both") {
       return [
         { ...s, id: "stair-r", label: "Staircase A", position: "right" },
         { ...s, id: "stair-l", label: "Staircase B", position: "left" },
       ];
     }
-    return [{ ...s, id: "stair-1", label: s.label ?? "Staircase A" }];
+    return [{ ...s, id: "stair-1", label: s.label ?? "Staircase A", position: s.position ?? staircasePosition }];
   }
+  const pos = staircasePosition ?? "both";
   if (floors > 1) {
-    return [
-      { id: "stair-r", label: "Staircase A", position: "right" },
-      { id: "stair-l", label: "Staircase B", position: "left" },
-    ];
+    if (pos === "both") {
+      return [
+        { id: "stair-r", label: "Staircase A", position: "right" },
+        { id: "stair-l", label: "Staircase B", position: "left" },
+      ];
+    }
+    return [{ id: "stair-1", label: "Staircase A", position: pos }];
   }
-  return [{ id: "stair-1", label: "Staircase A", position: "right", enabled: false }];
+  return [{ id: "stair-1", label: "Staircase A", position: pos === "both" ? "right" : pos, enabled: false }];
 }
 
-/** The effective, editable list of verandas/corridors (migrates the peripheral defaults). */
-export function effectiveVerandas(conf: RoomFloorPlanConfig, hasBottom: boolean): VerandaDrawConfig[] {
-  // An explicit array (even empty, after deleting them all) is honored; only migrate when truly absent.
+/**
+ * The effective, editable list of verandas / corridors.
+ *
+ * When the user has not hand-edited the veranda list, the defaults follow the calculator's
+ * CORRIDOR POSITION, so changing it live-updates the plan AND the elevations:
+ *   both            → peripheral veranda on the top AND bottom (double-loaded, the reference layout)
+ *   top/bottom/left/right → a single veranda on that side
+ *   center          → the corridor runs BETWEEN the two room rows; the room-plan engine models the
+ *                     rows back-to-back, so we keep the peripheral pair as the drawn access route
+ *                     (see `corridorPosition` note in the calculator).
+ * An explicit array (even empty, after deleting them all) is always honored.
+ */
+export function effectiveVerandas(
+  conf: RoomFloorPlanConfig,
+  hasBottom: boolean,
+  corridorPosition?: "center" | "top" | "bottom" | "left" | "right" | "both",
+): VerandaDrawConfig[] {
   if (Array.isArray(conf.verandas)) return conf.verandas;
   const railing = conf.showRailing ?? true;
+  const one = (side: Side, label: string): VerandaDrawConfig[] => [{ id: `ver-${side}`, label, side, railing }];
+
+  switch (corridorPosition) {
+    case "top": return one("top", "Top veranda");
+    case "bottom": return hasBottom ? one("bottom", "Bottom veranda") : one("top", "Top veranda");
+    case "left": return one("left", "Left veranda");
+    case "right": return one("right", "Right veranda");
+    default: break;   // "both" | "center" | undefined → the peripheral pair below
+  }
   const arr: VerandaDrawConfig[] = [{ id: "ver-top", label: "Top veranda", side: "top", railing }];
   if (hasBottom) arr.push({ id: "ver-bot", label: "Bottom veranda", side: "bottom", railing });
   return arr;
@@ -356,7 +392,7 @@ export function buildRoomFloorPlan(
   const maxBottomDepth = bottomNos.length ? Math.max(...bottomNos.map(depthOf)) : 0;
 
   /* ---------------- verandas → drive the room block depth ---------------- */
-  const verCfgs = effectiveVerandas(conf, hasBottom).filter((v) => v.enabled ?? true);
+  const verCfgs = effectiveVerandas(conf, hasBottom, result.config.corridorPosition).filter((v) => v.enabled ?? true);
   const depthOfVer = (v: VerandaDrawConfig) => Math.max(0.3, v.widthM && v.widthM > 0 ? v.widthM : verandaM);
   const maxSideDepth = (side: Side) =>
     verCfgs.filter((v) => (v.side ?? "top") === side).reduce((m, v) => Math.max(m, depthOfVer(v)), 0);
@@ -441,7 +477,7 @@ export function buildRoomFloorPlan(
   });
 
   /* ---------------- staircases ---------------- */
-  const stairCfgs = effectiveStaircases(conf, floors);
+  const stairCfgs = effectiveStaircases(conf, floors, cfg.staircasePosition);
   const stairs: FPStair[] = [];
   const stairRects: FPRect[] = []; // for same-side auto-separation
   stairCfgs.forEach((sc, i) => {
@@ -578,10 +614,17 @@ export function buildRoomFloorPlan(
     coreWidth.push({ start: refXs[i], len: lenOf(no), kind: "room" });
     if (roomGapM > 0 && i < refRow.length - 1) coreWidth.push({ start: refXs[i] + lenOf(no), len: roomGapM, kind: "gap" });
   });
+  // A LEFT/RIGHT veranda sits OUTSIDE the block (unlike the top/bottom pair, which blockDM
+  // already contains), so the x extension may hold a veranda, a staircase, or both. Label each
+  // band by what actually occupies it — never assume "anything outside the block is a stair".
   const widthBands: FPBand[] = [];
-  if (minX < -1e-6) widthBands.push({ start: minX, len: -minX, kind: "stair" });
+  const leftVerX0 = -leftVerM;
+  if (minX < leftVerX0 - 1e-6) widthBands.push({ start: minX, len: leftVerX0 - minX, kind: "stair" });
+  if (leftVerM > 1e-6) widthBands.push({ start: leftVerX0, len: leftVerM, kind: "veranda" });
   widthBands.push(...coreWidth);
-  if (maxX > blockWM + 1e-6) widthBands.push({ start: blockWM, len: maxX - blockWM, kind: "stair" });
+  if (rightVerM > 1e-6) widthBands.push({ start: blockWM, len: rightVerM, kind: "veranda" });
+  const rightVerX1 = blockWM + rightVerM;
+  if (maxX > rightVerX1 + 1e-6) widthBands.push({ start: rightVerX1, len: maxX - rightVerX1, kind: "stair" });
 
   // depth (y): [top extension] + top veranda + top row + [bottom row + bottom veranda] + [bottom extension]
   const coreDepth: FPBand[] = [];

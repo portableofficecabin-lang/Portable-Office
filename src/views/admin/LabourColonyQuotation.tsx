@@ -553,6 +553,7 @@ export default function LabourColonyQuotation() {
                       floorPlan={config.floorPlan}
                       onFloorPlanChange={(fp) => setConfig((c) => ({ ...c, floorPlan: fp }))}
                       plinthM={civilResult?.foundation.section.raisedPlinthHeightM}
+                      projectName={meta.projectName || config.projectName}
                     />
                   </Section>
 
@@ -817,7 +818,13 @@ export default function LabourColonyQuotation() {
                   <span><b>Corridor:</b> {result.config.corridorPosition ?? "center"} · {fmtLen(result.config.corridorWidth)}</span>
                 </div>
               </div>
-              <LabourColonyDrawings result={result} unit={unit} />
+              <LabourColonyDrawings
+                result={result}
+                unit={unit}
+                floorPlan={config.floorPlan}
+                plinthM={civilResult?.foundation.section.raisedPlinthHeightM}
+                projectName={meta.projectName || config.projectName}
+              />
             </div>
           ) : (
             <div className="py-12 text-center text-muted-foreground">Enter capacity and room dimensions to preview the layout.</div>

@@ -220,8 +220,44 @@ export interface RoomFloorPlanConfig {
   minClearanceM?: number;
   /** Elevation roof (drawing only): profile type + rise + eave overhang, metres. */
   roof?: ElevationRoofConfig;
+  /** Elevation structural frame (drawing only): column grid, cross bracing, panel courses. */
+  structure?: ElevationStructureConfig;
   /** Draw the safety railing along the open (outer) veranda edges. Default true. */
   showRailing?: boolean;
+}
+
+/**
+ * Structural detailing for the ELEVATION drawings (drawing only — never changes quantities/BOQ).
+ *
+ * The column grid is DERIVED from the plan (one column line at every room partition, at each
+ * external wall face and at each veranda's outer edge), then any bay wider than `maxBaySpacingM`
+ * is auto-subdivided so the frame reads like the real steel structure. Column and brace member
+ * sizes default to the project's own MemberSections (columns / bracing), so the drawing matches
+ * the steel that is actually being quoted.
+ */
+export interface ElevationStructureConfig {
+  /** Draw the steel column grid. Default true. */
+  columns?: boolean;
+  /** Max centre-to-centre column spacing (m). Bays wider than this are auto-subdivided. Default 3. */
+  maxBaySpacingM?: number;
+  /** Drawn column width (m). Default = MemberSections.columns section depth (RHS 100 → 0.1 m). */
+  columnWidthM?: number;
+  /** Cross-bracing pattern drawn in a braced bay. Default "x". */
+  bracePattern?: "x" | "single" | "none";
+  /** Which bays carry bracing. Default "all". */
+  braceBays?: "all" | "ends" | "alternate";
+  /** Which floors carry bracing. Default "all". */
+  braceFloors?: "all" | "ground" | "upper";
+  /** Drawn brace member thickness (m). Default = MemberSections.bracing leg (ANGLE 50 → 0.05 m). */
+  braceThickM?: number;
+  /** Never brace a bay that a door/window opening falls into. Default true. */
+  braceClearOpenings?: boolean;
+  /** Horizontal sandwich-panel course (joint) spacing, m. 0 = no course lines. Default 1. */
+  panelCourseM?: number;
+  /** Draw the veranda/walkway deck edge + railing on the side (gable-end) elevations. Default true. */
+  showDecks?: boolean;
+  /** Draw the bottom dimension chain (veranda | rooms | veranda) + height dims. Default true. */
+  showDims?: boolean;
 }
 
 export interface LabourColonyConfig {

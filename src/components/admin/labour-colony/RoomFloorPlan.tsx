@@ -74,8 +74,8 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
   const floorIdx = Math.min(floor, floorsWithRooms - 1);
 
   const geom = buildRoomFloorPlan(result, fp, floorIdx);
-  const stairList = effectiveStaircases(fp, floors);
-  const verandaList = effectiveVerandas(fp, geom.hasBottom);
+  const stairList = effectiveStaircases(fp, floors, result.config.staircasePosition);
+  const verandaList = effectiveVerandas(fp, geom.hasBottom, result.config.corridorPosition);
   const stairById = new Map(geom.stairs.map((s) => [s.id, s]));
 
   const fmt = (m: number) => formatLen(m, unit);
