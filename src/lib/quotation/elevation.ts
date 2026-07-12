@@ -127,6 +127,14 @@ export interface ElevationGeom {
   decks: ElevDeck[];
   courses: number[];              // panel-course line heights, m above ground
   dimChain: { x0: number; wM: number; kind: FPBand["kind"] }[];
+  /** The room module every face is built from — so each elevation can state the Length / Width /
+   *  Height it came from, whichever of them its own axis happens to show. */
+  room: { lengthM: number; widthM: number; heightM: number };
+  /** Overall building footprint from the plan: length along the building, width across it. */
+  footprint: { lengthM: number; widthM: number };
+  /** Which calculator input this face's HORIZONTAL axis measures:
+   *  front/rear → room LENGTH (along the building) · left/right → room WIDTH (across it). */
+  axisDim: "length" | "width";
   structure: Required<Omit<ElevationStructureConfig, "columnWidthM" | "braceThickM" | "handrailHeightM">> & {
     columnWidthM: number; braceThickM: number; handrailHeightM: number;
   };
@@ -448,5 +456,10 @@ export function buildElevation(
     plinthM, floorHM: floorH, floors, bodyHM: round(bodyHM), roof,
     totalHM, totalWidthM: round(buildX1 - buildX0),
     openings, rails, stairs, columns, bays, braces, decks, courses, dimChain, structure,
+    // Carry the source dimensions onto every face, so a change to Length or Width is visible on
+    // ALL FOUR elevations — even the one whose own axis does not happen to measure it.
+    room: { lengthM: cfg.roomLength, widthM: cfg.roomWidth, heightM: floorH },
+    footprint: { lengthM: round(g0.totalLengthM), widthM: round(g0.totalWidthM) },
+    axisDim: alongX ? "length" : "width",
   };
 }

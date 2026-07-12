@@ -278,6 +278,14 @@ function ElevationCard({ g, title, face, fmt, projectName }: {
             {fmt(g.totalWidthM)} wide · {fmt(g.totalHM)} high · {g.floors} floor{g.floors > 1 ? "s" : ""} · roof: {g.roof.type}
             {g.braces.length > 0 && <> · {g.braces.length} braced panel{g.braces.length > 1 ? "s" : ""}</>}
           </div>
+          <div className="text-[11px] text-slate-400">
+            room{" "}
+            <b className={g.axisDim === "length" ? "text-sky-700" : ""}>L {fmt(g.room.lengthM)}</b>
+            {" × "}
+            <b className={g.axisDim === "width" ? "text-sky-700" : ""}>W {fmt(g.room.widthM)}</b>
+            {" × H "}{fmt(g.room.heightM)} · this view measures the room{" "}
+            <b>{g.axisDim === "length" ? "LENGTH" : "WIDTH"}</b>
+          </div>
         </div>
         <div className="flex shrink-0 gap-1.5 print:hidden">
           <Button type="button" variant="outline" size="sm" className="gap-1.5" disabled={busy} onClick={() => download("svg")}>
@@ -302,7 +310,7 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
     const spanX = Math.max(1, g.x1 - g.x0);
     const S = Math.min(34, Math.max(9, 640 / spanX));   // px per metre
     const PAD_L = 78, PAD_R = 78, PAD_T = 30;
-    const PAD_B = g.structure.showDims ? 74 : 34;
+    const PAD_B = g.structure.showDims ? 92 : 50;   // dim chain + overall + the room/footprint note
 
     const H = g.plinthM + g.bodyHM;                     // wall height above ground
     const Ytop = g.roof.riseM;                          // roof band above the walls
@@ -530,7 +538,10 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
                       <line x1={c} y1={dy - 4} x2={c} y2={dy + 4} stroke={COL.dim} strokeWidth={0.9} />
                       <text x={(a + c) / 2} y={dy - 6} textAnchor="middle" fontSize={6.4} fill={COL.dim}>{fmt(b.wM)}</text>
                       <text x={(a + c) / 2} y={dy + 12} textAnchor="middle" fontSize={5.6} fill={COL.note}>
-                        {b.kind === "veranda" ? "VERANDA" : b.kind === "stair" ? "STAIR" : b.kind === "gap" ? "GAP" : "ROOM"}
+                        {b.kind === "veranda" ? "VERANDA" : b.kind === "stair" ? "STAIR" : b.kind === "gap" ? "GAP"
+                          // name the room band after the CALCULATOR INPUT that drives it, so it is
+                          // never ambiguous which of Length / Width moves this view
+                          : g.axisDim === "length" ? "ROOM LENGTH" : "ROOM WIDTH"}
                       </text>
                     </g>
                   );
@@ -583,6 +594,32 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
             </g>
           </>
         )}
+
+        {/* ---- ROOM & BUILDING note ----------------------------------------------------------
+             Carried on EVERY face. The horizontal axis of a front/rear view measures the room
+             LENGTH; a side (gable-end) view measures the room WIDTH — length runs into the page
+             there and can never be drawn. Stating both here means a change to either input is
+             visible immediately on all four elevations, including this one. */}
+        <g>
+          <text x={X(g.x0)} y={svgH - 20} fontSize={6.6} fill={COL.ink}>
+            <tspan fontWeight={700}>ROOM</tspan>
+            <tspan fill={g.axisDim === "length" ? COL.overall : COL.note} fontWeight={g.axisDim === "length" ? 700 : 400}>
+              {" "}L {fmt(g.room.lengthM)}
+            </tspan>
+            <tspan fill={COL.note}> × </tspan>
+            <tspan fill={g.axisDim === "width" ? COL.overall : COL.note} fontWeight={g.axisDim === "width" ? 700 : 400}>
+              W {fmt(g.room.widthM)}
+            </tspan>
+            <tspan fill={COL.note}> × H {fmt(g.room.heightM)}</tspan>
+          </text>
+          <text x={X(g.x0)} y={svgH - 10} fontSize={6.6} fill={COL.ink}>
+            <tspan fontWeight={700}>BUILDING</tspan>
+            <tspan fill={COL.note}> {fmt(g.footprint.lengthM)} (length) × {fmt(g.footprint.widthM)} (width)</tspan>
+          </text>
+          <text x={X(g.x1)} y={svgH - 10} textAnchor="end" fontSize={6} fill={COL.note}>
+            this view measures the room {g.axisDim === "length" ? "LENGTH" : "WIDTH"}
+          </text>
+        </g>
       </svg>
     );
   },
