@@ -47,6 +47,7 @@ import {
   type CivilWorkResult,
 } from "@/lib/quotation/labourColonyCivil";
 import { buildConstructionPlan } from "@/lib/quotation/labourColonyPlan";
+import { addLegalFooter } from "@/lib/pdfFooter";
 import {
   defaultProjectMeta,
   newId,
@@ -936,7 +937,9 @@ function KV({ rows }: { rows: [string, string | number][] }) {
 
 /* ---------------- PDF export ---------------- */
 function exportColonyPdf(result: LabourColonyResult, civil: CivilWorkResult | null, meta: ProjectMeta) {
-  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  // compress: true — FlateDecode on the content streams. Free on a vector PDF, and it keeps this
+  // export consistent with every other calculator.
+  const doc = new jsPDF({ unit: "pt", format: "a4", compress: true });
   const W = doc.internal.pageSize.getWidth();
   const margin = 40;
 
@@ -1074,5 +1077,7 @@ function exportColonyPdf(result: LabourColonyResult, civil: CivilWorkResult | nu
     y += lines.length * 9 + 2;
   });
 
+  // This was the ONE jsPDF export in the repo that never stamped the legal footer.
+  addLegalFooter(doc);
   doc.save(`labour-colony-${(result.config.projectName || "estimate").replace(/\s+/g, "-").toLowerCase()}.pdf`);
 }

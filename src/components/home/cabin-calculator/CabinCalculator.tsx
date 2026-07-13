@@ -1378,25 +1378,34 @@ export default function CabinCalculator() {
       ]);
       const autoTable = autoTableMod.default;
       type CellHookData = Parameters<NonNullable<Parameters<typeof autoTable>[1]["didParseCell"]>>[0];
-      const doc = new jsPDF({ unit: "mm", format: "a4" }) as InstanceType<typeof jsPDF> & { lastAutoTable: { finalY: number } };
+      const doc = new jsPDF({ unit: "mm", format: "a4", compress: true }) as InstanceType<typeof jsPDF> & { lastAutoTable: { finalY: number } };
       const product = PRODUCTS.find((p) => p.id === config.productId)!;
       // jsPDF's built-in fonts are Latin-1 only — the ₹ (U+20B9) glyph corrupts the
       // whole cell. Use "Rs." for every amount printed into the PDF (screen keeps ₹).
       const rsPdf = (n: number) => "Rs. " + new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(Math.round(Number(n) || 0));
       // Load the company logo → PNG (via canvas) so jsPDF can embed it regardless of the
       // webp source. Returns null if it can't load/decode → header falls back to text-only.
+      // The logo is placed ~20 mm wide, so ~256 px is already beyond print resolution. Embedding it
+      // at its natural size (often 1000 px+) added hundreds of KB to every PDF for no visible gain.
+      // It stays PNG — it needs its alpha channel to sit on the navy header band.
+      const LOGO_MAX_PX = 320;
       const loadImageData = (src: string) =>
         new Promise<{ data: string; w: number; h: number } | null>((resolve) => {
           const img = new Image();
           img.crossOrigin = "anonymous";
           img.onload = () => {
             try {
+              const k = Math.min(1, LOGO_MAX_PX / Math.max(1, img.naturalWidth));
+              const w = Math.max(1, Math.round(img.naturalWidth * k));
+              const h = Math.max(1, Math.round(img.naturalHeight * k));
               const canvas = document.createElement("canvas");
-              canvas.width = img.naturalWidth;
-              canvas.height = img.naturalHeight;
+              canvas.width = w;
+              canvas.height = h;
               const ctx = canvas.getContext("2d");
               if (!ctx) return resolve(null);
-              ctx.drawImage(img, 0, 0);
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = "high";
+              ctx.drawImage(img, 0, 0, w, h);
               resolve({ data: canvas.toDataURL("image/png"), w: img.naturalWidth, h: img.naturalHeight });
             } catch { resolve(null); }
           };

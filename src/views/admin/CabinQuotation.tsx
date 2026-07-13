@@ -3,9 +3,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Calculator, Save, Printer, FileText, Plus, Trash2 } from "lucide-react";
-import jsPDF from "jspdf";
-import { addLegalFooter } from "@/lib/pdfFooter";
-import { captureElementToCanvas } from "@/lib/pdf/sanitizeColors";
+import { exportSheetToPdf, formatBytes } from "@/lib/pdf/sheetPdf";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -265,14 +263,17 @@ export default function CabinQuotation() {
   const exportPDF = async () => {
     if (!printRef.current) return;
     try {
-      const canvas = await captureElementToCanvas(printRef.current, { scale: 2, backgroundColor: "#fff" });
-      const img = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-      const pdfW = 210;
-      const pdfH = (canvas.height * pdfW) / canvas.width;
-      pdf.addImage(img, "PNG", 0, 0, pdfW, pdfH);
-      addLegalFooter(pdf);
-      pdf.save(`${quotationNumber || "Quotation"}.pdf`);
+      // Shared exporter. This also fixes a real bug in the old code: it scaled the WHOLE quotation
+      // to a single addImage of height (canvas.height * 210 / canvas.width) with no pagination, so
+      // anything taller than one A4 page simply ran off the bottom and was lost.
+      const r = await exportSheetToPdf(printRef.current, {
+        filename: quotationNumber || "Quotation",
+        breakSelector: "table, thead, tbody > tr, h1, h2, h3",
+      });
+      toast({
+        title: "Quotation PDF downloaded",
+        description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)}`,
+      });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "";
       toast({ title: "Could not generate PDF", description: msg ? msg.slice(0, 140) : "Please try again.", variant: "destructive" });

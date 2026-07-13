@@ -8,8 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { DrawingWatermark } from "./DrawingWatermark";
-import { captureElementToCanvas } from "@/lib/pdf/sanitizeColors";
-import { addLegalFooter } from "@/lib/pdfFooter";
+import { exportSheetToPdf, formatBytes } from "@/lib/pdf/sheetPdf";
 import { ConstructionFloorPlan } from "./ConstructionFloorPlan";
 import { PlinthBeamLayout } from "./PlinthBeamLayout";
 import { PlinthBeamSection } from "./PlinthBeamSection";
@@ -17,16 +16,21 @@ import { ConstructionNotes } from "./ConstructionNotes";
 import { ColumnLayoutPlan } from "./ColumnLayoutPlan";
 import { BeamJunctionDetail } from "./BeamJunctionDetail";
 import { BarBendingSchedule } from "./BarBendingSchedule";
-import { ApprovalStamp, NotForConstructionWatermark } from "./ApprovalStamp";
+import { ApprovalStamp, StatusWatermark } from "./ApprovalStamp";
 import { SignOffPanel } from "./SignOffPanel";
 import {
   clearLocal,
+  defaultRevision,
   emptySignOff,
   fetchTeamSignOff,
   loadLocal,
+  loadRevision,
   saveLocal,
+  saveRevision,
   saveTeamSignOff,
+  statusMeta,
   todayDDMMYYYY,
+  type RevisionInfo,
   type SignOffDetails,
   type SignOffNames,
   type SignOffSource,
@@ -88,6 +92,15 @@ export function ConstructionDrawingTab({
   const [signOff, setSignOff] = useState<SignOffDetails>(emptySignOff);
   const [signOffSource, setSignOffSource] = useState<SignOffSource>("unsaved");
   const [signOffSaving, setSignOffSaving] = useState(false);
+  /** Approval status + revision block. Per-issue; cached on this device (populated after mount —
+   *  localStorage is browser-only, so seeding it in useState would cause a hydration mismatch). */
+  const [revision, setRevision] = useState<RevisionInfo>(() => ({
+    status: "revision", revNo: "R0", revDate: "", revDescription: "", remarks: "",
+  }));
+  const updateRevision = (next: RevisionInfo) => {
+    setRevision(next);
+    saveRevision(next);
+  };
   /** Pending debounce timer for the shared write — one round-trip per pause, not per keystroke. */
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -110,13 +123,24 @@ export function ConstructionDrawingTab({
     } else {
       setSignOff(signOffDefaults());
     }
+    // Restore the per-issue approval status + revision block (defaults on first use).
+    setRevision(loadRevision() ?? defaultRevision());
 
-    // …then let the SHARED row win. Supabase is the source of truth; the cache never overrides it.
+    // …then let the SHARED row win — but only the fields the server actually owns. approvedBy /
+    // approvedByDesignation are local-only (no server columns), so a spread of `team` would wipe
+    // them with the empty strings fetchTeamSignOff fills in.
     void fetchTeamSignOff().then((team) => {
       if (cancelled || !team) return; // offline / not migrated / no access → keep the cache.
-      setSignOff({ ...team, date: todayDDMMYYYY() });
+      setSignOff((prev) => ({
+        ...prev,
+        designedBy: team.designedBy,
+        checkedBy: team.checkedBy,
+        engineerName: team.engineerName,
+        engineerLicence: team.engineerLicence,
+        date: todayDDMMYYYY(),
+      }));
       setSignOffSource("team");
-      saveLocal(team); // refresh the offline copy
+      saveLocal({ ...(cached ?? emptySignOff()), ...team, approvedBy: cached?.approvedBy ?? "", approvedByDesignation: cached?.approvedByDesignation ?? "" }); // refresh the offline copy, keep local-only fields
     });
 
     return () => {
@@ -140,6 +164,8 @@ export function ConstructionDrawingTab({
       checkedBy: next.checkedBy,
       engineerName: next.engineerName,
       engineerLicence: next.engineerLicence,
+      approvedBy: next.approvedBy,
+      approvedByDesignation: next.approvedByDesignation,
     };
     saveLocal(names);
 
@@ -173,6 +199,8 @@ export function ConstructionDrawingTab({
       checkedBy: "",
       engineerName: "",
       engineerLicence: "",
+      approvedBy: "",
+      approvedByDesignation: "",
     }).then((ok) => {
       setSignOffSaving(false);
       setSignOffSource(ok ? "team" : "local");
@@ -209,39 +237,18 @@ export function ConstructionDrawingTab({
     if (!sheetRef.current) return;
     setBusy(true);
     try {
-      const canvas = await captureElementToCanvas(sheetRef.current, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-      const pageW = 210, pageH = 297, m = 8;
-      const imgW = pageW - m * 2;
-      const fullImgH = (canvas.height * imgW) / canvas.width;
-      const pageImgH = pageH - m * 2;
-
-      if (fullImgH <= pageImgH) {
-        pdf.addImage(canvas.toDataURL("image/png"), "PNG", m, m, imgW, fullImgH);
-      } else {
-        // paginate: slice the tall canvas into A4-height strips
-        const pxPerMm = canvas.height / fullImgH;
-        const sliceHpx = Math.floor(pageImgH * pxPerMm);
-        let sy = 0, first = true;
-        while (sy < canvas.height) {
-          const hpx = Math.min(sliceHpx, canvas.height - sy);
-          const strip = document.createElement("canvas");
-          strip.width = canvas.width;
-          strip.height = hpx;
-          const ctx = strip.getContext("2d");
-          if (!ctx) break;
-          ctx.fillStyle = "#ffffff";
-          ctx.fillRect(0, 0, strip.width, strip.height);
-          ctx.drawImage(canvas, 0, sy, canvas.width, hpx, 0, 0, canvas.width, hpx);
-          if (!first) pdf.addPage();
-          pdf.addImage(strip.toDataURL("image/png"), "PNG", m, m, imgW, hpx / pxPerMm);
-          sy += hpx;
-          first = false;
-        }
-      }
-      addLegalFooter(pdf);
-      pdf.save(`labour-colony-civil-drawing-${(config.projectName || "colony").replace(/\s+/g, "-").toLowerCase() || "colony"}.pdf`);
-      toast({ title: "Drawing PDF downloaded" });
+      // One shared exporter for every calculator: DPI-derived resolution, JPEG pages, page breaks
+      // on card boundaries (never through a table or drawing), and a 1 MB size budget.
+      const r = await exportSheetToPdf(sheetRef.current, {
+        filename: `labour-colony-civil-drawing-${(config.projectName || "colony").replace(/\s+/g, "-").toLowerCase() || "colony"}`,
+        // Every drawing card is a direct child of the sheet, so the default breakpoints already
+        // land between cards; the schedules are tall tables worth keeping whole too.
+        breakSelector: "table, thead, tbody > tr",
+      });
+      toast({
+        title: "Drawing PDF downloaded",
+        description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)} · ${r.dpi} DPI${r.overBudget ? " (kept above the size budget to preserve legibility)" : ""}`,
+      });
     } catch (err: unknown) {
       console.error("Construction drawing PDF failed:", err);
       const msg = err instanceof Error ? err.message : "";
@@ -332,6 +339,8 @@ export function ConstructionDrawingTab({
           onReset={resetSignOff}
           source={signOffSource}
           saving={signOffSaving}
+          revision={revision}
+          onRevisionChange={updateRevision}
         />
       )}
 
@@ -342,11 +351,11 @@ export function ConstructionDrawingTab({
         <div className="flex items-start gap-2.5 rounded-xl border border-red-300 bg-red-50 p-3 text-xs text-red-900">
           <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
           <span>
-            <b>Approval stamp is OFF.</b> This sheet will print and export with no{" "}
-            <b>NOT FOR CONSTRUCTION</b> status and no engineer checklist. The sizes on it are still
-            derived from an <b>assumed</b> safe bearing capacity, not a site-specific structural
-            analysis. Only leave this off if a qualified structural engineer has checked and signed
-            this issue.
+            <b>Approval stamp is OFF.</b> This sheet will print and export with <b>no approval
+            status</b> ({statusMeta(revision.status).watermark}), no revision block and no engineer
+            checklist. The sizes on it are still derived from an <b>assumed</b> safe bearing capacity,
+            not a site-specific structural analysis. Only leave this off if a qualified structural
+            engineer has checked and signed this issue.
           </span>
         </div>
       )}
@@ -362,6 +371,7 @@ export function ConstructionDrawingTab({
             projectName={config.projectName}
             warnings={rebar.warnings}
             signOff={signOff}
+            revision={revision}
           />
         )}
 
@@ -390,7 +400,7 @@ export function ConstructionDrawingTab({
 
         <ConstructionNotes notes={notes} section={section} floors={floors} rebar={rebar} columnCount={columns.length} />
 
-        {approvalStamp && <NotForConstructionWatermark />}
+        {approvalStamp && <StatusWatermark status={revision.status} />}
       </div>
     </div>
   );

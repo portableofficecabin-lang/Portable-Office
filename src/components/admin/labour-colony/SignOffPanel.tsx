@@ -1,31 +1,37 @@
 "use client";
 
-import { PenLine, RotateCcw, Check, Users, MonitorSmartphone, Loader2 } from "lucide-react";
+import { PenLine, RotateCcw, Users, MonitorSmartphone, Loader2, Stamp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { SignOffDetails, SignOffSource } from "./signOff";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  DRAWING_STATUSES, statusMeta,
+  type DrawingStatus, type RevisionInfo, type SignOffDetails, type SignOffSource,
+} from "./signOff";
 
 /**
- * The editor for the drawing's sign-off strip.
+ * The editor for the drawing's approval status, revision block and sign-off strip.
  *
- * The four NAMES are shared: they are stored once in Supabase and pre-fill the strip for every
- * authorised login on every device. The DATE is per-drawing and defaults to today.
+ * The NAMES are shared (Supabase) / cached locally; the DATE is per-drawing and defaults to today;
+ * the STATUS + REVISION block is per-issue (cached on this device so a refresh keeps it).
  *
  * This panel is a CONTROL, not part of the drawing — it lives OUTSIDE the sheet's ref, so it never
- * appears in window.print() or in the exported PDF; only the values it produces are printed.
+ * appears in window.print() or the exported PDF; only the values it produces are printed.
  *
  * There is deliberately no signature or stamp input. See the header of ./signOff.ts.
  */
 
-const FIELDS: {
+const NAME_FIELDS: {
   key: keyof SignOffDetails;
   label: string;
   placeholder: string;
   hint?: string;
 }[] = [
-  { key: "designedBy", label: "Designed by", placeholder: "Name" },
+  { key: "designedBy", label: "Drawn by", placeholder: "Name" },
   { key: "checkedBy", label: "Checked by", placeholder: "Name" },
+  { key: "approvedBy", label: "Approved by", placeholder: "Name" },
+  { key: "approvedByDesignation", label: "Designation", placeholder: "e.g. Project Manager" },
   {
     key: "engineerName",
     label: "Structural Engineer",
@@ -36,11 +42,6 @@ const FIELDS: {
   { key: "date", label: "Date", placeholder: "DD / MM / YYYY", hint: "This drawing only — not shared" },
 ];
 
-/**
- * Says exactly where the names ended up. "Saved for team" is only ever shown when the Supabase write
- * actually succeeded — if it fell back to this device, it must say so, or someone will believe their
- * engineer's name is shared with the team when it is not.
- */
 function SyncBadge({ source, saving }: { source: SignOffSource; saving: boolean }) {
   if (saving) {
     return (
@@ -75,23 +76,75 @@ export function SignOffPanel({
   onReset,
   source,
   saving,
+  revision,
+  onRevisionChange,
 }: {
   value: SignOffDetails;
   onChange: (next: SignOffDetails) => void;
   onReset: () => void;
   source: SignOffSource;
   saving: boolean;
+  revision: RevisionInfo;
+  onRevisionChange: (next: RevisionInfo) => void;
 }) {
   const set = (key: keyof SignOffDetails, v: string) => onChange({ ...value, [key]: v });
+  const setRev = (patch: Partial<RevisionInfo>) => onRevisionChange({ ...revision, ...patch });
+  const m = statusMeta(revision.status);
 
   return (
     <div className="rounded-xl border border-input bg-muted/30 p-3">
+      {/* ---------- approval status + revision control ---------- */}
+      <div className="mb-3 rounded-lg border bg-background p-3" style={{ borderColor: m.color }}>
+        <div className="mb-2 flex items-center gap-2">
+          <Stamp className="h-4 w-4" style={{ color: m.color }} />
+          <span className="text-xs font-bold uppercase tracking-wide">Approval status &amp; revision</span>
+          <span className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide" style={{ background: m.colorSoft, color: m.color, border: `1px solid ${m.color}` }}>
+            {m.watermark}
+          </span>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-1">
+            <Label className="text-[11px] font-semibold">Drawing status</Label>
+            <Select value={revision.status} onValueChange={(v) => setRev({ status: v as DrawingStatus })}>
+              <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {DRAWING_STATUSES.map((s) => (
+                  <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-[10px] leading-tight text-muted-foreground">Sets the watermark &amp; stamp on the sheet</p>
+          </div>
+          <div className="space-y-1">
+            <Label htmlFor="rev-no" className="text-[11px] font-semibold">Revision no.</Label>
+            <Input id="rev-no" value={revision.revNo} onChange={(e) => setRev({ revNo: e.target.value })}
+              placeholder="R0" className="h-8 text-xs" autoComplete="off" />
+          </div>
+          <div className="space-y-1">
+            <Label htmlFor="rev-date" className="text-[11px] font-semibold">Revision date</Label>
+            <Input id="rev-date" value={revision.revDate} onChange={(e) => setRev({ revDate: e.target.value })}
+              placeholder="DD / MM / YYYY" className="h-8 text-xs" autoComplete="off" />
+          </div>
+          <div className="space-y-1">
+            <Label htmlFor="rev-desc" className="text-[11px] font-semibold">Revision description</Label>
+            <Input id="rev-desc" value={revision.revDescription} onChange={(e) => setRev({ revDescription: e.target.value })}
+              placeholder="e.g. Rooms increased to 16; plinth beam revised" className="h-8 text-xs" autoComplete="off" />
+          </div>
+          <div className="space-y-1 sm:col-span-2 lg:col-span-4">
+            <Label htmlFor="rev-remarks" className="text-[11px] font-semibold">Remarks</Label>
+            <Input id="rev-remarks" value={revision.remarks} onChange={(e) => setRev({ remarks: e.target.value })}
+              placeholder="Printed on the stamp — e.g. approval conditions, site notes" className="h-8 text-xs" autoComplete="off" />
+          </div>
+        </div>
+      </div>
+
+      {/* ---------- names ---------- */}
       <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <PenLine className="h-4 w-4 text-amber" />
           <span className="text-xs font-bold uppercase tracking-wide">Sign-off details</span>
           <span className="text-[11px] text-muted-foreground">
-            Shared with your team — typed once, printed on every drawing set
+            Typed once, printed on every drawing set
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -102,8 +155,8 @@ export function SignOffPanel({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {FIELDS.map((f) => (
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {NAME_FIELDS.map((f) => (
           <div key={f.key} className="space-y-1">
             <Label htmlFor={`signoff-${f.key}`} className="text-[11px] font-semibold">
               {f.label}
@@ -130,10 +183,10 @@ export function SignOffPanel({
       )}
 
       <p className="mt-2.5 text-[11px] leading-snug text-muted-foreground">
-        These names are printed onto the sign-off strip so it does not have to be filled in by hand.
-        They do <b>not</b> approve the drawing: the <b>Signature &amp; stamp</b> box stays empty, and the
-        sheet remains <b className="text-red-600">NOT FOR CONSTRUCTION</b> until a qualified structural
-        engineer physically signs and stamps it.
+        These values print onto the stamp and sign-off strip so nothing is hand-written on every set.
+        Typing a name approves nothing by itself: the <b>Signature &amp; stamp</b> box stays empty for a
+        real signature, and the selected status — currently{" "}
+        <b style={{ color: m.color }}>{m.watermark}</b> — is what the sheet and its watermark declare.
       </p>
     </div>
   );

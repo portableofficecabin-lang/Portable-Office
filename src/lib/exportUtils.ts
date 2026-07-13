@@ -16,7 +16,7 @@ export function exportToPDF(
   rows: (string | number)[][],
   filename: string
 ) {
-  const doc = new jsPDF({ orientation: "landscape" });
+  const doc = new jsPDF({ orientation: "landscape", compress: true });
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
   doc.text(title, 14, 14);

@@ -3,16 +3,20 @@
 /**
  * WarrantyCertificate — admin tool to issue a branded Warranty Certificate for a
  * customer. Everything is typed manually (customer, product, and the warranty
- * coverage rows), a live certificate preview renders on the right, and "Download
- * PDF" rasterises that preview (html2canvas) into an A4 PDF — same approach the
- * Cabin Quotation admin tool uses. Self-contained: no DB table required.
+ * coverage rows), and a live certificate preview renders on the right.
+ *
+ * "Download PDF" builds the certificate as a TRUE VECTOR PDF (jsPDF + autoTable) rather than
+ * rasterising the preview. That keeps the text selectable and razor-sharp at any zoom, keeps the
+ * file to a few tens of KB instead of several MB, and lets autoTable paginate properly (headers
+ * repeat, rows are never split). Sheets that are genuinely drawings — where vector reconstruction
+ * is impractical — go through the shared raster exporter in lib/pdf/sheetPdf.ts instead.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import html2canvas from "html2canvas-pro"; // native oklch/lab support (Tailwind v4 palette)
-import { applySafeColors } from "@/lib/pdf/sanitizeColors";
+// (No html2canvas here: this certificate is generated as VECTOR jsPDF + autoTable, which is both
+// sharper and far smaller than a DOM raster. The old raster imports were dead code.)
 import { ShieldCheck, Download, Printer, Plus, Trash2, RotateCcw, Award, Save, FolderOpen, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -351,7 +355,7 @@ export default function WarrantyCertificate() {
     }
     setBusy(true);
     try {
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4", compress: true });
       const PW = 210, PH = 297;
       const LEFT = 15, RIGHT = 15, contentW = PW - LEFT - RIGHT;
       const navy: [number, number, number] = [15, 27, 45];

@@ -57,8 +57,17 @@ export function downloadSvgFile(svg: SVGSVGElement, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-/** Rasterise the SVG to a PNG data URL at `scale`× (vector source → crisp at any scale). */
-export async function svgToPngDataUrl(svg: SVGSVGElement, scale = 3): Promise<{ dataUrl: string; w: number; h: number }> {
+/** The SVG's intrinsic size in user units, without serialising it. */
+export function svgSize(svg: SVGSVGElement): { w: number; h: number } {
+  const vb = svg.viewBox?.baseVal;
+  return {
+    w: vb && vb.width ? vb.width : svg.clientWidth || 1000,
+    h: vb && vb.height ? vb.height : svg.clientHeight || 700,
+  };
+}
+
+/** Rasterise the SVG onto a white canvas at `scale`× (vector source → crisp at any scale). */
+async function rasterise(svg: SVGSVGElement, scale: number): Promise<{ canvas: HTMLCanvasElement; w: number; h: number }> {
   const { xml, w, h } = serializeSvg(svg);
   const url = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml;charset=utf-8" }));
   try {
@@ -73,13 +82,29 @@ export async function svgToPngDataUrl(svg: SVGSVGElement, scale = 3): Promise<{ 
     canvas.height = Math.max(1, Math.round(h * scale));
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Canvas 2D context unavailable");
-    ctx.fillStyle = "#ffffff";
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.fillStyle = "#ffffff";                     // opaque ground — JPEG has no alpha channel
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    return { dataUrl: canvas.toDataURL("image/png"), w, h };
+    return { canvas, w, h };
   } finally {
     URL.revokeObjectURL(url);
   }
+}
+
+/** Rasterise the SVG to a PNG data URL at `scale`× (lossless — used by the PNG download). */
+export async function svgToPngDataUrl(svg: SVGSVGElement, scale = 3): Promise<{ dataUrl: string; w: number; h: number }> {
+  const { canvas, w, h } = await rasterise(svg, scale);
+  return { dataUrl: canvas.toDataURL("image/png"), w, h };
+}
+
+/** Rasterise the SVG to a JPEG data URL — what the PDF embeds, for a ~5–10× smaller file. */
+export async function svgToJpegDataUrl(
+  svg: SVGSVGElement, scale = 2, quality = 0.92,
+): Promise<{ dataUrl: string; w: number; h: number }> {
+  const { canvas, w, h } = await rasterise(svg, scale);
+  return { dataUrl: canvas.toDataURL("image/jpeg", quality), w, h };
 }
 
 /** Save the drawing as a PNG image. */
@@ -94,10 +119,15 @@ export async function downloadSvgAsPng(svg: SVGSVGElement, filename: string, sca
 /**
  * Save the drawing as a single-page A4 landscape PDF, scaled to fit, with the house legal footer.
  * A single elevation always fits one sheet, so no pagination is needed.
+ *
+ * SIZE: the raster is sized from the PRINT geometry, not a blind 3× — the drawing is placed in a
+ * ~273 mm wide image area, so `targetDpi` dots across that area is all the detail the page can
+ * hold. It is then embedded as JPEG (line art on white compresses ~5–10× better than PNG) with
+ * `compress: true`, which brings a single elevation from several MB down to well under 1 MB.
+ * The .svg download stays VECTOR and is unaffected — it is a few KB and infinitely sharp.
  */
 export async function downloadSvgAsPdf(svg: SVGSVGElement, filename: string, title?: string, subtitle?: string) {
-  const { dataUrl, w, h } = await svgToPngDataUrl(svg, 3);
-  const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+  const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4", compress: true });
   const pageW = 297, pageH = 210, m = 12;
 
   let top = m;
@@ -116,11 +146,18 @@ export async function downloadSvgAsPdf(svg: SVGSVGElement, filename: string, tit
     top += 6;
   }
 
+  const { w, h } = svgSize(svg);
   const availW = pageW - m * 2;
   const availH = pageH - top - m - 10;              // leave room for the legal footer
   const k = Math.min(availW / w, availH / h);       // fit, preserving aspect ratio
   const imgW = w * k, imgH = h * k;
-  pdf.addImage(dataUrl, "PNG", (pageW - imgW) / 2, top, imgW, imgH);
+
+  // Rasterise at exactly the resolution the printed image area can carry — no more.
+  const targetDpi = 200;                            // a single elevation is small; 200 DPI is ample
+  const scale = Math.max(1, Math.min(4, ((imgW / 25.4) * targetDpi) / w));
+  const { dataUrl } = await svgToJpegDataUrl(svg, scale, 0.92);
+
+  pdf.addImage(dataUrl, "JPEG", (pageW - imgW) / 2, top, imgW, imgH, undefined, "FAST");
 
   addLegalFooter(pdf);
   pdf.save(filename.endsWith(".pdf") ? filename : `${filename}.pdf`);
