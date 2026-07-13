@@ -16,7 +16,10 @@
 
 // Value import (not type-only): the civil engine now derives its steel from the bar-bending
 // schedule. labourColonyRebar imports only TYPES back from here, so there is no runtime cycle.
-import { resolveRebar, buildBBS, type RebarDesign, type BbsResult } from "./labourColonyRebar";
+import {
+  resolveRebar, buildBBS, buildColumnMarks, buildFootingTypes, footingTotals,
+  type RebarDesign, type BbsResult, type FootingType,
+} from "./labourColonyRebar";
 
 /* ============================ TYPES ============================ */
 
@@ -196,6 +199,13 @@ export interface FoundationConfig {
   footingBarDiaMm?: number;
   footingBarSpacingMm?: number;
   footingTopMesh?: boolean;
+  /**
+   * Size each footing TYPE (F1/F2/F3) against its own tributary load and the SBC, instead of
+   * building one uniform footing everywhere. Corner and edge columns carry a quarter and a half of
+   * an internal column's load, so they get smaller footings — and the BOQ prices the real per-type
+   * concrete, excavation, PCC and steel. Default true. Set false to restore uniform footings.
+   */
+  differentiatedFootings?: boolean;
   /** Column / pedestal reinforcement. Defaults: 4-T16 vertical, T8 ties @ 150 c/c. */
   columnBars?: number;
   columnBarDiaMm?: number;
@@ -422,6 +432,12 @@ export interface FoundationResult extends CivilHeadResult {
   gridFromPlan: boolean;
   /** Full structural detailing (Ld, laps, footing mesh, column schedule, SBC check). */
   rebar: RebarDesign;
+  /**
+   * Footing TYPES (F1, F2, F3 …) — one per column kind, each sized against its own tributary load
+   * and the SBC, with the grid positions of every footing of that type. These drive the footing
+   * layout, the per-type reinforcement details AND the priced concrete/excavation/PCC/steel.
+   */
+  footingTypes: FootingType[];
   /** The bar-bending schedule the steel is priced from. */
   bbs: BbsResult;
   /** True when `steelKg` came from the BBS rather than the legacy kg/cum proxy. */
@@ -678,14 +694,55 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     footingBarDiaMm, footingBarSpacingMm, footingTopMesh,
     columnBars, columnBarDiaMm, columnTieDiaMm, columnTieSpacingMm,
   };
+  /* ---------- FOOTING TYPES (F1, F2, F3 …) ----------
+   * Corner / edge / internal columns carry different tributary loads, so they get different
+   * footings. The SAME types drive the drawings AND the quantities below — the schedule and the
+   * BOQ cannot drift apart. `differentiatedFootings: false` collapses back to one uniform type. */
+  const columnMarks = buildColumnMarks(grid.xsM, grid.ysM);
+  const differentiated = f.differentiatedFootings ?? true;
+  const footingTypes: FootingType[] = buildFootingTypes(
+    sectionDetail,
+    columnMarks,
+    { builtUpSqm: builtUp },
+    { differentiated, minSideM: Math.max(0.6, pedSize + 0.3) },
+  );
+  const fTot = footingTotals(footingTypes);
+
+  /* F1 is the GOVERNING footing. Every drawing and note that shows "the" footing must show THAT one,
+   * and the detailing (mesh, starter embedment, bearing panel) must be resolved against it — otherwise
+   * the section would contradict the schedule sitting next to it on the same sheet. */
+  const governing = footingTypes[0];
+  if (governing) {
+    sectionDetail.footingLengthM = governing.sideM;
+    sectionDetail.footingDepthM = governing.depthM;
+  }
+
   const rebarDesign = resolveRebar(sectionDetail, { builtUpSqm: builtUp, columnCount: footingCount });
+
+  if (governing) {
+    // resolveRebar spreads the load EVENLY over every column. The governing column does not carry the
+    // average — it carries its TRIBUTARY share — so the bearing panel must report the type's own
+    // check, and resolveRebar's average-load overstress warning (which the per-type warnings below
+    // supersede, accurately) must not be allowed to contradict it.
+    rebarDesign.bearing = {
+      ...rebarDesign.bearing,
+      perColumnKn: governing.loadKn,
+      footingSideM: governing.sideM,
+      footingAreaSqm: round(governing.sideM * governing.sideM, 2),
+      bearingPressureKnm2: governing.bearingPressureKnm2,
+      utilisation: governing.utilisation,
+      requiredAreaSqm: round(governing.requiredSideM * governing.requiredSideM, 2),
+      requiredSideM: governing.requiredSideM,
+      adequate: governing.adequate,
+    };
+    rebarDesign.warnings = rebarDesign.warnings.filter((w) => !/^Footing\b.*OVERSTRESSED/i.test(w));
+  }
 
   const fLines: CivilLine[] = [];
   const gradeRate = rates.rccByGrade[f.grade];
 
-  // Excavation for footing pits (+150 mm working space each side, +PCC depth).
-  const pitVol = (footL + 0.3) * (footW + 0.3) * (footD + pccThk / 1000 + 0.05) * footingCount;
-  const excavationCum = f.excavationCum ?? round(pitVol);
+  // Excavation for footing pits (+150 mm working space each side, +PCC depth) — summed per type.
+  const excavationCum = f.excavationCum ?? round(fTot.pitCum);
   fLines.push(line("excavation", "Excavation in foundation", "ordinary soil, pits", "cum", excavationCum, rates.excavation));
 
   // PCC bed under footings (or over whole footprint for raft/pcc_bed).
@@ -695,7 +752,7 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   } else if (f.type === "pcc_bed") {
     pccCum = round(L * W * Math.max(0.1, pccThk / 1000));
   } else {
-    pccCum = round((footL + 0.2) * (footW + 0.2) * (pccThk / 1000) * footingCount);
+    pccCum = round(fTot.pccCum);
   }
   if (pccCum > 0) fLines.push(line("pcc_bed", "PCC bed / levelling course", `${pccThk} mm, 1:4:8`, "cum", pccCum, rates.pcc));
 
@@ -705,7 +762,7 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   switch (f.type) {
     case "rcc_isolated_footing":
     case "rcc_pedestal": {
-      const footings = footL * footW * footD * footingCount;
+      const footings = fTot.concreteCum;   // Σ over F1/F2/F3 — exactly what the schedule details
       const pedestals = f.type === "rcc_pedestal" ? pedSize * pedSize * pedHt * footingCount : 0;
       const beams = beamW * beamD * beamLen;
       concreteCum = round(footings + pedestals + beams);
@@ -720,7 +777,7 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
       break;
     }
     case "rcc_plinth_beam": {
-      concreteCum = round(beamW * beamD * beamLen + footL * footW * footD * footingCount * 0.5);
+      concreteCum = round(beamW * beamD * beamLen + fTot.concreteCum * 0.5);  // shallow bases
       concreteSpec = `${f.grade} — plinth beam grid on shallow bases`;
       break;
     }
@@ -771,7 +828,12 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
 
   const bbs = buildBBS(
     rebarDesign,
-    { footings: isRcc ? footingCount : 0, pedestals: pedestalCount, plinthBeamLengthM: hasPlinthBeam ? beamLen : 0, concreteCum },
+    {
+      footingTypes: isRcc ? footingTypes : [],
+      pedestals: pedestalCount,
+      plinthBeamLengthM: hasPlinthBeam ? beamLen : 0,
+      concreteCum,
+    },
     f.steelWastagePct ?? 3,
   );
 
@@ -844,6 +906,7 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     builtUpSqm: round(builtUp),
     pedestalCount,
     columnCount: footingCount,
+    footingTypes,
     gridFromPlan,
     rebar: rebarDesign,
     bbs,
@@ -854,16 +917,17 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   // Service load per column = (built-up area × load intensity) / column count.
   // `builtUp` (not the raw ctx value) — it is already floored at the footprint area, so a missing
   // or zero built-up area can never make the bearing check NaN.
-  const totalLoadKn = builtUp * loadPerSqmKn;
-  const perColumnKn = totalLoadKn / Math.max(1, footingCount);
-  const bearingKnm2 = perColumnKn / Math.max(0.01, footL * footW);
-  if (bearingKnm2 > sbcKnm2) {
-    const reqSide = Math.ceil(Math.sqrt(perColumnKn / sbcKnm2) * 20) / 20;   // up to the next 50 mm
-    warnings.push(
-      `Footing OVERSTRESSED: ${footL} × ${footW} m carries ${Math.round(perColumnKn)} kN and delivers ` +
-      `${Math.round(bearingKnm2)} kN/m² against an SBC of ${sbcKnm2} kN/m². Increase the footing to at ` +
-      `least ${reqSide} m square, or confirm a higher SBC by soil test.`,
-    );
+  // Each TYPE is checked against its own tributary load — a corner footing and an internal one are
+  // not the same problem, so they are not the same check.
+  for (const t of footingTypes) {
+    if (!t.adequate) {
+      warnings.push(
+        `Footing ${t.mark} (${t.kind}, ${t.count} nos) OVERSTRESSED: ${t.sideM} m square carries ` +
+        `${Math.round(t.loadKn)} kN and delivers ${t.bearingPressureKnm2} kN/m² against an SBC of ` +
+        `${t.sbcKnm2} kN/m² (${Math.round(t.utilisation * 100)}% of capacity). Increase ${t.mark} to at ` +
+        `least ${t.requiredSideM} m square, or confirm a higher SBC by soil test.`,
+      );
+    }
   }
 
   // What the SBC check IS and — more importantly — what it is NOT.

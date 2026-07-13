@@ -13,9 +13,13 @@ import { PlinthBeamLayout } from "./PlinthBeamLayout";
 import { PlinthBeamSection } from "./PlinthBeamSection";
 import { ConstructionNotes } from "./ConstructionNotes";
 import { ColumnLayoutPlan } from "./ColumnLayoutPlan";
-import { FootingReinforcementDetail } from "./FootingReinforcementDetail";
 import { BeamJunctionDetail } from "./BeamJunctionDetail";
 import { BarBendingSchedule } from "./BarBendingSchedule";
+import { ApprovalStamp, NotForConstructionWatermark } from "./ApprovalStamp";
+import { ColumnReinforcementDetail } from "./ColumnReinforcementDetail";
+import { BeamSectionDetail } from "./BeamSectionDetail";
+import { FootingLayoutPlan } from "./FootingLayoutPlan";
+import { FootingScheduleDetail } from "./FootingScheduleDetail";
 import { buildColumnMarks } from "@/lib/quotation/labourColonyRebar";
 import { buildConstructionPlan, buildBeamSchedule, constructionNotes } from "@/lib/quotation/labourColonyPlan";
 import { type LabourColonyConfig, type FloorCount } from "@/lib/quotation/labourColony";
@@ -65,6 +69,8 @@ export function ConstructionDrawingTab({
   const columns = useMemo(() => buildColumnMarks(plan.colXs, plan.rowYs), [plan.colXs, plan.rowYs]);
   const rebar = civil.foundation.rebar;
   const bbs = civil.foundation.bbs;
+  // Load-differentiated footings (F1/F2/F3) — the SAME types the BOQ prices.
+  const footingTypes = civil.foundation.footingTypes;
 
   const downloadPdf = async () => {
     if (!sheetRef.current) return;
@@ -147,28 +153,47 @@ export function ConstructionDrawingTab({
         kg/cum rule of thumb.
       </div>
 
-      {rebar.warnings.length > 0 && (
-        <div className="rounded-xl border border-red-300 bg-red-50 p-3 text-xs text-red-800">
-          <div className="mb-1 font-semibold">Structural detailing warnings</div>
-          <ul className="list-disc space-y-0.5 pl-4">
-            {rebar.warnings.map((w, i) => <li key={i}>{w}</li>)}
-          </ul>
+      {/* Footing types the BOQ actually prices — the schedule and the quantities are one thing. */}
+      {footingTypes.length > 0 && (
+        <div className="rounded-xl border border-sky-300 bg-sky-50 p-3 text-xs text-sky-900">
+          <b>Load-differentiated footings.</b>{" "}
+          {footingTypes.map((t) => `${t.mark} (${t.kind}) ${t.count} nos @ ${Math.round(t.sideM * 1000)}×${Math.round(t.sideM * 1000)}×${Math.round(t.depthM * 1000)}`).join(" · ")}
+          {" "}— each sized against its own tributary load and the {footingTypes[0].sbcKnm2} kN/m² SBC, and the
+          civil BOQ prices exactly these (concrete, excavation, PCC and the bar-bending schedule).
         </div>
       )}
 
-      <div ref={sheetRef} id="lc-construction-sheet" className="space-y-6 bg-white p-2 rounded-2xl">
+      {/* The sheet. `relative` so the NOT-FOR-CONSTRUCTION watermark can overlay it, and the watermark
+          lives INSIDE the ref'd node so it is captured in the exported PDF too. */}
+      <div ref={sheetRef} id="lc-construction-sheet" className="relative space-y-6 bg-white p-2 rounded-2xl">
+        <ApprovalStamp projectName={config.projectName} warnings={rebar.warnings} />
+
         <ConstructionFloorPlan plan={plan} />
         <ColumnLayoutPlan plan={plan} columns={columns} rebar={rebar} />
+
+        {/* FOUNDATION — setting-out layout, then a detail per footing type */}
+        <FootingLayoutPlan plan={plan} footingTypes={footingTypes} />
+        <FootingScheduleDetail rebar={rebar} footingTypes={footingTypes} />
+
+        {/* COLUMNS — the cross-section + tie zones */}
+        <ColumnReinforcementDetail rebar={rebar} />
+
+        {/* BEAMS — layout, PB1/PB2 cross-sections + stirrup zones, the through-section, junctions */}
         <PlinthBeamLayout plan={plan} schedule={schedule} />
-        <FootingReinforcementDetail rebar={rebar} />
+        <BeamSectionDetail rebar={rebar} schedule={schedule} />
         <PlinthBeamSection foundation={civil.foundation} />
         <BeamJunctionDetail rebar={rebar} />
+
+        {/* STEEL — BBS with IS 2502 shape codes + bent-bar diagrams */}
         <BarBendingSchedule bbs={bbs} rebar={rebar} counts={{
           footings: civil.foundation.footingCount,
           pedestals: civil.foundation.pedestalCount,
           beamLengthM: civil.foundation.plinthBeamLengthM,
         }} />
+
         <ConstructionNotes notes={notes} section={section} floors={floors} rebar={rebar} columnCount={columns.length} />
+
+        <NotForConstructionWatermark />
       </div>
     </div>
   );

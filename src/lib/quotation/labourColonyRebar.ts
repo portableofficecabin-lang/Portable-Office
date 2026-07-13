@@ -380,6 +380,185 @@ export function resolveRebar(
   return { concreteGrade, steelGrade, footing, column, beam, bearing, warnings };
 }
 
+/* ======================================================== FOOTING TYPES (F1…) ==== */
+
+/**
+ * Corner, edge and internal columns do NOT carry the same load, so they do not need the same
+ * footing. The tributary area of a column on a regular grid is:
+ *
+ *      internal  →  1     bay      (four quadrants)
+ *      edge      →  1/2   bay      (two quadrants)
+ *      corner    →  1/4   bay      (one quadrant)
+ *
+ * The total service load (built-up area × load intensity) is shared out in those proportions, each
+ * type is then sized against the SBC, and the resulting F1/F2/F3 are what the drawing details AND
+ * what the BOQ prices — one source, so the schedule and the quantities cannot drift apart.
+ */
+export const TRIBUTARY: Record<ColumnKind, number> = { internal: 1, edge: 0.5, corner: 0.25 };
+
+export interface FootingType {
+  /** Drawing mark — F1 is the most heavily loaded. */
+  mark: string;
+  kind: ColumnKind;
+  /** How many footings of this type. */
+  count: number;
+  /** Tributary share of one bay carried by a column of this kind. */
+  tributary: number;
+  /** Service load on ONE footing of this type (kN). */
+  loadKn: number;
+
+  sideM: number;
+  depthM: number;
+  coverMm: number;
+  barDiaMm: number;
+  spacingMm: number;
+  barsEachWay: number;
+  barLengthMm: number;
+  topMesh: boolean;
+  topBarsEachWay: number;
+  bottomText: string;
+  topText: string;
+
+  /** Bearing check for THIS type. */
+  sbcKnm2: number;
+  bearingPressureKnm2: number;
+  utilisation: number;
+  requiredSideM: number;
+  adequate: boolean;
+
+  /** Quantities for ONE footing of this type. */
+  concreteCum: number;
+  /** Excavation pit for ONE footing (incl. 150 mm working space each side + PCC). */
+  pitCum: number;
+  /** PCC bed under ONE footing (100 mm projection each side). */
+  pccCum: number;
+
+  /** Grid positions of every column of this type — drives the footing layout + coordinate table. */
+  columns: ColumnMark[];
+}
+
+/** Round a footing side UP to the next 50 mm — you set out to a tape, not to 3 decimals. */
+const up50mm = (m: number) => Math.ceil(Math.max(0, m) * 20 - 1e-9) / 20;
+
+/**
+ * Size every footing type against its OWN tributary load and the soil.
+ *
+ * `minSideM` is the smallest footing that may be built (the specified footing acts as a floor so a
+ * lightly-loaded corner never shrinks to something unbuildable); the SBC governs upward from there.
+ */
+export function buildFootingTypes(
+  section: FoundationResult["section"],
+  columns: ColumnMark[],
+  ctx: { builtUpSqm: number },
+  opts?: { differentiated?: boolean; minSideM?: number },
+): FootingType[] {
+  const differentiated = opts?.differentiated ?? true;
+  const concreteGrade = section.grade;
+  const steelGrade = section.steelGrade;
+
+  const fCover = clamp(section.coverFootingMm, 25, 100, 50);
+  const fDia = clamp(section.footingBarDiaMm, 8, 32, 12);
+  const fSp = clamp(section.footingBarSpacingMm, 75, 300, 150);
+  const designedSide = clamp(section.footingLengthM, 0.3, 6, 1.2);
+  const designedDepth = clamp(section.footingDepthM, 0.15, 3, 0.4);
+  const pccThkM = clamp(section.pccThicknessMm, 0, 300, 100) / 1000;
+  const sbc = Math.max(20, Number.isFinite(section.sbcKnm2) && section.sbcKnm2 > 0 ? section.sbcKnm2 : 150);
+  const q = Math.max(1, Number.isFinite(section.loadPerSqmKn) && section.loadPerSqmKn > 0 ? section.loadPerSqmKn : 5);
+  const builtUp = Math.max(1, Number.isFinite(ctx.builtUpSqm) && ctx.builtUpSqm > 0 ? ctx.builtUpSqm : 1);
+  const minSide = Math.max(0.45, opts?.minSideM ?? 0.6);
+  const anch = anchorageFor(fDia, concreteGrade, steelGrade);
+
+  const all = columns.length ? columns : [];
+  if (!all.length) return [];
+
+  // ---- share the total service load out by tributary area ----
+  const totalLoadKn = builtUp * q;
+  const weightOf = (c: ColumnMark) => TRIBUTARY[c.kind];
+  const totalWeight = all.reduce((s, c) => s + weightOf(c), 0) || 1;
+
+  // Uniform mode: one type, every column on it, at the designed size (BOQ identical to before).
+  const groupsSrc: ColumnKind[] = differentiated
+    ? (["internal", "edge", "corner"] as ColumnKind[])
+    : (["internal"] as ColumnKind[]);
+
+  const buckets = groupsSrc
+    .map((kind) => ({
+      kind,
+      cols: differentiated ? all.filter((c) => c.kind === kind) : all,
+    }))
+    .filter((b) => b.cols.length > 0);
+
+  const types: FootingType[] = [];
+  let n = 1;
+  for (const b of buckets) {
+    // load on ONE column of this kind
+    const loadKn = differentiated
+      ? (totalLoadKn * TRIBUTARY[b.kind]) / totalWeight
+      : totalLoadKn / all.length;
+
+    const requiredSide = Math.sqrt(loadKn / sbc);
+    const sideM = differentiated
+      ? clamp(up50mm(Math.max(requiredSide, minSide)), 0.45, 6, designedSide)
+      : designedSide;
+    // Depth follows the size (a wider footing needs more depth to spread), never below the design.
+    const depthM = differentiated
+      ? clamp(up50mm(Math.max(designedDepth, sideM * 0.3)), 0.15, 3, designedDepth)
+      : designedDepth;
+
+    const clearSpanMm = sideM * 1000 - 2 * fCover;
+    const barsEachWay = Math.max(2, Math.floor(clearSpanMm / fSp) + 1);
+    const areaSqm = sideM * sideM;
+    const pressure = loadKn / areaSqm;
+
+    types.push({
+      mark: `F${n++}`,
+      kind: b.kind,
+      count: b.cols.length,
+      tributary: differentiated ? TRIBUTARY[b.kind] : 1,
+      loadKn: round(loadKn, 1),
+
+      sideM: round(sideM, 2),
+      depthM: round(depthM, 2),
+      coverMm: fCover,
+      barDiaMm: fDia,
+      spacingMm: fSp,
+      barsEachWay,
+      barLengthMm: up10(clearSpanMm + 2 * anch.bend90Mm),
+      topMesh: section.footingTopMesh,
+      topBarsEachWay: barsEachWay,
+      bottomText: `T${fDia} @ ${fSp} c/c both ways (bottom)`,
+      topText: `T${fDia} @ ${fSp} c/c both ways (top)`,
+
+      sbcKnm2: round(sbc),
+      bearingPressureKnm2: round(pressure, 1),
+      utilisation: round(pressure / sbc, 2),
+      requiredSideM: round(up50mm(requiredSide), 2),
+      adequate: pressure <= sbc + 1e-6,
+
+      concreteCum: round(areaSqm * depthM, 3),
+      pitCum: round((sideM + 0.3) * (sideM + 0.3) * (depthM + pccThkM + 0.05), 3),
+      pccCum: round((sideM + 0.2) * (sideM + 0.2) * pccThkM, 3),
+
+      columns: b.cols,
+    });
+  }
+  // F1 = the most heavily loaded type.
+  types.sort((a, b) => b.loadKn - a.loadKn);
+  types.forEach((t, i) => { t.mark = `F${i + 1}`; });
+  return types;
+}
+
+/** Totals across every footing type — what the BOQ prices. */
+export function footingTotals(types: FootingType[]) {
+  const sum = (f: (t: FootingType) => number) => round(types.reduce((s, t) => s + t.count * f(t), 0), 3);
+  return {
+    count: types.reduce((s, t) => s + t.count, 0),
+    concreteCum: sum((t) => t.concreteCum),
+    pitCum: sum((t) => t.pitCum),
+    pccCum: sum((t) => t.pccCum),
+  };
+}
+
 /* ==================================================================== BBS ==== */
 
 /**
@@ -395,10 +574,42 @@ export function resolveRebar(
  * This REPLACES the old `concrete volume × 85 kg/cum` proxy: the priced tonnage now moves when a
  * bar diameter, spacing or bar count changes.
  */
+/**
+ * IS 2502 / BS 8666 bar SHAPE CODES — fabrication teams bend to the code, not to prose.
+ *   20 — straight bar, no bends
+ *   21 — straight bar with a 90° bend at BOTH ends (footing mesh, beam bars anchored into supports)
+ *   26 — cranked / L bar: one 90° kicker at the foot + a lap projection (column & pedestal verticals)
+ *   51 — closed rectangular link with two 135° hooks (stirrups and column ties)
+ */
+export type ShapeCode = 20 | 21 | 26 | 51;
+export type ShapeKind = "straight" | "bent-both-ends" | "L-crank" | "stirrup";
+
+/** Leg dimensions the shape diagram is drawn from (mm). */
+export interface ShapeLegs {
+  /** Main / straight leg (or the link's outer width). */
+  aMm: number;
+  /** Second leg — end bend, kicker, or the link's outer depth. */
+  bMm?: number;
+  /** Third leg — the far end bend, or the link's hook length. */
+  cMm?: number;
+}
+
+export const SHAPE_LABEL: Record<ShapeCode, string> = {
+  20: "Straight",
+  21: "90° bend both ends",
+  26: "Cranked / L-bar + lap",
+  51: "Closed link + 135° hooks",
+};
+
 export interface BbsRow {
   mark: string;
   member: string;
   shape: string;
+  /** IS 2502 shape code — what the bender actually works to. */
+  shapeCode: ShapeCode;
+  shapeKind: ShapeKind;
+  /** Leg dimensions so the bent bar can be DRAWN, not just described. */
+  legs: ShapeLegs;
   diaMm: number;
   members: number;        // how many footings / columns / beam runs
   barsPerMember: number;
@@ -443,24 +654,28 @@ function tieCuttingLengthMm(outerAmm: number, outerBmm: number, diaMm: number, h
 
 export function buildBBS(
   d: RebarDesign,
-  qty: { footings: number; pedestals: number; plinthBeamLengthM: number; concreteCum: number },
+  qty: { footingTypes: FootingType[]; pedestals: number; plinthBeamLengthM: number; concreteCum: number },
   wastagePct = 3,
 ): BbsResult {
   const rows: BbsRow[] = [];
-  const nF = Math.max(0, Math.round(qty.footings));
   const nP = Math.max(0, Math.round(qty.pedestals));
   const beamRunM = Math.max(0, qty.plinthBeamLengthM);
+  const fTypes = qty.footingTypes ?? [];
 
   const push = (
-    mark: string, member: string, shape: string, diaMm: number,
+    mark: string, member: string, diaMm: number,
     members: number, barsPerMember: number, cuttingLengthMm: number,
+    shapeCode: ShapeCode, legs: ShapeLegs,
   ) => {
     const totalBars = Math.max(0, Math.round(members * barsPerMember));
     if (totalBars === 0 || cuttingLengthMm <= 0) return;
     const totalLengthM = (totalBars * cuttingLengthMm) / 1000;
     const unit = barKgPerM(diaMm);
+    const shapeKind: ShapeKind =
+      shapeCode === 51 ? "stirrup" : shapeCode === 26 ? "L-crank" : shapeCode === 21 ? "bent-both-ends" : "straight";
     rows.push({
-      mark, member, shape, diaMm, members, barsPerMember, totalBars,
+      mark, member, shape: SHAPE_LABEL[shapeCode], shapeCode, shapeKind, legs,
+      diaMm, members, barsPerMember, totalBars,
       cuttingLengthMm: Math.round(cuttingLengthMm),
       totalLengthM: round(totalLengthM, 1),
       unitWtKgPerM: round(unit, 3),
@@ -468,22 +683,30 @@ export function buildBBS(
     });
   };
 
-  /* ---- 1. FOOTING mesh (bottom, both ways; optional top) ---- */
-  const f = d.footing;
-  push("F1", "Footing — bottom mesh (X)", "Straight + 90° end bends", f.barDiaMm, nF, f.barsEachWay, f.barLengthMm);
-  push("F2", "Footing — bottom mesh (Y)", "Straight + 90° end bends", f.barDiaMm, nF, f.barsEachWay, f.barLengthMm);
-  if (f.topMesh) {
-    push("F3", "Footing — top mesh (X)", "Straight + 90° end bends", f.barDiaMm, nF, f.topBarsEachWay, f.barLengthMm);
-    push("F4", "Footing — top mesh (Y)", "Straight + 90° end bends", f.barDiaMm, nF, f.topBarsEachWay, f.barLengthMm);
+  /* ---- 1. FOOTING mesh — PER FOOTING TYPE (F1, F2, F3 …), bottom both ways + optional top ---- */
+  const fAnch = d.footing.anchorage;
+  for (const t of fTypes) {
+    const clearMm = Math.round(t.sideM * 1000 - 2 * t.coverMm);
+    const legs: ShapeLegs = { aMm: clearMm, bMm: fAnch.bend90Mm, cMm: fAnch.bend90Mm };
+    push(`${t.mark}-BX`, `${t.mark} footing (${t.kind}) — bottom mesh X`, t.barDiaMm, t.count, t.barsEachWay, t.barLengthMm, 21, legs);
+    push(`${t.mark}-BY`, `${t.mark} footing (${t.kind}) — bottom mesh Y`, t.barDiaMm, t.count, t.barsEachWay, t.barLengthMm, 21, legs);
+    if (t.topMesh) {
+      push(`${t.mark}-TX`, `${t.mark} footing (${t.kind}) — top mesh X`, t.barDiaMm, t.count, t.topBarsEachWay, t.barLengthMm, 21, legs);
+      push(`${t.mark}-TY`, `${t.mark} footing (${t.kind}) — top mesh Y`, t.barDiaMm, t.count, t.topBarsEachWay, t.barLengthMm, 21, legs);
+    }
   }
 
   /* ---- 2. PEDESTAL / COLUMN verticals + ties ---- */
   const c = d.column;
   // A vertical bar is cast into the footing (down to the bottom mesh, with a 90° kicker), runs the
-  // full pedestal height, and projects a compression lap above for the next lift.
-  const embedMm = Math.max(0, f.depthM * 1000 - f.coverMm);
-  const vertCut = up10(embedMm + c.heightM * 1000 + c.lapMm + c.anchorage.bend90Mm);
-  push("C1", "Pedestal/column — vertical bars", "L-bar + lap projection", c.barDiaMm, nP, c.bars, vertCut);
+  // full pedestal height, and projects a compression lap above for the next lift. The embedment is
+  // taken from the DEEPEST footing type, which is the one the starter has to reach the bottom of.
+  const deepestM = fTypes.length ? Math.max(...fTypes.map((t) => t.depthM)) : d.footing.depthM;
+  const embedMm = Math.max(0, deepestM * 1000 - d.footing.coverMm);
+  const vertStraightMm = embedMm + c.heightM * 1000 + c.lapMm;
+  const vertCut = up10(vertStraightMm + c.anchorage.bend90Mm);
+  push("C1", "Pedestal/column — vertical bars", c.barDiaMm, nP, c.bars, vertCut, 26,
+    { aMm: Math.round(vertStraightMm), bMm: c.anchorage.bend90Mm, cMm: c.lapMm });
 
   // Ties: nominal spacing over the middle, halved in the confinement zone at each end.
   const hMm = c.heightM * 1000;
@@ -493,7 +716,8 @@ export function buildBBS(
     Math.ceil((2 * confineMm) / c.tieSpacingEndMm) + Math.ceil(midMm / c.tieSpacingMm) + 1;
   const tieOuter = c.sizeMm - 2 * c.coverMm;
   const tieCut = tieCuttingLengthMm(tieOuter, tieOuter, c.tieDiaMm, c.anchorage.hook135Mm);
-  push("C2", "Pedestal/column — ties", "Closed rect. + 135° hooks", c.tieDiaMm, nP, tiesPerCol, tieCut);
+  push("C2", "Pedestal/column — ties", c.tieDiaMm, nP, tiesPerCol, tieCut, 51,
+    { aMm: Math.round(tieOuter), bMm: Math.round(tieOuter), cMm: c.anchorage.hook135Mm });
 
   /* ---- 3. PLINTH BEAM — top, bottom, stirrups ---- */
   const b = d.beam;
@@ -505,12 +729,20 @@ export function buildBBS(
     const perLineMm = beamRunM * 1000 + lapsPerLine * b.anchorage.lapTensionMm + 2 * b.anchorageIntoSupportMm;
     const piecesPerLine = Math.max(1, Math.ceil(perLineMm / (STOCK_LENGTH_M * 1000)));
     const pieceMm = up10(perLineMm / piecesPerLine);
-    push("PB-T", "Plinth beam — top bars", "Straight + laps + end anchorage", b.mainBarDiaMm, b.topBars, piecesPerLine, pieceMm);
-    push("PB-B", "Plinth beam — bottom bars", "Straight + laps + end anchorage", b.mainBarDiaMm, b.bottomBars, piecesPerLine, pieceMm);
+    const beamLegs: ShapeLegs = {
+      aMm: Math.round(Math.max(0, pieceMm - 2 * b.anchorageIntoSupportMm)),
+      bMm: b.anchorageIntoSupportMm,
+      cMm: b.anchorageIntoSupportMm,
+    };
+    push("PB-T", "Plinth beam — top bars", b.mainBarDiaMm, b.topBars, piecesPerLine, pieceMm, 21, beamLegs);
+    push("PB-B", "Plinth beam — bottom bars", b.mainBarDiaMm, b.bottomBars, piecesPerLine, pieceMm, 21, beamLegs);
 
     const stirCount = Math.ceil((beamRunM * 1000) / b.stirrupSpacingMm) + 1;
-    const stirCut = tieCuttingLengthMm(b.widthMm - 2 * b.coverMm, b.depthMm - 2 * b.coverMm, b.stirrupDiaMm, b.anchorage.hook135Mm);
-    push("PB-S", "Plinth beam — stirrups", "Closed rect. + 135° hooks", b.stirrupDiaMm, 1, stirCount, stirCut);
+    const stirW = b.widthMm - 2 * b.coverMm;
+    const stirD = b.depthMm - 2 * b.coverMm;
+    const stirCut = tieCuttingLengthMm(stirW, stirD, b.stirrupDiaMm, b.anchorage.hook135Mm);
+    push("PB-S", "Plinth beam — stirrups", b.stirrupDiaMm, 1, stirCount, stirCut, 51,
+      { aMm: Math.round(stirW), bMm: Math.round(stirD), cMm: b.anchorage.hook135Mm });
   }
 
   const netKg = round(rows.reduce((s, r) => s + r.weightKg, 0), 1);
