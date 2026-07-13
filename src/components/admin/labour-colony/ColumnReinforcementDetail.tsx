@@ -101,7 +101,10 @@ export function ColumnReinforcementDetail({ rebar }: { rebar: RebarDesign }) {
   const anch = c.anchorage;
   const ldCompMm = anch && Number.isFinite(anch.ldCompMm) ? anch.ldCompMm : 0;
   const ldCompMult = anch && Number.isFinite(anch.ldCompMultiple) ? anch.ldCompMultiple : 0;
-  const hook135Mm = anch && Number.isFinite(anch.hook135Mm) ? anch.hook135Mm : 0;
+  // The TIE's 135° hook is sized off the tie's OWN diameter (tieAnchorage), never the vertical bar's —
+  // a T8 tie bends to an 80 mm hook regardless of whether the verticals are T16 or T25.
+  const tieAnch = c.tieAnchorage;
+  const hook135Mm = tieAnch && Number.isFinite(tieAnch.hook135Mm) ? tieAnch.hook135Mm : 0;
 
   // Confinement zone = one column-depth at each end, but never more than half the column.
   const confineMm = Math.max(0, Math.min(sizeMm, heightMm / 2));

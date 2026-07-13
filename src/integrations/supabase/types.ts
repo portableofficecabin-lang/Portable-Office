@@ -440,6 +440,36 @@ export type Database = {
         }
         Relationships: []
       }
+      drawing_sign_off: {
+        Row: {
+          checked_by: string
+          designed_by: string
+          engineer_licence: string
+          engineer_name: string
+          id: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          checked_by?: string
+          designed_by?: string
+          engineer_licence?: string
+          engineer_name?: string
+          id?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          checked_by?: string
+          designed_by?: string
+          engineer_licence?: string
+          engineer_name?: string
+          id?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       enquiries: {
         Row: {
           assigned_to: string | null

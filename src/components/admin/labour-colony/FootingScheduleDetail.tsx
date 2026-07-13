@@ -88,13 +88,16 @@ function geomFor(t: FootingType, rebar: RebarDesign): SafeGeom {
   const pedHM = clamp(pos(rebar.column.heightM, 0.6), 0.1, 5, 0.6);
   const colCoverM = Math.min(clamp(pos(rebar.column.coverMm, 40), 10, 100, 40) / 1000, pedM * 0.25);
   const bendM = clamp(pos(rebar.footing.anchorage.bend90Mm, 96), 20, 400, 96) / 1000;
+  // The REAL PCC thickness this type was priced with (labourColonyRebar.ts pccCum = (side+0.2)² ×
+  // pccThkM) — not a hardcoded guess. Falls back to 100 mm only if the engine ever omits it.
+  const pccM = clamp(pos(t.pccThkM, 0.1), 0.02, 0.3, 0.1);
   return {
     sideM, depthM, coverM, barDiaM, barsEachWay,
     drawn: Math.min(barsEachWay, 12),
     pedM, pedHM, colCoverM,
     // The bend cannot be drawn taller than the pad it sits in.
     bendM: Math.min(bendM, depthM * 0.5),
-    pccM: 0.1,
+    pccM,
   };
 }
 
@@ -445,9 +448,9 @@ function TypeSection({ t, g, rebar }: { t: FootingType; g: SafeGeom; rebar: Reba
         <rect x={0} y={sy(yFootTop)} width={PADX} height={sw(g.depthM + g.pccM)} fill={`url(#fsSoil-${t.mark})`} />
         <rect x={sx(g.sideM)} y={sy(yFootTop)} width={PADX} height={sw(g.depthM + g.pccM)} fill={`url(#fsSoil-${t.mark})`} />
 
-        {/* PCC bed — projects 50 mm each side */}
+        {/* PCC bed — projects 100 mm each side, matching (side+0.2)² in labourColonyRebar.ts pccCum */}
         <rect
-          x={sx(-0.05)} y={sy(yFootBot)} width={sw(g.sideM + 0.1)} height={sw(g.pccM)}
+          x={sx(-0.1)} y={sy(yFootBot)} width={sw(g.sideM + 0.2)} height={sw(g.pccM)}
           fill={`url(#fsPcc-${t.mark})`} stroke={COL.rccStroke} strokeWidth={1}
         />
         <text x={sx(g.sideM) + 6} y={sy(yFootBot + g.pccM / 2) + 3} fontSize={7.5} fill={COL.note}>

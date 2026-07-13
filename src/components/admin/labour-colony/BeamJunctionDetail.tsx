@@ -69,7 +69,7 @@ export function BeamJunctionDetail({ rebar }: { rebar: RebarDesign }) {
         <Row k="Lap — tension" v={`${a.lapTensionMm} mm`} strong />
         <Row k="Lap — compression" v={`${a.lapCompressionMm} mm`} />
         <Row k="90° bend allowance" v={`${a.bend90Mm} mm = 8φ`} />
-        <Row k="Stirrup hook (135°)" v={`${a.hook135Mm} mm`} />
+        <Row k={`Stirrup hook (135°, T${beam.stirrupDiaMm})`} v={`${beam.stirrupAnchorage.hook135Mm} mm`} />
         <Row k="Anchorage into support" v={`${beam.anchorageIntoSupportMm} mm`} strong />
         <Row k="Top steel curtailed at" v={`${beam.curtailFromFaceMm} mm from face`} />
       </div>

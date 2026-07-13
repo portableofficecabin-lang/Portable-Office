@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { SignOffDetails } from "./signOff";
 
 /**
  * APPROVAL STAMP + "NOT FOR CONSTRUCTION" WATERMARK
@@ -44,27 +45,52 @@ const ENGINEER_CHECKS: string[] = [
   "Settlement — total and differential, including any adjacent or existing structure",
 ];
 
-/** The empty boxes of the printable sign-off strip, in CAD title-block order. */
-const SIGN_OFF: { role: string; hint: string; stamp?: boolean }[] = [
-  { role: "Designed by", hint: "Name / date" },
-  { role: "Checked by", hint: "Name / date" },
-  { role: "Structural Engineer", hint: "Name / licence no." },
+/**
+ * The boxes of the printable sign-off strip, in CAD title-block order.
+ *
+ * `field` names the SignOffDetails key printed on the box's ruled line; `sub` names an optional
+ * second line under it (the engineer's licence sits under the engineer's name). A box with no value
+ * renders exactly as before — an empty ruled line to be written on by hand.
+ *
+ * The "Signature & stamp" box has NO field on purpose. It is never filled from data: a real engineer
+ * signs and stamps it. See the header of ./signOff.ts.
+ */
+const SIGN_OFF: {
+  role: string;
+  hint: string;
+  stamp?: boolean;
+  field?: keyof SignOffDetails;
+  sub?: keyof SignOffDetails;
+}[] = [
+  { role: "Designed by", hint: "Name / date", field: "designedBy" },
+  { role: "Checked by", hint: "Name / date", field: "checkedBy" },
+  { role: "Structural Engineer", hint: "Name / licence no.", field: "engineerName", sub: "engineerLicence" },
   { role: "Signature & stamp", hint: "Affix stamp here", stamp: true },
-  { role: "Date", hint: "DD / MM / YYYY" },
+  { role: "Date", hint: "DD / MM / YYYY", field: "date" },
 ];
 
 export function ApprovalStamp({
   projectName,
   warnings,
+  signOff,
 }: {
   projectName?: string;
   warnings?: string[];
+  /** Names to print onto the sign-off strip. Any field left blank keeps its empty ruled line. */
+  signOff?: SignOffDetails;
 }) {
   // Robust to undefined / empty / blank-only inputs — never render an empty bullet or an empty strip row.
   const outstanding: string[] = (warnings ?? []).filter(
     (w): w is string => typeof w === "string" && w.trim().length > 0,
   );
   const project: string = projectName && projectName.trim().length > 0 ? projectName.trim() : "—";
+
+  /** A strip field's printable value, or "" when it should stay an empty ruled line. */
+  const filled = (key?: keyof SignOffDetails): string => {
+    if (!key || !signOff) return "";
+    const v = signOff[key];
+    return typeof v === "string" ? v.trim() : "";
+  };
 
   return (
     <div
@@ -201,61 +227,87 @@ export function ApprovalStamp({
         </div>
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:grid-cols-5">
-          {SIGN_OFF.map((b) => (
-            <div key={b.role} className="overflow-hidden rounded" style={{ border: `1px solid ${COL.rule}` }}>
-              <div
-                className="px-2 py-1 text-[10px] font-semibold"
-                style={{ borderBottom: `1px solid ${COL.line}`, background: COL.wash, color: COL.slate }}
-              >
-                {b.role}
-              </div>
+          {SIGN_OFF.map((b) => {
+            const value = filled(b.field);
+            const sub = filled(b.sub);
+            return (
+              <div key={b.role} className="overflow-hidden rounded" style={{ border: `1px solid ${COL.rule}` }}>
+                <div
+                  className="px-2 py-1 text-[10px] font-semibold"
+                  style={{ borderBottom: `1px solid ${COL.line}`, background: COL.wash, color: COL.slate }}
+                >
+                  {b.role}
+                </div>
 
-              {/* the empty ruled writing area */}
-              <div className="relative h-16" style={{ background: COL.paper }}>
-                {b.stamp ? (
-                  <svg
-                    viewBox="0 0 120 64"
-                    className="h-full w-full"
-                    preserveAspectRatio="xMidYMid meet"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <circle
-                      cx="60"
-                      cy="30"
-                      r="22"
-                      fill="none"
-                      stroke={COL.line}
-                      strokeWidth="1"
-                      strokeDasharray="4 3"
-                    />
-                    <text x="60" y="32" textAnchor="middle" fontSize="7" fill={COL.rule} fontFamily="Helvetica, Arial, sans-serif">
-                      STAMP
-                    </text>
-                    <line x1="10" y1="56" x2="110" y2="56" stroke={COL.line} strokeWidth="0.8" />
-                  </svg>
-                ) : (
-                  <svg
-                    viewBox="0 0 120 64"
-                    className="h-full w-full"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <line x1="8" y1="40" x2="112" y2="40" stroke={COL.line} strokeWidth="0.8" />
-                    <line x1="8" y1="56" x2="112" y2="56" stroke={COL.line} strokeWidth="0.8" />
-                  </svg>
-                )}
-              </div>
+                {/* The writing area. Filled from the saved sign-off details when we have them, and an
+                    empty ruled line when we do not — so an un-entered box still prints to be written on. */}
+                <div className="relative h-16" style={{ background: COL.paper }}>
+                  {b.stamp ? (
+                    /* NEVER data-filled. A real engineer signs and stamps this box. */
+                    <svg
+                      viewBox="0 0 120 64"
+                      className="h-full w-full"
+                      preserveAspectRatio="xMidYMid meet"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle
+                        cx="60"
+                        cy="30"
+                        r="22"
+                        fill="none"
+                        stroke={COL.line}
+                        strokeWidth="1"
+                        strokeDasharray="4 3"
+                      />
+                      <text x="60" y="32" textAnchor="middle" fontSize="7" fill={COL.rule} fontFamily="Helvetica, Arial, sans-serif">
+                        STAMP
+                      </text>
+                      <line x1="10" y1="56" x2="110" y2="56" stroke={COL.line} strokeWidth="0.8" />
+                    </svg>
+                  ) : value ? (
+                    /* Real DOM text, not SVG text: html2canvas rasterises DOM text reliably, and it
+                       wraps a long name instead of clipping it. Colours stay literal hex. */
+                    <div className="flex h-full flex-col justify-end px-2 pb-1.5">
+                      <span
+                        className="break-words text-[11px] font-semibold leading-tight"
+                        style={{ color: COL.ink }}
+                      >
+                        {value}
+                      </span>
+                      {sub && (
+                        <span className="break-words text-[10px] leading-tight" style={{ color: COL.slate }}>
+                          {sub}
+                        </span>
+                      )}
+                      <span
+                        className="mt-1 block"
+                        style={{ borderTop: `1px solid ${COL.line}`, height: 0 }}
+                      />
+                    </div>
+                  ) : (
+                    <svg
+                      viewBox="0 0 120 64"
+                      className="h-full w-full"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <line x1="8" y1="40" x2="112" y2="40" stroke={COL.line} strokeWidth="0.8" />
+                      <line x1="8" y1="56" x2="112" y2="56" stroke={COL.line} strokeWidth="0.8" />
+                    </svg>
+                  )}
+                </div>
 
-              <div
-                className="px-2 py-0.5 text-[9px]"
-                style={{ borderTop: `1px solid ${COL.line}`, color: COL.note }}
-              >
-                {b.hint}
+                <div
+                  className="px-2 py-0.5 text-[9px]"
+                  style={{ borderTop: `1px solid ${COL.line}`, color: COL.note }}
+                >
+                  {b.hint}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <p className="mt-2 text-[10px] leading-snug" style={{ color: COL.note }}>

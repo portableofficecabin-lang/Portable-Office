@@ -697,21 +697,29 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   /* ---------- FOOTING TYPES (F1, F2, F3 …) ----------
    * Corner / edge / internal columns carry different tributary loads, so they get different
    * footings. The SAME types drive the drawings AND the quantities below — the schedule and the
-   * BOQ cannot drift apart. `differentiatedFootings: false` collapses back to one uniform type. */
+   * BOQ cannot drift apart. `differentiatedFootings: false` collapses back to one uniform type.
+   * Only foundation types that actually BUILD isolated footings get this treatment — a raft or a
+   * strip footing has no isolated pad to differentiate, size against the SBC, or show a schedule for. */
+  const isolatedFootingTypes: FoundationType[] = ["rcc_isolated_footing", "rcc_pedestal", "rcc_plinth_beam"];
+  const hasIsolatedFootings = isolatedFootingTypes.includes(f.type);
   const columnMarks = buildColumnMarks(grid.xsM, grid.ysM);
   const differentiated = f.differentiatedFootings ?? true;
   const footingTypes: FootingType[] = buildFootingTypes(
     sectionDetail,
     columnMarks,
     { builtUpSqm: builtUp },
-    { differentiated, minSideM: Math.max(0.6, pedSize + 0.3) },
+    // minSideM is a FLOOR: the pedestal clearance AND whatever footing size the user entered (footL)
+    // both push footings up, never down — the entered "Footing size" field must not be a silent no-op.
+    { differentiated, minSideM: Math.max(0.6, pedSize + 0.3, footL) },
   );
   const fTot = footingTotals(footingTypes);
+  const footingTypesForUi = hasIsolatedFootings ? footingTypes : [];
 
   /* F1 is the GOVERNING footing. Every drawing and note that shows "the" footing must show THAT one,
    * and the detailing (mesh, starter embedment, bearing panel) must be resolved against it — otherwise
-   * the section would contradict the schedule sitting next to it on the same sheet. */
-  const governing = footingTypes[0];
+   * the section would contradict the schedule sitting next to it on the same sheet. Skipped for
+   * foundation types with no isolated footing (raft, strip …) — there is no "the footing" to govern. */
+  const governing = hasIsolatedFootings ? footingTypes[0] : undefined;
   if (governing) {
     sectionDetail.footingLengthM = governing.sideM;
     sectionDetail.footingDepthM = governing.depthM;
@@ -826,13 +834,22 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   const useBbs = f.useBbs ?? true;
   const pedestalCount = f.type === "rcc_pedestal" ? footingCount : 0;
 
+  // The BBS/F1-F2-F3 schedule takes off ISOLATED FOOTING mesh — it must only be fed to (and exposed
+  // for) foundation types that actually build isolated footings whose priced concrete IS `fTot.*`
+  // (hasIsolatedFootings, resolved above). Feeding it to a raft (priced as a slab) or a strip footing
+  // (priced as a 600 mm strip) would bill/draw a footing mesh for pads that are never built.
+  // Total bay-segments in the plinth-beam grid (each has 2 support faces) — same rows×(cols-1) +
+  // cols×(rows-1) shape as `autoBeamLen` above, just counting segments instead of summing their length.
+  const beamSpans = hasPlinthBeam ? grid.rows * Math.max(0, grid.cols - 1) + grid.cols * Math.max(0, grid.rows - 1) : 0;
+
   const bbs = buildBBS(
     rebarDesign,
     {
-      footingTypes: isRcc ? footingTypes : [],
+      footingTypes: footingTypesForUi,
       pedestals: pedestalCount,
       plinthBeamLengthM: hasPlinthBeam ? beamLen : 0,
       concreteCum,
+      beamSpans,
     },
     f.steelWastagePct ?? 3,
   );
@@ -842,9 +859,21 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   if (f.reinforcementKg != null && f.reinforcementKg > 0) {
     steelKg = round(f.reinforcementKg);
     steelSpec = `${steelGrade} — manual override`;
-  } else if (useBbs && isRcc) {
+  } else if (useBbs && isRcc && concreteCum > 0 && bbs.kgPerCum >= 30) {
     steelKg = bbs.totalKg;
     steelSpec = `${steelGrade} TMT — from BBS: ${bbs.netKg} kg net + ${bbs.wastagePct}% wastage (${bbs.kgPerCum} kg/cum)`;
+  } else if (useBbs && isRcc && concreteCum > 0) {
+    // The BBS does not (yet) take off every reinforced member of this foundation type (e.g. a raft's
+    // own mesh, or a strip footing's main + distribution bars) — its implied intensity is implausibly
+    // low. Fall back to the per-cum proxy rather than silently under-quote steel by an order of
+    // magnitude, and say so, so the gap is visible instead of buried in a "from BBS" label.
+    steelKg = round(concreteCum * steelPerCum);
+    steelSpec = `${steelGrade} — legacy proxy ~${steelPerCum} kg/cum (BBS take-off does not yet cover every member of this foundation type)`;
+    warnings.push(
+      `Bar-bending schedule take-off does not cover every reinforced member of this foundation type ` +
+      `(implied ${bbs.kgPerCum} kg/cum is implausibly low for RCC). Reinforcement steel is priced from the ` +
+      `${steelPerCum} kg/cum proxy instead — get this foundation's reinforcement detailed by a structural engineer.`,
+    );
   } else {
     steelKg = isRcc ? round(concreteCum * steelPerCum) : 0;
     steelSpec = `${steelGrade} — legacy proxy ~${steelPerCum} kg/cum`;
@@ -906,7 +935,9 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     builtUpSqm: round(builtUp),
     pedestalCount,
     columnCount: footingCount,
-    footingTypes,
+    // Empty for foundation types with no isolated footings (raft, strip, …) — the F1/F2/F3 layout,
+    // schedule and "load-differentiated footings" banner only ever show for a type that builds them.
+    footingTypes: footingTypesForUi,
     gridFromPlan,
     rebar: rebarDesign,
     bbs,
@@ -918,8 +949,9 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   // `builtUp` (not the raw ctx value) — it is already floored at the footprint area, so a missing
   // or zero built-up area can never make the bearing check NaN.
   // Each TYPE is checked against its own tributary load — a corner footing and an internal one are
-  // not the same problem, so they are not the same check.
-  for (const t of footingTypes) {
+  // not the same problem, so they are not the same check. Only for foundation types that actually
+  // build these footings (footingTypesForUi) — a raft/strip has no isolated footing to overstress.
+  for (const t of footingTypesForUi) {
     if (!t.adequate) {
       warnings.push(
         `Footing ${t.mark} (${t.kind}, ${t.count} nos) OVERSTRESSED: ${t.sideM} m square carries ` +

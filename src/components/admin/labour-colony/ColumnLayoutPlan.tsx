@@ -178,7 +178,7 @@ export function ColumnLayoutPlan({ plan, columns, rebar }: {
         <p className="mt-1.5 text-[10px] text-slate-500">
           All columns are identical in this scheme. Vertical bars are spliced above floor level with a{" "}
           {rebar.column.lapMm} mm compression lap ({rebar.column.anchorage.ldCompMultiple}φ); ties are closed with a
-          135° hook of {rebar.column.anchorage.hook135Mm} mm and are spaced at{" "}
+          135° hook of {rebar.column.tieAnchorage.hook135Mm} mm (sized off the tie's own diameter) and are spaced at{" "}
           {rebar.column.tieSpacingEndMm} mm c/c over a distance equal to the larger column dimension at each
           end (the confinement zone).
         </p>

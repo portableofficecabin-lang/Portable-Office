@@ -23,7 +23,7 @@ const COL = {
 };
 
 export function FoundationPlan({ foundation }: { foundation: FoundationResult }) {
-  const { grid, footingCount, plinthBeamLengthM, section } = foundation;
+  const { grid, footingCount, plinthBeamLengthM, section, footingTypes } = foundation;
   const L = grid.footprintLengthM;
   const W = grid.footprintWidthM;
   const maxDim = Math.max(L, W, 1);
@@ -31,8 +31,16 @@ export function FoundationPlan({ foundation }: { foundation: FoundationResult })
   const PAD = 54;
   const px = (m: number) => m * S;
 
+  // Load-differentiated footing sizes, keyed by grid cell (ci, ri) — the SAME indices buildColumnMarks
+  // assigned from this same grid.xsM/ysM, so `grid.xsM.map((x,i) => grid.ysM.map((y,j) => ...))` below
+  // can look each intersection up directly. Falls back to one uniform size when a foundation type has
+  // no isolated footings (foundation.footingTypes is then empty — see labourColonyCivil.ts).
   const footM = Math.max(0.6, section.footingLengthM);
-  const fh = px(footM);
+  const sideByCell = new Map<string, { sideM: number; mark: string }>();
+  for (const t of footingTypes ?? []) {
+    for (const c of t.columns ?? []) sideByCell.set(`${c.ci},${c.ri}`, { sideM: t.sideM, mark: t.mark });
+  }
+  const differentiated = sideByCell.size > 0;
   const pedM = Math.max(0.25, section.pedestalSizeM);
   const ph = px(pedM);
   const hasPedestal = section.type === "rcc_pedestal";
@@ -76,16 +84,26 @@ export function FoundationPlan({ foundation }: { foundation: FoundationResult })
               <line key={`bv${i}`} x1={px(x)} y1={px(grid.ysM[0])} x2={px(x)} y2={px(grid.ysM[grid.ysM.length - 1])} stroke={COL.beam} strokeWidth={4} strokeLinecap="round" />
             ))}
 
-            {/* footings + pedestals + columns at each grid intersection */}
+            {/* footings + pedestals + columns at each grid intersection — sized per its OWN
+                load-differentiated type (F1/F2/F3) when the foundation builds isolated footings */}
             {grid.ysM.map((y, j) =>
               grid.xsM.map((x, i) => {
                 const cx = px(x);
                 const cy = px(y);
+                const hit = sideByCell.get(`${i},${j}`);
+                const cellSideM = Math.max(0.4, hit?.sideM ?? footM);
+                const fh = px(cellSideM);
                 return (
                   <g key={`c${i}-${j}`}>
                     <rect x={cx - fh / 2} y={cy - fh / 2} width={fh} height={fh} fill={COL.footing} stroke={COL.footingStroke} strokeWidth={1.2} />
                     {hasPedestal && <rect x={cx - ph / 2} y={cy - ph / 2} width={ph} height={ph} fill={COL.pedestal} stroke={COL.footingStroke} strokeWidth={1} />}
                     <rect x={cx - 3} y={cy - 3} width={6} height={6} fill={COL.outline} />
+                    {/* clamped so a large F1 on the top grid row can never draw its mark above the
+                        canvas edge (the group is translated by PAD, so local y ≥ -(PAD-8) keeps it
+                        ≥ 8px from the top of the SVG regardless of footing size) */}
+                    {hit && fh >= 22 && (
+                      <text x={cx} y={Math.max(cy - fh / 2 - 3, -(PAD - 8))} textAnchor="middle" fontSize={7} fontWeight={700} fill={COL.footingStroke}>{hit.mark}</text>
+                    )}
                   </g>
                 );
               }),
@@ -129,7 +147,16 @@ export function FoundationPlan({ foundation }: { foundation: FoundationResult })
       </div>
 
       <div className="mt-2 flex flex-wrap gap-4 text-xs text-slate-600">
-        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.footing, borderColor: COL.footingStroke }} /> Footing {section.footingLengthM}×{section.footingLengthM} m</span>
+        {differentiated ? (
+          (footingTypes ?? []).map((t) => (
+            <span key={t.mark} className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 border" style={{ background: COL.footing, borderColor: COL.footingStroke }} />
+              {t.mark} {t.sideM}×{t.sideM}×{t.depthM} m ({t.kind}, ×{t.count})
+            </span>
+          ))
+        ) : (
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.footing, borderColor: COL.footingStroke }} /> Footing {section.footingLengthM}×{section.footingLengthM} m</span>
+        )}
         {hasPedestal && <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border" style={{ background: COL.pedestal, borderColor: COL.footingStroke }} /> Pedestal {section.pedestalSizeM} m</span>}
         <span className="flex items-center gap-1"><span className="inline-block w-4 h-1" style={{ background: COL.beam }} /> Plinth beam {section.plinthBeamWidthM}×{section.plinthBeamDepthM} m</span>
         <span className="flex items-center gap-1"><span className="inline-block w-2 h-2" style={{ background: COL.outline }} /> Column</span>

@@ -10,6 +10,7 @@ import type {
 import { buildElevation, resolveRoof, resolveStructure, type ElevationGeom, type ElevationFace } from "@/lib/quotation/elevation";
 import { formatLen, type LengthUnit } from "@/lib/quotation/units";
 import { downloadSvgFile, downloadSvgAsPdf } from "@/lib/pdf/svgExport";
+import { COMPANY } from "@/lib/company";
 
 /**
  * Four ELEVATIONS (Front / Rear / Left / Right) for the Labour Colony calculator.
@@ -75,6 +76,9 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
   const roof = resolveRoof(floorPlan);
   const st = resolveStructure(floorPlan, result.sections);
   const editable = !!onFloorPlanChange;
+  /** Company-name watermark on every elevation. On by default — an unmarked drawing leaving the
+   *  office is the thing you cannot take back, so switching it off has to be deliberate. */
+  const [watermark, setWatermark] = useState(true);
 
   const setRoof = (patch: Partial<ElevationRoofConfig>) =>
     onFloorPlanChange?.({ ...(floorPlan ?? {}), roof: { ...(floorPlan?.roof ?? {}), ...patch } });
@@ -112,6 +116,13 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
           <input type="number" step={0.05} min={0} value={roof.overhangM}
             onChange={(e) => setRoof({ overhangM: Math.max(0, parseFloat(e.target.value) || 0) })}
             onFocus={(e) => e.currentTarget.select()} disabled={!editable} className={numCls} />
+        </label>
+
+        {/* Watermark toggle — always available, even in the read-only Preview dialog, because it
+            changes what LEAVES the office, not the design. */}
+        <label className="flex items-center gap-1.5 pb-1.5 font-medium text-slate-700">
+          <input type="checkbox" checked={watermark} onChange={(e) => setWatermark(e.target.checked)} />
+          Watermark ({COMPANY.legalName})
         </label>
 
         <label className="font-medium text-slate-600">
@@ -242,7 +253,7 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {FACE_TITLES(st.frontFace).map(({ face, title }) => (
           <ElevationCard key={face} face={face} title={title} projectName={projectName}
-            g={buildElevation(result, floorPlan, face, { plinthM })} fmt={fmt} />
+            g={buildElevation(result, floorPlan, face, { plinthM })} fmt={fmt} watermark={watermark} />
         ))}
       </div>
 
@@ -265,9 +276,9 @@ export function LabourColonyDrawings({ result, unit, floorPlan, onFloorPlanChang
 
 /* ============================================================ elevation card */
 
-function ElevationCard({ g, title, face, fmt, projectName }: {
+function ElevationCard({ g, title, face, fmt, projectName, watermark }: {
   g: ElevationGeom; title: string; face: ElevationFace;
-  fmt: (m: number) => string; projectName?: string;
+  fmt: (m: number) => string; projectName?: string; watermark: boolean;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [busy, setBusy] = useState(false);
@@ -323,7 +334,7 @@ function ElevationCard({ g, title, face, fmt, projectName }: {
         </div>
       </div>
       <div className="overflow-x-auto">
-        <ElevationSvg ref={svgRef} g={g} fmt={fmt} />
+        <ElevationSvg ref={svgRef} g={g} fmt={fmt} watermark={watermark} />
       </div>
     </div>
   );
@@ -331,8 +342,8 @@ function ElevationCard({ g, title, face, fmt, projectName }: {
 
 /* ================================================================ SVG face */
 
-const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: number) => string }>(
-  function ElevationSvg({ g, fmt }, ref) {
+const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: number) => string; watermark?: boolean }>(
+  function ElevationSvg({ g, fmt, watermark }, ref) {
     const spanX = Math.max(1, g.x1 - g.x0);
     const S = Math.min(34, Math.max(9, 640 / spanX));   // px per metre
     const PAD_L = 78, PAD_R = 78, PAD_T = 30;
@@ -648,10 +659,37 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
             this view measures the room {g.axisDim === "length" ? "LENGTH" : "WIDTH"}
           </text>
         </g>
+
+        {/* Company watermark — drawn INSIDE the <svg>, so it is carried by the SVG download and by
+            the PDF (which rasterises that same serialized SVG), not just by an on-screen capture. */}
+        {watermark && <SvgWatermark w={svgW} h={svgH} />}
       </svg>
     );
   },
 );
+
+/** Tiled diagonal company-name watermark, in SVG so it survives serialization. */
+function SvgWatermark({ w, h }: { w: number; h: number }) {
+  const TW = 210, TH = 120;
+  const label = COMPANY.legalName.toUpperCase();
+  const cols = Math.ceil(w / TW) + 1;
+  const rows = Math.ceil(h / TH) + 1;
+  const cells: React.ReactNode[] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = c * TW + (r % 2 ? TW / 2 : 0);   // brick-offset every other row
+      const y = r * TH + TH / 2;
+      cells.push(
+        <text key={`${r}-${c}`} x={x} y={y} transform={`rotate(-30 ${x} ${y})`}
+          textAnchor="middle" fontSize={11} fontWeight={800} letterSpacing={1.6}
+          fill="#0f172a" fillOpacity={0.07}>
+          {label}
+        </text>,
+      );
+    }
+  }
+  return <g pointerEvents="none" aria-hidden="true">{cells}</g>;
+}
 
 /* ============================================================ staircase glyph */
 

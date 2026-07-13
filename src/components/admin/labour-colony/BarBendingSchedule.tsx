@@ -196,7 +196,11 @@ export function BarBendingSchedule({ bbs, rebar, counts }: {
             <li>Development length Ld = <b>{a.ldMm} mm</b> ({a.ldMultiple}φ) — IS 456 Cl. 26.2.1</li>
             <li>Tension lap <b>{a.lapTensionMm} mm</b>, compression lap <b>{a.lapCompressionMm} mm</b>; one splice per 12 m stock length</li>
             <li>Anchorage into support <b>{rebar.beam.anchorageIntoSupportMm} mm</b>; 90° end bend {a.bend90Mm} mm (8φ)</li>
-            <li>Stirrup/tie 135° hooks <b>{a.hook135Mm} mm</b>, less standard bend deductions (3 × 2φ + 2 × 3φ)</li>
+            <li>
+              Stirrup 135° hook <b>{rebar.beam.stirrupAnchorage.hook135Mm} mm</b> (T{rebar.beam.stirrupDiaMm}), tie 135°
+              hook <b>{rebar.column.tieAnchorage.hook135Mm} mm</b> (T{rebar.column.tieDiaMm}) — each sized off its OWN
+              diameter, less standard bend deductions (3 × 2φ + 2 × 3φ)
+            </li>
             <li>Cutting &amp; bending wastage <b>{bbs.wastagePct}%</b></li>
             <li>Implied intensity <b>{bbs.kgPerCum} kg/cum</b> of RCC — sanity check only, not the basis of pricing</li>
           </ul>

@@ -44,6 +44,14 @@ const clamp = (v: number, lo: number, hi: number, fallback = lo) =>
   Math.min(Math.max(Number.isFinite(v) ? v : fallback, lo), hi);
 /** Round a bar length UP to the next 10 mm — you cannot cut steel finer on site. */
 const up10 = (mm: number) => Math.ceil(Math.max(0, Number.isFinite(mm) ? mm : 0) / 10) * 10;
+/**
+ * Bars needed each way across a clear span so the delivered spacing NEVER exceeds `spacingMm`.
+ * Rounding the count down (floor) would space the bars WIDER than specified — the mesh drawn and
+ * priced would be lighter than the "@ N c/c" printed on the same sheet. Round up instead (the
+ * epsilon keeps an exact multiple, e.g. 900/150, from gaining a spurious extra bar to float error).
+ */
+const meshBarsEachWay = (clearSpanMm: number, spacingMm: number) =>
+  Math.max(2, Math.ceil(clearSpanMm / spacingMm - 1e-9) + 1);
 
 /* ------------------------------------------------------------------ anchorage */
 
@@ -232,7 +240,11 @@ export interface ColumnRebar {
   starterProjectionMm: number;
   /** Vertical bars lap here, above the floor level. */
   lapMm: number;
+  /** Anchorage for the VERTICAL bars (barDiaMm) — bend90/lap used for the starter + splice. */
   anchorage: AnchorageSet;
+  /** Anchorage for the TIE itself (tieDiaMm) — its hook135Mm is what the tie is actually bent to;
+   *  a tie's hook is sized off its OWN diameter, never the vertical bar's. */
+  tieAnchorage: AnchorageSet;
 }
 
 export interface BeamRebar {
@@ -248,7 +260,11 @@ export interface BeamRebar {
   anchorageIntoSupportMm: number;
   /** Top bars over a support are curtailed at this distance from the face. */
   curtailFromFaceMm: number;
+  /** Anchorage for the MAIN bars (mainBarDiaMm). */
   anchorage: AnchorageSet;
+  /** Anchorage for the STIRRUP itself (stirrupDiaMm) — its hook135Mm is what the stirrup is
+   *  actually bent to; a stirrup's hook is sized off its OWN diameter, never the main bar's. */
+  stirrupAnchorage: AnchorageSet;
 }
 
 export interface RebarDesign {
@@ -282,7 +298,7 @@ export function resolveRebar(
   const fSide = clamp(section.footingLengthM, 0.3, 6, 1.2);
   const fDepth = clamp(section.footingDepthM, 0.15, 3, 0.4);
   const clearSpanMm = fSide * 1000 - 2 * fCover;
-  const barsEachWay = Math.max(2, Math.floor(clearSpanMm / fSp) + 1);
+  const barsEachWay = meshBarsEachWay(clearSpanMm, fSp);
   const fAnch = anchorageFor(fDia, concreteGrade, steelGrade);
   const footing: FootingRebar = {
     sideM: fSide, depthM: fDepth, coverMm: fCover,
@@ -304,6 +320,7 @@ export function resolveRebar(
   const cSizeMm = Math.round(clamp(section.pedestalSizeM, 0.15, 2, 0.3) * 1000);
   const cHeightM = clamp(section.pedestalHeightM, 0.1, 5, 0.6);
   const cAnch = anchorageFor(cDia, concreteGrade, steelGrade);
+  const tAnch = anchorageFor(tDia, concreteGrade, steelGrade);
   const column: ColumnRebar = {
     sizeMm: cSizeMm, heightM: cHeightM, coverMm: cCover,
     bars: cBars, barDiaMm: cDia, tieDiaMm: tDia, tieSpacingMm: tSp,
@@ -313,6 +330,7 @@ export function resolveRebar(
     starterProjectionMm: cAnch.lapCompressionMm,
     lapMm: cAnch.lapCompressionMm,
     anchorage: cAnch,
+    tieAnchorage: tAnch,
   };
 
   // Will the vertical bars physically fit on the column face?
@@ -334,6 +352,7 @@ export function resolveRebar(
   const bTop = clamp(Math.round(section.topBars), 2, 12, 3);
   const bBot = clamp(Math.round(section.bottomBars), 2, 12, 3);
   const bAnch = anchorageFor(bDia, concreteGrade, steelGrade);
+  const sAnch = anchorageFor(sDia, concreteGrade, steelGrade);
   const beam: BeamRebar = {
     widthMm: Math.round(clamp(section.plinthBeamWidthM, 0.1, 1, 0.23) * 1000),
     depthMm: Math.round(clamp(section.plinthBeamDepthM, 0.1, 1.5, 0.3) * 1000),
@@ -349,6 +368,7 @@ export function resolveRebar(
     anchorageIntoSupportMm: up10(bAnch.ldMm / 3 + bAnch.bend90Mm),
     curtailFromFaceMm: up10(bAnch.ldMm),
     anchorage: bAnch,
+    stirrupAnchorage: sAnch,
   };
 
   const beamClearMm = beam.widthMm - 2 * bCover - 2 * sDia;
@@ -432,6 +452,9 @@ export interface FootingType {
   pitCum: number;
   /** PCC bed under ONE footing (100 mm projection each side). */
   pccCum: number;
+  /** PCC bed thickness used for `pccCum` above, metres — so a section detail can draw the REAL bed
+   *  instead of assuming one. */
+  pccThkM: number;
 
   /** Grid positions of every column of this type — drives the footing layout + coordinate table. */
   columns: ColumnMark[];
@@ -497,8 +520,11 @@ export function buildFootingTypes(
       : totalLoadKn / all.length;
 
     const requiredSide = Math.sqrt(loadKn / sbc);
+    // `minSide` already carries the caller's floor (pedestal clearance AND the user's own entered
+    // footing size, so a specified footing genuinely acts as a lower bound — the SBC only ever
+    // governs it UPWARD, never silently shrinks it below what was asked for).
     const sideM = differentiated
-      ? clamp(up50mm(Math.max(requiredSide, minSide)), 0.45, 6, designedSide)
+      ? clamp(up50mm(Math.max(requiredSide, minSide)), 0.45, 6, minSide)
       : designedSide;
     // Depth follows the size (a wider footing needs more depth to spread), never below the design.
     const depthM = differentiated
@@ -506,7 +532,7 @@ export function buildFootingTypes(
       : designedDepth;
 
     const clearSpanMm = sideM * 1000 - 2 * fCover;
-    const barsEachWay = Math.max(2, Math.floor(clearSpanMm / fSp) + 1);
+    const barsEachWay = meshBarsEachWay(clearSpanMm, fSp);
     const areaSqm = sideM * sideM;
     const pressure = loadKn / areaSqm;
 
@@ -538,6 +564,7 @@ export function buildFootingTypes(
       concreteCum: round(areaSqm * depthM, 3),
       pitCum: round((sideM + 0.3) * (sideM + 0.3) * (depthM + pccThkM + 0.05), 3),
       pccCum: round((sideM + 0.2) * (sideM + 0.2) * pccThkM, 3),
+      pccThkM: round(pccThkM, 3),
 
       columns: b.cols,
     });
@@ -640,9 +667,6 @@ export const barKgPerM = (diaMm: number) => (diaMm * diaMm) / 162;
 
 const STOCK_LENGTH_M = 12;   // TMT bars are supplied in 12 m lengths
 
-/** Laps needed to make a run of `runM` from 12 m stock: one per joint. */
-const lapsFor = (runM: number) => Math.max(0, Math.ceil(runM / STOCK_LENGTH_M) - 1);
-
 /** Closed rectangular tie/stirrup cutting length, incl. 135° hooks less bend deductions. */
 function tieCuttingLengthMm(outerAmm: number, outerBmm: number, diaMm: number, hook135Mm: number): number {
   const A = Math.max(50, outerAmm);
@@ -654,7 +678,12 @@ function tieCuttingLengthMm(outerAmm: number, outerBmm: number, diaMm: number, h
 
 export function buildBBS(
   d: RebarDesign,
-  qty: { footingTypes: FootingType[]; pedestals: number; plinthBeamLengthM: number; concreteCum: number },
+  qty: {
+    footingTypes: FootingType[]; pedestals: number; plinthBeamLengthM: number; concreteCum: number;
+    /** Number of beam bay-segments in the plinth-beam grid (each has 2 support faces). Drives the
+     *  support-zone stirrup spacing; omitted/1 treats the whole run as a single span. */
+    beamSpans?: number;
+  },
   wastagePct = 3,
 ): BbsResult {
   const rows: BbsRow[] = [];
@@ -705,29 +734,41 @@ export function buildBBS(
   const embedMm = Math.max(0, deepestM * 1000 - d.footing.coverMm);
   const vertStraightMm = embedMm + c.heightM * 1000 + c.lapMm;
   const vertCut = up10(vertStraightMm + c.anchorage.bend90Mm);
+  // Legs are derived FROM vertCut (not from vertStraightMm directly) so aMm+bMm+cMm always equals
+  // the priced cutting length exactly — vertStraightMm already includes the lap, so using it as leg
+  // A on top of a separate leg C for the same lap would draw a bar one whole lap longer than billed.
   push("C1", "Pedestal/column — vertical bars", c.barDiaMm, nP, c.bars, vertCut, 26,
-    { aMm: Math.round(vertStraightMm), bMm: c.anchorage.bend90Mm, cMm: c.lapMm });
+    { aMm: Math.round(vertCut - c.anchorage.bend90Mm - c.lapMm), bMm: c.anchorage.bend90Mm, cMm: c.lapMm });
 
-  // Ties: nominal spacing over the middle, halved in the confinement zone at each end.
+  // Ties: nominal spacing over the middle, halved in the confinement zone at each end. The 135° hook
+  // is sized off the TIE's own diameter (tieAnchorage), never the vertical bar's — a T8 tie bends to
+  // an 80 mm hook regardless of whether the verticals are T16 or T25.
   const hMm = c.heightM * 1000;
   const confineMm = Math.min(hMm / 2, c.sizeMm);          // one column-depth at each end
   const midMm = Math.max(0, hMm - 2 * confineMm);
   const tiesPerCol =
     Math.ceil((2 * confineMm) / c.tieSpacingEndMm) + Math.ceil(midMm / c.tieSpacingMm) + 1;
   const tieOuter = c.sizeMm - 2 * c.coverMm;
-  const tieCut = tieCuttingLengthMm(tieOuter, tieOuter, c.tieDiaMm, c.anchorage.hook135Mm);
+  const tieHookMm = c.tieAnchorage.hook135Mm;
+  const tieCut = tieCuttingLengthMm(tieOuter, tieOuter, c.tieDiaMm, tieHookMm);
   push("C2", "Pedestal/column — ties", c.tieDiaMm, nP, tiesPerCol, tieCut, 51,
-    { aMm: Math.round(tieOuter), bMm: Math.round(tieOuter), cMm: c.anchorage.hook135Mm });
+    { aMm: Math.round(tieOuter), bMm: Math.round(tieOuter), cMm: tieHookMm });
 
   /* ---- 3. PLINTH BEAM — top, bottom, stirrups ---- */
   const b = d.beam;
   if (beamRunM > 0) {
     // Each longitudinal bar LINE runs the whole beam grid, and every splice costs one tension lap.
     // A schedule must list bars you can actually cut, so the line is broken into stock-length
-    // pieces: the total steel is unchanged, but the cutting length is a real, ≤12 m bar.
-    const lapsPerLine = lapsFor(beamRunM);
-    const perLineMm = beamRunM * 1000 + lapsPerLine * b.anchorage.lapTensionMm + 2 * b.anchorageIntoSupportMm;
-    const piecesPerLine = Math.max(1, Math.ceil(perLineMm / (STOCK_LENGTH_M * 1000)));
+    // pieces — but the piece count and the lap count must be solved TOGETHER: each extra piece
+    // needs one MORE lap, which makes the line longer, which can need one more piece again. Solve by
+    // searching upward for the smallest piece count that actually spans the line once every splice
+    // it introduces has paid for its own lap (bounded: adding a lap can only ever need ≤1 more piece).
+    const needMm = beamRunM * 1000 + 2 * b.anchorageIntoSupportMm;
+    const lapMm = b.anchorage.lapTensionMm;
+    let piecesPerLine = Math.max(1, Math.ceil(needMm / (STOCK_LENGTH_M * 1000)));
+    while (piecesPerLine * STOCK_LENGTH_M * 1000 < needMm + (piecesPerLine - 1) * lapMm) piecesPerLine++;
+    const lapsPerLine = piecesPerLine - 1;
+    const perLineMm = needMm + lapsPerLine * lapMm;
     const pieceMm = up10(perLineMm / piecesPerLine);
     const beamLegs: ShapeLegs = {
       aMm: Math.round(Math.max(0, pieceMm - 2 * b.anchorageIntoSupportMm)),
@@ -737,12 +778,25 @@ export function buildBBS(
     push("PB-T", "Plinth beam — top bars", b.mainBarDiaMm, b.topBars, piecesPerLine, pieceMm, 21, beamLegs);
     push("PB-B", "Plinth beam — bottom bars", b.mainBarDiaMm, b.bottomBars, piecesPerLine, pieceMm, 21, beamLegs);
 
-    const stirCount = Math.ceil((beamRunM * 1000) / b.stirrupSpacingMm) + 1;
+    // Stirrups are closer together in the SHEAR ZONE at each support face (matches the drawn
+    // elevation) and at the nominal spacing at midspan — not the nominal spacing over the whole run,
+    // which under-counts every span's support zone.
+    const spans = Math.max(1, Math.round(qty.beamSpans ?? 1));
+    const faces = 2 * spans;
+    const avgSpanMm = (beamRunM * 1000) / spans;
+    const clearSpanMm = Math.max(0, avgSpanMm - d.column.sizeMm);
+    const shearZoneMm = Math.min(2 * b.depthMm, clearSpanMm / 2);
+    const supportRunMm = Math.min(beamRunM * 1000, faces * shearZoneMm);
+    const midRunMm = Math.max(0, beamRunM * 1000 - supportRunMm);
+    const stirCount =
+      Math.ceil(supportRunMm / b.stirrupSpacingSupportMm) + Math.ceil(midRunMm / b.stirrupSpacingMm) + spans;
     const stirW = b.widthMm - 2 * b.coverMm;
     const stirD = b.depthMm - 2 * b.coverMm;
-    const stirCut = tieCuttingLengthMm(stirW, stirD, b.stirrupDiaMm, b.anchorage.hook135Mm);
+    // The 135° hook is sized off the STIRRUP's own diameter (stirrupAnchorage), never the main bar's.
+    const stirHookMm = b.stirrupAnchorage.hook135Mm;
+    const stirCut = tieCuttingLengthMm(stirW, stirD, b.stirrupDiaMm, stirHookMm);
     push("PB-S", "Plinth beam — stirrups", b.stirrupDiaMm, 1, stirCount, stirCut, 51,
-      { aMm: Math.round(stirW), bMm: Math.round(stirD), cMm: b.anchorage.hook135Mm });
+      { aMm: Math.round(stirW), bMm: Math.round(stirD), cMm: stirHookMm });
   }
 
   const netKg = round(rows.reduce((s, r) => s + r.weightKg, 0), 1);

@@ -12,8 +12,8 @@ import type { BeamScheduleRow } from "@/lib/quotation/labourColonyPlan";
  *   • the beam outline (width × depth) with the clear cover dimensioned on both faces
  *   • the CLOSED rectangular stirrup sitting just inside the cover
  *   • the TOP and BOTTOM bars as they are really placed — evenly spaced across the stirrup, in the
- *     counts the SCHEDULE gives. PB1 (peripheral, more heavily loaded) legitimately carries one bar
- *     more than PB2, and the section shows that difference instead of averaging it away.
+ *     counts the SCHEDULE gives. PB1 (peripheral) and PB2 (internal) share one bar spec — the drawn
+ *     section always matches what the bar-bending schedule actually prices.
  *
  * Then ONE longitudinal elevation of a typical span showing where the stirrups tighten up:
  *   • support (shear) zones at the closer spacing, midspan at the nominal spacing
@@ -190,11 +190,11 @@ export function BeamSectionDetail({ rebar, schedule }: { rebar: RebarDesign; sch
       </div>
 
       <p className="mt-2 text-[10px] leading-snug text-slate-500">
-        Stirrups are closed rectangular links with 135° hooks ({rebar.beam.anchorage.hook135Mm} mm hook allowance,
-        IS 2502). Cover {coverMm} mm to the stirrup on every face. Top and bottom bars are shown in ONE layer —
-        if the schedule bars will not fit in the beam width the detailing warns and the beam must be widened or a
-        second layer detailed. Bar counts above are read from the beam schedule, so PB1 (peripheral) carries the
-        extra bar the schedule gives it.
+        Stirrups are closed rectangular links with 135° hooks ({rebar.beam.stirrupAnchorage.hook135Mm} mm hook
+        allowance, sized off the T{rebar.beam.stirrupDiaMm} stirrup's own diameter, IS 2502). Cover {coverMm} mm to
+        the stirrup on every face. Top and bottom bars are shown in ONE layer — if the schedule bars will not fit in
+        the beam width the detailing warns and the beam must be widened or a second layer detailed. Bar counts above
+        are read from the beam schedule; PB1 (peripheral) and PB2 (internal) share one spec.
       </p>
     </div>
   );

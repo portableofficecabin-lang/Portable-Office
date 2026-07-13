@@ -246,7 +246,18 @@ function buildBeams(colXs: number[], rowYs: number[], bayW: number, roomD: numbe
   return { beams, schedule: [] as BeamScheduleRow[] };
 }
 
-/** Beam schedule derived from the foundation section (single source with the section drawing). */
+/**
+ * Beam schedule derived from the foundation section (single source with the section drawing).
+ *
+ * PB1 = the outermost (peripheral) grid line in each direction, PB2 = the internal lines — same
+ * bar spec for both (a heavier PB1 was previously modelled as "+1 bar" but that extra bar was never
+ * taken off in the BAR BENDING SCHEDULE, so the drawn section and the priced steel disagreed; PB1 and
+ * PB2 now share one spec, matching what is actually billed).
+ *
+ * Rows are DIRECTION-SPECIFIC (X runs vs Y runs) so `Σ(lengthM × count)` is the TRUE total plinth-beam
+ * length — `rowYs.length × spanX + colXs.length × spanY` — identical to `grid.plinthBeamLengthM` in
+ * labourColonyCivil.ts (one grid, one length, no way for the drawing and the BOQ to disagree).
+ */
 export function buildBeamSchedule(plan: ConstructionPlan, section: FoundationResult["section"]): BeamScheduleRow[] {
   const w = mm(section.plinthBeamWidthM);
   const d = mm(section.plinthBeamDepthM);
@@ -255,29 +266,35 @@ export function buildBeamSchedule(plan: ConstructionPlan, section: FoundationRes
   const bot = section.bottomBars ?? 2;
   const stirDia = section.stirrupDiaMm ?? 8;
   const stirSp = section.stirrupSpacingMm ?? 150;
-  const bays = plan.bays;
-
-  // PB1 = peripheral (heavier: +1 bar), PB2 = internal
-  const horizLen = plan.blockW;
-  const vertLen = plan.rows === 2 ? 2 * plan.roomD : plan.roomD;
-  const pb1Count = 2 /*outer horiz*/ + 2 /*outer vert*/;
-  const pb2Count = Math.max(0, plan.rowYs.length - 2) + Math.max(0, plan.colXs.length - 2);
   const grade = section.grade;
 
+  const colXs = plan.colXs, rowYs = plan.rowYs;
+  if (colXs.length < 2 || rowYs.length < 2) return [];
+  const spanX = colXs[colXs.length - 1] - colXs[0];
+  const spanY = rowYs[rowYs.length - 1] - rowYs[0];
+  const innerH = Math.max(0, rowYs.length - 2);   // internal horizontal runs, each length spanX
+  const innerV = Math.max(0, colXs.length - 2);   // internal vertical runs, each length spanY
+
+  const bars = { topBars: `${top}-T${dia}`, bottomBars: `${bot}-T${dia}` };
+  const stirrups = `T${stirDia} @ ${stirSp} c/c`;
+  const row = (mark: string, lengthM: number, count: number): BeamScheduleRow => ({
+    mark, size: `${w} × ${d}`, grade, ...bars, stirrups, lengthM: round(lengthM), count,
+  });
+
   return [
-    {
-      mark: "PB1", size: `${w} × ${d}`, grade,
-      topBars: `${top + 1}-T${dia}`, bottomBars: `${bot + 1}-T${dia}`,
-      stirrups: `T${stirDia} @ ${stirSp} c/c`,
-      lengthM: round(Math.max(horizLen, vertLen)), count: pb1Count,
-    },
-    {
-      mark: "PB2", size: `${w} × ${d}`, grade,
-      topBars: `${top}-T${dia}`, bottomBars: `${bot}-T${dia}`,
-      stirrups: `T${stirDia} @ ${stirSp} c/c`,
-      lengthM: round(Math.max(horizLen, vertLen)), count: pb2Count,
-    },
-  ].filter((r) => r.count > 0);
+    row("PB1-X", spanX, 2),      // 2 outer horizontal grid lines (perimeter)
+    row("PB1-Y", spanY, 2),      // 2 outer vertical grid lines (perimeter)
+    row("PB2-X", spanX, innerH), // internal horizontal grid lines
+    row("PB2-Y", spanY, innerV), // internal vertical grid lines
+  ].filter((r) => r.count > 0 && r.lengthM > 0);
+}
+
+/** Total bay-segments in the plinth-beam grid — each segment has 2 support faces (one at each end).
+ *  Used to size the closer stirrup spacing at supports vs the nominal spacing at midspan. */
+export function beamSpanCount(colXs: number[], rowYs: number[]): number {
+  const cols = colXs.length, rows = rowYs.length;
+  if (cols < 2 || rows < 2) return 0;
+  return rows * (cols - 1) + cols * (rows - 1);
 }
 
 /** Standard construction notes + material specifications for the sheet. */
