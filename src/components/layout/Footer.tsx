@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, Facebook, Linkedin, Instagram, BadgeCheck } from "lucide-react";
 import logo from "@/assets/logo.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { PaymentMethods } from "@/components/PaymentMethods";
 
 const footerLinks = {
   products: [
@@ -209,6 +210,10 @@ export function Footer() {
               <BadgeCheck className="h-5 w-5 text-accent shrink-0" />
               MSME / Udyam Reg. No: <span className="font-mono tracking-wide">UDYAM-TN-11-0068545</span>
             </span>
+          </div>
+          {/* Accepted payment methods — the methods Razorpay actually takes at checkout. */}
+          <div className="mb-6 pb-6 border-b border-accent/20">
+            <PaymentMethods variant="footer" />
           </div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-primary-foreground font-bold text-lg">

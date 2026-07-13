@@ -112,9 +112,9 @@ const sizeRows = [
 
 const faqs = [
   {
-    question: "What is the typical cost of a 20x10 ft office portable cabin in 2025?",
+    question: "What does the office portable cabin on this page cost?",
     answer:
-      "Pricing depends on panel type, fit-out level, electrical scope, and transport distance. A standard 20x10 ft MS office cabin usually falls in a project-friendly range, and the best way to price it accurately is to request a quote with your actual requirements.",
+      "It is sold at the single price shown at the top of this page, inclusive of 18% GST — that is the price you pay, with no further negotiation. Transport and optional installation are calculated at checkout from your delivery pincode. Non-standard panel types, fit-out levels, or electrical scopes make it a made-to-order cabin, which we quote separately.",
   },
   {
     question: "How long does it take to deliver and install an office portable cabin?",

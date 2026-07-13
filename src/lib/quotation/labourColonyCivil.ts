@@ -14,6 +14,10 @@
  * Costs in INR. Rates are indicative and fully overridable via CivilRates.
  */
 
+// Value import (not type-only): the civil engine now derives its steel from the bar-bending
+// schedule. labourColonyRebar imports only TYPES back from here, so there is no runtime cycle.
+import { resolveRebar, buildBBS, type RebarDesign, type BbsResult } from "./labourColonyRebar";
+
 /* ============================ TYPES ============================ */
 
 export type FoundationType =
@@ -141,8 +145,6 @@ export interface SitePrepConfig {
 export interface FoundationConfig {
   type: FoundationType;
   grade: RccGrade;
-  /** Column count override (else auto from footprint grid). */
-  footingCount?: number;
   footingLengthM?: number;
   footingWidthM?: number;
   footingDepthM?: number;
@@ -153,7 +155,16 @@ export interface FoundationConfig {
   plinthBeamLengthM?: number;  // else auto = perimeter + internal grid lines
   pccThicknessMm?: number;
   raisedPlinthHeightM?: number;
-  /** Steel intensity kg per cum of RCC (else default). */
+  /**
+   * Price steel from the BAR BENDING SCHEDULE (default true). The BBS takes off every bar actually
+   * detailed — footing mesh, pedestal verticals + ties, plinth-beam top/bottom/stirrups, plus laps,
+   * anchorage and wastage — so the tonnage moves when a bar size or spacing changes.
+   * Set false ONLY to fall back to the old `concrete × steelKgPerCum` proxy.
+   */
+  useBbs?: boolean;
+  /** Cutting/bending wastage added on top of the BBS net weight, %. Default 3. */
+  steelWastagePct?: number;
+  /** LEGACY steel intensity kg per cum of RCC. Used only when `useBbs` is false. */
   steelKgPerCum?: number;
   /** Hard overrides for the headline quantities. */
   reinforcementKg?: number;
@@ -169,6 +180,27 @@ export interface FoundationConfig {
   plinthBeamBottomBars?: number;        // bottom main bars, e.g. 3
   plinthBeamStirrupDiaMm?: number;      // stirrup dia, e.g. 8
   plinthBeamStirrupSpacingMm?: number;  // stirrup c/c spacing (mm), e.g. 150
+
+  /* ---- Soil & structural detailing (drives the reinforcement drawings + the SBC check) ---- */
+  /** SAFE BEARING CAPACITY of the soil, kN/m². The footing is CHECKED against this. Default 150. */
+  sbcKnm2?: number;
+  /** Design service load per sqm of built-up area, kN/m². Default 5 (light MS prefab + live load). */
+  loadPerSqmKn?: number;
+  /** Reinforcement steel grade. Default "Fe500". */
+  steelGrade?: "Fe415" | "Fe500" | "Fe550";
+  /** Clear cover, mm. Defaults: footing 50, column/pedestal 40, plinth beam 40. */
+  coverFootingMm?: number;
+  coverColumnMm?: number;
+  coverBeamMm?: number;
+  /** Footing reinforcement mesh. Defaults: T12 @ 150 c/c both ways, bottom only. */
+  footingBarDiaMm?: number;
+  footingBarSpacingMm?: number;
+  footingTopMesh?: boolean;
+  /** Column / pedestal reinforcement. Defaults: 4-T16 vertical, T8 ties @ 150 c/c. */
+  columnBars?: number;
+  columnBarDiaMm?: number;
+  columnTieDiaMm?: number;
+  columnTieSpacingMm?: number;
 }
 
 export interface FlooringPlinthConfig {
@@ -231,6 +263,22 @@ export interface ExternalDevConfig {
   rainwaterDrainageM?: number;
 }
 
+/**
+ * The civil price the customer has actually been QUOTED. Captured when the user hits
+ * "Apply to quotation". While a snapshot exists and the freshly-computed numbers differ from it,
+ * the quotation keeps charging the APPROVED figure and the UI shows a before/after comparison —
+ * so a change to the footing count or the steel take-off can never silently move the price.
+ */
+export interface ApprovedCivilQuote {
+  footingCount: number;
+  steelKg: number;
+  concreteCum: number;
+  foundationCost: number;
+  totalCost: number;
+  /** ISO timestamp of the approval, supplied by the caller. */
+  approvedAt: string;
+}
+
 export interface CivilWorkConfig {
   enabled: boolean;
   sitePrep: SitePrepConfig;
@@ -241,6 +289,33 @@ export interface CivilWorkConfig {
   electricalCivil: ElectricalCivilConfig;
   externalDev: ExternalDevConfig;
   rates?: Partial<CivilRates>;
+  /** The last price the user explicitly approved. Absent = nothing approved yet. */
+  approvedQuote?: ApprovedCivilQuote;
+}
+
+/** What changed between the approved price and the freshly-computed one. */
+export interface QuoteDelta {
+  key: "footingCount" | "steelKg" | "concreteCum" | "foundationCost" | "totalCost";
+  label: string;
+  unit: string;
+  before: number;
+  after: number;
+  diff: number;
+}
+
+export interface QuoteGate {
+  /** True once the user has approved a price at least once. */
+  hasApproved: boolean;
+  /** True when the computed numbers differ from the approved ones — a confirmation is required. */
+  pending: boolean;
+  approved?: ApprovedCivilQuote;
+  computed: ApprovedCivilQuote;
+  deltas: QuoteDelta[];
+  /**
+   * The price the QUOTATION must use right now. It stays on the approved figure until the user
+   * confirms the change — never silently jumps to the recomputed one.
+   */
+  effectiveTotalCost: number;
 }
 
 /** Context handed in from the main labour-colony calculation. */
@@ -249,6 +324,13 @@ export interface CivilContext {
   footprintWidthM: number;
   builtUpSqm: number;
   floors: 1 | 2 | 3;
+  /**
+   * THE ARCHITECTURAL COLUMN GRID, straight from buildConstructionPlan() — the SINGLE source of
+   * truth for how many footings, pedestals and columns exist. When supplied it fully replaces the
+   * old spacing-derived grid, so the BOQ can never price a different number of columns from the
+   * one the construction drawing sets out.
+   */
+  columnGrid?: { xsM: number[]; ysM: number[] };
   wcCount?: number;
   bathCount?: number;
   totalCapacity?: number;
@@ -315,7 +397,35 @@ export interface FoundationResult extends CivilHeadResult {
     bottomBars: number;
     stirrupDiaMm: number;
     stirrupSpacingMm: number;
+    /* Soil + structural detailing, resolved. Everything the reinforcement drawings need travels
+     * here, so a drawing never has to reach back into the civil CONFIG. */
+    sbcKnm2: number;
+    loadPerSqmKn: number;
+    steelGrade: "Fe415" | "Fe500" | "Fe550";
+    coverFootingMm: number;
+    coverColumnMm: number;
+    coverBeamMm: number;
+    footingBarDiaMm: number;
+    footingBarSpacingMm: number;
+    footingTopMesh: boolean;
+    columnBars: number;
+    columnBarDiaMm: number;
+    columnTieDiaMm: number;
+    columnTieSpacingMm: number;
   };
+  /** Built-up area the foundation carries (all floors) — the SBC check needs it. */
+  builtUpSqm: number;
+  /** Counts, all derived from the ONE architectural grid — footings === pedestals === columns. */
+  pedestalCount: number;
+  columnCount: number;
+  /** True when the grid came from the construction plan (it always does in the app). */
+  gridFromPlan: boolean;
+  /** Full structural detailing (Ld, laps, footing mesh, column schedule, SBC check). */
+  rebar: RebarDesign;
+  /** The bar-bending schedule the steel is priced from. */
+  bbs: BbsResult;
+  /** True when `steelKg` came from the BBS rather than the legacy kg/cum proxy. */
+  steelFromBbs: boolean;
 }
 
 export interface CivilWorkResult {
@@ -331,6 +441,8 @@ export interface CivilWorkResult {
   totalCost: number;
   totalConcreteCum: number;
   totalSteelKg: number;
+  /** Before/after price comparison + the confirmation gate (see QuoteGate). */
+  quoteGate: QuoteGate;
   warnings: string[];
   rates: CivilRates;
 }
@@ -422,31 +534,57 @@ const round = (n: number, d = 2) => {
 const ceil = (n: number) => Math.ceil(n - 1e-9);
 const SQM_TO_SQFT = 10.7639;
 
-/** Build the column grid from the footprint + target spacing. */
+/**
+ * Build the column grid.
+ *
+ * `explicit` is the ARCHITECTURAL grid from the construction plan (plan.colXs × plan.rowYs). When
+ * given, it IS the grid — column count, footing count, pedestal count and plinth-beam runs are all
+ * taken from it, so the BOQ and the drawing can never disagree. The spacing-derived grid below is
+ * only a fallback for callers that have no plan (it produced the old 30-vs-15 mismatch).
+ *
+ * There is deliberately NO manual footing-count override any more: a hand-typed count is exactly
+ * what let the quantities drift away from the drawing.
+ */
 export function buildFoundationGrid(
   footprintLengthM: number,
   footprintWidthM: number,
   spacingTargetM = 3,
-  countOverride?: number,
   plinthLenOverride?: number,
+  explicit?: { xsM: number[]; ysM: number[] },
 ): FoundationGrid {
   const L = Math.max(1, footprintLengthM);
   const W = Math.max(1, footprintWidthM);
-  const spacing = Math.max(2, spacingTargetM);
-  const cols = Math.max(2, ceil(L / spacing) + 1);
-  const rows = Math.max(2, ceil(W / spacing) + 1);
-  const xsM: number[] = [];
-  const ysM: number[] = [];
-  for (let i = 0; i < cols; i++) xsM.push(round((i * L) / (cols - 1), 3));
-  for (let j = 0; j < rows; j++) ysM.push(round((j * W) / (rows - 1), 3));
-  const autoCount = cols * rows;
-  const columnCount = countOverride && countOverride > 0 ? countOverride : autoCount;
-  // Plinth-beam runs along every grid line (both directions).
-  const beamAlongLength = rows * L;   // horizontal lines
-  const beamAlongWidth = cols * W;    // vertical lines
-  const autoBeamLen = beamAlongLength + beamAlongWidth;
+
+  let xsM: number[];
+  let ysM: number[];
+  if (explicit && explicit.xsM.length >= 2 && explicit.ysM.length >= 2) {
+    xsM = [...explicit.xsM].sort((a, b) => a - b).map((v) => round(v, 3));
+    ysM = [...explicit.ysM].sort((a, b) => a - b).map((v) => round(v, 3));
+  } else {
+    const spacing = Math.max(2, spacingTargetM);
+    const c = Math.max(2, ceil(L / spacing) + 1);
+    const r = Math.max(2, ceil(W / spacing) + 1);
+    xsM = Array.from({ length: c }, (_, i) => round((i * L) / (c - 1), 3));
+    ysM = Array.from({ length: r }, (_, j) => round((j * W) / (r - 1), 3));
+  }
+
+  const cols = xsM.length;
+  const rows = ysM.length;
+  const columnCount = cols * rows;                       // ALWAYS derived — never overridden
+
+  // Grid spans (the architectural grid may not start at 0 or reach the footprint edge).
+  const spanX = Math.max(0, xsM[cols - 1] - xsM[0]);
+  const spanY = Math.max(0, ysM[rows - 1] - ysM[0]);
+  // Plinth beam runs along every grid line, both directions.
+  const autoBeamLen = rows * spanX + cols * spanY;
   const plinthBeamLengthM = plinthLenOverride && plinthLenOverride > 0 ? plinthLenOverride : round(autoBeamLen);
-  return { footprintLengthM: round(L), footprintWidthM: round(W), cols, rows, xsM, ysM, spacingM: spacing, columnCount, plinthBeamLengthM };
+  // Representative centre-to-centre spacing, for display only.
+  const spacingM = round(Math.max(spanX / Math.max(1, cols - 1), spanY / Math.max(1, rows - 1)), 2);
+
+  return {
+    footprintLengthM: round(L), footprintWidthM: round(W),
+    cols, rows, xsM, ysM, spacingM, columnCount, plinthBeamLengthM,
+  };
 }
 
 const line = (key: string, item: string, spec: string, unit: string, quantity: number, rate: number): CivilLine => ({
@@ -487,8 +625,12 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
 
   /* ---------- FOUNDATION ---------- */
   const f = input.foundation;
-  const grid = buildFoundationGrid(L, W, f.columnSpacingM ?? 3, f.footingCount, f.plinthBeamLengthM);
+  // ONE grid. When the caller supplies the architectural grid (it always does in the app), the
+  // footing / pedestal / column counts are taken straight from it — 15 columns on the drawing
+  // means 15 footings, 15 pedestals and 15 columns in the BOQ, with no way to desync them.
+  const grid = buildFoundationGrid(L, W, f.columnSpacingM ?? 3, f.plinthBeamLengthM, ctx.columnGrid);
   const footingCount = grid.columnCount;
+  const gridFromPlan = !!(ctx.columnGrid && ctx.columnGrid.xsM.length >= 2 && ctx.columnGrid.ysM.length >= 2);
 
   const footL = f.footingLengthM ?? (floors === 1 ? 1.0 : floors === 2 ? 1.2 : 1.5);
   const footW = f.footingWidthM ?? footL;
@@ -508,6 +650,35 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   const botBars = Math.max(2, f.plinthBeamBottomBars ?? 3);
   const stirDia = f.plinthBeamStirrupDiaMm ?? 8;
   const stirSp = f.plinthBeamStirrupSpacingMm ?? 150;
+
+  // Soil + structural detailing (drives the reinforcement drawings and the SBC bearing check).
+  const sbcKnm2 = Math.max(20, f.sbcKnm2 ?? 150);
+  const loadPerSqmKn = Math.max(1, f.loadPerSqmKn ?? 5);
+  const steelGrade = f.steelGrade ?? "Fe500";
+  const coverFootingMm = f.coverFootingMm ?? 50;
+  const coverColumnMm = f.coverColumnMm ?? 40;
+  const coverBeamMm = f.coverBeamMm ?? 40;
+  const footingBarDiaMm = f.footingBarDiaMm ?? 12;
+  const footingBarSpacingMm = f.footingBarSpacingMm ?? 150;
+  const footingTopMesh = f.footingTopMesh ?? false;
+  const columnBars = Math.max(4, f.columnBars ?? 4);
+  const columnBarDiaMm = f.columnBarDiaMm ?? 16;
+  const columnTieDiaMm = f.columnTieDiaMm ?? 8;
+  const columnTieSpacingMm = f.columnTieSpacingMm ?? 150;
+
+  // The section detail is built HERE, not at the end, because the BAR BENDING SCHEDULE is derived
+  // from it and the BBS is what now prices the steel.
+  const sectionDetail = {
+    footingLengthM: footL, footingDepthM: footD, pedestalSizeM: pedSize, pedestalHeightM: pedHt,
+    plinthBeamWidthM: beamW, plinthBeamDepthM: beamD, pccThicknessMm: pccThk, raisedPlinthHeightM: raisedPlinthHt,
+    grade: f.grade, type: f.type,
+    mainBarDiaMm: mainDia, topBars, bottomBars: botBars, stirrupDiaMm: stirDia, stirrupSpacingMm: stirSp,
+    sbcKnm2, loadPerSqmKn, steelGrade,
+    coverFootingMm, coverColumnMm, coverBeamMm,
+    footingBarDiaMm, footingBarSpacingMm, footingTopMesh,
+    columnBars, columnBarDiaMm, columnTieDiaMm, columnTieSpacingMm,
+  };
+  const rebarDesign = resolveRebar(sectionDetail, { builtUpSqm: builtUp, columnCount: footingCount });
 
   const fLines: CivilLine[] = [];
   const gradeRate = rates.rccByGrade[f.grade];
@@ -585,10 +756,38 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     }
   }
 
-  // Reinforcement steel (skip for non-RCC types).
+  /* ---------- REINFORCEMENT: priced from the BAR BENDING SCHEDULE ----------
+   * The old `concrete × 85 kg/cum` proxy meant bar sizes drove the drawings but not the money.
+   * The BBS takes off every bar actually detailed — footing mesh, pedestal verticals + ties,
+   * plinth-beam top/bottom/stirrups — including laps, anchorage and cutting wastage, so the
+   * priced tonnage now moves the moment a bar diameter, spacing or bar count changes.
+   * The proxy survives only as an explicit opt-out (`useBbs: false`). */
   const rccTypes: FoundationType[] = ["rcc_isolated_footing", "rcc_pedestal", "rcc_strip_footing", "rcc_plinth_beam", "full_rcc_slab", "steel_foundation_frame"];
-  const steelKg = f.reinforcementKg ?? (rccTypes.includes(f.type) ? round(concreteCum * steelPerCum) : 0);
-  if (steelKg > 0) fLines.push(line("reinforcement", "Reinforcement steel (Fe500)", `~${steelPerCum} kg/cum, cut/bent/placed`, "kg", steelKg, rates.reinforcement));
+  const beamTypes: FoundationType[] = ["rcc_isolated_footing", "rcc_pedestal", "rcc_strip_footing", "rcc_plinth_beam", "concrete_block"];
+  const isRcc = rccTypes.includes(f.type);
+  const hasPlinthBeam = beamTypes.includes(f.type);
+  const useBbs = f.useBbs ?? true;
+  const pedestalCount = f.type === "rcc_pedestal" ? footingCount : 0;
+
+  const bbs = buildBBS(
+    rebarDesign,
+    { footings: isRcc ? footingCount : 0, pedestals: pedestalCount, plinthBeamLengthM: hasPlinthBeam ? beamLen : 0, concreteCum },
+    f.steelWastagePct ?? 3,
+  );
+
+  let steelKg: number;
+  let steelSpec: string;
+  if (f.reinforcementKg != null && f.reinforcementKg > 0) {
+    steelKg = round(f.reinforcementKg);
+    steelSpec = `${steelGrade} — manual override`;
+  } else if (useBbs && isRcc) {
+    steelKg = bbs.totalKg;
+    steelSpec = `${steelGrade} TMT — from BBS: ${bbs.netKg} kg net + ${bbs.wastagePct}% wastage (${bbs.kgPerCum} kg/cum)`;
+  } else {
+    steelKg = isRcc ? round(concreteCum * steelPerCum) : 0;
+    steelSpec = `${steelGrade} — legacy proxy ~${steelPerCum} kg/cum`;
+  }
+  if (steelKg > 0) fLines.push(line("reinforcement", "Reinforcement steel (cut, bent & placed)", steelSpec, "kg", steelKg, rates.reinforcement));
 
   // Paver base / steel frame specials priced by their own units.
   if (f.type === "paver_block_base") fLines.push(line("paver_base", "Paver-block foundation base", "compacted + 80 mm pavers", "sqm", L * W, rates.paverBase));
@@ -608,8 +807,7 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   }
 
   // Plinth-beam schedule (only for foundation types that actually carry tie beams).
-  const beamTypes: FoundationType[] = ["rcc_isolated_footing", "rcc_pedestal", "rcc_strip_footing", "rcc_plinth_beam", "concrete_block"];
-  const hasPlinthBeam = beamTypes.includes(f.type);
+  // `beamTypes` / `hasPlinthBeam` are declared above — the BBS needs them earlier.
   const perimeterLen = round(2 * (L + W));
   const internalLen = round(Math.max(0, beamLen - perimeterLen));
   const wMm = Math.round(beamW * 1000), dMm = Math.round(beamD * 1000);
@@ -641,20 +839,47 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
     plinthBeamLengthM: beamLen,
     grid,
     beams,
-    section: {
-      footingLengthM: footL, footingDepthM: footD, pedestalSizeM: pedSize, pedestalHeightM: pedHt,
-      plinthBeamWidthM: beamW, plinthBeamDepthM: beamD, pccThicknessMm: pccThk, raisedPlinthHeightM: raisedPlinthHt,
-      grade: f.grade, type: f.type,
-      mainBarDiaMm: mainDia, topBars, bottomBars: botBars, stirrupDiaMm: stirDia, stirrupSpacingMm: stirSp,
-    },
+    // The SAME object the BBS was derived from — one section detail, no second copy to drift.
+    section: sectionDetail,
+    builtUpSqm: round(builtUp),
+    pedestalCount,
+    columnCount: footingCount,
+    gridFromPlan,
+    rebar: rebarDesign,
+    bbs,
+    steelFromBbs: useBbs && isRcc && !(f.reinforcementKg != null && f.reinforcementKg > 0),
   };
 
-  // Structural-engineer warning for multi-storey.
-  if (floors >= 2) {
+  // SOIL BEARING CHECK — the footing is sized AGAINST the SBC, not merely labelled with it.
+  // Service load per column = (built-up area × load intensity) / column count.
+  // `builtUp` (not the raw ctx value) — it is already floored at the footprint area, so a missing
+  // or zero built-up area can never make the bearing check NaN.
+  const totalLoadKn = builtUp * loadPerSqmKn;
+  const perColumnKn = totalLoadKn / Math.max(1, footingCount);
+  const bearingKnm2 = perColumnKn / Math.max(0.01, footL * footW);
+  if (bearingKnm2 > sbcKnm2) {
+    const reqSide = Math.ceil(Math.sqrt(perColumnKn / sbcKnm2) * 20) / 20;   // up to the next 50 mm
     warnings.push(
-      "Foundation size, reinforcement and footing depth must be confirmed by a structural engineer based on soil-bearing capacity and building loads.",
+      `Footing OVERSTRESSED: ${footL} × ${footW} m carries ${Math.round(perColumnKn)} kN and delivers ` +
+      `${Math.round(bearingKnm2)} kN/m² against an SBC of ${sbcKnm2} kN/m². Increase the footing to at ` +
+      `least ${reqSide} m square, or confirm a higher SBC by soil test.`,
     );
-  } else {
+  }
+
+  // What the SBC check IS and — more importantly — what it is NOT.
+  warnings.push(
+    "The SBC result is a PRELIMINARY SERVICE-LOAD BEARING CHECK ONLY (load ÷ footing area vs the entered SBC). " +
+    "It does NOT include settlement, punching shear, one-way/two-way shear, bending/flexural design, " +
+    "eccentricity or uplift, seismic or wind design, or any full structural design.",
+  );
+
+  // Structural-engineer approval — required for EVERY colony, not only multi-storey.
+  warnings.push(
+    "NOT FOR CONSTRUCTION until approved: the foundation, reinforcement, footing depth, beam and column " +
+    "sizes and the bar-bending schedule must be verified and STAMPED by a qualified structural engineer " +
+    "against a site soil-investigation report (SBC) and the actual building loads.",
+  );
+  if (floors === 1) {
     warnings.push(
       "For a single-storey temporary labour colony, RCC/PCC pedestals below the main columns with a raised plinth and peripheral drainage are recommended.",
     );
@@ -769,10 +994,51 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   const totalConcreteCum = round(pccCum + foundationConcrete + (fp.rccFlooringSqm ? fp.rccFlooringSqm * 0.1 : 0));
   const totalSteelKg = steelKg;
 
+  /* ---------- QUOTE GATE — never move the customer's price silently ----------
+   * The freshly-computed numbers are compared against the last price the user APPROVED. While they
+   * differ, `effectiveTotalCost` stays on the approved figure and `pending` is true, so the UI can
+   * show a before/after comparison and demand a confirmation before the BOQ price changes. */
+  const computedQuote: ApprovedCivilQuote = {
+    footingCount,
+    steelKg: totalSteelKg,
+    concreteCum: totalConcreteCum,
+    foundationCost: foundation.cost,
+    totalCost,
+    approvedAt: "",
+  };
+  const ap = input.approvedQuote;
+  const DELTA_DEFS: { key: QuoteDelta["key"]; label: string; unit: string }[] = [
+    { key: "footingCount", label: "Footings / pedestals / columns", unit: "nos" },
+    { key: "steelKg", label: "Reinforcement steel", unit: "kg" },
+    { key: "concreteCum", label: "Concrete", unit: "cum" },
+    { key: "foundationCost", label: "Foundation cost", unit: "INR" },
+    { key: "totalCost", label: "Civil total", unit: "INR" },
+  ];
+  const deltas: QuoteDelta[] = ap
+    ? DELTA_DEFS
+        .map((d) => ({ ...d, before: ap[d.key], after: computedQuote[d.key], diff: round(computedQuote[d.key] - ap[d.key]) }))
+        .filter((d) => Math.abs(d.diff) > 0.005)
+    : [];
+  const quoteGate: QuoteGate = {
+    hasApproved: !!ap,
+    pending: !!ap && deltas.length > 0,
+    approved: ap,
+    computed: computedQuote,
+    deltas,
+    effectiveTotalCost: ap && deltas.length > 0 ? ap.totalCost : totalCost,
+  };
+  if (quoteGate.pending) {
+    warnings.push(
+      `Quoted price is on hold: the civil quantities have changed since the last approval ` +
+      `(${deltas.map((d) => d.label).join(", ")}). Review the before/after comparison and confirm ` +
+      `before the BOQ price is updated.`,
+    );
+  }
+
   return {
     enabled: input.enabled,
     sitePrep, foundation, flooringPlinth, drainage, waterSupply, electricalCivil, externalDev,
-    boq, totalCost, totalConcreteCum, totalSteelKg, warnings, rates,
+    boq, totalCost, totalConcreteCum, totalSteelKg, warnings, rates, quoteGate,
   };
 }
 

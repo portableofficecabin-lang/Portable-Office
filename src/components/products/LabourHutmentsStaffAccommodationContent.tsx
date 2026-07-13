@@ -6,9 +6,10 @@ import labourHutments3 from "@/assets/products/labour-hutments-staff-accommodati
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 export function LabourHutmentsStaffAccommodationContent() {
+  // No "cost per bed" row: this page sells one unit at one fixed, GST-inclusive price, and a
+  // per-bed range beside it would contradict the cart, the JSON-LD offer and the feed.
   const comparisonRows = [
     ["Installation time", "3–6 weeks", "4–6 months"],
-    ["Cost per bed", "₹20,000–40,000", "₹50,000+"],
     ["Foundation needs", "Simple plinth", "Full RCC footings"],
     ["Reusability", "3–5 sites over 10 years", "Fixed location"],
     ["Monsoon delays", "Minimal", "Significant"],
@@ -45,7 +46,7 @@ export function LabourHutmentsStaffAccommodationContent() {
 
   const faqs = [
     { q: "How quickly can a 100-bed labour colony be installed?", a: "A 100-bed G+1 modular labour hutment colony takes 2–3 weeks factory prep + 10–14 days site installation post civil readiness. Work progresses parallel to main site mobilisation, saving valuable project time." },
-    { q: "What is the cost per bed for prefabricated labour hutments?", a: "Cost ranges from ₹20,000–40,000 per bed depending on configuration, panel thickness, and amenities. This is 20–30% cheaper than traditional RCC/brick construction with the added benefit of reusability across 3–5 project sites." },
+    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way it is 20–30% cheaper than traditional RCC/brick construction, with the added benefit of reusability across 3–5 project sites." },
     { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling with 80% material recovery for transport and reinstallation at subsequent sites, making them highly cost-effective over multiple project cycles." },
     { q: "What compliance standards do your labour hutments meet?", a: "Our structures comply with BOCW Act requirements, NBC 2016 fire safety and egress norms, IS 456/800/875 structural standards, and client-specific HSE requirements. Complete documentation including drawings, test certificates, and O&M manuals is provided." },
     { q: "Do you offer multi-storey labour accommodation?", a: "Yes, we offer G+1 and G+2 configurations that maximise space on land-scarce urban sites. Multi-storey units use heavy-duty steel framing designed for Zone V earthquake compliance." },
@@ -351,7 +352,7 @@ export function LabourHutmentsStaffAccommodationContent() {
             { label: "Repainting", value: "Every 3–5 years (coastal/industrial areas)" },
             { label: "Panel Replacement", value: "Individual sections replaceable without full disassembly" },
             { label: "Warranty", value: "1–2 years structural, 5 years panels" },
-            { label: "AMC", value: "Available at ₹5–10/sqm/year for large colonies" },
+            { label: "AMC", value: "Annual maintenance contracts available for large colonies" },
           ].map((item) => (
             <div key={item.label} className="bg-card rounded-lg p-4 border border-border">
               <p className="font-semibold text-foreground text-sm">{item.label}</p>

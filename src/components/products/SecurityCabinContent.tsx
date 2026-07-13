@@ -6,12 +6,15 @@ import securityCabinResidential from "@/assets/products/security-cabin-residenti
 import securityCabinIndustrial from "@/assets/products/security-cabin-industrial-gate.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
-const pricingRows = [
-  ["Entry-level MS cabins (4'×4')", "~₹40,000–55,000", "Gates, small sites"],
-  ["Mid-range GI/FRP cabins (6'×4' – 8'×5')", "~₹55,000–80,000", "Industrial, coastal"],
-  ["Premium Steel/PUF cabins (8'×6'+)", "₹90,000+", "Plants, pharma, labs"],
-  ["ACP modern cabins", "₹43,000+", "Corporate campuses"],
-  ["Container office cabins (20–40 ft)", "₹3,50,000+", "Command centres"],
+// Cabin families and where each one fits. No price column: the cabin sold on this page has
+// one fixed, GST-inclusive price (shown in the header above), and publishing ranges alongside
+// it would contradict the cart, the JSON-LD offer and the Merchant Center feed.
+const cabinTypeRows = [
+  ["Entry-level MS cabins (4'×4')", "Gates, small sites"],
+  ["Mid-range GI/FRP cabins (6'×4' – 8'×5')", "Industrial, coastal"],
+  ["Premium Steel/PUF cabins (8'×6'+)", "Plants, pharma, labs"],
+  ["ACP modern cabins", "Corporate campuses"],
+  ["Container office cabins (20–40 ft)", "Command centres"],
 ];
 
 const applicationAreas = [
@@ -30,7 +33,7 @@ const faqs = [
   },
   {
     q: "Which material is best for security cabins — MS, GI, or FRP?",
-    a: "MS (mild steel) is the most economical at ₹40,000–55,000 for standard sizes. GI offers 20–30% better corrosion resistance — ideal for coastal or high-rainfall areas. FRP is maintenance-free and corrosion-proof, best for institutional and corporate settings. Choose based on location, budget, and expected service life."
+    a: "MS (mild steel) is the most economical option for standard sizes. GI offers 20–30% better corrosion resistance — ideal for coastal or high-rainfall areas. FRP is maintenance-free and corrosion-proof, best for institutional and corporate settings. Choose based on location, budget, and expected service life."
   },
   {
     q: "How long does a security cabin last?",
@@ -46,7 +49,7 @@ const faqs = [
   },
   {
     q: "Can security cabins be relocated?",
-    a: "Yes. MS portable security cabins feature forklift pockets and lifting hooks for easy relocation. Budget ₹10,000+ per move for transport and crane setup. Cabins can be safely relocated 4–6 times with structural integrity checks."
+    a: "Yes. MS portable security cabins feature forklift pockets and lifting hooks for easy relocation. Transport and crane setup for a later move are arranged and quoted separately at the time. Cabins can be safely relocated 4–6 times with structural integrity checks."
   },
   {
     q: "Do I need permissions to install a security cabin?",
@@ -54,7 +57,7 @@ const faqs = [
   },
   {
     q: "What is the minimum order quantity for security cabins?",
-    a: "Single units are available for most MS, GI, FRP, and steel security cabins. PVC cabins may have minimum order quantity requirements (e.g., 5 units). Bulk orders of 10+ units qualify for 15–25% volume discounts."
+    a: "Single units are available for most MS, GI, FRP, and steel security cabins — the cabin listed on this page can be ordered as one unit at the price shown. PVC cabins may have minimum order quantity requirements (e.g., 5 units). Bulk orders of 10+ units are quoted separately by our sales team."
   },
 ];
 
@@ -111,7 +114,7 @@ export function SecurityCabinContent() {
               <li>Custom sizes on request</li>
             </ul>
             <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-              <strong className="text-foreground">Indicative pricing:</strong> Starting around ₹45,000 to ₹55,000 per piece in 2026, depending on cabin size, material selection, and interior fittings.
+              <strong className="text-foreground">Pricing:</strong> The cabin sold on this page is priced at the amount shown above, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode.
             </p>
           </div>
           <div className="space-y-4">
@@ -156,7 +159,7 @@ export function SecurityCabinContent() {
               <li>Safety glass windows</li>
             </ul>
             <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-              <strong className="text-foreground">Sample pricing:</strong> 8' × 6' × 8.5' steel security cabin starting from approximately ₹90,000–1,20,000 per piece, varying by insulation thickness, AC provision, and interior finishes.
+              <strong className="text-foreground">Note:</strong> Steel variants such as the 8' × 6' × 8.5' cabin are built to order and quoted separately, as insulation thickness, AC provision, and interior finishes change the specification.
             </p>
           </div>
           <div>
@@ -200,7 +203,7 @@ export function SecurityCabinContent() {
               <li>Single FRP or metal door</li>
             </ul>
             <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-              <strong className="text-foreground">Pricing:</strong> 6' × 4' cabin starting around ₹65,000–80,000 per piece; larger 8' × 6' units proportionally higher.
+              <strong className="text-foreground">Note:</strong> GI cabins in 6' × 4' and larger 8' × 6' formats are built to order and quoted separately from the unit listed on this page.
             </p>
           </div>
           <OptimizedImage
@@ -229,7 +232,7 @@ export function SecurityCabinContent() {
               <li>Height: typically 8'–8.5' for comfortable standing</li>
             </ul>
             <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-              <strong className="text-foreground">Indicative pricing:</strong> 7' × 4' GI security cabin starting around ₹70,000 per piece depending on fittings.
+              <strong className="text-foreground">Note:</strong> A 7' × 4' GI security guard cabin is a made-to-order size and is quoted separately once fittings are confirmed.
             </p>
           </div>
           <div>
@@ -268,7 +271,7 @@ export function SecurityCabinContent() {
                 <li>6' × 4' cabin with 60mm wall thickness for better insulation</li>
               </ul>
               <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20 mt-3">
-                <strong className="text-foreground">Reference pricing:</strong> Approximately ₹40,000–55,000 per piece for standard single-guard sizes.
+                <strong className="text-foreground">Note:</strong> Single-guard MS sizes other than the unit listed on this page are made to order and quoted separately.
               </p>
             </div>
             <div>
@@ -315,7 +318,7 @@ export function SecurityCabinContent() {
             ))}
           </div>
           <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-            <strong className="text-foreground">Approximate pricing:</strong> ₹46,000–60,000 for typical 4' × 4' and 4' × 6' configurations. Final cost depends on accessories including air-conditioning, extra glazing, and branding panels.
+            <strong className="text-foreground">Note:</strong> Outdoor 4' × 4' and 4' × 6' configurations are made to order. Accessories such as air-conditioning, extra glazing, and branding panels change the specification and are quoted separately.
           </p>
         </div>
       </section>
@@ -337,7 +340,7 @@ export function SecurityCabinContent() {
               <li>Pyramid or Kaul style FRP roof</li>
             </ul>
             <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-              <strong className="text-foreground">Pricing:</strong> FRP security cabin 4' × 4' starting around ₹45,000–55,000 per piece; ACP variants slightly higher due to façade material.
+              <strong className="text-foreground">Note:</strong> FRP and ACP cabins are a different build from the steel cabin listed on this page and are quoted separately.
             </p>
           </div>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -397,7 +400,7 @@ export function SecurityCabinContent() {
             Prefabricated security cabin units ship factory-built and ready-to-install, minimising on-site disruption while ensuring consistent quality across multiple locations. Modern designs feature sleek rectangular forms with concealed wiring, large glazed panels, integrated LED lighting, and company branding panels.
           </p>
           <p className="text-sm bg-primary/5 rounded-lg p-3 border border-primary/20">
-            <strong className="text-foreground">Example pricing:</strong> Modern cabins starting around ₹43,000 for compact models, increasing with custom glass, surface treatment, and built-type amenities.
+            <strong className="text-foreground">Note:</strong> Modern and prefabricated variants are configured to the site — custom glass, surface treatment, and built-in amenities are specified and quoted per project.
           </p>
         </div>
       </section>
@@ -412,53 +415,57 @@ export function SecurityCabinContent() {
           </div>
           <div className="bg-background rounded-lg p-5 border">
             <h4 className="font-semibold text-foreground mb-2">Portable Toll Booths</h4>
-            <p className="text-sm text-muted-foreground">Compact cabins with large front glazing, money handling counter, and cable routing for toll systems. Starting around ₹48,000 per unit.</p>
+            <p className="text-sm text-muted-foreground">Compact cabins with large front glazing, money handling counter, and cable routing for toll systems. Built to order and quoted per project.</p>
           </div>
           <div className="bg-background rounded-lg p-5 border">
             <h4 className="font-semibold text-foreground mb-2">Container Office Cabins</h4>
-            <p className="text-sm text-muted-foreground">20 ft or 40 ft units serving as control rooms or security command centres with AC, CCTV monitoring desks, and meeting areas. From ₹3,50,000+.</p>
+            <p className="text-sm text-muted-foreground">20 ft or 40 ft units serving as control rooms or security command centres with AC, CCTV monitoring desks, and meeting areas. Quoted per project.</p>
           </div>
         </div>
       </section>
 
-      {/* Pricing Table */}
+      {/* Cabin types, lead times & ordering */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-4">Pricing, Lead Times & Ordering Process</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-4">Cabin Types, Lead Times & Ordering Process</h2>
         <div className="overflow-x-auto mb-6">
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="bg-accent/10">
                 <th className="border border-border px-4 py-3 text-left font-semibold text-foreground">Category</th>
-                <th className="border border-border px-4 py-3 text-left font-semibold text-foreground">Starting Price (Per Piece)</th>
                 <th className="border border-border px-4 py-3 text-left font-semibold text-foreground">Best For</th>
               </tr>
             </thead>
             <tbody>
-              {pricingRows.map((row, i) => (
+              {cabinTypeRows.map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="border border-border px-4 py-3 text-muted-foreground">{row[0]}</td>
-                  <td className="border border-border px-4 py-3 font-semibold text-foreground">{row[1]}</td>
-                  <td className="border border-border px-4 py-3 text-muted-foreground">{row[2]}</td>
+                  <td className="border border-border px-4 py-3 font-semibold text-foreground">{row[0]}</td>
+                  <td className="border border-border px-4 py-3 text-muted-foreground">{row[1]}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p className="text-sm text-muted-foreground mb-6">
+          The security cabin listed on this page is sold at the single price shown above, inclusive of 18% GST. Transport and optional installation are added at checkout from your delivery pincode. Other materials, sizes and custom layouts are quoted separately.
+        </p>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold text-foreground mb-2">Standard delivery time:</h4>
             <p className="text-sm text-muted-foreground">7–15 working days for common sizes; 15–25 days for fully customised designs or large orders. One week turnaround possible for stock configurations.</p>
           </div>
           <div>
-            <h4 className="font-semibold text-foreground mb-2">Ordering steps:</h4>
+            <h4 className="font-semibold text-foreground mb-2">Ordering steps (custom cabins):</h4>
             <ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
               <li>Site assessment or client brief</li>
               <li>Selection of size and material</li>
               <li>Drawing/layout approval</li>
               <li>Final quotation</li>
-              <li>Advance payment and fabrication</li>
+              <li>Order confirmation and fabrication</li>
               <li>Dispatch and installation guidance</li>
             </ol>
+            <p className="mt-2 text-sm text-muted-foreground">
+              The standard cabin listed on this page skips all of that — add it to the cart and pay the full price shown online.
+            </p>
           </div>
         </div>
       </section>

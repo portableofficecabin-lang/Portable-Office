@@ -7,11 +7,14 @@ import {
   Phone,
   MessageCircle,
   Clock,
-  AlertCircle,
+  ShieldCheck,
   CheckCircle2,
   Receipt,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PaymentMethods } from "@/components/PaymentMethods";
+import { GST_PERCENT_LABEL, formatINR } from "@/lib/pricing/gst";
+import { INSTALLATION } from "@/data/shippingZones";
 
 // Server Component (no "use client") — the full policy text is in the initial HTML
 // so Google Merchant Center and crawlers can read it without executing JS.
@@ -48,7 +51,7 @@ export default function PaymentPolicyPage() {
             How Payment <span className="text-accent">Works</span>
           </h1>
           <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-            No payment is taken through this website. Every order is confirmed with a written quotation first — here is exactly what you pay and how you pay it.
+            Standard products can be bought and paid for online, securely. Custom, made-to-order builds follow the quotation route — here is exactly what you pay and how you pay it.
           </p>
         </div>
       </section>
@@ -71,78 +74,107 @@ export default function PaymentPolicyPage() {
             <strong>Last updated:</strong> July 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
-            Portable Office Cabin manufactures to order. Prices shown on this website are indicative starting prices — the amount you actually pay is confirmed in a written quotation before your order is confirmed. This policy explains what is and is not included in a price, which payment methods we accept, and how invoicing works.
+            Portable Office Cabin sells in two ways. Our <strong>standard, fixed-price products</strong> can be bought
+            and paid for directly on this website — the price you see is the price you pay. Our{" "}
+            <strong>made-to-order, custom and project builds</strong> are not sold online: those follow the quotation
+            route, where the price is agreed in writing first. This policy explains both, including what is included in
+            a price, which payment methods we accept, and how invoicing works.
           </p>
 
-          {/* No online payment notice */}
-          <div className="bg-destructive/5 border border-destructive/20 rounded-2xl p-6 mb-10">
+          {/* Online payment IS accepted — this site now takes full payment for fixed-price products. */}
+          <div className="bg-accent/5 border border-accent/20 rounded-2xl p-6 mb-10">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center shrink-0 mt-0.5">
-                <AlertCircle className="h-5 w-5 text-destructive" />
+              <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
+                <ShieldCheck className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <h2 className="font-display text-lg font-bold text-foreground mb-2">No Payment Is Collected on This Website</h2>
+                <h2 className="font-display text-lg font-bold text-foreground mb-2">Online Payment Is Accepted</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  This website does not process payments. <strong>We do not accept online card payment</strong>, and there is no checkout or payment gateway here. Everything you add to your list is a <strong>quote request</strong> — our team responds with a written quotation, and payment is made directly to us by bank transfer, UPI, cheque or demand draft once you approve it.
+                  For standard, fixed-price products you can complete your purchase on this website.{" "}
+                  <strong>Full payment is taken at checkout</strong> by UPI, credit or debit card, or net banking,
+                  processed securely by <strong>Razorpay</strong>. We never see or store your card or bank credentials.
+                  Custom and made-to-order builds are quoted separately — see section 6 below.
                 </p>
               </div>
             </div>
           </div>
 
+          <PaymentMethods variant="checkout" className="mb-10" />
+
           <Section title="1. Prices Shown on This Website">
             <ul className="space-y-3">
-              <Bullet>All prices displayed on the website are <strong>indicative starting prices</strong> and are <strong>exclusive of GST</strong>.</Bullet>
-              <Bullet>A displayed price is a starting point for a standard configuration. The final price depends on size, specification, fit-out and delivery location.</Bullet>
-              <Bullet>The <strong>final payable amount is confirmed in a written quotation</strong> before any order is confirmed. Nothing is binding until that quotation is issued and approved.</Bullet>
+              <Bullet>Prices displayed for standard, purchasable products are <strong>final and inclusive of {GST_PERCENT_LABEL} GST</strong>. The price on the product page is the price in the cart, at checkout and on the invoice.</Bullet>
+              <Bullet>Transport is added by delivery zone and installation is an optional extra — both are shown to you at checkout, before you pay (see section 3).</Bullet>
+              <Bullet>Products shown as <strong>&ldquo;Request a Quote&rdquo;</strong> are made-to-order or project builds and are not sold online. Any price shown against them is indicative, and the payable amount is confirmed in a written quotation.</Bullet>
             </ul>
           </Section>
 
-          <Section title="2. GST Is Charged Extra">
+          <Section title="2. GST Is Included in the Displayed Price">
             <ul className="space-y-3">
-              <Bullet>GST is <strong>not included</strong> in the prices displayed on this website.</Bullet>
-              <Bullet>GST is charged <strong>extra at the applicable rate</strong> and is shown separately on your tax invoice.</Bullet>
-              <Bullet>The GST amount applicable to your order is set out in your written quotation.</Bullet>
+              <Bullet>Displayed product prices <strong>include {GST_PERCENT_LABEL} GST</strong>. There is no tax added on top at checkout.</Bullet>
+              <Bullet>A <strong>GST tax invoice is issued for every order</strong>, showing the taxable value and the GST component separately.</Bullet>
+              <Bullet>Our GSTIN is <span className="font-mono tracking-wide text-foreground">33FVKPK6238Q1ZT</span> — see section 7.</Bullet>
             </ul>
           </Section>
 
           <Section title="3. Delivery, Transport & Installation Charges">
             <ul className="space-y-3">
-              <Bullet><strong>Free delivery within 50 km</strong> of our facility — this is genuinely honoured and no transport charge applies.</Bullet>
-              <Bullet><strong>Beyond 50 km</strong>, transport / freight is charged based on distance. The applicable amount is quoted to you in writing before you confirm.</Bullet>
-              <Bullet><strong>Installation</strong>, if required, is charged separately and is confirmed in the quotation.</Bullet>
+              <Bullet><strong>Free delivery within ~50 km</strong> of our facility (Zone 1) — this is genuinely honoured and no transport charge applies.</Bullet>
+              <Bullet><strong>Beyond that</strong>, transport is charged by <strong>delivery zone</strong>, worked out from your pincode. The exact amount appears in your order total at checkout, before payment.</Bullet>
+              <Bullet><strong>On-site installation is optional</strong> and charged separately at {formatINR(INSTALLATION.rate)} — it is never bundled into the transport charge. You choose whether to add it at checkout.</Bullet>
+              <Bullet>Transport and installation charges also <strong>include {GST_PERCENT_LABEL} GST</strong>.</Bullet>
             </ul>
             <p className="mt-3">
-              For full details of delivery coverage and timelines, see our{" "}
+              The full zone table, rates and delivery timelines are on our{" "}
               <Link href="/shipping" className="text-accent hover:underline">Shipping &amp; Delivery Policy</Link>.
             </p>
           </Section>
 
-          <Section title="4. Accepted Payment Methods">
-            <p>We accept payment through the following methods only:</p>
+          <Section title="4. Accepted Payment Methods (Online Orders)">
+            <p>At checkout, payment is processed securely by <strong>Razorpay</strong>. We accept:</p>
             <ul className="space-y-3 mt-3">
-              <Bullet><strong>Bank transfer</strong> — NEFT, RTGS or IMPS.</Bullet>
-              <Bullet><strong>UPI</strong>.</Bullet>
-              <Bullet><strong>Cheque</strong>.</Bullet>
-              <Bullet><strong>Demand draft</strong>.</Bullet>
+              <Bullet><strong>UPI</strong> — GPay, PhonePe, Paytm, BHIM and any other UPI app.</Bullet>
+              <Bullet><strong>Credit &amp; debit cards</strong> — all major Indian and international cards.</Bullet>
+              <Bullet><strong>Net banking</strong> — all major Indian banks.</Bullet>
             </ul>
             <p className="mt-3">
-              We <strong>do not accept online card payment on this website</strong>, and no payment is taken through the website. Our bank / UPI details are shared with you on the quotation and the invoice.
+              Card and bank details are entered on Razorpay&rsquo;s secure, PCI-DSS compliant gateway. They are never
+              stored on this website.
             </p>
           </Section>
 
-          <Section title="5. Advance Payment & Balance">
+          <Section title="5. Full Payment at Checkout">
             <ul className="space-y-3">
-              <Bullet>A <strong>40–50% advance</strong> is required before manufacturing begins. The advance confirms your order and reserves your production slot.</Bullet>
-              <Bullet>The <strong>balance is payable as set out in your quotation</strong>. The exact payment schedule is confirmed in that quotation — it is not fixed on this website.</Bullet>
-              <Bullet>Manufacturing timelines begin only after the order is confirmed and the advance is received.</Bullet>
+              <Bullet>Products bought online are sold on a <strong>full-payment basis</strong>. The complete amount — product, transport and installation if you selected it — is paid at checkout.</Bullet>
+              <Bullet>There is <strong>no advance or token payment</strong> for online orders; you pay once, at the listed price, and the order is confirmed.</Bullet>
+              <Bullet>Manufacturing and dispatch timelines begin only once the order is confirmed and payment has been received.</Bullet>
             </ul>
             <p className="mt-3">
-              Cancellation and refund rules that apply to the advance are set out in our{" "}
+              Cancellations, returns and refunds are governed by our{" "}
               <Link href="/refund-policy" className="text-accent hover:underline">Return, Refund &amp; Cancellation Policy</Link>.
             </p>
           </Section>
 
-          <Section title="6. GST Tax Invoice">
+          <Section title="6. Custom & Made-to-Order Builds (Quotation Route)">
+            <p>
+              Customised units, bespoke sizes and project builds are <strong>not sold online</strong>. They follow our
+              quotation process, and the terms below apply to those orders only:
+            </p>
+            <ul className="space-y-3 mt-3">
+              <Bullet>The payable amount is confirmed in a <strong>written quotation</strong>. Nothing is binding until that quotation is issued and approved.</Bullet>
+              <Bullet>A <strong>40–50% advance</strong> is required before manufacturing begins. The advance confirms your order and reserves your production slot.</Bullet>
+              <Bullet>The <strong>balance is payable as set out in your quotation</strong> — the exact schedule is confirmed there, not on this website.</Bullet>
+              <Bullet>For quoted orders we accept <strong>bank transfer (NEFT / RTGS / IMPS), UPI, cheque and demand draft</strong>. Our bank and UPI details are shared with you on the quotation and the invoice.</Bullet>
+            </ul>
+            <p className="mt-3">
+              See also our{" "}
+              <Link href="/custom-product-policy" className="text-accent hover:underline">Customised Product Policy</Link>{" "}
+              and our{" "}
+              <Link href="/refund-policy" className="text-accent hover:underline">Return, Refund &amp; Cancellation Policy</Link>.
+            </p>
+          </Section>
+
+          <Section title="7. GST Tax Invoice">
             <div className="bg-accent/5 border border-accent/20 rounded-2xl p-6">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">

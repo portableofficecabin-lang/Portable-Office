@@ -46,6 +46,7 @@ import {
   type CivilContext,
   type CivilWorkResult,
 } from "@/lib/quotation/labourColonyCivil";
+import { buildConstructionPlan } from "@/lib/quotation/labourColonyPlan";
 import {
   defaultProjectMeta,
   newId,
@@ -98,6 +99,11 @@ const n = (x: number) => (Number.isFinite(x) ? x.toLocaleString("en-IN") : "—"
 const floorsLabel = (f: FloorCount) => (f === 1 ? "Ground floor" : f === 2 ? "G+1" : "G+2");
 
 function buildCivilCtx(result: LabourColonyResult): CivilContext {
+  // ONE GRID. We hand the civil engine the SAME architectural column grid the construction drawing
+  // sets out from (buildConstructionPlan → colXs × rowYs), so the BOQ counts exactly the footings,
+  // pedestals and columns that are drawn. There is no second, spacing-derived grid to drift from.
+  const rpf = Math.max(1, Math.ceil(result.occupancy.rooms / Math.max(1, result.config.floors)));
+  const plan = buildConstructionPlan(result.config, { roomsPerFloor: rpf, startRoomNo: 1 });
   return {
     footprintLengthM: result.area.footprintLengthM,
     footprintWidthM: result.area.footprintWidthM,
@@ -107,6 +113,7 @@ function buildCivilCtx(result: LabourColonyResult): CivilContext {
     bathCount: result.occupancy.baths,
     totalCapacity: result.occupancy.totalCapacity,
     diningKitchen: result.config.facilities.diningKitchen,
+    columnGrid: { xsM: plan.colXs, ysM: plan.rowYs },
   };
 }
 

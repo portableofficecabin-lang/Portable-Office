@@ -126,7 +126,7 @@ export function PrefabricatedPortableCabinContent() {
           Transform Your Workspace Today
         </h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Explore our latest price product details and send your enquiry for best quote approx pricing. Request callback from our manufacturing team to discuss your requirements.
+          The cabin on this page is sold at the single price shown at the top, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. For a custom size or layout, send us your requirements or request a callback from our manufacturing team.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-6 py-3 font-semibold hover:bg-accent/90 transition-colors">

@@ -1,5 +1,19 @@
 // SEO data and JSON-LD helpers (server-safe — no "use client")
 
+import {
+  BRAND,
+  getCommerce,
+  hasGenuineSalePrice,
+  isPurchasable,
+} from "@/data/productCommerce";
+import { priceForFeed, sellPrice } from "@/lib/pricing/gst";
+import {
+  DISPATCH_WORKING_DAYS,
+  FALLBACK_ZONE_ID,
+  SHIPPING_ZONES,
+  type ShippingZone,
+} from "@/data/shippingZones";
+
 export const SITE_URL = "https://portableofficecabin.com";
 
 /** Structured data must carry absolute URLs — a bundler-hashed relative asset path
@@ -82,19 +96,200 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]) 
   };
 }
 
-/** Product schema for a QUOTE-ONLY business.
- *  Deliberately emits NO `offers`: nothing on this site is transactable — displayed prices
- *  are indicative "starting from" figures (GST, transport beyond 50 km and installation are
- *  extra) and every enquiry goes through a quote request. An Offer here would assert a
- *  purchasable price, an availability and a shipping rate that do not exist. A Product node
- *  without offers is valid schema.org and is the honest representation. */
+/** `priceValidUntil` for an Offer: one year from the build date, as YYYY-MM-DD.
+ *  Computed, never hard-coded — a date in the past makes Google drop the offer. */
+function oneYearFromNow(): string {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+/* ────────────────────────────────────────────────────────────────────────────────────────
+ *  SHIPPING — modelled from SHIPPING_ZONES, never flattened to a single rate.
+ *
+ *  We used to emit ONE OfferShippingDetails claiming ₹0 freight for all of India. That was
+ *  false (only Zone 1 is free) and it is exactly the kind of claim that got the Merchant
+ *  Center account suspended. Freight is now expressed per zone, at the zone's real rate.
+ *
+ *  The wrinkle: SHIPPING_ZONES.pincodePrefixes deliberately OVERLAP and are resolved
+ *  longest-prefix-first (see resolveShippingZone) — "560" is Zone 1 (free) while the shorter
+ *  "56" is Zone 2 (₹18,000). schema.org has no precedence rule between two DefinedRegions,
+ *  so emitting those prefixes verbatim would let a crawler read "free delivery to 561xxx",
+ *  which we do not honour. Zone 4 is worse: it has NO prefixes at all (it is the fallback),
+ *  so it cannot be expressed as prefixes even in principle.
+ *
+ *  So instead of prefixes we emit non-overlapping PostalCodeRangeSpecifications, derived
+ *  from the same table by resolving every 3-digit pincode bucket through the same
+ *  longest-prefix rule the checkout uses and then merging consecutive buckets. The result
+ *  partitions the whole Indian pincode space (1xxxxx–8xxxxx) exactly once, so every postal
+ *  code carries precisely the rate the customer will actually be charged. Zone 1's ₹0 is
+ *  genuinely free and stays ₹0; nothing else claims free delivery.
+ * ──────────────────────────────────────────────────────────────────────────────────────── */
+
+/** Indian pincodes begin 1–8. 0xxxxx and 9xxxxx are not allocated, so we never claim them. */
+const PIN_FIRST_DIGIT_MIN = 1;
+const PIN_FIRST_DIGIT_MAX = 8;
+const PIN_LENGTH = 6;
+
+interface PostalRange {
+  begin: string;
+  end: string;
+}
+
+/** The bucket width we partition on = the longest prefix in the table (3 today). */
+const ZONE_PREFIX_LEN = SHIPPING_ZONES.reduce(
+  (max, z) => z.pincodePrefixes.reduce((m, p) => Math.max(m, p.length), max),
+  1,
+);
+
+/** Same longest-prefix-wins rule as resolveShippingZone(), applied to a pincode bucket. */
+function zoneForBucket(bucket: string): ShippingZone | undefined {
+  let best: ShippingZone | undefined;
+  let bestLength = -1;
+  for (const zone of SHIPPING_ZONES) {
+    for (const prefix of zone.pincodePrefixes) {
+      if (bucket.startsWith(prefix) && prefix.length > bestLength) {
+        best = zone;
+        bestLength = prefix.length;
+      }
+    }
+  }
+  return best ?? SHIPPING_ZONES.find((z) => z.id === FALLBACK_ZONE_ID);
+}
+
+/**
+ * zoneId -> the contiguous, mutually exclusive pincode ranges that zone really covers.
+ * Computed once at module load, straight from SHIPPING_ZONES, so an owner edit to the freight
+ * table flows into the JSON-LD with no second place to update.
+ */
+const ZONE_POSTAL_RANGES: Map<string, PostalRange[]> = (() => {
+  const ranges = new Map<string, PostalRange[]>();
+  // A prefix longer than the bucket width would make the partition unsound. Bail out rather
+  // than emit a rate we cannot prove — omitting shippingDetails is always safe (Merchant
+  // Center's account-level shipping settings then carry it), a wrong rate never is.
+  if (ZONE_PREFIX_LEN > 3) return ranges;
+
+  const pad = PIN_LENGTH - ZONE_PREFIX_LEN;
+  const first = PIN_FIRST_DIGIT_MIN * 10 ** (ZONE_PREFIX_LEN - 1);
+  const last = (PIN_FIRST_DIGIT_MAX + 1) * 10 ** (ZONE_PREFIX_LEN - 1) - 1;
+
+  let runZoneId: string | undefined;
+  let runStart = "";
+  let runEnd = "";
+
+  const flush = () => {
+    if (!runZoneId) return;
+    const list = ranges.get(runZoneId) ?? [];
+    list.push({ begin: runStart + "0".repeat(pad), end: runEnd + "9".repeat(pad) });
+    ranges.set(runZoneId, list);
+  };
+
+  for (let n = first; n <= last; n++) {
+    const bucket = String(n).padStart(ZONE_PREFIX_LEN, "0");
+    const zoneId = zoneForBucket(bucket)?.id;
+    if (zoneId && zoneId === runZoneId) {
+      runEnd = bucket; // extend the current run
+      continue;
+    }
+    flush();
+    runZoneId = zoneId;
+    runStart = bucket;
+    runEnd = bucket;
+  }
+  flush();
+
+  return ranges;
+})();
+
+/**
+ * One OfferShippingDetails per zone. handlingTime is the manufacturing/dispatch lead time
+ * (DISPATCH_WORKING_DAYS, the 7–15 working days published across the site); transitTime is
+ * the zone's own road leg. Together they reconstruct the "7–21 Working Days" the page shows.
+ *
+ * Installation is NOT folded in — it is a separate optional line item at checkout, not freight.
+ */
+function shippingDetailsForAllZones() {
+  return SHIPPING_ZONES.map((zone) => {
+    const postalRanges = ZONE_POSTAL_RANGES.get(zone.id) ?? [];
+    if (postalRanges.length === 0) return null;
+    return {
+      "@type": "OfferShippingDetails",
+      name: zone.name,
+      shippingRate: {
+        "@type": "MonetaryAmount",
+        // GST-inclusive, exactly what computeTotals() adds to the order.
+        value: zone.rate,
+        currency: "INR",
+      },
+      shippingDestination: postalRanges.map((range) => ({
+        "@type": "DefinedRegion",
+        addressCountry: "IN",
+        postalCodeRange: {
+          "@type": "PostalCodeRangeSpecification",
+          postalCodeBegin: range.begin,
+          postalCodeEnd: range.end,
+        },
+      })),
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: {
+          "@type": "QuantitativeValue",
+          minValue: DISPATCH_WORKING_DAYS.min,
+          maxValue: DISPATCH_WORKING_DAYS.max,
+          unitCode: "DAY",
+        },
+        transitTime: {
+          "@type": "QuantitativeValue",
+          minValue: zone.transitDaysMin,
+          maxValue: zone.transitDaysMax,
+          unitCode: "DAY",
+        },
+      },
+    };
+  }).filter(Boolean);
+}
+
+/**
+ * RETURNS. This mirrors /refund-policy EXACTLY and must keep doing so.
+ *
+ * That page states: every unit is custom-built to order, so "we do not accept returns" once
+ * the product has been manufactured and delivered; an order may be cancelled within 48 hours
+ * of confirmation for a full refund only if manufacturing has not started.
+ *
+ * A cancellation window is NOT a return window, so the correct category is
+ * MerchantReturnNotPermitted. Claiming a 30-day return here would look better in Shopping and
+ * would itself be a misrepresentation — the site does not honour it.
+ */
+const RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "IN",
+  returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+  merchantReturnLink: `${SITE_URL}/refund-policy`,
+} as const;
+
+/** Product schema.
+ *
+ *  The `offers` block is emitted ONLY when `isPurchasable(id)` — the same single predicate
+ *  that gates Add to Cart and Merchant feed inclusion (see src/data/productCommerce.ts), so
+ *  page / JSON-LD / cart / feed can never disagree. Quote-only SKUs (custom, rental, service,
+ *  guide, location, or any product whose price the owner has not confirmed) get a valid
+ *  Product node with NO price and NO availability — asserting either would be a
+ *  misrepresentation. Callers that pass no `id` at all (the promotions landing pages) are
+ *  quote-only by definition and likewise get no offers.
+ *
+ *  The price is `sellPrice(basePrice)` — GST-inclusive, the identical integer the page shows,
+ *  the cart charges and the feed submits. Shipping and returns are modelled from
+ *  src/data/shippingZones.ts and /refund-policy respectively (see above). */
 export function generateProductStructuredData(product: {
+  /** Product.id from src/data/products.ts — the join key into the commerce catalog.
+   *  Without it nothing is treated as purchasable and no `offers` is emitted. */
+  id?: string;
   name: string;
   description: string;
-  /** Accepted from the catalog but intentionally NOT emitted — see the note above:
-   *  with no Offer, no price / availability leaves this function. */
-  price?: number;
-  inStock?: boolean;
+  /** The whole gallery. Emitted as an ARRAY of absolute https URLs, as Google prefers. */
+  images?: string[];
+  /** Single-image convenience for callers with only a hero (e.g. the promotions landing
+   *  pages). Folded into the same `image` array. */
   image?: string;
   sku?: string;
   slug?: string;
@@ -115,6 +310,76 @@ export function generateProductStructuredData(product: {
   const productUrl = product.slug
     ? `${SITE_URL}/products/${product.slug}`
     : `${SITE_URL}/products`;
+
+  // The commerce catalog is the authority on money and on what may be sold.
+  const commerce = product.id ? getCommerce(product.id) : undefined;
+  const purchasable = !!product.id && isPurchasable(product.id) && !!commerce;
+
+  // A genuine strike-through: offers.price stays the CURRENT (lower) price, and the higher
+  // "was" price is carried as a ListPrice UnitPriceSpecification — the only correct way to
+  // express a sale in schema.org. hasGenuineSalePrice() is false for every SKU today (no
+  // compareAtBasePrice is set anywhere, deliberately), so this renders nothing yet; putting
+  // the higher number in offers.price would misstate what the customer is charged.
+  const salePriceBlock =
+    commerce && hasGenuineSalePrice(commerce) && commerce.compareAtBasePrice
+      ? {
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            priceType: "https://schema.org/ListPrice",
+            price: priceForFeed(sellPrice(commerce.compareAtBasePrice)),
+            priceCurrency: "INR",
+          },
+        }
+      : {};
+
+  // Empty ONLY if the range derivation bailed out (see ZONE_POSTAL_RANGES). In that case we
+  // omit the key entirely and let Merchant Center's account-level shipping settings carry
+  // freight — saying nothing is safe, quoting a rate we cannot prove is not.
+  const shipping = shippingDetailsForAllZones();
+
+  const offerBlock =
+    purchasable && commerce
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: productUrl,
+            // GST-INCLUSIVE, rounded once in sellPrice() — byte-identical to the price
+            // rendered on the page, charged at checkout and submitted to the feed.
+            price: priceForFeed(sellPrice(commerce.basePrice)),
+            priceCurrency: "INR",
+            ...salePriceBlock,
+            // Built to order, but never sold when we cannot supply it: isPurchasable()
+            // already requires inStock, so this is InStock in practice. BackOrder (not
+            // OutOfStock) is the honest fallback — the unit is still orderable, it just
+            // ships after manufacture.
+            availability: commerce.inStock
+              ? "https://schema.org/InStock"
+              : "https://schema.org/BackOrder",
+            itemCondition: "https://schema.org/NewCondition",
+            priceValidUntil: oneYearFromNow(),
+            seller: {
+              "@type": "Organization",
+              name: BRAND,
+              url: SITE_URL,
+            },
+            ...(shipping.length > 0 ? { shippingDetails: shipping } : {}),
+            hasMerchantReturnPolicy: RETURN_POLICY,
+          },
+        }
+      : {};
+
+  // No GTINs exist for these products, so identity is brand + mpn, and mpn is the SKU.
+  const sku = commerce?.sku || product.sku || "POC-GENERIC";
+
+  // Absolute — the catalog hands us bundler-hashed paths like /_next/static/media/….webp,
+  // which a crawler cannot resolve. Deduped so a hero passed twice isn't emitted twice.
+  const images = Array.from(
+    new Set(
+      [...(product.images || []), ...(product.image ? [product.image] : [])]
+        .filter(Boolean)
+        .map(absoluteUrl),
+    ),
+  );
 
   const reviews = product.reviews ?? [];
   // Prefer the authoritative aggregate (all approved reviews); fall back to computing
@@ -160,27 +425,33 @@ export function generateProductStructuredData(product: {
       }
     : {};
 
+  // For a fed SKU the schema name MUST be the feed title: it is what <g:title> sends and what
+  // the page <title> renders, and Google matches the feed item to its landing page on it.
+  // Quote-only SKUs (and callers with no commerce object) keep the caller's name — they are
+  // never fed, so there is nothing to match.
+  const name = purchasable && commerce ? commerce.feedTitle : product.name;
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
+    name,
     description: product.description,
     keywords: product.keywords,
     category: product.category,
     url: productUrl,
-    // Absolute — the catalog hands us bundler-hashed paths like
-    // /_next/static/media/….webp, which a crawler cannot resolve.
-    ...(product.image ? { image: absoluteUrl(product.image) } : {}),
-    sku: product.sku || "POC-GENERIC",
+    ...(images.length > 0 ? { image: images } : {}),
+    sku,
+    mpn: sku,
     brand: {
       "@type": "Brand",
-      name: "Portable Office Cabin",
+      name: BRAND,
     },
     manufacturer: {
       "@type": "Organization",
-      name: "Portable Office Cabin",
+      name: BRAND,
       url: SITE_URL,
     },
+    ...offerBlock,
     ...reviewBlock,
   };
 }

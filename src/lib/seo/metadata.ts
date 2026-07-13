@@ -15,6 +15,20 @@ export function buildCanonical(path: string) {
   return `${SITE_URL}${normalized}`;
 }
 
+/**
+ * Force any image reference to a fully-qualified https URL.
+ *
+ * A RELATIVE og:image does not render — Facebook/WhatsApp/X and Google's rich-result
+ * preview all require an absolute URL. Several callers hand us a Next static-import path
+ * ("/_next/static/media/…"), so absolutising here (rather than at each call site) means no
+ * page can ship a broken social image.
+ */
+function toAbsoluteImage(url: string): string {
+  if (!url) return siteConfig.defaultOgImage;
+  if (url.startsWith("http")) return url;
+  return `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
 type GeoMeta = {
   region: string;
   placename: string;
@@ -28,7 +42,9 @@ export function buildPageMetadata({
   description,
   keywords,
   path,
+  image,
   ogImage,
+  imageAlt,
   ogType = "website",
   geo,
 }: {
@@ -37,12 +53,22 @@ export function buildPageMetadata({
   description: string;
   keywords?: string;
   path: string;
+  /**
+   * The page's own primary image — for a product page, the SAME photo the gallery shows
+   * (and the same one <g:image_link> sends to Merchant Center). Absolute or root-relative;
+   * it is absolutised for you. OPTIONAL — omit it and the site-wide og-image.jpg is used,
+   * exactly as before.
+   */
+  image?: string;
+  /** @deprecated Older alias for `image`. Kept so existing callers keep working. */
   ogImage?: string;
+  /** Alt text for the social image. Optional. */
+  imageAlt?: string;
   ogType?: "website" | "article" | "product";
   geo?: GeoMeta;
 }) {
   const canonical = buildCanonical(path);
-  const image = ogImage ?? siteConfig.defaultOgImage;
+  const resolvedImage = toAbsoluteImage(image ?? ogImage ?? siteConfig.defaultOgImage);
   const resolvedTitle = absoluteTitle ?? title ?? siteConfig.name;
   const titleField = absoluteTitle ? { absolute: absoluteTitle } : resolvedTitle;
   const geoMeta = geo ?? {
@@ -68,7 +94,7 @@ export function buildPageMetadata({
       description,
       url: canonical,
       siteName: siteConfig.name,
-      images: [{ url: image }],
+      images: [imageAlt ? { url: resolvedImage, alt: imageAlt } : { url: resolvedImage }],
       type: ogType,
       locale: "en_IN",
     },
@@ -76,7 +102,7 @@ export function buildPageMetadata({
       card: "summary_large_image" as const,
       title: resolvedTitle,
       description,
-      images: [image],
+      images: [resolvedImage],
     },
     other: {
       "geo.region": geoMeta.region,

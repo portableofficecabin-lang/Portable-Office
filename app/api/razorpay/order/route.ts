@@ -1,0 +1,252 @@
+/**
+ * POST /api/razorpay/order — create a Razorpay order for the signed-in user's cart.
+ *
+ * ── THE SECURITY PROPERTY THAT MATTERS ──────────────────────────────────────────────
+ * The amount charged is RECOMPUTED HERE, on the server, from the user's own cart_items
+ * rows + the commerce catalog + the zone table. Nothing about the price comes from the
+ * browser — the client posts only a pincode and an installation flag. If a customer
+ * tampers with the JS and posts ₹1, they are still charged the real total, because the
+ * real total is never something they sent us.
+ *
+ * The same computeTotals() the cart and checkout UI render from is used here, so the
+ * figure the customer was shown and the figure Razorpay charges are the same integer.
+ *
+ * Razorpay is called over its REST API with fetch + HTTP Basic auth — deliberately no
+ * `razorpay` npm package, to avoid the install step and the supply-chain dependency.
+ */
+
+import { NextResponse } from "next/server";
+import { createClient as createSupabaseServerClient } from "@/lib/supabase/server";
+import { createClient as createSupabaseServiceClient } from "@supabase/supabase-js";
+import { computeTotals } from "@/lib/pricing/orderTotals";
+import { getProductById } from "@/data/products";
+
+// node:crypto / Supabase cookies — must not run on the edge, and must never be cached.
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+const RAZORPAY_ORDERS_URL = "https://api.razorpay.com/v1/orders";
+
+/** Razorpay rejects anything under ₹1. A ₹0 order would also mean our maths broke. */
+const MIN_AMOUNT_PAISE = 100;
+
+/**
+ * Service-role client: RLS gives users INSERT+SELECT on their own orders but NO UPDATE,
+ * and no INSERT at all on order_status_history — that is deliberate (it is why a browser
+ * can never mark an order paid). The server therefore writes with the service key.
+ *
+ * Intentionally left UNTYPED (no <Database> generic): the razorpay_* columns are added by
+ * supabase/migrations/20260713090000_razorpay_payment_fields.sql and are not yet in the
+ * generated src/integrations/supabase/types.ts. Regenerate the types and this can be typed.
+ */
+function serviceClient(url: string, serviceKey: string) {
+  return createSupabaseServiceClient(url, serviceKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
+
+export async function POST(request: Request) {
+  // ── Fail loudly on missing config, rather than pretending to take a payment ──────
+  const keyId = process.env.RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  const missing = [
+    !keyId && "RAZORPAY_KEY_ID",
+    !keySecret && "RAZORPAY_KEY_SECRET",
+    !supabaseUrl && "NEXT_PUBLIC_SUPABASE_URL",
+    !serviceKey && "SUPABASE_SERVICE_ROLE_KEY",
+  ].filter(Boolean);
+
+  if (missing.length > 0) {
+    console.error(`[razorpay/order] missing env: ${missing.join(", ")}`);
+    return NextResponse.json(
+      { error: `Payments are not configured on this server (missing: ${missing.join(", ")}). Please contact us to complete your order.` },
+      { status: 500 },
+    );
+  }
+
+  // ── Authenticate. Anonymous checkout is not supported. ──────────────────────────
+  const supabase = await createSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: "Please sign in to complete your purchase." }, { status: 401 });
+  }
+
+  let body: { pincode?: string; wantsInstallation?: boolean; address_line1?: string; address_line2?: string; city?: string; state?: string; notes?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
+
+  const pincode = (body.pincode ?? "").trim();
+  const wantsInstallation = body.wantsInstallation === true;
+
+  // ── The user's REAL cart, read server-side. The browser sends no items and no prices. ──
+  const { data: cartRows, error: cartErr } = await supabase
+    .from("cart_items")
+    .select("product_id, quantity")
+    .eq("user_id", user.id);
+
+  if (cartErr) {
+    console.error("[razorpay/order] cart read failed:", cartErr.message);
+    return NextResponse.json({ error: "Could not read your cart." }, { status: 500 });
+  }
+  if (!cartRows || cartRows.length === 0) {
+    return NextResponse.json({ error: "Your cart is empty." }, { status: 400 });
+  }
+
+  // ── Authoritative totals ────────────────────────────────────────────────────────
+  const totals = computeTotals({
+    items: cartRows.map((row) => ({
+      productId: row.product_id,
+      quantity: row.quantity,
+      name: getProductById(row.product_id)?.name,
+    })),
+    pincode,
+    wantsInstallation,
+  });
+
+  if (totals.skipped.length > 0) {
+    // A quote-only product reached the cart (e.g. added before the guard existed).
+    // Refuse to charge for it rather than inventing a price.
+    return NextResponse.json(
+      { error: "Your cart contains a made-to-order product that cannot be bought online. Please remove it and request a quote." },
+      { status: 400 },
+    );
+  }
+  if (totals.lines.length === 0) {
+    return NextResponse.json({ error: "Your cart is empty." }, { status: 400 });
+  }
+  if (!totals.zone || totals.shipping === null) {
+    return NextResponse.json(
+      { error: "Enter a valid 6-digit delivery pincode so we can calculate transport." },
+      { status: 400 },
+    );
+  }
+  if (totals.amountPaise < MIN_AMOUNT_PAISE) {
+    console.error(`[razorpay/order] computed amount too low: ${totals.amountPaise} paise`);
+    return NextResponse.json({ error: "Order total is invalid. Please contact us." }, { status: 400 });
+  }
+
+  const admin = serviceClient(supabaseUrl!, serviceKey!);
+
+  // ── Local order first, so the Razorpay receipt can carry our order number ───────
+  // order_number is generated by the `set_order_number` trigger when passed as "".
+  const { data: order, error: orderErr } = await admin
+    .from("orders")
+    .insert({
+      user_id: user.id,
+      order_number: "",
+      status: "pending",
+      total_amount: totals.grandTotal,
+      payment_method: "razorpay",
+      payment_status: "pending",
+      shipping_address_line1: body.address_line1 ?? null,
+      shipping_address_line2: body.address_line2 ?? null,
+      shipping_city: body.city ?? null,
+      shipping_state: body.state ?? null,
+      shipping_pincode: pincode,
+      notes: body.notes || null,
+    })
+    .select("id, order_number")
+    .single();
+
+  if (orderErr || !order) {
+    console.error("[razorpay/order] order insert failed:", orderErr?.message);
+    return NextResponse.json({ error: "Could not start your order." }, { status: 500 });
+  }
+
+  // Line items, including transport and installation as their own rows, so the sum of
+  // order_items always reconciles to orders.total_amount and the admin sees the breakdown.
+  const orderItems: Record<string, unknown>[] = totals.lines.map((line) => ({
+    order_id: order.id,
+    product_id: line.productId,
+    product_name: line.name,
+    product_sku: line.sku,
+    quantity: line.quantity,
+    unit_price: line.unitPrice,
+  }));
+
+  orderItems.push({
+    order_id: order.id,
+    product_id: null,
+    product_name: `Transport — ${totals.zone.name}`,
+    product_sku: totals.zone.id,
+    quantity: 1,
+    unit_price: totals.shipping,
+  });
+
+  if (totals.installation > 0) {
+    orderItems.push({
+      order_id: order.id,
+      product_id: null,
+      product_name: "On-site installation & positioning",
+      product_sku: "INSTALLATION",
+      quantity: 1,
+      unit_price: totals.installation,
+    });
+  }
+
+  const { error: itemsErr } = await admin.from("order_items").insert(orderItems);
+  if (itemsErr) {
+    console.error("[razorpay/order] order_items insert failed:", itemsErr.message);
+    await admin.from("orders").delete().eq("id", order.id);
+    return NextResponse.json({ error: "Could not start your order." }, { status: 500 });
+  }
+
+  // ── Create the Razorpay order ───────────────────────────────────────────────────
+  let razorpayOrder: { id?: string; amount?: number; currency?: string; error?: { description?: string } };
+  try {
+    const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+    const res = await fetch(RAZORPAY_ORDERS_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: totals.amountPaise,
+        currency: "INR",
+        // Razorpay caps the receipt at 40 chars; "ORD-10001" is comfortably inside.
+        receipt: order.order_number,
+        notes: { order_id: order.id, user_id: user.id },
+      }),
+    });
+    razorpayOrder = await res.json();
+    if (!res.ok || !razorpayOrder?.id) {
+      throw new Error(razorpayOrder?.error?.description || `Razorpay returned ${res.status}`);
+    }
+  } catch (err) {
+    console.error("[razorpay/order] Razorpay order creation failed:", err instanceof Error ? err.message : err);
+    // Roll the local order back (order_items cascade) so no orphan pending order is left.
+    await admin.from("orders").delete().eq("id", order.id);
+    return NextResponse.json({ error: "Could not reach the payment gateway. Please try again." }, { status: 502 });
+  }
+
+  const { error: updateErr } = await admin
+    .from("orders")
+    .update({ razorpay_order_id: razorpayOrder.id })
+    .eq("id", order.id);
+
+  if (updateErr) {
+    // Almost always means the migration has not been applied to this database.
+    console.error("[razorpay/order] could not store razorpay_order_id:", updateErr.message);
+    await admin.from("orders").delete().eq("id", order.id);
+    return NextResponse.json(
+      { error: "Payment could not be started (order storage failed). Please contact us." },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({
+    razorpayOrderId: razorpayOrder.id,
+    amount: totals.amountPaise,
+    currency: "INR",
+    keyId, // the public key_id — safe to expose, and sourced here so it cannot drift
+    orderId: order.id,
+    orderNumber: order.order_number,
+  });
+}

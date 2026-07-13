@@ -131,13 +131,16 @@ const cabinTypes = [
   { icon: Home, title: "Rooftop Shed Cabins", desc: "Lightweight office or storage solutions designed for terrace installation." },
 ];
 
-const pricingRows = [
-  ["Basic security cabin", "4’ x 4’", "₹40,000 – ₹60,000"],
-  ["Standard security cabin", "6’ x 6’", "₹70,000 – ₹1,00,000"],
-  ["Basic office cabin", "8’ x 10’", "₹1,20,000 – ₹1,80,000"],
-  ["Standard office cabin", "10’ x 20’", "₹2,50,000 – ₹4,00,000"],
-  ["Enhanced office cabin", "10’ x 30’", "₹4,00,000 – ₹6,00,000"],
-  ["Large staff / bunk cabin", "40’ x 10’", "₹5,00,000 – ₹8,00,000"],
+// Size reference only — no price column. The cabin sold on this page has one fixed,
+// GST-inclusive price (shown in the header above), so publishing ranges beside it would
+// contradict the cart, the JSON-LD offer and the Merchant Center feed.
+const cabinTypeRows = [
+  ["Basic security cabin", "4’ x 4’"],
+  ["Standard security cabin", "6’ x 6’"],
+  ["Basic office cabin", "8’ x 10’"],
+  ["Standard office cabin", "10’ x 20’"],
+  ["Enhanced office cabin", "10’ x 30’"],
+  ["Large staff / bunk cabin", "40’ x 10’"],
 ];
 
 const industries = [
@@ -192,7 +195,7 @@ export function MSPortableCabinContent() {
             The Indian construction and infrastructure sector adopted MS portable cabins because they solve a real problem fast: creating durable offices, accommodation, security points, classrooms, and sanitation blocks without waiting months for conventional construction.
           </p>
           <p className="leading-relaxed text-muted-foreground">
-            Portable Office Cabin, established in 2014, manufactures and supplies MS portable cabins, container offices, and prefab buildings for both B2B and B2C requirements across India. This guide explains what an MS portable cabin is, typical sizes, realistic price ranges for 2024–2025, major applications, and how MS compares with GI, FRP, and shipping container conversions.
+            Portable Office Cabin, established in 2014, manufactures and supplies MS portable cabins, container offices, and prefab buildings for both B2B and B2C requirements across India. This guide explains what an MS portable cabin is, typical sizes, major applications, and how MS compares with GI, FRP, and shipping container conversions.
           </p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -349,10 +352,10 @@ export function MSPortableCabinContent() {
       <section className="space-y-6">
         <div className="flex items-center gap-3">
           <IndianRupee className="h-6 w-6 text-accent" />
-          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Pricing of MS Portable Cabins in India (2024–2025)</h2>
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Price & Standard Cabin Types</h2>
         </div>
         <p className="leading-relaxed text-muted-foreground">
-          Final pricing depends on cabin size, insulation, interior finish quality, utility scope, transport distance, and order volume. The ranges below are indicative budgeting references for 2024–2025.
+          The MS portable cabin listed on this page is sold at the single price shown at the top, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode. The table below is a size reference for the standard cabin types we build — other sizes and finishes are made to order and quoted separately.
         </p>
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <table className="w-full text-sm">
@@ -360,15 +363,13 @@ export function MSPortableCabinContent() {
               <tr className="bg-accent/10">
                 <th className="px-5 py-4 text-left font-semibold text-foreground">Cabin type</th>
                 <th className="px-5 py-4 text-left font-semibold text-foreground">Size</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Approximate range</th>
               </tr>
             </thead>
             <tbody>
-              {pricingRows.map(([type, size, price], index) => (
+              {cabinTypeRows.map(([type, size], index) => (
                 <tr key={type} className={index % 2 === 0 ? "bg-card" : "bg-muted/30"}>
                   <td className="px-5 py-4 font-medium text-foreground">{type}</td>
                   <td className="px-5 py-4 text-muted-foreground">{size}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{price}</td>
                 </tr>
               ))}
             </tbody>

@@ -7,6 +7,11 @@ import { useFeaturedProducts } from "@/hooks/useProducts";
 import { getBestProductImage } from "@/data/productImages";
 import { getProductDetailPath } from "@/data/products";
 import { OptimizedImage } from "@/components/OptimizedImage";
+// Money comes from the commerce catalog, never from Product.price — the catalog holds the
+// ex-GST base and sellPrice() adds GST, so this card can never disagree with the product
+// page, the cart, the JSON-LD or the Merchant feed.
+import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 
 export function FeaturedProducts() {
   const { products: featuredProducts, isLoading } = useFeaturedProducts();
@@ -129,12 +134,17 @@ export function FeaturedProducts() {
                 </p>
                 
                 <div className="flex items-center justify-between pt-4 border-t border-border/50">
-                  {product.price && (
+                  {isPurchasable(product.id) ? (
                     <div>
-                      <span className="text-xs text-muted-foreground">{product.priceLabel}</span>
+                      <span className="text-xs text-muted-foreground">Price (incl. {GST_PERCENT_LABEL} GST)</span>
                       <div className="font-display font-bold text-xl bg-gradient-to-r from-accent to-amber-light bg-clip-text text-transparent">
-                        ₹{product.price.toLocaleString('en-IN')}
+                        {formatINR(sellPrice(getCommerce(product.id)!.basePrice))}
                       </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <span className="text-xs text-muted-foreground">Made to order</span>
+                      <div className="font-display font-bold text-lg text-foreground">Request a quote</div>
                     </div>
                   )}
                   <Link 

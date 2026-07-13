@@ -32,9 +32,9 @@ export const VIP_FAQS: { question: string; answer: string }[] = [
       "Both. You can buy a VIP container office outright or rent one on flexible monthly terms across India.",
   },
   {
-    question: "How much does a VIP container office cost in India?",
+    question: "How much does the VIP container office on this page cost?",
     answer:
-      "Our standard 40×14×9 ft VIP container office starts at ₹8,00,000 (GST and transport extra). The final price depends on size, finish, furnishing, add-ons, and whether you buy or rent. We provide a free, transparent, itemised quote for your specific requirement.",
+      "The standard 40×14×9 ft VIP container office is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode. Different sizes, finishes, furnishing packages, and rental terms are quoted separately.",
   },
   {
     question: "Is the VIP container office air-conditioned?",

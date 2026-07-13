@@ -28,11 +28,14 @@ const quickHighlights = [
   "Pan-India transport with hydra crane unloading and fast installation",
 ];
 
-const pricingRows = [
-  ["6' x 6' x 8.5'", "Security post / small office", "₹65,000 – ₹75,000 per piece"],
-  ["20' x 10' x 8.6'", "Standard office for 4–6 staff", "₹1,70,000 – ₹2,10,000 per piece"],
-  ["10' x 20' x 8.6'", "School or site office cabin", "₹2,05,000 – ₹2,40,000 per piece"],
-  ["10' x 40' x 8.6'", "Large office for 10–12 staff", "₹3,40,000 – ₹3,80,000 per piece"],
+// Size reference only. The price of the unit sold on this page is the single figure shown
+// in the header above (inclusive of 18% GST) — no ranges are published here, so the page,
+// the cart and the Merchant Center feed can never disagree.
+const sizeRows = [
+  ["6' x 6' x 8.5'", "Security post / small office"],
+  ["20' x 10' x 8.6'", "Standard office for 4–6 staff"],
+  ["10' x 20' x 8.6'", "School or site office cabin"],
+  ["10' x 40' x 8.6'", "Large office for 10–12 staff"],
 ];
 
 const technicalSpecs = [
@@ -107,9 +110,9 @@ const faqs = [
       "Yes. The cabins are designed for lifting, transport, and repeat installation using hydra cranes and trailers, which makes them ideal for rotating project sites.",
   },
   {
-    question: "What is included in the basic price?",
+    question: "What is included in the price shown on this page?",
     answer:
-      "Base pricing generally includes flooring, standard electrical wiring, LED lights, ceiling fans, and standard windows and doors. Premium interiors, attached toilets, ACs, and transport are usually quoted separately.",
+      "The price shown above is inclusive of 18% GST and covers flooring, standard electrical wiring, LED lights, ceiling fans, and standard windows and doors. Transport and optional installation are added at checkout based on your delivery pincode. Premium interiors, attached toilets, and ACs are optional extras quoted separately.",
   },
   {
     question: "Are these cabins suitable for hot and rainy Indian climates?",
@@ -159,7 +162,7 @@ export function MSContainerOfficeCabinContent() {
           Quick Overview of MS Container Office Cabins
         </h2>
         <p className="text-muted-foreground">
-          For B2B buyers evaluating options in 2025, standard MS container office cabins typically range from ₹1,40,000 for smaller units to ₹3,80,000 or more for larger, fully fitted configurations. Final pricing depends on dimensions, insulation, electrical load, interior finish, and transport distance.
+          This unit is sold at the single price shown above, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode, so what you see is what you pay.
         </p>
         <p className="text-muted-foreground">
           Unlike repurposed shipping containers, these cabins are purpose-built from new MS sections, designed specifically for office use with insulation, ventilation, flooring, and electrical readiness built into the fabrication process.
@@ -168,7 +171,7 @@ export function MSContainerOfficeCabinContent() {
 
       <section className="space-y-6">
         <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
-          Standard Sizes, Configurations & Typical Pricing (India – 2025)
+          Standard Sizes & Configurations
         </h2>
         <div className="overflow-hidden rounded-xl bg-card shadow-card">
           <table className="w-full">
@@ -176,22 +179,20 @@ export function MSContainerOfficeCabinContent() {
               <tr className="bg-accent/10">
                 <th className="px-6 py-4 text-left font-semibold text-foreground">Size</th>
                 <th className="px-6 py-4 text-left font-semibold text-foreground">Typical use</th>
-                <th className="px-6 py-4 text-left font-semibold text-foreground">Approximate range</th>
               </tr>
             </thead>
             <tbody>
-              {pricingRows.map(([size, use, price], index) => (
+              {sizeRows.map(([size, use], index) => (
                 <tr key={size} className={index % 2 === 0 ? "bg-muted/30" : "bg-card"}>
                   <td className="px-6 py-4 font-medium text-foreground">{size}</td>
                   <td className="px-6 py-4 text-muted-foreground">{use}</td>
-                  <td className="px-6 py-4 text-muted-foreground">{price}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="text-sm italic text-muted-foreground">
-          * Indicative ex-factory figures only. Final quotes vary with insulation grade, windows, doors, electrical load, interior finish, and logistics.
+          * Sizes are the standard configurations we build. The unit listed on this page is priced at the amount shown above, inclusive of 18% GST. Other sizes and custom layouts are quoted separately — talk to our team.
         </p>
       </section>
 

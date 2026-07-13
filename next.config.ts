@@ -12,19 +12,27 @@ const isDev = process.env.NODE_ENV !== "production";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://qsrlfsjtuymuhvwnsegq.supabase.co";
 const supabaseWs = supabaseUrl.replace(/^https:/, "wss:");
 
+// Razorpay Checkout is loaded from checkout.razorpay.com and renders the card/UPI/netbanking
+// form inside its own iframe, talking back to api.razorpay.com (+ lumberjack.razorpay.com for
+// its telemetry). Without all three of script-src / frame-src / connect-src below, the payment
+// modal opens blank and fails silently — the browser blocks it and nothing surfaces in the UI.
+const razorpayOrigins = "https://checkout.razorpay.com https://api.razorpay.com https://*.razorpay.com";
+
 const cspDirectives = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://checkout.razorpay.com${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "media-src 'self' https: data: blob:",
-  `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com${isDev ? " ws: wss:" : ""}`,
-  "frame-src 'self'",
+  `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com ${razorpayOrigins}${isDev ? " ws: wss:" : ""}`,
+  `frame-src 'self' ${razorpayOrigins}`,
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  // Razorpay's netbanking/3-D Secure flows hand off to the issuing bank, so the checkout
+  // iframe must be able to POST to origins other than our own.
+  "form-action 'self' https://*.razorpay.com",
   "frame-ancestors 'none'",
 ];
 if (!isDev) cspDirectives.push("upgrade-insecure-requests");

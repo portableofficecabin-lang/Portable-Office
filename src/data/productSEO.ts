@@ -63,7 +63,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Container Office — INTENT: Buy single standard unit (transactional)
   "10": {
     title: "Container Office for Sale in India | Portable Office Cabin",
-    description: "Ready-to-deploy container offices in India — 20ft & 40ft units from ₹7L. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Get a free quote!",
+    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Request a quote.",
     keywords: "container office for sale India, buy container office, 20ft container office price, 40ft container office price, ready container office, container office delivery India",
   },
   // Porta Cabin
@@ -132,7 +132,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // MS Container Office Cabin — INTENT: Mild-steel material variant (heavy-duty)
   "20": {
     title: "MS Container Office Cabin | Portable Office Cabin",
-    description: "Heavy-duty MS (mild steel) container office cabin with ISMB frame, 40–60mm insulation & corrugated cladding. Built for monsoons & repeat relocation. From ₹2.4L.",
+    description: "Heavy-duty MS (mild steel) container office cabin with ISMB frame, 40–60mm insulation & corrugated cladding. Built for monsoons & repeat relocation. Buy online.",
     keywords: "MS container office cabin, mild steel container office, heavy duty container office cabin, ISMB frame office cabin, corrugated steel office cabin India, MS office cabin price",
   },
   // Office Portable Cabin
@@ -150,7 +150,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Prefab Porta Cabin
   "23": {
     title: "Prefab Porta Cabin – Types, Pricing & Guide",
-    description: "Prefab porta cabin guide for India 2026: types, sizes, pricing (₹900–₹2,000/sq ft), specs & selection tips. 40–60% cheaper than RCC. Get a free quote!",
+    description: "Prefab porta cabin for India 2026 — MS frame, PUF sandwich panels, bolted assembly, relocatable. 40–60% cheaper than RCC. Price incl. GST, buy online.",
     keywords: "prefab porta cabin, porta cabin price India, portable cabin types, prefab cabin manufacturer, modular porta cabin, site office porta cabin, prefab porta cabin 2026, porta cabin sizes India",
   },
   // Labor Hutments
@@ -168,7 +168,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Security Cabin
   "26": {
     title: "Portable Security Guard Cabin | Portable Office Cabin",
-    description: "Portable security & guard cabins — MS, GI, FRP, ACP, PVC & PUF from ₹40,000. Police, toll & gate booths with pan-India dispatch in 7–15 days. Get a quote.",
+    description: "Portable security & guard cabin in MS steel with PUF insulation. Police, toll & gate booths with pan-India dispatch in 7–15 days. Price incl. GST, buy online.",
     keywords: "security cabin, portable security cabin, security guard cabin, watchman cabin, GI security cabin, FRP security cabin, MS security cabin, steel security cabin, portable guard cabin, gate security cabin, toll booth cabin, police booth cabin, security cabin price, security cabin manufacturer India",
   },
   // Cabins in Office
@@ -180,7 +180,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Steel Portable Office Container — INTENT: Portability + ISMC/RHS structural steel + stackable G+1
   "28": {
     title: "Steel Office Container 10–40ft | Portable Office Cabin",
-    description: "Portable steel office containers in 10/20/30/40ft sizes with ISMC/RHS frame, stackable G+1 & G+2 setups, PUF insulation & 10–25 year design life. From ₹1.6L.",
+    description: "Portable steel office container with ISMC/RHS frame, stackable G+1 & G+2 setups, PUF insulation & 10–25 year design life. Price incl. GST, buy online.",
     keywords: "portable steel office container, stackable container office, ISMC steel container office, G+1 container office, 10ft portable office container, RHS steel office container India",
   },
   "29": {
@@ -190,27 +190,27 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "30": {
     title: "Shipping Container in Krishnagiri | Portable Office Cabin",
-    description: "20 ft & 40 ft shipping containers in Krishnagiri for sale or rent — storage, offices, homes & modular solutions. Used units from ₹1.5L. Get a free quote!",
+    description: "20 ft & 40 ft shipping containers in Krishnagiri for sale or rent — storage, offices, homes & modular solutions. Request a free quote.",
     keywords: "shipping container Krishnagiri, used shipping container Krishnagiri, container office Krishnagiri, container storage Hosur, shipping container Tamil Nadu, portable office Krishnagiri, container home Krishnagiri, modular container Krishnagiri",
   },
   "31": {
     title: "Shipping Container in SIPCOT | Portable Office Cabin",
-    description: "Shipping containers for SIPCOT estates — Sriperumbudur, Oragadam, Hosur & Gummidipoondi. Storage, offices & labour camps from ₹1.5L. Get a free quote!",
+    description: "Shipping containers for SIPCOT estates — Sriperumbudur, Oragadam, Hosur & Gummidipoondi. Storage, offices & labour camps. Request a free quote.",
     keywords: "shipping container SIPCOT, container office Sriperumbudur, container storage Oragadam, shipping container Hosur, SIPCOT container rental, prefab labour colony SIPCOT, portable office SIPCOT, container Gummidipoondi",
   },
   "32": {
     title: "Shipping Container in Chennai | Portable Office Cabin",
-    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. Used 20 ft from ₹80K. 7–15 day dispatch. Get a free quote!",
+    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. 7–15 day dispatch. Request a free quote.",
     keywords: "shipping container Chennai, container office Chennai, used shipping container Chennai, container rental Chennai, container home ECR, shipping container Ennore, container café OMR, modular container Sriperumbudur",
   },
   "33": {
     title: "Shipping Container in Narsapura | Portable Office Cabin",
-    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices, labour colonies for KIADB plots. Used 20 ft from ₹95K. 7–15 day dispatch.",
+    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices & labour colonies for KIADB plots. 7–15 day dispatch.",
     keywords: "shipping container Narsapura, container office KIADB, shipping container Narsapura Industrial Area, container storage Kolar, portable office Narsapura, container Vemgal, container Malur, modular container Hoskote",
   },
   "34": {
     title: "Shipping Container in Peenya | Portable Office Cabin",
-    description: "Shipping containers in Peenya, Bengaluru for sale or rent — storage, offices, security cabins & modular solutions. Used 20 ft from ₹85K. Get a free quote!",
+    description: "Shipping containers in Peenya, Bengaluru for sale or rent — storage, offices, security cabins & modular solutions. Request a free quote.",
     keywords: "shipping container Peenya, container office Peenya Industrial Area, shipping container Bengaluru, container storage Tumkur Road, portable office Peenya, container Peenya 2nd Stage, modular container Bengaluru, used shipping container Peenya",
   },
   "35": {
@@ -231,7 +231,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "38": {
     title: "Cargo Container for Sale Bangalore | Portable Office Cabin",
-    description: "20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. From ₹1.25L. Get a quote.",
+    description: "20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. Request a quote.",
     keywords: "cargo shipping container for sale Bangalore, buy cargo container India, 20ft shipping container price Bangalore, 40ft cargo container India, ISO shipping container Bangalore, used cargo container for sale, shipping container price India, cargo container manufacturer Bangalore",
   },
   "39": {
@@ -241,7 +241,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "40": {
     title: "Labour Colony – Prefab Worker Accommodation",
-    description: "Prefabricated labour colony for construction sites & industrial projects. G+1/G+2 modular camps for 50–500 workers. ₹350–1,000+/sq ft. Get a free quote!",
+    description: "Prefabricated labour colony for construction sites & industrial projects. G+1/G+2 modular camps for 50–500 workers. Request a free quote.",
     keywords: "labour colony, prefab labour colony, labour camp India, worker accommodation, prefab dormitory, G+1 labour colony, construction worker housing, labour hutments, modular labour colony, portable camp",
   },
   // VIP Container Office

@@ -8,7 +8,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 export function LaborHutmentsContent() {
   const faqs = [
     { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp takes 10–20 days versus 60–90 days for masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
-    { q: "What is the cost per bed for prefabricated labor hutments?", a: "Indicative range is ₹20,000–50,000 per 8–10 bed room depending on specifications. Panel thickness, interior furnishings, sanitary provisions, and number of floors all affect pricing." },
+    { q: "What does the labor hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Larger colonies are sized to the brief — panel thickness, interior furnishings, sanitary provisions, and number of floors all change the build — so those are quoted separately." },
     { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition. Units are designed for 3–10 project reuses." },
     { q: "What is the service life of prefab labor hutments?", a: "Can be temporary (1–3 years) or semi-permanent (up to 15–20 years) depending on specifications, foundation type, and maintenance practices. Anti-corrosive coatings and galvanized steel ensure long-term durability." },
     { q: "Do you offer G+1 and G+2 configurations?", a: "Yes. Single-story, G+1, and G+2 options are available with staircases, corridors, and balcony walkways to address land availability constraints on urban and remote sites." },
@@ -31,7 +31,7 @@ export function LaborHutmentsContent() {
           Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach ensures rapid installation — typically 5–15 days for small colonies — along with significant cost savings versus brick-and-mortar construction, reusability between projects, and improved living standards for labourers.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          This article covers: types of hutments and building configurations, design features including insulation, safety, and sanitary fixtures, customization options for specific requirements, pricing ranges and cost factors, installation timelines and typical applications.
+          This article covers: types of hutments and building configurations, design features including insulation, safety, and sanitary fixtures, customization options for specific requirements, specification factors, installation timelines and typical applications.
         </p>
       </section>
 
@@ -221,13 +221,13 @@ export function LaborHutmentsContent() {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* Price */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Pricing Guidelines and Cost Factors
+          Price and What Changes the Specification
         </h2>
         <p className="text-muted-foreground mb-6">
-          Exact price depends on specifications, but these guidelines help with budget planning. Contact our team for customized quotes based on your project details.
+          The labor hutment unit listed on this page is sold at the single price shown at the top, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode. Full colony packages are sized to the brief and quoted separately by our team.
         </p>
         <div className="overflow-x-auto mb-6">
           <table className="w-full border-collapse">
@@ -239,10 +239,9 @@ export function LaborHutmentsContent() {
             </thead>
             <tbody>
               {[
-                ["Indicative Ranges", "₹300–1,800 per sq ft; typical 8–10 bed room costs ₹20,000–50,000"],
-                ["Cost Factors", "Panel thickness (30mm vs 60mm), floors, interior furnishings, sanitary provisions, logistics, foundation"],
-                ["Lifecycle Value", "Upfront 10–20% higher than basic brick sheds but amortize to 20–35% savings over 5–10 years through reusability"],
-                ["Rental Comparison", "Prefab ownership offers better control vs ₹5,000–10,000 per bed/month rental near sites"],
+                ["Specification Drivers", "Panel thickness (30mm vs 60mm), floors, interior furnishings, sanitary provisions, foundation"],
+                ["Lifecycle Value", "Amortizes to 20–35% savings over 5–10 years through reusability across 3–10 projects"],
+                ["Ownership vs Rental", "Prefab ownership offers better control and reuse than renting accommodation near the site"],
               ].map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : ""}>
                   <td className="px-4 py-3 font-medium text-foreground border border-border">{row[0]}</td>

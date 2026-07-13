@@ -21,7 +21,7 @@ export function CabinPortableContent() {
           Ideal for dynamic project environments where traditional construction is too slow or costly, portable cabins are designed with the ability to withstand extreme weather conditions, offering exceptional strength, durability, and adaptability to various environmental challenges.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          This guide covers everything you need to know about portable cabins in India—from types and materials to pricing, processes, and real-world applications across industries.
+          This guide covers everything you need to know about portable cabins in India—from types and materials to specifications, processes, and real-world applications across industries.
         </p>
       </section>
 
@@ -67,7 +67,7 @@ export function CabinPortableContent() {
           </ul>
         </div>
         <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-          This article covers types (office, labour, toilets, security), materials (MS, GI, containers, sandwich panels), indicative pricing ranges, and the complete process from design to installation.
+          This article covers types (office, labour, toilets, security), materials (MS, GI, containers, sandwich panels), specifications, and the complete process from design to installation. The cabin listed on this page is sold at the single price shown at the top, inclusive of 18% GST.
         </p>
       </section>
 
@@ -600,12 +600,12 @@ export function CabinPortableContent() {
           <li className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Clarity of documentation (drawings, BOQ, warranty)</li>
         </ul>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">Hidden cost considerations:</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-4">What sits outside the unit price:</h3>
         <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Transportation charges to site</li>
-          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Crane or hydra lifting fees (5-10% of unit price)</li>
-          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Utility connection work</li>
-          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Potential relocation costs (5-8% per move)</li>
+          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Transport to your site — calculated at checkout from your delivery pincode, and free within 50 km of our works</li>
+          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Installation — an optional line item you can add at checkout</li>
+          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Utility connection work at your end (power and water hookup)</li>
+          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Relocating the cabin to a future site — arranged and quoted at the time</li>
         </ul>
       </section>
 

@@ -191,7 +191,7 @@ export function Header() {
                 </Link>
               )}
 
-              <Link href="/cart" aria-label="View quote list" title="Quote List" className="relative rounded-full border border-border/60 bg-card/70 p-2 text-foreground transition-all hover:border-accent/40 hover:text-accent">
+              <Link href="/cart" aria-label="View cart" title="Cart" className="relative rounded-full border border-border/60 bg-card/70 p-2 text-foreground transition-all hover:border-accent/40 hover:text-accent">
                 <ShoppingCart className="h-4 w-4" />
                 {itemCount > 0 && (
                   <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-sm">
@@ -206,7 +206,7 @@ export function Header() {
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <Link href="/cart" aria-label="View quote list" title="Quote List" className="relative rounded-full border border-border/60 bg-card/70 p-2 text-foreground transition-all hover:border-accent/40 hover:text-accent">
+              <Link href="/cart" aria-label="View cart" title="Cart" className="relative rounded-full border border-border/60 bg-card/70 p-2 text-foreground transition-all hover:border-accent/40 hover:text-accent">
                 <ShoppingCart className="h-4 w-4" />
                 {itemCount > 0 && (
                   <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-sm">

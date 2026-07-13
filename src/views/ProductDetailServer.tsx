@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
+import { ProductKeySpecs } from "@/components/products/ProductKeySpecs";
 import { ProductReviews } from "@/components/products/ProductReviews";
 import type { ProductReview } from "@/components/products/ProductReviews";
 import { ProductRatingSummary } from "@/components/products/ProductRatingSummary";
@@ -19,6 +20,8 @@ import {
 import { getBestProductImage } from "@/data/productImages";
 import { getImageCaption } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
+import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { getProductH1, getProductPrimaryKeyword, getProductSEO } from "@/data/productSEO";
@@ -99,13 +102,43 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
   const productCanonicalUrl = `${SITE}${getProductDetailPath(product)}`;
   const categoryPath = `/products/category/${product.categorySlug}`;
 
+  // The commerce catalog — not Product.price — is the authority on money and on what may be
+  // sold. `purchasable` is the SINGLE predicate that gates the fixed price shown below, the
+  // Add to Cart CTA and the JSON-LD `offers` block, so the three can never disagree.
+  const commerce = getCommerce(product.id);
+  const purchasable = isPurchasable(product.id);
+  const sellingPrice = commerce ? sellPrice(commerce.basePrice) : undefined;
+
+  // The <h1> is the commerce catalog's short, clean product name. getProductH1() still drives
+  // the SEO metadata elsewhere, but several of its titles are keyword-stuffed ("… – Types,
+  // Pricing & Guide"), which is a poor page title AND a weak match for the Merchant feed item.
+  // h1Title is the single name a shopper sees. Falls back to getProductH1() only if a product
+  // has no commerce row at all.
+  const pageH1 = commerce?.h1Title || productH1;
+
+  // A strikethrough is rendered ONLY against a price the product genuinely sold at
+  // (hasGenuineSalePrice → compareAtBasePrice > basePrice). No SKU has one today, so this
+  // renders nothing — inventing a "was" price is a fake discount (GMC misrepresentation and,
+  // in India, a misleading advertisement under the CPA). The saving is COMPUTED from the two
+  // real numbers; no promotional copy is asserted.
+  const compareAtPrice =
+    commerce && hasGenuineSalePrice(commerce) && commerce.compareAtBasePrice !== undefined
+      ? sellPrice(commerce.compareAtBasePrice)
+      : undefined;
+  const savePercent =
+    compareAtPrice !== undefined && sellingPrice !== undefined && compareAtPrice > sellingPrice
+      ? Math.round(((compareAtPrice - sellingPrice) / compareAtPrice) * 100)
+      : undefined;
+
   const structuredData = generateProductStructuredData({
-    name: productH1,
+    // `id` lets the schema helper read the same commerce catalog and apply the same
+    // isPurchasable() gate — no price/availability is emitted for quote-only products.
+    id: product.id,
+    // IDENTICAL to the visible <h1> below (and to what the Merchant feed must send).
+    name: pageH1,
     description: productSEO.description,
-    price: product.price,
-    image: productImage,
+    images: galleryImages,
     sku: product.sku,
-    inStock: product.inStock,
     slug: productSlug,
     keywords: productSEO.keywords,
     category: product.category,
@@ -116,15 +149,15 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     { name: "Home", url: SITE },
     { name: "Products", url: `${SITE}/products` },
     { name: product.category, url: `${SITE}${categoryPath}` },
-    { name: productH1, url: productCanonicalUrl },
+    { name: pageH1, url: productCanonicalUrl },
   ]);
 
   const cs = product.categorySlug;
 
   // SEO image attributes derived from the page title (H1), primary keyword and
   // category, so each product page's images carry unique, relevant alt/title text.
-  const imageAlt = `${productH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${product.category} manufacturer in India`;
-  const imageTitle = `${productH1} | ${product.category} — Portable Office Cabin`;
+  const imageAlt = `${pageH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${product.category} manufacturer in India`;
+  const imageTitle = `${pageH1} | ${product.category} — Portable Office Cabin`;
 
   // Per-image descriptive alt/title (aligned with galleryImages). When an image
   // has a caption (see productImageCaptions), build a unique, keyword-rich string;
@@ -133,8 +166,8 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     const caption = getImageCaption(img);
     if (caption) {
       return {
-        alt: `${productH1} — ${caption} | ${productPrimaryKeyword}, ${product.category} by Portable Office Cabin`,
-        title: `${productH1} — ${caption} | Portable Office Cabin`,
+        alt: `${pageH1} — ${caption} | ${productPrimaryKeyword}, ${product.category} by Portable Office Cabin`,
+        title: `${pageH1} — ${caption} | Portable Office Cabin`,
       };
     }
     return {
@@ -217,7 +250,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 </span>
               </div>
               <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                {productH1}
+                {pageH1}
               </h1>
 
               {/* Trust & info strip — rating, size, Pan-India delivery + timeline */}
@@ -278,15 +311,75 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 </dl>
               </div>
 
-              {product.price && (
+              {/* PRICE.
+                  Purchasable → the ONE fixed, GST-inclusive figure the customer actually pays
+                  for the item, straight from sellPrice(). It is the same number in the cart, at
+                  checkout, in the JSON-LD Offer and in the Merchant feed. There is deliberately
+                  no "price may vary" disclaimer: the base price is fixed, and a disclaimer that
+                  contradicts it is exactly the landing-page mismatch GMC disapproves for.
+                  Quote-only → no number at all. Showing an unconfirmed figure as if it were
+                  payable is the misrepresentation we are here to remove. */}
+              {purchasable && sellingPrice !== undefined ? (
                 <div className="bg-muted rounded-xl p-6 mb-6">
-                  <div className="text-sm text-muted-foreground mb-1">{product.priceLabel}</div>
-                  <div className="font-display text-4xl font-bold text-foreground">
-                    ₹{product.price.toLocaleString("en-IN")}
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    {/* Renders for NO SKU today — compareAtBasePrice is deliberately unset
+                        everywhere. It appears only where the unit genuinely sold higher. */}
+                    {compareAtPrice !== undefined && (
+                      <span className="text-xl text-muted-foreground line-through">
+                        {formatINR(compareAtPrice)}
+                      </span>
+                    )}
+                    <span className="font-display text-4xl font-bold text-foreground">
+                      {formatINR(sellingPrice)}
+                    </span>
+                    {savePercent !== undefined && savePercent > 0 && (
+                      <span className="text-sm font-semibold text-accent bg-accent/10 px-2.5 py-1 rounded-full">
+                        Save {savePercent}%
+                      </span>
+                    )}
+                  </div>
+                  {/* The price above is the final, all-in figure for the item. */}
+                  <div className="text-sm text-muted-foreground mt-1">Inclusive of all taxes</div>
+                  {/* Required disclosure and genuinely true: freight is distance-based per
+                      src/data/shippingZones.ts and installation is a separate optional line. */}
+                  <p className="text-sm text-muted-foreground mt-3">
+                    Transport &amp; installation charges calculated at checkout based on delivery
+                    pincode.
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-muted rounded-xl p-6 mb-6">
+                  <div className="font-display text-2xl font-bold text-foreground">
+                    Request a quote for pricing
                   </div>
                   <p className="text-sm text-muted-foreground mt-2">
-                    * Price may vary based on customization and delivery location
+                    This unit is priced per requirement. Send us your size, specification and
+                    delivery location and our team will share a written quotation.
                   </p>
+                </div>
+              )}
+
+              {/* Key specs — true for purchasable AND quote-only SKUs alike; only the price
+                  is gated. Driven entirely by getKeySpecs(commerce). */}
+              {commerce && <ProductKeySpecs commerce={commerce} className="mb-6" />}
+
+              {/* Delivery window + stock status, server-rendered right above the CTAs.
+                  The wording is locked to the JSON-LD: inStock → "In Stock" (InStock),
+                  !inStock → "Made to Order" (the schema emits BackOrder/OutOfStock). */}
+              {commerce && (
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-sm">
+                  <span className="flex items-center gap-1.5 text-muted-foreground">
+                    <Truck className="h-4 w-4 text-accent" />
+                    <span className="font-medium text-foreground">Delivery:</span>{" "}
+                    {commerce.deliveryDays}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1 text-xs font-medium text-foreground">
+                    <span
+                      className={`h-2 w-2 rounded-full ${commerce.inStock ? "bg-green-500" : "bg-amber-500"}`}
+                      aria-hidden="true"
+                    />
+                    {commerce.inStock ? "In Stock" : "Made to Order"}
+                  </span>
                 </div>
               )}
 
@@ -370,7 +463,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
             initialReviews={reviews}
             initialSummary={reviewSummary}
             productSlug={slug}
-            productName={productH1}
+            productName={pageH1}
           />
 
           {/* Related Products */}

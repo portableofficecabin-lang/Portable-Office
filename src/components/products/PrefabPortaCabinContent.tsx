@@ -16,13 +16,6 @@ export function PrefabPortaCabinContent() {
     ["20x40 ft", "800 sq ft", "Large office or 2 BHK cottage"],
   ];
 
-  const pricingExamples = [
-    ["Basic 10x20 ft site office", "₹1,57,500–₹1,92,500"],
-    ["12x40 ft bunkhouse with bunks", "₹7–10 lakhs"],
-    ["4x4 ft security cabin", "₹1–1.5 lakhs"],
-    ["Premium G+1 labour colony blocks", "₹15–20+ lakhs"],
-  ];
-
   const faqs = [
     {
       q: "How long does delivery take?",
@@ -55,7 +48,7 @@ export function PrefabPortaCabinContent() {
       {/* Introduction */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-          Prefab Porta Cabin: Complete Guide to Types, Pricing & Selection in India
+          Prefab Porta Cabin: Complete Guide to Types, Specifications & Selection in India
         </h2>
         <p className="text-muted-foreground text-lg leading-relaxed mb-4">
           Prefab porta cabins have become essential infrastructure across India's booming construction, education, and industrial sectors. These factory-fabricated modular buildings combine steel frameworks with insulated sandwich panels, enabling rapid deployment that traditional construction simply cannot match.
@@ -64,7 +57,7 @@ export function PrefabPortaCabinContent() {
           In 2026, the demand for portable cabins continues to surge. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins deliver 40–60% cost savings compared to conventional RCC construction.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          This guide covers everything procurement teams and project managers need: features, types (from compact security cabins to G+1 labour colonies), realistic 2026 pricing, and how to choose the right prefab porta cabin for your specific requirements.
+          This guide covers everything procurement teams and project managers need: features, types (from compact security cabins to G+1 labour colonies), specifications, and how to choose the right prefab porta cabin for your specific requirements.
         </p>
       </section>
 
@@ -324,46 +317,23 @@ export function PrefabPortaCabinContent() {
         </p>
       </section>
 
-      {/* Pricing */}
+      {/* Price & what changes it */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Pricing of Prefab Porta Cabins in India (2026)
+          Price of This Prefab Porta Cabin
         </h2>
         <p className="text-muted-foreground mb-6">
-          Final costs depend on size, specifications, interior finishes, and quantity. Based on 2026 market data, expect these ranges:
+          This cabin is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode — there is no separate negotiation and no hidden extra.
         </p>
-        <div className="bg-accent/10 rounded-xl p-6 mb-6">
-          <p className="text-foreground font-semibold text-lg">Price per square foot: ₹900–₹2,000 depending on finish level</p>
-        </div>
 
-        <h3 className="font-semibold text-foreground mb-3">Indicative Examples:</h3>
-        <div className="overflow-x-auto mb-6">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-accent/10">
-                <th className="text-left px-4 py-3 font-semibold text-foreground border border-border">Configuration</th>
-                <th className="text-left px-4 py-3 font-semibold text-foreground border border-border">Price Range</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingExamples.map((row, i) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : ""}>
-                  <td className="px-4 py-3 text-foreground border border-border">{row[0]}</td>
-                  <td className="px-4 py-3 text-accent font-semibold border border-border">{row[1]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <h3 className="font-semibold text-foreground mb-3">Factors Adding Cost:</h3>
+        <h3 className="font-semibold text-foreground mb-3">Options that change the specification (and are quoted separately):</h3>
         <ul className="grid sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
           {["Thicker insulation panels", "Branded UPVC windows and doors", "Modular furniture and electrical fittings", "Attached toilets and AC provisions", "Staircases for G+1 structures"].map((item) => (
             <li key={item} className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />{item}</li>
           ))}
         </ul>
         <p className="text-sm text-muted-foreground mt-4 italic">
-          Bulk orders typically reduce per-square-foot pricing by 10–20%. These figures help with initial budgeting before requesting formal quotations.
+          Anything outside the standard build above is a made-to-order cabin. Send us the brief and we will quote it — the listed unit itself stays at the price shown.
         </p>
       </section>
 

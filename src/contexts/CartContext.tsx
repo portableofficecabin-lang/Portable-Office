@@ -3,10 +3,16 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
+import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { sellPrice } from "@/lib/pricing/gst";
 
 // Load Supabase lazily so its (~heavy) bundle stays off the initial JS-execution
 // path. Every cart operation is async and gated behind a logged-in user, so the
 // client is only fetched when a signed-in user actually touches their cart.
+//
+// NOTE: @/data/productCommerce and @/lib/pricing/gst are imported EAGERLY above —
+// they are tiny (a flat array + four pure functions) and addToCart must be able to
+// refuse a quote-only product synchronously, before it ever reaches the database.
 const getSupabase = () =>
   import("@/integrations/supabase/client").then((m) => m.supabase);
 
@@ -17,7 +23,14 @@ interface CartItem {
   customization_notes: string | null;
   product?: {
     name: string;
+    /**
+     * The GST-INCLUSIVE price the customer actually pays, i.e. sellPrice(basePrice)
+     * from src/data/productCommerce.ts. Deliberately NOT Product.price from
+     * src/data/products.ts — that field is a stale ex-GST display figure and using it
+     * here is exactly the price mismatch that got the Merchant account suspended.
+     */
     price: number | null;
+    sku: string | null;
     image_url: string | null;
     category: string;
   };
@@ -31,6 +44,7 @@ interface CartContextType {
   removeFromCart: (itemId: string) => Promise<void>;
   updateQuantity: (itemId: string, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
+  /** GST-inclusive items subtotal. Freight and installation are added at checkout. */
   getCartTotal: () => number;
 }
 
@@ -51,11 +65,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     ]);
     return cartRows.map(row => {
       const localProduct = getProductById(row.product_id);
+      // Price comes from the commerce catalog, never from Product.price.
+      const commerce = getCommerce(row.product_id);
       return {
         ...row,
         product: localProduct ? {
           name: localProduct.name,
-          price: localProduct.price || null,
+          price: commerce && isPurchasable(row.product_id) ? sellPrice(commerce.basePrice) : null,
+          sku: commerce?.sku ?? null,
           image_url: getBestProductImage(localProduct.id, localProduct.categorySlug, localProduct.images?.[0], localProduct.sku),
           category: localProduct.category,
         } : undefined,
@@ -82,19 +99,32 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addToCart = async (productId: string, quantity = 1) => {
     if (!user) {
-      toast({ title: "Please log in", description: "You need an account to add items to your quote list.", variant: "destructive" });
+      toast({ title: "Please log in", description: "You need an account to add items to your cart.", variant: "destructive" });
       return;
     }
+
+    // A quote-only product (made-to-order, rental, service, guide, location page, or a
+    // price the owner has not confirmed) must never enter a cart that leads to a real
+    // payment. Refuse it here, at the only door into cart_items.
+    if (!isPurchasable(productId)) {
+      toast({
+        title: "Not available for online purchase",
+        description: "This product is made to order — please request a quote.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const supabase = await getSupabase();
       const { error } = await supabase
         .from("cart_items")
         .upsert({ user_id: user.id, product_id: productId, quantity }, { onConflict: "user_id,product_id" });
       if (error) throw error;
-      toast({ title: "Added to your quote list", description: "Submit your quote list and our team will send you final pricing." });
+      toast({ title: "Added to cart", description: "Prices include 18% GST. Transport and installation are calculated at checkout." });
       fetchCart();
     } catch {
-      toast({ title: "Error", description: "Could not add to your quote list.", variant: "destructive" });
+      toast({ title: "Error", description: "Could not add this item to your cart.", variant: "destructive" });
     }
   };
 

@@ -14,10 +14,13 @@ const cabinTypes = [
   ["Executive cabin", "18+ m²", "1–4", "Leadership, lounge meetings"],
 ];
 
-const pricingRows = [
-  ["Basic", "Standard aluminium, single-glazed", "₹80,000–₹1,50,000"],
-  ["Standard", "Double-glazing, integrated LEDs", "₹1,50,000–₹3,00,000"],
-  ["Premium", "Branded acoustics, smart tech, biophilic elements", "₹3,00,000–₹5,00,000+"],
+// Specification tiers only — the price column is deliberately gone. The cabin sold on this
+// page has one fixed, GST-inclusive price (shown in the header above); publishing ranges
+// beside it would contradict the cart, the JSON-LD offer and the Merchant Center feed.
+const specTierRows = [
+  ["Basic", "Standard aluminium, single-glazed"],
+  ["Standard", "Double-glazing, integrated LEDs"],
+  ["Premium", "Branded acoustics, smart tech, biophilic elements"],
 ];
 
 const faqs = [
@@ -34,8 +37,8 @@ const faqs = [
     a: "Common materials include powder-coated aluminium frames, laminated or tempered glass (clear, frosted, or tinted), modular gypsum or PUF insulated panels, and LVT or carpet flooring. Double-glazed glass provides 30–40 dB sound reduction."
   },
   {
-    q: "How much do office cabins cost in India?",
-    a: "Basic cabins with standard aluminium and single glazing range from ₹80,000–₹1,50,000. Standard cabins with double-glazing and integrated LEDs cost ₹1,50,000–₹3,00,000. Premium cabins with smart tech and biophilic elements start at ₹3,00,000+."
+    q: "What does the office cabin on this page cost?",
+    a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are added at checkout based on your delivery pincode. Higher specification tiers — double-glazing, smart tech, biophilic elements — change the build and are quoted separately."
   },
   {
     q: "Can office cabins be relocated?",
@@ -320,32 +323,30 @@ export function CabinsInOfficeContent() {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* Specification tiers */}
       <section className="bg-muted/30 rounded-2xl p-8">
-        <h2 className="text-2xl font-bold text-foreground mb-4">Cost Factors for Office Cabins</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-4">Specification Tiers for Office Cabins</h2>
         <div className="overflow-x-auto mb-6">
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="bg-accent/10">
                 <th className="border border-border px-4 py-3 text-left font-semibold text-foreground">Tier</th>
                 <th className="border border-border px-4 py-3 text-left font-semibold text-foreground">Specifications</th>
-                <th className="border border-border px-4 py-3 text-left font-semibold text-foreground">Cost Range (INR)</th>
               </tr>
             </thead>
             <tbody>
-              {pricingRows.map((row, i) => (
+              {specTierRows.map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
                   <td className="border border-border px-4 py-3 font-medium text-foreground">{row[0]}</td>
                   <td className="border border-border px-4 py-3 text-muted-foreground">{row[1]}</td>
-                  <td className="border border-border px-4 py-3 font-semibold text-foreground">{row[2]}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="text-sm text-muted-foreground">
-          <strong>Cost breakdown:</strong> Partition system, doors & glass (40–50%), electrical & data integration (15–20%), furniture & ergonomics (20–25%), optional acoustic upgrades.
-          Long-term savings come from easier reconfiguration — avoiding demolition costs that run 2–3x higher for brick walls.
+          The cabin listed on this page is sold at the single price shown at the top, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Other tiers and custom fit-outs are made to order and quoted separately.
+          Long-term savings come from easier reconfiguration — avoiding the demolition work that brick walls require.
         </p>
       </section>
 

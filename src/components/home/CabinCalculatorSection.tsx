@@ -13,7 +13,7 @@ const trustPoints = [
 
 export function CabinCalculatorSection() {
   return (
-    <section className="relative overflow-hidden py-16 lg:py-20 cv-section" aria-labelledby="cabin-calc-heading">
+    <section id="cabin-calculator" className="relative overflow-hidden py-16 lg:py-20 cv-section scroll-mt-24" aria-labelledby="cabin-calc-heading">
       {/* Navy gradient backdrop matching the site hero */}
       <div className="absolute inset-0 z-0" style={{ background: "var(--gradient-hero)" }} />
       <div

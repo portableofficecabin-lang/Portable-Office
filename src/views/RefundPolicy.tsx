@@ -100,20 +100,31 @@ export default function RefundPolicyPage() {
             </ul>
           </Section>
 
-          <Section title="2. Advance Payment Conditions" index={1}>
+          <Section title="2. Payment Conditions" index={1}>
+            <p className="mb-3">
+              There are two ways to order from us, and the payment terms differ. The terms that apply to you are
+              the ones for the route you actually used.
+            </p>
+            <p className="font-semibold text-foreground mb-2">Standard products bought online</p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Standard, fixed-price products can be purchased directly on this website. Payment is taken <strong>in full</strong> at checkout — there is no advance, token or part-payment option for online orders.</li>
+              <li>We accept UPI, credit and debit cards, and net banking, processed securely by Razorpay. Card details are never stored on this website.</li>
+              <li>The amount shown at checkout is the final amount payable. See our <Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link>.</li>
+            </ul>
+            <p className="font-semibold text-foreground mb-2">Custom and made-to-order builds (quotation route)</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>A minimum advance of 40–50% of the total order value is required before we begin manufacturing.</li>
-              <li>The advance payment confirms your order and reserves your production slot.</li>
-              <li>The remaining balance must be paid before or at the time of dispatch/delivery.</li>
-              <li>Failure to pay the balance within the agreed timeline may result in the order being put on hold or cancelled, with applicable deductions.</li>
-              <li>Payments are accepted by bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft. No payment is collected through this website — see our <Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link>.</li>
+              <li>Custom units, project builds and rentals are not sold online. They begin with a written quotation.</li>
+              <li>A minimum advance of 40–50% of the total order value is required before we begin manufacturing. The advance confirms your order and reserves your production slot.</li>
+              <li>The remaining balance must be paid before or at the time of dispatch/delivery. Failure to pay the balance within the agreed timeline may result in the order being put on hold or cancelled, with applicable deductions.</li>
+              <li>Payments on the quotation route are accepted by bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft.</li>
             </ul>
           </Section>
 
           <Section title="3. Taxes & Transport Charges" index={2}>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>GST is charged in addition to the product price</strong> and is shown separately on the tax invoice. Prices displayed on the website are indicative starting prices, exclusive of GST.</li>
-              <li>Delivery is free within a 50 km radius of our facility. Beyond 50 km, transport is charged based on distance, as confirmed in your written quotation.</li>
+              <li><strong>Prices shown on product pages are inclusive of 18% GST</strong> — the price you see is the price of the item. GST is shown separately on your tax invoice.</li>
+              <li>Transport is charged separately, based on the delivery pincode. It is calculated and shown to you at checkout before payment, and is confirmed in the written quotation on the custom route.</li>
+              <li>Delivery is free within a 50 km radius of our facility. Beyond 50 km, transport is charged based on distance. Installation, where required, is an optional charge shown separately.</li>
               <li>Freight or transport charges already incurred on an order that has been dispatched or is in transit are <strong>not refundable</strong>.</li>
             </ul>
           </Section>

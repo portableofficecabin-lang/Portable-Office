@@ -9,7 +9,15 @@ export default function robots(): MetadataRoute.Robots {
         // non-SEO sections are blocked. These also send X-Robots-Tag: noindex,nofollow
         // (see next.config.ts) so they can't be indexed even if linked.
         userAgent: "*",
-        allow: "/",
+        allow: [
+          "/",
+          // The Google Merchant Center feed. Google's feed fetcher OBEYS robots.txt, so the
+          // broad "/api/" Disallow below would block it and every product in the account would
+          // fail to fetch. Per the robots.txt spec the most specific (longest) matching rule
+          // wins, so this 18-character Allow beats the 5-character "/api/" Disallow for this one
+          // path — and ONLY this one path; the rest of /api/ stays blocked.
+          "/api/merchant-feed",
+        ],
         disallow: [
           "/admin/",
           "/api/",

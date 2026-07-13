@@ -5,6 +5,8 @@ import { ArrowRight, Eye, MessageSquare, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Product, getProductDetailPath } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
+import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
 
@@ -19,6 +21,20 @@ interface ProductCardProps {
 export function ProductCard({ product, onEnquire, priority = false }: ProductCardProps) {
   const { addToCart } = useCart();
   const productImage = getBestProductImage(product.id, product.categorySlug, product.images?.[0], product.sku);
+
+  // Same commerce catalog, same isPurchasable() gate as the product page and the JSON-LD, so
+  // the card price is the identical GST-inclusive integer the product page shows. Quote-only
+  // SKUs show no price and no cart CTA.
+  const commerce = getCommerce(product.id);
+  const purchasable = isPurchasable(product.id);
+  const sellingPrice = commerce ? sellPrice(commerce.basePrice) : undefined;
+
+  // Struck-through "was" price — only where the unit genuinely sold at it (no SKU today).
+  // Same helper, same sellPrice(), so the card can never disagree with the product page.
+  const compareAtPrice =
+    commerce && hasGenuineSalePrice(commerce) && commerce.compareAtBasePrice !== undefined
+      ? sellPrice(commerce.compareAtBasePrice)
+      : undefined;
 
   return (
     <div className="group bg-gradient-to-br from-card via-card to-muted/30 rounded-2xl overflow-hidden shadow-card hover:shadow-2xl transition-all duration-500 border border-border/50 hover:border-accent/30">
@@ -68,10 +84,12 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
               View Details
             </Link>
           </Button>
-          <Button size="sm" variant="accent" className="shadow-lg" onClick={() => addToCart(product.id)}>
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Quote List
-          </Button>
+          {purchasable && (
+            <Button size="sm" variant="accent" className="shadow-lg" onClick={() => addToCart(product.id)}>
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Add to Cart
+            </Button>
+          )}
         </div>
       </div>
 
@@ -96,15 +114,22 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
         </p>
         
         <div className="flex items-center justify-between pt-4 border-t border-border/50">
-          {product.price ? (
+          {purchasable && sellingPrice !== undefined ? (
             <div>
-              <span className="text-xs text-muted-foreground">{product.priceLabel}</span>
-            <div className="font-display font-bold text-xl bg-gradient-to-r from-accent to-amber-light bg-clip-text text-transparent">
-                ₹{product.price.toLocaleString('en-IN')}
+              <div className="flex items-baseline gap-2">
+                {compareAtPrice !== undefined && (
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatINR(compareAtPrice)}
+                  </span>
+                )}
+                <div className="font-display font-bold text-xl bg-gradient-to-r from-accent to-amber-light bg-clip-text text-transparent">
+                  {formatINR(sellingPrice)}
+                </div>
               </div>
+              <span className="text-xs text-muted-foreground">Incl. taxes</span>
             </div>
           ) : (
-            <span className="text-muted-foreground text-sm font-medium">Contact for price</span>
+            <span className="text-muted-foreground text-sm font-medium">Request a quote for pricing</span>
           )}
           <Link
             href={getProductDetailPath(product)}
@@ -115,17 +140,30 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
           </Link>
         </div>
 
-        {/* Primary conversion path: every order starts with a written quotation. */}
-        {onEnquire && (
+        {/* Purchasable → buying is the primary path (fixed price, payable in full).
+            Quote-only → a written quotation is the only honest path. */}
+        {purchasable ? (
           <Button
             variant="accent"
             className="w-full mt-5"
-            onClick={() => onEnquire(product)}
-            aria-label={`Request a quote for ${product.name}`}
+            onClick={() => addToCart(product.id)}
+            aria-label={`Add ${product.name} to cart`}
           >
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Request a Quote
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Add to Cart
           </Button>
+        ) : (
+          onEnquire && (
+            <Button
+              variant="accent"
+              className="w-full mt-5"
+              onClick={() => onEnquire(product)}
+              aria-label={`Request a quote for ${product.name}`}
+            >
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Request a Quote
+            </Button>
+          )
         )}
       </div>
     </div>

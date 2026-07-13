@@ -12,6 +12,11 @@ import { ConstructionFloorPlan } from "./ConstructionFloorPlan";
 import { PlinthBeamLayout } from "./PlinthBeamLayout";
 import { PlinthBeamSection } from "./PlinthBeamSection";
 import { ConstructionNotes } from "./ConstructionNotes";
+import { ColumnLayoutPlan } from "./ColumnLayoutPlan";
+import { FootingReinforcementDetail } from "./FootingReinforcementDetail";
+import { BeamJunctionDetail } from "./BeamJunctionDetail";
+import { BarBendingSchedule } from "./BarBendingSchedule";
+import { buildColumnMarks } from "@/lib/quotation/labourColonyRebar";
 import { buildConstructionPlan, buildBeamSchedule, constructionNotes } from "@/lib/quotation/labourColonyPlan";
 import { type LabourColonyConfig, type FloorCount } from "@/lib/quotation/labourColony";
 import { type CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
@@ -52,6 +57,14 @@ export function ConstructionDrawingTab({
   const section = civil.foundation.section;
   const schedule = useMemo(() => buildBeamSchedule(plan, section), [plan, section]);
   const notes = useMemo(() => constructionNotes(section, floors), [section, floors]);
+
+  // Columns are set out on the ARCHITECTURAL grid (plan.colXs × rowYs) — and the civil engine is
+  // now handed that SAME grid, so `civil.foundation.columnCount` is this same number by
+  // construction. The rebar design and BBS come straight from the engine: one source, no recompute,
+  // nothing to drift.
+  const columns = useMemo(() => buildColumnMarks(plan.colXs, plan.rowYs), [plan.colXs, plan.rowYs]);
+  const rebar = civil.foundation.rebar;
+  const bbs = civil.foundation.bbs;
 
   const downloadPdf = async () => {
     if (!sheetRef.current) return;
@@ -124,11 +137,38 @@ export function ConstructionDrawingTab({
         </div>
       </div>
 
+      {/* ONE grid — the drawing and the BOQ count the same columns by construction. */}
+      <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 text-xs text-emerald-900">
+        <b>Single architectural grid.</b> {plan.colXs.length} × {plan.rowYs.length} ={" "}
+        <b>{columns.length} columns</b> — and the Civil BOQ prices exactly{" "}
+        <b>{civil.foundation.footingCount} footings, {civil.foundation.pedestalCount} pedestals and{" "}
+        {civil.foundation.columnCount} columns</b> from that same grid. Steel is taken off the bar-bending
+        schedule below ({civil.foundation.bbs.totalKg} kg = {civil.foundation.bbs.totalTonnes} t), not a
+        kg/cum rule of thumb.
+      </div>
+
+      {rebar.warnings.length > 0 && (
+        <div className="rounded-xl border border-red-300 bg-red-50 p-3 text-xs text-red-800">
+          <div className="mb-1 font-semibold">Structural detailing warnings</div>
+          <ul className="list-disc space-y-0.5 pl-4">
+            {rebar.warnings.map((w, i) => <li key={i}>{w}</li>)}
+          </ul>
+        </div>
+      )}
+
       <div ref={sheetRef} id="lc-construction-sheet" className="space-y-6 bg-white p-2 rounded-2xl">
         <ConstructionFloorPlan plan={plan} />
+        <ColumnLayoutPlan plan={plan} columns={columns} rebar={rebar} />
         <PlinthBeamLayout plan={plan} schedule={schedule} />
+        <FootingReinforcementDetail rebar={rebar} />
         <PlinthBeamSection foundation={civil.foundation} />
-        <ConstructionNotes notes={notes} section={section} floors={floors} />
+        <BeamJunctionDetail rebar={rebar} />
+        <BarBendingSchedule bbs={bbs} rebar={rebar} counts={{
+          footings: civil.foundation.footingCount,
+          pedestals: civil.foundation.pedestalCount,
+          beamLengthM: civil.foundation.plinthBeamLengthM,
+        }} />
+        <ConstructionNotes notes={notes} section={section} floors={floors} rebar={rebar} columnCount={columns.length} />
       </div>
     </div>
   );

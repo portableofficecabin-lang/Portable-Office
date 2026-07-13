@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Product } from "@/data/products";
+import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -177,9 +179,11 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
           <div className="bg-muted rounded-lg p-4">
             <div className="text-sm font-medium text-foreground mb-2">Product Summary</div>
             <div className="text-sm text-muted-foreground">{product.name}</div>
-            {product.price && (
+            {/* Only a purchasable SKU has a real, payable price. Quote-only products show no
+                figure at all — the whole point of this modal is that their price is quoted. */}
+            {isPurchasable(product.id) && (
               <div className="text-sm text-accent font-medium mt-1">
-                {product.priceLabel}: ₹{product.price.toLocaleString('en-IN')}
+                Price (incl. {GST_PERCENT_LABEL} GST): {formatINR(sellPrice(getCommerce(product.id)!.basePrice))}
               </div>
             )}
           </div>

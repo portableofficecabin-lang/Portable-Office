@@ -13,18 +13,6 @@ const sizeRows = [
   ["10' x 40' x 8.6'", "Open-plan office with meeting area", "8–12 people"],
 ];
 
-const pricingRows = [
-  ["Compact 10'x10' or 10'x15' GI portable office cabin", "₹1,10,000 – ₹1,80,000", "₹900–1200"],
-  ["20 ft steel office container (basic to insulated)", "₹1,60,000 – ₹2,40,000", "₹1000–1500"],
-  ["40 ft container office (customized multi-room)", "₹3,20,000 – ₹5,50,000+", "Varies"],
-];
-
-const costTierRows = [
-  ["Basic", "Standard aluminium, single-glazed", "₹80,000–₹1,50,000"],
-  ["Standard", "Double-glazing, integrated LEDs", "₹1,50,000–₹3,00,000"],
-  ["Premium", "Branded acoustics, smart tech, biophilic elements", "₹3,00,000–₹5,00,000+"],
-];
-
 const applications = [
   { icon: HardHat, title: "Construction Site Offices", desc: "40 ft site offices on NH projects housing project managers and engineers" },
   { icon: Factory, title: "Industrial Plant Offices", desc: "Admin cabins for logistics yards and warehouse operations with server provisions" },
@@ -36,7 +24,7 @@ const applications = [
 
 const advantages = [
   { icon: Truck, title: "Speed", desc: "Complete prefabrication in 7–15 days; 1–2 days onsite placement" },
-  { icon: IndianRupee, title: "Cost Control", desc: "₹900–1500/sq ft versus ₹2000+ for masonry — no overruns" },
+  { icon: IndianRupee, title: "Cost Control", desc: "One fixed, GST-inclusive price for the listed unit — no mid-project overruns" },
   { icon: Recycle, title: "Reusability", desc: "Same units serve 8–10 project cycles, reducing embodied carbon by 40–60%" },
   { icon: ThermometerSun, title: "Durability", desc: "Anti-corrosive coatings handle harsh coastal humidity and industrial environments" },
 ];
@@ -47,7 +35,7 @@ const faqs = [
   { q: "What insulation options are available for Indian climate conditions?", a: "We offer PUF panels (best thermal performance), EPS panels (cost-effective), glass wool, and rock wool in 40–60 mm thickness. PUF panels carry a 20% premium but deliver superior insulation for extreme heat in North and Central India and humidity in coastal zones." },
   { q: "Can steel containers be stacked for multi-storey offices?", a: "Yes, we design G+1 and G+2 configurations with proper staircase, railing, and structural reinforcement. Stacked containers suit large infrastructure projects and urban sites with limited ground-level space." },
   { q: "What is the expected lifespan of a steel portable office container?", a: "With periodic maintenance including triennial repainting and annual sealant inspection, steel portable office containers offer 10–25 years of service life. Well-maintained units can serve 8–10 project relocation cycles." },
-  { q: "How do costs compare to traditional brick-and-mortar site offices?", a: "Steel portable offices cost ₹900–1500 per sq ft versus ₹2000+ for masonry construction. Total project time drops from 60–90 days to 14–21 days, translating to faster mobilization and earlier revenue generation. Units also produce 90% less onsite debris." },
+  { q: "How do steel portable offices compare to traditional brick-and-mortar site offices?", a: "Total project time drops from 60–90 days to 14–21 days, translating to faster mobilization and earlier revenue generation. The unit is relocatable rather than written off at the end of the project, and it produces 90% less onsite debris. The container listed on this page is sold at the single price shown above, inclusive of 18% GST." },
   { q: "What customization options are available?", a: "Full customization includes external branding (company colours, logo vinyls, ACP facades), internal partitioning with modular 75 mm panels, reinforced security doors for server rooms, and extensions like verandahs and canopies. Modules can be connected with common doors or weatherproof passages." },
   { q: "What compliance and safety standards do these containers meet?", a: "Our units adhere to IS 800 for structural steel design, IS 732 for electrical installations, and NBC fire safety norms. Pre-dispatch quality checks include ultrasonic weld testing, insulation continuity verification, alignment checks, and simulated rain leakage testing." },
 ];
@@ -247,38 +235,21 @@ export function SteelPortableOfficeContainerContent() {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* Price */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-6">Pricing Range & Cost Factors</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-card rounded-xl overflow-hidden shadow-card">
-            <thead>
-              <tr className="bg-primary text-primary-foreground">
-                <th className="px-6 py-4 text-left font-semibold">Container Type</th>
-                <th className="px-6 py-4 text-left font-semibold">Price Range (Indicative)</th>
-                <th className="px-6 py-4 text-left font-semibold">Price per Sq Ft</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingRows.map((row, i) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                  <td className="px-6 py-4 font-medium text-foreground">{row[0]}</td>
-                  <td className="px-6 py-4 text-muted-foreground">{row[1]}</td>
-                  <td className="px-6 py-4 text-muted-foreground">{row[2]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-6 bg-muted/30 rounded-xl p-6 border border-border">
-          <h3 className="font-semibold text-foreground mb-3">Key Cost Drivers</h3>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Price & What Changes the Specification</h2>
+        <p className="text-muted-foreground mb-6">
+          The steel portable office container listed on this page is sold at the single price shown at the top, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode, so the total is settled before you pay — nothing is added later.
+        </p>
+        <div className="bg-muted/30 rounded-xl p-6 border border-border">
+          <h3 className="font-semibold text-foreground mb-3">Specification changes that make it a made-to-order build (quoted separately)</h3>
           <ul className="grid sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
-            <li>• Steel thickness: 1.6 mm adds 15% over 1.2 mm</li>
-            <li>• PUF insulation carries 20% premium over EPS</li>
-            <li>• Premium gypsum and modular furniture add 10–15%</li>
-            <li>• High-AC configurations add ~₹20,000 to base price</li>
-            <li>• Transport logistics: ₹5–10 per km from factory</li>
-            <li>• Crane charges at ₹10,000 per day</li>
+            <li>• Heavier 1.6 mm steel cladding in place of 1.2 mm</li>
+            <li>• PUF insulation in place of EPS</li>
+            <li>• Premium gypsum finishes and modular furniture</li>
+            <li>• Additional AC provisions beyond the standard fit-out</li>
+            <li>• Multi-room 40 ft and stacked G+1 / G+2 configurations</li>
+            <li>• Non-standard sizes and external branding packages</li>
           </ul>
         </div>
       </section>
@@ -288,7 +259,7 @@ export function SteelPortableOfficeContainerContent() {
         <h2 className="text-2xl font-bold text-foreground mb-6">Cost Optimisation Tips for Buyers</h2>
         <ul className="space-y-3 text-muted-foreground">
           <li className="flex items-start gap-3"><span className="bg-accent text-accent-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span> Standardize sizes across sites (same 20 ft and 40 ft modules) for reuse and simplified logistics</li>
-          <li className="flex items-start gap-3"><span className="bg-accent text-accent-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span> Decide early whether washrooms integrate into the main cabin or remain separate (₹50,000 savings per unit)</li>
+          <li className="flex items-start gap-3"><span className="bg-accent text-accent-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span> Decide early whether washrooms integrate into the main cabin or remain separate — it changes the build, not just the fit-out</li>
           <li className="flex items-start gap-3"><span className="bg-accent text-accent-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span> Opt for functional, durable interiors instead of decorative finishes for construction environments</li>
           <li className="flex items-start gap-3"><span className="bg-accent text-accent-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span> Plan for future relocation from design stage — include lifting points and modular partitions</li>
           <li className="flex items-start gap-3"><span className="bg-accent text-accent-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">5</span> Consider phased expansion: start with base modules and add units as team size grows</li>
