@@ -28,6 +28,50 @@ const COLOR_PROPS = [
   "text-decoration-color", "column-rule-color", "caret-color", "fill", "stroke",
 ] as const;
 
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+/**
+ * Paint properties that only exist on SVG nodes. These get a HARDER treatment than the
+ * COLOR_PROPS above — see flattenSvgPaint().
+ */
+const SVG_PAINT_PROPS = ["fill", "stroke", "stop-color", "flood-color", "lighting-color"] as const;
+
+/**
+ * SVG paint must be flattened to a CONCRETE colour — unconditionally, not just when it uses an
+ * unsupported colour function.
+ *
+ * html2canvas does not rasterise an inline <svg> as part of the DOM. It SERIALISES the <svg>
+ * standalone and loads it as an <img> (data:image/svg+xml,…). That detached SVG document has no
+ * access to the page's CSS custom properties, so a presentation attribute like
+ *
+ *     fill="hsl(var(--accent))"
+ *
+ * resolves against an undefined `--accent` inside the serialised image: the declaration is invalid
+ * at computed-value time, `fill` falls back to black and `stroke` to none. The drawing exports as
+ * black blobs with no outlines — and because the computed value on the LIVE DOM is already a plain
+ * `rgb(...)`, it never matches UNSUPPORTED_COLOR, so the oklch sanitiser above never touches it.
+ * The export SUCCEEDS and silently produces a wrong drawing, which is worse than throwing.
+ *
+ * getComputedStyle on the live DOM has already resolved the var() to concrete rgb, so copying that
+ * value onto an inline style makes the serialised SVG self-contained. For a drawing that already
+ * uses literal hex (ModulePlan, every labour-colony sheet) this is a visual no-op.
+ *
+ * NOTE: the resolved value depends on the ACTIVE THEME. This app renders <html class="dark">, so a
+ * sheet meant to be printed on white paper must opt into the light palette (add the `light` class to
+ * the sheet element) — otherwise the ink flattened here is the dark theme's near-white foreground,
+ * and the drawing comes out white-on-white.
+ */
+function flattenSvgPaint(cs: CSSStyleDeclaration, set: (prop: string, val: string) => void) {
+  for (const prop of SVG_PAINT_PROPS) {
+    const val = cs.getPropertyValue(prop);
+    // "none" and "" are already self-contained; anything else is pinned to its computed colour.
+    if (!val || val === "none") continue;
+    set(prop, UNSUPPORTED_COLOR.test(val) ? toRenderableColor(val) : val);
+  }
+}
+
+const isSvgNode = (node: Element): boolean => node.namespaceURI === SVG_NS;
+
 let _canvas: HTMLCanvasElement | null = null;
 /** Convert any CSS colour (incl. oklch/lab/…) to #rrggbb/rgba via the native canvas engine. */
 export function toRenderableColor(value: string): string {
@@ -65,10 +109,14 @@ export function applySafeColors(root: HTMLElement): () => void {
   const nodes: HTMLElement[] = [root, ...Array.from(root.querySelectorAll<HTMLElement>("*"))];
   for (const node of nodes) {
     const cs = window.getComputedStyle(node);
-    sanitizeOne(cs, (prop, val) => {
+    const set = (prop: string, val: string) => {
       touched.push([node, prop, node.style.getPropertyValue(prop)]);
       node.style.setProperty(prop, val, "important");
-    });
+    };
+    sanitizeOne(cs, set);
+    // SVG nodes need their paint pinned to a concrete colour even when it is already valid rgb,
+    // because the <svg> is serialised standalone and loses the page's CSS variables. See flattenSvgPaint.
+    if (isSvgNode(node)) flattenSvgPaint(cs, set);
   }
   return () => {
     for (const [node, prop, prev] of touched) {
@@ -87,7 +135,9 @@ export function sanitizeClonedDoc(doc: Document, rootId?: string) {
   const nodes: HTMLElement[] = [root as HTMLElement, ...Array.from(root.querySelectorAll<HTMLElement>("*"))];
   for (const node of nodes) {
     const cs = win.getComputedStyle(node);
-    sanitizeOne(cs, (prop, val) => node.style.setProperty(prop, val));
+    const set = (prop: string, val: string) => node.style.setProperty(prop, val);
+    sanitizeOne(cs, set);
+    if (isSvgNode(node)) flattenSvgPaint(cs, set);
   }
 }
 

@@ -30,6 +30,17 @@
  *
  * Aspect ratio is preserved at every step, so nothing is stretched; the image is centred in the page
  * margins, so nothing is shifted or clipped.
+ *
+ * ── `format: "png"` — for dense CAD-style sheets ─────────────────────────────────────────────────
+ * JPEG is a poor fit for line art: its DCT-based compression rings around hard edges — exactly
+ * hairline strokes, hatch fills and small text — which is what "blurry lines / fuzzy text" reports
+ * trace back to almost every time, not insufficient DPI. PNG is lossless (zero ringing) and, for
+ * mostly-white pages with sharp edges and flat colour (a construction drawing sheet, not a photo),
+ * its deflate compression is usually competitive with or smaller than a JPEG good enough to look
+ * clean at this content type. Callers with dense technical sheets (rebar shape diagrams, hatch
+ * patterns, 6–8 pt dimension text) should pass `format: "png"` with a higher `dpi`/`minDpi` and a
+ * larger `targetBytes` — the size-budget loop still applies, but only ever flexes DPI for PNG (there
+ * is no lossy "quality" knob to step down first).
  */
 
 import jsPDF from "jspdf";
@@ -51,6 +62,16 @@ export const SHEET_PDF_DEFAULTS = {
   targetBytes: 1_000_000,
   marginMm: 8,
   orientation: "portrait" as "portrait" | "landscape",
+  /** JPEG (small, fine for photos/screenshots) or PNG (lossless — no ringing on line art/text). */
+  format: "jpeg" as "jpeg" | "png",
+  /**
+   * PNG pre-encode quantisation, bits per channel. html2canvas antialiasing scatters thousands of
+   * near-identical colours across a line-art page; PNG's deflate then finds almost no repeated runs
+   * and the file balloons. Snapping near-white to pure white and rounding each channel to 2^bits
+   * levels is invisible at print DPI (32 grey levels still render smooth text edges; flat fills
+   * shift < 4/255) but typically cuts the encoded size 3–6×. 8 disables the pass entirely.
+   */
+  pngQuantizeBits: 5,
 } as const;
 
 /**
@@ -61,12 +82,14 @@ export const SHEET_PDF_DEFAULTS = {
  * tall and narrow, so this is the cap that bites first; setting it too low silently starves a long
  * sheet of resolution (at 16 384 a 25 000 px sheet fell to 93 DPI).
  *
- * AREA: 40 Mpx ≈ 160 MB of RGBA backing store. Chrome permits far more (268 Mpx), but there is no
- * point allocating a canvas so large it risks an OOM on a modest machine.
+ * AREA: 64 Mpx ≈ 256 MB of RGBA backing store. Chrome permits far more (268 Mpx); this is headroom
+ * for a genuinely tall multi-drawing technical sheet (a dozen stacked construction-drawing cards) to
+ * reach a high target DPI without the area cap binding first, while staying well inside what a
+ * modest machine can allocate.
  *
  * Past those limits the effective DPI degrades gracefully instead of the export blowing up.
  */
-const MAX_CANVAS_PX = 40_000_000;
+const MAX_CANVAS_PX = 64_000_000;
 const MAX_CANVAS_DIM = 32_000;
 
 export interface SheetPdfOptions {
@@ -83,6 +106,10 @@ export interface SheetPdfOptions {
   footer?: boolean;
   /** Extra CSS selectors whose boundaries are also safe page breaks. */
   breakSelector?: string;
+  /** JPEG (default) or PNG. Use PNG for dense line-art/text sheets — see the file header comment. */
+  format?: "jpeg" | "png";
+  /** PNG-only: bits per channel for the pre-encode quantisation pass (see defaults). 8 disables. */
+  pngQuantizeBits?: number;
 }
 
 export interface SheetPdfResult {
@@ -134,18 +161,56 @@ function contentBreakpoints(el: HTMLElement, extraSelector?: string): number[] {
   return [...marks].sort((a, b) => a - b);
 }
 
-/** Render one page of the master canvas as a JPEG data URL on an opaque white ground. */
-function sliceToJpeg(master: HTMLCanvasElement, y0: number, h: number, quality: number): string {
+/** Slice one page-height strip out of the master canvas onto an opaque white ground. */
+function sliceStrip(master: HTMLCanvasElement, y0: number, h: number): HTMLCanvasElement {
   const strip = document.createElement("canvas");
   strip.width = master.width;
   strip.height = Math.max(1, Math.round(h));
   const ctx = strip.getContext("2d");
-  if (!ctx) return "";
-  // JPEG has no alpha — paint the ground explicitly or transparent pixels come out black.
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, strip.width, strip.height);
-  ctx.drawImage(master, 0, Math.round(y0), master.width, strip.height, 0, 0, strip.width, strip.height);
-  return strip.toDataURL("image/jpeg", quality);
+  if (ctx) {
+    // No alpha in the output either format — paint the ground explicitly or transparent pixels
+    // come out black (JPEG) or stay transparent over a dark PDF viewer background (PNG).
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, strip.width, strip.height);
+    ctx.drawImage(master, 0, Math.round(y0), master.width, strip.height, 0, 0, strip.width, strip.height);
+  }
+  return strip;
+}
+
+/** Render one page of the master canvas as a JPEG data URL. */
+function sliceToJpeg(master: HTMLCanvasElement, y0: number, h: number, quality: number): string {
+  return sliceStrip(master, y0, h).toDataURL("image/jpeg", quality);
+}
+
+/**
+ * Quantise a strip's pixels IN PLACE before PNG encoding: near-white (≥ whiteFloor) snaps to pure
+ * white, every other channel value rounds to 2^bits levels, alpha forced opaque. Deflate then sees
+ * long identical runs instead of antialiasing noise — the visual change is imperceptible at print
+ * DPI, the size change is dramatic. A no-op at bits ≥ 8.
+ */
+function quantizeStrip(strip: HTMLCanvasElement, bits: number, whiteFloor = 248): void {
+  if (bits >= 8) return;
+  const ctx = strip.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const img = ctx.getImageData(0, 0, strip.width, strip.height);
+  const d = img.data;
+  const step = 256 >> Math.max(1, Math.min(7, Math.round(bits)));
+  const half = step >> 1;
+  for (let i = 0; i < d.length; i += 4) {
+    for (let k = 0; k < 3; k++) {
+      const v = d[i + k];
+      d[i + k] = v >= whiteFloor ? 255 : Math.min(255, (((v + half) / step) | 0) * step);
+    }
+    d[i + 3] = 255; // opaque — the ground is already painted white
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+/** Render one page of the master canvas as a PNG data URL — no compression ringing; quantised for size. */
+function sliceToPng(master: HTMLCanvasElement, y0: number, h: number, quantizeBits: number): string {
+  const strip = sliceStrip(master, y0, h);
+  quantizeStrip(strip, quantizeBits);
+  return strip.toDataURL("image/png");
 }
 
 /* ------------------------------------------------------------------- export */
@@ -186,8 +251,9 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
   });
 
   const breaksCss = contentBreakpoints(el, o.breakSelector);
+  const isPng = o.format === "png";
 
-  /** Build the whole PDF at a given downscale factor + JPEG quality. */
+  /** Build the whole PDF at a given downscale factor + JPEG quality (ignored for PNG). */
   const build = (f: number, quality: number) => {
     const canvas = rescale(master, f);
     const pxPerMm = canvas.width / imgWmm;
@@ -210,9 +276,11 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
         // else: this single block is taller than a page — a hard slice is the only option.
       }
       const hpx = Math.max(1, cut - y);
-      const data = sliceToJpeg(canvas, y, hpx, quality);
+      const data = isPng ? sliceToPng(canvas, y, hpx, o.pngQuantizeBits) : sliceToJpeg(canvas, y, hpx, quality);
       if (pages > 0) pdf.addPage();
-      pdf.addImage(data, "JPEG", m, m, imgWmm, hpx / pxPerMm, undefined, "FAST");
+      // PNG pages get jsPDF's best flate ("SLOW") — worth the CPU on line art; JPEG is already
+      // entropy-coded, so "FAST" avoids pointless recompression time there.
+      pdf.addImage(data, isPng ? "PNG" : "JPEG", m, m, imgWmm, hpx / pxPerMm, undefined, isPng ? "SLOW" : "FAST");
       pages++;
       y = cut;
       if (pages > 60) break;   // runaway guard
@@ -225,9 +293,11 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
   /**
    * ADAPTIVE size targeting. A fixed ladder of (quality × dpi) combinations would need up to 16
    * rebuilds — each one re-encodes every page, so that is 8–16 s of spinner. Instead we build once,
-   * measure, and JUMP to the settings that should hit the budget: JPEG size falls roughly linearly
-   * with pixel count, so the linear scale factor we need is ~sqrt(target / actual). Quality is
-   * stepped down first because it costs less legibility than resolution. Converges in ≤ 4 builds.
+   * measure, and JUMP to the settings that should hit the budget: image size falls roughly linearly
+   * with pixel count, so the linear scale factor we need is ~sqrt(target / actual). For JPEG, quality
+   * is stepped down first because it costs less legibility than resolution; PNG has no lossy quality
+   * knob, so it is treated as already "at the quality floor" and only DPI ever flexes. Converges in
+   * ≤ 4 builds.
    */
   const minF = Math.min(1, o.minDpi / baseDpi);
   let f = 1;
@@ -236,7 +306,7 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
 
   for (let i = 0; i < 3 && best.blob.size > o.targetBytes; i++) {
     const ratio = o.targetBytes / best.blob.size;
-    const atQualityFloor = q <= o.minQuality + 1e-6;
+    const atQualityFloor = isPng || q <= o.minQuality + 1e-6;
     const atDpiFloor = f <= minF + 1e-6;
     if (atQualityFloor && atDpiFloor) break;                  // nothing left to give
 

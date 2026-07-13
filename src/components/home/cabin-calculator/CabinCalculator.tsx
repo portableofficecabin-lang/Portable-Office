@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useMemo, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
+import dynamic from "next/dynamic";
 import {
   Building, Briefcase, Shield, Bath, BedDouble, Container, LayoutGrid, Warehouse,
   ArrowLeft, ArrowRight, Check, Loader2, Send, Download, MessageCircle,
@@ -44,6 +45,14 @@ import {
 import { LayoutDesigner, CompleteLayoutPreview, summariseLayout } from "./LayoutDesigner";
 import { ModulePlan } from "./ModulePlan";
 import { SocketSwitchDiagram } from "./ElectricalDiagram";
+
+// Admin-only drawing toolbar (watermark toggle + drawing PDF export). Loaded with
+// next/dynamic + ssr:false so the chunk is only fetched when `adminTools` renders it —
+// the public homepage bundle never pulls in the PDF/rasteriser code.
+const AdminDrawingTools = dynamic(
+  () => import("./AdminDrawingTools").then((m) => ({ default: m.AdminDrawingTools })),
+  { ssr: false },
+);
 
 // Steps a storage container customer sees — everything else (structure, interior,
 // doors/windows, electrical, add-ons) is irrelevant and skipped.
@@ -604,22 +613,60 @@ function Elevations({
   );
 }
 
-/** Preview with a Floor Plan / 4 Elevations toggle. */
+/** Preview with a Floor Plan / 4 Elevations toggle.
+ *  `printAll` stacks all three views with no tab buttons — used by the admin printable sheet
+ *  so a single PDF carries the 2D plan, the floor plan and the elevations. */
 function CabinPreview({
   length, width, height, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt,
-  containerDoor, roomLengths, partitionDoor, puf, roof, caption, config,
+  containerDoor, roomLengths, partitionDoor, puf, roof, caption, config, printAll,
 }: {
   length: number; width: number; height: number;
   doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[];
   windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean;
   roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
   config?: CabinConfig;
+  printAll?: boolean;
 }) {
   const pd = config;
   // "module" = the full architectural 2D plan (needs the whole config); default when available.
   const [view, setView] = useState<"module" | "plan" | "elevation">(config ? "module" : "plan");
   const tabs = ([["module", "2D Plan"], ["plan", "Floor Plan"], ["elevation", "4 Elevations"]] as const)
     .filter(([v]) => v !== "module" || config);
+
+  // Printable sheet: every view stacked, in order, each in its own page-break-friendly block.
+  // Literal hex only — this subtree is rasterised by html2canvas-pro, which cannot parse oklch().
+  if (printAll) {
+    const Heading = ({ children }: { children: React.ReactNode }) => (
+      <h4 className="mb-2 text-[12px] font-bold uppercase tracking-wide" style={{ color: "#0f172a" }}>
+        {children}
+      </h4>
+    );
+    return (
+      <div className="space-y-5">
+        {config && (
+          <section className="cabin-drawing-block">
+            <Heading>2D Plan</Heading>
+            <ModulePlan config={config} />
+          </section>
+        )}
+        <section className="cabin-drawing-block">
+          <Heading>Floor Plan</Heading>
+          <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPlacements={windowPlacements}
+            windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
+            containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor}
+            partitionDoorType={pd?.partitionDoorType} partitionDoorOffset={pd?.partitionDoorOffset}
+            partitionDoorHinge={pd?.partitionDoorHinge} partitionDoorSwing={pd?.partitionDoorSwing} puf={puf} />
+        </section>
+        <section className="cabin-drawing-block">
+          <Heading>4 Elevations</Heading>
+          <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
+            windowPlacements={windowPlacements} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
+            containerDoor={containerDoor} roof={roof} />
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="mb-2 flex items-center justify-between gap-2">
@@ -783,7 +830,9 @@ function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean
 /* ---------------------------------------------------------------- */
 /* Main component                                                   */
 /* ---------------------------------------------------------------- */
-export default function CabinCalculator() {
+/** `adminTools` is opt-in and off by default, so the public homepage calculator is unchanged:
+ *  the AdminDrawingTools chunk is never imported and no drawing UI is rendered. */
+export default function CabinCalculator({ adminTools = false }: { adminTools?: boolean } = {}) {
   const [config, setConfig] = useState<CabinConfig>(() => buildDefaultConfig());
   const [step, setStep] = useState(0);
   const [restored, setRestored] = useState(false);
@@ -803,6 +852,51 @@ export default function CabinCalculator() {
 
   const est = useMemo(() => computeEstimate(config), [config]);
   const product = useMemo(() => PRODUCTS.find((p) => p.id === config.productId), [config.productId]);
+
+  // Title-block text for the admin drawing sheet — built from the live config only.
+  // Any part that isn't configured is simply left out (never invented).
+  const drawingTitle = useMemo(
+    () => [product?.label, `${config.length}x${config.width}`].filter(Boolean).join(" "),
+    [product?.label, config.length, config.width],
+  );
+  const drawingSubtitle = useMemo(() => {
+    const rooms = config.roomLengths?.length ?? 0;
+    // Storage containers skip the Structure step entirely (CONTAINER_STEP_KEYS), and selectProduct
+    // CARRIES THE OLD structureId OVER rather than clearing it. So a PUF cabin switched to a
+    // container still holds the PUF id, and printing it here would stamp "PUF Panel" onto the
+    // title block of an exported container drawing — a spec the admin never chose. Omit it.
+    const structure = isStorageProduct(config.productId)
+      ? undefined
+      : STRUCTURES.find((s) => s.id === config.structureId)?.label;
+    return [
+      `${config.length} x ${config.width} x ${config.height} ft`,
+      structure,
+      rooms > 1 ? `${rooms} rooms` : rooms === 1 ? "1 room" : undefined,
+    ].filter(Boolean).join(" · ");
+  }, [config.productId, config.length, config.width, config.height, config.structureId, config.roomLengths]);
+
+  /**
+   * The full drawing set for the admin export sheet — all three views stacked.
+   *
+   * Memoised on `config` so that merely walking between wizard steps (or touching any state that is
+   * not the cabin itself) does not repaint ModulePlan + FloorPreview + Elevations, which is three
+   * heavy SVGs. It still updates live when the cabin actually changes, which is the point.
+   * Only built in admin mode — on the public site this is never evaluated.
+   */
+  const adminDrawing = useMemo(
+    () =>
+      adminTools ? (
+        <CabinPreview
+          length={config.length} width={config.width} height={config.height}
+          doorPlacements={config.doorPlacements} windowPlacements={config.windowPlacements}
+          windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3}
+          containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths}
+          partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)}
+          roof={config.roofId} config={config} printAll
+        />
+      ) : null,
+    [adminTools, config],
+  );
 
   // Only render the body portal after mount (document is guaranteed available; the
   // island is ssr:false so there is no hydration pass, but this keeps it defensive).
@@ -2810,6 +2904,19 @@ export default function CabinCalculator() {
               </StepShell>
             )}
           </div>
+
+          {/* Admin only: drawing sheet + watermark toggle + PDF export. Sits directly under the step
+              body so it is reachable from every step once a size exists.
+              Skipped on step 0 (Product): nothing is configured yet, so the sheet would just render
+              three heavy SVGs of the default cabin. `adminDrawing` is memoised on `config`, so
+              walking between steps does not repaint ModulePlan + FloorPreview + Elevations. */}
+          {adminTools && step > 0 && (
+            <div className="mt-6 rounded-2xl border border-border bg-background p-4 sm:p-5">
+              <AdminDrawingTools title={drawingTitle} subtitle={drawingSubtitle}>
+                {adminDrawing}
+              </AdminDrawingTools>
+            </div>
+          )}
 
           {/* Nav */}
           <div className="mt-6 flex items-center justify-between border-t border-border pt-4">

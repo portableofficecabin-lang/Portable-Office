@@ -29,6 +29,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   Calculator,
+  Ruler,
   Star,
   BookOpen,
 } from "lucide-react";
@@ -58,6 +59,7 @@ const sidebarNav = [
   { name: "Work Orders", href: "/admin/inventory-pro/work-orders", icon: FileText, group: "ERP" },
   { name: "Factory Invoice Tracker", href: "/admin/factory-invoices", icon: ShieldAlert, group: "ERP", highlight: true },
   { name: "Cabin Quotation Calculator", href: "/admin/cabin-quotation", icon: Calculator, group: "ERP", highlight: true },
+  { name: "Cabin Design Calculator", href: "/admin/cabin-calculator", icon: Ruler, group: "ERP", highlight: true },
   { name: "Rental Contracts", href: "/admin/rental-contracts", icon: Truck, group: "ERP", highlight: true },
   { name: "Suppliers", href: "/admin/suppliers", icon: Truck, group: "ERP" },
   { name: "Specifications", href: "/admin/specifications", icon: FileText, group: "Documents" },

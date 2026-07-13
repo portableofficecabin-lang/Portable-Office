@@ -237,13 +237,20 @@ export function ConstructionDrawingTab({
     if (!sheetRef.current) return;
     setBusy(true);
     try {
-      // One shared exporter for every calculator: DPI-derived resolution, JPEG pages, page breaks
-      // on card boundaries (never through a table or drawing), and a 1 MB size budget.
+      // One shared exporter for every calculator, but THIS sheet gets the high-fidelity preset:
+      // dense CAD-style line art (rebar shape diagrams, hatch fills, 6–8 pt dimension text) is
+      // exactly the content JPEG compresses worst — its DCT ringing shows up as fuzzy hairlines and
+      // mushy text. PNG is lossless (no ringing) at a real print DPI, with a generous size budget so
+      // the adaptive backoff essentially never has to trade quality away on a normal export.
       const r = await exportSheetToPdf(sheetRef.current, {
         filename: `labour-colony-civil-drawing-${(config.projectName || "colony").replace(/\s+/g, "-").toLowerCase() || "colony"}`,
         // Every drawing card is a direct child of the sheet, so the default breakpoints already
         // land between cards; the schedules are tall tables worth keeping whole too.
         breakSelector: "table, thead, tbody > tr",
+        format: "png",
+        dpi: 300,
+        minDpi: 220,
+        targetBytes: 10_000_000,
       });
       toast({
         title: "Drawing PDF downloaded",
