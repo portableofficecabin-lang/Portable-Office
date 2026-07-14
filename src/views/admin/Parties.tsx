@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { format } from "date-fns";
 import {
   Users, Search, Plus, Building2, Phone, Mail, MapPin, X, Loader2,
-  FileText, Receipt, Truck, IndianRupee, FolderKanban, Download, Edit, Trash2,
+  FileText, Receipt, Truck, IndianRupee, FolderKanban, Download, Edit, Trash2, Package,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -22,6 +22,7 @@ import { PageHeader } from "@/components/admin/PageHeader";
 import { AdminCard, AdminCardHeader, AdminCardContent } from "@/components/admin/AdminCard";
 import { cn } from "@/lib/utils";
 import { exportToExcel, exportToPDF } from "@/lib/exportUtils";
+import { downloadPartyLedgerPdf, projectedInvoiceValue, type HoldItemRow } from "@/lib/pdf/partyLedgerPdf";
 
 interface Party {
   id: string;
@@ -70,6 +71,52 @@ const blankParty: Partial<Party> = {
   contact_person: "", site_location: "",
 };
 
+/**
+ * A completed item held back at the CUSTOMER's request, not yet invoiced.
+ * `amount` is a GENERATED column in Postgres (rate * qty) — read it, never write it.
+ */
+interface HoldItem {
+  id?: string;
+  party_id?: string;
+  item_description: string;
+  rate: number;
+  qty: number;
+  amount?: number;
+  gst_treatment: "inclusive" | "exclusive" | "unknown";
+  gst_rate_pct: number;
+  project_ref?: string | null;
+  held_on: string;
+  hold_reason?: string | null;
+  status: "invoice_pending" | "invoiced" | "dispatched" | "cancelled";
+  invoice_number?: string | null;
+  invoiced_on?: string | null;
+  notes?: string | null;
+}
+
+/** DB row → the shape the ledger-statement PDF expects. `amount` is generated, so fall back to
+ *  rate × qty for a row that was just edited client-side and not re-fetched yet. */
+const toHoldRow = (h: HoldItem): HoldItemRow => ({
+  item_description: h.item_description,
+  rate: Number(h.rate || 0),
+  qty: Number(h.qty || 0),
+  amount: Number(h.amount ?? Number(h.rate || 0) * Number(h.qty || 0)),
+  held_on: h.held_on,
+  status: h.status,
+  gst_treatment: h.gst_treatment,
+  gst_rate_pct: Number(h.gst_rate_pct ?? 18),
+  hold_reason: h.hold_reason ?? null,
+});
+
+/** A fresh hold row. `gst_treatment` starts UNSET on purpose — guessing whether a rate already
+ *  carries GST is exactly how the eventual invoice comes out wrong. */
+const blankHold = (): HoldItem => ({
+  item_description: "", rate: 0, qty: 1,
+  gst_treatment: "unknown", gst_rate_pct: 18,
+  held_on: new Date().toISOString().slice(0, 10),
+  hold_reason: "Dispatch postponed at customer's request",
+  status: "invoice_pending", project_ref: "", notes: "",
+});
+
 export default function AdminParties() {
   const [parties, setParties] = useState<Party[]>([]);
   const [addresses, setAddresses] = useState<PartyAddress[]>([]);
@@ -92,6 +139,13 @@ export default function AdminParties() {
   const [entryDialog, setEntryDialog] = useState(false);
   const [entryForm, setEntryForm] = useState<any>({ entry_type: "payment", entry_date: new Date().toISOString().slice(0, 10), debit: 0, credit: 0 });
 
+  // Completed items held at the customer's request — MEMORANDUM ONLY.
+  // Deliberately kept in their own state and their own total: these are NOT ledger rows and must
+  // never reach `totals` (see the comment there). No invoice has been raised, so no debtor exists.
+  const [holdItems, setHoldItems] = useState<HoldItem[]>([]);
+  const [holdDialog, setHoldDialog] = useState(false);
+  const [holdForm, setHoldForm] = useState<HoldItem>(blankHold());
+
   useEffect(() => { fetchParties(); }, []);
   useEffect(() => { if (selected) fetchPartyData(selected); }, [selected]);
 
@@ -109,13 +163,14 @@ export default function AdminParties() {
 
   const fetchPartyData = async (party: Party) => {
     const sb = supabase as any;
-    const [q, s, pr, r, o, le] = await Promise.all([
+    const [q, s, pr, r, o, le, hi] = await Promise.all([
       sb.from("quotations").select("*").eq("party_id", party.id),
       sb.from("sales_orders").select("*").eq("party_id", party.id),
       sb.from("project_allocations").select("*").eq("party_id", party.id),
       sb.from("rental_assignments").select("*").eq("party_id", party.id),
       sb.from("stock_outwards").select("*").eq("party_id", party.id),
       sb.from("ledger_entries").select("*").eq("party_id", party.id),
+      sb.from("customer_hold_items").select("*").eq("party_id", party.id).order("created_at"),
     ]);
     setQuotations((q.data as any) || []);
     setSalesOrders((s.data as any) || []);
@@ -123,7 +178,55 @@ export default function AdminParties() {
     setRentals((r.data as any) || []);
     setOutwards((o.data as any) || []);
     setLedgerEntries((le.data as any) || []);
+    // A missing table (migration not applied yet) must not blank out the rest of the ledger.
+    if (hi?.error) console.warn("customer_hold_items unavailable — has the migration been applied?", hi.error.message);
+    setHoldItems((hi?.data as HoldItem[]) || []);
     setLedgerProject("all");
+  };
+
+  /* ---- Completed items on customer hold (memorandum, never a debit) ---- */
+
+  const saveHoldItem = async () => {
+    if (!selected) return;
+    if (!holdForm.item_description?.trim()) {
+      toast({ title: "Description required", variant: "destructive" }); return;
+    }
+    const rate = Number(holdForm.rate || 0);
+    const qty = Number(holdForm.qty || 0);
+    if (rate <= 0 || qty <= 0) {
+      toast({ title: "Enter a rate and quantity", variant: "destructive" }); return;
+    }
+    // `amount` is a GENERATED column (rate * qty) — never send it, Postgres rejects the write.
+    const payload: Omit<HoldItem, "id" | "amount"> & { party_id: string } = {
+      party_id: selected.id,
+      item_description: holdForm.item_description.trim(),
+      rate, qty,
+      gst_treatment: holdForm.gst_treatment || "unknown",
+      gst_rate_pct: Number(holdForm.gst_rate_pct ?? 18),
+      project_ref: holdForm.project_ref || null,
+      held_on: holdForm.held_on,
+      hold_reason: holdForm.hold_reason || null,
+      status: holdForm.status || "invoice_pending",
+      invoice_number: holdForm.invoice_number || null,
+      invoiced_on: holdForm.invoiced_on || null,
+      notes: holdForm.notes || null,
+    };
+    const sb = supabase as any;
+    const { error } = holdForm.id
+      ? await sb.from("customer_hold_items").update(payload).eq("id", holdForm.id)
+      : await sb.from("customer_hold_items").insert(payload);
+    if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
+    toast({ title: "Hold item saved", description: "Recorded as a memorandum — it does NOT affect the customer's balance." });
+    setHoldDialog(false);
+    setHoldForm(blankHold());
+    fetchPartyData(selected);
+  };
+
+  const deleteHoldItem = async (id: string) => {
+    if (!confirm("Remove this held item?")) return;
+    const { error } = await (supabase as any).from("customer_hold_items").delete().eq("id", id);
+    if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
+    if (selected) fetchPartyData(selected);
   };
 
   const saveLedgerEntry = async () => {
@@ -221,12 +324,44 @@ export default function AdminParties() {
     return rows.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [salesOrders, rentals, ledgerEntries, ledgerProject]);
 
+  // NOTE: `holdItems` is deliberately NOT referenced here. Completed-but-uninvoiced goods are not a
+  // receivable — no invoice, no transfer of control, no debtor — so they must never enter this
+  // balance. They are totalled separately in `holdTotals` below and shown in their own block.
   const totals = useMemo(() => {
     const debit = ledgerRows.reduce((s, r) => s + r.debit, 0);
     const credit = ledgerRows.reduce((s, r) => s + r.credit, 0);
     const opening = ledgerProject === "all" ? Number(selected?.opening_balance || 0) : 0;
     return { debit, credit, balance: opening + debit - credit, opening };
   }, [ledgerRows, selected, ledgerProject]);
+
+  /** Only items still awaiting an invoice count as "on hold" — once invoiced they become a normal
+   *  ledger debit, and counting them in both places would double-count the customer. */
+  const openHoldItems = useMemo(
+    () => holdItems.filter(h => h.status === "invoice_pending"),
+    [holdItems],
+  );
+  const holdTotals = useMemo(() => {
+    const value = openHoldItems.reduce((s, h) => s + Number(h.amount || 0), 0);
+    const projected = projectedInvoiceValue(openHoldItems.map(toHoldRow));
+    const gstUnset = openHoldItems.some(h => h.gst_treatment === "unknown");
+    return { value, projected, gstUnset, count: openHoldItems.length };
+  }, [openHoldItems]);
+
+  /** The full customer statement: Part A (books) + Part B (memorandum), as a vector PDF. */
+  const downloadStatement = () => {
+    if (!selected) return;
+    const r = downloadPartyLedgerPdf({
+      party: selected,
+      rows: ledgerRows.map(x => ({
+        date: x.date, ref: x.ref, type: x.type, project: x.project,
+        debit: x.debit, credit: x.credit, status: x.status,
+      })),
+      opening: totals.opening,
+      holdItems: openHoldItems.map(toHoldRow),
+      projectLabel: ledgerProject,
+    });
+    toast({ title: "Ledger statement downloaded", description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${Math.round(r.bytes / 1024)} KB` });
+  };
 
   const saveParty = async () => {
     if (!editing.name?.trim()) {
@@ -490,6 +625,10 @@ export default function AdminParties() {
                       </Button>
                       <Button size="sm" variant="outline" onClick={() => exportLedger("excel")}><Download className="h-4 w-4 mr-1" />Excel</Button>
                       <Button size="sm" variant="outline" onClick={() => exportLedger("pdf")}><Download className="h-4 w-4 mr-1" />PDF</Button>
+                      {/* The FULL statement: Part A (books) + Part B (customer-hold memorandum). */}
+                      <Button size="sm" onClick={downloadStatement} className="bg-slate-900 text-white hover:bg-slate-800">
+                        <FileText className="h-4 w-4 mr-1" /> Ledger Statement (PDF)
+                      </Button>
                     </div>
                   </div>
 
@@ -497,7 +636,7 @@ export default function AdminParties() {
                     <SumCard label="Opening" value={inr(totals.opening)} />
                     <SumCard label="Total Debit" value={inr(totals.debit)} className="text-red-600" />
                     <SumCard label="Total Credit" value={inr(totals.credit)} className="text-emerald-600" />
-                    <SumCard label="Net Balance" value={inr(totals.balance)} className="font-bold" />
+                    <SumCard label="Net Balance (Receivable)" value={inr(totals.balance)} className="font-bold" />
                   </div>
 
                   <div className="rounded-xl border-2 border-border overflow-hidden">
@@ -529,6 +668,118 @@ export default function AdminParties() {
                         ))}
                       </TableBody>
                     </Table>
+                  </div>
+
+                  {/* ============================================================================
+                      COMPLETED ITEMS — CUSTOMER HOLD  (MEMORANDUM, NOT A RECEIVABLE)
+                      Goods finished and ready for dispatch, held back at the CUSTOMER's request,
+                      with no tax invoice raised. They are shown BELOW the ledger and OUTSIDE the
+                      Net Balance above, because no invoice means no debtor: control of the goods has
+                      not transferred, so in the books they are still Finished Goods (inventory), and
+                      under GST the time of supply has not been triggered. Adding them to the balance
+                      would overstate receivables and misstate tax.
+                      ============================================================================ */}
+                  <div className="rounded-xl border-2 border-amber-300 bg-amber-50/60 dark:bg-amber-950/20 overflow-hidden">
+                    <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b-2 border-amber-300">
+                      <div className="flex items-center gap-2">
+                        <Package className="h-4 w-4 text-amber-700" />
+                        <span className="font-bold text-sm text-amber-900 dark:text-amber-200">
+                          Completed Items — Customer Hold
+                        </span>
+                        <Badge variant="outline" className="border-amber-500 text-amber-800 dark:text-amber-300 text-[10px]">
+                          Memorandum · not a receivable
+                        </Badge>
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => { setHoldForm({ ...blankHold(), project_ref: ledgerProject !== "all" ? ledgerProject : "" }); setHoldDialog(true); }}
+                        className="bg-amber-600 text-white hover:bg-amber-700"
+                      >
+                        <Plus className="h-4 w-4 mr-1" /> Add Held Item
+                      </Button>
+                    </div>
+
+                    <div className="px-4 py-2 text-[11px] text-amber-900 dark:text-amber-200/90 border-b border-amber-200">
+                      Completed and ready for dispatch; dispatch postponed at the customer&apos;s request.
+                      <strong> No tax invoice raised — this value is NOT included in the Net Balance above</strong> and must not be
+                      shown as an outstanding/debit balance until invoiced.
+                    </div>
+
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-amber-100/70 dark:bg-amber-900/30">
+                          <TableHead>Particulars</TableHead>
+                          <TableHead className="text-right">Rate</TableHead>
+                          <TableHead className="text-center">Qty</TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                          <TableHead>GST basis</TableHead>
+                          <TableHead>Held On</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead className="w-12"></TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {holdItems.length === 0 ? (
+                          <TableRow><TableCell colSpan={8} className="text-center py-6 text-muted-foreground text-sm">
+                            No items on hold. Use &quot;Add Held Item&quot; for completed goods awaiting dispatch/invoice.
+                          </TableCell></TableRow>
+                        ) : holdItems.map(h => (
+                          <TableRow key={h.id} className={h.status !== "invoice_pending" ? "opacity-55" : ""}>
+                            <TableCell className="font-medium">{h.item_description}</TableCell>
+                            <TableCell className="text-right">{inr(h.rate)}</TableCell>
+                            <TableCell className="text-center">{h.qty}</TableCell>
+                            <TableCell className="text-right font-bold text-amber-800 dark:text-amber-300">{inr(h.amount ?? h.rate * h.qty)}</TableCell>
+                            <TableCell>
+                              {h.gst_treatment === "unknown"
+                                ? <Badge variant="destructive" className="text-[10px]">NOT SET</Badge>
+                                : <span className="text-xs">{h.gst_treatment === "inclusive" ? `Incl. ${h.gst_rate_pct}%` : `Excl. ${h.gst_rate_pct}%`}</span>}
+                            </TableCell>
+                            <TableCell className="text-xs">{formatDateSafe(new Date(h.held_on), "dd/MM/yyyy")}</TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className="text-[10px]">
+                                {h.status === "invoice_pending" ? "Invoice Pending" : h.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-0.5">
+                                <Button size="sm" variant="ghost" onClick={() => { setHoldForm({ ...h }); setHoldDialog(true); }} className="h-7 w-7 p-0"><Edit className="h-3.5 w-3.5" /></Button>
+                                <Button size="sm" variant="ghost" onClick={() => h.id && deleteHoldItem(h.id)} className="text-destructive h-7 w-7 p-0"><Trash2 className="h-3.5 w-3.5" /></Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+
+                    {holdTotals.count > 0 && (
+                      <div className="px-4 py-3 border-t-2 border-amber-300 space-y-2">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="font-bold text-sm text-amber-900 dark:text-amber-200">
+                            Total Value on Customer Hold ({holdTotals.count} item{holdTotals.count > 1 ? "s" : ""})
+                          </span>
+                          <span className="font-bold text-lg text-amber-800 dark:text-amber-300">{inr(holdTotals.value)}</span>
+                        </div>
+
+                        {/* A rate that silently carries GST and one that silently doesn't cannot be added
+                            together — that difference becomes a wrong invoice. Surface it, with the number. */}
+                        {holdTotals.gstUnset ? (
+                          <div className="text-[11px] text-red-700 dark:text-red-400">
+                            <strong>GST basis not set</strong> on one or more lines. Confirm whether the rate already
+                            includes GST — the invoice value depends on it.
+                          </div>
+                        ) : Math.abs(holdTotals.projected - holdTotals.value) > 0.5 ? (
+                          <div className="text-[11px] text-amber-900 dark:text-amber-200/90">
+                            Lines priced <strong>exclusive</strong> of GST will invoice higher — projected invoice value
+                            incl. GST: <strong>{inr(holdTotals.projected)}</strong> (difference {inr(holdTotals.projected - holdTotals.value)}).
+                          </div>
+                        ) : null}
+
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-amber-200 text-xs">
+                          <span className="text-muted-foreground">Combined exposure (information only — not a receivable)</span>
+                          <span className="font-semibold">{inr(totals.balance + holdTotals.value)}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </TabsContent>
               </Tabs>
@@ -662,6 +913,88 @@ export default function AdminParties() {
           <DialogFooter>
             <Button variant="outline" onClick={() => setEntryDialog(false)}>Cancel</Button>
             <Button onClick={saveLedgerEntry} className="bg-emerald-600 text-white">Save Entry</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Completed item held at the customer's request — memorandum, never a debit. */}
+      <Dialog open={holdDialog} onOpenChange={setHoldDialog}>
+        <DialogContent className="max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{holdForm.id ? "Edit" : "Add"} Held Item — Completed, Awaiting Dispatch</DialogTitle>
+          </DialogHeader>
+
+          <div className="rounded-md border border-amber-300 bg-amber-50 dark:bg-amber-950/30 px-3 py-2 text-[11px] text-amber-900 dark:text-amber-200">
+            Recorded as a <strong>memorandum</strong>. It will <strong>not</strong> be added to the customer&apos;s
+            outstanding/debit balance until an invoice is raised.
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-2">
+              <Field label="Particulars *">
+                <Input
+                  placeholder="e.g. MS Portable Bunker Bed Cabin, 20' x 10'"
+                  value={holdForm.item_description || ""}
+                  onChange={e => setHoldForm({ ...holdForm, item_description: e.target.value })}
+                />
+              </Field>
+            </div>
+            <Field label="Rate (₹) *">
+              <Input type="number" value={holdForm.rate || 0} onChange={e => setHoldForm({ ...holdForm, rate: Number(e.target.value) })} />
+            </Field>
+            <Field label="Quantity *">
+              <Input type="number" value={holdForm.qty ?? 1} onChange={e => setHoldForm({ ...holdForm, qty: Number(e.target.value) })} />
+            </Field>
+
+            {/* The single most consequential field here: an inclusive rate and an exclusive rate cannot
+                be added together, and getting it wrong changes the invoice. No silent default. */}
+            <Field label="Is the rate inclusive of GST? *">
+              <Select value={holdForm.gst_treatment || "unknown"} onValueChange={v => setHoldForm({ ...holdForm, gst_treatment: v as HoldItem["gst_treatment"] })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="unknown">— Not set (confirm before invoicing) —</SelectItem>
+                  <SelectItem value="inclusive">Inclusive of GST</SelectItem>
+                  <SelectItem value="exclusive">Exclusive of GST (tax added on invoice)</SelectItem>
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field label="GST Rate (%)">
+              <Input type="number" value={holdForm.gst_rate_pct ?? 18} onChange={e => setHoldForm({ ...holdForm, gst_rate_pct: Number(e.target.value) })} />
+            </Field>
+
+            <Field label="Held On *">
+              <Input type="date" value={holdForm.held_on || ""} onChange={e => setHoldForm({ ...holdForm, held_on: e.target.value })} />
+            </Field>
+            <Field label="Status">
+              <Select value={holdForm.status || "invoice_pending"} onValueChange={v => setHoldForm({ ...holdForm, status: v as HoldItem["status"] })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="invoice_pending">Invoice Pending (on hold)</SelectItem>
+                  <SelectItem value="invoiced">Invoiced (now a ledger debit)</SelectItem>
+                  <SelectItem value="dispatched">Dispatched</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
+            </Field>
+
+            <div className="col-span-2">
+              <Field label="Reason for hold">
+                <Input value={holdForm.hold_reason || ""} onChange={e => setHoldForm({ ...holdForm, hold_reason: e.target.value })} />
+              </Field>
+            </div>
+            <div className="col-span-2">
+              <Field label="Notes"><Textarea rows={2} value={holdForm.notes || ""} onChange={e => setHoldForm({ ...holdForm, notes: e.target.value })} /></Field>
+            </div>
+
+            <div className="col-span-2 rounded-md bg-muted/50 px-3 py-2 flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Line amount (rate × qty)</span>
+              <span className="font-bold">{inr(Number(holdForm.rate || 0) * Number(holdForm.qty || 0))}</span>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setHoldDialog(false)}>Cancel</Button>
+            <Button onClick={saveHoldItem} className="bg-amber-600 text-white hover:bg-amber-700">Save Held Item</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
