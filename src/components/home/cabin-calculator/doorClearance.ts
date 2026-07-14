@@ -4,7 +4,7 @@
  * washroom may sit or be shifted into it. Kept in its own module so ModulePlan doesn't export
  * non-component helpers (which breaks React Fast Refresh).
  */
-import { DOOR_SIZE, sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig } from "./pricing";
+import { doorSizeOf, sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig } from "./pricing";
 
 export type KeepRect = { x0: number; y0: number; x1: number; y1: number };
 
@@ -21,10 +21,14 @@ export function doorKeepoutRects(
     const side = d.side || "bottom";
     const horiz = side === "top" || side === "bottom";
     const spanFt = sideSpanFt(side, L, W);
-    const dw = openingWidthOn(spanFt, DOOR_SIZE.widthFt) * ppf;
-    const startPx = clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt) * ppf;
+    // Sized off THIS door, not the standard 3 ft. A 6 ft double-leaf door needs a keep-out twice as
+    // wide AND twice as deep — its leaves sweep further into the room. Keeping the old constant here
+    // would let a table be auto-placed inside the swing of a wide door.
+    const dz = doorSizeOf(d);
+    const dw = openingWidthOn(spanFt, dz.widthFt) * ppf;
+    const startPx = clampOpeningOffset(d.offset, spanFt, dz.widthFt) * ppf;
     const roomDepth = horiz ? by - oy : rx - ox;
-    const clr = Math.min(Math.max(DOOR_SIZE.widthFt, 3) * ppf, roomDepth * 0.6);
+    const clr = Math.min(Math.max(dz.widthFt, 3) * ppf, roomDepth * 0.6);
     if (side === "bottom")     rects.push({ x0: ox + startPx - m, x1: ox + startPx + dw + m, y0: by - clr, y1: by });
     else if (side === "top")   rects.push({ x0: ox + startPx - m, x1: ox + startPx + dw + m, y0: oy, y1: oy + clr });
     else if (side === "left")  rects.push({ x0: ox, x1: ox + clr, y0: oy + startPx - m, y1: oy + startPx + dw + m });

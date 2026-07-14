@@ -22,7 +22,8 @@ import { ftToMm } from "@/features/cabin-design/furniture/tables/tableUnits";
 
 import {
   tablesOf,
-  DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf,
+  DOOR_SIZE, doorSizeOf, windowSizeOf, type OpeningSize,
+  TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf,
   furnitureAdjustOf, type FurnitureAdjust, plugPlanFor,
   MANAGER_TABLE_SIZE, MANAGER_L_SIZE, findWindowTrack, isToiletCabin,
   isOpenableWindow, type WindowOpening,
@@ -1009,7 +1010,11 @@ export function ModulePlan({
   // door so its outward swing arc + label are never clipped by the paper edge.
   const doorSides = new Set((config.doorPlacements ?? []).map((d) => d.side || "bottom"));
   // Reserve wall thickness + the full swing arc (≈ door width) + the two-line DOOR label.
-  const doorReach = Math.round(DOOR_SIZE.widthFt * ppf) + wallT + 32;
+  // The arc scales with the door, so the margin must be sized off the WIDEST door on the plan —
+  // a 6 ft double-leaf door swings twice as far as a 3 ft one and would otherwise be clipped.
+  const widestDoorFt = (config.doorPlacements ?? []).reduce(
+    (m, d) => Math.max(m, doorSizeOf(d).widthFt), DOOR_SIZE.widthFt);
+  const doorReach = Math.round(widestDoorFt * ppf) + wallT + 32;
   const mL = Math.max(92, doorSides.has("left") ? doorReach : 0);
   const mT = Math.max(74, doorSides.has("top") ? doorReach : 0);
   const mR = Math.max(52, doorSides.has("right") ? doorReach : 0);
@@ -1023,10 +1028,12 @@ export function ModulePlan({
   const nLedPanel = Math.min(e.led ?? 0, 10);
   const nTube = Math.min(e.tube ?? 0, 10);
   const ledRound = config.ledShape === "round";
-  const winW = config.windowWidthFt ?? 3, winH = config.windowHeightFt ?? 3;
-  // Label shows the exact chosen size AND track, e.g. 3'-0" X 5'-0" · 2 Track.
-  const winLabel = `${ftLabel(winW)} X ${ftLabel(winH)} · ${findWindowTrack(config.windowTrackId ?? "2").label}`;
-  const doorLabel = `${ftLabel(DOOR_SIZE.widthFt)} X ${ftLabel(DOOR_SIZE.heightFt)}`;
+  // Sizes and labels are resolved PER OPENING at the point of drawing (see the door/window loops).
+  // They used to be hoisted here as one size + one label for the whole plan, which is why every
+  // window was drawn and labelled identically no matter what was ordered.
+  const trackLabel = findWindowTrack(config.windowTrackId ?? "2").label;
+  const winLabelOf = (s: OpeningSize) => `${ftLabel(s.widthFt)} X ${ftLabel(s.heightFt)} · ${trackLabel}`;
+  const doorLabelOf = (s: OpeningSize) => `${ftLabel(s.widthFt)} X ${ftLabel(s.heightFt)}`;
   // Plate-bar lifting hooks: 2 on a small cabin, 4 once the floor area exceeds 100 sq.ft.
   const nHooks = L * W > 100 ? 4 : 2;
 
@@ -1197,7 +1204,7 @@ export function ModulePlan({
                   <g transform={`rotate(-90 ${lx} ${lm})`}>
                     <rect x={lx - 52} y={lm - 12} width={104} height={17} fill={C.paper} opacity={0.85} />
                     <text x={lx} y={lm - 3.5} textAnchor="middle" fontSize={7} fontWeight={700} fill={C.ink}>
-                      SLIDING DOOR {doorLabel}
+                      SLIDING DOOR {doorLabelOf(DOOR_SIZE)}
                     </text>
                     <text x={lx} y={lm + 4.5} textAnchor="middle" fontSize={6.6} fontWeight={700} fill={C.slide}>
                       SLIDES TO {slideDir === "rear" ? "REAR" : "FRONT"} · {slideSide === "left" ? "LEFT" : "RIGHT"} SIDE
@@ -1524,9 +1531,11 @@ export function ModulePlan({
           const spanFt = sideSpanFt(side, L, W);
           // In a top-down plan a window's along-wall extent is its WIDTH on every wall (the
           // height isn't visible). Clamped by the shared rule, so the plan matches the input.
-          const openFt = openingWidthOn(spanFt, winW);
+          const wz = windowSizeOf(wp, config);            // THIS window's size
+          const winLabel = winLabelOf(wz);
+          const openFt = openingWidthOn(spanFt, wz.widthFt);
           const len = openFt * ppf;
-          const startPx = clampOpeningOffset(wp.offset, spanFt, winW) * ppf;
+          const startPx = clampOpeningOffset(wp.offset, spanFt, wz.widthFt) * ppf;
           // Window type drives what's drawn: sliding/uPVC → sliding-track channels; openable →
           // a casement sash + swing arc (+ safety grill when it opens inside); fixed → an X.
           const winType = config.windowTypeId ?? "upvc";
@@ -1592,8 +1601,12 @@ export function ModulePlan({
           // door's NEAR edge; the opening then spans dw INTO the wall. The shared helpers
           // clamp it to exactly the range the offset input allows, so plan == input.
           const spanFt = sideSpanFt(side, L, W);
-          const dw = openingWidthOn(spanFt, DOOR_SIZE.widthFt) * ppf;
-          const startPx = clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt) * ppf;
+          // THIS door's size. `dw` is the opening width AND the swing-arc radius AND the open-leaf
+          // length, so a per-door width flows into all three at once — the arc grows with the door.
+          const dz = doorSizeOf(d);
+          const doorLabel = doorLabelOf(dz);
+          const dw = openingWidthOn(spanFt, dz.widthFt) * ppf;
+          const startPx = clampOpeningOffset(d.offset, spanFt, dz.widthFt) * ppf;
           // The customer picks which edge is hinged (hand) and which way the leaf swings (swing).
           const hand = d.hand ?? "left";
           const swing = d.swing ?? "out";

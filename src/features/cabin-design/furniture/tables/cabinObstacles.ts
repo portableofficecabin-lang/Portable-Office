@@ -30,7 +30,7 @@
  */
 
 import {
-  DOOR_SIZE,
+  DOOR_SIZE, doorSizeOf, windowSizeOf,
   ENCLOSED_TOILET_IDS,
   MANAGER_L_SIZE,
   MANAGER_TABLE_SIZE,
@@ -204,10 +204,13 @@ function doorEntryBoxes(config: CabinConfig): Box[] {
     const side = d.side || "bottom";
     const horiz = side === "top" || side === "bottom";
     const spanFt = sideSpanFt(side, config.length, config.width);
-    const dw = ft(openingWidthOn(spanFt, DOOR_SIZE.widthFt));
-    const start = ft(clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt));
+    // Sized off THIS door. A wide door needs a proportionally wider AND deeper entry keep-out —
+    // pinning this to the 3 ft standard would let furniture be auto-placed inside a 6 ft door's swing.
+    const dz = doorSizeOf(d);
+    const dw = ft(openingWidthOn(spanFt, dz.widthFt));
+    const start = ft(clampOpeningOffset(d.offset, spanFt, dz.widthFt));
     const roomDepth = horiz ? W : L;
-    const clr = Math.min(ft(Math.max(DOOR_SIZE.widthFt, 3)), roomDepth * 0.6);
+    const clr = Math.min(ft(Math.max(dz.widthFt, 3)), roomDepth * 0.6);
     const m = KEEP_MARGIN_MM;
     if (side === "bottom") return { x0: start - m, x1: start + dw + m, y0: W - clr, y1: W };
     if (side === "top") return { x0: start - m, x1: start + dw + m, y0: 0, y1: clr };
@@ -260,8 +263,10 @@ function mainDoorObstacles(config: CabinConfig): Obstacle[] {
     const side = d.side || "bottom";
     const horiz = side === "top" || side === "bottom";
     const spanFt = sideSpanFt(side, config.length, config.width);
-    const dw = ft(openingWidthOn(spanFt, DOOR_SIZE.widthFt));
-    const start = ft(clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt));
+    // `dw` is the opening width AND the swept swing radius — both scale with THIS door.
+    const dz = doorSizeOf(d);
+    const dw = ft(openingWidthOn(spanFt, dz.widthFt));
+    const start = ft(clampOpeningOffset(d.offset, spanFt, dz.widthFt));
     const hand = d.hand ?? "left";
     const swing = d.swing ?? "out";
 
@@ -431,8 +436,6 @@ function partitionObstacles(config: CabinConfig): Obstacle[] {
 
 function windowObstacles(config: CabinConfig): Obstacle[] {
   const { lengthMm: L, widthMm: W } = cabinSizeMm(config);
-  const winW = config.windowWidthFt ?? 3;
-  const winH = config.windowHeightFt ?? 3;
   const openable = isOpenableWindow(config.windowTypeId ?? "upvc");
   const opensIn = openable && config.windowOpening === "inside";
 
@@ -440,8 +443,12 @@ function windowObstacles(config: CabinConfig): Obstacle[] {
     const side = wp.side || "top";
     const horiz = side === "top" || side === "bottom";
     const spanFt = sideSpanFt(side, config.length, config.width);
-    const len = ft(openingWidthOn(spanFt, winW));
-    const start = ft(clampOpeningOffset(wp.offset, spanFt, winW));
+    // Sized off THIS window: its along-wall extent, how far an inward-opening sash sweeps, and the
+    // head height a tall table could foul all follow its own width/height.
+    const wz = windowSizeOf(wp, config);
+    const winH = wz.heightFt;
+    const len = ft(openingWidthOn(spanFt, wz.widthFt));
+    const start = ft(clampOpeningOffset(wp.offset, spanFt, wz.widthFt));
     // A casement sash that opens INSIDE sweeps its own width into the room; every other window
     // type (sliding / uPVC / fixed) stays in the wall plane.
     const depth = opensIn ? len : WALL_MM;
@@ -487,8 +494,10 @@ function electricalBoardObstacles(config: CabinConfig): Obstacle[] {
   const side = door.side || "bottom";
   const horiz = side === "top" || side === "bottom";
   const spanFt = sideSpanFt(side, config.length, config.width);
-  const dw = ft(openingWidthOn(spanFt, DOOR_SIZE.widthFt));
-  const start = ft(clampOpeningOffset(door.offset, spanFt, DOOR_SIZE.widthFt));
+  // The board sits BESIDE the main door, so it must be pushed clear of THAT door's actual width.
+  const dz = doorSizeOf(door);
+  const dw = ft(openingWidthOn(spanFt, dz.widthFt));
+  const start = ft(clampOpeningOffset(door.offset, spanFt, dz.widthFt));
 
   // Beside the door: past its far edge, plus a gap — clamped onto the wall.
   const span = horiz ? L : W;

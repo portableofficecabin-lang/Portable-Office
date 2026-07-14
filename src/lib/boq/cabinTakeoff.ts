@@ -39,6 +39,8 @@
 import {
   CONTAINER_DOOR_SIZE,
   DOOR_SIZE,
+  doorSizeOf,
+  windowSizeOf,
   ELECTRICAL_ITEMS,
   ENCLOSED_TOILET_IDS,
   PRODUCTS,
@@ -452,8 +454,6 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
   /* ---- 5.2 openings, read from the SAME placements the drawings render ---- */
   const doorQty = clamp(Math.round(cfg.doorQty), 0, 50);
   const windowQty = toiletCabin ? 0 : clamp(Math.round(cfg.windowQty), 0, 100);
-  const winWFt = clamp(cfg.windowWidthFt ?? 3, 1, 12);
-  const winHFt = clamp(cfg.windowHeightFt ?? 3, 1, 12);
 
   /** Openings deducted from each elevation's covering, keyed by the wall DOOR_WALL maps them to. */
   const wallCuts: Record<WallKey, { label: string; areaSqm: number }[]> = {
@@ -486,22 +486,39 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
       const side = placed[i]?.side ?? "bottom";
       const wall = DOOR_WALL[side] ?? "front";
       const span = sideSpanFt(side, L, W);
-      const wFt = openingWidthOn(span, DOOR_SIZE.widthFt);
-      const hFt = Math.min(DOOR_SIZE.heightFt, H);
+      /* EACH door is cut at ITS OWN size. Cutting every door at the 3′×6′ standard would under-cut
+       * the sheet for a 6′ double-leaf door and register it in the door schedule at the wrong size —
+       * i.e. quote and manufacture the wrong door. addDoors() groups by size, so a mixed set now
+       * yields one schedule row per distinct size, which is exactly what the shop floor needs. */
+      const dz = doorSizeOf(placed[i]);
+      const wFt = openingWidthOn(span, dz.widthFt);
+      const hFt = Math.min(dz.heightFt, H);
       wallCuts[wall].push({ label: `Door ${i + 1}`, areaSqm: ft2m(wFt) * ft2m(hFt) });
+      addDoors(dz.widthFt, dz.heightFt, "door", 1);
     }
-    addDoors(DOOR_SIZE.widthFt, DOOR_SIZE.heightFt, "door", doorQty);
   }
 
+  /* Windows are grouped by SIZE exactly as doors are, so a cabin with three different windows yields
+   * three schedule rows (frame jambs, head+sill, grill) at the right lengths — not one row at an
+   * averaged-away size. */
+  const winGroups = new Map<string, DoorGroup>();
   const winPlaced = (cfg.windowPlacements ?? []).slice(0, windowQty);
   for (let i = 0; i < windowQty; i++) {
     /* Unplaced windows sit on the REAR wall — buildDefaultConfig's default ("top"). */
     const side = winPlaced[i]?.side ?? "top";
     const wall = DOOR_WALL[side] ?? "rear";
     const span = sideSpanFt(side, L, W);
-    const wFt = openingWidthOn(span, winWFt);
-    const hFt = Math.min(winHFt, H);
+    const wz = windowSizeOf(winPlaced[i], cfg);   // EACH window at its own size
+    const wFt = openingWidthOn(span, wz.widthFt);
+    const hFt = Math.min(wz.heightFt, H);
     wallCuts[wall].push({ label: `Window ${i + 1}`, areaSqm: ft2m(wFt) * ft2m(hFt) });
+
+    const gw = round(wz.widthFt, 2);
+    const gh = round(Math.min(wz.heightFt, H), 2);
+    const slug = `${gw}x${gh}`.replace(/\./g, "-");
+    const g = winGroups.get(slug) ?? { slug, label: "window", widthFt: gw, heightFt: gh, count: 0 };
+    g.count += 1;
+    winGroups.set(slug, g);
   }
 
   /* A partition door in every partition (cfg.partitionDoor applies uniformly to all N−1). */
@@ -716,25 +733,25 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
     (container ? " (the container's ISO double door counts as 1 leaf)" : ""),
     totalDoors);
 
-  if (windowQty > 0) {
-    const wM = ft2m(winWFt);
-    const hM = ft2m(Math.min(winHFt, H));
-    s.steel("openings", "window-frame-jamb", CABIN_MATERIAL_ROLES["window-frame"],
-      "Window frame jamb",
-      `2 jambs × ${windowQty} window(s) = ${2 * windowQty} × ${d(hM)} m`,
-      2 * windowQty, hM);
-    s.steel("openings", "window-frame-head-sill", CABIN_MATERIAL_ROLES["window-frame"],
-      "Window frame head + sill",
-      `head + sill = 2 × ${windowQty} window(s) = ${2 * windowQty} × ${d(wM)} m. A window IS 4-sided — a door is not: a window needs a sill, a door opens onto the floor`,
-      2 * windowQty, wM);
-    s.count("openings", "window", CABIN_MATERIAL_ROLES.window,
-      "Window",
-      `${windowQty} × ${winWFt}′ × ${winHFt}′`,
-      windowQty);
-    s.sheet("openings", "window-grill", CABIN_MATERIAL_ROLES["window-grill"],
-      "Window grill",
-      `${windowQty} × ${d(wM)} × ${d(hM)} m opening face`,
-      windowQty * wM * hM, [], 1);
+  for (const g of winGroups.values()) {
+    const wM = ft2m(g.widthFt);
+    const hM = ft2m(g.heightFt);
+    s.steel("openings", `window-frame-jamb:${g.slug}`, CABIN_MATERIAL_ROLES["window-frame"],
+      `Window frame jamb — ${g.widthFt}′ × ${g.heightFt}′`,
+      `2 jambs × ${g.count} window(s) = ${2 * g.count} × ${d(hM)} m`,
+      2 * g.count, hM);
+    s.steel("openings", `window-frame-head-sill:${g.slug}`, CABIN_MATERIAL_ROLES["window-frame"],
+      `Window frame head + sill — ${g.widthFt}′ × ${g.heightFt}′`,
+      `head + sill = 2 × ${g.count} window(s) = ${2 * g.count} × ${d(wM)} m. A window IS 4-sided — a door is not: a window needs a sill, a door opens onto the floor`,
+      2 * g.count, wM);
+    s.count("openings", `window:${g.slug}`, CABIN_MATERIAL_ROLES.window,
+      `Window — ${g.widthFt}′ × ${g.heightFt}′`,
+      `${g.count} × ${g.widthFt}′ × ${g.heightFt}′`,
+      g.count);
+    s.sheet("openings", `window-grill:${g.slug}`, CABIN_MATERIAL_ROLES["window-grill"],
+      `Window grill — ${g.widthFt}′ × ${g.heightFt}′`,
+      `${g.count} × ${d(wM)} × ${d(hM)} m opening face`,
+      g.count * wM * hM, [], 1);
   }
 
   /* ==========================================================================

@@ -356,6 +356,109 @@ export const CONTAINER_DOOR_SIZE: OpeningSize = { widthFt: 7 + 8 / 12, heightFt:
 export const sizeLabel = (s: OpeningSize): string => `${formatFeet(s.widthFt)}×${formatFeet(s.heightFt)}`;
 
 /* ------------------------------------------------------------------ *
+ * PER-OPENING SIZES.
+ *
+ * Every door and every window may carry its OWN width/height. The size is OPTIONAL on the
+ * placement, and that is the whole design:
+ *
+ *   undefined  ⇒  fall back to the standard/global size  ⇒  behaves EXACTLY as before.
+ *
+ * That fallback is what keeps the public homepage calculator (which has no per-opening size UI and
+ * only sets the single global windowWidthFt/windowHeightFt) bit-for-bit unchanged, and what lets a
+ * config saved in localStorage BEFORE this feature keep pricing and drawing identically.
+ *
+ * ALWAYS resolve a size through doorSizeOf() / windowSizeOf(). Never read DOOR_SIZE or
+ * cfg.windowWidthFt directly at a call site — that is exactly how one consumer (a drawing, the BOQ,
+ * the furniture keep-out) silently keeps using 3×6 while the rest of the app moved on.
+ * ------------------------------------------------------------------ */
+
+/** Openings are clamped to a sane build range so a typo can't produce a 900 ft door. */
+export const MIN_OPENING_FT = 1;
+export const MAX_OPENING_FT = 12;
+export const clampOpeningFt = (n: number, fallback: number): number =>
+  Math.min(Math.max(Number.isFinite(n) ? n : fallback, MIN_OPENING_FT), MAX_OPENING_FT);
+
+/** A per-opening size override. Both fields are optional and independent. */
+export interface OpeningSizeOverride { widthFt?: number; heightFt?: number; }
+
+/** The size ACTUALLY used for one door. Its own override wins; otherwise the standard 3′×6′. */
+export const doorSizeOf = (d?: OpeningSizeOverride | null): OpeningSize => ({
+  widthFt: clampOpeningFt(d?.widthFt ?? DOOR_SIZE.widthFt, DOOR_SIZE.widthFt),
+  heightFt: clampOpeningFt(d?.heightFt ?? DOOR_SIZE.heightFt, DOOR_SIZE.heightFt),
+});
+
+/**
+ * The size ACTUALLY used for one window. Resolution order:
+ *   1. the window's own override      (admin per-window size)
+ *   2. the config's global window size (what the PUBLIC calculator sets — unchanged behaviour)
+ *   3. the standard 3′×3′
+ */
+export const windowSizeOf = (
+  w?: OpeningSizeOverride | null,
+  cfg?: { windowWidthFt?: number; windowHeightFt?: number } | null,
+): OpeningSize => ({
+  widthFt: clampOpeningFt(w?.widthFt ?? cfg?.windowWidthFt ?? WINDOW_SIZE.widthFt, WINDOW_SIZE.widthFt),
+  heightFt: clampOpeningFt(w?.heightFt ?? cfg?.windowHeightFt ?? WINDOW_SIZE.heightFt, WINDOW_SIZE.heightFt),
+});
+
+/** True when this opening carries an explicit size of its own (i.e. "Custom", not "Standard"). */
+export const hasCustomSize = (o?: OpeningSizeOverride | null): boolean =>
+  o?.widthFt !== undefined || o?.heightFt !== undefined;
+
+export interface OpeningPreset extends OpeningSize { id: string; label: string; }
+
+/** Standard door sizes. The 3′×6′ entry IS `DOOR_SIZE` — picking it reproduces today's price exactly. */
+export const DOOR_STD_SIZES: OpeningPreset[] = [
+  { id: "d-2.5x6.5", label: "2′6″ × 6′6″ — Narrow",      widthFt: 2.5, heightFt: 6.5 },
+  { id: "d-3x6",     label: "3′ × 6′ — Standard",        widthFt: 3,   heightFt: 6 },
+  { id: "d-3x7",     label: "3′ × 7′ — Tall",            widthFt: 3,   heightFt: 7 },
+  { id: "d-3.5x7",   label: "3′6″ × 7′ — Wide",          widthFt: 3.5, heightFt: 7 },
+  { id: "d-4x7",     label: "4′ × 7′ — Extra Wide",      widthFt: 4,   heightFt: 7 },
+  { id: "d-6x7",     label: "6′ × 7′ — Double Leaf",     widthFt: 6,   heightFt: 7 },
+];
+
+/** Standard window sizes. The 3′×3′ entry IS `WINDOW_SIZE` — today's default. */
+export const WINDOW_STD_SIZES: OpeningPreset[] = [
+  { id: "w-2x2",   label: "2′ × 2′ — Small",       widthFt: 2, heightFt: 2 },
+  { id: "w-3x3",   label: "3′ × 3′ — Standard",    widthFt: 3, heightFt: 3 },
+  { id: "w-4x3",   label: "4′ × 3′ — Wide",        widthFt: 4, heightFt: 3 },
+  { id: "w-4x4",   label: "4′ × 4′ — Large",       widthFt: 4, heightFt: 4 },
+  { id: "w-5x4",   label: "5′ × 4′ — Extra Wide",  widthFt: 5, heightFt: 4 },
+  { id: "w-6x4",   label: "6′ × 4′ — Panoramic",   widthFt: 6, heightFt: 4 },
+];
+
+/** The preset matching this exact size, or undefined when the size is genuinely custom. */
+export const matchPreset = (presets: OpeningPreset[], s: OpeningSize): OpeningPreset | undefined =>
+  presets.find((p) => Math.abs(p.widthFt - s.widthFt) < 1e-6 && Math.abs(p.heightFt - s.heightFt) < 1e-6);
+
+/**
+ * Door price scales with AREA off the standard 3′×6′ (18 sq ft), exactly as windows scale off 3′×3′.
+ * A standard door gives a ratio of 1.0, so a build with no custom sizes prices identically to before.
+ */
+export const DOOR_BASE_AREA = DOOR_SIZE.widthFt * DOOR_SIZE.heightFt; // 18 sq ft
+export function doorUnitPrice(basePrice: number, widthFt: number, heightFt: number): number {
+  const area = Math.max(1, widthFt || DOOR_SIZE.widthFt) * Math.max(1, heightFt || DOOR_SIZE.heightFt);
+  return Math.round(basePrice * (area / DOOR_BASE_AREA));
+}
+
+/**
+ * Breakdown text for a set of openings, e.g.
+ *   all the same → "2 × uPVC Window 3′×3′"
+ *   mixed sizes  → "3 × uPVC Window · sizes: 3′×3′, 4′×4′, 6′×4′"
+ * Sizes that differ per opening MUST be spelled out — a single "3′×3′" on a quote whose windows are
+ * actually three different sizes is how the wrong window gets manufactured.
+ */
+export function openingsDetail(qty: number, label: string, sizes: OpeningSize[], includedQty?: number): string {
+  const head = `${qty} × ${label}`;
+  const inc = includedQty ? ` · ${includedQty} included` : "";
+  if (!sizes.length) return head + inc;
+  const uniform = sizes.every((s) => s.widthFt === sizes[0].widthFt && s.heightFt === sizes[0].heightFt);
+  return uniform
+    ? `${head} ${sizeLabel(sizes[0])}${inc}`
+    : `${head}${inc} · sizes: ${sizes.map(sizeLabel).join(", ")}`;
+}
+
+/* ------------------------------------------------------------------ *
  * Openings (doors & windows) — placement model.
  *
  * Every opening is { side, offset }. `offset` is the distance in FEET from
@@ -368,7 +471,15 @@ export const sizeLabel = (s: OpeningSize): string => `${formatFeet(s.widthFt)}×
  * agree. Previously each renderer clamped on its own, which made offsets past
  * the limit silently collapse to the same spot.
  * ------------------------------------------------------------------ */
-export interface OpeningPlacement { side: string; offset: number; }
+/**
+ * One opening on a wall. `offset` is feet from that wall's start corner to the opening's NEAR EDGE.
+ *
+ * `widthFt` / `heightFt` are the OPTIONAL per-opening size override (see doorSizeOf / windowSizeOf).
+ * Leaving them undefined means "standard size" and reproduces the pre-per-size behaviour exactly —
+ * which is what keeps old saved configs and the public calculator unchanged. Resolve them through
+ * doorSizeOf() / windowSizeOf(); never read the raw fields.
+ */
+export interface OpeningPlacement extends OpeningSizeOverride { side: string; offset: number; }
 
 export const OPENING_SIDES = [
   { id: "top",    label: "Upper" },
@@ -1249,19 +1360,31 @@ export function computeEstimate(cfg: CabinConfig, opts: EstimateOptions = {}): E
   const win = findById(WINDOW_TYPES, cfg.windowTypeId) ?? WINDOW_TYPES[0];
   const doorQty = clamp(Math.round(cfg.doorQty), 0, 50);
   const windowQty = toilet ? 0 : clamp(Math.round(cfg.windowQty), 0, 100);
-  // Only doors beyond the included quantity (1 Steel Door) are charged.
-  const doorChargeQty = Math.max(0, doorQty - (door.includedQty ?? 0));
-  const doorAmt = round(door.price * doorChargeQty);
-  // Windows: base 3×3 ft, 2-track — price scales with area and track (2.5-track = +12%).
-  const winW = clamp(cfg.windowWidthFt ?? 3, 1, 12);
-  const winH = clamp(cfg.windowHeightFt ?? 3, 1, 12);
   const winTrack = findWindowTrack(cfg.windowTrackId);
-  const winPerUnit = windowUnitPrice(win.price, winW, winH, cfg.windowTrackId);
-  const winAmt = round(winPerUnit * windowQty);
+
+  // Each opening is priced at ITS OWN size. Sizes are resolved per index, and an index with no
+  // placement (or no override) resolves to the standard/global size — so a build with no custom
+  // sizes produces exactly the same total as before this feature existed.
+  const doorSizes = Array.from({ length: doorQty }, (_, i) => doorSizeOf(cfg.doorPlacements?.[i]));
+  const winSizes = Array.from({ length: windowQty }, (_, i) => windowSizeOf(cfg.windowPlacements?.[i], cfg));
+
+  // Doors scale by area off the standard 3′×6′ (ratio 1.0 for a standard door).
+  const doorGross = doorSizes.reduce((s, sz) => s + doorUnitPrice(door.price, sz.widthFt, sz.heightFt), 0);
+  // The "1 Steel Door included" allowance is worth ONE STANDARD door — so if the free door is
+  // upgraded to a bigger one, the customer pays only the DIFFERENCE rather than getting the upgrade
+  // free. With all-standard doors this reduces to the old `price × (qty − included)` exactly.
+  const doorAllowance = (door.includedQty ?? 0) * door.price;
+  const doorAmt = round(Math.max(0, doorGross - doorAllowance));
+
+  // Windows: base 3×3 ft, 2-track — price scales with area and track (2.5-track = +12%).
+  const winAmt = round(
+    winSizes.reduce((s, sz) => s + windowUnitPrice(win.price, sz.widthFt, sz.heightFt, cfg.windowTrackId), 0),
+  );
+
   const openings = doorAmt + winAmt;
   const openingLines: LineDelta[] = [
-    { label: "Doors", detail: door.includedQty ? `${doorQty} × ${door.label} · ${door.includedQty} included` : `${doorQty} × ${door.label}`, amount: doorAmt },
-    { label: "Windows", detail: `${windowQty} × ${win.label} ${formatFeet(winW)}×${formatFeet(winH)} · ${winTrack.label}`, amount: winAmt },
+    { label: "Doors", detail: openingsDetail(doorQty, door.label, doorSizes, door.includedQty), amount: doorAmt },
+    { label: "Windows", detail: `${openingsDetail(windowQty, win.label, winSizes)} · ${winTrack.label}`, amount: winAmt },
   ].filter((l) => l.amount !== 0);
 
   // Ventilation (toilet cabins) — exhaust fan / louver, priced only when selected.

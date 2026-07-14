@@ -22,6 +22,8 @@ import logo from "@/assets/logo.webp";
 import {
   PRODUCTS, STRUCTURES, WALL_MATERIALS, CEILING_MATERIALS, FLOORING_MATERIALS, INSULATION_OPTIONS,
   DOOR_TYPES, WINDOW_TYPES, WINDOW_TRACKS, WINDOW_OPENINGS, isOpenableWindow, windowOpeningLabel, windowUnitPrice, DOOR_SIZE, WINDOW_SIZE, CONTAINER_DOOR_SIZE, sizeLabel, formatFeet, ELECTRICAL_ITEMS, ADDONS, addonsForProduct, toiletAddonsOnly,
+  doorSizeOf, windowSizeOf, doorUnitPrice, matchPreset, clampOpeningFt,
+  DOOR_STD_SIZES, WINDOW_STD_SIZES, type OpeningSize, type OpeningSizeOverride, type OpeningPreset,
   STORAGE_SIZES, VENTILATION_ITEMS, CONTAINER_GRADES, containerRate,
   LIGHT_COLORS, LED_SHAPES, isToiletCabin, isStorageProduct,
   isPufPanel, WALL_NONE, pufWallOptions, findWallMaterial, materialLabel, materialAllowed,
@@ -181,6 +183,78 @@ function DimField({
   );
 }
 
+/**
+ * ADMIN-ONLY: the size control for ONE door or ONE window.
+ *
+ * Standard  → pick a preset from the list; the opening stores that exact width/height.
+ * Custom    → type any width × height.
+ * Clearing the size back to `undefined` is what "no override" means, and that is the state that
+ * reproduces the pre-feature behaviour — so "Standard" is not a separate flag, it is simply a size
+ * that happens to match a preset.
+ *
+ * `maxWidthFt` is what the WALL can actually take (an opening is capped at 60% of its wall span).
+ * It is surfaced here rather than silently clamped in the background, because a door that is priced
+ * at 6 ft but drawn at 4 ft is a quote that does not match the drawing.
+ */
+function OpeningSizeField({
+  kind, size, presets, maxWidthFt, onChange,
+}: {
+  kind: "Door" | "Window";
+  size: OpeningSize;
+  presets: OpeningPreset[];
+  maxWidthFt: number;
+  onChange: (s: OpeningSizeOverride) => void;
+}) {
+  const preset = matchPreset(presets, size);
+  const custom = !preset;
+  const tooWide = size.widthFt > maxWidthFt + 1e-6;
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span className="text-[11px] text-muted-foreground">Size</span>
+      <select
+        aria-label={`${kind} size`}
+        value={preset?.id ?? "__custom"}
+        onChange={(e) => {
+          const p = presets.find((x) => x.id === e.target.value);
+          // Choosing a preset writes its exact size; "Custom" keeps the current numbers and just
+          // hands the user the two inputs.
+          if (p) onChange({ widthFt: p.widthFt, heightFt: p.heightFt });
+        }}
+        className="h-8 rounded-md border border-border bg-transparent px-1.5 text-[11px] font-medium outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
+      >
+        {presets.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+        <option value="__custom">Custom…</option>
+      </select>
+
+      {/* Width × Height are ALWAYS editable — typing here is what makes a size "custom". */}
+      <input type="number" inputMode="decimal" min={1} max={12} step={0.5} aria-label={`${kind} width (ft)`}
+        value={Number.isFinite(size.widthFt) ? size.widthFt : ""}
+        onFocus={selectOnFocus}
+        onChange={(e) => onChange({ widthFt: parseFloat(cleanNumericInput(e.currentTarget)) || 1 })}
+        className={cn(
+          "h-8 w-14 rounded-md border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+          tooWide ? "border-destructive text-destructive" : "border-border",
+        )} />
+      <span className="text-[11px] text-muted-foreground">×</span>
+      <input type="number" inputMode="decimal" min={1} max={12} step={0.5} aria-label={`${kind} height (ft)`}
+        value={Number.isFinite(size.heightFt) ? size.heightFt : ""}
+        onFocus={selectOnFocus}
+        onChange={(e) => onChange({ heightFt: parseFloat(cleanNumericInput(e.currentTarget)) || 1 })}
+        className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+      <span className="text-[11px] text-muted-foreground">ft</span>
+
+      {custom && (
+        <span className="rounded border border-accent px-1.5 py-0.5 text-[9px] font-semibold uppercase text-accent">Custom</span>
+      )}
+      {tooWide && (
+        <span className="text-[10px] font-medium text-destructive">
+          max {formatFt(maxWidthFt)} ft on this wall
+        </span>
+      )}
+    </div>
+  );
+}
+
 /** A price-aware selectable pill for materials / door / window types. */
 function MaterialChip({
   item, selected, onSelect,
@@ -271,10 +345,10 @@ function MainBoardMark({ box }: { box: { x: number; y: number; bw: number; bh: n
 /* ---------------------------------------------------------------- */
 function FloorPreview({ length, width, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt, containerDoor, roomLengths, partitionDoor, partitionDoorType, partitionDoorOffset, partitionDoorHinge, partitionDoorSwing, partitionSlideSide, partitionSlideDirection, puf }: { length: number; width: number; doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[]; windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; partitionDoorType?: string; partitionDoorOffset?: number; partitionDoorHinge?: PartitionHinge; partitionDoorSwing?: PartitionSwing; partitionSlideSide?: PartitionSlideSide; partitionSlideDirection?: PartitionSlideDirection; puf?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
-  // The customer's chosen window size (falls back to the 3×3 default).
-  const winW = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
-  const winH = Math.min(Math.max(windowHeightFt ?? WINDOW_SIZE.heightFt, 1), 12);
-  const winLabel = sizeLabel({ widthFt: winW, heightFt: winH });
+  // Every opening is drawn at ITS OWN size. `windowWidthFt`/`windowHeightFt` remain the FALLBACK
+  // for a window that carries no override of its own — which is exactly what the public calculator
+  // sets, so its drawing is unchanged.
+  const winFallback = { windowWidthFt, windowHeightFt };
   const maxW = 300, maxH = 180;
   const scale = Math.min(maxW / L, maxH / W);
   const w = L * scale, h = W * scale;
@@ -346,8 +420,9 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
           // door's NEAR edge; the opening then spans `len` INTO the wall. The shared helpers
           // clamp it to exactly the range the offset input allows, so preview == input.
           const spanFt = sideSpanFt(side, L, W);
-          const len = Math.max(6, openingWidthOn(spanFt, DOOR_SIZE.widthFt) * scale);
-          const startPx = clampOpeningOffset(d.offset, spanFt, DOOR_SIZE.widthFt) * scale;
+          const dz = doorSizeOf(d);                       // THIS door's size, not the global 3×6
+          const len = Math.max(6, openingWidthOn(spanFt, dz.widthFt) * scale);
+          const startPx = clampOpeningOffset(d.offset, spanFt, dz.widthFt) * scale;
           const wallX = side === "left" ? pad : pad + w;
           const wallY = side === "top" ? pad : pad + h;
           const cx = horiz ? pad + startPx + len / 2 : wallX; // door centre (for the size label)
@@ -357,7 +432,7 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
               {horiz
                 ? <rect x={pad + startPx} y={wallY - 3} width={len} height={6} rx={1} fill="hsl(var(--accent))" />
                 : <rect x={wallX - 3} y={pad + startPx} width={6} height={len} rx={1} fill="hsl(var(--accent))" />}
-              {sizeText(side, cx, cy, sizeLabel(DOOR_SIZE), `dl${i}`)}
+              {sizeText(side, cx, cy, sizeLabel(dz), `dl${i}`)}
             </g>
           );
         })
@@ -369,10 +444,11 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
         const side = wp.side || "top";
         const horiz = side === "top" || side === "bottom";
         const spanFt = sideSpanFt(side, L, W);
+        const wz = windowSizeOf(wp, winFallback);         // THIS window's size
         // A window's along-wall extent in plan view is its WIDTH on every wall.
-        const openFt = openingWidthOn(spanFt, winW);
+        const openFt = openingWidthOn(spanFt, wz.widthFt);
         const len = Math.max(6, openFt * scale);
-        const startPx = clampOpeningOffset(wp.offset, spanFt, winW) * scale;
+        const startPx = clampOpeningOffset(wp.offset, spanFt, wz.widthFt) * scale;
         const wallX = side === "left" ? pad : pad + w;
         const wallY = side === "top" ? pad : pad + h;
         const cx = horiz ? pad + startPx + len / 2 : wallX;
@@ -382,7 +458,7 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
             {horiz
               ? <rect x={pad + startPx} y={wallY - 3} width={len} height={6} rx={1} fill={win} />
               : <rect x={wallX - 3} y={pad + startPx} width={6} height={len} rx={1} fill={win} />}
-            {sizeText(side, cx, cy, winLabel, `wl${i}`)}
+            {sizeText(side, cx, cy, sizeLabel(wz), `wl${i}`)}
           </g>
         );
       })}
@@ -514,12 +590,17 @@ function Elevations({
   // Lifting hooks: 2 diagonal corners for ≤100 sq.ft, 4 corners above — mirrors the 2D plan.
   const nHooks = L * W > 100 ? 4 : 2;
   const hookCorners = new Set(nHooks === 4 ? ["FL", "FR", "RL", "RR"] : ["RL", "FR"]);
-  // The customer's chosen window size (falls back to the 3×3 default).
-  const winWFt = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
-  const winHFt = Math.min(Math.max(windowHeightFt ?? WINDOW_SIZE.heightFt, 1), 12);
+  // Fallback size for a window that carries no override of its own (what the public calculator sets).
+  const winFallback = { windowWidthFt, windowHeightFt };
 
-  // Gather openings per wall (fractions along each wall's own width).
-  const walls: Record<WallKey, { widthFt: number; doors: { frac: number; hand: DoorHand }[]; windows: number[] }> = {
+  // Gather openings per wall. Each opening CARRIES ITS OWN SIZE through to the render — the previous
+  // structure threw the size away and re-derived one size for the whole wall, which is precisely why
+  // two differently-sized windows used to come out identical.
+  const walls: Record<WallKey, {
+    widthFt: number;
+    doors: { frac: number; hand: DoorHand; size: OpeningSize }[];
+    windows: { frac: number; size: OpeningSize }[];
+  }> = {
     front: { widthFt: L, doors: [], windows: [] },
     rear:  { widthFt: L, doors: [], windows: [] },
     left:  { widthFt: W, doors: [], windows: [] },
@@ -536,12 +617,14 @@ function Elevations({
   (doorPlacements ?? []).forEach((d) => {
     const wall = DOOR_WALL[d.side];
     if (!wall) return;
-    walls[wall].doors.push({ frac: centreFrac(d.offset, d.side, DOOR_SIZE.widthFt), hand: d.hand ?? "left" });
+    const size = doorSizeOf(d);
+    walls[wall].doors.push({ frac: centreFrac(d.offset, d.side, size.widthFt), hand: d.hand ?? "left", size });
   });
   (windowPlacements ?? []).forEach((wp) => {
     const wall = DOOR_WALL[wp.side];
     if (!wall) return;
-    walls[wall].windows.push(centreFrac(wp.offset, wp.side, winWFt));
+    const size = windowSizeOf(wp, winFallback);
+    walls[wall].windows.push({ frac: centreFrac(wp.offset, wp.side, size.widthFt), size });
   });
 
   // Shared scale → proportions read correctly across all four walls in one viewBox.
@@ -586,13 +669,14 @@ function Elevations({
       ribs.push(<line key={`rib${x}`} x1={x} y1={wy + 2} x2={x} y2={ground - 2} stroke={acc} strokeOpacity={0.12} strokeWidth={0.8} />);
     }
 
-    // Window drawn to its real size (width × height ft) via the shared px-per-ft
-    // `scale`, sat on a ~3 ft sill and kept inside the wall.
-    const winWpx = Math.max(7, Math.min(winWFt * scale, wallW - 6));
-    const winHpx = Math.max(7, Math.min(winHFt * scale, wallH - 6));
-    const sillPx = Math.min(3 * scale, Math.max(2, wallH - winHpx - 4));
-    const winY = ground - sillPx - winHpx;
-    const windows = wdat.windows.map((frac, i) => {
+    // Each window is drawn to ITS OWN real size (width × height ft) via the shared px-per-ft
+    // `scale`, sat on a ~3 ft sill and kept inside the wall. Sill and head are derived PER WINDOW —
+    // a taller window keeps the same sill and grows upward, which is how it is actually built.
+    const windows = wdat.windows.map(({ frac, size }, i) => {
+      const winWpx = Math.max(7, Math.min(size.widthFt * scale, wallW - 6));
+      const winHpx = Math.max(7, Math.min(size.heightFt * scale, wallH - 6));
+      const sillPx = Math.min(3 * scale, Math.max(2, wallH - winHpx - 4));
+      const winY = ground - sillPx - winHpx;
       const cx = wx + wallW * frac;
       const x = Math.min(Math.max(cx - winWpx / 2, wx + 3), wx + wallW - winWpx - 3);
       const yc = winY + winHpx / 2;
@@ -618,16 +702,23 @@ function Elevations({
         </g>
       );
     } else {
-      // Door to its real standard height (DOOR_SIZE, 6 ft) via the shared scale.
-      const dW = Math.max(9, Math.min(wallW * 0.14, 22));
-      const dH = Math.min(DOOR_SIZE.heightFt * scale, wallH - 3);
-      doors = wdat.doors.map(({ frac, hand }, i) => {
-        const cx = wx + wallW * frac, x = cx - dW / 2, y = ground - dH;
+      // Each door is drawn to ITS OWN real width AND height via the shared scale.
+      // NOTE: the width used to be a flat `wallW * 0.14` — NOT to scale. That had to go: with
+      // per-door sizes, a 6′ double-leaf door and a 3′ door would otherwise be drawn identically,
+      // which is the whole point of the feature. Heights were already to scale.
+      doors = wdat.doors.map(({ frac, hand, size }, i) => {
+        const dW = Math.max(9, Math.min(size.widthFt * scale, wallW - 6));
+        const dH = Math.min(size.heightFt * scale, wallH - 3);
+        const cx = wx + wallW * frac;
+        const x = Math.min(Math.max(cx - dW / 2, wx + 3), wx + wallW - dW - 3);
+        const y = ground - dH;
         // Handle sits on the edge OPPOSITE the hinge (hinge left → handle right).
         const hx = hand === "left" ? x + dW - 2.5 : x + 2.5;
         return (
           <g key={`d${i}`}>
             <rect x={x} y={y} width={dW} height={dH} rx={1} fill={acc} />
+            {/* A double-leaf door (>= 5 ft) reads as two leaves with a meeting stile. */}
+            {size.widthFt >= 5 && <line x1={x + dW / 2} y1={y} x2={x + dW / 2} y2={y + dH} stroke="#fff" strokeWidth={0.8} strokeOpacity={0.8} />}
             <circle cx={hx} cy={y + dH / 2} r={1.2} fill="#fff" />
           </g>
         );
@@ -1652,22 +1743,40 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
      mutation, so a number the customer types can never exceed the wall and silently
      collapse onto the same spot in the drawing. `windowWidthFt` is the along-wall extent
      of a window on any wall (its height isn't visible in a top-down plan). */
-  const winWidthOf = (c: CabinConfig) => c.windowWidthFt ?? WINDOW_SIZE.widthFt;
-  const doorMaxOffset = (c: CabinConfig, side: string) =>
-    maxOpeningOffset(sideSpanFt(side, c.length, c.width), DOOR_SIZE.widthFt);
-  const windowMaxOffset = (c: CabinConfig, side: string) =>
-    maxOpeningOffset(sideSpanFt(side, c.length, c.width), winWidthOf(c));
+  // Offsets are clamped against the width of THE OPENING BEING MOVED, not a single global width —
+  // a 6 ft door and a 2 ft window on the same wall have different legal offset ranges.
+  const doorMaxOffset = (c: CabinConfig, side: string, i?: number) =>
+    maxOpeningOffset(sideSpanFt(side, c.length, c.width), doorSizeOf(i === undefined ? undefined : c.doorPlacements[i]).widthFt);
+  const windowMaxOffset = (c: CabinConfig, side: string, i?: number) =>
+    maxOpeningOffset(sideSpanFt(side, c.length, c.width), windowSizeOf(i === undefined ? undefined : c.windowPlacements[i], c).widthFt);
 
-  /** Re-clamp all openings — call after any change to cabin length/width or window width.
-   *  The partition door runs along the WIDTH, so a width change can push it out of range too. */
+  /**
+   * Re-clamp all openings — after any change to cabin length/width, an opening's WALL, or its own
+   * size. Each opening is clamped against ITS OWN width.
+   *
+   * It clamps the WIDTH as well as the offset, and that is load-bearing. An opening can only be
+   * drawn up to 60% of its wall span (openingWidthOn), so a 12 ft door moved onto a 10 ft wall would
+   * otherwise stay 12 ft in the config — PRICED at 12 ft while DRAWN at 6 ft. The quote and the
+   * drawing would then disagree about what was sold. Only an explicit override is touched; an
+   * opening with no size (undefined) is left alone, so standard openings are untouched.
+   */
+  const fitWidth = (o: OpeningSizeOverride, spanFt: number, std: number): number | undefined =>
+    o.widthFt === undefined ? undefined : openingWidthOn(spanFt, clampOpeningFt(o.widthFt, std));
+
   const reclampOpenings = (c: CabinConfig): CabinConfig => ({
     ...c,
-    doorPlacements: c.doorPlacements.map((d) => ({
-      ...d, offset: clampOpeningOffset(d.offset, sideSpanFt(d.side, c.length, c.width), DOOR_SIZE.widthFt),
-    })),
-    windowPlacements: c.windowPlacements.map((wp) => ({
-      ...wp, offset: clampOpeningOffset(wp.offset, sideSpanFt(wp.side, c.length, c.width), winWidthOf(c)),
-    })),
+    doorPlacements: c.doorPlacements.map((d) => {
+      const span = sideSpanFt(d.side, c.length, c.width);
+      const widthFt = fitWidth(d, span, DOOR_SIZE.widthFt);
+      const next = { ...d, ...(widthFt === undefined ? {} : { widthFt }) };
+      return { ...next, offset: clampOpeningOffset(next.offset, span, doorSizeOf(next).widthFt) };
+    }),
+    windowPlacements: c.windowPlacements.map((wp) => {
+      const span = sideSpanFt(wp.side, c.length, c.width);
+      const widthFt = fitWidth(wp, span, WINDOW_SIZE.widthFt);
+      const next = { ...wp, ...(widthFt === undefined ? {} : { widthFt }) };
+      return { ...next, offset: clampOpeningOffset(next.offset, span, windowSizeOf(next, c).widthFt) };
+    }),
     // A sliding door additionally needs a door-width run of blank partition to retract onto, so a
     // width change re-snaps it into a position where the leaf still clears the doorway.
     partitionDoorOffset: c.partitionDoorType === "sliding"
@@ -1687,21 +1796,56 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
       const target = Math.min(Math.max(Math.round(n), 0), 6);
       const dp = c.doorPlacements.slice(0, target);
       while (dp.length < target) {
+        // A NEW door carries no size override — it resolves to the standard 3′×6′.
         dp.push({ side: "bottom", offset: clampOpeningOffset(Math.round((c.length || 10) * 0.3), sideSpanFt("bottom", c.length, c.width), DOOR_SIZE.widthFt) });
       }
       return { ...c, doorPlacements: dp, doorQty: dp.length };
     });
+  // Through reclampOpenings: moving a door to a SHORTER wall must shrink an oversized custom width
+  // to what that wall can take, or the price and the drawing part company.
   const setDoorSide = (i: number, side: string) =>
-    setConfig((c) => ({
+    setConfig((c) => reclampOpenings({
       ...c,
-      doorPlacements: c.doorPlacements.map((d, idx) =>
-        idx === i ? { ...d, side, offset: clampOpeningOffset(d.offset, sideSpanFt(side, c.length, c.width), DOOR_SIZE.widthFt) } : d),
+      doorPlacements: c.doorPlacements.map((d, idx) => (idx === i ? { ...d, side } : d)),
     }));
   const setDoorOffset = (i: number, offset: number) =>
     setConfig((c) => ({
       ...c,
       doorPlacements: c.doorPlacements.map((d, idx) =>
-        idx === i ? { ...d, offset: clampOpeningOffset(offset, sideSpanFt(d.side, c.length, c.width), DOOR_SIZE.widthFt) } : d),
+        idx === i ? { ...d, offset: clampOpeningOffset(offset, sideSpanFt(d.side, c.length, c.width), doorSizeOf(d).widthFt) } : d),
+    }));
+
+  /**
+   * Set ONE door's size. `undefined` on a field clears the override back to the standard size.
+   *
+   * The width is clamped to what the wall can actually take (openingWidthOn caps an opening at 60%
+   * of its wall). Without that clamp a 6 ft door on an 8 ft wall would be PRICED at 6 ft but DRAWN
+   * narrowed — the quote and the drawing would disagree about what was sold.
+   */
+  const setDoorSize = (i: number, size: OpeningSizeOverride) =>
+    setConfig((c) => reclampOpenings({
+      ...c,
+      doorPlacements: c.doorPlacements.map((d, idx) => {
+        if (idx !== i) return d;
+        const next = { ...d, ...size };
+        if (next.widthFt !== undefined) {
+          next.widthFt = openingWidthOn(sideSpanFt(next.side, c.length, c.width), clampOpeningFt(next.widthFt, DOOR_SIZE.widthFt));
+        }
+        return next;
+      }),
+    }));
+
+  const setWindowSize = (i: number, size: OpeningSizeOverride) =>
+    setConfig((c) => reclampOpenings({
+      ...c,
+      windowPlacements: c.windowPlacements.map((wp, idx) => {
+        if (idx !== i) return wp;
+        const next = { ...wp, ...size };
+        if (next.widthFt !== undefined) {
+          next.widthFt = openingWidthOn(sideSpanFt(next.side, c.length, c.width), clampOpeningFt(next.widthFt, WINDOW_SIZE.widthFt));
+        }
+        return next;
+      }),
     }));
   // Door OPENING — which edge is hinged, and which way the leaf swings.
   const setDoorHand = (i: number, hand: DoorHand) =>
@@ -1734,7 +1878,9 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
     setConfig((c) => {
       const target = Math.min(Math.max(Math.round(n) || 0, 0), 12);
       const wp = c.windowPlacements.slice(0, target);
-      const wW = winWidthOf(c);
+      // A NEW window inherits no override — it resolves to the standard/global size, so adding one
+      // never silently invents a custom size.
+      const wW = windowSizeOf(undefined, c).widthFt;
       while (wp.length < target) {
         // Spread each new window evenly along the rear (Upper) wall instead of stacking.
         const span = sideSpanFt("top", c.length, c.width);
@@ -1744,16 +1890,17 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
       return { ...c, windowPlacements: wp, windowQty: wp.length };
     });
   const setWindowSide = (i: number, side: string) =>
-    setConfig((c) => ({
+    setConfig((c) => reclampOpenings({
       ...c,
-      windowPlacements: c.windowPlacements.map((wp, idx) =>
-        idx === i ? { side, offset: clampOpeningOffset(wp.offset, sideSpanFt(side, c.length, c.width), winWidthOf(c)) } : wp),
+      // `...wp` is load-bearing: this used to rebuild the object as `{ side, offset }`, which would
+      // now SILENTLY DROP the window's custom size the moment its wall was changed.
+      windowPlacements: c.windowPlacements.map((wp, idx) => (idx === i ? { ...wp, side } : wp)),
     }));
   const setWindowOffset = (i: number, offset: number) =>
     setConfig((c) => ({
       ...c,
       windowPlacements: c.windowPlacements.map((wp, idx) =>
-        idx === i ? { ...wp, offset: clampOpeningOffset(offset, sideSpanFt(wp.side, c.length, c.width), winWidthOf(c)) } : wp),
+        idx === i ? { ...wp, offset: clampOpeningOffset(offset, sideSpanFt(wp.side, c.length, c.width), windowSizeOf(wp, c).widthFt) } : wp),
     }));
 
   const startOver = () => {
@@ -2512,16 +2659,28 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                                   className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", d.side === id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{lbl}</button>
                               ))}
                             </div>
+                            {/* ADMIN ONLY — per-door size (standard preset or custom W×H). The public
+                                homepage never renders this, so its doors stay the standard 3′×6′ and
+                                its price and drawings are unchanged. */}
+                            {adminTools && (
+                              <OpeningSizeField
+                                kind="Door"
+                                size={doorSizeOf(d)}
+                                presets={DOOR_STD_SIZES}
+                                maxWidthFt={openingWidthOn(sideSpanFt(d.side, config.length, config.width), 12)}
+                                onChange={(s) => setDoorSize(i, s)}
+                              />
+                            )}
                             {/* Quick corner / centre presets. `offset` is the door's NEAR edge, so the
                                 far corner is (span - doorWidth) and centre is (span - doorWidth)/2. */}
                             {(() => {
                               const span = sideSpanFt(d.side, config.length, config.width);
-                              const max = doorMaxOffset(config, d.side);
+                              const max = doorMaxOffset(config, d.side, i);
                               return (
                                 <>
                                   <div className="flex gap-1">
                                     {([["start", "Left Corner"], ["center", "Center"], ["end", "Right Corner"]] as const).map(([pos, lbl]) => {
-                                      const target = openingPreset(pos, span, DOOR_SIZE.widthFt);
+                                      const target = openingPreset(pos, span, doorSizeOf(d).widthFt);
                                       const active = Math.abs(d.offset - target) < 0.05;
                                       return (
                                         <button key={pos} type="button" onClick={() => setDoorOffset(i, target)} aria-pressed={active}
@@ -2564,8 +2723,13 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                       </div>
                     )}
                     <div className="mt-2 space-y-1.5">
+                      {/* Derived from DOOR_SIZE, never re-typed: this line used to read "6 ft × 30″",
+                          which matched neither DOOR_SIZE (3′×6′) nor anything the code drew or priced. */}
                       <p className="text-[11px] text-muted-foreground">
-                        Standard door size: <span className="font-semibold text-foreground">6 ft × 30″</span> — custom sizes available on request.
+                        Standard door size: <span className="font-semibold text-foreground">{sizeLabel(DOOR_SIZE)}</span>
+                        {adminTools
+                          ? " — set a different width × height for each door above."
+                          : " — custom sizes available on request."}
                       </p>
                       <p className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-2 text-[11px] leading-snug text-muted-foreground">
                         <span className="font-semibold text-foreground">Opening tip:</span> if the entrance is under a <span className="font-semibold text-foreground">shed / covered porch</span>, we suggest <span className="font-semibold text-foreground">Opens In</span> to avoid rain coming in. For an <span className="font-semibold text-foreground">open, exposed site</span>, we suggest <span className="font-semibold text-foreground">Opens Out</span> — it seals tighter against wind &amp; rain. Use <span className="font-semibold text-foreground">Hinge L / Hinge R</span> to set the handle side for a left- or right-hand opening.
@@ -2623,9 +2787,18 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                           </div>
                         )}
                       </div>
-                      <div className="grid gap-3 sm:grid-cols-[auto_auto_1fr] sm:items-end">
-                        <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={setWindowWidth} max={12} />
-                        <DimField label="Window Height" value={config.windowHeightFt ?? 3} onChange={(n) => patch({ windowHeightFt: n })} max={12} />
+                      {/* The GLOBAL window size is the PUBLIC calculator's only size control — one size
+                          for every window. In ADMIN it is hidden, because each window below carries its
+                          own size and two competing controls for the same thing is how they end up
+                          disagreeing. The field still exists on the config and still acts as the
+                          fallback for any window with no override. */}
+                      <div className={cn("grid gap-3 sm:items-end", adminTools ? "sm:grid-cols-1" : "sm:grid-cols-[auto_auto_1fr]")}>
+                        {!adminTools && (
+                          <>
+                            <DimField label="Window Width" value={config.windowWidthFt ?? 3} onChange={setWindowWidth} max={12} />
+                            <DimField label="Window Height" value={config.windowHeightFt ?? 3} onChange={(n) => patch({ windowHeightFt: n })} max={12} />
+                          </>
+                        )}
                         <SpecPills label="Window Track" hint="2.5-track slides smoother — +12% over 2-track (price scales with window size)."
                           options={WINDOW_TRACKS} value={config.windowTrackId ?? "2"} onSelect={(id) => patch({ windowTrackId: id })} />
                       </div>
@@ -2646,8 +2819,8 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                               </p>
                             ) : config.windowPlacements.map((wp, i) => {
                               const span = sideSpanFt(wp.side, config.length, config.width);
-                              const max = windowMaxOffset(config, wp.side);
-                              const wW = config.windowWidthFt ?? 3;
+                              const max = windowMaxOffset(config, wp.side, i);
+                              const wW = windowSizeOf(wp, config).widthFt;
                               return (
                                 <div key={i} className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2">
                                   <span className="w-16 text-xs font-semibold text-muted-foreground">Window {i + 1}</span>
@@ -2657,6 +2830,16 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                                         className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", wp.side === s.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{s.label}</button>
                                     ))}
                                   </div>
+                                  {/* ADMIN ONLY — this window's own size. */}
+                                  {adminTools && (
+                                    <OpeningSizeField
+                                      kind="Window"
+                                      size={windowSizeOf(wp, config)}
+                                      presets={WINDOW_STD_SIZES}
+                                      maxWidthFt={openingWidthOn(span, 12)}
+                                      onChange={(s) => setWindowSize(i, s)}
+                                    />
+                                  )}
                                   <div className="flex gap-1">
                                     {([["start", "Left Corner"], ["center", "Center"], ["end", "Right Corner"]] as const).map(([pos, lbl]) => {
                                       const target = openingPreset(pos, span, wW);
