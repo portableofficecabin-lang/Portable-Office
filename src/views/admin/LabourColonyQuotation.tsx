@@ -24,6 +24,8 @@ import { LabourColonyDrawings } from "@/components/admin/LabourColonyDrawings";
 import { RoomFloorPlan } from "@/components/admin/labour-colony/RoomFloorPlan";
 import { CivilWorkTab } from "@/components/admin/labour-colony/CivilWorkTab";
 import { ConstructionDrawingTab } from "@/components/admin/labour-colony/ConstructionDrawingTab";
+import ColonyBoqPanel from "@/components/admin/boq/ColonyBoqPanel";
+import type { BoqResult, BoqSettings } from "@/lib/boq/types";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { exportToExcel, formatINR } from "@/lib/exportUtils";
@@ -125,6 +127,9 @@ export default function LabourColonyQuotation() {
   const [meta, setMetaState] = useState<ProjectMeta>(defaultProjectMeta());
   const [sizeMode, setSizeMode] = useState<SizeMode>("capacity");
   const [projectId, setProjectId] = useState<string>(() => newId());
+  /* The priced Material BOQ, lifted out of the panel so the Reports tab and the project PDF can export
+   * it without pricing it a second time (and risk showing a different number than the tab does). */
+  const [boqResult, setBoqResult] = useState<BoqResult | null>(null);
 
   const [projects, setProjects] = useState<LabourColonyProject[]>([]);
   const [remoteAvailable, setRemoteAvailable] = useState(false);
@@ -284,8 +289,28 @@ export default function LabourColonyQuotation() {
       toast({ title: "Nothing to export", description: "Complete the structure inputs first.", variant: "destructive" });
       return;
     }
-    exportColonyPdf(result, civilResult, meta);
+    exportColonyPdf(result, civilResult, meta, boqResult);
     toast({ title: "PDF exported" });
+  };
+
+  /* The Material BOQ exporters pull in xlsx + jsPDF, so they are dynamic-imported at click time rather
+   * than at module load. They re-use `boqResult` — the exact object the Material BOQ tab priced — so an
+   * exported sheet can never disagree with what the admin approved on screen. */
+  const boqFilename = () =>
+    `material-boq-${(config.projectName || meta.projectName || "labour-colony").replace(/\s+/g, "-").toLowerCase()}`;
+
+  const exportMaterialBoqExcel = async () => {
+    if (!boqResult) return;
+    const R = await import("@/lib/boq/reports");
+    await R.exportAllExcel(boqResult, boqFilename());
+    toast({ title: "Material BOQ exported", description: "All sheets: BOQ, cutting list, weights, purchase, cost." });
+  };
+
+  const exportMaterialBoqPdf = async () => {
+    if (!boqResult) return;
+    const R = await import("@/lib/boq/reports");
+    R.exportBoqPdf(boqResult, boqFilename());
+    toast({ title: "Material BOQ PDF exported" });
   };
 
   const exportCivilBoq = () => {
@@ -332,6 +357,7 @@ export default function LabourColonyQuotation() {
             <TabsTrigger value="project" className="gap-1.5"><Building2 className="h-4 w-4" /> Project</TabsTrigger>
             <TabsTrigger value="structure" className="gap-1.5"><LayoutGrid className="h-4 w-4" /> Structure &amp; Drawings</TabsTrigger>
             <TabsTrigger value="civil" className="gap-1.5"><HardHat className="h-4 w-4" /> Civil Work</TabsTrigger>
+            <TabsTrigger value="material" className="gap-1.5"><Package className="h-4 w-4" /> Material BOQ</TabsTrigger>
             <TabsTrigger value="drawing" className="gap-1.5"><Ruler className="h-4 w-4" /> Construction Drawing</TabsTrigger>
             <TabsTrigger value="reports" className="gap-1.5"><FileText className="h-4 w-4" /> Reports &amp; Saved</TabsTrigger>
           </TabsList>
@@ -737,6 +763,27 @@ export default function LabourColonyQuotation() {
           )}
         </TabsContent>
 
+        {/* ============ MATERIAL BOQ, WEIGHT & COST ============
+            Taken off the SAME geometry the drawings render (buildRoomFloorPlan / buildElevation), so
+            the BOQ and the drawing can never disagree and no dimension is re-entered. */}
+        <TabsContent value="material" className="mt-6">
+          {result ? (
+            <ColonyBoqPanel
+              result={result}
+              title={meta.projectName || "Labour Colony"}
+              settings={config.materialBoq}
+              onSettingsChange={(s) => setConfig((c) => ({ ...c, materialBoq: s }))}
+              plinthM={civilResult?.foundation.section.raisedPlinthHeightM}
+              onResult={setBoqResult}
+            />
+          ) : (
+            <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
+              <Package className="h-10 w-10 mx-auto mb-3 opacity-40" />
+              Complete the Structure tab (capacity + room size) to generate the material BOQ.
+            </AdminCardContent></AdminCard>
+          )}
+        </TabsContent>
+
         {/* ============ CONSTRUCTION DRAWING (§6/§7) ============ */}
         <TabsContent value="drawing" className="mt-6">
           {result && civilResult ? (
@@ -759,8 +806,16 @@ export default function LabourColonyQuotation() {
                 <Button variant="outline" onClick={newProject} className="gap-2"><FilePlus2 className="h-4 w-4" /> New project</Button>
                 <Button variant="outline" onClick={exportPdf} disabled={!result} className="gap-2"><Download className="h-4 w-4" /> Download PDF (with civil BOQ)</Button>
                 <Button variant="outline" onClick={exportCivilBoq} disabled={!civilResult} className="gap-2"><SheetIcon className="h-4 w-4" /> Civil BOQ → Excel</Button>
+                <Button variant="outline" onClick={exportMaterialBoqExcel} disabled={!boqResult} className="gap-2"><SheetIcon className="h-4 w-4" /> Material BOQ → Excel</Button>
+                <Button variant="outline" onClick={exportMaterialBoqPdf} disabled={!boqResult} className="gap-2"><Download className="h-4 w-4" /> Material BOQ → PDF</Button>
                 <Button variant="outline" onClick={() => window.print()} className="gap-2"><Printer className="h-4 w-4" /> Print</Button>
               </div>
+              {!boqResult && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Open the Material BOQ tab once to price the take-off — the exports then reuse that
+                  exact result, so they can never print a different number than the tab shows.
+                </p>
+              )}
               {civilResult && (
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <Tile label="Civil work total" value={formatINR(civilResult.totalCost)} />
@@ -936,7 +991,12 @@ function KV({ rows }: { rows: [string, string | number][] }) {
 }
 
 /* ---------------- PDF export ---------------- */
-function exportColonyPdf(result: LabourColonyResult, civil: CivilWorkResult | null, meta: ProjectMeta) {
+function exportColonyPdf(
+  result: LabourColonyResult,
+  civil: CivilWorkResult | null,
+  meta: ProjectMeta,
+  boq: BoqResult | null,
+) {
   // compress: true — FlateDecode on the content streams. Free on a vector PDF, and it keeps this
   // export consistent with every other calculator.
   const doc = new jsPDF({ unit: "pt", format: "a4", compress: true });
@@ -1065,6 +1125,41 @@ function exportColonyPdf(result: LabourColonyResult, civil: CivilWorkResult | nu
       doc.text(lines, margin, y);
       y += lines.length * 9 + 2;
     });
+  }
+
+  /* MATERIAL BOQ — the elevation-wise cost/weight breakup and the totals, taken off the drawings.
+   * Money is written as "Rs." and NEVER as ₹ (U+20B9): jsPDF's built-in fonts are Latin-1 only and
+   * the rupee glyph corrupts the cell — the same trap documented in CabinCalculator.tsx:1477. */
+  if (boq) {
+    const rs = (n: number) => "Rs. " + Math.round(n).toLocaleString("en-IN");
+    heading("Material BOQ — elevation-wise breakup");
+    tbl(
+      boq.sections.map((s) => [
+        s.label, s.drawing, s.steelKg.toFixed(1), s.totalKg.toFixed(1), rs(s.materialAmount),
+      ]),
+      ["Section", "From drawing", "Steel kg", "Total kg", "Material"],
+    );
+
+    heading("Material BOQ — cost summary");
+    tbl(
+      [
+        ["Total steel (incl. wastage)", boq.totals.totalSteelKg.toFixed(1) + " kg"],
+        ["Total material weight", boq.totals.totalWeightKg.toFixed(1) + " kg (" + boq.totals.totalTonnes.toFixed(2) + " t)"],
+        ["Material cost", rs(boq.totals.materialAmount)],
+        ...boq.totals.chargeLines.map((c) => [c.label, rs(c.amount)]),
+        ["Subtotal", rs(boq.totals.subtotal)],
+        ["GST", rs(boq.totals.gstAmount)],
+        ["GRAND TOTAL", rs(boq.totals.grandTotal)],
+        ["Rate per sq.ft", rs(boq.totals.ratePerSqft)],
+      ],
+      ["Item", "Value"],
+    );
+
+    const errs = boq.issues.filter((i) => i.severity === "error");
+    if (errs.length) {
+      heading("Material BOQ — VALIDATION ERRORS (quotation not verified)");
+      tbl(errs.map((i) => [i.code, i.message]), ["Check", "Detail"]);
+    }
   }
 
   heading("Assumptions");

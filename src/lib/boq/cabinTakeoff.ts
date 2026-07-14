@@ -52,9 +52,13 @@ import {
   sideSpanFt,
   type CabinConfig,
 } from "@/components/home/cabin-calculator/pricing";
+import { tableWorldBbox } from "@/features/cabin-design/furniture/tables/tableGeometry";
+import type { CabinTable } from "@/features/cabin-design/furniture/tables/tableSchema";
+import { emitTableTakeoff } from "@/lib/boq/tableTakeoff";
 import type {
   BoqNorms,
   BoqSection,
+  CabinBoqOptions,
   CountTakeoff,
   FrameGeometry,
   SheetTakeoff,
@@ -233,13 +237,10 @@ const clamp = (n: number, min: number, max: number) =>
 /** "3.05" — a dimension inside a formula string. */
 const d = (n: number): string => String(round(n, 2));
 
-export interface CabinBoqOptions {
-  floors?: number;
-  staircase?: boolean;
-  verandaWidthFt?: number;
-  verandaSides?: WallKey[];
-  handrail?: boolean;
-}
+/* CabinBoqOptions is declared in ./types (pricing.ts carries it on CabinConfig, and this file imports
+ * CabinConfig from pricing.ts — declaring it here would make the two files import each other).
+ * Re-exported so callers can keep importing it from the take-off they use it with. */
+export type { CabinBoqOptions } from "./types";
 
 /* ==========================================================================
  * 3. THE SINK — every item lands here, and zero-quantity items never do
@@ -388,6 +389,35 @@ interface DoorGroup {
   widthFt: number;
   heightFt: number;
   count: number;
+}
+
+/**
+ * Metres of conduit from each table to the NEAREST WALL — the cable route the electrical take-off
+ * bills (spec §21).
+ *
+ * Spec §21 is explicit that a wall-mounted socket "must stay on the wall and must not float inside
+ * the drawing": the route therefore runs from the table's own edge to the closest wall FACE, and it
+ * is measured from the same world bounding box the plan draws. A table that is dragged toward a wall
+ * gets a shorter conduit run, and the BOQ follows the drawing without anyone re-entering a number.
+ * The vertical drop from the table top up/down to the socket is added as a flat 1.2 m per run.
+ */
+const SOCKET_DROP_M = 1.2;
+
+function tableCableRuns(cfg: CabinConfig, tables: CabinTable[]): Record<string, number> {
+  const lengthMm = Math.max(1, cfg.length) * 304.8;
+  const widthMm = Math.max(1, cfg.width) * 304.8;
+  const runs: Record<string, number> = {};
+
+  for (const t of tables) {
+    const b = tableWorldBbox(t);
+    const toLeft = Math.max(0, b.minX);
+    const toRight = Math.max(0, lengthMm - b.maxX);
+    const toRear = Math.max(0, b.minY);
+    const toFront = Math.max(0, widthMm - b.maxY);
+    const nearestMm = Math.min(toLeft, toRight, toRear, toFront);
+    runs[t.id] = round(nearestMm / 1000 + SOCKET_DROP_M, 2);
+  }
+  return runs;
 }
 
 export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: CabinBoqOptions = {}): Takeoff {
@@ -970,6 +1000,23 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
     "Nut-bolt assemblies",
     `${BOLTS_PER_JOINT} bolts per joint × (4 corner posts × ${floors} floor(s) + ${nHooks} lifting hooks) = ${bolts}`,
     bolts);
+
+  /* ==========================================================================
+   * FURNITURE — the parametric tables (Table Customisation Module, spec §22)
+   *
+   * The tables ride on the SAME CabinConfig the 2D plan and the elevations render from, and their
+   * take-off reads its areas and perimeters from the SAME geometry module the SVG draws with
+   * (tableGeometry.topAreaSqm / topPerimeterM). So the furniture BOQ cannot drift from the furniture
+   * drawing — which is the whole point of a parametric system, and the one guarantee a flat-priced
+   * add-on could never give.
+   * ========================================================================== */
+  const tables = cfg.tables ?? [];
+  if (tables.length) {
+    emitTableTakeoff(s, tables, norms, { cableRunM: tableCableRuns(cfg, tables) });
+    notes.push(
+      `${tables.length} parametric table(s) taken off into the FURNITURE section — board area and edge-band length are measured from the SAME polygons the 2D plan draws, so the furniture BOQ and the furniture drawing are the same geometry.`,
+    );
+  }
 
   /* ==========================================================================
    * NOTES — the assumptions, said out loud

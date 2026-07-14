@@ -42,9 +42,33 @@ import {
   clampPartitionSlideOffset, partitionSlideOffsetRange, partitionSpecLabel,
   type DoorHand, type DoorSwing, type PartitionHinge, type PartitionSwing,
   type PartitionSlideSide, type PartitionSlideDirection,
-  buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
+  buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft, tablesOf,
   type CabinConfig, type Material, type Estimate, type InsulationOption, type OpeningPlacement, type DoorPlacement, type PlugGroup,
 } from "./pricing";
+// TYPE-ONLY on purpose: erased at compile time, so not one byte of the BOQ engine reaches the public
+// homepage bundle from here. The take-off and the panel both sit behind the CabinBoqPanel dynamic
+// import below, and the defaults are applied there.
+import type { BoqSettings, CabinBoqOptions } from "@/lib/boq/types";
+
+/* ---- Table Customisation Module (spec §35) --------------------------------------------------
+ * These DO reach the calculator's bundle — deliberately. The calculator is already a deferred,
+ * ssr:false chunk that only mounts when the customer opens it (see CabinCalculatorLoader), so the
+ * BOQ engine that prices a table costs the homepage nothing on first load. The alternative — a
+ * second, "cheap" pricing path for the wizard — would let the quoted price and the BOQ disagree,
+ * which is exactly the failure mode spec §22/§25 exist to prevent. */
+import { fetchMaterials, indexMaterials } from "@/lib/boq/materialMaster";
+import type { MaterialIndex } from "@/lib/boq/types";
+import { TableElevationLayer } from "@/features/cabin-design/furniture/tables/TableElevation";
+import { TablesSection } from "@/features/cabin-design/furniture/tables/TablesSection";
+import { fetchClearances } from "@/features/cabin-design/furniture/tables/tableCatalog";
+import { buildContext, checkAllTables, conflictingIds } from "@/features/cabin-design/furniture/tables/tableCollision";
+import { clampTable } from "@/features/cabin-design/furniture/tables/tableDefaults";
+import { clampIntoCabin } from "@/features/cabin-design/furniture/tables/tableGeometry";
+import { defaultMaterialIndex, priceTables } from "@/features/cabin-design/furniture/tables/tablePricing";
+import { furnitureSchedule, quotationDescription, tableRef } from "@/features/cabin-design/furniture/tables/tableSchedule";
+import { DEFAULT_CLEARANCES, type CabinTable, type ClearanceRules } from "@/features/cabin-design/furniture/tables/tableSchema";
+import { ftToMm, type TableUnit } from "@/features/cabin-design/furniture/tables/tableUnits";
+import { useTableHistory } from "@/features/cabin-design/furniture/tables/useTableHistory";
 import { LayoutDesigner, CompleteLayoutPreview, summariseLayout } from "./LayoutDesigner";
 import { ModulePlan } from "./ModulePlan";
 import { SocketSwitchDiagram } from "./ElectricalDiagram";
@@ -57,11 +81,22 @@ const AdminDrawingTools = dynamic(
   { ssr: false },
 );
 
+// Admin-only Material BOQ (quantities, weights, rates, cutting list, reports). Same next/dynamic +
+// ssr:false treatment as the drawing tools, and for a stronger reason: this chunk pulls in the BOQ
+// engine, xlsx, jsPDF and the Supabase client. The public homepage must never download any of it —
+// which is also why the take-off is derived inside the wrapper, not here.
+const CabinBoqPanel = dynamic(() => import("@/components/admin/boq/CabinBoqPanel"), { ssr: false });
+
 // Steps a storage container customer sees — everything else (structure, interior,
 // doors/windows, electrical, add-ons) is irrelevant and skipped.
 const CONTAINER_STEP_KEYS = ["product", "size", "delivery", "quote"];
 
 const WHATSAPP_NUMBER = "919731897976";
+
+/** Drag-snap grid for tables in the 2D plan (spec §10: "snap to grid when enabled"). 25 mm reads as
+ *  free movement to a human but keeps the saved coordinates round, so a reopened design has clean
+ *  numbers in its position fields rather than 1483.6194 mm. */
+const TABLE_SNAP_MM = 25;
 const STORAGE_KEY = "poc_cabin_config_v1";
 
 const ICONS: Record<string, React.ElementType> = {
@@ -467,10 +502,13 @@ const WALL_TOP_CORNERS: Record<WallKey, [string, string]> = {
 
 function Elevations({
   length, width, height, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt, containerDoor, roof,
+  tables = [],
 }: {
   length: number; width: number; height: number;
   doorPlacements?: DoorPlacement[]; windowPlacements?: OpeningPlacement[];
   windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roof?: string;
+  /** Parametric tables, projected onto each wall (spec §13). Empty = the elevations are unchanged. */
+  tables?: CabinTable[];
 }) {
   const L = Math.max(1, length), W = Math.max(1, width), H = Math.max(6, height);
   // Lifting hooks: 2 diagonal corners for ≤100 sq.ft, 4 corners above — mirrors the 2D plan.
@@ -626,6 +664,22 @@ function Elevations({
         <rect x={wx} y={wy} width={wallW} height={wallH} rx={1.5} fill="hsl(var(--accent) / 0.06)" stroke={acc} strokeWidth={1.4} />
         {ribs}
         <line x1={wx - 6} y1={ground} x2={wx + wallW + 6} y2={ground} stroke="hsl(var(--muted-foreground))" strokeWidth={1} />
+        {/* Tables projected onto this wall (spec §13). Drawn BEFORE the openings so a door or a
+            window always reads on top of the furniture standing in front of it — and after the wall
+            + ribs so a table is never hidden behind the wall it stands against. `scale` is the same
+            px-per-foot the wall is drawn at, so a 750 mm-high desk is 750 mm high here too. */}
+        {tables.length > 0 && (
+          <TableElevationLayer
+            tables={tables}
+            wall={cell.key}
+            cabinLengthFt={L}
+            cabinWidthFt={W}
+            cabinHeightFt={H}
+            ox={wx}
+            ppf={scale}
+            floorY={ground}
+          />
+        )}
         {windows}
         {doors}
         <text x={cell.ox + cellW / 2} y={ground + 13} textAnchor="middle" fontSize={9.5} fill="hsl(var(--muted-foreground))">
@@ -643,12 +697,55 @@ function Elevations({
   );
 }
 
+/**
+ * The furniture schedule printed on the exported drawing (spec §33).
+ *
+ * LITERAL HEX ONLY. This subtree is rasterised by html2canvas-pro, which cannot parse `oklch()` —
+ * a Tailwind colour token here would export as black or vanish entirely (see
+ * src/lib/pdf/sanitizeColors.ts, and the project's oklch/html2canvas note). Everything is inline-styled.
+ */
+function FurnitureSchedule({ tables }: { tables: CabinTable[] }) {
+  const rows = furnitureSchedule(tables);
+  if (!rows.length) return null;
+  const border = "1px solid #cbd5e1";
+  const th: React.CSSProperties = {
+    border, padding: "3px 6px", background: "#f1f5f9", color: "#0f172a",
+    fontSize: 10, fontWeight: 700, textAlign: "left",
+  };
+  const td: React.CSSProperties = { border, padding: "3px 6px", color: "#0f172a", fontSize: 10 };
+  return (
+    <table style={{ width: "100%", borderCollapse: "collapse", background: "#ffffff" }}>
+      <thead>
+        <tr>
+          <th style={th}>Ref.</th>
+          <th style={th}>Table Type</th>
+          <th style={th}>Size</th>
+          <th style={{ ...th, textAlign: "right" }}>Qty</th>
+          <th style={{ ...th, textAlign: "right" }}>Seating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr key={r.tableId}>
+            <td style={{ ...td, fontWeight: 700 }}>{r.ref}</td>
+            <td style={td}>{r.type}</td>
+            <td style={td}>{r.size}</td>
+            <td style={{ ...td, textAlign: "right" }}>{r.qty}</td>
+            <td style={{ ...td, textAlign: "right" }}>{r.seating || "—"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 /** Preview with a Floor Plan / 4 Elevations toggle.
  *  `printAll` stacks all three views with no tab buttons — used by the admin printable sheet
  *  so a single PDF carries the 2D plan, the floor plan and the elevations. */
 function CabinPreview({
   length, width, height, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt,
   containerDoor, roomLengths, partitionDoor, puf, roof, caption, config, printAll,
+  tableEdit,
 }: {
   length: number; width: number; height: number;
   doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[];
@@ -656,8 +753,19 @@ function CabinPreview({
   roomLengths?: number[]; partitionDoor?: boolean; puf?: boolean; roof?: string; caption?: string;
   config?: CabinConfig;
   printAll?: boolean;
+  /** Table editing surface (spec §10). Omitted ⇒ the preview is a pure render, exactly as before —
+   *  which is what keeps the printable sheet and the read-only previews unchanged. */
+  tableEdit?: {
+    selectedId: string | null;
+    onSelect: (id: string | null) => void;
+    conflictIds: Set<string>;
+    onMove: (id: string, xMm: number, yMm: number, commit: boolean) => void;
+    snapMm: number;
+    showDimensions: boolean;
+  };
 }) {
   const pd = config;
+  const tables = config ? tablesOf(config) : [];
   // "module" = the full architectural 2D plan (needs the whole config); default when available.
   const [view, setView] = useState<"module" | "plan" | "elevation">(config ? "module" : "plan");
   const tabs = ([["module", "2D Plan"], ["plan", "Floor Plan"], ["elevation", "4 Elevations"]] as const)
@@ -692,8 +800,16 @@ function CabinPreview({
           <Heading>4 Elevations</Heading>
           <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
             windowPlacements={windowPlacements} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
-            containerDoor={containerDoor} roof={roof} />
+            containerDoor={containerDoor} roof={roof} tables={tables} />
         </section>
+        {/* Furniture schedule (spec §33) — the exported drawing must carry it, so it lives inside
+            the printable block, not in the interactive UI. */}
+        {tables.length > 0 && (
+          <section className="cabin-drawing-block">
+            <Heading>Furniture Schedule</Heading>
+            <FurnitureSchedule tables={tables} />
+          </section>
+        )}
       </div>
     );
   }
@@ -713,11 +829,20 @@ function CabinPreview({
         {caption && <span className="text-[10px] text-muted-foreground">{caption}</span>}
       </div>
       {view === "module" && config ? (
-        <ModulePlan config={config} />
+        <ModulePlan
+          config={config}
+          editable={!!tableEdit}
+          selectedTableId={tableEdit?.selectedId ?? null}
+          onSelectTable={tableEdit?.onSelect}
+          conflictIds={tableEdit?.conflictIds}
+          showTableDimensions={tableEdit?.showDimensions}
+          onTableMove={tableEdit?.onMove}
+          snapMm={tableEdit?.snapMm ?? 0}
+        />
       ) : view === "elevation" ? (
         <Elevations length={length} width={width} height={height} doorPlacements={doorPlacements}
           windowPlacements={windowPlacements} windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
-          containerDoor={containerDoor} roof={roof} />
+          containerDoor={containerDoor} roof={roof} tables={tables} />
       ) : (
         <FloorPreview length={length} width={width} doorPlacements={doorPlacements} windowPlacements={windowPlacements}
           windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
@@ -843,6 +968,9 @@ function EstimateRows({ est, gstOn, container }: { est: Estimate; gstOn: boolean
       {est.ventilation > 0 && <Row label="Ventilation" value={`+${formatINR(est.ventilation)}`} positive />}
       {est.electrical > 0 && <Row label="Electrical" value={`+${formatINR(est.electrical)}`} positive />}
       {est.furniture > 0 && <Row label="Furniture / Add-ons" value={`+${formatINR(est.furniture)}`} positive />}
+      {/* Tables are ALREADY inside `est.furniture` — this is an itemisation, not another charge, so
+          it is rendered muted and never added to a total (see Estimate.tables in pricing.ts). */}
+      {est.tables > 0 && <Row label="— incl. tables" value={formatINR(est.tables)} muted />}
       {est.quantity > 1 && (
         <div className="mt-1 border-t border-dashed border-border pt-1">
           <Row label={`Per cabin`} value={formatINR(est.perCabin)} muted />
@@ -882,8 +1010,104 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
   const topRef = useRef<HTMLDivElement>(null);
   const notesId = useId();
 
-  const est = useMemo(() => computeEstimate(config), [config]);
+  /* ================================================================ TABLE CUSTOMISATION MODULE
+   *
+   * Everything below derives from `config.tables` — the SINGLE structured configuration that is
+   * saved, reloaded, drawn, taken off into the BOQ, priced and quoted (spec §26, §35). There is no
+   * second copy of a table anywhere in this component.
+   *
+   * RATES: table prices come from the Material Master, never from a constant (spec §23). The public
+   * calculator cannot read `material_master` (it is admin-RLS'd by design), so it prices from the
+   * pure seed index — which is the same list the migration seeds the DB with. When the admin opens
+   * the calculator with `adminTools`, the LIVE rates are fetched and every table re-prices against
+   * them, so the admin's BOQ and the admin's quotation agree to the rupee. */
+  const [tableUnit, setTableUnit] = useState<TableUnit>("mm");
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
+  const [clearances, setClearances] = useState<ClearanceRules>(DEFAULT_CLEARANCES);
+  const [materials, setMaterials] = useState<MaterialIndex>(() => defaultMaterialIndex());
+
+  // Admin-editable clearance rules (spec §15). Falls back to the built-in defaults when the
+  // migration has not been applied — the read never throws.
+  useEffect(() => {
+    let alive = true;
+    fetchClearances()
+      .then((r) => { if (alive) setClearances(r.clearances); })
+      .catch(() => { /* keep the defaults */ });
+    return () => { alive = false; };
+  }, []);
+
+  // Live Material Master rates, admin only (the anon role cannot read the table).
+  useEffect(() => {
+    if (!adminTools) return;
+    let alive = true;
+    fetchMaterials()
+      .then((r) => { if (alive && r.materials.length) setMaterials(indexMaterials(r.materials)); })
+      .catch(() => { /* keep the seed index */ });
+    return () => { alive = false; };
+  }, [adminTools]);
+
+  const tables = useMemo(() => tablesOf(config), [config]);
+
+  const setTables = useCallback(
+    (next: CabinTable[]) => setConfig((c) => ({ ...c, tables: next })),
+    [],
+  );
+  const history = useTableHistory(tables, setTables);
+
+  /* Live cost per table, straight from the BOQ engine — so the price the customer sees IS the price
+   * the BOQ produces. */
+  const tableCosts = useMemo(() => priceTables(tables, materials), [tables, materials]);
+  const tableCostMap = useMemo(
+    () => Object.fromEntries(tableCosts.costs.map((c) => [c.tableId, c.totalAmount])),
+    [tableCosts],
+  );
+
+  /* Live collision + clearance checking (spec §14). Cheap enough to run on every drag frame — the
+   * collision module AABB-rejects and caches footprints (~0.3 ms for a full pass). */
+  const tableIssues = useMemo(
+    () => (tables.length ? checkAllTables(buildContext(config, clearances)) : []),
+    [config, tables.length, clearances],
+  );
+  const tableConflictIds = useMemo(() => conflictingIds(tableIssues), [tableIssues]);
+  const tableBlocking = useMemo(
+    () => tableIssues.some((i) => i.severity === "error"),
+    [tableIssues],
+  );
+
+  /**
+   * A drag in the 2D plan (spec §10). The plan hands back the new CENTRE in mm; we clamp it into the
+   * cabin so a table can never be dragged out through a wall, then commit. While the pointer is down
+   * every frame shares ONE mergeKey, so the whole gesture is a SINGLE undo entry rather than forty.
+   */
+  const moveTable = useCallback(
+    (id: string, xMm: number, yMm: number, commit: boolean) => {
+      const cabinLenMm = ftToMm(Math.max(1, config.length));
+      const cabinWidMm = ftToMm(Math.max(1, config.width));
+      const next = tablesOf(config).map((t) =>
+        t.id === id
+          ? clampIntoCabin(clampTable({ ...t, position: { ...t.position, xMm, yMm } }, t), cabinLenMm, cabinWidMm)
+          : t,
+      );
+      history.commit(next, "Move table", `move:${id}`);
+      if (commit) history.seal();
+    },
+    [config, history],
+  );
+
+  const est = useMemo(() => computeEstimate(config, { tableCosts: tableCostMap }), [config, tableCostMap]);
   const product = useMemo(() => PRODUCTS.find((p) => p.id === config.productId), [config.productId]);
+
+  /* ---------------------------------------------------------------- Material BOQ (admin only)
+   *
+   * The take-off itself is derived INSIDE CabinBoqPanel (dynamically imported below), not here, so
+   * that none of the BOQ engine reaches the public homepage bundle. This component only owns the two
+   * pieces of persisted state the panel writes back — they live on `config` so they ride the existing
+   * localStorage blob, and computeEstimate() never reads them. */
+  const setBoqSettings = useCallback((s: BoqSettings) => setConfig((c) => ({ ...c, boq: s })), []);
+  const setBoqOptions = useCallback(
+    (o: CabinBoqOptions) => setConfig((c) => ({ ...c, boqOptions: o })),
+    [],
+  );
 
   // Title-block text for the admin drawing sheet — built from the live config only.
   // Any part that isn't configured is simply left out (never invented).
@@ -1657,6 +1881,18 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
         }
         configRows.push(["Electrical", est.electricalLines.map((l) => l.label).join(", ") || "—"]);
         configRows.push(["Add-ons", est.furnitureLines.map((l) => l.label).join(", ") || "—"]);
+        /* Tables (spec §25). One row PER TABLE, with the auto-built description — type, shape, size,
+         * material, top thickness, support, storage, accessories, seating, finish and quantity — so
+         * the customer's PDF says exactly what is being made, not just "Table ×1". */
+        {
+          const tRows = tablesOf(config);
+          if (tRows.length) {
+            configRows.push([
+              "Tables",
+              tRows.map((t, i) => `${tableRef(i)} ${quotationDescription(t, { simplified: true })}`).join("\n"),
+            ]);
+          }
+        }
         if (!isToilet) configRows.push(["Furniture Position", furniturePositionLabel(config.furniturePosition)]);
         { const s = socketPlanSummary(config); configRows.push(["Socket Placement", s || (config.electrical.plug ? `${config.electrical.plug} plug point(s) — as per site` : "—")]); }
         configRows.push(["Shifting / Mobility", mobilityTypeLabel(config.mobilityType)]);
@@ -2980,6 +3216,57 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                         </div>
                       );
                     })()}
+                    {/* ---- FURNITURE → TABLES (Table Customisation Module, spec §1) ----------------
+                        A parametric furniture system, not a dropdown: any number of tables, each with
+                        its own type, shape, dimensions, material, support, storage, accessories,
+                        electricals, seating, position and rotation — drawn live in the plan beside it,
+                        collision-checked against the doors and fixtures, and taken off into the BOQ.
+
+                        Hidden for a toilet cabin: it is a self-contained washroom with no office
+                        furniture (the same rule addonsForProduct() applies to the add-ons above). */}
+                    {!isToiletCabin(config.productId) && (
+                      <div className="space-y-4 border-t border-border pt-4">
+                        <TablesSection
+                          config={config}
+                          tables={tables}
+                          onChange={history.commit}
+                          onSeal={history.seal}
+                          history={history}
+                          selectedId={selectedTableId}
+                          onSelect={setSelectedTableId}
+                          clearances={clearances}
+                          issues={tableIssues}
+                          costs={tableCosts.costs}
+                          materials={materials}
+                          unit={tableUnit}
+                          onUnitChange={setTableUnit}
+                        />
+                        {/* The live plan sits WITH the editor (spec §28: never hide the live plan) and
+                            is the drag surface (spec §10) — dragging a table here writes straight back
+                            into config.tables, so the numeric fields, the wall distances, the collision
+                            highlights and the BOQ all follow the drag with no second source of truth. */}
+                        {tables.length > 0 && (
+                          <CabinPreview
+                            length={config.length} width={config.width} height={config.height}
+                            doorPlacements={config.doorPlacements} windowPlacements={config.windowPlacements}
+                            windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3}
+                            containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths}
+                            partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)}
+                            roof={config.roofId} config={config}
+                            caption="Drag a table to move it"
+                            tableEdit={{
+                              selectedId: selectedTableId,
+                              onSelect: setSelectedTableId,
+                              conflictIds: tableConflictIds,
+                              onMove: moveTable,
+                              snapMm: TABLE_SNAP_MM,
+                              showDimensions: true,
+                            }}
+                          />
+                        )}
+                      </div>
+                    )}
+
                     {/* Complete layout — a read-only floor plan combining EVERYTHING chosen
                         so far (doors, windows, lights, fans, plug points, fittings & furniture)
                         in one view. Shown for EVERY product, incl. the toilet cabin — its plan
@@ -3040,10 +3327,30 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                       <Label htmlFor={notesId} className="text-xs text-muted-foreground">Notes</Label>
                       <Textarea id={notesId} rows={2} value={lead.notes} onChange={(e) => setLead({ ...lead, notes: e.target.value })} placeholder="Anything specific about your requirement…" />
                     </div>
+                    {/* A furniture collision blocks the quotation (spec §14: "Prevent final submission
+                        until the conflict is resolved"). The message names the objects and the overlap,
+                        and links back to the Add-ons step where the table can be moved. */}
+                    {tableBlocking && (
+                      <div className="space-y-1.5 rounded-lg border border-destructive/50 bg-destructive/5 p-3 text-xs">
+                        <p className="font-semibold text-destructive">
+                          Furniture conflict — resolve it before requesting the quotation
+                        </p>
+                        {tableIssues.filter((i) => i.severity === "error").slice(0, 4).map((i, k) => (
+                          <p key={k} className="text-muted-foreground">• {i.message}</p>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => setStep(6)}
+                          className="font-semibold text-accent underline underline-offset-2"
+                        >
+                          Go to Add-ons and move the table
+                        </button>
+                      </div>
+                    )}
                     <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-3 text-xs text-muted-foreground">
                       <span className="font-semibold text-foreground">Estimated Total: {totalText}{config.gst || needsContact ? "" : " + GST"}</span> — this indicative price will be verified & approved by our sales team.
                     </div>
-                    <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
+                    <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting || tableBlocking}>
                       {submitting ? <><Loader2 className="h-5 w-5 animate-spin" /> Sending…</> : <><Send className="h-5 w-5" /> Get My Official Quotation</>}
                     </Button>
                   </form>
@@ -3062,6 +3369,24 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
               <AdminDrawingTools title={drawingTitle} subtitle={drawingSubtitle}>
                 {adminDrawing}
               </AdminDrawingTools>
+            </div>
+          )}
+
+          {/* Material BOQ — quantities, weights and cost taken off the SAME config the drawings above
+              are rendered from. No dimension is entered twice. */}
+          {adminTools && step > 0 && (
+            <div className="mt-6 rounded-2xl border border-border bg-background p-4 sm:p-5">
+              <h3 className="mb-1 text-lg font-bold">Material BOQ, Weight &amp; Cost</h3>
+              <p className="mb-4 text-sm text-muted-foreground">
+                Taken off the live drawing — {drawingTitle}. Change any dimension, room, door, window
+                or partition above and every quantity below recalculates.
+              </p>
+              <CabinBoqPanel
+                config={config}
+                title={`${product?.label ?? "Cabin"} ${config.length}x${config.width}`}
+                onSettingsChange={setBoqSettings}
+                onOptionsChange={setBoqOptions}
+              />
             </div>
           )}
 

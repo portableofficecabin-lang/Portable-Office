@@ -22,6 +22,10 @@
  * Units: metres / square metres / kilograms (1 sqm = 10.7639 sqft).
  */
 
+// Type-only: LabourColonyConfig carries the Material BOQ's saved settings so they persist inside the
+// project's `data` jsonb. Type-only, so this engine keeps zero runtime dependency on the BOQ engine.
+import type { BoqSettings } from "@/lib/boq/types";
+
 export type PanelType = "PUF" | "EPS" | "GI";
 export type FloorCount = 1 | 2 | 3; // 1 = Ground, 2 = G+1, 3 = G+2
 export type BoltSize = "M10" | "M12" | "M16";
@@ -328,6 +332,12 @@ export interface LabourColonyConfig {
 
   /** Room-wise construction floor-plan (door/window positions & veranda). Drawing only. */
   floorPlan?: RoomFloorPlanConfig;
+
+  /** Material BOQ settings — rates, wastage, structural norms, per-line overrides, charges, template.
+   *  calculateLabourColony() does not read this: the legacy quantity engine and the Material BOQ are
+   *  separate models, and tuning a BOQ rate must not move the structure/panel/weight results. It lives
+   *  here only so it persists inside labour_colony_projects.data (jsonb) with no migration. */
+  materialBoq?: BoqSettings;
 
   norms?: Partial<LabourColonyNorms>;
 }

@@ -115,6 +115,7 @@ export type BoqSection =
   | "openings"     // door + window frames, leaves, grills
   | "staircase"
   | "veranda"      // veranda / corridor / walkway / handrail / chequered plate
+  | "furniture"    // parametric tables + their chairs, storage, screens and fittings
   | "electrical"
   | "plumbing"
   | "finishing"
@@ -131,6 +132,7 @@ export const BOQ_SECTIONS: { id: BoqSection; label: string; drawing: string }[] 
   { id: "openings",   label: "Doors & windows",      drawing: "Elevations + Floor Plan" },
   { id: "staircase",  label: "Staircase",            drawing: "Floor Plan + Elevation" },
   { id: "veranda",    label: "Veranda / walkway",    drawing: "Floor Plan + Elevation" },
+  { id: "furniture",  label: "Furniture — tables",   drawing: "Furniture Layout" },
   { id: "electrical", label: "Electrical work",      drawing: "Electrical Layout" },
   { id: "plumbing",   label: "Plumbing work",        drawing: "Floor Plan" },
   { id: "finishing",  label: "Finishing",            drawing: "—" },
@@ -281,6 +283,24 @@ export const DEFAULT_CHARGES: ChargeLine[] = [
 ];
 
 export type BoqTemplateKind = "ms_cabin" | "puf_cabin" | "container" | "labour_colony";
+
+/**
+ * BOQ-only cabin extensions. The customer wizard has no multi-floor / staircase / veranda concept,
+ * so these are admin-entered on the BOQ panel and default to a single-storey cabin with neither.
+ *
+ * Declared HERE rather than in cabinTakeoff.ts on purpose: pricing.ts carries this on CabinConfig,
+ * and cabinTakeoff.ts imports CabinConfig FROM pricing.ts — so defining it there would make the two
+ * files import each other.
+ */
+export interface CabinBoqOptions {
+  floors?: number;
+  /** Implied true when floors > 1. */
+  staircase?: boolean;
+  /** 0 = no veranda. */
+  verandaWidthFt?: number;
+  verandaSides?: ("front" | "rear" | "left" | "right")[];
+  handrail?: boolean;
+}
 
 /** Everything the admin can tune, persisted per quotation AND saveable as a template. */
 export interface BoqSettings {

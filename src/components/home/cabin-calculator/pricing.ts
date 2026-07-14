@@ -11,6 +11,17 @@
  * binding prices. Adjust freely.
  */
 
+// Type-only: CabinConfig carries the admin Material BOQ settings so they persist with the config.
+// A type-only import keeps this module free of any runtime dependency on the BOQ engine, so the
+// public homepage bundle is unchanged.
+import type { BoqSettings, CabinBoqOptions } from "@/lib/boq/types";
+// Type-only, for the SAME reason: a table's price is derived by the BOQ engine from the Material
+// Master (spec §23 — "do not hardcode rates inside the calculator"), which this module must not
+// import at runtime. computeEstimate() therefore takes the per-table costs as an INJECTED map
+// (see EstimateOptions) rather than computing them itself. CabinCalculator — which is already a
+// deferred, ssr:false chunk — does the pricing and passes the result in.
+import type { CabinTable } from "@/features/cabin-design/furniture/tables/tableSchema";
+
 export const GST_RATE = 0.18; // 18% GST
 export const TRANSPORT_BASE = 18000; // per cabin, local/regional; long-haul varies
 export const INSTALLATION_BASE = 15000; // per cabin, standard site install
@@ -980,6 +991,21 @@ export interface CabinConfig {
   transport: boolean;
   installation: boolean;
   gst: boolean;
+  /** ADMIN-ONLY, and deliberately invisible to computeEstimate(): the Material BOQ's saved settings
+   *  (rates, wastage, norms, per-line overrides, charges, template). It rides in this object purely
+   *  so it persists with the rest of the config through localStorage. The customer estimate is a
+   *  top-down ₹/sqft model and must not move because a BOQ rate was tuned — nothing in
+   *  computeEstimate(), summariseConfig() or the enquiry payload reads these two fields. */
+  boq?: BoqSettings;
+  /** ADMIN-ONLY: floors / staircase / veranda for the BOQ. The customer wizard is single-storey and
+   *  has no veranda, so these live outside it and default to "one floor, neither". */
+  boqOptions?: CabinBoqOptions;
+  /** Table Customisation Module (spec §26) — the COMPLETE structured configuration of every table
+   *  in the design: type, shape, dimensions, position, rotation, material, support, storage,
+   *  accessories, electrical and seating. Because it lives on CabinConfig it is saved, reloaded,
+   *  taken off into the BOQ and drawn from ONE object, so a reopened design is byte-identical.
+   *  Optional so every config persisted before the module existed still loads. */
+  tables?: CabinTable[];
 }
 
 export interface LineDelta {
@@ -1014,6 +1040,11 @@ export interface Estimate {
   electricalLines: LineDelta[];
   furniture: number;
   furnitureLines: LineDelta[];
+  /** Parametric tables. A SUB-VIEW of `furniture` — the amount is ALREADY inside `furniture`
+   *  (and therefore inside `perCabin`). It exists so the UI, the PDF and the quotation can
+   *  itemise the tables separately. NEVER add it to a total again. */
+  tables: number;
+  tableLines: LineDelta[];
   perCabin: number;
   cabinsSubtotal: number; // perCabin * qty
   transport: number;
@@ -1028,6 +1059,20 @@ export interface Estimate {
 
 const findById = <T extends { id: string }>(list: T[], id: string): T | undefined =>
   list.find((x) => x.id === id);
+
+/** The ONE accessor for a design's tables — nothing else ever indexes `cfg.tables` raw, so a config
+ *  persisted before the module existed (where the field is absent) can never throw. */
+export const tablesOf = (cfg: CabinConfig): CabinTable[] =>
+  Array.isArray(cfg.tables) ? cfg.tables : [];
+
+/** Injected inputs computeEstimate cannot derive without importing the BOQ engine (see the
+ *  type-only import note at the top of this file). */
+export interface EstimateOptions {
+  /** tableId → total ₹ for that table's FULL quantity, priced by the BOQ engine from the Material
+   *  Master. Absent ⇒ tables contribute ₹0, which is what a caller with no engine (e.g. the
+   *  server-side `fromPrice`) correctly wants. */
+  tableCosts?: Record<string, number>;
+}
 
 export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
   const product = findById(PRODUCTS, productId) ?? PRODUCTS[0];
@@ -1106,6 +1151,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     roomPurposes: [],
     mobilityType: "movable",
     furnitureRoom: {},
+    tables: [],
     addons: {},
     // Drag-and-drop item positions (spec-only) — empty until the customer arranges them.
     layout: {},
@@ -1133,7 +1179,7 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
 const clamp = (n: number, min: number, max: number) =>
   Number.isFinite(n) ? Math.min(Math.max(n, min), max) : min;
 
-export function computeEstimate(cfg: CabinConfig): Estimate {
+export function computeEstimate(cfg: CabinConfig, opts: EstimateOptions = {}): Estimate {
   const product = findById(PRODUCTS, cfg.productId) ?? PRODUCTS[0];
   const structure = findById(STRUCTURES, cfg.structureId) ?? STRUCTURES[0];
 
@@ -1266,6 +1312,30 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     }
   });
 
+  /* Parametric tables (Table Customisation Module).
+   *
+   * Every table's cost is computed by the BOQ engine from the Material Master and handed in via
+   * `opts.tableCosts` — this module never invents a furniture rate (spec §23). The amounts are
+   * FOLDED INTO the `furniture` bucket so that every existing consumer (perCabin, the on-screen
+   * breakdown, the PDF, the WhatsApp summary) picks them up with no change, and `est.tables` is
+   * published purely as an itemisable sub-view. */
+  const tableCosts = opts.tableCosts ?? {};
+  const tableLines: LineDelta[] = [];
+  let tables = 0;
+  tablesOf(cfg).forEach((t) => {
+    const qty = clamp(Math.round(t.quantity ?? 0), 0, 50);
+    const amt = round(tableCosts[t.id] ?? 0);
+    if (qty <= 0 || amt <= 0) return;
+    tables += amt;
+    tableLines.push({
+      label: `${t.name} · ${Math.round(t.dimensions.lengthMm)} × ${Math.round(t.dimensions.depthMm)} × ${Math.round(t.dimensions.heightMm)} mm`,
+      detail: qty > 1 ? `${qty} × ${formatINR(round(amt / qty))}` : formatINR(amt),
+      amount: amt,
+    });
+  });
+  furniture += tables;
+  furnitureLines.push(...tableLines);
+
   // Containers price on the grade rate alone — no interior/openings/electrical/furniture.
   const perCabin = container ? base : base + heightSurcharge + roofSurcharge + interior + insulation + openings + ventilation + electrical + furniture;
   const cabinsSubtotal = perCabin * quantity;
@@ -1296,6 +1366,8 @@ export function computeEstimate(cfg: CabinConfig): Estimate {
     electricalLines: container ? [] : electricalLines,
     furniture: container ? 0 : furniture,
     furnitureLines: container ? [] : furnitureLines,
+    tables: container ? 0 : tables,
+    tableLines: container ? [] : tableLines,
     perCabin,
     cabinsSubtotal,
     transport,

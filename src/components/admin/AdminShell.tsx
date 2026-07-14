@@ -32,6 +32,7 @@ import {
   Ruler,
   Star,
   BookOpen,
+  Table2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -60,6 +61,8 @@ const sidebarNav = [
   { name: "Factory Invoice Tracker", href: "/admin/factory-invoices", icon: ShieldAlert, group: "ERP", highlight: true },
   { name: "Cabin Quotation Calculator", href: "/admin/cabin-quotation", icon: Calculator, group: "ERP", highlight: true },
   { name: "Cabin Design Calculator", href: "/admin/cabin-calculator", icon: Ruler, group: "ERP", highlight: true },
+  { name: "Material Master", href: "/admin/material-master", icon: Boxes, group: "ERP", highlight: true },
+  { name: "Table Config", href: "/admin/table-config", icon: Table2, group: "ERP", highlight: true },
   { name: "Rental Contracts", href: "/admin/rental-contracts", icon: Truck, group: "ERP", highlight: true },
   { name: "Suppliers", href: "/admin/suppliers", icon: Truck, group: "ERP" },
   { name: "Specifications", href: "/admin/specifications", icon: FileText, group: "Documents" },

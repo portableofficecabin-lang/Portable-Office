@@ -674,35 +674,63 @@ function drawingCrossChecks(
     }
   }
 
-  /* ---- b. corner posts: exactly 4 per module per floor ----
+  /* ---- b. corner posts ----
    *
-   * A colony's adjoining modules SHARE a corner post, and colonyTakeoff emits that post ONCE with
-   * `sharedBy: n`. So the drawing's 4-per-module count is only recoverable by multiplying each
-   * counted post back out by the number of modules it serves — which is precisely what makes this a
-   * regression net for shared-wall de-duplication: a producer that drops a post AND its sharedBy
-   * marker fails here even though its line count looks plausible. */
+   * "4 corner posts per module per floor" is a CABIN identity, and only a cabin's. A cabin is a
+   * standalone box: it has exactly 4 corners, and cabinTakeoff attributes one to each elevation so
+   * every face's breakup shows a post while the total stays 4. Checking that is a real regression net.
+   *
+   * A COLONY IS NOT A GRID OF STANDALONE BOXES, and asserting 4×modules×floors here would demand
+   * precisely the double-count spec §6 forbids: adjoining modules SHARE their columns. colonyTakeoff
+   * sets a column where an x column-line meets a y column-line on a room/veranda boundary — the same
+   * grid buildElevation() draws — so a mid-grid column serves FOUR modules, an edge column two, a
+   * true corner one. There is no per-line multiplier that recovers 4N from that, and inventing one
+   * would just re-introduce the party-wall double count. The colony's column integrity is instead
+   * guaranteed by shared_wall_double_counted (each geomKey may be emitted once) plus the check below
+   * that the grid is not empty. */
 
-  if (meta.modules > 0 && meta.floors > 0) {
-    const sharedBy = new Map<string, number>();
-    for (const i of takeoff.items) {
-      if (i.kind === "steel" && (i.sharedBy ?? 0) > 1) sharedBy.set(i.id, i.sharedBy as number);
-    }
-
-    const cornerLines = live.filter((l) => isSteelLine(l) && RX_CORNER.test(text(l)));
-    const actualCorners = cornerLines.reduce((s, l) => s + countOf(l) * (sharedBy.get(l.id) ?? 1), 0);
+  if (meta.source === "cabin" && meta.modules > 0 && meta.floors > 0) {
+    /* STRUCTURE ONLY. This cross-check asserts a structural identity — "a cabin box has 4 corner
+     * posts per floor" — so it must only ever look at the STRUCTURAL take-off. Furniture is not
+     * structure: a "Corner Table" is a legitimate product (spec §2) whose legs are steel lines
+     * whose description contains the word "corner". Without this guard, adding one corner table
+     * would inflate `actualCorners` and fail the whole cabin's BOQ with a quantity_drawing_mismatch
+     * ERROR that has nothing to do with the frame. Scoping by section is the honest fix — the
+     * alternative (banning the word "corner" from furniture descriptions) would silently corrupt
+     * the customer's own product names. */
+    const cornerLines = live.filter(
+      (l) => l.section !== "furniture" && isSteelLine(l) && RX_CORNER.test(text(l)),
+    );
+    const actualCorners = cornerLines.reduce((s, l) => s + countOf(l), 0);
     const expectedCorners = 4 * meta.modules * meta.floors;
-    const anyShared = cornerLines.some((l) => (sharedBy.get(l.id) ?? 1) > 1);
 
     if (actualCorners !== expectedCorners) {
       out.push(
         issue(
           "quantity_drawing_mismatch",
           "error",
-          `Corner posts — EXPECTED ${expectedCorners} (4 per module × ${meta.modules} module(s) × ${meta.floors} floor(s)), ACTUAL ${actualCorners}${anyShared ? " (posts shared between modules counted once per module they serve)" : ""}.`,
+          `Corner posts — EXPECTED ${expectedCorners} (4 per module × ${meta.modules} module(s) × ${meta.floors} floor(s)), ACTUAL ${actualCorners}.`,
           cornerLines.map((l) => l.id),
           actualCorners === 0
             ? 'No line in the take-off is named as a corner post. The frame take-off must emit them with "corner" in the description.'
-            : "The corner-post count does not match the module grid. Check the frame geometry, and check that a post shared between two modules is emitted once with `sharedBy: 2` — not dropped.",
+            : "The corner-post count does not match the cabin. Each of the 4 corners is attributed to one elevation — emit one per face, not four.",
+        ),
+      );
+    }
+  }
+
+  /* A colony must have a column grid at all: an empty one means the elevation geometry never reached
+   * the take-off, which is the "unlinked drawing element" failure wearing a different hat. */
+  if (meta.source === "colony" && meta.modules > 0) {
+    const colLines = live.filter((l) => isSteelLine(l) && /\b(corner|wall)\s+post\b/i.test(text(l)));
+    if (colLines.length === 0) {
+      out.push(
+        issue(
+          "quantity_drawing_mismatch",
+          "error",
+          `Columns — EXPECTED a column grid for ${meta.modules} module(s) over ${meta.floors} storey(s), ACTUAL none.`,
+          [],
+          "colonyTakeoff derives columns from buildElevation()'s column lines. An empty grid means the elevation geometry never reached the take-off — the BOQ and the drawing have diverged.",
         ),
       );
     }

@@ -15,7 +15,13 @@
  * entangling the large CabinCalculator component.
  */
 
+import { useCallback, useRef } from "react";
+
+import { TableLayer } from "@/features/cabin-design/furniture/tables/TableRenderer2D";
+import { ftToMm } from "@/features/cabin-design/furniture/tables/tableUnits";
+
 import {
+  tablesOf,
   DOOR_SIZE, TABLE_SIZE, ROOM_FURNITURE_IDS, furnitureRoomCounts, TABLE_ADDON_IDS, tablePlacementsOf,
   furnitureAdjustOf, type FurnitureAdjust, plugPlanFor,
   MANAGER_TABLE_SIZE, MANAGER_L_SIZE, findWindowTrack, isToiletCabin,
@@ -958,7 +964,42 @@ function CasementWindow({ ax, ay, ux, uy, ex, ey, len, opening, keyBase }: {
   return <g key={keyBase}>{nodes}</g>;
 }
 
-export function ModulePlan({ config }: { config: CabinConfig }) {
+/**
+ * ModulePlan is a PURE RENDER by default — pass only `config` and it behaves exactly as it always
+ * has (which is what keeps its three existing call sites working untouched). The optional props
+ * below turn it into the Table module's editing surface (spec §10: "allow direct drag-and-drop
+ * movement in the 2D plan").
+ */
+export interface ModulePlanProps {
+  config: CabinConfig;
+  /** Turns on table hit-testing + drag. */
+  editable?: boolean;
+  selectedTableId?: string | null;
+  onSelectTable?: (id: string | null) => void;
+  /** Ids of every object currently in conflict — those tables draw RED (spec §14). */
+  conflictIds?: Set<string>;
+  showTableDimensions?: boolean;
+  /**
+   * A drag moved the table's CENTRE to (xMm, yMm) in cabin millimetres. The caller clamps it into
+   * the cabin, snaps it and writes it back — this component owns no state.
+   * `commit` is false while the pointer is down (so the whole gesture coalesces into ONE undo entry)
+   * and true on pointer-up.
+   */
+  onTableMove?: (id: string, xMm: number, yMm: number, commit: boolean) => void;
+  /** Snap the dragged centre to this grid (mm). 0 / undefined = free movement. */
+  snapMm?: number;
+}
+
+export function ModulePlan({
+  config,
+  editable = false,
+  selectedTableId = null,
+  onSelectTable,
+  conflictIds,
+  showTableDimensions = false,
+  onTableMove,
+  snapMm = 0,
+}: ModulePlanProps) {
   const L = Math.max(1, config.length || 1);
   const W = Math.max(1, config.width || 1);
   const ppf = Math.min(Math.max(760 / L, 15), 34); // pixels per foot
@@ -999,9 +1040,78 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
   // ---- dimension line helpers ----
   const arrow = (x: number, y: number, dir: "l" | "r" | "u" | "d") => arrowAt(x, y, dir, C.dim);
 
+  /* ---- table drag (spec §10) ------------------------------------------------------------------
+   *
+   * The SVG is `viewBox` + `w-full h-auto`, so the browser scales it UNIFORMLY: one viewBox unit is
+   * `vbW / rect.width` CSS pixels on both axes. Inverting the plan transform is therefore exact —
+   * and it MUST be, because the numeric position fields, the wall-distance readouts and the
+   * collision polygons are all derived from the value this produces. Getting it approximately right
+   * would mean a table that drifts a few millimetres every time it is touched.
+   *
+   *   viewBox x = ox + xFt * ppf     ⇒     xFt = (viewBoxX - ox) / ppf     ⇒     xMm = xFt * 304.8
+   *
+   * The grab OFFSET (cursor → table centre) is captured on pointer-down, so a table dragged by its
+   * corner does not jump its centre to the cursor. */
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const dragRef = useRef<{ id: string; offXMm: number; offYMm: number } | null>(null);
+
+  const pointerToMm = useCallback((clientX: number, clientY: number) => {
+    const svg = svgRef.current;
+    if (!svg) return null;
+    const r = svg.getBoundingClientRect();
+    if (!r.width) return null;
+    const k = vbW / r.width;                       // viewBox units per CSS pixel (uniform)
+    const vx = (clientX - r.left) * k;
+    const vy = (clientY - r.top) * k;
+    return { xMm: ftToMm((vx - ox) / ppf), yMm: ftToMm((vy - oy) / ppf) };
+  }, [vbW, ox, oy, ppf]);
+
+  const snap = useCallback((v: number) => (snapMm > 0 ? Math.round(v / snapMm) * snapMm : v), [snapMm]);
+
+  const onTableDragStart = useCallback(
+    (id: string, e: React.PointerEvent) => {
+      if (!editable || !onTableMove) return;
+      const t = tablesOf(config).find((x) => x.id === id);
+      if (!t || t.position.locked) return;         // a locked table does not move (spec §11)
+
+      const p = pointerToMm(e.clientX, e.clientY);
+      if (!p) return;
+      dragRef.current = {
+        id,
+        offXMm: t.position.xMm - p.xMm,
+        offYMm: t.position.yMm - p.yMm,
+      };
+
+      const target = e.currentTarget as Element;
+      try { target.setPointerCapture(e.pointerId); } catch { /* not all pointers can be captured */ }
+
+      const move = (ev: PointerEvent) => {
+        const d = dragRef.current;
+        const q = pointerToMm(ev.clientX, ev.clientY);
+        if (!d || !q) return;
+        onTableMove(d.id, snap(q.xMm + d.offXMm), snap(q.yMm + d.offYMm), false);
+      };
+      const up = (ev: PointerEvent) => {
+        const d = dragRef.current;
+        const q = pointerToMm(ev.clientX, ev.clientY);
+        if (d && q) onTableMove(d.id, snap(q.xMm + d.offXMm), snap(q.yMm + d.offYMm), true);
+        dragRef.current = null;
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", up);
+      };
+      // Listen on the WINDOW, not the node: a fast drag outruns the 20 px table and would otherwise
+      // drop it the moment the cursor left the glyph.
+      window.addEventListener("pointermove", move);
+      window.addEventListener("pointerup", up);
+      e.preventDefault();
+    },
+    [editable, onTableMove, config, pointerToMm, snap],
+  );
+
   return (
     <div className="overflow-hidden rounded-xl border border-border" style={{ background: C.paper }}>
-      <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${vbW} ${vbH}`} className="w-full h-auto" role="img"
+        onPointerDown={editable ? (e) => { if (e.target === e.currentTarget) onSelectTable?.(null); } : undefined}
         aria-label={`2D floor plan — ${ftLabel(L)} by ${ftLabel(W)} cabin`}>
         {/* ---- walls + room ---- */}
         <rect x={ox - wallT} y={oy - wallT} width={planW + wallT * 2} height={planH + wallT * 2} rx={2} fill={C.wall} />
@@ -1248,6 +1358,28 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           });
           return out;
         })()}
+
+        {/* ---- PARAMETRIC TABLES (Table Customisation Module, spec §12) ----
+               Drawn ABOVE the legacy add-on furniture and the loose fixtures, but BELOW the opaque
+               enclosed-washroom boxes and the ceiling RCP — the same z-order a real plan uses, so a
+               table can never be drawn over the washroom it is standing outside of.
+
+               The layer is handed the plan's own (ox, oy, ppf), so a table's pixels and its
+               collision polygons are produced from ONE transform (tableTransform), and the drawing
+               cannot disagree with the BOQ that was taken off from the same geometry. */}
+        <TableLayer
+          tables={tablesOf(config)}
+          ox={ox}
+          oy={oy}
+          ppf={ppf}
+          selectedId={selectedTableId}
+          conflictIds={conflictIds}
+          showLabels
+          showDimensions={showTableDimensions}
+          editable={editable}
+          onSelect={onSelectTable}
+          onDragStart={onTableDragStart}
+        />
 
         {/* ---- enclosed toilet / washroom — one partitioned box PER UNIT, each against its chosen
                wall at its feet-offset (auto-spread when left on "auto"), door swinging in/out.
