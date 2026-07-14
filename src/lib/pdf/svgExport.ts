@@ -1,18 +1,23 @@
 /**
  * Export an on-page <svg> drawing as a standalone file — vector SVG, PNG or PDF.
  *
- * Why NOT html2canvas here: our drawings are pure SVG whose colours are literal hex values,
- * so serialising the SVG directly is both exact and vector-clean. It also sidesteps the two
- * traps of the DOM-capture path:
- *   • html2canvas chokes on Tailwind's oklch() colour tokens (see lib/pdf/sanitizeColors.ts);
- *   • the drawing lives inside an `overflow-x-auto` box, so a DOM capture would CLIP a wide
- *     drawing to the visible scroll window.
- * Serialising the SVG node avoids both entirely. For rasterising we go SVG → Image → canvas,
- * which needs no third-party library at all.
+ * Why NOT html2canvas here: serialising the SVG node directly is exact and vector-clean, and it
+ * sidesteps a trap of the DOM-capture path — the drawing lives inside an `overflow-x-auto` box, so a
+ * DOM capture would CLIP a wide drawing to the visible scroll window. For rasterising we go
+ * SVG → Image → canvas, which needs no third-party library at all.
+ *
+ * The serialised SVG is loaded as an <img> from a blob URL, which makes it a DETACHED document: it
+ * can see none of the page's CSS custom properties. Any `hsl(var(--accent))` / `currentColor` left in
+ * it is invalid at computed-value time there, so `fill` silently falls back to BLACK and `stroke` to
+ * none — an export that succeeds and quietly produces a wrong drawing. This file used to rely on the
+ * convention that "our drawings only ever use literal hex"; it now enforces the property instead, by
+ * pinning every paint to its resolved colour through the shared sanitiser (inlineSvgPaint) before
+ * cloning. For a hex-only drawing that is a no-op — it pins the value that was already there.
  */
 
 import jsPDF from "jspdf";
 import { addLegalFooter } from "@/lib/pdfFooter";
+import { inlineSvgPaint } from "./sanitizeColors";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -22,14 +27,26 @@ function serializeSvg(svg: SVGSVGElement): { xml: string; w: number; h: number }
   const w = vb && vb.width ? vb.width : svg.clientWidth || 1000;
   const h = vb && vb.height ? vb.height : svg.clientHeight || 700;
 
-  const clone = svg.cloneNode(true) as SVGSVGElement;
+  // Resolve every fill / stroke / stop-color / currentColor against the LIVE page, so the clone below
+  // carries concrete colours instead of page-dependent references. Undone immediately afterwards —
+  // the on-screen drawing is never left modified.
+  const restorePaint = inlineSvgPaint(svg);
+  let clone: SVGSVGElement;
+  try {
+    clone = svg.cloneNode(true) as SVGSVGElement;
+  } finally {
+    restorePaint();
+  }
+
   clone.setAttribute("xmlns", SVG_NS);
   clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
   clone.setAttribute("width", String(w));
   clone.setAttribute("height", String(h));
-  // Tailwind classes and the min-width style are meaningless (and harmful) standalone.
+  // Tailwind classes are meaningless (and harmful) standalone. The root's inline style is kept —
+  // inlineSvgPaint just wrote the root's own resolved paint into it — but the min-width that makes
+  // the drawing scroll on screen would distort a standalone render, so drop just that.
   clone.removeAttribute("class");
-  clone.removeAttribute("style");
+  clone.style.removeProperty("min-width");
   // A standalone SVG inherits no page font — state it explicitly.
   clone.setAttribute("font-family", "Helvetica, Arial, sans-serif");
 

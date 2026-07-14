@@ -245,16 +245,19 @@ export function ConstructionDrawingTab({
       const r = await exportSheetToPdf(sheetRef.current, {
         filename: `labour-colony-civil-drawing-${(config.projectName || "colony").replace(/\s+/g, "-").toLowerCase() || "colony"}`,
         // Every drawing card is a direct child of the sheet, so the default breakpoints already
-        // land between cards; the schedules are tall tables worth keeping whole too.
-        breakSelector: "table, thead, tbody > tr",
+        // land between cards; the schedules are tall tables that may legitimately split BETWEEN rows.
+        // `thead` is deliberately NOT a boundary: its bottom edge is a legal cut, which would leave a
+        // table's column headers stranded at the foot of one page and its data rows on the next.
+        breakSelector: "table, tbody > tr",
         format: "png",
         dpi: 300,
         minDpi: 220,
         targetBytes: 10_000_000,
       });
       toast({
-        title: "Drawing PDF downloaded",
-        description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)} · ${r.dpi} DPI${r.overBudget ? " (kept above the size budget to preserve legibility)" : ""}`,
+        title: r.truncated ? "Drawing PDF downloaded — INCOMPLETE" : "Drawing PDF downloaded",
+        description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)} · ${r.dpi} DPI${r.overBudget ? " (kept above the size budget to preserve legibility)" : ""}${r.truncated ? " — the sheet is longer than the page cap and was cut short." : ""}`,
+        variant: r.truncated ? "destructive" : undefined,
       });
     } catch (err: unknown) {
       console.error("Construction drawing PDF failed:", err);

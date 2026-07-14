@@ -38,7 +38,10 @@ import {
   OPENING_SIDES, sideSpanFt, openingWidthOn, maxOpeningOffset, clampOpeningOffset, openingPreset,
   placementLabel, LEGACY_WINDOW_POSITIONS,
   DOOR_HANDS, DOOR_SWINGS, PARTITION_HINGES, PARTITION_SWINGS, PARTITION_DOOR_TYPES, doorOpeningLabel,
+  PARTITION_SLIDE_SIDES, PARTITION_SLIDE_DIRECTIONS, partitionSlideFits, partitionSlideRunFt,
+  clampPartitionSlideOffset, partitionSlideOffsetRange, partitionSpecLabel,
   type DoorHand, type DoorSwing, type PartitionHinge, type PartitionSwing,
+  type PartitionSlideSide, type PartitionSlideDirection,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft,
   type CabinConfig, type Material, type Estimate, type InsulationOption, type OpeningPlacement, type DoorPlacement, type PlugGroup,
 } from "./pricing";
@@ -231,7 +234,7 @@ function MainBoardMark({ box }: { box: { x: number; y: number; bw: number; bh: n
 /* ---------------------------------------------------------------- */
 /* Live 2D floor-plan preview                                       */
 /* ---------------------------------------------------------------- */
-function FloorPreview({ length, width, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt, containerDoor, roomLengths, partitionDoor, partitionDoorType, partitionDoorOffset, partitionDoorHinge, partitionDoorSwing, puf }: { length: number; width: number; doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[]; windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; partitionDoorType?: string; partitionDoorOffset?: number; partitionDoorHinge?: PartitionHinge; partitionDoorSwing?: PartitionSwing; puf?: boolean }) {
+function FloorPreview({ length, width, doorPlacements, windowPlacements, windowWidthFt, windowHeightFt, containerDoor, roomLengths, partitionDoor, partitionDoorType, partitionDoorOffset, partitionDoorHinge, partitionDoorSwing, partitionSlideSide, partitionSlideDirection, puf }: { length: number; width: number; doorPlacements?: OpeningPlacement[]; windowPlacements?: OpeningPlacement[]; windowWidthFt?: number; windowHeightFt?: number; containerDoor?: boolean; roomLengths?: number[]; partitionDoor?: boolean; partitionDoorType?: string; partitionDoorOffset?: number; partitionDoorHinge?: PartitionHinge; partitionDoorSwing?: PartitionSwing; partitionSlideSide?: PartitionSlideSide; partitionSlideDirection?: PartitionSlideDirection; puf?: boolean }) {
   const L = Math.max(1, length), W = Math.max(1, width);
   // The customer's chosen window size (falls back to the 3×3 default).
   const winW = Math.min(Math.max(windowWidthFt ?? WINDOW_SIZE.widthFt, 1), 12);
@@ -362,6 +365,16 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
         const hy = hinge === "top" ? dTop : dBot;   // hinge point
         const cy = hinge === "top" ? dBot : dTop;   // closed leaf tip
         const sweep = dir * (cy - hy) > 0 ? 1 : 0;
+        // Sliding: the leaf hangs on one FACE of the partition (+x = right room) and travels
+        // ALONG it (+y = toward the front wall). Clamp the parked leaf to the blank partition
+        // that actually exists — this preview has no margin, so an unclamped run would be drawn
+        // over the dimension text and clipped by the viewBox.
+        const face = (partitionSlideSide ?? "right") === "right" ? 1 : -1;
+        const travel = (partitionSlideDirection ?? "rear") === "front" ? 1 : -1;
+        const sOpen = travel < 0 ? dTop : dBot;      // the gap edge the leaf retracts past
+        const sRun = Math.max(0, travel < 0 ? dTop - pad : pad + h - dBot);
+        const sPark = Math.min(dH, sRun);
+        const sEnd = sOpen + travel * sPark;
         const edges: number[] = [];   // svg x of each internal partition
         const mids: number[] = [];    // svg x mid of each room (for labels)
         let acc = 0, prevX = pad;
@@ -382,12 +395,29 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
                 <g key={i}>
                   <line x1={px} y1={pad} x2={px} y2={dTop} stroke="hsl(var(--accent))" strokeWidth={2} />
                   <line x1={px} y1={dBot} x2={px} y2={pad + h} stroke="hsl(var(--accent))" strokeWidth={2} />
-                  {sliding ? (
-                    <>
-                      <line x1={px} y1={dTop} x2={px} y2={dBot} stroke="hsl(var(--accent) / 0.4)" strokeWidth={0.8} strokeDasharray="3 2" />
-                      <line x1={px + dir * 2.5} y1={dTop} x2={px + dir * 2.5} y2={dBot} stroke="hsl(var(--accent))" strokeWidth={2} />
-                    </>
-                  ) : (
+                  {sliding ? (() => {
+                    const lf = px + face * 3;                 // the leaf, on its chosen face
+                    return (
+                      <>
+                        {/* doorway */}
+                        <line x1={px} y1={dTop} x2={px} y2={dBot} stroke="hsl(var(--accent) / 0.4)" strokeWidth={0.8} strokeDasharray="3 2" />
+                        {/* parked (open) leaf, ghosted over the partition it retracts onto */}
+                        {sPark > 2 && (
+                          <line x1={lf} y1={sOpen} x2={lf} y2={sEnd} stroke="hsl(var(--accent) / 0.45)" strokeWidth={1.8} strokeDasharray="3 2" />
+                        )}
+                        {/* closed leaf */}
+                        <line x1={lf} y1={dTop} x2={lf} y2={dBot} stroke="hsl(var(--accent))" strokeWidth={2} />
+                        {/* travel arrow — which way it slides open */}
+                        {sPark > 7 && (
+                          <polygon
+                            points={travel < 0
+                              ? `${lf},${sEnd} ${lf - 2.5},${sEnd + 4} ${lf + 2.5},${sEnd + 4}`
+                              : `${lf},${sEnd} ${lf - 2.5},${sEnd - 4} ${lf + 2.5},${sEnd - 4}`}
+                            fill="hsl(var(--accent))" />
+                        )}
+                      </>
+                    );
+                  })() : (
                     <>
                       <line x1={px} y1={hy} x2={px + dir * dH} y2={hy} stroke="hsl(var(--accent))" strokeWidth={1.4} />
                       <path d={`M ${px + dir * dH} ${hy} A ${dH} ${dH} 0 0 ${sweep} ${px} ${cy}`} fill="none" stroke="hsl(var(--accent) / 0.4)" strokeWidth={1} />
@@ -655,7 +685,8 @@ function CabinPreview({
             windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
             containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor}
             partitionDoorType={pd?.partitionDoorType} partitionDoorOffset={pd?.partitionDoorOffset}
-            partitionDoorHinge={pd?.partitionDoorHinge} partitionDoorSwing={pd?.partitionDoorSwing} puf={puf} />
+            partitionDoorHinge={pd?.partitionDoorHinge} partitionDoorSwing={pd?.partitionDoorSwing}
+            partitionSlideSide={pd?.partitionSlideSide} partitionSlideDirection={pd?.partitionSlideDirection} puf={puf} />
         </section>
         <section className="cabin-drawing-block">
           <Heading>4 Elevations</Heading>
@@ -692,7 +723,8 @@ function CabinPreview({
           windowWidthFt={windowWidthFt} windowHeightFt={windowHeightFt}
           containerDoor={containerDoor} roomLengths={roomLengths} partitionDoor={partitionDoor}
           partitionDoorType={pd?.partitionDoorType} partitionDoorOffset={pd?.partitionDoorOffset}
-          partitionDoorHinge={pd?.partitionDoorHinge} partitionDoorSwing={pd?.partitionDoorSwing} puf={puf} />
+          partitionDoorHinge={pd?.partitionDoorHinge} partitionDoorSwing={pd?.partitionDoorSwing}
+          partitionSlideSide={pd?.partitionSlideSide} partitionSlideDirection={pd?.partitionSlideDirection} puf={puf} />
       )}
     </div>
   );
@@ -860,12 +892,14 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
     [product?.label, config.length, config.width],
   );
   const drawingSubtitle = useMemo(() => {
-    const rooms = config.roomLengths?.length ?? 0;
-    // Storage containers skip the Structure step entirely (CONTAINER_STEP_KEYS), and selectProduct
-    // CARRIES THE OLD structureId OVER rather than clearing it. So a PUF cabin switched to a
-    // container still holds the PUF id, and printing it here would stamp "PUF Panel" onto the
-    // title block of an exported container drawing — a spec the admin never chose. Omit it.
-    const structure = isStorageProduct(config.productId)
+    // A storage container is an ISO shipping container: it has no wall STRUCTURE to choose (it skips
+    // the Structure step entirely — CONTAINER_STEP_KEYS) and it is not partitioned into rooms. Both
+    // fields still hold whatever the *previous* product left in the config, so printing them here
+    // would stamp specs onto the title block of an exported container drawing that the admin never
+    // chose — "Insulated PUF Panel Wall" on a shipping container. Neither applies: omit both.
+    const container = isStorageProduct(config.productId);
+    const rooms = container ? 0 : (config.roomLengths?.length ?? 0);
+    const structure = container
       ? undefined
       : STRUCTURES.find((s) => s.id === config.structureId)?.label;
     return [
@@ -891,7 +925,11 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
           doorPlacements={config.doorPlacements} windowPlacements={config.windowPlacements}
           windowWidthFt={config.windowWidthFt ?? 3} windowHeightFt={config.windowHeightFt ?? 3}
           containerDoor={isStorageProduct(config.productId)} roomLengths={config.roomLengths}
-          partitionDoor={config.partitionDoor} puf={isPufPanel(config.structureId)}
+          // Same stale-spec rule as the title block above, applied to the DRAWING: `structureId` is
+          // not a container spec, so a container must never be drawn with PUF panel walls just
+          // because the previously-selected product was a PUF cabin.
+          partitionDoor={config.partitionDoor}
+          puf={!isStorageProduct(config.productId) && isPufPanel(config.structureId)}
           roof={config.roofId} config={config} printAll
         />
       ) : null,
@@ -990,6 +1028,26 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
           if (merged.partitionDoorHinge !== "top" && merged.partitionDoorHinge !== "bottom") merged.partitionDoorHinge = base.partitionDoorHinge;
           if (merged.partitionDoorSwing !== "left" && merged.partitionDoorSwing !== "right") merged.partitionDoorSwing = base.partitionDoorSwing;
           merged.partitionDoorOffset = clampOpeningOffset(merged.partitionDoorOffset, merged.width, DOOR_SIZE.widthFt);
+          // Sliding partition door — MIGRATE, don't default. Before the slide side/direction
+          // existed, a sliding leaf was drawn on the face picked by `partitionDoorSwing` (the
+          // hinged door's "into left/right room" chips were relabelled "Slides to …"). Carry that
+          // choice over, or an already-saved sliding quote silently flips to the other face.
+          if (merged.partitionSlideSide !== "left" && merged.partitionSlideSide !== "right") {
+            merged.partitionSlideSide = merged.partitionDoorType === "sliding"
+              ? merged.partitionDoorSwing : base.partitionSlideSide;
+          }
+          // Travel direction is genuinely new — nothing to carry over. Seed it with a direction the
+          // leaf can actually retract into (given the door's saved position), so an old config
+          // doesn't hydrate straight into the "cannot open fully" warning. Only ever applied when
+          // the field is absent: a direction the admin explicitly chose is never second-guessed.
+          if (merged.partitionSlideDirection !== "rear" && merged.partitionSlideDirection !== "front") {
+            const preferred = base.partitionSlideDirection;
+            const other: PartitionSlideDirection = preferred === "rear" ? "front" : "rear";
+            merged.partitionSlideDirection =
+              partitionSlideFits(preferred, merged.partitionDoorOffset, merged.width) ||
+              !partitionSlideFits(other, merged.partitionDoorOffset, merged.width)
+                ? preferred : other;
+          }
           // Re-clamp every opening — an older config may hold an offset past its wall. Doors
           // saved before the opening model get the default hand/swing (hinge left, opens out).
           const wWid = merged.windowWidthFt ?? WINDOW_SIZE.widthFt;
@@ -1343,9 +1401,17 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
   };
   const setRoomCount = (n: number) => setConfig((c) => applyRooms(c, n, c.roomLengths, c.partitionDoor));
   const setPartitionDoor = (door: boolean) => setConfig((c) => applyRooms(c, c.roomCount, c.roomLengths, door));
-  // Switch the partition door between hinged and sliding — re-applies the priced add-on.
+  // Switch the partition door between hinged and sliding — re-applies the priced add-on. Going
+  // sliding also snaps the door to a position its leaf can retract into: a hinged door only needs
+  // its own opening, a sliding one needs a door-width run of blank partition to park on, and the
+  // hinged default (centred) usually leaves too little on either side.
   const setPartitionDoorType = (t: string) =>
-    setConfig((c) => applyRooms({ ...c, partitionDoorType: t }, c.roomCount, c.roomLengths, c.partitionDoor));
+    setConfig((c) => {
+      const partitionDoorOffset = t === "sliding"
+        ? clampPartitionSlideOffset(c.partitionSlideDirection, c.partitionDoorOffset, c.width)
+        : c.partitionDoorOffset;
+      return applyRooms({ ...c, partitionDoorType: t, partitionDoorOffset }, c.roomCount, c.roomLengths, c.partitionDoor);
+    });
   const distributeEqually = () =>
     setConfig((c) => applyRooms(c, c.roomCount, Array.from({ length: c.roomCount }, () => c.length / c.roomCount), c.partitionDoor));
   // Set the length of editable room index i (0-based; only rooms 0..N-2 are user-editable —
@@ -1378,7 +1444,11 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
     windowPlacements: c.windowPlacements.map((wp) => ({
       ...wp, offset: clampOpeningOffset(wp.offset, sideSpanFt(wp.side, c.length, c.width), winWidthOf(c)),
     })),
-    partitionDoorOffset: clampOpeningOffset(c.partitionDoorOffset, c.width, DOOR_SIZE.widthFt),
+    // A sliding door additionally needs a door-width run of blank partition to retract onto, so a
+    // width change re-snaps it into a position where the leaf still clears the doorway.
+    partitionDoorOffset: c.partitionDoorType === "sliding"
+      ? clampPartitionSlideOffset(c.partitionSlideDirection, c.partitionDoorOffset, c.width)
+      : clampOpeningOffset(c.partitionDoorOffset, c.width, DOOR_SIZE.widthFt),
   });
 
   // A cabin-length change re-normalises the room split AND re-clamps every opening.
@@ -1423,6 +1493,17 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
     setConfig((c) => ({ ...c, partitionDoorHinge }));
   const setPartitionDoorSwing = (partitionDoorSwing: PartitionSwing) =>
     setConfig((c) => ({ ...c, partitionDoorSwing }));
+  // Sliding partition door — which face the leaf hangs on, and which way it travels to open.
+  // Both are spec-only (no price impact), so they bypass applyRooms and its add-on rewrite.
+  const setPartitionSlideSide = (partitionSlideSide: PartitionSlideSide) =>
+    setConfig((c) => ({ ...c, partitionSlideSide }));
+  // Changing the travel direction changes which end needs the blank partition, so the door
+  // re-snaps to a position where the leaf still retracts clear of the doorway.
+  const setPartitionSlideDirection = (partitionSlideDirection: PartitionSlideDirection) =>
+    setConfig((c) => ({
+      ...c, partitionSlideDirection,
+      partitionDoorOffset: clampPartitionSlideOffset(partitionSlideDirection, c.partitionDoorOffset, c.width),
+    }));
 
   // Windows — identical placement model to doors (side + distance from corner).
   const setWindowCount = (n: number) =>
@@ -1563,7 +1644,7 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
         if (config.roomCount > 1) {
           configRows.push([
             "Rooms",
-            `${config.roomCount} (${config.roomLengths.map((l, i) => { const p = config.roomPurposes?.[i]; const nm = p && p !== "other" ? ` ${roomPurposeLabel(p)}` : ""; return `R${i + 1} ${Math.round(l)}ft${nm}`; }).join(" · ")}) — ${config.roomCount - 1} × ${config.partitionDoor ? "Partition w/ Door" : "Fixed Partition"}`,
+            `${config.roomCount} (${config.roomLengths.map((l, i) => { const p = config.roomPurposes?.[i]; const nm = p && p !== "other" ? ` ${roomPurposeLabel(p)}` : ""; return `R${i + 1} ${Math.round(l)}ft${nm}`; }).join(" · ")}) — ${config.roomCount - 1} × ${partitionSpecLabel(config)}`,
           ]);
         }
         if (isToilet) {
@@ -1942,6 +2023,15 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                         {config.partitionDoor && (() => {
                           const pMax = partitionDoorMax(config);
                           const sliding = config.partitionDoorType === "sliding";
+                          // A sliding leaf needs a run of blank partition equal to its own width to
+                          // retract onto, on whichever end it travels toward. `slideRange` is the
+                          // door positions where that holds — null when the cabin is simply too
+                          // narrow (width < 2 × door width) for the leaf to ever clear the doorway.
+                          const slideDir = config.partitionSlideDirection;
+                          const slideNeed = openingWidthOn(config.width, DOOR_SIZE.widthFt);
+                          const slideHave = partitionSlideRunFt(slideDir, config.partitionDoorOffset, config.width);
+                          const slideFits = partitionSlideFits(slideDir, config.partitionDoorOffset, config.width);
+                          const slideRange = partitionSlideOffsetRange(slideDir, config.width);
                           return (
                             <div className="space-y-2 rounded-lg border border-border bg-background p-3">
                               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -1982,29 +2072,86 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                                     onChange={(e) => setPartitionDoorOffset(parseFloat(cleanNumericInput(e.currentTarget)) || 0)}
                                     className="h-8 w-14 rounded-md border border-border bg-transparent px-2 text-center text-sm outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
                                   <span className="text-[11px] text-muted-foreground">
-                                    ft from rear <span className="text-muted-foreground/70">(0–{formatFt(pMax)})</span>
+                                    ft from rear{" "}
+                                    <span className="text-muted-foreground/70">
+                                      {/* A sliding leaf can only sit where it has room to retract. */}
+                                      {sliding && slideRange
+                                        ? `(${formatFt(slideRange.min)}–${formatFt(slideRange.max)} to slide ${slideDir})`
+                                        : `(0–${formatFt(pMax)})`}
+                                    </span>
                                   </span>
                                 </div>
                               </div>
-                              <div className="flex flex-wrap items-center gap-2">
-                                <span className="w-14 text-[11px] font-medium text-muted-foreground">Opens</span>
-                                {!sliding && (
+                              {/* How it opens. A hinged leaf pivots at one end and swings into a room;
+                                  a sliding leaf has no hinge and no swing — it hangs on ONE FACE of
+                                  the partition and travels ALONG it, so it needs a side and a
+                                  travel direction instead. */}
+                              {!sliding ? (
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="w-14 text-[11px] font-medium text-muted-foreground">Opens</span>
                                   <div className="flex gap-1">
                                     {PARTITION_HINGES.map((hg) => (
                                       <button key={hg.id} type="button" onClick={() => setPartitionDoorHinge(hg.id)} aria-pressed={config.partitionDoorHinge === hg.id}
                                         className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionDoorHinge === hg.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{hg.label}</button>
                                     ))}
                                   </div>
-                                )}
-                                <div className="flex gap-1">
-                                  {PARTITION_SWINGS.map((sw) => (
-                                    <button key={sw.id} type="button" onClick={() => setPartitionDoorSwing(sw.id)} aria-pressed={config.partitionDoorSwing === sw.id}
-                                      className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionDoorSwing === sw.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
-                                      {sliding ? sw.label.replace("Into", "Slides to") : sw.label}
-                                    </button>
-                                  ))}
+                                  <div className="flex gap-1">
+                                    {PARTITION_SWINGS.map((sw) => (
+                                      <button key={sw.id} type="button" onClick={() => setPartitionDoorSwing(sw.id)} aria-pressed={config.partitionDoorSwing === sw.id}
+                                        className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionDoorSwing === sw.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>
+                                        {sw.label}
+                                      </button>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
+                              ) : (
+                                <>
+                                  {/* Which room's face the panel is mounted on and parks in. */}
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <span className="w-14 text-[11px] font-medium text-muted-foreground">Side</span>
+                                    <div className="flex gap-1">
+                                      {PARTITION_SLIDE_SIDES.map((sd) => (
+                                        <button key={sd.id} type="button" onClick={() => setPartitionSlideSide(sd.id)} aria-pressed={config.partitionSlideSide === sd.id}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionSlideSide === sd.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{sd.label}</button>
+                                      ))}
+                                    </div>
+                                    <span className="text-[11px] text-muted-foreground">panel hangs in the {config.partitionSlideSide} room</span>
+                                  </div>
+                                  {/* Which way the leaf travels along the partition as it opens. */}
+                                  <div className="flex flex-wrap items-center gap-2">
+                                    <span className="w-14 text-[11px] font-medium text-muted-foreground">Slides</span>
+                                    <div className="flex gap-1">
+                                      {PARTITION_SLIDE_DIRECTIONS.map((sd) => (
+                                        <button key={sd.id} type="button" onClick={() => setPartitionSlideDirection(sd.id)} aria-pressed={config.partitionSlideDirection === sd.id}
+                                          className={cn("rounded-md border px-2 py-1 text-[11px] font-medium", config.partitionSlideDirection === sd.id ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:text-foreground")}>{sd.label}</button>
+                                      ))}
+                                    </div>
+                                    {slideFits && (
+                                      <span className="text-[11px] font-medium text-emerald-500">
+                                        Retracts onto {formatFt(slideHave)} of blank partition
+                                      </span>
+                                    )}
+                                  </div>
+                                  {/* The leaf needs somewhere to go. Say so before it reaches the factory. */}
+                                  {!slideFits && (
+                                    <div className="flex flex-wrap items-center gap-2 rounded-md border border-amber-500/40 bg-amber-500/10 px-2.5 py-1.5">
+                                      <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400">
+                                        Panel needs {formatFt(slideNeed)} of blank partition to slide {slideDir} — only {formatFt(slideHave)} available.
+                                        {slideRange
+                                          ? ` Move the door to ${formatFt(slideRange.min)}–${formatFt(slideRange.max)} from rear, or slide it the other way.`
+                                          : ` This cabin is too narrow (${formatFt(config.width)}) for a fully-retracting sliding partition door — use a hinged door.`}
+                                      </span>
+                                      {slideRange && (
+                                        <button type="button"
+                                          onClick={() => setPartitionDoorOffset(clampPartitionSlideOffset(slideDir, config.partitionDoorOffset, config.width))}
+                                          className="rounded-md border border-amber-500/60 px-2 py-0.5 text-[11px] font-semibold text-amber-600 hover:bg-amber-500/20 dark:text-amber-400">
+                                          Snap to fit
+                                        </button>
+                                      )}
+                                    </div>
+                                  )}
+                                </>
+                              )}
                             </div>
                           );
                         })()}

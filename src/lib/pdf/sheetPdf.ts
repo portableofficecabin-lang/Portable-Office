@@ -115,12 +115,16 @@ export interface SheetPdfOptions {
 export interface SheetPdfResult {
   bytes: number;
   pages: number;
-  /** What was actually used after any size back-off. */
+  /** DPI actually ACHIEVED (after the canvas caps and any size back-off), not the one requested. */
   dpi: number;
   quality: number;
   scale: number;
   /** True when the budget could not be met without going below the legibility floors. */
   overBudget: boolean;
+  /** Page breaks that had to cut THROUGH content because one block was taller than a whole page. */
+  sliced: number;
+  /** True when the page cap stopped the export before the end of the sheet — the PDF is incomplete. */
+  truncated: boolean;
 }
 
 const A4 = { w: 210, h: 297 };
@@ -265,15 +269,43 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
     const pdf = new jsPDF({ orientation: o.orientation, unit: "mm", format: "a4", compress: true });
     let y = 0;
     let pages = 0;
+    let sliced = 0;
     while (y < canvas.height - 1) {
       const hardEnd = Math.min(y + pageHpx, canvas.height);
       let cut = hardEnd;
       if (hardEnd < canvas.height) {
-        // Prefer the LAST content boundary that fits on this page. Require the page to be at least
-        // a quarter full, otherwise one tall card would produce a run of nearly-empty pages.
-        const candidates = breaksPx.filter((b) => b > y + pageHpx * 0.25 && b <= hardEnd + 0.5);
-        if (candidates.length) cut = Math.max(...candidates);
-        // else: this single block is taller than a page — a hard slice is the only option.
+        // Cut at the LAST content boundary that still fits on this page — that fills the page as far
+        // as it can go without slicing anything.
+        //
+        // There used to be an extra `b > y + pageHpx * 0.25` filter here ("keep the page at least a
+        // quarter full"), and it was the bug: when the only clean boundary on a page fell inside that
+        // first quarter, EVERY candidate was rejected and the code fell through to a hard slice —
+        // cutting straight through a floor plan or an elevation, which is precisely what content
+        // pagination exists to prevent. A page that is only a third full is a cosmetic cost; a
+        // drawing severed across a page break is a broken drawing. So take the clean cut whenever one
+        // exists, and hard-slice ONLY when no boundary fits at all — i.e. one block is genuinely
+        // taller than a whole page, where slicing is the only option.
+        const candidates = breaksPx.filter((b) => b > y + 1 && b <= hardEnd + 0.5);
+        if (!candidates.length) {
+          sliced++;                                   // nothing fits — one block is taller than a page
+        } else {
+          const clean = Math.max(...candidates);
+          // Would the chunk that STARTS the next page be able to finish inside one page — i.e. is
+          // there any boundary within a page of it? If not, it is an unbreakable block taller than a
+          // whole page (the footing-schedule card is one): it gets hard-sliced wherever it starts, so
+          // pushing it onto a fresh page protects nothing and merely strands THIS page nearly empty.
+          // In that one case, fill the page instead. The `fill` guard keeps us from doing so when the
+          // page is already nearly full, which would leave just the block's heading dangling at the
+          // foot of it.
+          const breakable = breaksPx.some((b) => b > clean + 1 && b <= clean + pageHpx + 0.5);
+          const fill = (clean - y) / pageHpx;
+          if (!breakable && fill < 0.75) {
+            cut = hardEnd;
+            sliced++;
+          } else {
+            cut = clean;
+          }
+        }
       }
       const hpx = Math.max(1, cut - y);
       const data = isPng ? sliceToPng(canvas, y, hpx, o.pngQuantizeBits) : sliceToJpeg(canvas, y, hpx, quality);
@@ -285,9 +317,16 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
       y = cut;
       if (pages > 60) break;   // runaway guard
     }
+    // Content past the runaway guard is genuinely missing from the PDF — surface it rather than
+    // letting a truncated document look complete.
+    const truncated = y < canvas.height - 1;
     if (o.footer) addLegalFooter(pdf);
     const blob = pdf.output("blob") as Blob;
-    return { pdf, blob, pages, quality, dpi: baseDpi * f, scale: baseScale * f };
+    // Report the DPI actually ACHIEVED, not the one requested: scaleFor() clamps the capture scale to
+    // the browser's canvas limits, so a very tall sheet can land well below `o.dpi`. Deriving it from
+    // the finished canvas keeps the number in the toast honest.
+    const achievedDpi = (canvas.width / imgWmm) * 25.4;
+    return { pdf, blob, pages, quality, dpi: achievedDpi, scale: baseScale * f, sliced, truncated };
   };
 
   /**
@@ -299,7 +338,12 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
    * knob, so it is treated as already "at the quality floor" and only DPI ever flexes. Converges in
    * ≤ 4 builds.
    */
-  const minF = Math.min(1, o.minDpi / baseDpi);
+  // The legibility floor has to be measured against what the master canvas ACTUALLY achieved. Using
+  // the requested `baseDpi` here meant that when the canvas caps clamped the capture (a long sheet at
+  // 300 DPI lands nearer 200), the back-off was still allowed to shrink by minDpi/300 — pushing the
+  // real resolution well under the floor it was supposed to protect.
+  const masterDpi = (master.width / imgWmm) * 25.4;
+  const minF = Math.min(1, o.minDpi / masterDpi);
   let f = 1;
   let q = o.quality;
   let best = build(f, q);
@@ -320,6 +364,10 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
   const name = o.filename.endsWith(".pdf") ? o.filename : `${o.filename}.pdf`;
   best.pdf.save(name);
 
+  if (best.truncated) {
+    console.warn(`[sheetPdf] ${name}: the sheet is longer than the ${best.pages}-page cap — the PDF is truncated.`);
+  }
+
   return {
     bytes: best.blob.size,
     pages: best.pages,
@@ -327,6 +375,8 @@ export async function exportSheetToPdf(el: HTMLElement, opts: SheetPdfOptions): 
     quality: Number(best.quality.toFixed(2)),
     scale: Number(best.scale.toFixed(2)),
     overBudget: best.blob.size > o.targetBytes,
+    sliced: best.sliced,
+    truncated: best.truncated,
   };
 }
 

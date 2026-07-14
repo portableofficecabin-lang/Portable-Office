@@ -82,11 +82,18 @@ export function AdminDrawingTools({ title, subtitle, children }: AdminDrawingToo
         // drawing set arrives as ONE child — so a sheet taller than a page gets hard-sliced straight
         // through a plan or an elevation. CabinPreview marks each view with .cabin-drawing-block
         // precisely so the page can break BETWEEN them.
-        breakSelector: ".cabin-drawing-block, svg",
+        //
+        // `svg` used to be in this list too, and it defeated the whole point: a breakpoint is the top
+        // AND bottom edge of every match, so every <svg> edge became a legal page cut INSIDE a block.
+        // A .cabin-drawing-block is `<heading> <svg> <legend>` — cutting at the svg's top orphaned the
+        // "4 ELEVATIONS" heading at the foot of the previous page, and cutting at its bottom stranded
+        // the floor plan's legend at the top of the next one. The blocks are the only safe boundaries.
+        breakSelector: ".cabin-drawing-block",
       });
       toast({
-        title: "Drawing PDF downloaded",
-        description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)} · ${r.dpi} DPI${r.overBudget ? " (kept above the size budget to preserve legibility)" : ""}`,
+        title: r.truncated ? "Drawing PDF downloaded — INCOMPLETE" : "Drawing PDF downloaded",
+        description: `${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)} · ${r.dpi} DPI${r.overBudget ? " (kept above the size budget to preserve legibility)" : ""}${r.truncated ? " — the sheet is longer than the page cap and was cut short." : ""}`,
+        variant: r.truncated ? "destructive" : undefined,
       });
     } catch (err: unknown) {
       console.error("Cabin drawing PDF failed:", err);

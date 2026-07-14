@@ -69,11 +69,24 @@ function ftLabel(f: number): string {
   return `${whole}'-${inches}"`;
 }
 
+/** A solid arrowhead with its tip at (x,y). Deliberately a literal <polygon> rather than an SVG
+ *  <marker>: the PDF export serialises this <svg> standalone and re-loads it as an <img>, a path
+ *  on which url(#marker) references are not reliably resolved. Shared by the dimension lines and
+ *  the sliding-door travel arrow. */
+function arrowAt(x: number, y: number, dir: "l" | "r" | "u" | "d", fill: string) {
+  const p = dir === "l" ? `${x},${y} ${x + 5},${y - 3} ${x + 5},${y + 3}`
+    : dir === "r" ? `${x},${y} ${x - 5},${y - 3} ${x - 5},${y + 3}`
+    : dir === "u" ? `${x},${y} ${x - 3},${y + 5} ${x + 3},${y + 5}`
+    : `${x},${y} ${x - 3},${y - 5} ${x + 3},${y - 5}`;
+  return <polygon points={p} fill={fill} />;
+}
+
 // Palette (fixed, paper-style — matches an architectural print).
 const C = {
   paper: "#fbfaf6", wall: "#333333", room: "#e9ddc4",
   win: "#a8c8e0", winLine: "#5a86ab",
   door: "#333333", arc: "#7a7a7a",
+  slide: "#0f6f63",                       // sliding-door track / travel arrow / direction note
   socket: "#f7f7f7", socketInk: "#333333",
   light: "#f2ecc6", lightEdge: "#bcae5a",
   fan: "#8aa9bb", fanEdge: "#4f7387", fanHub: "#3d5f72",
@@ -984,13 +997,7 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
   const doorKeeps = doorKeepoutRects(config, ox, oy, rx, by, L, W, ppf);
 
   // ---- dimension line helpers ----
-  const arrow = (x: number, y: number, dir: "l" | "r" | "u" | "d") => {
-    const p = dir === "l" ? `${x},${y} ${x + 5},${y - 3} ${x + 5},${y + 3}`
-      : dir === "r" ? `${x},${y} ${x - 5},${y - 3} ${x - 5},${y + 3}`
-      : dir === "u" ? `${x},${y} ${x - 3},${y + 5} ${x + 3},${y + 5}`
-      : `${x},${y} ${x - 3},${y - 5} ${x + 3},${y - 5}`;
-    return <polygon points={p} fill={C.dim} />;
-  };
+  const arrow = (x: number, y: number, dir: "l" | "r" | "u" | "d") => arrowAt(x, y, dir, C.dim);
 
   return (
     <div className="overflow-hidden rounded-xl border border-border" style={{ background: C.paper }}>
@@ -1013,6 +1020,24 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
           const swing = config.partitionDoorSwing ?? "right";
           const sliding = config.partitionDoorType === "sliding";
           const dir = swing === "right" ? 1 : -1; // +x = into the room on the right
+          // Sliding: the leaf hangs on ONE FACE of the partition and travels ALONG it. `face` is
+          // the room it hangs in (+x = right room); `travel` is the way it slides open
+          // (+y = toward the front wall). The two are independent — a leaf on the right face can
+          // slide either rearward or frontward.
+          const slideSide = config.partitionSlideSide ?? "right";
+          const slideDir = config.partitionSlideDirection ?? "rear";
+          const face = slideSide === "right" ? 1 : -1;
+          const travel = slideDir === "front" ? 1 : -1;
+          // The leaf stands clear of the 4px wall stroke (px±2) so the panel reads as a panel
+          // rather than merging into the partition line at plan scale.
+          const faceOff = face * 6.5;
+          // Where the leaf ends up when fully open. Clamped to the blank partition actually
+          // available, so the parked leaf is never drawn straight through the exterior wall when
+          // the door is positioned too close to that end (the UI warns about exactly that case).
+          const openEdge = travel < 0 ? gTop : gBot;         // the gap edge the leaf retracts past
+          const runPx = Math.max(0, travel < 0 ? gTop - oy : by - gBot);
+          const parkPx = Math.min(pdw, runPx);
+          const parkEnd = openEdge + travel * parkPx;
           let acc = 0;
           return rooms.slice(0, -1).map((rl, i) => {
             acc += rl;
@@ -1026,13 +1051,48 @@ export function ModulePlan({ config }: { config: CabinConfig }) {
                 <line x1={px} y1={gBot} x2={px} y2={by} stroke={C.wall} strokeWidth={4} />
               </>
             );
-            // A sliding partition door parks alongside the opening — no swing arc.
+            // A sliding partition door parks alongside the opening — no swing arc. Drawn as:
+            // the doorway (dashed), the CLOSED leaf on its face (solid), the OPEN/parked leaf
+            // (dashed ghost) over the blank partition it retracts onto, and a travel arrow +
+            // note naming the direction. Arrowheads are literal <polygon>s (via `arrow`) — SVG
+            // <marker> does not survive html2canvas' serialise-to-<img> path used by the PDF.
             if (sliding) {
+              const lf = px + faceOff;                       // the leaf's line, on its chosen face
+              const lx = px + face * 22;                     // direction note, clear of the leaf
+              const lm = (gTop + gBot) / 2;
               return (
                 <g key={i}>
                   {wallSegs}
+                  {/* doorway */}
                   <line x1={px} y1={gTop} x2={px} y2={gBot} stroke={C.arc} strokeWidth={0.8} strokeDasharray="3 2" />
-                  <line x1={px + dir * 2.5} y1={gTop} x2={px + dir * 2.5} y2={gBot} stroke={C.door} strokeWidth={2.4} />
+                  {/* track: spans the doorway + the run the leaf retracts onto */}
+                  <line x1={lf} y1={Math.min(gTop, parkEnd)} x2={lf} y2={Math.max(gBot, parkEnd)}
+                    stroke={C.slide} strokeWidth={0.7} />
+                  {/* parked (open) leaf — ghosted over the blank partition it slides onto */}
+                  {parkPx > 2 && (
+                    <line x1={lf} y1={openEdge} x2={lf} y2={parkEnd}
+                      stroke={C.slide} strokeWidth={2.6} strokeDasharray="4 2.5" opacity={0.6} />
+                  )}
+                  {/* closed leaf */}
+                  <line x1={lf} y1={gTop} x2={lf} y2={gBot} stroke={C.door} strokeWidth={3.2} />
+                  {/* travel arrow — which way the leaf slides to open */}
+                  {parkPx > 8 && (
+                    <>
+                      <line x1={lf} y1={openEdge + travel * 3} x2={lf} y2={parkEnd - travel * 5}
+                        stroke={C.slide} strokeWidth={1.1} />
+                      {arrowAt(lf, parkEnd, travel < 0 ? "u" : "d", C.slide)}
+                    </>
+                  )}
+                  {/* direction note, reading along the partition */}
+                  <g transform={`rotate(-90 ${lx} ${lm})`}>
+                    <rect x={lx - 52} y={lm - 12} width={104} height={17} fill={C.paper} opacity={0.85} />
+                    <text x={lx} y={lm - 3.5} textAnchor="middle" fontSize={7} fontWeight={700} fill={C.ink}>
+                      SLIDING DOOR {doorLabel}
+                    </text>
+                    <text x={lx} y={lm + 4.5} textAnchor="middle" fontSize={6.6} fontWeight={700} fill={C.slide}>
+                      SLIDES TO {slideDir === "rear" ? "REAR" : "FRONT"} · {slideSide === "left" ? "LEFT" : "RIGHT"} SIDE
+                    </text>
+                  </g>
                 </g>
               );
             }

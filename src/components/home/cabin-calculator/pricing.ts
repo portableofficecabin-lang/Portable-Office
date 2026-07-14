@@ -435,11 +435,67 @@ export const PARTITION_SWINGS = [
   { id: "right", label: "Into Right Room" },
 ] as const;
 
+/* ---- Sliding partition door (side + travel direction) --------------------------- *
+ * A sliding leaf does NOT swing — it hangs on ONE FACE of the partition and travels
+ * ALONG it. The partition spans the cabin WIDTH, so the only axis it can travel on is
+ * rear ↔ front. Two independent choices fully specify it:
+ *   side      "left" | "right"  = which room's face the panel is mounted on (and parks in)
+ *   direction "rear" | "front"  = which way the leaf travels as it opens
+ * To open CLEAR of the doorway the leaf needs a run of blank partition equal to its own
+ * width on the side it travels toward. Nothing else in the opening model enforces that,
+ * so `partitionSlideOffsetRange` is the single source of truth for where the door may sit
+ * — the UI, the 2D plan and the quote text all read it, and therefore cannot disagree.
+ * -------------------------------------------------------------------------------- */
+export type PartitionSlideSide = "left" | "right";
+export type PartitionSlideDirection = "rear" | "front";
+export const PARTITION_SLIDE_SIDES = [
+  { id: "left",  label: "Left Side" },
+  { id: "right", label: "Right Side" },
+] as const;
+export const PARTITION_SLIDE_DIRECTIONS = [
+  { id: "rear",  label: "Slides to Rear" },
+  { id: "front", label: "Slides to Front" },
+] as const;
+
+/** Blank partition (ft) the leaf has to park on, travelling `direction` from `offsetFt`. */
+export const partitionSlideRunFt = (direction: PartitionSlideDirection, offsetFt: number, widthFt: number): number => {
+  const ow = openingWidthOn(widthFt, DOOR_SIZE.widthFt);
+  const off = clampOpeningOffset(offsetFt, widthFt, DOOR_SIZE.widthFt);
+  return direction === "rear" ? off : Math.max(0, widthFt - off - ow);
+};
+/** True when the leaf retracts fully clear of the doorway (run ≥ its own width). */
+export const partitionSlideFits = (direction: PartitionSlideDirection, offsetFt: number, widthFt: number): boolean =>
+  partitionSlideRunFt(direction, offsetFt, widthFt) + 1e-6 >= openingWidthOn(widthFt, DOOR_SIZE.widthFt);
+/** Door offsets (ft from the rear wall) at which the leaf fully retracts travelling `direction`.
+ *  null ⇒ the partition is too short to ever clear the doorway (cabin width < 2 × door width),
+ *  in which case a sliding partition door cannot open fully whichever way it is hung. */
+export const partitionSlideOffsetRange = (
+  direction: PartitionSlideDirection, widthFt: number,
+): { min: number; max: number } | null => {
+  const ow = openingWidthOn(widthFt, DOOR_SIZE.widthFt);
+  const maxOff = maxOpeningOffset(widthFt, DOOR_SIZE.widthFt);
+  const min = direction === "rear" ? ow : 0;
+  const max = direction === "rear" ? maxOff : maxOff - ow;
+  return max + 1e-6 < min ? null : { min, max };
+};
+/** Snap a door offset to the nearest position where the leaf fully retracts. Falls back to the
+ *  plain opening clamp when no such position exists, so the door is still drawn on the wall. */
+export const clampPartitionSlideOffset = (
+  direction: PartitionSlideDirection, offsetFt: number, widthFt: number,
+): number => {
+  const off = clampOpeningOffset(offsetFt, widthFt, DOOR_SIZE.widthFt);
+  const r = partitionSlideOffsetRange(direction, widthFt);
+  return r ? Math.min(Math.max(off, r.min), r.max) : off;
+};
+
 /** e.g. "hinge left, opens out" — for the quote / WhatsApp / PDF. */
 export const doorOpeningLabel = (d: DoorPlacement): string =>
   `hinge ${d.hand ?? "left"}, opens ${d.swing ?? "out"}`;
 export const partitionOpeningLabel = (hinge: PartitionHinge, swing: PartitionSwing): string =>
   `hinge ${hinge === "top" ? "rear" : "front"}, opens into ${swing} room`;
+/** e.g. "right face, slides to rear" — how a sliding partition door opens. */
+export const partitionSlideLabel = (side: PartitionSlideSide, direction: PartitionSlideDirection): string =>
+  `${side} face, slides to ${direction}`;
 
 /** Legacy named window positions (the old toggle-chip model) → side + CENTRE fraction along
  *  that wall. Kept ONLY to migrate saved configs onto the windowPlacements model. */
@@ -609,6 +665,32 @@ export const PARTITION_DOOR_TYPES = [
 ] as const;
 export const partitionDoorTypeLabel = (id: string): string =>
   PARTITION_DOOR_TYPES.find((t) => t.id === id)?.label ?? id;
+
+/** The one-line partition spec, e.g.
+ *    "Partition w/ Sliding Door @ 3' from rear (right face, slides to rear)"
+ *    "Partition w/ Hinged Door @ 2'6" from rear (hinge rear, opens into right room)"
+ *    "Fixed Partition"
+ *  Shared by the WhatsApp/enquiry summary AND the printed PDF spec table so the two can never
+ *  drift — the factory reads whichever reaches it first. */
+export const partitionSpecLabel = (
+  cfg: Pick<CabinConfig,
+    "width" | "partitionDoor" | "partitionDoorType" | "partitionDoorOffset" |
+    "partitionDoorHinge" | "partitionDoorSwing" | "partitionSlideSide" | "partitionSlideDirection">,
+): string => {
+  if (!cfg.partitionDoor) return "Fixed Partition";
+  const sliding = cfg.partitionDoorType === "sliding";
+  const side = cfg.partitionSlideSide ?? "right";
+  const dir = cfg.partitionSlideDirection ?? "rear";
+  const opening = sliding
+    ? partitionSlideLabel(side, dir)
+    : partitionOpeningLabel(cfg.partitionDoorHinge, cfg.partitionDoorSwing);
+  // A leaf with too little blank partition to retract into is a build defect — say so in the
+  // spec rather than letting the factory discover it on site.
+  const tight = sliding && !partitionSlideFits(dir, cfg.partitionDoorOffset, cfg.width)
+    ? ` [WARNING: needs ${formatFeet(openingWidthOn(cfg.width, DOOR_SIZE.widthFt))} clear partition to slide ${dir}, only ${formatFeet(partitionSlideRunFt(dir, cfg.partitionDoorOffset, cfg.width))} available]`
+    : "";
+  return `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear (${opening})${tight}`;
+};
 /** Work-table add-ons. Adding the first one auto-ticks "By Work Table" for plug points;
  *  removing the last one un-ticks it (see the toggleAddon handler). */
 export const TABLE_ADDON_IDS = ["workstation", "manager", "manager-l", "conference"];
@@ -886,10 +968,15 @@ export interface CabinConfig {
    *  measured along the partition — which spans the cabin WIDTH. Clamped so it always fits.
    *  Applies uniformly to all N-1 partitions. */
   partitionDoorOffset: number;
-  /** Partition-door opening: which end of the opening is hinged (rear/front end of the
+  /** HINGED partition-door opening: which end of the opening is hinged (rear/front end of the
    *  partition) and which room the leaf swings into. Applies to all N-1 partitions. */
   partitionDoorHinge: PartitionHinge;
   partitionDoorSwing: PartitionSwing;
+  /** SLIDING partition-door opening: which room's face the leaf hangs on, and which way it
+   *  travels along the partition when it opens. Only meaningful when partitionDoorType is
+   *  "sliding" (a sliding leaf has no hinge and no swing). Applies to all N-1 partitions. */
+  partitionSlideSide: PartitionSlideSide;
+  partitionSlideDirection: PartitionSlideDirection;
   transport: boolean;
   installation: boolean;
   gst: boolean;
@@ -1032,6 +1119,10 @@ export function buildDefaultConfig(productId = PRODUCTS[0].id): CabinConfig {
     // Opens like the original drawing: hinged at the rear end, swinging into the right room.
     partitionDoorHinge: "top",
     partitionDoorSwing: "right",
+    // If the customer switches to a sliding door: leaf on the right room's face, sliding rearward.
+    // (The offset is re-snapped to a position the leaf can retract into on that switch.)
+    partitionSlideSide: "right",
+    partitionSlideDirection: "rear",
     transport: false,
     installation: false,
     gst: true,
@@ -1704,7 +1795,7 @@ export function summariseConfig(cfg: CabinConfig, est: Estimate): string {
     isToilet ? `Window: Not Applicable (toilet cabin)` : (isStorage && cfg.windowQty === 0 ? `Window: Not Applicable (add if required)` : ``),
     `Electrical: ${elec}`,
     cfg.roomCount > 1
-      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => { const p = cfg.roomPurposes?.[i]; const nm = p && p !== "other" ? ` ${roomPurposeLabel(p)}` : ""; return `R${i + 1} ${Math.round(l)}ft${nm}`; }).join(" · ")}) — ${cfg.roomCount - 1} × ${cfg.partitionDoor ? `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear${cfg.partitionDoorType === "hinged" ? ` (${partitionOpeningLabel(cfg.partitionDoorHinge, cfg.partitionDoorSwing)})` : ""}` : "Fixed Partition"}`
+      ? `Rooms: ${cfg.roomCount} (${cfg.roomLengths.map((l, i) => { const p = cfg.roomPurposes?.[i]; const nm = p && p !== "other" ? ` ${roomPurposeLabel(p)}` : ""; return `R${i + 1} ${Math.round(l)}ft${nm}`; }).join(" · ")}) — ${cfg.roomCount - 1} × ${partitionSpecLabel(cfg)}`
       : `Rooms: Single`,
     `Add-ons: ${furn}`,
     isToilet ? `` : `Furniture Position: ${furniturePositionLabel(cfg.furniturePosition)}`,

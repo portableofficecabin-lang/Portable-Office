@@ -268,7 +268,9 @@ export default function CabinQuotation() {
       // anything taller than one A4 page simply ran off the bottom and was lost.
       const r = await exportSheetToPdf(printRef.current, {
         filename: quotationNumber || "Quotation",
-        breakSelector: "table, thead, tbody > tr, h1, h2, h3",
+        // `thead` is NOT a boundary — cutting at its bottom edge orphans the column headers at the
+        // foot of a page and continues the rows, headerless, on the next one.
+        breakSelector: "table, tbody > tr, h1, h2, h3",
       });
       toast({
         title: "Quotation PDF downloaded",
@@ -413,7 +415,17 @@ export default function CabinQuotation() {
 
         <TabsContent value="preview">
           <Card className="p-8 max-w-4xl mx-auto bg-white text-black">
-            <div ref={printRef} className="space-y-6">
+            {/* `light` is LOAD-BEARING, not cosmetic. The app runs <html class="dark"> (and index.css
+                binds the dark palette on :root too), and `bg-white`/`text-black` above are literal
+                utilities — they do NOT re-bind the --foreground / --muted / --primary custom
+                properties. So the plan-view SVG below, which paints with hsl(var(--…)) and
+                fill-foreground, resolved against the DARK palette: a near-black --muted floor fill
+                and near-WHITE dimension lines, text and arrowheads on white paper. That was wrong on
+                screen and, because the PDF exporter faithfully flattens whatever palette is in scope,
+                it was baked into the exported quotation too. `light` re-binds the tokens for this
+                subtree — dark navy ink, pale floor, amber openings. (exportSheetToPdf also forces the
+                light palette during capture, so the PDF is safe either way; this fixes the preview.) */}
+            <div ref={printRef} className="light space-y-6">
               <div className="flex justify-between items-start border-b-2 border-primary pb-4">
                 <div>
                   <h1 className="text-2xl font-bold text-primary">Portable Office Cabin</h1>
