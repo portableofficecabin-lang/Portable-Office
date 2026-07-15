@@ -392,7 +392,20 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
-                  <Button type="submit" variant="accent" size="lg" className="w-full mt-6" disabled={loading || !totals.payable}>
+                  {/* Override the accent variant's offset drop-shadow (0 10px 30px -10px …) with a
+                      CENTERED glow. The default shadow is pushed 10px down, so on this dark summary
+                      card the orange halo bunches under the button and reads as a misaligned layer.
+                      Zero vertical offset → an even halo all around the pill.
+                      The override is `!`-important: tailwind-merge can't dedupe `shadow-accent`
+                      (it reads the theme's `accent` token as a shadow COLOUR, not a box-shadow), so
+                      without `!` both shadows would apply and CSS source order would decide. */}
+                  <Button
+                    type="submit"
+                    variant="accent"
+                    size="lg"
+                    className="w-full mt-6 !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
+                    disabled={loading || !totals.payable}
+                  >
                     <Lock className="mr-2 h-4 w-4" />
                     {loading
                       ? "Processing..."

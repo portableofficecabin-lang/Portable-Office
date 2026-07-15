@@ -36,6 +36,47 @@ import { getBestProductImage } from "@/data/productImages";
 
 const SITE_URL = "https://portableofficecabin.com";
 
+/**
+ * ── GMC IMAGE POLICY ────────────────────────────────────────────────────────────────────────────
+ * Result of a visual inspection of EVERY image this feed submits (rendered from the live server and
+ * eyeballed one by one, 2026-07). Google disapproves a product image that carries baked-in
+ * promotional / brand TEXT or a logo over the product — watermarks, added banners, "SITE OFFICE",
+ * "MODU-L", etc. (Real, incidental container ID markings on a genuine container photo are NOT a
+ * violation and are left alone; CSS "Featured" badges are not in the image file and never reach
+ * Google.)
+ *
+ * Two levers, both feed-only — NOTHING here touches the product pages, the gallery, the JSON-LD or
+ * the on-disk image files:
+ *   • `drop`        — remove specific NON-COMPLIANT images (matched by filename fragment) from BOTH
+ *                     the primary and the additional slots. If a CLEAN image remains it becomes the
+ *                     primary automatically (galleryImagesFor preserves order), which is exactly the
+ *                     "use the clean gallery image as the Merchant image" rule.
+ *   • `blockReason` — the product has NO clean image at all, so it is TEMPORARILY EXCLUDED from the
+ *                     feed with this reason logged. The page stays live and indexable; only the
+ *                     Shopping offer pauses until clean photography is supplied. Delete the entry to
+ *                     re-enable once a compliant image exists.
+ */
+const FEED_IMAGE_POLICY: Record<string, { drop?: string[]; blockReason?: string }> = {
+  // 4 of 5 exterior shots carry a baked-in "MS PORTABLE CABIN" signboard; the interior is clean and
+  // survives as the sole feed image.
+  "POC-PC-MSPC": {
+    drop: [
+      "ms-portable-cabin-front",
+      "ms-portable-cabin-side",
+      "ms-portable-cabin-back",
+      "ms-portable-cabin-angle",
+    ],
+  },
+  // Sole image has "SITE OFFICE" text baked onto the cabin — no clean alternative in the gallery.
+  "POC-SOC-CSPO": { blockReason: "GMC image replacement required — only image has 'SITE OFFICE' text baked in" },
+  // Sole image carries an embedded 'MST' brand logo on the cabin — no clean alternative.
+  "POC-CO-MSCO": { blockReason: "GMC image replacement required — only image has an embedded 'MST' logo" },
+  // Sole image has 'SECURITY' text + a small logo baked on the guard cabin — no clean alternative.
+  "POC-SC-SECAB": { blockReason: "GMC image replacement required — only image has 'SECURITY' text + a logo baked in" },
+  // All five gallery images carry a baked-in 'MODU-L' / 'UNIT 0x' brand wordmark — no clean image.
+  "POC-VIP-40": { blockReason: "GMC image replacement required — every gallery image carries a 'MODU-L' brand wordmark" },
+};
+
 /** Merchant Center hard-rejects a title over 150 characters. feedTitle is written to fit. */
 const MAX_TITLE_LENGTH = 150;
 
@@ -276,6 +317,41 @@ function shippingElements(): string {
   return out.join("\n");
 }
 
+/**
+ * OPTIONAL Merchant Center attributes built ONLY from real, structured per-product data — never
+ * invented, never promotional:
+ *   • <g:product_detail>    — one (section, name, value) triple per row of the product's own
+ *                             `specifications` table (Dimensions, Wall Panels, Flooring, Electrical,
+ *                             Windows, Warranty, …). This is the exact spec grid the page renders.
+ *   • <g:product_highlight> — the same specs phrased as short "Label: Value" highlights (Google caps
+ *                             each at 150 chars). Drawn from `specifications`, NOT from `features`,
+ *                             because features carry marketing tone ("handles monsoon heat well")
+ *                             which Merchant Center disapproves in this field.
+ * A product whose specifications table is empty simply gets neither block.
+ */
+function specAttributes(product: Product): string {
+  const specs = (product.specifications || []).filter((s) => s.label?.trim() && s.value?.trim());
+  if (specs.length === 0) return "";
+
+  const details = specs
+    .map(
+      (s) => `      <g:product_detail>
+        <g:section_name>Specifications</g:section_name>
+        <g:attribute_name>${xmlEscape(trimToWordBoundary(s.label.trim(), 140))}</g:attribute_name>
+        <g:attribute_value>${xmlEscape(trimToWordBoundary(s.value.trim(), 1000))}</g:attribute_value>
+      </g:product_detail>`,
+    )
+    .join("\n");
+
+  // Up to 6 highlights, each a factual "Label: Value" spec, deduped and length-capped.
+  const highlights = specs
+    .slice(0, 6)
+    .map((s) => `      <g:product_highlight>${xmlEscape(trimToWordBoundary(`${s.label.trim()}: ${s.value.trim()}`, 150))}</g:product_highlight>`)
+    .join("\n");
+
+  return `${highlights}\n${details}\n`;
+}
+
 function buildItem(commerce: ProductCommerce, product: Product, images: string[]): string {
   const [primaryImage, ...additionalImages] = images;
 
@@ -322,7 +398,7 @@ ${salePrice ? `      <g:sale_price>${salePrice}</g:sale_price>\n` : ""}      <g:
       <g:condition>new</g:condition>
       <g:product_type>${xmlEscape(commerce.productType)}</g:product_type>
       <g:google_product_category>${xmlEscape(commerce.googleProductCategory)}</g:google_product_category>
-      <g:min_handling_time>${DISPATCH_WORKING_DAYS.min}</g:min_handling_time>
+${specAttributes(product)}      <g:min_handling_time>${DISPATCH_WORKING_DAYS.min}</g:min_handling_time>
       <g:max_handling_time>${DISPATCH_WORKING_DAYS.max}</g:max_handling_time>
 ${shippingElements()}
     </item>`;
@@ -347,9 +423,38 @@ function generateFeed(): { xml: string; count: number } {
       console.error(`[merchant-feed] SKIP ${commerce.sku}: duplicate g:id — a duplicate id rejects the entire feed`);
       continue;
     }
-    const images = galleryImagesFor(product);
+
+    // GMC IMAGE POLICY — a product with no clean image is excluded outright (see FEED_IMAGE_POLICY).
+    const policy = FEED_IMAGE_POLICY[commerce.sku];
+    if (policy?.blockReason) {
+      console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: ${policy.blockReason}`);
+      continue;
+    }
+
+    // A zero / negative / non-finite price is never a valid Shopping offer — guard rather than emit
+    // a "0 INR" item. (feedEligible already requires priceConfirmed, so this only ever catches a
+    // data-entry slip like basePrice: 0.)
+    const payable = sellPrice(commerce.basePrice);
+    if (!Number.isFinite(payable) || payable <= 0) {
+      console.error(`[merchant-feed] SKIP ${commerce.sku}: price resolves to ${payable} — a zero/invalid price cannot be fed`);
+      continue;
+    }
+
+    // The landing URL must be a real absolute https URL, or the item is rejected.
+    const link = `${SITE_URL}${getProductDetailPath(product)}`;
+    if (!/^https:\/\/[^\s]+$/.test(link)) {
+      console.error(`[merchant-feed] SKIP ${commerce.sku}: invalid landing URL "${link}"`);
+      continue;
+    }
+
+    let images = galleryImagesFor(product);
+    // Drop any individually non-compliant image (baked-in text/logo). A surviving clean image keeps
+    // its gallery order, so the first clean one becomes the primary automatically.
+    if (policy?.drop?.length) {
+      images = images.filter((url) => !policy.drop!.some((frag) => url.includes(frag)));
+    }
     if (images.length === 0) {
-      console.error(`[merchant-feed] SKIP ${commerce.sku}: no usable image; g:image_link is required`);
+      console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: GMC image replacement required — no compliant image left after policy filtering`);
       continue;
     }
     seenIds.add(commerce.sku);

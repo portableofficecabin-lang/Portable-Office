@@ -255,7 +255,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Standard Site Office Container 20ft x 8ft Corten Steel for Construction Sites | Portable Office Cabin",
     size: "20ft x 8ft x 8.5ft (160 sq ft)", material: "Corten Steel, 50mm Rockwool", bestFor: "Construction Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Site Office Containers",
-    note: "NEEDS PRICE: ₹28,00,000 for a 20ft site office container is ~10x its peers (POC-SOC-MFR is ₹2,80,000). Almost certainly a missing decimal.",
+    note: "NEEDS CONFIRMED GMC PRICE — ₹28,00,000 for a 20ft site office container is ~10x its peers (POC-SOC-MFR is ₹2,80,000). Almost certainly a missing decimal.",
   },
   {
     id: "7", sku: "POC-PC-40BH", basePrice: 2800000, priceConfirmed: false, kind: "product", inStock: true,
@@ -263,7 +263,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Portable Cabin 40ft Bunkhouse with Bathroom for Worker Accommodation | Portable Office Cabin",
     size: "40ft x 10ft x 9.5ft", material: "MS Frame with Insulated Panels", bestFor: "Worker Accommodation (8–12)",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
-    note: "NEEDS PRICE: ₹28,00,000 vs a portable-cabins median of ₹2,85,000. Same suspected missing decimal.",
+    note: "NEEDS CONFIRMED GMC PRICE — ₹28,00,000 vs a portable-cabins median of ₹2,85,000. Same suspected missing decimal.",
   },
   {
     id: "3", sku: "POC-CO-40MD", basePrice: 1850000, priceConfirmed: false, kind: "product", inStock: true,
@@ -271,7 +271,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Modern Container Office 40ft x 8ft Insulated for Workspaces | Portable Office Cabin",
     size: "40ft x 8ft x 9.5ft (320 sq ft)", material: "Corten Steel Container Shell", bestFor: "Modern Workspaces",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
-    note: "NEEDS PRICE: ContainerOfficeContent.tsx tells visitors a 40ft container office is ₹4,00,000–₹7,25,000. ALSO strip that page's price ranges before enabling.",
+    note: "NEEDS CONFIRMED GMC PRICE — ContainerOfficeContent.tsx tells visitors a 40ft container office is ₹4,00,000–₹7,25,000. ALSO strip that page's price ranges before enabling.",
   },
   {
     id: "5", sku: "POC-PT-4UT", basePrice: 900000, priceConfirmed: false, kind: "product", inStock: true,
@@ -279,7 +279,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Portable Toilet Block 20ft 4-Unit for Construction Sites & Events | Portable Office Cabin",
     size: "20ft x 8ft x 8ft", material: "MS Steel with Ceramic Sanitary Fittings", bestFor: "Construction Sites & Events",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Toilet Cabins",
-    note: "NEEDS PRICE: PortableToiletContent.tsx quotes ₹8,500–₹12,000 per unit, so a 4-unit block should be far below ₹9,00,000. ALSO strip that page's price ranges before enabling.",
+    note: "NEEDS CONFIRMED GMC PRICE — PortableToiletContent.tsx quotes ₹8,500–₹12,000 per unit, so a 4-unit block should be far below ₹9,00,000. ALSO strip that page's price ranges before enabling.",
   },
   {
     id: "6", sku: "POC-SC-6GD", basePrice: 480000, priceConfirmed: false, kind: "product", inStock: true,
@@ -287,7 +287,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Guard Security Cabin 20ft x 10ft with 360 Degree Visibility for Gate Posts | Portable Office Cabin",
     size: "20ft x 10ft x 8ft", material: "MS Steel with Toughened Glass", bestFor: "Gate & Toll Posts",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Security Cabins",
-    note: "NEEDS PRICE: SecurityCabinContent.tsx quotes ₹90,000–₹1,20,000 per security cabin.",
+    note: "NEEDS CONFIRMED GMC PRICE — SecurityCabinContent.tsx quotes ₹90,000–₹1,20,000 per security cabin.",
   },
   {
     id: "9", sku: "POC-PC-PORTA", basePrice: 1800000, priceConfirmed: false, kind: "product", inStock: true,
@@ -295,7 +295,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Porta Cabin 40ft x 12ft BIS Certified MS Steel for Offices & Accommodation | Portable Office Cabin",
     size: "40ft x 12ft x 9ft", material: "BIS-Certified MS Steel (ISMC, RHS, SHS)", bestFor: "Offices & Accommodation",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
-    note: "NEEDS PRICE: PortaCabinContent.tsx tops out at '₹8 lakh+ for fully furnished 40×10 ft'. ALSO strip that page's price ranges before enabling.",
+    note: "NEEDS CONFIRMED GMC PRICE — PortaCabinContent.tsx tops out at '₹8 lakh+ for fully furnished 40×10 ft'. ALSO strip that page's price ranges before enabling.",
   },
   {
     id: "10", sku: "POC-CO-GEN", basePrice: 1200000, priceConfirmed: false, kind: "product", inStock: true,
@@ -303,7 +303,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Container Office 25ft x 14ft High-Tensile MS Steel for Project Sites | Portable Office Cabin",
     size: "25ft x 14ft x 9ft (160–320+ sq ft)", material: "High-Tensile MS / Corten Steel", bestFor: "Project Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
-    note: "NEEDS PRICE: ContainerOfficeContent.tsx quotes ₹4,00,000–₹7,25,000 for a 40ft unit.",
+    note: "NEEDS CONFIRMED GMC PRICE — ContainerOfficeContent.tsx quotes ₹4,00,000–₹7,25,000 for a 40ft unit.",
   },
 
   // ═════════ CUSTOM / PROJECT BUILDS — genuinely quote-only, never fed ═════════
