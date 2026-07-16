@@ -29,7 +29,8 @@
 
 import { NextResponse } from "next/server";
 import { createClient as createSupabaseServerClient } from "@/lib/supabase/server";
-import { createClient as createSupabaseServiceClient } from "@supabase/supabase-js";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { missingPaymentEnv, readPaymentEnv, misconfiguredMessage } from "@/lib/razorpay/env";
 import { verifyCheckoutSignature } from "@/lib/razorpay/signature";
 
 export const runtime = "nodejs";
@@ -41,25 +42,14 @@ const RAZORPAY_PAYMENTS_URL = "https://api.razorpay.com/v1/payments";
 const expectedPaise = (totalAmountRupees: number): number => Math.round(totalAmountRupees * 100);
 
 export async function POST(request: Request) {
-  const keyId = process.env.RAZORPAY_KEY_ID;
-  const keySecret = process.env.RAZORPAY_KEY_SECRET;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  const missing = [
-    !keyId && "RAZORPAY_KEY_ID",
-    !keySecret && "RAZORPAY_KEY_SECRET",
-    !supabaseUrl && "NEXT_PUBLIC_SUPABASE_URL",
-    !serviceKey && "SUPABASE_SERVICE_ROLE_KEY",
-  ].filter(Boolean);
-
+  // Names only — a value is never logged or returned. See lib/razorpay/env.ts.
+  const missing = missingPaymentEnv();
   if (missing.length > 0) {
     console.error(`[razorpay/verify] missing env: ${missing.join(", ")}`);
-    return NextResponse.json(
-      { error: `Payments are not configured on this server (missing: ${missing.join(", ")}).` },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: misconfiguredMessage(missing) }, { status: 500 });
   }
+  // Non-null after the check above.
+  const { keyId, keySecret, supabaseUrl, serviceKey } = readPaymentEnv()!;
 
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -84,9 +74,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Incomplete payment confirmation." }, { status: 400 });
   }
 
-  const admin = createSupabaseServiceClient(supabaseUrl!, serviceKey!, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  const admin = createSupabaseAdminClient(supabaseUrl, serviceKey);
 
   // ── 1. Load OUR order FIRST — the id we sign with must come from our record, not the browser ──
   const { data: order, error: orderErr } = await admin

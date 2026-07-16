@@ -25,24 +25,15 @@
  */
 
 import { NextResponse } from "next/server";
-import { createClient as createSupabaseServiceClient } from "@supabase/supabase-js";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { missingWebhookEnv, readWebhookEnv } from "@/lib/razorpay/env";
 import { verifyWebhookSignature } from "@/lib/razorpay/signature";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/**
- * Service-role client. Left UNTYPED (no <Database> generic) on purpose — same as
- * app/api/razorpay/order/route.ts: the razorpay_* columns and the razorpay_webhook_events
- * table are added by migrations that are not yet in the generated supabase types, so a typed
- * client would reject them. The 3-arg overload infers an `any` schema, which is what we want here.
- */
-function serviceClient(url: string, key: string) {
-  return createSupabaseServiceClient(url, key, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-}
-type ServiceClient = ReturnType<typeof serviceClient>;
+/** The shared service-role client's type — see lib/supabase/admin.ts for why it is untyped. */
+type ServiceClient = ReturnType<typeof createSupabaseAdminClient>;
 
 /** Rupees stored on the order → the integer paise Razorpay charges. Mirrors computeTotals(). */
 const expectedPaise = (totalAmountRupees: number): number => Math.round(totalAmountRupees * 100);
@@ -116,27 +107,23 @@ async function findOrder(admin: ServiceClient, razorpayOrderId: string | undefin
 }
 
 export async function POST(request: Request) {
-  const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  const missing = [
-    !webhookSecret && "RAZORPAY_WEBHOOK_SECRET",
-    !supabaseUrl && "NEXT_PUBLIC_SUPABASE_URL",
-    !serviceKey && "SUPABASE_SERVICE_ROLE_KEY",
-  ].filter(Boolean);
-
+  // Names only — a value is never logged or returned. See lib/razorpay/env.ts.
+  const missing = missingWebhookEnv();
   if (missing.length > 0) {
     console.error(`[razorpay/webhook] missing env: ${missing.join(", ")}`);
     // 500 → Razorpay will retry once the server is configured. Never acknowledge blindly.
+    // The response stays generic: this endpoint is public and unauthenticated, so unlike the
+    // customer-facing checkout it gets no detail about what is misconfigured.
     return NextResponse.json({ error: "Webhook not configured." }, { status: 500 });
   }
+  // Non-null after the check above.
+  const { supabaseUrl, serviceKey, webhookSecret } = readWebhookEnv()!;
 
   // ── 1. RAW body, exactly as signed. Do NOT parse before verifying. ───────────────
   const raw = await request.text();
   const signature = request.headers.get("x-razorpay-signature") ?? "";
 
-  if (!verifyWebhookSignature({ rawBody: raw, signature, webhookSecret: webhookSecret! })) {
+  if (!verifyWebhookSignature({ rawBody: raw, signature, webhookSecret })) {
     // No ids logged — an unauthenticated caller does not get to write to our logs, and we
     // do not echo the signature. This is the ONLY place we return 400.
     console.error("[razorpay/webhook] invalid signature — rejected");
@@ -165,7 +152,7 @@ export async function POST(request: Request) {
     request.headers.get("x-razorpay-event-id") ??
     `${eventType}:${paymentId ?? razorpayOrderId ?? "na"}`;
 
-  const admin = serviceClient(supabaseUrl!, serviceKey!);
+  const admin = createSupabaseAdminClient(supabaseUrl, serviceKey);
 
   // ── 3. CLAIM the event. A duplicate delivery loses this insert and is acknowledged. ──
   const { data: claim, error: claimErr } = await admin
