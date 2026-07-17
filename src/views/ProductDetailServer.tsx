@@ -448,18 +448,18 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "portable-cabins" && slug === "labor-hutments" && <div className="mt-16"><LaborHutmentsContent /></div>}
           {cs === "portable-cabins" && slug === "cabin-portable" && <div className="mt-16"><CabinPortableContent /></div>}
           {isStaticProduct && cs === "portable-cabins" && !["porta-cabin","ms-portable-cabin","office-portable-cabin","prefabricated-portable-cabin","prefabricated-labour-hutments-staff-accommodation","prefab-porta-cabin","labor-hutments","cabin-portable"].includes(slug) && <div className="mt-16"><PortableCabinContent /></div>}
-          {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent /></div>}
+          {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}
-          {isStaticProduct && cs === "site-office-containers" && !["construction-site-portable-office","site-office-container-manufacturers","steel-portable-office-container"].includes(slug) && <div className="mt-16"><SiteOfficeContainerContent /></div>}
+          {isStaticProduct && cs === "site-office-containers" && !["construction-site-portable-office","site-office-container-manufacturers","steel-portable-office-container"].includes(slug) && <div className="mt-16"><SiteOfficeContainerContent offer={contentOffer} /></div>}
           {cs === "container-offices" && slug === "container-office" && <div className="mt-16"><ContainerOfficeGenericContent /></div>}
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}
           {cs === "container-offices" && slug === "vip-container-office" && <div className="mt-16"><VipContainerOfficeContent /></div>}
           {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent offer={contentOffer} /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-for-sale" && <div className="mt-16"><ShippingContainerForSaleContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-for-sale" && <div className="mt-16"><ShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent offer={contentOffer} /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-rental" && <div className="mt-16"><ShippingContainerRentalContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-kormangala" && <div className="mt-16"><ShippingContainerKormangalaContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-krishnagiri" && <div className="mt-16"><ShippingContainerKrishnagiriContent /></div>}

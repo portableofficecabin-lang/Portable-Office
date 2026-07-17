@@ -1,7 +1,15 @@
 import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Factory, GraduationCap, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Zap, Package, Settings, Shield, Thermometer, MapPin, Calendar, IndianRupee, ArrowRightLeft, HelpCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
-export function SiteOfficeContainerContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (isPurchasable() — passed in by
+ * ProductDetailServer). Every generic ₹ figure below — the "Indicative Price Ranges (2025)" table
+ * (₹2.5-3.5 lakh … ₹6-8 lakh), its "indicative ranges" footnote and the per-sq-ft pricing framing —
+ * renders ONLY when `offer` is absent, i.e. on quotation-only pages where an indicative range cannot
+ * be mistaken for a chargeable price. On a purchasable page the one number shown is the real offer.
+ */
+export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       {/* Hero Introduction */}
@@ -54,7 +62,9 @@ export function SiteOfficeContainerContent() {
           {[
             { icon: Calendar, title: "Quick Installation", desc: "5-7 days after order confirmation" },
             { icon: ArrowRightLeft, title: "Easy Relocation", desc: "Minimal disassembly between project sites" },
-            { icon: IndianRupee, title: "Predictable Cost", desc: "Per sq ft pricing with no hidden civil work expenses" },
+            /* Purchasable SKU: "per sq ft pricing" is a rate-based framing that contradicts the
+               fixed checkout price — the offer branch keeps the argument, drops the rate model. */
+            { icon: IndianRupee, title: "Predictable Cost", desc: offer ? "One fixed price with no hidden civil work expenses" : "Per sq ft pricing with no hidden civil work expenses" },
             { icon: Building2, title: "Minimal Foundation", desc: "Simple concrete blocks suffice" },
             { icon: ShieldCheck, title: "Factory-Built Quality", desc: "Better quality control under controlled conditions" },
             { icon: Package, title: "Reusable", desc: "Across 3-5 projects with proper maintenance" },
@@ -395,45 +405,68 @@ export function SiteOfficeContainerContent() {
       {/* Pricing Guide */}
       <section>
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-6">
-          Pricing Guide and Cost Factors in 2025
+          {offer ? "Price and Cost Factors" : "Pricing Guide and Cost Factors in 2025"}
         </h2>
-        <p className="text-muted-foreground leading-relaxed mb-6">
-          Container office cost in India is typically quoted per square foot or per unit, with rates varying based on specifications, steel prices, and current market conditions. As a manufacturer engaged in this field for years, we emphasize transparent pricing with itemized quotations.
-        </p>
+        {offer ? (
+          /* Purchasable SKU: the same transparency argument, minus the "quoted per square foot,
+             rates varying" framing that would sit on the page contradicting the fixed offer. */
+          <p className="text-muted-foreground leading-relaxed mb-6">
+            This configuration is sold at one fixed, GST-inclusive price — shown below — so there is
+            no per-square-foot estimate to interpret. As a manufacturer engaged in this field for
+            years, we emphasize transparent pricing, with site-specific items such as transport and
+            installation quoted separately.
+          </p>
+        ) : (
+          <p className="text-muted-foreground leading-relaxed mb-6">
+            Container office cost in India is typically quoted per square foot or per unit, with rates varying based on specifications, steel prices, and current market conditions. As a manufacturer engaged in this field for years, we emphasize transparent pricing with itemized quotations.
+          </p>
+        )}
 
-        {/* Pricing Table */}
-        <div className="bg-card rounded-xl shadow-card overflow-hidden mb-8">
-          <div className="px-6 py-4 bg-accent/10 border-b border-border">
-            <h3 className="font-semibold text-foreground">Indicative Price Ranges (2025)</h3>
+        {offer ? (
+          /* Purchasable SKU: the indicative 2025 range table (₹2.5-3.5 lakh … ₹6-8 lakh) and its
+             "wait for a formal quotation" footnote are replaced by the one real figure — a range
+             row beside the fixed checkout price is exactly the landing-page contradiction the
+             offer prop exists to prevent. */
+          <div className="mb-8">
+            <FixedPriceCallout offer={offer} />
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Configuration</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Approximate Range</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { config: "Basic 20 ft office (unfurnished)", price: "₹2.5-3.5 lakh" },
-                  { config: "Standard 20 ft with AC and basic furniture", price: "₹3.5-4.5 lakh" },
-                  { config: "Furnished 40 ft executive office", price: "₹6-8 lakh" },
-                  { config: "20 ft with integrated toilet and pantry", price: "₹4.5-6 lakh" },
-                ].map((row, idx) => (
-                  <tr key={idx} className={idx % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                    <td className="px-6 py-3 text-sm text-foreground">{row.config}</td>
-                    <td className="px-6 py-3 text-sm font-semibold text-accent">{row.price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        ) : (
+          <>
+            {/* Pricing Table */}
+            <div className="bg-card rounded-xl shadow-card overflow-hidden mb-8">
+              <div className="px-6 py-4 bg-accent/10 border-b border-border">
+                <h3 className="font-semibold text-foreground">Indicative Price Ranges (2025)</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Configuration</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Approximate Range</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { config: "Basic 20 ft office (unfurnished)", price: "₹2.5-3.5 lakh" },
+                      { config: "Standard 20 ft with AC and basic furniture", price: "₹3.5-4.5 lakh" },
+                      { config: "Furnished 40 ft executive office", price: "₹6-8 lakh" },
+                      { config: "20 ft with integrated toilet and pantry", price: "₹4.5-6 lakh" },
+                    ].map((row, idx) => (
+                      <tr key={idx} className={idx % 2 === 0 ? "bg-muted/30" : "bg-card"}>
+                        <td className="px-6 py-3 text-sm text-foreground">{row.config}</td>
+                        <td className="px-6 py-3 text-sm font-semibold text-accent">{row.price}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-        <p className="text-xs text-muted-foreground mb-6 italic">
-          Note: These are indicative ranges. Please wait for a formal quotation based on your specific requirements.
-        </p>
+            <p className="text-xs text-muted-foreground mb-6 italic">
+              Note: These are indicative ranges. Please wait for a formal quotation based on your specific requirements.
+            </p>
+          </>
+        )}
 
         <div className="grid sm:grid-cols-2 gap-8">
           <div>

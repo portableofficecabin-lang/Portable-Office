@@ -4,6 +4,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BadgeIndianRupee, CheckCircle2, MapPin, Package, Settings, ShieldCheck, Truck, Wrench } from "lucide-react";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
 const highlights = [
   {
@@ -109,7 +110,16 @@ const whyChoose = [
 
 const cityCoverage = ["Mumbai", "Chennai", "Delhi", "Bengaluru", "Pune", "Hyderabad", "Ahmedabad"];
 
-export function ShippingContainerForSaleContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (passed in by
+ * ProductDetailServer from isPurchasable()). Every generic ₹ figure in this guide — the 2024
+ * indicative pricing table (₹1,40,000 … ₹4,50,000+) and the "prices are indicative" FAQ — renders
+ * ONLY when `offer` is absent, i.e. on quotation-only pages where an indicative range cannot be
+ * mistaken for a chargeable price. On a purchasable page the one number shown is the real offer —
+ * a range beside a fixed checkout price is the landing-page contradiction that got the Merchant
+ * Center account suspended.
+ */
+export function ShippingContainerForSaleContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       <section className="space-y-8">
@@ -236,30 +246,41 @@ export function ShippingContainerForSaleContent() {
 
       <section className="space-y-6">
         <div>
-          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">Standard sizes, specifications, and typical pricing in 2024</h3>
-          <p className="text-muted-foreground">
-            Exact prices vary with steel rates, transport distance, condition, and customization, but these figures provide realistic planning references.
-          </p>
+          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">
+            {offer ? "Standard sizes, specifications & price" : "Standard sizes, specifications, and typical pricing in 2024"}
+          </h3>
+          {!offer && (
+            <p className="text-muted-foreground">
+              Exact prices vary with steel rates, transport distance, condition, and customization, but these figures provide realistic planning references.
+            </p>
+          )}
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Container Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Indicative Pricing (2024)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingRows.map(([type, price], index) => (
-                <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 text-foreground">{type}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{price}</td>
+        {offer ? (
+          /* Purchasable SKU: the 2024 indicative range table is replaced by the one real figure —
+             a "₹1,40,000 – ₹1,80,000" row beside a fixed checkout price is exactly the
+             landing-page contradiction the offer prop exists to prevent. */
+          <FixedPriceCallout offer={offer} />
+        ) : (
+          <div className="overflow-hidden rounded-3xl border border-border bg-card">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-accent/10">
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Container Type</th>
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Indicative Pricing (2024)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {pricingRows.map(([type, price], index) => (
+                  <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
+                    <td className="px-5 py-4 text-foreground">{type}</td>
+                    <td className="px-5 py-4 text-muted-foreground">{price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="overflow-hidden rounded-3xl border border-border bg-card">
           <table className="w-full text-sm">
@@ -289,7 +310,11 @@ export function ShippingContainerForSaleContent() {
         </div>
 
         <p className="text-sm text-muted-foreground">
-          All prices are indicative and subject to final confirmation. Detailed quotations include specifications, delivery charges, and taxes.
+          {offer
+            ? /* Purchasable SKU: "prices are indicative and subject to final confirmation" would
+                 contradict the fixed, GST-inclusive amount charged at checkout. */
+              "Specifications above are standard ISO reference figures. Transport and installation are calculated separately by delivery pincode at checkout."
+            : "All prices are indicative and subject to final confirmation. Detailed quotations include specifications, delivery charges, and taxes."}
         </p>
       </section>
 
@@ -345,12 +370,17 @@ export function ShippingContainerForSaleContent() {
       <section className="rounded-3xl border border-border bg-card p-8 shadow-card">
         <h3 className="mb-4 font-display text-2xl font-bold text-foreground">Frequently asked questions</h3>
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="pricing">
-            <AccordionTrigger>Are the listed container prices final?</AccordionTrigger>
-            <AccordionContent>
-              No. Prices are indicative references only and vary by container grade, age, condition, city of delivery, transport distance, and requested modifications.
-            </AccordionContent>
-          </AccordionItem>
+          {/* The indicative-pricing FAQ renders only on quotation-only pages — on a purchasable
+              page "prices are indicative references only" would sit beside, and contradict, the
+              fixed offer price shown above. */}
+          {!offer && (
+            <AccordionItem value="pricing">
+              <AccordionTrigger>Are the listed container prices final?</AccordionTrigger>
+              <AccordionContent>
+                No. Prices are indicative references only and vary by container grade, age, condition, city of delivery, transport distance, and requested modifications.
+              </AccordionContent>
+            </AccordionItem>
+          )}
           <AccordionItem value="delivery">
             <AccordionTrigger>Do you handle delivery and installation?</AccordionTrigger>
             <AccordionContent>

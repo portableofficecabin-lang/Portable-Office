@@ -33,7 +33,10 @@ const INSIGHTS: Record<string, InsightContent> = {
         heading: "The 50mm PUF panel decision — and when we recommend going to 75mm",
         paragraphs: [
           "Our standard build uses 50mm polyurethane foam (PUF) sandwich panels with a density of 40 kg per cubic metre. For most of South India and central Maharashtra, this is the sweet spot — it keeps internal temperature roughly 6 to 8 degrees Celsius below outside ambient with a single 1.5-ton AC running.",
-          "We suggest the 75mm upgrade only when the cabin is going to a coastal location like Mangalore, Visakhapatnam or Kandla, or when the customer plans to keep server equipment inside. The thicker panel adds about ₹18,000–₹22,000 to the base price but reduces AC load by roughly 20 percent over a year of use.",
+          // Number-free on purpose: an "adds ₹18,000–₹22,000" upsell figure beside a fixed
+          // GST-inclusive offer price reads as a second price the checkout never charges — the
+          // add-on is quoted in writing when a customer asks for the upgrade.
+          "We suggest the 75mm upgrade only when the cabin is going to a coastal location like Mangalore, Visakhapatnam or Kandla, or when the customer plans to keep server equipment inside. The thicker panel adds a modest premium to the base price — quoted with your order — but reduces AC load by roughly 20 percent over a year of use.",
         ],
         checklist: [
           "50mm panel: standard projects, inland sites, single-shift use",

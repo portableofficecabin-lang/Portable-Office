@@ -165,10 +165,17 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
+    /**
+     * SIZE PINNED BY THE OWNER (2026-07): this listing is the 15ft x 10ft configuration at the
+     * confirmed ₹2,40,000 ex-GST → ₹2,83,200 incl. GST. It previously said "Custom sizes" — a
+     * fixed-price offer cannot describe an unbounded size range (the id-10 ambiguity), and its
+     * products.ts spec table carried a "₹1,40,000 to ₹3,80,000+" Price Range chip that contradicted
+     * the checkout price (removed the same day). Other sizes remain available on quotation.
+     */
     id: "20", sku: "POC-CO-MSCO", basePrice: 240000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "MS Container Office Cabin",
-    feedTitle: "MS Container Office Cabin ISMB Frame Insulated for Site Offices | Portable Office Cabin",
-    size: "Custom sizes", material: "Heavy-Duty MS ISMB / ISMC Sections", bestFor: "Site Offices",
+    feedTitle: "MS Container Office Cabin 15ft x 10ft ISMB Frame Insulated for Site Offices | Portable Office Cabin",
+    size: "15ft x 10ft", material: "Heavy-Duty MS ISMB / ISMC Sections", bestFor: "Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
   },
   {

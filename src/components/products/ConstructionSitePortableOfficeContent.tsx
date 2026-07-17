@@ -4,6 +4,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Building2, Calendar, CheckCircle2, ClipboardCheck, IndianRupee, ShieldCheck, Truck, Users, Wrench } from "lucide-react";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
 const useCases = [
   "Building sites in Mumbai, Delhi, Bengaluru and Chennai",
@@ -29,7 +30,14 @@ const buyingChecklist = [
   "Need for attached toilets, canteen, labour accommodation, or storage",
 ];
 
-export function ConstructionSitePortableOfficeContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (isPurchasable() — passed in by
+ * ProductDetailServer). Every generic ₹ figure below — the "₹50 lakh" intro claim and the
+ * indicative price-range table (₹80,000 … ₹15,00,000+) — renders ONLY when `offer` is absent,
+ * i.e. on quotation-only pages where an indicative range cannot be mistaken for a chargeable
+ * price. On a purchasable page the one number shown is the real offer.
+ */
+export function ConstructionSitePortableOfficeContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       <section className="space-y-8">
@@ -61,7 +69,10 @@ export function ConstructionSitePortableOfficeContent() {
             Construction Site Portable Office: The Complete Guide for Indian Projects
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            Every construction project above ₹50 lakh in India now relies on a dedicated control hub—a construction site portable office that keeps coordination, documentation, billing, planning, and day-to-day decisions organised on site.
+            {offer
+              ? /* Purchasable SKU: same argument, minus the ₹ figure that would sit beside the fixed offer price. */
+                "Every major construction project in India now relies on a dedicated control hub—a construction site portable office that keeps coordination, documentation, billing, planning, and day-to-day decisions organised on site."
+              : "Every construction project above ₹50 lakh in India now relies on a dedicated control hub—a construction site portable office that keeps coordination, documentation, billing, planning, and day-to-day decisions organised on site."}
           </p>
           <p className="text-muted-foreground leading-relaxed">
             Portable Office Cabin designs and manufactures construction site offices and container offices for infrastructure, industrial, and real-estate projects across India, helping project managers and procurement teams deploy durable workspaces quickly without conventional temporary construction.
@@ -218,32 +229,43 @@ export function ConstructionSitePortableOfficeContent() {
       </section>
 
       <section>
-        <h3 className="font-display text-2xl font-bold text-foreground mb-6">Buying vs. renting and indicative pricing</h3>
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Cabin Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Approximate Price Range (INR)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                ["Compact security / mini office (10 ft × 8 ft)", "₹80,000 – ₹1,20,000"],
-                ["Mid-size site office (10 ft × 20 ft)", "₹1,60,000 – ₹3,50,000"],
-                ["Standard container office (20 ft)", "₹2,50,000 – ₹5,00,000"],
-                ["Fully furnished premium site office (40 ft)", "₹8,00,000 – ₹15,00,000+"],
-              ].map(([type, price], index) => (
-                <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 text-foreground">{type}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{price}</td>
+        <h3 className="font-display text-2xl font-bold text-foreground mb-6">
+          {offer ? "Price" : "Buying vs. renting and indicative pricing"}
+        </h3>
+        {offer ? (
+          /* Purchasable SKU: the indicative range table is replaced by the one real figure — a
+             "₹2,50,000 – ₹5,00,000" row beside a fixed checkout price is exactly the landing-page
+             contradiction the offer prop exists to prevent. */
+          <FixedPriceCallout offer={offer} />
+        ) : (
+          <div className="overflow-hidden rounded-3xl border border-border bg-card">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-accent/10">
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Cabin Type</th>
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Approximate Price Range (INR)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {[
+                  ["Compact security / mini office (10 ft × 8 ft)", "₹80,000 – ₹1,20,000"],
+                  ["Mid-size site office (10 ft × 20 ft)", "₹1,60,000 – ₹3,50,000"],
+                  ["Standard container office (20 ft)", "₹2,50,000 – ₹5,00,000"],
+                  ["Fully furnished premium site office (40 ft)", "₹8,00,000 – ₹15,00,000+"],
+                ].map(([type, price], index) => (
+                  <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
+                    <td className="px-5 py-4 text-foreground">{type}</td>
+                    <td className="px-5 py-4 text-muted-foreground">{price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         <p className="text-sm text-muted-foreground mt-4">
-          Final pricing depends on size, insulation thickness, windows, electrical grade, furnishings, HVAC, transport distance, and site access constraints.
+          {offer
+            ? "The price above is fixed for this configuration—transport and installation are calculated separately by delivery pincode at checkout."
+            : "Final pricing depends on size, insulation thickness, windows, electrical grade, furnishings, HVAC, transport distance, and site access constraints."}
         </p>
       </section>
 

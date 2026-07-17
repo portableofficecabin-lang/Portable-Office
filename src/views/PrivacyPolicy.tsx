@@ -62,7 +62,7 @@ export default function PrivacyPolicyPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> February 2026
+            <strong>Last updated:</strong> 17 July 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             At Portable Office Cabin, we take your privacy seriously. This policy explains what personal information we collect, why we collect it, and how we keep it safe. By using our website or engaging with our services, you agree to the practices described here.
@@ -73,7 +73,11 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li><strong>Personal details:</strong> Your name, email address, phone number, and company name.</li>
               <li><strong>Project details:</strong> Site location, product requirements, and any specifications you share with us.</li>
-              <li><strong>Payment references:</strong> Bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft references that you share with us offline after a written quotation is confirmed. No payment is collected on this website and we do not collect or store card details.</li>
+              {/* Must match how the site actually behaves: online checkout runs through Razorpay.
+                  Claiming "no payment is collected on this website" while running a checkout is a
+                  Merchant Center misrepresentation. We describe exactly what we retain (references,
+                  never credentials). */}
+              <li><strong>Payment information:</strong> Payments for products purchased online are processed securely by <strong>Razorpay</strong>, our PCI-DSS compliant payment gateway. This website does not directly collect or store complete card numbers, CVV codes, UPI PINs, or bank account credentials — those are entered only on Razorpay&rsquo;s secure payment interface. We retain limited transaction information — such as the order ID, Razorpay payment reference, amount paid, and payment status — for accounting, customer support, and order processing. For quotation orders paid offline, we record the bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft reference you share with us.</li>
               <li><strong>Technical data:</strong> Your IP address, browser type, device information, and pages visited on our website.</li>
               <li><strong>Communication records:</strong> Emails, WhatsApp messages, and call records related to your enquiry or order.</li>
             </ul>

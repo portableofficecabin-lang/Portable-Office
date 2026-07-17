@@ -4,8 +4,13 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BadgeIndianRupee, Building2, CheckCircle2, Container, Home, PackageCheck, Truck, Warehouse } from "lucide-react";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
-const overviewStats = [
+/**
+ * The one ₹ figure in this overview grid ("start around ₹1,25,000") renders only when the page
+ * has no fixed offer — on the purchasable page the card points at the fixed price instead.
+ */
+const overviewStats = (offer?: FixedOffer) => [
   {
     icon: Container,
     title: "Stocked formats",
@@ -13,8 +18,10 @@ const overviewStats = [
   },
   {
     icon: BadgeIndianRupee,
-    title: "2025–2026 pricing",
-    description: "Used cargo-worthy units start around ₹1,25,000 for 20 ft and scale by size, grade, and yard location.",
+    title: offer ? "Fixed pricing" : "2025–2026 pricing",
+    description: offer
+      ? "This unit sells at a fixed, GST-inclusive price. Other sizes, grades, and yard locations are quoted individually."
+      : "Used cargo-worthy units start around ₹1,25,000 for 20 ft and scale by size, grade, and yard location.",
   },
   {
     icon: Truck,
@@ -150,7 +157,15 @@ const strengths = [
   "Reusable container-based construction with lower embodied carbon than many conventional approaches",
 ];
 
-export function CargoContainerForSaleContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (passed in by
+ * ProductDetailServer from isPurchasable()). This page sells at a fixed price, so every generic
+ * ₹ figure in this guide — the overview "start around" figure, the ex-yard price prose, the
+ * 2025–2026 pricing table, the new-vs-used comparison table and the monthly rental table — renders
+ * ONLY when `offer` is absent. An indicative range or rental figure beside a fixed checkout price
+ * is the landing-page contradiction that got the Merchant Center account suspended.
+ */
+export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       <section className="space-y-8">
@@ -192,7 +207,7 @@ export function CargoContainerForSaleContent() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {overviewStats.map((item) => (
+          {overviewStats(offer).map((item) => (
             <div key={item.title} className="rounded-2xl border border-border bg-card p-5">
               <item.icon className="mb-3 h-7 w-7 text-accent" />
               <h3 className="mb-1 font-semibold text-foreground">{item.title}</h3>
@@ -207,7 +222,13 @@ export function CargoContainerForSaleContent() {
           <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Quick overview: cargo containers for sale in 2026</h3>
           <div className="space-y-4 text-muted-foreground">
             <p>We commonly stock 10 ft fabricated containers, 20 ft GP, 30 ft custom units, 40 ft GP, and 40 ft high cube containers, with reefer options available on request.</p>
-            <p>Typical 2025–2026 ex-yard cargo-worthy price ranges start from approximately ₹1,25,000 for 20 ft, ₹2,45,000 for 40 ft GP, and ₹2,70,000 for 40 ft HC units.</p>
+            {/* Purchasable page: the same sizing argument without the ex-yard ₹ figures that
+                would sit beside the fixed checkout price. */}
+            <p>
+              {offer
+                ? "Typical ex-yard cargo-worthy commercials scale with size across 20 ft, 40 ft GP, and 40 ft HC units — this page's unit sells at the fixed price shown in the pricing section."
+                : "Typical 2025–2026 ex-yard cargo-worthy price ranges start from approximately ₹1,25,000 for 20 ft, ₹2,45,000 for 40 ft GP, and ₹2,70,000 for 40 ft HC units."}
+            </p>
             <p>Final commercials vary based on age, condition grade, and pickup location such as Nhava Sheva, Mundra, Chennai, or inland cities.</p>
           </div>
         </div>
@@ -312,27 +333,42 @@ export function CargoContainerForSaleContent() {
         </div>
 
         <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Price comparison example</h3>
-          <div className="overflow-hidden rounded-2xl border border-border">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border bg-muted/30">
-                  <th className="px-4 py-3 text-left font-semibold text-foreground">Container Type</th>
-                  <th className="px-4 py-3 text-left font-semibold text-foreground">New / One-Trip</th>
-                  <th className="px-4 py-3 text-left font-semibold text-foreground">Used Cargo-Worthy</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonRows.map(([type, newPrice, usedPrice], index) => (
-                  <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                    <td className="px-4 py-3 text-foreground">{type}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{newPrice}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{usedPrice}</td>
+          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">
+            {offer ? "New vs used: how the market compares" : "Price comparison example"}
+          </h3>
+          {offer ? (
+            /* Purchasable SKU: the new-vs-used comparison ranges (up to ₹5,00,000) would sit on
+               the page contradicting the fixed offer price — the argument stays, the figures
+               move to the written quotation. */
+            <p className="text-muted-foreground">
+              New and one-trip units command a clear premium over used cargo-worthy stock of the
+              same size, the gap widens with container length, and high-cube formats sit above
+              their GP equivalents in both markets. This page's unit sells at the fixed price
+              shown in the pricing section; comparison figures for other sizes and grades are
+              shared in a written quotation.
+            </p>
+          ) : (
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/30">
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Container Type</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">New / One-Trip</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Used Cargo-Worthy</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {comparisonRows.map(([type, newPrice, usedPrice], index) => (
+                    <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
+                      <td className="px-4 py-3 text-foreground">{type}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{newPrice}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{usedPrice}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
           <p className="mt-4 text-sm text-muted-foreground">Exact quotes remain subject to current inspection results and supply location.</p>
         </div>
       </section>
@@ -363,29 +399,38 @@ export function CargoContainerForSaleContent() {
 
       <section className="space-y-6">
         <div>
-          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">Cargo container pricing in India (2025–2026 guide)</h3>
+          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">
+            {offer ? "Cargo container price" : "Cargo container pricing in India (2025–2026 guide)"}
+          </h3>
           <p className="text-muted-foreground">
             Market pricing moves with steel rates, container releases, freight demand, customization scope, and inland logistics.
           </p>
         </div>
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Container Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Price Range (₹)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {priceRows.map(([type, price], index) => (
-                <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 text-foreground">{type}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{price}</td>
+        {offer ? (
+          /* Purchasable SKU: the indicative range table (₹1,00,000 – ₹3,90,000) is replaced by
+             the one real figure the checkout charges — a range beside a fixed price is exactly
+             the landing-page contradiction this prop exists to prevent. */
+          <FixedPriceCallout offer={offer} />
+        ) : (
+          <div className="overflow-hidden rounded-3xl border border-border bg-card">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-accent/10">
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Container Type</th>
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Price Range (₹)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {priceRows.map(([type, price], index) => (
+                  <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
+                    <td className="px-5 py-4 text-foreground">{type}</td>
+                    <td className="px-5 py-4 text-muted-foreground">{price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-3xl border border-border bg-card p-8">
             <h4 className="mb-4 font-display text-xl font-bold text-foreground">Key factors affecting price</h4>
@@ -464,20 +509,24 @@ export function CargoContainerForSaleContent() {
 
       <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Indicative rental rates</h3>
+          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">
+            {offer ? "Rental options" : "Indicative rental rates"}
+          </h3>
           <div className="overflow-hidden rounded-2xl border border-border">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-muted/30">
                   <th className="px-4 py-3 text-left font-semibold text-foreground">Container Type</th>
-                  <th className="px-4 py-3 text-left font-semibold text-foreground">Monthly Rental (₹)</th>
+                  <th className="px-4 py-3 text-left font-semibold text-foreground">{offer ? "Monthly Rental" : "Monthly Rental (₹)"}</th>
                 </tr>
               </thead>
               <tbody>
                 {rentalRows.map(([type, rent], index) => (
                   <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
                     <td className="px-4 py-3 text-foreground">{type}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{rent}</td>
+                    {/* Purchasable page: a monthly ₹ figure beside the fixed sale price reads as
+                        a second, contradicting price — rentals are quoted, not published. */}
+                    <td className="px-4 py-3 text-muted-foreground">{offer ? "Monthly rental on quotation" : rent}</td>
                   </tr>
                 ))}
               </tbody>

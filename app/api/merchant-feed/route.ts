@@ -1,5 +1,5 @@
 import { products, getProductDetailPath, type Product } from "@/data/products";
-import { feedEligible, hasGenuineSalePrice, BRAND, type ProductCommerce } from "@/data/productCommerce";
+import { feedEligible, hasGenuineSalePrice, isPurchasable, BRAND, type ProductCommerce } from "@/data/productCommerce";
 import { sellPrice, priceForFeed } from "@/lib/pricing/gst";
 import { SHIPPING_ZONES, DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
@@ -147,6 +147,41 @@ function isPromotional(sentence: string): boolean {
 }
 
 /**
+ * ── PRICE-CLAIM TEXT — THE STRICT-ELIGIBILITY GUARD ──────────────────────────────────────────
+ * A feed item's ONLY price is <g:price> (+ <g:sale_price> on a genuine sale). Any OTHER price
+ * signal in the submitted text — a "starting from", a "price on request", a ₹/lakh figure, a
+ * per-sq-ft rate — either contradicts <g:price> outright or marks the product as not really
+ * fixed-price. Both are Misrepresentation triggers.
+ *
+ * Applied two ways, deliberately different:
+ *   • TITLE: any hit EXCLUDES the item. A title cannot be sentence-trimmed without rewriting it,
+ *     and a rewritten title would no longer match the landing page.
+ *   • DESCRIPTION: the offending SENTENCE is dropped (same lossless policy as PROMO_PATTERNS —
+ *     the sentence still exists on the landing page; it simply is not submitted).
+ *
+ * "quote"/"quotation" alone is NOT matched: transport-quoted-at-checkout wording is factual and
+ * fine. Only the phrases that mark the PRODUCT itself as quote-priced are.
+ */
+const PRICE_CLAIM_PATTERNS: RegExp[] = [
+  /₹/, // any literal rupee figure in feed text can only drift from <g:price>
+  /\bRs\.?\s*\d/i,
+  /\bINR\s*\d/i,
+  /\d[\d,.]*\s*(lakh|lac|crore)s?\b/i,
+  /\b(price|cost|rate)s?\s+on\s+request\b/i,
+  /\bcall\s+for\s+(a\s+)?price\b/i,
+  /\brequest\s+(a\s+)?quot(e|ation)\b/i,
+  /\bquotation[-\s]only\b/i,
+  /\bstarting\s+(from|at|near|price)\b/i,
+  /\bprices?\s+start\b/i,
+  /\bper\s+sq\.?\s*\.?\s*(ft|feet|foot|m|metre|meter)\b/i,
+  /\bapprox(imate(ly)?)?\.?\s*(₹|rs|inr|\d)/i,
+];
+
+function priceClaimIn(text: string): RegExp | undefined {
+  return PRICE_CLAIM_PATTERNS.find((pattern) => pattern.test(text));
+}
+
+/**
  * Collapse genuine ALL-CAPS shouting, which Merchant Center rejects.
  *
  * Deliberately narrow: it only fires on a RUN of three or more consecutive all-caps words of 4+
@@ -185,10 +220,12 @@ function feedDescription(commerce: ProductCommerce, product: Product): string {
     if (!plain) return "";
 
     const sentences = plain.split(/(?<=[.!?])\s+/);
-    const kept = sentences.filter((sentence) => !isPromotional(sentence));
+    // Promotional sentences AND price-claim sentences are dropped: a description may carry no
+    // price signal at all — the item's only price is <g:price>.
+    const kept = sentences.filter((sentence) => !isPromotional(sentence) && !priceClaimIn(sentence));
     if (kept.length < sentences.length) {
       console.warn(
-        `[merchant-feed] ${commerce.sku}: dropped ${sentences.length - kept.length} promotional sentence(s) from the description`,
+        `[merchant-feed] ${commerce.sku}: dropped ${sentences.length - kept.length} promotional/price-claim sentence(s) from the description`,
       );
     }
     return kept.join(" ").trim();
@@ -421,6 +458,24 @@ function generateFeed(): { xml: string; count: number } {
     }
     if (seenIds.has(commerce.sku)) {
       console.error(`[merchant-feed] SKIP ${commerce.sku}: duplicate g:id — a duplicate id rejects the entire feed`);
+      continue;
+    }
+
+    // STRICT ELIGIBILITY: the item must be genuinely buyable online RIGHT NOW — Add to Cart,
+    // checkout and full Razorpay payment all hang off this same predicate, so one check covers
+    // all three. feedEligible() applies the identical gates; this belt exists so the whitelist
+    // survives even if the two functions ever drift apart.
+    if (!isPurchasable(commerce.id)) {
+      console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: not purchasable online (quote-only or price unconfirmed)`);
+      continue;
+    }
+
+    // A title carrying any price signal ("starting from", "price on request", a ₹/lakh figure)
+    // either contradicts <g:price> or marks the product as not fixed-price. Titles cannot be
+    // sentence-trimmed, so the item is excluded until the title is fixed.
+    const titleClaim = priceClaimIn(feedTitle(commerce));
+    if (titleClaim) {
+      console.error(`[merchant-feed] EXCLUDE ${commerce.sku}: title carries a price claim (${titleClaim})`);
       continue;
     }
 

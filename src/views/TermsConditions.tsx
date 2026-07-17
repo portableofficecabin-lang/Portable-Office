@@ -62,7 +62,7 @@ export default function TermsConditionsPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> February 2026
+            <strong>Last updated:</strong> 17 July 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             Welcome to Portable Office Cabin. These Terms and Conditions govern your use of our website, products, and services. By placing an order, booking an appointment, or using any part of our website, you agree to be bound by the terms outlined below.
@@ -85,21 +85,32 @@ export default function TermsConditionsPage() {
             <p className="mt-3">Product images, dimensions, and specifications shown on our website are for reference purposes. Actual products may vary slightly depending on customisation, material availability, and manufacturing tolerances.</p>
           </Section>
 
+          {/* Two purchase paths, described honestly. This section must always match how the site
+              actually behaves: purchasable SKUs (isPurchasable() in the commerce catalog) show a
+              fixed GST-inclusive price with Add to Cart and are paid in full online via Razorpay;
+              everything else is quotation-only. Claiming "no payment is collected online" while the
+              site runs an online checkout is a Merchant Center misrepresentation. */}
           <Section title="3. Pricing & Payment" index={2}>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>All prices listed on our website are indicative <strong>starting prices</strong> and are <strong>exclusive of GST</strong>, transport beyond the 50 km free delivery zone, and installation. They may change based on specifications, customisation, raw material costs, and delivery distance.</li>
-              <li><strong>No payment is collected through this website and products cannot be purchased online.</strong> Every order begins with a written quotation — you send us your requirement, we send you a quotation, and the order is placed only after you confirm it.</li>
-              <li>A final quotation will be shared before order confirmation. The quoted price is valid for 15 days from the date of issue unless stated otherwise. <strong>The binding price for your order is the one stated in that written quotation</strong>, not the indicative price shown on the website.</li>
-              <li>We accept payments via bank transfer (NEFT/RTGS/IMPS), UPI, cheque, and demand draft.</li>
-              <li>A minimum advance payment (typically 40–50% of the total order value) is required to begin manufacturing.</li>
-              <li>The remaining balance must be cleared before or at the time of dispatch/delivery.</li>
-              <li>GST and applicable taxes will be charged extra, as per prevailing government rates, and are shown separately on the tax invoice.</li>
+            <p className="font-semibold text-foreground">Standard products purchased online</p>
+            <ul className="list-disc pl-6 space-y-2 mt-2">
+              <li><strong>Standard fixed-price products — those showing a price with an Add to Cart or Buy Now option — can be purchased directly on this website.</strong> The price displayed on the product page is the final, GST-inclusive price for the item.</li>
+              <li><strong>Full payment for these products is processed online through Razorpay</strong>, our PCI-DSS compliant payment gateway. We accept UPI, credit and debit cards, and net banking through Razorpay.</li>
+              <li><strong>GST, transport (calculated by delivery pincode) and optional charges such as installation are displayed at checkout before you pay.</strong> The amount charged is exactly the total shown at checkout — there are no post-payment price revisions for online orders.</li>
+              <li>Online orders are confirmed automatically once Razorpay reports a successful payment, and appear in your account with a payment reference.</li>
+            </ul>
+            <p className="font-semibold text-foreground mt-4">Custom and quotation-only products</p>
+            <ul className="list-disc pl-6 space-y-2 mt-2">
+              <li><strong>Custom, project-specific and quotation-only products — those showing &ldquo;Request a Quote&rdquo; — require technical confirmation and a written quotation, and cannot be purchased directly online</strong> unless and until they are listed with a fixed price and an online checkout.</li>
+              <li>For quotation orders, the quoted price is valid for 15 days from the date of issue unless stated otherwise, and <strong>the binding price is the one stated in that written quotation</strong>.</li>
+              <li>Quotation orders may be paid via bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft. A minimum advance (typically 40–50% of the order value) is required to begin manufacturing, with the balance cleared before or at dispatch/delivery.</li>
+              <li>For quotation orders, GST and applicable taxes are charged as per prevailing government rates and shown separately on the tax invoice.</li>
             </ul>
           </Section>
 
           <Section title="4. Order Process & Confirmation" index={3}>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Orders are confirmed only after we receive your advance payment and a signed purchase order or written confirmation (via email or WhatsApp).</li>
+              <li><strong>Online orders</strong> are confirmed automatically on successful full payment through Razorpay at checkout.</li>
+              <li><strong>Quotation orders</strong> are confirmed after we receive your advance payment and a signed purchase order or written confirmation (via email or WhatsApp).</li>
               <li>Once confirmed, manufacturing will begin as per the agreed specifications and timeline.</li>
               <li>Any changes to the order after confirmation may result in revised pricing and extended delivery timelines.</li>
             </ul>
