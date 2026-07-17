@@ -29,3 +29,4 @@ image-backups/
 
 # Supabase CLI temporary files
 supabase/.temp/
+merchant-feed.xml
