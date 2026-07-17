@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
@@ -83,7 +84,15 @@ const faqs = [
   },
 ];
 
-export function CargoStorageContainersPinkContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (passed in by
+ * ProductDetailServer from isPurchasable()). This SKU (POC-CSC-PINK) sells at a fixed price, so
+ * every generic ₹ figure in this guide — the basic/fitted range table, the fit-out add-on prices,
+ * the crane / rental / relocation figures and the rental FAQ — renders ONLY when `offer` is
+ * absent. A range or an add-on price beside a fixed checkout price is the landing-page
+ * contradiction that got the Merchant Center account suspended.
+ */
+export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       {/* Hero Introduction */}
@@ -157,8 +166,12 @@ export function CargoStorageContainersPinkContent() {
             <p className="text-muted-foreground leading-relaxed">
               Colour psychology works in your favour. Pink signals creativity, friendliness, and modernity—qualities that help businesses stand out against the sea of standard blue and grey containers on Indian construction sites and streets.
             </p>
+            {/* Purchasable page: the same argument without the ₹ figure — a rupee amount in prose
+                reads as a price claim to a sweep, whatever it is actually valuing. */}
             <p className="text-muted-foreground leading-relaxed">
-              A pink shipping container acts as 24/7 outdoor advertising. Positioned in high-traffic areas, a single 20ft unit visible to 10,000 daily passersby can deliver ₹5–10 lakh in annual advertising value without recurring hoarding costs.
+              {offer
+                ? "A pink shipping container acts as 24/7 outdoor advertising. Positioned in a high-traffic area, a single 20ft unit visible to 10,000 daily passersby delivers year-round brand visibility without recurring hoarding costs."
+                : "A pink shipping container acts as 24/7 outdoor advertising. Positioned in high-traffic areas, a single 20ft unit visible to 10,000 daily passersby can deliver ₹5–10 lakh in annual advertising value without recurring hoarding costs."}
             </p>
             <p className="text-muted-foreground leading-relaxed text-sm">
               Consider these scenarios: a pink container boutique at Goa's Baga Beach market during the 2025 tourist season, a cosmetic brand kiosk in a Delhi NCR mall parking lot, or a college fest registration booth in Pune handling 1,000 registrations per hour.
@@ -341,8 +354,16 @@ export function CargoStorageContainersPinkContent() {
 
       {/* Pricing */}
       <section>
-        <h2 className="text-3xl font-bold text-foreground mb-6">Pricing, Delivery Timelines & Buying vs. Renting</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-6">
+          {offer ? "Price, Delivery Timelines & Buying vs. Renting" : "Pricing, Delivery Timelines & Buying vs. Renting"}
+        </h2>
         <div className="space-y-4">
+          {offer ? (
+            /* Purchasable SKU: the basic/fitted reference ranges are replaced by the one real
+               figure the checkout charges. */
+            <FixedPriceCallout offer={offer} />
+          ) : (
+            <>
           <p className="text-muted-foreground leading-relaxed">
             Exact pricing depends on size, base container condition, and fit-out level. Here are 2025–2026 reference ranges:
           </p>
@@ -366,15 +387,30 @@ export function CargoStorageContainersPinkContent() {
               </tbody>
             </table>
           </div>
+            </>
+          )}
           <div className="grid md:grid-cols-3 gap-4 mt-4">
             <Card className="border-border">
               <CardContent className="p-4">
-                <h3 className="font-bold text-foreground text-sm mb-2">Cost Add-Ons</h3>
+                <h3 className="font-bold text-foreground text-sm mb-2">{offer ? "Optional Add-Ons" : "Cost Add-Ons"}</h3>
+                {/* Purchasable page: the add-on figures would read as extra charges the checkout
+                    never collects — the options stay, the prices move to the written quotation. */}
                 <ul className="text-muted-foreground text-xs space-y-1">
-                  <li>• Insulation 75mm rockwool: +₹50k</li>
-                  <li>• Premium vinyl flooring: +₹30k/sqm</li>
-                  <li>• Air-conditioning: +₹80k</li>
-                  <li>• Glass fronts: +₹2 lakh</li>
+                  {offer ? (
+                    <>
+                      <li>• Insulation 75mm rockwool</li>
+                      <li>• Premium vinyl flooring</li>
+                      <li>• Air-conditioning</li>
+                      <li>• Glass fronts — all quoted on request</li>
+                    </>
+                  ) : (
+                    <>
+                      <li>• Insulation 75mm rockwool: +₹50k</li>
+                      <li>• Premium vinyl flooring: +₹30k/sqm</li>
+                      <li>• Air-conditioning: +₹80k</li>
+                      <li>• Glass fronts: +₹2 lakh</li>
+                    </>
+                  )}
                 </ul>
               </CardContent>
             </Card>
@@ -385,7 +421,7 @@ export function CargoStorageContainersPinkContent() {
                   <li>• Repaint + light mods: 2–3 weeks</li>
                   <li>• Fully customised: 4–6 weeks</li>
                   <li>• Transport: 16-tyre trailers</li>
-                  <li>• Hydra crane: ₹50k/day</li>
+                  <li>{offer ? "• Hydra crane arranged at site (charged at actuals)" : "• Hydra crane: ₹50k/day"}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -394,7 +430,7 @@ export function CargoStorageContainersPinkContent() {
                 <h3 className="font-bold text-foreground text-sm mb-2">Buy vs. Rent</h3>
                 <ul className="text-muted-foreground text-xs space-y-1">
                   <li>• Buy: long-term use & branding</li>
-                  <li>• Rent: ₹20–40k/month for events</li>
+                  <li>{offer ? "• Rent option for events — quoted monthly" : "• Rent: ₹20–40k/month for events"}</li>
                   <li>• MCD/BMC permits: 15–30 days</li>
                   <li>• PAN-India delivery available</li>
                 </ul>
@@ -417,7 +453,9 @@ export function CargoStorageContainersPinkContent() {
               "Pan-India project execution from single units to 100-container complexes",
               "Coordination with architects and branding agencies for brand-aligned designs",
               "80% recycled steel and sustainable manufacturing practices",
-              "After-sales support: modifications, relocation (₹1 lakh/unit), and repaint every 5 years",
+              offer
+                ? "After-sales support: modifications, relocation assistance, and repaint every 5 years"
+                : "After-sales support: modifications, relocation (₹1 lakh/unit), and repaint every 5 years",
               "B2B and B2C: from corporates to individual entrepreneurs",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 bg-muted/30 p-3 rounded-lg">
@@ -453,7 +491,10 @@ export function CargoStorageContainersPinkContent() {
       <section>
         <h2 className="text-3xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
         <Accordion type="single" collapsible className="w-full">
-          {faqs.map((faq, i) => (
+          {/* The rental-rate FAQ (₹20,000–40,000/month) renders only on a quote-only page — on the
+              purchasable page a monthly figure beside the fixed sale price reads as a second,
+              contradicting price. */}
+          {faqs.filter((faq) => !offer || !faq.a.includes("₹")).map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`}>
               <AccordionTrigger className="text-left text-foreground font-medium">
                 {faq.q}

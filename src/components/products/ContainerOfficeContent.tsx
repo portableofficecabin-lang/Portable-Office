@@ -8,8 +8,17 @@ import {
 } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import containerOfficeModernGlass from "@/assets/products/container-office-modern-glass.webp";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
+import { formatINR } from "@/lib/pricing/gst";
 
-export function ContainerOfficeContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (isPurchasable() — passed in by
+ * ProductDetailServer). Every generic ₹ figure below — the hero "Starting Price", the per-sq-ft
+ * lifecycle claim, the indicative cost-range table and the cost-range FAQ — renders ONLY when
+ * `offer` is absent, i.e. on quotation-only pages where an indicative range cannot be mistaken
+ * for a chargeable price. On a purchasable page the one number shown is the real offer.
+ */
+export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       {/* Intro Section */}
@@ -23,9 +32,21 @@ export function ContainerOfficeContent() {
             priority
           />
           <div className="absolute bottom-4 left-4 bg-background/95 backdrop-blur px-4 py-2 rounded-lg shadow-card">
-            <div className="text-xs text-muted-foreground uppercase tracking-wide">Starting Price</div>
-            <div className="font-display text-xl md:text-2xl font-bold text-foreground">₹7,00,000/-</div>
-            <div className="text-[10px] text-muted-foreground">Base price, excl. GST, transport & installation</div>
+            {offer ? (
+              <>
+                {/* Purchasable SKU: the hero badge shows THE price — not a "starting" figure that
+                    the checkout would then contradict. */}
+                <div className="text-xs text-muted-foreground uppercase tracking-wide">Fixed Price</div>
+                <div className="font-display text-xl md:text-2xl font-bold text-foreground">{formatINR(offer.sellPriceInr)}</div>
+                <div className="text-[10px] text-muted-foreground">Incl. GST · transport & installation at checkout</div>
+              </>
+            ) : (
+              <>
+                <div className="text-xs text-muted-foreground uppercase tracking-wide">Starting Price</div>
+                <div className="font-display text-xl md:text-2xl font-bold text-foreground">₹7,00,000/-</div>
+                <div className="text-[10px] text-muted-foreground">Base price, excl. GST, transport & installation</div>
+              </>
+            )}
           </div>
         </div>
         <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6">
@@ -111,9 +132,20 @@ export function ContainerOfficeContent() {
         </div>
 
         <h3 className="font-display text-xl font-semibold text-foreground mb-3">Lifecycle Cost Perspective</h3>
-        <p className="text-muted-foreground">
-          Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification—significantly less than the ₹3,500–₹5,000+ per sq. ft required for traditional offices. When you factor in zero rent for 10–15 years, reuse across multiple projects, and strong resale value, the Total Cost of Ownership makes container offices a cost effective choice for most project-based businesses.
-        </p>
+        {offer ? (
+          /* Purchasable SKU: the same argument, minus the per-sq-ft figures that would sit on the
+             page contradicting the fixed offer price. */
+          <p className="text-muted-foreground">
+            A container office is a manufactured capital asset, not a site-built structure: zero rent for
+            10–15 years, reuse across multiple projects, and strong resale value keep its Total Cost of
+            Ownership well below a traditional office of the same size. This unit sells at the fixed,
+            all-inclusive price shown above.
+          </p>
+        ) : (
+          <p className="text-muted-foreground">
+            Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification—significantly less than the ₹3,500–₹5,000+ per sq. ft required for traditional offices. When you factor in zero rent for 10–15 years, reuse across multiple projects, and strong resale value, the Total Cost of Ownership makes container offices a cost effective choice for most project-based businesses.
+          </p>
+        )}
       </section>
 
       {/* Key Features */}
@@ -446,31 +478,45 @@ export function ContainerOfficeContent() {
           Costs, Budgeting & ROI for Container Offices
         </h2>
 
-        <h3 className="font-display text-xl font-semibold text-foreground mb-4">Indicative Cost Ranges</h3>
-        <div className="bg-card rounded-xl shadow-card overflow-hidden mb-8">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-accent/10">
-                <th className="px-6 py-4 text-left font-semibold text-foreground">Configuration</th>
-                <th className="px-6 py-4 text-left font-semibold text-foreground">Approximate Cost Range</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { config: "20 ft container office (~150 sq ft)", cost: "₹2,10,000 – ₹3,75,000" },
-                { config: "40 ft container office (~290 sq ft)", cost: "₹4,00,000 – ₹7,25,000" },
-              ].map((row, index) => (
-                <tr key={row.config} className={index % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                  <td className="px-6 py-4 font-medium text-foreground">{row.config}</td>
-                  <td className="px-6 py-4 text-muted-foreground">{row.cost}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-sm text-muted-foreground italic mb-6">
-          * Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification. These figures are indicative estimates only—actual quotations depend on specific requirements and current material costs.
-        </p>
+        {offer ? (
+          /* Purchasable SKU: the indicative range table is replaced by the one real figure. A
+             "₹4,00,000 – ₹7,25,000" row beside a ₹18,88,000 checkout price is precisely the
+             landing-page contradiction this prop exists to prevent. */
+          <>
+            <h3 className="font-display text-xl font-semibold text-foreground mb-4">This Configuration's Price</h3>
+            <div className="mb-8">
+              <FixedPriceCallout offer={offer} />
+            </div>
+          </>
+        ) : (
+          <>
+            <h3 className="font-display text-xl font-semibold text-foreground mb-4">Indicative Cost Ranges</h3>
+            <div className="bg-card rounded-xl shadow-card overflow-hidden mb-8">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-accent/10">
+                    <th className="px-6 py-4 text-left font-semibold text-foreground">Configuration</th>
+                    <th className="px-6 py-4 text-left font-semibold text-foreground">Approximate Cost Range</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { config: "20 ft container office (~150 sq ft)", cost: "₹2,10,000 – ₹3,75,000" },
+                    { config: "40 ft container office (~290 sq ft)", cost: "₹4,00,000 – ₹7,25,000" },
+                  ].map((row, index) => (
+                    <tr key={row.config} className={index % 2 === 0 ? "bg-muted/30" : "bg-card"}>
+                      <td className="px-6 py-4 font-medium text-foreground">{row.config}</td>
+                      <td className="px-6 py-4 text-muted-foreground">{row.cost}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-muted-foreground italic mb-6">
+              * Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification. These figures are indicative estimates only—actual quotations depend on specific requirements and current material costs.
+            </p>
+          </>
+        )}
 
         <h3 className="font-display text-xl font-semibold text-foreground mb-3">Primary Cost Drivers</h3>
         <div className="grid sm:grid-cols-2 gap-3 mb-8">
@@ -685,10 +731,16 @@ export function ContainerOfficeContent() {
               q: "Can container offices be stacked for G+1 structures?",
               a: "Yes, containers can be stacked with proper structural reinforcement and engineering assessment. This is common for larger site setups. Stacking requires certified corner castings and professional installation.",
             },
-            {
-              q: "What is the cost range for container offices in India?",
-              a: "Quality Indian container offices typically range from ₹1,400–₹2,500 per sq. ft. A 20 ft unit (~150 sq ft) costs approximately ₹2,10,000–₹3,75,000, while a 40 ft unit (~290 sq ft) ranges from ₹4,00,000–₹7,25,000 depending on specifications.",
-            },
+            /* The cost-range FAQ renders only on quotation-only pages — on a purchasable page its
+               ranges would contradict the fixed offer price shown above. */
+            ...(offer
+              ? []
+              : [
+                  {
+                    q: "What is the cost range for container offices in India?",
+                    a: "Quality Indian container offices typically range from ₹1,400–₹2,500 per sq. ft. A 20 ft unit (~150 sq ft) costs approximately ₹2,10,000–₹3,75,000, while a 40 ft unit (~290 sq ft) ranges from ₹4,00,000–₹7,25,000 depending on specifications.",
+                  },
+                ]),
             {
               q: "How quickly can a container office be deployed?",
               a: "Factory production takes 4–6 weeks from order. Once delivered, a single-container office can be installed and commissioned within one working day when site preparation is complete.",

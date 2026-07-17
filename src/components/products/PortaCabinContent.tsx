@@ -1,8 +1,17 @@
 import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home, Zap, Calendar, IndianRupee, Settings, Hammer, Lightbulb, TrendingUp } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
-export function PortaCabinContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (passed in by
+ * ProductDetailServer from isPurchasable()). Every generic ₹ figure in this guide — the 2025
+ * per-sq-ft reference card, the guard-cabin and office-cabin price tables and the price sentences
+ * inside the product-range grid — renders ONLY when `offer` is absent. A per-sq-ft claim beside a
+ * fixed checkout price is a self-contradiction: 480 sq ft × the page's own top rate would "prove"
+ * a different price than the one being charged.
+ */
+export function PortaCabinContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       {/* Hero Introduction */}
@@ -69,28 +78,38 @@ export function PortaCabinContent() {
           Portable Office Cabin manufactures and supplies porta cabins with a pan India delivery network, serving both B2B clients (contractors, developers, institutions, corporates, government departments) and B2C customers (individual plot owners, farmhouse developers, rooftop room requirements).
         </p>
 
-        {/* 2025 Pricing Reference */}
-        <div className="bg-card rounded-xl p-6 border border-border">
-          <h3 className="font-display font-bold text-lg text-foreground mb-4">2025 Pricing Reference:</h3>
-          <div className="space-y-3">
-            {[
-              { label: "Per sq.ft. cost", value: "Approx ₹1,050–₹2,500 depending on specifications" },
-              { label: "Small guard cabins", value: "Starting near ₹90,000–₹1,20,000" },
-              { label: "Larger office & accommodation units", value: "₹1.8 lakh to ₹12 lakh+ based on size and finish" },
-            ].map((item) => (
-              <div key={item.label} className="flex items-start gap-3">
-                <IndianRupee className="h-4 w-4 text-accent shrink-0 mt-1" />
-                <div>
-                  <span className="font-semibold text-foreground text-sm">{item.label}: </span>
-                  <span className="text-sm text-muted-foreground">{item.value}</span>
-                </div>
-              </div>
-            ))}
+        {/* 2025 Pricing Reference — quotation-only pages. On a purchasable page the per-sq-ft and
+            range figures are replaced by the one real offer price. */}
+        {offer ? (
+          <div>
+            <FixedPriceCallout offer={offer} />
+            <p className="text-sm text-muted-foreground mt-4">
+              Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground mt-4">
-            Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
-          </p>
-        </div>
+        ) : (
+          <div className="bg-card rounded-xl p-6 border border-border">
+            <h3 className="font-display font-bold text-lg text-foreground mb-4">2025 Pricing Reference:</h3>
+            <div className="space-y-3">
+              {[
+                { label: "Per sq.ft. cost", value: "Approx ₹1,050–₹2,500 depending on specifications" },
+                { label: "Small guard cabins", value: "Starting near ₹90,000–₹1,20,000" },
+                { label: "Larger office & accommodation units", value: "₹1.8 lakh to ₹12 lakh+ based on size and finish" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-3">
+                  <IndianRupee className="h-4 w-4 text-accent shrink-0 mt-1" />
+                  <div>
+                    <span className="font-semibold text-foreground text-sm">{item.label}: </span>
+                    <span className="text-sm text-muted-foreground">{item.value}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground mt-4">
+              Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
+            </p>
+          </div>
+        )}
       </section>
 
       {/* What is a Porta Cabin */}
@@ -157,7 +176,11 @@ export function PortaCabinContent() {
             {
               icon: IndianRupee,
               title: "Cost Savings",
-              desc: "Per sq.ft. cost of ₹1,050–₹2,500 compares favourably against civil construction costs in metros where traditional builds often exceed ₹3,000–₹4,000 per sq.ft.",
+              // Purchasable page: same argument without the per-sq-ft figures that would contradict
+              // the fixed offer price shown above.
+              desc: offer
+                ? "Factory fabrication avoids shuttering, curing time, debris and on-site labour overruns — and the cabin is a reusable asset you can relocate across projects instead of writing off."
+                : "Per sq.ft. cost of ₹1,050–₹2,500 compares favourably against civil construction costs in metros where traditional builds often exceed ₹3,000–₹4,000 per sq.ft.",
             },
             {
               icon: Truck,
@@ -206,7 +229,10 @@ export function PortaCabinContent() {
             {
               icon: Building2,
               title: "Portable Office Cabins",
-              desc: "Available in 10×8 ft, 20×10 ft, 30×10 ft, and 40×10 ft with doors, windows, electrical fittings, insulation, and flooring. 2025 pricing from ₹1.5 lakh for basic 10×8 ft to ₹8 lakh+ for fully furnished 40×10 ft offices.",
+              // The range sentence quotes other sizes' prices — dropped on a purchasable page.
+              desc: offer
+                ? "Available in 10×8 ft, 20×10 ft, 30×10 ft, and 40×10 ft with doors, windows, electrical fittings, insulation, and flooring."
+                : "Available in 10×8 ft, 20×10 ft, 30×10 ft, and 40×10 ft with doors, windows, electrical fittings, insulation, and flooring. 2025 pricing from ₹1.5 lakh for basic 10×8 ft to ₹8 lakh+ for fully furnished 40×10 ft offices.",
             },
             {
               icon: Factory,
@@ -221,7 +247,10 @@ export function PortaCabinContent() {
             {
               icon: ShieldCheck,
               title: "Portable Security Cabins",
-              desc: "Compact guard cabins in 4×4 ft, 4×6 ft, and 6×6 ft sizes using MS steel and PUF panels. Features include glass panels, service counters, fan, light, and wiring. From ₹90,000–₹1,50,000.",
+              // Same rule: the guard-cabin price range is dropped on a purchasable page.
+              desc: offer
+                ? "Compact guard cabins in 4×4 ft, 4×6 ft, and 6×6 ft sizes using MS steel and PUF panels. Features include glass panels, service counters, fan, light, and wiring."
+                : "Compact guard cabins in 4×4 ft, 4×6 ft, and 6×6 ft sizes using MS steel and PUF panels. Features include glass panels, service counters, fan, light, and wiring. From ₹90,000–₹1,50,000.",
             },
             {
               icon: Bath,
@@ -315,8 +344,18 @@ export function PortaCabinContent() {
       <section>
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
           <IndianRupee className="h-7 w-7 text-accent" />
-          Porta Cabin Pricing in India (2025 Reference Guide)
+          {offer ? "Porta Cabin Price" : "Porta Cabin Pricing in India (2025 Reference Guide)"}
         </h2>
+        {/* Purchasable page: the reference tables and the per-sq-ft intro are replaced by the one
+            real price. The "Factors Affecting Price" list below stays — it carries no ₹ and
+            explains what a different configuration would change. */}
+        {offer && (
+          <div className="mb-8">
+            <FixedPriceCallout offer={offer} />
+          </div>
+        )}
+        {!offer && (
+          <>
         <p className="text-muted-foreground mb-8 leading-relaxed">
           Final porta cabin pricing depends on size, specification level, interior finishes, delivery location, and installation complexity. Standard insulated porta cabins typically cost approx ₹1,050–₹2,500 per sq.ft. in 2025 across most Indian cities.
         </p>
@@ -376,6 +415,8 @@ export function PortaCabinContent() {
             </tbody>
           </table>
         </div>
+          </>
+        )}
 
         {/* Factors Affecting Price */}
         <h3 className="font-display text-lg font-semibold text-foreground mb-4">Factors Affecting Price:</h3>

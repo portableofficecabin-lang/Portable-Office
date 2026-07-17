@@ -5,6 +5,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BadgeIndianRupee, CheckCircle2, Container, Hammer, ShieldCheck, Truck, Warehouse } from "lucide-react";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
 const highlights = [
   {
@@ -96,7 +97,15 @@ const selectionChecklist = [
   "Match insulation, paint grade, and roof protection to local heat, rain, or coastal conditions.",
 ];
 
-export function UsedShippingContainerForSaleContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (passed in by
+ * ProductDetailServer from isPurchasable()). The indicative used-container price table
+ * (₹95,000 … ₹2,10,000 ex-yard) renders ONLY when `offer` is absent — i.e. on the quote-only page
+ * this guide serves today. If this page's product is ever given a confirmed fixed price, the table
+ * is automatically replaced by that one real figure, so the page can never publish ranges that
+ * contradict its own checkout.
+ */
+export function UsedShippingContainerForSaleContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-16">
       <section className="space-y-8">
@@ -182,30 +191,41 @@ export function UsedShippingContainerForSaleContent() {
 
       <section className="space-y-6">
         <div>
-          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">Used shipping container price in India</h3>
-          <p className="text-muted-foreground">
-            Prices fluctuate with container age, steel rates, grade, and site location, but these indicative numbers provide a practical starting point.
-          </p>
+          <h3 className="mb-2 font-display text-2xl font-bold text-foreground">
+            {offer ? "Used shipping container price" : "Used shipping container price in India"}
+          </h3>
+          {!offer && (
+            <p className="text-muted-foreground">
+              Prices fluctuate with container age, steel rates, grade, and site location, but these indicative numbers provide a practical starting point.
+            </p>
+          )}
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/10">
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Indicative Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingRows.map(([type, price], index) => (
-                <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                  <td className="px-5 py-4 text-foreground">{type}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{price}</td>
+        {offer ? (
+          /* Purchasable SKU: the indicative range table is replaced by the one real figure — a
+             "₹95,000 – ₹1,45,000 ex-yard" row beside a fixed checkout price is exactly the
+             landing-page contradiction the offer prop exists to prevent. */
+          <FixedPriceCallout offer={offer} />
+        ) : (
+          <div className="overflow-hidden rounded-3xl border border-border bg-card">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-accent/10">
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Type</th>
+                  <th className="px-5 py-4 text-left font-semibold text-foreground">Indicative Price</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {pricingRows.map(([type, price], index) => (
+                  <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
+                    <td className="px-5 py-4 text-foreground">{type}</td>
+                    <td className="px-5 py-4 text-muted-foreground">{price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <p className="text-sm text-muted-foreground">
           Formal quotations include exact container photos, condition reports, fabrication scope, delivery timeline, and all commercial breakups.

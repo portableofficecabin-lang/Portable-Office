@@ -230,10 +230,18 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Site Office Containers",
   },
   {
+    /**
+     * SIZE PINNED BY THE OWNER (2026-07): the sellable record is the 20ft x 8ft used shipping
+     * container configuration. It previously said "20ft / 40ft" — a fixed price cannot honestly
+     * describe two container sizes (the same ambiguity that made id 10 quote-only), and its own
+     * landing page prices 20ft and 40ft units differently. The 40ft build stays available on
+     * quotation; it is copy on the page, not part of this offer. basePrice/priceConfirmed are
+     * UNCHANGED — the price was already confirmed and live at ₹2,95,000 incl. GST.
+     */
     id: "37", sku: "POC-CSC-PINK", basePrice: 250000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Pink Cargo Storage Container",
-    feedTitle: "Pink Cargo Storage Container 20ft & 40ft for Retail Kiosks & Cafes | Portable Office Cabin",
-    size: "20ft / 40ft", material: "Corten Steel / Mild Steel (IS 2062)", bestFor: "Retail Kiosks & Cafes",
+    feedTitle: "Pink Cargo Storage Container 20ft x 8ft Used Shipping Container for Retail Kiosks & Cafes | Portable Office Cabin",
+    size: "20ft x 8ft x 8.5ft", material: "Corten Steel / Mild Steel (IS 2062)", bestFor: "Retail Kiosks & Cafes",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
@@ -244,69 +252,156 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
   },
 
-  // ═════════ NEEDS PRICE — sellable in principle, basePrice is NOT trustworthy ═════════
-  // Each contradicts a figure published elsewhere on your own site. Feeding them would be
-  // an instant landing-page price mismatch. Correct the number, THEN set priceConfirmed:true.
-  // ⚠️ For ids 3, 5 and 9 you must ALSO strip the price ranges from their content components
-  //    first (see the manual checklist) — those pages still publish ₹ ranges.
+  // ═════════ OWNER-PRICED, LANDING PAGE RECONCILED ═════════
+  // These were once "NEEDS PRICE": each carried a suspicious basePrice AND its own landing page
+  // published a contradicting ₹ range. Both halves are now fixed together — the owner supplied
+  // exact ex-GST prices, and the long-form content components (ContainerOfficeContent,
+  // PortableToiletContent, PortaCabinContent) are OFFER-AWARE: ProductDetailServer hands them the
+  // SKU's real price whenever isPurchasable() is true, and they suppress every generic range /
+  // per-sq-ft claim on that page in favour of the one real figure.
+  //
+  // THE RULE THIS ENCODES (learned from the Merchant Center suspension): a price may only be
+  // confirmed together with the page that displays it. If you add a purchasable SKU to a category
+  // whose content component publishes ₹ figures, the component must receive `offer` — never ship
+  // the price and leave the copy to "fix later".
   {
-    id: "2", sku: "POC-SOC-20ST", basePrice: 2800000, priceConfirmed: false, kind: "product", inStock: true,
+    /**
+     * PRICE CONFIRMED BY THE OWNER: ₹3,40,000 ex-GST → ₹4,01,200 incl. 18% GST.
+     * Replaces ₹28,00,000, which was the suspected missing decimal (~10× its peer POC-SOC-MFR).
+     *
+     * LANDING PAGE AGREES — checked, not assumed. This page renders SiteOfficeContainerContent
+     * (ProductDetailServer's `cs === "site-office-containers"` fallback), which publishes
+     * "Standard 20 ft with AC and basic furniture — ₹3.5-4.5 lakh". ₹4,01,200 sits inside that
+     * band, so the visible copy and the offer do not contradict each other.
+     */
+    id: "2", sku: "POC-SOC-20ST", basePrice: 340000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Standard Site Office Container",
     feedTitle: "Standard Site Office Container 20ft x 8ft Corten Steel for Construction Sites | Portable Office Cabin",
     size: "20ft x 8ft x 8.5ft (160 sq ft)", material: "Corten Steel, 50mm Rockwool", bestFor: "Construction Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Site Office Containers",
-    note: "NEEDS CONFIRMED GMC PRICE — ₹28,00,000 for a 20ft site office container is ~10x its peers (POC-SOC-MFR is ₹2,80,000). Almost certainly a missing decimal.",
   },
   {
-    id: "7", sku: "POC-PC-40BH", basePrice: 2800000, priceConfirmed: false, kind: "product", inStock: true,
+    /**
+     * PRICE CONFIRMED BY THE OWNER: ₹9,65,000 ex-GST → ₹11,38,700 incl. 18% GST.
+     * Replaces ₹28,00,000 (the same suspected missing decimal as POC-SOC-20ST).
+     *
+     * LANDING PAGE CANNOT CONTRADICT IT — checked, not assumed. This page renders
+     * PortableCabinContent (the `cs === "portable-cabins"` fallback), which publishes NO ₹ figure
+     * anywhere, so there is nothing on the page for the offer to disagree with.
+     */
+    id: "7", sku: "POC-PC-40BH", basePrice: 965000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Portable Cabin 40ft Bunkhouse",
     feedTitle: "Portable Cabin 40ft Bunkhouse with Bathroom for Worker Accommodation | Portable Office Cabin",
     size: "40ft x 10ft x 9.5ft", material: "MS Frame with Insulated Panels", bestFor: "Worker Accommodation (8–12)",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
-    note: "NEEDS CONFIRMED GMC PRICE — ₹28,00,000 vs a portable-cabins median of ₹2,85,000. Same suspected missing decimal.",
   },
   {
-    id: "3", sku: "POC-CO-40MD", basePrice: 1850000, priceConfirmed: false, kind: "product", inStock: true,
+    /**
+     * PRICE CONFIRMED BY THE OWNER: ₹16,00,000 ex-GST → ₹18,88,000 incl. 18% GST.
+     * Replaces ₹18,50,000 (which contradicted the page's own published ranges).
+     *
+     * LANDING PAGE RECONCILED — the old blocker ("ContainerOfficeContent tells visitors a 40ft
+     * container office is ₹4,00,000–₹7,25,000") is resolved structurally, not by deleting the
+     * guide: ContainerOfficeContent is now offer-aware. ProductDetailServer passes it this SKU's
+     * real price (`contentOffer`), and the component suppresses the ₹7,00,000 hero, the
+     * per-sq-ft claims, the indicative range table and the cost-range FAQ on THIS page, showing
+     * ₹18,88,000 instead. Quotation-only pages in the category keep the generic ranges.
+     */
+    id: "3", sku: "POC-CO-40MD", basePrice: 1600000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Modern Container Office",
     feedTitle: "Modern Container Office 40ft x 8ft Insulated for Workspaces | Portable Office Cabin",
     size: "40ft x 8ft x 9.5ft (320 sq ft)", material: "Corten Steel Container Shell", bestFor: "Modern Workspaces",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
-    note: "NEEDS CONFIRMED GMC PRICE — ContainerOfficeContent.tsx tells visitors a 40ft container office is ₹4,00,000–₹7,25,000. ALSO strip that page's price ranges before enabling.",
   },
   {
-    id: "5", sku: "POC-PT-4UT", basePrice: 900000, priceConfirmed: false, kind: "product", inStock: true,
+    /**
+     * PRICE CONFIRMED BY THE OWNER: ₹5,80,000 ex-GST → ₹6,84,400 incl. 18% GST.
+     * Replaces ₹9,00,000. THE PRICE IS FOR THE COMPLETE 4-UNIT BLOCK — one 20 ft cabin containing
+     * four toilet units — never a per-toilet figure (the "Configuration" spec chip below and the
+     * fixed-price callout on the page both say so explicitly).
+     *
+     * LANDING PAGE RECONCILED — PortableToiletContent (which renders on every portable-toilet
+     * product page) is now offer-aware: on THIS page it suppresses the single-unit tier grid
+     * (₹8,000…₹1,50,000+), the accessible-toilet "Price Range ₹35,000–₹55,000" chip and the
+     * "₹8,500–₹12,000 per piece" prose, showing ₹6,84,400 with a "not a per-toilet figure" note
+     * instead. Those single-unit ranges were never this block's price — leaving them visible
+     * beside a real offer is how a customer concludes the product costs 12× less than it does.
+     */
+    id: "5", sku: "POC-PT-4UT", basePrice: 580000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Portable Toilet Block - 4 Unit",
     feedTitle: "Portable Toilet Block 20ft 4-Unit for Construction Sites & Events | Portable Office Cabin",
     size: "20ft x 8ft x 8ft", material: "MS Steel with Ceramic Sanitary Fittings", bestFor: "Construction Sites & Events",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Toilet Cabins",
-    note: "NEEDS CONFIRMED GMC PRICE — PortableToiletContent.tsx quotes ₹8,500–₹12,000 per unit, so a 4-unit block should be far below ₹9,00,000. ALSO strip that page's price ranges before enabling.",
+    extraSpecs: [{ label: "Configuration", value: "Complete block of 4 toilet units in one 20 ft cabin" }],
   },
   {
-    id: "6", sku: "POC-SC-6GD", basePrice: 480000, priceConfirmed: false, kind: "product", inStock: true,
+    /**
+     * PRICE CONFIRMED BY THE OWNER: ₹4,80,000 ex-GST → ₹5,66,400 incl. 18% GST.
+     * `basePrice` is UNCHANGED from what was already in the catalog — the owner verified the
+     * existing figure was correct, so nothing was recalculated.
+     *
+     * WHY THIS WAS GATED, AND WHY THAT WAS A MISTAKE: the previous note read "NEEDS CONFIRMED GMC
+     * PRICE — SecurityCabinContent.tsx quotes ₹90,000–₹1,20,000 per security cabin." That note was
+     * wrong on both counts. SecurityCabinContent.tsx contains no ₹ figure at all, and the
+     * ₹90,000–₹1,20,000 range lives in PortaCabinContent.tsx describing **4×4 ft** guard cabins
+     * (~16 sq ft). This SKU is **20×10 ft** (200 sq ft) — a different product, ~12× the area. The
+     * gate was comparing unlike sizes.
+     *
+     * NO LANDING-PAGE CONFLICT: this SKU's slug is "guard-security-cabin", which is not in
+     * ProductDetailServer's slug→content injection map, so no price-quoting content component
+     * renders on its page. (SecurityCabinContent renders only on slug "security-cabin", a
+     * different product.) Verified against the rendered HTML, not assumed.
+     */
+    id: "6", sku: "POC-SC-6GD", basePrice: 480000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Guard Security Cabin",
     feedTitle: "Guard Security Cabin 20ft x 10ft with 360 Degree Visibility for Gate Posts | Portable Office Cabin",
     size: "20ft x 10ft x 8ft", material: "MS Steel with Toughened Glass", bestFor: "Gate & Toll Posts",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Security Cabins",
-    note: "NEEDS CONFIRMED GMC PRICE — SecurityCabinContent.tsx quotes ₹90,000–₹1,20,000 per security cabin.",
   },
   {
-    id: "9", sku: "POC-PC-PORTA", basePrice: 1800000, priceConfirmed: false, kind: "product", inStock: true,
+    /**
+     * PRICE CONFIRMED BY THE OWNER: ₹14,00,000 ex-GST → ₹16,52,000 incl. 18% GST.
+     * Replaces ₹18,00,000.
+     *
+     * LANDING PAGE RECONCILED — PortaCabinContent (rendered only on this slug) is now
+     * offer-aware: on THIS page it suppresses the "₹1,050–₹2,500 per sq.ft." claims, the 2025
+     * pricing-reference card, and the guard-cabin / office-cabin price tables, showing
+     * ₹16,52,000 instead. Those tables priced 40×10 ft units; this SKU is 40×12 ft, so their
+     * figures were never this product's price — but sat close enough to read as one.
+     */
+    id: "9", sku: "POC-PC-PORTA", basePrice: 1400000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Porta Cabin",
     feedTitle: "Porta Cabin 40ft x 12ft BIS Certified MS Steel for Offices & Accommodation | Portable Office Cabin",
     size: "40ft x 12ft x 9ft", material: "BIS-Certified MS Steel (ISMC, RHS, SHS)", bestFor: "Offices & Accommodation",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
-    note: "NEEDS CONFIRMED GMC PRICE — PortaCabinContent.tsx tops out at '₹8 lakh+ for fully furnished 40×10 ft'. ALSO strip that page's price ranges before enabling.",
   },
+
+  // ═════════ CUSTOM / PROJECT BUILDS — genuinely quote-only, never fed ═════════
   {
-    id: "10", sku: "POC-CO-GEN", basePrice: 1200000, priceConfirmed: false, kind: "product", inStock: true,
+    id: "10", sku: "POC-CO-GEN", basePrice: 1200000, priceConfirmed: false, kind: "custom", inStock: true,
     h1Title: "Container Office",
     feedTitle: "Container Office 25ft x 14ft High-Tensile MS Steel for Project Sites | Portable Office Cabin",
     size: "25ft x 14ft x 9ft (160–320+ sq ft)", material: "High-Tensile MS / Corten Steel", bestFor: "Project Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
-    note: "NEEDS CONFIRMED GMC PRICE — ContainerOfficeContent.tsx quotes ₹4,00,000–₹7,25,000 for a 40ft unit.",
+    /**
+     * QUOTE-ONLY BY DECISION OF THE OWNER, not merely "awaiting a price".
+     *
+     * Its `size` is a RANGE (160–320+ sq ft), so there is no single configuration a single
+     * checkout price could honestly describe — a fixed price here would necessarily be wrong for
+     * most of the sizes the SKU covers. It was previously filed under "NEEDS PRICE (sellable in
+     * principle)", which invited someone to flip `priceConfirmed` and start selling it; `custom`
+     * makes the gate structural instead, so confirming a price ALONE can never sell it.
+     *
+     * TO MAKE THIS SELLABLE: create ONE exact size + specification (ideally as its own SKU),
+     * then set kind back to "product" with that SKU's own confirmed price. Do not re-point this
+     * record at a range.
+     *
+     * The old note read "NEEDS CONFIRMED GMC PRICE — ContainerOfficeContent.tsx quotes
+     * ₹4,00,000–₹7,25,000 for a 40ft unit" — retained here as history only. That range is for a
+     * 40ft unit and is NOT this SKU's price: this record is 25ft x 14ft.
+     */
+    note: "Quote-only: size is a range (160–320+ sq ft), so no single fixed price is honest. Needs one exact size + spec before it can be sold or fed.",
   },
-
-  // ═════════ CUSTOM / PROJECT BUILDS — genuinely quote-only, never fed ═════════
   {
     id: "4", sku: "POC-PH-2BHK", basePrice: 1800000, priceConfirmed: false, kind: "custom", inStock: true,
     h1Title: "Family Prefab Home 2BHK",

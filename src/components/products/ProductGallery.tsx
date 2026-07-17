@@ -99,9 +99,13 @@ export function ProductGallery({
             Featured
           </span>
         )}
+        {/* Every cabin is fabricated against the order — nothing ships off a shelf — so the badge
+            states the real fulfilment model rather than implying warehouse stock. The `inStock`
+            flag still gates it: it means "we are currently accepting orders for this", not
+            "a finished unit is sitting in a yard". */}
         {inStock && (
           <span className="bg-primary text-primary-foreground text-sm font-semibold px-4 py-1.5 rounded-full">
-            In Stock
+            Made to Order
           </span>
         )}
       </div>

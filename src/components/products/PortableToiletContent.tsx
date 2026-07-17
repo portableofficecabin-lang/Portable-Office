@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Shield, Droplets, Leaf, Lock, Wrench, FileCheck, Accessibility, IndianRupee, Factory, Truck, CheckCircle2, Sparkles, Phone } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
 const keyFeatures = [
   { icon: Factory, title: "Built-Type Prefab Construction", desc: "Rapid deployment and easy relocation — portable toilets are easy to install and move, emphasizing portability and quick setup." },
@@ -27,7 +28,15 @@ const pricingTiers = [
   { tier: "Multi-Seater & Mobile Vans", range: "₹60,000 – ₹1,50,000+", desc: "Large-scale solutions for events and townships" },
 ];
 
-export function PortableToiletContent() {
+/**
+ * `offer` is present when the CURRENT product page is purchasable (passed in by
+ * ProductDetailServer from isPurchasable()). This guide's ₹ figures — the per-single-unit tier
+ * grid, the accessible-toilet price-range chip and the per-piece prose — describe SINGLE toilet
+ * units, so on a purchasable page (e.g. the complete 4-unit block) they would read as a wildly
+ * lower price for the very product being sold. With `offer` set they are replaced by the one
+ * real, chargeable figure.
+ */
+export function PortableToiletContent({ offer }: { offer?: FixedOffer }) {
   return (
     <div className="space-y-10 mb-12">
       {/* Hero Introduction */}
@@ -114,26 +123,35 @@ export function PortableToiletContent() {
         </div>
       </div>
 
-      {/* Pricing Tiers */}
+      {/* Pricing Tiers — the tier grid quotes per-SINGLE-UNIT figures (₹8,000…₹1,50,000+), so on a
+          purchasable page it is replaced by the real offer: a complete multi-unit block priced as
+          one product must never sit beside single-toilet prices that look like its price. */}
       <div>
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
             <IndianRupee className="w-5 h-5 text-accent" />
           </div>
           <div>
-            <h3 className="font-display font-bold text-xl text-foreground">Indicative Pricing (2025)</h3>
-            <p className="text-xs text-muted-foreground">Ex-factory before GST</p>
+            <h3 className="font-display font-bold text-xl text-foreground">{offer ? "Price" : "Indicative Pricing (2025)"}</h3>
+            {!offer && <p className="text-xs text-muted-foreground">Ex-factory before GST</p>}
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {pricingTiers.map((tier, i) => (
-            <div key={i} className="bg-card border border-border/50 rounded-xl p-5 hover:border-accent/30 transition-colors">
-              <p className="font-display font-bold text-accent text-lg mb-1">{tier.range}</p>
-              <p className="font-semibold text-foreground text-sm mb-1">{tier.tier}</p>
-              <p className="text-muted-foreground text-xs">{tier.desc}</p>
-            </div>
-          ))}
-        </div>
+        {offer ? (
+          <FixedPriceCallout
+            offer={offer}
+            note="This price is for the complete unit named above — it is not a per-seat or per-toilet figure."
+          />
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {pricingTiers.map((tier, i) => (
+              <div key={i} className="bg-card border border-border/50 rounded-xl p-5 hover:border-accent/30 transition-colors">
+                <p className="font-display font-bold text-accent text-lg mb-1">{tier.range}</p>
+                <p className="font-semibold text-foreground text-sm mb-1">{tier.tier}</p>
+                <p className="text-muted-foreground text-xs">{tier.desc}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Accessible Toilets */}
@@ -172,7 +190,10 @@ export function PortableToiletContent() {
               </tr>
             </thead>
             <tbody>
-              {accessibleSpecs.map((spec, i) => (
+              {/* On a purchasable page the accessible-toilet "Price Range ₹35,000–₹55,000" chip is
+                  dropped — it describes a different (single accessible) unit, and a visible ₹ range
+                  beside the real offer reads as this product's price. */}
+              {accessibleSpecs.filter((spec) => !offer || spec.label !== "Price Range").map((spec, i) => (
                 <tr key={i} className="border-t border-border/50">
                   <td className="p-3 text-muted-foreground font-medium">{spec.label}</td>
                   <td className="p-3 text-foreground">{spec.value}</td>
@@ -194,9 +215,14 @@ export function PortableToiletContent() {
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">
           When you need to deploy large numbers of units across labour colonies, small construction sites, or temporary projects with tight budgets, economical MS portable toilets deliver essential functionality without unnecessary frills. A standard economical MS cabin measures approximately <strong className="text-foreground">3'x3'x7'</strong>, constructed with 2–3mm MS thickness.
         </p>
-        <p className="text-sm text-muted-foreground mb-5">
-          <strong className="text-foreground">Real-world pricing:</strong> Starting from approx. ₹8,500–₹12,000 per piece (2025) for standard single units without water tank, ex-factory. Volume discounts apply for orders exceeding 20–50 units.
-        </p>
+        {/* Per-piece single-unit pricing — quotation-only pages only. On a purchasable page this
+            "₹8,500–₹12,000 per piece" line would read as the product's price and contradict the
+            fixed offer above. */}
+        {!offer && (
+          <p className="text-sm text-muted-foreground mb-5">
+            <strong className="text-foreground">Real-world pricing:</strong> Starting from approx. ₹8,500–₹12,000 per piece (2025) for standard single units without water tank, ex-factory. Volume discounts apply for orders exceeding 20–50 units.
+          </p>
+        )}
         <div className="grid sm:grid-cols-2 gap-3">
           {[
             "Lightweight yet durable construction for easy handling and relocation",

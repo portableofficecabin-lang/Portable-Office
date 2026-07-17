@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { ProductCard } from "@/components/products/ProductCard";
 import dynamic from "next/dynamic";
 import { Product, Category, getProductDetailPath } from "@/data/products";
+import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { cn } from "@/lib/utils";
 
 // Enquiry form is click-only — defer its chunk out of the listing first-load JS.
@@ -288,7 +290,20 @@ export function ProductsPageContent({
                         <Link href={getProductDetailPath(p)} className="font-medium text-foreground hover:text-accent transition-colors">{p.name}</Link>
                         {p.shortDescription && <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{p.shortDescription}</p>}
                         <div className="text-xs text-muted-foreground mt-0.5">
-                          <span className="text-accent font-semibold">{p.price ? `₹${p.price.toLocaleString("en-IN")}` : "Contact for price"}</span>
+                          {/* Same source as the product card, the detail page, the JSON-LD and the
+                              feed: the commerce catalog via sellPrice(). This index used to render
+                              the legacy static `p.price` field, which drifts from the catalog and
+                              published a DIFFERENT figure than the card directly above it — the
+                              exact landing-page price mismatch that got the Merchant Center account
+                              suspended. Quote-only products show no figure at all. */}
+                          <span className="text-accent font-semibold">
+                            {(() => {
+                              const c = getCommerce(p.id);
+                              return isPurchasable(p.id) && c
+                                ? `${formatINR(sellPrice(c.basePrice))} incl. GST`
+                                : "Contact for price";
+                            })()}
+                          </span>
                           <span className="mx-1.5">·</span>
                           <span>{p.category}</span>
                         </div>

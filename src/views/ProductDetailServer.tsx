@@ -109,6 +109,18 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
   const purchasable = isPurchasable(product.id);
   const sellingPrice = commerce ? sellPrice(commerce.basePrice) : undefined;
 
+  /**
+   * Handed to the long-form category content (ContainerOfficeContent, PortableToiletContent,
+   * PortaCabinContent). When set, those components suppress every generic ₹ range / per-sq-ft
+   * claim and show THIS figure instead — so the content section can never publish a number that
+   * contradicts the buy box, the cart, the JSON-LD or the Merchant feed. Quote-only pages get
+   * `undefined` and keep their indicative ranges, where no chargeable price exists to contradict.
+   */
+  const contentOffer =
+    purchasable && commerce && sellingPrice !== undefined
+      ? { sellPriceInr: sellingPrice, name: commerce.h1Title }
+      : undefined;
+
   // The <h1> is the commerce catalog's short, clean product name. getProductH1() still drives
   // the SEO metadata elsewhere, but several of its titles are keyword-stuffed ("… – Types,
   // Pricing & Guide"), which is a poor page title AND a weak match for the Merchant feed item.
@@ -363,9 +375,17 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   is gated. Driven entirely by getKeySpecs(commerce). */}
               {commerce && <ProductKeySpecs commerce={commerce} className="mb-6" />}
 
-              {/* Delivery window + stock status, server-rendered right above the CTAs.
-                  The wording is locked to the JSON-LD: inStock → "In Stock" (InStock),
-                  !inStock → "Made to Order" (the schema emits BackOrder/OutOfStock). */}
+              {/* Delivery window + fulfilment status, server-rendered right above the CTAs.
+                  Every cabin is fabricated against the order, so the chip states that plainly.
+
+                  DELIBERATE, AND THE REASONING MATTERS: the visible wording is no longer a literal
+                  mirror of the JSON-LD token. The schema still emits InStock for `inStock` SKUs,
+                  which stays TRUE under Google's model — availability answers "can you fulfil this
+                  order?", and the manufacturing lead time is carried by `deliveryDays` /
+                  handling time, not by the availability enum. "Made to Order" describes the
+                  fulfilment model, not a stock-out. Do NOT read this as licence to let the price
+                  or the availability ENUM drift from the markup — that mismatch is what suspended
+                  the Merchant Center account. */}
               {commerce && (
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-sm">
                   <span className="flex items-center gap-1.5 text-muted-foreground">
@@ -378,7 +398,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                       className={`h-2 w-2 rounded-full ${commerce.inStock ? "bg-green-500" : "bg-amber-500"}`}
                       aria-hidden="true"
                     />
-                    {commerce.inStock ? "In Stock" : "Made to Order"}
+                    Made to Order
                   </span>
                 </div>
               )}
@@ -418,8 +438,8 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           </div>
 
           {/* Category-specific content (server-rendered) */}
-          {isStaticProduct && cs === "portable-toilet-cabins" && <div className="mt-16"><PortableToiletContent /></div>}
-          {cs === "portable-cabins" && slug === "porta-cabin" && <div className="mt-16"><PortaCabinContent /></div>}
+          {isStaticProduct && cs === "portable-toilet-cabins" && <div className="mt-16"><PortableToiletContent offer={contentOffer} /></div>}
+          {cs === "portable-cabins" && slug === "porta-cabin" && <div className="mt-16"><PortaCabinContent offer={contentOffer} /></div>}
           {cs === "portable-cabins" && slug === "ms-portable-cabin" && <div className="mt-16"><MSPortableCabinContent /></div>}
           {cs === "portable-cabins" && slug === "office-portable-cabin" && <div className="mt-16"><OfficePortableCabinContent /></div>}
           {cs === "portable-cabins" && slug === "prefabricated-portable-cabin" && <div className="mt-16"><PrefabricatedPortableCabinContent /></div>}
@@ -436,9 +456,9 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}
           {cs === "container-offices" && slug === "vip-container-office" && <div className="mt-16"><VipContainerOfficeContent /></div>}
-          {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent /></div>}
+          {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-for-sale" && <div className="mt-16"><ShippingContainerForSaleContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-rental" && <div className="mt-16"><ShippingContainerRentalContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-kormangala" && <div className="mt-16"><ShippingContainerKormangalaContent /></div>}
@@ -449,7 +469,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-in-peenya-industrial" && <div className="mt-16"><ShippingContainerPeenyaContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers" && <div className="mt-16"><CargoStorageContainersContent /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-containers" && <div className="mt-16"><CargoContainersContent /></div>}
-          {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers-pink" && <div className="mt-16"><CargoStorageContainersPinkContent /></div>}
+          {cs === "cargo-storage-shipping-containers" && slug === "cargo-storage-containers-pink" && <div className="mt-16"><CargoStorageContainersPinkContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-shipping-container" && <div className="mt-16"><CargoShippingContainerContent /></div>}
           {cs === "g1-workmen-accommodation" && slug === "workmen-accommodation" && <div className="mt-16"><WorkmenAccommodationContent /></div>}
           {cs === "g1-workmen-accommodation" && slug === "labour-colony" && <div className="mt-16"><LabourColonyContent /></div>}
