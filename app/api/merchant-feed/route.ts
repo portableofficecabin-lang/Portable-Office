@@ -77,6 +77,52 @@ const FEED_IMAGE_POLICY: Record<string, { drop?: string[]; blockReason?: string 
   "POC-VIP-40": { blockReason: "GMC image replacement required — every gallery image carries a 'MODU-L' brand wordmark" },
 };
 
+/**
+ * ── STABLE FEED IMAGES ──────────────────────────────────────────────────────────────────────────
+ * FEED-ONLY image-URL stabilisation.
+ *
+ * WHY: the catalog's imported assets resolve to bundler-hashed paths
+ * (/_next/static/media/<name>.<hash>.webp). The hash changes whenever the asset pipeline
+ * re-fingerprints, so the image URL Google crawled yesterday can 404 after today's deploy —
+ * which surfaces in Merchant Center as "Unable to show image". A file under public/ has a
+ * permanent URL that survives every build.
+ *
+ * HOW: any feed image whose basename appears below is rewritten to its permanent
+ * /images/products/<name> URL (those public files are the pre-optimised web variants of the very
+ * same photos — e.g. office-portable-cabin-main is the square 800×800 cut). The set is explicit,
+ * not an fs scan, so the feed's behaviour is identical in every environment and reviewable in a
+ * diff. After rewriting, ANY image still on /_next/ is dropped from the item rather than
+ * submitted — the feed structurally cannot emit a hash-rotating URL. If dropping leaves an item
+ * imageless, the existing "no compliant image" exclusion takes over.
+ *
+ * Feed-only by design: the PAGE keeps using the imported asset (next/image serves it and the
+ * page's URL is always in sync with its own build); only the URLs submitted to Google change.
+ *
+ * TO ADD A PRODUCT IMAGE: put the optimised copy in public/images/products/ and list its
+ * basename here.
+ */
+const STABLE_IMAGE_BASENAMES = new Set<string>([
+  "office-portable-cabin-main.webp",              // POC-PC-OFFICE  (GMC "Unable to show image", 2026-07)
+  "cabin-portable-site.webp",                     // POC-PC-CABPORT
+  "cabins-in-office-modern.webp",                 // POC-CO-CABIN
+  "cargo-container-for-sale-main.webp",           // POC-CC-FS
+  "cargo-storage-container-40ft.webp",            // POC-CSC-2040
+  "cargo-storage-containers-pink-main.webp",      // POC-CSC-PINK
+  "labor-hutments-aerial.webp",                   // POC-LH-WORKER
+  "labour-hutments-staff-accommodation-1.webp",   // POC-LH-STAFF
+  "prefab-porta-cabin-exterior.webp",             // POC-PC-PREFAB + POC-PC-PPCB (shared photo)
+  "shipping-container-stacked.webp",              // POC-SC-40HC
+  "steel-portable-office-container-crane.webp",   // POC-SOC-SPOC
+]);
+
+/** Rewrite a bundler-hashed asset URL to its permanent public twin; unknown URLs pass through. */
+function stabilizeImageUrl(url: string): string {
+  const m = url.match(/\/_next\/static\/media\/(.+)\.[a-f0-9]{8}\.(\w+)$/);
+  if (!m) return url;
+  const base = `${m[1]}.${m[2]}`;
+  return STABLE_IMAGE_BASENAMES.has(base) ? toAbsolute(`/images/products/${base}`) : url;
+}
+
 /** Merchant Center hard-rejects a title over 150 characters. feedTitle is written to fit. */
 const MAX_TITLE_LENGTH = 150;
 
@@ -512,6 +558,24 @@ function generateFeed(): { xml: string; count: number } {
       console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: GMC image replacement required — no compliant image left after policy filtering`);
       continue;
     }
+
+    // Swap every bundler-hashed URL for its stable public twin, then refuse to submit anything
+    // still on /_next/ — a hash-rotating URL in the feed is a future "Unable to show image"
+    // disapproval, and an absent image is strictly better than a breaking one.
+    images = images.map(stabilizeImageUrl);
+    const unstable = images.filter((u) => u.includes("/_next/"));
+    if (unstable.length > 0) {
+      console.warn(
+        `[merchant-feed] ${commerce.sku}: dropped ${unstable.length} un-stabilised /_next/ image(s) — ` +
+          `add optimised copies to public/images/products/ and list them in STABLE_IMAGE_BASENAMES`,
+      );
+      images = images.filter((u) => !u.includes("/_next/"));
+    }
+    if (images.length === 0) {
+      console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: no stable image available`);
+      continue;
+    }
+
     seenIds.add(commerce.sku);
     items.push(buildItem(commerce, product, images));
   }
