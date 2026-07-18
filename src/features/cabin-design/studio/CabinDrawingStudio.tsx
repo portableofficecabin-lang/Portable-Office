@@ -35,6 +35,8 @@ import {
   deleteDesign, listDesigns, newDesignId, saveDesign, type CabinDesignRecord,
 } from "@/lib/quotation/cabinDesignStore";
 
+import { StudioTabBoundary } from "./StudioTabBoundary";
+
 const Cabin3DLoader = dynamic(() => import("@/features/cabin-design/viewer3d/Cabin3DLoader"), {
   ssr: false,
   loading: () => (
@@ -262,7 +264,9 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
           </div>
         </div>
       ) : tab === "3d" ? (
-        <Cabin3DLoader model={model} viewMode={viewMode} boqLookup={boqLookup} selectedId={selectedId} onSelectPart={setSelectedId} />
+        <StudioTabBoundary label="3D view">
+          <Cabin3DLoader model={model} viewMode={viewMode} boqLookup={boqLookup} selectedId={selectedId} onSelectPart={setSelectedId} />
+        </StudioTabBoundary>
       ) : tab === "reports" ? (
         <div className="space-y-4">
           <div>
@@ -281,15 +285,17 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
           </div>
         </div>
       ) : (
-        <AssemblyVideoLoader
-          model={model}
-          boqResult={boqResult}
-          viewMode={viewMode}
-          projectName={model.meta.title}
-          customerName={customerName || undefined}
-          selectedId={selectedId}
-          onSelectPart={setSelectedId}
-        />
+        <StudioTabBoundary label="Assembly video">
+          <AssemblyVideoLoader
+            model={model}
+            boqResult={boqResult}
+            viewMode={viewMode}
+            projectName={model.meta.title}
+            customerName={customerName || undefined}
+            selectedId={selectedId}
+            onSelectPart={setSelectedId}
+          />
+        </StudioTabBoundary>
       )}
     </div>
   );

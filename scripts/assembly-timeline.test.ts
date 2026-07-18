@@ -38,7 +38,9 @@ const msCabin = model(cfg({ length: 20, width: 10, height: 8, structureId: "gi",
 const pufCabin = model(cfg({ length: 20, width: 10, height: 8, structureId: "puf", roofId: "sloped" }));
 const longCabin = model(cfg({ length: 40, width: 10, height: 8 }));
 const smallCabin = model(cfg({ length: 8, width: 6, height: 7 }));
-const multiRoom = model(cfg({ length: 24, width: 10, height: 8, roomCount: 3, partitionDoor: true }));
+// NOTE: partitions require roomLengths (a multi-element array), not just roomCount — roomRangesMm
+// keys off config.roomLengths. Setting only roomCount produces ZERO partitions (verified).
+const multiRoom = model(cfg({ length: 24, width: 10, height: 8, roomCount: 3, roomLengths: [8, 8, 8], partitionDoor: true }));
 const toiletCabin = model(cfg({}, "toilet-cabin"));
 const storageCabin = model(cfg({}, "storage-container"));
 
@@ -293,6 +295,112 @@ section("review fix: all fly-in offsets are finite and within the ±3.5 m clamp"
   }
   check("no offset is NaN/Infinity or beyond the clamp", ok);
   check("most parts actually travel (offset non-zero)", moved > tMs.schedule.length * 0.5);
+}
+
+/* ---- TASK 3 — representative cabin configurations: invariants across the board -------------- */
+section("TASK 3 — representative configurations all build valid, sound timelines");
+{
+  const configs: [string, CabinConfig][] = [
+    ["standard MS 20x10", cfg({ length: 20, width: 10, height: 8, structureId: "gi", roofId: "sloped" })],
+    ["PUF 20x10", cfg({ length: 20, width: 10, height: 8, structureId: "puf" })],
+    ["2-room hinged", cfg({ length: 24, width: 10, roomCount: 2, roomLengths: [12, 12], partitionDoor: true, partitionDoorType: "hinged" })],
+    ["2-room sliding", cfg({ length: 24, width: 10, roomCount: 2, roomLengths: [12, 12], partitionDoor: true, partitionDoorType: "sliding", partitionSlideDirection: "front" })],
+    ["3-room fixed", cfg({ length: 30, width: 10, roomCount: 3, roomLengths: [10, 10, 10], partitionDoor: false })],
+    ["toilet cabin", cfg({}, "toilet-cabin")],
+    ["storage container", cfg({}, "storage-container")],
+    ["40ft long", cfg({ length: 40, width: 10, height: 8 })],
+    ["small 8x6", cfg({ length: 8, width: 6, height: 7 })],
+    ["custom window", cfg({ length: 20, width: 10, windowWidthFt: 5, windowHeightFt: 4 })],
+    ["flat roof", cfg({ length: 20, width: 10, roofId: "flat" })],
+  ];
+
+  for (const [name, c] of configs) {
+    const m = model(c);
+    const t = buildAssemblyTimeline(m, null);
+    const v = validateAssemblyTimeline(t, m);
+
+    check(`${name}: validates with no errors`, v.ok);
+    // strictly increasing assemblyStep (logical build order)
+    check(`${name}: steps in strict assemblyStep order`, t.steps.every((s, i) => i === 0 || t.steps[i - 1].assemblyStep < s.assemblyStep));
+    // every installable part scheduled exactly once (no part installed twice; nothing left floating)
+    const installable = m.parts.filter((p) => p.assemblyStep >= 1 && p.assemblyStep <= 16).map((p) => p.id);
+    const sched = t.schedule.map((e) => e.partId);
+    check(`${name}: every installable part scheduled exactly once`, sched.length === new Set(sched).size && installable.every((id) => sched.includes(id)));
+    // offsets finite + clamped (no part flies to infinity / through the world)
+    check(`${name}: all fly-in offsets finite + within ±3.5m`, t.schedule.every((e) => e.enterOffset.every((n) => Number.isFinite(n) && Math.abs(n) <= 3.5)));
+    // cameras finite for every step (framing works for 40ft/small alike)
+    check(`${name}: all step cameras finite`, t.steps.every((s) => [...s.camera.from.position, ...s.camera.to.position, ...s.camera.from.target, ...s.camera.to.target].every(Number.isFinite)));
+    // no caption carries undefined/NaN (customer mode never leaks debug values)
+    const capText = t.steps.flatMap((s) => [s.title, s.captionCustomer, s.captionEngineering ?? "", ...s.engineering.map((r) => JSON.stringify(r))]).join(" ") + t.intro.title + t.intro.subtitle + t.outro.title;
+    check(`${name}: no caption contains undefined/NaN`, !/undefined|NaN/.test(capText));
+    // skip-absent: a step exists IFF the model has a part for it
+    const presentSteps = new Set(t.steps.map((s) => s.assemblyStep));
+    const okSkip = ([9, 15, 16] as const).every((step) => (m.parts.some((p) => p.assemblyStep === step)) === presentSteps.has(step));
+    check(`${name}: partition/plumbing/furniture steps present iff their parts exist`, okSkip);
+  }
+}
+
+/* ---- TASK 3 — material-accurate captions per configuration ---------------------------------- */
+section("TASK 3 — captions match the real construction (PUF/MS, partitions, sliding)");
+{
+  const pufWall = buildAssemblyTimeline(pufCabin, null).steps.find((s) => s.assemblyStep === 6);
+  const msWall = tMs.steps.find((s) => s.assemblyStep === 6);
+  check("PUF wall caption says PUF", !!pufWall && /puf/i.test(pufWall.captionCustomer));
+  check("MS wall caption never says PUF", !!msWall && !/puf/i.test(`${msWall.captionCustomer} ${msWall.captionEngineering}`));
+
+  const twoRoom = model(cfg({ length: 24, width: 10, roomCount: 2, roomLengths: [12, 12], partitionDoor: true, partitionDoorType: "hinged" }));
+  const tTwo = buildAssemblyTimeline(twoRoom, null);
+  const s9 = tTwo.steps.find((s) => s.assemblyStep === 9);
+  check("2-room cabin generates a partition step", !!s9);
+  check("2-room partition caption states the room count", !!s9 && /2 rooms/.test(s9.captionCustomer));
+  check("2-room cabin has partition parts in the model", twoRoom.parts.some((p) => p.kind === "partition"));
+
+  const sliding = model(cfg({ length: 24, width: 10, roomCount: 2, roomLengths: [12, 12], partitionDoor: true, partitionDoorType: "sliding", partitionSlideDirection: "front" }));
+  const tSlide = buildAssemblyTimeline(sliding, null);
+  const s9s = tSlide.steps.find((s) => s.assemblyStep === 9);
+  check("sliding cabin has a sliding-leaf door part", sliding.parts.some((p) => p.kind === "door" && /slid/i.test(p.label)));
+  check("sliding partition caption mentions the sliding leaf", !!s9s && /slid/i.test(s9s.captionEngineering ?? ""));
+  check("hinged partition caption does NOT mention sliding", (() => { const s = buildAssemblyTimeline(twoRoom, null).steps.find((x) => x.assemblyStep === 9); return !!s && !/slid/i.test(`${s.captionCustomer} ${s.captionEngineering}`); })());
+}
+
+/* ---- TASK 4 — config changes regenerate; rate-only changes do not -------------------------- */
+section("TASK 4 — geometry changes regenerate the timeline; a BOQ rate change does not");
+{
+  const base = cfg({ length: 20, width: 10, height: 8 });
+  const baseModelJson = JSON.stringify(model(base));
+  // A geometry change must regenerate the GEOMETRY (the shared model). The timeline is a pure function
+  // of the model, so a new model ⇒ a rebuilt timeline. (The schedule stores RELATIVE motion + timing
+  // keyed by part id, so height / window-size changes flow through part geometry + camera framing, not
+  // the schedule array — that is correct, not a regression.)
+  const changes: [string, Partial<CabinConfig>][] = [
+    ["length", { length: 28 }],
+    ["width", { width: 12 }],
+    ["height", { height: 10 }],
+    ["roof type", { roofId: "flat" }],
+    ["add partitions", { roomCount: 2, roomLengths: [10, 10], partitionDoor: true }],
+    ["custom window size", { windowWidthFt: 6, windowHeightFt: 4 }],
+  ];
+  for (const [label, patch] of changes) {
+    check(`changing ${label} regenerates the geometry (model)`, JSON.stringify(model({ ...base, ...patch })) !== baseModelJson);
+  }
+  // structural changes that add/move parts also change the schedule + timing
+  check("length change also changes the schedule", JSON.stringify(buildAssemblyTimeline(model({ ...base, length: 28 }), null).schedule) !== JSON.stringify(buildAssemblyTimeline(model(base), null).schedule));
+  // a taller cabin reframes the cinematic camera (bounds grow ⇒ different framing)
+  check("taller cabin reframes the camera", JSON.stringify(buildAssemblyTimeline(model({ ...base, height: 12 }), null).steps.map((s) => s.camera)) !== JSON.stringify(buildAssemblyTimeline(model(base), null).steps.map((s) => s.camera)));
+
+  // rate-only: SAME model, different BOQ input → schedule + timing + camera byte-identical
+  const m = model(base);
+  const a = buildAssemblyTimeline(m, null);
+  const b = buildAssemblyTimeline(m, { lines: [{ id: "floor:board", material: "X", spec: "Y", qty: 1, uom: "nos", rate: 999, amount: 999, totalWeightKg: 5 }] } as never);
+  check("BOQ rate change leaves the schedule byte-identical", JSON.stringify(a.schedule) === JSON.stringify(b.schedule));
+  const proj = (t: typeof a) => t.steps.map((s) => ({ startMs: s.startMs, endMs: s.endMs, partIds: s.partIds, camera: s.camera }));
+  check("BOQ rate change leaves step timing + camera identical", JSON.stringify(proj(a)) === JSON.stringify(proj(b)));
+
+  // legacy config (missing optional fields) still builds a valid timeline
+  const legacy = { ...buildDefaultConfig(), tables: undefined, socketPlan: undefined, roomLengths: undefined } as unknown as CabinConfig;
+  let legacyOk = true;
+  try { const lt = buildAssemblyTimeline(buildCabinModel(legacy), undefined); legacyOk = validateAssemblyTimeline(lt, buildCabinModel(legacy)).ok; } catch { legacyOk = false; }
+  check("legacy config (missing optional fields) builds + validates", legacyOk);
 }
 
 /* ---- stub for describeStep-only wording tests ---------------------------------------------- */
