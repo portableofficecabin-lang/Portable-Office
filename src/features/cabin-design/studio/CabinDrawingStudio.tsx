@@ -17,7 +17,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { Boxes, FileBarChart, FolderOpen, Layers, Loader2, Ruler, Save, Trash2, Users } from "lucide-react";
+import { Boxes, FileBarChart, Film, FolderOpen, Layers, Loader2, Ruler, Save, Trash2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
@@ -40,6 +40,17 @@ const Cabin3DLoader = dynamic(() => import("@/features/cabin-design/viewer3d/Cab
   loading: () => (
     <div className="flex h-[420px] items-center justify-center rounded-xl border border-border bg-muted/30 text-sm text-muted-foreground">
       <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading 3D viewer…
+    </div>
+  ),
+});
+
+// The assembly-video island is lazier still: three.js + the exporter only load when this tab opens,
+// never on the public bundle or the other studio tabs.
+const AssemblyVideoLoader = dynamic(() => import("@/features/cabin-design/animation/AssemblyVideoLoader"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[420px] items-center justify-center rounded-xl border border-border bg-muted/30 text-sm text-muted-foreground">
+      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading assembly animation…
     </div>
   ),
 });
@@ -77,7 +88,7 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
   const boqLookup = useCallback((part: CabinPart) => boqForPart(part, boqResult), [boqResult]);
 
   const [viewMode, setViewMode] = useState<ViewMode>("engineering");
-  const [tab, setTab] = useState<"2d" | "3d" | "reports">("2d");
+  const [tab, setTab] = useState<"2d" | "3d" | "reports" | "video">("2d");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedPart = selectedId ? model.parts.find((p) => p.id === selectedId) ?? null : null;
 
@@ -206,10 +217,10 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
 
       {/* tabs */}
       <div className="inline-flex rounded-lg border border-border p-0.5">
-        {([["2d", "2D Engineering"], ["3d", "3D & Exploded"], ["reports", "Reports & Manufacturing"]] as const).map(([id, label]) => (
+        {([["2d", "2D Engineering"], ["3d", "3D & Exploded"], ["reports", "Reports & Manufacturing"], ["video", "Assembly Video"]] as const).map(([id, label]) => (
           <button key={id} onClick={() => setTab(id)}
             className={cn("inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium", tab === id ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground")}>
-            {id === "2d" ? <Layers className="h-3.5 w-3.5" /> : id === "3d" ? <Boxes className="h-3.5 w-3.5" /> : <FileBarChart className="h-3.5 w-3.5" />} {label}
+            {id === "2d" ? <Layers className="h-3.5 w-3.5" /> : id === "3d" ? <Boxes className="h-3.5 w-3.5" /> : id === "reports" ? <FileBarChart className="h-3.5 w-3.5" /> : <Film className="h-3.5 w-3.5" />} {label}
           </button>
         ))}
       </div>
@@ -252,7 +263,7 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
         </div>
       ) : tab === "3d" ? (
         <Cabin3DLoader model={model} viewMode={viewMode} boqLookup={boqLookup} selectedId={selectedId} onSelectPart={setSelectedId} />
-      ) : (
+      ) : tab === "reports" ? (
         <div className="space-y-4">
           <div>
             <div className="mb-2 text-sm font-semibold">Reports (live from the Material BOQ)</div>
@@ -269,6 +280,16 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
             </div>
           </div>
         </div>
+      ) : (
+        <AssemblyVideoLoader
+          model={model}
+          boqResult={boqResult}
+          viewMode={viewMode}
+          projectName={model.meta.title}
+          customerName={customerName || undefined}
+          selectedId={selectedId}
+          onSelectPart={setSelectedId}
+        />
       )}
     </div>
   );
