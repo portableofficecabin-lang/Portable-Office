@@ -98,15 +98,21 @@ export function EngineeringSheets({ model, config, viewMode, boqResult, selected
         </>
       )}
 
-      <Block title="Electrical Layout">
-        <CabinPlanSheet model={model} config={config} show={["electrical"]} title="All electrical points, sockets, switches & DB" {...sel} />
-      </Block>
+      {/* Full electrical + socket schedules are engineering detail; customer mode keeps the
+          friendlier lighting reflected plan only. */}
+      {engineering && (
+        <Block title="Electrical Layout">
+          <CabinPlanSheet model={model} config={config} show={["electrical"]} title="All electrical points, sockets, switches & DB" {...sel} />
+        </Block>
+      )}
       <Block title="Lighting Layout">
         <CabinPlanSheet model={model} config={config} show={["electrical"]} kinds={["light", "fan"]} title="Lights & fans (reflected)" {...sel} />
       </Block>
-      <Block title="Socket Layout">
-        <CabinPlanSheet model={model} config={config} show={["electrical"]} kinds={["socket", "switch", "electrical-panel"]} title="Sockets, switch boards & DB" {...sel} />
-      </Block>
+      {engineering && (
+        <Block title="Socket Layout">
+          <CabinPlanSheet model={model} config={config} show={["electrical"]} kinds={["socket", "switch", "electrical-panel"]} title="Sockets, switch boards & DB" {...sel} />
+        </Block>
+      )}
 
       {hasPlumbing && (
         <Block title="Plumbing Layout">

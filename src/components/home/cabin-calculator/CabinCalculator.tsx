@@ -41,7 +41,7 @@ import {
   placementLabel, LEGACY_WINDOW_POSITIONS,
   DOOR_HANDS, DOOR_SWINGS, PARTITION_HINGES, PARTITION_SWINGS, PARTITION_DOOR_TYPES, doorOpeningLabel,
   PARTITION_SLIDE_SIDES, PARTITION_SLIDE_DIRECTIONS, partitionSlideFits, partitionSlideRunFt,
-  clampPartitionSlideOffset, partitionSlideOffsetRange, partitionSpecLabel,
+  clampPartitionSlideOffset, partitionSlideOffsetRange, partitionSpecLabel, slidingDoorModel,
   type DoorHand, type DoorSwing, type PartitionHinge, type PartitionSwing,
   type PartitionSlideSide, type PartitionSlideDirection,
   buildDefaultConfig, computeEstimate, summariseConfig, formatINR, cabinRatePerSqft, tablesOf,
@@ -487,15 +487,19 @@ function FloorPreview({ length, width, doorPlacements, windowPlacements, windowW
         const cy = hinge === "top" ? dBot : dTop;   // closed leaf tip
         const sweep = dir * (cy - hy) > 0 ? 1 : 0;
         // Sliding: the leaf hangs on one FACE of the partition (+x = right room) and travels
-        // ALONG it (+y = toward the front wall). Clamp the parked leaf to the blank partition
-        // that actually exists — this preview has no margin, so an unclamped run would be drawn
-        // over the dimension text and clipped by the viewBox.
-        const face = (partitionSlideSide ?? "right") === "right" ? 1 : -1;
-        const travel = (partitionSlideDirection ?? "rear") === "front" ? 1 : -1;
+        // ALONG it (+y = toward the front wall). Face/travel/park all come from the shared
+        // `slidingDoorModel` so this preview agrees with the main plan. This preview has no
+        // margin, so the parked leaf is additionally clamped inside the box [pad, pad+h].
+        const slideModel = slidingDoorModel({
+          width: W, partitionDoorOffset: partitionDoorOffset ?? 0,
+          partitionSlideSide, partitionSlideDirection,
+        });
+        const face = slideModel.faceSign;
+        const travel = slideModel.travelSign;
         const sOpen = travel < 0 ? dTop : dBot;      // the gap edge the leaf retracts past
-        const sRun = Math.max(0, travel < 0 ? dTop - pad : pad + h - dBot);
-        const sPark = Math.min(dH, sRun);
-        const sEnd = sOpen + travel * sPark;
+        const parkPx = (slideModel.parked.u1 - slideModel.parked.u0) * scale;
+        const sEnd = Math.min(Math.max(sOpen + travel * parkPx, pad), pad + h);
+        const sPark = Math.abs(sEnd - sOpen);
         const edges: number[] = [];   // svg x of each internal partition
         const mids: number[] = [];    // svg x mid of each room (for labels)
         let acc = 0, prevX = pad;

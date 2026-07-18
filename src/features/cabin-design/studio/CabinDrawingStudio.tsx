@@ -15,14 +15,14 @@
  * three.js only loads when the 3D tab is opened. Nothing existing is modified.
  */
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Boxes, FileBarChart, FolderOpen, Layers, Loader2, Ruler, Save, Trash2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import type { CabinConfig } from "@/components/home/cabin-calculator/pricing";
-import type { CabinDrawingMeta, CabinPart, ViewMode } from "@/features/cabin-design/model/types";
+import type { CabinDrawingMeta, CabinModel, CabinPart, ViewMode } from "@/features/cabin-design/model/types";
 import type { BoqResult } from "@/lib/boq/types";
 import { buildCabinModel } from "@/features/cabin-design/model/cabinModel";
 import { boqForPart } from "@/features/cabin-design/inspector/boqLink";
@@ -62,8 +62,17 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
     () => JSON.stringify({ ...config, boq: config.boq ? { norms: config.boq.norms } : undefined }),
     [config],
   );
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed on geometry only
-  const model = useMemo(() => buildCabinModel(config), [geomKey]);
+  // Rebuild geometry only when the geometry key changes. A ref cache keyed on geomKey lets this memo
+  // honestly depend on `config` (satisfying exhaustive-deps with no rule suppression) while returning
+  // the SAME model object when only pricing changed — so a Material Master rate change never rebuilds
+  // geometry (spec §5 + §8).
+  const modelCache = useRef<{ key: string; model: CabinModel } | null>(null);
+  const model = useMemo(() => {
+    if (modelCache.current && modelCache.current.key === geomKey) return modelCache.current.model;
+    const built = buildCabinModel(config);
+    modelCache.current = { key: geomKey, model: built };
+    return built;
+  }, [config, geomKey]);
 
   const boqLookup = useCallback((part: CabinPart) => boqForPart(part, boqResult), [boqResult]);
 

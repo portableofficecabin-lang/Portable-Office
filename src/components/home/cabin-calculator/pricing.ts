@@ -619,6 +619,76 @@ export const partitionOpeningLabel = (hinge: PartitionHinge, swing: PartitionSwi
 export const partitionSlideLabel = (side: PartitionSlideSide, direction: PartitionSlideDirection): string =>
   `${side} face, slides to ${direction}`;
 
+/* ---- Sliding partition door: the ONE shared geometry model --------------------- *
+ * Every consumer of a sliding partition door — the 2D ModulePlan, the small FloorPreview,
+ * the furniture keep-out (doorClearance), the validation warnings, the PDF spec table and
+ * the WhatsApp/enquiry summary — reads its geometry from `slidingDoorModel`, so none of
+ * them can disagree about where the leaf is, how far it travels, whether it fits, or where
+ * furniture may not go.
+ *
+ * Frame — the partition spans the cabin WIDTH and is drawn as a VERTICAL wall in plan:
+ *   • u-axis  = feet along the partition from the REAR wall (u=0) toward the FRONT (u=width).
+ *   • faceSign = which room the leaf hangs in along the LENGTH axis: +1 = right room
+ *                (drawn at larger x), -1 = left room.
+ *   • travelSign = which way the leaf slides: -1 = toward the rear (u→0), +1 = toward the
+ *                  front (u→width).
+ * Bounds are returned in FEET on the u-axis; px consumers scale by (origin + u·ppf) and
+ * project the face with faceSign. Nothing here touches React or pixels. */
+export interface USpan {
+  /** near edge (smaller u, feet from rear) */ u0: number;
+  /** far edge (larger u, feet from rear) */ u1: number;
+}
+export interface SlidingDoorModel {
+  side: PartitionSlideSide;
+  direction: PartitionSlideDirection;
+  faceSign: 1 | -1;             // +1 = right room, -1 = left room
+  travelSign: 1 | -1;          // +1 = slides toward front, -1 = toward rear
+  widthFt: number;             // cabin width = partition length
+  doorWidthFt: number;         // leaf width along the partition
+  offsetFt: number;            // clamped near-edge distance from the rear wall
+  opening: USpan;              // the doorway gap (what a person walks through)
+  closed: USpan;               // the closed leaf footprint (== opening)
+  parked: USpan;               // the parked/retracted leaf footprint (clamped to blank partition)
+  travel: USpan;               // full swept envelope = closed ∪ parked
+  runFt: number;               // blank partition available to retract onto
+  needFt: number;              // blank partition required to fully retract (== doorWidthFt)
+  fits: boolean;               // runFt >= needFt (leaf clears the doorway when open)
+  validRange: { min: number; max: number } | null; // offsets where it fits; null = impossible (cabin too narrow)
+  warning: string | null;      // canonical human warning when it does not fit (null when fine)
+}
+
+/** Build the sliding-door geometry model from a cabin config. Uses the SAME opening clamps as
+ *  the drawing (openingWidthOn / clampOpeningOffset), so the model and every renderer agree. */
+export const slidingDoorModel = (
+  cfg: Pick<CabinConfig, "width" | "partitionDoorOffset" | "partitionSlideSide" | "partitionSlideDirection">,
+): SlidingDoorModel => {
+  const widthFt = Math.max(1, cfg.width || 1);
+  const side = cfg.partitionSlideSide ?? "right";
+  const direction = cfg.partitionSlideDirection ?? "rear";
+  const faceSign: 1 | -1 = side === "right" ? 1 : -1;
+  const travelSign: 1 | -1 = direction === "front" ? 1 : -1;
+  const doorWidthFt = openingWidthOn(widthFt, DOOR_SIZE.widthFt);
+  const offsetFt = clampOpeningOffset(cfg.partitionDoorOffset ?? 0, widthFt, DOOR_SIZE.widthFt);
+  const opening: USpan = { u0: offsetFt, u1: offsetFt + doorWidthFt };
+  const runFt = partitionSlideRunFt(direction, offsetFt, widthFt);
+  // The DRAWN parked leaf is clamped to the blank partition actually available, so it is never
+  // drawn (or kept-out) through the exterior wall when the door sits too close to that end.
+  const parkFt = Math.min(doorWidthFt, runFt);
+  const parked: USpan = direction === "rear"
+    ? { u0: opening.u0 - parkFt, u1: opening.u0 }
+    : { u0: opening.u1, u1: opening.u1 + parkFt };
+  const travel: USpan = { u0: Math.min(opening.u0, parked.u0), u1: Math.max(opening.u1, parked.u1) };
+  const needFt = doorWidthFt;
+  const fits = runFt + 1e-6 >= needFt;
+  const validRange = partitionSlideOffsetRange(direction, widthFt);
+  const warning = fits ? null
+    : `Sliding panel needs ${formatFeet(needFt)} of clear partition to slide ${direction}, only ${formatFeet(runFt)} available`;
+  return {
+    side, direction, faceSign, travelSign, widthFt, doorWidthFt, offsetFt,
+    opening, closed: opening, parked, travel, runFt, needFt, fits, validRange, warning,
+  };
+};
+
 /** Legacy named window positions (the old toggle-chip model) → side + CENTRE fraction along
  *  that wall. Kept ONLY to migrate saved configs onto the windowPlacements model. */
 export const LEGACY_WINDOW_POSITIONS: Record<string, { side: string; t: number }> = {
@@ -807,11 +877,10 @@ export const partitionSpecLabel = (
     ? partitionSlideLabel(side, dir)
     : partitionOpeningLabel(cfg.partitionDoorHinge, cfg.partitionDoorSwing);
   // A leaf with too little blank partition to retract into is a build defect — say so in the
-  // spec rather than letting the factory discover it on site.
-  const tight = sliding && !partitionSlideFits(dir, cfg.partitionDoorOffset, cfg.width)
-    ? ` [WARNING: needs ${formatFeet(openingWidthOn(cfg.width, DOOR_SIZE.widthFt))} clear partition to slide ${dir}, only ${formatFeet(partitionSlideRunFt(dir, cfg.partitionDoorOffset, cfg.width))} available]`
-    : "";
-  return `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear (${opening})${tight}`;
+  // spec rather than letting the factory discover it on site. The warning text comes from the
+  // shared model so the spec table, the WhatsApp summary and the admin UI all read identically.
+  const tight = sliding ? slidingDoorModel(cfg).warning : null;
+  return `Partition w/ ${partitionDoorTypeLabel(cfg.partitionDoorType)} @ ${formatFeet(cfg.partitionDoorOffset)} from rear (${opening})${tight ? ` [WARNING: ${tight}]` : ""}`;
 };
 /** Work-table add-ons. Adding the first one auto-ticks "By Work Table" for plug points;
  *  removing the last one un-ticks it (see the toggleAddon handler). */

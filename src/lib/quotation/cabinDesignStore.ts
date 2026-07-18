@@ -50,7 +50,10 @@ function isSchemaMissing(error: unknown): boolean {
 /* ---------- localStorage ---------- */
 export function loadDesignsLocal(): CabinDesignRecord[] {
   try {
-    return JSON.parse(localStorage.getItem(DESIGNS_KEY) || "[]");
+    const parsed = JSON.parse(localStorage.getItem(DESIGNS_KEY) || "[]");
+    // Guard against valid-JSON-but-non-array data (e.g. a stray "{}") — otherwise listDesigns'
+    // for..of and saveDesign's findIndex would throw and crash the studio on load.
+    return Array.isArray(parsed) ? parsed.filter((d) => d && typeof d === "object" && d.id) : [];
   } catch {
     return [];
   }

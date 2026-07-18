@@ -31,9 +31,9 @@ import {
   fixtureSizeOf, fixtureSizeLabel,
   fixtureUnitWallsOf, fixtureUnitOffsetsOf, fixtureUnitSwingsOf,
   fixtureUnitEwcWallsOf, fixtureUnitEwcDistsOf, externalLightOffsetOf,
-  sideSpanFt, openingWidthOn, clampOpeningOffset, type CabinConfig,
+  sideSpanFt, openingWidthOn, clampOpeningOffset, slidingDoorModel, type CabinConfig,
 } from "./pricing";
-import { doorKeepoutRects, avoidKeepouts, type KeepRect } from "./doorClearance";
+import { doorKeepoutRects, partitionSlideKeepoutRects, avoidKeepouts, type KeepRect } from "./doorClearance";
 
 /**
  * Divider positions (fractions of the window depth) for a sliding window, so the
@@ -1041,8 +1041,13 @@ export function ModulePlan({
   const rooms = Array.isArray(config.roomLengths) && config.roomLengths.length > 1 ? config.roomLengths : null;
 
   // Clear zone(s) in front of the main entrance door(s) — furniture, fixtures & the enclosed
-  // washroom are all kept out of these so the entry stays accessible.
-  const doorKeeps = doorKeepoutRects(config, ox, oy, rx, by, L, W, ppf);
+  // washroom are all kept out of these so the entry stays accessible. A SLIDING partition door
+  // adds its own keep-out (doorway + closed/parked leaf + travel path); hinged partitions add
+  // none, so their existing layouts are unchanged.
+  const doorKeeps = [
+    ...doorKeepoutRects(config, ox, oy, rx, by, L, W, ppf),
+    ...partitionSlideKeepoutRects(config, ox, oy, rx, by, L, W, ppf),
+  ];
 
   // ---- dimension line helpers ----
   const arrow = (x: number, y: number, dir: "l" | "r" | "u" | "d") => arrowAt(x, y, dir, C.dim);
@@ -1129,32 +1134,33 @@ export function ModulePlan({
         {rooms && (() => {
           const total = rooms.reduce((a, b) => a + b, 0) || L;
           // The partition spans the cabin WIDTH; the door sits `partitionDoorOffset` ft from the
-          // rear wall (near edge), hinged at the rear/front end, swinging into the left/right room.
-          const pdw = openingWidthOn(W, DOOR_SIZE.widthFt) * ppf;
-          const startPx = clampOpeningOffset(config.partitionDoorOffset, W, DOOR_SIZE.widthFt) * ppf;
-          const gTop = oy + startPx, gBot = gTop + pdw;
+          // rear wall (near edge). ALL of the sliding geometry (opening, closed/parked leaf, travel
+          // path, clamping to the blank partition) comes from the shared `slidingDoorModel`, so the
+          // plan, the small floor plan, the furniture keep-out and the validation warnings agree.
+          const model = slidingDoorModel(config);
+          const pdw = model.doorWidthFt * ppf;
+          const gTop = oy + model.opening.u0 * ppf, gBot = oy + model.opening.u1 * ppf;
           const hinge = config.partitionDoorHinge ?? "top";
           const swing = config.partitionDoorSwing ?? "right";
           const sliding = config.partitionDoorType === "sliding";
-          const dir = swing === "right" ? 1 : -1; // +x = into the room on the right
+          const dir = swing === "right" ? 1 : -1; // +x = into the room on the right (hinged)
           // Sliding: the leaf hangs on ONE FACE of the partition and travels ALONG it. `face` is
           // the room it hangs in (+x = right room); `travel` is the way it slides open
           // (+y = toward the front wall). The two are independent — a leaf on the right face can
           // slide either rearward or frontward.
-          const slideSide = config.partitionSlideSide ?? "right";
-          const slideDir = config.partitionSlideDirection ?? "rear";
-          const face = slideSide === "right" ? 1 : -1;
-          const travel = slideDir === "front" ? 1 : -1;
+          const slideSide = model.side;
+          const slideDir = model.direction;
+          const face = model.faceSign;
+          const travel = model.travelSign;
           // The leaf stands clear of the 4px wall stroke (px±2) so the panel reads as a panel
           // rather than merging into the partition line at plan scale.
           const faceOff = face * 6.5;
-          // Where the leaf ends up when fully open. Clamped to the blank partition actually
-          // available, so the parked leaf is never drawn straight through the exterior wall when
-          // the door is positioned too close to that end (the UI warns about exactly that case).
+          // Where the leaf ends up when fully open. The model already clamped the parked span to
+          // the blank partition available, so the parked leaf is never drawn through the exterior
+          // wall when the door is positioned too close to that end (the UI warns about that case).
           const openEdge = travel < 0 ? gTop : gBot;         // the gap edge the leaf retracts past
-          const runPx = Math.max(0, travel < 0 ? gTop - oy : by - gBot);
-          const parkPx = Math.min(pdw, runPx);
-          const parkEnd = openEdge + travel * parkPx;
+          const parkEnd = oy + (travel < 0 ? model.parked.u0 : model.parked.u1) * ppf;
+          const parkPx = Math.abs(parkEnd - openEdge);
           let acc = 0;
           return rooms.slice(0, -1).map((rl, i) => {
             acc += rl;

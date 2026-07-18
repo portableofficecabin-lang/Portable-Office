@@ -14,7 +14,7 @@
  * the exploded animation by stepping `explodeT`, which re-renders and paints one frame each tick.
  */
 
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useThree, type ThreeEvent } from "@react-three/fiber";
 import { OrbitControls, Grid, Html, Line } from "@react-three/drei";
 import * as THREE from "three";
@@ -219,18 +219,21 @@ export function Cabin3DView(props: Cabin3DViewProps) {
   // section clipping plane, along the width (three z). Position 0..1 slides it through the cabin.
   const clipPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, -1), 0), []);
   const halfZ = (b.max.y - b.min.y) / 1000 / 2;
-  clipPlane.constant = -halfZ + settings.section.position * (2 * halfZ) + halfZ * 0.0001;
-  // stable array reference so React.memo(PartMesh) is not defeated on unrelated re-renders (hover)
-  const clip = useMemo(
-    () => (settings.section.enabled ? [clipPlane] : EMPTY_PLANES),
-    [settings.section.enabled, clipPlane],
-  );
+  // The plane's constant is updated INSIDE the memo (never mutated during render), and the array
+  // reference stays stable while the section is off so React.memo(PartMesh) is not defeated on hover.
+  const clip = useMemo(() => {
+    if (!settings.section.enabled) return EMPTY_PLANES;
+    clipPlane.constant = -halfZ + settings.section.position * (2 * halfZ) + halfZ * 0.0001;
+    return [clipPlane];
+  }, [settings.section.enabled, settings.section.position, clipPlane, halfZ]);
 
-  // measurement: two clicked part centres (three coords)
+  // measurement: two clicked part centres (three coords). Cleared when measure mode toggles AND when
+  // the model geometry changes (old points would otherwise render a stale line at the wrong place).
   const [measurePts, setMeasurePts] = useState<[number, number, number][]>([]);
-  useEffect(() => { if (!measureMode) setMeasurePts([]); }, [measureMode]);
+  useEffect(() => { setMeasurePts([]); }, [measureMode, model]);
 
-  const handleSelect = (id: string | null) => {
+  // Stable across renders so it does not defeat React.memo(PartMesh) (Phase 8).
+  const handleSelect = useCallback((id: string | null) => {
     if (measureMode && id) {
       const part = model.parts.find((p) => p.id === id);
       const box = part && boxOfSolid(part.solid, ctx);
@@ -238,7 +241,7 @@ export function Cabin3DView(props: Cabin3DViewProps) {
       return;
     }
     onSelect(id);
-  };
+  }, [measureMode, model, ctx, onSelect]);
 
   const measureMm = measurePts.length === 2
     ? Math.hypot(
