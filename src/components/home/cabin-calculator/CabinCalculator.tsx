@@ -50,7 +50,7 @@ import {
 // TYPE-ONLY on purpose: erased at compile time, so not one byte of the BOQ engine reaches the public
 // homepage bundle from here. The take-off and the panel both sit behind the CabinBoqPanel dynamic
 // import below, and the defaults are applied there.
-import type { BoqSettings, CabinBoqOptions } from "@/lib/boq/types";
+import type { BoqSettings, BoqResult, CabinBoqOptions } from "@/lib/boq/types";
 
 /* ---- Table Customisation Module (spec §35) --------------------------------------------------
  * These DO reach the calculator's bundle — deliberately. The calculator is already a deferred,
@@ -88,6 +88,16 @@ const AdminDrawingTools = dynamic(
 // engine, xlsx, jsPDF and the Supabase client. The public homepage must never download any of it —
 // which is also why the take-off is derived inside the wrapper, not here.
 const CabinBoqPanel = dynamic(() => import("@/components/admin/boq/CabinBoqPanel"), { ssr: false });
+
+// Admin-only Drawing / 3D / Exploded studio (2D engineering sheet set, interactive 3D model +
+// exploded assembly, component inspector, drawing-set PDF, save/load). Same next/dynamic + ssr:false
+// treatment: this chunk pulls in the shared model builder, the drawing sheets and (further-lazy) the
+// three.js 3D viewer, so the public homepage bundle never downloads any of it. Non-destructive — an
+// additional panel beside the existing drawing tools + BOQ, driven by the SAME config.
+const CabinDrawingStudio = dynamic(
+  () => import("@/features/cabin-design/studio/CabinDrawingStudio").then((m) => ({ default: m.CabinDrawingStudio })),
+  { ssr: false },
+);
 
 // Steps a storage container customer sees — everything else (structure, interior,
 // doors/windows, electrical, add-ons) is irrelevant and skipped.
@@ -1199,6 +1209,9 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
     (o: CabinBoqOptions) => setConfig((c) => ({ ...c, boqOptions: o })),
     [],
   );
+  // Live priced BOQ, lifted from the Material BOQ panel so the Drawing Studio's inspector + reports
+  // read the SAME priced result (no duplicate pricing). Recomputes when a rate/override changes.
+  const [studioBoq, setStudioBoq] = useState<BoqResult | null>(null);
 
   // Title-block text for the admin drawing sheet — built from the live config only.
   // Any part that isn't configured is simply left out (never invented).
@@ -3569,6 +3582,21 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                 title={`${product?.label ?? "Cabin"} ${config.length}x${config.width}`}
                 onSettingsChange={setBoqSettings}
                 onOptionsChange={setBoqOptions}
+                onResult={setStudioBoq}
+              />
+            </div>
+          )}
+
+          {/* Admin only: Drawings / 3D / Exploded studio — 2D engineering sheet set, interactive 3D
+              model + exploded assembly, component inspector, drawing-set PDF and save/load. Built
+              from the SAME `config` as the drawings and BOQ above, so nothing is entered twice. */}
+          {adminTools && step > 0 && (
+            <div className="mt-6 rounded-2xl border border-border bg-background p-4 sm:p-5">
+              <CabinDrawingStudio
+                config={config}
+                estimateTotal={est.total}
+                boqResult={studioBoq}
+                onLoadConfig={(loaded) => setConfig(loaded)}
               />
             </div>
           )}
