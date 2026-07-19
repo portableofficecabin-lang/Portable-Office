@@ -95,8 +95,21 @@ function opacityOf(part: CabinPart, s: View3DSettings): number {
   if (s.transparentWalls && (part.layer === "walls" || part.layer === "roof")) {
     return Math.min(base, part.kind === "floor-board" || part.kind === "floor-finish" ? 0.9 : 0.22);
   }
+  // Normal mode: render the outer envelope (wall panels / roof / ceiling) fully OPAQUE for a clean,
+  // sharp read. The faint see-through that let the studwork bleed through the panels (the vertical
+  // banding) is only wanted in the explicit Transparent-walls / X-ray modes handled above. Openings
+  // (glazing, the door-swing arc) keep their designed translucency.
+  if (part.kind === "window" || part.kind === "door-swing") return base;
+  if (part.layer === "walls" || part.layer === "roof") return 1;
   return base;
 }
+
+/** Thin parts that sit ON / IN the wall, floor or ceiling plane. They share a plane with the surface
+ *  behind them, so a small polygon offset pulls them just in front and stops the depth-fighting
+ *  speckle seen around doors, windows and fittings. */
+const OVERLAY_KINDS = new Set<CabinPart["kind"]>([
+  "door", "door-swing", "window", "socket", "switch", "light", "fan", "electrical-panel", "plumbing-fixture", "pipe",
+]);
 
 /* ------------------------------------------------------------------ one part ------------------ */
 
@@ -113,6 +126,8 @@ const PartMesh = memo(function PartMesh({
   const wireframe = settings.wireframe;
   const color = selected ? "#f59e0b" : part.colorHex;
   const emissive = selected ? "#7c3a00" : hovered ? "#334155" : "#000000";
+  // pull wall/floor/ceiling overlays a hair toward the camera so they win the depth test cleanly
+  const overlay = OVERLAY_KINDS.has(part.kind);
 
   const stop = (e: ThreeEvent<PointerEvent | MouseEvent>) => e.stopPropagation();
   const handlers = {
@@ -139,7 +154,8 @@ const PartMesh = memo(function PartMesh({
       <mesh geometry={geo} position={offset} {...handlers}>
         <meshStandardMaterial color={color} emissive={emissive} side={THREE.DoubleSide}
           transparent={transparent} opacity={opacity} roughness={0.85} metalness={0.05}
-          wireframe={wireframe} depthWrite={!transparent} clippingPlanes={clip} clipShadows />
+          wireframe={wireframe} depthWrite={!transparent} clippingPlanes={clip} clipShadows
+          polygonOffset={overlay} polygonOffsetFactor={overlay ? -2 : 0} polygonOffsetUnits={overlay ? -2 : 0} />
       </mesh>
     );
   }
@@ -156,7 +172,8 @@ const PartMesh = memo(function PartMesh({
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={color} emissive={emissive} emissiveIntensity={selected ? 0.5 : 0.35}
         transparent={transparent} opacity={opacity} roughness={0.82} metalness={0.05}
-        wireframe={wireframe} depthWrite={!transparent} clippingPlanes={clip} clipShadows />
+        wireframe={wireframe} depthWrite={!transparent} clippingPlanes={clip} clipShadows
+        polygonOffset={overlay} polygonOffsetFactor={overlay ? -2 : 0} polygonOffsetUnits={overlay ? -2 : 0} />
     </mesh>
   );
 });
@@ -259,7 +276,7 @@ export function Cabin3DView(props: Cabin3DViewProps) {
       frameloop="demand"
       shadows
       dpr={settings.wireframe ? [1, 2] : [1, 3]}
-      gl={{ preserveDrawingBuffer: true, antialias: true }}
+      gl={{ preserveDrawingBuffer: true, antialias: true, powerPreference: "high-performance" }}
       onCreated={({ gl }) => { gl.localClippingEnabled = true; }}
       camera={{ position: [radius * 1.6, radius * 1.4, radius * 1.6], fov: 42, near: 0.05, far: radius * 40 }}
       onPointerMissed={() => !measureMode && onSelect(null)}
@@ -267,10 +284,11 @@ export function Cabin3DView(props: Cabin3DViewProps) {
     >
       <color attach="background" args={["#f1f5f9"]} />
       <hemisphereLight args={["#ffffff", "#cbd5e1", 0.9]} />
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[radius * 3, radius * 5, radius * 2]} intensity={1.15} castShadow
-        shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
-      <directionalLight position={[-radius * 3, radius * 3, -radius * 2]} intensity={0.4} />
+      <ambientLight intensity={0.4} />
+      {/* key light — a touch stronger + a sharper, acne-free shadow for crisper definition */}
+      <directionalLight position={[radius * 3, radius * 5, radius * 2]} intensity={1.35} castShadow
+        shadow-mapSize-width={2048} shadow-mapSize-height={2048} shadow-bias={-0.0004} shadow-normalBias={0.02} />
+      <directionalLight position={[-radius * 3, radius * 3, -radius * 2]} intensity={0.45} />
 
       <Grid
         args={[radius * 8, radius * 8]}
