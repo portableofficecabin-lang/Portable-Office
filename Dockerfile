@@ -4,7 +4,10 @@ FROM node:20-alpine AS base
 
 FROM base AS deps
 WORKDIR /app
-COPY package.json package-lock.json ./
+# .npmrc is REQUIRED here: it carries legacy-peer-deps=true, without which npm ci fails on the
+# @react-three/fiber@9 (react>=19 peers) vs react@18 / react-day-picker@8 peer wall. See .npmrc
+# for the full rationale — remove it from this COPY only when that file itself is retired.
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 
 FROM base AS builder
