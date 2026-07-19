@@ -25,6 +25,7 @@ import type { CabinConfig } from "@/components/home/cabin-calculator/pricing";
 import type { CabinDrawingMeta, CabinModel, CabinPart, ViewMode } from "@/features/cabin-design/model/types";
 import type { BoqResult } from "@/lib/boq/types";
 import { buildCabinModel } from "@/features/cabin-design/model/cabinModel";
+import { parseSectionFromSpec, type SectionDims } from "@/features/cabin-design/model/sectionDims";
 import { boqForPart } from "@/features/cabin-design/inspector/boqLink";
 import { ComponentInspector } from "@/features/cabin-design/inspector/ComponentInspector";
 import { EngineeringSheets } from "@/features/cabin-design/drawing/EngineeringSheets";
@@ -68,12 +69,40 @@ export interface CabinDrawingStudioProps {
 }
 
 export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqResult }: CabinDrawingStudioProps) {
-  // Geometry key excludes BOQ pricing (overrides/rates/charges) so a Material Master rate change
-  // recomputes the BOQ WITHOUT rebuilding the model geometry (spec §5 + §8). Norms + boqOptions,
-  // which DO change the frame, stay in the key.
+  // LIVE SECTION RESOLVER — each frame member's real cross-section is read straight from the priced
+  // BOQ (line.spec carries the Material Master section), so a section swap or a Material Master edit
+  // scales the 3D member. The single source of truth is the same section the BOQ prices.
+  const sectionByLine = useMemo(() => {
+    const map = new Map<string, SectionDims | null>();
+    for (const l of boqResult?.lines ?? []) {
+      if (l.cutLengthM != null) map.set(l.id, parseSectionFromSpec(l.spec));
+    }
+    return map;
+  }, [boqResult]);
+  const resolveSection = useCallback((id: string) => sectionByLine.get(id) ?? null, [sectionByLine]);
+
+  // The part of the design that changes member GEOMETRY: dimensions/rooms/norms/boqOptions (envelope
+  // + counts) AND the section CHOSEN for each member (materialKey), but NOT rates/wastage/charges. A
+  // section swap changes a materialKey → geometry rebuilds; a rate change keeps every materialKey →
+  // it does not (spec §5 + §8). Section keys come from both the priced result (live/custom sections)
+  // and config.boq (so a swap rebuilds immediately, before the BOQ re-prices).
+  const sectionSig = useMemo(() => {
+    const fromResult = (boqResult?.lines ?? [])
+      .filter((l) => l.cutLengthM != null)
+      .map((l) => `${l.id}=${l.materialKey}`);
+    const mm = config.boq?.materialMap ?? {};
+    const ov = Object.entries(config.boq?.overrides ?? {})
+      .filter(([, o]) => o.materialKey)
+      .map(([id, o]) => `${id}=${o.materialKey}`);
+    return JSON.stringify({ fromResult, mm, ov });
+  }, [boqResult, config.boq?.materialMap, config.boq?.overrides]);
+
   const geomKey = useMemo(
-    () => JSON.stringify({ ...config, boq: config.boq ? { norms: config.boq.norms } : undefined }),
-    [config],
+    () =>
+      JSON.stringify({ ...config, boq: config.boq ? { norms: config.boq.norms } : undefined }) +
+      "|" +
+      sectionSig,
+    [config, sectionSig],
   );
   // Rebuild geometry only when the geometry key changes. A ref cache keyed on geomKey lets this memo
   // honestly depend on `config` (satisfying exhaustive-deps with no rule suppression) while returning
@@ -82,10 +111,10 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
   const modelCache = useRef<{ key: string; model: CabinModel } | null>(null);
   const model = useMemo(() => {
     if (modelCache.current && modelCache.current.key === geomKey) return modelCache.current.model;
-    const built = buildCabinModel(config);
+    const built = buildCabinModel(config, { resolveSection });
     modelCache.current = { key: geomKey, model: built };
     return built;
-  }, [config, geomKey]);
+  }, [config, geomKey, resolveSection]);
 
   const boqLookup = useCallback((part: CabinPart) => boqForPart(part, boqResult), [boqResult]);
 

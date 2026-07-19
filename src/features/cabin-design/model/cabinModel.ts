@@ -22,6 +22,8 @@ import type { CabinConfig } from "@/components/home/cabin-calculator/pricing";
 import { isPufPanel, isStorageProduct, isToiletCabin, PRODUCTS } from "@/components/home/cabin-calculator/pricing";
 import { buildCabinTakeoff } from "@/lib/boq/cabinTakeoff";
 import { DEFAULT_NORMS } from "@/lib/boq/types";
+import { indexMaterials, SEED_MATERIALS } from "@/lib/boq/materialMaster";
+import { parseSectionDims, type SectionDims } from "./sectionDims";
 import {
   cabinObstacles, cabinSizeMm, roomRangesMm, type Obstacle,
 } from "@/features/cabin-design/furniture/tables/cabinObstacles";
@@ -39,7 +41,11 @@ const ROOF_RISE_FT = 8 / 12;                 // matches cabinTakeoff.ROOF_RISE_F
 const FLOOR_TOP = 0;                         // finished floor at z = 0
 const BASE_Z0 = -170, BASE_Z1 = -20;         // base chassis sits just below the floor
 const FLOOR_BOARD_Z1 = 25, FLOOR_FINISH_Z1 = 42;
-const MEMBER_COL = 60, MEMBER_POST = 45, MEMBER_STUD = 32, MEMBER_JOIST = 45; // cosmetic draw widths (mm)
+const MEMBER_COL = 60, MEMBER_POST = 45, MEMBER_STUD = 32, MEMBER_JOIST = 45; // fallback draw widths (mm)
+/** Smallest visible cross-section (mm) — a thin 40×2 section must never collapse to a hairline. */
+const MIN_VIS_MM = 22;
+/** Section fallback for standard keys: the seeded Material Master, mirroring the DB seed rows. */
+const SEED_INDEX = indexMaterials(SEED_MATERIALS);
 const WALL_T = 60, INT_T = 18, INS_T = 40;   // wall skin / lining / insulation draw thickness (mm)
 const CEILING_T = 30, ROOF_T = 45;
 const DOOR_H_DEFAULT_MM = 2032;              // 6'-8" leaf when a placement carries no size
@@ -121,7 +127,25 @@ const prism = (poly: Pt[], z0: number, z1: number): PartSolid => ({ kind: "prism
 
 /* ------------------------------------------------------------------ the builder -------------- */
 
-export function buildCabinModel(config: CabinConfig): CabinModel {
+/** How a member's real cross-section (mm) maps onto its two drawn axes. */
+export interface MemberXsec {
+  /** The narrower profile dimension — drawn across the run, in-plane (min-clamped). */
+  across: number;
+  /** The larger profile dimension — drawn as the member's depth/height (min-clamped). */
+  through: number;
+}
+
+export interface BuildCabinModelOptions {
+  /**
+   * Resolve a BOQ line id → its real section dimensions. The studio passes a resolver reading the
+   * LIVE priced BOQ (so overrides, DB edits and custom sections all flow through). When it returns
+   * null (or is absent), buildCabinModel falls back to the effective key from config.boq against the
+   * seeded Material Master — so a Frame Config section swap scales the 3D even before the BOQ reprices.
+   */
+  resolveSection?: (boqLineId: string) => SectionDims | null;
+}
+
+export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOptions = {}): CabinModel {
   const s = new ModelSink();
 
   const { lengthMm: L, widthMm: W } = cabinSizeMm(config);
@@ -136,25 +160,52 @@ export function buildCabinModel(config: CabinConfig): CabinModel {
   const product = PRODUCTS.find((p) => p.id === config.productId) ?? PRODUCTS[0];
   const rooms = roomRangesMm(config);
 
-  /* ---- 1. bottom structural frame (chassis) --------------------------------------------- */
-  s.add("floor:base-frame-long-a", "base-frame", "Base frame — longitudinal",
-    box(0, 0, BASE_Z0, L, MEMBER_COL, BASE_Z1), { boqLineId: "floor:base-frame-long" });
-  s.add("floor:base-frame-long-b", "base-frame", "Base frame — longitudinal",
-    box(0, W - MEMBER_COL, BASE_Z0, L, W, BASE_Z1), { boqLineId: "floor:base-frame-long" });
-  s.add("floor:base-frame-cross-a", "base-frame", "Base frame — cross",
-    box(0, 0, BASE_Z0, MEMBER_COL, W, BASE_Z1), { boqLineId: "floor:base-frame-cross" });
-  s.add("floor:base-frame-cross-b", "base-frame", "Base frame — cross",
-    box(L - MEMBER_COL, 0, BASE_Z0, L, W, BASE_Z1), { boqLineId: "floor:base-frame-cross" });
-
-  /* ---- structure + roof member lines from the SAME frame the BOQ prices ----------------- */
+  /* ---- structure + roof member lines from the SAME frame the BOQ prices ----------------- *
+   * Built first so member cross-sections can be sized from the section each line is priced with. */
   const takeoff = buildCabinTakeoff(config, config.boq?.norms ?? DEFAULT_NORMS, config.boqOptions ?? {});
   const frame = takeoff.frame;
 
+  /* ---- SECTION SIZING: real Material Master dims → scaled member cross-sections ---------- *
+   * Single source of truth: the section each frame line is priced against. The studio's resolver
+   * reads the live BOQ; the fallback resolves the effective key (role default → materialMap →
+   * per-line override) from config.boq and reads the seeded catalogue. Unknown → cosmetic default. */
+  const roleKeyById = new Map(takeoff.items.map((it) => [it.id, it.materialKey]));
+  const sectionForLine = (id: string): SectionDims | null => {
+    const live = opts.resolveSection?.(id);
+    if (live) return live;
+    const roleKey = roleKeyById.get(id);
+    if (!roleKey) return null;
+    const key = config.boq?.overrides?.[id]?.materialKey ?? config.boq?.materialMap?.[roleKey] ?? roleKey;
+    const m = SEED_INDEX[key];
+    return m ? parseSectionDims(m.sectionSize, m.thicknessMm) : null;
+  };
+  const xsec = (id: string, fallback: number): MemberXsec => {
+    const d = sectionForLine(id);
+    if (!d) return { across: fallback, through: fallback };
+    return {
+      across: Math.max(MIN_VIS_MM, Math.min(d.widthMm, d.depthMm)),
+      through: Math.max(MIN_VIS_MM, Math.max(d.widthMm, d.depthMm)),
+    };
+  };
+
+  /* ---- 1. bottom structural frame (chassis) — cross-section from the base-frame section --- */
+  const bfl = xsec("floor:base-frame-long", MEMBER_COL);
+  const bfc = xsec("floor:base-frame-cross", MEMBER_COL);
+  s.add("floor:base-frame-long-a", "base-frame", "Base frame — longitudinal",
+    box(0, 0, BASE_Z1 - bfl.through, L, bfl.across, BASE_Z1), { boqLineId: "floor:base-frame-long" });
+  s.add("floor:base-frame-long-b", "base-frame", "Base frame — longitudinal",
+    box(0, W - bfl.across, BASE_Z1 - bfl.through, L, W, BASE_Z1), { boqLineId: "floor:base-frame-long" });
+  s.add("floor:base-frame-cross-a", "base-frame", "Base frame — cross",
+    box(0, 0, BASE_Z1 - bfc.through, bfc.across, W, BASE_Z1), { boqLineId: "floor:base-frame-cross" });
+  s.add("floor:base-frame-cross-b", "base-frame", "Base frame — cross",
+    box(L - bfc.across, 0, BASE_Z1 - bfc.through, L, W, BASE_Z1), { boqLineId: "floor:base-frame-cross" });
+
   /* ---- 2. floor joists (frame.joists = x positions along the length, metres) ------------ */
+  const js = xsec("floor:joists", MEMBER_JOIST);
   (frame?.joists ?? []).forEach((xM, i) => {
     const x = xM * 1000;
     s.add(`floor:joist:${i}`, "joist", "Floor joist",
-      box(x - MEMBER_JOIST / 2, 0, BASE_Z1 - 40, x + MEMBER_JOIST / 2, W, FLOOR_TOP),
+      box(x - js.across / 2, 0, FLOOR_TOP - js.through, x + js.across / 2, W, FLOOR_TOP),
       { boqLineId: "floor:joists" });
   });
 
@@ -170,33 +221,32 @@ export function buildCabinModel(config: CabinConfig): CabinModel {
     { x: L, y: W, face: "front" }, { x: 0, y: W, face: "left" },
   ];
   corners.forEach((c, i) => {
-    const cx = c.x === 0 ? 0 : L - MEMBER_COL;
-    const cy = c.y === 0 ? 0 : W - MEMBER_COL;
+    const cc = xsec(`${c.face}:corner-post`, MEMBER_COL);
+    const cx = c.x === 0 ? 0 : L - cc.across;
+    const cy = c.y === 0 ? 0 : W - cc.through;
     s.add(`column:corner:${i}`, "column", "Corner column",
-      box(cx, cy, FLOOR_TOP, cx + MEMBER_COL, cy + MEMBER_COL, Htop),
+      box(cx, cy, FLOOR_TOP, cx + cc.across, cy + cc.through, Htop),
       { boqLineId: `${c.face}:corner-post` });
   });
 
-  /* ---- 5. wall framing: intermediate posts + studs (from frame.posts) ------------------- */
-  const faceGeom = (face: string, along: number): { x: number; y: number; horiz: boolean } => {
-    // along = metres from the wall's left edge. front/rear run along x; left/right run along y.
-    const a = along * 1000;
-    if (face === "rear") return { x: a, y: 0, horiz: true };
-    if (face === "front") return { x: a, y: W - MEMBER_POST, horiz: true };
-    if (face === "left") return { x: 0, y: a, horiz: false };
-    return { x: L - MEMBER_POST, y: a, horiz: false };
-  };
+  /* ---- 5. wall framing: intermediate posts + studs (from frame.posts) ------------------- *
+   * Each member's cross-section comes from its own priced section: `across` runs parallel to the
+   * wall (centred on the frame line), `through` runs into the cabin (anchored to the wall face). */
   (frame?.posts ?? []).forEach((p, i) => {
     if (p.kind === "corner") return; // corners handled above
     const isStud = p.kind === "stud";
-    const t = isStud ? MEMBER_STUD : MEMBER_POST;
-    const g = faceGeom(p.face, p.xM);
-    const x0 = g.horiz ? g.x - t / 2 : g.x;
-    const y0 = g.horiz ? g.y : g.y - t / 2;
+    const lineId = `${p.face}:${isStud ? "studs" : "posts"}`;
+    const sec = xsec(lineId, isStud ? MEMBER_STUD : MEMBER_POST);
+    const a = p.xM * 1000;                          // centreline along the wall
+    const half = sec.across / 2;
+    const thru = sec.through;
+    let solid: PartSolid;
+    if (p.face === "rear") solid = box(a - half, 0, FLOOR_TOP, a + half, thru, Htop);
+    else if (p.face === "front") solid = box(a - half, W - thru, FLOOR_TOP, a + half, W, Htop);
+    else if (p.face === "left") solid = box(0, a - half, FLOOR_TOP, thru, a + half, Htop);
+    else solid = box(L - thru, a - half, FLOOR_TOP, L, a + half, Htop);
     s.add(`${p.face}:${p.kind}:${i}`, isStud ? "stud" : "column",
-      isStud ? "Wall stud" : "Intermediate post",
-      box(x0, y0, FLOOR_TOP, x0 + (g.horiz ? t : t), y0 + (g.horiz ? t : t), Htop),
-      { boqLineId: `${p.face}:${isStud ? "studs" : "posts"}` });
+      isStud ? "Wall stud" : "Intermediate post", solid, { boqLineId: lineId });
   });
 
   /* ---- framing rails (top + bottom of each wall) ---------------------------------------- */
@@ -217,7 +267,9 @@ export function buildCabinModel(config: CabinConfig): CabinModel {
 
   /* ---- 6/7/8. wall skins: external panel, insulation, internal lining -------------------- */
   wallFaces.forEach(({ face, horiz }) => {
-    const panelKey = puf ? "ext PUF panel" : "external sheet";
+    // The skin noun already reads as the material; the "External" prefix is added once here, so the
+    // noun must NOT itself start with "external" or the caption doubles up ("External external sheet").
+    const panelKey = puf ? "PUF panel" : "sheet";
     // outer skin, then insulation, then lining, each stepped one thickness inward.
     const layers: { kind: PartKind; t: number; boq: string; on: boolean; label: string }[] = [
       { kind: "ext-panel", t: WALL_T, boq: `${face}:ext-sheet`, on: true, label: `External ${panelKey} — ${face}` },
@@ -241,20 +293,22 @@ export function buildCabinModel(config: CabinConfig): CabinModel {
     }
   });
 
-  /* ---- 11. roof frame ------------------------------------------------------------------- */
-  // top perimeter frame
+  /* ---- 11. roof frame — top perimeter + ridge, cross-section from their sections --------- */
+  const tfl = xsec("roof:top-frame-long", MEMBER_COL);
+  const tfc = xsec("roof:top-frame-cross", MEMBER_COL);
   s.add("roof:top-frame-a", "roof-frame", "Top frame — longitudinal",
-    box(0, 0, Htop, L, MEMBER_COL, Htop + MEMBER_COL), { boqLineId: "roof:top-frame-long" });
+    box(0, 0, Htop, L, tfl.across, Htop + tfl.through), { boqLineId: "roof:top-frame-long" });
   s.add("roof:top-frame-b", "roof-frame", "Top frame — longitudinal",
-    box(0, W - MEMBER_COL, Htop, L, W, Htop + MEMBER_COL), { boqLineId: "roof:top-frame-long" });
+    box(0, W - tfl.across, Htop, L, W, Htop + tfl.through), { boqLineId: "roof:top-frame-long" });
   s.add("roof:top-frame-c", "roof-frame", "Top frame — cross",
-    box(0, 0, Htop, MEMBER_COL, W, Htop + MEMBER_COL), { boqLineId: "roof:top-frame-cross" });
+    box(0, 0, Htop, tfc.across, W, Htop + tfc.through), { boqLineId: "roof:top-frame-cross" });
   s.add("roof:top-frame-d", "roof-frame", "Top frame — cross",
-    box(L - MEMBER_COL, 0, Htop, L, W, Htop + MEMBER_COL), { boqLineId: "roof:top-frame-cross" });
+    box(L - tfc.across, 0, Htop, L, W, Htop + tfc.through), { boqLineId: "roof:top-frame-cross" });
 
   if (sloped) {
+    const rg = xsec("roof:ridge", MEMBER_COL);
     s.add("roof:ridge", "roof-frame", "Ridge member",
-      box(0, W / 2 - MEMBER_COL / 2, ridgeZ - MEMBER_COL, L, W / 2 + MEMBER_COL / 2, ridgeZ),
+      box(0, W / 2 - rg.across / 2, ridgeZ - rg.through, L, W / 2 + rg.across / 2, ridgeZ),
       { boqLineId: "roof:ridge" });
   }
 

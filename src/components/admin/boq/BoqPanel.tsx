@@ -99,6 +99,7 @@ import {
 
 import { BoqLineRow } from "./BoqLineRow";
 import { ChargeEditor } from "./ChargeEditor";
+import FrameConfigPanel from "./FrameConfigPanel";
 import { IssueList } from "./IssueList";
 import { SectionCard } from "./SectionCard";
 import {
@@ -765,6 +766,9 @@ export default function BoqPanel({
           <TabsTrigger value="detailed" className="text-[11px]">
             Detailed BOQ
           </TabsTrigger>
+          <TabsTrigger value="frame" className="text-[11px]">
+            Frame &amp; Stiffeners
+          </TabsTrigger>
           <TabsTrigger value="cutting" className="text-[11px]">
             Cutting List
           </TabsTrigger>
@@ -1008,6 +1012,21 @@ export default function BoqPanel({
             that line&apos;s id — it survives the re-derivation and re-applies to the same member. LOCK freezes the
             quantity at its current value so a design change cannot move it; RESET returns the row to AUTO.
           </p>
+        </TabsContent>
+
+        {/* ==================== BASE FRAME & CROSS STIFFENERS ==================== */}
+        <TabsContent value="frame" className="mt-3">
+          <FrameConfigPanel
+            result={result}
+            materials={materials}
+            index={index}
+            norms={norms}
+            overrides={overrides}
+            applyOverride={applyOverride}
+            resetLine={(id) => applyOverride(id, { qty: null, rate: null, locked: null })}
+            toggleLock={toggleLock}
+            patchNorms={patchNorms}
+          />
         </TabsContent>
 
         {/* ============================ CUTTING LIST ============================ */}
