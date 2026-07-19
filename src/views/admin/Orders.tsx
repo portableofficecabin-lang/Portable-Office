@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { formatDateSafe } from "@/utils/formatDate";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
-import { Loader2, Package, Search, FileText, IndianRupee, Receipt } from "lucide-react";
+import { Loader2, Package, Search, FileText, IndianRupee, Receipt, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
@@ -124,7 +124,17 @@ export default function AdminOrders() {
   });
 
   const totals = {
-    revenue: orders.reduce((s, o) => s + Number(o.total_amount || 0), 0),
+    // Total Revenue = order value of PAID orders only. payment_status is the source of truth for
+    // "has this been paid" (set to 'paid' only by the verified Razorpay webhook/verify flow);
+    // 'pending' and 'failed' orders are deliberately excluded so revenue reflects real income.
+    revenue: orders
+      .filter((o) => o.payment_status === "paid")
+      .reduce((s, o) => s + Number(o.total_amount || 0), 0),
+    // Pending Order Value = order value still awaiting payment (payment_status = 'pending'). Shown
+    // separately so it is never conflated with realised revenue.
+    pendingValue: orders
+      .filter((o) => o.payment_status === "pending")
+      .reduce((s, o) => s + Number(o.total_amount || 0), 0),
     paid: orders.reduce((s, o) => s + Number(o.paid_amount || 0), 0),
     pending: orders.filter((o) => o.status === "pending").length,
   };
@@ -141,8 +151,9 @@ export default function AdminOrders() {
     <div className="space-y-6">
       <PageHeader title="Orders & Invoices" description="ERP view of all orders, payments and invoices" />
 
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard icon={IndianRupee} label="Total Revenue" value={inr(totals.revenue)} />
+        <KpiCard icon={Clock} label="Pending Order Value" value={inr(totals.pendingValue)} />
         <KpiCard icon={Receipt} label="Collected" value={inr(totals.paid)} />
         <KpiCard icon={Package} label="Pending Orders" value={String(totals.pending)} />
       </div>
