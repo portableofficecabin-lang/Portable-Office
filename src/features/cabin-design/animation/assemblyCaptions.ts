@@ -69,10 +69,14 @@ export function describeStep(step: AssemblyStep, ctx: AssemblyContext, parts: Ca
       };
     case 2:
       return {
-        title: "Floor support members",
-        description: "Floor joists are laid across the width at the design spacing.",
-        captionCustomer: "Floor support members are laid across the base.",
-        captionEngineering: "Joists spanning the width at the specified spacing.",
+        title: "Base Frame & Cross-Stiffener Installation",
+        description:
+          "Transverse base-frame stiffeners shall be installed between the longitudinal base members at a " +
+          "maximum spacing of 2'-0\" centre-to-centre, using the selected structural section, to provide adequate " +
+          "support for the floor assembly and distribute imposed loads uniformly across the base frame.",
+        captionCustomer: "Cross-stiffeners are fitted across the base frame.",
+        captionEngineering:
+          "Transverse base-frame cross-stiffeners between the longitudinal members at the specified c/c spacing.",
       };
     case 3:
       return {
@@ -88,13 +92,19 @@ export function describeStep(step: AssemblyStep, ctx: AssemblyContext, parts: Ca
         captionCustomer: "The corner columns are raised into position.",
         captionEngineering: "Corner posts set the eave height and carry the top frame.",
       };
-    case 5:
+    case 5: {
+      const mdf = has(parts, "mdf-support");
       return {
         title: "Wall framing",
-        description: "Intermediate posts, studs and top/bottom rails complete the wall frame.",
+        description:
+          "Intermediate posts, studs and top/bottom rails complete the wall frame" +
+          (mdf ? ", with 50 × 25 internal MDF-lining support battens on the room face." : "."),
         captionCustomer: "The wall framework is built up between the columns.",
-        captionEngineering: "Intermediate posts, studs and perimeter rails frame every wall.",
+        captionEngineering:
+          "Intermediate posts, studs and perimeter rails frame every wall" +
+          (mdf ? "; internal MDF support battens back the lining." : "."),
       };
+    }
     case 6:
       return {
         title: "Wall panel installation",

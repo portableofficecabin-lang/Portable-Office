@@ -81,6 +81,27 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
   }, [boqResult]);
   const resolveSection = useCallback((id: string) => sectionByLine.get(id) ?? null, [sectionByLine]);
 
+  // LIVE QUANTITY RESOLVER — each structural member's count is read straight from the priced BOQ
+  // (pieces, incl. any manual override / lock), so the 3D member count is never recomputed and always
+  // matches the BOQ, the cutting list and the drawings (spec §4 cross-stiffeners, §7 MDF support).
+  const qtyByLine = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const l of boqResult?.lines ?? []) {
+      if (l.cutLengthM != null && l.pieces != null) map.set(l.id, l.pieces);
+    }
+    return map;
+  }, [boqResult]);
+  const resolveQty = useCallback((id: string) => qtyByLine.get(id) ?? null, [qtyByLine]);
+  // Priced structural piece-counts feed geomKey so a qty override / lock rebuilds geometry; a RATE
+  // change never touches pieces, so it still does not rebuild the model (spec §5 + §8).
+  const qtySig = useMemo(
+    () => (boqResult?.lines ?? [])
+      .filter((l) => l.cutLengthM != null)
+      .map((l) => `${l.id}=${l.pieces}`)
+      .join(","),
+    [boqResult],
+  );
+
   // The part of the design that changes member GEOMETRY: dimensions/rooms/norms/boqOptions (envelope
   // + counts) AND the section CHOSEN for each member (materialKey), but NOT rates/wastage/charges. A
   // section swap changes a materialKey → geometry rebuilds; a rate change keeps every materialKey →
@@ -101,8 +122,10 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
     () =>
       JSON.stringify({ ...config, boq: config.boq ? { norms: config.boq.norms } : undefined }) +
       "|" +
-      sectionSig,
-    [config, sectionSig],
+      sectionSig +
+      "|" +
+      qtySig,
+    [config, sectionSig, qtySig],
   );
   // Rebuild geometry only when the geometry key changes. A ref cache keyed on geomKey lets this memo
   // honestly depend on `config` (satisfying exhaustive-deps with no rule suppression) while returning
@@ -111,10 +134,10 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
   const modelCache = useRef<{ key: string; model: CabinModel } | null>(null);
   const model = useMemo(() => {
     if (modelCache.current && modelCache.current.key === geomKey) return modelCache.current.model;
-    const built = buildCabinModel(config, { resolveSection });
+    const built = buildCabinModel(config, { resolveSection, resolveQty });
     modelCache.current = { key: geomKey, model: built };
     return built;
-  }, [config, geomKey, resolveSection]);
+  }, [config, geomKey, resolveSection, resolveQty]);
 
   const boqLookup = useCallback((part: CabinPart) => boqForPart(part, boqResult), [boqResult]);
 

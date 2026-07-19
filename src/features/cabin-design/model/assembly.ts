@@ -12,7 +12,7 @@ import type { AssemblyStep, AssemblyStepInfo, PartKind, Vec3 } from "./types";
 /** The 17-step timeline, in build order (spec §3). Step 17 = the collapsed, completed cabin. */
 export const ASSEMBLY_SEQUENCE: AssemblyStepInfo[] = [
   { step: 1, title: "Bottom structural frame", description: "The base chassis — longitudinal and cross members that carry the cabin." },
-  { step: 2, title: "Flooring support members", description: "Floor joists spanning the width at the joist spacing." },
+  { step: 2, title: "Base frame & cross-stiffeners", description: "Transverse base-frame stiffeners between the longitudinal members at the joist spacing." },
   { step: 3, title: "Floor board & final flooring", description: "Structural deck board and the finished floor over it." },
   { step: 4, title: "Corner columns", description: "The four corner posts that set the cabin height." },
   { step: 5, title: "Wall framing & stiffeners", description: "Intermediate posts, wall studs and top/bottom framing rails." },
@@ -39,6 +39,7 @@ export const STEP_OF_KIND: Record<PartKind, AssemblyStep> = {
   column: 4,
   stud: 5,
   rail: 5,
+  "mdf-support": 5,
   "ext-panel": 6,
   insulation: 7,
   "int-finish": 8,
@@ -76,6 +77,7 @@ export const EXPLODE_OF_KIND: Record<PartKind, Vec3> = {
   column: { x: 0, y: 0, z: 0.4 },
   stud: { x: 0, y: 0, z: 0.6 },
   rail: { x: 0, y: 0, z: 0.6 },
+  "mdf-support": { x: 0, y: 0, z: 0.7 },   // overridden per-face (fans inward toward the room)
   "ext-panel": { x: 0, y: 0, z: 0 },      // overridden per-face
   insulation: { x: 0, y: 0, z: 0 },        // overridden per-face
   "int-finish": { x: 0, y: 0, z: 0 },      // overridden per-face

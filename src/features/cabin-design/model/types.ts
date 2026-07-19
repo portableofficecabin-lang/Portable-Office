@@ -76,7 +76,7 @@ export type AssemblyStep =
  */
 export type PartKind =
   // structure
-  | "base-frame" | "joist" | "column" | "stud" | "rail" | "roof-frame" | "lifting-hook"
+  | "base-frame" | "joist" | "column" | "stud" | "rail" | "mdf-support" | "roof-frame" | "lifting-hook"
   // envelope
   | "floor-board" | "floor-finish" | "ext-panel" | "insulation" | "int-finish"
   | "roof-sheet" | "ceiling"

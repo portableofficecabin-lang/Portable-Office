@@ -54,13 +54,13 @@ const ft = (v: number): number => v * MM_PER_FT;
 
 /** Which part families are engineering-only (hidden in the clean customer view, spec §6). */
 const ENG_ONLY = new Set<PartKind>([
-  "base-frame", "joist", "column", "stud", "rail", "roof-frame", "lifting-hook", "insulation", "door-swing",
+  "base-frame", "joist", "column", "stud", "rail", "mdf-support", "roof-frame", "lifting-hook", "insulation", "door-swing",
 ]);
 
 /** Broad layer each part family belongs to (drives the visibility toggles). */
 const LAYER_OF_KIND: Record<PartKind, PartLayer> = {
   "base-frame": "structure", joist: "structure", column: "structure", stud: "structure",
-  rail: "structure", "roof-frame": "structure", "lifting-hook": "structure",
+  rail: "structure", "mdf-support": "structure", "roof-frame": "structure", "lifting-hook": "structure",
   "floor-board": "walls", "floor-finish": "walls", "ext-panel": "walls", insulation: "walls",
   "int-finish": "walls", "roof-sheet": "roof", ceiling: "roof",
   partition: "walls", door: "openings", "door-swing": "openings", window: "openings",
@@ -71,7 +71,7 @@ const LAYER_OF_KIND: Record<PartKind, PartLayer> = {
 
 const COLOR_OF_KIND: Record<PartKind, string> = {
   "base-frame": "#64748b", joist: "#94a3b8", column: "#475569", stud: "#94a3b8",
-  rail: "#64748b", "roof-frame": "#64748b", "lifting-hook": "#334155",
+  rail: "#64748b", "mdf-support": "#a3855b", "roof-frame": "#64748b", "lifting-hook": "#334155",
   "floor-board": "#b98a52", "floor-finish": "#d9bb8f", "ext-panel": "#cbd5e1",
   insulation: "#facc15", "int-finish": "#e7ecf2", "roof-sheet": "#9aa7b4", ceiling: "#eef2f7",
   partition: "#c7b299", door: "#8b5a2b", "door-swing": "#cbd5e1", window: "#a8c8e0",
@@ -143,6 +143,13 @@ export interface BuildCabinModelOptions {
    * seeded Material Master — so a Frame Config section swap scales the 3D even before the BOQ reprices.
    */
   resolveSection?: (boqLineId: string) => SectionDims | null;
+  /**
+   * Resolve a BOQ line id → its PRICED piece count. The studio passes a resolver reading the LIVE
+   * priced BOQ, so a manual quantity override or lock on a member (e.g. the base-frame cross-stiffeners
+   * or the MDF support battens) is reflected in the 3D member count — never independently recomputed.
+   * Absent / null ⇒ falls back to the take-off's own auto count (which equals the BOQ's auto count).
+   */
+  resolveQty?: (boqLineId: string) => number | null;
 }
 
 export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOptions = {}): CabinModel {
@@ -188,6 +195,21 @@ export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOption
     };
   };
 
+  /* ---- MEMBER COUNT: straight from the priced BOQ, never recomputed here (spec: single source of
+   * truth). The live resolver returns the priced pieces (with any manual override / lock); the
+   * fallback is the take-off's own auto count for that line, which equals the BOQ's auto count. */
+  const qtyById = new Map<string, number>();
+  for (const it of takeoff.items) if (it.kind === "steel") qtyById.set(it.id, it.qty);
+  const memberCount = (id: string): number => {
+    const live = opts.resolveQty?.(id);
+    if (live != null && Number.isFinite(live)) return Math.max(0, Math.round(live));
+    return qtyById.get(id) ?? 0;
+  };
+  /** `count` interior lines evenly spaced across a span, excluding both ends (mirrors the take-off's
+   *  evenLines) — so the first/last member never duplicates the perimeter frame at 0 or `span`. */
+  const evenLines = (span: number, count: number): number[] =>
+    Array.from({ length: Math.max(0, count) }, (_, i) => (span * (i + 1)) / (count + 1));
+
   /* ---- 1. bottom structural frame (chassis) — cross-section from the base-frame section --- */
   const bfl = xsec("floor:base-frame-long", MEMBER_COL);
   const bfc = xsec("floor:base-frame-cross", MEMBER_COL);
@@ -200,12 +222,17 @@ export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOption
   s.add("floor:base-frame-cross-b", "base-frame", "Base frame — cross",
     box(L - bfc.across, 0, BASE_Z1 - bfc.through, L, W, BASE_Z1), { boqLineId: "floor:base-frame-cross" });
 
-  /* ---- 2. floor joists (frame.joists = x positions along the length, metres) ------------ */
+  /* ---- 2. base-frame cross-stiffeners (transverse floor members) — spec §4 -----------------
+   * COUNT + section come straight from the priced BOQ line "floor:joists" (so a spacing change,
+   * a manual qty override and a section swap all flow through — nothing is recomputed here). Each
+   * stiffener runs TRANSVERSELY between the two longitudinal base members, at the base-frame level,
+   * across the CLEAR internal width; interior positions never duplicate the front/rear perimeter. */
   const js = xsec("floor:joists", MEMBER_JOIST);
-  (frame?.joists ?? []).forEach((xM, i) => {
-    const x = xM * 1000;
-    s.add(`floor:joist:${i}`, "joist", "Floor joist",
-      box(x - js.across / 2, 0, FLOOR_TOP - js.through, x + js.across / 2, W, FLOOR_TOP),
+  const yClearLo = bfl.across;        // inner face of the rear longitudinal side member
+  const yClearHi = W - bfl.across;    // inner face of the front longitudinal side member
+  evenLines(L, memberCount("floor:joists")).forEach((x, i) => {
+    s.add(`floor:joist:${i}`, "joist", "Base-frame cross-stiffener",
+      box(x - js.across / 2, yClearLo, BASE_Z1 - js.through, x + js.across / 2, yClearHi, BASE_Z1),
       { boqLineId: "floor:joists" });
   });
 
@@ -263,6 +290,86 @@ export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOption
         : box(xBase, 0, z0, xBase + MEMBER_POST, W, z1);
       s.add(`${face}:rail:${tag}`, "rail", `Wall rail — ${face}`, solid, { boqLineId: `${face}:rails` });
     }
+  });
+
+  /* ---- internal MDF-lining support battens (spec §7) — rendered ONLY when the BOQ took them off.
+   * COUNT + section per face come straight from the priced BOQ (front/rear/left/right :mdf-support-v/-h),
+   * never recomputed here. Each batten is CLIPPED against the door/window openings on its wall — read
+   * from the SAME obstacles the interior draws — so no member ever passes through a door or window.
+   * Interior positions never duplicate the corner columns. */
+  const mdfInset = WALL_T + (insulated ? INS_T : 0) + (lined ? INT_T : 0);
+  const faceOpenings: Record<string, { aLo: number; aHi: number; zLo: number; zHi: number }[]> = {
+    front: [], rear: [], left: [], right: [],
+  };
+  for (const ob of cabinObstacles(config)) {
+    if (ob.kind !== "door" && ob.kind !== "window") continue;
+    const xs = ob.poly.map((p) => p.x), ys = ob.poly.map((p) => p.y);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const dRear = y0, dFront = W - y1, dLeft = x0, dRight = L - x1;
+    const m = Math.min(dRear, dFront, dLeft, dRight);
+    if (m > 250) continue; // an interior / partition door — not on an external wall
+    const pad = 20;                                  // small clear margin so a batten never grazes an edge
+    const zLo = (ob.fromHeightMm ?? FLOOR_TOP) - pad;
+    const zHi = (ob.toHeightMm ?? Htop) + pad;
+    const rectX = { aLo: x0 - pad, aHi: x1 + pad, zLo, zHi };
+    const rectY = { aLo: y0 - pad, aHi: y1 + pad, zLo, zHi };
+    if (m === dRear) faceOpenings.rear.push(rectX);
+    else if (m === dFront) faceOpenings.front.push(rectX);
+    else if (m === dLeft) faceOpenings.left.push(rectY);
+    else faceOpenings.right.push(rectY);
+  }
+  /** The sub-segments of [lo,hi] left after removing every hole interval (drops hairline slivers). */
+  const carve = (lo: number, hi: number, holes: [number, number][]): [number, number][] => {
+    let segs: [number, number][] = [[lo, hi]];
+    for (const [h0, h1] of holes) {
+      const next: [number, number][] = [];
+      for (const [s0, s1] of segs) {
+        if (h1 <= s0 || h0 >= s1) { next.push([s0, s1]); continue; }
+        if (h0 > s0) next.push([s0, Math.min(h0, s1)]);
+        if (h1 < s1) next.push([Math.max(h1, s0), s1]);
+      }
+      segs = next;
+    }
+    return segs.filter(([a, b]) => b - a > 30);
+  };
+
+  wallFaces.forEach(({ face, horiz }) => {
+    const wallLen = horiz ? L : W;
+    const nV = memberCount(`${face}:mdf-support-v`);
+    const nH = memberCount(`${face}:mdf-support-h`);
+    if (nV + nH === 0) return;
+    const ops = faceOpenings[face];
+    const inward: Vec3 =
+      face === "rear" ? { x: 0, y: 1, z: 0.25 } : face === "front" ? { x: 0, y: -1, z: 0.25 }
+      : face === "left" ? { x: 1, y: 0, z: 0.25 } : { x: -1, y: 0, z: 0.25 };
+
+    // place a batten box on the room face: [aLo,aHi] along the wall, [zLo,zHi] in height, depth `t`.
+    const battenSolid = (aLo: number, aHi: number, zLo: number, zHi: number, t: number): PartSolid =>
+      face === "rear" ? box(aLo, mdfInset, zLo, aHi, mdfInset + t, zHi)
+      : face === "front" ? box(aLo, W - mdfInset - t, zLo, aHi, W - mdfInset, zHi)
+      : face === "left" ? box(mdfInset, aLo, zLo, mdfInset + t, aHi, zHi)
+      : box(L - mdfInset - t, aLo, zLo, L - mdfInset, aHi, zHi);
+
+    // vertical battens — floor to eave at each position, carved around openings in the HEIGHT axis
+    const sv = xsec(`${face}:mdf-support-v`, MEMBER_STUD);
+    evenLines(wallLen, nV).forEach((a, i) => {
+      const w = sv.across / 2;
+      const holes = ops.filter((o) => a >= o.aLo && a <= o.aHi).map((o) => [o.zLo, o.zHi] as [number, number]);
+      carve(FLOOR_TOP, Htop, holes).forEach(([z0, z1], k) => {
+        s.add(`${face}:mdf-support-v:${i}-${k}`, "mdf-support", `Internal MDF support batten — ${face}`,
+          battenSolid(a - w, a + w, z0, z1, sv.through), { boqLineId: `${face}:mdf-support-v`, explode: inward });
+      });
+    });
+    // horizontal battens — along the wall at each height, carved around openings in the ALONG axis
+    const sh = xsec(`${face}:mdf-support-h`, MEMBER_STUD);
+    evenLines(Htop, nH).forEach((z, i) => {
+      const w = sh.across / 2;
+      const holes = ops.filter((o) => z >= o.zLo && z <= o.zHi).map((o) => [o.aLo, o.aHi] as [number, number]);
+      carve(0, wallLen, holes).forEach(([a0, a1], k) => {
+        s.add(`${face}:mdf-support-h:${i}-${k}`, "mdf-support", `Internal MDF support batten — ${face}`,
+          battenSolid(a0, a1, z - w, z + w, sh.through), { boqLineId: `${face}:mdf-support-h`, explode: inward });
+      });
+    });
   });
 
   /* ---- 6/7/8. wall skins: external panel, insulation, internal lining -------------------- */
