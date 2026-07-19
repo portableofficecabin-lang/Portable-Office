@@ -3,7 +3,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { CabinCalculatorSection } from "@/components/home/CabinCalculatorSection";
 import { CategoriesSection } from "@/components/home/CategoriesSection";
 import { ProductRangeSection } from "@/components/home/ProductRangeSection";
-import { HomeBelowFold } from "@/components/home/HomeBelowFold";
+import HomeBelowFoldSections from "@/components/home/HomeBelowFoldSections";
 import { FAQSection } from "@/components/home/FAQSection";
 import { CTASection } from "@/components/home/CTASection";
 import { InternalLinkingHub } from "@/components/home/InternalLinkingHub";
@@ -33,8 +33,12 @@ const Index = () => {
       <CabinCalculatorSection />
       <CategoriesSection />
       <ProductRangeSection />
-      {/* Non-SEO-critical, below-the-fold — deferred to client (kept out of HTML) */}
-      <HomeBelowFold />
+      {/* Below-the-fold sections — SERVER-RENDERED so their content is in the initial HTML:
+          featured products + GST-inclusive prices, why-choose-us, tech specs, applications,
+          how-it-works, what-sets-us-apart and trusted clients. The six static sections ship
+          ZERO client JS; FeaturedProducts is an async server component reading the ISR-cached
+          merged catalog (page revalidate). Interactivity elsewhere stays in small islands. */}
+      <HomeBelowFoldSections />
       {/* SEO-critical — FAQ schema + internal links stay server-rendered */}
       <FAQSection />
       <InternalLinkingHub />

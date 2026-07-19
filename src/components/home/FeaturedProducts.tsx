@@ -1,36 +1,27 @@
-"use client";
-
+// SERVER COMPONENT — no "use client". This section has no interactive state (its buttons are
+// links + a static enquiry CTA), so it is server-rendered: the featured product names, categories,
+// GST-inclusive prices and detail links are all present in the initial HTML for SEO, and the
+// section ships ZERO client JS.
+//
+// Data comes from getAllProductsMerged() — the SAME server-side, ISR-cached (page revalidate),
+// cookie-less read the product listing/detail pages use. It merges any admin overrides from
+// Supabase over the static catalog and falls back to the static catalog if Supabase is
+// unreachable, so the homepage can never fail to render its featured products. Prices/availability
+// still come from the commerce catalog (productCommerce.ts), so this card can never disagree with
+// the product page, the cart, the JSON-LD or the Merchant feed.
 import Link from "next/link";
-import { ArrowRight, Eye, MessageSquare, Loader2 } from "lucide-react";
+import { ArrowRight, Eye, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useFeaturedProducts } from "@/hooks/useProducts";
+import { getAllProductsMerged } from "@/lib/products/server";
 import { getBestProductImage } from "@/data/productImages";
 import { getProductDetailPath } from "@/data/products";
 import { OptimizedImage } from "@/components/OptimizedImage";
-// Money comes from the commerce catalog, never from Product.price — the catalog holds the
-// ex-GST base and sellPrice() adds GST, so this card can never disagree with the product
-// page, the cart, the JSON-LD or the Merchant feed.
 import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 
-export function FeaturedProducts() {
-  const { products: featuredProducts, isLoading } = useFeaturedProducts();
-  const displayProducts = featuredProducts.slice(0, 6);
-
-  // Static featured products are seeded synchronously (useProducts), so render
-  // them immediately and only show the spinner when there is genuinely nothing
-  // to display yet. Avoids blocking the section on the Supabase round-trip.
-  if (isLoading && displayProducts.length === 0) {
-    return (
-      <section className="section-padding bg-muted/50">
-        <div className="container-custom">
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-10 w-10 text-accent animate-spin" />
-          </div>
-        </div>
-      </section>
-    );
-  }
+export async function FeaturedProducts() {
+  const allProducts = await getAllProductsMerged();
+  const displayProducts = allProducts.filter((p) => p.featured).slice(0, 6);
 
   if (displayProducts.length === 0) {
     return null;
