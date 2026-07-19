@@ -85,8 +85,8 @@ export default function RefundPolicyPage() {
               <div>
                 <h2 className="font-display text-lg font-bold text-foreground mb-2">No Returns Accepted</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  All products manufactured by Portable Office Cabin — including portable cabins, shipping containers, prefab homes, and modular structures — are <strong>custom-built to order</strong>. Due to the bespoke nature of our products, <strong>we do not accept returns</strong> once the product has been manufactured and delivered. Please review all specifications carefully before confirming your order. See our{" "}
-                  <Link href="/custom-product-policy" className="text-accent hover:underline">Custom Product Policy</Link> for full details.
+                  Our products are <strong>manufactured to order</strong> — each unit is built against your confirmed order rather than taken from shelf stock. Because a unit is produced specifically for your order, <strong>we do not accept returns</strong> once it has been manufactured and delivered. This applies both to standard fixed-price products bought online and to customised or project builds. Please review all specifications carefully before confirming your order. See our{" "}
+                  <Link href="/custom-product-policy" className="text-accent hover:underline">Custom Product Policy</Link> for full details. Damaged or defective units on delivery are handled separately, under the sections below.
                 </p>
               </div>
             </div>

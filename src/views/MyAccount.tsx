@@ -60,7 +60,7 @@ export default function MyAccountPage() {
       // Fetch orders summary
       const { data: orders } = await supabase
         .from("orders")
-        .select("id, status, total_amount, created_at, order_number, order_items(product_name, quantity)")
+        .select("id, status, payment_status, total_amount, created_at, order_number, order_items(product_name, quantity)")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
@@ -436,15 +436,20 @@ export default function MyAccountPage() {
                         {order.order_items?.map((item: any, idx: number) => (
                           <p key={idx} className="text-sm text-muted-foreground">{item.product_name} × {item.quantity}</p>
                         ))}
-                        {/* Indicative only — no money is collected on this site. */}
+                        {/* A PAID online order shows the real GST-inclusive amount charged; a
+                            quote-request row stays indicative (its binding price is in the quotation). */}
                         {order.total_amount ? (
                           <div className="mt-3 pt-3 border-t border-border/50">
                             <div className="flex items-baseline justify-between gap-3">
-                              <span className="text-sm font-semibold text-muted-foreground">Indicative Subtotal</span>
+                              <span className="text-sm font-semibold text-muted-foreground">
+                                {order.payment_status === "paid" ? "Total Paid" : "Indicative Subtotal"}
+                              </span>
                               <span className="text-lg font-bold text-foreground">₹{order.total_amount.toLocaleString("en-IN")}</span>
                             </div>
                             <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
-                              Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation.
+                              {order.payment_status === "paid"
+                                ? "Paid in full, inclusive of 18% GST. Transport and any optional installation you selected are included in this total."
+                                : "Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation."}
                             </p>
                           </div>
                         ) : null}

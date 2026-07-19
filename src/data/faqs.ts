@@ -121,15 +121,15 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "How is pricing determined?",
-        a: "Pricing depends on the type of structure, size, materials, and any custom features you need. The prices shown on our website are indicative \"starting from\" prices, exclusive of GST, transport beyond the 50 km free delivery zone, and installation — GST is always charged extra. Once you share your requirements, we'll send a written quotation with a clear breakdown, and that quoted price is the binding one for your order.",
+        a: "We sell in two ways. Our standard, fixed-configuration products show a fixed price that is inclusive of 18% GST — the price on the product page is exactly what you pay in the cart and at checkout, with transport calculated from your delivery pincode and optional installation shown separately before payment. Our customised, bespoke and project builds depend on the size, materials and features you need, so those are priced in a written quotation — for them the quoted price is the binding one.",
       },
       {
         q: "Can I buy a cabin online through the website?",
-        a: "No. We do not collect payments on this website and nothing can be purchased online. Every order starts with a written quotation — add the units you're interested in to your quote list or call, WhatsApp, or email us, and we'll send you a quotation. The order is placed only after you confirm that quotation with us directly.",
+        a: "Yes — our standard, fixed-price products can be bought and paid for online. Add the unit to your cart, enter your delivery pincode to see the transport charge, choose whether you want optional installation, and pay the full amount securely by UPI, card or net banking. You do not need an account — guest checkout is available. Customised or project builds are not sold online; for those you send a quote request and we confirm the price in a written quotation.",
       },
       {
         q: "What are your payment terms?",
-        a: "We require a 40–50% advance to begin production, with the balance due before or at the time of dispatch/delivery. For larger projects, we can discuss milestone-based payment plans. Payments are accepted by bank transfer (NEFT/RTGS/IMPS), UPI, cheque, or demand draft — there is no online card payment on the website. GST is charged extra and shown separately on the tax invoice.",
+        a: "For standard products bought online, you pay the full amount at checkout — there is no advance or token payment. Payments are processed securely by Razorpay and we accept UPI, credit/debit cards and net banking; GST is already included in the displayed price and shown separately on the tax invoice. For customised or project builds quoted in writing, we require a 40–50% advance to begin production with the balance due before or at dispatch, payable by bank transfer (NEFT/RTGS/IMPS), UPI, cheque or demand draft.",
       },
     ],
   },

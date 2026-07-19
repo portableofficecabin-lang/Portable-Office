@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
-import { useAuth } from "@/contexts/AuthContext";
 import { SEOHead } from "@/components/SEOHead";
 import { computeTotals } from "@/lib/pricing/orderTotals";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
@@ -13,7 +12,6 @@ import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ShoppingBag, Loader2 } f
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, isLoading } = useCart();
-  const { user } = useAuth();
 
   // The SAME function the checkout summary and the server-side Razorpay route use, so
   // the subtotal here is the identical integer the customer is eventually charged.
@@ -30,26 +28,6 @@ export default function CartPage() {
     () => new Map(totals.lines.map((line) => [line.productId, line])),
     [totals.lines],
   );
-
-  if (!user) {
-    return (
-      <Layout>
-        <SEOHead title="Cart | Portable Office Cabin" description="View the products in your cart." />
-        <section className="section-padding">
-          <div className="container-custom text-center max-w-lg">
-            <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
-              <ShoppingCart className="h-10 w-10 text-muted-foreground" />
-            </div>
-            <h1 className="font-display text-2xl font-bold mb-3">Please Sign In</h1>
-            <p className="text-muted-foreground mb-6">You need to log in to view your cart.</p>
-            <Button variant="accent" size="lg" asChild>
-              <Link href="/login">Sign In</Link>
-            </Button>
-          </div>
-        </section>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>

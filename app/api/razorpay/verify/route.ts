@@ -51,11 +51,12 @@ export async function POST(request: Request) {
   // Non-null after the check above.
   const { keyId, keySecret, supabaseUrl, serviceKey } = readPaymentEnv()!;
 
+  // Session is OPTIONAL — a guest verifies a guest order. Ownership is proved differently for
+  // the two cases (see step 1 below): a logged-in order must belong to the caller; a guest order
+  // (user_id IS NULL) is proved solely by the Razorpay signature, which is pinned to the
+  // razorpay_order_id WE stored and can only be produced by Razorpay after a real payment.
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json({ error: "Please sign in." }, { status: 401 });
-  }
 
   let body: {
     razorpay_order_id?: string;
@@ -87,9 +88,15 @@ export async function POST(request: Request) {
     console.error("[razorpay/verify] order lookup failed:", orderErr?.message);
     return NextResponse.json({ error: "Order not found." }, { status: 404 });
   }
-  if (order.user_id !== user.id) {
-    console.error(`[razorpay/verify] user ${user.id} tried to verify order ${orderId} owned by ${order.user_id}`);
-    return NextResponse.json({ error: "Order not found." }, { status: 404 });
+  // A logged-in order must belong to the caller (unchanged protection: one user can never verify
+  // another's order). A GUEST order has user_id = NULL; there is no session to match, so ownership
+  // rests entirely on the signature check below — which the browser cannot forge for someone
+  // else's order because the HMAC is built from OUR stored razorpay_order_id, not the browser's.
+  if (order.user_id) {
+    if (!user || order.user_id !== user.id) {
+      console.error(`[razorpay/verify] user ${user?.id ?? "anon"} tried to verify order ${orderId} owned by ${order.user_id}`);
+      return NextResponse.json({ error: "Order not found." }, { status: 404 });
+    }
   }
   if (!order.razorpay_order_id) {
     console.error(`[razorpay/verify] order ${orderId} has no razorpay_order_id — checkout did not complete`);
@@ -194,11 +201,14 @@ export async function POST(request: Request) {
     order_id: order.id,
     status: "confirmed",
     notes: `Payment received via Razorpay (payment id ${razorpay_payment_id}).`,
-    created_by: user.id,
+    created_by: user?.id ?? null, // null for a guest order — there is no acting user
   });
 
-  // The cart has become an order — empty it.
-  await admin.from("cart_items").delete().eq("user_id", user.id);
+  // The cart has become an order — empty it. Only logged-in carts live in cart_items; a guest's
+  // cart is in the browser's localStorage and is cleared client-side on success.
+  if (order.user_id) {
+    await admin.from("cart_items").delete().eq("user_id", order.user_id);
+  }
 
   return NextResponse.json({ orderNumber: order.order_number });
 }

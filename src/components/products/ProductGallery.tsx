@@ -17,6 +17,10 @@ interface ProductGalleryProps {
   imageMeta?: { alt: string; title: string }[];
   featured?: boolean;
   inStock?: boolean;
+  /** True when the SKU is a standard fixed-price product that can be bought online right now
+   *  (isPurchasable). Drives whether the overlay badge reads "Available to Order" (buyable) or
+   *  "Made to Order" (quote-only), so the image does not contradict a working Add-to-Cart. */
+  purchasable?: boolean;
 }
 
 // Client island for the product image gallery. Selection is INDEX-based so it is
@@ -32,6 +36,7 @@ export function ProductGallery({
   imageMeta,
   featured,
   inStock,
+  purchasable,
 }: ProductGalleryProps) {
   // Normalise to real, non-empty URLs once. Empty/placeholder entries are dropped
   // so they can never become the selected main image.
@@ -99,13 +104,13 @@ export function ProductGallery({
             Featured
           </span>
         )}
-        {/* Every cabin is fabricated against the order — nothing ships off a shelf — so the badge
-            states the real fulfilment model rather than implying warehouse stock. The `inStock`
-            flag still gates it: it means "we are currently accepting orders for this", not
-            "a finished unit is sitting in a yard". */}
+        {/* A standard fixed-price SKU (purchasable) reads "Available to Order" — it can be bought
+            and paid for online right now, so the image must not imply it is unavailable. A
+            quote-only SKU keeps "Made to Order": accurate for a built-to-brief unit. The `inStock`
+            flag still gates the badge — it means "we are currently accepting orders for this". */}
         {inStock && (
           <span className="bg-primary text-primary-foreground text-sm font-semibold px-4 py-1.5 rounded-full">
-            Made to Order
+            {purchasable ? "Available to Order" : "Made to Order"}
           </span>
         )}
       </div>

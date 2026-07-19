@@ -106,7 +106,7 @@ export default function RegisterPage() {
 
   return (
     <Layout>
-      <SEOHead title="Create Account | Portable Office Cabin" description="Create an account to save your quote list and track your quote requests. Every order starts with a written quotation — there is no online payment." />
+      <SEOHead title="Create Account | Portable Office Cabin" description="Create an account to track your orders and quote requests. Standard products can be bought and paid for online; customised builds are confirmed by written quotation. An account is optional — guest checkout is available." />
       <section className="section-padding bg-gradient-to-b from-muted/50 to-background">
         <div className="container-custom max-w-md">
           <div className="bg-card rounded-2xl shadow-xl border border-border/50 p-8">

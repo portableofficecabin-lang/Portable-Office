@@ -21,6 +21,7 @@ import { getBestProductImage } from "@/data/productImages";
 import { getImageCaption } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
+import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -242,6 +243,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               imageMeta={imageMeta}
               featured={product.featured}
               inStock={product.inStock}
+              purchasable={purchasable}
             />
 
             {/* Info */}
@@ -376,29 +378,38 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               {commerce && <ProductKeySpecs commerce={commerce} className="mb-6" />}
 
               {/* Delivery window + fulfilment status, server-rendered right above the CTAs.
-                  Every cabin is fabricated against the order, so the chip states that plainly.
 
-                  DELIBERATE, AND THE REASONING MATTERS: the visible wording is no longer a literal
-                  mirror of the JSON-LD token. The schema still emits InStock for `inStock` SKUs,
-                  which stays TRUE under Google's model — availability answers "can you fulfil this
-                  order?", and the manufacturing lead time is carried by `deliveryDays` /
-                  handling time, not by the availability enum. "Made to Order" describes the
-                  fulfilment model, not a stock-out. Do NOT read this as licence to let the price
-                  or the availability ENUM drift from the markup — that mismatch is what suspended
-                  the Merchant Center account. */}
+                  A PURCHASABLE product is a standard, fixed-price item you can buy and pay for
+                  online right now, so it must NOT read as "not in stock". It shows "Available to
+                  Order" and the real dispatch lead time (DISPATCH_WORKING_DAYS, 7–15 working days),
+                  which is byte-identical to the <g:min/max_handling_time> in the Merchant feed and
+                  to the handlingTime in the JSON-LD — so the page, the feed and the schema agree.
+                  Showing "Made to Order" beside a working Add-to-Cart button is precisely the kind
+                  of mixed signal ("user cannot complete purchase") that suspended the account.
+
+                  A QUOTE-ONLY SKU keeps "Made to Order" and its own deliveryDays window — that is
+                  accurate for a built-to-brief unit that is not sold online.
+
+                  The visible wording is decoupled from the JSON-LD availability ENUM by design: the
+                  schema still emits InStock for `inStock` SKUs (availability answers "can you fulfil
+                  this order?"). Do NOT let the price or the availability enum drift from the markup. */}
               {commerce && (
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-sm">
                   <span className="flex items-center gap-1.5 text-muted-foreground">
                     <Truck className="h-4 w-4 text-accent" />
-                    <span className="font-medium text-foreground">Delivery:</span>{" "}
-                    {commerce.deliveryDays}
+                    <span className="font-medium text-foreground">
+                      {purchasable ? "Dispatch:" : "Delivery:"}
+                    </span>{" "}
+                    {purchasable
+                      ? `Within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`
+                      : commerce.deliveryDays}
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1 text-xs font-medium text-foreground">
                     <span
                       className={`h-2 w-2 rounded-full ${commerce.inStock ? "bg-green-500" : "bg-amber-500"}`}
                       aria-hidden="true"
                     />
-                    Made to Order
+                    {purchasable ? "Available to Order" : "Made to Order"}
                   </span>
                 </div>
               )}

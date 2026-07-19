@@ -14,10 +14,12 @@
  *   business owner, it does not go here — and it does not go on the site.
  * - Change a fact HERE, once. Never patch it at the call site.
  *
- * NOTE: Portable Office Cabin is a QUOTE-ONLY business — there is no payment
- * gateway and nothing can be purchased online. Displayed prices are indicative
- * "starting from" prices, exclusive of GST, of transport beyond 50 km, and of
- * installation.
+ * NOTE: Portable Office Cabin sells in TWO ways. Standard, fixed-configuration
+ * products are bought and paid for online (Razorpay checkout) at a fixed,
+ * GST-INCLUSIVE price — see src/data/productCommerce.ts (isPurchasable) and
+ * app/api/razorpay. Customised / bespoke / project builds are quote-only: their
+ * displayed figures are indicative "starting from" prices before GST, transport
+ * beyond 50 km, and installation, with the binding price set in a written quotation.
  */
 
 /** A structured postal address, shaped to map directly onto schema.org PostalAddress. */

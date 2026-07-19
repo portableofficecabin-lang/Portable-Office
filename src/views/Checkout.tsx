@@ -17,7 +17,7 @@ import { PaymentMethods } from "@/components/PaymentMethods";
 import { computeTotals } from "@/lib/pricing/orderTotals";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 import { INSTALLATION, deliveryEstimate } from "@/data/shippingZones";
-import { AlertCircle, CheckCircle2, Lock, Truck } from "lucide-react";
+import { AlertCircle, CheckCircle2, Lock, Truck, User as UserIcon } from "lucide-react";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
 
@@ -70,14 +70,27 @@ const POLICY_LINKS = [
 ];
 
 export default function CheckoutPage() {
-  const { items } = useCart();
+  const { items, clearCart } = useCart();
   const { user } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [wantsInstallation, setWantsInstallation] = useState(false);
+  // Set once the payment is verified — drives the public order-confirmation screen. A guest has
+  // no /my-account/orders to land on, so success must be shown here, on this same route.
+  const [placed, setPlaced] = useState<{ orderNumber: string; email: string; amount: number } | null>(null);
   const [form, setForm] = useState({
+    // Guest contact — collected only when logged out. Logged-in orders use the account/profile.
+    name: "", email: "", phone: "",
     address_line1: "", address_line2: "", city: "", state: "", pincode: "", notes: "",
   });
+
+  // Guests must give us a way to reach and deliver to them; that is ALL we ask — no company,
+  // GSTIN or business details. Logged-in buyers already have an account, so this is skipped.
+  const isGuest = !user;
+  const nameValid = form.name.trim().length > 1;
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+  const phoneValid = /^\d{10}$/.test(form.phone.trim());
+  const contactComplete = !isGuest || (nameValid && emailValid && phoneValid);
 
   // The single source of order maths — the very same function the server re-runs before
   // charging. What is rendered below is exactly what Razorpay will be asked for.
@@ -102,17 +115,24 @@ export default function CheckoutPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     // Keep the pincode field to digits only, max 6 — it is the key to the whole freight table.
-    setForm(prev => ({ ...prev, [name]: name === "pincode" ? value.replace(/\D/g, "").slice(0, 6) : value }));
+    // The phone field is digits only, max 10 — a 10-digit Indian mobile number.
+    const next =
+      name === "pincode" ? value.replace(/\D/g, "").slice(0, 6)
+      : name === "phone" ? value.replace(/\D/g, "").slice(0, 10)
+      : value;
+    setForm(prev => ({ ...prev, [name]: next }));
   };
 
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !totals.payable || loading) return;
+    if (!totals.payable || loading || !contactComplete) return;
     setLoading(true);
 
     try {
-      // 1. The server recomputes the amount from OUR cart rows and creates the Razorpay
-      //    order. We deliberately send no prices — only the pincode and the installation flag.
+      // 1. The server recomputes the amount from the catalog and creates the Razorpay order.
+      //    We NEVER send prices — only the pincode + installation flag (and, for a guest, the
+      //    product ids + quantities, which the server re-prices from the catalog so a tampered
+      //    guest cart cannot change what is charged). A logged-in order reads the DB cart.
       const res = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -124,6 +144,12 @@ export default function CheckoutPage() {
           city: form.city,
           state: form.state,
           notes: form.notes,
+          ...(isGuest
+            ? {
+                items: items.map((i) => ({ productId: i.product_id, quantity: i.quantity })),
+                customer: { name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() },
+              }
+            : {}),
         }),
       });
 
@@ -143,7 +169,11 @@ export default function CheckoutPage() {
         order_id: created.razorpayOrderId,
         name: "Portable Office Cabin",
         description: `Order ${created.orderNumber}`,
-        prefill: { email: user.email ?? "", contact: "" },
+        prefill: {
+          name: user ? "" : form.name,
+          email: user?.email ?? form.email,
+          contact: user ? "" : form.phone,
+        },
         notes: { order_number: created.orderNumber },
         theme: { color: "#0f172a" },
         // 3. Razorpay hands the browser a signature. It proves nothing until the SERVER
@@ -162,7 +192,16 @@ export default function CheckoutPage() {
               title: "Payment successful",
               description: `Order ${verified.orderNumber} is confirmed. We will be in touch with your dispatch schedule.`,
             });
-            router.push("/my-account/orders");
+            // The cart has become an order. The server already cleared a logged-in DB cart; this
+            // clears the guest localStorage cart (and syncs local state either way).
+            clearCart();
+            // Show the confirmation on THIS route — a guest has no /my-account/orders to visit.
+            setPlaced({
+              orderNumber: verified.orderNumber,
+              email: user?.email ?? form.email,
+              amount: totals.grandTotal,
+            });
+            setLoading(false);
           } catch (err) {
             toast({
               title: "Payment taken, confirmation pending",
@@ -198,7 +237,55 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!user) { router.push("/login"); return null; }
+  // ── Order placed — the public confirmation screen (works for guest AND logged-in). ──────
+  if (placed) {
+    return (
+      <Layout>
+        <SEOHead title="Order Confirmed | Portable Office Cabin" description="Your order has been placed successfully." />
+        <section className="section-padding">
+          <div className="container-custom max-w-xl text-center">
+            <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="h-11 w-11 text-accent" />
+            </div>
+            <h1 className="font-display text-3xl font-bold text-foreground mb-3">Payment successful</h1>
+            <p className="text-muted-foreground mb-6">
+              Thank you — your order is confirmed and paid in full.
+            </p>
+            <div className="bg-card rounded-xl border border-border/50 p-6 text-left space-y-3 mb-8">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Order reference</span>
+                <span className="font-display font-bold text-foreground">{placed.orderNumber}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Amount paid</span>
+                <span className="font-semibold text-accent">{formatINR(placed.amount)}</span>
+              </div>
+              <p className="text-sm text-muted-foreground pt-2 border-t border-border leading-relaxed">
+                A confirmation has been sent to <strong className="text-foreground">{placed.email}</strong>. Please
+                keep your order reference — quote it in any correspondence. Our team will be in touch with your
+                dispatch schedule.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              {user ? (
+                <Button variant="accent" size="lg" asChild>
+                  <Link href="/my-account/orders">View My Orders</Link>
+                </Button>
+              ) : (
+                <Button variant="accent" size="lg" asChild>
+                  <Link href="/register">Create an account to track this order</Link>
+                </Button>
+              )}
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/products">Continue Shopping</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
+
   if (items.length === 0) { router.push("/cart"); return null; }
 
   return (
@@ -210,6 +297,51 @@ export default function CheckoutPage() {
           <form onSubmit={handlePay}>
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
+                {/* Contact details — GUESTS ONLY. Logged-in buyers already have an account, so we
+                    never re-ask. We collect ONLY what is needed to deliver and confirm the order —
+                    no company name, GSTIN or business registration. Checking out as a guest is the
+                    default; signing in is an optional shortcut. */}
+                {isGuest && (
+                  <div className="bg-card rounded-xl border border-border/50 p-6">
+                    <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+                      <h2 className="font-display font-semibold text-lg flex items-center gap-2">
+                        <UserIcon className="h-5 w-5 text-accent" /> Your Contact Details
+                      </h2>
+                      <p className="text-sm text-muted-foreground">
+                        Have an account?{" "}
+                        <Link href="/login" className="text-accent underline font-medium">Sign in</Link>{" "}
+                        or{" "}
+                        <Link href="/register" className="text-accent underline font-medium">create one</Link>{" "}
+                        <span className="text-muted-foreground">(optional — your cart is kept)</span>
+                      </p>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      You can check out as a guest — no account needed. We use these details to send your order
+                      confirmation and coordinate delivery.
+                    </p>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="sm:col-span-2">
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input id="name" name="name" value={form.name} onChange={handleChange} required autoComplete="name" className="mt-1.5" />
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Email *</Label>
+                        <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} required autoComplete="email" inputMode="email" placeholder="you@example.com" className="mt-1.5" />
+                        {form.email.length > 0 && !emailValid && (
+                          <p className="mt-1.5 text-xs text-destructive">Enter a valid email address.</p>
+                        )}
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone *</Label>
+                        <Input id="phone" name="phone" value={form.phone} onChange={handleChange} required autoComplete="tel" inputMode="numeric" placeholder="10-digit mobile number" className="mt-1.5" />
+                        {form.phone.length > 0 && !phoneValid && (
+                          <p className="mt-1.5 text-xs text-destructive">Enter a 10-digit mobile number.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Delivery address */}
                 <div className="bg-card rounded-xl border border-border/50 p-6">
                   <h2 className="font-display font-semibold text-lg mb-4 flex items-center gap-2">
@@ -404,16 +536,18 @@ export default function CheckoutPage() {
                     variant="accent"
                     size="lg"
                     className="w-full mt-6 !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
-                    disabled={loading || !totals.payable}
+                    disabled={loading || !totals.payable || !contactComplete}
                   >
                     <Lock className="mr-2 h-4 w-4" />
                     {loading
                       ? "Processing..."
                       : totals.skipped.length > 0
                         ? "Remove quote-only items to continue"
-                        : totals.shipping === null
-                          ? "Enter pincode to continue"
-                          : `Pay ${formatINR(totals.grandTotal)} securely`}
+                        : !contactComplete
+                          ? "Enter your contact details to continue"
+                          : totals.shipping === null
+                            ? "Enter pincode to continue"
+                            : `Pay ${formatINR(totals.grandTotal)} securely`}
                   </Button>
 
                   {/* Do NOT re-list the payment methods here. They are rendered once, from

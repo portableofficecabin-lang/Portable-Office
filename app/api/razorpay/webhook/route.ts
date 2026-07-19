@@ -68,7 +68,7 @@ interface WebhookEvent {
  */
 async function markOrderPaid(
   admin: ServiceClient,
-  order: { id: string; user_id: string; order_number: string },
+  order: { id: string; user_id: string | null; order_number: string },
   paymentId: string | undefined,
   note: string,
 ): Promise<boolean> {
@@ -91,7 +91,11 @@ async function markOrderPaid(
     notes: note,
     created_by: null, // server-to-server: there is no acting user
   });
-  await admin.from("cart_items").delete().eq("user_id", order.user_id);
+  // Only a logged-in cart lives in cart_items; a guest order (user_id NULL) has no such rows,
+  // and its localStorage cart is cleared in the browser on success.
+  if (order.user_id) {
+    await admin.from("cart_items").delete().eq("user_id", order.user_id);
+  }
   return true;
 }
 

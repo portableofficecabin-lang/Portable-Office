@@ -121,16 +121,22 @@ export default function MyOrdersPage() {
                           ))}
                         </div>
 
-                        {/* Indicative subtotal — NOT an amount charged or collected.
-                            There is no online payment; the binding price arrives in the written quotation. */}
+                        {/* A PAID online order shows the real amount charged (GST-inclusive, incl.
+                            transport + any installation). A quote-request row (payment_status not
+                            "paid") stays an indicative subtotal — its binding price arrives in the
+                            written quotation. */}
                         {order.total_amount ? (
                           <div className="mt-4 rounded-lg bg-muted/40 border border-border/50 p-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-sm font-semibold">Indicative Subtotal</span>
+                              <span className="text-sm font-semibold">
+                                {order.payment_status === "paid" ? "Total Paid" : "Indicative Subtotal"}
+                              </span>
                               <span className="font-display font-bold text-accent">₹{order.total_amount.toLocaleString("en-IN")}</span>
                             </div>
                             <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
-                              Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation.
+                              {order.payment_status === "paid"
+                                ? "Paid in full, inclusive of 18% GST. Transport and any optional installation you selected are included in this total."
+                                : "Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation."}
                             </p>
                           </div>
                         ) : null}

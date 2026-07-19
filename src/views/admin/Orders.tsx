@@ -28,7 +28,11 @@ interface OrderRow {
   invoice_generated_at: string | null;
   shipping_city: string | null;
   shipping_state: string | null;
-  user_id: string;
+  user_id: string | null; // NULL for a guest checkout
+  // Guest-checkout contact (NULL for logged-in orders, which carry contact via the profile).
+  customer_name: string | null;
+  customer_email: string | null;
+  customer_phone: string | null;
   created_at: string;
   notes: string | null;
 }
@@ -107,7 +111,14 @@ export default function AdminOrders() {
 
   const filtered = orders.filter((o) => {
     const q = search.toLowerCase();
-    const ok = !q || o.order_number.toLowerCase().includes(q) || (o.invoice_number || "").toLowerCase().includes(q);
+    const ok =
+      !q ||
+      o.order_number.toLowerCase().includes(q) ||
+      (o.invoice_number || "").toLowerCase().includes(q) ||
+      // Let admins find a guest order by the contact captured at checkout.
+      (o.customer_name || "").toLowerCase().includes(q) ||
+      (o.customer_email || "").toLowerCase().includes(q) ||
+      (o.customer_phone || "").toLowerCase().includes(q);
     const sf = statusFilter === "all" || o.status === statusFilter;
     return ok && sf;
   });
@@ -178,7 +189,24 @@ export default function AdminOrders() {
                     <motion.tr key={o.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b hover:bg-muted/40">
                       <td className="py-3 px-2 font-mono font-semibold">{o.order_number}</td>
                       <td className="py-3 px-2 text-muted-foreground">{formatDateSafe(new Date(o.created_at), "MMM d, yyyy")}</td>
-                      <td className="py-3 px-2">{[o.shipping_city, o.shipping_state].filter(Boolean).join(", ") || "—"}</td>
+                      <td className="py-3 px-2">
+                        {/* Guest orders carry contact on the order itself; logged-in orders don't
+                            (they use the account/profile), so this line only appears for guests. */}
+                        {o.customer_name && (
+                          <div className="text-xs font-medium text-foreground">
+                            {o.customer_name}
+                            <span className="ml-1 rounded bg-muted px-1 py-0.5 text-[10px] text-muted-foreground">Guest</span>
+                          </div>
+                        )}
+                        {(o.customer_email || o.customer_phone) && (
+                          <div className="text-[11px] text-muted-foreground">
+                            {[o.customer_email, o.customer_phone].filter(Boolean).join(" · ")}
+                          </div>
+                        )}
+                        <div className="text-muted-foreground">
+                          {[o.shipping_city, o.shipping_state].filter(Boolean).join(", ") || "—"}
+                        </div>
+                      </td>
                       <td className="py-3 px-2 text-right font-semibold">{inr(Number(o.total_amount || 0))}</td>
                       <td className="py-3 px-2 text-right">{inr(Number(o.paid_amount || 0))}</td>
                       <td className="py-3 px-2">
@@ -246,7 +274,7 @@ th{background:#f8fafc;text-transform:uppercase;font-size:11px;letter-spacing:0.0
 <div style="text-align:right"><h2>INVOICE</h2><p><strong>${o.invoice_number}</strong></p><p class="muted">${formatDateSafe(new Date(), "MMM d, yyyy")}</p></div>
 </div>
 <div class="row">
-<div><strong>Bill To</strong><br/><p class="muted">${[o.shipping_city, o.shipping_state].filter(Boolean).join(", ") || "Customer"}</p></div>
+<div><strong>Bill To</strong><br/><p class="muted">${[o.customer_name, [o.customer_email, o.customer_phone].filter(Boolean).join(" · "), [o.shipping_city, o.shipping_state].filter(Boolean).join(", ")].filter(Boolean).join("<br/>") || "Customer"}</p></div>
 <div style="text-align:right"><strong>Order #</strong><br/><p>${o.order_number}</p></div>
 </div>
 <table>

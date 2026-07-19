@@ -42,14 +42,19 @@ export async function POST(request: Request) {
   // Non-null after the check above.
   const { keyId, keySecret, supabaseUrl, serviceKey } = readPaymentEnv()!;
 
-  // ── Authenticate. Anonymous checkout is not supported. ──────────────────────────
+  // ── Session is OPTIONAL. Guest checkout is supported (Merchant Center requires that a
+  //    brand-new logged-out visitor can complete a purchase). A logged-in buyer's cart is
+  //    still read authoritatively from the database; a guest sends the product ids + quantities
+  //    and the server re-prices every line from the catalog, so neither can dictate a price. ──
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json({ error: "Please sign in to complete your purchase." }, { status: 401 });
-  }
 
-  let body: { pincode?: string; wantsInstallation?: boolean; address_line1?: string; address_line2?: string; city?: string; state?: string; notes?: string };
+  let body: {
+    pincode?: string; wantsInstallation?: boolean;
+    address_line1?: string; address_line2?: string; city?: string; state?: string; notes?: string;
+    items?: { productId?: string; quantity?: number }[];
+    customer?: { name?: string; email?: string; phone?: string };
+  };
   try {
     body = await request.json();
   } catch {
@@ -59,16 +64,41 @@ export async function POST(request: Request) {
   const pincode = (body.pincode ?? "").trim();
   const wantsInstallation = body.wantsInstallation === true;
 
-  // ── The user's REAL cart, read server-side. The browser sends no items and no prices. ──
-  const { data: cartRows, error: cartErr } = await supabase
-    .from("cart_items")
-    .select("product_id, quantity")
-    .eq("user_id", user.id);
+  // Guest contact — required for a guest order, so we can confirm and deliver it. Validated
+  // here (the DB columns are nullable so existing logged-in orders are unaffected).
+  const guestName = (body.customer?.name ?? "").trim();
+  const guestEmail = (body.customer?.email ?? "").trim();
+  const guestPhone = (body.customer?.phone ?? "").replace(/\D/g, "");
 
-  if (cartErr) {
-    console.error("[razorpay/order] cart read failed:", cartErr.message);
-    return NextResponse.json({ error: "Could not read your cart." }, { status: 500 });
+  // ── Resolve the cart. Logged-in → the DB cart (browser sends no items). Guest → the posted
+  //    { productId, quantity } list, which computeTotals re-prices from the catalog below. ──
+  let cartRows: { product_id: string; quantity: number }[];
+  if (user) {
+    const { data, error: cartErr } = await supabase
+      .from("cart_items")
+      .select("product_id, quantity")
+      .eq("user_id", user.id);
+    if (cartErr) {
+      console.error("[razorpay/order] cart read failed:", cartErr.message);
+      return NextResponse.json({ error: "Could not read your cart." }, { status: 500 });
+    }
+    cartRows = (data ?? []).map((r) => ({ product_id: r.product_id as string, quantity: r.quantity as number }));
+  } else {
+    // Guest path: validate contact, then take items from the request body.
+    if (!guestName || guestName.length < 2) {
+      return NextResponse.json({ error: "Please enter your name to complete a guest checkout." }, { status: 400 });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestEmail)) {
+      return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
+    }
+    if (guestPhone.length < 10) {
+      return NextResponse.json({ error: "Please enter a valid 10-digit phone number." }, { status: 400 });
+    }
+    cartRows = (Array.isArray(body.items) ? body.items : [])
+      .map((i) => ({ product_id: String(i.productId ?? "").trim(), quantity: Number(i.quantity) }))
+      .filter((i) => i.product_id && Number.isFinite(i.quantity) && i.quantity > 0);
   }
+
   if (!cartRows || cartRows.length === 0) {
     return NextResponse.json({ error: "Your cart is empty." }, { status: 400 });
   }
@@ -113,7 +143,14 @@ export async function POST(request: Request) {
   const { data: order, error: orderErr } = await admin
     .from("orders")
     .insert({
-      user_id: user.id,
+      // NULL for a guest order (orders.user_id is nullable per the guest-orders migration);
+      // the authenticated user's id otherwise, so the order still appears in their history.
+      user_id: user?.id ?? null,
+      // Guest contact is stored on the order (guests have no profiles row). Left null for
+      // logged-in orders, which carry contact via the account/profile — unchanged behaviour.
+      customer_name: user ? null : guestName,
+      customer_email: user ? null : guestEmail,
+      customer_phone: user ? null : guestPhone,
       order_number: "",
       status: "pending",
       total_amount: totals.grandTotal,
@@ -187,7 +224,11 @@ export async function POST(request: Request) {
         currency: "INR",
         // Razorpay caps the receipt at 40 chars; "ORD-10001" is comfortably inside.
         receipt: order.order_number,
-        notes: { order_id: order.id, user_id: user.id },
+        // user_id only when signed in; a guest order is reconciled by order_id + email instead.
+        notes: {
+          order_id: order.id,
+          ...(user ? { user_id: user.id } : { guest_email: guestEmail }),
+        },
       }),
     });
     razorpayOrder = await res.json();

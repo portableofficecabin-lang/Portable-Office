@@ -71,7 +71,8 @@ export default function CustomProductPolicyPage() {
             <strong>Last updated:</strong> July 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
-            Portable Office Cabin is a manufacturer, not a retailer of stocked goods. Most of what we supply — portable cabins, container offices, prefab homes, portable toilets, security cabins and modular structures — is <strong>manufactured to order</strong> against the size, layout and specification you choose. This policy explains how customised orders are priced, produced and cancelled.
+            Portable Office Cabin sells in two ways. Our <strong>standard, fixed-configuration products</strong> can be bought and paid for online at a fixed, GST-inclusive price — <strong>this policy does not apply to those</strong>; they follow our{" "}
+            <Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link>. This page covers our <strong>customised, bespoke and project builds</strong> — the portable cabins, container offices, prefab homes, labour colonies and modular structures that are <strong>manufactured to order</strong> against the size, layout and specification you choose. It explains how those customised orders are priced, produced and cancelled.
           </p>
 
           {/* Made to order notice */}
@@ -81,9 +82,10 @@ export default function CustomProductPolicyPage() {
                 <Ruler className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <h2 className="font-display text-lg font-bold text-foreground mb-2">Manufactured to Order</h2>
+                <h2 className="font-display text-lg font-bold text-foreground mb-2">Manufactured to Order (Customised Builds)</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Our products are <strong>manufactured to order</strong> to the customer's selected size, layout and specification. They are <strong>not stocked finished goods</strong>. Each unit is built for one customer and generally cannot be repurposed for another.
+                  Customised units are <strong>manufactured to order</strong> to the customer's selected size, layout and specification. They are <strong>not stocked finished goods</strong> — each unit is built for one customer and generally cannot be repurposed for another. (Our standard, fixed-price products are also built after you order, but at a fixed published price and are bought and paid for online — see our{" "}
+                  <Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link>.)
                 </p>
               </div>
             </div>
@@ -91,9 +93,9 @@ export default function CustomProductPolicyPage() {
 
           <Section title="1. Pricing of Customised Products">
             <ul className="space-y-3">
-              <Bullet>Because each unit is built to your specification, the price shown on a product page is an <strong>indicative starting price</strong>.</Bullet>
-              <Bullet>The exact price depends on <strong>size, specification, fit-out and delivery location</strong>.</Bullet>
-              <Bullet>The exact price is <strong>confirmed in a written quotation</strong>. Prices shown on the website are exclusive of GST, transport beyond 50 km, and installation.</Bullet>
+              <Bullet>For a <strong>customised</strong> unit — where you choose a non-standard size, layout or fit-out — any price shown on a product page is an <strong>indicative starting price</strong>, because the unit is built to your specification. (A standard, fixed-price product instead shows a final, GST-inclusive price you can pay online.)</Bullet>
+              <Bullet>The exact price of a customised unit depends on <strong>size, specification, fit-out and delivery location</strong>.</Bullet>
+              <Bullet>For customised units the exact price is <strong>confirmed in a written quotation</strong>. Indicative figures shown for them are before GST, transport beyond the 50 km free zone, and optional installation.</Bullet>
             </ul>
             <p className="mt-3">
               See our{" "}
@@ -102,11 +104,11 @@ export default function CustomProductPolicyPage() {
             </p>
           </Section>
 
-          <Section title="2. Every Order Begins With a Quotation">
+          <Section title="2. Every Customised Order Begins With a Quotation">
             <ul className="space-y-3">
-              <Bullet>Products <strong>cannot be purchased directly through this website</strong>. There is no online checkout and no payment is taken here.</Bullet>
-              <Bullet><strong>Every order begins with a quotation.</strong> You send us a quote request with the configuration you want; we respond with a written quotation covering price, GST, transport and installation.</Bullet>
-              <Bullet>An order is confirmed only when you approve that quotation and the advance payment is received.</Bullet>
+              <Bullet>Customised, bespoke and project builds <strong>are not sold through the online checkout</strong> — a made-to-brief unit has no single fixed price, so it begins with a quotation instead. (Standard, fixed-price products <em>can</em> be bought and paid for online — see our <Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link>.)</Bullet>
+              <Bullet><strong>Every customised order begins with a quotation.</strong> You send us a quote request with the configuration you want; we respond with a written quotation covering price, GST, transport and installation.</Bullet>
+              <Bullet>A customised order is confirmed only when you approve that quotation and the advance payment is received.</Bullet>
             </ul>
           </Section>
 
