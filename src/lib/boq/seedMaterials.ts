@@ -71,6 +71,7 @@ const CABIN_SEED_MATERIALS: Material[] = [
   seed("shs-50x50x2",    "MS Square Tube 50 × 50 × 2 mm",       "steel_section", "50 × 50 mm SHS",       2,    "IS 4923 YSt 210", "m",   2.95,  "kg_per_m",    6.0,  null,  null,  68,   "per_kg",  3),
   seed("shs-50x50x3",    "MS Square Tube 50 × 50 × 3 mm",       "steel_section", "50 × 50 mm SHS",       3,    "IS 4923 YSt 210", "m",   4.29,  "kg_per_m",    6.0,  null,  null,  68,   "per_kg",  3),
   seed("shs-40x40x2",    "MS Square Tube 40 × 40 × 2 mm",       "steel_section", "40 × 40 mm SHS",       2,    "IS 4923 YSt 210", "m",   2.32,  "kg_per_m",    6.0,  null,  null,  68,   "per_kg",  3),
+  seed("rhs-50x25x2",    "MS Rectangular Tube 50 × 25 × 2 mm",  "steel_section", "50 × 25 mm RHS",       2,    "IS 4923 YSt 210", "m",   2.23,  "kg_per_m",    6.0,  null,  null,  68,   "per_kg",  3),
   seed("ismc-100x50",    "MS C-Channel ISMC 100 × 50",          "steel_section", "ISMC 100 × 50",        6,    "IS 2062 E250",    "m",   9.56,  "kg_per_m",    6.0,  null,  null,  65,   "per_kg",  3),
   seed("c-purlin-75x40", "C-Purlin 75 × 40 × 2 mm",             "steel_section", "C 75 × 40 mm",         2,    "IS 811",          "m",   2.90,  "kg_per_m",    6.0,  null,  null,  70,   "per_kg",  3),
   seed("angle-50x50x5",  "MS Angle 50 × 50 × 5 mm",             "steel_section", "MS Angle 50 × 50 mm",  5,    "IS 2062 E250",    "m",   3.80,  "kg_per_m",    6.0,  null,  null,  65,   "per_kg",  3),

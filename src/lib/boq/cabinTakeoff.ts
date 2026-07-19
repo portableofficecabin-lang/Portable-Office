@@ -63,12 +63,13 @@ import type {
   CabinBoqOptions,
   CountTakeoff,
   FrameGeometry,
+  SheetOrientation,
   SheetTakeoff,
   SteelTakeoff,
   Takeoff,
   TakeoffItem,
 } from "@/lib/boq/types";
-import { BOQ_SECTIONS, ceil, ft2m, intermediateLines, round, totalLines, wallKey } from "@/lib/boq/types";
+import { BOQ_SECTIONS, DEFAULT_NORMS, ceil, ft2m, intermediateLines, roofRiseFtOf, round, totalLines, wallKey } from "@/lib/boq/types";
 
 /* ==========================================================================
  * 1. MATERIAL ROLES — role → default Material Master key
@@ -93,6 +94,7 @@ export type CabinRole =
   | "stud"        // intermediate wall stiffeners
   | "rail"        // wall panel top/bottom rails, truss ties
   | "truss"       // sloped-roof rafters + ridge
+  | "mdf-support" // internal MDF-lining support battens (spec §7)
   | "purlin"      // roof cross members
   | "stringer"    // staircase strings
   | "tread"       // staircase tread framing
@@ -139,6 +141,7 @@ export const CABIN_MATERIAL_ROLES: Record<CabinRole, string> = {
   stud: "shs-40x40x2",
   rail: "shs-50x50x2",
   truss: "angle-50x50x5",
+  "mdf-support": "rhs-50x25x2",
   purlin: "c-purlin-75x40",
   stringer: "ismc-100x50",
   tread: "angle-40x40x5",
@@ -208,8 +211,8 @@ const ELEC_SUBSTITUTED = new Set(["tube", "exhaust", "ac", "popup-socket", "ext-
  * 2. GEOMETRY CONSTANTS — real dimensions, not prices
  * ========================================================================== */
 
-/** The sloped roof rises 8 inches above the wall top (CabinCalculator.tsx: peak = (8/12) × scale). */
-const ROOF_RISE_FT = 8 / 12;
+/** The sloped roof rises above the wall top; the default is 8″ but a project may override it via
+ *  CabinBoqOptions.roofRiseFt (spec §2). See roofRiseFtOf() / DEFAULT_ROOF_RISE_FT in types.ts. */
 /** Staircase: 180 mm riser, 250 mm going, 1.0 m clear flight — a standard steel service stair. */
 const RISER_M = 0.18;
 const GOING_M = 0.25;
@@ -252,7 +255,7 @@ class Sink {
   readonly items: TakeoffItem[] = [];
 
   steel(section: BoqSection, slug: string, materialKey: string, description: string, formula: string,
-        qty: number, cutLengthM: number, geomKey?: string): void {
+        qty: number, cutLengthM: number, geomKey?: string, spacingM?: number): void {
     const n = Math.round(qty);
     if (n <= 0 || !(cutLengthM > MIN_CUT_M)) return;
     const item: SteelTakeoff = {
@@ -267,12 +270,14 @@ class Sink {
       cutLengthM: round(cutLengthM, 4),
     };
     if (geomKey) item.geomKey = geomKey;
+    if (spacingM != null && spacingM > 0) item.spacingM = round(spacingM, 4);
     this.items.push(item);
   }
 
   sheet(section: BoqSection, slug: string, materialKey: string, description: string, formula: string,
         grossAreaSqm: number, deductions: { label: string; areaSqm: number }[], faces: number,
-        geomKey?: string): void {
+        geomKey?: string,
+        layout?: { runM: number; spanM: number; faces?: number; orientation?: SheetOrientation }): void {
     if (!(grossAreaSqm > 0)) return;
     /* A deduction can never exceed the covering it is cut out of (validate.ts: opening_exceeds_wall).
      * openingWidthOn() already caps an opening at 60% of its wall, so this only bites on absurd
@@ -298,6 +303,12 @@ class Sink {
       faces,
     };
     if (geomKey) item.geomKey = geomKey;
+    if (layout && layout.runM > 0 && layout.spanM > 0) {
+      item.runM = round(layout.runM, 4);
+      item.spanM = round(layout.spanM, 4);
+      if (layout.faces != null) item.layoutFaces = Math.max(1, Math.round(layout.faces));
+      if (layout.orientation) item.orientation = layout.orientation;
+    }
     this.items.push(item);
   }
 
@@ -422,7 +433,10 @@ function tableCableRuns(cfg: CabinConfig, tables: CabinTable[]): Record<string, 
   return runs;
 }
 
-export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: CabinBoqOptions = {}): Takeoff {
+export function buildCabinTakeoff(cfg: CabinConfig, normsIn: BoqNorms, opts: CabinBoqOptions = {}): Takeoff {
+  // Backfill any norm a JSON round-trip / pre-upgrade preset dropped, exactly as priceTakeoff does —
+  // otherwise a missing spacing (e.g. the new MDF norms) reads undefined and poisons counts with NaN.
+  const norms: BoqNorms = { ...DEFAULT_NORMS, ...(normsIn ?? {}) };
   const s = new Sink();
   const notes: string[] = [];
 
@@ -550,7 +564,7 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
   s.steel("floor", "joists", CABIN_MATERIAL_ROLES.joist,
     "Floor cross members (joists)",
     `intermediateLines(${d(Lm)} m ÷ ${norms.joistSpacingM} m) = ${nJoists} joists × ${d(Wm)} m span${floorFactor}`,
-    nJoists * floors, Wm);
+    nJoists * floors, Wm, undefined, norms.joistSpacingM);
   s.sheet("floor", "board", CABIN_MATERIAL_ROLES["floor-board"],
     "Flooring board (deck)",
     `${d(Lm)} × ${d(Wm)} m plan area${floorFactor}`,
@@ -568,7 +582,8 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
   s.steel("roof", "top-frame-cross", CABIN_MATERIAL_ROLES.base,
     "Top frame — cross", `2 members across the width × ${d(Wm)} m`, 2, Wm);
 
-  const riseM = ft2m(ROOF_RISE_FT);
+  const roofRiseFt = roofRiseFtOf(opts);
+  const riseM = ft2m(roofRiseFt);
   const rafterLenM = Math.sqrt((Wm / 2) ** 2 + riseM ** 2);
   let purlinLines: number[] = [];
   let roofSheetSqm: number;
@@ -582,8 +597,8 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
     s.steel("roof", "truss-rafter", CABIN_MATERIAL_ROLES.truss,
       "Roof truss rafter",
       `2 rafters per truss × totalLines(${d(Lm)} m ÷ ${norms.trussSpacingM} m) = ${nTruss} trusses; ` +
-      `rafter = √((${d(Wm)}/2)² + ${d(riseM)}²) = ${d(rafterLenM)} m (8″ ridge rise over the width)`,
-      2 * nTruss, rafterLenM);
+      `rafter = √((${d(Wm)}/2)² + ${d(riseM)}²) = ${d(rafterLenM)} m (${roofRiseFt.toFixed(2)} ft ridge rise over the width)`,
+      2 * nTruss, rafterLenM, undefined, norms.trussSpacingM);
     s.steel("roof", "truss-tie", CABIN_MATERIAL_ROLES.rail,
       "Roof truss bottom tie",
       `1 tie per truss × ${nTruss} trusses × ${d(Wm)} m span`,
@@ -596,11 +611,13 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
       "Roof cross members (purlins)",
       `2 slopes × totalLines(rafter ${d(rafterLenM)} m ÷ ${norms.purlinSpacingM} m) = ` +
       `${2 * nPurlinPerSlope} purlins × ${d(Lm)} m`,
-      2 * nPurlinPerSlope, Lm);
+      2 * nPurlinPerSlope, Lm, undefined, norms.purlinSpacingM);
     s.sheet("roof", "sheet", CABIN_MATERIAL_ROLES["roof-sheet"],
       "Roof sheet (sloped)",
       `2 slopes × rafter ${d(rafterLenM)} m × ${d(Lm)} m = ${d(roofSheetSqm)} m² — the TRUE sloped area, not the plan area`,
-      roofSheetSqm, [], 1);
+      roofSheetSqm, [], 1, undefined,
+      // Layout is per-slope (eave→ridge run × length span), repeated over the 2 slopes.
+      { runM: rafterLenM, spanM: Lm, faces: 2, orientation: "vertical" });
   } else {
     const nPurlin = intermediateLines(Lm, norms.purlinSpacingM);
     purlinLines = evenLines(Lm, nPurlin);
@@ -609,18 +626,20 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
     s.steel("roof", "purlins", CABIN_MATERIAL_ROLES.purlin,
       "Roof cross members (purlins)",
       `intermediateLines(${d(Lm)} m ÷ ${norms.purlinSpacingM} m) = ${nPurlin} purlins × ${d(Wm)} m span`,
-      nPurlin, Wm);
+      nPurlin, Wm, undefined, norms.purlinSpacingM);
     s.sheet("roof", "sheet", CABIN_MATERIAL_ROLES["roof-sheet"],
       "Roof sheet (flat)",
       `${d(Lm)} × ${d(Wm)} m plan area`,
-      roofSheetSqm, [], 1);
+      roofSheetSqm, [], 1, undefined,
+      { runM: Wm, spanM: Lm, faces: 1, orientation: "horizontal" });
   }
 
   const ceilingSqm = Lm * Wm;
   s.sheet("roof", "ceiling", CABIN_MATERIAL_ROLES["ceiling-sheet"],
     "Ceiling sheet (internal lining)",
     `${d(Lm)} × ${d(Wm)} m plan area — the ceiling is always the PLAN area, whatever the roof does above it`,
-    ceilingSqm, [], 1);
+    ceilingSqm, [], 1, undefined,
+    { runM: Wm, spanM: Lm, faces: 1, orientation: "horizontal" });
   if (insulated) {
     s.sheet("roof", "insulation", insulationKey,
       "Roof / ceiling insulation",
@@ -643,6 +662,11 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
    * elevation's own breakup.
    */
   const framePosts: FrameGeometry["posts"] = [];
+
+  /* Optional roof-rise allowance on the corner columns (spec §5): off by default so existing quotes
+   * are unchanged; when on, a sloped cabin's corners are cut to the eave height PLUS the roof rise.
+   * The COUNT stays 1 per face (4 total) so the validate.ts corner cross-check is unaffected. */
+  const cornerRiseM = sloped && opts.cornerColumnRoofRise ? riseM : 0;
 
   for (const face of WALLS) {
     const lengthWall = face === "front" || face === "rear";
@@ -667,20 +691,21 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
     s.steel(face, "corner-post", CABIN_MATERIAL_ROLES.column,
       `Corner post — ${face} elevation`,
       `1 of the cabin's 4 corner posts attributed to this face (each corner is shared by 2 faces, ` +
-      `so 1 per face = 4 in total)${floorFactor} × ${d(Hm)} m`,
-      floors, Hm, gk);
+      `so 1 per face = 4 in total)${floorFactor} × ${d(Hm + cornerRiseM)} m` +
+      (cornerRiseM > 0 ? ` (incl. ${d(cornerRiseM)} m roof-rise allowance)` : ""),
+      floors, Hm + cornerRiseM, gk);
 
     s.steel(face, "posts", CABIN_MATERIAL_ROLES.column,
       `Intermediate posts — ${face} elevation`,
       `intermediateLines(${d(wallLenM)} m ÷ ${norms.postSpacingM} m) = ${nPost} posts${floorFactor} × ${d(Hm)} m`,
-      nPost * floors, Hm, gk);
+      nPost * floors, Hm, gk, norms.postSpacingM);
 
     s.steel(face, "studs", CABIN_MATERIAL_ROLES.stud,
       `Wall stiffeners (studs) — ${face} elevation`,
       `intermediateLines(${d(wallLenM)} m ÷ ${norms.studSpacingM} m) − intermediateLines(${d(wallLenM)} m ÷ ` +
       `${norms.postSpacingM} m) = ${nStud + nPost} − ${nPost} = ${nStud} studs${floorFactor} × ${d(Hm)} m. ` +
       `The subtraction is a real de-duplication: a stud line that coincides with a post line IS a post, not a stud`,
-      nStud * floors, Hm, gk);
+      nStud * floors, Hm, gk, norms.studSpacingM);
 
     s.steel(face, "rails", CABIN_MATERIAL_ROLES.rail,
       `Wall framing rails — ${face} elevation`,
@@ -691,17 +716,37 @@ export function buildCabinTakeoff(cfg: CabinConfig, norms: BoqNorms, opts: Cabin
       ? ` less ${cuts.length} opening(s) = ${d(cuts.reduce((a, c) => a + c.areaSqm, 0))} m²`
       : " (no openings on this wall)";
 
+    // Wall sheets run floor-to-top (run = Hm) per floor, side-by-side across the wall length (span).
+    const wallLayout = { runM: Hm, spanM: wallLenM, faces: floors, orientation: "vertical" as SheetOrientation };
+
     s.sheet(face, "ext-sheet", extKey,
       `External wall sheet — ${face} elevation`,
       `${d(wallLenM)} m × ${d(Hm)} m${floorFactor} = ${d(grossSqm)} m² gross${cutText}. ` +
       `Openings are deducted from the WALL COVERING only — their framing is taken off in the openings section`,
-      grossSqm, cuts, 1, gk);
+      grossSqm, cuts, 1, gk, wallLayout);
 
     if (linedInside) {
       s.sheet(face, "int-sheet", CABIN_MATERIAL_ROLES["int-sheet"],
         `Internal wall lining sheet — ${face} elevation`,
         `Same gross wall ${d(grossSqm)} m² and the same opening deductions as the external skin${cutText}`,
-        grossSqm, cuts, 1, gk);
+        grossSqm, cuts, 1, gk, wallLayout);
+
+      /* Internal MDF-lining support battens (spec §7) — a 50×25 vertical + horizontal grid behind the
+       * lining. Off by default (opts.internalMdfSupport) so an existing quotation is unchanged. NEW
+       * item ids, so no saved override is orphaned; batten runs are not opening-deducted (a
+       * conservative count for a backing framework). */
+      if (opts.internalMdfSupport) {
+        const nMdfV = intermediateLines(wallLenM, norms.mdfSupportVSpacingM);
+        const nMdfH = intermediateLines(Hm, norms.mdfSupportHSpacingM);
+        s.steel(face, "mdf-support-v", CABIN_MATERIAL_ROLES["mdf-support"],
+          `Internal MDF support — vertical battens — ${face} elevation`,
+          `intermediateLines(${d(wallLenM)} m ÷ ${norms.mdfSupportVSpacingM} m) = ${nMdfV} battens${floorFactor} × ${d(Hm)} m`,
+          nMdfV * floors, Hm, gk, norms.mdfSupportVSpacingM);
+        s.steel(face, "mdf-support-h", CABIN_MATERIAL_ROLES["mdf-support"],
+          `Internal MDF support — horizontal battens — ${face} elevation`,
+          `intermediateLines(${d(Hm)} m ÷ ${norms.mdfSupportHSpacingM} m) = ${nMdfH} battens${floorFactor} × ${d(wallLenM)} m`,
+          nMdfH * floors, wallLenM, gk, norms.mdfSupportHSpacingM);
+      }
     }
     if (insulated) {
       s.sheet(face, "insulation", insulationKey,

@@ -1,0 +1,1430 @@
+################################################################
+SCENARIO :: 1. Standard cabin — 20 x 10 x 8.5 ft, 1 room, 1 door, 1 window, sloped roof
+################################################################
+META  L=6.096 W=3.048 H=2.591 floors=1 rooms=1 partitions=0 doors=1 windows=1 stairs=0 verandas=0 modules=1 floorArea=18.581 roof=Sloped (2-side)
+TOTALS netSteel=1135.610 totSteel=1204.150 totWeight=2489.800 material=142459 charges=79925 subtotal=222384 gst=40029 grand=262413 rsPerSqft=1312.04
+  CHARGE Fabrication / welding [per_kg] = 21675
+  CHARGE Installation [amount] = 15000
+  CHARGE Labour [per_kg] = 14450
+  CHARGE Painting (primer + enamel) [per_sqm] = 10801
+  CHARGE Transport [amount] = 18000
+SECTIONS:
+  SEC electrical  steelKg=2.510 totKg=19.710 material=19858 lines=6
+  SEC finishing   steelKg=0.000 totKg=0.000 material=7792 lines=2
+  SEC floor       steelKg=315.400 totKg=843.830 material=30807 lines=5
+  SEC front       steelKg=124.430 totKg=284.470 material=11127 lines=6
+  SEC left        steelKg=68.110 totKg=157.610 material=6122 lines=6
+  SEC misc        steelKg=0.000 totKg=2.940 material=704 lines=1
+  SEC openings    steelKg=20.610 totKg=77.000 material=13213 lines=7
+  SEC rear        steelKg=124.430 totKg=293.950 material=11284 lines=6
+  SEC right       steelKg=68.110 totKg=157.610 material=6122 lines=6
+  SEC roof        steelKg=480.550 totKg=652.680 material=35431 lines=9
+LINES (54):
+  LINE electrical:db                      src=auto   en=Y qty=1.000 nos   pcs=1 cut=- run=- net=- sheets=- totKg=3.200 rate=4200.00 amt=4200 mat=elec-db
+  LINE electrical:fan                     src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=9.000 rate=2500.00 amt=5000 mat=elec-fan
+  LINE electrical:led                     src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=3.000 rate=800.00 amt=4000 mat=elec-led-panel
+  LINE electrical:plug                    src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=0.800 rate=450.00 amt=1800 mat=elec-socket
+  LINE electrical:switch-board            src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=1.200 rate=650.00 amt=2600 mat=elec-switch
+  LINE electrical:wire                    src=auto   en=Y qty=116.175 m     pcs=1 cut=116.175 run=116.175 net=- sheets=- totKg=2.510 rate=18.00 amt=2258 mat=elec-wire-1.5
+  LINE finishing:enamel                   src=auto   en=Y qty=15.790 ltr   pcs=15.79 cut=- run=- net=- sheets=- totKg=0.000 rate=380.00 amt=6300 mat=enamel-paint
+  LINE finishing:primer                   src=auto   en=Y qty=5.920 ltr   pcs=5.92 cut=- run=- net=- sheets=- totKg=0.000 rate=240.00 amt=1492 mat=primer-red-oxide
+  LINE floor:base-frame-cross             src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=61.770 rate=65.00 amt=4015 mat=ismc-100x50
+  LINE floor:base-frame-long              src=auto   en=Y qty=12.192 m     pcs=2 cut=6.096 run=12.192 net=- sheets=- totKg=123.550 rate=65.00 amt=8031 mat=ismc-100x50
+  LINE floor:board                        src=auto   en=Y qty=18.581 sqm   pcs=- cut=- run=- net=18.581 sheets=8 totKg=491.310 rate=320.00 amt=6719 mat=cementboard-18
+  LINE floor:finish                       src=auto   en=Y qty=18.581 sqm   pcs=- cut=- run=- net=18.581 sheets=1 totKg=37.120 rate=155.00 amt=3197 mat=vinyl-2mm
+  LINE floor:joists                       src=auto   en=Y qty=18.288 m     pcs=6 cut=3.048 run=18.288 net=- sheets=- totKg=130.080 rate=68.00 amt=8845 mat=rhs-100x50x3
+  LINE front:corner-post                  src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE front:ext-sheet                    src=auto   en=Y qty=14.121 sqm   pcs=- cut=- run=- net=14.121 sheets=6 totKg=98.440 rate=92.00 amt=1442 mat=sheet-ext-gi-0.8
+  LINE front:int-sheet                    src=auto   en=Y qty=14.121 sqm   pcs=- cut=- run=- net=14.121 sheets=6 totKg=61.600 rate=78.00 amt=1223 mat=sheet-int-ppgi-0.5
+  LINE front:posts                        src=auto   en=Y qty=5.182 m     pcs=2 cut=2.591 run=5.182 net=- sheets=- totKg=23.560 rate=68.00 amt=1602 mat=shs-50x50x3
+  LINE front:rails                        src=auto   en=Y qty=12.192 m     pcs=2 cut=6.096 run=12.192 net=- sheets=- totKg=38.120 rate=68.00 amt=2592 mat=shs-50x50x2
+  LINE front:studs                        src=auto   en=Y qty=20.726 m     pcs=8 cut=2.591 run=20.726 net=- sheets=- totKg=50.970 rate=68.00 amt=3466 mat=shs-40x40x2
+  LINE left:corner-post                   src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE left:ext-sheet                     src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=55.050 rate=92.00 amt=806 mat=sheet-ext-gi-0.8
+  LINE left:int-sheet                     src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=34.450 rate=78.00 amt=684 mat=sheet-int-ppgi-0.5
+  LINE left:posts                         src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE left:rails                         src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=19.060 rate=68.00 amt=1296 mat=shs-50x50x2
+  LINE left:studs                         src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=25.490 rate=68.00 amt=1733 mat=shs-40x40x2
+  LINE misc:bolts                         src=auto   en=Y qty=32.000 nos   pcs=32 cut=- run=- net=- sheets=- totKg=2.940 rate=22.00 amt=704 mat=bolt-m12
+  LINE openings:door-frame-head:3x6       src=auto   en=Y qty=0.914 m     pcs=1 cut=0.914 run=0.914 net=- sheets=- totKg=2.290 rate=68.00 amt=156 mat=door-frame-40x40
+  LINE openings:door-frame-jamb:3x6       src=auto   en=Y qty=3.658 m     pcs=2 cut=1.829 run=3.658 net=- sheets=- totKg=9.160 rate=68.00 amt=623 mat=door-frame-40x40
+  LINE openings:door-leaf                 src=auto   en=Y qty=1.000 nos   pcs=1 cut=- run=- net=- sheets=- totKg=28.000 rate=7500.00 amt=7500 mat=door-ms-flush
+  LINE openings:window-frame-head-sill:3x3 src=auto   en=Y qty=1.829 m     pcs=2 cut=0.914 run=1.829 net=- sheets=- totKg=4.580 rate=68.00 amt=312 mat=window-frame-40x40
+  LINE openings:window-frame-jamb:3x3     src=auto   en=Y qty=1.829 m     pcs=2 cut=0.914 run=1.829 net=- sheets=- totKg=4.580 rate=68.00 amt=312 mat=window-frame-40x40
+  LINE openings:window-grill:3x3          src=auto   en=Y qty=0.836 sqm   pcs=- cut=- run=- net=0.836 sheets=0 totKg=10.390 rate=78.00 amt=811 mat=window-grill
+  LINE openings:window:3x3                src=auto   en=Y qty=1.000 nos   pcs=1 cut=- run=- net=- sheets=- totKg=18.000 rate=3500.00 amt=3500 mat=window-slider
+  LINE rear:corner-post                   src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE rear:ext-sheet                     src=auto   en=Y qty=14.957 sqm   pcs=- cut=- run=- net=14.957 sheets=6 totKg=104.270 rate=92.00 amt=1527 mat=sheet-ext-gi-0.8
+  LINE rear:int-sheet                     src=auto   en=Y qty=14.957 sqm   pcs=- cut=- run=- net=14.957 sheets=6 totKg=65.250 rate=78.00 amt=1295 mat=sheet-int-ppgi-0.5
+  LINE rear:posts                         src=auto   en=Y qty=5.182 m     pcs=2 cut=2.591 run=5.182 net=- sheets=- totKg=23.560 rate=68.00 amt=1602 mat=shs-50x50x3
+  LINE rear:rails                         src=auto   en=Y qty=12.192 m     pcs=2 cut=6.096 run=12.192 net=- sheets=- totKg=38.120 rate=68.00 amt=2592 mat=shs-50x50x2
+  LINE rear:studs                         src=auto   en=Y qty=20.726 m     pcs=8 cut=2.591 run=20.726 net=- sheets=- totKg=50.970 rate=68.00 amt=3466 mat=shs-40x40x2
+  LINE right:corner-post                  src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE right:ext-sheet                    src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=55.050 rate=92.00 amt=806 mat=sheet-ext-gi-0.8
+  LINE right:int-sheet                    src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=34.450 rate=78.00 amt=684 mat=sheet-int-ppgi-0.5
+  LINE right:posts                        src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE right:rails                        src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=19.060 rate=68.00 amt=1296 mat=shs-50x50x2
+  LINE right:studs                        src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=25.490 rate=68.00 amt=1733 mat=shs-40x40x2
+  LINE roof:ceiling                       src=auto   en=Y qty=18.581 sqm   pcs=- cut=- run=- net=18.581 sheets=7 totKg=81.050 rate=76.00 amt=1567 mat=sheet-ceiling-0.5
+  LINE roof:lifting-hooks                 src=auto   en=Y qty=1.200 m     pcs=4 cut=0.300 run=1.200 net=- sheets=- totKg=4.830 rate=65.00 amt=314 mat=angle-50x50x5
+  LINE roof:purlins                       src=auto   en=Y qty=36.576 m     pcs=6 cut=6.096 run=36.576 net=- sheets=- totKg=112.430 rate=70.00 amt=7870 mat=c-purlin-75x40
+  LINE roof:ridge                         src=auto   en=Y qty=6.096 m     pcs=1 cut=6.096 run=6.096 net=- sheets=- totKg=24.550 rate=65.00 amt=1596 mat=angle-50x50x5
+  LINE roof:sheet                         src=auto   en=Y qty=18.745 sqm   pcs=- cut=- run=- net=18.745 sheets=7 totKg=91.080 rate=88.00 amt=1864 mat=sheet-roof-0.5
+  LINE roof:top-frame-cross               src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=61.770 rate=65.00 amt=4015 mat=ismc-100x50
+  LINE roof:top-frame-long                src=auto   en=Y qty=12.192 m     pcs=2 cut=6.096 run=12.192 net=- sheets=- totKg=123.550 rate=65.00 amt=8031 mat=ismc-100x50
+  LINE roof:truss-rafter                  src=auto   en=Y qty=21.525 m     pcs=14 cut=1.538 run=21.525 net=- sheets=- totKg=86.700 rate=65.00 amt=5636 mat=angle-50x50x5
+  LINE roof:truss-tie                     src=auto   en=Y qty=21.336 m     pcs=7 cut=3.048 run=21.336 net=- sheets=- totKg=66.720 rate=68.00 amt=4537 mat=shs-50x50x2
+CUTTING (31):
+  CUT angle-50x50x5        Lifting hook lugs                          cut=0.300 qty=4 totLen=1.200 kg=4.560
+  CUT angle-50x50x5        Ridge member                               cut=6.096 qty=1 totLen=6.096 kg=23.160
+  CUT angle-50x50x5        Roof truss rafter                          cut=1.538 qty=14 totLen=21.525 kg=81.800
+  CUT c-purlin-75x40       Roof cross members (purlins)               cut=6.096 qty=6 totLen=36.576 kg=106.070
+  CUT door-frame-40x40     Door frame head — 3′ × 6′ door             cut=0.914 qty=1 totLen=0.914 kg=2.120
+  CUT door-frame-40x40     Door frame jamb — 3′ × 6′ door             cut=1.829 qty=2 totLen=3.658 kg=8.490
+  CUT elec-wire-1.5        Copper wire — lighting + power circuits    cut=116.175 qty=1 totLen=116.175 kg=2.320
+  CUT ismc-100x50          Bottom base frame — cross                  cut=3.048 qty=2 totLen=6.096 kg=58.280
+  CUT ismc-100x50          Bottom base frame — longitudinal           cut=6.096 qty=2 totLen=12.192 kg=116.560
+  CUT ismc-100x50          Top frame — cross                          cut=3.048 qty=2 totLen=6.096 kg=58.280
+  CUT ismc-100x50          Top frame — longitudinal                   cut=6.096 qty=2 totLen=12.192 kg=116.560
+  CUT rhs-100x50x3         Floor cross members (joists)               cut=3.048 qty=6 totLen=18.288 kg=122.710
+  CUT shs-40x40x2          Wall stiffeners (studs) — front elevation  cut=2.591 qty=8 totLen=20.726 kg=48.090
+  CUT shs-40x40x2          Wall stiffeners (studs) — left elevation   cut=2.591 qty=4 totLen=10.363 kg=24.040
+  CUT shs-40x40x2          Wall stiffeners (studs) — rear elevation   cut=2.591 qty=8 totLen=20.726 kg=48.090
+  CUT shs-40x40x2          Wall stiffeners (studs) — right elevation  cut=2.591 qty=4 totLen=10.363 kg=24.040
+  CUT shs-50x50x2          Roof truss bottom tie                      cut=3.048 qty=7 totLen=21.336 kg=62.940
+  CUT shs-50x50x2          Wall framing rails — front elevation       cut=6.096 qty=2 totLen=12.192 kg=35.970
+  CUT shs-50x50x2          Wall framing rails — left elevation        cut=3.048 qty=2 totLen=6.096 kg=17.980
+  CUT shs-50x50x2          Wall framing rails — rear elevation        cut=6.096 qty=2 totLen=12.192 kg=35.970
+  CUT shs-50x50x2          Wall framing rails — right elevation       cut=3.048 qty=2 totLen=6.096 kg=17.980
+  CUT shs-50x50x3          Corner post — front elevation              cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — left elevation               cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — rear elevation               cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — right elevation              cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Intermediate posts — front elevation       cut=2.591 qty=2 totLen=5.182 kg=22.230
+  CUT shs-50x50x3          Intermediate posts — left elevation        cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Intermediate posts — rear elevation        cut=2.591 qty=2 totLen=5.182 kg=22.230
+  CUT shs-50x50x3          Intermediate posts — right elevation       cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT window-frame-40x40   Window frame head + sill — 3′ × 3′         cut=0.914 qty=2 totLen=1.829 kg=4.240
+  CUT window-frame-40x40   Window frame jamb — 3′ × 3′                cut=0.914 qty=2 totLen=1.829 kg=4.240
+PURCHASE (27):
+  BUY angle-50x50x5        net=28.821 m     wst=6.00 buy=30.550 stock=6 offcut=7.275 kg=116.080 amt=7546
+  BUY bolt-m12             net=32.000 nos   wst=2.00 buy=32.640 stock=- offcut=- kg=2.940 amt=704
+  BUY c-purlin-75x40       net=36.576 m     wst=6.00 buy=38.771 stock=6 offcut=0.000 kg=112.430 amt=7870
+  BUY cementboard-18       net=18.581 sqm   wst=13.00 buy=20.996 stock=8 offcut=5.233 kg=491.310 amt=6719
+  BUY door-frame-40x40     net=4.572 m     wst=8.00 buy=4.938 stock=1 offcut=1.428 kg=11.450 amt=779
+  BUY door-ms-flush        net=1.000 nos   wst=0.00 buy=1.000 stock=- offcut=- kg=28.000 amt=7500
+  BUY elec-db              net=1.000 nos   wst=0.00 buy=1.000 stock=- offcut=- kg=3.200 amt=4200
+  BUY elec-fan             net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=9.000 amt=5000
+  BUY elec-led-panel       net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=3.000 amt=4000
+  BUY elec-socket          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=0.800 amt=1800
+  BUY elec-switch          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=1.200 amt=2600
+  BUY elec-wire-1.5        net=116.175 m     wst=8.00 buy=125.468 stock=- offcut=- kg=2.510 amt=2258
+  BUY enamel-paint         net=15.790 ltr   wst=5.00 buy=16.580 stock=- offcut=- kg=0.000 amt=6300
+  BUY ismc-100x50          net=36.576 m     wst=6.00 buy=38.771 stock=8 offcut=11.808 kg=370.640 amt=24092
+  BUY primer-red-oxide     net=5.920 ltr   wst=5.00 buy=6.216 stock=- offcut=- kg=0.000 amt=1492
+  BUY rhs-100x50x3         net=18.288 m     wst=6.00 buy=19.385 stock=6 offcut=17.712 kg=130.080 amt=8845
+  BUY sheet-ceiling-0.5    net=18.581 sqm   wst=11.00 buy=20.624 stock=7 offcut=2.419 kg=81.050 amt=1567
+  BUY sheet-ext-gi-0.8     net=44.872 sqm   wst=11.00 buy=49.808 stock=17 offcut=6.128 kg=312.810 amt=4582
+  BUY sheet-int-ppgi-0.5   net=44.872 sqm   wst=11.00 buy=49.808 stock=17 offcut=6.128 kg=195.750 amt=3885
+  BUY sheet-roof-0.5       net=18.745 sqm   wst=13.00 buy=21.182 stock=7 offcut=3.305 kg=91.080 amt=1864
+  BUY shs-40x40x2          net=62.179 m     wst=6.00 buy=65.910 stock=12 offcut=9.821 kg=152.920 amt=10398
+  BUY shs-50x50x2          net=57.912 m     wst=6.00 buy=61.387 stock=15 offcut=32.472 kg=181.080 amt=12314
+  BUY shs-50x50x3          net=25.908 m     wst=6.00 buy=27.462 stock=5 offcut=4.092 kg=117.800 amt=8011
+  BUY vinyl-2mm            net=18.581 sqm   wst=11.00 buy=20.624 stock=1 offcut=21.419 kg=37.120 amt=3197
+  BUY window-frame-40x40   net=3.658 m     wst=8.00 buy=3.950 stock=1 offcut=2.342 kg=9.160 amt=623
+  BUY window-grill         net=0.836 sqm   wst=10.00 buy=0.920 stock=- offcut=- kg=10.390 amt=811
+  BUY window-slider        net=1.000 nos   wst=0.00 buy=1.000 stock=- offcut=- kg=18.000 amt=3500
+WEIGHT SUMMARY (25):
+  WT angle-50x50x5        net=109.520 tot=116.080
+  WT bolt-m12             net=2.880 tot=2.940
+  WT c-purlin-75x40       net=106.070 tot=112.430
+  WT cementboard-18       net=434.790 tot=491.310
+  WT door-frame-40x40     net=10.610 tot=11.450
+  WT door-ms-flush        net=28.000 tot=28.000
+  WT elec-db              net=3.200 tot=3.200
+  WT elec-fan             net=9.000 tot=9.000
+  WT elec-led-panel       net=3.000 tot=3.000
+  WT elec-socket          net=0.800 tot=0.800
+  WT elec-switch          net=1.200 tot=1.200
+  WT elec-wire-1.5        net=2.320 tot=2.510
+  WT ismc-100x50          net=349.680 tot=370.640
+  WT rhs-100x50x3         net=122.710 tot=130.080
+  WT sheet-ceiling-0.5    net=73.020 tot=81.050
+  WT sheet-ext-gi-0.8     net=281.790 tot=312.810
+  WT sheet-int-ppgi-0.5   net=176.340 tot=195.750
+  WT sheet-roof-0.5       net=80.600 tot=91.080
+  WT shs-40x40x2          net=144.260 tot=152.920
+  WT shs-50x50x2          net=170.840 tot=181.080
+  WT shs-50x50x3          net=111.120 tot=117.800
+  WT vinyl-2mm            net=33.450 tot=37.120
+  WT window-frame-40x40   net=8.480 tot=9.160
+  WT window-grill         net=9.450 tot=10.390
+  WT window-slider        net=18.000 tot=18.000
+ISSUES errors=0 warnings=0
+
+################################################################
+SCENARIO :: 2. Cabin with internal partitions — 40 x 10 ft, 3 rooms (2 partitions), partition doors
+################################################################
+META  L=12.192 W=3.048 H=2.591 floors=1 rooms=3 partitions=2 doors=3 windows=2 stairs=0 verandas=0 modules=1 floorArea=37.161 roof=Sloped (2-side)
+TOTALS netSteel=2108.040 totSteel=2235.570 totWeight=4763.310 material=258716 charges=121385 subtotal=380101 gst=68418 grand=448519 rsPerSqft=1121.30
+  CHARGE Fabrication / welding [per_kg] = 40240
+  CHARGE Installation [amount] = 15000
+  CHARGE Labour [per_kg] = 26827
+  CHARGE Painting (primer + enamel) [per_sqm] = 21318
+  CHARGE Transport [amount] = 18000
+SECTIONS:
+  SEC electrical  steelKg=3.810 totKg=21.010 material=21032 lines=6
+  SEC finishing   steelKg=0.000 totKg=0.000 material=12989 lines=2
+  SEC floor       steelKg=569.020 totKg=1625.890 material=57598 lines=5
+  SEC front       steelKg=237.100 totKg=576.130 material=21767 lines=6
+  SEC left        steelKg=68.110 totKg=157.610 material=6122 lines=6
+  SEC misc        steelKg=0.000 totKg=2.940 material=704 lines=1
+  SEC openings    steelKg=52.680 totKg=193.470 material=34705 lines=7
+  SEC partition   steelKg=148.960 totKg=257.570 material=12285 lines=4
+  SEC rear        steelKg=237.100 totKg=576.130 material=21767 lines=6
+  SEC right       steelKg=68.110 totKg=157.610 material=6122 lines=6
+  SEC roof        steelKg=850.680 totKg=1194.950 material=63625 lines=9
+LINES (58):
+  LINE electrical:db                      src=auto   en=Y qty=1.000 nos   pcs=1 cut=- run=- net=- sheets=- totKg=3.200 rate=4200.00 amt=4200 mat=elec-db
+  LINE electrical:fan                     src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=9.000 rate=2500.00 amt=5000 mat=elec-fan
+  LINE electrical:led                     src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=3.000 rate=800.00 amt=4000 mat=elec-led-panel
+  LINE electrical:plug                    src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=0.800 rate=450.00 amt=1800 mat=elec-socket
+  LINE electrical:switch-board            src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=1.200 rate=650.00 amt=2600 mat=elec-switch
+  LINE electrical:wire                    src=auto   en=Y qty=176.525 m     pcs=1 cut=176.525 run=176.525 net=- sheets=- totKg=3.810 rate=18.00 amt=3432 mat=elec-wire-1.5
+  LINE finishing:enamel                   src=auto   en=Y qty=26.320 ltr   pcs=26.32 cut=- run=- net=- sheets=- totKg=0.000 rate=380.00 amt=10502 mat=enamel-paint
+  LINE finishing:primer                   src=auto   en=Y qty=9.870 ltr   pcs=9.87 cut=- run=- net=- sheets=- totKg=0.000 rate=240.00 amt=2487 mat=primer-red-oxide
+  LINE floor:base-frame-cross             src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=61.770 rate=65.00 amt=4015 mat=ismc-100x50
+  LINE floor:base-frame-long              src=auto   en=Y qty=24.384 m     pcs=2 cut=12.192 run=24.384 net=- sheets=- totKg=247.100 rate=65.00 amt=16061 mat=ismc-100x50
+  LINE floor:board                        src=auto   en=Y qty=37.161 sqm   pcs=- cut=- run=- net=37.161 sheets=15 totKg=982.620 rate=320.00 amt=13437 mat=cementboard-18
+  LINE floor:finish                       src=auto   en=Y qty=37.161 sqm   pcs=- cut=- run=- net=37.161 sheets=2 totKg=74.250 rate=155.00 amt=6394 mat=vinyl-2mm
+  LINE floor:joists                       src=auto   en=Y qty=36.576 m     pcs=12 cut=3.048 run=36.576 net=- sheets=- totKg=260.150 rate=68.00 amt=17690 mat=rhs-100x50x3
+  LINE front:corner-post                  src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE front:ext-sheet                    src=auto   en=Y qty=29.915 sqm   pcs=- cut=- run=- net=29.915 sheets=12 totKg=208.530 rate=92.00 amt=3055 mat=sheet-ext-gi-0.8
+  LINE front:int-sheet                    src=auto   en=Y qty=29.915 sqm   pcs=- cut=- run=- net=29.915 sheets=12 totKg=130.500 rate=78.00 amt=2590 mat=sheet-int-ppgi-0.5
+  LINE front:posts                        src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=47.130 rate=68.00 amt=3205 mat=shs-50x50x3
+  LINE front:rails                        src=auto   en=Y qty=24.384 m     pcs=2 cut=12.192 run=24.384 net=- sheets=- totKg=76.250 rate=68.00 amt=5185 mat=shs-50x50x2
+  LINE front:studs                        src=auto   en=Y qty=41.453 m     pcs=16 cut=2.591 run=41.453 net=- sheets=- totKg=101.940 rate=68.00 amt=6932 mat=shs-40x40x2
+  LINE left:corner-post                   src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE left:ext-sheet                     src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=55.050 rate=92.00 amt=806 mat=sheet-ext-gi-0.8
+  LINE left:int-sheet                     src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=34.450 rate=78.00 amt=684 mat=sheet-int-ppgi-0.5
+  LINE left:posts                         src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE left:rails                         src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=19.060 rate=68.00 amt=1296 mat=shs-50x50x2
+  LINE left:studs                         src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=25.490 rate=68.00 amt=1733 mat=shs-40x40x2
+  LINE misc:bolts                         src=auto   en=Y qty=32.000 nos   pcs=32 cut=- run=- net=- sheets=- totKg=2.940 rate=22.00 amt=704 mat=bolt-m12
+  LINE openings:door-frame-head:3x6       src=auto   en=Y qty=2.743 m     pcs=3 cut=0.914 run=2.743 net=- sheets=- totKg=6.870 rate=68.00 amt=467 mat=door-frame-40x40
+  LINE openings:door-frame-jamb:3x6       src=auto   en=Y qty=10.973 m     pcs=6 cut=1.829 run=10.973 net=- sheets=- totKg=27.490 rate=68.00 amt=1870 mat=door-frame-40x40
+  LINE openings:door-leaf                 src=auto   en=Y qty=3.000 nos   pcs=3 cut=- run=- net=- sheets=- totKg=84.000 rate=7500.00 amt=22500 mat=door-ms-flush
+  LINE openings:window-frame-head-sill:3x3 src=auto   en=Y qty=3.658 m     pcs=4 cut=0.914 run=3.658 net=- sheets=- totKg=9.160 rate=68.00 amt=623 mat=window-frame-40x40
+  LINE openings:window-frame-jamb:3x3     src=auto   en=Y qty=3.658 m     pcs=4 cut=0.914 run=3.658 net=- sheets=- totKg=9.160 rate=68.00 amt=623 mat=window-frame-40x40
+  LINE openings:window-grill:3x3          src=auto   en=Y qty=1.672 sqm   pcs=- cut=- run=- net=1.672 sheets=0 totKg=20.790 rate=78.00 amt=1621 mat=window-grill
+  LINE openings:window:3x3                src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=36.000 rate=3500.00 amt=7000 mat=window-slider
+  LINE partition:end-posts                src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=47.130 rate=68.00 amt=3205 mat=shs-50x50x3
+  LINE partition:rails                    src=auto   en=Y qty=12.192 m     pcs=4 cut=3.048 run=12.192 net=- sheets=- totKg=38.120 rate=68.00 amt=2592 mat=shs-50x50x2
+  LINE partition:sheet                    src=auto   en=Y qty=24.898 sqm   pcs=- cut=- run=- net=24.898 sheets=10 totKg=108.610 rate=78.00 amt=2156 mat=sheet-int-ppgi-0.5
+  LINE partition:studs                    src=auto   en=Y qty=25.908 m     pcs=10 cut=2.591 run=25.908 net=- sheets=- totKg=63.710 rate=68.00 amt=4332 mat=shs-40x40x2
+  LINE rear:corner-post                   src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE rear:ext-sheet                     src=auto   en=Y qty=29.915 sqm   pcs=- cut=- run=- net=29.915 sheets=12 totKg=208.530 rate=92.00 amt=3055 mat=sheet-ext-gi-0.8
+  LINE rear:int-sheet                     src=auto   en=Y qty=29.915 sqm   pcs=- cut=- run=- net=29.915 sheets=12 totKg=130.500 rate=78.00 amt=2590 mat=sheet-int-ppgi-0.5
+  LINE rear:posts                         src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=47.130 rate=68.00 amt=3205 mat=shs-50x50x3
+  LINE rear:rails                         src=auto   en=Y qty=24.384 m     pcs=2 cut=12.192 run=24.384 net=- sheets=- totKg=76.250 rate=68.00 amt=5185 mat=shs-50x50x2
+  LINE rear:studs                         src=auto   en=Y qty=41.453 m     pcs=16 cut=2.591 run=41.453 net=- sheets=- totKg=101.940 rate=68.00 amt=6932 mat=shs-40x40x2
+  LINE right:corner-post                  src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE right:ext-sheet                    src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=55.050 rate=92.00 amt=806 mat=sheet-ext-gi-0.8
+  LINE right:int-sheet                    src=auto   en=Y qty=7.897 sqm   pcs=- cut=- run=- net=7.897 sheets=3 totKg=34.450 rate=78.00 amt=684 mat=sheet-int-ppgi-0.5
+  LINE right:posts                        src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE right:rails                        src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=19.060 rate=68.00 amt=1296 mat=shs-50x50x2
+  LINE right:studs                        src=auto   en=Y qty=10.363 m     pcs=4 cut=2.591 run=10.363 net=- sheets=- totKg=25.490 rate=68.00 amt=1733 mat=shs-40x40x2
+  LINE roof:ceiling                       src=auto   en=Y qty=37.161 sqm   pcs=- cut=- run=- net=37.161 sheets=14 totKg=162.110 rate=76.00 amt=3135 mat=sheet-ceiling-0.5
+  LINE roof:lifting-hooks                 src=auto   en=Y qty=1.200 m     pcs=4 cut=0.300 run=1.200 net=- sheets=- totKg=4.830 rate=65.00 amt=314 mat=angle-50x50x5
+  LINE roof:purlins                       src=auto   en=Y qty=73.152 m     pcs=6 cut=12.192 run=73.152 net=- sheets=- totKg=224.870 rate=70.00 amt=15741 mat=c-purlin-75x40
+  LINE roof:ridge                         src=auto   en=Y qty=12.192 m     pcs=1 cut=12.192 run=12.192 net=- sheets=- totKg=49.110 rate=65.00 amt=3192 mat=angle-50x50x5
+  LINE roof:sheet                         src=auto   en=Y qty=37.490 sqm   pcs=- cut=- run=- net=37.490 sheets=14 totKg=182.160 rate=88.00 amt=3728 mat=sheet-roof-0.5
+  LINE roof:top-frame-cross               src=auto   en=Y qty=6.096 m     pcs=2 cut=3.048 run=6.096 net=- sheets=- totKg=61.770 rate=65.00 amt=4015 mat=ismc-100x50
+  LINE roof:top-frame-long                src=auto   en=Y qty=24.384 m     pcs=2 cut=12.192 run=24.384 net=- sheets=- totKg=247.100 rate=65.00 amt=16061 mat=ismc-100x50
+  LINE roof:truss-rafter                  src=auto   en=Y qty=36.900 m     pcs=24 cut=1.538 run=36.900 net=- sheets=- totKg=148.630 rate=65.00 amt=9661 mat=angle-50x50x5
+  LINE roof:truss-tie                     src=auto   en=Y qty=36.576 m     pcs=12 cut=3.048 run=36.576 net=- sheets=- totKg=114.370 rate=68.00 amt=7777 mat=shs-50x50x2
+CUTTING (34):
+  CUT angle-50x50x5        Lifting hook lugs                          cut=0.300 qty=4 totLen=1.200 kg=4.560
+  CUT angle-50x50x5        Ridge member                               cut=12.192 qty=1 totLen=12.192 kg=46.330
+  CUT angle-50x50x5        Roof truss rafter                          cut=1.538 qty=24 totLen=36.900 kg=140.220
+  CUT c-purlin-75x40       Roof cross members (purlins)               cut=12.192 qty=6 totLen=73.152 kg=212.140
+  CUT door-frame-40x40     Door frame head — 3′ × 6′ door             cut=0.914 qty=3 totLen=2.743 kg=6.360
+  CUT door-frame-40x40     Door frame jamb — 3′ × 6′ door             cut=1.829 qty=6 totLen=10.973 kg=25.460
+  CUT elec-wire-1.5        Copper wire — lighting + power circuits    cut=176.525 qty=1 totLen=176.525 kg=3.530
+  CUT ismc-100x50          Bottom base frame — cross                  cut=3.048 qty=2 totLen=6.096 kg=58.280
+  CUT ismc-100x50          Bottom base frame — longitudinal           cut=12.192 qty=2 totLen=24.384 kg=233.110
+  CUT ismc-100x50          Top frame — cross                          cut=3.048 qty=2 totLen=6.096 kg=58.280
+  CUT ismc-100x50          Top frame — longitudinal                   cut=12.192 qty=2 totLen=24.384 kg=233.110
+  CUT rhs-100x50x3         Floor cross members (joists)               cut=3.048 qty=12 totLen=36.576 kg=245.420
+  CUT shs-40x40x2          Partition studs                            cut=2.591 qty=10 totLen=25.908 kg=60.110
+  CUT shs-40x40x2          Wall stiffeners (studs) — front elevation  cut=2.591 qty=16 totLen=41.453 kg=96.170
+  CUT shs-40x40x2          Wall stiffeners (studs) — left elevation   cut=2.591 qty=4 totLen=10.363 kg=24.040
+  CUT shs-40x40x2          Wall stiffeners (studs) — rear elevation   cut=2.591 qty=16 totLen=41.453 kg=96.170
+  CUT shs-40x40x2          Wall stiffeners (studs) — right elevation  cut=2.591 qty=4 totLen=10.363 kg=24.040
+  CUT shs-50x50x2          Partition rails                            cut=3.048 qty=4 totLen=12.192 kg=35.970
+  CUT shs-50x50x2          Roof truss bottom tie                      cut=3.048 qty=12 totLen=36.576 kg=107.900
+  CUT shs-50x50x2          Wall framing rails — front elevation       cut=12.192 qty=2 totLen=24.384 kg=71.930
+  CUT shs-50x50x2          Wall framing rails — left elevation        cut=3.048 qty=2 totLen=6.096 kg=17.980
+  CUT shs-50x50x2          Wall framing rails — rear elevation        cut=12.192 qty=2 totLen=24.384 kg=71.930
+  CUT shs-50x50x2          Wall framing rails — right elevation       cut=3.048 qty=2 totLen=6.096 kg=17.980
+  CUT shs-50x50x3          Corner post — front elevation              cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — left elevation               cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — rear elevation               cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — right elevation              cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Intermediate posts — front elevation       cut=2.591 qty=4 totLen=10.363 kg=44.460
+  CUT shs-50x50x3          Intermediate posts — left elevation        cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Intermediate posts — rear elevation        cut=2.591 qty=4 totLen=10.363 kg=44.460
+  CUT shs-50x50x3          Intermediate posts — right elevation       cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Partition end posts                        cut=2.591 qty=4 totLen=10.363 kg=44.460
+  CUT window-frame-40x40   Window frame head + sill — 3′ × 3′         cut=0.914 qty=4 totLen=3.658 kg=8.490
+  CUT window-frame-40x40   Window frame jamb — 3′ × 3′                cut=0.914 qty=4 totLen=3.658 kg=8.490
+PURCHASE (27):
+  BUY angle-50x50x5        net=50.292 m     wst=6.00 buy=53.310 stock=9 offcut=9.900 kg=202.570 amt=13167
+  BUY bolt-m12             net=32.000 nos   wst=2.00 buy=32.640 stock=- offcut=- kg=2.940 amt=704
+  BUY c-purlin-75x40       net=73.152 m     wst=6.00 buy=77.541 stock=6 offcut=0.000 kg=224.870 amt=15741
+  BUY cementboard-18       net=37.161 sqm   wst=13.00 buy=41.992 stock=15 offcut=7.491 kg=982.620 amt=13437
+  BUY door-frame-40x40     net=13.716 m     wst=8.00 buy=14.813 stock=3 offcut=4.284 kg=34.360 amt=2337
+  BUY door-ms-flush        net=3.000 nos   wst=0.00 buy=3.000 stock=- offcut=- kg=84.000 amt=22500
+  BUY elec-db              net=1.000 nos   wst=0.00 buy=1.000 stock=- offcut=- kg=3.200 amt=4200
+  BUY elec-fan             net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=9.000 amt=5000
+  BUY elec-led-panel       net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=3.000 amt=4000
+  BUY elec-socket          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=0.800 amt=1800
+  BUY elec-switch          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=1.200 amt=2600
+  BUY elec-wire-1.5        net=176.525 m     wst=8.00 buy=190.647 stock=- offcut=- kg=3.810 amt=3432
+  BUY enamel-paint         net=26.320 ltr   wst=5.00 buy=27.636 stock=- offcut=- kg=0.000 amt=10502
+  BUY ismc-100x50          net=60.960 m     wst=6.00 buy=64.618 stock=8 offcut=11.808 kg=617.740 amt=40153
+  BUY primer-red-oxide     net=9.870 ltr   wst=5.00 buy=10.364 stock=- offcut=- kg=0.000 amt=2487
+  BUY rhs-100x50x3         net=36.576 m     wst=6.00 buy=38.771 stock=12 offcut=35.424 kg=260.150 amt=17690
+  BUY sheet-ceiling-0.5    net=37.161 sqm   wst=11.00 buy=41.249 stock=14 offcut=4.839 kg=162.110 amt=3135
+  BUY sheet-ext-gi-0.8     net=75.623 sqm   wst=11.00 buy=83.942 stock=28 offcut=8.377 kg=527.160 amt=7723
+  BUY sheet-int-ppgi-0.5   net=100.521 sqm   wst=11.00 buy=111.578 stock=38 offcut=13.479 kg=438.510 amt=8703
+  BUY sheet-roof-0.5       net=37.490 sqm   wst=13.00 buy=42.364 stock=14 offcut=6.610 kg=182.160 amt=3728
+  BUY shs-40x40x2          net=129.540 m     wst=6.00 buy=137.312 stock=25 offcut=20.460 kg=318.570 amt=21662
+  BUY shs-50x50x2          net=109.728 m     wst=6.00 buy=116.312 stock=24 offcut=59.040 kg=343.110 amt=23332
+  BUY shs-50x50x3          net=46.634 m     wst=6.00 buy=49.432 stock=9 offcut=7.366 kg=212.070 amt=14420
+  BUY vinyl-2mm            net=37.161 sqm   wst=11.00 buy=41.249 stock=2 offcut=42.839 kg=74.250 amt=6394
+  BUY window-frame-40x40   net=7.315 m     wst=8.00 buy=7.900 stock=2 offcut=4.685 kg=18.320 amt=1246
+  BUY window-grill         net=1.672 sqm   wst=10.00 buy=1.840 stock=- offcut=- kg=20.790 amt=1621
+  BUY window-slider        net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=36.000 amt=7000
+WEIGHT SUMMARY (25):
+  WT angle-50x50x5        net=191.110 tot=202.570
+  WT bolt-m12             net=2.880 tot=2.940
+  WT c-purlin-75x40       net=212.140 tot=224.870
+  WT cementboard-18       net=869.570 tot=982.620
+  WT door-frame-40x40     net=31.820 tot=34.360
+  WT door-ms-flush        net=84.000 tot=84.000
+  WT elec-db              net=3.200 tot=3.200
+  WT elec-fan             net=9.000 tot=9.000
+  WT elec-led-panel       net=3.000 tot=3.000
+  WT elec-socket          net=0.800 tot=0.800
+  WT elec-switch          net=1.200 tot=1.200
+  WT elec-wire-1.5        net=3.530 tot=3.810
+  WT ismc-100x50          net=582.780 tot=617.740
+  WT rhs-100x50x3         net=245.420 tot=260.150
+  WT sheet-ceiling-0.5    net=146.040 tot=162.110
+  WT sheet-ext-gi-0.8     net=474.900 tot=527.160
+  WT sheet-int-ppgi-0.5   net=395.040 tot=438.510
+  WT sheet-roof-0.5       net=161.210 tot=182.160
+  WT shs-40x40x2          net=300.530 tot=318.570
+  WT shs-50x50x2          net=323.690 tot=343.110
+  WT shs-50x50x3          net=200.040 tot=212.070
+  WT vinyl-2mm            net=66.890 tot=74.250
+  WT window-frame-40x40   net=16.980 tot=18.320
+  WT window-grill         net=18.900 tot=20.790
+  WT window-slider        net=36.000 tot=36.000
+ISSUES errors=0 warnings=0
+
+################################################################
+SCENARIO :: 3. Cabin with multiple doors and windows — 30 x 12 ft, 3 doors, 5 windows on all 4 walls
+################################################################
+META  L=9.144 W=3.658 H=2.591 floors=1 rooms=1 partitions=0 doors=3 windows=5 stairs=0 verandas=0 modules=1 floorArea=33.445 roof=Sloped (2-side)
+TOTALS netSteel=1704.920 totSteel=1808.930 totWeight=3964.670 material=233156 charges=102447 subtotal=335603 gst=60409 grand=396012 rsPerSqft=1100.04
+  CHARGE Fabrication / welding [per_kg] = 32561
+  CHARGE Installation [amount] = 15000
+  CHARGE Labour [per_kg] = 21707
+  CHARGE Painting (primer + enamel) [per_sqm] = 15179
+  CHARGE Transport [amount] = 18000
+SECTIONS:
+  SEC electrical  steelKg=3.290 totKg=20.490 material=20562 lines=6
+  SEC finishing   steelKg=0.000 totKg=0.000 material=10911 lines=2
+  SEC floor       steelKg=493.590 totKg=1444.770 material=50634 lines=5
+  SEC front       steelKg=180.770 totKg=405.030 material=16026 lines=6
+  SEC left        steelKg=78.290 totKg=154.100 material=6586 lines=6
+  SEC misc        steelKg=0.000 totKg=2.940 material=704 lines=1
+  SEC openings    steelKg=87.820 totKg=331.110 material=51377 lines=7
+  SEC rear        steelKg=180.770 totKg=417.670 material=16237 lines=6
+  SEC right       steelKg=78.290 totKg=173.040 material=6902 lines=6
+  SEC roof        steelKg=706.110 totKg=1015.520 material=53218 lines=9
+LINES (54):
+  LINE electrical:db                      src=auto   en=Y qty=1.000 nos   pcs=1 cut=- run=- net=- sheets=- totKg=3.200 rate=4200.00 amt=4200 mat=elec-db
+  LINE electrical:fan                     src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=9.000 rate=2500.00 amt=5000 mat=elec-fan
+  LINE electrical:led                     src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=3.000 rate=800.00 amt=4000 mat=elec-led-panel
+  LINE electrical:plug                    src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=0.800 rate=450.00 amt=1800 mat=elec-socket
+  LINE electrical:switch-board            src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=1.200 rate=650.00 amt=2600 mat=elec-switch
+  LINE electrical:wire                    src=auto   en=Y qty=152.385 m     pcs=1 cut=152.385 run=152.385 net=- sheets=- totKg=3.290 rate=18.00 amt=2962 mat=elec-wire-1.5
+  LINE finishing:enamel                   src=auto   en=Y qty=22.110 ltr   pcs=22.11 cut=- run=- net=- sheets=- totKg=0.000 rate=380.00 amt=8822 mat=enamel-paint
+  LINE finishing:primer                   src=auto   en=Y qty=8.290 ltr   pcs=8.29 cut=- run=- net=- sheets=- totKg=0.000 rate=240.00 amt=2089 mat=primer-red-oxide
+  LINE floor:base-frame-cross             src=auto   en=Y qty=7.315 m     pcs=2 cut=3.658 run=7.315 net=- sheets=- totKg=74.130 rate=65.00 amt=4818 mat=ismc-100x50
+  LINE floor:base-frame-long              src=auto   en=Y qty=18.288 m     pcs=2 cut=9.144 run=18.288 net=- sheets=- totKg=185.320 rate=65.00 amt=12046 mat=ismc-100x50
+  LINE floor:board                        src=auto   en=Y qty=33.445 sqm   pcs=- cut=- run=- net=33.445 sheets=13 totKg=884.360 rate=320.00 amt=12094 mat=cementboard-18
+  LINE floor:finish                       src=auto   en=Y qty=33.445 sqm   pcs=- cut=- run=- net=33.445 sheets=1 totKg=66.820 rate=155.00 amt=5754 mat=vinyl-2mm
+  LINE floor:joists                       src=auto   en=Y qty=32.918 m     pcs=9 cut=3.658 run=32.918 net=- sheets=- totKg=234.140 rate=68.00 amt=15921 mat=rhs-100x50x3
+  LINE front:corner-post                  src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE front:ext-sheet                    src=auto   en=Y qty=19.788 sqm   pcs=- cut=- run=- net=19.788 sheets=8 totKg=137.940 rate=92.00 amt=2021 mat=sheet-ext-gi-0.8
+  LINE front:int-sheet                    src=auto   en=Y qty=19.788 sqm   pcs=- cut=- run=- net=19.788 sheets=8 totKg=86.320 rate=78.00 amt=1713 mat=sheet-int-ppgi-0.5
+  LINE front:posts                        src=auto   en=Y qty=7.772 m     pcs=3 cut=2.591 run=7.772 net=- sheets=- totKg=35.340 rate=68.00 amt=2403 mat=shs-50x50x3
+  LINE front:rails                        src=auto   en=Y qty=18.288 m     pcs=2 cut=9.144 run=18.288 net=- sheets=- totKg=57.190 rate=68.00 amt=3889 mat=shs-50x50x2
+  LINE front:studs                        src=auto   en=Y qty=31.090 m     pcs=12 cut=2.591 run=31.090 net=- sheets=- totKg=76.460 rate=68.00 amt=5199 mat=shs-40x40x2
+  LINE left:corner-post                   src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE left:ext-sheet                     src=auto   en=Y qty=6.689 sqm   pcs=- cut=- run=- net=6.689 sheets=3 totKg=46.630 rate=92.00 amt=683 mat=sheet-ext-gi-0.8
+  LINE left:int-sheet                     src=auto   en=Y qty=6.689 sqm   pcs=- cut=- run=- net=6.689 sheets=3 totKg=29.180 rate=78.00 amt=579 mat=sheet-int-ppgi-0.5
+  LINE left:posts                         src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE left:rails                         src=auto   en=Y qty=7.315 m     pcs=2 cut=3.658 run=7.315 net=- sheets=- totKg=22.870 rate=68.00 amt=1555 mat=shs-50x50x2
+  LINE left:studs                         src=auto   en=Y qty=12.954 m     pcs=5 cut=2.591 run=12.954 net=- sheets=- totKg=31.860 rate=68.00 amt=2166 mat=shs-40x40x2
+  LINE misc:bolts                         src=auto   en=Y qty=32.000 nos   pcs=32 cut=- run=- net=- sheets=- totKg=2.940 rate=22.00 amt=704 mat=bolt-m12
+  LINE openings:door-frame-head:3x6       src=auto   en=Y qty=2.743 m     pcs=3 cut=0.914 run=2.743 net=- sheets=- totKg=6.870 rate=68.00 amt=467 mat=door-frame-40x40
+  LINE openings:door-frame-jamb:3x6       src=auto   en=Y qty=10.973 m     pcs=6 cut=1.829 run=10.973 net=- sheets=- totKg=27.490 rate=68.00 amt=1870 mat=door-frame-40x40
+  LINE openings:door-leaf                 src=auto   en=Y qty=3.000 nos   pcs=3 cut=- run=- net=- sheets=- totKg=84.000 rate=7500.00 amt=22500 mat=door-ms-flush
+  LINE openings:window-frame-head-sill:4x3 src=auto   en=Y qty=12.192 m     pcs=10 cut=1.219 run=12.192 net=- sheets=- totKg=30.550 rate=68.00 amt=2077 mat=window-frame-40x40
+  LINE openings:window-frame-jamb:4x3     src=auto   en=Y qty=9.144 m     pcs=10 cut=0.914 run=9.144 net=- sheets=- totKg=22.910 rate=68.00 amt=1558 mat=window-frame-40x40
+  LINE openings:window-grill:4x3          src=auto   en=Y qty=5.574 sqm   pcs=- cut=- run=- net=5.574 sheets=0 totKg=69.290 rate=78.00 amt=5404 mat=window-grill
+  LINE openings:window:4x3                src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=90.000 rate=3500.00 amt=17500 mat=window-slider
+  LINE rear:corner-post                   src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE rear:ext-sheet                     src=auto   en=Y qty=20.903 sqm   pcs=- cut=- run=- net=20.903 sheets=8 totKg=145.710 rate=92.00 amt=2135 mat=sheet-ext-gi-0.8
+  LINE rear:int-sheet                     src=auto   en=Y qty=20.903 sqm   pcs=- cut=- run=- net=20.903 sheets=8 totKg=91.190 rate=78.00 amt=1810 mat=sheet-int-ppgi-0.5
+  LINE rear:posts                         src=auto   en=Y qty=7.772 m     pcs=3 cut=2.591 run=7.772 net=- sheets=- totKg=35.340 rate=68.00 amt=2403 mat=shs-50x50x3
+  LINE rear:rails                         src=auto   en=Y qty=18.288 m     pcs=2 cut=9.144 run=18.288 net=- sheets=- totKg=57.190 rate=68.00 amt=3889 mat=shs-50x50x2
+  LINE rear:studs                         src=auto   en=Y qty=31.090 m     pcs=12 cut=2.591 run=31.090 net=- sheets=- totKg=76.460 rate=68.00 amt=5199 mat=shs-40x40x2
+  LINE right:corner-post                  src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE right:ext-sheet                    src=auto   en=Y qty=8.361 sqm   pcs=- cut=- run=- net=8.361 sheets=4 totKg=58.280 rate=92.00 amt=854 mat=sheet-ext-gi-0.8
+  LINE right:int-sheet                    src=auto   en=Y qty=8.361 sqm   pcs=- cut=- run=- net=8.361 sheets=4 totKg=36.470 rate=78.00 amt=724 mat=sheet-int-ppgi-0.5
+  LINE right:posts                        src=auto   en=Y qty=2.591 m     pcs=1 cut=2.591 run=2.591 net=- sheets=- totKg=11.780 rate=68.00 amt=801 mat=shs-50x50x3
+  LINE right:rails                        src=auto   en=Y qty=7.315 m     pcs=2 cut=3.658 run=7.315 net=- sheets=- totKg=22.870 rate=68.00 amt=1555 mat=shs-50x50x2
+  LINE right:studs                        src=auto   en=Y qty=12.954 m     pcs=5 cut=2.591 run=12.954 net=- sheets=- totKg=31.860 rate=68.00 amt=2166 mat=shs-40x40x2
+  LINE roof:ceiling                       src=auto   en=Y qty=33.445 sqm   pcs=- cut=- run=- net=33.445 sheets=13 totKg=145.900 rate=76.00 amt=2821 mat=sheet-ceiling-0.5
+  LINE roof:lifting-hooks                 src=auto   en=Y qty=1.200 m     pcs=4 cut=0.300 run=1.200 net=- sheets=- totKg=4.830 rate=65.00 amt=314 mat=angle-50x50x5
+  LINE roof:purlins                       src=auto   en=Y qty=54.864 m     pcs=6 cut=9.144 run=54.864 net=- sheets=- totKg=168.650 rate=70.00 amt=11806 mat=c-purlin-75x40
+  LINE roof:ridge                         src=auto   en=Y qty=9.144 m     pcs=1 cut=9.144 run=9.144 net=- sheets=- totKg=36.830 rate=65.00 amt=2394 mat=angle-50x50x5
+  LINE roof:sheet                         src=auto   en=Y qty=33.651 sqm   pcs=- cut=- run=- net=33.651 sheets=13 totKg=163.510 rate=88.00 amt=3346 mat=sheet-roof-0.5
+  LINE roof:top-frame-cross               src=auto   en=Y qty=7.315 m     pcs=2 cut=3.658 run=7.315 net=- sheets=- totKg=74.130 rate=65.00 amt=4818 mat=ismc-100x50
+  LINE roof:top-frame-long                src=auto   en=Y qty=18.288 m     pcs=2 cut=9.144 run=18.288 net=- sheets=- totKg=185.320 rate=65.00 amt=12046 mat=ismc-100x50
+  LINE roof:truss-rafter                  src=auto   en=Y qty=33.122 m     pcs=18 cut=1.840 run=33.122 net=- sheets=- totKg=133.410 rate=65.00 amt=8672 mat=angle-50x50x5
+  LINE roof:truss-tie                     src=auto   en=Y qty=32.918 m     pcs=9 cut=3.658 run=32.918 net=- sheets=- totKg=102.940 rate=68.00 amt=7000 mat=shs-50x50x2
+CUTTING (31):
+  CUT angle-50x50x5        Lifting hook lugs                          cut=0.300 qty=4 totLen=1.200 kg=4.560
+  CUT angle-50x50x5        Ridge member                               cut=9.144 qty=1 totLen=9.144 kg=34.750
+  CUT angle-50x50x5        Roof truss rafter                          cut=1.840 qty=18 totLen=33.122 kg=125.860
+  CUT c-purlin-75x40       Roof cross members (purlins)               cut=9.144 qty=6 totLen=54.864 kg=159.110
+  CUT door-frame-40x40     Door frame head — 3′ × 6′ door             cut=0.914 qty=3 totLen=2.743 kg=6.360
+  CUT door-frame-40x40     Door frame jamb — 3′ × 6′ door             cut=1.829 qty=6 totLen=10.973 kg=25.460
+  CUT elec-wire-1.5        Copper wire — lighting + power circuits    cut=152.385 qty=1 totLen=152.385 kg=3.050
+  CUT ismc-100x50          Bottom base frame — cross                  cut=3.658 qty=2 totLen=7.315 kg=69.930
+  CUT ismc-100x50          Bottom base frame — longitudinal           cut=9.144 qty=2 totLen=18.288 kg=174.830
+  CUT ismc-100x50          Top frame — cross                          cut=3.658 qty=2 totLen=7.315 kg=69.930
+  CUT ismc-100x50          Top frame — longitudinal                   cut=9.144 qty=2 totLen=18.288 kg=174.830
+  CUT rhs-100x50x3         Floor cross members (joists)               cut=3.658 qty=9 totLen=32.918 kg=220.880
+  CUT shs-40x40x2          Wall stiffeners (studs) — front elevation  cut=2.591 qty=12 totLen=31.090 kg=72.130
+  CUT shs-40x40x2          Wall stiffeners (studs) — left elevation   cut=2.591 qty=5 totLen=12.954 kg=30.050
+  CUT shs-40x40x2          Wall stiffeners (studs) — rear elevation   cut=2.591 qty=12 totLen=31.090 kg=72.130
+  CUT shs-40x40x2          Wall stiffeners (studs) — right elevation  cut=2.591 qty=5 totLen=12.954 kg=30.050
+  CUT shs-50x50x2          Roof truss bottom tie                      cut=3.658 qty=9 totLen=32.918 kg=97.110
+  CUT shs-50x50x2          Wall framing rails — front elevation       cut=9.144 qty=2 totLen=18.288 kg=53.950
+  CUT shs-50x50x2          Wall framing rails — left elevation        cut=3.658 qty=2 totLen=7.315 kg=21.580
+  CUT shs-50x50x2          Wall framing rails — rear elevation        cut=9.144 qty=2 totLen=18.288 kg=53.950
+  CUT shs-50x50x2          Wall framing rails — right elevation       cut=3.658 qty=2 totLen=7.315 kg=21.580
+  CUT shs-50x50x3          Corner post — front elevation              cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — left elevation               cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — rear elevation               cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Corner post — right elevation              cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Intermediate posts — front elevation       cut=2.591 qty=3 totLen=7.772 kg=33.340
+  CUT shs-50x50x3          Intermediate posts — left elevation        cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT shs-50x50x3          Intermediate posts — rear elevation        cut=2.591 qty=3 totLen=7.772 kg=33.340
+  CUT shs-50x50x3          Intermediate posts — right elevation       cut=2.591 qty=1 totLen=2.591 kg=11.110
+  CUT window-frame-40x40   Window frame head + sill — 4′ × 3′         cut=1.219 qty=10 totLen=12.192 kg=28.290
+  CUT window-frame-40x40   Window frame jamb — 4′ × 3′                cut=0.914 qty=10 totLen=9.144 kg=21.210
+PURCHASE (27):
+  BUY angle-50x50x5        net=43.466 m     wst=6.00 buy=46.074 stock=7 offcut=1.678 kg=175.070 amt=11380
+  BUY bolt-m12             net=32.000 nos   wst=2.00 buy=32.640 stock=- offcut=- kg=2.940 amt=704
+  BUY c-purlin-75x40       net=54.864 m     wst=6.00 buy=58.156 stock=6 offcut=0.000 kg=168.650 amt=11806
+  BUY cementboard-18       net=33.445 sqm   wst=13.00 buy=37.793 stock=13 offcut=5.253 kg=884.360 amt=12094
+  BUY door-frame-40x40     net=13.716 m     wst=8.00 buy=14.813 stock=3 offcut=4.284 kg=34.360 amt=2337
+  BUY door-ms-flush        net=3.000 nos   wst=0.00 buy=3.000 stock=- offcut=- kg=84.000 amt=22500
+  BUY elec-db              net=1.000 nos   wst=0.00 buy=1.000 stock=- offcut=- kg=3.200 amt=4200
+  BUY elec-fan             net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=9.000 amt=5000
+  BUY elec-led-panel       net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=3.000 amt=4000
+  BUY elec-socket          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=0.800 amt=1800
+  BUY elec-switch          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=1.200 amt=2600
+  BUY elec-wire-1.5        net=152.385 m     wst=8.00 buy=164.576 stock=- offcut=- kg=3.290 amt=2962
+  BUY enamel-paint         net=22.110 ltr   wst=5.00 buy=23.216 stock=- offcut=- kg=0.000 amt=8822
+  BUY ismc-100x50          net=51.206 m     wst=6.00 buy=54.279 stock=8 offcut=9.370 kg=518.900 amt=33729
+  BUY primer-red-oxide     net=8.290 ltr   wst=5.00 buy=8.705 stock=- offcut=- kg=0.000 amt=2089
+  BUY rhs-100x50x3         net=32.918 m     wst=6.00 buy=34.894 stock=9 offcut=21.082 kg=234.140 amt=15921
+  BUY sheet-ceiling-0.5    net=33.445 sqm   wst=11.00 buy=37.124 stock=13 offcut=5.555 kg=145.900 amt=2821
+  BUY sheet-ext-gi-0.8     net=55.742 sqm   wst=11.00 buy=61.874 stock=21 offcut=7.258 kg=388.560 amt=5692
+  BUY sheet-int-ppgi-0.5   net=55.742 sqm   wst=11.00 buy=61.874 stock=21 offcut=7.258 kg=243.160 amt=4826
+  BUY sheet-roof-0.5       net=33.651 sqm   wst=13.00 buy=38.026 stock=13 offcut=7.299 kg=163.510 amt=3346
+  BUY shs-40x40x2          net=88.087 m     wst=6.00 buy=93.372 stock=17 offcut=13.913 kg=216.640 amt=14730
+  BUY shs-50x50x2          net=84.125 m     wst=6.00 buy=89.172 stock=17 offcut=30.451 kg=263.060 amt=17888
+  BUY shs-50x50x3          net=31.090 m     wst=6.00 buy=32.955 stock=6 offcut=4.910 kg=141.360 amt=9614
+  BUY vinyl-2mm            net=33.445 sqm   wst=11.00 buy=37.124 stock=1 offcut=6.555 kg=66.820 amt=5754
+  BUY window-frame-40x40   net=21.336 m     wst=8.00 buy=23.043 stock=4 offcut=2.664 kg=53.460 amt=3635
+  BUY window-grill         net=5.574 sqm   wst=10.00 buy=6.132 stock=- offcut=- kg=69.290 amt=5404
+  BUY window-slider        net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=90.000 amt=17500
+WEIGHT SUMMARY (25):
+  WT angle-50x50x5        net=165.170 tot=175.070
+  WT bolt-m12             net=2.880 tot=2.940
+  WT c-purlin-75x40       net=159.110 tot=168.650
+  WT cementboard-18       net=782.620 tot=884.360
+  WT door-frame-40x40     net=31.820 tot=34.360
+  WT door-ms-flush        net=84.000 tot=84.000
+  WT elec-db              net=3.200 tot=3.200
+  WT elec-fan             net=9.000 tot=9.000
+  WT elec-led-panel       net=3.000 tot=3.000
+  WT elec-socket          net=0.800 tot=0.800
+  WT elec-switch          net=1.200 tot=1.200
+  WT elec-wire-1.5        net=3.050 tot=3.290
+  WT ismc-100x50          net=489.520 tot=518.900
+  WT rhs-100x50x3         net=220.880 tot=234.140
+  WT sheet-ceiling-0.5    net=131.440 tot=145.900
+  WT sheet-ext-gi-0.8     net=350.060 tot=388.560
+  WT sheet-int-ppgi-0.5   net=219.070 tot=243.160
+  WT sheet-roof-0.5       net=144.700 tot=163.510
+  WT shs-40x40x2          net=204.360 tot=216.640
+  WT shs-50x50x2          net=248.170 tot=263.060
+  WT shs-50x50x3          net=133.340 tot=141.360
+  WT vinyl-2mm            net=60.200 tot=66.820
+  WT window-frame-40x40   net=49.500 tot=53.460
+  WT window-grill         net=62.990 tot=69.290
+  WT window-slider        net=90.000 tot=90.000
+ISSUES errors=0 warnings=0
+
+################################################################
+SCENARIO :: 4. G+1 Labour Colony — 12 rooms, 3.0 x 3.0 x 2.7 m, centre corridor, staircase
+################################################################
+META  L=9.000 W=6.000 H=2.700 floors=2 rooms=12 partitions=14 doors=12 windows=12 stairs=1 verandas=2 modules=16 floorArea=162.000 roof=gable
+TOTALS netSteel=6909.850 totSteel=7343.830 totWeight=15762.070 material=1142354 charges=295513 subtotal=1437867 gst=258816 grand=1696683 rsPerSqft=973.01
+  CHARGE Fabrication / welding [per_kg] = 132189
+  CHARGE Installation [amount] = 15000
+  CHARGE Labour [per_kg] = 88126
+  CHARGE Painting (primer + enamel) [per_sqm] = 42198
+  CHARGE Transport [amount] = 18000
+SECTIONS:
+  SEC electrical  steelKg=0.000 totKg=128.800 material=89800 lines=4
+  SEC floor       steelKg=1763.250 totKg=4834.770 material=172245 lines=4
+  SEC front       steelKg=468.810 totKg=781.440 material=68381 lines=14
+  SEC left        steelKg=455.400 totKg=806.450 material=71564 lines=11
+  SEC misc        steelKg=0.000 totKg=52.880 material=12672 lines=1
+  SEC openings    steelKg=293.210 totKg=1063.430 material=168960 lines=8
+  SEC partition   steelKg=965.870 totKg=1955.250 material=85319 lines=43
+  SEC plumbing    steelKg=144.520 totKg=294.520 material=65897 lines=4
+  SEC rear        steelKg=468.810 totKg=781.440 material=68381 lines=14
+  SEC right       steelKg=455.400 totKg=806.450 material=71564 lines=11
+  SEC roof        steelKg=721.680 totKg=1409.780 material=63541 lines=4
+  SEC staircase   steelKg=307.510 totKg=555.510 material=39910 lines=7
+  SEC veranda     steelKg=1299.370 totKg=2291.350 material=164120 lines=6
+LINES (131):
+  LINE electrical:db                      src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=6.400 rate=4200.00 amt=8400 mat=elec-db
+  LINE electrical:fans                    src=auto   en=Y qty=24.000 nos   pcs=24 cut=- run=- net=- sheets=- totKg=108.000 rate=2500.00 amt=60000 mat=elec-fan
+  LINE electrical:lights                  src=auto   en=Y qty=20.000 nos   pcs=20 cut=- run=- net=- sheets=- totKg=12.000 rate=800.00 amt=16000 mat=elec-led-panel
+  LINE electrical:sockets                 src=auto   en=Y qty=12.000 nos   pcs=12 cut=- run=- net=- sheets=- totKg=2.400 rate=450.00 amt=5400 mat=elec-socket
+  LINE floor:base-beam:3000               src=auto   en=Y qty=102.000 m     pcs=34 cut=3.000 run=102.000 net=- sheets=- totKg=1033.630 rate=65.00 amt=67186 mat=ismc-100x50
+  LINE floor:board                        src=auto   en=Y qty=108.000 sqm   pcs=- cut=- run=- net=108.000 sheets=41 totKg=2855.740 rate=320.00 amt=39053 mat=cementboard-18
+  LINE floor:joist:3000                   src=auto   en=Y qty=72.000 m     pcs=24 cut=3.000 run=72.000 net=- sheets=- totKg=729.620 rate=65.00 amt=47425 mat=ismc-100x50
+  LINE floor:vinyl                        src=auto   en=Y qty=108.000 sqm   pcs=- cut=- run=- net=108.000 sheets=3 totKg=215.780 rate=155.00 amt=18581 mat=vinyl-2mm
+  LINE front:cladding                     src=auto   en=Y qty=28.854 sqm   pcs=- cut=- run=- net=28.854 sheets=10 totKg=312.630 rate=1150.00 amt=36500 mat=puf-panel-50
+  LINE front:column-post                  src=auto   en=Y qty=21.600 m     pcs=8 cut=2.700 run=21.600 net=- sheets=- totKg=153.630 rate=68.00 amt=10447 mat=rhs-100x50x3
+  LINE front:rail:f0:y7500:0-3000         src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f0:y7500:3000-6000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f0:y7500:6000-9000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:0-3000         src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:3000-6000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:6000-9000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:0-3000         src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:3000-6000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:6000-9000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:0-3000         src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:3000-6000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:6000-9000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:brace:4036                    src=auto   en=Y qty=32.288 m     pcs=8 cut=4.036 run=32.288 net=- sheets=- totKg=130.060 rate=65.00 amt=8454 mat=angle-50x50x5
+  LINE left:cladding                      src=auto   en=Y qty=32.400 sqm   pcs=- cut=- run=- net=32.400 sheets=11 totKg=351.050 rate=1150.00 amt=40986 mat=puf-panel-50
+  LINE left:column-corner                 src=auto   en=Y qty=16.200 m     pcs=6 cut=2.700 run=16.200 net=- sheets=- totKg=115.220 rate=68.00 amt=7835 mat=rhs-100x50x3
+  LINE left:rail:f0:x0:1500-4500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:rail:f0:x0:4500-7500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:rail:f1:x0:1500-4500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:rail:f1:x0:4500-7500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:stud:f0:x0:1500-4500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:stud:f0:x0:4500-7500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:stud:f1:x0:1500-4500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:stud:f1:x0:4500-7500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE misc:bolts                         src=auto   en=Y qty=576.000 nos   pcs=576 cut=- run=- net=- sheets=- totKg=52.880 rate=22.00 amt=12672 mat=bolt-m12
+  LINE openings:door-head:914x2000        src=auto   en=Y qty=10.968 m     pcs=12 cut=0.914 run=10.968 net=- sheets=- totKg=27.480 rate=68.00 amt=1869 mat=door-frame-40x40
+  LINE openings:door-jamb:914x2000        src=auto   en=Y qty=48.000 m     pcs=24 cut=2.000 run=48.000 net=- sheets=- totKg=120.270 rate=68.00 amt=8178 mat=door-frame-40x40
+  LINE openings:door-leaf:914x2000        src=auto   en=Y qty=12.000 nos   pcs=12 cut=- run=- net=- sheets=- totKg=336.000 rate=7500.00 amt=90000 mat=door-ms-flush
+  LINE openings:window-grill:1219x1200    src=auto   en=Y qty=17.556 sqm   pcs=- cut=- run=- net=17.556 sheets=0 totKg=218.220 rate=78.00 amt=17021 mat=window-grill
+  LINE openings:window-head:1219x1200     src=auto   en=Y qty=14.628 m     pcs=12 cut=1.219 run=14.628 net=- sheets=- totKg=36.650 rate=68.00 amt=2492 mat=window-frame-40x40
+  LINE openings:window-jamb:1219x1200     src=auto   en=Y qty=28.800 m     pcs=24 cut=1.200 run=28.800 net=- sheets=- totKg=72.160 rate=68.00 amt=4907 mat=window-frame-40x40
+  LINE openings:window-sill:1219x1200     src=auto   en=Y qty=14.628 m     pcs=12 cut=1.219 run=14.628 net=- sheets=- totKg=36.650 rate=68.00 amt=2492 mat=window-frame-40x40
+  LINE openings:window:1219x1200          src=auto   en=Y qty=12.000 nos   pcs=12 cut=- run=- net=- sheets=- totKg=216.000 rate=3500.00 amt=42000 mat=window-slider
+  LINE partition:column-corner            src=auto   en=Y qty=32.400 m     pcs=12 cut=2.700 run=32.400 net=- sheets=- totKg=230.450 rate=68.00 amt=15670 mat=rhs-100x50x3
+  LINE partition:rail:f0:x3000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x3000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x6000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x6000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:0-3000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:3000-6000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:6000-9000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x3000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x3000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x6000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x6000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:0-3000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:3000-6000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:6000-9000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:sheet:f0:x3000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x3000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x6000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x6000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:0-3000    src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:3000-6000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:6000-9000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x3000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x3000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x6000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x6000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:0-3000    src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:3000-6000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:6000-9000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:stud:f0:x3000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x3000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x6000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x6000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:0-3000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:3000-6000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:6000-9000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x3000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x3000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x6000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x6000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:0-3000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:3000-6000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:6000-9000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE plumbing:cpvc                      src=auto   en=Y qty=84.000 m     pcs=1 cut=84.000 run=84.000 net=- sheets=- totKg=32.630 rate=145.00 amt=13520 mat=plumb-cpvc-25
+  LINE plumbing:pvc                       src=auto   en=Y qty=63.000 m     pcs=1 cut=63.000 run=63.000 net=- sheets=- totKg=111.890 rate=320.00 amt=22378 mat=plumb-pvc-110
+  LINE plumbing:washbasin                 src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=60.000 rate=2200.00 amt=11000 mat=plumb-washbasin
+  LINE plumbing:wc                        src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=90.000 rate=3800.00 amt=19000 mat=plumb-wc
+  LINE rear:cladding                      src=auto   en=Y qty=28.854 sqm   pcs=- cut=- run=- net=28.854 sheets=10 totKg=312.630 rate=1150.00 amt=36500 mat=puf-panel-50
+  LINE rear:column-post                   src=auto   en=Y qty=21.600 m     pcs=8 cut=2.700 run=21.600 net=- sheets=- totKg=153.630 rate=68.00 amt=10447 mat=rhs-100x50x3
+  LINE rear:rail:f0:y1500:0-3000          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f0:y1500:3000-6000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f0:y1500:6000-9000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:0-3000          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:3000-6000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:6000-9000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:0-3000          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:3000-6000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:6000-9000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:0-3000          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:3000-6000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:6000-9000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:brace:4036                   src=auto   en=Y qty=32.288 m     pcs=8 cut=4.036 run=32.288 net=- sheets=- totKg=130.060 rate=65.00 amt=8454 mat=angle-50x50x5
+  LINE right:cladding                     src=auto   en=Y qty=32.400 sqm   pcs=- cut=- run=- net=32.400 sheets=11 totKg=351.050 rate=1150.00 amt=40986 mat=puf-panel-50
+  LINE right:column-corner                src=auto   en=Y qty=16.200 m     pcs=6 cut=2.700 run=16.200 net=- sheets=- totKg=115.220 rate=68.00 amt=7835 mat=rhs-100x50x3
+  LINE right:rail:f0:x9000:1500-4500      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:rail:f0:x9000:4500-7500      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:rail:f1:x9000:1500-4500      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:rail:f1:x9000:4500-7500      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:stud:f0:x9000:1500-4500      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:stud:f0:x9000:4500-7500      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:stud:f1:x9000:1500-4500      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:stud:f1:x9000:4500-7500      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE roof:ceiling                       src=auto   en=Y qty=54.000 sqm   pcs=- cut=- run=- net=54.000 sheets=20 totKg=235.560 rate=76.00 amt=4555 mat=sheet-ceiling-0.5
+  LINE roof:purlin                        src=auto   en=Y qty=105.600 m     pcs=88 cut=1.200 run=105.600 net=- sheets=- totKg=324.610 rate=70.00 amt=22723 mat=c-purlin-75x40
+  LINE roof:rafter                        src=auto   en=Y qty=87.318 m     pcs=18 cut=4.851 run=87.318 net=- sheets=- totKg=397.070 rate=68.00 amt=27001 mat=shs-50x50x3
+  LINE roof:sheet                         src=auto   en=Y qty=93.135 sqm   pcs=- cut=- run=- net=93.135 sheets=34 totKg=452.540 rate=88.00 amt=9261 mat=sheet-roof-0.5
+  LINE staircase:landing-cross:stair-1    src=auto   en=Y qty=3.000 m     pcs=2 cut=1.500 run=3.000 net=- sheets=- totKg=30.400 rate=65.00 amt=1976 mat=ismc-100x50
+  LINE staircase:landing-side:stair-1     src=auto   en=Y qty=2.000 m     pcs=2 cut=1.000 run=2.000 net=- sheets=- totKg=20.270 rate=65.00 amt=1317 mat=ismc-100x50
+  LINE staircase:plate:stair-1            src=auto   en=Y qty=6.750 sqm   pcs=- cut=- run=- net=6.750 sheets=3 totKg=248.000 rate=78.00 amt=19344 mat=chequered-plate-4
+  LINE staircase:rail-post:stair-1        src=auto   en=Y qty=7.200 m     pcs=8 cut=0.900 run=7.200 net=- sheets=- totKg=17.650 rate=72.00 amt=1271 mat=pipe-od48x2
+  LINE staircase:rail:stair-1             src=auto   en=Y qty=26.520 m     pcs=6 cut=4.420 run=26.520 net=- sheets=- totKg=65.020 rate=72.00 amt=4681 mat=pipe-od48x2
+  LINE staircase:stringer:stair-1         src=auto   en=Y qty=8.840 m     pcs=2 cut=4.420 run=8.840 net=- sheets=- totKg=89.580 rate=65.00 amt=5823 mat=ismc-100x50
+  LINE staircase:tread-frame:stair-1      src=auto   en=Y qty=21.000 m     pcs=14 cut=1.500 run=21.000 net=- sheets=- totKg=84.590 rate=65.00 amt=5498 mat=angle-50x50x5
+  LINE veranda:beam:1500                  src=auto   en=Y qty=12.000 m     pcs=8 cut=1.500 run=12.000 net=- sheets=- totKg=121.600 rate=65.00 amt=7904 mat=ismc-100x50
+  LINE veranda:beam:9000                  src=auto   en=Y qty=36.000 m     pcs=4 cut=9.000 run=36.000 net=- sheets=- totKg=364.810 rate=65.00 amt=23713 mat=ismc-100x50
+  LINE veranda:joist:1500                 src=auto   en=Y qty=48.000 m     pcs=32 cut=1.500 run=48.000 net=- sheets=- totKg=486.410 rate=65.00 amt=31617 mat=ismc-100x50
+  LINE veranda:plate                      src=auto   en=Y qty=27.000 sqm   pcs=- cut=- run=- net=27.000 sheets=10 totKg=991.980 rate=78.00 amt=77374 mat=chequered-plate-4
+  LINE veranda:rail-post:900              src=auto   en=Y qty=25.200 m     pcs=28 cut=0.900 run=25.200 net=- sheets=- totKg=61.780 rate=72.00 amt=4448 mat=pipe-od48x2
+  LINE veranda:rail:1500                  src=auto   en=Y qty=108.000 m     pcs=72 cut=1.500 run=108.000 net=- sheets=- totKg=264.770 rate=72.00 amt=19064 mat=pipe-od48x2
+CUTTING (97):
+  CUT angle-50x50x5        Cross bracing (X) — Left elevation         cut=4.036 qty=8 totLen=32.288 kg=122.690
+  CUT angle-50x50x5        Cross bracing (X) — Right elevation        cut=4.036 qty=8 totLen=32.288 kg=122.690
+  CUT angle-50x50x5        Staircase A — tread framing angle          cut=1.500 qty=14 totLen=21.000 kg=79.800
+  CUT c-purlin-75x40       Roof purlin                                cut=1.200 qty=88 totLen=105.600 kg=306.240
+  CUT door-frame-40x40     Door frame head 0.91 × 2 m                 cut=0.914 qty=12 totLen=10.968 kg=25.450
+  CUT door-frame-40x40     Door frame jamb 0.91 × 2 m                 cut=2.000 qty=24 totLen=48.000 kg=111.360
+  CUT ismc-100x50          Base frame beam under wall line — 3 m      cut=3.000 qty=34 totLen=102.000 kg=975.120
+  CUT ismc-100x50          Floor joist — 3 m span                     cut=3.000 qty=24 totLen=72.000 kg=688.320
+  CUT ismc-100x50          Staircase A — landing frame (cross member) cut=1.500 qty=2 totLen=3.000 kg=28.680
+  CUT ismc-100x50          Staircase A — landing frame (side member)  cut=1.000 qty=2 totLen=2.000 kg=19.120
+  CUT ismc-100x50          Staircase A — stringer                     cut=4.420 qty=2 totLen=8.840 kg=84.510
+  CUT ismc-100x50          Veranda deck joist — 1.5 m span            cut=1.500 qty=32 totLen=48.000 kg=458.880
+  CUT ismc-100x50          Veranda edge beam — 1.5 m                  cut=1.500 qty=8 totLen=12.000 kg=114.720
+  CUT ismc-100x50          Veranda edge beam — 9 m                    cut=9.000 qty=4 totLen=36.000 kg=344.160
+  CUT pipe-od48x2          Staircase A — handrail (raking)            cut=4.420 qty=6 totLen=26.520 kg=60.200
+  CUT pipe-od48x2          Staircase A — handrail post                cut=0.900 qty=8 totLen=7.200 kg=16.340
+  CUT pipe-od48x2          Veranda handrail post                      cut=0.900 qty=28 totLen=25.200 kg=57.200
+  CUT pipe-od48x2          Veranda handrail — 1.5 m bay               cut=1.500 qty=72 totLen=108.000 kg=245.160
+  CUT plumb-cpvc-25        CPVC water supply pipe 25 mm (running length) cut=84.000 qty=1 totLen=84.000 kg=29.400
+  CUT plumb-pvc-110        PVC soil / waste pipe 110 mm (running length) cut=63.000 qty=1 totLen=63.000 kg=100.800
+  CUT rhs-100x50x3         Corner post — Internal column line         cut=2.700 qty=12 totLen=32.400 kg=217.400
+  CUT rhs-100x50x3         Corner post — Left column line             cut=2.700 qty=6 totLen=16.200 kg=108.700
+  CUT rhs-100x50x3         Corner post — Right column line            cut=2.700 qty=6 totLen=16.200 kg=108.700
+  CUT rhs-100x50x3         Wall post — Front column line              cut=2.700 qty=8 totLen=21.600 kg=144.940
+  CUT rhs-100x50x3         Wall post — Rear column line               cut=2.700 qty=8 totLen=21.600 kg=144.940
+  CUT shs-50x50x2          Front W1 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W1 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W2 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W2 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W3 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W3 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W4 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W4 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W5 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W5 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W6 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W6 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W1 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W1 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W2 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W2 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W3 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W3 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W4 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W4 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P1 · L0 — top & bottom rail (shared: rooms 4/5) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P1 · L0 — wall studs (shared: rooms 4/5) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P10 · L1 — top & bottom rail (shared: rooms 11/12) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P10 · L1 — wall studs (shared: rooms 11/12) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P11 · L1 — top & bottom rail (shared: rooms 8/9) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P11 · L1 — wall studs (shared: rooms 8/9) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P12 · L1 — top & bottom rail (shared: rooms 10/7) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P12 · L1 — wall studs (shared: rooms 10/7) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P13 · L1 — top & bottom rail (shared: rooms 11/8) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P13 · L1 — wall studs (shared: rooms 11/8) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P14 · L1 — top & bottom rail (shared: rooms 12/9) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P14 · L1 — wall studs (shared: rooms 12/9) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P2 · L0 — top & bottom rail (shared: rooms 1/2) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P2 · L0 — wall studs (shared: rooms 1/2) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P3 · L0 — top & bottom rail (shared: rooms 5/6) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P3 · L0 — wall studs (shared: rooms 5/6) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P4 · L0 — top & bottom rail (shared: rooms 2/3) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P4 · L0 — wall studs (shared: rooms 2/3) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P5 · L0 — top & bottom rail (shared: rooms 4/1) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P5 · L0 — wall studs (shared: rooms 4/1) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P6 · L0 — top & bottom rail (shared: rooms 5/2) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P6 · L0 — wall studs (shared: rooms 5/2) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P7 · L0 — top & bottom rail (shared: rooms 6/3) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P7 · L0 — wall studs (shared: rooms 6/3) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P8 · L1 — top & bottom rail (shared: rooms 10/11) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P8 · L1 — wall studs (shared: rooms 10/11) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P9 · L1 — top & bottom rail (shared: rooms 7/8) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P9 · L1 — wall studs (shared: rooms 7/8) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W1 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W1 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W2 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W2 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W3 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W3 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W4 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W4 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W5 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W5 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W6 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W6 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W1 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W1 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W2 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W2 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W3 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W3 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W4 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W4 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x3          Roof frame / rafter (gable)                cut=4.851 qty=18 totLen=87.318 kg=374.590
+  CUT window-frame-40x40   Window frame head 1.22 × 1.2 m             cut=1.219 qty=12 totLen=14.628 kg=33.940
+  CUT window-frame-40x40   Window frame jamb 1.22 × 1.2 m             cut=1.200 qty=24 totLen=28.800 kg=66.820
+  CUT window-frame-40x40   Window frame sill 1.22 × 1.2 m             cut=1.219 qty=12 totLen=14.628 kg=33.940
+PURCHASE (28):
+  BUY angle-50x50x5        net=85.576 m     wst=6.00 buy=90.711 stock=16 offcut=10.424 kg=344.710 amt=22406
+  BUY bolt-m12             net=576.000 nos   wst=2.00 buy=587.520 stock=- offcut=- kg=52.880 amt=12672
+  BUY c-purlin-75x40       net=105.600 m     wst=6.00 buy=111.936 stock=18 offcut=2.400 kg=324.610 amt=22723
+  BUY cementboard-18       net=108.000 sqm   wst=13.00 buy=122.040 stock=41 offcut=14.049 kg=2855.740 amt=39053
+  BUY chequered-plate-4    net=33.750 sqm   wst=10.00 buy=37.125 stock=12 offcut=3.750 kg=1239.980 amt=96718
+  BUY door-frame-40x40     net=58.968 m     wst=8.00 buy=63.685 stock=10 offcut=1.032 kg=147.750 amt=10047
+  BUY door-ms-flush        net=12.000 nos   wst=0.00 buy=12.000 stock=- offcut=- kg=336.000 amt=90000
+  BUY elec-db              net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=6.400 amt=8400
+  BUY elec-fan             net=24.000 nos   wst=0.00 buy=24.000 stock=- offcut=- kg=108.000 amt=60000
+  BUY elec-led-panel       net=20.000 nos   wst=0.00 buy=20.000 stock=- offcut=- kg=12.000 amt=16000
+  BUY elec-socket          net=12.000 nos   wst=0.00 buy=12.000 stock=- offcut=- kg=2.400 amt=5400
+  BUY ismc-100x50          net=283.840 m     wst=6.00 buy=300.870 stock=46 offcut=4.160 kg=2876.320 amt=186961
+  BUY pipe-od48x2          net=166.920 m     wst=8.00 buy=180.274 stock=29 offcut=7.080 kg=409.220 amt=29464
+  BUY plumb-cpvc-25        net=84.000 m     wst=11.00 buy=93.240 stock=1 offcut=0.000 kg=32.630 amt=13520
+  BUY plumb-pvc-110        net=63.000 m     wst=11.00 buy=69.930 stock=1 offcut=0.000 kg=111.890 amt=22378
+  BUY plumb-washbasin      net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=60.000 amt=11000
+  BUY plumb-wc             net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=90.000 amt=19000
+  BUY puf-panel-50         net=122.508 sqm   wst=10.00 buy=134.759 stock=40 offcut=15.492 kg=1327.360 amt=154973
+  BUY rhs-100x50x3         net=108.000 m     wst=6.00 buy=114.480 stock=20 offcut=12.000 kg=768.150 amt=52235
+  BUY sheet-ceiling-0.5    net=54.000 sqm   wst=11.00 buy=59.940 stock=20 offcut=6.000 kg=235.560 amt=4555
+  BUY sheet-int-ppgi-0.5   net=226.800 sqm   wst=11.00 buy=251.748 stock=84 offcut=25.200 kg=989.380 amt=19636
+  BUY sheet-roof-0.5       net=93.135 sqm   wst=13.00 buy=105.243 stock=34 offcut=13.965 kg=452.540 amt=9261
+  BUY shs-50x50x2          net=571.200 m     wst=6.00 buy=605.472 stock=102 offcut=40.800 kg=1786.020 amt=121458
+  BUY shs-50x50x3          net=87.318 m     wst=6.00 buy=92.557 stock=18 offcut=20.682 kg=397.070 amt=27001
+  BUY vinyl-2mm            net=108.000 sqm   wst=11.00 buy=119.880 stock=3 offcut=12.000 kg=215.780 amt=18581
+  BUY window-frame-40x40   net=58.056 m     wst=8.00 buy=62.700 stock=11 offcut=7.944 kg=145.460 amt=9892
+  BUY window-grill         net=17.556 sqm   wst=10.00 buy=19.312 stock=- offcut=- kg=218.220 amt=17021
+  BUY window-slider        net=12.000 nos   wst=0.00 buy=12.000 stock=- offcut=- kg=216.000 amt=42000
+WEIGHT SUMMARY (28):
+  WT angle-50x50x5        net=325.180 tot=344.710
+  WT bolt-m12             net=51.840 tot=52.880
+  WT c-purlin-75x40       net=306.240 tot=324.610
+  WT cementboard-18       net=2527.200 tot=2855.740
+  WT chequered-plate-4    net=1127.250 tot=1239.980
+  WT door-frame-40x40     net=136.810 tot=147.750
+  WT door-ms-flush        net=336.000 tot=336.000
+  WT elec-db              net=6.400 tot=6.400
+  WT elec-fan             net=108.000 tot=108.000
+  WT elec-led-panel       net=12.000 tot=12.000
+  WT elec-socket          net=2.400 tot=2.400
+  WT ismc-100x50          net=2713.510 tot=2876.320
+  WT pipe-od48x2          net=378.900 tot=409.220
+  WT plumb-cpvc-25        net=29.400 tot=32.630
+  WT plumb-pvc-110        net=100.800 tot=111.890
+  WT plumb-washbasin      net=60.000 tot=60.000
+  WT plumb-wc             net=90.000 tot=90.000
+  WT puf-panel-50         net=1206.700 tot=1327.360
+  WT rhs-100x50x3         net=724.680 tot=768.150
+  WT sheet-ceiling-0.5    net=212.220 tot=235.560
+  WT sheet-int-ppgi-0.5   net=891.380 tot=989.380
+  WT sheet-roof-0.5       net=400.480 tot=452.540
+  WT shs-50x50x2          net=1685.040 tot=1786.020
+  WT shs-50x50x3          net=374.590 tot=397.070
+  WT vinyl-2mm            net=194.400 tot=215.780
+  WT window-frame-40x40   net=134.700 tot=145.460
+  WT window-grill         net=198.380 tot=218.220
+  WT window-slider        net=216.000 tot=216.000
+ISSUES errors=0 warnings=0
+
+################################################################
+SCENARIO :: 5. Labour Colony — 20 rooms, G+1, TWO staircases, TWO verandas, railings
+################################################################
+META  L=15.000 W=6.000 H=2.700 floors=2 rooms=20 partitions=26 doors=20 windows=20 stairs=2 verandas=2 modules=26 floorArea=270.000 roof=gable
+TOTALS netSteel=10971.930 totSteel=11662.730 totWeight=25367.290 material=1810925 charges=452881 subtotal=2263806 gst=407485 grand=2671292 rsPerSqft=919.15
+  CHARGE Fabrication / welding [per_kg] = 209929
+  CHARGE Installation [amount] = 15000
+  CHARGE Labour [per_kg] = 139953
+  CHARGE Painting (primer + enamel) [per_sqm] = 70000
+  CHARGE Transport [amount] = 18000
+SECTIONS:
+  SEC electrical  steelKg=0.000 totKg=216.000 material=151400 lines=4
+  SEC floor       steelKg=2857.670 totKg=7976.870 material=281806 lines=4
+  SEC front       steelKg=755.750 totKg=1276.810 material=112227 lines=22
+  SEC left        steelKg=455.400 totKg=806.450 material=71564 lines=11
+  SEC misc        steelKg=0.000 totKg=85.920 material=20592 lines=1
+  SEC openings    steelKg=488.700 totKg=1772.410 material=281601 lines=8
+  SEC partition   steelKg=1826.680 totKg=3664.100 material=160688 lines=79
+  SEC plumbing    steelKg=233.990 totKg=473.990 material=106120 lines=4
+  SEC rear        steelKg=755.750 totKg=1276.810 material=112227 lines=22
+  SEC right       steelKg=455.400 totKg=806.450 material=71564 lines=11
+  SEC roof        steelKg=1145.160 totKg=2273.150 material=101568 lines=4
+  SEC staircase   steelKg=569.020 totKg=965.820 material=69093 lines=14
+  SEC veranda     steelKg=2119.210 totKg=3772.510 material=270475 lines=6
+LINES (190):
+  LINE electrical:db                      src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=12.800 rate=4200.00 amt=16800 mat=elec-db
+  LINE electrical:fans                    src=auto   en=Y qty=40.000 nos   pcs=40 cut=- run=- net=- sheets=- totKg=180.000 rate=2500.00 amt=100000 mat=elec-fan
+  LINE electrical:lights                  src=auto   en=Y qty=32.000 nos   pcs=32 cut=- run=- net=- sheets=- totKg=19.200 rate=800.00 amt=25600 mat=elec-led-panel
+  LINE electrical:sockets                 src=auto   en=Y qty=20.000 nos   pcs=20 cut=- run=- net=- sheets=- totKg=4.000 rate=450.00 amt=9000 mat=elec-socket
+  LINE floor:base-beam:3000               src=auto   en=Y qty=162.000 m     pcs=54 cut=3.000 run=162.000 net=- sheets=- totKg=1641.640 rate=65.00 amt=106707 mat=ismc-100x50
+  LINE floor:board                        src=auto   en=Y qty=180.000 sqm   pcs=- cut=- run=- net=180.000 sheets=69 totKg=4759.560 rate=320.00 amt=65088 mat=cementboard-18
+  LINE floor:joist:3000                   src=auto   en=Y qty=120.000 m     pcs=40 cut=3.000 run=120.000 net=- sheets=- totKg=1216.030 rate=65.00 amt=79042 mat=ismc-100x50
+  LINE floor:vinyl                        src=auto   en=Y qty=180.000 sqm   pcs=- cut=- run=- net=180.000 sheets=5 totKg=359.640 rate=155.00 amt=30969 mat=vinyl-2mm
+  LINE front:cladding                     src=auto   en=Y qty=48.090 sqm   pcs=- cut=- run=- net=48.090 sheets=16 totKg=521.060 rate=1150.00 amt=60834 mat=puf-panel-50
+  LINE front:column-post                  src=auto   en=Y qty=32.400 m     pcs=12 cut=2.700 run=32.400 net=- sheets=- totKg=230.450 rate=68.00 amt=15670 mat=rhs-100x50x3
+  LINE front:rail:f0:y7500:0-3000         src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f0:y7500:12000-15000    src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f0:y7500:3000-6000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f0:y7500:6000-9000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f0:y7500:9000-12000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:0-3000         src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:12000-15000    src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:3000-6000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:6000-9000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:rail:f1:y7500:9000-12000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:0-3000         src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:12000-15000    src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:3000-6000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:6000-9000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f0:y7500:9000-12000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:0-3000         src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:12000-15000    src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:3000-6000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:6000-9000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE front:stud:f1:y7500:9000-12000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:brace:4036                    src=auto   en=Y qty=32.288 m     pcs=8 cut=4.036 run=32.288 net=- sheets=- totKg=130.060 rate=65.00 amt=8454 mat=angle-50x50x5
+  LINE left:cladding                      src=auto   en=Y qty=32.400 sqm   pcs=- cut=- run=- net=32.400 sheets=11 totKg=351.050 rate=1150.00 amt=40986 mat=puf-panel-50
+  LINE left:column-corner                 src=auto   en=Y qty=16.200 m     pcs=6 cut=2.700 run=16.200 net=- sheets=- totKg=115.220 rate=68.00 amt=7835 mat=rhs-100x50x3
+  LINE left:rail:f0:x0:1500-4500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:rail:f0:x0:4500-7500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:rail:f1:x0:1500-4500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:rail:f1:x0:4500-7500          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE left:stud:f0:x0:1500-4500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:stud:f0:x0:4500-7500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:stud:f1:x0:1500-4500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE left:stud:f1:x0:4500-7500          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE misc:bolts                         src=auto   en=Y qty=936.000 nos   pcs=936 cut=- run=- net=- sheets=- totKg=85.920 rate=22.00 amt=20592 mat=bolt-m12
+  LINE openings:door-head:914x2000        src=auto   en=Y qty=18.280 m     pcs=20 cut=0.914 run=18.280 net=- sheets=- totKg=45.800 rate=68.00 amt=3115 mat=door-frame-40x40
+  LINE openings:door-jamb:914x2000        src=auto   en=Y qty=80.000 m     pcs=40 cut=2.000 run=80.000 net=- sheets=- totKg=200.450 rate=68.00 amt=13630 mat=door-frame-40x40
+  LINE openings:door-leaf:914x2000        src=auto   en=Y qty=20.000 nos   pcs=20 cut=- run=- net=- sheets=- totKg=560.000 rate=7500.00 amt=150000 mat=door-ms-flush
+  LINE openings:window-grill:1219x1200    src=auto   en=Y qty=29.261 sqm   pcs=- cut=- run=- net=29.261 sheets=0 totKg=363.710 rate=78.00 amt=28370 mat=window-grill
+  LINE openings:window-head:1219x1200     src=auto   en=Y qty=24.380 m     pcs=20 cut=1.219 run=24.380 net=- sheets=- totKg=61.090 rate=68.00 amt=4154 mat=window-frame-40x40
+  LINE openings:window-jamb:1219x1200     src=auto   en=Y qty=48.000 m     pcs=40 cut=1.200 run=48.000 net=- sheets=- totKg=120.270 rate=68.00 amt=8178 mat=window-frame-40x40
+  LINE openings:window-sill:1219x1200     src=auto   en=Y qty=24.380 m     pcs=20 cut=1.219 run=24.380 net=- sheets=- totKg=61.090 rate=68.00 amt=4154 mat=window-frame-40x40
+  LINE openings:window:1219x1200          src=auto   en=Y qty=20.000 nos   pcs=20 cut=- run=- net=- sheets=- totKg=360.000 rate=3500.00 amt=70000 mat=window-slider
+  LINE partition:column-corner            src=auto   en=Y qty=64.800 m     pcs=24 cut=2.700 run=64.800 net=- sheets=- totKg=460.900 rate=68.00 amt=31341 mat=rhs-100x50x3
+  LINE partition:rail:f0:x12000:1500-4500 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x12000:4500-7500 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x3000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x3000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x6000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x6000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x9000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:x9000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:0-3000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:12000-15000 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:3000-6000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:6000-9000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f0:y4500:9000-12000 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x12000:1500-4500 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x12000:4500-7500 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x3000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x3000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x6000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x6000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x9000:1500-4500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:x9000:4500-7500  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:0-3000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:12000-15000 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:3000-6000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:6000-9000  src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:rail:f1:y4500:9000-12000 src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE partition:sheet:f0:x12000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x12000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x3000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x3000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x6000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x6000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x9000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:x9000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:0-3000    src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:12000-15000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:3000-6000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:6000-9000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f0:y4500:9000-12000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x12000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x12000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x3000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x3000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x6000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x6000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x9000:1500-4500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:x9000:4500-7500 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:0-3000    src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:12000-15000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:3000-6000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:6000-9000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:sheet:f1:y4500:9000-12000 src=auto   en=Y qty=16.200 sqm   pcs=- cut=- run=- net=16.200 sheets=6 totKg=70.670 rate=78.00 amt=1403 mat=sheet-int-ppgi-0.5
+  LINE partition:stud:f0:x12000:1500-4500 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x12000:4500-7500 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x3000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x3000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x6000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x6000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x9000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:x9000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:0-3000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:12000-15000 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:3000-6000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:6000-9000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f0:y4500:9000-12000 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x12000:1500-4500 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x12000:4500-7500 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x3000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x3000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x6000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x6000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x9000:1500-4500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:x9000:4500-7500  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:0-3000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:12000-15000 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:3000-6000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:6000-9000  src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE partition:stud:f1:y4500:9000-12000 src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE plumbing:cpvc                      src=auto   en=Y qty=136.000 m     pcs=1 cut=136.000 run=136.000 net=- sheets=- totKg=52.840 rate=145.00 amt=21889 mat=plumb-cpvc-25
+  LINE plumbing:pvc                       src=auto   en=Y qty=102.000 m     pcs=1 cut=102.000 run=102.000 net=- sheets=- totKg=181.150 rate=320.00 amt=36230 mat=plumb-pvc-110
+  LINE plumbing:washbasin                 src=auto   en=Y qty=8.000 nos   pcs=8 cut=- run=- net=- sheets=- totKg=96.000 rate=2200.00 amt=17600 mat=plumb-washbasin
+  LINE plumbing:wc                        src=auto   en=Y qty=8.000 nos   pcs=8 cut=- run=- net=- sheets=- totKg=144.000 rate=3800.00 amt=30400 mat=plumb-wc
+  LINE rear:cladding                      src=auto   en=Y qty=48.090 sqm   pcs=- cut=- run=- net=48.090 sheets=16 totKg=521.060 rate=1150.00 amt=60834 mat=puf-panel-50
+  LINE rear:column-post                   src=auto   en=Y qty=32.400 m     pcs=12 cut=2.700 run=32.400 net=- sheets=- totKg=230.450 rate=68.00 amt=15670 mat=rhs-100x50x3
+  LINE rear:rail:f0:y1500:0-3000          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f0:y1500:12000-15000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f0:y1500:3000-6000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f0:y1500:6000-9000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f0:y1500:9000-12000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:0-3000          src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:12000-15000     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:3000-6000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:6000-9000       src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:rail:f1:y1500:9000-12000      src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:0-3000          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:12000-15000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:3000-6000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:6000-9000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f0:y1500:9000-12000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:0-3000          src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:12000-15000     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:3000-6000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:6000-9000       src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE rear:stud:f1:y1500:9000-12000      src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:brace:4036                   src=auto   en=Y qty=32.288 m     pcs=8 cut=4.036 run=32.288 net=- sheets=- totKg=130.060 rate=65.00 amt=8454 mat=angle-50x50x5
+  LINE right:cladding                     src=auto   en=Y qty=32.400 sqm   pcs=- cut=- run=- net=32.400 sheets=11 totKg=351.050 rate=1150.00 amt=40986 mat=puf-panel-50
+  LINE right:column-corner                src=auto   en=Y qty=16.200 m     pcs=6 cut=2.700 run=16.200 net=- sheets=- totKg=115.220 rate=68.00 amt=7835 mat=rhs-100x50x3
+  LINE right:rail:f0:x15000:1500-4500     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:rail:f0:x15000:4500-7500     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:rail:f1:x15000:1500-4500     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:rail:f1:x15000:4500-7500     src=auto   en=Y qty=6.000 m     pcs=2 cut=3.000 run=6.000 net=- sheets=- totKg=18.760 rate=68.00 amt=1276 mat=shs-50x50x2
+  LINE right:stud:f0:x15000:1500-4500     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:stud:f0:x15000:4500-7500     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:stud:f1:x15000:1500-4500     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE right:stud:f1:x15000:4500-7500     src=auto   en=Y qty=10.800 m     pcs=4 cut=2.700 run=10.800 net=- sheets=- totKg=33.770 rate=68.00 amt=2296 mat=shs-50x50x2
+  LINE roof:ceiling                       src=auto   en=Y qty=90.000 sqm   pcs=- cut=- run=- net=90.000 sheets=34 totKg=392.610 rate=76.00 amt=7592 mat=sheet-ceiling-0.5
+  LINE roof:purlin                        src=auto   en=Y qty=171.600 m     pcs=143 cut=1.200 run=171.600 net=- sheets=- totKg=527.500 rate=70.00 amt=36925 mat=c-purlin-75x40
+  LINE roof:rafter                        src=auto   en=Y qty=135.828 m     pcs=28 cut=4.851 run=135.828 net=- sheets=- totKg=617.660 rate=68.00 amt=42001 mat=shs-50x50x3
+  LINE roof:sheet                         src=auto   en=Y qty=151.344 sqm   pcs=- cut=- run=- net=151.344 sheets=55 totKg=735.380 rate=88.00 amt=15050 mat=sheet-roof-0.5
+  LINE staircase:landing-cross:s1         src=auto   en=Y qty=2.400 m     pcs=2 cut=1.200 run=2.400 net=- sheets=- totKg=24.320 rate=65.00 amt=1581 mat=ismc-100x50
+  LINE staircase:landing-cross:s2         src=auto   en=Y qty=2.400 m     pcs=2 cut=1.200 run=2.400 net=- sheets=- totKg=24.320 rate=65.00 amt=1581 mat=ismc-100x50
+  LINE staircase:landing-side:s1          src=auto   en=Y qty=2.000 m     pcs=2 cut=1.000 run=2.000 net=- sheets=- totKg=20.270 rate=65.00 amt=1317 mat=ismc-100x50
+  LINE staircase:landing-side:s2          src=auto   en=Y qty=2.000 m     pcs=2 cut=1.000 run=2.000 net=- sheets=- totKg=20.270 rate=65.00 amt=1317 mat=ismc-100x50
+  LINE staircase:plate:s1                 src=auto   en=Y qty=5.400 sqm   pcs=- cut=- run=- net=5.400 sheets=2 totKg=198.400 rate=78.00 amt=15475 mat=chequered-plate-4
+  LINE staircase:plate:s2                 src=auto   en=Y qty=5.400 sqm   pcs=- cut=- run=- net=5.400 sheets=2 totKg=198.400 rate=78.00 amt=15475 mat=chequered-plate-4
+  LINE staircase:rail-post:s1             src=auto   en=Y qty=7.200 m     pcs=8 cut=0.900 run=7.200 net=- sheets=- totKg=17.650 rate=72.00 amt=1271 mat=pipe-od48x2
+  LINE staircase:rail-post:s2             src=auto   en=Y qty=7.200 m     pcs=8 cut=0.900 run=7.200 net=- sheets=- totKg=17.650 rate=72.00 amt=1271 mat=pipe-od48x2
+  LINE staircase:rail:s1                  src=auto   en=Y qty=26.520 m     pcs=6 cut=4.420 run=26.520 net=- sheets=- totKg=65.020 rate=72.00 amt=4681 mat=pipe-od48x2
+  LINE staircase:rail:s2                  src=auto   en=Y qty=26.520 m     pcs=6 cut=4.420 run=26.520 net=- sheets=- totKg=65.020 rate=72.00 amt=4681 mat=pipe-od48x2
+  LINE staircase:stringer:s1              src=auto   en=Y qty=8.840 m     pcs=2 cut=4.420 run=8.840 net=- sheets=- totKg=89.580 rate=65.00 amt=5823 mat=ismc-100x50
+  LINE staircase:stringer:s2              src=auto   en=Y qty=8.840 m     pcs=2 cut=4.420 run=8.840 net=- sheets=- totKg=89.580 rate=65.00 amt=5823 mat=ismc-100x50
+  LINE staircase:tread-frame:s1           src=auto   en=Y qty=16.800 m     pcs=14 cut=1.200 run=16.800 net=- sheets=- totKg=67.670 rate=65.00 amt=4399 mat=angle-50x50x5
+  LINE staircase:tread-frame:s2           src=auto   en=Y qty=16.800 m     pcs=14 cut=1.200 run=16.800 net=- sheets=- totKg=67.670 rate=65.00 amt=4399 mat=angle-50x50x5
+  LINE veranda:beam:1500                  src=auto   en=Y qty=12.000 m     pcs=8 cut=1.500 run=12.000 net=- sheets=- totKg=121.600 rate=65.00 amt=7904 mat=ismc-100x50
+  LINE veranda:beam:15000                 src=auto   en=Y qty=60.000 m     pcs=4 cut=15.000 run=60.000 net=- sheets=- totKg=608.020 rate=65.00 amt=39521 mat=ismc-100x50
+  LINE veranda:joist:1500                 src=auto   en=Y qty=84.000 m     pcs=56 cut=1.500 run=84.000 net=- sheets=- totKg=851.220 rate=65.00 amt=55329 mat=ismc-100x50
+  LINE veranda:plate                      src=auto   en=Y qty=45.000 sqm   pcs=- cut=- run=- net=45.000 sheets=16 totKg=1653.300 rate=78.00 amt=128957 mat=chequered-plate-4
+  LINE veranda:rail-post:900              src=auto   en=Y qty=39.600 m     pcs=44 cut=0.900 run=39.600 net=- sheets=- totKg=97.080 rate=72.00 amt=6990 mat=pipe-od48x2
+  LINE veranda:rail:1500                  src=auto   en=Y qty=180.000 m     pcs=120 cut=1.500 run=180.000 net=- sheets=- totKg=441.290 rate=72.00 amt=31773 mat=pipe-od48x2
+CUTTING (143):
+  CUT angle-50x50x5        Cross bracing (X) — Left elevation         cut=4.036 qty=8 totLen=32.288 kg=122.690
+  CUT angle-50x50x5        Cross bracing (X) — Right elevation        cut=4.036 qty=8 totLen=32.288 kg=122.690
+  CUT angle-50x50x5        Staircase 1 — tread framing angle          cut=1.200 qty=14 totLen=16.800 kg=63.840
+  CUT angle-50x50x5        Staircase 2 — tread framing angle          cut=1.200 qty=14 totLen=16.800 kg=63.840
+  CUT c-purlin-75x40       Roof purlin                                cut=1.200 qty=143 totLen=171.600 kg=497.640
+  CUT door-frame-40x40     Door frame head 0.91 × 2 m                 cut=0.914 qty=20 totLen=18.280 kg=42.410
+  CUT door-frame-40x40     Door frame jamb 0.91 × 2 m                 cut=2.000 qty=40 totLen=80.000 kg=185.600
+  CUT ismc-100x50          Base frame beam under wall line — 3 m      cut=3.000 qty=54 totLen=162.000 kg=1548.720
+  CUT ismc-100x50          Floor joist — 3 m span                     cut=3.000 qty=40 totLen=120.000 kg=1147.200
+  CUT ismc-100x50          Staircase 1 — landing frame (cross member) cut=1.200 qty=2 totLen=2.400 kg=22.940
+  CUT ismc-100x50          Staircase 1 — landing frame (side member)  cut=1.000 qty=2 totLen=2.000 kg=19.120
+  CUT ismc-100x50          Staircase 1 — stringer                     cut=4.420 qty=2 totLen=8.840 kg=84.510
+  CUT ismc-100x50          Staircase 2 — landing frame (cross member) cut=1.200 qty=2 totLen=2.400 kg=22.940
+  CUT ismc-100x50          Staircase 2 — landing frame (side member)  cut=1.000 qty=2 totLen=2.000 kg=19.120
+  CUT ismc-100x50          Staircase 2 — stringer                     cut=4.420 qty=2 totLen=8.840 kg=84.510
+  CUT ismc-100x50          Veranda deck joist — 1.5 m span            cut=1.500 qty=56 totLen=84.000 kg=803.040
+  CUT ismc-100x50          Veranda edge beam — 1.5 m                  cut=1.500 qty=8 totLen=12.000 kg=114.720
+  CUT ismc-100x50          Veranda edge beam — 15 m                   cut=15.000 qty=4 totLen=60.000 kg=573.600
+  CUT pipe-od48x2          Staircase 1 — handrail (raking)            cut=4.420 qty=6 totLen=26.520 kg=60.200
+  CUT pipe-od48x2          Staircase 1 — handrail post                cut=0.900 qty=8 totLen=7.200 kg=16.340
+  CUT pipe-od48x2          Staircase 2 — handrail (raking)            cut=4.420 qty=6 totLen=26.520 kg=60.200
+  CUT pipe-od48x2          Staircase 2 — handrail post                cut=0.900 qty=8 totLen=7.200 kg=16.340
+  CUT pipe-od48x2          Veranda handrail post                      cut=0.900 qty=44 totLen=39.600 kg=89.890
+  CUT pipe-od48x2          Veranda handrail — 1.5 m bay               cut=1.500 qty=120 totLen=180.000 kg=408.600
+  CUT plumb-cpvc-25        CPVC water supply pipe 25 mm (running length) cut=136.000 qty=1 totLen=136.000 kg=47.600
+  CUT plumb-pvc-110        PVC soil / waste pipe 110 mm (running length) cut=102.000 qty=1 totLen=102.000 kg=163.200
+  CUT rhs-100x50x3         Corner post — Internal column line         cut=2.700 qty=24 totLen=64.800 kg=434.810
+  CUT rhs-100x50x3         Corner post — Left column line             cut=2.700 qty=6 totLen=16.200 kg=108.700
+  CUT rhs-100x50x3         Corner post — Right column line            cut=2.700 qty=6 totLen=16.200 kg=108.700
+  CUT rhs-100x50x3         Wall post — Front column line              cut=2.700 qty=12 totLen=32.400 kg=217.400
+  CUT rhs-100x50x3         Wall post — Rear column line               cut=2.700 qty=12 totLen=32.400 kg=217.400
+  CUT shs-50x50x2          Front W1 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W1 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W10 · L1 — top & bottom rail         cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W10 · L1 — wall studs                cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W2 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W2 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W3 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W3 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W4 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W4 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W5 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W5 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W6 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W6 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W7 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W7 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W8 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W8 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Front W9 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Front W9 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W1 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W1 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W2 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W2 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W3 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W3 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Left W4 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Left W4 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P1 · L0 — top & bottom rail (shared: rooms 9/10) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P1 · L0 — wall studs (shared: rooms 9/10) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P10 · L0 — top & bottom rail (shared: rooms 10/5) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P10 · L0 — wall studs (shared: rooms 10/5) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P11 · L0 — top & bottom rail (shared: rooms 7/2) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P11 · L0 — wall studs (shared: rooms 7/2) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P12 · L0 — top & bottom rail (shared: rooms 8/3) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P12 · L0 — wall studs (shared: rooms 8/3) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P13 · L0 — top & bottom rail (shared: rooms 9/4) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P13 · L0 — wall studs (shared: rooms 9/4) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P14 · L1 — top & bottom rail (shared: rooms 19/20) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P14 · L1 — wall studs (shared: rooms 19/20) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P15 · L1 — top & bottom rail (shared: rooms 14/15) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P15 · L1 — wall studs (shared: rooms 14/15) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P16 · L1 — top & bottom rail (shared: rooms 16/17) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P16 · L1 — wall studs (shared: rooms 16/17) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P17 · L1 — top & bottom rail (shared: rooms 11/12) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P17 · L1 — wall studs (shared: rooms 11/12) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P18 · L1 — top & bottom rail (shared: rooms 17/18) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P18 · L1 — wall studs (shared: rooms 17/18) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P19 · L1 — top & bottom rail (shared: rooms 12/13) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P19 · L1 — wall studs (shared: rooms 12/13) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P2 · L0 — top & bottom rail (shared: rooms 4/5) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P2 · L0 — wall studs (shared: rooms 4/5) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P20 · L1 — top & bottom rail (shared: rooms 18/19) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P20 · L1 — wall studs (shared: rooms 18/19) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P21 · L1 — top & bottom rail (shared: rooms 13/14) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P21 · L1 — wall studs (shared: rooms 13/14) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P22 · L1 — top & bottom rail (shared: rooms 16/11) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P22 · L1 — wall studs (shared: rooms 16/11) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P23 · L1 — top & bottom rail (shared: rooms 20/15) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P23 · L1 — wall studs (shared: rooms 20/15) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P24 · L1 — top & bottom rail (shared: rooms 17/12) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P24 · L1 — wall studs (shared: rooms 17/12) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P25 · L1 — top & bottom rail (shared: rooms 18/13) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P25 · L1 — wall studs (shared: rooms 18/13) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P26 · L1 — top & bottom rail (shared: rooms 19/14) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P26 · L1 — wall studs (shared: rooms 19/14) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P3 · L0 — top & bottom rail (shared: rooms 6/7) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P3 · L0 — wall studs (shared: rooms 6/7) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P4 · L0 — top & bottom rail (shared: rooms 1/2) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P4 · L0 — wall studs (shared: rooms 1/2) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P5 · L0 — top & bottom rail (shared: rooms 7/8) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P5 · L0 — wall studs (shared: rooms 7/8) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P6 · L0 — top & bottom rail (shared: rooms 2/3) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P6 · L0 — wall studs (shared: rooms 2/3) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P7 · L0 — top & bottom rail (shared: rooms 8/9) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P7 · L0 — wall studs (shared: rooms 8/9) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P8 · L0 — top & bottom rail (shared: rooms 3/4) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P8 · L0 — wall studs (shared: rooms 3/4) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Partition P9 · L0 — top & bottom rail (shared: rooms 6/1) cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Partition P9 · L0 — wall studs (shared: rooms 6/1) cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W1 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W1 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W10 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W10 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W2 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W2 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W3 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W3 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W4 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W4 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W5 · L0 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W5 · L0 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W6 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W6 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W7 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W7 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W8 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W8 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Rear W9 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Rear W9 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W1 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W1 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W2 · L0 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W2 · L0 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W3 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W3 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          Right W4 · L1 — top & bottom rail          cut=3.000 qty=2 totLen=6.000 kg=17.700
+  CUT shs-50x50x2          Right W4 · L1 — wall studs                 cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x3          Roof frame / rafter (gable)                cut=4.851 qty=28 totLen=135.828 kg=582.700
+  CUT window-frame-40x40   Window frame head 1.22 × 1.2 m             cut=1.219 qty=20 totLen=24.380 kg=56.560
+  CUT window-frame-40x40   Window frame jamb 1.22 × 1.2 m             cut=1.200 qty=40 totLen=48.000 kg=111.360
+  CUT window-frame-40x40   Window frame sill 1.22 × 1.2 m             cut=1.219 qty=20 totLen=24.380 kg=56.560
+PURCHASE (28):
+  BUY angle-50x50x5        net=98.176 m     wst=6.00 buy=104.067 stock=19 offcut=15.824 kg=395.460 amt=25704
+  BUY bolt-m12             net=936.000 nos   wst=2.00 buy=954.720 stock=- offcut=- kg=85.920 amt=20592
+  BUY c-purlin-75x40       net=171.600 m     wst=6.00 buy=181.896 stock=29 offcut=2.400 kg=527.500 amt=36925
+  BUY cementboard-18       net=180.000 sqm   wst=13.00 buy=203.400 stock=69 offcut=25.399 kg=4759.560 amt=65088
+  BUY chequered-plate-4    net=55.800 sqm   wst=10.00 buy=61.380 stock=20 offcut=6.700 kg=2050.100 amt=159907
+  BUY door-frame-40x40     net=98.280 m     wst=8.00 buy=106.142 stock=17 offcut=3.720 kg=246.250 amt=16745
+  BUY door-ms-flush        net=20.000 nos   wst=0.00 buy=20.000 stock=- offcut=- kg=560.000 amt=150000
+  BUY elec-db              net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=12.800 amt=16800
+  BUY elec-fan             net=40.000 nos   wst=0.00 buy=40.000 stock=- offcut=- kg=180.000 amt=100000
+  BUY elec-led-panel       net=32.000 nos   wst=0.00 buy=32.000 stock=- offcut=- kg=19.200 amt=25600
+  BUY elec-socket          net=20.000 nos   wst=0.00 buy=20.000 stock=- offcut=- kg=4.000 amt=9000
+  BUY ismc-100x50          net=464.480 m     wst=6.00 buy=492.349 stock=72 offcut=3.520 kg=4706.850 amt=305946
+  BUY pipe-od48x2          net=287.040 m     wst=8.00 buy=310.003 stock=49 offcut=6.960 kg=703.710 amt=50667
+  BUY plumb-cpvc-25        net=136.000 m     wst=11.00 buy=150.960 stock=1 offcut=0.000 kg=52.840 amt=21889
+  BUY plumb-pvc-110        net=102.000 m     wst=11.00 buy=113.220 stock=1 offcut=0.000 kg=181.150 amt=36230
+  BUY plumb-washbasin      net=8.000 nos   wst=0.00 buy=8.000 stock=- offcut=- kg=96.000 amt=17600
+  BUY plumb-wc             net=8.000 nos   wst=0.00 buy=8.000 stock=- offcut=- kg=144.000 amt=30400
+  BUY puf-panel-50         net=160.980 sqm   wst=10.00 buy=177.078 stock=52 offcut=18.420 kg=1744.220 amt=203640
+  BUY rhs-100x50x3         net=162.000 m     wst=6.00 buy=171.720 stock=30 offcut=18.000 kg=1152.240 amt=78352
+  BUY sheet-ceiling-0.5    net=90.000 sqm   wst=11.00 buy=99.900 stock=34 offcut=12.000 kg=392.610 amt=7592
+  BUY sheet-int-ppgi-0.5   net=421.200 sqm   wst=11.00 buy=467.532 stock=156 offcut=46.800 kg=1837.420 amt=36468
+  BUY sheet-roof-0.5       net=151.344 sqm   wst=13.00 buy=171.019 stock=55 offcut=21.906 kg=735.380 amt=15050
+  BUY shs-50x50x2          net=907.200 m     wst=6.00 buy=961.632 stock=162 offcut=64.800 kg=2836.620 amt=192904
+  BUY shs-50x50x3          net=135.828 m     wst=6.00 buy=143.978 stock=28 offcut=32.172 kg=617.660 amt=42001
+  BUY vinyl-2mm            net=180.000 sqm   wst=11.00 buy=199.800 stock=5 offcut=20.000 kg=359.640 amt=30969
+  BUY window-frame-40x40   net=96.760 m     wst=8.00 buy=104.501 stock=18 offcut=11.240 kg=242.450 amt=16486
+  BUY window-grill         net=29.261 sqm   wst=10.00 buy=32.187 stock=- offcut=- kg=363.710 amt=28370
+  BUY window-slider        net=20.000 nos   wst=0.00 buy=20.000 stock=- offcut=- kg=360.000 amt=70000
+WEIGHT SUMMARY (28):
+  WT angle-50x50x5        net=373.060 tot=395.460
+  WT bolt-m12             net=84.240 tot=85.920
+  WT c-purlin-75x40       net=497.640 tot=527.500
+  WT cementboard-18       net=4212.000 tot=4759.560
+  WT chequered-plate-4    net=1863.720 tot=2050.100
+  WT door-frame-40x40     net=228.010 tot=246.250
+  WT door-ms-flush        net=560.000 tot=560.000
+  WT elec-db              net=12.800 tot=12.800
+  WT elec-fan             net=180.000 tot=180.000
+  WT elec-led-panel       net=19.200 tot=19.200
+  WT elec-socket          net=4.000 tot=4.000
+  WT ismc-100x50          net=4440.420 tot=4706.850
+  WT pipe-od48x2          net=651.570 tot=703.710
+  WT plumb-cpvc-25        net=47.600 tot=52.840
+  WT plumb-pvc-110        net=163.200 tot=181.150
+  WT plumb-washbasin      net=96.000 tot=96.000
+  WT plumb-wc             net=144.000 tot=144.000
+  WT puf-panel-50         net=1585.660 tot=1744.220
+  WT rhs-100x50x3         net=1087.010 tot=1152.240
+  WT sheet-ceiling-0.5    net=353.700 tot=392.610
+  WT sheet-int-ppgi-0.5   net=1655.420 tot=1837.420
+  WT sheet-roof-0.5       net=650.780 tot=735.380
+  WT shs-50x50x2          net=2676.240 tot=2836.620
+  WT shs-50x50x3          net=582.700 tot=617.660
+  WT vinyl-2mm            net=324.000 tot=359.640
+  WT window-frame-40x40   net=224.480 tot=242.450
+  WT window-grill         net=330.650 tot=363.710
+  WT window-slider        net=360.000 tot=360.000
+ISSUES errors=0 warnings=0
+
+################################################################
+SCENARIO :: 6. Extra coverage cabin — 24 x 12 x 9 ft, 2 rooms, flat roof, PUF, G+1, veranda + handrail
+################################################################
+META  L=7.315 W=3.658 H=2.743 floors=2 rooms=2 partitions=1 doors=3 windows=3 stairs=1 verandas=1 modules=1 floorArea=53.512 roof=Flat
+TOTALS netSteel=2597.870 totSteel=2757.930 totWeight=6997.470 material=491708 charges=141039 subtotal=632747 gst=113894 grand=746641 rsPerSqft=1296.26
+  CHARGE Fabrication / welding [per_kg] = 49643
+  CHARGE Installation [amount] = 15000
+  CHARGE Labour [per_kg] = 33095
+  CHARGE Painting (primer + enamel) [per_sqm] = 25301
+  CHARGE Transport [amount] = 18000
+SECTIONS:
+  SEC electrical  steelKg=2.930 totKg=23.330 material=24440 lines=6
+  SEC finishing   steelKg=0.000 totKg=0.000 material=19804 lines=2
+  SEC floor       steelKg=808.990 totKg=2330.880 material=82234 lines=5
+  SEC front       steelKg=301.270 totKg=868.840 material=70964 lines=6
+  SEC left        steelKg=163.110 totKg=451.140 material=36707 lines=6
+  SEC misc        steelKg=0.000 totKg=4.410 material=1056 lines=1
+  SEC openings    steelKg=66.440 totKg=246.010 material=40761 lines=7
+  SEC partition   steelKg=88.300 totKg=161.250 material=7452 lines=4
+  SEC rear        steelKg=301.270 totKg=885.780 material=72470 lines=6
+  SEC right       steelKg=163.110 totKg=451.140 material=36707 lines=6
+  SEC roof        steelKg=305.920 totKg=552.650 material=25196 lines=6
+  SEC staircase   steelKg=230.690 totKg=368.470 material=26374 lines=5
+  SEC veranda     steelKg=325.900 totKg=653.570 material=47543 lines=6
+LINES (66):
+  LINE electrical:db                      src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=6.400 rate=4200.00 amt=8400 mat=elec-db
+  LINE electrical:fan                     src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=9.000 rate=2500.00 amt=5000 mat=elec-fan
+  LINE electrical:led                     src=auto   en=Y qty=5.000 nos   pcs=5 cut=- run=- net=- sheets=- totKg=3.000 rate=800.00 amt=4000 mat=elec-led-panel
+  LINE electrical:plug                    src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=0.800 rate=450.00 amt=1800 mat=elec-socket
+  LINE electrical:switch-board            src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=1.200 rate=650.00 amt=2600 mat=elec-switch
+  LINE electrical:wire                    src=auto   en=Y qty=135.788 m     pcs=1 cut=135.788 run=135.788 net=- sheets=- totKg=2.930 rate=18.00 amt=2640 mat=elec-wire-1.5
+  LINE finishing:enamel                   src=auto   en=Y qty=40.130 ltr   pcs=40.13 cut=- run=- net=- sheets=- totKg=0.000 rate=380.00 amt=16012 mat=enamel-paint
+  LINE finishing:primer                   src=auto   en=Y qty=15.050 ltr   pcs=15.05 cut=- run=- net=- sheets=- totKg=0.000 rate=240.00 amt=3793 mat=primer-red-oxide
+  LINE floor:base-frame-cross             src=auto   en=Y qty=14.630 m     pcs=4 cut=3.658 run=14.630 net=- sheets=- totKg=148.260 rate=65.00 amt=9637 mat=ismc-100x50
+  LINE floor:base-frame-long              src=auto   en=Y qty=29.261 m     pcs=4 cut=7.315 run=29.261 net=- sheets=- totKg=296.520 rate=65.00 amt=19274 mat=ismc-100x50
+  LINE floor:board                        src=auto   en=Y qty=53.512 sqm   pcs=- cut=- run=- net=53.512 sheets=21 totKg=1414.970 rate=320.00 amt=19350 mat=cementboard-18
+  LINE floor:finish                       src=auto   en=Y qty=53.512 sqm   pcs=- cut=- run=- net=53.512 sheets=2 totKg=106.920 rate=155.00 amt=9207 mat=vinyl-2mm
+  LINE floor:joists                       src=auto   en=Y qty=51.206 m     pcs=14 cut=3.658 run=51.206 net=- sheets=- totKg=364.210 rate=68.00 amt=24766 mat=rhs-100x50x3
+  LINE front:corner-post                  src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE front:ext-sheet                    src=auto   en=Y qty=37.347 sqm   pcs=- cut=- run=- net=37.347 sheets=12 totKg=404.650 rate=1150.00 amt=47244 mat=puf-panel-50
+  LINE front:int-sheet                    src=auto   en=Y qty=37.347 sqm   pcs=- cut=- run=- net=37.347 sheets=14 totKg=162.920 rate=78.00 amt=3234 mat=sheet-int-ppgi-0.5
+  LINE front:posts                        src=auto   en=Y qty=10.973 m     pcs=4 cut=2.743 run=10.973 net=- sheets=- totKg=49.900 rate=68.00 amt=3393 mat=shs-50x50x3
+  LINE front:rails                        src=auto   en=Y qty=29.261 m     pcs=4 cut=7.315 run=29.261 net=- sheets=- totKg=91.500 rate=68.00 amt=6222 mat=shs-50x50x2
+  LINE front:studs                        src=auto   en=Y qty=54.864 m     pcs=20 cut=2.743 run=54.864 net=- sheets=- totKg=134.920 rate=68.00 amt=9175 mat=shs-40x40x2
+  LINE left:corner-post                   src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE left:ext-sheet                     src=auto   en=Y qty=18.952 sqm   pcs=- cut=- run=- net=18.952 sheets=7 totKg=205.350 rate=1150.00 amt=23975 mat=puf-panel-50
+  LINE left:int-sheet                     src=auto   en=Y qty=18.952 sqm   pcs=- cut=- run=- net=18.952 sheets=8 totKg=82.680 rate=78.00 amt=1641 mat=sheet-int-ppgi-0.5
+  LINE left:posts                         src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE left:rails                         src=auto   en=Y qty=14.630 m     pcs=4 cut=3.658 run=14.630 net=- sheets=- totKg=45.750 rate=68.00 amt=3111 mat=shs-50x50x2
+  LINE left:studs                         src=auto   en=Y qty=27.432 m     pcs=10 cut=2.743 run=27.432 net=- sheets=- totKg=67.460 rate=68.00 amt=4587 mat=shs-40x40x2
+  LINE misc:bolts                         src=auto   en=Y qty=48.000 nos   pcs=48 cut=- run=- net=- sheets=- totKg=4.410 rate=22.00 amt=1056 mat=bolt-m12
+  LINE openings:door-frame-head:3x6       src=auto   en=Y qty=2.743 m     pcs=3 cut=0.914 run=2.743 net=- sheets=- totKg=6.870 rate=68.00 amt=467 mat=door-frame-40x40
+  LINE openings:door-frame-jamb:3x6       src=auto   en=Y qty=10.973 m     pcs=6 cut=1.829 run=10.973 net=- sheets=- totKg=27.490 rate=68.00 amt=1870 mat=door-frame-40x40
+  LINE openings:door-leaf                 src=auto   en=Y qty=3.000 nos   pcs=3 cut=- run=- net=- sheets=- totKg=84.000 rate=7500.00 amt=22500 mat=door-ms-flush
+  LINE openings:window-frame-head-sill:4x3 src=auto   en=Y qty=7.315 m     pcs=6 cut=1.219 run=7.315 net=- sheets=- totKg=18.330 rate=68.00 amt=1246 mat=window-frame-40x40
+  LINE openings:window-frame-jamb:4x3     src=auto   en=Y qty=5.486 m     pcs=6 cut=0.914 run=5.486 net=- sheets=- totKg=13.750 rate=68.00 amt=935 mat=window-frame-40x40
+  LINE openings:window-grill:4x3          src=auto   en=Y qty=3.345 sqm   pcs=- cut=- run=- net=3.345 sheets=0 totKg=41.570 rate=78.00 amt=3243 mat=window-grill
+  LINE openings:window:4x3                src=auto   en=Y qty=3.000 nos   pcs=3 cut=- run=- net=- sheets=- totKg=54.000 rate=3500.00 amt=10500 mat=window-slider
+  LINE partition:end-posts                src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE partition:rails                    src=auto   en=Y qty=7.315 m     pcs=2 cut=3.658 run=7.315 net=- sheets=- totKg=22.870 rate=68.00 amt=1555 mat=shs-50x50x2
+  LINE partition:sheet                    src=auto   en=Y qty=16.722 sqm   pcs=- cut=- run=- net=16.722 sheets=7 totKg=72.950 rate=78.00 amt=1448 mat=sheet-int-ppgi-0.5
+  LINE partition:studs                    src=auto   en=Y qty=16.459 m     pcs=6 cut=2.743 run=16.459 net=- sheets=- totKg=40.480 rate=68.00 amt=2752 mat=shs-40x40x2
+  LINE rear:corner-post                   src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE rear:ext-sheet                     src=auto   en=Y qty=38.462 sqm   pcs=- cut=- run=- net=38.462 sheets=13 totKg=416.730 rate=1150.00 amt=48654 mat=puf-panel-50
+  LINE rear:int-sheet                     src=auto   en=Y qty=38.462 sqm   pcs=- cut=- run=- net=38.462 sheets=15 totKg=167.780 rate=78.00 amt=3330 mat=sheet-int-ppgi-0.5
+  LINE rear:posts                         src=auto   en=Y qty=10.973 m     pcs=4 cut=2.743 run=10.973 net=- sheets=- totKg=49.900 rate=68.00 amt=3393 mat=shs-50x50x3
+  LINE rear:rails                         src=auto   en=Y qty=29.261 m     pcs=4 cut=7.315 run=29.261 net=- sheets=- totKg=91.500 rate=68.00 amt=6222 mat=shs-50x50x2
+  LINE rear:studs                         src=auto   en=Y qty=54.864 m     pcs=20 cut=2.743 run=54.864 net=- sheets=- totKg=134.920 rate=68.00 amt=9175 mat=shs-40x40x2
+  LINE right:corner-post                  src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE right:ext-sheet                    src=auto   en=Y qty=18.952 sqm   pcs=- cut=- run=- net=18.952 sheets=7 totKg=205.350 rate=1150.00 amt=23975 mat=puf-panel-50
+  LINE right:int-sheet                    src=auto   en=Y qty=18.952 sqm   pcs=- cut=- run=- net=18.952 sheets=8 totKg=82.680 rate=78.00 amt=1641 mat=sheet-int-ppgi-0.5
+  LINE right:posts                        src=auto   en=Y qty=5.486 m     pcs=2 cut=2.743 run=5.486 net=- sheets=- totKg=24.950 rate=68.00 amt=1697 mat=shs-50x50x3
+  LINE right:rails                        src=auto   en=Y qty=14.630 m     pcs=4 cut=3.658 run=14.630 net=- sheets=- totKg=45.750 rate=68.00 amt=3111 mat=shs-50x50x2
+  LINE right:studs                        src=auto   en=Y qty=27.432 m     pcs=10 cut=2.743 run=27.432 net=- sheets=- totKg=67.460 rate=68.00 amt=4587 mat=shs-40x40x2
+  LINE roof:ceiling                       src=auto   en=Y qty=26.756 sqm   pcs=- cut=- run=- net=26.756 sheets=10 totKg=116.720 rate=76.00 amt=2257 mat=sheet-ceiling-0.5
+  LINE roof:lifting-hooks                 src=auto   en=Y qty=1.200 m     pcs=4 cut=0.300 run=1.200 net=- sheets=- totKg=4.830 rate=65.00 amt=314 mat=angle-50x50x5
+  LINE roof:purlins                       src=auto   en=Y qty=25.603 m     pcs=7 cut=3.658 run=25.603 net=- sheets=- totKg=78.700 rate=70.00 amt=5509 mat=c-purlin-75x40
+  LINE roof:sheet                         src=auto   en=Y qty=26.756 sqm   pcs=- cut=- run=- net=26.756 sheets=10 totKg=130.010 rate=88.00 amt=2661 mat=sheet-roof-0.5
+  LINE roof:top-frame-cross               src=auto   en=Y qty=7.315 m     pcs=2 cut=3.658 run=7.315 net=- sheets=- totKg=74.130 rate=65.00 amt=4818 mat=ismc-100x50
+  LINE roof:top-frame-long                src=auto   en=Y qty=14.630 m     pcs=2 cut=7.315 run=14.630 net=- sheets=- totKg=148.260 rate=65.00 amt=9637 mat=ismc-100x50
+  LINE staircase:handrail-posts           src=auto   en=Y qty=9.000 m     pcs=10 cut=0.900 run=9.000 net=- sheets=- totKg=22.060 rate=72.00 amt=1589 mat=pipe-od48x2
+  LINE staircase:handrail-rails           src=auto   en=Y qty=27.878 m     pcs=6 cut=4.646 run=27.878 net=- sheets=- totKg=68.350 rate=72.00 amt=4921 mat=pipe-od48x2
+  LINE staircase:stringers                src=auto   en=Y qty=9.293 m     pcs=2 cut=4.646 run=9.293 net=- sheets=- totKg=94.170 rate=65.00 amt=6121 mat=ismc-100x50
+  LINE staircase:tread-framing            src=auto   en=Y qty=15.000 m     pcs=15 cut=1.000 run=15.000 net=- sheets=- totKg=46.110 rate=65.00 amt=2997 mat=angle-40x40x5
+  LINE staircase:treads                   src=auto   en=Y qty=3.750 sqm   pcs=- cut=- run=- net=3.750 sheets=2 totKg=137.780 rate=78.00 amt=10746 mat=chequered-plate-4
+  LINE veranda:beams:front                src=auto   en=Y qty=14.630 m     pcs=2 cut=7.315 run=14.630 net=- sheets=- totKg=148.260 rate=65.00 amt=9637 mat=ismc-100x50
+  LINE veranda:deck:front                 src=auto   en=Y qty=8.919 sqm   pcs=- cut=- run=- net=8.919 sheets=4 totKg=327.670 rate=78.00 amt=25559 mat=chequered-plate-4
+  LINE veranda:handrail-posts:front       src=auto   en=Y qty=5.400 m     pcs=6 cut=0.900 run=5.400 net=- sheets=- totKg=13.240 rate=72.00 amt=953 mat=pipe-od48x2
+  LINE veranda:handrail-rails:front       src=auto   en=Y qty=21.946 m     pcs=3 cut=7.315 run=21.946 net=- sheets=- totKg=53.800 rate=72.00 amt=3874 mat=pipe-od48x2
+  LINE veranda:joists:front               src=auto   en=Y qty=8.534 m     pcs=7 cut=1.219 run=8.534 net=- sheets=- totKg=60.700 rate=68.00 amt=4128 mat=rhs-100x50x3
+  LINE veranda:posts:front                src=auto   en=Y qty=10.973 m     pcs=4 cut=2.743 run=10.973 net=- sheets=- totKg=49.900 rate=68.00 amt=3393 mat=shs-50x50x3
+CUTTING (40):
+  CUT angle-40x40x5        Tread framing                              cut=1.000 qty=15 totLen=15.000 kg=43.500
+  CUT angle-50x50x5        Lifting hook lugs                          cut=0.300 qty=4 totLen=1.200 kg=4.560
+  CUT c-purlin-75x40       Roof cross members (purlins)               cut=3.658 qty=7 totLen=25.603 kg=74.250
+  CUT door-frame-40x40     Door frame head — 3′ × 6′ door             cut=0.914 qty=3 totLen=2.743 kg=6.360
+  CUT door-frame-40x40     Door frame jamb — 3′ × 6′ door             cut=1.829 qty=6 totLen=10.973 kg=25.460
+  CUT elec-wire-1.5        Copper wire — lighting + power circuits    cut=135.788 qty=1 totLen=135.788 kg=2.720
+  CUT ismc-100x50          Bottom base frame — cross                  cut=3.658 qty=4 totLen=14.630 kg=139.870
+  CUT ismc-100x50          Bottom base frame — longitudinal           cut=7.315 qty=4 totLen=29.261 kg=279.730
+  CUT ismc-100x50          Staircase stringers                        cut=4.646 qty=2 totLen=9.293 kg=88.840
+  CUT ismc-100x50          Top frame — cross                          cut=3.658 qty=2 totLen=7.315 kg=69.930
+  CUT ismc-100x50          Top frame — longitudinal                   cut=7.315 qty=2 totLen=14.630 kg=139.870
+  CUT ismc-100x50          Veranda beams — front                      cut=7.315 qty=2 totLen=14.630 kg=139.870
+  CUT pipe-od48x2          Staircase handrail posts                   cut=0.900 qty=10 totLen=9.000 kg=20.430
+  CUT pipe-od48x2          Staircase handrail rails                   cut=4.646 qty=6 totLen=27.878 kg=63.280
+  CUT pipe-od48x2          Veranda handrail posts — front             cut=0.900 qty=6 totLen=5.400 kg=12.260
+  CUT pipe-od48x2          Veranda handrail rails — front             cut=7.315 qty=3 totLen=21.946 kg=49.820
+  CUT rhs-100x50x3         Floor cross members (joists)               cut=3.658 qty=14 totLen=51.206 kg=343.590
+  CUT rhs-100x50x3         Veranda joists — front                     cut=1.219 qty=7 totLen=8.534 kg=57.270
+  CUT shs-40x40x2          Partition studs                            cut=2.743 qty=6 totLen=16.459 kg=38.190
+  CUT shs-40x40x2          Wall stiffeners (studs) — front elevation  cut=2.743 qty=20 totLen=54.864 kg=127.280
+  CUT shs-40x40x2          Wall stiffeners (studs) — left elevation   cut=2.743 qty=10 totLen=27.432 kg=63.640
+  CUT shs-40x40x2          Wall stiffeners (studs) — rear elevation   cut=2.743 qty=20 totLen=54.864 kg=127.280
+  CUT shs-40x40x2          Wall stiffeners (studs) — right elevation  cut=2.743 qty=10 totLen=27.432 kg=63.640
+  CUT shs-50x50x2          Partition rails                            cut=3.658 qty=2 totLen=7.315 kg=21.580
+  CUT shs-50x50x2          Wall framing rails — front elevation       cut=7.315 qty=4 totLen=29.261 kg=86.320
+  CUT shs-50x50x2          Wall framing rails — left elevation        cut=3.658 qty=4 totLen=14.630 kg=43.160
+  CUT shs-50x50x2          Wall framing rails — rear elevation        cut=7.315 qty=4 totLen=29.261 kg=86.320
+  CUT shs-50x50x2          Wall framing rails — right elevation       cut=3.658 qty=4 totLen=14.630 kg=43.160
+  CUT shs-50x50x3          Corner post — front elevation              cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Corner post — left elevation               cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Corner post — rear elevation               cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Corner post — right elevation              cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Intermediate posts — front elevation       cut=2.743 qty=4 totLen=10.973 kg=47.070
+  CUT shs-50x50x3          Intermediate posts — left elevation        cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Intermediate posts — rear elevation        cut=2.743 qty=4 totLen=10.973 kg=47.070
+  CUT shs-50x50x3          Intermediate posts — right elevation       cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Partition end posts                        cut=2.743 qty=2 totLen=5.486 kg=23.540
+  CUT shs-50x50x3          Veranda posts — front                      cut=2.743 qty=4 totLen=10.973 kg=47.070
+  CUT window-frame-40x40   Window frame head + sill — 4′ × 3′         cut=1.219 qty=6 totLen=7.315 kg=16.970
+  CUT window-frame-40x40   Window frame jamb — 4′ × 3′                cut=0.914 qty=6 totLen=5.486 kg=12.730
+PURCHASE (30):
+  BUY angle-40x40x5        net=15.000 m     wst=6.00 buy=15.900 stock=3 offcut=3.000 kg=46.110 amt=2997
+  BUY angle-50x50x5        net=1.200 m     wst=6.00 buy=1.272 stock=1 offcut=4.800 kg=4.830 amt=314
+  BUY bolt-m12             net=48.000 nos   wst=2.00 buy=48.960 stock=- offcut=- kg=4.410 amt=1056
+  BUY c-purlin-75x40       net=25.603 m     wst=6.00 buy=27.139 stock=7 offcut=16.397 kg=78.700 amt=5509
+  BUY cementboard-18       net=53.512 sqm   wst=13.00 buy=60.469 stock=21 offcut=9.001 kg=1414.970 amt=19350
+  BUY chequered-plate-4    net=12.669 sqm   wst=10.00 buy=13.936 stock=5 offcut=2.956 kg=465.450 amt=36305
+  BUY door-frame-40x40     net=13.716 m     wst=8.00 buy=14.813 stock=3 offcut=4.284 kg=34.360 amt=2337
+  BUY door-ms-flush        net=3.000 nos   wst=0.00 buy=3.000 stock=- offcut=- kg=84.000 amt=22500
+  BUY elec-db              net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=6.400 amt=8400
+  BUY elec-fan             net=2.000 nos   wst=0.00 buy=2.000 stock=- offcut=- kg=9.000 amt=5000
+  BUY elec-led-panel       net=5.000 nos   wst=0.00 buy=5.000 stock=- offcut=- kg=3.000 amt=4000
+  BUY elec-socket          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=0.800 amt=1800
+  BUY elec-switch          net=4.000 nos   wst=0.00 buy=4.000 stock=- offcut=- kg=1.200 amt=2600
+  BUY elec-wire-1.5        net=135.788 m     wst=8.00 buy=146.651 stock=- offcut=- kg=2.930 amt=2640
+  BUY enamel-paint         net=40.130 ltr   wst=5.00 buy=42.137 stock=- offcut=- kg=0.000 amt=16012
+  BUY ismc-100x50          net=89.760 m     wst=6.00 buy=95.145 stock=16 offcut=16.762 kg=909.600 amt=59123
+  BUY pipe-od48x2          net=64.223 m     wst=8.00 buy=69.361 stock=11 offcut=5.722 kg=157.450 amt=11336
+  BUY primer-red-oxide     net=15.050 ltr   wst=5.00 buy=15.803 stock=- offcut=- kg=0.000 amt=3793
+  BUY puf-panel-50         net=113.713 sqm   wst=10.00 buy=125.085 stock=37 offcut=13.937 kg=1232.080 amt=143847
+  BUY rhs-100x50x3         net=59.741 m     wst=6.00 buy=63.325 stock=14 offcut=24.259 kg=424.910 amt=28894
+  BUY sheet-ceiling-0.5    net=26.756 sqm   wst=11.00 buy=29.699 stock=10 offcut=3.244 kg=116.720 amt=2257
+  BUY sheet-int-ppgi-0.5   net=130.436 sqm   wst=11.00 buy=144.784 stock=49 offcut=16.564 kg=569.010 amt=11293
+  BUY sheet-roof-0.5       net=26.756 sqm   wst=13.00 buy=30.234 stock=10 offcut=4.744 kg=130.010 amt=2661
+  BUY shs-40x40x2          net=181.051 m     wst=6.00 buy=191.914 stock=33 offcut=16.949 kg=445.240 amt=30276
+  BUY shs-50x50x2          net=95.098 m     wst=6.00 buy=100.803 stock=18 offcut=23.424 kg=297.370 amt=20221
+  BUY shs-50x50x3          net=71.323 m     wst=6.00 buy=75.603 stock=13 offcut=6.677 kg=324.350 amt=22055
+  BUY vinyl-2mm            net=53.512 sqm   wst=11.00 buy=59.399 stock=2 offcut=26.488 kg=106.920 amt=9207
+  BUY window-frame-40x40   net=12.802 m     wst=8.00 buy=13.826 stock=3 offcut=5.198 kg=32.080 amt=2181
+  BUY window-grill         net=3.345 sqm   wst=10.00 buy=3.679 stock=- offcut=- kg=41.570 amt=3243
+  BUY window-slider        net=3.000 nos   wst=0.00 buy=3.000 stock=- offcut=- kg=54.000 amt=10500
+WEIGHT SUMMARY (28):
+  WT angle-40x40x5        net=43.500 tot=46.110
+  WT angle-50x50x5        net=4.560 tot=4.830
+  WT bolt-m12             net=4.320 tot=4.410
+  WT c-purlin-75x40       net=74.250 tot=78.700
+  WT cementboard-18       net=1252.190 tot=1414.970
+  WT chequered-plate-4    net=423.130 tot=465.450
+  WT door-frame-40x40     net=31.820 tot=34.360
+  WT door-ms-flush        net=84.000 tot=84.000
+  WT elec-db              net=6.400 tot=6.400
+  WT elec-fan             net=9.000 tot=9.000
+  WT elec-led-panel       net=3.000 tot=3.000
+  WT elec-socket          net=0.800 tot=0.800
+  WT elec-switch          net=1.200 tot=1.200
+  WT elec-wire-1.5        net=2.720 tot=2.930
+  WT ismc-100x50          net=858.110 tot=909.600
+  WT pipe-od48x2          net=145.790 tot=157.450
+  WT puf-panel-50         net=1120.080 tot=1232.080
+  WT rhs-100x50x3         net=400.860 tot=424.910
+  WT sheet-ceiling-0.5    net=105.150 tot=116.720
+  WT sheet-int-ppgi-0.5   net=512.600 tot=569.010
+  WT sheet-roof-0.5       net=115.050 tot=130.010
+  WT shs-40x40x2          net=420.030 tot=445.240
+  WT shs-50x50x2          net=280.540 tot=297.370
+  WT shs-50x50x3          net=305.990 tot=324.350
+  WT vinyl-2mm            net=96.320 tot=106.920
+  WT window-frame-40x40   net=29.700 tot=32.080
+  WT window-grill         net=37.790 tot=41.570
+  WT window-slider        net=54.000 tot=54.000
+ISSUES errors=0 warnings=0
+
+################################################################
+BASELINE COMPLETE — 6 scenarios fingerprinted
+################################################################

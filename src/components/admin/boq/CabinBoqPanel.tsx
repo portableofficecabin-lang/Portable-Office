@@ -22,8 +22,10 @@ import { useMemo } from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { buildCabinTakeoff } from "@/lib/boq/cabinTakeoff";
+import { companyDefaultSettingsSync } from "@/lib/boq/templateStore";
 import {
-  defaultBoqSettings,
+  DEFAULT_ROOF_RISE_FT,
+  roofRiseFtOf,
   type BoqResult,
   type BoqSettings,
   type BoqTemplateKind,
@@ -32,6 +34,7 @@ import {
 import type { CabinConfig } from "@/components/home/cabin-calculator/pricing";
 
 import BoqPanel from "./BoqPanel";
+import { DimField } from "./DimField";
 
 const VERANDA_SIDES = ["front", "rear", "left", "right"] as const;
 
@@ -58,7 +61,10 @@ export default function CabinBoqPanel({
   onResult,
 }: CabinBoqPanelProps) {
   const kind = templateKindOf(config);
-  const settings = useMemo(() => config.boq ?? defaultBoqSettings(kind), [config.boq, kind]);
+  // A NEW cabin (no saved boq settings yet) auto-applies the company construction preset — the admin's
+  // chosen default if set, else the built-in Company Standard. `??` fires ONLY when config.boq is
+  // absent, so a saved quotation's own settings/overrides are never overwritten. (spec §1)
+  const settings = useMemo(() => config.boq ?? companyDefaultSettingsSync(kind), [config.boq, kind]);
   const opts = useMemo<CabinBoqOptions>(() => config.boqOptions ?? {}, [config.boqOptions]);
 
   const takeoff = useMemo(
@@ -136,6 +142,46 @@ export default function CabinBoqPanel({
                 {opts.handrail ? "Posts + rails taken off" : "None"}
               </span>
             </div>
+          </div>
+
+          {/* --- framing options (spec §5, §7, §2) --- */}
+          <div className="space-y-1.5">
+            <Label className="text-xs">Internal MDF support frame</Label>
+            <div className="flex h-9 items-center gap-2">
+              <Switch
+                checked={!!opts.internalMdfSupport}
+                onCheckedChange={(v) => patch({ internalMdfSupport: v })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {opts.internalMdfSupport ? "50×25 batten grid" : "Off"}
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-xs">Roof-rise on corner columns</Label>
+            <div className="flex h-9 items-center gap-2">
+              <Switch
+                checked={!!opts.cornerColumnRoofRise}
+                onCheckedChange={(v) => patch({ cornerColumnRoofRise: v })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {opts.cornerColumnRoofRise ? "Added (sloped roofs)" : "Off"}
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-xs">Roof rise (sloped roofs)</Label>
+            <DimField
+              valueFt={roofRiseFtOf(opts)}
+              onCommitFt={(ft) => patch({ roofRiseFt: ft })}
+              minFt={0}
+              ariaLabel="Roof rise"
+            />
+            <p className="text-[10px] text-muted-foreground">
+              Default {DEFAULT_ROOF_RISE_FT.toFixed(2)} ft (8″). Drives rafter length, roof-sheet area &amp; the 3D peak.
+            </p>
           </div>
         </div>
 

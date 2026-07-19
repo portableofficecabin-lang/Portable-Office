@@ -67,6 +67,8 @@ import {
   type TakeoffItem,
   type Uom,
 } from "@/lib/boq/types";
+import { computeCompetitive } from "@/lib/boq/competitive";
+import { computeSheetLayout, resolveLapConfig, type SheetLayoutResult } from "@/lib/boq/sheetLayout";
 import { validateBoq } from "@/lib/boq/validate";
 
 /* ==========================================================================
@@ -234,6 +236,9 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
     let sheets = 0;
     let netQty = 0;
     let amount = 0;
+    /** Set only on a lapped sheet line — overrides the default net×wastage weight, and feeds the §12–§14 columns. */
+    let totalWeightOverride: number | null = null;
+    let layout: SheetLayoutResult | null = null;
 
     if (item.kind === "steel") {
       pieces = ov.qty ?? item.qty;
@@ -274,29 +279,60 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
       netAreaSqm = ov.qty ?? Math.max(0, (grossAreaSqm - deductionSqm) * item.faces);
 
       netWeightKg = areaWeightKg(netAreaSqm, m);
-      const totalWeight = withWastage(netWeightKg, wastagePercent);
-      const purchaseAreaSqm = withWastage(netAreaSqm, wastagePercent);
 
-      const sh = sheetsNeeded(netAreaSqm, m, wastagePercent);
-      sheets = sh.sheets;
+      /* LAPPED LAYOUT (spec §12–§14): only when the item carries the covering rectangle AND the
+       * material carries a side/end lap AND the admin has not manually overridden the quantity.
+       * A manual/locked qty override means "price this exact area" — it takes the legacy branch so
+       * the override actually drives amount + weight (a layout is pure geometry and would ignore it).
+       * Every other sheet line — and the whole Labour-Colony BOQ, which never sets runM/spanM — takes
+       * the legacy area count below, byte-identical. */
+      const lap = item.runM != null && item.spanM != null && ov.qty == null ? resolveLapConfig(m) : null;
+      layout =
+        lap && netAreaSqm > 0
+          ? computeSheetLayout({
+              runM: item.runM!,
+              spanM: item.spanM!,
+              standardLengthM: lap.standardLengthM,
+              coverWidthM: lap.coverWidthM,
+              sideLapM: lap.sideLapM,
+              endLapM: lap.endLapM,
+              faces: item.layoutFaces ?? item.faces,
+            })
+          : null;
 
       qty = netAreaSqm;
       netQty = netAreaSqm;
 
-      amount = enabled
-        ? costOf(
-            {
-              weightKg: totalWeight,
-              lengthM: 0,
-              areaSqm: purchaseAreaSqm,
-              pieces: 0,
-              sheets,
-              bars: 0,
-              qty: purchaseAreaSqm,
-            },
-            priceable,
-          )
-        : 0;
+      if (layout) {
+        sheets = layout.sheets;
+        const purchaseAreaSqm = layout.coverageSqm; // gross area actually bought (incl. laps + trim)
+        totalWeightOverride = areaWeightKg(purchaseAreaSqm, m);
+        amount = enabled
+          ? costOf(
+              { weightKg: totalWeightOverride, lengthM: 0, areaSqm: purchaseAreaSqm, pieces: 0, sheets, bars: 0, qty: purchaseAreaSqm },
+              priceable,
+            )
+          : 0;
+      } else {
+        const totalWeight = withWastage(netWeightKg, wastagePercent);
+        const purchaseAreaSqm = withWastage(netAreaSqm, wastagePercent);
+        const sh = sheetsNeeded(netAreaSqm, m, wastagePercent);
+        sheets = sh.sheets;
+        amount = enabled
+          ? costOf(
+              {
+                weightKg: totalWeight,
+                lengthM: 0,
+                areaSqm: purchaseAreaSqm,
+                pieces: 0,
+                sheets,
+                bars: 0,
+                qty: purchaseAreaSqm,
+              },
+              priceable,
+            )
+          : 0;
+      }
     } else {
       pieces = ov.qty ?? item.qty;
       netWeightKg = countWeightKg(pieces, m);
@@ -323,7 +359,8 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
         : 0;
     }
 
-    const totalWeightKg = withWastage(netWeightKg, wastagePercent);
+    // A lapped sheet weighs what was actually BOUGHT (sheets × sheet area), not net × wastage.
+    const totalWeightKg = totalWeightOverride ?? withWastage(netWeightKg, wastagePercent);
 
     if ((item.kind === "steel" || item.kind === "sheet") && (item.sharedBy ?? 0) > 1) {
       remarks.push(`Shared by ${item.sharedBy} modules — counted once`);
@@ -358,12 +395,23 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
       runningLengthM: item.kind === "steel" ? dim(runningLengthM) : null,
       stockLengthM: item.kind === "steel" ? m.stockLengthM : null,
       stockBars: item.kind === "steel" && m.stockLengthM ? bars : null,
+      spacingM: item.kind === "steel" ? (item.spacingM ?? null) : null,
 
       grossAreaSqm: item.kind === "sheet" ? dim(grossAreaSqm) : null,
       deductionSqm: item.kind === "sheet" ? dim(deductionSqm) : null,
       netAreaSqm: item.kind === "sheet" ? dim(netAreaSqm) : null,
       sheetSize: item.kind === "sheet" ? sheetSizeLabel(m) : null,
       sheets: item.kind === "sheet" ? sheets : null,
+
+      // §12–§14 lapped-layout breakdown — null on a legacy (area-count) sheet or a non-sheet line.
+      sheetRows: layout ? layout.rows : null,
+      fullSheets: layout ? layout.fullSheets : null,
+      cutSheets: layout ? layout.cutSheets : null,
+      coverageSqm: layout ? layout.coverageSqm : null,
+      overlapSqm: layout ? layout.overlapSqm : null,
+      scrapSqm: layout ? layout.scrapSqm : null,
+      reusableOffcutSqm: layout ? layout.reusableOffcutSqm : null,
+      sheetOrientation: item.kind === "sheet" ? (item.orientation ?? null) : null,
 
       unitWeight: m.unitWeight,
       weightBasis: m.weightBasis,
@@ -424,14 +472,21 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
     const isSheet = g.some((p) => p.kind === "sheet");
 
     const netQty = g.reduce((s, p) => s + p.netQty, 0);
+    /* A lapped sheet material buys its lapped COVERAGE (sheets × sheet area), not net × wastage — so
+     * purchase qty (and the wastage % read back off it) reconciles with the line amount. */
+    const isLappedSheet = g.some((p) => p.kind === "sheet" && p.line.sheetRows != null);
     /* Per-line wastage can differ (an override, a mixed group), so the purchase quantity is the sum
      * of the lines' own inflated quantities and the group % is read BACK off it — exact, additive. */
-    const purchaseQty = g.reduce((s, p) => s + withWastage(p.netQty, p.wastagePercent), 0);
+    const purchaseQty = isLappedSheet
+      ? g.reduce((s, p) => s + (p.line.coverageSqm ?? withWastage(p.netQty, p.wastagePercent)), 0)
+      : g.reduce((s, p) => s + withWastage(p.netQty, p.wastagePercent), 0);
     const wastagePercent = netQty > 0 ? (purchaseQty / netQty - 1) * 100 : 0;
 
     let stockUnits: number | null = null;
     let stockUnitLabel: string | null = null;
     let offcut: number | null = null;
+    let reusableOffcutSqm: number | null = null;
+    let scrapSqm: number | null = null;
 
     if (isSteel && m.stockLengthM) {
       /* THE point of this report: nest every distinct cut of this material into the same bars. */
@@ -442,6 +497,14 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
       stockUnits = nest.bars;
       stockUnitLabel = stockLabel(m);
       offcut = nest.offcutM;
+    } else if (isSheet && isLappedSheet) {
+      /* Lapped material (spec §17): the row-by-row layout already nested each covering, so sum the
+       * line-level sheets and the reusable-offcut / scrap split — do NOT re-run the area count. */
+      stockUnits = g.reduce((s, p) => s + (p.line.sheets ?? 0), 0);
+      stockUnitLabel = sheetSizeLabel(m);
+      reusableOffcutSqm = round(g.reduce((s, p) => s + (p.line.reusableOffcutSqm ?? 0), 0), 3);
+      scrapSqm = round(g.reduce((s, p) => s + (p.line.scrapSqm ?? 0), 0), 3);
+      offcut = round(reusableOffcutSqm + scrapSqm, 3);
     } else if (isSheet && m.sheetLengthM && m.sheetWidthM) {
       const area = g.reduce((s, p) => s + p.netAreaSqm, 0);
       const sh = sheetsNeeded(area, m, wastagePercent);
@@ -467,6 +530,8 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
       stockUnits,
       stockUnitLabel,
       offcut: offcut == null ? null : dim(offcut),
+      reusableOffcutSqm: reusableOffcutSqm == null ? null : dim(reusableOffcutSqm),
+      scrapSqm: scrapSqm == null ? null : dim(scrapSqm),
       totalWeightKg: kg(g.reduce((s, p) => s + p.line.totalWeightKg, 0)),
       rate,
       rateUnit: m.rateUnit,
@@ -561,6 +626,16 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
     ratePerSqft: floorSqft > 0 ? money(grandTotal / floorSqft) : 0,
   };
 
+  /* §15 INTERNAL selling-price analysis. Pure add-on over the cost totals — it touches no cost field
+   * above, and with the default (absent / all-zero) config produces selling == cost. Never fed to the
+   * customer/GMC estimate (pricing.ts computeEstimate). */
+  const competitive = computeCompetitive(
+    totals,
+    takeoff.meta.floorAreaSqm,
+    settings.competitive,
+    settings.gstPercent,
+  );
+
   return {
     meta: takeoff.meta,
     lines,
@@ -569,6 +644,7 @@ export function priceTakeoff(takeoff: Takeoff, materials: MaterialIndex, setting
     sections,
     weightSummary,
     totals,
+    competitive,
     issues: validateBoq(takeoff, materials, lines, settings),
     notes: takeoff.notes,
   };

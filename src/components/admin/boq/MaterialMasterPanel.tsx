@@ -166,6 +166,10 @@ interface MaterialDraft {
   stockLengthM: string;
   sheetLengthM: string;
   sheetWidthM: string;
+  coverWidthM: string;
+  sideLapM: string;
+  endLapM: string;
+  standardLengthM: string;
   purchaseRate: string;
   rateUnit: RateUnit;
   wastagePercent: string;
@@ -199,6 +203,10 @@ const toDraft = (m: Material): MaterialDraft => ({
   stockLengthM: str(m.stockLengthM),
   sheetLengthM: str(m.sheetLengthM),
   sheetWidthM: str(m.sheetWidthM),
+  coverWidthM: str(m.coverWidthM),
+  sideLapM: str(m.sideLapM),
+  endLapM: str(m.endLapM),
+  standardLengthM: str(m.standardLengthM),
   purchaseRate: str(m.purchaseRate),
   rateUnit: m.rateUnit,
   wastagePercent: str(m.wastagePercent),
@@ -222,6 +230,10 @@ const fromDraft = (d: MaterialDraft): Material => ({
   stockLengthM: numOrNull(d.stockLengthM),
   sheetLengthM: numOrNull(d.sheetLengthM),
   sheetWidthM: numOrNull(d.sheetWidthM),
+  coverWidthM: numOrNull(d.coverWidthM),
+  sideLapM: numOrNull(d.sideLapM),
+  endLapM: numOrNull(d.endLapM),
+  standardLengthM: numOrNull(d.standardLengthM),
   purchaseRate: numOrNull(d.purchaseRate),
   rateUnit: d.rateUnit,
   wastagePercent: numOrNull(d.wastagePercent) ?? 0,
@@ -244,6 +256,10 @@ const emptyDraft = (): MaterialDraft => ({
   stockLengthM: "6",
   sheetLengthM: "",
   sheetWidthM: "",
+  coverWidthM: "",
+  sideLapM: "",
+  endLapM: "",
+  standardLengthM: "",
   purchaseRate: "",
   rateUnit: "per_kg",
   wastagePercent: "3",
@@ -959,6 +975,61 @@ export default function MaterialMasterPanel() {
                   step="0.01"
                   placeholder="1"
                 />
+              </div>
+
+              {/* Lapped-layout config (spec §12–§14). Sheets/panels only. Set a side/end lap to switch
+                  this material from the plain area count to a row-by-row lapped layout. */}
+              <div className="space-y-1.5">
+                <Label htmlFor="f-cover">Effective cover width (m)</Label>
+                <NumberInput
+                  id="f-cover"
+                  value={draft.coverWidthM}
+                  onChange={(e) => patch({ coverWidthM: e.target.value })}
+                  step="0.01"
+                  placeholder="(sheet width)"
+                />
+                <p className="text-[11px] text-muted-foreground">
+                  Blank ⇒ uses the sheet width. The usable width before the side-lap deduction.
+                </p>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="f-sidelap">Side lap (m)</Label>
+                <NumberInput
+                  id="f-sidelap"
+                  value={draft.sideLapM}
+                  onChange={(e) => patch({ sideLapM: e.target.value })}
+                  step="0.005"
+                  placeholder="0"
+                />
+                <p className="text-[11px] text-muted-foreground">
+                  A side or end lap &gt; 0 turns on lapped layout (rows, full/cut, off-cut). Blank/0 ⇒ plain area count.
+                </p>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="f-endlap">End lap (m)</Label>
+                <NumberInput
+                  id="f-endlap"
+                  value={draft.endLapM}
+                  onChange={(e) => patch({ endLapM: e.target.value })}
+                  step="0.01"
+                  placeholder="0"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="f-stdlen">Standard sheet length for layout (m)</Label>
+                <NumberInput
+                  id="f-stdlen"
+                  value={draft.standardLengthM}
+                  onChange={(e) => patch({ standardLengthM: e.target.value })}
+                  step="0.01"
+                  placeholder="(sheet length)"
+                />
+                <p className="text-[11px] text-muted-foreground">
+                  Blank ⇒ uses the sheet length. A run longer than this is split into lapped rows.
+                </p>
               </div>
 
               <div className="space-y-1.5">

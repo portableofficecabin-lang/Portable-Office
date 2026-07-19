@@ -21,7 +21,7 @@
 import type { CabinConfig } from "@/components/home/cabin-calculator/pricing";
 import { isPufPanel, isStorageProduct, isToiletCabin, PRODUCTS } from "@/components/home/cabin-calculator/pricing";
 import { buildCabinTakeoff } from "@/lib/boq/cabinTakeoff";
-import { DEFAULT_NORMS } from "@/lib/boq/types";
+import { DEFAULT_NORMS, roofRiseFtOf } from "@/lib/boq/types";
 import { indexMaterials, SEED_MATERIALS } from "@/lib/boq/materialMaster";
 import { parseSectionDims, type SectionDims } from "./sectionDims";
 import {
@@ -37,7 +37,7 @@ import type {
 
 /* ------------------------------------------------------------------ constants + helpers ------ */
 
-const ROOF_RISE_FT = 8 / 12;                 // matches cabinTakeoff.ROOF_RISE_FT (8″ over the width)
+// Roof rise comes from CabinBoqOptions.roofRiseFt (default 8″) via roofRiseFtOf — matches the take-off.
 const FLOOR_TOP = 0;                         // finished floor at z = 0
 const BASE_Z0 = -170, BASE_Z1 = -20;         // base chassis sits just below the floor
 const FLOOR_BOARD_Z1 = 25, FLOOR_FINISH_Z1 = 42;
@@ -155,7 +155,7 @@ export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOption
   const sloped = config.roofId !== "flat" && !container;      // same rule the elevations use
   const insulated = !puf && config.insulationId !== "none";
   const lined = !(puf && config.wallId === "none");
-  const riseMm = ft(ROOF_RISE_FT);
+  const riseMm = ft(roofRiseFtOf(config.boqOptions));
   const ridgeZ = Htop + riseMm;
   const product = PRODUCTS.find((p) => p.id === config.productId) ?? PRODUCTS[0];
   const rooms = roomRangesMm(config);

@@ -16,6 +16,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "boq:scenarios": "tsx scripts/boq-scenarios.ts",
+    "boq:baseline": "tsx scripts/boq-baseline.ts",
     "seo:audit": "node scripts/seo-audit.mjs",
     "admin:reset-password": "node scripts/reset-admin-password.mjs"
   },

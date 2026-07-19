@@ -198,6 +198,7 @@ function boqSpec(r: BoqResult, f: Fmt): SheetSpec {
       "Section",
       "Material Description",
       "Size & Specification",
+      "Spacing (m)",
       "Calculation Formula",
       "Quantity",
       "Unit",
@@ -216,6 +217,7 @@ function boqSpec(r: BoqResult, f: Fmt): SheetSpec {
       SECTION_META[l.section].label,
       l.description || l.material,
       l.spec,
+      l.spacingM == null ? "—" : f.num(l.spacingM, 3),
       l.formula,
       f.num(l.qty, 3),
       l.uom,
@@ -259,6 +261,48 @@ function cuttingSpec(r: BoqResult, f: Fmt): SheetSpec {
       f.num(c.totalLengthM, 2),
       f.num(c.weightKg, 2),
       c.drawingRef,
+    ]),
+  };
+}
+
+/** Report — roofing / wall / MDF sheet layout & cutting plan (spec §12–§14, §17). */
+function sheetLayoutSpec(r: BoqResult, f: Fmt): SheetSpec {
+  const sheets = r.lines.filter((l) => l.netAreaSqm != null);
+  return {
+    name: "Sheet Layout",
+    head: [
+      "#",
+      "Section",
+      "Covering",
+      "Material",
+      "Orientation",
+      "Sheet size",
+      "Rows",
+      "Full sheets",
+      "Cut sheets",
+      "Total sheets",
+      "Covered area (m²)",
+      "Bought area (m²)",
+      "Overlap (m²)",
+      "Reusable off-cut (m²)",
+      "Scrap (m²)",
+    ],
+    body: sheets.map((l, i) => [
+      i + 1,
+      SECTION_META[l.section].label,
+      l.description || l.material,
+      l.material,
+      l.sheetOrientation ?? "—",
+      l.sheetSize ?? "—",
+      l.sheetRows ?? "—",
+      l.fullSheets ?? "—",
+      l.cutSheets ?? "—",
+      l.sheets ?? "—",
+      l.netAreaSqm == null ? "—" : f.num(l.netAreaSqm, 2),
+      l.coverageSqm == null ? "—" : f.num(l.coverageSqm, 2),
+      l.overlapSqm == null ? "—" : f.num(l.overlapSqm, 2),
+      l.reusableOffcutSqm == null ? "—" : f.num(l.reusableOffcutSqm, 2),
+      l.scrapSqm == null ? "—" : f.num(l.scrapSqm, 2),
     ]),
   };
 }
@@ -353,6 +397,8 @@ function purchaseSpec(r: BoqResult, f: Fmt): SheetSpec {
       "Stock Units",
       "Stock Unit",
       "Off-cut",
+      "Reusable off-cut (m²)",
+      "Scrap (m²)",
       "Total Weight (kg)",
       f.moneyHead("Rate"),
       "Rate Unit",
@@ -371,6 +417,8 @@ function purchaseSpec(r: BoqResult, f: Fmt): SheetSpec {
       p.stockUnits == null ? "—" : p.stockUnits,
       p.stockUnitLabel ?? "—",
       p.offcut == null ? "—" : f.num(p.offcut, 2),
+      p.reusableOffcutSqm == null ? "—" : f.num(p.reusableOffcutSqm, 2),
+      p.scrapSqm == null ? "—" : f.num(p.scrapSqm, 2),
       f.num(p.totalWeightKg),
       p.rate == null ? "—" : f.money(p.rate),
       RATE_LABEL[p.rateUnit],
@@ -599,6 +647,10 @@ export function exportBoqExcel(r: BoqResult, title: string): void {
 
 export function exportCuttingListExcel(r: BoqResult, title: string): void {
   writeBook([cuttingSpec(r, XL)], `cutting-list-${slug(title)}`);
+}
+
+export function exportSheetLayoutExcel(r: BoqResult, title: string): void {
+  writeBook([sheetLayoutSpec(r, XL)], `sheet-layout-${slug(title)}`);
 }
 
 export function exportWeightSummaryExcel(r: BoqResult, title: string): void {
@@ -833,6 +885,7 @@ export async function exportAllExcel(r: BoqResult, title: string): Promise<void>
       boqSpec(r, XL),
       elevationSpec(r, XL),
       cuttingSpec(r, XL),
+      sheetLayoutSpec(r, XL),
       weightSpec(r, XL),
       purchaseSpec(r, XL),
       { name: "Cost Summary", head: sec.head, body: [...sec.body, [], tot.head, ...tot.body] },

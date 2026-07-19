@@ -83,6 +83,10 @@ interface MaterialRow {
   stock_length_m: number | string | null;
   sheet_length_m: number | string | null;
   sheet_width_m: number | string | null;
+  cover_width_m?: number | string | null;
+  side_lap_m?: number | string | null;
+  end_lap_m?: number | string | null;
+  standard_length_m?: number | string | null;
   purchase_rate: number | string | null;
   rate_unit: string;
   wastage_percent: number | string | null;
@@ -121,6 +125,10 @@ export function rowToMaterial(r: MaterialRow): Material {
     stockLengthM: num(r.stock_length_m),
     sheetLengthM: num(r.sheet_length_m),
     sheetWidthM: num(r.sheet_width_m),
+    coverWidthM: num(r.cover_width_m),
+    sideLapM: num(r.side_lap_m),
+    endLapM: num(r.end_lap_m),
+    standardLengthM: num(r.standard_length_m),
     purchaseRate: num(r.purchase_rate),
     rateUnit: (r.rate_unit || "per_nos") as RateUnit,
     wastagePercent: num(r.wastage_percent) ?? 0,
@@ -156,6 +164,12 @@ export function materialToRow(m: Material): Record<string, unknown> {
     notes: m.notes ?? "",
   };
   if (m.id) row.id = m.id;
+  /* The lap columns were added in a later migration — reference them ONLY when set, so saving a
+   * material never fails on a database where that migration is not applied yet (spec §12–§14). */
+  if (m.coverWidthM != null) row.cover_width_m = m.coverWidthM;
+  if (m.sideLapM != null) row.side_lap_m = m.sideLapM;
+  if (m.endLapM != null) row.end_lap_m = m.endLapM;
+  if (m.standardLengthM != null) row.standard_length_m = m.standardLengthM;
   return row;
 }
 /* ==========================================================================

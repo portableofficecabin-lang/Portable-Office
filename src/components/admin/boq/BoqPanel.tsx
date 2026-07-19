@@ -72,16 +72,17 @@ import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 import { priceTakeoff } from "@/lib/boq/engine";
+import { fetchMaterials, indexMaterials, type BoqTemplateRecord } from "@/lib/boq/materialMaster";
 import {
-  fetchMaterials,
-  indexMaterials,
+  companyDefaultSettingsSync,
+  deleteTemplate,
   listTemplates,
   saveTemplate,
-  deleteTemplate,
-  type BoqTemplateRecord,
-} from "@/lib/boq/materialMaster";
+} from "@/lib/boq/templateStore";
+import { isBuiltinPresetId } from "@/lib/boq/presets";
 import {
   BOQ_SECTIONS,
+  DEFAULT_COMPETITIVE,
   DEFAULT_NORMS,
   type BoqLine,
   type BoqNorms,
@@ -90,6 +91,7 @@ import {
   type BoqSection,
   type BoqSettings,
   type BoqTemplateKind,
+  type CompetitivePricing,
   type CuttingRow,
   type ManualBoqItem,
   type Material,
@@ -223,6 +225,13 @@ const REPORTS: ReportDef[] = [
     hint: "What the saw operator gets",
     kind: "xlsx",
     run: (R, r, t) => R.exportCuttingListExcel(r, t),
+  },
+  {
+    key: "sheet-layout-xlsx",
+    label: "Sheet layout & cutting plan",
+    hint: "Roofing / wall / MDF sheets — rows, full/cut, off-cut, scrap",
+    kind: "xlsx",
+    run: (R, r, t) => R.exportSheetLayoutExcel(r, t),
   },
   {
     key: "weight-xlsx",
@@ -413,6 +422,16 @@ export default function BoqPanel({
   const patchNorms = useCallback(
     (p: Partial<BoqNorms>) => patchSettings({ norms: { ...norms, ...p } }),
     [norms, patchSettings],
+  );
+
+  /* ---------- §15 competitive / selling-price config (internal only) ---------- */
+  const competitive: CompetitivePricing = useMemo(
+    () => ({ ...DEFAULT_COMPETITIVE, ...(settings.competitive ?? {}) }),
+    [settings.competitive],
+  );
+  const patchCompetitive = useCallback(
+    (p: Partial<CompetitivePricing>) => patchSettings({ competitive: { ...competitive, ...p } }),
+    [competitive, patchSettings],
   );
 
   const toggleSection = useCallback(
@@ -622,6 +641,66 @@ export default function BoqPanel({
     },
     [loadTemplates, selectedTemplate],
   );
+
+  /** Duplicate any preset (incl. a built-in) into a new, editable, non-default copy. (spec §1) */
+  const duplicateTemplate = useCallback(
+    async (id: string) => {
+      const tpl = templates.find((t) => t.id === id);
+      if (!tpl) return;
+      try {
+        const rec = await saveTemplate({
+          name: `${tpl.name} (copy)`,
+          kind: tpl.kind,
+          description: tpl.description,
+          isDefault: false,
+          data: { ...tpl.data, templateKind: tpl.kind },
+        });
+        await loadTemplates();
+        setSelectedTemplate(rec.id);
+        toast({ title: "Preset duplicated", description: `${rec.name} — now editable` });
+      } catch (e) {
+        toast({ variant: "destructive", title: "Duplicate failed", description: e instanceof Error ? e.message : String(e) });
+      }
+    },
+    [loadTemplates, templates],
+  );
+
+  /** Mark a saved preset as the company default — new cabins of its kind start from it. (spec §1) */
+  const setAsDefault = useCallback(
+    async (id: string) => {
+      const tpl = templates.find((t) => t.id === id);
+      if (!tpl || isBuiltinPresetId(tpl.id)) return; // built-ins are the fallback default already
+      try {
+        const rec = await saveTemplate({
+          id: tpl.id,
+          name: tpl.name,
+          kind: tpl.kind,
+          description: tpl.description,
+          isDefault: true,
+          data: tpl.data,
+        });
+        await loadTemplates();
+        setSelectedTemplate(rec.id);
+        toast({
+          title: "Company default set",
+          description: `New ${TEMPLATE_KIND_LABEL[rec.kind]} cabins will start from “${rec.name}”.`,
+        });
+      } catch (e) {
+        toast({ variant: "destructive", title: "Set default failed", description: e instanceof Error ? e.message : String(e) });
+      }
+    },
+    [loadTemplates, templates],
+  );
+
+  /** Restore this quotation to the company default preset (admin's if set, else built-in). (spec §1) */
+  const restoreDefault = useCallback(() => {
+    const kind = settings.templateKind ?? defaultTemplateKind;
+    onSettingsChange(companyDefaultSettingsSync(kind));
+    toast({
+      title: "Company default restored",
+      description: `Reset to the ${TEMPLATE_KIND_LABEL[kind]} company standard.`,
+    });
+  }, [defaultTemplateKind, onSettingsChange, settings.templateKind]);
 
   /* ==========================================================================
    * Render
@@ -895,6 +974,46 @@ export default function BoqPanel({
             </table>
           </div>
 
+          {/* §15 internal selling strip — only when a markup or benchmark is configured. */}
+          {(() => {
+            const cr = result.competitive;
+            const active =
+              cr != null &&
+              (competitive.overheadPercent !== 0 ||
+                competitive.overheadAmount !== 0 ||
+                competitive.profitPercent !== 0 ||
+                competitive.targetRatePerSqft != null ||
+                competitive.competitorRatePerSqft != null ||
+                competitive.minRatePerSqft != null);
+            if (!active || !cr) return null;
+            return (
+              <div className="rounded-xl border border-emerald-300 bg-emerald-50/50 p-3">
+                <div className="mb-1.5 flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-emerald-800">
+                    Proposed selling price (internal — not the customer estimate)
+                  </span>
+                  {(cr.undercutsCost || cr.belowMinSafe) && (
+                    <span className="flex items-center gap-1 rounded bg-red-100 px-1.5 py-0.5 text-[9px] font-bold text-red-700">
+                      <AlertTriangle className="h-3 w-3" /> below safe margin
+                    </span>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+                  <Stat label="Cost (incl. GST)" value={money(t.grandTotal)} sub={`${money(t.ratePerSqft)}/sqft`} />
+                  <Stat label="Ex-GST selling" value={money(cr.exGstSelling)} sub={`${num(cr.grossMarginPercent, 1)}% margin`} />
+                  <Stat label="Final selling" value={money(cr.finalSelling)} tone="amber" sub="incl. GST" />
+                  <Stat label="Selling rate" value={`${money(cr.ratePerSqft)}/sqft`} sub={`${money(cr.ratePerSqm)}/m²`} tone="slate" />
+                  <Stat label="Gross profit" value={money(cr.grossProfit)} sub={`${num(cr.grossMarginPercent, 1)}%`} />
+                  <Stat
+                    label="vs Competitor"
+                    value={cr.competitorSelling == null ? "—" : `${cr.vsCompetitorPercent != null && cr.vsCompetitorPercent > 0 ? "+" : ""}${cr.vsCompetitorPercent == null ? "" : num(cr.vsCompetitorPercent, 1) + "%"}`}
+                    sub={cr.competitorSelling == null ? "set in Settings" : money(cr.competitorSelling)}
+                  />
+                </div>
+              </div>
+            );
+          })()}
+
           {result.notes.length > 0 && (
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
               <div className="mb-1 text-[10px] font-bold uppercase tracking-wide text-slate-700">
@@ -1133,6 +1252,8 @@ export default function BoqPanel({
                     "Purchase qty",
                     "Stock bars / sheets",
                     "Off-cut",
+                    "Reusable off-cut (m²)",
+                    "Scrap (m²)",
                     "Total wt (kg)",
                     "Rate",
                     "Amount",
@@ -1168,6 +1289,12 @@ export default function BoqPanel({
                     <td className={cn(TD_R, "text-slate-500")}>
                       {p.offcut == null ? "—" : num(p.offcut, 2)}
                     </td>
+                    <td className={cn(TD_R, "text-emerald-700")}>
+                      {p.reusableOffcutSqm == null ? "—" : num(p.reusableOffcutSqm, 2)}
+                    </td>
+                    <td className={cn(TD_R, "text-slate-500")}>
+                      {p.scrapSqm == null ? "—" : num(p.scrapSqm, 2)}
+                    </td>
                     <td className={TD_R}>{num(p.totalWeightKg)}</td>
                     <td className={cn(TD_R, "whitespace-nowrap")}>
                       {p.rate == null ? (
@@ -1185,7 +1312,7 @@ export default function BoqPanel({
                 ))}
                 {result.purchase.length === 0 && (
                   <tr>
-                    <td colSpan={14} className="border border-slate-300 px-2 py-4 text-center text-slate-400">
+                    <td colSpan={16} className="border border-slate-300 px-2 py-4 text-center text-slate-400">
                       Nothing to purchase — no enabled lines.
                     </td>
                   </tr>
@@ -1193,7 +1320,7 @@ export default function BoqPanel({
               </tbody>
               <tfoot>
                 <tr className="bg-amber-50">
-                  <td colSpan={10} className="border border-slate-300 px-1.5 py-1 text-right font-extrabold text-slate-900">
+                  <td colSpan={12} className="border border-slate-300 px-1.5 py-1 text-right font-extrabold text-slate-900">
                     MATERIAL PURCHASE TOTAL
                   </td>
                   <td className={cn(TD_R, "font-extrabold")}>{num(t.totalWeightKg)}</td>
@@ -1275,6 +1402,176 @@ export default function BoqPanel({
               </div>
             </div>
           </section>
+
+          {/* --- §15 competitive rate & selling price (INTERNAL) --- */}
+          {(() => {
+            const cr = result.competitive;
+            if (!cr) return null;
+            return (
+              <section className="rounded-xl border border-emerald-300 bg-emerald-50/40 p-3">
+                <h4 className="mb-0.5 text-[11px] font-bold uppercase tracking-wide text-emerald-900">
+                  Competitive rate & selling price
+                </h4>
+                <p className="mb-2 text-[9.5px] leading-snug text-emerald-700">
+                  A bottom-up markup on the BOQ cost so you can quote instantly and never dip below a safe
+                  margin. <b>Internal only</b> — this is NOT the customer or Merchant-feed price; overhead 0
+                  and profit 0 means selling equals cost.
+                </p>
+
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Overhead %</Label>
+                    <NumField
+                      value={competitive.overheadPercent}
+                      onCommit={(v) => patchCompetitive({ overheadPercent: v ?? 0 })}
+                      step={0.5}
+                      min={0}
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Overhead percent"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Overhead ₹ (flat)</Label>
+                    <NumField
+                      value={competitive.overheadAmount}
+                      onCommit={(v) => patchCompetitive({ overheadAmount: v ?? 0 })}
+                      step={500}
+                      min={0}
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Flat overhead amount"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Profit margin %</Label>
+                    <NumField
+                      value={competitive.profitPercent}
+                      onCommit={(v) => patchCompetitive({ profitPercent: v ?? 0 })}
+                      step={0.5}
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Profit margin percent"
+                      title="May be negative to undercut — a below-cost or below-min-margin quote is clearly warned."
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Selling GST % (blank = {num(settings.gstPercent, 2)})</Label>
+                    <NumField
+                      value={competitive.gstPercent}
+                      onCommit={(v) => patchCompetitive({ gstPercent: v })}
+                      allowEmpty
+                      step={0.5}
+                      min={0}
+                      placeholder={String(settings.gstPercent)}
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Selling GST percent"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Round final to ₹ (0 = off)</Label>
+                    <NumField
+                      value={competitive.roundTo}
+                      onCommit={(v) => patchCompetitive({ roundTo: v ?? 0 })}
+                      step={100}
+                      min={0}
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Round final selling price to"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Target rate ₹/sqft</Label>
+                    <NumField
+                      value={competitive.targetRatePerSqft}
+                      onCommit={(v) => patchCompetitive({ targetRatePerSqft: v })}
+                      allowEmpty
+                      step={10}
+                      min={0}
+                      placeholder="—"
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Target rate per sqft"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Competitor rate ₹/sqft</Label>
+                    <NumField
+                      value={competitive.competitorRatePerSqft}
+                      onCommit={(v) => patchCompetitive({ competitorRatePerSqft: v })}
+                      allowEmpty
+                      step={10}
+                      min={0}
+                      placeholder="—"
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Competitor rate per sqft"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10.5px] text-slate-600">Min safe rate ₹/sqft</Label>
+                    <NumField
+                      value={competitive.minRatePerSqft}
+                      onCommit={(v) => patchCompetitive({ minRatePerSqft: v })}
+                      allowEmpty
+                      step={10}
+                      min={0}
+                      placeholder="—"
+                      className="mt-1 h-8 text-[11px]"
+                      ariaLabel="Minimum safe rate per sqft"
+                    />
+                  </div>
+                </div>
+
+                {cr.warnings.length > 0 && (
+                  <div
+                    className={cn(
+                      "mt-3 flex flex-col gap-1 rounded-lg border p-2 text-[10.5px] font-semibold",
+                      cr.undercutsCost || cr.belowMinSafe
+                        ? "border-red-300 bg-red-50 text-red-700"
+                        : "border-amber-300 bg-amber-50 text-amber-800",
+                    )}
+                  >
+                    {cr.warnings.map((wn) => (
+                      <div key={wn} className="flex items-start gap-1.5">
+                        <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                        <span>{wn}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+                  <Stat label="Cost (ex-GST)" value={money(cr.costBase)} sub="material + charges" />
+                  <Stat label="Overhead + profit" value={money(cr.overheadAmount + cr.profitAmount)} sub={`OH ${money(cr.overheadAmount)} · P ${money(cr.profitAmount)}`} />
+                  <Stat label="Ex-GST selling" value={money(cr.exGstSelling)} sub={`margin ${num(cr.grossMarginPercent, 1)}%`} />
+                  <Stat label={`Selling GST @ ${num(cr.gstPercent, 2)}%`} value={money(cr.gstAmount)} />
+                  <Stat label="Final selling (incl. GST)" value={money(cr.finalSelling)} tone="amber" />
+                  <Stat
+                    label="Selling rate"
+                    value={`${money(cr.ratePerSqft)}/sqft`}
+                    sub={`${money(cr.ratePerSqm)}/m²`}
+                    tone="slate"
+                  />
+                  <Stat
+                    label="Gross profit"
+                    value={money(cr.grossProfit)}
+                    sub={`${num(cr.grossMarginPercent, 1)}% margin`}
+                    tone={cr.grossProfit < 0 ? undefined : "slate"}
+                  />
+                  <Stat
+                    label="Min safe selling"
+                    value={cr.minSafeSelling == null ? "—" : money(cr.minSafeSelling)}
+                    sub={competitive.minRatePerSqft == null ? "set a min rate" : `${money(competitive.minRatePerSqft)}/sqft`}
+                  />
+                  <Stat
+                    label="vs Target"
+                    value={cr.targetSelling == null ? "—" : money(cr.vsTargetAmount ?? 0)}
+                    sub={cr.vsTargetPercent == null ? "set a target" : `${cr.vsTargetPercent > 0 ? "+" : ""}${num(cr.vsTargetPercent, 1)}%`}
+                  />
+                  <Stat
+                    label="vs Competitor"
+                    value={cr.competitorSelling == null ? "—" : money(cr.vsCompetitorAmount ?? 0)}
+                    sub={cr.vsCompetitorPercent == null ? "set a competitor rate" : `${cr.vsCompetitorPercent > 0 ? "+dearer " : "cheaper "}${num(Math.abs(cr.vsCompetitorPercent), 1)}%`}
+                  />
+                </div>
+              </section>
+            );
+          })()}
 
           {/* --- norms --- */}
           <section className="rounded-xl border border-slate-300 p-3">
@@ -1373,25 +1670,31 @@ export default function BoqPanel({
             </div>
           </section>
 
-          {/* --- templates --- */}
-          <section className="rounded-xl border border-slate-300 p-3">
-            <h4 className="mb-1 text-[11px] font-bold uppercase tracking-wide text-slate-900">Templates</h4>
-            <p className="mb-2 text-[9.5px] text-slate-500">
-              A template stores THIS whole settings block — norms, charges, GST, material substitutions, overrides
-              and manual rows — so a PUF cabin and an MS cabin can be quoted from the same drawing.
+          {/* --- construction presets (spec §1) --- */}
+          <section className="rounded-xl border border-indigo-300 bg-indigo-50/40 p-3">
+            <h4 className="mb-0.5 text-[11px] font-bold uppercase tracking-wide text-indigo-900">
+              Company construction presets
+            </h4>
+            <p className="mb-2 text-[9.5px] leading-snug text-indigo-700">
+              Configure your standard construction method ONCE and reuse it on every quotation. A preset stores this
+              whole settings block — section bindings, spacing norms, charges, GST, wastage and competitive markup.
+              The built-in <b>Company Standard</b> (2'-0" c/c framing) auto-applies to every NEW cabin; duplicate it to
+              customise, set any preset as the company default, or restore it here. Editing values below only changes
+              THIS quotation — the preset is untouched until you save.
             </p>
 
             <div className="flex flex-wrap items-end gap-2">
               <div className="min-w-[240px] flex-1">
-                <Label className="text-[10.5px] text-slate-600">Saved templates</Label>
+                <Label className="text-[10.5px] text-slate-600">Presets</Label>
                 <Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
-                  <SelectTrigger className="mt-1 h-8 text-[11px]" aria-label="Saved templates">
-                    <SelectValue placeholder={templates.length ? "Choose a template…" : "No templates saved yet"} />
+                  <SelectTrigger className="mt-1 h-8 text-[11px]" aria-label="Construction presets">
+                    <SelectValue placeholder={templates.length ? "Choose a preset…" : "No presets yet"} />
                   </SelectTrigger>
                   <SelectContent>
                     {templates.map((tpl) => (
                       <SelectItem key={tpl.id} value={tpl.id} className="text-[11px]">
                         {tpl.name} · {TEMPLATE_KIND_LABEL[tpl.kind]}
+                        {isBuiltinPresetId(tpl.id) ? " · built-in" : ""}
                         {tpl.isDefault ? " · default" : ""}
                       </SelectItem>
                     ))}
@@ -1406,8 +1709,9 @@ export default function BoqPanel({
                 disabled={!selectedTemplate}
                 onClick={() => applyTemplate(selectedTemplate)}
                 className="h-8 text-[11px]"
+                title="Apply the selected preset to this quotation"
               >
-                Load template
+                Apply
               </Button>
 
               <Button
@@ -1415,8 +1719,46 @@ export default function BoqPanel({
                 variant="outline"
                 size="sm"
                 disabled={!selectedTemplate}
+                onClick={() => void duplicateTemplate(selectedTemplate)}
+                className="h-8 text-[11px]"
+                title="Duplicate the selected preset into a new editable copy"
+              >
+                <Plus className="mr-1 h-3.5 w-3.5" />
+                Duplicate
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={!selectedTemplate || isBuiltinPresetId(selectedTemplate)}
+                onClick={() => void setAsDefault(selectedTemplate)}
+                className="h-8 text-[11px]"
+                title="Make the selected preset the company default for new cabins"
+              >
+                Set default
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={restoreDefault}
+                className="h-8 text-[11px]"
+                title="Reset this quotation to the company default preset"
+              >
+                <RefreshCw className="mr-1 h-3.5 w-3.5" />
+                Restore default
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={!selectedTemplate || isBuiltinPresetId(selectedTemplate)}
                 onClick={() => void removeTemplate(selectedTemplate)}
                 className="h-8 border-red-200 text-[11px] text-red-600 hover:bg-red-50"
+                title="Delete the selected saved preset (built-ins cannot be deleted)"
               >
                 <Trash2 className="mr-1 h-3.5 w-3.5" />
                 Delete
@@ -1431,9 +1773,10 @@ export default function BoqPanel({
                   setSaveOpen(true);
                 }}
                 className="h-8 bg-amber-600 text-[11px] hover:bg-amber-700"
+                title="Save the current settings as a new named preset"
               >
                 <Save className="mr-1 h-3.5 w-3.5" />
-                Save as template
+                Save as preset
               </Button>
             </div>
 
@@ -1442,7 +1785,11 @@ export default function BoqPanel({
               <span className={cn("font-semibold", source === "db" ? "text-emerald-600" : "text-amber-600")}>
                 {source === "db" ? "database" : "seed (migration not applied)"}
               </span>
-              {settings.templateId ? ` · loaded from template ${settings.templateId.slice(0, 8)}` : ""}
+              {settings.templateId
+                ? ` · this quotation started from ${
+                    templates.find((tp) => tp.id === settings.templateId)?.name ?? settings.templateId.slice(0, 8)
+                  }`
+                : ""}
             </div>
           </section>
         </TabsContent>
