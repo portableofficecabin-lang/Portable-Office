@@ -208,8 +208,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           50vw"` (AVIF/WebP, slot-sized); (3) the 4/3 aspect-ratio box reserves space
           → no CLS. No further code change improves this element. */}
       {productImage && (
-        // @ts-expect-error fetchpriority is valid HTML, not yet in React's link types
-        <link rel="preload" as="image" href={productImage} fetchpriority="high" />
+        <link rel="preload" as="image" href={productImage} fetchPriority="high" />
       )}
       <Layout>
         <JsonLd data={[structuredData, breadcrumb]} />

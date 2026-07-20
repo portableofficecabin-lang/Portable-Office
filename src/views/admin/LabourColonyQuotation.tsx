@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
-  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler,
+  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler, Boxes,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -76,6 +77,22 @@ const COMPANY = {
   gst: "33FVKPK6238Q1ZT",
   website: "portableofficecabin.com",
 };
+
+/* The Tekla-style engineering detailing studio (structural 3D, exploded, assembly video, fabrication
+ * drawings + schedules). ADDITIVE: it reads the live result / civil / priced BOQ and changes nothing.
+ * ssr:false + dynamic so three.js only loads when an admin opens the tab — the rest of the calculator
+ * (and every other tab) is unaffected if it fails to load. */
+const ColonyDrawingStudio = dynamic(
+  () => import("@/features/labour-colony-studio/studio/ColonyDrawingStudio").then((m) => m.ColonyDrawingStudio),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[420px] items-center justify-center rounded-xl border border-border bg-muted/30 text-sm text-muted-foreground">
+        Loading engineering studio…
+      </div>
+    ),
+  },
+);
 
 const DEFAULT_CONFIG: LabourColonyConfig = {
   projectName: "",
@@ -359,6 +376,7 @@ export default function LabourColonyQuotation() {
             <TabsTrigger value="civil" className="gap-1.5"><HardHat className="h-4 w-4" /> Civil Work</TabsTrigger>
             <TabsTrigger value="material" className="gap-1.5"><Package className="h-4 w-4" /> Material BOQ</TabsTrigger>
             <TabsTrigger value="drawing" className="gap-1.5"><Ruler className="h-4 w-4" /> Construction Drawing</TabsTrigger>
+            <TabsTrigger value="studio" className="gap-1.5"><Boxes className="h-4 w-4" /> Engineering Studio</TabsTrigger>
             <TabsTrigger value="reports" className="gap-1.5"><FileText className="h-4 w-4" /> Reports &amp; Saved</TabsTrigger>
           </TabsList>
         </div>
@@ -792,6 +810,26 @@ export default function LabourColonyQuotation() {
             <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
               <Building2 className="h-10 w-10 mx-auto mb-3 opacity-40" />
               Complete the Structure tab (capacity + room size) and keep Civil Work enabled to generate the construction drawing.
+            </AdminCardContent></AdminCard>
+          )}
+        </TabsContent>
+
+        {/* ============ ENGINEERING STUDIO (structural 3D / exploded / assembly / fabrication) ============ */}
+        <TabsContent value="studio" className="mt-6">
+          {result ? (
+            <ColonyDrawingStudio
+              result={result}
+              civil={civilResult}
+              boqResult={boqResult}
+              projectName={meta.projectName || config.projectName}
+              clientName={meta.customerName}
+              location={meta.location || config.location}
+            />
+          ) : (
+            <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
+              <Boxes className="h-10 w-10 mx-auto mb-3 opacity-40" />
+              Complete the Structure tab (capacity + room size) to generate the engineering model,
+              fabrication drawings and assembly sequence.
             </AdminCardContent></AdminCard>
           )}
         </TabsContent>

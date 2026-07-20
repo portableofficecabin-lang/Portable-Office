@@ -50,16 +50,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           as="image"
           href="/assets/hero-bg-mobile.webp"
           media="(max-width: 768px)"
-          // @ts-expect-error fetchpriority is valid HTML, not yet in React's link types
-          fetchpriority="high"
+          fetchPriority="high"
         />
         <link
           rel="preload"
           as="image"
           href="/assets/hero-bg.webp"
           media="(min-width: 769px)"
-          // @ts-expect-error fetchpriority is valid HTML, not yet in React's link types
-          fetchpriority="high"
+          fetchPriority="high"
         />
         <link rel="preconnect" href={SUPABASE_ORIGIN} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={SUPABASE_ORIGIN} />

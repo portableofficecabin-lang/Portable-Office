@@ -19,6 +19,11 @@
     "typecheck": "tsc --noEmit",
     "boq:scenarios": "tsx scripts/boq-scenarios.ts",
     "boq:baseline": "tsx scripts/boq-baseline.ts",
+    "colony:model": "npx tsx scripts/colony-studio.test.ts",
+    "colony:reports": "npx tsx scripts/colony-studio-reports.test.ts",
+    "colony:animation": "npx tsx scripts/colony-studio-animation.test.ts",
+    "colony:render": "npx tsx --tsconfig scripts/tsconfig.harness.json scripts/colony-studio-render.test.tsx",
+    "colony:verify": "npm run colony:model && npm run colony:reports && npm run colony:animation && npm run colony:render",
     "seo:audit": "node scripts/seo-audit.mjs",
     "admin:reset-password": "node scripts/reset-admin-password.mjs"
   },

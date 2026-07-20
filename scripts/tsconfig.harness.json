@@ -1,0 +1,7 @@
+{
+  "//": "Harness-only tsconfig. The app's root tsconfig uses jsx:\"preserve\" because Next.js performs the JSX transform at build time. When a harness runs a .tsx component directly under `npx tsx`, esbuild has no Next pipeline, falls back to the CLASSIC runtime and emits React.createElement into component files that (correctly) never import React — throwing \"React is not defined\". Selecting the automatic runtime here fixes that for the harnesses WITHOUT touching a single component. Used as: npx tsx --tsconfig scripts/tsconfig.harness.json <script>",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
+}
