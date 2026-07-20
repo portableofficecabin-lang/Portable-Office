@@ -112,8 +112,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           rel="preload"
           as="image"
           href={post.featured_image_url}
-          // @ts-expect-error fetchpriority is valid HTML, not yet in React's link types
-          fetchpriority="high"
+          fetchPriority="high"
         />
       )}
       <JsonLd
