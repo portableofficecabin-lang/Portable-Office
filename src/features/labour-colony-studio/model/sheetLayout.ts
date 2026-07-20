@@ -53,6 +53,74 @@ export const MODULAR_SPACINGS_MM: number[] = [1, 2, 3, 4].map((n) => SHEET_SHORT
 /** Minimum steel under EACH side of a sheet-to-sheet joint for both sheets to bear and be fixed. */
 export const MIN_EDGE_BEARING_MM = 25;
 
+/**
+ * THE COMPANY-STANDARD JOIST SPACING FOR AN 8'×4' DECK — 609.6 mm (2 ft) centres.
+ *
+ * This is a RECOMMENDATION, never an applied default. Nothing in this module writes it anywhere:
+ * the live spacing is whatever `joistSpacingM` in the BOQ norms says, every saved configuration keeps
+ * the value it was priced with, and `DEFAULT_NORMS.joistSpacingM` is deliberately left alone. All the
+ * engine does is measure the frame it is given and report the gap.
+ *
+ * Why 2 ft specifically: it is the widest spacing that divides the 4 ft sheet width a WHOLE number of
+ * times (1219.2 ÷ 609.6 = 2), so it lands a member under both long sheet edges AND under the
+ * intermediate joint line — with no added bearers at all. Anything wider leaves joints floating;
+ * anything narrower is steel spent for no gain unless the loading demands it.
+ *
+ * NOTE: the existing company standard preset (`companyStandardSettings`, `SPACING_2FT`) already uses
+ * this value. A colony showing a non-modular spacing is therefore usually running on
+ * `DEFAULT_NORMS` (1.0 m) rather than the company preset — the fix is to select the preset or set
+ * `joistSpacingM` for that colony, which is a configuration action, not a code change.
+ */
+export const COMPANY_STANDARD_SPACING_MM = SHEET_SHORT_MM / 2;   // 609.6
+export const COMPANY_STANDARD_SPACING_M = COMPANY_STANDARD_SPACING_MM / 1000;
+
+/** A presentable recommendation: what the frame has, what it should have, and what that buys. */
+export interface SheetSpacingRecommendation {
+  currentMm: number;
+  recommendedMm: number;
+  /** true ⇒ the frame is already sheet-modular and nothing needs changing. */
+  alreadyModular: boolean;
+  /** Bearer LINES the recommended spacing would make unnecessary. */
+  bearerLinesSaved: number;
+  /** Where the admin changes it — this module never writes it. */
+  settingPath: string;
+  headline: string;
+  detail: string;
+}
+
+/**
+ * Build the spacing recommendation for a resolved layout.
+ *
+ * Deliberately phrased as advice with a cost attached rather than a pass/fail, because the decision
+ * is the estimator's: a non-modular frame is buildable — it just costs bearers.
+ */
+export function buildSpacingRecommendation(layout: SheetLayoutResult): SheetSpacingRecommendation {
+  const modular = layout.spacing.modular;
+  const saved = layout.bearersAvoidableBySpacing;
+  return {
+    currentMm: layout.spacing.actualMm,
+    recommendedMm: COMPANY_STANDARD_SPACING_MM,
+    alreadyModular: modular,
+    bearerLinesSaved: saved,
+    settingPath: "Material BOQ → norms → joistSpacingM (or select the Company Standard preset)",
+    headline: modular
+      ? `Joist spacing is sheet-modular at ${layout.spacing.actualMm.toFixed(0)} mm — no bearers needed.`
+      : `Re-space joists to ${COMPANY_STANDARD_SPACING_MM.toFixed(1)} mm to remove ${saved} bearer line(s).`,
+    detail: modular
+      ? `${layout.spacing.actualMm.toFixed(0)} mm centres divide the ${SHEET_SHORT_MM.toFixed(0)} mm sheet `
+        + `width exactly, so every sheet joint already lands on a structural member and no additional `
+        + `bearer is required. Nothing to change.`
+      : `The frame is at ${layout.spacing.actualMm.toFixed(0)} mm centres, which does not divide the `
+        + `${SHEET_SHORT_MM.toFixed(0)} mm sheet width — sheet joints fall between members, so `
+        + `${layout.bearers.length} bearer line(s) have been added to give every joint a bearing. `
+        + `At the company standard of ${COMPANY_STANDARD_SPACING_MM.toFixed(1)} mm (2 ft) the 4 ft sheet `
+        + `spans exactly two bays, so both long edges and the centre joint land on steel and `
+        + `${saved} of those bearer lines become unnecessary. This is a RECOMMENDATION only: the priced `
+        + `geometry, the existing default and every saved configuration are unchanged. Apply it per `
+        + `colony via ${"Material BOQ → norms → joistSpacingM"}, then re-price.`,
+  };
+}
+
 /** A sheet edge is treated as landing on a member when it is within this of the member centreline. */
 const EDGE_SNAP_MM = 12;
 

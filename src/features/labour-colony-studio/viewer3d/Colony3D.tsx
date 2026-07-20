@@ -13,7 +13,7 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
-  Box, Camera, Eye, EyeOff, Grid3x3, Layers, Maximize2, Move3d, RotateCcw, Ruler,
+  Box, Camera, Eye, EyeOff, Grid3x3, Layers, Maximize2, MessageSquare, Move3d, RotateCcw, Ruler,
   Scissors, Sparkles, Tag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";

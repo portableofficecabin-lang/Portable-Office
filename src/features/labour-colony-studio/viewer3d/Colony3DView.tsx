@@ -226,14 +226,32 @@ const PartMesh = memo(function PartMesh({
 
 /* ------------------------------------------------------------------ part-mark labels ---------- */
 
-const PartMarkLabels = memo(function PartMarkLabels({ parts, ctx }: { parts: ColonyPart[]; ctx: SceneCtx }) {
+/**
+ * Fabrication part marks floating on their members.
+ *
+ * The mark must travel with its part: it carries the SAME explode offset the mesh does (and falls
+ * back to a quad's centroid the way the callout layer below does), otherwise a mark stays welded to
+ * the assembled position and, as the explode slider opens, ends up labelling empty space — or worse,
+ * sitting over a different member and mis-identifying it to the fabricator.
+ */
+const PartMarkLabels = memo(function PartMarkLabels({
+  parts, ctx, settings,
+}: { parts: ColonyPart[]; ctx: SceneCtx; settings: ColonyView3DSettings }) {
   return (
     <>
       {parts.map((p) => {
         const b = boxOfSolid(p.solid, ctx);
-        if (!b) return null;
+        const base = b ? b.center : quadCentre(p, ctx);
+        if (!base) return null;
+        const off = explodeOffset(p, settings.explode, SEP_GAP_M);
         return (
-          <Html key={`mark-${p.id}`} position={b.center} center distanceFactor={12} occlude={false}>
+          <Html
+            key={`mark-${p.id}`}
+            position={[base[0] + off[0], base[1] + off[1], base[2] + off[2]]}
+            center
+            distanceFactor={12}
+            occlude={false}
+          >
             <div style={{ background: "#0f172a", color: "#fff", fontSize: 9, padding: "0 4px", borderRadius: 3, whiteSpace: "nowrap", pointerEvents: "none" }}>
               {p.partMark}
             </div>
@@ -513,7 +531,7 @@ export function Colony3DView(props: Colony3DViewProps) {
         />
       ))}
 
-      {markParts.length > 0 && <PartMarkLabels parts={markParts} ctx={ctx} />}
+      {markParts.length > 0 && <PartMarkLabels parts={markParts} ctx={ctx} settings={settings} />}
 
       {settings.showAnnotations && (
         <ExplodedExplanationLayer
