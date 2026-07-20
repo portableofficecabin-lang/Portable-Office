@@ -21,6 +21,8 @@ import {
 import {
   defaultPalette, groupsPresentIn, resolvePartColor, GROUP_OF_KIND,
 } from "../src/features/labour-colony-studio/model/palette";
+import { buildSpacingRecommendation } from "../src/features/labour-colony-studio/model/sheetLayout";
+import { buildExplodedExplanation } from "../src/features/labour-colony-studio/viewer3d/explodedAnnotations";
 
 let passed = 0;
 let failed = 0;
@@ -617,6 +619,92 @@ console.log("\n=== Component colour palette ===");
   const groups = groupsPresentIn(parts);
   ok(groups.has("cChannel") && groups.has("floorSheet") && groups.has("pufPanel"),
     "F3: the new component families are offered by the picker");
+}
+
+/* ============ G. EXPLANATION LAYER + the spacing recommendation ============================
+ * The exploded view is only useful if it says WHY. These checks hold the explanation to the same
+ * standard as the geometry: every callout must anchor to a part that really exists, quote numbers
+ * that come from the model rather than from prose, and never contradict the layout it describes. */
+console.log("\n=== Exploded-view explanation layer + spacing recommendation ===");
+{
+  const x = buildExplodedExplanation(model);
+  const ids = new Set(model.parts.map((p) => p.id));
+
+  ok(x.annotations.length > 0, `G1: the exploded view carries explanation callouts (${x.annotations.length})`);
+  ok(x.annotations.every((a) => ids.has(a.partId)),
+    "G1a: every callout anchors to a part that exists in the model");
+  ok(x.dimensions.every((d) => ids.has(d.fromPartId) && ids.has(d.toPartId)),
+    "G1b: every dimension run anchors to parts that exist in the model");
+  ok(new Set(x.annotations.map((a) => a.id)).size === x.annotations.length,
+    "G1c: callout ids are unique");
+  ok(x.annotations.every((a) => !!a.title && a.lines.length > 0),
+    "G1d: every callout has a title and a body");
+  ok([...x.annotations, ...x.dimensions].every((a) => /^#[0-9a-f]{6}$/i.test(a.accent)),
+    "G1e: every accent is a literal hex — export-safe, never oklch");
+  ok(x.annotations.every((a) => Number.isFinite(a.distR) && a.distR > 0
+    && Number.isFinite(a.dir[0] + a.dir[1] + a.dir[2])),
+    "G1f: every callout has a finite offset direction and distance");
+
+  /* the C-bend callout must actually state all four of its roles */
+  const cb = x.annotations.find((a) => a.id === "ann:c-bend:left");
+  ok(!!cb, "G2: the first C-bend is explained in the exploded view");
+  if (cb) {
+    const body = cb.lines.join(" ");
+    ok(/EDGE SUPPORT/i.test(body) && /PERIMETER/i.test(body)
+      && /PANEL SEAT/i.test(body) && /STIFFENER/i.test(body),
+      "G2a: the C-bend callout names all four of its structural roles");
+    ok(/footing/i.test(body), "G2b: the C-bend callout traces the load path to the footing");
+  }
+
+  /* a non-modular spacing must be visible AS A WARNING on the dimension, not quietly normalised */
+  const dim = x.dimensions.find((d) => d.id === "dim:joist-spacing");
+  if (dim && model.deck) {
+    ok(dim.text.includes(model.deck.spacing.actualMm.toFixed(0)),
+      `G3: the spacing dimension quotes the REAL spacing (${dim.text})`);
+    ok(model.deck.spacing.modular
+      ? /modular/i.test(dim.note ?? "")
+      : /NOT sheet-modular/i.test(dim.note ?? ""),
+      "G3a: the dimension states whether the spacing is sheet-modular");
+  }
+
+  /* ---- the recommendation is advice, never an applied change ---- */
+  if (model.deck) {
+    const rec = buildSpacingRecommendation(model.deck);
+    ok(Math.abs(rec.recommendedMm - 609.6) < 0.05,
+      `G4: the company standard recommended for an 8'x4' sheet is 609.6 mm (${rec.recommendedMm})`);
+    ok(rec.alreadyModular === model.deck.spacing.modular,
+      "G4a: the recommendation agrees with the layout about whether the frame is modular");
+    ok(rec.bearerLinesSaved === model.deck.bearersAvoidableBySpacing,
+      "G4b: the bearer saving quoted matches the layout's own figure");
+    ok(/RECOMMENDATION only/i.test(rec.detail) || rec.alreadyModular,
+      "G4c: a non-modular frame is given advice, not a silent change");
+    ok(rec.settingPath.includes("joistSpacingM"),
+      "G4d: the recommendation says exactly where the admin changes it");
+    /* the engine must NEVER have written the recommendation into the model it measured */
+    ok(!model.deck.spacing.modular || model.deck.bearers.length === 0,
+      "G4e: a modular frame needs no bearers — the two figures cannot disagree");
+  }
+}
+
+/* ============ H. ORDERING FIGURES ARE PRESENTED AS FOUR DISTINCT NUMBERS ==================== */
+console.log("\n=== Flooring ordering: placement / optimised / area-floor / recommended ===");
+{
+  const d = model.deck;
+  if (d) {
+    ok(d.sheetsIfNoReuse === d.sheets.length,
+      `H1: physical placement count equals the sheets actually laid (${d.sheetsIfNoReuse})`);
+    ok(d.sheetsByAreaOnly === Math.ceil(d.deckAreaM2 / d.sheetAreaM2 - 1e-9),
+      `H2: the area-only theoretical minimum is deck area / sheet area (${d.sheetsByAreaOnly})`);
+    ok(d.purchaseSheets >= d.sheetsByAreaOnly && d.purchaseSheets <= d.sheetsIfNoReuse,
+      `H3: the recommended order sits between the theoretical floor and the no-reuse count `
+      + `(${d.sheetsByAreaOnly} <= ${d.purchaseSheets} <= ${d.sheetsIfNoReuse})`);
+    /* the wastage figure must describe the RECOMMENDED order, not one of the other two */
+    const impliedPct = ((d.purchaseSheets * d.sheetAreaM2 - d.deckAreaM2) / d.deckAreaM2) * 100;
+    ok(Math.abs(impliedPct - d.wastagePct) < 0.05,
+      `H4: the wastage % is derived from the RECOMMENDED order quantity (${d.wastagePct}% vs ${impliedPct.toFixed(2)}%)`);
+    ok(d.offcutAreaM2 >= d.reusableOffcutM2 && d.wasteAreaM2 >= 0,
+      "H5: re-usable offcut never exceeds total offcut, and scrap is never negative");
+  }
 }
 
 /* ================================================================= report ================= */

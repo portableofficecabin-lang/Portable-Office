@@ -19,6 +19,7 @@
 import type { BoqResult } from "@/lib/boq/types";
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import type { ColonyModel } from "../model/types";
+import { buildSpacingRecommendation } from "../model/sheetLayout";
 import {
   buildBeamSchedule,
   buildBoltSchedule,
@@ -668,6 +669,19 @@ export function buildReportTables(
     .filter((c) => !c.pass)
     .map((c) => `${c.code} FAILED — ${c.title}: ${c.detail}`);
   const spacingRemark = deck ? `Joist / bearer spacing: ${deck.spacing.note}` : "";
+  /* The company-standard recommendation travels WITH the schedule, because the spacing defect and its
+   * fix are the same fact — and the fix is a configuration action the reader can take, not a code
+   * change. Stated as advice with a cost: nothing here alters the priced geometry or the saved
+   * default (see model/sheetLayout.ts COMPANY_STANDARD_SPACING_MM). */
+  const spacingAdvice = deck
+    ? (() => {
+      const rec = buildSpacingRecommendation(deck);
+      return rec.alreadyModular
+        ? `Company standard: ${rec.headline}`
+        : `Company standard (RECOMMENDATION — nothing changed automatically): ${rec.detail} `
+          + `Set it at ${rec.settingPath}.`;
+    })()
+    : "";
 
   /* -------------------------------------------------- 17. floor sheet schedule */
   tables.push(makeTable({
@@ -714,7 +728,7 @@ export function buildReportTables(
     rows: sheetSummaryRows,
     sectionOf: (r) => r.group,
     extraRemarks: sheetSummaryRows.length
-      ? [NOT_A_PURCHASE, spacingRemark, ...failedSheetChecks]
+      ? [NOT_A_PURCHASE, spacingRemark, spacingAdvice, ...failedSheetChecks]
       : [],
     emptyReason: "This colony has no modelled deck, so there is no sheet layout to summarise.",
     columns: [

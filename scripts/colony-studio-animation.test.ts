@@ -19,6 +19,9 @@ import { validateAssemblyTimeline } from "../src/features/labour-colony-studio/a
 import {
   sampleAssembly, samplePart, activeStepIndexAt, activeStepCutawayAt,
 } from "../src/features/labour-colony-studio/animation/assemblyMotion";
+import {
+  buildColonyStepEngineeringRows, colonyContextOf, describeColonyStep,
+} from "../src/features/labour-colony-studio/animation/assemblyCaptions";
 
 let passed = 0;
 let failed = 0;
@@ -147,6 +150,53 @@ const single = calculateLabourColony({ ...CONFIG, floors: 1, capacity: 40 });
 const civilS = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(single));
 const tS = buildAssemblyTimeline(buildColonyModel({ result: single, civil: civilS, columnGrid: null }));
 ok(tS.steps.length > 0 && tS.totalMs > 0, "ground-floor-only model still produces a timeline");
+
+/* ---- CAPTIONS MUST NEVER NARRATE A PART THE MODEL DOES NOT CONTAIN ---------------------------
+ * The step copy is the one place in the studio that can lie without failing a type check or a
+ * geometry invariant: it is prose, so an assertion about a king post survives happily in a colony
+ * that has no king post. These checks pin the two ways that actually happened. */
+{
+  const stepCopy = (m: ReturnType<typeof buildColonyModel>, step: number) =>
+    describeColonyStep(step as never, colonyContextOf(m), m.parts.filter((p) => p.assemblyStep === step));
+
+  /* (1) A MONO-PITCH roof emits one rafter and NO truss webs — so it has no apex and no king post. */
+  const mono = calculateLabourColony({ ...CONFIG, roofType: "mono" } as LabourColonyConfig);
+  const monoCivil = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(mono));
+  const monoModel = buildColonyModel({ result: mono, civil: monoCivil, columnGrid: null });
+  const monoWebs = monoModel.parts.filter((p) => p.kind === "truss-web").length;
+  if (monoWebs === 0) {
+    const c = stepCopy(monoModel, 17);
+    const prose = `${c.description} ${c.captionCustomer} ${c.captionEngineering}`;
+    ok(!/king post/i.test(prose), "captions: a roof with no truss webs is never told it has a king post");
+    ok(!/apex/i.test(prose), "captions: a single-slope roof is never told it has an apex");
+    ok(!/web member/i.test(prose), "captions: a roof with no webs is never told it has web members");
+  } else {
+    ok(true, `captions: mono roof still emits ${monoWebs} webs — apex/king-post check not applicable`);
+  }
+
+  /* (2) connectionDetail:false builds the truss with NO welds, plates or bolts at all. */
+  const bare = buildColonyModel({ result, civil, columnGrid: null }, { connectionDetail: false });
+  const bareHw = bare.parts.filter((p) => (p.assemblyId ?? "").startsWith("truss:")
+    && (p.kind === "weld" || p.kind === "splice-plate" || p.kind === "bolt")).length;
+  ok(bareHw === 0, `captions: connectionDetail:false really removes the truss hardware (${bareHw})`);
+  const bc = stepCopy(bare, 17);
+  const bareProse = `${bc.description} ${bc.captionCustomer} ${bc.captionEngineering}`;
+  ok(!/fillet weld/i.test(bareProse) && !/M16/.test(bareProse) && !/Ø18/.test(bareProse),
+    "captions: a truss with no modelled hardware is never given weld sizes, bolt grades or hole diameters");
+  ok(!/torque/i.test(bc.inspection ?? ""),
+    "captions: the ITP does not demand a torque check on bolts that were never modelled");
+
+  /* (3) THE OVERLAY PAINTS ONLY SIX ROWS — the explanation must not push priced rows off the frame.
+   *     Regression guard: detail rows were prepended without trimming, silently dropping a
+   *     BOQ-referenced row from every exported frame of steps 6, 8 and 14. */
+  for (const step of [6, 8, 14, 17, 20]) {
+    const parts = model.parts.filter((p) => p.assemblyStep === step);
+    if (!parts.length) continue;
+    const rows = buildColonyStepEngineeringRows(parts);
+    ok(rows.length <= 6,
+      `captions: step ${step} engineering rows fit the overlay's 6-row budget (${rows.length})`);
+  }
+}
 
 console.log(`\ncolony-studio-animation.test.ts — ${passed} passed, ${failed} failed\n`);
 if (failed) {

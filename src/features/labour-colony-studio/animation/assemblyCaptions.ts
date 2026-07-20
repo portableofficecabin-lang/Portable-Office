@@ -82,7 +82,19 @@ export interface ColonyAssemblyContext {
    * drifting derivation of them. */
   hasCBend: boolean;
   hasSheetSetOut: boolean;
-  hasSheetBearer: boolean;
+
+  /**
+   * A fully TRIANGULATED truss (king post + webs + tie chord), as opposed to a single mono-pitch
+   * rafter. A mono roof emits one `rafter` and no `truss-web` at all, so narrating an apex, a king
+   * post or web members there would describe a truss that was never built.
+   */
+  hasTrussFrame: boolean;
+  /**
+   * The truss's own welds / splice plates / bolts are present. `buildColonyModel` gates every one of
+   * them behind `connectionDetail`, so a model built with it off has a truss and no joint hardware —
+   * and must not be narrated with weld sizes, plate thicknesses and bolt groups that are not there.
+   */
+  hasTrussConnDetail: boolean;
   hasDeckCleat: boolean;
   hasPanelSeating: boolean;
   deck?: SheetLayoutResult;
@@ -145,7 +157,11 @@ export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
     upperFloor: m.floors > 1 || parts.some((p) => (p.floor ?? 0) >= 1),
     hasCBend: parts.some(isPerimeterCBend),
     hasSheetSetOut: hasKind(parts, "floor-sheet") && (model.deck?.sheets.length ?? 0) > 0,
-    hasSheetBearer: hasKind(parts, "noggin"),
+
+    hasTrussFrame: hasKind(parts, "truss-web"),
+    hasTrussConnDetail: parts.some((p) =>
+      (p.assemblyId ?? "").startsWith("truss:")
+      && (p.kind === "weld" || p.kind === "splice-plate" || p.kind === "bolt")),
     hasDeckCleat: parts.some(isDeckCleat),
     hasPanelSeating: hasAnyKind(parts, ["u-channel", "angle-support", "pocket-support"])
       || parts.some(isPanelSeat),
@@ -450,36 +466,63 @@ export function describeColonyStep(
         safety: "Edge protection along the open corridor edge before the walkway plate is walked on.",
         inspection: "Walkway level, plate fixing and post bases verified before the railing step.",
       };
-    case 17:
-      /* The truss step carries the fullest fabrication story in the whole sequence, so the copy is
-       * deliberately layered: the CUSTOMER caption explains it in plain language (a ready-made frame
-       * arrives and is lifted on), while the ENGINEERING caption states exactly how it is made and
-       * joined — shop welds inside the truss, bolted plates on BOTH faces at the site joints. Both
-       * are read off the model's own detailing, so the narration cannot drift from the geometry. */
+    case 17: {
+      /* The truss step carries the fullest fabrication story in the sequence, so the copy is layered:
+       * the CUSTOMER caption explains it plainly, the ENGINEERING caption states how it is made and
+       * joined. Both are gated on what the model ACTUALLY contains, because "sloped" alone is not
+       * enough to justify the narration:
+       *   • a MONO-pitch roof emits one rafter and no `truss-web`, so it has no apex, no king post
+       *     and no web members — describing them would narrate a truss that was never built;
+       *   • `connectionDetail: false` builds the truss with NO welds, plates or bolts, so the joint
+       *     specification must disappear with them.
+       * The weld / plate / bolt FIGURES below are the detailing constants `buildColonyModel` uses;
+       * they are literals here, not read from the parts, so `hasTrussConnDetail` only decides whether
+       * they are shown at all. The weld and bolt SCHEDULES remain the authority on those values. */
+      const triangulated = ctx.sloped && ctx.hasTrussFrame;
+      const jointSpec = ctx.hasTrussConnDetail;
       return {
         title: "Roof trusses & rafters",
-        description: ctx.sloped
+        description: triangulated
           ? "Each roof truss arrives as ONE ready-fabricated unit: the top chords, bottom tie chord, king " +
             "post and web members are already welded together in the shop. The finished truss is craned " +
-            "onto the column heads, seated at the heels and joined at the apex — the site joints are bolted, " +
-            "not welded, through a pair of plates fitted on BOTH faces of the truss."
-          : "Roof rafters and the top frame are landed on the column heads, setting the roof falls.",
-        captionCustomer: ctx.sloped
-          ? "The roof truss comes ready-made from the factory — already welded — and is simply lifted on and bolted down."
+            "onto the column heads, seated at the heels and joined at the apex" +
+            (jointSpec
+              ? " — the site joints are bolted, not welded, through a pair of plates fitted on BOTH faces of the truss."
+              : ".")
+          : ctx.sloped
+            ? "Sloping roof rafters are landed on the column heads and seated at the eaves, setting the roof falls."
+            : "Roof rafters and the top frame are landed on the column heads, setting the roof falls.",
+        captionCustomer: triangulated
+          ? "The roof truss comes ready-made from the factory — already welded — and is simply lifted on" +
+            (jointSpec ? " and bolted down." : " and seated.")
           : "The roof structure is lifted into place.",
-        captionEngineering: ctx.sloped
+        captionEngineering: triangulated && jointSpec
           ? "Shop-welded truss: 6 mm continuous fillet weld at every panel point (apex, both heels, king-post " +
             "foot, web-to-chord). Site joints bolted — paired 10 mm splice / cleat plates on BOTH faces, " +
             "4 × M16 gr 8.8 per joint through Ø18 holes; apex gauge 120 / pitch 100 / edge 35, heel gauge 100 / " +
             "pitch 80 / edge 30. One washer and one nut per bolt."
-          : "Roof rafters and top frame landed on the column heads to the designed falls.",
-        tools: "Mobile crane, spreader beam, tag lines, podger spanner, calibrated torque wrench, spirit level",
-        safety: "Trusses stay slung and laterally restrained until at least two purlins or ties are fixed. " +
-          "Never release the sling on a truss held by fewer than the full bolt group.",
-        inspection: "Shop welds visually checked for full continuous profile before dispatch. On site: truss " +
-          "spacing, heel bearing, plate seating on both faces, full bolt complement (no open holes) and torque " +
-          "check on every bolt before the sling is released.",
+          : triangulated
+            ? "Shop-welded triangulated truss lifted in as one unit and seated on the column heads. " +
+              "Connection detailing is not modelled in this view — see the weld and bolt schedules."
+            : ctx.sloped
+              ? "Sloping rafters landed on the column heads to the designed falls and fixed at the eaves."
+              : "Roof rafters and top frame landed on the column heads to the designed falls.",
+        tools: "Mobile crane, spreader beam, tag lines, spirit level"
+          + (jointSpec ? ", podger spanner, calibrated torque wrench" : ""),
+        safety: triangulated
+          ? "Trusses stay slung and laterally restrained until at least two purlins or ties are fixed. "
+            + (jointSpec ? "Never release the sling on a truss held by fewer than the full bolt group." : "")
+          : "Rafters stay slung and laterally restrained until the purlins or ties that stabilise them are fixed.",
+        inspection: triangulated
+          ? "Shop welds visually checked for full continuous profile before dispatch. On site: truss "
+            + "spacing, heel bearing"
+            + (jointSpec
+              ? ", plate seating on both faces, full bolt complement (no open holes) and torque check on every bolt"
+              : "")
+            + " before the sling is released."
+          : "Rafter spacing, eaves bearing and fixing checked before the sling is released.",
       };
+    }
     case 18:
       return {
         title: "Roof purlins & bracing",
@@ -531,7 +574,11 @@ export function describeColonyStep(
           `${ctx.hasLining ? "; internal lining board over the studwork" : ""}` +
           `${ctx.hasPartition ? `; partitions setting out ${ctx.rooms} rooms` : ""}.` +
           (spec && lock.length
-            ? ` Panel lock sequence, ${lock.length} steps with the head fixed last: ${fmtMm(spec.thicknessMm)} mm ` +
+            /* "head fixed last" would contradict the sequence printed beside it — step 7 is the head
+             * restraint but step 8 is the closing panel, which is entered afterwards (and gets its own
+             * head restraint). Describe the RULE the order encodes instead of the final step. */
+            ? ` Panel lock sequence, ${lock.length} steps — each panel gains two edges before the next ` +
+              `arrives and no head is fixed until its panel is home: ${fmtMm(spec.thicknessMm)} mm ` +
               `panel into a ${fmtMm(spec.slotWidthMm)} mm slot, ${fmtMm(spec.clearanceMm)} mm free play, ` +
               `${fmtMm(spec.minInsertionMm)} mm minimum insertion on every captured edge. A panel edge ` +
               "bears on steel — never packed with timber or foam."
@@ -857,7 +904,19 @@ export function buildColonyStepEngineeringRows(parts: ColonyPart[]): StepEnginee
     });
     if (grouped.length >= 6) break;
   }
-  return [...detailRowsOf(parts), ...grouped];
+  /* THE OVERLAY PAINTS ONLY THE FIRST SIX ROWS (assemblyOverlayDraw.ts drawAssemblyOverlay →
+   * `cap.engineeringRows.slice(0, 6)`), so the six slots are a SHARED budget, not one budget each.
+   * Prepending the detail rows unconditionally therefore pushed priced, BOQ-referenced rows off the
+   * rendered and exported frame — step 14 silently lost its "Wall stud … (BOQ front:stud:…)" row.
+   *
+   * Detail rows still lead, because a step's explanation is what the viewer is there to read, but
+   * they are capped at two and the grouped rows are trimmed to fill exactly the six visible slots.
+   * That keeps at least four priced rows on screen in every step, so the explanation can never
+   * displace the take-off it is explaining. */
+  const OVERLAY_ROW_BUDGET = 6;
+  const MAX_DETAIL_ROWS = 2;
+  const detail = detailRowsOf(parts).slice(0, MAX_DETAIL_ROWS);
+  return [...detail, ...grouped.slice(0, Math.max(0, OVERLAY_ROW_BUDGET - detail.length))];
 }
 
 /* ----------------------------------------------------------------- helpers --------------------- */

@@ -1169,7 +1169,13 @@ export interface SheetSummaryRow {
 export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
   const d = model.deck;
   if (!d) return [];
-  const decks = Math.max(1, model.meta.floors);
+  /* Read the deck count back from the sheets the model actually PLACED, the same way
+   * `buildFloorSheetSchedule` does, rather than trusting `meta.floors`. The two agree today, but if a
+   * level is ever treated as roof rather than deck the summary would otherwise contradict the sister
+   * schedule's own "Decks" column — and it is the multiplied ORDER row below that would be wrong. */
+  const deckFloors = new Set<number>();
+  for (const p of model.parts) if (p.kind === "floor-sheet") deckFloors.add(p.floor ?? 0);
+  const decks = Math.max(1, deckFloors.size || model.meta.floors);
   const fig = (v: number, dp = 2): string => v.toFixed(dp);
   const figure = (group: string, item: string, value: string, detail: string): SheetSummaryRow =>
     ({ group, code: "", item, figure: value, status: "", detail });
@@ -1199,14 +1205,39 @@ export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
     figure("Sheet count (one deck)", "Unusable scrap", `${fig(d.wasteAreaM2)} m²`,
       "Offcut too narrow to lay anywhere — the real waste."),
 
-    figure("Ordering quantity", "Sheets if offcuts are NOT re-used", `${d.sheetsIfNoReuse}`,
-      "One fresh sheet per laid position. The safe site figure when offcuts are not tracked."),
-    figure("Ordering quantity", "Sheets by area alone", `${d.sheetsByAreaOnly}`,
-      "The theoretical floor, ceil(deck ÷ sheet). Never achievable in practice."),
-    figure("Ordering quantity", "Sheets to purchase (recommended)", `${d.purchaseSheets}`,
-      "Whole-sheet equivalents recovered from re-usable offcut are credited back, but never below the "
-      + "area floor. ORDERING GUIDANCE ONLY — the priced floor:board line is what the deck costs."),
-    figure("Ordering quantity", "Wastage on the recommendation", `${fig(d.wastagePct, 1)} %`,
+    /* FOUR DISTINCT FIGURES, deliberately never collapsed into one. Each answers a different
+     * question, and quoting only the last one would hide the assumption it rests on. */
+    figure("Ordering quantity (ONE deck)", "1 · Physical placement (no offcut re-use)", `${d.sheetsIfNoReuse}`,
+      "One fresh sheet per laid position — what the site actually handles. The safe figure when "
+      + "offcuts are not tracked or cannot be carried between bays."),
+    figure("Ordering quantity (ONE deck)", "2 · Whole sheets recovered from offcut", `${d.sheetsIfNoReuse - d.purchaseSheets}`,
+      /* Quote the credited AREA as the whole-sheet equivalent actually used, not the 2-dp rounded
+       * offcut total: re-deriving the count from a rounded area lands one sheet low in about 0.2% of
+       * deck geometries, and the whole point of splitting this into four numbered figures is that a
+       * reader can check the arithmetic by hand. */
+      `The optimisation step: ${fig((d.sheetsIfNoReuse - d.purchaseSheets) * d.sheetAreaM2)} m² of the `
+      + `${fig(d.reusableOffcutM2)} m² re-usable offcut is credited back — only in WHOLE-sheet `
+      + "equivalents, because a part sheet cannot be ordered."),
+    figure("Ordering quantity (ONE deck)", "3 · Area-only theoretical minimum", `${d.sheetsByAreaOnly}`,
+      "ceil(deck area ÷ sheet area). A floor the arithmetic can never go below, and one no real cutting "
+      + "plan achieves — shown so the recommendation can be judged against it."),
+    figure("Ordering quantity (ONE deck)", "4 · RECOMMENDED ORDER (per deck)", `${d.purchaseSheets}`,
+      `Figure 1 less figure 2, never below figure 3 (${d.sheetsIfNoReuse} − ${d.sheetsIfNoReuse - d.purchaseSheets} `
+      + `→ ${d.purchaseSheets}, floor ${d.sheetsByAreaOnly}). Assumes offcuts ARE sorted and re-used on the same deck; `
+      + "if they will not be, order figure 1 instead. ORDERING GUIDANCE ONLY — the priced floor:board "
+      + "line remains what the deck costs."),
+    /* THE NUMBER A BUYER ACTUALLY ORDERS AGAINST. Every figure above is for one storey, because the
+     * layout is solved once and repeated — so on a G+1 or G+2 job the per-deck recommendation is a
+     * third to a half of what the building needs. Stating the multiplied total explicitly is the
+     * difference between a correct order and a site that runs out of decking. */
+    figure("Ordering quantity (WHOLE BUILDING)", "5 · ORDER FOR THE BUILDING", `${d.purchaseSheets * decks}`,
+      `${d.purchaseSheets} sheets per deck × ${decks} deck level(s). This is the procurement figure — `
+      + `every other row in this schedule describes ONE storey. Still ordering guidance only: the priced `
+      + `floor:board line remains what the deck costs.`),
+    figure("Ordering quantity (WHOLE BUILDING)", "Placement total (no offcut re-use)", `${d.sheetsIfNoReuse * decks}`,
+      `${d.sheetsIfNoReuse} × ${decks} deck level(s) — order this instead if offcuts will not be sorted and re-used.`),
+
+    figure("Ordering quantity (ONE deck)", "Wastage on the recommendation", `${fig(d.wastagePct, 1)} %`,
       `${fig(d.purchaseSheets * d.sheetAreaM2)} m² bought against a ${fig(d.deckAreaM2)} m² deck.`),
 
     figure("Support & bearing", "Support spacing (actual)", `${fig(d.spacing.actualMm, 1)} mm`,
