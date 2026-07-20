@@ -39,6 +39,12 @@ export interface StepCopy {
   description: string;
   captionCustomer: string;
   captionEngineering: string;
+  /** Ordered fixing / installation sub-steps for the fitter (optional — most steps have none). */
+  instructions?: string[];
+  /** Tooling call-out for the step. */
+  tools?: string;
+  /** What the supervisor signs off before the next step. */
+  inspection?: string;
 }
 
 const has = (parts: CabinPart[], kind: CabinPart["kind"]): boolean => parts.some((p) => p.kind === kind);
@@ -80,10 +86,22 @@ export function describeStep(step: AssemblyStep, ctx: AssemblyContext, parts: Ca
       };
     case 3:
       return {
-        title: "Floor decking",
-        description: "The structural floor board and finished flooring are laid over the joists.",
-        captionCustomer: "The floor is laid and finished.",
-        captionEngineering: "Deck board + floor finish over the joist grid.",
+        title: "Floor decking — 8 ft × 4 ft sheets",
+        description:
+          "The structural floor board is laid sheet by sheet over the joist grid using standard 8 ft × 4 ft " +
+          "(32 sq ft) boards, laid length-wise along the cabin. Perimeter sheets are cut to fit and the off-cuts " +
+          "are reused; the finished flooring is then laid over the deck.",
+        captionCustomer: "The floor sheets are laid and finished.",
+        captionEngineering: "8′ × 4′ deck boards laid length-wise over the joist grid, then the floor finish.",
+        instructions: [
+          "1 · Set out from the rear-left corner and lay full 8 ft × 4 ft sheets length-wise along the cabin.",
+          "2 · Land each sheet on the joists so every edge is supported and joints fall on a member.",
+          "3 · Work along the row, then start the next row — follow the sheet marks (GF-01, GF-02 …).",
+          "4 · Measure, mark and cut the perimeter sheets to fit; keep the off-cuts for the opposite end.",
+          "5 · Fix each sheet down to the joists, then lay the floor finish over the completed deck.",
+        ],
+        tools: "Circular saw, tape, chalk line, screw gun",
+        inspection: "All joints supported on a member; no unsupported edges; deck level and fully fixed.",
       };
     case 4:
       return {
@@ -156,14 +174,38 @@ export function describeStep(step: AssemblyStep, ctx: AssemblyContext, parts: Ca
       };
     }
     case 11:
-      return {
-        title: "Roof frame",
-        description: ctx.sloped
-          ? "The top frame and ridge are assembled to form the sloped roof structure."
-          : "The top perimeter frame is assembled.",
-        captionCustomer: "The roof frame is assembled.",
-        captionEngineering: ctx.sloped ? "Top frame + ridge member set the roof pitch." : "Top perimeter frame closes the structure.",
-      };
+      return ctx.sloped
+        ? {
+            title: "Roof truss fabrication & installation",
+            description:
+              "Each roof truss is delivered as a complete, ready-fabricated unit: the rafter pair and the bottom " +
+              "tie are FULLY WELDED at every internal joint in the shop (6 mm fillet weld, all round) so no site " +
+              "welding is required. The truss is then landed on the top frame and secured at each eave bearing " +
+              "through connection plates fitted on BOTH faces of the rafter, using an engineering-standard " +
+              "nut-and-bolt fastening system.",
+            captionCustomer: "Ready-welded roof trusses are lifted on and bolted down.",
+            captionEngineering:
+              "Shop-welded truss units (2 rafters + bottom tie) bolted to the top frame through twin connection plates.",
+            instructions: [
+              "1 · Check each truss mark (T1, T2 …) and confirm all internal joints are fully welded — 6 mm fillet, all round.",
+              "2 · Lift the truss and land it on the top frame, apex centred on the cabin width.",
+              "3 · Align the truss to its grid line and plumb it square to the base frame.",
+              "4 · Offer up a connection plate to EACH face of the rafter at the eave bearing (2 plates per joint).",
+              "5 · Line the plate holes through with a drift; holes are ⌀14 mm for M12 bolts (2 mm clearance).",
+              "6 · Insert 2 × M12 × 40 property-class 8.8 bolts per joint from the outer face.",
+              "7 · Fit a flat washer under the head, then a flat washer + spring washer under the nut.",
+              "8 · Run the nuts up hand-tight, re-check alignment, then tighten to 80 Nm with a torque wrench.",
+              "9 · Repeat at the opposite eave, then fix the purlins to the rafters at the priced spacing.",
+            ],
+            tools: "Torque wrench (80 Nm), ⌀14 mm drift, spirit level, lifting sling",
+            inspection: "All bolts torqued and marked; truss plumb and square; no site welding on any internal joint.",
+          }
+        : {
+            title: "Roof frame",
+            description: "The top perimeter frame is assembled.",
+            captionCustomer: "The roof frame is assembled.",
+            captionEngineering: "Top perimeter frame closes the structure.",
+          };
     case 12:
       return {
         title: "Roof installation",

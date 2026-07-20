@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils";
 import type {
   ColonyModel, ColonyPartKind, ColonyPartLayer, ViewMode,
 } from "@/features/labour-colony-studio/model/types";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { PaletteEditor } from "@/features/labour-colony-studio/palette/PaletteEditor";
 import {
   Colony3DView, type CameraPreset, type ColonyView3DSettings, type RenderMode, type SectionAxis,
 } from "./Colony3DView";
@@ -29,6 +31,12 @@ export interface Colony3DProps {
   model: ColonyModel;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  /**
+   * Per-group colour overrides. Owned by ColonyDrawingStudio so the SAME palette drives the assembly
+   * video; when omitted the viewer falls back to its own local state and still works standalone.
+   */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 const PRESETS: { id: CameraPreset; label: string }[] = [
@@ -64,15 +72,24 @@ const KIND_GROUPS: { id: string; label: string; kinds: ColonyPartKind[] }[] = [
   { id: "plates", label: "Plates", kinds: ["base-plate", "levelling-plate", "gusset", "cleat", "end-plate", "splice-plate", "stiffener", "walkway-plate"] },
   { id: "bolts", label: "Bolts", kinds: ["bolt", "nut", "washer", "anchor-bolt"] },
   { id: "welds", label: "Welds", kinds: ["weld"] },
+  { id: "edge-members", label: "C / U / angle / pocket", kinds: ["c-channel", "u-channel", "angle-support", "pocket-support"] },
+  { id: "bearers", label: "Sheet bearers", kinds: ["noggin"] },
+  { id: "floor-sheets", label: "Deck sheets (8'×4')", kinds: ["floor-sheet"] },
   { id: "staircase", label: "Staircase", kinds: ["stair-stringer", "stair-tread", "landing"] },
   { id: "railings", label: "Railings", kinds: ["handrail", "handrail-post", "toe-plate"] },
 ];
 
 const ALL_LAYERS: ColonyPartLayer[] = LAYERS.map((l) => l.id);
 
-export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
+export function Colony3D({ model, selectedId, onSelect, palette, onPaletteChange }: Colony3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const captureRef = useRef<null | (() => string | null)>(null);
+
+  /* The palette is CONTROLLED when the studio supplies one (so the video shares it) and falls back
+   * to local state otherwise, keeping the viewer usable on its own. */
+  const [localPalette, setLocalPalette] = useState<ColonyPalette>({});
+  const activePalette = palette ?? localPalette;
+  const setPalette = onPaletteChange ?? setLocalPalette;
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [preset, setPreset] = useState<{ view: CameraPreset; nonce: number }>({ view: "iso", nonce: 0 });
@@ -82,6 +99,7 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   const [explode, setExplode] = useState(0);
   const [showConnectionDetail, setShowConnectionDetail] = useState(false);
   const [showPartMarks, setShowPartMarks] = useState(false);
+  const [showAnnotations, setShowAnnotations] = useState(false);
   const [measureMode, setMeasureMode] = useState(false);
   const [hd, setHd] = useState(false);
 
@@ -112,8 +130,8 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   const settings: ColonyView3DSettings = useMemo(() => ({
     hiddenLayers, hiddenKinds, hiddenFloors, viewMode, renderMode, explode, showConnectionDetail,
     section: { enabled: sectionEnabled, axis: sectionAxis, position: sectionPos },
-    showPartMarks, hd,
-  }), [hiddenLayers, hiddenKinds, hiddenFloors, viewMode, renderMode, explode, showConnectionDetail, sectionEnabled, sectionAxis, sectionPos, showPartMarks, hd]);
+    showPartMarks, showAnnotations, hd, palette: activePalette,
+  }), [hiddenLayers, hiddenKinds, hiddenFloors, viewMode, renderMode, explode, showConnectionDetail, sectionEnabled, sectionAxis, sectionPos, showPartMarks, showAnnotations, hd, activePalette]);
 
   const toggleLayer = (id: ColonyPartLayer) => setHiddenLayers((prev) => {
     const n = new Set(prev);
@@ -217,6 +235,9 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
         {([
           { on: showConnectionDetail, set: setShowConnectionDetail, icon: Sparkles, label: "Connection detail" },
           { on: showPartMarks, set: setShowPartMarks, icon: Tag, label: "Part marks" },
+          /* A mark says WHICH piece; an annotation says WHY the piece is shaped that way. Separate
+           * toggles because a fabricator wants marks only, while a customer wants the explanation. */
+          { on: showAnnotations, set: setShowAnnotations, icon: MessageSquare, label: "Explain" },
           { on: measureMode, set: setMeasureMode, icon: Move3d, label: "Measure" },
           { on: sectionEnabled, set: setSectionEnabled, icon: Scissors, label: "Section cut" },
           { on: hd, set: setHd, icon: Sparkles, label: "HD" },
@@ -262,6 +283,9 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
 
         {measureMode && <span className="text-xs text-red-600">Click two components to measure</span>}
       </div>
+
+      {/* component colours — the same palette the assembly video renders with */}
+      <PaletteEditor model={model} palette={activePalette} onChange={setPalette} />
 
       {/* layer toggles */}
       <div className="flex flex-wrap items-center gap-1.5">

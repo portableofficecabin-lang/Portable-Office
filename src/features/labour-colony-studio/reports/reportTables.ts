@@ -26,11 +26,14 @@ import {
   buildConnectionSchedule,
   buildCuttingList,
   buildDispatchList,
+  buildFloorSheetSchedule,
   buildFootingSchedule,
   buildMemberList,
   buildNutSchedule,
+  buildPanelSeatingSchedule,
   buildPlateSchedule,
   buildRailingSchedule,
+  buildSheetSummary,
   buildStaircaseSchedule,
   buildTrussSchedule,
   buildWasherSchedule,
@@ -55,7 +58,7 @@ export interface ReportTableSection {
 export interface ReportTable {
   id: ReportTableId;
   title: string;
-  /** Toolbar / picker grouping ("Fabrication", "Connections", "Assemblies", "Substructure", "Summary"). */
+  /** Toolbar / picker grouping ("Fabrication", "Connections", "Assemblies", "Substructure", "Deck & panels", "Summary"). */
   group: string;
   /** One-line explanation of what the schedule is and where its numbers come from. */
   note: string;
@@ -94,7 +97,10 @@ export type ReportTableId =
   | "column-schedule"
   | "beam-schedule"
   | "weight-summary"
-  | "dispatch-list";
+  | "dispatch-list"
+  | "floor-sheet-schedule"
+  | "sheet-summary"
+  | "panel-seating-schedule";
 
 /* ============================================================ column definition ========== */
 
@@ -255,6 +261,9 @@ export function buildReportTables(
   const beamRows = buildBeamSchedule(model, boqResult, civil);
   const dispatchRows = buildDispatchList(model, boqResult);
   const weight = buildWeightSummary(model, boqResult);
+  const sheetRows = buildFloorSheetSchedule(model);
+  const sheetSummaryRows = buildSheetSummary(model);
+  const panelSeatRows = buildPanelSeatingSchedule(model);
 
   const tables: ReportTable[] = [];
 
@@ -642,6 +651,114 @@ export function buildReportTables(
       { header: "Members", value: (r) => r.memberCount, dp: 0, sum: true },
       { header: "Fabrication", value: (r) => r.fabrication },
       { header: "Weight (kg)", value: (r) => r.weightKg, dp: 1, sum: true },
+    ],
+  }));
+
+  /* -------------------------------------------------- 17-19. deck sheets + panel seating *
+   * Setting-out, not procurement. Both schedules describe how an ALREADY-PRICED quantity is cut,
+   * laid and held, so every one of them repeats the reconciliation in its remarks — a reader
+   * arriving at a sheet count must not read it as a second purchase. */
+  const deck = model.deck;
+  const deckLevels = Math.max(1, model.meta.floors);
+  const NOT_A_PURCHASE =
+    "SETTING-OUT, NOT A PURCHASE: this is how the priced floor:board deck area is physically cut and "
+    + "laid. The deck sheets carry no BOQ line of their own and the priced board area remains the "
+    + "source of truth for cost — the sheet counts here are ordering guidance, never a second line.";
+  const failedSheetChecks = (deck?.checks ?? [])
+    .filter((c) => !c.pass)
+    .map((c) => `${c.code} FAILED — ${c.title}: ${c.detail}`);
+  const spacingRemark = deck ? `Joist / bearer spacing: ${deck.spacing.note}` : "";
+
+  /* -------------------------------------------------- 17. floor sheet schedule */
+  tables.push(makeTable({
+    id: "floor-sheet-schedule",
+    title: "Flooring sheet schedule",
+    group: "Deck & panels",
+    note: "Every 8'×4' deck sheet in laying sequence with its cut size, offcut and edge support. The layout is solved once and laid on every storey, so areas are for ONE deck level.",
+    fileStem: "colony-flooring-sheet-schedule",
+    rows: sheetRows,
+    sectionOf: (r) => (r.full ? "Full sheets" : "Cut sheets"),
+    remarkOf: (r) => (r.remark ? `${r.mark}: ${r.remark}` : ""),
+    extraRemarks: sheetRows.length
+      ? [
+          NOT_A_PURCHASE,
+          `Area and offcut totals are for ONE deck level (${deck ? deck.deckAreaM2.toFixed(2) : "0"} m²); the identical field is laid on each of the ${deckLevels} deck level(s). The 'Decks' column totals the physical sheets to be cut across the whole building.`,
+          spacingRemark,
+          ...failedSheetChecks,
+        ]
+      : [],
+    emptyReason: "This colony has no modelled deck, so there is no flooring sheet setting-out to schedule.",
+    columns: [
+      { header: "Mark", value: (r) => r.mark },
+      { header: "Seq", value: (r) => r.no, dp: 0 },
+      { header: "Row", value: (r) => r.row, dp: 0 },
+      { header: "Col", value: (r) => r.col, dp: 0 },
+      { header: "Size W×L (mm)", value: (r) => r.sizeMm },
+      { header: "Full / cut", value: (r) => r.cut },
+      { header: "Area (m²)", value: (r) => r.areaM2, dp: 3, sum: true },
+      { header: "Offcut (m²)", value: (r) => r.offcutM2, dp: 3, sum: true },
+      { header: "Supported edges", value: (r) => `${r.supportedEdges}/4`, align: "right" },
+      { header: "Floors", value: (r) => r.floors },
+      { header: "Decks", value: (r) => r.deckCount, dp: 0, sum: true },
+      { header: "Remark", value: (r) => r.remark || "" },
+    ],
+  }));
+
+  /* -------------------------------------------------- 18. sheet ordering + check summary */
+  tables.push(makeTable({
+    id: "sheet-summary",
+    title: "Flooring sheet ordering & check summary",
+    group: "Deck & panels",
+    note: "Sheet quantity reported three ways (no re-use, area-only floor, recommended purchase) with the support spacing, edge bearing, bearer count and every pass/fail layout check behind them.",
+    fileStem: "colony-flooring-sheet-summary",
+    rows: sheetSummaryRows,
+    sectionOf: (r) => r.group,
+    extraRemarks: sheetSummaryRows.length
+      ? [NOT_A_PURCHASE, spacingRemark, ...failedSheetChecks]
+      : [],
+    emptyReason: "This colony has no modelled deck, so there is no sheet layout to summarise.",
+    columns: [
+      { header: "Ref", value: (r) => r.code || "" },
+      { header: "Item", value: (r) => r.item },
+      { header: "Figure", value: (r) => r.figure, align: "right" },
+      { header: "Status", value: (r) => r.status || "" },
+      { header: "Basis / note", value: (r) => r.detail || "" },
+    ],
+  }));
+
+  /* -------------------------------------------------- 19. panel seating schedule */
+  const panelSpec = model.panelSupport;
+  tables.push(makeTable({
+    id: "panel-seating-schedule",
+    title: "Panel seating & fixing schedule",
+    group: "Deck & panels",
+    note: "How the configured PUF panel is captured by the MS framework — base track, jamb / closing channel, head restraint and framed pocket — followed by the slot and insertion required at every trade thickness.",
+    fileStem: "colony-panel-seating-schedule",
+    rows: panelSeatRows,
+    sectionOf: (r) => r.group,
+    extraRemarks: panelSpec
+      ? [
+          panelSpec.note,
+          `Fixings: ${panelSpec.fixingSpec} at ${panelSpec.fixingPitchMm} mm centres, tightened to ${panelSpec.fixingPitchCornerMm} mm within 300 mm of every corner and opening.`,
+          "The seating sections are un-priced engineering detail and carry no BOQ line — panel AREA is priced by the wall / partition lines, which remain the source of truth for cost.",
+          "Nothing here is a lookup: the seating geometry is derived from the thickness, so a thickness outside the trade list still produces a buildable, self-consistent detail.",
+        ]
+      : [],
+    emptyReason: "No panel thickness is configured for this colony, so no seating detail can be derived.",
+    columns: [
+      { header: "Position", value: (r) => r.position },
+      { header: "Seat", value: (r) => r.label },
+      { header: "Section call-out", value: (r) => r.sectionCall },
+      { header: "Panel (mm)", value: (r) => r.thicknessMm, dp: 0 },
+      { header: "Slot width (mm)", value: (r) => r.slotWidthMm, dp: 0 },
+      { header: "Clearance (mm)", value: (r) => r.clearanceMm, dp: 0 },
+      { header: "Leg (mm)", value: (r) => r.legMm, dp: 0 },
+      { header: "Min insertion (mm)", value: (r) => r.minInsertionMm, dp: 0 },
+      { header: "Gauge (mm)", value: (r) => r.gaugeMm, dp: 1 },
+      { header: "Fixing pitch (mm)", value: (r) => r.fixingPitchMm, dp: 0 },
+      { header: "Configured", value: (r) => (r.configured ? "Yes" : "") },
+      { header: "Role", value: (r) => r.role },
+      { header: "Load path", value: (r) => r.loadPath },
     ],
   }));
 

@@ -51,12 +51,27 @@ export const STEP_OF_KIND: Record<ColonyPartKind, ColonyAssemblyStep> = {
   "base-beam": 6,
   column: 7,
   joist: 8,
+  /* The noggin is part of the sheet-bearing frame, so it goes in with the joists — BEFORE any sheet
+   * is laid over it, which is the whole reason it exists. */
+  noggin: 8,
   "floor-board": 8,
+  /* The numbered 8'×4' sheets are laid after the joists + noggins are complete and checked. */
+  "floor-sheet": 8,
   "floor-finish": 8,
   brace: 9,
   "floor-beam": 11,
   stud: 14,
   rail: 14,
+  /* PANEL-SUPPORT SECTIONS.
+   * The C-channel defaults to the BASE FRAME step because its primary job is the perimeter deck edge
+   * member — it is part of the floor structure, not the wall. Jamb / closing channels used purely to
+   * receive a panel edge override this to 14 at build time via `assemblyStep`.
+   * The base track, head angle and framed pockets all belong with the wall framing: they must be
+   * complete and checked BEFORE the first panel (step 20) is offered up. */
+  "c-channel": 6,
+  "u-channel": 14,
+  "angle-support": 14,
+  "pocket-support": 14,
   "stair-stringer": 15,
   "stair-tread": 15,
   landing: 15,
@@ -117,12 +132,23 @@ export const EXPLODE_OF_KIND: Record<ColonyPartKind, Vec3> = {
   "base-beam": { x: 0, y: 0, z: -1.1 },
   column: { x: 0, y: 0, z: 0.4 },
   joist: { x: 0, y: 0, z: -0.6 },
+  noggin: { x: 0, y: 0, z: -0.75 },
+  /* The sheets lift CLEAR of the joists in the exploded view — that separation is what lets the
+   * viewer read the support grid underneath and see that every joint lands on a member. */
+  "floor-sheet": { x: 0, y: 0, z: 1.15 },
   "floor-board": { x: 0, y: 0, z: -0.3 },
   "floor-finish": { x: 0, y: 0, z: -0.15 },
   brace: { x: 0, y: 0, z: 0.5 },
   "floor-beam": { x: 0, y: 0, z: 0.7 },
   stud: { x: 0, y: 0, z: 0.6 },
   rail: { x: 0, y: 0, z: 0.6 },
+  /* Panel-support sections travel OUTWARD from the wall they serve, so the exploded view reads as the
+   * panel sliding out of its channel. The perimeter C-channel and the base track get a per-edge
+   * outward vector at build time; these are the fallbacks. */
+  "c-channel": { x: 0, y: 0, z: -0.9 },
+  "u-channel": { x: 0, y: 0, z: -0.5 },
+  "angle-support": { x: 0, y: 0, z: 0.8 },
+  "pocket-support": { x: 0, y: 0, z: 0.6 },
   "stair-stringer": { x: -1, y: 0, z: 0.2 },
   "stair-tread": { x: -1, y: 0, z: 0.3 },
   landing: { x: -1, y: 0, z: 0.2 },
@@ -171,10 +197,13 @@ export const LAYER_OF_KIND: Record<ColonyPartKind, ColonyPartLayer> = {
   pcc: "foundation", footing: "foundation", pedestal: "foundation", "plinth-beam": "foundation",
   "levelling-plate": "foundation", "base-plate": "connection", "anchor-bolt": "connection",
   column: "structure", stud: "structure", rail: "structure", "base-beam": "structure",
-  "floor-beam": "structure", joist: "structure", brace: "structure",
+  "floor-beam": "structure", joist: "structure", brace: "structure", noggin: "structure",
+  "c-channel": "structure", "u-channel": "structure",
+  "angle-support": "structure", "pocket-support": "structure",
   "roof-truss": "roof", rafter: "roof", "truss-web": "roof", purlin: "roof", ridge: "roof",
   gusset: "connection", cleat: "connection", "end-plate": "connection", "splice-plate": "connection",
   stiffener: "connection", bolt: "connection", nut: "connection", washer: "connection", weld: "connection",
+  "floor-sheet": "walls",
   "floor-board": "walls", "floor-finish": "walls", "ext-panel": "walls", insulation: "walls",
   "int-finish": "walls", "roof-sheet": "roof", ceiling: "roof", partition: "walls",
   door: "openings", "door-swing": "openings", window: "openings",
@@ -191,10 +220,14 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
   pcc: "#9ca3af", footing: "#78716c", pedestal: "#8b8377", "plinth-beam": "#a8a29e",
   "levelling-plate": "#52525b", "base-plate": "#3f3f46", "anchor-bolt": "#27272a",
   column: "#475569", stud: "#94a3b8", rail: "#64748b", "base-beam": "#334155",
-  "floor-beam": "#3b4a5e", joist: "#94a3b8", brace: "#0ea5e9",
+  "floor-beam": "#3b4a5e", joist: "#94a3b8", brace: "#0ea5e9", noggin: "#a3b3c6",
+  /* Panel-support sections read as a distinct TEAL family so the MS support framework the panels seat
+   * into is instantly separable from the primary grey frame in both the 3D and the video. */
+  "c-channel": "#0d9488", "u-channel": "#14b8a6", "angle-support": "#2dd4bf", "pocket-support": "#0f766e",
   "roof-truss": "#475569", rafter: "#64748b", "truss-web": "#7c8ca0", purlin: "#93a3b5", ridge: "#334155",
   gusset: "#b45309", cleat: "#c2841a", "end-plate": "#a16207", "splice-plate": "#92400e",
   stiffener: "#b45309", bolt: "#1f2937", nut: "#111827", washer: "#374151", weld: "#ef4444",
+  "floor-sheet": "#c79a63",
   "floor-board": "#b98a52", "floor-finish": "#d9bb8f", "ext-panel": "#cbd5e1", insulation: "#facc15",
   "int-finish": "#e7ecf2", "roof-sheet": "#9aa7b4", ceiling: "#eef2f7", partition: "#c7b299",
   door: "#8b5a2b", "door-swing": "#cbd5e1", window: "#a8c8e0",
@@ -208,7 +241,11 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
 /** Which part families are engineering-only (hidden in the clean customer view). */
 export const ENG_ONLY = new Set<ColonyPartKind>([
   "pcc", "footing", "pedestal", "plinth-beam", "levelling-plate", "base-plate", "anchor-bolt",
-  "column", "stud", "rail", "base-beam", "floor-beam", "joist", "brace",
+  "column", "stud", "rail", "base-beam", "floor-beam", "joist", "brace", "noggin",
+  "c-channel", "u-channel", "angle-support", "pocket-support",
+  /* The numbered sheet setting-out is a fabrication overlay ON the deck the customer already sees
+   * (floor-board / floor-finish stay in the customer view untouched) — so it is engineering-only. */
+  "floor-sheet",
   "roof-truss", "rafter", "truss-web", "purlin", "ridge",
   "gusset", "cleat", "end-plate", "splice-plate", "stiffener", "bolt", "nut", "washer", "weld",
   "insulation", "door-swing", "veranda-beam", "veranda-joist", "veranda-post",

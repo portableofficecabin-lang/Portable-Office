@@ -24,6 +24,7 @@ import { buildCabinTakeoff } from "@/lib/boq/cabinTakeoff";
 import { DEFAULT_NORMS, roofRiseFtOf } from "@/lib/boq/types";
 import { indexMaterials, SEED_MATERIALS } from "@/lib/boq/materialMaster";
 import { parseSectionDims, type SectionDims } from "./sectionDims";
+import { buildFloorSheetSchedule, SHEET_LEN_FT, SHEET_WID_FT } from "./floorSheets";
 import {
   cabinObstacles, cabinSizeMm, roomRangesMm, type Obstacle,
 } from "@/features/cabin-design/furniture/tables/cabinObstacles";
@@ -55,12 +56,14 @@ const ft = (v: number): number => v * MM_PER_FT;
 /** Which part families are engineering-only (hidden in the clean customer view, spec §6). */
 const ENG_ONLY = new Set<PartKind>([
   "base-frame", "joist", "column", "stud", "rail", "mdf-support", "roof-frame", "lifting-hook", "insulation", "door-swing",
+  "gusset-plate", "fastener",
 ]);
 
 /** Broad layer each part family belongs to (drives the visibility toggles). */
 const LAYER_OF_KIND: Record<PartKind, PartLayer> = {
   "base-frame": "structure", joist: "structure", column: "structure", stud: "structure",
   rail: "structure", "mdf-support": "structure", "roof-frame": "structure", "lifting-hook": "structure",
+  "gusset-plate": "structure", fastener: "structure",
   "floor-board": "walls", "floor-finish": "walls", "ext-panel": "walls", insulation: "walls",
   "int-finish": "walls", "roof-sheet": "roof", ceiling: "roof",
   partition: "walls", door: "openings", "door-swing": "openings", window: "openings",
@@ -72,6 +75,7 @@ const LAYER_OF_KIND: Record<PartKind, PartLayer> = {
 const COLOR_OF_KIND: Record<PartKind, string> = {
   "base-frame": "#64748b", joist: "#94a3b8", column: "#475569", stud: "#94a3b8",
   rail: "#64748b", "mdf-support": "#a3855b", "roof-frame": "#64748b", "lifting-hook": "#334155",
+  "gusset-plate": "#0f766e", fastener: "#b45309",
   "floor-board": "#b98a52", "floor-finish": "#d9bb8f", "ext-panel": "#cbd5e1",
   insulation: "#facc15", "int-finish": "#e7ecf2", "roof-sheet": "#9aa7b4", ceiling: "#eef2f7",
   partition: "#c7b299", door: "#8b5a2b", "door-swing": "#cbd5e1", window: "#a8c8e0",
@@ -241,6 +245,33 @@ export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOption
     box(0, 0, FLOOR_TOP, L, W, FLOOR_BOARD_Z1), { boqLineId: "floor:board" });
   s.add("floor:finish", "floor-finish", "Floor finish",
     box(0, 0, FLOOR_BOARD_Z1, L, W, FLOOR_FINISH_Z1), { boqLineId: "floor:finish" });
+
+  /* ---- 3b. the 8 ft × 4 ft decking laid out SHEET BY SHEET (spec: flooring-sheet calculation).
+   * The whole-slab `floor:board` above stays exactly as it is (the inspector, boqLink, the 2D sheets
+   * and the assembly timeline all key off that id). These tiles are the physical CUTTING + PLACEMENT
+   * layout drawn over it — each carries its sheet mark, cut size and full/cut status, and a per-sheet
+   * explode stagger so the exploded view fans them out in installation order. */
+  {
+    const sched = buildFloorSheetSchedule(config, null, 1);
+    const JOINT = 5;                                   // visible joint between sheets (mm)
+    for (const sh of sched.rows) {
+      const lenFt = sh.cutLengthMm / MM_PER_FT, widFt = sh.cutWidthMm / MM_PER_FT;
+      s.add(`floor:board:sheet:${sh.no}`, "floor-board",
+        `Floor sheet ${sh.mark} — ${lenFt.toFixed(2)} × ${widFt.toFixed(2)} ft${sh.full ? " (full 8×4)" : " (cut to fit)"}`,
+        box(sh.x0 + JOINT / 2, sh.y0 + JOINT / 2, FLOOR_TOP, sh.x1 - JOINT / 2, sh.y1 - JOINT / 2, FLOOR_BOARD_Z1 + 1),
+        {
+          boqLineId: "floor:board",
+          explode: { x: 0, y: 0, z: -0.5 - sh.no * 0.05 },   // stagger so every sheet reads separately
+          spec: {
+            partMark: sh.mark,
+            lengthMm: sh.cutLengthMm, widthMm: sh.cutWidthMm,
+            note: sh.full
+              ? `Full ${SHEET_LEN_FT} ft × ${SHEET_WID_FT} ft sheet · laid ${sh.orientation} · install order ${sh.no}`
+              : `Cut to ${lenFt.toFixed(2)} ft × ${widFt.toFixed(2)} ft from a full ${SHEET_LEN_FT}×${SHEET_WID_FT} sheet · install order ${sh.no}`,
+          },
+        });
+    }
+  }
 
   /* ---- 4. corner columns (the 4 real corners; BOQ attributes one per face) -------------- */
   const corners: { x: number; y: number; face: string }[] = [
@@ -417,6 +448,126 @@ export function buildCabinModel(config: CabinConfig, opts: BuildCabinModelOption
     s.add("roof:ridge", "roof-frame", "Ridge member",
       box(0, W / 2 - rg.across / 2, ridgeZ - rg.through, L, W / 2 + rg.across / 2, ridgeZ),
       { boqLineId: "roof:ridge" });
+
+    /* ---- 11b. THE ROOF TRUSS as a fabricated unit — rafters + bottom tie + purlins.
+     * Every COUNT is read from the priced BOQ (memberCount) and every SECTION from the priced
+     * material (xsec); nothing here is recomputed. The truss LINE POSITIONS come from the take-off's
+     * own frame geometry (frame.purlins == endToEndLines(Lm, nTruss) on a sloped roof), so the drawn
+     * trusses land exactly where the BOQ priced them — first and last flush with the end walls. */
+    const ra = xsec("roof:truss-rafter", MEMBER_COL);
+    const tie = xsec("roof:truss-tie", MEMBER_COL);
+    const pu = xsec("roof:purlins", MEMBER_JOIST);
+
+    const nTie = memberCount("roof:truss-tie");
+    const nRafter = memberCount("roof:truss-rafter");           // 2 rafters per truss
+    const nTruss = nTie > 0 ? nTie : Math.round(nRafter / 2);
+
+    const framePurlins = frame?.purlins ?? [];
+    const trussXs: number[] =
+      framePurlins.length === nTruss
+        ? framePurlins.map((mM) => mM * 1000)
+        : nTruss <= 1
+          ? [0]
+          : Array.from({ length: nTruss }, (_, i) => (L * i) / (nTruss - 1));
+
+    // bottom ties — horizontal chord across the full width, seated on the top frame (priced cut = Wm)
+    trussXs.forEach((x, i) => {
+      s.add(`roof:truss-tie:${i}`, "roof-frame", `Roof truss bottom tie — T${i + 1}`,
+        box(x - tie.across / 2, 0, Htop, x + tie.across / 2, W, Htop + tie.through),
+        { boqLineId: "roof:truss-tie", spec: { partMark: `T${i + 1}`, note: "Shop-welded to both rafters" } });
+    });
+
+    // rafter pairs — eave → ridge. The chord length is √((W/2)² + rise²), i.e. the SAME number the
+    // take-off priced as rafterLenM, because ridgeZ = Htop + riseMm uses the identical rise.
+    let drawn = 0;
+    for (let i = 0; i < trussXs.length && drawn < nRafter; i++) {
+      const x = trussXs[i];
+      for (const [yE, yR, side] of [[0, W / 2, "rear"], [W, W / 2, "front"]] as [number, number, string][]) {
+        if (drawn >= nRafter) break;
+        s.add(`roof:truss-rafter:${i}:${side}`, "roof-frame", `Roof truss rafter — T${i + 1} ${side}`, {
+          kind: "quad",
+          thicknessMm: ra.across,
+          pts: [
+            { x, y: yE, z: Htop }, { x, y: yR, z: ridgeZ },
+            { x, y: yR, z: ridgeZ - ra.through }, { x, y: yE, z: Htop - ra.through },
+          ],
+        }, { boqLineId: "roof:truss-rafter", spec: { partMark: `T${i + 1}`, note: "Fully welded to the tie at the heel and to its pair at the apex" } });
+        drawn++;
+      }
+    }
+
+    /* ---- 11c. CONNECTION DETAILING (presentation only — never priced, never in the take-off).
+     * Shop practice: every INTERNAL truss joint (apex + both eave heels) is FULLY WELDED, so the truss
+     * arrives as one ready-fabricated unit. The truss is then BOLTED down to the top frame through a
+     * pair of connection plates — one each side of the rafter web — at each eave bearing. */
+    const PLATE_T = 8;                       // connection plate thickness (mm)
+    const PLATE_L = 200, PLATE_H = 150;      // plate size (mm)
+    const BOLT_D = 12, HOLE_D = 14;          // M12 bolt in a 14 mm drilled hole (2 mm clearance)
+    const BOLTS_PER_JOINT = 2;
+    const TORQUE_NM = 80;                    // M12 property class 8.8
+    const WELD_MM = 6;                       // 6 mm fillet, all round
+    const boltSpec = `M${BOLT_D} × 40 property class 8.8`;
+    const plateSize = `${PLATE_L} × ${PLATE_H} × ${PLATE_T} mm`;
+
+    trussXs.forEach((x, i) => {
+      const mark = `T${i + 1}`;
+      // --- the two eave BEARINGS: plates both sides + a bolt group through them ---
+      for (const [yE, side] of [[0, "rear"], [W, "front"]] as [number, string][]) {
+        const cid = `C${i + 1}-${side}`;
+        const yLo = yE === 0 ? 0 : W - PLATE_L;
+        const detail = {
+          partMark: mark, connectionId: cid,
+          plateThkMm: PLATE_T, plateSizeMm: plateSize,
+          boltSpec, boltCount: BOLTS_PER_JOINT, holeDiaMm: HOLE_D, torqueNm: TORQUE_NM,
+          note: `Truss ${mark} bearing — plates BOTH sides, ${BOLTS_PER_JOINT} × M${BOLT_D} bolts, nut + spring washer + flat washer, tighten to ${TORQUE_NM} Nm`,
+        };
+        // one plate on each face of the rafter web
+        for (const [nSide, xPlate] of [["near", x - ra.across / 2 - PLATE_T], ["far", x + ra.across / 2]] as [string, number][]) {
+          s.add(`roof:truss-plate:${i}:${side}:${nSide}`, "gusset-plate",
+            `Connection plate ${cid} (${nSide} face) — ${plateSize}`,
+            box(xPlate, yLo, Htop - PLATE_H / 2, xPlate + PLATE_T, yLo + PLATE_L, Htop + PLATE_H / 2),
+            { spec: detail });
+        }
+        // the bolt group — bolts pass through BOTH plates and the member between them
+        for (let b = 0; b < BOLTS_PER_JOINT; b++) {
+          const yB = yLo + PLATE_L * (b === 0 ? 0.25 : 0.75);
+          s.add(`roof:truss-bolt:${i}:${side}:${b}`, "fastener",
+            `${boltSpec} — ${cid} bolt ${b + 1}/${BOLTS_PER_JOINT} (⌀${HOLE_D} mm hole)`,
+            box(x - ra.across / 2 - PLATE_T - 6, yB - BOLT_D / 2, Htop - BOLT_D / 2,
+                x + ra.across / 2 + PLATE_T + 6, yB + BOLT_D / 2, Htop + BOLT_D / 2),
+            { spec: detail });
+        }
+      }
+      // --- the fully-welded INTERNAL joints: 2 heels + 1 apex, marked for the fabricator ---
+      const weld = (tag: string, wx: number, wy: number, wz: number, joint: string) =>
+        s.add(`roof:truss-weld:${i}:${tag}`, "fastener",
+          `Weld ${joint} — ${WELD_MM} mm fillet, all round (shop)`,
+          box(wx - ra.across / 2, wy - 40, wz - 40, wx + ra.across / 2, wy + 40, wz + 40),
+          { spec: {
+              partMark: mark, connectionId: `W${i + 1}-${tag}`,
+              weldType: `${WELD_MM} mm fillet weld, all round`, weldSizeMm: WELD_MM, weldLengthMm: 2 * (ra.across + ra.through),
+              note: `Shop weld — ${joint}. Fully welded before dispatch; no site welding required.`,
+            } });
+      weld("heel-rear", x, 0 + 40, Htop, "rafter → bottom tie (rear heel)");
+      weld("heel-front", x, W - 40, Htop, "rafter → bottom tie (front heel)");
+      weld("apex", x, W / 2, ridgeZ - 40, "rafter → rafter (apex)");
+    });
+
+    // purlins — run along the LENGTH (priced cut = Lm), riding the same rafter chord as the roof sheet
+    const nPurlin = memberCount("roof:purlins");
+    const nPerSlope = Math.max(1, Math.round(nPurlin / 2));
+    let pDrawn = 0;
+    for (let k = 0; k < nPerSlope && pDrawn < nPurlin; k++) {
+      const tk = nPerSlope <= 1 ? 0 : k / (nPerSlope - 1);
+      const z = Htop + tk * riseMm;
+      for (const y of [tk * (W / 2), W - tk * (W / 2)]) {
+        if (pDrawn >= nPurlin) break;
+        s.add(`roof:purlin:${pDrawn}`, "roof-frame", "Roof purlin",
+          box(0, y - pu.across / 2, z, L, y + pu.across / 2, z + pu.through),
+          { boqLineId: "roof:purlins" });
+        pDrawn++;
+      }
+    }
   }
 
   /* ---- 12. roof sheets ------------------------------------------------------------------ */

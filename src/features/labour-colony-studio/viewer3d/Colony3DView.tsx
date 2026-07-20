@@ -30,6 +30,8 @@ import type {
   ColonyModel, ColonyPart, ColonyPartKind, ColonyPartLayer, ViewMode,
 } from "@/features/labour-colony-studio/model/types";
 import { CONNECTION_DETAIL } from "@/features/labour-colony-studio/model/assembly";
+import { resolvePartColor, type ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { buildExplodedExplanation, type ExplodedExplanation } from "./explodedAnnotations";
 import {
   boxOfSolid, explodeOffset, quadOfSolid, sceneCtxOf, MIN_VIS_M, type SceneCtx,
 } from "./partGeometry";
@@ -60,6 +62,18 @@ export interface ColonyView3DSettings {
   section: { enabled: boolean; axis: SectionAxis; position: number };
   /** Overlay fabrication part-mark labels on structural members. */
   showPartMarks: boolean;
+  /**
+   * Overlay the EXPLANATION layer — leader-line callouts and dimension runs that say what each key
+   * member is for, how the load leaves it, and what the spacing and bearing measure. Independent of
+   * `showPartMarks`: a mark tells you the piece number, a callout tells you why the piece exists.
+   */
+  showAnnotations: boolean;
+  /**
+   * Per-colour-group overrides. Resolved through `resolvePartColor` so the SAME colour a group is
+   * given here also appears in the exploded view, the assembly video and every exported frame —
+   * there is one resolver and every surface calls it. Undefined ⇒ the model's own engineering colours.
+   */
+  palette?: ColonyPalette | null;
   /** Higher device-pixel-ratio ceiling for crisper (heavier) rendering. */
   hd: boolean;
 }
@@ -144,7 +158,7 @@ const PartMesh = memo(function PartMesh({
   const opacity = opacityOf(part, mode);
   const wireframe = mode === "wireframe";
   const transparent = !wireframe && (opacity < 1 || mode === "xray" || mode === "hidden-line");
-  const color = selected ? "#f59e0b" : part.colorHex;
+  const color = selected ? "#f59e0b" : resolvePartColor(part, settings.palette);
   const emissive = selected ? "#7c3a00" : hovered ? "#334155" : "#000000";
   const overlay = OVERLAY_KINDS.has(part.kind);
   const showEdges = !wireframe && (mode === "hidden-line" || EDGE_LAYERS.has(part.layer));
@@ -230,6 +244,116 @@ const PartMarkLabels = memo(function PartMarkLabels({ parts, ctx }: { parts: Col
   );
 });
 
+/* ------------------------------------------------------------------ explanation layer --------- */
+
+/**
+ * Leader-line callouts + dimension runs that explain the exploded model.
+ *
+ * Positions are resolved HERE, not in the pure builder, because each anchor must carry the same
+ * explode offset its part does — otherwise every label would stay welded to the assembled position
+ * and drift away from the member it describes as the slider opens.
+ */
+const ExplodedExplanationLayer = memo(function ExplodedExplanationLayer({
+  explanation, partIndex, ctx, settings, radius,
+}: {
+  explanation: ExplodedExplanation;
+  partIndex: Map<string, ColonyPart>;
+  ctx: SceneCtx;
+  settings: ColonyView3DSettings;
+  radius: number;
+}) {
+  const anchorOf = (partId: string): [number, number, number] | null => {
+    const part = partIndex.get(partId);
+    if (!part) return null;
+    const b = boxOfSolid(part.solid, ctx);
+    const base = b ? b.center : quadCentre(part, ctx);
+    if (!base) return null;
+    const off = explodeOffset(part, settings.explode, SEP_GAP_M);
+    return [base[0] + off[0], base[1] + off[1], base[2] + off[2]];
+  };
+
+  return (
+    <>
+      {explanation.annotations.map((a) => {
+        const anchor = anchorOf(a.partId);
+        if (!anchor) return null;
+        const d = radius * a.distR;
+        const label: [number, number, number] = [
+          anchor[0] + a.dir[0] * d, anchor[1] + a.dir[1] * d, anchor[2] + a.dir[2] * d,
+        ];
+        return (
+          <group key={a.id}>
+            {/* leader line + a dot on the member it points at */}
+            <Line points={[anchor, label]} color={a.accent} lineWidth={1.4} dashed dashSize={0.12} gapSize={0.08} />
+            <mesh position={anchor}>
+              <sphereGeometry args={[Math.max(MIN_VIS_M, radius * 0.012), 10, 10]} />
+              <meshBasicMaterial color={a.accent} />
+            </mesh>
+            <Html position={label} center={false} distanceFactor={radius * 1.1} occlude={false} zIndexRange={[20, 0]}>
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.96)", border: `1.5px solid ${a.accent}`,
+                  borderRadius: 6, padding: "5px 8px", minWidth: 190, maxWidth: 300,
+                  boxShadow: "0 2px 8px rgba(15,23,42,0.18)", pointerEvents: "none",
+                  fontFamily: '"Inter", system-ui, sans-serif',
+                }}
+              >
+                <div style={{ color: a.accent, fontWeight: 800, fontSize: 9.5, letterSpacing: 0.2, marginBottom: 2 }}>
+                  {a.title}
+                </div>
+                {a.lines.map((ln, i) => (
+                  <div key={i} style={{ color: "#0f172a", fontSize: 8.4, lineHeight: 1.32, whiteSpace: "pre" }}>{ln}</div>
+                ))}
+              </div>
+            </Html>
+          </group>
+        );
+      })}
+
+      {explanation.dimensions.map((dm) => {
+        const a = anchorOf(dm.fromPartId);
+        const b = anchorOf(dm.toPartId);
+        if (!a || !b) return null;
+        const d = radius * dm.distR;
+        const off: [number, number, number] = [dm.dir[0] * d, dm.dir[1] * d, dm.dir[2] * d];
+        const a2: [number, number, number] = [a[0] + off[0], a[1] + off[1], a[2] + off[2]];
+        const b2: [number, number, number] = [b[0] + off[0], b[1] + off[1], b[2] + off[2]];
+        const mid: [number, number, number] = [(a2[0] + b2[0]) / 2, (a2[1] + b2[1]) / 2, (a2[2] + b2[2]) / 2];
+        return (
+          <group key={dm.id}>
+            {/* witness lines from each member down to the dimension line, then the run itself */}
+            <Line points={[a, a2]} color={dm.accent} lineWidth={1} dashed dashSize={0.08} gapSize={0.06} />
+            <Line points={[b, b2]} color={dm.accent} lineWidth={1} dashed dashSize={0.08} gapSize={0.06} />
+            <Line points={[a2, b2]} color={dm.accent} lineWidth={2} />
+            <Html position={mid} center distanceFactor={radius * 1.1} occlude={false} zIndexRange={[20, 0]}>
+              <div
+                style={{
+                  background: dm.accent, color: "#fff", borderRadius: 4, padding: "2px 6px",
+                  textAlign: "center", pointerEvents: "none", fontFamily: '"Inter", system-ui, sans-serif',
+                }}
+              >
+                <div style={{ fontSize: 10, fontWeight: 800, whiteSpace: "nowrap" }}>{dm.text}</div>
+                {dm.note && <div style={{ fontSize: 8, opacity: 0.95, whiteSpace: "nowrap" }}>{dm.note}</div>}
+              </div>
+            </Html>
+          </group>
+        );
+      })}
+    </>
+  );
+});
+
+/** Centre of a sloped-quad part (the only solid `boxOfSolid` cannot reduce). */
+function quadCentre(part: ColonyPart, ctx: SceneCtx): [number, number, number] | null {
+  const q = quadOfSolid(part.solid, ctx);
+  if (!q || q.length !== 4) return null;
+  return [
+    q.reduce((a, p) => a + p[0], 0) / 4,
+    q.reduce((a, p) => a + p[1], 0) / 4,
+    q.reduce((a, p) => a + p[2], 0) / 4,
+  ];
+}
+
 /* ------------------------------------------------------------------ camera + capture ---------- */
 
 function CaptureBridge({ onReady }: { onReady?: (capture: () => string | null) => void }) {
@@ -297,10 +421,23 @@ export function Colony3DView(props: Colony3DViewProps) {
 
   const markParts = useMemo(
     () => (settings.showPartMarks
-      ? parts.filter((p) => !!p.partMark && (p.layer === "structure" || p.layer === "foundation" || p.layer === "roof"))
+      // `connection` is included so splice plates, bolts, nuts and welds carry their fabrication
+      // marks in the exploded view — that detailing is the whole point of turning part marks on.
+      ? parts.filter((p) => !!p.partMark
+          && (p.layer === "structure" || p.layer === "foundation" || p.layer === "roof" || p.layer === "connection"))
       : []),
     [parts, settings.showPartMarks],
   );
+
+  /* The explanation layer is derived from the WHOLE model, not the filtered `parts`, so a callout
+   * survives its anchor being hidden by a layer toggle — it simply resolves no position and skips.
+   * Indexed once so each annotation is an O(1) lookup rather than a scan of a few thousand parts. */
+  const explanation = useMemo(() => buildExplodedExplanation(model), [model]);
+  const partIndex = useMemo(() => {
+    const m = new Map<string, ColonyPart>();
+    for (const p of parts) m.set(p.id, p);
+    return m;
+  }, [parts]);
 
   // Section clipping plane along the chosen axis (three-space). The plane's constant is set INSIDE
   // the memo (never mutated during render); the array reference stays stable while off so
@@ -377,6 +514,12 @@ export function Colony3DView(props: Colony3DViewProps) {
       ))}
 
       {markParts.length > 0 && <PartMarkLabels parts={markParts} ctx={ctx} />}
+
+      {settings.showAnnotations && (
+        <ExplodedExplanationLayer
+          explanation={explanation} partIndex={partIndex} ctx={ctx} settings={settings} radius={radius}
+        />
+      )}
 
       {/* measurement */}
       {measurePts.map((pt, i) => (

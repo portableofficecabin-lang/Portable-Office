@@ -307,7 +307,13 @@ export interface LabourColonyConfig {
   lengthUnit?: "ft" | "ftin" | "m" | "cm" | "mm";
 
   panelType: PanelType;
-  panelThicknessMm: number; // 30 / 40 / 50 / 60 / 75
+  /**
+   * Sandwich-panel core thickness (mm). A FREE numeric value, not an enum — the trade sizes in
+   * regular use are 30 / 40 / 50 / 60 / 65 / 70 / 75, and the studio's seating detail
+   * (`panelSupport.ts`) DERIVES its channel slot, insertion depth and gauge from whatever value is
+   * set, so an unlisted thickness still resolves to a buildable detail rather than falling back.
+   */
+  panelThicknessMm: number;
   /** PUF/EPS steel skin thickness (mm), per face. Default 0.5. */
   panelSkinThicknessMm?: number;
   wastagePercent: number;

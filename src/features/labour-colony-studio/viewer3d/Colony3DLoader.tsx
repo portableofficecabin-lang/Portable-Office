@@ -15,11 +15,15 @@ import { Component, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "lucide-react";
 import type { ColonyModel } from "@/features/labour-colony-studio/model/types";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
 
 export interface Colony3DLoaderProps {
   model: ColonyModel;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  /** Per-group colour overrides, shared with the assembly video so both surfaces always match. */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 function Skeleton() {
@@ -68,10 +72,16 @@ class Viewer3DErrorBoundary extends Component<{ children: ReactNode }, BoundaryS
 
 /* ------------------------------------------------------------------ public wrapper ------------ */
 
-export function Colony3DLoader({ model, selectedId, onSelect }: Colony3DLoaderProps) {
+export function Colony3DLoader({ model, selectedId, onSelect, palette, onPaletteChange }: Colony3DLoaderProps) {
   return (
     <Viewer3DErrorBoundary>
-      <Colony3D model={model} selectedId={selectedId} onSelect={onSelect} />
+      <Colony3D
+        model={model}
+        selectedId={selectedId}
+        onSelect={onSelect}
+        palette={palette}
+        onPaletteChange={onPaletteChange}
+      />
     </Viewer3DErrorBoundary>
   );
 }

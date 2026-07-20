@@ -80,7 +80,8 @@ const BUILDERS: { name: string; run: () => unknown[]; expectRows: boolean }[] = 
   { name: "nutSchedule", run: () => S.buildNutSchedule(model), expectRows: true },
   { name: "washerSchedule", run: () => S.buildWasherSchedule(model), expectRows: true },
   { name: "plateSchedule", run: () => S.buildPlateSchedule(model), expectRows: true },
-  { name: "weldSchedule", run: () => S.buildWeldSchedule(model), expectRows: false },
+  // The truss is shop-welded at every panel point, so the weld schedule must now carry real rows.
+  { name: "weldSchedule", run: () => S.buildWeldSchedule(model), expectRows: true },
   { name: "connectionSchedule", run: () => S.buildConnectionSchedule(model), expectRows: true },
   { name: "trussSchedule", run: () => S.buildTrussSchedule(model), expectRows: true },
   { name: "staircaseSchedule", run: () => S.buildStaircaseSchedule(model), expectRows: false },
@@ -113,6 +114,19 @@ try {
   ok(anyArr.every((a) => allNumbersFinite(a)), "weightSummary: all numeric fields finite");
 } catch (e) {
   ok(false, `weightSummary: threw — ${(e as Error).message}`);
+}
+
+/* ---- the SHOP-FACING check: no schedule may print a nut/bolt mismatch remark ---------------- */
+{
+  const boltRows = S.buildBoltSchedule(model);
+  const flagged = boltRows.filter((r) => /≠|verify/i.test(r.remark));
+  ok(boltRows.length > 0, `bolt schedule has rows (${boltRows.length})`);
+  ok(flagged.length === 0,
+    `no bolt-schedule row reports a nut/bolt mismatch (${flagged.length} flagged: ${flagged.slice(0, 2).map((r) => r.connectionId).join(", ")})`);
+  const weldRows = S.buildWeldSchedule(model);
+  ok(weldRows.length > 0, `weld schedule has rows (${weldRows.length})`);
+  ok(weldRows.some((r) => r.fabrication === "shop" && (r.lengthMm ?? 0) > 0),
+    "weld schedule carries shop welds with a real weld length");
 }
 
 /* ---- spec §Required-testing 11 + 12: nut/washer parity with bolts --------------------------- */
