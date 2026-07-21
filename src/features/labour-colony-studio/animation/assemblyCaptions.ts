@@ -327,13 +327,13 @@ export function describeColonyStep(
               "power nor a certificate and can be inspected by eye on site."
             : ""),
         captionCustomer: "The ground floor is decked and finished." +
-          (deck ? " The floor sheets are numbered and cut so that every joint sits on a steel member." : ""),
+          (deck ? " On the upper decks the floor sheets are numbered and cut so that every joint sits on a steel member — the ground floor bears directly on the plinth and needs none." : ""),
         captionEngineering:
           `Floor joists at design c/c between the base beams; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
           (deck
-            ? ` ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
+            ? ` Upper decks: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
               `, ${deck.fullCount} full / ${deck.cutCount} cut, joints on members at ` +
-              `${fmtMm(deck.edgeBearingMm)} mm edge bearing.`
+              `${fmtMm(deck.edgeBearingMm)} mm edge bearing. GF lays no sheet field (bears on the plinth).`
             : "") +
           (cleat ? " Joist ends: shop-welded cleat, site-bolted joist." : ""),
         tools: "Chain block, screw gun, joist cleats, chalk line, circular saw",
@@ -683,10 +683,11 @@ function sheetSetOutParagraph(d: SheetLayoutResult): string {
   const edges = d.unsupportedSheets === 0
     ? "no sheet is left with an unsupported edge"
     : `${d.unsupportedSheets} sheet${d.unsupportedSheets === 1 ? "" : "s"} remain short of full edge support`;
-  /* Every count below is ONE deck: the layout is resolved per floor and repeated, so a G+1 colony lays
-   * this field twice. Saying "per deck" is what stops the paragraph disagreeing with the step's own
-   * part count, which spans every floor the step installs. */
-  return `Each deck is then set out as a field of ${d.moduleLabel} sheets laid ${sheetLayWords(d)} and ` +
+  /* Every count below is ONE deck, and the field goes on the UPPER decks only — the ground floor
+   * bears on the filled plinth and lays no sheets. Saying "per deck" is what stops the paragraph
+   * disagreeing with the step's own part count, which spans every floor the step installs. */
+  return `Each upper deck (the ground floor bears on the plinth and takes no sheet field) is then ` +
+    `set out as a field of ${d.moduleLabel} sheets laid ${sheetLayWords(d)} and ` +
     `numbered ${sheetMarkRange(d)} in laying sequence, row by row from the origin corner: ` +
     `${d.laidCount} sheets per deck, ${d.fullCount} laid whole and ${d.cutCount} cut to the perimeter. ` +
     `${spacing}. A joint landing on a member gives ${fmtMm(d.edgeBearingMm)} mm bearing to each sheet ` +

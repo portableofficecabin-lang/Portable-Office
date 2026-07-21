@@ -660,7 +660,12 @@ export function buildReportTables(
    * laid and held, so every one of them repeats the reconciliation in its remarks — a reader
    * arriving at a sheet count must not read it as a second purchase. */
   const deck = model.deck;
-  const deckLevels = Math.max(1, model.meta.floors);
+  /* Sheeted deck levels are read back from the placed sheets, not from meta.floors: the 8'×4' field
+   * is laid on the UPPER storeys only (the ground floor bears on the filled plinth), so a G+2 colony
+   * has 2 sheeted decks, not 3. */
+  const deckLevelSet = new Set<number>();
+  for (const p of model.parts) if (p.kind === "floor-sheet") deckLevelSet.add(p.floor ?? 0);
+  const deckLevels = deckLevelSet.size;
   const NOT_A_PURCHASE =
     "SETTING-OUT, NOT A PURCHASE: this is how the priced floor:board deck area is physically cut and "
     + "laid. The deck sheets carry no BOQ line of their own and the priced board area remains the "
@@ -688,7 +693,7 @@ export function buildReportTables(
     id: "floor-sheet-schedule",
     title: "Flooring sheet schedule",
     group: "Deck & panels",
-    note: "Every 8'×4' deck sheet in laying sequence with its cut size, offcut and edge support. The layout is solved once and laid on every storey, so areas are for ONE deck level.",
+    note: "Every 8'×4' deck sheet in laying sequence with its cut size, offcut and edge support. The layout is solved once and laid on each UPPER storey — the ground floor bears on the plinth and carries no sheet field — so areas are for ONE deck level.",
     fileStem: "colony-flooring-sheet-schedule",
     rows: sheetRows,
     sectionOf: (r) => (r.full ? "Full sheets" : "Cut sheets"),
@@ -696,7 +701,7 @@ export function buildReportTables(
     extraRemarks: sheetRows.length
       ? [
           NOT_A_PURCHASE,
-          `Area and offcut totals are for ONE deck level (${deck ? deck.deckAreaM2.toFixed(2) : "0"} m²); the identical field is laid on each of the ${deckLevels} deck level(s). The 'Decks' column totals the physical sheets to be cut across the whole building.`,
+          `Area and offcut totals are for ONE deck level (${deck ? deck.deckAreaM2.toFixed(2) : "0"} m²); the identical field is laid on each of the ${deckLevels} UPPER deck level(s) — the ground floor bears on the plinth and takes no sheets. The 'Decks' column totals the physical sheets to be cut across the whole building.`,
           spacingRemark,
           ...failedSheetChecks,
         ]

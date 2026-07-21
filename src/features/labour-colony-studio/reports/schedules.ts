@@ -1097,9 +1097,10 @@ export interface FloorSheetScheduleRow {
 /**
  * Every 8'×4' deck sheet in laying sequence, with its cut size, offcut and edge support.
  *
- * The layout is solved ONCE for the deck footprint and then laid on every storey, so a row's area is
- * one sheet on ONE deck. `floors` and `deckCount` are read back from the placed `floor-sheet` parts
- * rather than multiplied out, so the schedule states how many times that sheet is really cut — and a
+ * The layout is solved ONCE for the deck footprint and then laid on every UPPER storey — the ground
+ * floor bears on the filled plinth and carries no sheet field — so a row's area is one sheet on ONE
+ * deck. `floors` and `deckCount` are read back from the placed `floor-sheet` parts rather than
+ * multiplied out, so the schedule states how many times that sheet is really cut — and a
  * mark the layout produced but the model never placed is kept and flagged, never dropped.
  *
  * SETTING-OUT, NOT A PURCHASE: these sheets carry no BOQ line. The priced `floor:board` area remains
@@ -1170,12 +1171,13 @@ export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
   const d = model.deck;
   if (!d) return [];
   /* Read the deck count back from the sheets the model actually PLACED, the same way
-   * `buildFloorSheetSchedule` does, rather than trusting `meta.floors`. The two agree today, but if a
-   * level is ever treated as roof rather than deck the summary would otherwise contradict the sister
-   * schedule's own "Decks" column — and it is the multiplied ORDER row below that would be wrong. */
+   * `buildFloorSheetSchedule` does, rather than trusting `meta.floors`. The sheet field goes on the
+   * UPPER decks only (the ground floor bears on the filled plinth), so on a G+2 colony this is 2,
+   * not 3 — and on a single-storey colony it is honestly 0, so the multiplied ORDER row below says
+   * to buy nothing rather than a deck's worth of sheets nobody will lay. */
   const deckFloors = new Set<number>();
   for (const p of model.parts) if (p.kind === "floor-sheet") deckFloors.add(p.floor ?? 0);
-  const decks = Math.max(1, deckFloors.size || model.meta.floors);
+  const decks = deckFloors.size;
   const fig = (v: number, dp = 2): string => v.toFixed(dp);
   const figure = (group: string, item: string, value: string, detail: string): SheetSummaryRow =>
     ({ group, code: "", item, figure: value, status: "", detail });
@@ -1183,10 +1185,12 @@ export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
   const rows: SheetSummaryRow[] = [
     figure("Deck & sheet module", "Total flooring area (one deck)", `${fig(d.deckAreaM2)} m²`,
       "The area the sheets have to cover on a single storey."),
-    figure("Deck & sheet module", "Deck levels", `${decks}`,
-      "The identical sheet field is laid on every storey, so every figure below repeats per level."),
-    figure("Deck & sheet module", "Total flooring area (all levels)", `${fig(d.deckAreaM2 * decks)} m²`,
-      "Reconciles against the priced floor:board area — it does not add to it."),
+    figure("Deck & sheet module", "Deck levels (sheeted)", `${decks}`,
+      "The identical sheet field is laid on each UPPER storey only — the ground floor bears on the "
+      + "filled plinth and carries no 8'×4' field — so every figure below repeats per sheeted level."),
+    figure("Deck & sheet module", "Total sheeted area (all levels)", `${fig(d.deckAreaM2 * decks)} m²`,
+      "Upper decks only. The priced floor:board line still covers every storey including the ground "
+      + "floor; this figure never adds to it."),
     figure("Deck & sheet module", "Sheet module", d.moduleLabel,
       `Nominal ${Math.round(d.longMm)} × ${Math.round(d.shortMm)} mm.`),
     figure("Deck & sheet module", "Area of one sheet", `${fig(d.sheetAreaM2, 3)} m²`, ""),
@@ -1231,11 +1235,12 @@ export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
      * third to a half of what the building needs. Stating the multiplied total explicitly is the
      * difference between a correct order and a site that runs out of decking. */
     figure("Ordering quantity (WHOLE BUILDING)", "5 · ORDER FOR THE BUILDING", `${d.purchaseSheets * decks}`,
-      `${d.purchaseSheets} sheets per deck × ${decks} deck level(s). This is the procurement figure — `
-      + `every other row in this schedule describes ONE storey. Still ordering guidance only: the priced `
+      `${d.purchaseSheets} sheets per deck × ${decks} sheeted deck level(s) — upper storeys only, the `
+      + `ground floor bears on the plinth and takes none. This is the procurement figure — every other `
+      + `row in this schedule describes ONE storey. Still ordering guidance only: the priced `
       + `floor:board line remains what the deck costs.`),
     figure("Ordering quantity (WHOLE BUILDING)", "Placement total (no offcut re-use)", `${d.sheetsIfNoReuse * decks}`,
-      `${d.sheetsIfNoReuse} × ${decks} deck level(s) — order this instead if offcuts will not be sorted and re-used.`),
+      `${d.sheetsIfNoReuse} × ${decks} sheeted deck level(s) — order this instead if offcuts will not be sorted and re-used.`),
 
     figure("Ordering quantity (ONE deck)", "Wastage on the recommendation", `${fig(d.wastagePct, 1)} %`,
       `${fig(d.purchaseSheets * d.sheetAreaM2)} m² bought against a ${fig(d.deckAreaM2)} m² deck.`),

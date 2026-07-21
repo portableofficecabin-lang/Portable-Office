@@ -81,6 +81,12 @@ export function buildExplodedExplanation(model: ColonyModel): ExplodedExplanatio
 
   const gf = (p: ColonyPart) => (p.floor ?? 0) === 0;
 
+  /* The matching part on the LOWEST storey that carries one. The sheet field starts on floor 1 —
+   * the ground floor bears on the plinth and lays no sheets — so a callout anchored with a
+   * hard-coded gf() filter would silently vanish. This follows the field wherever it starts. */
+  const onLowestFloor = (pred: (p: ColonyPart) => boolean): ColonyPart | undefined =>
+    parts.filter(pred).sort((a, b) => (a.floor ?? 0) - (b.floor ?? 0))[0];
+
   /* ---- 1. THE FIRST C-BEND — the datum the whole deck is measured from -------------------- */
   const cbendLeft = byId((p) => p.kind === "c-channel" && p.id.includes(":c-bend:left:web") && gf(p));
   if (cbendLeft) {
@@ -137,7 +143,7 @@ export function buildExplodedExplanation(model: ColonyModel): ExplodedExplanatio
   }
 
   /* ---- 3. THE SHEET MODULE + its bearing --------------------------------------------------- */
-  const sheet1 = byId((p) => p.kind === "floor-sheet" && p.spec.sheetMark === "S01" && gf(p));
+  const sheet1 = onLowestFloor((p) => p.kind === "floor-sheet" && p.spec.sheetMark === "S01");
   if (sheet1 && deck) {
     annotations.push({
       id: "ann:sheet:module",
@@ -155,6 +161,8 @@ export function buildExplodedExplanation(model: ColonyModel): ExplodedExplanatio
         "Fixings 150 mm c/c on edges, 300 mm c/c at",
         "intermediate supports.",
         `${deck.fullCount} full + ${deck.cutCount} cut = ${deck.sheets.length} laid.`,
+        "UPPER DECKS ONLY — the ground floor bears on",
+        "the plinth and carries no sheet field.",
       ],
       accent: ACCENT.sheet,
       dir: [0, 1, -0.5],
@@ -163,7 +171,7 @@ export function buildExplodedExplanation(model: ColonyModel): ExplodedExplanatio
   }
 
   /* ---- 4. THE ADDED BEARERS — visible proof of the spacing defect, and its cost ----------- */
-  const bearer = byId((p) => p.kind === "noggin" && gf(p));
+  const bearer = onLowestFloor((p) => p.kind === "noggin");
   if (bearer && deck && deck.bearers.length > 0) {
     annotations.push({
       id: "ann:bearer",

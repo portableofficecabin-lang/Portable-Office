@@ -1153,11 +1153,17 @@ function addBoltedSidePlates(
   });
 }
 
-/* ==================================================== GROUND-FLOOR DECK ENGINEERING DETAIL ====
+/* ==================================================== DECK ENGINEERING DETAIL =================
  * The priced take-off puts joists in the floor and buys a deck area. What it cannot say is whether
  * that steel actually CARRIES an 8'×4' sheet — and a sheet whose edge lands mid-bay has no bearing,
  * so it deflects, the joint telegraphs through the finish and the fixings work loose. This section
- * closes that gap:
+ * closes that gap.
+ *
+ * WHERE THE SHEETS GO — upper decks (floors 1+) ONLY. The ground floor bears on the filled plinth,
+ * so it needs no 8'×4' sheet field; the numbered setting-out, and the bearers that exist only to
+ * support its joints, are laid on the first and second floor decks. The perimeter C-bend and the
+ * joist-end connection detail stay on every deck including the ground floor, because the rim and
+ * the joist bolting are real on every storey.
  *
  *   1. it measures the support the priced frame provides and sets the sheets out on it one by one;
  *   2. it adds the PERIMETER C-BEND, which is what gives the outer sheet edge something to sit on
@@ -1209,8 +1215,11 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
     memberWidthM: joistWM,
   });
 
-  /* ---- deterministic engineering warnings (never silently "fix" the frame) ------------------ */
-  if (!layout.spacing.modular) {
+  /* ---- deterministic engineering warnings (never silently "fix" the frame) ------------------ *
+   * Gated on an upper deck existing at all: the 8'×4' field is laid on floors 1+ only (the ground
+   * floor bears on the filled plinth), so a single-storey colony lays no sheet field and there is
+   * nothing for the spacing to defect against. */
+  if (a.floors > 1 && !layout.spacing.modular) {
     s.warn({
       code: "sheet-spacing-not-modular",
       required: round(layout.spacing.recommendedMm, 1),
@@ -1223,7 +1232,7 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
         + `fix, of which ${layout.bearersAvoidableBySpacing} would be unnecessary at the recommended spacing.`,
     });
   }
-  if (layout.edgeBearingMm < MIN_EDGE_BEARING_MM) {
+  if (a.floors > 1 && layout.edgeBearingMm < MIN_EDGE_BEARING_MM) {
     s.warn({
       code: "sheet-edge-bearing-short",
       required: MIN_EDGE_BEARING_MM,
@@ -1246,6 +1255,13 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
 
     /* ---- 1. PERIMETER C-BEND — the edge member the whole deck edge depends on --------------- */
     addPerimeterCBend(s, { tag, floor: f, body, zBot, zTop });
+
+    /* THE 8'×4' SHEET FIELD IS LAID ON THE UPPER DECKS ONLY. The ground floor bears on the filled
+     * plinth, so it takes no sheet setting-out — and therefore none of the bearers whose only job
+     * is to close that field's joints. The GF keeps its C-bend (deck edge rim + panel seat) and its
+     * priced board/finish; only the UNPRICED numbered setting-out is restricted, so what the deck
+     * costs (`floor:board`) is untouched by this rule. */
+    if (f >= 1) {
 
     /* ---- 2. BEARERS under every sheet joint the priced frame does not already carry --------- *
      * Cut between the members either side of the joint, so each bearer is a real fabricable piece
@@ -1328,6 +1344,8 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
         },
       );
     }
+
+    } // end upper-deck-only sheet field (f >= 1)
 
     /* ---- 4. JOIST-END CONNECTIONS — shop-welded cleat, site-bolted joist -------------------- *
      * Ground floor only: this is the floor the detailing is being asked to explain, and emitting a
