@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Phone, Mail, MapPin, Send, Clock, Loader2, Check, ChevronLeft, ChevronRight, User, Package, ClipboardList, FileCheck, Copy } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -297,16 +298,12 @@ export default function ContactPage() {
 
   return (
     <Layout>
-      <section className="bg-primary text-primary-foreground py-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
-            <h1 className="font-display text-4xl sm:text-5xl font-bold mb-4">Contact Us</h1>
-            <p className="text-lg text-primary-foreground/80">
-              Share your requirements in 4 quick steps. We'll respond within 24 hours with a detailed estimate.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Get in Touch"
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Contact" }]}
+        title="Contact Us"
+        description="Share your requirements in 4 quick steps. We'll respond within 24 hours with a detailed estimate."
+      />
 
       <section className="section-padding">
         <div className="container-custom">

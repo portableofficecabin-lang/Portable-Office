@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useRef, useState, useMemo, useEffect } from "react";
-import { Filter, Search, Grid, List, X, ArrowRight } from "lucide-react";
+import { BadgeCheck, Factory, Filter, Search, Grid, List, Truck, X, ArrowRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero, PageHeroChip } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -105,37 +106,49 @@ export function ProductsPageContent({
 
   return (
     <Layout>
-      {/* Header */}
-      <section className="relative bg-gradient-to-br from-primary via-navy-deep to-primary text-primary-foreground py-20 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-light/10 rounded-full blur-2xl" />
-        <div className="container-custom relative">
-          <div className="max-w-3xl">
-            <nav className="flex items-center gap-2 text-sm text-primary-foreground/60 mb-4">
-              <Link href="/" className="hover:text-accent transition-colors">Home</Link>
-              <span>/</span>
-              <span className="text-accent font-medium">Products</span>
-            </nav>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-1.5 h-10 bg-gradient-to-b from-accent to-amber-light rounded-full" />
-              {/* ▶ LCP ELEMENT (/products and /products/category/[slug], mobile):
-                  this H1 is the LCP — the page header is a pure CSS-gradient band with
-                  NO image, so the largest above-the-fold paint is this display-size
-                  heading text. It needs no image optimization; it paints as soon as
-                  the HTML + (display:swap) font fallback arrive, i.e. it is gated only
-                  by TTFB, not by any asset. The first product card image below is
-                  preloaded as a desktop LCP fallback (ProductCard `priority`). */}
-              <h1 className="font-display text-4xl sm:text-5xl font-bold">
-                {activeCategoryObj ? activeCategoryObj.name : "Our Products"}
-              </h1>
-            </div>
-            <p className="text-lg text-primary-foreground/80 max-w-2xl">
-              Explore our complete range of <span className="text-accent font-semibold">premium portable structures</span>.
-              Quality construction, customizable designs, delivered to your site.
-            </p>
-          </div>
+      {/* ▶ LCP ELEMENT (/products and /products/category/[slug], mobile):
+          PageHero's <h1> is the LCP — the band is pure CSS with NO image, so the
+          largest above-the-fold paint is this display-size heading text. It needs no
+          image optimization; it paints as soon as the HTML + (display:swap) fallback
+          font arrive, i.e. it is gated only by TTFB, not by any asset. The first
+          product card image below is preloaded as a desktop LCP fallback
+          (ProductCard `priority`). Keep PageHero image-free for this reason. */}
+      <PageHero
+        eyebrow={activeCategoryObj ? "Product Category" : "Our Range"}
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          ...(activeCategoryObj
+            ? [{ name: "Products", href: "/products" }, { name: activeCategoryObj.name }]
+            : [{ name: "Products" }]),
+        ]}
+        title={activeCategoryObj ? activeCategoryObj.name : "Our Products"}
+        description={
+          activeCategoryObj ? (
+            activeCategoryObj.description
+          ) : (
+            <>
+              Explore our complete range of{" "}
+              <span className="font-semibold text-accent">premium portable structures</span>. Quality
+              construction, customizable designs, delivered to your site.
+            </>
+          )
+        }
+      >
+        <div className="flex flex-wrap gap-2.5">
+          <PageHeroChip>
+            <BadgeCheck className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+            ISO 9001:2015 Certified
+          </PageHeroChip>
+          <PageHeroChip>
+            <Factory className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+            In-house manufacturing
+          </PageHeroChip>
+          <PageHeroChip>
+            <Truck className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+            Delivery across India
+          </PageHeroChip>
         </div>
-      </section>
+      </PageHero>
 
       <section className="section-padding">
         <div className="container-custom">

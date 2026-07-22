@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import {
   CreditCard,
   ChevronRight,
@@ -41,20 +42,17 @@ export default function PaymentPolicyPage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
-        <div className="container-custom text-center">
-          <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-            <CreditCard className="h-4 w-4" />
+      <PageHero
+        size="compact"
+        eyebrow={
+          <span className="inline-flex items-center gap-1.5">
+            <CreditCard className="h-3.5 w-3.5" aria-hidden="true" />
             Payment Policy
-          </div>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            How Payment <span className="text-accent">Works</span>
-          </h1>
-          <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-            Standard products can be bought and paid for online, securely. Custom, made-to-order builds follow the quotation route — here is exactly what you pay and how you pay it.
-          </p>
-        </div>
-      </section>
+          </span>
+        }
+        title={<>How Payment <span className="text-accent">Works</span></>}
+        description="Standard products can be bought and paid for online, securely. Custom, made-to-order builds follow the quotation route — here is exactly what you pay and how you pay it."
+      />
 
       {/* Breadcrumb */}
       <section className="bg-muted/50 py-3 border-b border-border">

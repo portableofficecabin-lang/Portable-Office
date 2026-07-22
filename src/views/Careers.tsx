@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import {
   Users,
   TrendingUp,
@@ -103,36 +104,20 @@ export default function CareersPage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-primary via-primary to-navy-light overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--accent)/0.15),transparent_60%)]" />
-        <div className="container-custom relative py-20 lg:py-28">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={0}
-            className="max-w-3xl"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent font-semibold text-sm mb-6 backdrop-blur-sm border border-accent/30">
-              We're Hiring
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-              Build Your Career With Us
-            </h1>
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mb-8">
-              Join a team that's shaping the future of modular construction in India. At Portable Office Cabin, you'll find meaningful work, real growth, and the chance to make a lasting impact.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button variant="accent" size="xl" asChild>
-                <a href="#openings">View Open Positions</a>
-              </Button>
-              <Button variant="outline-light" size="xl" asChild>
-                <a href="mailto:admin@portableofficecabin.com">Send Your CV</a>
-              </Button>
-            </div>
-          </motion.div>
+      <PageHero
+        eyebrow="We're Hiring"
+        title="Build Your Career With Us"
+        description="Join a team that's shaping the future of modular construction in India. At Portable Office Cabin, you'll find meaningful work, real growth, and the chance to make a lasting impact."
+      >
+        <div className="flex flex-wrap gap-4">
+          <Button variant="accent" size="xl" asChild>
+            <a href="#openings">View Open Positions</a>
+          </Button>
+          <Button variant="outline-light" size="xl" asChild>
+            <a href="mailto:admin@portableofficecabin.com">Send Your CV</a>
+          </Button>
         </div>
-      </section>
+      </PageHero>
 
       {/* Company Intro */}
       <section className="py-16 lg:py-20 bg-background">
@@ -428,7 +413,9 @@ export default function CareersPage() {
       </section>
 
       {/* How to Apply */}
-      <section className="py-16 lg:py-20 bg-gradient-to-br from-primary via-primary to-navy-light relative overflow-hidden">
+      {/* Navy, NOT from-primary. --primary is amber in this theme, so the previous
+          gradient put white text on orange at ~2.4:1. Navy gives ~13:1. */}
+      <section className="py-16 lg:py-20 bg-gradient-to-br from-navy-deep via-navy-deep to-navy-medium relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,hsl(var(--accent)/0.12),transparent_60%)]" />
         <div className="container-custom relative">
           <motion.div
