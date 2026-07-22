@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 import { formatDateSafe } from "@/utils/formatDate";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, Calendar, Clock, User, Tag, BookOpen, Search,
-  TrendingUp, ChevronRight, FileText, Bookmark, Share2
+  TrendingUp, FileText, Bookmark, Share2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -175,59 +176,36 @@ export default function Blog() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-16 md:py-20 overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 25% 40%, hsl(32 95% 52% / 0.4) 0%, transparent 45%), radial-gradient(circle at 75% 60%, hsl(32 95% 52% / 0.2) 0%, transparent 45%)' }} />
-          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle, hsl(210 40% 98% / 0.4) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-        </div>
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 mb-6">
-            <span className="text-sm font-semibold text-accent">Premium Portable Structures</span>
-          </div>
-
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm mb-8">
-            <Link href="/" className="transition-colors" style={{ color: 'hsl(var(--slate-100) / 0.75)' }}>Home</Link>
-            <ChevronRight className="h-3.5 w-3.5" style={{ color: 'hsl(var(--slate-100) / 0.45)' }} />
-            <span className="font-semibold text-accent">Blog</span>
-          </nav>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight" style={{ color: 'hsl(var(--slate-50))' }}>
-              Industry Insights & <span className="text-accent">Expert Guides</span>
-            </h1>
-            <p className="text-base md:text-lg max-w-2xl mb-10 leading-relaxed" style={{ color: 'hsl(var(--slate-100) / 0.86)' }}>
-              Deep-dive articles on portable cabins, prefab structures, container offices, and modular building solutions. Written by industry experts.
+      <PageHero
+        eyebrow="Premium Portable Structures"
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Blog" },
+        ]}
+        title={
+          <>
+            Industry Insights & <span className="text-accent">Expert Guides</span>
+          </>
+        }
+        description="Deep-dive articles on portable cabins, prefab structures, container offices, and modular building solutions. Written by industry experts."
+      >
+        {/* Stats Bar */}
+        <div className="bg-white/[0.07] backdrop-blur-sm border border-white/15 rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2.5 text-lg font-bold text-white">
+              <BookOpen className="h-5 w-5 text-accent" />
+              Blog Articles
+            </div>
+            <p className="text-sm mt-1 text-white/75">
+              Showing <strong className="text-white">{filteredPosts.length}</strong> of <strong className="text-white">{allPosts.length}</strong> articles
             </p>
-          </motion.div>
-
-          {/* Stats Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-          >
-            <div>
-              <div className="flex items-center gap-2.5 text-lg font-bold" style={{ color: 'hsl(var(--slate-50))' }}>
-                <BookOpen className="h-5 w-5 text-accent" />
-                Blog Articles
-              </div>
-              <p className="text-sm mt-1" style={{ color: 'hsl(var(--slate-100) / 0.78)' }}>
-                Showing <strong style={{ color: 'hsl(var(--slate-50))' }}>{filteredPosts.length}</strong> of <strong style={{ color: 'hsl(var(--slate-50))' }}>{allPosts.length}</strong> articles
-              </p>
-            </div>
-            <div className="text-right hidden sm:block">
-              <div className="text-4xl font-bold text-accent">{allPosts.length}</div>
-              <div className="text-xs uppercase tracking-widest font-medium" style={{ color: 'hsl(var(--slate-100) / 0.62)' }}>Total Articles</div>
-            </div>
-          </motion.div>
+          </div>
+          <div className="text-right hidden sm:block">
+            <div className="text-4xl font-bold text-accent">{allPosts.length}</div>
+            <div className="text-xs uppercase tracking-widest font-medium text-white/60">Total Articles</div>
+          </div>
         </div>
-      </section>
+      </PageHero>
 
       {/* Main Content */}
       <section className="py-10 md:py-16 bg-background">

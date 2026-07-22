@@ -3,22 +3,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { ArrowRight, MapPin } from "lucide-react";
 import { seoPromotions } from "@/data/seoPromotions";
 
 export function MarketplacePage() {
   return (
     <Layout>
-      <div className="container-custom section-padding">
-        <div className="text-center mb-12">
-          <h1 className="font-display font-extrabold text-4xl md:text-5xl mb-4 text-foreground">
-            Our <span className="text-primary">Marketplace</span>
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore all our location-specific promotions and offers on portable cabins, container offices, and prefab structures.
-          </p>
-        </div>
+      <PageHero
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Marketplace" },
+        ]}
+        title={
+          <>
+            Our <span className="text-accent">Marketplace</span>
+          </>
+        }
+        description="Explore all our location-specific promotions and offers on portable cabins, container offices, and prefab structures."
+      />
 
+      <div className="container-custom section-padding">
         {/* All Promotion Cards in Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {seoPromotions.map((promo, index) => {

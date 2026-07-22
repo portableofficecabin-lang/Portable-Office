@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Users, Award, CheckCircle } from "lucide-react";
 
@@ -33,19 +34,17 @@ export default function AboutPage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-20">
-        <div className="container-custom">
-          <div className="max-w-3xl">
-            <h1 className="font-display text-4xl sm:text-5xl font-bold mb-6">
-              About Us
-            </h1>
-            <p className="text-xl text-primary-foreground/80">
-              For over 15 years, we've been manufacturing premium portable structures 
-              that help businesses and individuals build their spaces anywhere.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Who We Are"
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "About Us" }]}
+        title="About Us"
+        description={
+          <>
+            For over 15 years, we&apos;ve been manufacturing premium portable structures
+            that help businesses and individuals build their spaces anywhere.
+          </>
+        }
+      />
 
       {/* Mission & Vision */}
       <section className="section-padding">
@@ -142,14 +141,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-primary text-primary-foreground py-16">
+      {/* CTA — navy, NOT bg-primary. In this theme --primary is amber and
+          --primary-foreground is dark navy, so the previous combination rendered
+          dark navy text on orange at roughly 2:1. White on navy-deep is 15:1. */}
+      <section className="bg-navy-deep text-white py-16">
         <div className="container-custom text-center">
           <h2 className="font-display text-3xl font-bold mb-4">
             Ready to Work With Us?
           </h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-            Let's discuss how we can help you with your portable structure needs.
+          <p className="text-white/75 mb-8 max-w-xl mx-auto">
+            Let&apos;s discuss how we can help you with your portable structure needs.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button variant="hero" size="lg" asChild>

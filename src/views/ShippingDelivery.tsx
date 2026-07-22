@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import {
   Truck,
   Clock,
@@ -74,22 +75,17 @@ export default function ShippingDeliveryPage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
-        <div className="container-custom text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-              <Truck className="h-4 w-4" />
-              Shipping & Delivery
-            </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Hassle-Free Delivery, <span className="text-accent">Every Time</span>
-            </h1>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-              From our factory floor to your site — we handle everything. Here's exactly what to expect when you order from us.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        size="compact"
+        eyebrow={
+          <span className="inline-flex items-center gap-1.5">
+            <Truck className="h-3.5 w-3.5" aria-hidden="true" />
+            Shipping & Delivery
+          </span>
+        }
+        title={<>Hassle-Free Delivery, <span className="text-accent">Every Time</span></>}
+        description="From our factory floor to your site — we handle everything. Here's exactly what to expect when you order from us."
+      />
 
       {/* Breadcrumb */}
       <section className="bg-muted/50 py-3 border-b border-border">

@@ -83,22 +83,28 @@ export function PaymentMethods({ variant = "footer", className }: PaymentMethods
     );
   }
 
-  // "footer" — compact, sits on the dark footer background.
+  // "footer" — compact, sits on the deep-navy footer background.
+  //
+  // COLOUR NOTE: this used to be `text-primary-foreground`. In this theme `--primary`
+  // is amber, so `--primary-foreground` is DARK NAVY — it was legible only because the
+  // old footer was an amber slab. Now that the footer is navy, that same token would
+  // render near-invisible. These are explicit white tints instead, so this strip stays
+  // readable regardless of which dark surface it is dropped onto.
   return (
     <div className={cn("flex flex-wrap items-center gap-x-3 gap-y-2", className)}>
-      <span className="text-sm font-bold text-primary-foreground/90 mr-1">We accept</span>
+      <span className="text-sm font-semibold text-white/80 mr-1">We accept</span>
 
       {METHODS.map((method) => (
         <span
           key={method.name}
-          className="inline-flex items-center gap-2 rounded-lg bg-white/10 border border-accent/30 px-3 py-1.5 text-sm font-bold text-primary-foreground"
+          className="inline-flex items-center gap-2 rounded-lg bg-white/10 border border-white/15 px-3 py-1.5 text-sm font-semibold text-white"
         >
           <method.icon className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
           {method.name}
         </span>
       ))}
 
-      <span className="inline-flex items-center gap-2 text-sm font-bold text-primary-foreground/90">
+      <span className="inline-flex items-center gap-2 text-sm font-semibold text-white/80">
         <ShieldCheck className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
         Secured by Razorpay
       </span>

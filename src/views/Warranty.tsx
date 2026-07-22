@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import {
   Shield,
   CheckCircle2,
@@ -40,22 +41,17 @@ export default function WarrantyPage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground py-16 md:py-20">
-        <div className="container-custom text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-              <Shield className="h-4 w-4" />
-              Warranty & Support
-            </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Built to Last. <span className="text-accent">Backed by Us.</span>
-            </h1>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto text-lg">
-              Every cabin we build comes with a solid warranty and dedicated after-sales support — because your peace of mind matters.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        size="compact"
+        eyebrow={
+          <span className="inline-flex items-center gap-1.5">
+            <Shield className="h-3.5 w-3.5" aria-hidden="true" />
+            Warranty & Support
+          </span>
+        }
+        title={<>Built to Last. <span className="text-accent">Backed by Us.</span></>}
+        description="Every cabin we build comes with a solid warranty and dedicated after-sales support — because your peace of mind matters."
+      />
 
       {/* Breadcrumb */}
       <section className="bg-muted/50 py-3 border-b border-border">
