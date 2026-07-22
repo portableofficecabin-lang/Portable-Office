@@ -18,10 +18,14 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Film, Loader2, X } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronRight, Film, Loader2, Wrench, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { ColonyModel, ViewMode } from "@/features/labour-colony-studio/model/types";
+import {
+  assemblyCallout, pufLockMethodSteps, PUF_LOCK_EXPLANATION,
+  type PufLockDerived,
+} from "@/features/labour-colony-studio/model/pufLock";
 import type { BoqResult } from "@/lib/boq/types";
 import { AssemblyScene, type AssemblyExportController } from "./AssemblyScene";
 import { AssemblyOverlay } from "./AssemblyOverlay";
@@ -211,6 +215,13 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
   const extras = useMemo(() => overlayExtrasFor(timeline, player.timeMs), [timeline, player.timeMs]);
   const webmSupported = isWebMSupported();
 
+  /* ---- PUF panel bottom locking system — the erection method statement that accompanies the video.
+   *      The 16 steps come straight from the engineering core (model.pufLock, the same bundle the
+   *      geometry and the schedules were built from), so this panel can never narrate a quantity the
+   *      animation does not show. Rendered only when the system is actually on this colony. ---- */
+  const pufLock = model.pufLock;
+  const showPufLock = !!pufLock?.config.enabled && pufLock.positions.length > 0;
+
   if (validation.errors.length) {
     return (
       <div className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">
@@ -304,6 +315,8 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
               onClose={() => setShowExport(false)}
             />
           )}
+
+          {showPufLock && pufLock && <PufLockMethodPanel lock={pufLock} />}
         </div>
 
         {/* erection step list */}
@@ -317,6 +330,93 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
 }
 
 export default AssemblyVideoView;
+
+/* ----------------------------------------------------------------- PUF lock method statement --- */
+
+/**
+ * The PUF panel bottom locking system's 16-step erection method statement, shown ALONGSIDE the
+ * animation (the locking system itself erects inside the canonical 24-step sequence: the plate,
+ * anchors and welded C-purlin pair at step 5, the panel dropping into the finished pocket at step 20).
+ *
+ * Every line is read from `pufLockMethodSteps(model.pufLock)` — the same resolved bundle the geometry,
+ * the detail sheets and the fabrication schedules were built from — so nothing here can state a
+ * quantity, a pocket width or a weld length that disagrees with the model. Collapsed by default so it
+ * never pushes the player or the controls off screen; it sits outside the captured stage, so it can
+ * never appear in an export.
+ */
+function PufLockMethodPanel({ lock }: { lock: PufLockDerived }) {
+  const [open, setOpen] = useState(false);
+  const steps = useMemo(() => pufLockMethodSteps(lock), [lock]);
+  const callout = useMemo(() => assemblyCallout(lock.config), [lock.config]);
+  const t = lock.takeoff;
+
+  return (
+    <div className="rounded-xl border border-border bg-background text-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center gap-2 px-3 py-2 text-left"
+      >
+        {open ? <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+              : <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />}
+        <Wrench className="h-4 w-4 shrink-0 text-accent" />
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold leading-tight">
+            PUF panel bottom locking — erection method statement
+          </span>
+          <span className="block text-xs text-muted-foreground">
+            {steps.length} steps · {t.plates} assembl{t.plates === 1 ? "y" : "ies"} ·{" "}
+            {t.pocketClearGapMm} mm pocket for a {t.panelThicknessMm} mm panel · erects at sequence steps 5 and 20
+          </span>
+        </span>
+      </button>
+
+      {open && (
+        <div className="space-y-2 border-t border-border/60 px-3 py-2.5">
+          <div className="rounded-lg bg-muted/50 px-2.5 py-1.5 text-xs">
+            <div className="font-medium text-foreground/80">{callout}</div>
+            <div className="mt-0.5 text-muted-foreground">
+              {t.purlinPieces} C-purlin pieces · {t.bolts} anchor bolts · {t.weldTotalLengthM.toFixed(2)} m of weld ·{" "}
+              {t.sideGapMm} mm side gap
+            </div>
+          </div>
+
+          <ol className="space-y-1.5">
+            {steps.map((s) => (
+              <li key={s.no} className="flex gap-2">
+                <span className="mt-0.5 inline-flex h-5 min-w-[1.4rem] shrink-0 items-center justify-center rounded bg-muted px-1 text-xs font-bold tabular-nums text-muted-foreground">
+                  {s.no}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs font-semibold leading-snug">{s.title}</span>
+                  <span className="block text-xs leading-relaxed text-muted-foreground">{s.detail}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          {lock.errors.length > 0 && (
+            <div className="rounded-md border border-red-300 bg-red-50 px-2 py-1 text-xs text-red-700">
+              <span className="font-semibold">Locking system errors:</span>{" "}
+              {lock.errors.slice(0, 3).map((e) => e.message).join(" ")}
+            </div>
+          )}
+          {lock.errors.length === 0 && lock.warnings.length > 0 && (
+            <div className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-xs text-amber-800">
+              <span className="font-semibold">Note:</span>{" "}
+              {lock.warnings.slice(0, 3).map((w) => w.message).join(" ")}
+            </div>
+          )}
+
+          <p className="border-t border-border/60 pt-2 text-[11px] leading-relaxed text-muted-foreground">
+            {PUF_LOCK_EXPLANATION}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ----------------------------------------------------------------- export panel ---------------- */
 

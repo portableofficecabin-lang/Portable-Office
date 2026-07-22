@@ -7,7 +7,7 @@ import autoTable from "jspdf-autotable";
 import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
-  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler, Boxes,
+  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler, Boxes, Lock,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ import { AdminCard, AdminCardContent } from "@/components/admin/AdminCard";
 import { LabourColonyDrawings } from "@/components/admin/LabourColonyDrawings";
 import { RoomFloorPlan } from "@/components/admin/labour-colony/RoomFloorPlan";
 import { CivilWorkTab } from "@/components/admin/labour-colony/CivilWorkTab";
+import { PufLockTab } from "@/components/admin/labour-colony/PufLockTab";
 import { ConstructionDrawingTab } from "@/components/admin/labour-colony/ConstructionDrawingTab";
 import ColonyBoqPanel from "@/components/admin/boq/ColonyBoqPanel";
 import type { BoqResult, BoqSettings } from "@/lib/boq/types";
@@ -50,6 +51,8 @@ import {
   type CivilWorkResult,
 } from "@/lib/quotation/labourColonyCivil";
 import { buildConstructionPlan } from "@/lib/quotation/labourColonyPlan";
+import { buildColumnMarks } from "@/lib/quotation/labourColonyRebar";
+import type { PufLockContext } from "@/features/labour-colony-studio/model/pufLock";
 import { addLegalFooter } from "@/lib/pdfFooter";
 import {
   defaultProjectMeta,
@@ -202,6 +205,26 @@ export default function LabourColonyQuotation() {
     () => (civilCtx && civil.enabled ? calculateCivilWork(civil, civilCtx) : null),
     [civil, civilCtx],
   );
+
+  /* The building the PUF-panel bottom locking system is set out on. Built from the SAME live result
+   * and civil result every other tab uses — the plinth-beam grid the plates bolt down to, the plinth
+   * top they sit at, the beam width they may not overhang, and the calculator's own panel thickness
+   * the receiving pocket tracks. ADDITIVE: nothing here feeds back into the structure or civil
+   * engines, so configuring the locking detail cannot move any existing result. */
+  const pufLockCtx = useMemo<PufLockContext | null>(() => {
+    if (!result || !civilResult) return null;
+    const g = civilResult.foundation.grid;
+    if (g.xsM.length < 2 || g.ysM.length < 2) return null;
+    return {
+      grid: buildColumnMarks(g.xsM, g.ysM),
+      plinthTopZM: civilResult.foundation.section.raisedPlinthHeightM ?? 0.45,
+      plinthBeamWidthM: civilResult.foundation.section.plinthBeamWidthM ?? 0.23,
+      configPanelThicknessMm: config.panelThicknessMm,
+      body: { x0: 0, y0: 0, x1: result.area.footprintLengthM, y1: result.area.footprintWidthM },
+      // decides the DEFAULT enabled state for a project that has never configured the locking system
+      panelType: config.panelType,
+    };
+  }, [result, civilResult, config.panelThicknessMm, config.panelType]);
 
   /* ---------- persistence ---------- */
   const buildProject = (): LabourColonyProject => {
@@ -374,6 +397,7 @@ export default function LabourColonyQuotation() {
             <TabsTrigger value="project" className="gap-1.5"><Building2 className="h-4 w-4" /> Project</TabsTrigger>
             <TabsTrigger value="structure" className="gap-1.5"><LayoutGrid className="h-4 w-4" /> Structure &amp; Drawings</TabsTrigger>
             <TabsTrigger value="civil" className="gap-1.5"><HardHat className="h-4 w-4" /> Civil Work</TabsTrigger>
+            <TabsTrigger value="puflock" className="gap-1.5"><Lock className="h-4 w-4" /> PUF Lock</TabsTrigger>
             <TabsTrigger value="material" className="gap-1.5"><Package className="h-4 w-4" /> Material BOQ</TabsTrigger>
             <TabsTrigger value="drawing" className="gap-1.5"><Ruler className="h-4 w-4" /> Construction Drawing</TabsTrigger>
             <TabsTrigger value="studio" className="gap-1.5"><Boxes className="h-4 w-4" /> Engineering Studio</TabsTrigger>
@@ -777,6 +801,23 @@ export default function LabourColonyQuotation() {
             <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
               <HardHat className="h-10 w-10 mx-auto mb-3 opacity-40" />
               Complete the Structure tab (capacity + room size) to size the civil work.
+            </AdminCardContent></AdminCard>
+          )}
+        </TabsContent>
+
+        {/* ============ PUF PANEL BOTTOM LOCKING SYSTEM ============
+            The plate / anchor / paired-C-purlin locking detail the external PUF wall panels drop into.
+            Stored at config.pufLock (optional jsonb, no migration) and resolved through
+            derivePufLock, which is the same bundle the engineering model, the detail sheets and the
+            fabrication schedules read — so this tab can never show a different quantity. */}
+        <TabsContent value="puflock" className="mt-6">
+          {result && civilResult && pufLockCtx ? (
+            <PufLockTab config={config} onChange={setConfig} ctx={pufLockCtx} />
+          ) : (
+            <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
+              <Lock className="h-10 w-10 mx-auto mb-3 opacity-40" />
+              Complete the Structure tab (capacity + room size) and keep Civil Work enabled — the
+              locking plates are set out on the plinth-beam grid, so the foundation must be sized first.
             </AdminCardContent></AdminCard>
           )}
         </TabsContent>

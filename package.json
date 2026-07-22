@@ -23,7 +23,8 @@
     "colony:reports": "npx tsx scripts/colony-studio-reports.test.ts",
     "colony:animation": "npx tsx scripts/colony-studio-animation.test.ts",
     "colony:render": "npx tsx --tsconfig scripts/tsconfig.harness.json scripts/colony-studio-render.test.tsx",
-    "colony:verify": "npm run colony:model && npm run colony:reports && npm run colony:animation && npm run colony:render",
+    "colony:puflock": "npx tsx scripts/colony-puf-lock.test.ts",
+    "colony:verify": "npm run colony:model && npm run colony:reports && npm run colony:animation && npm run colony:render && npm run colony:puflock",
     "seo:audit": "node scripts/seo-audit.mjs",
     "admin:reset-password": "node scripts/reset-admin-password.mjs"
   },

@@ -13,6 +13,8 @@ import { buildConstructionPlan } from "../src/lib/quotation/labourColonyPlan";
 import { calculateCivilWork, DEFAULT_CIVIL_CONFIG, type CivilContext, type CivilWorkResult } from "../src/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
 import * as S from "../src/features/labour-colony-studio/reports/schedules";
+import * as P from "../src/features/labour-colony-studio/reports/pufLockSchedules";
+import type { PufLockDerived } from "../src/features/labour-colony-studio/model/pufLock";
 
 let passed = 0;
 let failed = 0;
@@ -72,6 +74,14 @@ const result = calculateLabourColony(CONFIG);
 const civil: CivilWorkResult = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(result));
 const model = buildColonyModel({ result, civil, columnGrid: null });
 
+/**
+ * The PUF panel bottom locking system rides on the model itself (`ColonyModel.pufLock`) — the
+ * schedules take that ONE resolved bundle, never the model, so they can never re-derive a pocket
+ * width or a piece count of their own.
+ */
+ok(!!model.pufLock, "model carries the resolved PUF-lock bundle");
+const puf: PufLockDerived | null = model.pufLock ?? null;
+
 /* ---- every builder runs, returns an array, and emits only finite numbers ------------------- */
 const BUILDERS: { name: string; run: () => unknown[]; expectRows: boolean }[] = [
   { name: "memberList", run: () => S.buildMemberList(model, null), expectRows: true },
@@ -89,6 +99,13 @@ const BUILDERS: { name: string; run: () => unknown[]; expectRows: boolean }[] = 
   { name: "columnSchedule", run: () => S.buildColumnSchedule(model), expectRows: true },
   { name: "beamSchedule", run: () => S.buildBeamSchedule(model), expectRows: true },
   { name: "dispatchList", run: () => S.buildDispatchList(model), expectRows: true },
+  // PUF panel bottom lock — these take model.pufLock (the derived bundle), not the model.
+  { name: "pufLockPlateSchedule", run: () => (puf ? P.buildPufLockPlateSchedule(puf) : []), expectRows: true },
+  { name: "pufLockAnchorSchedule", run: () => (puf ? P.buildPufLockAnchorSchedule(puf) : []), expectRows: true },
+  { name: "pufLockPurlinSchedule", run: () => (puf ? P.buildPufLockPurlinSchedule(puf) : []), expectRows: true },
+  { name: "pufLockWeldSchedule", run: () => (puf ? P.buildPufLockWeldSchedule(puf) : []), expectRows: true },
+  { name: "pufLockPanelSchedule", run: () => (puf ? P.buildPufLockPanelSchedule(puf) : []), expectRows: true },
+  { name: "pufLockOrderingSummary", run: () => (puf ? P.buildPufLockOrderingSummary(puf) : []), expectRows: true },
 ];
 
 for (const b of BUILDERS) {

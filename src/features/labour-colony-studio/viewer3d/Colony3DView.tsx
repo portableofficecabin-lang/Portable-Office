@@ -62,6 +62,13 @@ export interface ColonyView3DSettings {
   showPartMarks: boolean;
   /** Higher device-pixel-ratio ceiling for crisper (heavier) rendering. */
   hd: boolean;
+  /**
+   * Isolate ONE assembly: when set, every part whose `connectionId` differs is hidden, leaving just
+   * that connection group on screen (e.g. a single PUF locking assembly "pufl:P07" — its plate,
+   * bolts, nuts, washers, both C-purlins, welds and panel seating). `null` / omitted is the default
+   * and leaves visibility exactly as it was before this field existed.
+   */
+  isolateConnectionId?: string | null;
 }
 
 interface Colony3DViewProps {
@@ -97,6 +104,9 @@ function isVisible(
 ): boolean {
   if (s.hiddenLayers.has(part.layer)) return false;
   if (s.hiddenKinds.has(part.kind)) return false;
+  // Assembly isolation — everything outside the isolated connection group drops out. Checked before
+  // the detail gate so the isolated assembly's own gated hardware still resolves normally below.
+  if (s.isolateConnectionId != null && part.connectionId !== s.isolateConnectionId) return false;
   if (part.floor != null && s.hiddenFloors.has(part.floor)) return false;
   if (s.viewMode === "customer" && !part.viewMask.includes("customer")) return false;
   // Connection hardware is heavy → only render when the detail flag is on, the part itself is
@@ -113,7 +123,10 @@ function isVisible(
 function opacityOf(part: ColonyPart, mode: RenderMode): number {
   const base = part.opacity ?? 1;
   if (mode === "xray") {
-    const structural = part.layer === "structure" || part.layer === "foundation" || part.layer === "connection";
+    // "puf-lock" counts as structural: the locking assemblies are fabricated steel and must stay
+    // readable through an x-ray rather than fading out with the envelope.
+    const structural = part.layer === "structure" || part.layer === "foundation"
+      || part.layer === "connection" || part.layer === "puf-lock";
     return Math.min(base, structural ? 0.5 : 0.22);
   }
   if (mode === "hidden-line") return 0.16;
@@ -295,9 +308,14 @@ export function Colony3DView(props: Colony3DViewProps) {
     [model, settings, selectedId, selectedConnId],
   );
 
+  // PUF-lock BASE PLATES join the marked members so the plate numbers are readable in the scene.
+  // Deliberately plates only — marking every bolt, nut, washer, purlin and weld of every assembly
+  // would put hundreds of labels on screen.
   const markParts = useMemo(
     () => (settings.showPartMarks
-      ? parts.filter((p) => !!p.partMark && (p.layer === "structure" || p.layer === "foundation" || p.layer === "roof"))
+      ? parts.filter((p) => !!p.partMark && (
+          p.layer === "structure" || p.layer === "foundation" || p.layer === "roof"
+          || p.kind === "puf-lock-base-plate"))
       : []),
     [parts, settings.showPartMarks],
   );

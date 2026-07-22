@@ -19,7 +19,7 @@
 import type {
   ColonyAssemblyStep, ColonyModel, ColonyPart, ColonyPartKind,
 } from "@/features/labour-colony-studio/model/types";
-import { CONNECTION_DETAIL } from "@/features/labour-colony-studio/model/assembly";
+import { CONNECTION_DETAIL, isPufLockKind } from "@/features/labour-colony-studio/model/assembly";
 import type { StepEngineeringRow } from "./assemblyTypes";
 
 /* ----------------------------------------------------------------- context --------------------- */
@@ -61,15 +61,54 @@ export interface ColonyAssemblyContext {
   hasSplice: boolean;
   hasBrace: boolean;
   upperFloor: boolean;
+  /* ---- PUF panel bottom locking system (model/pufLock) ----
+   * Read from `model.pufLock.takeoff` — the ONE take-off the model, the drawings and the schedules
+   * were all built from — falling back to counting the emitted parts. Nothing here recomputes a
+   * pocket width, a piece count or a weld length; a value that does not resolve stays 0 and every
+   * clause that would print it is dropped, so a caption can never carry "undefined" or "NaN". */
+  hasPufLock: boolean;
+  /** Base plates set on the plinth beam for the locking system (NOT the column base plates). */
+  pufLockPlates: number;
+  /** Total C-purlin pieces — 2 per plate form one receiving pocket. */
+  pufLockPurlins: number;
+  /** Clear receiving-pocket width (mm) = panel thickness + installation clearance. */
+  pufLockPocketMm: number;
+  /** The PUF panel thickness the pocket is dimensioned for (mm). */
+  pufLockPanelMm: number;
+  /** Holding-down anchor bolts across every locking plate. */
+  pufLockBolts: number;
+  /** Total plate-to-purlin weld run (m). */
+  pufLockWeldM: number;
+  /** How far the panel is pushed down into the pocket (mm). */
+  pufLockInsertionMm: number;
 }
 
 const hasKind = (parts: ColonyPart[], kind: ColonyPartKind): boolean => parts.some((p) => p.kind === kind);
 const hasAnyKind = (parts: ColonyPart[], kinds: ColonyPartKind[]): boolean =>
   parts.some((p) => kinds.includes(p.kind));
+const countKind = (parts: ColonyPart[], kind: ColonyPartKind): number =>
+  parts.reduce((n, p) => (p.kind === kind ? n + 1 : n), 0);
+
+/** A model value only when it is a usable finite number; otherwise the part-count fallback. */
+const numOr = (v: number | undefined, fallback: number): number =>
+  typeof v === "number" && Number.isFinite(v) ? v : fallback;
 
 export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
   const parts = model.parts;
   const m = model.meta;
+
+  /* ---- PUF panel bottom locking system --------------------------------------------------------
+   * The locking system is "present" when the model actually carries its parts (the model builder
+   * emits them only when the system is enabled AND plates are placed), which is exactly what the
+   * animation can narrate. Quantities prefer the resolved take-off and fall back to the parts. */
+  const hasPufLock = parts.some((p) => isPufLockKind(p.kind));
+  const lock = model.pufLock;
+  const t = lock?.takeoff;
+  const platesFromParts = countKind(parts, "puf-lock-base-plate");
+  const purlinsFromParts =
+    countKind(parts, "puf-lock-c-purlin-left") + countKind(parts, "puf-lock-c-purlin-right");
+  const boltsFromParts = countKind(parts, "puf-lock-anchor-bolt");
+
   return {
     projectName: m.projectName,
     title: m.title,
@@ -105,6 +144,14 @@ export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
     hasSplice: hasKind(parts, "splice-plate"),
     hasBrace: hasKind(parts, "brace"),
     upperFloor: m.floors > 1 || parts.some((p) => (p.floor ?? 0) >= 1),
+    hasPufLock,
+    pufLockPlates: numOr(t?.plates, platesFromParts),
+    pufLockPurlins: numOr(t?.purlinPieces, purlinsFromParts),
+    pufLockPocketMm: numOr(t?.pocketClearGapMm, 0),
+    pufLockPanelMm: numOr(t?.panelThicknessMm, 0),
+    pufLockBolts: numOr(t?.bolts, boltsFromParts),
+    pufLockWeldM: numOr(t?.weldTotalLengthM, 0),
+    pufLockInsertionMm: numOr(lock?.config.iface.insertionDepthMm, 0),
   };
 }
 
@@ -123,6 +170,72 @@ export interface ColonyStepCopy {
 }
 
 const FLOOR_WORD = (n: number): string => (n <= 1 ? "the floor" : `all ${n} floors`);
+
+/* ----------------------------------------------------------------- PUF bottom lock copy -------- */
+
+/**
+ * Ready-to-interpolate fragments for the PUF panel bottom locking system, built ONCE per step from
+ * the context (which itself only mirrors `model.pufLock.takeoff`).
+ *
+ * Every fragment is a complete, grammatical noun phrase: when a model value is missing or non-finite
+ * the fragment falls back to wording that carries no number at all, so no caption can ever emit
+ * "undefined", "NaN" or a dangling "0 mm" — the timeline validator forbids the first two outright.
+ */
+interface PufLockCopy {
+  /** "12 base plates" — or "the base plates" when the count did not resolve. */
+  plates: string;
+  /** "24 C-purlins" — or "paired C-purlins". */
+  purlins: string;
+  /** "48 anchor bolts", or "" when the count did not resolve (clause is dropped). */
+  bolts: string;
+  /** "a 53 mm receiving pocket for the 50 mm PUF wall panel" — never carries a bare number. */
+  pocket: string;
+  /** "53 mm", or "" when unresolved. */
+  pocketMm: string;
+  /** "50 mm", or "" when unresolved. */
+  panelMm: string;
+  /** "14.40 m", or "" when unresolved. */
+  weldM: string;
+  /** " 60 mm" style insertion phrase, e.g. "lowered 60 mm into" vs "lowered into". */
+  lowered: string;
+  /** "all 12 assemblies" / "every assembly". */
+  assemblies: string;
+}
+
+const isPos = (v: number): boolean => Number.isFinite(v) && v > 0;
+/** A positive finite millimetre value as text, or "" — the single gate every mm clause passes. */
+const mmText = (v: number): string => (isPos(v) ? `${trimNum(v)} mm` : "");
+
+function pufLockCopyOf(ctx: ColonyAssemblyContext): PufLockCopy {
+  const nPlates = ctx.pufLockPlates;
+  const nPurlins = ctx.pufLockPurlins;
+  const nBolts = ctx.pufLockBolts;
+  const pocketMm = mmText(ctx.pufLockPocketMm);
+  const panelMm = mmText(ctx.pufLockPanelMm);
+  const insertMm = mmText(ctx.pufLockInsertionMm);
+
+  return {
+    plates: isPos(nPlates)
+      ? `${trimNum(nPlates)} base plate${nPlates === 1 ? "" : "s"}`
+      : "the base plates",
+    purlins: isPos(nPurlins)
+      ? `${trimNum(nPurlins)} C-purlin${nPurlins === 1 ? "" : "s"}`
+      : "paired C-purlins",
+    bolts: isPos(nBolts) ? `${trimNum(nBolts)} anchor bolt${nBolts === 1 ? "" : "s"}` : "",
+    pocket: pocketMm && panelMm
+      ? `a ${pocketMm} receiving pocket for the ${panelMm} PUF wall panel`
+      : pocketMm
+        ? `a ${pocketMm} receiving pocket`
+        : "a receiving pocket matching the selected PUF-panel thickness",
+    pocketMm,
+    panelMm,
+    weldM: isPos(ctx.pufLockWeldM) ? `${ctx.pufLockWeldM.toFixed(2)} m` : "",
+    lowered: insertMm ? `lowered ${insertMm} into` : "lowered into",
+    assemblies: isPos(nPlates)
+      ? `all ${trimNum(nPlates)} assembl${nPlates === 1 ? "y" : "ies"}`
+      : "every assembly",
+  };
+}
 
 /**
  * The dynamic copy for one construction step, given the parts installed in it and the colony context.
@@ -181,19 +294,45 @@ export function describeColonyStep(
         safety: "Support shuttering from firm ground; keep the trench access route clear of stacked rebar.",
         inspection: "Plinth beam line, level, lap lengths and cover verified before the pour.",
       };
-    case 5:
+    case 5: {
+      // The PUF panel bottom lock erects in the SAME operation: its plates are bolted to the plinth
+      // beam and its C-purlins are welded up into pairs here, so the pocket is finished and cured long
+      // before a panel arrives at step 20. Every clause is gated on ctx.hasPufLock, so a colony
+      // without the locking system reads exactly as it did before.
+      const puf = ctx.hasPufLock ? pufLockCopyOf(ctx) : null;
       return {
         title: "Base plates & anchor bolts",
         description:
           "Holding-down anchor bolts, levelling plates and the column base plates are set, packed and " +
-          "grouted at finished plinth level so the steel frame lands dead level.",
-        captionCustomer: "Steel base plates are levelled and bolted to the foundations.",
+          "grouted at finished plinth level so the steel frame lands dead level." +
+          (puf
+            ? ` In the same operation ${puf.plates} for the PUF panel bottom locking system are set on the ` +
+              `plinth beam, and ${puf.purlins} are welded up in pairs on them to form ${puf.pocket}.`
+            : ""),
+        captionCustomer:
+          "Steel base plates are levelled and bolted to the foundations." +
+          (puf ? " The bottom locking channels that will hold the wall panels are formed at the same time." : ""),
         captionEngineering:
-          "Base plates set on levelling packs over the HD anchor-bolt groups; non-shrink grout after final level.",
-        tools: "Torque wrench, spanner set, levelling shims, auto level, grout gun",
-        safety: "Do not stand plates on unsecured packs; torque bolts in a diagonal sequence.",
-        inspection: "Base plate level, packing and anchor-bolt torque recorded on the ITP before erection starts.",
+          "Base plates set on levelling packs over the HD anchor-bolt groups; non-shrink grout after final level." +
+          (puf
+            ? ` PUF bottom lock: ${puf.plates} bolted to the plinth beam${puf.bolts ? ` on ${puf.bolts}` : ""}, ` +
+              `${puf.purlins} welded upright in pairs — webs on the pocket line, flanges turned away from the ` +
+              `panel — giving ${puf.pocket}${puf.weldM ? `; ${puf.weldM} of weld in total` : ""}.`
+            : ""),
+        tools:
+          "Torque wrench, spanner set, levelling shims, auto level, grout gun" +
+          (puf ? `, welding set${puf.pocketMm ? `, ${puf.pocketMm} pocket spacer / template` : ", pocket spacer / template"}` : ""),
+        safety:
+          "Do not stand plates on unsecured packs; torque bolts in a diagonal sequence." +
+          (puf ? " Hot-work permit, screens and a fire watch while the C-purlins are welded on the plinth beam." : ""),
+        inspection:
+          "Base plate level, packing and anchor-bolt torque recorded on the ITP before erection starts." +
+          (puf
+            ? ` Clear pocket width${puf.pocketMm ? ` (${puf.pocketMm})` : ""} checked at both ends of ${puf.assemblies}, ` +
+              `with weld size and coating signed off before the wall-panel step.`
+            : ""),
       };
+    }
     case 6:
       return {
         title: "Ground-floor base frame",
@@ -366,21 +505,46 @@ export function describeColonyStep(
         safety: "Sheets never left unfixed in wind; crawl boards over the purlins; fall-arrest at all times.",
         inspection: "Lap lengths, fixing pattern and flashing seal verified; roof rain-tightness checked.",
       };
-    case 20:
+    case 20: {
+      // The pocket was finished at step 5; this is where the panel actually drops into it. The
+      // locking-system sentence below is a spec requirement and is reproduced verbatim.
+      const puf = ctx.hasPufLock ? pufLockCopyOf(ctx) : null;
       return {
         title: "Wall panels & partitions",
         description:
           `External cladding${ctx.hasInsulation ? ", cavity insulation" : ""}${ctx.hasLining ? ", internal lining" : ""}` +
-          `${ctx.hasPartition ? " and the internal partitions" : ""} are installed over the wall framing.`,
-        captionCustomer: "The walls are clad, lined and divided into rooms.",
+          `${ctx.hasPartition ? " and the internal partitions" : ""} are installed over the wall framing.` +
+          (puf
+            ? ` Each${puf.panelMm ? ` ${puf.panelMm}` : ""} PUF wall panel is ${puf.lowered} the C-purlin pocket ` +
+              `already welded up on the plinth beam at ${puf.assemblies}. Two C-purlins are welded to each ` +
+              `base plate to form a receiving pocket matching the selected PUF-panel thickness. This limits ` +
+              `sideways movement and avoids excessive shaking or open gaps.`
+            : ""),
+        captionCustomer:
+          "The walls are clad, lined and divided into rooms." +
+          (puf ? " Each wall panel drops into the locking channel at its base so it cannot shake or gap." : ""),
         captionEngineering:
           `External cladding fixed to the stud frame${ctx.hasInsulation ? "; cavity insulation to the specification" : ""}` +
           `${ctx.hasLining ? "; internal lining board over the studwork" : ""}` +
-          `${ctx.hasPartition ? `; partitions setting out ${ctx.rooms} rooms` : ""}.`,
-        tools: "Screw gun, sheet nibbler, chalk line, sealant gun, panel lifter",
-        safety: "Two-person handling on full-height panels; keep panel stacks braced against wind.",
-        inspection: "Panel fixing centres, sheet alignment and partition line verified against the room layout.",
+          `${ctx.hasPartition ? `; partitions setting out ${ctx.rooms} rooms` : ""}.` +
+          (puf
+            ? ` PUF bottom lock: panel edge${puf.panelMm ? ` (${puf.panelMm})` : ""} seated into the ` +
+              `${puf.pocketMm ? `${puf.pocketMm} ` : ""}clear pocket between the paired C-purlins on ${puf.assemblies}; ` +
+              `isolation strip and sealant bedded before the panel is plumbed.`
+            : ""),
+        tools:
+          "Screw gun, sheet nibbler, chalk line, sealant gun, panel lifter" +
+          (puf ? ", pocket feeler gauge, soft mallet" : ""),
+        safety:
+          "Two-person handling on full-height panels; keep panel stacks braced against wind." +
+          (puf ? " Never force a panel into the pocket — check the gap before seating it." : ""),
+        inspection:
+          "Panel fixing centres, sheet alignment and partition line verified against the room layout." +
+          (puf
+            ? ` Panel insertion, plumb and a uniform side gap recorded along the full pocket length on ${puf.assemblies}.`
+            : ""),
       };
+    }
     case 21: {
       const d = hasKind(parts, "door");
       const w = hasKind(parts, "window");

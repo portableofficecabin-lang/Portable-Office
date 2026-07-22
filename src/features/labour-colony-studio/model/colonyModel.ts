@@ -37,6 +37,7 @@ import {
   ASSEMBLY_SEQUENCE, COLOR_OF_KIND, EXPLODE_OF_KIND, LAYER_OF_KIND, STEP_OF_KIND, viewMaskOf,
 } from "./assembly";
 import { msSectionToDims, parseSectionDims, parseSectionFromSpec, type SectionDims } from "./sectionDims";
+import { derivePufLock, platePocketGeometry, type PufLockDerived } from "./pufLock";
 import type {
   BoqSource, ColonyModel, ColonyPart, ColonyPartKind, ModelBounds, ModelWarning, PartSolid, PartSpec, Pt, Vec3,
 } from "./types";
@@ -343,6 +344,17 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   /* ================================================================= BASE PLATES + ANCHORS */
   if (connDetail) buildColumnBases(s, grid, plinthM);
 
+  /* ================================================================= PUF PANEL BOTTOM LOCK */
+  const pufLock = derivePufLock(cfg.pufLock, {
+    grid: grid.map((c) => ({ grid: c.grid, xM: c.xM, yM: c.yM })),
+    plinthTopZM: plinthM,
+    plinthBeamWidthM: civil?.foundation?.section?.plinthBeamWidthM ?? 0.23,
+    configPanelThicknessMm: cfg.panelThicknessMm,
+    body: { x0: bodyX0, y0: bodyY0, x1: bodyX1, y1: bodyY1 },
+    panelType: cfg.panelType,
+  });
+  buildPufLockAssemblies(s, pufLock, plinthM, cfg.panelType);
+
   /* ================================================================= COLUMNS (grid) ====== */
   const colDims = sectionForLine(firstLineByPrefix("front:column") ?? "front:column-corner", "columns");
   const cThruX = Math.max(MIN_VIS, colDims.widthMm / 1000);
@@ -486,6 +498,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
     assembly: ASSEMBLY_SEQUENCE,
     bounds,
     warnings: s.warnings,
+    pufLock,
     meta: {
       projectName: cfg.projectName || result.config.projectName || "Labour Colony",
       title: `${cfg.projectName || "Labour Colony"} — G+${floors - 1}`,
@@ -614,6 +627,175 @@ function buildColumnBases(s: ModelSink, grid: ColumnMark[], plinthM: number): vo
       s.add(`conn:base:${cm.grid}:nut:${i}`, "nut", `Nut ${cm.grid}-${i + 1}`,
         prism(hexPoly(bx, by, BOLT_D * 1.6), plinthM + BASE_PLATE_T + 0.004, plinthM + BASE_PLATE_T + 0.02),
         { connectionId: cid, grid: cm.grid, floor: 0, fabrication: "site" });
+    });
+  });
+}
+
+/**
+ * PUF PANEL BOTTOM LOCKING SYSTEM — position every fabricated assembly.
+ *
+ * Geometry, quantities, weights and validation all come from `pufLock.ts`; this function ONLY turns
+ * the already-resolved assemblies into addressable model parts. It never computes a pocket width, a
+ * piece count or a weight of its own, so the 3D model, the detail sheets and the schedules are
+ * guaranteed to agree.
+ *
+ * Every part carries `connectionId = pufl:<plate mark>` so selecting any member of an assembly
+ * highlights the whole assembly everywhere, and `assemblyId` so the exploded view flies the assembly
+ * in as a unit. The two purlins additionally get a per-part explode vector along the pocket normal,
+ * so exploding visibly OPENS the pocket instead of lifting both purlins together.
+ */
+function buildPufLockAssemblies(s: ModelSink, d: PufLockDerived, plinthM: number, panelType: string): void {
+  if (!d.config.enabled || !d.positions.length) return;
+  const { config: c, takeoff: t } = d;
+
+  // surface every engineering issue as a deterministic model warning
+  for (const issue of d.issues) {
+    s.warn({
+      code: `puf-lock-${issue.code}`,
+      message: `PUF panel bottom lock — ${issue.message}`,
+      memberId: issue.plateId,
+    });
+  }
+
+  const solidOf = (b: { x0: number; y0: number; z0: number; x1: number; y1: number; z1: number }): PartSolid =>
+    box(b.x0, b.y0, b.z0, b.x1, b.y1, b.z1);
+
+  const purlinLabel = `${c.purlin.designation} (${c.purlin.grade})`;
+  const boltSpec = `M${c.anchor.diameterMm} gr ${c.anchor.grade} × ${c.anchor.lengthMm}`;
+  const weldSpec = `${c.purlin.weldSizeMm} mm ${c.purlin.weldType} · ${c.purlin.weldRunsPerPurlin} runs`;
+
+  d.positions.forEach((pos, i) => {
+    const g = platePocketGeometry(c, pos, plinthM);
+    const id = `pufl:${pos.mark}`;
+    const conn = `pufl:${pos.mark}`;
+    const asm = `pufl-asm:${pos.mark}`;
+    const asmMark = `PA-${String(i + 1).padStart(2, "0")}`;
+    // the pocket normal, used so the two purlins fan APART when the model is exploded
+    const nx = g.normal.x, ny = g.normal.y;
+
+    /* ---- base / anchor plate ---- */
+    s.add(`${id}:plate`, "puf-lock-base-plate", `PUF lock base plate ${pos.mark}`, solidOf(g.plate), {
+      connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "shop",
+      partMark: `${c.plate.mark}-${pos.mark.slice(1)}`,
+      spec: {
+        material: c.plate.material,
+        grade: c.plate.grade,
+        sectionSize: `${c.plate.lengthMm} × ${c.plate.widthMm} × ${c.plate.thicknessMm} mm`,
+        widthMm: c.plate.widthMm, heightMm: c.plate.lengthMm, thicknessMm: c.plate.thicknessMm,
+        quantity: 1, unitWeightKg: t.plateUnitKg, totalWeightKg: t.plateUnitKg,
+        boltSpec, boltCount: c.anchor.perPlate, holeDiaMm: c.plate.boltHoleDiaMm,
+        note: `${asmMark} — bolted to plinth beam ${pos.beamId}. ${c.plate.finish}.`,
+      },
+    });
+
+    /* ---- anchor bolts + washers + nuts ---- */
+    g.bolts.forEach((b, bi) => {
+      const bd = c.anchor.diameterMm / 2000;
+      s.add(`${id}:bolt:${bi}`, "puf-lock-anchor-bolt", `PUF lock anchor bolt ${pos.mark}-${bi + 1}`,
+        box(b.x - bd, b.y - bd, b.z0, b.x + bd, b.y + bd, b.z1), {
+          connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "site",
+          partMark: "AB",
+          spec: {
+            grade: c.anchor.grade, boltSpec, holeDiaMm: c.plate.boltHoleDiaMm,
+            quantity: 1, unitWeightKg: t.boltUnitKg, totalWeightKg: t.boltUnitKg,
+            note: `${c.anchor.type} anchor · ${c.anchor.embedmentMm} mm embedment · ${c.anchor.projectionMm} mm projection`,
+          },
+        });
+      s.add(`${id}:washer:${bi}`, "puf-lock-washer", `PUF lock washer ${pos.mark}-${bi + 1}`,
+        box(b.x - bd * 2, b.y - bd * 2, b.z1 - c.anchor.projectionMm / 1000 - 0.004,
+            b.x + bd * 2, b.y + bd * 2, b.z1 - c.anchor.projectionMm / 1000), {
+          connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "site",
+          partMark: "WSR",
+          spec: { quantity: 1, unitWeightKg: t.washerUnitKg, totalWeightKg: t.washerUnitKg, boltSpec },
+        });
+      s.add(`${id}:nut:${bi}`, "puf-lock-nut", `PUF lock nut ${pos.mark}-${bi + 1}`,
+        prism(hexPoly(b.x, b.y, c.anchor.diameterMm * 1.5 / 1000),
+              b.z1 - c.anchor.projectionMm / 1000, b.z1 - c.anchor.projectionMm / 1000 + c.anchor.diameterMm * 0.8 / 1000), {
+          connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "site",
+          partMark: "NUT",
+          spec: {
+            quantity: 1, unitWeightKg: t.nutUnitKg, totalWeightKg: t.nutUnitKg, boltSpec,
+            note: c.anchor.tighteningNote,
+          },
+        });
+    });
+
+    /* ---- the PAIR of C-purlins that forms the receiving pocket ---- */
+    ([
+      ["left", g.purlinLeft, -1] as const,
+      ["right", g.purlinRight, 1] as const,
+    ]).forEach(([side, solid, dir]) => {
+      const kind: ColonyPartKind = side === "left" ? "puf-lock-c-purlin-left" : "puf-lock-c-purlin-right";
+      s.add(`${id}:cpurlin-${side}`, kind, `PUF lock C-purlin (${side}) ${pos.mark}`, solidOf(solid), {
+        connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "shop",
+        partMark: `${c.purlin.partMark}-${side === "left" ? "L" : "R"}`,
+        // fan apart along the pocket normal so exploding OPENS the pocket
+        explode: { x: nx * dir * 1.4, y: ny * dir * 1.4, z: 0.5 },
+        spec: {
+          material: "MS C-purlin", grade: c.purlin.grade, sectionSize: purlinLabel,
+          thicknessMm: c.purlin.thicknessMm, lengthM: c.purlin.lengthMm / 1000,
+          widthMm: c.purlin.flangeMm, heightMm: c.purlin.depthMm,
+          quantity: 1,
+          unitWeightKg: round(t.purlinKgPerM * (c.purlin.lengthMm / 1000), 3),
+          totalWeightKg: round(t.purlinKgPerM * (c.purlin.lengthMm / 1000), 3),
+          weldSpec, weldLengthMm: c.purlin.weldLengthMm,
+          note:
+            `Welded upright to plate ${pos.mark}. Web on the pocket line, flange turned away from the `
+            + `panel. Clear pocket ${t.pocketClearGapMm} mm for a ${t.panelThicknessMm} mm ${panelType} panel.`,
+        },
+      });
+    });
+
+    /* ---- weld runs at the foot of each purlin web ---- */
+    g.welds.forEach((w, wi) => {
+      s.add(`${id}:weld:${wi}`, "puf-lock-weld", `PUF lock weld ${pos.mark}-${wi + 1}`, solidOf(w), {
+        connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "shop",
+        partMark: "W",
+        spec: {
+          weldSpec, weldLengthMm: c.purlin.weldLengthMm,
+          quantity: c.purlin.weldRunsPerPurlin,
+          note: `${c.purlin.weldType} weld, ${c.purlin.weldSizeMm} mm leg, both sides of the seating flange.`,
+        },
+      });
+    });
+
+    /* ---- isolation strip + sealant bed inside the pocket ---- */
+    if (c.iface.isolationStrip) {
+      s.add(`${id}:strip`, "puf-lock-isolation-strip", `Isolation strip ${pos.mark}`, solidOf(g.bed), {
+        connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "site",
+        partMark: "ISO", opacity: 0.9,
+        spec: {
+          material: c.iface.isolationStripMaterial,
+          lengthM: c.purlin.lengthMm / 1000,
+          note: "Isolation / de-bridging strip between the panel edge and the steel pocket.",
+        },
+      });
+    }
+    s.add(`${id}:sealant`, "puf-lock-sealant", `Sealant ${pos.mark}`,
+      box(g.bed.x0, g.bed.y0, g.bed.z1, g.bed.x1, g.bed.y1, g.bed.z1 + 0.006), {
+        connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "site",
+        partMark: "SL", opacity: 0.85,
+        spec: {
+          material: c.iface.sealantType,
+          lengthM: c.purlin.lengthMm / 1000,
+          note: "Sealant bead both faces after the panel is plumbed.",
+        },
+      });
+
+    /* ---- the captured panel bottom edge, at the TRUE selected panel thickness ---- */
+    s.add(`${id}:panel-seat`, "puf-lock-panel-seat", `PUF panel seating ${pos.mark}`, solidOf(g.panelSeat), {
+      connectionId: conn, assemblyId: asm, grid: pos.gridRef, floor: 0, fabrication: "site",
+      partMark: "PNL", opacity: 0.95,
+      spec: {
+        material: `${panelType} panel`,
+        thicknessMm: t.panelThicknessMm,
+        widthMm: t.panelThicknessMm,
+        heightMm: c.iface.insertionDepthMm,
+        lengthM: c.purlin.lengthMm / 1000,
+        note:
+          `Panel bottom edge captured in the paired C-purlin pocket. Pocket ${t.pocketClearGapMm} mm, `
+          + `side gap ${t.sideGapMm} mm (max ${c.iface.maxSideGapMm} mm), insertion ${c.iface.insertionDepthMm} mm.`,
+      },
     });
   });
 }

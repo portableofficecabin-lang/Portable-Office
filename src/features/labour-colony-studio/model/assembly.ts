@@ -91,6 +91,19 @@ export const STEP_OF_KIND: Record<ColonyPartKind, ColonyAssemblyStep> = {
   nut: 6,
   washer: 6,
   weld: 6,
+  // PUF LOCK — the plate + anchor + welded C-purlin pair IS a base-plate-and-anchor-bolt operation on
+  // the plinth beam, so it erects with step 5; the panel only drops into the finished pocket at the
+  // wall-panel step (20). Mapping onto the existing 24-step canon keeps the sequence additive.
+  "puf-lock-base-plate": 5,
+  "puf-lock-anchor-bolt": 5,
+  "puf-lock-nut": 5,
+  "puf-lock-washer": 5,
+  "puf-lock-c-purlin-left": 5,
+  "puf-lock-c-purlin-right": 5,
+  "puf-lock-weld": 5,
+  "puf-lock-isolation-strip": 20,
+  "puf-lock-sealant": 20,
+  "puf-lock-panel-seat": 20,
   light: 23,
   fan: 23,
   socket: 23,
@@ -156,6 +169,20 @@ export const EXPLODE_OF_KIND: Record<ColonyPartKind, Vec3> = {
   nut: { x: 0, y: 0, z: 0.9 },
   washer: { x: 0, y: 0, z: 0.9 },
   weld: { x: 0, y: 0, z: 0 },
+  // PUF LOCK — the exploded order the spec calls for reads bottom-up off these magnitudes:
+  // anchor bolts → plate → washers → nuts → left purlin → right purlin → weld → strip → seal → panel.
+  // The two purlins additionally fan APART along the pocket normal, which is stamped per-part at
+  // build time (the sign depends on which wall the plate sits on), so the pocket opens up visibly.
+  "puf-lock-anchor-bolt": { x: 0, y: 0, z: -1.5 },
+  "puf-lock-base-plate": { x: 0, y: 0, z: -1.2 },
+  "puf-lock-washer": { x: 0, y: 0, z: -0.9 },
+  "puf-lock-nut": { x: 0, y: 0, z: -0.6 },
+  "puf-lock-c-purlin-left": { x: 0, y: 0, z: 0.5 },
+  "puf-lock-c-purlin-right": { x: 0, y: 0, z: 0.5 },
+  "puf-lock-weld": { x: 0, y: 0, z: 0.8 },
+  "puf-lock-isolation-strip": { x: 0, y: 0, z: 1.1 },
+  "puf-lock-sealant": { x: 0, y: 0, z: 1.3 },
+  "puf-lock-panel-seat": { x: 0, y: 0, z: 1.8 },
   light: { x: 0, y: 0, z: 1.4 },
   fan: { x: 0, y: 0, z: 1.4 },
   socket: { x: 0, y: 0, z: 0 },           // overridden per-face
@@ -184,6 +211,10 @@ export const LAYER_OF_KIND: Record<ColonyPartKind, ColonyPartLayer> = {
   "walkway-plate": "walls",
   light: "electrical", fan: "electrical", socket: "electrical", db: "electrical",
   "plumbing-fixture": "plumbing", pipe: "plumbing", furniture: "furniture", bunk: "furniture",
+  "puf-lock-base-plate": "puf-lock", "puf-lock-anchor-bolt": "puf-lock", "puf-lock-nut": "puf-lock",
+  "puf-lock-washer": "puf-lock", "puf-lock-c-purlin-left": "puf-lock", "puf-lock-c-purlin-right": "puf-lock",
+  "puf-lock-weld": "puf-lock", "puf-lock-panel-seat": "puf-lock", "puf-lock-sealant": "puf-lock",
+  "puf-lock-isolation-strip": "puf-lock",
 };
 
 /** Engineering-mode colour per kind (LITERAL hex — export safe). */
@@ -203,6 +234,12 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
   "veranda-beam": "#3b4a5e", "veranda-joist": "#94a3b8", "veranda-post": "#475569", "walkway-plate": "#71717a",
   light: "#fde68a", fan: "#94a3b8", socket: "#475569", db: "#334155",
   "plumbing-fixture": "#bae6fd", pipe: "#7dd3fc", furniture: "#d9bb8f", bunk: "#e7d3b3",
+  // PUF lock — the two purlins are deliberately DIFFERENT greens so the viewer can see at a glance
+  // that the panel is captured between two SEPARATE members, not one folded channel.
+  "puf-lock-base-plate": "#334155", "puf-lock-anchor-bolt": "#18181b", "puf-lock-nut": "#0f0f11",
+  "puf-lock-washer": "#3f3f46", "puf-lock-c-purlin-left": "#0f766e", "puf-lock-c-purlin-right": "#15803d",
+  "puf-lock-weld": "#ef4444", "puf-lock-panel-seat": "#cbd5e1", "puf-lock-sealant": "#a3a3a3",
+  "puf-lock-isolation-strip": "#1f2937",
 };
 
 /** Which part families are engineering-only (hidden in the clean customer view). */
@@ -212,7 +249,31 @@ export const ENG_ONLY = new Set<ColonyPartKind>([
   "roof-truss", "rafter", "truss-web", "purlin", "ridge",
   "gusset", "cleat", "end-plate", "splice-plate", "stiffener", "bolt", "nut", "washer", "weld",
   "insulation", "door-swing", "veranda-beam", "veranda-joist", "veranda-post",
+  // The whole PUF locking system is fabrication detail — hidden in the clean customer view.
+  "puf-lock-base-plate", "puf-lock-anchor-bolt", "puf-lock-nut", "puf-lock-washer",
+  "puf-lock-c-purlin-left", "puf-lock-c-purlin-right", "puf-lock-weld",
+  "puf-lock-panel-seat", "puf-lock-sealant", "puf-lock-isolation-strip",
 ]);
+
+/**
+ * The PUF-lock part families, as one set — the "show / hide locking assemblies" toggle and every
+ * schedule filter key off this rather than re-listing the kinds.
+ *
+ * Deliberately NOT added to CONNECTION_DETAIL: that gate hides its members until the heavy-detail
+ * flag is switched on, and the whole point of this system is that the captured panel must be visible
+ * in the model. The part count is bounded (one small assembly per plate — a dozen or so), so it costs
+ * nothing to render, and the dedicated `puf-lock` layer gives the user a single switch to hide it.
+ */
+export const PUF_LOCK_KINDS = new Set<ColonyPartKind>([
+  "puf-lock-base-plate", "puf-lock-anchor-bolt", "puf-lock-nut", "puf-lock-washer",
+  "puf-lock-c-purlin-left", "puf-lock-c-purlin-right", "puf-lock-weld",
+  "puf-lock-panel-seat", "puf-lock-sealant", "puf-lock-isolation-strip",
+]);
+
+/** True when a part belongs to the PUF panel bottom locking system. */
+export function isPufLockKind(kind: ColonyPartKind): boolean {
+  return PUF_LOCK_KINDS.has(kind);
+}
 
 export function viewMaskOf(kind: ColonyPartKind): ViewMode[] {
   return ENG_ONLY.has(kind) ? ["engineering"] : ["engineering", "customer"];

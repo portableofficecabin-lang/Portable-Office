@@ -13,7 +13,15 @@
  *   4. COLUMN GRID           — the bubbled structural grid + the column schedule.
  *   5. FRAMING ELEVATIONS    — front, rear, left and right.
  *   6. CONNECTION DETAILS    — enlarged base plate + truss gusset.
- *   7. TITLE BLOCK           — drawing register, approval stamp and the NOT-FOR-CONSTRUCTION watermark.
+ *   7. PUF LOCK — LAYOUT     — base-plate layout plan on the plinth beams + setting-out table.
+ *   8. PUF LOCK — ENLARGED   — enlarged plan of a typical assembly + section A–A through the pocket.
+ *   9. PUF LOCK — SECTION    — "PUF panel bottom locking detail at plinth beam".
+ *  10. PUF LOCK — FABRICATION— plate hole layout, C-purlin cut length, weld symbols + parts table.
+ *  11. TITLE BLOCK           — drawing register, approval stamp and the NOT-FOR-CONSTRUCTION watermark.
+ *
+ * The four PUF-lock sheets are ADDITIVE and sit AFTER the connection details, so the existing sheet
+ * numbers S-01…S-nn are unchanged. They render an explained empty state (never a half-detail) when
+ * the locking system is switched off, and read every number from `model.pufLock`.
  *
  * Every sheet is wrapped in a printable `.colony-drawing-block` div with a white (#ffffff) background
  * and the `light` class, which is exactly what `exportColonyDrawingSet` paginates on — a plan, plate
@@ -36,6 +44,9 @@ import { FoundationLayoutSheet } from "./FoundationLayoutSheet";
 import { FramingElevationSheet, type ElevationFaceName } from "./FramingElevationSheet";
 import { FramingPlanSheet } from "./FramingPlanSheet";
 import { ConnectionDetailSheet } from "./ConnectionDetailSheet";
+import {
+  PufLockEnlargedPlanSheet, PufLockFabricationSheet, PufLockLayoutSheet, PufLockSectionSheet,
+} from "./PufLockDetailSheet";
 import { DimLineH, DimLineV, NorthArrow, ScaleBar } from "./sheetPrimitives";
 import { PLAN, footprintXY, mLabel, planPpm, planSpan } from "./planScale";
 
@@ -273,6 +284,34 @@ export function EngineeringSheets({
       {engineering && (
         <Sheet no={sheetNo()} title="Connection details" subtitle="Enlarged column base plate and truss ridge gusset" meta={meta}>
           <ConnectionDetailSheet model={model} meta={meta} connectionId={selectedIdConnection(model, selectedId)} />
+        </Sheet>
+      )}
+
+      {engineering && (
+        <Sheet no={sheetNo()} title="PUF panel bottom lock — base-plate layout"
+          subtitle="Plate layout on the plinth-beam runs, offsets, spacing and the setting-out table" meta={meta}>
+          <PufLockLayoutSheet model={model} meta={meta} selectedId={selectedId} onSelect={onSelect} />
+        </Sheet>
+      )}
+
+      {engineering && (
+        <Sheet no={sheetNo()} title="PUF panel bottom lock — enlarged plan"
+          subtitle="Typical assembly in plan with section A–A through the receiving pocket" meta={meta}>
+          <PufLockEnlargedPlanSheet model={model} meta={meta} />
+        </Sheet>
+      )}
+
+      {engineering && (
+        <Sheet no={sheetNo()} title="PUF panel bottom locking detail at plinth beam"
+          subtitle="Dimensioned section: anchorage, plate, paired C-purlins, pocket and seated panel" meta={meta}>
+          <PufLockSectionSheet model={model} meta={meta} />
+        </Sheet>
+      )}
+
+      {engineering && (
+        <Sheet no={sheetNo()} title="PUF panel bottom lock — fabrication detail"
+          subtitle="Plate hole layout, C-purlin cut length and end profile, weld symbols and parts table" meta={meta}>
+          <PufLockFabricationSheet model={model} meta={meta} />
         </Sheet>
       )}
 

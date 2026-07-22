@@ -103,6 +103,10 @@ export type ColonyPartKind =
   // fabricated connections (synthesized engineering detail)
   | "gusset" | "cleat" | "end-plate" | "splice-plate" | "stiffener"
   | "bolt" | "nut" | "washer" | "weld"
+  // PUF panel bottom locking system (paired C-purlin receiving pocket on the plinth beam)
+  | "puf-lock-base-plate" | "puf-lock-anchor-bolt" | "puf-lock-nut" | "puf-lock-washer"
+  | "puf-lock-c-purlin-left" | "puf-lock-c-purlin-right" | "puf-lock-weld"
+  | "puf-lock-panel-seat" | "puf-lock-sealant" | "puf-lock-isolation-strip"
   // envelope
   | "floor-board" | "floor-finish" | "ext-panel" | "insulation" | "int-finish"
   | "roof-sheet" | "ceiling" | "partition"
@@ -118,7 +122,9 @@ export type ColonyPartKind =
 /** Which coarse visibility layer a toggle controls. */
 export type ColonyPartLayer =
   | "foundation" | "structure" | "connection" | "walls" | "roof" | "openings" | "stair"
-  | "electrical" | "plumbing" | "furniture";
+  | "electrical" | "plumbing" | "furniture"
+  /** The PUF panel bottom locking assemblies — one toggle hides / shows every plate + purlin pair. */
+  | "puf-lock";
 
 /** The two viewing modes. A part visible in customer mode is also visible in engineering. */
 export type ViewMode = "engineering" | "customer";
@@ -242,6 +248,13 @@ export interface ColonyModel {
   assembly: AssemblyStepInfo[];
   bounds: ModelBounds;
   warnings: ModelWarning[];
+  /**
+   * The resolved PUF panel bottom locking system — config, plate positions, take-off and validation
+   * issues, exactly as the parts above were built from. Carried on the model so the detail sheets,
+   * the schedules and the reports read the SAME numbers the geometry was built from and never
+   * re-derive a pocket width or a piece count. Type: PufLockDerived (model/pufLock).
+   */
+  pufLock?: import("./pufLock").PufLockDerived;
   /** Convenience header echoed from the config (metres), for titles / labels. */
   meta: {
     projectName: string;

@@ -25,6 +25,7 @@
 // Type-only: LabourColonyConfig carries the Material BOQ's saved settings so they persist inside the
 // project's `data` jsonb. Type-only, so this engine keeps zero runtime dependency on the BOQ engine.
 import type { BoqSettings } from "@/lib/boq/types";
+import type { PufLockConfig } from "@/features/labour-colony-studio/model/pufLock";
 
 export type PanelType = "PUF" | "EPS" | "GI";
 export type FloorCount = 1 | 2 | 3; // 1 = Ground, 2 = G+1, 3 = G+2
@@ -338,6 +339,16 @@ export interface LabourColonyConfig {
    *  separate models, and tuning a BOQ rate must not move the structure/panel/weight results. It lives
    *  here only so it persists inside labour_colony_projects.data (jsonb) with no migration. */
   materialBoq?: BoqSettings;
+
+  /** PUF panel bottom locking system — base plates + paired C-purlin receiving pocket on the plinth
+   *  beam. Engineering / drawing detail only: calculateLabourColony() does not read it, exactly like
+   *  `materialBoq` above, so tuning the locking detail can never move the structure / panel / weight
+   *  results. It lives here so it persists inside labour_colony_projects.data (jsonb) with no
+   *  migration. OPTIONAL and defaulted at the point of use (resolvePufLockConfig) so every project
+   *  saved before this field existed still loads. Type: PufLockConfig from
+   *  @/features/labour-colony-studio/model/pufLock, which is a deliberate zero-import leaf module so
+   *  this type-only reference can never create a cycle. */
+  pufLock?: PufLockConfig;
 
   norms?: Partial<LabourColonyNorms>;
 }
