@@ -57,6 +57,25 @@ export interface PageHeroProps {
   /** Set when the page needs to reference the heading, e.g. aria-labelledby. */
   titleId?: string;
   className?: string;
+
+  /* ── Optional slots for the signed-in pages ────────────────────────────────
+   * All three are additive and default to undefined, so every call site that
+   * predates them renders exactly the tree it rendered before. */
+
+  /**
+   * Right-aligned control cluster — Logout, Admin Dashboard, a cart count.
+   * Supplying this is what switches the band to a two-column row; leave it off
+   * and the single-column layout below is untouched.
+   */
+  actions?: ReactNode;
+  /**
+   * Block beside the title column, e.g. an account avatar tile. When set it
+   * takes the vertical amber rule's place rather than sitting next to it —
+   * two leading marks side by side is just noise.
+   */
+  leading?: ReactNode;
+  /** One line of metadata under the title, above `description`. */
+  meta?: ReactNode;
 }
 
 export function PageHero({
@@ -68,7 +87,95 @@ export function PageHero({
   size = "default",
   titleId,
   className,
+  actions,
+  leading,
+  meta,
 }: PageHeroProps) {
+  /* The band only becomes a two-column row when there is something to put in
+   * the second column. Without `actions` the markup below is identical to what
+   * this component has always emitted. */
+  const hasActions = Boolean(actions);
+  const padding = size === "compact" ? "py-12 md:py-14" : "py-14 md:py-20";
+
+  const heading = (
+    <div className="flex items-start gap-4">
+      {leading ? (
+        <div className="mt-0.5 shrink-0">{leading}</div>
+      ) : (
+        /* Vertical brand rule beside the title. */
+        <span
+          aria-hidden="true"
+          className={cn(
+            "mt-1.5 w-1 shrink-0 rounded-full bg-gradient-to-b from-accent to-amber-light",
+            size === "compact" ? "h-8 sm:h-9" : "h-9 sm:h-11",
+          )}
+        />
+      )}
+      {/* `meta` lives in the title's own column so it lines up under the title rather than
+          under the avatar/rule in the gutter. */}
+      <div className="min-w-0">
+        <h1
+          id={titleId}
+          className={cn(
+            "font-display font-bold tracking-tight text-white",
+            size === "compact" ? "text-3xl sm:text-4xl" : "text-3xl sm:text-4xl lg:text-5xl",
+          )}
+        >
+          {title}
+        </h1>
+        {meta && <div className="mt-2 text-sm text-white/70">{meta}</div>}
+      </div>
+    </div>
+  );
+
+  const copy = (
+    <>
+      {breadcrumbs && breadcrumbs.length > 0 && (
+        <nav aria-label="Breadcrumb" className="mb-5">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+            {breadcrumbs.map((crumb, index) => {
+              const isLast = index === breadcrumbs.length - 1;
+              return (
+                <li key={`${crumb.name}-${index}`} className="flex items-center gap-2">
+                  {index > 0 && (
+                    <span aria-hidden="true" className="text-white/35">
+                      /
+                    </span>
+                  )}
+                  {crumb.href && !isLast ? (
+                    <Link
+                      href={crumb.href}
+                      className="text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-navy-deep motion-reduce:transition-none"
+                    >
+                      {crumb.name}
+                    </Link>
+                  ) : (
+                    <span className="font-medium text-accent" aria-current={isLast ? "page" : undefined}>
+                      {crumb.name}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      )}
+
+      {eyebrow && (
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-accent">{eyebrow}</p>
+      )}
+
+      {heading}
+
+      {description && (
+        <div className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
+          {description}
+        </div>
+      )}
+
+      {children && <div className="mt-7">{children}</div>}
+    </>
+  );
   return (
     <section className={cn("relative isolate overflow-hidden bg-navy-deep", className)}>
       {/* ---------- Decorative layers (all aria-hidden, none interactive) ---------- */}
@@ -111,72 +218,14 @@ export function PageHero({
 
       {/* ---------- Content ---------- */}
       <div className="container-custom relative">
-        <div className={cn("max-w-3xl", size === "compact" ? "py-12 md:py-14" : "py-14 md:py-20")}>
-          {breadcrumbs && breadcrumbs.length > 0 && (
-            <nav aria-label="Breadcrumb" className="mb-5">
-              <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
-                {breadcrumbs.map((crumb, index) => {
-                  const isLast = index === breadcrumbs.length - 1;
-                  return (
-                    <li key={`${crumb.name}-${index}`} className="flex items-center gap-2">
-                      {index > 0 && (
-                        <span aria-hidden="true" className="text-white/35">
-                          /
-                        </span>
-                      )}
-                      {crumb.href && !isLast ? (
-                        <Link
-                          href={crumb.href}
-                          className="text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-navy-deep motion-reduce:transition-none"
-                        >
-                          {crumb.name}
-                        </Link>
-                      ) : (
-                        <span className="font-medium text-accent" aria-current={isLast ? "page" : undefined}>
-                          {crumb.name}
-                        </span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ol>
-            </nav>
-          )}
-
-          {eyebrow && (
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-accent">{eyebrow}</p>
-          )}
-
-          <div className="flex items-start gap-4">
-            {/* Vertical brand rule beside the title. */}
-            <span
-              aria-hidden="true"
-              className={cn(
-                "mt-1.5 w-1 shrink-0 rounded-full bg-gradient-to-b from-accent to-amber-light",
-                size === "compact" ? "h-8 sm:h-9" : "h-9 sm:h-11",
-              )}
-            />
-            <h1
-              id={titleId}
-              className={cn(
-                "font-display font-bold tracking-tight text-white",
-                size === "compact"
-                  ? "text-3xl sm:text-4xl"
-                  : "text-3xl sm:text-4xl lg:text-5xl",
-              )}
-            >
-              {title}
-            </h1>
+        {hasActions ? (
+          <div className={cn("flex flex-col gap-6 md:flex-row md:items-center md:justify-between", padding)}>
+            <div className="min-w-0 max-w-3xl">{copy}</div>
+            <div className="flex shrink-0 flex-wrap items-center gap-2 md:justify-end">{actions}</div>
           </div>
-
-          {description && (
-            <div className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-              {description}
-            </div>
-          )}
-
-          {children && <div className="mt-7">{children}</div>}
-        </div>
+        ) : (
+          <div className={cn("max-w-3xl", padding)}>{copy}</div>
+        )}
       </div>
     </section>
   );

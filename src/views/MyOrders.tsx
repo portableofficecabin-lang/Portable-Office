@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -63,16 +64,28 @@ export default function MyOrdersPage() {
   return (
     <Layout>
       <SEOHead title="My Quote Requests | Portable Office Cabin" description="Track the status of the quote requests you have submitted." />
+
+      {/* Matches the band on My Account and the rest of the site; the back-link moves into the
+          hero's actions slot. The outline button is re-expressed in white/* because the default
+          outline tokens are dark and would vanish against navy. */}
+      <PageHero
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "My Account", href: "/my-account" }, { name: "Quote Requests" }]}
+        title="My Quote Requests"
+        meta={
+          !loading && orders.length > 0
+            ? `${orders.length} ${orders.length === 1 ? "request" : "requests"} submitted`
+            : undefined
+        }
+        size="compact"
+        actions={
+          <Button variant="outline" size="sm" asChild className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white">
+            <Link href="/my-account"><ArrowLeft className="mr-2 h-4 w-4" /> My Account</Link>
+          </Button>
+        }
+      />
+
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="font-display text-3xl font-bold flex items-center gap-3">
-              <Package className="h-8 w-8 text-accent" /> My Quote Requests
-            </h1>
-            <Button variant="outline" asChild>
-              <Link href="/my-account"><ArrowLeft className="mr-2 h-4 w-4" /> My Account</Link>
-            </Button>
-          </div>
 
           {loading ? (
             <div className="text-center py-16 text-muted-foreground">Loading quote requests...</div>

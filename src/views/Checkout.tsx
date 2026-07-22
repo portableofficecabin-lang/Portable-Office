@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -291,9 +292,17 @@ export default function CheckoutPage() {
   return (
     <Layout>
       <SEOHead title="Checkout | Portable Office Cabin" description="Complete your purchase securely." />
+
+      {/* Consistent band with Cart and My Account. Guest checkout is unaffected — this is
+          presentation only and adds no auth requirement. */}
+      <PageHero
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Cart", href: "/cart" }, { name: "Checkout" }]}
+        title="Checkout"
+        size="compact"
+      />
+
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
-          <h1 className="font-display text-3xl font-bold text-foreground mb-8">Checkout</h1>
           <form onSubmit={handlePay}>
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
