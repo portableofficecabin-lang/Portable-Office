@@ -1,306 +1,165 @@
 "use client";
 
-import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Phone, ShoppingCart, User, LogIn, ShieldCheck, Sparkles, Mail, Menu, ChevronDown, Building2 } from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import logo from "@/assets/logo.webp";
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about-us" },
-  { name: "Products", href: "/products", hasDropdown: true },
-  { name: "Gallery", href: "/gallery" },
-  { name: "Blog", href: "/blog" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Contact", href: "/contact" },
-];
+import { CartButton } from "./header/HeaderActions";
+import { DesktopNavigation } from "./header/DesktopNavigation";
+import { HeaderActions } from "./header/HeaderActions";
+import { HeaderSearch } from "./header/HeaderSearch";
+import { MobileNavigation } from "./header/MobileNavigation";
+import { TopBar } from "./header/TopBar";
 
-const productCategories = [
-  { name: "Portable Cabins", href: "/products/category/portable-cabins" },
-  { name: "Container Offices", href: "/products/category/container-offices" },
-  { name: "Site Office Containers", href: "/products/category/site-office-containers" },
-  { name: "Cargo & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
-  { name: "Prefab Homes", href: "/products/category/prefab-homes" },
-  { name: "Security Cabins", href: "/products/category/security-cabins" },
-  { name: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
-  { name: "G+1 Workmen Accommodation", href: "/products/category/g1-workmen-accommodation" },
-  { name: "Labour Colony", href: "/products/category/labour-colony" },
-  { name: "Bunker Bed Container Cabin", href: "/products/category/bunker-bed-container-cabin" },
-  { name: "PEB Buildings", href: "/products/category/peb-building" },
-  { name: "Storage Sheds", href: "/products/category/storage-shed" },
-  { name: "Fabrication", href: "/products/category/fabrication" },
-  { name: "Modular Furniture", href: "/products/category/modular-furniture" },
-  { name: "UPVC Windows & Doors", href: "/products/category/upvc-windows-doors" },
-];
-
+/**
+ * Public site header.
+ *
+ * ── HOW THE STICKY BEHAVIOUR WORKS (and why there is no layout shift) ────────────
+ * The whole header is `sticky` with a NEGATIVE top offset equal to the TopBar's
+ * height (-top-9 / -2.25rem, matching TopBar's h-9). While the page is at the top
+ * the header sits in normal flow and both bars are visible. As the user scrolls, the
+ * header pins with its first 36px above the viewport — so the information bar slides
+ * away and the main navigation parks flush against the top edge.
+ *
+ * That gives the "shorter header once scrolled" effect with ZERO JavaScript and zero
+ * layout shift: no element's height ever animates, so nothing below the header can
+ * be pushed around. The only thing scroll position drives is the border/shadow
+ * treatment below, which is paint-only and cannot affect layout.
+ *
+ * If you change TopBar's height, change this offset in the same commit.
+ *
+ * ── CLIENT COMPONENT ────────────────────────────────────────────────────────────
+ * This has to stay a Client Component: it reads auth and cart state, and owns the
+ * mega menu, search and drawer interactions. Layout.tsx keeps it as an isolated
+ * client island so the Footer and page content still render on the server.
+ */
 export function Header() {
-  const pathname = usePathname();
-  const { user } = useAuth();
   const { itemCount } = useCart();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 8);
+    };
+
+    const onScroll = () => {
+      // rAF-coalesced so a fast scroll cannot queue a setState per scroll event.
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    // Run once on mount: a reload part-way down the page should start in the
+    // scrolled treatment rather than waiting for the first scroll event.
+    update();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 shadow-[0_18px_50px_-28px_hsl(var(--foreground)/0.28)] backdrop-blur-xl supports-[backdrop-filter]:bg-background/72">
-      <div className="hidden border-b border-border/40 bg-gradient-to-r from-primary via-primary to-primary/90 text-primary-foreground md:block">
+    <header className="sticky -top-9 z-50 w-full">
+      {/* Keyboard users land here first — lets them skip the whole nav. Visible only
+          while focused. Targets the #main-content landmark set in Layout.tsx.
+          `fixed`, NOT `absolute`: the header is a positioned ancestor pinned at
+          -top-9, so an absolutely-positioned skip link would resolve against that
+          offset and sit half-clipped above the viewport once the page is scrolled. */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-accent-foreground"
+      >
+        Skip to main content
+      </a>
+
+      <TopBar />
+
+      {/* Solid background, no backdrop-blur: at 95%+ opacity a blur pass is visually
+          imperceptible but still costs a full-width compositor gaussian on every
+          scrolled frame. The previous header paid that for no gain. */}
+      <div
+        className={cn(
+          "border-b bg-background",
+          "transition-shadow duration-200 motion-reduce:transition-none",
+          scrolled
+            ? "border-border/70 shadow-[0_10px_30px_-12px_hsl(var(--background)/0.9)]"
+            : "border-border/40 shadow-none",
+        )}
+      >
         <div className="container-custom">
-          <div className="flex min-h-9 items-center justify-between gap-2 py-1 text-xs sm:text-sm">
-            <div className="flex items-center gap-2 overflow-x-auto">
-              <div className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary-foreground/15 bg-primary-foreground/10 px-2.5 py-0.5 shadow-sm backdrop-blur-sm">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-sm ring-1 ring-primary-foreground/15">
-                  <ShieldCheck className="h-3.5 w-3.5 stroke-[2.5]" />
-                </div>
-                <div className="flex min-w-0 items-center gap-1.5 leading-none whitespace-nowrap">
-                  <span className="inline-flex items-center gap-1 font-semibold tracking-wide">
-                    GST Verified
-                    <Sparkles className="h-2.5 w-2.5 text-accent" />
-                  </span>
-                  <span className="hidden font-mono text-[10px] text-primary-foreground/75 sm:inline">33FVKPK6238Q1ZT</span>
-                </div>
-              </div>
-
-              <a
-                href="tel:+919731897976"
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary-foreground/12 bg-primary-foreground/6 px-2.5 py-0.5 font-medium text-primary-foreground/90 transition-all hover:border-accent/40 hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              >
-                <Phone className="h-3 w-3 text-accent" />
-                <span>+91 9731897976</span>
-              </a>
-
-              <a
-                href="mailto:sales@portableofficecabin.com"
-                className="hidden items-center gap-1.5 rounded-full border border-primary-foreground/12 bg-primary-foreground/6 px-2.5 py-0.5 font-medium text-primary-foreground/90 transition-all hover:border-accent/40 hover:bg-primary-foreground/10 hover:text-primary-foreground lg:inline-flex"
-              >
-                <Mail className="h-3 w-3 text-accent" />
-                <span>sales@portableofficecabin.com</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* NOTE: the sticky <header> above already applies one backdrop-blur-xl pass
-          over the full-width bar. This inner bar previously ALSO had backdrop-blur-xl —
-          a redundant second full-width gaussian-blur pass that (because LCP is timed at
-          frame presentation, after the whole viewport composites) added compositor cost
-          to the hero-LCP frame on low-end mobile GPUs for no visual gain (bg is 88%
-          opaque). Dropped the second pass; the single header blur is kept. */}
-      <div className="bg-background/88 text-foreground">
-        <div className="container-custom">
-          <div className="flex h-14 items-center justify-between gap-2 lg:h-16">
-            <Link href="/" className="flex min-w-0 items-center gap-2">
-              {/* loading="lazy" is deliberate: the logo is header chrome, NOT the LCP
-                  element. Without it, React auto-emits a <link rel=preload as=image> for
-                  this SSR'd <img> as the FIRST head hint, so on slow 4G the 8KB logo
-                  competes with the 26KB hero-bg for the critical connection during the
-                  exact LCP window. lazy suppresses that preload; the in-viewport logo
-                  still loads promptly, just at normal priority behind the hero. */}
+          {/* `relative` is load-bearing: the mega menu and search panels anchor to
+              THIS row, not to their own triggers, so they can never be pushed past a
+              viewport edge by where their button happens to sit. */}
+          <div className="relative flex h-16 items-center justify-between gap-3 xl:h-[4.5rem]">
+            {/* ---------- Brand ---------- */}
+            {/* No `shrink-0` here: the brand must be the thing that gives way when
+                the bar is tight, otherwise the shortfall lands on the icon buttons
+                and squashes them below their 44px touch target. `min-w-0` + the
+                `truncate` on the wordmark below only work if this can shrink. */}
+            <Link
+              href="/"
+              className={cn(
+                "flex min-w-0 items-center gap-2.5 rounded-lg",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              )}
+            >
+              {/* loading="lazy" is deliberate and load-bearing: the logo is header
+                  chrome, NOT the LCP element. Without it, an eagerly-fetched SSR'd
+                  <img> gets a <link rel=preload as=image> emitted as the FIRST head
+                  hint, so on slow 4G the logo competes with the hero background for
+                  the critical connection during the exact LCP window. Explicit
+                  width/height (the asset is a 400x400 square) reserve the box so
+                  lazy-loading it cannot shift the header. */}
               <img
                 src={resolveImageUrl(logo)}
                 alt="Portable Office Cabin"
+                width={400}
+                height={400}
                 loading="lazy"
                 decoding="async"
-                className="h-9 w-auto rounded-lg border border-accent/20 bg-card p-1 object-contain shadow-md lg:h-10"
+                className="h-10 w-10 shrink-0 rounded-lg border border-accent/20 bg-card object-contain p-1 shadow-sm xl:h-11 xl:w-11"
               />
-              <span className="truncate font-display text-sm font-extrabold tracking-tight text-foreground sm:text-base lg:text-lg">
-                Portable Office <span className="text-accent">Cabin</span>
+              <span className="hidden min-w-0 flex-col leading-none md:flex">
+                <span className="truncate font-display text-base font-extrabold tracking-tight text-foreground xl:text-lg">
+                  Portable Office <span className="text-accent">Cabin</span>
+                </span>
+                <span className="mt-1 truncate text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                  Prefab &amp; Modular Manufacturer
+                </span>
               </span>
             </Link>
 
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-              {navigation.map((item) =>
-                item.hasDropdown ? (
-                  <div key={item.name} className="group relative">
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "relative inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold transition-all duration-200",
-                        pathname.startsWith("/products")
-                          ? "bg-primary text-primary-foreground shadow-md"
-                          : "text-foreground/78 hover:bg-secondary hover:text-foreground"
-                      )}
-                    >
-                      {item.name}
-                      <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
-                    </Link>
-                    <div className="invisible absolute left-1/2 top-full z-50 mt-2 w-[min(92vw,640px)] -translate-x-1/2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100">
-                      <div className="rounded-2xl border border-border/60 bg-popover p-3 shadow-xl">
-                        <div className="grid grid-cols-2 gap-1">
-                          {productCategories.map((cat) => (
-                            <Link
-                              key={cat.href}
-                              href={cat.href}
-                              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-foreground/85 transition-colors hover:bg-secondary hover:text-accent"
-                            >
-                              <Building2 className="h-3.5 w-3.5 text-accent shrink-0" />
-                              <span className="truncate">{cat.name}</span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={cn(
-                      "relative rounded-full px-3 py-1 text-sm font-semibold transition-all duration-200",
-                      pathname === item.href
-                        ? "bg-primary text-primary-foreground shadow-md"
-                        : "text-foreground/78 hover:bg-secondary hover:text-foreground"
-                    )}
-                  >
-                    {item.name}
-                    {pathname === item.href && (
-                      <span className="absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-accent" />
-                    )}
-                  </Link>
-                )
-              )}
-            </nav>
+            {/* ---------- Desktop navigation ---------- */}
+            <DesktopNavigation />
 
-            <div className="hidden items-center gap-1.5 lg:flex">
-              <a
-                href="tel:+919731897976"
-                className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/70 px-3 py-1.5 text-sm font-semibold text-foreground transition-all hover:border-accent/40 hover:text-accent"
+            {/* ---------- Desktop actions ---------- */}
+            <HeaderActions />
+
+            {/* ---------- Mobile / tablet actions ----------
+                The desktop bar switches in at xl (1280px), not lg. At 1024px the
+                brand + 7 nav labels + 5 action controls need ~1130px of unshrinkable
+                content in a 960px container, which overflowed the page and crushed
+                the icon buttons below 44px. Tablet gets the drawer instead. */}
+            <div className="flex shrink-0 items-center gap-2 xl:hidden">
+              <HeaderSearch />
+              <CartButton itemCount={itemCount} />
+              <Button
+                variant="accent"
+                size="sm"
+                className="hidden h-11 px-4 text-navy-deep sm:inline-flex"
+                asChild
               >
-                <Phone className="h-3.5 w-3.5 text-accent" />
-                +91 9731897976
-              </a>
-
-              {user ? (
-                <Link
-                  href="/my-account"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/70 px-2.5 py-1 text-sm font-semibold text-foreground transition-all hover:border-accent/40 hover:text-accent"
-                >
-                  <User className="h-3.5 w-3.5" />
-                  My Account
-                </Link>
-              ) : (
-                <Link
-                  href="/login"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/70 px-2.5 py-1 text-sm font-semibold text-foreground transition-all hover:border-accent/40 hover:text-accent"
-                >
-                  <LogIn className="h-3.5 w-3.5" />
-                  Login
-                </Link>
-              )}
-
-              <Link href="/cart" aria-label="View cart" title="Cart" className="relative rounded-full border border-border/60 bg-card/70 p-2 text-foreground transition-all hover:border-accent/40 hover:text-accent">
-                <ShoppingCart className="h-4 w-4" />
-                {itemCount > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-sm">
-                    {itemCount}
-                  </span>
-                )}
-              </Link>
-
-              <Button variant="accent" size="sm" className="h-9 px-4" asChild>
-                <Link href="/contact">Get Quote</Link>
+                <Link href="/contact">Quote</Link>
               </Button>
-            </div>
-
-            <div className="flex items-center gap-2 lg:hidden">
-              <Link href="/cart" aria-label="View cart" title="Cart" className="relative rounded-full border border-border/60 bg-card/70 p-2 text-foreground transition-all hover:border-accent/40 hover:text-accent">
-                <ShoppingCart className="h-4 w-4" />
-                {itemCount > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground shadow-sm">
-                    {itemCount}
-                  </span>
-                )}
-              </Link>
-
-              <Sheet>
-                <SheetTrigger asChild>
-                  <button
-                    type="button"
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-card/70 text-foreground transition-colors hover:border-accent/40 hover:text-accent"
-                    aria-label="Open menu"
-                  >
-                    <Menu className="h-5 w-5" />
-                  </button>
-                </SheetTrigger>
-
-                <SheetContent side="right" className="w-[88vw] overflow-y-auto border-border/60 bg-background px-5 py-5 sm:max-w-sm">
-                  <div className="flex min-h-full flex-col">
-                    <div className="pr-10">
-                      <SheetTitle className="text-left font-display text-xl font-extrabold tracking-tight">
-                        Portable Office <span className="text-accent">Cabin</span>
-                      </SheetTitle>
-                      <p className="mt-1 text-sm text-muted-foreground">Quick access to products, gallery, contact, and your account.</p>
-                    </div>
-
-                    <div className="mt-6 space-y-2">
-                      {navigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className={cn(
-                            "block rounded-xl border px-4 py-3 text-base font-semibold transition-all",
-                            pathname === item.href
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border/60 bg-card/60 text-foreground hover:border-accent/40 hover:text-accent"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-
-                    <details className="mt-3 rounded-xl border border-border/60 bg-card/60">
-                      <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-foreground">Product Categories</summary>
-                      <div className="space-y-1 px-2 pb-3">
-                        {productCategories.map((cat) => (
-                          <Link
-                            key={cat.href}
-                            href={cat.href}
-                            className="block rounded-lg px-3 py-2 text-sm text-foreground/85 hover:bg-secondary hover:text-accent"
-                          >
-                            {cat.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </details>
-
-                    <div className="mt-6 space-y-3 border-t border-border/60 pt-5">
-                      <Link
-                        href={user ? "/my-account" : "/login"}
-                        className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 px-4 py-3 text-sm font-semibold text-foreground transition-all hover:border-accent/40 hover:text-accent"
-                      >
-                        {user ? <User className="h-4 w-4" /> : <LogIn className="h-4 w-4" />}
-                        {user ? "My Account" : "Login / Register"}
-                      </Link>
-
-                      <a
-                        href="tel:+919731897976"
-                        className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 px-4 py-3 text-sm font-medium text-foreground transition-all hover:border-accent/40 hover:text-accent"
-                      >
-                        <Phone className="h-4 w-4 text-accent" />
-                        <span>+91 9731897976</span>
-                      </a>
-
-                      <a
-                        href="mailto:sales@portableofficecabin.com"
-                        className="flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 px-4 py-3 text-sm font-medium text-foreground transition-all hover:border-accent/40 hover:text-accent"
-                      >
-                        <Mail className="h-4 w-4 text-accent" />
-                        <span className="truncate">sales@portableofficecabin.com</span>
-                      </a>
-                    </div>
-
-                    <div className="mt-auto pt-6">
-                      <Button variant="accent" size="lg" className="w-full" asChild>
-                        <Link href="/contact">Get Quote</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
+              <MobileNavigation />
             </div>
           </div>
         </div>

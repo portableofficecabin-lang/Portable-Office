@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useRef, useState, useMemo, useEffect } from "react";
 import { Filter, Search, Grid, List, X, ArrowRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,13 @@ type ProductsPageProps = {
   currentPage?: number;
   /** Base path for pagination/links: "/products" or "/products/category/<slug>". */
   basePath?: string;
+  /**
+   * Search term supplied by the URL (`/products?search=...`), which is what the
+   * header search box submits to. Seeds — and re-seeds — the sidebar search field
+   * below, so the header search drives this existing client-side filter instead of
+   * needing a search backend the site does not have.
+   */
+  initialSearch?: string;
 };
 
 export function ProductsPageContent({
@@ -37,8 +45,17 @@ export function ProductsPageContent({
   activeCategory,
   currentPage = 1,
   basePath = "/products",
+  initialSearch = "",
 }: ProductsPageProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
+
+  // Re-sync when the URL-provided term changes — i.e. when a header search lands
+  // here, including a second search made while already on this page. It cannot
+  // clobber typing, because `initialSearch` only changes when the URL changes.
+  useEffect(() => {
+    setSearchQuery(initialSearch);
+  }, [initialSearch]);
+
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -69,6 +86,9 @@ export function ProductsPageContent({
   const buildPageHref = (pageNum: number) => {
     const params = new URLSearchParams();
     if (basePath === "/products" && activeCategory) params.set("category", activeCategory);
+    // Carry the active search across pagination. Without this, page 2 of a search
+    // result dropped the term and dumped the user back into the full catalogue.
+    if (searchQuery) params.set("search", searchQuery);
     if (pageNum > 1) params.set("page", String(pageNum));
     const qs = params.toString();
     return qs ? `${basePath}?${qs}` : basePath;
@@ -464,6 +484,7 @@ export function ProductsListingWithParams({
 }) {
   const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
@@ -472,15 +493,71 @@ export function ProductsListingWithParams({
     setCurrentPage(pageParam ? parseInt(pageParam, 10) || 1 : 1);
   }, []);
 
+  /**
+   * `?search=` needs REACTIVE reading, unlike ?category= and ?page= above.
+   *
+   * A header search submitted while the user is already on /products changes only
+   * the query string. Next treats that as the same route segment, so this component
+   * re-renders but never remounts — a mount-only effect would miss it. Reading
+   * window.location during render does not work either: Next writes the new URL in
+   * the commit phase, so the render triggered by router.push() still sees the old
+   * query and nothing schedules a further render.
+   *
+   * useSearchParams() is the only reactive source, and it must sit inside a Suspense
+   * boundary or it opts the whole route out of static rendering. The bridge below
+   * renders NOTHING, so the boundary wraps zero markup: /products stays fully
+   * static/ISR (verified in the build output) and every crawlable product/category
+   * link stays in the HTML.
+   */
+  // Tracks the last term the bridge reported. A ref, not state, because it must be
+  // readable without adding a dependency that would re-create this callback.
+  // `null` means "nothing reported yet".
+  const lastReportedSearch = useRef<string | null>(null);
+
+  const handleSearchChange = useCallback((value: string) => {
+    const previous = lastReportedSearch.current;
+    lastReportedSearch.current = value;
+    setSearch(value);
+
+    // Reset pagination when the term genuinely CHANGES — otherwise searching from
+    // ?page=4 strands the user on the last page of a smaller result set. Skipped on
+    // the first report, which would otherwise clobber a deep-linked
+    // /products?search=cabin&page=3 back to page 1.
+    if (previous !== null && previous !== value) setCurrentPage(1);
+  }, []);
+
   return (
-    <ProductsPageContent
-      products={products}
-      categories={categories}
-      activeCategory={activeCategory}
-      currentPage={currentPage}
-      basePath="/products"
-    />
+    <>
+      <Suspense fallback={null}>
+        <SearchParamBridge onChange={handleSearchChange} />
+      </Suspense>
+      <ProductsPageContent
+        products={products}
+        categories={categories}
+        activeCategory={activeCategory}
+        currentPage={currentPage}
+        basePath="/products"
+        initialSearch={search}
+      />
+    </>
   );
+}
+
+/**
+ * Reports the current `?search=` value to its parent and renders nothing.
+ *
+ * Isolated in its own component purely so the Suspense boundary that
+ * useSearchParams() requires contains no markup — see ProductsListingWithParams.
+ */
+function SearchParamBridge({ onChange }: { onChange: (value: string) => void }) {
+  const searchParams = useSearchParams();
+  const value = searchParams.get("search") ?? "";
+
+  useEffect(() => {
+    onChange(value);
+  }, [value, onChange]);
+
+  return null;
 }
 
 /**
