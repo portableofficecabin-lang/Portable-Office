@@ -42,20 +42,23 @@ export interface NavLinkItem {
  * ------------------------------------------------------------------ */
 
 /**
- * The top-level bar. Deliberately short — the 15 product categories live in the mega
- * menu, not up here. Even at seven items the bar plus the brand and the action
- * cluster needs ~1130px of unshrinkable width, which is why the desktop header only
- * appears at xl (1280px) and tablets get the drawer instead; adding entries here
- * makes that worse. FAQs therefore lives in megaMenuFeatured rather than in this
- * list. Every entry is a confirmed route.
+ * The primary nav row. It gets a full-width row of its own beneath the brand/CTA
+ * bar, so it no longer competes with the logo and action buttons for horizontal
+ * space — which is what previously forced the desktop header up to a 1280px
+ * breakpoint. Nine items fit comfortably from 1024px.
+ *
+ * The 15 product categories still live in the mega menu, not here. Every entry is a
+ * confirmed route.
  */
 export const primaryNavigation: NavLinkItem[] = [
   { name: "Home", href: "/" },
+  { name: "About Us", href: "/about-us" },
   { name: "Products", href: "/products" },
-  { name: "Rental", href: "/rental-service" },
+  { name: "Rentals", href: "/rental-service" },
   { name: "Projects", href: "/gallery" },
-  { name: "About", href: "/about-us" },
+  { name: "Marketplace", href: "/marketplace" },
   { name: "Blog", href: "/blog" },
+  { name: "FAQ", href: "/faq" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -147,12 +150,7 @@ export const megaMenuFeatured: NavLinkItem[] = [
   { name: "Cabins on Rent", href: "/rental-service", description: "Monthly rental with delivery and installation" },
   { name: "Marketplace", href: "/marketplace", description: "Ready stock available for immediate dispatch" },
   { name: "Book a Consultation", href: "/book-appointment", description: "Talk sizing and layout with our team" },
-  // FAQ lives here rather than in primaryNavigation: the old header carried it as a
-  // top-level item, and dropping it outright would have been a regression, but an
-  // eighth item does not fit the bar. This surfaces it in BOTH the desktop mega menu
-  // and the mobile drawer (both render megaMenuFeatured), and it is also in the
-  // footer Support column.
-  { name: "FAQs", href: "/faq", description: "Delivery, warranty, payment and sizing answers" },
+  { name: "Offers & Promotions", href: "/promotions", description: "Current deals on ready-stock units" },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -268,6 +266,21 @@ export const socialLinks = [
  * project counts, client percentages) appears here — those strings are
  * inconsistent across the site and are not in the verified-facts file.
  */
+/**
+ * The three statements in the slim bar above the header.
+ *
+ * All three are substantiated by content already on this site: the Karnataka works
+ * is at Hoskote near Bangalore (COMPANY.addresses.karnatakaFactory) and the site
+ * publishes a "portable cabin manufacturers in Bangalore" page; customisation is the
+ * documented quote-only build path; and PAN-India delivery restates the
+ * LocalBusiness areaServed. No unbacked figure (years, project counts) appears here.
+ */
+export const topBarTrustItems = [
+  { label: "Manufacturer in Bangalore", icon: "pin" },
+  { label: "Custom sizes available", icon: "tag" },
+  { label: "Delivery across India", icon: "truck" },
+] as const;
+
 export const footerTrustItems = [
   { label: "ISO 9001:2015 Certified", icon: "badge" },
   { label: "GST Invoice", icon: "receipt" },

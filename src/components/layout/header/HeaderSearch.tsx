@@ -106,12 +106,10 @@ export function HeaderSearch({ className }: { className?: string }) {
         aria-label={open ? "Close product search" : "Search products"}
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "inline-flex h-11 w-11 items-center justify-center rounded-full border",
+          "inline-flex h-11 w-11 items-center justify-center rounded-lg",
           "transition-colors duration-200 motion-reduce:transition-none",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-          open
-            ? "border-accent/50 bg-accent/15 text-accent"
-            : "border-border/60 bg-card/60 text-foreground hover:border-accent/40 hover:text-accent",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white",
+          open ? "bg-accent/15 text-accent" : "text-navy-deep hover:bg-navy-deep/[0.06]",
         )}
       >
         {open ? (
@@ -134,14 +132,14 @@ export function HeaderSearch({ className }: { className?: string }) {
           <form
             onSubmit={handleSubmit}
             role="search"
-            className="rounded-2xl border border-border/70 bg-popover p-3 shadow-2xl"
+            className="rounded-xl border border-navy-deep/10 bg-white p-3 shadow-2xl"
           >
             <label htmlFor={`${panelId}-input`} className="sr-only">
               Search products
             </label>
             <div className="relative">
               <Search
-                className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-navy-deep/50"
                 aria-hidden="true"
               />
               <Input
@@ -153,17 +151,20 @@ export function HeaderSearch({ className }: { className?: string }) {
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={PLACEHOLDER}
                 autoComplete="off"
-                className="h-11 rounded-xl border-border/60 bg-card/60 pl-10 pr-3 focus-visible:border-accent/40 focus-visible:ring-accent/50"
+                className="h-11 rounded-lg border-navy-deep/15 bg-white pl-10 pr-3 text-navy-deep placeholder:text-navy-deep/45 focus-visible:border-accent/50 focus-visible:ring-accent/40"
               />
             </div>
 
             <div className="mt-2.5 flex items-center justify-between gap-3">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-navy-deep/60">
                 Searches our product range by name and category.
               </p>
-              {/* text-navy-deep: white on the amber gradient fails contrast — see
-                  the note in HeaderActions. */}
-              <Button type="submit" variant="accent" size="sm" className="h-9 shrink-0 px-4 text-navy-deep">
+              {/* Deep orange + white = 5.4:1. See the contrast note in HeaderActions. */}
+              <Button
+                type="submit"
+                size="sm"
+                className="h-9 shrink-0 bg-[hsl(22_90%_38%)] px-4 text-white hover:bg-[hsl(22_90%_32%)]"
+              >
                 Search
               </Button>
             </div>

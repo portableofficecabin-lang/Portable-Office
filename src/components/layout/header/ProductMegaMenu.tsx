@@ -166,22 +166,26 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
         }}
         onKeyDown={handleTriggerKeyDown}
         className={cn(
-          "inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold",
+          "relative inline-flex h-12 items-center gap-1 whitespace-nowrap px-3.5 text-[15px] font-medium xl:px-4",
           "transition-colors duration-200 motion-reduce:transition-none",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-          isActive
-            ? "bg-accent/15 text-accent"
-            : "text-foreground/80 hover:bg-secondary hover:text-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset",
+          isActive || open ? "text-accent" : "text-navy-deep hover:text-accent",
         )}
       >
         Products
         <ChevronDown
           className={cn(
-            "h-3.5 w-3.5 transition-transform duration-200 motion-reduce:transition-none",
+            "h-4 w-4 transition-transform duration-200 motion-reduce:transition-none",
             open && "rotate-180",
           )}
           aria-hidden="true"
         />
+        {isActive && (
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-3 bottom-0 h-0.5 rounded-t bg-accent xl:inset-x-3.5"
+          />
+        )}
       </button>
 
       {/* Rendered only when open: nothing to hit-test or paint while closed, and no
@@ -191,18 +195,20 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
           ref={panelRef}
           id={panelId}
           className={cn(
-            // Anchored to the header row (inset to the container), so the panel can
-            // never run off either viewport edge at any width.
-            "absolute inset-x-0 top-full z-50 mt-2",
+            // Anchored to the nav row (inset to the container), so the panel can
+            // never run off either viewport edge at any width. No top margin — it
+            // reads as a sheet dropping straight out of the nav row.
+            "absolute inset-x-0 top-full z-50",
             "animate-[fade-in_0.15s_ease-out_forwards] motion-reduce:animate-none",
           )}
         >
           <div
             className={cn(
-              "overflow-hidden rounded-2xl border border-border/70 bg-popover shadow-2xl",
+              // White to match the light header bars above it.
+              "overflow-hidden rounded-b-2xl border-x border-b border-navy-deep/10 bg-white shadow-2xl",
               // A short viewport can't show a 4-row category grid; let it scroll
               // rather than spill off the bottom of the screen.
-              "max-h-[calc(100vh-8rem)] overflow-y-auto",
+              "max-h-[calc(100vh-9rem)] overflow-y-auto",
             )}
           >
             <div className="grid gap-x-6 gap-y-7 p-6 xl:grid-cols-[repeat(4,minmax(0,1fr))_15rem]">
@@ -221,7 +227,7 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
                             onClick={closeNow}
                             className={cn(
                               "group/item flex gap-2.5 rounded-lg p-2 transition-colors duration-200 motion-reduce:transition-none",
-                              "hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+                              "hover:bg-navy-deep/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
                             )}
                           >
                             <Icon
@@ -229,10 +235,10 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
                               aria-hidden="true"
                             />
                             <span className="min-w-0">
-                              <span className="block text-sm font-semibold leading-snug text-foreground group-hover/item:text-accent">
+                              <span className="block text-sm font-semibold leading-snug text-navy-deep group-hover/item:text-accent">
                                 {item.name}
                               </span>
-                              <span className="mt-0.5 block text-xs leading-snug text-muted-foreground">
+                              <span className="mt-0.5 block text-xs leading-snug text-navy-deep/60">
                                 {item.description}
                               </span>
                             </span>
@@ -245,7 +251,7 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
               ))}
 
               {/* Right-hand rail: the non-category journeys. */}
-              <div className="min-w-0 xl:border-l xl:border-border/60 xl:pl-6">
+              <div className="min-w-0 xl:border-l xl:border-navy-deep/10 xl:pl-6">
                 <h3 className="mb-3 text-[11px] font-bold uppercase tracking-wider text-accent">
                   Quick Links
                 </h3>
@@ -257,17 +263,17 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
                         onClick={closeNow}
                         className={cn(
                           "group/item block rounded-lg p-2 transition-colors duration-200 motion-reduce:transition-none",
-                          "hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+                          "hover:bg-navy-deep/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
                         )}
                       >
-                        <span className="flex items-center gap-1.5 text-sm font-semibold leading-snug text-foreground group-hover/item:text-accent">
+                        <span className="flex items-center gap-1.5 text-sm font-semibold leading-snug text-navy-deep group-hover/item:text-accent">
                           {item.name}
                           <ArrowRight
                             className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/item:translate-x-0.5 motion-reduce:transition-none"
                             aria-hidden="true"
                           />
                         </span>
-                        <span className="mt-0.5 block text-xs leading-snug text-muted-foreground">
+                        <span className="mt-0.5 block text-xs leading-snug text-navy-deep/60">
                           {item.description}
                         </span>
                       </Link>

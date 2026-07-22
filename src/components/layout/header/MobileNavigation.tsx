@@ -64,37 +64,38 @@ export function MobileNavigation() {
           type="button"
           aria-label="Open navigation menu"
           className={cn(
-            "inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-card/60 text-foreground",
+            "inline-flex h-11 w-11 items-center justify-center rounded-lg text-navy-deep",
             "transition-colors duration-200 motion-reduce:transition-none",
-            "hover:border-accent/40 hover:text-accent",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            "hover:bg-navy-deep/[0.06]",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white",
           )}
         >
-          <Menu className="h-5 w-5" aria-hidden="true" />
+          <Menu className="h-6 w-6" aria-hidden="true" />
+          <span className="sr-only">Menu</span>
         </button>
       </SheetTrigger>
 
       <SheetContent
         side="right"
         className={cn(
-          "flex w-[min(92vw,24rem)] flex-col gap-0 overflow-y-auto border-border/60 bg-background p-0 sm:max-w-sm",
+          "flex w-[min(92vw,24rem)] flex-col gap-0 overflow-y-auto border-navy-deep/10 bg-white p-0 sm:max-w-sm",
           // The shared SheetContent renders its own close button as the last direct
           // child. It ships at icon size, which is well under the 44px touch target
           // this drawer needs, so it is enlarged here rather than by editing the
           // shared primitive (which other dialogs across the app rely on).
           "[&>button]:right-4 [&>button]:top-4 [&>button]:z-10 [&>button]:flex [&>button]:h-11 [&>button]:w-11",
           "[&>button]:items-center [&>button]:justify-center [&>button]:rounded-full",
-          "[&>button]:border [&>button]:border-border/60 [&>button]:bg-card/60 [&>button]:opacity-100",
+          "[&>button]:border [&>button]:border-navy-deep/15 [&>button]:bg-white [&>button]:text-navy-deep [&>button]:opacity-100",
           "[&>button>svg]:h-5 [&>button>svg]:w-5",
         )}
       >
         {/* ---------- Drawer header ---------- */}
-        <div className="border-b border-border/60 px-5 pb-5 pt-6">
+        <div className="border-b border-navy-deep/10 px-5 pb-5 pt-6">
           <div className="pr-14">
-            <SheetTitle className="text-left font-display text-lg font-extrabold tracking-tight text-foreground">
+            <SheetTitle className="text-left font-display text-lg font-extrabold tracking-tight text-navy-deep">
               Portable Office <span className="text-accent">Cabin</span>
             </SheetTitle>
-            <SheetDescription className="mt-1 text-left text-sm text-muted-foreground">
+            <SheetDescription className="mt-1 text-left text-sm text-navy-deep/60">
               Manufacturer of portable cabins, container offices and prefab structures.
             </SheetDescription>
           </div>
@@ -120,8 +121,8 @@ export function MobileNavigation() {
                       "flex min-h-11 items-center rounded-xl px-4 text-[15px] font-semibold",
                       "transition-colors duration-200 motion-reduce:transition-none",
                       active
-                        ? "bg-accent/15 text-accent"
-                        : "text-foreground hover:bg-secondary",
+                        ? "bg-accent/12 text-accent"
+                        : "text-navy-deep hover:bg-navy-deep/[0.06]",
                     )}
                   >
                     {item.name}
@@ -136,9 +137,9 @@ export function MobileNavigation() {
               <AccordionItem
                 key={column.title}
                 value={column.title}
-                className="border-b border-border/50"
+                className="border-b border-navy-deep/10"
               >
-                <AccordionTrigger className="min-h-11 px-4 text-left text-[13px] font-bold uppercase tracking-wide text-muted-foreground hover:text-foreground hover:no-underline">
+                <AccordionTrigger className="min-h-11 px-4 text-left text-[13px] font-bold uppercase tracking-wide text-navy-deep/60 hover:text-navy-deep hover:no-underline">
                   {column.title}
                 </AccordionTrigger>
                 <AccordionContent className="pb-2">
@@ -150,7 +151,7 @@ export function MobileNavigation() {
                           <Link
                             href={item.href}
                             onClick={close}
-                            className="flex min-h-11 items-center gap-2.5 rounded-lg px-4 text-sm font-medium text-foreground/90 transition-colors duration-200 hover:bg-secondary hover:text-accent motion-reduce:transition-none"
+                            className="flex min-h-11 items-center gap-2.5 rounded-lg px-4 text-sm font-medium text-navy-deep/85 transition-colors duration-200 hover:bg-navy-deep/[0.06] hover:text-accent motion-reduce:transition-none"
                           >
                             <Icon className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                             {item.name}
@@ -170,7 +171,7 @@ export function MobileNavigation() {
                 <Link
                   href={item.href}
                   onClick={close}
-                  className="flex min-h-11 items-center rounded-xl px-4 text-[15px] font-semibold text-foreground transition-colors duration-200 hover:bg-secondary motion-reduce:transition-none"
+                  className="flex min-h-11 items-center rounded-xl px-4 text-[15px] font-semibold text-navy-deep transition-colors duration-200 hover:bg-navy-deep/[0.06] motion-reduce:transition-none"
                 >
                   {item.name}
                 </Link>
@@ -180,7 +181,7 @@ export function MobileNavigation() {
               <Link
                 href={user ? "/my-account" : "/login"}
                 onClick={close}
-                className="flex min-h-11 items-center gap-2.5 rounded-xl px-4 text-[15px] font-semibold text-foreground transition-colors duration-200 hover:bg-secondary motion-reduce:transition-none"
+                className="flex min-h-11 items-center gap-2.5 rounded-xl px-4 text-[15px] font-semibold text-navy-deep transition-colors duration-200 hover:bg-navy-deep/[0.06] motion-reduce:transition-none"
               >
                 <User className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                 {user ? "My Account" : "Sign In / Register"}
@@ -190,17 +191,17 @@ export function MobileNavigation() {
         </nav>
 
         {/* ---------- Contact + primary CTA ---------- */}
-        <div className="mt-auto space-y-3 border-t border-border/60 bg-card/40 px-5 py-5">
+        <div className="mt-auto space-y-3 border-t border-navy-deep/10 bg-navy-deep/[0.03] px-5 py-5">
           <a
             href={`tel:${primaryPhone.e164}`}
-            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-semibold text-foreground transition-colors hover:text-accent"
+            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-semibold text-navy-deep transition-colors hover:text-accent"
           >
             <Phone className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
             {primaryPhone.display}
           </a>
           <a
             href={`tel:${secondaryPhone.e164}`}
-            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-semibold text-foreground transition-colors hover:text-accent"
+            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-semibold text-navy-deep transition-colors hover:text-accent"
           >
             <Phone className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
             {secondaryPhone.display}
@@ -209,19 +210,19 @@ export function MobileNavigation() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-semibold text-foreground transition-colors hover:text-[#25D366]"
+            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-semibold text-navy-deep transition-colors hover:text-[#0B7A43]"
           >
-            <WhatsAppGlyph className="h-4 w-4 shrink-0 text-[#25D366]" />
+            <WhatsAppGlyph className="h-4 w-4 shrink-0 text-[#0B7A43]" />
             WhatsApp us
           </a>
           <a
             href={`mailto:${COMPANY.email.sales}`}
-            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-medium text-foreground transition-colors hover:text-accent"
+            className="flex min-h-11 items-center gap-3 rounded-xl px-1 text-sm font-medium text-navy-deep transition-colors hover:text-accent"
           >
             <Mail className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
             <span className="truncate">{COMPANY.email.sales}</span>
           </a>
-          <p className="flex items-start gap-3 px-1 text-xs text-muted-foreground">
+          <p className="flex items-start gap-3 px-1 text-xs text-navy-deep/60">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
             <span>
               {COMPANY.businessHours.weekdays.display}

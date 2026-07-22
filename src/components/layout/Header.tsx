@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FileText } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
@@ -17,26 +17,34 @@ import { MobileNavigation } from "./header/MobileNavigation";
 import { TopBar } from "./header/TopBar";
 
 /**
- * Public site header.
+ * Public site header — three stacked rows:
  *
- * ── HOW THE STICKY BEHAVIOUR WORKS (and why there is no layout shift) ────────────
- * The whole header is `sticky` with a NEGATIVE top offset equal to the TopBar's
- * height (-top-9 / -2.25rem, matching TopBar's h-9). While the page is at the top
- * the header sits in normal flow and both bars are visible. As the user scrolls, the
- * header pins with its first 36px above the viewport — so the information bar slides
- * away and the main navigation parks flush against the top edge.
+ *   1. TopBar     dark navy, h-9                  — trust statements (call/WhatsApp on mobile)
+ *   2. Brand bar  white, h-16 / lg:h-[4.5rem]     — logo + search/account/cart + CTAs
+ *   3. Nav row    white, h-12                     — the primary links, lg and up
  *
- * That gives the "shorter header once scrolled" effect with ZERO JavaScript and zero
- * layout shift: no element's height ever animates, so nothing below the header can
- * be pushed around. The only thing scroll position drives is the border/shadow
- * treatment below, which is paint-only and cannot affect layout.
+ * ── WHY THE NAV GETS ITS OWN ROW ────────────────────────────────────────────────
+ * Previously the links sat inline between the logo and the action buttons, and the
+ * three groups fought over the same horizontal space: nine unbreakable labels plus
+ * the brand plus five controls needed ~1130px of unshrinkable width, so the desktop
+ * layout could not appear below 1280px. Giving the nav a full-width row of its own
+ * removes that competition — it now has the whole container, and the desktop header
+ * starts at lg (1024px).
  *
+ * ── STICKY BEHAVIOUR (no layout shift, no JS) ───────────────────────────────────
+ * The header is `sticky` with a NEGATIVE top offset equal to the TopBar's height
+ * (-top-9 / -2.25rem, matching TopBar's h-9). At rest all three rows show. On scroll
+ * the header pins with its first 36px above the viewport, so the trust bar slides
+ * away and the white brand bar + nav row park flush against the top edge.
+ *
+ * No element's height is ever animated, so nothing below can be pushed around. Only
+ * the shadow responds to scroll, and that is paint-only.
  * If you change TopBar's height, change this offset in the same commit.
  *
  * ── CLIENT COMPONENT ────────────────────────────────────────────────────────────
- * This has to stay a Client Component: it reads auth and cart state, and owns the
- * mega menu, search and drawer interactions. Layout.tsx keeps it as an isolated
- * client island so the Footer and page content still render on the server.
+ * Must stay a Client Component: it reads auth and cart state and owns the mega menu,
+ * search and drawer interactions. Layout.tsx keeps it an isolated client island so
+ * the Footer and page content still render on the server.
  */
 export function Header() {
   const { itemCount } = useCart();
@@ -68,11 +76,9 @@ export function Header() {
 
   return (
     <header className="sticky -top-9 z-50 w-full">
-      {/* Keyboard users land here first — lets them skip the whole nav. Visible only
-          while focused. Targets the #main-content landmark set in Layout.tsx.
-          `fixed`, NOT `absolute`: the header is a positioned ancestor pinned at
-          -top-9, so an absolutely-positioned skip link would resolve against that
-          offset and sit half-clipped above the viewport once the page is scrolled. */}
+      {/* Keyboard users land here first. `fixed`, NOT `absolute`: the header is a
+          positioned ancestor pinned at -top-9, so an absolutely-positioned skip link
+          would resolve against that offset and sit half-clipped once scrolled. */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-accent-foreground"
@@ -82,42 +88,34 @@ export function Header() {
 
       <TopBar />
 
-      {/* Solid background, no backdrop-blur: at 95%+ opacity a blur pass is visually
-          imperceptible but still costs a full-width compositor gaussian on every
-          scrolled frame. The previous header paid that for no gain. */}
       <div
         className={cn(
-          "border-b bg-background",
+          "bg-white",
           "transition-shadow duration-200 motion-reduce:transition-none",
-          scrolled
-            ? "border-border/70 shadow-[0_10px_30px_-12px_hsl(var(--background)/0.9)]"
-            : "border-border/40 shadow-none",
+          scrolled ? "shadow-[0_6px_20px_-8px_rgba(10,25,47,0.28)]" : "shadow-none",
         )}
       >
+        {/* ---------- Row 2: brand + actions ---------- */}
         <div className="container-custom">
-          {/* `relative` is load-bearing: the mega menu and search panels anchor to
-              THIS row, not to their own triggers, so they can never be pushed past a
-              viewport edge by where their button happens to sit. */}
-          <div className="relative flex h-16 items-center justify-between gap-3 xl:h-[4.5rem]">
-            {/* ---------- Brand ---------- */}
-            {/* No `shrink-0` here: the brand must be the thing that gives way when
-                the bar is tight, otherwise the shortfall lands on the icon buttons
-                and squashes them below their 44px touch target. `min-w-0` + the
-                `truncate` on the wordmark below only work if this can shrink. */}
+          {/* `relative` anchors the search panel to this row rather than to its 44px
+              button, which would push the panel off the left edge on mobile. */}
+          <div className="relative flex h-16 items-center justify-between gap-3 lg:h-[4.5rem]">
+            {/* No `shrink-0` on the brand: it must be what gives way when the bar is
+                tight, or the shortfall lands on the icon buttons and squashes them
+                below their 44px touch target. */}
             <Link
               href="/"
               className={cn(
-                "flex min-w-0 items-center gap-2.5 rounded-lg",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                "flex min-w-0 items-center gap-3 rounded-lg",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white",
               )}
             >
               {/* loading="lazy" is deliberate and load-bearing: the logo is header
-                  chrome, NOT the LCP element. Without it, an eagerly-fetched SSR'd
-                  <img> gets a <link rel=preload as=image> emitted as the FIRST head
-                  hint, so on slow 4G the logo competes with the hero background for
-                  the critical connection during the exact LCP window. Explicit
-                  width/height (the asset is a 400x400 square) reserve the box so
-                  lazy-loading it cannot shift the header. */}
+                  chrome, NOT the LCP element. Without it an eagerly-fetched SSR'd
+                  <img> gets a <link rel=preload as=image> emitted as the first head
+                  hint, so on slow 4G it competes with the hero background during the
+                  exact LCP window. Explicit width/height (the asset is 400x400)
+                  reserve the box so lazy-loading cannot shift the header. */}
               <img
                 src={resolveImageUrl(logo)}
                 alt="Portable Office Cabin"
@@ -125,41 +123,48 @@ export function Header() {
                 height={400}
                 loading="lazy"
                 decoding="async"
-                className="h-10 w-10 shrink-0 rounded-lg border border-accent/20 bg-card object-contain p-1 shadow-sm xl:h-11 xl:w-11"
+                className="h-11 w-11 shrink-0 rounded-lg object-contain lg:h-12 lg:w-12"
               />
-              <span className="hidden min-w-0 flex-col leading-none md:flex">
-                <span className="truncate font-display text-base font-extrabold tracking-tight text-foreground xl:text-lg">
+              <span className="flex min-w-0 flex-col leading-none">
+                <span className="truncate font-display text-base font-extrabold tracking-tight text-navy-deep sm:text-lg">
                   Portable Office <span className="text-accent">Cabin</span>
                 </span>
-                <span className="mt-1 truncate text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                <span className="mt-1 hidden truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-navy-deep/55 sm:block">
                   Prefab &amp; Modular Manufacturer
                 </span>
               </span>
             </Link>
 
-            {/* ---------- Desktop navigation ---------- */}
-            <DesktopNavigation />
-
-            {/* ---------- Desktop actions ---------- */}
+            {/* Desktop: search, account, cart, then Call / WhatsApp / Get Quote */}
             <HeaderActions />
 
-            {/* ---------- Mobile / tablet actions ----------
-                The desktop bar switches in at xl (1280px), not lg. At 1024px the
-                brand + 7 nav labels + 5 action controls need ~1130px of unshrinkable
-                content in a 960px container, which overflowed the page and crushed
-                the icon buttons below 44px. Tablet gets the drawer instead. */}
-            <div className="flex shrink-0 items-center gap-2 xl:hidden">
+            {/* Mobile / tablet */}
+            <div className="flex shrink-0 items-center gap-1 lg:hidden">
               <HeaderSearch />
               <CartButton itemCount={itemCount} />
-              <Button
-                variant="accent"
-                size="sm"
-                className="hidden h-11 px-4 text-navy-deep sm:inline-flex"
-                asChild
+              <Link
+                href="/contact"
+                className={cn(
+                  "hidden h-11 items-center gap-1.5 rounded-lg bg-[hsl(22_90%_38%)] px-3.5 text-sm font-semibold text-white sm:inline-flex",
+                  "transition-colors duration-200 hover:bg-[hsl(22_90%_32%)] motion-reduce:transition-none",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(22_90%_38%)] focus-visible:ring-offset-2",
+                )}
               >
-                <Link href="/contact">Quote</Link>
-              </Button>
+                <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
+                Quote
+              </Link>
               <MobileNavigation />
+            </div>
+          </div>
+        </div>
+
+        {/* ---------- Row 3: primary navigation (lg and up) ---------- */}
+        <div className="hidden border-t border-navy-deep/10 lg:block">
+          <div className="container-custom">
+            {/* `relative` anchors the mega menu panel to this row, so it spans the
+                container width and can never run off a viewport edge. */}
+            <div className="relative">
+              <DesktopNavigation />
             </div>
           </div>
         </div>
