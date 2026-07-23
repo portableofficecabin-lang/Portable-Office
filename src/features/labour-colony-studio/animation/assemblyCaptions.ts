@@ -1269,6 +1269,34 @@ export function describeDeckStructureStep(parts: ColonyPart[]): ColonyStepCopy {
 export interface FloorTubeInsertCopy extends ColonyStepCopy {
   subTitle: string;
 }
+
+/** One RAFTER's own zoomed placement shot — the member lands and EVERY nut-bolt is fitted on
+ *  camera before the next rafter moves (user spec: each item shown in zoom, one at a time). */
+export function describeRafterPlace(
+  chord: ColonyPart, ordinal: number, total: number,
+): FloorTubeInsertCopy {
+  const fl = floorWordOf(chord.floor);
+  const side = /side-rafter/.test(chord.id);
+  return {
+    subTitle: `Rafter ${ordinal} of ${total} · ${fl}`,
+    title: `Rafter ${ordinal}/${total} — place & bolt`,
+    description:
+      `${side ? "Side rafter" : "Rafter"} ${ordinal} of ${total} (${fl}) is craned in and seated, ` +
+      "and the camera stays CLOSE while every nut-bolt of its " +
+      `${side ? "hold-down and end connections" : "end connections"} is fitted — plate, bolt, ` +
+      "washer, nut — before the next rafter moves. One rafter at a time, zoomed in so each item " +
+      "is seen going in.",
+    captionCustomer:
+      `Rafter ${ordinal} of ${total} is placed and every nut-bolt fitted — one rafter at a time, up close.`,
+    captionEngineering:
+      `Rafter ${ordinal}/${total} (${fl}): chord + lattice landed; ` +
+      `${side ? "hold-downs at every grid line" : "end cleats / MS end plates"} bolted M12, ` +
+      "one nut + washer per bolt. The next rafter moves only after lock-off.",
+    tools: "Crane / chain block, podger spanner, torque wrench",
+    safety: "The rafter stays slung until every end bolt is made up.",
+    inspection: `Rafter ${ordinal} line, bearing and bolt torque checked before rafter ${ordinal + 1} is lifted.`,
+  };
+}
 export function describeFloorTubeInsert(
   tube: ColonyPart, ordinal: number, total: number,
 ): FloorTubeInsertCopy {

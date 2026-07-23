@@ -34,7 +34,8 @@ import {
 import {
   boltSpecOf, boqRefsOf, buildColonyStepEngineeringRows, colonyContextOf, colonyDimensionsLine,
   colonySummaryLine, connectionMarksOf, describeColonyStep, describeDeckCoverStep,
-  describeDeckStructureStep, describeFloorTubeInsert, describeRafterSupportAssembly,
+  describeDeckStructureStep, describeFloorTubeInsert, describeRafterPlace,
+  describeRafterSupportAssembly,
   memberMarksOf, type ColonyAssemblyContext, type ColonyStepCopy,
 } from "./assemblyCaptions";
 import {
@@ -495,15 +496,81 @@ export function buildAssemblyTimeline(
       const pre = rest.filter((p) => !COVER_KINDS.has(p.kind));
       const post = rest.filter((p) => COVER_KINDS.has(p.kind));
 
-      if (pre.length) {
-        const parts = sortForInstall(pre, sceneCtx, modelCenter);
+      /* ZOOMED framing: never frame a whole 20 m member — crop the framing box's longest axis to a
+       * few metres around its centre so every rafter placement and tube insertion is watched CLOSE
+       * enough to read the plates, bolts, washers and nuts going in (user spec). */
+      const cropForZoom = (b: Box3, maxLen: number): Box3 => {
+        const li = b.size.indexOf(Math.max(...b.size));
+        if (b.size[li] <= maxLen) return b;
+        const min = [...b.min] as Vec3T;
+        const max = [...b.max] as Vec3T;
+        const size = [...b.size] as Vec3T;
+        min[li] = b.center[li] - maxLen / 2;
+        max[li] = b.center[li] + maxLen / 2;
+        size[li] = maxLen;
+        return { min, max, size, center: [...b.center] as Vec3T };
+      };
+
+      /* ---- EVERY RAFTER IS ITS OWN ZOOMED SHOT (user spec): the member lands, then its plates,
+       * bolts, washers and nuts fit ON CAMERA, one rafter at a time — before any tube moves. */
+      const rafterKeyOf = (p: ColonyPart): string | null => {
+        let mm = /^gf:side-rafter:(rear|front)/.exec(p.id);
+        if (mm) return `gf:side:${mm[1]}`;
+        mm = /^(gf|f\d+):(?:joist|rafter):(\d+):(\d+)/.exec(p.id);
+        if (mm) return `${mm[1]}:${parseInt(mm[2], 10)}:${parseInt(mm[3], 10)}`;
+        const c = p.connectionId ?? "";
+        mm = /^(?:joist|rend):(gf|f\d+):(\d+):(\d+):/.exec(c);
+        if (mm) return `${mm[1]}:${parseInt(mm[2], 10) - 1}:${parseInt(mm[3], 10) - 1}`;
+        mm = /^rend:gf:(rear|front):/.exec(c);
+        if (mm) return `gf:side:${mm[1]}`;
+        mm = /^srafter:(rear|front):/.exec(c);
+        if (mm) return `gf:side:${mm[1]}`;
+        return null;
+      };
+      const rafterGroups = new Map<string, ColonyPart[]>();
+      const preCommon: ColonyPart[] = [];
+      for (const p of pre) {
+        const rk = rafterKeyOf(p);
+        if (rk) {
+          const arr = rafterGroups.get(rk);
+          if (arr) arr.push(p); else rafterGroups.set(rk, [p]);
+        } else preCommon.push(p);
+      }
+      const rafterFloorOf = (k: string): number => {
+        if (k.startsWith("gf:")) return 0;
+        const mf = /^f(\d+):/.exec(k);
+        return mf ? parseInt(mf[1], 10) : 0;
+      };
+      const rafterKeys = [...rafterGroups.keys()].sort((a, b) =>
+        rafterFloorOf(a) - rafterFloorOf(b) || a.localeCompare(b, undefined, { numeric: true }));
+
+      let sub = 0;
+      if (preCommon.length) {
+        const parts = sortForInstall(preCommon, sceneCtx, modelCenter);
         const installMs = Math.round(options.stepInstallMs * (1 + 0.45 * clamp01((parts.length - 1) / 16)));
         pushStep({
           assemblyStep, parts, installMs, holdMs: options.stepHoldMs,
           shot: "floor-deck", to: planShot("floor-deck", modelBox, groupBoxOf(parts, sceneCtx) ?? modelBox),
-          copy: describeDeckStructureStep(pre),
+          copy: describeDeckStructureStep(preCommon),
         });
       }
+      rafterKeys.forEach((rk, ri) => {
+        const group = rafterGroups.get(rk) ?? [];
+        const chord = group.find((p) => p.kind === "joist") ?? group[0];
+        const parts = sortForInstall(group, sceneCtx, modelCenter);
+        const focusBox = groupBoxOf(parts, sceneCtx) ?? modelBox;
+        const copy = describeRafterPlace(chord, ri + 1, rafterKeys.length);
+        sub += 1;
+        pushStep({
+          assemblyStep, parts,
+          installMs: Math.round(options.stepInstallMs * 0.8), holdMs: 300,
+          shot: "floor-deck",
+          /* planDetailShot frames the CROPPED member box alone — the genuinely zoomed pose planShot's
+           * whole-model distance floor can never reach — so the plates and nut-bolts are readable. */
+          to: planDetailShot(cropForZoom(focusBox, 3.0), modelBox),
+          copy, subIndex: sub, subTitle: copy.subTitle, focusPartIds: [chord.id],
+        });
+      });
 
       const tubesOrdered = [...deckTubes].sort(
         (a, b) => (a.floor ?? 0) - (b.floor ?? 0) || a.id.localeCompare(b.id),
@@ -515,12 +582,14 @@ export function buildAssemblyTimeline(
         if (key) consumed.add(key);
         const parts = [tube, ...sortForInstall(hw, sceneCtx, modelCenter)];
         const copy = describeFloorTubeInsert(tube, ti + 1, tubesOrdered.length);
+        sub += 1;
         pushStep({
           assemblyStep, parts,
           installMs: Math.round(options.stepInstallMs * 0.9), holdMs: 400,
           shot: "floor-deck",
-          to: planShot("floor-deck", modelBox, groupBoxOf(parts, sceneCtx) ?? modelBox),
-          copy, subIndex: ti + 1, subTitle: copy.subTitle, focusPartIds: [tube.id],
+          /* Zoomed on a few metres of the tube's run — the tube slides INTO the frame lengthwise. */
+          to: planDetailShot(cropForZoom(groupBoxOf(parts, sceneCtx) ?? modelBox, 3.0), modelBox),
+          copy, subIndex: sub, subTitle: copy.subTitle, focusPartIds: [tube.id],
         });
       });
       // hardware whose tube never emitted (defensive) — never dropped, it closes with the covering
@@ -529,11 +598,12 @@ export function buildAssemblyTimeline(
       if (post.length) {
         const parts = sortForInstall(post, sceneCtx, modelCenter);
         const installMs = Math.round(options.stepInstallMs * (1 + 0.45 * clamp01((parts.length - 1) / 16)));
+        sub += 1;
         pushStep({
           assemblyStep, parts, installMs, holdMs: options.stepHoldMs,
           shot: "floor-deck", to: planShot("floor-deck", modelBox, groupBoxOf(parts, sceneCtx) ?? modelBox),
           copy: describeDeckCoverStep(ctx, post),
-          subIndex: tubesOrdered.length + 1, subTitle: "Deck boards & floor sheets",
+          subIndex: sub, subTitle: "Deck boards & floor sheets",
         });
       }
     } else if (plan.main.length > 0) {
