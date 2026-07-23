@@ -51,6 +51,8 @@ export type ColonyColorGroup =
   | "uChannel"
   | "angleSupport"
   | "pocketSupport"
+  // the floor's SECONDARY member — its own group so it can never share the rafters' colour
+  | "floorTube"
   // detailing systems (PUF bottom locking pocket on the plinth; rafter support cleat/purlin/tube)
   | "pufLock"
   | "rafterSupport"
@@ -90,6 +92,7 @@ export const COLOR_GROUP_META: Record<ColonyColorGroup, { label: string; hint: s
   uChannel: { label: "U-channel", hint: "Panel base tracks" },
   angleSupport: { label: "Angle supports", hint: "Panel head restraints and angle cleats" },
   pocketSupport: { label: "Framed pockets", hint: "Three-sided panel pockets at columns" },
+  floorTube: { label: "MS pipe frame", hint: "Secondary SHS floor tubes resting on seat cleats above the rafters" },
   pufLock: { label: "PUF bottom lock", hint: "Plinth base plates, anchor bolts and the paired C-purlin panel pocket" },
   rafterSupport: { label: "Rafter support", hint: "Bolted cleats, C-purlins and MS tubes on the rafters" },
   plate: { label: "Side & gusset plates", hint: "Splice, cleat, gusset, end and stiffener plates" },
@@ -119,7 +122,7 @@ export const GROUP_OF_KIND: Record<ColonyPartKind, ColonyColorGroup> = {
   pcc: "foundation", footing: "foundation", pedestal: "foundation", "plinth-beam": "foundation",
   "levelling-plate": "baseConnection", "base-plate": "baseConnection", "anchor-bolt": "baseConnection",
   column: "column", "base-beam": "beam", "floor-beam": "beam",
-  joist: "joist", "joist-web": "joist", "floor-tube": "joist", noggin: "noggin", brace: "brace",
+  joist: "joist", "joist-web": "joist", "floor-tube": "floorTube", noggin: "noggin", brace: "brace",
   stud: "column", rail: "beam",
   "roof-truss": "truss", rafter: "truss", "truss-web": "truss", ridge: "truss", purlin: "purlin",
   "c-channel": "cChannel", "u-channel": "uChannel",
@@ -161,7 +164,7 @@ const REPRESENTATIVE_KIND: Record<ColonyColorGroup, ColonyPartKind> = {
   foundation: "footing", baseConnection: "base-plate", column: "column", beam: "base-beam",
   joist: "joist", noggin: "noggin", brace: "brace", truss: "roof-truss", purlin: "purlin",
   cChannel: "c-channel", uChannel: "u-channel", angleSupport: "angle-support", pocketSupport: "pocket-support",
-  pufLock: "puf-lock-c-purlin-left", rafterSupport: "rsup-c-purlin",
+  floorTube: "floor-tube", pufLock: "puf-lock-c-purlin-left", rafterSupport: "rsup-c-purlin",
   plate: "splice-plate", bolt: "bolt", nut: "nut", weld: "weld",
   floorSheet: "floor-sheet", pufPanel: "ext-panel", insulation: "insulation", lining: "int-finish",
   roofSheet: "roof-sheet", partition: "partition", opening: "door", stair: "stair-stringer",

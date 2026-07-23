@@ -702,9 +702,10 @@ export function describeColonyStep(
             : "Floor joists are laid between the base beams at the designed spacing and the structural deck " +
               "and floor finish are fixed over them.") +
           (pipes
-            ? " The floor goes up in a FIXED order: rafters first, then the MS pipe frame — SHS tubes " +
-              "bolted over the rafter top chords at a sheet-modular 1220 mm — and only then the deck, " +
-              "so every board and sheet-end joint bears on a tube centreline."
+            ? " The floor goes up in a FIXED order: the PRIMARY rafters first, then the SECONDARY MS " +
+              "pipe frame — SHS tubes resting on seat cleats clearly ABOVE the rafter chords, spread " +
+              "lengthwise at a sheet-modular 1220 mm — and only then the deck, so every board and " +
+              "sheet-end joint bears on a tube centreline. Two separate members, never one."
             : "") +
           (gfSideOnly
             ? " On the GROUND floor the rafters run along the SIDE WALLS ONLY and the MS pipes run " +

@@ -80,6 +80,7 @@ const STEEL_KEYWORD: Partial<Record<ColonyPartKind, string>> = {
   "pocket-support": "channel",
   noggin: "joist",
   "floor-sheet": "floor",
+  "floor-tube": "floor",
   "floor-board": "floor",
   "floor-finish": "floor",
   "ext-panel": "sheet",

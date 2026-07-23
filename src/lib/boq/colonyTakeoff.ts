@@ -55,6 +55,27 @@ import { ceil, intermediateLines, round, totalLines, wallKey } from "@/lib/boq/t
 /** The plan rounds to 3 dp, so a millimetre is the finest distinction that survives it. */
 const EPS = 1e-3;
 
+/* ------------------------------------------------------------------ MS pipe frame module ------ *
+ * ONE derivation of the floor pipe frame's setting-out, exported so the priced take-off, the 3D
+ * model and the sheet-layout support lines can never disagree on where a tube run is. */
+
+/** 50 × 50 SHS — the MS pipe frame member size (m). */
+export const FLOOR_TUBE_SIZE_M = 0.05;
+/** Tube run spacing across the deck — 4 ft, so every 8 ft sheet-end joint lands on a tube (m). */
+export const FLOOR_TUBE_SPACING_M = 1.2192;
+/**
+ * The pipe frame's tube centrelines across the deck depth. Interior runs sit on EXACT sheet-module
+ * multiples from the deck origin; only the two EDGE runs pull in half a tube so nothing overhangs
+ * the body (those edges bear on the perimeter member anyway).
+ */
+export function floorTubeLineYs(y0: number, y1: number): number[] {
+  const half = FLOOR_TUBE_SIZE_M / 2;
+  const out: number[] = [y0 + half];
+  for (let yk = y0 + FLOOR_TUBE_SPACING_M; yk < y1 - half - EPS; yk += FLOOR_TUBE_SPACING_M) out.push(yk);
+  out.push(y1 - half);
+  return out;
+}
+
 const mm = (v: number): number => Math.round(v * 1000);
 const eq = (a: number, b: number): boolean => Math.abs(a - b) <= EPS;
 const hyp = (dx: number, dy: number): number => Math.hypot(dx, dy);
@@ -769,6 +790,40 @@ export function buildColonyTakeoff(
   }
 
   /* ---------------------------------------------------------------- 3.8 floor */
+
+  /* MS PIPE FRAME — the SECONDARY floor members: SHS 50×50 tubes resting on seat cleats ABOVE the
+   * primary rafters, spread LENGTHWISE at a sheet-modular 1220 mm so every 8 ft sheet-end joint
+   * lands on a tube centreline. Ground floor lays only its interior runs (the side rafters own the
+   * edge lines); upper floors keep the edge runs over the transverse field. Priced as its own line
+   * (user rule, 2026-07-23): the tube is a DIFFERENT member from the rafter and bills as one. */
+  {
+    let tubeRuns = 0;
+    let tubeLenM = 0;
+    for (let f = 0; f < floors; f++) {
+      const g = geoms[f];
+      if (!g.rooms.length) continue;
+      const y0 = Math.min(...g.rooms.map((r) => r.y));
+      const y1 = Math.max(...g.rooms.map((r) => r.y + r.d));
+      const x0 = Math.min(...g.rooms.map((r) => r.x));
+      const x1 = Math.max(...g.rooms.map((r) => r.x + r.w));
+      const lines = floorTubeLineYs(y0, y1);
+      tubeRuns += f === 0 ? Math.max(0, lines.length - 2) : lines.length;
+      tubeLenM = Math.max(tubeLenM, x1 - x0);
+    }
+    if (tubeRuns > 0 && tubeLenM > 0) {
+      steel({
+        kind: "steel",
+        id: "floor:tube",
+        section: "floor",
+        materialKey: "shs-50x50x2",
+        description: "MS pipe frame — SHS 50 × 50 × 2 floor tube (secondary, above the rafters)",
+        formula: `${tubeRuns} longitudinal run(s) @ ${FLOOR_TUBE_SPACING_M} m across ${floors} storey(s), GF interior runs only`,
+        drawingRef: PLAN,
+        qty: tubeRuns,
+        cutLengthM: round(tubeLenM, 3),
+      });
+    }
+  }
 
   /* A base beam under EVERY wall line — including a shared one, ONCE. The grillage is not a wall, so
    * it carries no geomKey: the de-duplication already happened when the segments were built. */

@@ -230,6 +230,8 @@ const STRUCTURAL_KINDS = new Set<ColonyPartKind>([
    * member, so they belong in the member / cutting / dispatch lists even though the priced take-off
    * does not itemise them — the lists show them with no BOQ line, which is the honest state. */
   "c-channel", "u-channel", "angle-support", "pocket-support", "noggin",
+  /* The MS pipe frame — the floor's SECONDARY member, priced on its own floor:tube line. */
+  "floor-tube", "joist-web",
 ]);
 
 const PLATE_KINDS = new Set<ColonyPartKind>([
