@@ -117,9 +117,17 @@ export function buildExplodedExplanation(model: ColonyModel): ExplodedExplanatio
     });
   }
 
-  /* ---- 2. JOIST SPACING — the single number the sheet layout lives or dies on ------------- */
+  /* ---- 2. JOIST SPACING — the single number the sheet layout lives or dies on -------------
+   * Measured on the LOWEST floor that carries the transverse rafter field. That is floor 1 now:
+   * the ground floor has side rafters only (it bears on the plinth), so a gf() filter here would
+   * find two parallel side members and silently drop the dimension. */
   const deck = model.deck;
-  const joists = parts.filter((p) => p.kind === "joist" && gf(p));
+  const fieldFloor = Math.min(
+    ...parts.filter((p) => p.kind === "joist" && !p.id.includes("side-rafter")).map((p) => p.floor ?? 0),
+  );
+  const joists = parts.filter(
+    (p) => p.kind === "joist" && !p.id.includes("side-rafter") && (p.floor ?? 0) === fieldFloor,
+  );
   if (deck && joists.length >= 2) {
     /* Two joists on the SAME bay, adjacent in x — so the dimension measures a real centre-to-centre
      * spacing rather than the diagonal between two members in different bays. */

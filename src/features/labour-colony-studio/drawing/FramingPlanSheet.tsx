@@ -15,6 +15,8 @@ import { DimChainH, DimChainV, GridLines, NorthArrow, ScaleBar } from "./sheetPr
 import { PLAN, footprintXY, mLabel, parseGrid, planPpm, planSpan } from "./planScale";
 
 const PAD = 74;
+/** MS pipe frame plan ink — literal hex (export-safe), matching the 3D `floor-tube` colour family. */
+const TUBE_INK = "#1380a1";
 
 export interface FramingPlanSheetProps {
   model: ColonyModel;
@@ -49,6 +51,7 @@ export function FramingPlanSheet({ model, floor, meta, selectedId, onSelect }: F
   const cols = model.parts.filter((p) => p.kind === "column" && onFloor(p));
   const beams = model.parts.filter((p) => (p.kind === "base-beam" || p.kind === "floor-beam") && onFloor(p));
   const joists = model.parts.filter((p) => p.kind === "joist" && onFloor(p));
+  const tubes = model.parts.filter((p) => p.kind === "floor-tube" && onFloor(p));
   const braces = model.parts.filter((p) => p.kind === "brace" && onFloor(p));
 
   // structural grid stations from the columns' grid refs (letters → x, numbers → y)
@@ -76,7 +79,15 @@ export function FramingPlanSheet({ model, floor, meta, selectedId, onSelect }: F
   const legend: { mark: string; role: string; section: string; color: string }[] = [];
   if (cols[0]) legend.push({ mark: cols[0].partMark ?? "C", role: "Column", section: secOf(cols[0]), color: PLAN.column });
   if (beams[0]) legend.push({ mark: beams[0].partMark ?? "B", role: floor === 0 ? "Base beam" : "Floor beam", section: secOf(beams[0]), color: PLAN.beam });
-  if (joists[0]) legend.push({ mark: joists[0].partMark ?? "J", role: "Floor joist", section: secOf(joists[0]), color: PLAN.joist });
+  if (joists[0]) {
+    legend.push({
+      mark: joists[0].partMark ?? "J",
+      role: floor === 0 ? "Side rafter (side walls only)" : "Floor rafter",
+      section: secOf(joists[0]),
+      color: PLAN.joist,
+    });
+  }
+  if (tubes[0]) legend.push({ mark: tubes[0].partMark ?? "FT", role: "MS pipe frame (longitudinal)", section: secOf(tubes[0]), color: TUBE_INK });
   if (braces[0]) legend.push({ mark: braces[0].partMark ?? "BR", role: "Vertical brace", section: secOf(braces[0]), color: PLAN.brace });
 
   const floorName = floor === 0 ? "Ground floor" : `Floor ${floor}`;
@@ -99,11 +110,18 @@ export function FramingPlanSheet({ model, floor, meta, selectedId, onSelect }: F
         {/* grid lines + bubbles */}
         <GridLines xs={gridXs} ys={gridYs} x0={mx(outerX0)} x1={mx(outerX1)} y0={my(outerY0)} y1={my(outerY1)} />
 
-        {/* joists (thin) */}
+        {/* joists / side rafters (thin) */}
         {joists.map((p) => {
           const r = rectOf(p);
           if (!r) return null;
           return <rect key={p.id} x={r.x} y={r.y} width={r.w} height={r.h} fill={PLAN.joist} opacity={0.75} />;
+        })}
+
+        {/* MS pipe frame — the LONGITUDINAL tube runs the deck bears on */}
+        {tubes.map((p) => {
+          const r = rectOf(p);
+          if (!r) return null;
+          return <rect key={p.id} x={r.x} y={r.y} width={r.w} height={r.h} fill={TUBE_INK} opacity={0.85} />;
         })}
 
         {/* beams */}

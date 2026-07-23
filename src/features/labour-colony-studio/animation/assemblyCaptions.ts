@@ -690,6 +690,7 @@ export function describeColonyStep(
       const cleat = ctx.hasDeckCleat;
       const lattice = hasKind(parts, "joist-web");
       const pipes = hasKind(parts, "floor-tube");
+      const gfSideOnly = parts.some((p) => p.id.startsWith("gf:side-rafter"));
       return {
         title: "Ground-floor joists & deck",
         description:
@@ -703,6 +704,12 @@ export function describeColonyStep(
             ? " The floor goes up in a FIXED order: rafters first, then the MS pipe frame — SHS tubes " +
               "bolted over the rafter top chords at a sheet-modular 1220 mm — and only then the deck, " +
               "so every board and sheet-end joint bears on a tube centreline."
+            : "") +
+          (gfSideOnly
+            ? " On the GROUND floor the rafters run along the SIDE WALLS ONLY and the MS pipes run " +
+              "the LENGTH of the building — nothing spans the width, because the filled plinth and " +
+              "the base frame already carry the floor there. The full transverse rafter field starts " +
+              "at the first floor."
             : "") +
           (deck ? ` ${sheetSetOutParagraph(deck, ctx.gfSheeted)}` : "") +
           (cleat
@@ -725,6 +732,8 @@ export function describeColonyStep(
             ? "Lattice floor rafters (shop-welded chords + webs) at design c/c between the base beams — site joints are the bolted end cleats only (demountable)"
             : "Floor joists at design c/c between the base beams"}${pipes
             ? "; MS pipe frame (SHS 50×50 @ 1220 c/c) site-bolted over the chords at crossing plates — rafter first, then tubes, then deck"
+            : ""}${gfSideOnly
+            ? ". GF: side-wall rafters + longitudinal tubes only — no transverse members (plinth-borne)"
             : ""}; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
           (deck
             ? ` ${ctx.gfSheeted ? "All decks (GF sheet field enabled)" : "Upper decks"}: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +

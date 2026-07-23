@@ -77,6 +77,9 @@ const GROUND_HEX: Record<AssemblyBackground, string | null> = {
   realistic: null, studio: "#e2e8f0", white: "#f1f5f9", site: "#d3cec2", transparent: null,
 };
 const SELECT_HEX = "#f59e0b";
+/* "Dim installed" tint — dimmed parts LERP toward this at full opacity (solid, crisp), never via
+ * transparency, which loses depth-write and blurs the whole structure. */
+const DIM_TINT = new THREE.Color("#ccd4db");
 const SELECT_EMISSIVE = "#7c3a00";
 const HIGHLIGHT_EMISSIVE = "#b45309";
 const NO_EMISSIVE = "#000000";
@@ -215,7 +218,9 @@ function SceneContents(props: AssemblySceneProps) {
       } else if (st.highlight) {
         mat.color.set(resolvePartColor(rec.part, paletteRef.current)); mat.emissive.set(HIGHLIGHT_EMISSIVE); mat.emissiveIntensity = 0.5;
       } else {
-        mat.color.set(resolvePartColor(rec.part, paletteRef.current)); mat.emissive.set(NO_EMISSIVE); mat.emissiveIntensity = 0;
+        mat.color.set(resolvePartColor(rec.part, paletteRef.current));
+        if (st.dimmed) mat.color.lerp(DIM_TINT, 0.55);
+        mat.emissive.set(NO_EMISSIVE); mat.emissiveIntensity = 0;
       }
     }
 

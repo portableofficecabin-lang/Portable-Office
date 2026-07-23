@@ -514,7 +514,80 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
     const floorTag = f === 0 ? "gf" : `f${f}`;
     /* Rafter top chords sit ONE TUBE below the deck soffit — the pipe frame occupies that band. */
     const chordTop = z - FLOOR_TUBE_H;
-    joistXs.forEach((x, i) => {
+
+    /* GROUND FLOOR (company rule, 2026-07-23): rafters along the SIDE WALLS ONLY, and nothing
+     * spanning the width — the filled plinth and the priced base frame carry the floor, so a
+     * transverse rafter field there would be steel without a job. The two side rafters run the FULL
+     * LENGTH under the side walls (they take the panel base and edge loads), built as the same
+     * shop-welded lattice as every other rafter, and are BOLTED DOWN to the base frame at every
+     * grid line — the removable joints. Upper floors keep the full transverse rafter field. */
+    if (f === 0) {
+      ([bodyY0 + jw / 2, bodyY1 - jw / 2] as const).forEach((yc, si) => {
+        const side = si === 0 ? "rear" : "front";
+        const sideSpec = {
+          role:
+            "Ground-floor SIDE rafter — runs the full length under the side wall. Takes the panel "
+            + "base and floor-edge loads; the floor field itself bears on the filled plinth, which "
+            + "is why the ground floor has no transverse rafters.",
+          loadPath: "Wall base + deck edge → side rafter → hold-down bolts at every grid line → base frame → plinth → footing.",
+          note:
+            "Shop-welded lattice unit, SITE-bolted down at every grid line — a removable joint: "
+            + "undo the nut-bolts and the rafter lifts out for relocation.",
+        } as const;
+        s.add(`gf:side-rafter:${side}:chord`, "joist", `GF side rafter (${side}) — top chord`,
+          box(bodyX0, yc - jw / 2, chordTop - jh, bodyX1, yc + jw / 2, chordTop),
+          { floor: 0, partMark: "SR", fabrication: "shop", spec: { ...dimsSpec(jDims, bodyWM), ...sideSpec } });
+        const gap = Math.min(RAFTER_WEB_GAP, chordTop - 2 * jh - 0.05);
+        if (gap >= 0.05) {
+          const topSoffit = chordTop - jh;
+          const botTop = topSoffit - gap;
+          const webT = Math.max(0.025, Math.min(jw, 0.04));
+          s.add(`gf:side-rafter:${side}:bottom`, "joist-web", `GF side rafter (${side}) — bottom chord`,
+            box(bodyX0, yc - jw / 2, botTop - jh, bodyX1, yc + jw / 2, botTop),
+            { floor: 0, partMark: "SR", fabrication: "shop", spec: { ...sideSpec } });
+          const panels = Math.max(2, Math.round(bodyWM / 0.35));
+          for (let wseg = 0; wseg < panels; wseg++) {
+            const xa = bodyX0 + (bodyWM * wseg) / panels;
+            const xb = bodyX0 + (bodyWM * (wseg + 1)) / panels;
+            const up = wseg % 2 === 0;
+            s.add(`gf:side-rafter:${side}:web:${wseg}`, "joist-web", `GF side rafter (${side}) — web member`,
+              braceQuad(true, yc, xa, up ? botTop : topSoffit, xb, up ? topSoffit : botTop, webT),
+              { floor: 0, partMark: "SR", fabrication: "shop", spec: { ...sideSpec } });
+          }
+        }
+        /* hold-down plates — the removable side-rafter joints, one at every grid line */
+        if (connDetail) {
+          colXs
+            .map((xg) => Math.min(bodyX1 - 0.06, Math.max(bodyX0 + 0.06, xg)))
+            .filter((xg, gi, arr) => arr.indexOf(xg) === gi)
+            .forEach((xg, gi) => {
+              const cid = `srafter:${side}:${pad2(gi + 1)}`;
+              const idBase = `gf:conn:srafter:${side}:${pad2(gi + 1)}`;
+              const pT = 0.008, pHalf = 0.05;
+              const chordBot = chordTop - jh;
+              s.add(`${idBase}:plate`, "cleat", "Side-rafter hold-down plate",
+                box(xg - pHalf, yc - pHalf, chordBot - pT, xg + pHalf, yc + pHalf, chordBot),
+                { connectionId: cid, assemblyId: "gf:deck", partMark: "HD", floor: 0, fabrication: "shop",
+                  spec: { widthMm: 100, heightMm: 100, thicknessMm: 8, boltCount: 1, boltSpec: "M12 gr 8.8",
+                    role: "Holds the side rafter down to the base frame at this grid line.",
+                    loadPath: "Side rafter → hold-down plate → bolt → base frame → plinth.",
+                    note: "SITE-bolted — the removable joint of the ground-floor side rafter." } });
+              s.add(`${idBase}:bolt`, "bolt", "Side-rafter hold-down bolt M12",
+                box(xg - 0.006, yc - 0.006, chordBot - pT - 0.024, xg + 0.006, yc + 0.006, chordBot + 0.014),
+                { connectionId: cid, assemblyId: "gf:deck", partMark: "HB", floor: 0, fabrication: "site",
+                  spec: { boltSpec: "M12 × 50 gr 8.8" } });
+              s.add(`${idBase}:washer`, "washer", "Hold-down washer",
+                box(xg - 0.012, yc - 0.012, chordBot - pT - 0.027, xg + 0.012, yc + 0.012, chordBot - pT - 0.024),
+                { connectionId: cid, assemblyId: "gf:deck", floor: 0, fabrication: "site" });
+              s.add(`${idBase}:nut`, "nut", "Hold-down nut M12",
+                box(xg - 0.0095, yc - 0.0095, chordBot - pT - 0.037, xg + 0.0095, yc + 0.0095, chordBot - pT - 0.027),
+                { connectionId: cid, assemblyId: "gf:deck", floor: 0, fabrication: "site" });
+            });
+        }
+      });
+    }
+
+    if (f > 0) joistXs.forEach((x, i) => {
       for (let b = 0; b < joistBayYs.length - 1; b++) {
         const y0 = joistBayYs[b], y1 = joistBayYs[b + 1];
         const span = y1 - y0;
@@ -574,11 +647,16 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
           box(bodyX0, yk - half, z - FLOOR_TUBE_H, bodyX1, yk + half, z),
           { floor: f, partMark: "FT", fabrication: "site", assemblyId: `${floorTag}:deck`, spec: { ...TUBE_SPEC, lengthM: round(bodyWM, 3) } });
 
-        /* Bolted crossing plates — the removable tube-to-rafter joint, sampled on the GROUND and
-         * FIRST floor (the same two-storey rule as the joist-end cleats; higher storeys repeat the
-         * identical detail without multiplying the part count). */
+        /* Bolted crossing plates — the removable tube joint, sampled on the GROUND and FIRST floor
+         * (the same two-storey rule as the joist-end cleats; higher storeys repeat the identical
+         * detail without multiplying the part count). On the FIRST floor the tubes bolt to the
+         * rafter field; on the GROUND floor there is no transverse field — the longitudinal tubes
+         * bolt DOWN to the transverse base beams at the grid lines instead. */
         if (connDetail && f <= 1) {
-          joistXs.forEach((x, i) => {
+          const crossXs = f === 0
+            ? colXs.filter((xg) => xg > bodyX0 + 0.06 && xg < bodyX1 - 0.06)
+            : joistXs;
+          crossXs.forEach((x, i) => {
             const cid = `ftube:${floorTag}:${pad2(i + 1)}:${pad2(k + 1)}`;
             const idBase = `${floorTag}:conn:tube:${pad2(i + 1)}:${pad2(k + 1)}`;
             const pT = 0.008, pHalf = 0.05;
@@ -2163,28 +2241,26 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
     } // end sheet field gate (floors 1+ always; GF only via gfSheetField)
 
     /* ---- 4. JOIST-END CONNECTIONS — shop-welded cleat, site-bolted joist -------------------- *
-     * GROUND and FIRST floor (company rule, 2026-07-23, from the site photo of the floor rafters):
-     * the plate is shown ALONG the rafter run at every joist crossing, with its two nut-bolts, on
-     * both storeys where the crew actually makes the joint. Higher storeys repeat the identical
-     * detail, so they are not multiplied out — the part count would grow without adding an
-     * engineering fact the first two floors have not already made. */
-    if (a.connDetail && f <= 1) {
+     * FIRST floor: the transverse rafter field lives on the upper decks, so this is where its
+     * end-cleat detail is sampled. The GROUND floor no longer has a transverse field at all — its
+     * removable joints are the side-rafter hold-downs and the tube-to-base-beam crossings, emitted
+     * with the members themselves. Higher storeys repeat the identical detail, so they are not
+     * multiplied out. */
+    if (a.connDetail && f === 1) {
       a.joistXs.forEach((x, i) => {
         for (let b = 0; b < a.joistBayYs.length - 1; b++) {
           const ends: [number, number][] = [[a.joistBayYs[b], 1], [a.joistBayYs[b + 1], -1]];
           ends.forEach(([yEnd, dir], e) => {
             const idBase = `${tag}:conn:joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
-            /* The GF keeps its historic un-tagged connection ids (stable ids are load-bearing for
-             * selection, tests and saved links); upper floors carry the floor tag so a first-floor
-             * cleat can never join a ground-floor connection group. */
-            const connTag = f === 0 ? "" : `${tag}:`;
-            const connectionId = `joist:${connTag}${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
+            /* Floor-tagged connection ids, so a first-floor cleat can never join another storey's
+             * connection group. */
+            const connectionId = `joist:${tag}:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
             const cz = z - FLOOR_TUBE_H - joistHM / 2;
             const cy = yEnd + dir * 0.05;
             addBoltedJoistCleat(s, {
               idBase, connectionId,
               assemblyId: `${tag}:deck`,
-              label: `${f === 0 ? "GF" : `Floor ${f}`} joist ${i + 1} end cleat`,
+              label: `Floor ${f} joist ${i + 1} end cleat`,
               x, memberT: joistWM,
               cy, cz,
               halfY: 0.045, halfZ: Math.max(0.03, joistHM / 2 - 0.01),

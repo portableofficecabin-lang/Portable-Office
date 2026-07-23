@@ -291,6 +291,12 @@ export interface PartRenderState {
   highlight: boolean;
   /** future part shown faint (only when ghostFuture is on). */
   ghost: boolean;
+  /**
+   * Installed in an EARLIER step while "Dim installed" is on. Rendered as a COLOUR fade toward a
+   * quiet grey at FULL opacity — never as transparency, which loses depth-write and turns the whole
+   * structure into the blurred X-ray the option was reported broken for.
+   */
+  dimmed: boolean;
 }
 
 /** A cheap, whole-scene sample (camera + caption + progress) — the per-part states are applied
