@@ -161,7 +161,9 @@ export const EXPLODE_OF_KIND: Record<ColonyPartKind, Vec3> = {
   column: { x: 0, y: 0, z: 0.4 },
   joist: { x: 0, y: 0, z: -0.6 },
   "joist-web": { x: 0, y: 0, z: -0.75 },
-  "floor-tube": { x: 0, y: 0, z: 0.9 },
+  /* The tube's approach IS its site insertion: it slides in LENGTHWISE along the building (with a
+   * slight lift), never dropped in from above — the exploded view pulls it out the same way. */
+  "floor-tube": { x: 1.25, y: 0, z: 0.12 },
   noggin: { x: 0, y: 0, z: -0.75 },
   /* The sheets lift CLEAR of the joists in the exploded view — that separation is what lets the
    * viewer read the support grid underneath and see that every joint lands on a member. */

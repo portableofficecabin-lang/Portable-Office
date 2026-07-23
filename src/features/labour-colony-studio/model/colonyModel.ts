@@ -587,21 +587,21 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
               const chordBot = sideChordTop - jh;
               s.add(`${idBase}:plate`, "cleat", "Side-rafter hold-down plate",
                 box(xg - pHalf, yc - pHalf, chordBot - pT, xg + pHalf, yc + pHalf, chordBot),
-                { connectionId: cid, assemblyId: "gf:deck", partMark: "HD", floor: 0, fabrication: "shop",
+                { connectionId: cid, assemblyId: "gf:deck", partMark: "HD", floor: 0, fabrication: "shop", assemblyStep: 8,
                   spec: { widthMm: 100, heightMm: 100, thicknessMm: 8, boltCount: 1, boltSpec: "M12 gr 8.8",
                     role: "Holds the side rafter down to the base frame at this grid line.",
                     loadPath: "Side rafter → hold-down plate → bolt → base frame → plinth.",
                     note: "SITE-bolted — the removable joint of the ground-floor side rafter." } });
               s.add(`${idBase}:bolt`, "bolt", "Side-rafter hold-down bolt M12",
                 box(xg - 0.006, yc - 0.006, chordBot - pT - 0.024, xg + 0.006, yc + 0.006, chordBot + 0.014),
-                { connectionId: cid, assemblyId: "gf:deck", partMark: "HB", floor: 0, fabrication: "site",
+                { connectionId: cid, assemblyId: "gf:deck", partMark: "HB", floor: 0, fabrication: "site", assemblyStep: 8,
                   spec: { boltSpec: "M12 × 50 gr 8.8" } });
               s.add(`${idBase}:washer`, "washer", "Hold-down washer",
                 box(xg - 0.012, yc - 0.012, chordBot - pT - 0.027, xg + 0.012, yc + 0.012, chordBot - pT - 0.024),
-                { connectionId: cid, assemblyId: "gf:deck", floor: 0, fabrication: "site" });
+                { connectionId: cid, assemblyId: "gf:deck", floor: 0, fabrication: "site", assemblyStep: 8 });
               s.add(`${idBase}:nut`, "nut", "Hold-down nut M12",
                 box(xg - 0.0095, yc - 0.0095, chordBot - pT - 0.037, xg + 0.0095, yc + 0.0095, chordBot - pT - 0.027),
-                { connectionId: cid, assemblyId: "gf:deck", floor: 0, fabrication: "site" });
+                { connectionId: cid, assemblyId: "gf:deck", floor: 0, fabrication: "site", assemblyStep: 8 });
             });
         }
       });
@@ -695,7 +695,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
               box(x - pHalf, yk - pHalf, seatBot, x + pHalf, yk + pHalf, tubeSoffit),
               {
                 connectionId: cid, assemblyId: `${floorTag}:deck`, partMark: "TP", floor: f,
-                fabrication: "shop",
+                fabrication: "shop", assemblyStep: 8,
                 spec: {
                   widthMm: 100, heightMm: 100, thicknessMm: seatH, boltCount: 1, boltSpec: "M12 gr 8.8",
                   role: f === 0
@@ -710,14 +710,14 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
               });
             s.add(`${idBase}:bolt`, "bolt", "Tube holding-down bolt M12",
               box(x - 0.006, yk - 0.006, seatBot - 0.03, x + 0.006, yk + 0.006, tubeSoffit + 0.014),
-              { connectionId: cid, assemblyId: `${floorTag}:deck`, partMark: "TB", floor: f, fabrication: "site",
+              { connectionId: cid, assemblyId: `${floorTag}:deck`, partMark: "TB", floor: f, fabrication: "site", assemblyStep: 8,
                 spec: { boltSpec: "M12 gr 8.8", note: "Vertical bolt through tube bottom wall, seat and the member below." } });
             s.add(`${idBase}:washer`, "washer", "Tube bolt washer",
               box(x - 0.012, yk - 0.012, seatBot - 0.033, x + 0.012, yk + 0.012, seatBot - 0.03),
-              { connectionId: cid, assemblyId: `${floorTag}:deck`, floor: f, fabrication: "site" });
+              { connectionId: cid, assemblyId: `${floorTag}:deck`, floor: f, fabrication: "site", assemblyStep: 8 });
             s.add(`${idBase}:nut`, "nut", "Tube bolt nut M12",
               box(x - 0.0095, yk - 0.0095, seatBot - 0.043, x + 0.0095, yk + 0.0095, seatBot - 0.033),
-              { connectionId: cid, assemblyId: `${floorTag}:deck`, floor: f, fabrication: "site",
+              { connectionId: cid, assemblyId: `${floorTag}:deck`, floor: f, fabrication: "site", assemblyStep: 8,
                 spec: { note: "Nut + washer under the seat — the removable joint of the pipe frame." } });
           });
         }
@@ -2473,7 +2473,7 @@ function addRafterEndPlate(
     axBox(p0, p1, o.cross - pw / 2, o.cross + pw / 2, zBot, zTop),
     {
       connectionId: o.connectionId, assemblyId: o.assemblyId, partMark: "EP", floor: o.floor,
-      fabrication: "shop",
+      fabrication: "shop", assemblyStep: 8,
       spec: {
         widthMm: Math.round(pw * 1000), heightMm: Math.round((zTop - zBot) * 1000), thicknessMm: 8,
         boltCount: 2, boltSpec,
@@ -2491,14 +2491,14 @@ function addRafterEndPlate(
     const bIn = p1 + o.dir * 0.012;                  // into the rafter end
     s.add(`${o.idBase}:bolt:${i + 1}`, "bolt", `${o.label} — bolt ${i + 1} (${boltSpec})`,
       axBox(bOut, bIn, o.cross - 0.006, o.cross + 0.006, cz - 0.006, cz + 0.006),
-      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site",
+      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site", assemblyStep: 8,
         spec: { boltSpec, note: "Through the end plate AND the C wall purlin web." } });
     s.add(`${o.idBase}:washer:${i + 1}`, "washer", `${o.label} — washer ${i + 1}`,
       axBox(o.at - o.dir * 0.003, o.at - o.dir * 0.006, o.cross - 0.012, o.cross + 0.012, cz - 0.012, cz + 0.012),
-      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site" });
+      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site", assemblyStep: 8 });
     s.add(`${o.idBase}:nut:${i + 1}`, "nut", `${o.label} — nut ${i + 1}`,
       axBox(o.at - o.dir * 0.006, o.at - o.dir * 0.016, o.cross - 0.0095, o.cross + 0.0095, cz - 0.0095, cz + 0.0095),
-      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site" });
+      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site", assemblyStep: 8 });
   });
 }
 
@@ -2525,6 +2525,7 @@ function addBoltedJoistCleat(
       partMark: "CL",
       floor: o.floor,
       fabrication: "shop",
+      assemblyStep: 8,
       explode: { x: -1.3, y: 0, z: 0.2 },
       spec: {
         widthMm: Math.round(o.halfY * 2000),
@@ -2553,6 +2554,7 @@ function addBoltedJoistCleat(
     runY: o.halfY * 2,
     runZ: 0.01,
     lengthMm: Math.round(o.halfY * 2000),
+    step: 8,
   });
 
   /* Two bolts, vertically pitched — one bolt would let the joist rotate about it. */
@@ -2570,6 +2572,7 @@ function addBoltedJoistCleat(
       boltSpec,
       holeDiaMm,
       floor: o.floor,
+      step: 8,
     });
   });
 }

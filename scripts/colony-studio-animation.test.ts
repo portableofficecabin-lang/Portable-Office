@@ -167,9 +167,12 @@ if (rsupConns.size > 0) {
   ok(t.detailTour.toured === t.detailTour.assemblies && !t.detailTour.capped,
     `a typical colony tours every assembly (${t.detailTour.toured}/${t.detailTour.assemblies})`);
 
+  /* Sub-steps now come from TWO systems: the rafter-support tour (steps 18/19) and the per-tube
+   * deck insertion sequence (step 8). The tour assertions below check the TOUR subs only. */
   const subs = t.steps.filter((s) => s.subIndex !== undefined);
-  ok(subs.length === t.detailTour.toured, `one sub-step per toured assembly (${subs.length})`);
-  ok(subs.every((s) => s.shot === "detail-closeup"), "every detail sub-step uses the macro shot");
+  const tourSubs = subs.filter((s) => s.assemblyStep >= 18);
+  ok(tourSubs.length === t.detailTour.toured, `one sub-step per toured assembly (${tourSubs.length})`);
+  ok(tourSubs.every((s) => s.shot === "detail-closeup"), "every detail sub-step uses the macro shot");
 
   // ids: the convention IS the join key — duplicates would collide as React keys + validator refs
   const stepIds = t.steps.map((s) => s.id);
@@ -197,7 +200,7 @@ if (rsupConns.size > 0) {
   ok(union.length === model.parts.length, `the steps partition the whole model (${union.length} of ${model.parts.length})`);
 
   // the camera must be a genuine macro shot, not the "close-up" a 12 m building normally allows
-  const detailDist = subs.map((s) => Math.hypot(
+  const detailDist = tourSubs.map((s) => Math.hypot(
     s.camera.to.position[0] - s.camera.to.target[0],
     s.camera.to.position[1] - s.camera.to.target[1],
     s.camera.to.position[2] - s.camera.to.target[2],
@@ -213,11 +216,11 @@ if (rsupConns.size > 0) {
   const capText = (s: (typeof subs)[number]) =>
     [s.title, s.description, s.captionCustomer, s.captionEngineering ?? "", s.subTitle ?? ""].join(" ");
   ok(!subs.some((s) => /undefined|NaN/.test(capText(s))), "no detail caption carries undefined / NaN");
-  ok(subs.every((s) => /M\d+/.test(s.description)), "every detail caption names the bolt spec");
-  ok(subs.every((s) => s.description.includes("flush")), "every detail caption states the flush web bearing");
+  ok(tourSubs.every((s) => /M\d+/.test(s.description)), "every detail caption names the bolt spec");
+  ok(tourSubs.every((s) => s.description.includes("flush")), "every detail caption states the flush web bearing");
 
   // the camera keeps moving through the dwell (cinematography, not a freeze-frame)
-  const d0 = subs[0];
+  const d0 = tourSubs[0];
   const camA = sampleAssembly(t, d0.startMs + d0.installMs + 5).camera;
   const camB = sampleAssembly(t, d0.endMs - 5).camera;
   const drift = Math.hypot(
@@ -242,7 +245,7 @@ if (rsupConns.size > 0) {
 
 /* ---- the tour is OPTIONAL and degrades to the pre-existing timeline -------------------------- */
 const noTour = buildAssemblyTimeline(model, { detailTour: false });
-ok(noTour.steps.every((s) => s.subIndex === undefined), "detail tour off ⇒ no sub-steps at all");
+ok(noTour.steps.filter((s) => s.assemblyStep >= 18).every((s) => s.subIndex === undefined), "detail tour off ⇒ no rafter-tour sub-steps (the per-tube deck sequence is not the tour)");
 ok(!noTour.detailTour.enabled, "detail tour off is reported on the timeline");
 ok(new Set(noTour.steps.flatMap((s) => s.partIds)).size === model.parts.length,
   "detail tour off still schedules every part exactly once");
@@ -254,7 +257,7 @@ const stripped = { ...model, parts: model.parts.filter((p) => !isRafterSupportKi
 const tStripped = buildAssemblyTimeline(stripped);
 ok(!tStripped.detailTour.enabled && tStripped.detailTour.assemblies === 0,
   "a colony without the rafter-support system gets no tour");
-ok(tStripped.steps.every((s) => s.subIndex === undefined), "…and no sub-steps");
+ok(tStripped.steps.filter((s) => s.assemblyStep >= 18).every((s) => s.subIndex === undefined), "…and no tour sub-steps");
 ok(validateAssemblyTimeline(tStripped, stripped).issues.filter((i) => i.severity === "error").length === 0,
   "…and still validates");
 

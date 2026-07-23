@@ -1224,6 +1224,91 @@ export function describeRafterSupportAssembly(
   };
 }
 
+/* ----------------------------------------------------------------- deck sequence copy ---------- *
+ * The deck is FILMED AS A SEQUENCE (user spec, 2026-07-23): rafters set & locked → each MS tube
+ * inserted ONE BY ONE, lengthwise, onto its seat cleats → only then the boards and sheets. These
+ * three copy builders narrate exactly that split; `describeColonyStep(8)` remains the single-shot
+ * fallback for a model with no pipe frame. */
+
+/** The floor a part belongs to, in words. */
+const floorWordOf = (f: number | undefined): string =>
+  f === 0 ? "ground floor" : f === 1 ? "first floor" : `floor ${f ?? 0}`;
+
+/** Copy for the deck STRUCTURE shot — rafters, lattice, end plates and cleats, before any tube. */
+export function describeDeckStructureStep(parts: ColonyPart[]): ColonyStepCopy {
+  const lattice = hasKind(parts, "joist-web");
+  const gfSideOnly = parts.some((p) => p.id.startsWith("gf:side-rafter"));
+  const wallEnd = parts.some((p) => (p.connectionId ?? "").startsWith("rend:"));
+  return {
+    title: "Floor rafters — set & locked",
+    description:
+      (lattice
+        ? "The PRIMARY floor rafters go in first — each a shop-welded lattice truss craned in as one unit — "
+        : "The floor rafters go in first, ") +
+      "and every one is LOCKED before anything is laid on it: the end cleats are bolted" +
+      (wallEnd ? ", and each wall-line end is seated in its MS end plate bolted through the C wall purlin, which was fixed with the base frame" : "") +
+      "." +
+      (gfSideOnly
+        ? " On the ground floor the rafters run along the side walls only — the filled plinth carries the floor field."
+        : ""),
+    captionCustomer:
+      "The main floor rafters are set and bolted down first — nothing rests on an unlocked rafter.",
+    captionEngineering:
+      "PRIMARY rafters erected and locked: end cleats bolted" +
+      (wallEnd ? "; wall-line ends seated in MS end plates through the C wall purlin (fixed at the base-frame step)" : "") +
+      ". The pipe frame follows tube by tube.",
+    tools: "Crane or chain block, tag lines, podger spanner, torque wrench, string line",
+    safety: "No load on any rafter until its end connections are fully bolted.",
+    inspection: "Rafter line, level and every end-connection bolt checked BEFORE the first tube is inserted.",
+  };
+}
+
+/** One MS tube's own insertion shot — "tube k of n slides in lengthwise and bolts down". */
+export interface FloorTubeInsertCopy extends ColonyStepCopy {
+  subTitle: string;
+}
+export function describeFloorTubeInsert(
+  tube: ColonyPart, ordinal: number, total: number,
+): FloorTubeInsertCopy {
+  const fl = floorWordOf(tube.floor);
+  return {
+    subTitle: `MS tube ${ordinal} of ${total} · ${fl}`,
+    title: `MS tube ${ordinal}/${total} — slide in & bolt down`,
+    description:
+      `With the rafters locked and the C wall purlin already fixed, MS tube ${ordinal} of ${total} ` +
+      `(${fl}) is INSERTED LENGTHWISE — slid in along the building over the rafter seat cleats — ` +
+      "then bolted down at every crossing. One tube at a time: the next tube does not move until " +
+      "this one is landed and its nuts are tight.",
+    captionCustomer:
+      `Square tube ${ordinal} of ${total} slides in along the building and is bolted down — one at a time.`,
+    captionEngineering:
+      `MS pipe ${ordinal}/${total} (${fl}): SHS 50 × 50 inserted lengthwise onto the seat cleats, ` +
+      "M12 holding-down bolt at every crossing. Secondary member — clear of the rafter, never flush on it.",
+    tools: "Two-man carry or rope slide, podger spanner, torque wrench",
+    safety: "Never stand on a tube before its holding-down bolts are made up; feed lengthwise, never drop in.",
+    inspection: `Tube ${ordinal} seat bearing, line and bolt tightness checked before tube ${ordinal + 1} is fed in.`,
+  };
+}
+
+/** The deck COVERING shot — bearers, boards and the numbered sheet field over the finished pipes. */
+export function describeDeckCoverStep(ctx: ColonyAssemblyContext, parts: ColonyPart[]): ColonyStepCopy {
+  const deck = ctx.hasSheetSetOut ? ctx.deck : undefined;
+  return {
+    title: "Deck boards & floor sheets",
+    description:
+      "With every tube inserted and bolted, the deck closes over the pipe frame: bearers where a " +
+      "joint still needs one, then the boards and finish." +
+      (deck && hasKind(parts, "floor-sheet") ? ` ${sheetSetOutParagraph(deck, ctx.gfSheeted)}` : ""),
+    captionCustomer: "The floor is decked and finished over the completed tube frame.",
+    captionEngineering:
+      "Deck closed over the finished pipe frame — every board and sheet-end joint bears on a tube " +
+      "centreline; fixings to the schedule.",
+    tools: "Screw gun, circular saw, chalk line",
+    safety: "No unfixed board or sheet left as a walking surface.",
+    inspection: "Deck bearing and fixing pattern verified against the framing plan before fit-out.",
+  };
+}
+
 /* ----------------------------------------------------------------- deck set-out copy ----------- */
 
 /** "4 ft width across the joists" — the lay the layout actually resolved, not an assumed one. */

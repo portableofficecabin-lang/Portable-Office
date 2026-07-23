@@ -33,7 +33,8 @@ import {
 } from "./assemblyCamera";
 import {
   boltSpecOf, boqRefsOf, buildColonyStepEngineeringRows, colonyContextOf, colonyDimensionsLine,
-  colonySummaryLine, connectionMarksOf, describeColonyStep, describeRafterSupportAssembly,
+  colonySummaryLine, connectionMarksOf, describeColonyStep, describeDeckCoverStep,
+  describeDeckStructureStep, describeFloorTubeInsert, describeRafterSupportAssembly,
   memberMarksOf, type ColonyAssemblyContext, type ColonyStepCopy,
 } from "./assemblyCaptions";
 import {
@@ -466,7 +467,76 @@ export function buildAssemblyTimeline(
     /* ---- the step's overview shot: everything not individually toured ---- */
     // Emitted whenever it carries parts. It is skipped ONLY when every part of the step went into a
     // detail shot, because a step with no parts is a caption with nothing behind it.
-    if (plan.main.length > 0) {
+    const deckTubes = assemblyStep === 8 ? plan.main.filter((p) => p.kind === "floor-tube") : [];
+    if (plan.main.length > 0 && deckTubes.length > 0) {
+      /* THE DECK IS FILMED AS A SEQUENCE (user spec): rafters set & LOCKED first, then each MS tube
+       * INSERTED ONE BY ONE — its own sub-step, sliding in lengthwise with its seat bolts — and only
+       * then the covering. Never all tubes at once. The three phases partition the step's parts, so
+       * "every part scheduled exactly once" still holds. */
+      const keyOfTube = (p: ColonyPart): string | null => {
+        const mt = /^(gf|f\d+):tube:(\d+)$/.exec(p.id);
+        return mt ? `${mt[1]}:${mt[2]}` : null;
+      };
+      const keyOfHw = (p: ColonyPart): string | null => {
+        const mh = /^ftube:(gf|f\d+):\d+:(\d+)$/.exec(p.connectionId ?? "");
+        return mh ? `${mh[1]}:${mh[2]}` : null;
+      };
+      const hwByKey = new Map<string, ColonyPart[]>();
+      const rest: ColonyPart[] = [];
+      for (const p of plan.main) {
+        if (p.kind === "floor-tube") continue;
+        const hk = keyOfHw(p);
+        if (hk) {
+          const arr = hwByKey.get(hk);
+          if (arr) arr.push(p); else hwByKey.set(hk, [p]);
+        } else rest.push(p);
+      }
+      const COVER_KINDS = new Set<ColonyPartKind>(["noggin", "floor-board", "floor-sheet", "floor-finish"]);
+      const pre = rest.filter((p) => !COVER_KINDS.has(p.kind));
+      const post = rest.filter((p) => COVER_KINDS.has(p.kind));
+
+      if (pre.length) {
+        const parts = sortForInstall(pre, sceneCtx, modelCenter);
+        const installMs = Math.round(options.stepInstallMs * (1 + 0.45 * clamp01((parts.length - 1) / 16)));
+        pushStep({
+          assemblyStep, parts, installMs, holdMs: options.stepHoldMs,
+          shot: "floor-deck", to: planShot("floor-deck", modelBox, groupBoxOf(parts, sceneCtx) ?? modelBox),
+          copy: describeDeckStructureStep(pre),
+        });
+      }
+
+      const tubesOrdered = [...deckTubes].sort(
+        (a, b) => (a.floor ?? 0) - (b.floor ?? 0) || a.id.localeCompare(b.id),
+      );
+      const consumed = new Set<string>();
+      tubesOrdered.forEach((tube, ti) => {
+        const key = keyOfTube(tube);
+        const hw = key ? hwByKey.get(key) ?? [] : [];
+        if (key) consumed.add(key);
+        const parts = [tube, ...sortForInstall(hw, sceneCtx, modelCenter)];
+        const copy = describeFloorTubeInsert(tube, ti + 1, tubesOrdered.length);
+        pushStep({
+          assemblyStep, parts,
+          installMs: Math.round(options.stepInstallMs * 0.9), holdMs: 400,
+          shot: "floor-deck",
+          to: planShot("floor-deck", modelBox, groupBoxOf(parts, sceneCtx) ?? modelBox),
+          copy, subIndex: ti + 1, subTitle: copy.subTitle, focusPartIds: [tube.id],
+        });
+      });
+      // hardware whose tube never emitted (defensive) — never dropped, it closes with the covering
+      for (const [hk, arr] of hwByKey) if (!consumed.has(hk)) post.push(...arr);
+
+      if (post.length) {
+        const parts = sortForInstall(post, sceneCtx, modelCenter);
+        const installMs = Math.round(options.stepInstallMs * (1 + 0.45 * clamp01((parts.length - 1) / 16)));
+        pushStep({
+          assemblyStep, parts, installMs, holdMs: options.stepHoldMs,
+          shot: "floor-deck", to: planShot("floor-deck", modelBox, groupBoxOf(parts, sceneCtx) ?? modelBox),
+          copy: describeDeckCoverStep(ctx, post),
+          subIndex: tubesOrdered.length + 1, subTitle: "Deck boards & floor sheets",
+        });
+      }
+    } else if (plan.main.length > 0) {
       const parts = sortForInstall(plan.main, sceneCtx, modelCenter);
       const N = parts.length;
       const installMs = Math.round(options.stepInstallMs * (1 + 0.45 * clamp01((N - 1) / 16)));
