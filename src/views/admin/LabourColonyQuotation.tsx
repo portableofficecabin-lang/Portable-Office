@@ -596,6 +596,21 @@ export default function LabourColonyQuotation() {
                   <div className="space-y-2"><Label>Wastage (%)</Label><NumberInput value={config.wastagePercent} onChange={setNum("wastagePercent")} /></div>
                 </div>
 
+                <div className="border-t pt-4 space-y-2">
+                  <h3 className="font-display font-bold flex items-center gap-2"><Layers className="h-4 w-4 text-amber" /> Flooring</h3>
+                  <FacilityToggle
+                    icon={Layers}
+                    label="Ground-floor 8'×4' sheet field"
+                    checked={config.gfSheetField ?? false}
+                    onChange={(v) => setConfig((c) => ({ ...c, gfSheetField: v }))}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Off by default — the ground floor bears on the filled plinth, so the numbered 8'×4'
+                    setting-out (and its ordering figures) covers floors 1+ only. Switch on for the
+                    projects that do want ground-floor sheets; the priced flooring BOQ is unchanged either way.
+                  </p>
+                </div>
+
                 <div className="border-t pt-4 space-y-3">
                   <h3 className="font-display font-bold flex items-center gap-2"><Layers className="h-4 w-4 text-amber" /> Facilities</h3>
                   <FacilityToggle icon={Bath} label="Toilet & bath block" checked={config.facilities.toilet} onChange={setFac("toilet")} />

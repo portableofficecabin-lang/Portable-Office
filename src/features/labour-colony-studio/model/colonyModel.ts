@@ -490,6 +490,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   const deck = buildDeckSystem(s, {
     body, floors, fflOf, joistXs, joistBayYs, colXs, rowYs,
     joistWM: jw, joistHM: jh, connDetail,
+    gfSheetField: cfg.gfSheetField ?? false,
   });
 
   /* ================================================================= PANEL SEATING SYSTEM ======
@@ -1858,6 +1859,8 @@ interface DeckArgs {
   joistWM: number;
   joistHM: number;
   connDetail: boolean;
+  /** Per-project opt-in: lay the 8'×4' sheet field on the GROUND floor too (default false). */
+  gfSheetField: boolean;
 }
 
 function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
@@ -1880,10 +1883,11 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
   });
 
   /* ---- deterministic engineering warnings (never silently "fix" the frame) ------------------ *
-   * Gated on an upper deck existing at all: the 8'×4' field is laid on floors 1+ only (the ground
-   * floor bears on the filled plinth), so a single-storey colony lays no sheet field and there is
-   * nothing for the spacing to defect against. */
-  if (a.floors > 1 && !layout.spacing.modular) {
+   * Gated on ANY deck actually carrying the sheet field: floors 1+ always do, the ground floor only
+   * when the per-project `gfSheetField` opt-in is on (the company default is that the ground floor
+   * bears on the filled plinth). A colony laying no field anywhere has nothing to defect against. */
+  const anySheetedDeck = a.floors > 1 || a.gfSheetField;
+  if (anySheetedDeck && !layout.spacing.modular) {
     s.warn({
       code: "sheet-spacing-not-modular",
       required: round(layout.spacing.recommendedMm, 1),
@@ -1896,7 +1900,7 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
         + `fix, of which ${layout.bearersAvoidableBySpacing} would be unnecessary at the recommended spacing.`,
     });
   }
-  if (a.floors > 1 && layout.edgeBearingMm < MIN_EDGE_BEARING_MM) {
+  if (anySheetedDeck && layout.edgeBearingMm < MIN_EDGE_BEARING_MM) {
     s.warn({
       code: "sheet-edge-bearing-short",
       required: MIN_EDGE_BEARING_MM,
@@ -1920,12 +1924,13 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
     /* ---- 1. PERIMETER C-BEND — the edge member the whole deck edge depends on --------------- */
     addPerimeterCBend(s, { tag, floor: f, body, zBot, zTop });
 
-    /* THE 8'×4' SHEET FIELD IS LAID ON THE UPPER DECKS ONLY. The ground floor bears on the filled
-     * plinth, so it takes no sheet setting-out — and therefore none of the bearers whose only job
-     * is to close that field's joints. The GF keeps its C-bend (deck edge rim + panel seat) and its
-     * priced board/finish; only the UNPRICED numbered setting-out is restricted, so what the deck
-     * costs (`floor:board`) is untouched by this rule. */
-    if (f >= 1) {
+    /* THE 8'×4' SHEET FIELD IS LAID ON THE UPPER DECKS by default. The ground floor bears on the
+     * filled plinth, so it normally takes no sheet setting-out — and therefore none of the bearers
+     * whose only job is to close that field's joints — unless the per-project `gfSheetField` opt-in
+     * says this job wants it. The GF always keeps its C-bend (deck edge rim + panel seat) and its
+     * priced board/finish; only the UNPRICED numbered setting-out is gated, so what the deck costs
+     * (`floor:board`) is untouched either way. */
+    if (f >= 1 || a.gfSheetField) {
 
     /* ---- 2. BEARERS under every sheet joint the priced frame does not already carry --------- *
      * Cut between the members either side of the joint, so each bearer is a real fabricable piece
@@ -2009,29 +2014,35 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
       );
     }
 
-    } // end upper-deck-only sheet field (f >= 1)
+    } // end sheet field gate (floors 1+ always; GF only via gfSheetField)
 
     /* ---- 4. JOIST-END CONNECTIONS — shop-welded cleat, site-bolted joist -------------------- *
-     * Ground floor only: this is the floor the detailing is being asked to explain, and emitting a
-     * full bolt group at every joist end on every storey would multiply the part count without
-     * adding an engineering fact the ground floor has not already made. */
-    if (a.connDetail && f === 0) {
+     * GROUND and FIRST floor (company rule, 2026-07-23, from the site photo of the floor rafters):
+     * the plate is shown ALONG the rafter run at every joist crossing, with its two nut-bolts, on
+     * both storeys where the crew actually makes the joint. Higher storeys repeat the identical
+     * detail, so they are not multiplied out — the part count would grow without adding an
+     * engineering fact the first two floors have not already made. */
+    if (a.connDetail && f <= 1) {
       a.joistXs.forEach((x, i) => {
         for (let b = 0; b < a.joistBayYs.length - 1; b++) {
           const ends: [number, number][] = [[a.joistBayYs[b], 1], [a.joistBayYs[b + 1], -1]];
           ends.forEach(([yEnd, dir], e) => {
-            const idBase = `gf:conn:joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
-            const connectionId = `joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
+            const idBase = `${tag}:conn:joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
+            /* The GF keeps its historic un-tagged connection ids (stable ids are load-bearing for
+             * selection, tests and saved links); upper floors carry the floor tag so a first-floor
+             * cleat can never join a ground-floor connection group. */
+            const connTag = f === 0 ? "" : `${tag}:`;
+            const connectionId = `joist:${connTag}${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
             const cz = z - joistHM / 2;
             const cy = yEnd + dir * 0.05;
             addBoltedJoistCleat(s, {
               idBase, connectionId,
-              assemblyId: "gf:deck",
-              label: `Joist ${i + 1} end cleat`,
+              assemblyId: `${tag}:deck`,
+              label: `${f === 0 ? "GF" : `Floor ${f}`} joist ${i + 1} end cleat`,
               x, memberT: joistWM,
               cy, cz,
               halfY: 0.045, halfZ: Math.max(0.03, joistHM / 2 - 0.01),
-              floor: 0,
+              floor: f,
             });
           });
         }
@@ -2180,7 +2191,7 @@ function addBoltedJoistCleat(
         holeDiaMm,
         boltSpec,
         weldSpec: `${WELD_LEG * 1000} mm fillet · shop weld to the beam web`,
-        role: "Carries the joist end reaction into the base beam and holds the joist upright.",
+        role: "Carries the joist end reaction into the supporting beam and holds the joist upright.",
         loadPath: "Joist end shear → bolts → cleat → shop weld → beam web → column.",
         note: "Cleat is SHOP-welded to the beam; the joist is SITE-bolted to the cleat.",
       },

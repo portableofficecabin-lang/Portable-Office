@@ -961,7 +961,7 @@ export function buildReportTables(
     id: "floor-sheet-schedule",
     title: "Flooring sheet schedule",
     group: "Deck & panels",
-    note: "Every 8'×4' deck sheet in laying sequence with its cut size, offcut and edge support. The layout is solved once and laid on each UPPER storey — the ground floor bears on the plinth and carries no sheet field — so areas are for ONE deck level.",
+    note: `Every 8'×4' deck sheet in laying sequence with its cut size, offcut and edge support. The layout is solved once and laid on ${deckLevelSet.has(0) ? "EVERY storey — the ground-floor sheet option is on for this project" : "each UPPER storey — the ground floor bears on the plinth and carries no sheet field"} — so areas are for ONE deck level.`,
     fileStem: "colony-flooring-sheet-schedule",
     rows: sheetRows,
     sectionOf: (r) => (r.full ? "Full sheets" : "Cut sheets"),
@@ -969,7 +969,7 @@ export function buildReportTables(
     extraRemarks: sheetRows.length
       ? [
           NOT_A_PURCHASE,
-          `Area and offcut totals are for ONE deck level (${deck ? deck.deckAreaM2.toFixed(2) : "0"} m²); the identical field is laid on each of the ${deckLevels} UPPER deck level(s) — the ground floor bears on the plinth and takes no sheets. The 'Decks' column totals the physical sheets to be cut across the whole building.`,
+          `Area and offcut totals are for ONE deck level (${deck ? deck.deckAreaM2.toFixed(2) : "0"} m²); the identical field is laid on each of the ${deckLevels} sheeted deck level(s)${deckLevelSet.has(0) ? " (ground floor included — its sheet option is on)" : " — upper storeys only, the ground floor bears on the plinth and takes no sheets"}. The 'Decks' column totals the physical sheets to be cut across the whole building.`,
           spacingRemark,
           ...failedSheetChecks,
         ]

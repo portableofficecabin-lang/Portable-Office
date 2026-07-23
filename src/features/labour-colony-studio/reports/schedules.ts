@@ -1186,8 +1186,11 @@ export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
     figure("Deck & sheet module", "Total flooring area (one deck)", `${fig(d.deckAreaM2)} m²`,
       "The area the sheets have to cover on a single storey."),
     figure("Deck & sheet module", "Deck levels (sheeted)", `${decks}`,
-      "The identical sheet field is laid on each UPPER storey only — the ground floor bears on the "
-      + "filled plinth and carries no 8'×4' field — so every figure below repeats per sheeted level."),
+      deckFloors.has(0)
+        ? "The identical sheet field is laid on EVERY storey including the ground floor (the "
+          + "per-project ground-floor sheet option is on), so every figure below repeats per level."
+        : "The identical sheet field is laid on each UPPER storey only — the ground floor bears on the "
+          + "filled plinth and carries no 8'×4' field — so every figure below repeats per sheeted level."),
     figure("Deck & sheet module", "Total sheeted area (all levels)", `${fig(d.deckAreaM2 * decks)} m²`,
       "Upper decks only. The priced floor:board line still covers every storey including the ground "
       + "floor; this figure never adds to it."),
@@ -1235,10 +1238,11 @@ export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
      * third to a half of what the building needs. Stating the multiplied total explicitly is the
      * difference between a correct order and a site that runs out of decking. */
     figure("Ordering quantity (WHOLE BUILDING)", "5 · ORDER FOR THE BUILDING", `${d.purchaseSheets * decks}`,
-      `${d.purchaseSheets} sheets per deck × ${decks} sheeted deck level(s) — upper storeys only, the `
-      + `ground floor bears on the plinth and takes none. This is the procurement figure — every other `
-      + `row in this schedule describes ONE storey. Still ordering guidance only: the priced `
-      + `floor:board line remains what the deck costs.`),
+      `${d.purchaseSheets} sheets per deck × ${decks} sheeted deck level(s)${deckFloors.has(0)
+        ? " — the ground floor included (its sheet option is on for this project)"
+        : " — upper storeys only, the ground floor bears on the plinth and takes none"}. `
+      + `This is the procurement figure — every other row in this schedule describes ONE storey. `
+      + `Still ordering guidance only: the priced floor:board line remains what the deck costs.`),
     figure("Ordering quantity (WHOLE BUILDING)", "Placement total (no offcut re-use)", `${d.sheetsIfNoReuse * decks}`,
       `${d.sheetsIfNoReuse} × ${decks} sheeted deck level(s) — order this instead if offcuts will not be sorted and re-used.`),
 

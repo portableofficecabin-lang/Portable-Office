@@ -330,6 +330,14 @@ export interface LabourColonyConfig {
   /** Cement / bison board flooring thickness (mm): 16 / 18 / 20 / 25. */
   cementBoardThicknessMm?: number;
 
+  /**
+   * Lay the 8'×4' sheet field on the GROUND floor too. Default false — the company rule is that the
+   * ground floor bears on the filled plinth and needs no sheet field (floors 1+ always get it); this
+   * is the per-project opt-in for the jobs that do want it. Drawing / setting-out only: the priced
+   * `floor:board` line is unaffected either way.
+   */
+  gfSheetField?: boolean;
+
   /** Connection / cross-support bolt size. Default M12. */
   boltSize?: BoltSize;
 

@@ -89,6 +89,9 @@ export interface ColonyAssemblyContext {
    * drifting derivation of them. */
   hasCBend: boolean;
   hasSheetSetOut: boolean;
+  /** True when the GROUND floor also carries the 8'×4' field (the per-project gfSheetField opt-in);
+   *  false is the company default — GF bears on the filled plinth — and the copy must say which. */
+  gfSheeted: boolean;
 
   /**
    * A fully TRIANGULATED truss (king post + webs + tie chord), as opposed to a single mono-pitch
@@ -362,6 +365,7 @@ export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
     rafterSupport: rsup ? rafterSupportFactsOf(rsup) : null,
     hasCBend: parts.some(isPerimeterCBend),
     hasSheetSetOut: hasKind(parts, "floor-sheet") && (model.deck?.sheets.length ?? 0) > 0,
+    gfSheeted: parts.some((p) => p.kind === "floor-sheet" && (p.floor ?? 0) === 0),
     hasTrussFrame: hasKind(parts, "truss-web"),
     hasTrussConnDetail: parts.some((p) =>
       (p.assemblyId ?? "").startsWith("truss:")
@@ -689,20 +693,24 @@ export function describeColonyStep(
         description:
           "Floor joists are laid between the base beams at the designed spacing and the structural deck " +
           "and floor finish are fixed over them." +
-          (deck ? ` ${sheetSetOutParagraph(deck)}` : "") +
+          (deck ? ` ${sheetSetOutParagraph(deck, ctx.gfSheeted)}` : "") +
           (cleat
             ? " Every joist end is made up the same way: the cleat is SHOP-welded to the base beam and " +
               "the joist is SITE-bolted to that cleat. A sound weld needs a shop; a bolt needs neither " +
               "power nor a certificate and can be inspected by eye on site."
             : ""),
         captionCustomer: "The ground floor is decked and finished." +
-          (deck ? " On the upper decks the floor sheets are numbered and cut so that every joint sits on a steel member — the ground floor bears directly on the plinth and needs none." : ""),
+          (deck
+            ? ctx.gfSheeted
+              ? " On every deck — the ground floor included — the floor sheets are numbered and cut so that every joint sits on a steel member."
+              : " On the upper decks the floor sheets are numbered and cut so that every joint sits on a steel member — the ground floor bears directly on the plinth and needs none."
+            : ""),
         captionEngineering:
           `Floor joists at design c/c between the base beams; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
           (deck
-            ? ` Upper decks: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
+            ? ` ${ctx.gfSheeted ? "All decks (GF sheet field enabled)" : "Upper decks"}: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
               `, ${deck.fullCount} full / ${deck.cutCount} cut, joints on members at ` +
-              `${fmtMm(deck.edgeBearingMm)} mm edge bearing. GF lays no sheet field (bears on the plinth).`
+              `${fmtMm(deck.edgeBearingMm)} mm edge bearing.${ctx.gfSheeted ? "" : " GF lays no sheet field (bears on the plinth)."}`
             : "") +
           (cleat ? " Joist ends: shop-welded cleat, site-bolted joist." : ""),
         tools: "Chain block, screw gun, joist cleats, chalk line, circular saw",
@@ -1203,7 +1211,7 @@ function sheetMarkRange(d: SheetLayoutResult): string {
  * The sheet quantity is a CUTTING and ordering figure, so the paragraph says that outright: the
  * priced deck-board line stays the source of truth for cost, and nothing here is a second purchase.
  */
-function sheetSetOutParagraph(d: SheetLayoutResult): string {
+function sheetSetOutParagraph(d: SheetLayoutResult, gfSheeted: boolean): string {
   const bearers = d.bearers.length;
   const spacing = d.spacing.modular
     ? `Support members at ${fmtMm(d.spacing.actualMm)} mm centres divide the sheet exactly, so every ` +
@@ -1215,10 +1223,11 @@ function sheetSetOutParagraph(d: SheetLayoutResult): string {
   const edges = d.unsupportedSheets === 0
     ? "no sheet is left with an unsupported edge"
     : `${d.unsupportedSheets} sheet${d.unsupportedSheets === 1 ? "" : "s"} remain short of full edge support`;
-  /* Every count below is ONE deck, and the field goes on the UPPER decks only — the ground floor
-   * bears on the filled plinth and lays no sheets. Saying "per deck" is what stops the paragraph
-   * disagreeing with the step's own part count, which spans every floor the step installs. */
-  return `Each upper deck (the ground floor bears on the plinth and takes no sheet field) is then ` +
+  /* Every count below is ONE deck. By default the field goes on the UPPER decks only — the ground
+   * floor bears on the filled plinth — but the per-project gfSheetField opt-in can sheet the GF too,
+   * and the copy states whichever is true. Saying "per deck" is what stops the paragraph disagreeing
+   * with the step's own part count, which spans every floor the step installs. */
+  return `Each ${gfSheeted ? "deck, the ground floor included," : "upper deck (the ground floor bears on the plinth and takes no sheet field)"} is then ` +
     `set out as a field of ${d.moduleLabel} sheets laid ${sheetLayWords(d)} and ` +
     `numbered ${sheetMarkRange(d)} in laying sequence, row by row from the origin corner: ` +
     `${d.laidCount} sheets per deck, ${d.fullCount} laid whole and ${d.cutCount} cut to the perimeter. ` +

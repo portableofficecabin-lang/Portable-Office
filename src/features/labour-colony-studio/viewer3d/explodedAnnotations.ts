@@ -161,8 +161,9 @@ export function buildExplodedExplanation(model: ColonyModel): ExplodedExplanatio
         "Fixings 150 mm c/c on edges, 300 mm c/c at",
         "intermediate supports.",
         `${deck.fullCount} full + ${deck.cutCount} cut = ${deck.sheets.length} laid.`,
-        "UPPER DECKS ONLY — the ground floor bears on",
-        "the plinth and carries no sheet field.",
+        ...(parts.some((p) => p.kind === "floor-sheet" && (p.floor ?? 0) === 0)
+          ? ["ALL DECKS — the ground-floor sheet field is", "enabled for this project."]
+          : ["UPPER DECKS ONLY — the ground floor bears on", "the plinth and carries no sheet field."]),
       ],
       accent: ACCENT.sheet,
       dir: [0, 1, -0.5],
