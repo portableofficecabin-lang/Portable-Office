@@ -86,7 +86,11 @@ export const DEFAULT_ASSEMBLY_OPTIONS: AssemblyOptions = {
   showEngineeringCaptions: true,
   showCompanyTitle: true,
   ghostFuture: false,
-  dimInstalled: true,
+  // OFF by default: dimming every installed member to 70% turns the whole structure translucent
+  // (transparent materials also lose depth-write), which reads as a blurry X-ray once a few dozen
+  // members overlap. The film defaults to a CLEAR solid build-up — the current step still pops via
+  // its highlight — and the "Dim installed" toggle remains for anyone who wants the old emphasis.
+  dimInstalled: false,
   // AUTO: the per-assembly zoomed tour switches itself on exactly when the model carries rafter
   // support assemblies, so nothing changes for a colony that does not build the system.
   detailTour: undefined,

@@ -169,7 +169,10 @@ export function samplePart(entry: PartScheduleEntry, timeMs: number, ctx: PartSa
   const realStep = ctx.activeStepIndex >= 0 && ctx.activeStepIndex < ctx.stepCount;
   const highlight = ctx.activeStepIndex === stepIndex;
   let opacity = 1;
-  if (ctx.options.dimInstalled && realStep && stepIndex < ctx.activeStepIndex && !highlight) opacity = 0.7;
+  /* 0.85, not 0.7: even when the user opts into dimming, earlier work should read as quieter solid
+   * steel, not translucent ghosts — heavy transparency across overlapping members is what made the
+   * film look blurred. */
+  if (ctx.options.dimInstalled && realStep && stepIndex < ctx.activeStepIndex && !highlight) opacity = 0.85;
   return { visible: true, offset: [0, 0, 0], opacity, highlight, ghost: false };
 }
 
