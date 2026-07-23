@@ -119,6 +119,11 @@ const SHOTS: Record<CameraShotKind, ShotRecipe> = {
   "roof-elevated": { dir: [0.8, 1.5, 0.85], distFactor: 2.25, tightness: 0.12, targetLift: 0.3 },
   interior: { dir: [1.2, 0.72, 0.55], distFactor: 1.65, tightness: 0.45, targetLift: 0.05 },
   "opening-closeup": { dir: [0.55, 0.42, 1.3], distFactor: 1.25, tightness: 0.7, targetLift: 0.0 },
+  // A fallback only — a real detail shot is planned by planDetailShot(), which frames on the focus box
+  // ALONE. planShot() can never be tight enough for a 300 mm cleat on a 12 m building, because its
+  // distance floor is `modelR * 0.6` (≈ 5 m here): that floor is what keeps wide shots from clipping
+  // into the building, and it is exactly what a macro shot has to escape.
+  "detail-closeup": { dir: [0.9, 0.42, 0.85], distFactor: 0.9, tightness: 1.0, targetLift: 0.0 },
   orbit: { dir: [1.05, 0.6, 1.2], distFactor: 2.4, tightness: 0.0, targetLift: 0.15 },
   hero: { dir: [1.1, 0.55, 1.25], distFactor: 2.35, tightness: 0.0, targetLift: 0.12 },
 };
@@ -143,9 +148,16 @@ export function shotForStep(step: ColonyAssemblyStep): CameraShotKind {
   }
 }
 
-/** Interior / MEP steps want the envelope cut away so the camera can read the work inside. */
+/**
+ * Interior / MEP steps want the envelope cut away so the camera can read the work inside.
+ *
+ * A rafter-support DETAIL shot needs the same treatment for the same reason: a ground-floor ceiling
+ * connection hangs under the floor deck above it, and a roof connection ends up under the panel the
+ * previous shots just laid — without ghosting the already-installed envelope the macro camera would
+ * be looking at the back of a board.
+ */
 export function isCutawayShot(shot: CameraShotKind): boolean {
-  return shot === "interior";
+  return shot === "interior" || shot === "detail-closeup";
 }
 
 /**
@@ -169,6 +181,101 @@ export function planShot(shot: CameraShotKind, modelBox: Box3, groupBox: Box3 | 
 
   const position = add(target, scale(norm(recipe.dir), dist));
   return { position: sanitize(position, modelBox), target: sanitize(target, modelBox) };
+}
+
+/* ----------------------------------------------------------------- detail (macro) shot --------- */
+
+/**
+ * How a bolted connection wants to be looked at. Both hints are DERIVED FROM THE EMITTED PARTS by the
+ * timeline builder (tube centre − purlin centre, covering centre − cleat centre) — never recomputed
+ * from the engineering core, and both optional so a missing part just falls back to a safe pose.
+ */
+export interface DetailFraming {
+  /**
+   * Horizontal unit vector pointing from the C-purlin WEB into the MS TUBE. The camera approaches
+   * from this side, so the shot shows the tube bolted flush to the web with the bolt head, the nut
+   * and the projecting thread all visible — rather than the back of the purlin, where the flanges
+   * turn away and the joint is hidden.
+   */
+  webNormal?: Vec3T;
+  /** +1 the assembly builds UP off the rafter (roof); −1 it hangs DOWN under the beam (ceiling). */
+  buildSign?: number;
+}
+
+/** Tightness of the macro framing: distance = focus radius × this + a small standoff. */
+const DETAIL_DIST_FACTOR = 2.65;
+const DETAIL_STANDOFF_M = 0.2;
+/** Never closer than this (the scene's near plane is 0.05 m) and never further than this. */
+const DETAIL_MIN_DIST_M = 0.5;
+const DETAIL_MAX_DIST_M = 5.0;
+/** How far round the joint the camera drifts during the dwell (radians ≈ 13°). */
+export const DETAIL_ORBIT_RAD = 0.23;
+/** How much the camera creeps in over the dwell (1 = none). A hair of push-in reads as intent. */
+export const DETAIL_DWELL_DOLLY = 0.955;
+
+const horiz = (v: Vec3T | undefined): Vec3T | null => {
+  if (!v) return null;
+  const l = Math.hypot(v[0], v[2]);
+  if (!Number.isFinite(l) || l < 1e-6) return null;
+  return [v[0] / l, 0, v[2] / l];
+};
+
+/**
+ * A genuinely TIGHT close-up framed on the focus box ALONE.
+ *
+ * Distance keys off the FOCUS radius with no model-radius floor, which is the whole difference from
+ * `planShot`: on a 12 m colony the tightest shot planShot can produce sits ~5 m back, where an M12
+ * bolt head is a couple of pixels. Here a 200 mm cleat is framed from ~0.55 m, so the head, the
+ * washer, the nut and the thread projecting past it are all legible — the detail the user
+ * photographed.
+ *
+ * `modelBox` is used only to sanitize a non-finite result, never to widen the framing.
+ */
+export function planDetailShot(focusBox: Box3, modelBox: Box3, framing?: DetailFraming): CameraKeyframe {
+  const web = horiz(framing?.webNormal) ?? norm([0.86, 0, 0.51]);
+  // the run direction — perpendicular to the web normal in plan; approaching slightly along the run
+  // keeps the bolt head from being seen exactly end-on, so its hexagon and the nut both read.
+  const along: Vec3T = [-web[2], 0, web[0]];
+  // a roof assembly is looked at slightly from above, a ceiling assembly slightly from below, so the
+  // covering it carries never sits between the lens and the joint.
+  const sign = (framing?.buildSign ?? 1) >= 0 ? 1 : -1;
+  const dir = norm([
+    web[0] + along[0] * 0.62,
+    sign * 0.34,
+    web[2] + along[2] * 0.62,
+  ]);
+
+  const r = radiusOf(focusBox);
+  const dist = Math.min(
+    DETAIL_MAX_DIST_M,
+    Math.max(DETAIL_MIN_DIST_M, (Number.isFinite(r) ? r : 0.2) * DETAIL_DIST_FACTOR + DETAIL_STANDOFF_M),
+  );
+
+  const target = focusBox.center;
+  const position = add(target, scale(dir, dist));
+  return { position: sanitize(position, modelBox), target: sanitize(target, modelBox) };
+}
+
+/**
+ * Rotate a pose around the vertical axis through its own target, optionally dollying in/out.
+ *
+ * Used for the detail dwell: holding a macro shot perfectly still for a second reads as a stalled
+ * render, while a few degrees of drift reads as a camera being walked around the connection.
+ */
+export function orbitAroundTarget(k: CameraKeyframe, angleRad: number, dolly = 1): CameraKeyframe {
+  const dx = k.position[0] - k.target[0];
+  const dy = k.position[1] - k.target[1];
+  const dz = k.position[2] - k.target[2];
+  const c = Math.cos(angleRad);
+  const s = Math.sin(angleRad);
+  return {
+    position: [
+      k.target[0] + (dx * c - dz * s) * dolly,
+      k.target[1] + dy * dolly,
+      k.target[2] + (dx * s + dz * c) * dolly,
+    ],
+    target: k.target,
+  };
 }
 
 /** The final-orbit pose at angle θ around the model centre, at a fixed elevation + radius. */

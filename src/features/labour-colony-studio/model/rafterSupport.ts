@@ -69,6 +69,29 @@ const STEEL_KG_PER_MM3 = 7.85e-6;
 const EPS_M = 1e-6;
 
 /**
+ * A residual below this (mm) is a rounding artefact, not a piece of material: no cut board, no cut
+ * panel, no closing tube line. It is deliberately NOT `edgeToleranceMm`, which answers a different
+ * question (how far an edge may miss a tube centreline before it counts as unsupported) and which
+ * silently suppressed up to 10 mm of real, billed-but-never-bought ceiling when it was reused here.
+ */
+const CUT_THRESHOLD_MM = 1;
+
+/** `CUT_THRESHOLD_MM` in colony metres — the residual at which `tubeLinesFor` adds a closing line. */
+const CUT_THRESHOLD_M = CUT_THRESHOLD_MM / 1000;
+
+/**
+ * The tightest tube spacing this module will lay out (mm). Below it — and at zero, at a negative value
+ * and at a cleared field that persisted as null — no line list is produced at all and
+ * `tube-spacing-invalid` reports it. A cleared spacing used to be clamped to 1 mm centres, which
+ * generated 132 011 lines on a 30 × 12 m building and threw `RangeError: Maximum call stack size
+ * exceeded` out of `deriveRafterSupport` before any of it could be validated.
+ */
+const MIN_TUBE_SPACING_MM = 10;
+
+/** Most `sheet-joint-off-tube` issues one level may raise before they are summarised. */
+const MAX_JOINT_ISSUES_PER_LEVEL = 12;
+
+/**
  * The standing explanation the UI, the drawings and the reports must all show. Deliberately states
  * that drawing the connection does NOT make it structurally approved.
  */
@@ -114,13 +137,26 @@ export const RAFTER_SUPPORT_DRAWING_NOTES: string[] = [
  * WHY THIS TABLE EXISTS AT ALL (and why it is not a second source of truth):
  * the geometric derivation `tubeSectionKgPerM` uses the sharp-corner mid-line rule
  *     kg/m = 2 · (width + depth − 2t) · t · 0.00785
- * which reproduces `rhs-50x25x2` EXACTLY (2.2294 vs the master's 2.23) but OVERSTATES the tabulated
- * square-tube rows by 1–2 % (3.0144 vs 2.95 for `shs-50x50x2`), because a rolled hollow section has
- * radiused corners that the sharp-corner rule does not remove. This module is a zero-import leaf and
- * cannot read the Material Master, so a catalogue section carries its tabulated weight as an explicit
- * `unitWeightKgPerMOverride` on the config. This table exists ONLY so the section picker can seed that
- * override together with the material key; the Material Master row remains the authority the moment an
- * admin edits it, and `tubeKgPerM` always prefers the config's own override over anything here.
+ * which is a SHARP-CORNER UPPER BOUND: a rolled hollow section has radiused corners the rule does not
+ * remove, so it never understates and usually overstates. Measured against `src/lib/boq/seedMaterials.ts`
+ * (every row below is a byte-for-byte copy of its master row):
+ *
+ *     shs-50x50x2    3.014 vs 2.95   +2.17 %
+ *     shs-50x50x3    4.427 vs 4.29   +3.19 %
+ *     shs-40x40x2    2.386 vs 2.32   +2.84 %
+ *     rhs-50x25x2    2.229 vs 2.23   −0.04 %   (this master row is itself a sharp-corner figure)
+ *     rhs-100x50x3   6.782 vs 6.71   +1.07 %
+ *
+ * i.e. 0–3.2 %, NOT the "1–2 %" an earlier revision of this comment claimed. Since a 2–3 % silent
+ * overstatement of every tube in the take-off is real money, `tubeKgPerM` resolves in this order:
+ *     1. the config's own `unitWeightKgPerMOverride` (a project decision always wins);
+ *     2. THIS TABLE, matched on `materialKey` AND on the section dimensions, i.e. the tabulated
+ *        Material Master weight — so a catalogue section is never billed at the geometric bound
+ *        whether or not the picker remembered to seed an override;
+ *     3. the sharp-corner geometry, the honest fallback for a section nobody has tabulated.
+ * This module is a zero-import leaf and cannot read the Material Master, so the five rows are mirrored
+ * here; `tube-unit-weight-drift` warns whenever the value in force disagrees with the tabulated row by
+ * more than 2 %, which is what makes the mirror self-checking rather than a silent second truth.
  */
 export interface TubeSectionOption {
   materialKey: string;
@@ -256,7 +292,14 @@ export interface RafterSupportBoltSpec {
   materialKey: string;
   nutMaterialKey: string;
   washerMaterialKey: string;
+  /**
+   * Tabulated weight of ONE CLEAT bolt, i.e. of an M`diameterMm` × `lengthMm` assembly. It is applied
+   * ONLY to that length — the web bolt is roughly twice as long, and letting one override stand for
+   * both would silently halve the heavier of the two.
+   */
   unitWeightKgOverride?: number;
+  /** Tabulated weight of ONE WEB bolt (M`diameterMm` × `webLengthMm`). Derived geometrically if unset. */
+  webUnitWeightKgOverride?: number;
   rateOverride?: number;
   nutRateOverride?: number;
   washerRateOverride?: number;
@@ -597,27 +640,250 @@ export const DEFAULT_RAFTER_SUPPORT_CONFIG: RafterSupportConfig = {
   layoutEdited: false,
 };
 
+/* ---- defensive coercion of stored jsonb ------------------------------------------------------- */
+
 /**
- * Deep-merge a persisted (possibly older / partial) config over the defaults, so a project saved
- * before a field existed still loads with that field at its shipped value. Copies `pufLock.ts`
- * exactly: every nested spec is spread over its default, arrays are validated rather than trusted.
+ * A persisted jsonb value is NOT typed at runtime. A form can store `"10"`, a cleared field can store
+ * `null`, an older build can omit a field entirely, and an array element can be `null` or a shape from
+ * two releases ago. Every value the resolver reads therefore goes through one of these helpers, so no
+ * arithmetic, sort or template string anywhere downstream can ever meet `NaN`, `undefined` or `"10"`.
+ * (`"10" + 10` was silently producing a 201010 mm required bolt length before this existed.)
+ */
+function numOr(v: unknown, fallback: number): number {
+  const n = typeof v === "number" ? v : typeof v === "string" && v.trim() !== "" ? Number(v) : Number.NaN;
+  return Number.isFinite(n) ? n : fallback;
+}
+/** Finite and ≥ 0, else the fallback. A ZERO is kept — the validation rules exist to report it. */
+function nonNegOr(v: unknown, fallback: number): number {
+  const n = numOr(v, fallback);
+  return n >= 0 ? n : fallback;
+}
+/** Finite, ≥ 0 and whole — a count of pieces. */
+function countOr(v: unknown, fallback: number): number {
+  return Math.round(nonNegOr(v, fallback));
+}
+/** An optional override: a finite POSITIVE number, or undefined. Never NaN, never a string. */
+function optPosOr(v: unknown): number | undefined {
+  const n = typeof v === "number" ? v : typeof v === "string" && v.trim() !== "" ? Number(v) : Number.NaN;
+  return Number.isFinite(n) && n > 0 ? n : undefined;
+}
+function strOr(v: unknown, fallback: string): string {
+  return typeof v === "string" ? v : fallback;
+}
+function boolOr(v: unknown, fallback: boolean): boolean {
+  return typeof v === "boolean" ? v : fallback;
+}
+function recordOf(v: unknown): Record<string, unknown> {
+  return typeof v === "object" && v !== null ? (v as Record<string, unknown>) : {};
+}
+
+/** One stored level, validated element by element. Returns null for anything with no usable id. */
+function sanitizeLevel(v: unknown): RafterSupportLevel | null {
+  const r = recordOf(v);
+  const id = typeof r.id === "string" && r.id.trim() !== "" ? r.id : "";
+  if (!id) return null;
+  const kind: RafterSupportLevelKind = r.kind === "ceiling" ? "ceiling" : "roof";
+  const floorIndex = countOr(r.floorIndex, 0);
+  // a level with no label used to print "undefined @ 1200 mm c/c" in the method statement
+  const label = typeof r.label === "string" && r.label.trim() !== ""
+    ? r.label
+    : kind === "ceiling"
+      ? (floorIndex === 0 ? "Ground-floor ceiling" : `Floor ${floorIndex} ceiling`)
+      : "Top-floor sloped roof";
+  const out: RafterSupportLevel = { id, kind, floorIndex, label, enabled: boolOr(r.enabled, true) };
+  if (r.runAxis === "x" || r.runAxis === "y") out.runAxis = r.runAxis;
+  const over = optPosOr(r.tubeSpacingMmOverride);
+  if (over !== undefined) out.tubeSpacingMmOverride = over;
+  return out;
+}
+
+/** One stored cleat position, validated field by field. Returns null for anything with no usable id. */
+function sanitizePosition(v: unknown): RafterSupportCleatPosition | null {
+  const r = recordOf(v);
+  if (typeof r.id !== "string" || r.id.trim() === "") return null;
+  const levelKind: RafterSupportLevelKind = r.levelKind === "ceiling" ? "ceiling" : "roof";
+  const dir: 1 | -1 = r.dir === -1 ? -1 : r.dir === 1 ? 1 : levelKind === "ceiling" ? -1 : 1;
+  return {
+    id: r.id,
+    mark: strOr(r.mark, "RS-00"),
+    // an entry with no levelId is kept (it is user data) and reported by `cleat-orphan-level`;
+    // renumberCleats used to throw on it before this existed
+    levelId: strOr(r.levelId, ""),
+    levelKind,
+    floorIndex: countOr(r.floorIndex, 0),
+    lineIndex: countOr(r.lineIndex, 0),
+    lineId: strOr(r.lineId, ""),
+    rafterId: strOr(r.rafterId, ""),
+    gridRef: strOr(r.gridRef, "?"),
+    offsetMm: numOr(r.offsetMm, 0),
+    xM: numOr(r.xM, 0),
+    yM: numOr(r.yM, 0),
+    seatZM: numOr(r.seatZM, 0),
+    dir,
+    runAxis: r.runAxis === "y" ? "y" : "x",
+    acrossM: numOr(r.acrossM, 0),
+    rakeM: numOr(r.rakeM, 0),
+    source: r.source === "auto" ? "auto" : "manual",
+  };
+}
+
+/**
+ * Deep-merge a persisted (possibly older / partial / corrupt) config over the defaults, so a project
+ * saved before a field existed still loads with that field at its shipped value. Follows `pufLock.ts`,
+ * but every nested spec is rebuilt field by field through the coercion helpers above rather than
+ * spread blindly: the doc used to claim "arrays are validated rather than trusted" while only checking
+ * `Array.isArray`, which let a `null` element or a missing `levelId` throw inside `renumberCleats`.
  */
 export function resolveRafterSupportConfig(
   stored: Partial<RafterSupportConfig> | undefined | null,
 ): RafterSupportConfig {
   const d = DEFAULT_RAFTER_SUPPORT_CONFIG;
   if (!stored) return { ...d, levels: [], positions: [] };
+
+  const s = recordOf(stored);
+  const c = recordOf(s.cleat);
+  const b = recordOf(s.bolt);
+  const p = recordOf(s.purlin);
+  const t = recordOf(s.tube);
+  const sh = recordOf(s.ceilingSheet);
+  const rp = recordOf(s.roofPanel);
+
+  const cleat: RafterCleatSpec = {
+    lengthMm: nonNegOr(c.lengthMm, d.cleat.lengthMm),
+    widthMm: nonNegOr(c.widthMm, d.cleat.widthMm),
+    thicknessMm: nonNegOr(c.thicknessMm, d.cleat.thicknessMm),
+    grade: strOr(c.grade, d.cleat.grade),
+    material: strOr(c.material, d.cleat.material),
+    finish: strOr(c.finish, d.cleat.finish),
+    mark: strOr(c.mark, d.cleat.mark),
+    boltHoleDiaMm: nonNegOr(c.boltHoleDiaMm, d.cleat.boltHoleDiaMm),
+    holeCount: countOr(c.holeCount, d.cleat.holeCount),
+    edgeDistanceMm: nonNegOr(c.edgeDistanceMm, d.cleat.edgeDistanceMm),
+    holePitchMm: nonNegOr(c.holePitchMm, d.cleat.holePitchMm),
+    holeGaugeMm: nonNegOr(c.holeGaugeMm, d.cleat.holeGaugeMm),
+    materialKey: strOr(c.materialKey, d.cleat.materialKey),
+    unitWeightKgOverride: optPosOr(c.unitWeightKgOverride),
+    rateOverride: optPosOr(c.rateOverride),
+  };
+
+  const bolt: RafterSupportBoltSpec = {
+    diameterMm: nonNegOr(b.diameterMm, d.bolt.diameterMm),
+    lengthMm: nonNegOr(b.lengthMm, d.bolt.lengthMm),
+    webLengthMm: nonNegOr(b.webLengthMm, d.bolt.webLengthMm),
+    grade: strOr(b.grade, d.bolt.grade),
+    perCleat: countOr(b.perCleat, d.bolt.perCleat),
+    nutsPerBolt: countOr(b.nutsPerBolt, d.bolt.nutsPerBolt),
+    washersPerBolt: countOr(b.washersPerBolt, d.bolt.washersPerBolt),
+    projectionMm: nonNegOr(b.projectionMm, d.bolt.projectionMm),
+    headHeightMm: nonNegOr(b.headHeightMm, d.bolt.headHeightMm),
+    acrossFlatsMm: nonNegOr(b.acrossFlatsMm, d.bolt.acrossFlatsMm),
+    nutHeightMm: nonNegOr(b.nutHeightMm, d.bolt.nutHeightMm),
+    washerThicknessMm: nonNegOr(b.washerThicknessMm, d.bolt.washerThicknessMm),
+    washerOuterDiaMm: nonNegOr(b.washerOuterDiaMm, d.bolt.washerOuterDiaMm),
+    tighteningNote: strOr(b.tighteningNote, d.bolt.tighteningNote),
+    materialKey: strOr(b.materialKey, d.bolt.materialKey),
+    nutMaterialKey: strOr(b.nutMaterialKey, d.bolt.nutMaterialKey),
+    washerMaterialKey: strOr(b.washerMaterialKey, d.bolt.washerMaterialKey),
+    unitWeightKgOverride: optPosOr(b.unitWeightKgOverride),
+    webUnitWeightKgOverride: optPosOr(b.webUnitWeightKgOverride),
+    rateOverride: optPosOr(b.rateOverride),
+    nutRateOverride: optPosOr(b.nutRateOverride),
+    washerRateOverride: optPosOr(b.washerRateOverride),
+  };
+
+  const purlin: RafterSupportPurlinSpec = {
+    materialKey: strOr(p.materialKey, d.purlin.materialKey),
+    designation: strOr(p.designation, d.purlin.designation),
+    depthMm: nonNegOr(p.depthMm, d.purlin.depthMm),
+    flangeMm: nonNegOr(p.flangeMm, d.purlin.flangeMm),
+    lipMm: nonNegOr(p.lipMm, d.purlin.lipMm),
+    thicknessMm: nonNegOr(p.thicknessMm, d.purlin.thicknessMm),
+    grade: strOr(p.grade, d.purlin.grade),
+    finish: strOr(p.finish, d.purlin.finish),
+    lengthMm: nonNegOr(p.lengthMm, d.purlin.lengthMm),
+    partMark: strOr(p.partMark, d.purlin.partMark),
+    unitWeightKgPerMOverride: optPosOr(p.unitWeightKgPerMOverride),
+    rateOverride: optPosOr(p.rateOverride),
+  };
+
+  const tube: RafterSupportTubeSpec = {
+    materialKey: strOr(t.materialKey, d.tube.materialKey),
+    designation: strOr(t.designation, d.tube.designation),
+    widthMm: nonNegOr(t.widthMm, d.tube.widthMm),
+    depthMm: nonNegOr(t.depthMm, d.tube.depthMm),
+    wallThicknessMm: nonNegOr(t.wallThicknessMm, d.tube.wallThicknessMm),
+    grade: strOr(t.grade, d.tube.grade),
+    finish: strOr(t.finish, d.tube.finish),
+    lengthMm: nonNegOr(t.lengthMm, d.tube.lengthMm),
+    partMark: strOr(t.partMark, d.tube.partMark),
+    sideOfWeb: t.sideOfWeb === "negative" ? "negative" : "positive",
+    faceOffsetMm: nonNegOr(t.faceOffsetMm, d.tube.faceOffsetMm),
+    boltsPerConnection: countOr(t.boltsPerConnection, d.tube.boltsPerConnection),
+    boltPitchMm: nonNegOr(t.boltPitchMm, d.tube.boltPitchMm),
+    maxOverhangMm: nonNegOr(t.maxOverhangMm, d.tube.maxOverhangMm),
+    unitWeightKgPerMOverride: optPosOr(t.unitWeightKgPerMOverride),
+    rateOverride: optPosOr(t.rateOverride),
+  };
+
+  const ceilingSheet: CeilingSheetSpec = {
+    sheetLengthMm: nonNegOr(sh.sheetLengthMm, d.ceilingSheet.sheetLengthMm),
+    sheetWidthMm: nonNegOr(sh.sheetWidthMm, d.ceilingSheet.sheetWidthMm),
+    thicknessMm: nonNegOr(sh.thicknessMm, d.ceilingSheet.thicknessMm),
+    material: strOr(sh.material, d.ceilingSheet.material),
+    materialKey: strOr(sh.materialKey, d.ceilingSheet.materialKey),
+    tubeSpacingMm: nonNegOr(sh.tubeSpacingMm, d.ceilingSheet.tubeSpacingMm),
+    jointGapMm: nonNegOr(sh.jointGapMm, d.ceilingSheet.jointGapMm),
+    edgeToleranceMm: nonNegOr(sh.edgeToleranceMm, d.ceilingSheet.edgeToleranceMm),
+    crossNoggins: boolOr(sh.crossNoggins, d.ceilingSheet.crossNoggins),
+    fixingSpec: strOr(sh.fixingSpec, d.ceilingSheet.fixingSpec),
+    fixingMaterialKey: strOr(sh.fixingMaterialKey, d.ceilingSheet.fixingMaterialKey),
+    fixingSpacingMm: nonNegOr(sh.fixingSpacingMm, d.ceilingSheet.fixingSpacingMm),
+    maxOverhangMm: nonNegOr(sh.maxOverhangMm, d.ceilingSheet.maxOverhangMm),
+    unitWeightKgPerSqm: nonNegOr(sh.unitWeightKgPerSqm, d.ceilingSheet.unitWeightKgPerSqm),
+    rateOverride: optPosOr(sh.rateOverride),
+  };
+
+  const roofPanel: RoofPanelSpec = {
+    coverWidthMm: nonNegOr(rp.coverWidthMm, d.roofPanel.coverWidthMm),
+    thicknessMm: nonNegOr(rp.thicknessMm, d.roofPanel.thicknessMm),
+    panelType: strOr(rp.panelType, d.roofPanel.panelType),
+    materialKey: strOr(rp.materialKey, d.roofPanel.materialKey),
+    sideLapDetail: strOr(rp.sideLapDetail, d.roofPanel.sideLapDetail),
+    tubeSpacingMm: nonNegOr(rp.tubeSpacingMm, d.roofPanel.tubeSpacingMm),
+    maxSpanMm: nonNegOr(rp.maxSpanMm, d.roofPanel.maxSpanMm),
+    maxPanelLengthMm: nonNegOr(rp.maxPanelLengthMm, d.roofPanel.maxPanelLengthMm),
+    endLapMm: nonNegOr(rp.endLapMm, d.roofPanel.endLapMm),
+    maxOverhangMm: nonNegOr(rp.maxOverhangMm, d.roofPanel.maxOverhangMm),
+    fixingSpec: strOr(rp.fixingSpec, d.roofPanel.fixingSpec),
+    fixingMaterialKey: strOr(rp.fixingMaterialKey, d.roofPanel.fixingMaterialKey),
+    fixingsPerPanelPerSupport: countOr(rp.fixingsPerPanelPerSupport, d.roofPanel.fixingsPerPanelPerSupport),
+    colour: strOr(rp.colour, d.roofPanel.colour),
+    finish: strOr(rp.finish, d.roofPanel.finish),
+    unitWeightKgPerSqm: nonNegOr(rp.unitWeightKgPerSqm, d.roofPanel.unitWeightKgPerSqm),
+    rateOverride: optPosOr(rp.rateOverride),
+  };
+
+  const levels: RafterSupportLevel[] = (Array.isArray(s.levels) ? s.levels : [])
+    .map(sanitizeLevel)
+    .filter((l): l is RafterSupportLevel => l !== null);
+  const positions: RafterSupportCleatPosition[] = (Array.isArray(s.positions) ? s.positions : [])
+    .map(sanitizePosition)
+    .filter((p2): p2 is RafterSupportCleatPosition => p2 !== null);
+
   return {
-    ...d,
-    ...stored,
-    cleat: { ...d.cleat, ...(stored.cleat ?? {}) },
-    bolt: { ...d.bolt, ...(stored.bolt ?? {}) },
-    purlin: { ...d.purlin, ...(stored.purlin ?? {}) },
-    tube: { ...d.tube, ...(stored.tube ?? {}) },
-    ceilingSheet: { ...d.ceilingSheet, ...(stored.ceilingSheet ?? {}) },
-    roofPanel: { ...d.roofPanel, ...(stored.roofPanel ?? {}) },
-    levels: Array.isArray(stored.levels) ? stored.levels : [],
-    positions: Array.isArray(stored.positions) ? stored.positions : [],
+    enabled: boolOr(s.enabled, d.enabled),
+    levels,
+    levelsEdited: boolOr(s.levelsEdited, d.levelsEdited),
+    cleat,
+    bolt,
+    purlin,
+    tube,
+    ceilingSheet,
+    roofPanel,
+    detailSegmentLengthMm: nonNegOr(s.detailSegmentLengthMm, d.detailSegmentLengthMm),
+    positions,
+    layoutEdited: boolOr(s.layoutEdited, d.layoutEdited),
+    notes: typeof s.notes === "string" ? s.notes : undefined,
   };
 }
 
@@ -659,13 +925,52 @@ export function tubeSectionKgPerM(t: RafterSupportTubeSpec): number {
   return round3(2 * midline * wall * STEEL_KG_PER_M_PER_MM2);
 }
 
-/** Unit weight of the MS tube (kg/m) — the project override wins, otherwise the section geometry. */
+/**
+ * The TABULATED Material Master weight of this tube section (kg/m), or undefined when the spec is not
+ * a catalogue section. The material key alone is not enough — an admin can retype the dimensions and
+ * leave the key behind — so the section geometry must agree with the catalogue row before its weight
+ * is applied. `tube-section-mismatch` reports the disagreement.
+ */
+export function tubeCatalogueKgPerM(t: RafterSupportTubeSpec): number | undefined {
+  const row = tubeSectionOption(t.materialKey);
+  if (!row) return undefined;
+  const same =
+    Math.abs(row.widthMm - t.widthMm) < 0.01
+    && Math.abs(row.depthMm - t.depthMm) < 0.01
+    && Math.abs(row.wallThicknessMm - t.wallThicknessMm) < 0.01;
+  return same ? row.masterKgPerM : undefined;
+}
+
+/**
+ * Unit weight of the MS tube (kg/m). Resolution order — see TUBE_SECTION_LIBRARY:
+ *   1. the project's own `unitWeightKgPerMOverride`;
+ *   2. the TABULATED Material Master weight of the catalogue section (so a catalogue tube is never
+ *      billed at the sharp-corner bound just because the picker did not seed an override — that was
+ *      silently adding 1.07–3.19 % to every tube in the take-off);
+ *   3. the sharp-corner geometry, the honest fallback for an untabulated section.
+ */
 export function tubeKgPerM(t: RafterSupportTubeSpec): number {
   if (t.unitWeightKgPerMOverride && t.unitWeightKgPerMOverride > 0) return round3(t.unitWeightKgPerMOverride);
+  const tabulated = tubeCatalogueKgPerM(t);
+  if (tabulated !== undefined && tabulated > 0) return round3(tabulated);
   return tubeSectionKgPerM(t);
 }
 
-/** Unit weight of one cleat plate (kg) — gross plate less the drilled holes. MS plate is 7.85 kg/m² per mm. */
+/**
+ * GROSS weight of one cleat plate (kg) — the plate as BOUGHT, before it is drilled. `ms-plate-8` is a
+ * `per_kg` row and the holes are drilled out of a bought plate, so this, not the net weight, is what a
+ * purchase order must carry. MS plate is 7.85 kg/m² per mm.
+ */
+export function cleatGrossUnitWeightKg(c: RafterCleatSpec): number {
+  const gross = Math.max(0, c.lengthMm) * Math.max(0, c.widthMm) * Math.max(0, c.thicknessMm);
+  return round3(gross * STEEL_KG_PER_MM3);
+}
+
+/**
+ * Unit weight of one FABRICATED cleat plate (kg) — gross plate less the drilled holes, i.e. the weight
+ * that is actually erected. Use `cleatGrossUnitWeightKg` for what is purchased; the take-off carries
+ * both, because the 2 % difference is bought steel that nobody erects.
+ */
 export function cleatUnitWeightKg(c: RafterCleatSpec): number {
   if (c.unitWeightKgOverride && c.unitWeightKgOverride > 0) return round3(c.unitWeightKgOverride);
   const gross = Math.max(0, c.lengthMm) * Math.max(0, c.widthMm) * Math.max(0, c.thicknessMm);
@@ -673,10 +978,24 @@ export function cleatUnitWeightKg(c: RafterCleatSpec): number {
   return round3(Math.max(0, gross - holes) * STEEL_KG_PER_MM3);
 }
 
-/** Unit weight of one bolt of the given length (kg) — shank volume + a 20 % head allowance. */
+/**
+ * Unit weight of one bolt of the given length (kg) — shank volume + a 20 % head allowance.
+ *
+ * An override is the tabulated weight of a bolt OF A PARTICULAR LENGTH, so it is applied only to the
+ * length it was entered against: `unitWeightKgOverride` to the M12 × `lengthMm` cleat bolt and
+ * `webUnitWeightKgOverride` to the M12 × `webLengthMm` web bolt. Letting one override answer for both
+ * used to collapse a 100 mm web bolt onto the weight of a 50 mm cleat bolt — exactly halving it — and
+ * `bolt-m12` in the Material Master is explicitly the M12 × 50 row an admin would reach for.
+ */
 export function boltUnitWeightKg(b: RafterSupportBoltSpec, lengthMm: number): number {
-  if (b.unitWeightKgOverride && b.unitWeightKgOverride > 0) return round3(b.unitWeightKgOverride);
-  const shank = (Math.PI / 4) * b.diameterMm ** 2 * Math.max(0, lengthMm);
+  const len = Math.max(0, lengthMm);
+  if (b.webUnitWeightKgOverride && b.webUnitWeightKgOverride > 0 && Math.abs(len - b.webLengthMm) < 1e-9) {
+    return round3(b.webUnitWeightKgOverride);
+  }
+  if (b.unitWeightKgOverride && b.unitWeightKgOverride > 0 && Math.abs(len - b.lengthMm) < 1e-9) {
+    return round3(b.unitWeightKgOverride);
+  }
+  const shank = (Math.PI / 4) * b.diameterMm ** 2 * len;
   return round3(shank * STEEL_KG_PER_MM3 * 1.2);
 }
 
@@ -735,9 +1054,15 @@ export function requiredWebBoltLengthMm(cfg: RafterSupportConfig): number {
 /**
  * The minimum cleat width (mm): it must span the purlin flange, the tube beside it, and both bolt rows
  * at their gauge with the full edge distance outside them.
+ *
+ * The plate is CENTRED ON THE WEB-FACE PLANE (see `rafterCleatGeometry`), and the purlin flange runs
+ * one way off that plane while the tube runs the other. A plate centred on the interface therefore
+ * needs `2 × max(flange, tubeWidth)` to cover both, NOT `flange + tubeWidth`: a 100 mm plate under a
+ * 65 mm flange and a 25 mm tube satisfies `65 + 25` yet leaves 15 mm of purlin flange hanging over the
+ * edge of the cleat with nothing under it.
  */
 export function requiredCleatWidthMm(cfg: RafterSupportConfig): number {
-  const occupied = Math.max(0, cfg.purlin.flangeMm) + Math.max(0, cfg.tube.widthMm);
+  const occupied = 2 * Math.max(Math.max(0, cfg.purlin.flangeMm), Math.max(0, cfg.tube.widthMm));
   const bolts = Math.max(0, cfg.cleat.holeGaugeMm) + 2 * Math.max(0, cfg.cleat.edgeDistanceMm);
   return round2(Math.max(occupied, bolts));
 }
@@ -786,24 +1111,51 @@ export interface TubeSpacingResult {
  * what `validateRafterSupport` turns into a "sheet edge unsupported" issue.
  */
 export function tubeSpacingForSheet(sheet: CeilingSheetSpec, requestedMm?: number): TubeSpacingResult {
-  const sheetLen = Math.max(0, sheet.sheetLengthMm);
-  const requested = Math.max(0, requestedMm ?? sheet.tubeSpacingMm);
+  const sheetLen = numOr(sheet.sheetLengthMm, 0) > 0 ? Math.max(0, sheet.sheetLengthMm) : 0;
+  const asked = requestedMm ?? sheet.tubeSpacingMm;
+  const requested = numOr(asked, 0) > 0 ? Math.max(0, asked) : 0;
   if (sheetLen <= 0 || requested <= 0) {
     return { requestedMm: requested, spacingMm: requested, divisions: 0, divides: false, nearestDividingMm: 0, residualMm: 0 };
   }
   const exact = sheetLen / requested;
   const n = Math.max(1, Math.round(exact));
-  const nearest = round3(sheetLen / n);
-  const whole = Math.floor(sheetLen / requested + 1e-9);
-  const residual = round3(sheetLen - whole * requested);
-  const divides = Math.abs(exact - Math.round(exact)) < 1e-9;
+
+  // A dividing spacing that is not a terminating decimal (2440/3, 2440/6 …) can only ever be STORED to
+  // the millimetre grid this module rounds to, so `2440 / 813.333` is 3.0000012, not 3. Testing that
+  // against a 1e-9 absolute tolerance made the module reject its own suggestion: the admin was told to
+  // "Use 813.333 mm c/c", entered it, and got the identical error back. The tolerance is therefore the
+  // rounding grid itself — n divisions each rounded to 3 dp can be out by at most n × 0.0005 mm, which
+  // is 0.003 mm at n = 6 and still 5 orders of magnitude below anything a fabricator can set out.
+  const gridTolMm = Math.max(1e-9, n * 5e-4);
+  const divides = Math.abs(sheetLen - n * requested) <= gridTolMm;
+
+  // …and the same grid tolerance decides how many WHOLE bays fit, or `divides: true, divisions: 6`
+  // could be published alongside `residualMm: 406.665` — a full bay of a gap that does not exist.
+  const whole = divides ? n : Math.floor(sheetLen / requested + 1e-9);
+  const residual = divides ? 0 : round3(sheetLen - whole * requested);
+
+  // The NEAREST DIVIDING SPACING, not the nearest division COUNT: `Math.round(exact)` picks the closest
+  // n, which is not the closest sheetLen/n. For a 1000 mm request it named 1220 (220 mm away) when
+  // 813.333 is 187 mm away; for 700 it named 813.333 (113 away) when 610 is 90 away. Both candidates
+  // either side of the request are tested and the genuinely nearer one is returned.
+  const candidates = [Math.max(1, Math.floor(exact)), Math.max(1, Math.ceil(exact)), n];
+  let nearest = round3(sheetLen / n);
+  let bestGap = Math.abs(nearest - requested);
+  for (const k of candidates) {
+    const s = round3(sheetLen / k);
+    const gap = Math.abs(s - requested);
+    if (gap < bestGap - 1e-9) {
+      bestGap = gap;
+      nearest = s;
+    }
+  }
   return {
     requestedMm: round3(requested),
     spacingMm: round3(requested),
     divisions: round3(exact),
     divides,
     nearestDividingMm: nearest,
-    residualMm: divides ? 0 : residual,
+    residualMm: residual,
   };
 }
 
@@ -861,6 +1213,19 @@ export interface CeilingSheetLayout {
   nogginRunningLengthM: number;
   /** Screws, from the real perimeter + intermediate support runs at the configured centres. */
   screws: number;
+  /** Bays between adjacent tube centrelines across the span — `supportLines − 1`, never `round(across/spacing)`. */
+  bays: number;
+  /** Tube centrelines the boards are borne on across the span (= `bays + 1`). */
+  supportLines: number;
+  /** The movement gap left between boards (mm) — echoed so the cutting list and the drawing agree. */
+  jointGapMm: number;
+  /**
+   * The size each WHOLE board is actually CUT to (mm), i.e. the module less the movement gap. The tube
+   * module stays at `sheetLengthMm` so every joint still lands on a centreline; the gap is taken out of
+   * the board, not out of the setting-out. `jointGapMm` used to be stored, documented and never read.
+   */
+  laidSheetLengthMm: number;
+  laidSheetWidthMm: number;
 }
 
 /**
@@ -877,20 +1242,57 @@ export function sheetLayoutFor(
   spanAcrossM: number,
   sheet: CeilingSheetSpec,
 ): CeilingSheetLayout {
-  const across = Math.max(0, spanAcrossM) * 1000;
-  const along = Math.max(0, spanAlongM) * 1000;
-  const sl = Math.max(1, sheet.sheetLengthMm);
-  const sw = Math.max(1, sheet.sheetWidthMm);
-  const spacing = Math.max(1, level.spacingMm);
-  const tol = Math.max(0, sheet.edgeToleranceMm);
+  const across = Math.max(0, numOr(spanAcrossM, 0)) * 1000;
+  const along = Math.max(0, numOr(spanAlongM, 0)) * 1000;
+  const sl = numOr(sheet.sheetLengthMm, 0);
+  const sw = numOr(sheet.sheetWidthMm, 0);
+  const spacing = numOr(level.spacingMm, 0);
+  const tol = Math.max(0, numOr(sheet.edgeToleranceMm, 0));
+  const gap = Math.max(0, Math.min(numOr(sheet.jointGapMm, 0), sl / 2, sw / 2));
+
+  // A blank / zeroed board size used to be clamped to a 1 mm module, which produced 62 000 000 boards
+  // and one `sheet-joint-off-tube` issue per joint station. There is no layout for a board with no
+  // size: return the empty one and let `sheet-size-invalid` say so.
+  if (!(sl > 0) || !(sw > 0) || !(spacing > 0)) {
+    return {
+      levelId: level.id,
+      sheetLengthMm: Math.max(0, sl),
+      sheetWidthMm: Math.max(0, sw),
+      spacingMm: round3(Math.max(0, spacing)),
+      wholeRowsAcross: 0,
+      wholeRowsAlong: 0,
+      wholeSheets: 0,
+      cutSheetLengthMm: 0,
+      cutSheetWidthMm: 0,
+      cutSheets: 0,
+      totalSheets: 0,
+      coveredAreaSqm: 0,
+      purchasedAreaSqm: 0,
+      jointStationsMm: [],
+      unsupportedJointsMm: [],
+      crossJointStationsMm: [],
+      nogginPieces: 0,
+      nogginRunningLengthM: 0,
+      screws: 0,
+      bays: 0,
+      supportLines: 0,
+      jointGapMm: gap,
+      laidSheetLengthMm: 0,
+      laidSheetWidthMm: 0,
+    };
+  }
 
   const wholeAcross = Math.floor(across / sl + 1e-9);
   const cutLen = round2(across - wholeAcross * sl);
   const wholeAlong = Math.floor(along / sw + 1e-9);
   const cutWid = round2(along - wholeAlong * sw);
 
-  const hasCutLen = cutLen > tol;
-  const hasCutWid = cutWid > tol;
+  // A CUT board and an UNSUPPORTED edge are two different questions. `edgeToleranceMm` answers the
+  // second (how far an edge may miss a tube) and used to answer the first as well, so any residual up
+  // to 10 mm was billed as covered ceiling with no board bought at all — 0.146 m² on a 9770 × 4890
+  // span. The cut threshold is the same sub-millimetre rounding guard `panelLayoutFor` already used.
+  const hasCutLen = cutLen > CUT_THRESHOLD_MM;
+  const hasCutWid = cutWid > CUT_THRESHOLD_MM;
   const wholeSheets = wholeAcross * wholeAlong;
   const cutSheets =
     (hasCutLen ? wholeAlong : 0)
@@ -906,29 +1308,52 @@ export function sheetLayoutFor(
   // including the closing line at the far edge — and only fall back to bare multiples of the spacing
   // when the caller has no line list to offer.
   const stations = level.tubeStationsMm?.length ? level.tubeStationsMm : null;
-  const distanceToTube = (j: number): number =>
-    stations
-      ? Math.min(...stations.map((s) => Math.abs(j - s)))
-      : Math.abs(j - Math.round(j / spacing) * spacing);
+  const distanceToTube = (j: number): number => {
+    if (!stations) return Math.abs(j - Math.round(j / spacing) * spacing);
+    // a loop, not Math.min(...stations): a spread of a long station list throws RangeError
+    let best = Infinity;
+    for (const s of stations) {
+      const d = Math.abs(j - s);
+      if (d < best) best = d;
+    }
+    return Number.isFinite(best) ? best : Infinity;
+  };
   const unsupported = jointStations.filter((j) => distanceToTube(j) > tol);
 
   const crossStations: number[] = [];
   for (let k = 1; k <= wholeAlong; k++) {
     const at = round2(k * sw);
-    if (at < along - tol) crossStations.push(at);
+    if (at < along - CUT_THRESHOLD_MM) crossStations.push(at);
   }
 
-  // One noggin per cross joint per bay between adjacent tubes. Length is taken centre-to-centre (the
-  // spacing) rather than the clear bay, because a noggin is cut and fitted between the tube faces and
-  // the offcut is not recoverable — an ordering length must not be optimistic.
-  const bays = Math.max(0, Math.round(across / spacing));
+  // THE BAYS ARE THE BAYS THAT WERE LAID OUT. `Math.round(across / spacing)` disagreed with
+  // `tubeLinesFor` for roughly half of all spans — a 6200 mm span at 1220 c/c has 7 lines and so 6
+  // bays, and the take-off row published `tubeLines: 7` beside `nogginPieces: 40` (5 bays) with no
+  // issue raised. When the real centrelines are known they decide; otherwise they are reproduced
+  // exactly as `tubeLinesFor` would lay them, closing line included.
+  const bayWidths: number[] = [];
+  if (stations) {
+    const sorted = [...stations].sort((a, b) => a - b);
+    for (let i = 1; i < sorted.length; i++) bayWidths.push(sorted[i] - sorted[i - 1]);
+  } else {
+    const n = Math.floor(across / spacing + 1e-9);
+    for (let i = 0; i < n; i++) bayWidths.push(spacing);
+    const residual = round2(across - n * spacing);
+    if (residual > CUT_THRESHOLD_MM) bayWidths.push(residual);
+  }
+  const bays = bayWidths.length;
+  const supportLines = bays + 1;
+
+  // One noggin per cross joint per bay. Its ordering length is that bay's own centre-to-centre
+  // distance — a noggin is cut and fitted between the tube faces and the offcut is not recoverable —
+  // so the 100 mm closing bay is charged at 100 mm and not at a full 1220 mm module.
   const nogginPieces = crossStations.length * bays;
-  const nogginRunningLengthM = round3((nogginPieces * spacing) / 1000);
+  const nogginRunningLengthM = round3((crossStations.length * bayWidths.reduce((a, w) => a + w, 0)) / 1000);
 
   // screws: every board is fixed along each supporting member it crosses, at the configured centres
-  const supportLines = Math.max(2, bays + 1);
-  const screwSpacing = Math.max(50, sheet.fixingSpacingMm);
-  const screws = Math.max(0, Math.ceil((supportLines * along) / screwSpacing))
+  const screwLines = Math.max(2, supportLines);
+  const screwSpacing = Math.max(50, numOr(sheet.fixingSpacingMm, 300));
+  const screws = Math.max(0, Math.ceil((screwLines * along) / screwSpacing))
     + Math.max(0, Math.ceil((crossStations.length * across) / screwSpacing));
 
   return {
@@ -951,6 +1376,11 @@ export function sheetLayoutFor(
     nogginPieces: sheet.crossNoggins ? nogginPieces : 0,
     nogginRunningLengthM: sheet.crossNoggins ? nogginRunningLengthM : 0,
     screws,
+    bays,
+    supportLines,
+    jointGapMm: round2(gap),
+    laidSheetLengthMm: round2(sl - gap),
+    laidSheetWidthMm: round2(sw - gap),
   };
 }
 
@@ -999,29 +1429,54 @@ export function panelLayoutFor(
   slopeLengthM: number,
   panel: RoofPanelSpec,
 ): RoofPanelLayout {
-  const width = Math.max(0, slopeWidthM) * 1000;
-  const rake = Math.max(0, slopeLengthM) * 1000;
-  const cover = Math.max(1, panel.coverWidthMm);
-  const span = Math.max(0, level.spacingMm);
+  const width = Math.max(0, numOr(slopeWidthM, 0)) * 1000;
+  const rake = Math.max(0, numOr(slopeLengthM, 0)) * 1000;
+  const cover = numOr(panel.coverWidthMm, 0);
+  const span = Math.max(0, numOr(level.spacingMm, 0));
+
+  // a zero / cleared / negative cover width used to be clamped to a 1 mm module: 20 000 roof panels
+  // and 240 366 screws for one 8.4 m slope. `panel-cover-width-invalid` reports it instead.
+  if (!(cover > 0)) {
+    return {
+      levelId: level.id,
+      coverWidthMm: Math.max(0, cover),
+      wholePanels: 0,
+      cutPanelWidthMm: 0,
+      hasCutPanel: false,
+      totalPanelRuns: 0,
+      piecesPerRun: 0,
+      totalPanels: 0,
+      panelLengthMm: 0,
+      rakeLengthMm: round2(rake),
+      spanMm: round3(span),
+      spanOk: false,
+      sideJointStationsMm: [],
+      coveredAreaSqm: 0,
+      purchasedAreaSqm: 0,
+      screws: 0,
+    };
+  }
 
   const whole = Math.floor(width / cover + 1e-9);
   const residual = round2(width - whole * cover);
-  const hasCut = residual > 1; // a sub-millimetre residual is a rounding artefact, not a cut panel
+  const hasCut = residual > CUT_THRESHOLD_MM; // a sub-millimetre residual is rounding, not a cut panel
   const runs = whole + (hasCut ? 1 : 0);
 
-  const maxLen = Math.max(1, panel.maxPanelLengthMm);
+  const maxLen = Math.max(1, numOr(panel.maxPanelLengthMm, 1));
   const pieces = Math.max(1, Math.ceil(rake / maxLen - 1e-9));
-  const lap = pieces > 1 ? Math.max(0, panel.endLapMm) : 0;
-  const pieceLen = round2(rake / pieces + lap);
+  const lap = pieces > 1 ? Math.max(0, numOr(panel.endLapMm, 0)) : 0;
+  // n pieces down one run make n − 1 end laps, not n. `rake / pieces + lap` bought one whole extra lap
+  // on every run — 199.99 mm × 30 runs = 6.0 m of over-purchased panel on a 25 m rake.
+  const pieceLen = round2(rake / pieces + (lap * (pieces - 1)) / pieces);
 
   const sideJoints: number[] = [];
   for (let k = 1; k <= whole; k++) {
     const at = round2(k * cover);
-    if (at < width - 1) sideJoints.push(at);
+    if (at < width - CUT_THRESHOLD_MM) sideJoints.push(at);
   }
 
   const supportLines = Math.max(2, Math.ceil(rake / Math.max(1, span)) + 1);
-  const screws = Math.max(0, runs * pieces * supportLines * Math.max(1, panel.fixingsPerPanelPerSupport));
+  const screws = Math.max(0, runs * pieces * supportLines * Math.max(1, countOr(panel.fixingsPerPanelPerSupport, 1)));
 
   return {
     levelId: level.id,
@@ -1035,7 +1490,7 @@ export function panelLayoutFor(
     panelLengthMm: pieceLen,
     rakeLengthMm: round2(rake),
     spanMm: round3(span),
-    spanOk: span > 0 && span <= panel.maxSpanMm + 1e-9,
+    spanOk: span > 0 && span <= numOr(panel.maxSpanMm, 0) + 1e-9,
     sideJointStationsMm: sideJoints,
     coveredAreaSqm: round3((width / 1000) * (rake / 1000)),
     purchasedAreaSqm: round3((runs * cover * pieces * pieceLen) / 1e6),
@@ -1134,10 +1589,14 @@ export function autoLevels(ctx: RafterSupportContext): RafterSupportLevel[] {
   return out;
 }
 
-/** The FINAL level list. An edited list is authoritative and is never silently regenerated. */
+/**
+ * The FINAL level list. An edited list is authoritative and is never silently regenerated — INCLUDING
+ * an edited list that is empty: deleting every level used to fall through to `autoLevels` and quietly
+ * put them all back, so the admin could never switch the system off level by level.
+ */
 export function resolveLevels(cfg: RafterSupportConfig, ctx: RafterSupportContext): RafterSupportLevel[] {
   if (!cfg.enabled) return [];
-  if (cfg.levelsEdited && cfg.levels.length) return cfg.levels;
+  if (cfg.levelsEdited) return cfg.levels;
   if (cfg.levels.length) return cfg.levels;
   return autoLevels(ctx);
 }
@@ -1223,6 +1682,41 @@ export interface RafterSupportTubeLine {
   slopeId?: string;
   /** Whether this line falls on the covering module or is a closing line at the far edge. */
   onModule: boolean;
+  /**
+   * The ACROSS extents of the covering strip THIS line carries (m): half the real bay to each
+   * neighbour, clipped to the covered span. Not `spacing / 2` either side — that drew a full 1220 mm
+   * strip on a 680 mm closing bay (0.058 m³ of duplicated cement board), ran 610 mm outside the
+   * building at both boundaries, and on a flat roof put 57 mm of PUF panel through its neighbour.
+   */
+  coverFromM: number;
+  coverToM: number;
+  /**
+   * dz / d(across) of the covering plane at this line — the slope of the surface the covering follows,
+   * signed in the ACROSS direction. 0 for a ceiling and for a flat roof. Carried here because it is
+   * known only where the slope planes are resolved, and because an axis-aligned box cannot express it.
+   */
+  coverSlope: number;
+}
+
+/**
+ * Give every line the covering strip it really carries: half the bay to each neighbour, clipped to the
+ * covered span so no strip runs outside the building and no two strips share material. Adjacent strips
+ * meet exactly on the mid-bay plane, so they touch and never interpenetrate.
+ */
+function assignCoveringStrips(lines: RafterSupportTubeLine[], spanFromM: number, spanToM: number): void {
+  if (!lines.length) return;
+  const order = [...lines].sort((a, b) => a.acrossM - b.acrossM);
+  const lo = Math.min(spanFromM, spanToM);
+  const hi = Math.max(spanFromM, spanToM);
+  const clamp = (v: number) => Math.max(lo, Math.min(hi, v));
+  for (let i = 0; i < order.length; i++) {
+    const prev = i > 0 ? order[i - 1] : null;
+    const next = i < order.length - 1 ? order[i + 1] : null;
+    const from = prev ? (prev.acrossM + order[i].acrossM) / 2 : lo;
+    const to = next ? (order[i].acrossM + next.acrossM) / 2 : hi;
+    order[i].coverFromM = round4(clamp(Math.min(from, to)));
+    order[i].coverToM = round4(clamp(Math.max(from, to)));
+  }
 }
 
 /**
@@ -1244,7 +1738,10 @@ export function tubeLinesFor(
   runAxis: RafterSupportRunAxis,
   spacingMm: number,
 ): RafterSupportTubeLine[] {
-  const spacing = Math.max(0.001, spacingMm / 1000);
+  // no spacing, no lines — see MIN_TUBE_SPACING_MM. Never clamp a cleared field to 1 mm centres.
+  const requested = numOr(spacingMm, 0);
+  if (!(requested >= MIN_TUBE_SPACING_MM)) return [];
+  const spacing = requested / 1000;
   const alongFrom = runAxis === "x" ? ctx.body.x0 : ctx.body.y0;
   const alongTo = runAxis === "x" ? ctx.body.x1 : ctx.body.y1;
   const acrossFrom = runAxis === "x" ? ctx.body.y0 : ctx.body.x0;
@@ -1270,10 +1767,13 @@ export function tubeLinesFor(
         dir: -1,
         rakeM: 0,
         onModule: true,
+        coverFromM: round4(acrossFrom + i * spacing),
+        coverToM: round4(acrossFrom + i * spacing),
+        coverSlope: 0,
       });
     }
     const residual = round4(span - n * spacing);
-    if (residual > 0.001) {
+    if (residual > CUT_THRESHOLD_M) {
       out.push({
         id: `${level.id}:L${String(n + 1).padStart(2, "0")}-close`,
         levelId: level.id,
@@ -1287,8 +1787,12 @@ export function tubeLinesFor(
         dir: -1,
         rakeM: 0,
         onModule: false,
+        coverFromM: round4(acrossTo),
+        coverToM: round4(acrossTo),
+        coverSlope: 0,
       });
     }
+    assignCoveringStrips(out, acrossFrom, acrossTo);
     return out;
   }
 
@@ -1301,16 +1805,19 @@ export function tubeLinesFor(
     const cos = plane.rakeLengthM > EPS_M ? Math.abs(plane.toM - plane.fromM) / plane.rakeLengthM : 1;
     const sin = plane.rakeLengthM > EPS_M ? Math.abs(plane.toZM - plane.fromZM) / plane.rakeLengthM : 0;
     const sign = plane.toM >= plane.fromM ? 1 : -1;
+    // dz/d(across) on this plane: z rises with the rake, and the rake advances in the `sign` direction
+    const coverSlope = cos > EPS_M ? (sin / cos) * sign : 0;
     for (let i = 0; i <= bays; i++) {
       // a shared ridge line is emitted once, by the first slope only
       if (i === bays && planes.length > 1 && plane.id !== planes[0].id) continue;
       const rake = i * step;
+      const acrossM = round4(plane.fromM + sign * rake * cos);
       out.push({
         id: `${level.id}:${plane.id}:L${String(i).padStart(2, "0")}`,
         levelId: level.id,
         index: idx++,
         runAxis,
-        acrossM: round4(plane.fromM + sign * rake * cos),
+        acrossM,
         fromM: round4(alongFrom),
         toM: round4(alongTo),
         lengthM,
@@ -1319,10 +1826,19 @@ export function tubeLinesFor(
         rakeM: round4(rake),
         slopeId: plane.id,
         onModule: true,
+        coverFromM: acrossM,
+        coverToM: acrossM,
+        coverSlope: round4(coverSlope),
       });
     }
   }
-  return out.sort((a, b) => a.acrossM - b.acrossM || a.id.localeCompare(b.id));
+  const sorted = out.sort((a, b) => a.acrossM - b.acrossM || a.id.localeCompare(b.id));
+  // …and only NOW number them. `index` used to be assigned in emission order, so on a gable the second
+  // slope's lines carried indices that ran backwards against `acrossM`; `renumberCleats` sorts on that
+  // index, which put the RS marks in emission order rather than in layout order.
+  sorted.forEach((l, i) => { l.index = i; });
+  assignCoveringStrips(sorted, acrossFrom, acrossTo);
+  return sorted;
 }
 
 /* ------------------------------------------------------------------ cleat layout --------------- */
@@ -1401,17 +1917,35 @@ export function cleatPositionsFor(
   return out;
 }
 
-/** Sort into a stable order (level, line, along) and reissue RS-01…RS-nn. */
+/**
+ * Sort into a stable order (level, line, along) and reissue RS-01…RS-nn.
+ *
+ * Every sort key is read defensively: `resolveRafterSupportConfig` now validates each stored position,
+ * but this is exported and a caller can hand it a list from anywhere, and a single entry saved by an
+ * older build with no `levelId` used to throw `Cannot read properties of undefined` out of the whole
+ * studio page rather than out of one schedule.
+ */
 export function renumberCleats(list: RafterSupportCleatPosition[]): RafterSupportCleatPosition[] {
+  const key = (p: RafterSupportCleatPosition | null | undefined) => ({
+    levelId: typeof p?.levelId === "string" ? p.levelId : "",
+    lineIndex: numOr(p?.lineIndex, 0),
+    xM: numOr(p?.xM, 0),
+    yM: numOr(p?.yM, 0),
+    id: typeof p?.id === "string" ? p.id : "",
+  });
   return [...list]
-    .sort(
-      (a, b) =>
-        a.levelId.localeCompare(b.levelId)
-        || a.lineIndex - b.lineIndex
-        || a.xM - b.xM
-        || a.yM - b.yM
-        || a.id.localeCompare(b.id),
-    )
+    .filter((p): p is RafterSupportCleatPosition => p !== null && p !== undefined)
+    .sort((a, b) => {
+      const ka = key(a);
+      const kb = key(b);
+      return (
+        ka.levelId.localeCompare(kb.levelId)
+        || ka.lineIndex - kb.lineIndex
+        || ka.xM - kb.xM
+        || ka.yM - kb.yM
+        || ka.id.localeCompare(kb.id)
+      );
+    })
     .map((p, i) => ({ ...p, mark: cleatMark(i + 1) }));
 }
 
@@ -1425,8 +1959,15 @@ export interface RafterSupportResolvedLevel {
   label: string;
   enabled: boolean;
   runAxis: RafterSupportRunAxis;
-  /** The tube centre-to-centre spacing actually in force (mm). */
+  /** The tube centre-to-centre spacing REQUESTED (mm) — the configured module or the level override. */
   spacingMm: number;
+  /**
+   * The spacing the level is actually BUILT at (mm). A ceiling marches at exactly the module, so this
+   * equals `spacingMm`; a roof divides each rake into `ceil(rake / spacing)` EQUAL bays, so the real
+   * step is always smaller — 1030.8 mm against a configured 1200 on the shipped default 30 × 12 m
+   * gable, a 16.4 % overstatement that the method statement used to print as fact.
+   */
+  actualSpacingMm: number;
   /** How the requested spacing resolved against the sheet module (ceiling levels only). */
   spacing: TubeSpacingResult | null;
   lines: RafterSupportTubeLine[];
@@ -1442,6 +1983,14 @@ export interface RafterSupportResolvedLevel {
   panelLayouts: RoofPanelLayout[];
   /** Total running length of C-purlin / MS tube at this level (m). */
   runningLengthM: number;
+  /**
+   * Roof levels only: the sloping area of the EAVE OVERHANG (m²) — the roof that projects beyond the
+   * walled body. `roofSlopePlanes` and `panelLayoutFor` are driven entirely off `ctx.body`, so panels
+   * are laid out for the walled body ONLY while the validator simultaneously warns that the covering
+   * overhangs the eave: 52 m² of a 30 × 12 m gable at a 600 mm overhang. Reported here rather than
+   * silently omitted, so the schedule shows what the panel take-off does NOT contain.
+   */
+  eaveUncoveredAreaSqm: number;
 }
 
 /** Which axis the purlins run along: perpendicular to the majority of the rafter lines. */
@@ -1498,6 +2047,7 @@ export function resolveLevel(
       enabled: level.enabled,
       runAxis,
       spacingMm: round3(spacingMm),
+      actualSpacingMm: round3(spacingMm),
       spacing: tubeSpacingForSheet(cfg.ceilingSheet, spacingMm),
       lines,
       spanAlongM,
@@ -1507,13 +2057,15 @@ export function resolveLevel(
       sheetLayout: level.enabled ? sheetLayoutFor(layoutLevel, spanAlongM, spanAcrossM, cfg.ceilingSheet) : null,
       panelLayouts: [],
       runningLengthM: round3(lines.reduce((a, l) => a + l.lengthM, 0)),
+      eaveUncoveredAreaSqm: 0,
     };
   }
 
   const slopes = roofSlopePlanes(ctx, acrossFrom, acrossTo);
-  const panelLayouts = level.enabled
+  const usableSpacingM = numOr(spacingMm, 0) >= MIN_TUBE_SPACING_MM ? spacingMm / 1000 : 0;
+  const panelLayouts = level.enabled && usableSpacingM > 0
     ? slopes.map((s) => {
-        const bays = Math.max(1, Math.ceil(s.rakeLengthM / Math.max(0.001, spacingMm / 1000) - 1e-9));
+        const bays = Math.max(1, Math.ceil(s.rakeLengthM / usableSpacingM - 1e-9));
         const actualSpanMm = round3((s.rakeLengthM / bays) * 1000);
         return panelLayoutFor(
           { id: `${level.id}:${s.id}`, kind: "roof", spacingMm: actualSpanMm },
@@ -1523,6 +2075,28 @@ export function resolveLevel(
         );
       })
     : [];
+  // the widest bay the panels really span, not the value that was asked for
+  const actualSpacingMm = panelLayouts.length
+    ? round3(panelLayouts.reduce((a, p) => Math.max(a, p.spanMm), 0))
+    : round3(spacingMm);
+
+  // the SLOPING eave-overhang area not included in the body-only panel take-off: the covered rake is
+  // (plan span + 2 × overhang) / cos(pitch), the covered plan is the body, and the difference on both
+  // axes is the four overhang strips + corners
+  const overhang = Math.max(0, ctx.slope.overhangM);
+  let eaveUncoveredAreaSqm = 0;
+  if (level.enabled && overhang > 0 && slopes.length) {
+    const alongPlan = spanAlongM;
+    const coveredRake = slopes.reduce((a, s) => a + s.rakeLengthM, 0);
+    const meanCos = slopes.length && coveredRake > 0
+      ? slopes.reduce((a, s) => a + Math.cos((s.pitchDeg * Math.PI) / 180) * s.rakeLengthM, 0) / coveredRake
+      : 1;
+    const totalRake = coveredRake + (2 * overhang) / Math.max(EPS_M, meanCos);
+    const totalAlong = alongPlan + 2 * overhang;
+    const totalSloped = totalRake * totalAlong;
+    const coveredSloped = coveredRake * alongPlan;
+    eaveUncoveredAreaSqm = round3(Math.max(0, totalSloped - coveredSloped));
+  }
 
   return {
     id: level.id,
@@ -1532,6 +2106,7 @@ export function resolveLevel(
     enabled: level.enabled,
     runAxis,
     spacingMm: round3(spacingMm),
+    actualSpacingMm,
     spacing: null,
     lines,
     spanAlongM,
@@ -1541,6 +2116,7 @@ export function resolveLevel(
     sheetLayout: null,
     panelLayouts,
     runningLengthM: round3(lines.reduce((a, l) => a + l.lengthM, 0)),
+    eaveUncoveredAreaSqm,
   };
 }
 
@@ -1558,14 +2134,15 @@ export function resolveCleatPositions(
   const out: RafterSupportCleatPosition[] = [];
   for (const lv of levels) {
     if (!lv.enabled) continue;
-    out.push(
-      ...cleatPositionsFor(
-        ctx,
-        { id: lv.id, kind: lv.kind, floorIndex: lv.floorIndex, label: lv.label, enabled: lv.enabled },
-        lv.lines,
-        lv.runAxis,
-      ),
+    // a loop, not out.push(...): spreading a long array as arguments throws RangeError well before
+    // the array itself is a problem (V8 caps spread arity at ~128 000 here)
+    const built = cleatPositionsFor(
+      ctx,
+      { id: lv.id, kind: lv.kind, floorIndex: lv.floorIndex, label: lv.label, enabled: lv.enabled },
+      lv.lines,
+      lv.runAxis,
     );
+    for (const p of built) out.push(p);
   }
   return renumberCleats(out);
 }
@@ -1598,10 +2175,32 @@ export interface RafterSupportBoltSolids {
   projection: RafterSupportBox;
 }
 
+/** What the geometry builders need to know about the level they are drawing. */
+export interface RafterSupportGeometryLevel {
+  kind: RafterSupportLevelKind;
+  /** The REQUESTED tube spacing (mm) — the fallback strip width when the real lines are not supplied. */
+  spacingMm: number;
+  /**
+   * The laid-out tube lines. When present the covering strip is clipped to the line's REAL half-bays
+   * (`coverFromM` / `coverToM`) instead of being drawn `spacingMm` wide about the centreline.
+   */
+  lines?: RafterSupportTubeLine[];
+}
+
 /** Every solid of ONE connection, in colony METRES. */
 export interface RafterCleatGeometry {
-  /** Reference stub of the rafter the cleat bolts to (not a priced member — orientation only). */
+  /**
+   * Reference ENVELOPE of the rafter the cleat bolts to (not a priced member — orientation only). Like
+   * `purlin`, this is the bounding volume of an open section, NOT solid steel: the cleat bolts' lower
+   * washers, nuts and projecting threads sit inside it, in the open depth beside the web. Clash-test
+   * against `rafterFlange` / `rafterWeb`, which ARE the steel; both are sub-solids of this envelope and
+   * deliberately overlap it.
+   */
   rafter: RafterSupportBox;
+  /** The rafter FLANGE the cleat bolt actually passes through — the plate the connection bears on. */
+  rafterFlange: RafterSupportBox;
+  /** The rafter WEB below that flange. The bolt rows straddle it, so a spanner reaches every nut. */
+  rafterWeb: RafterSupportBox;
   cleat: RafterSupportBox;
   /**
    * The C-purlin ENVELOPE — the full flange width across the run, the full depth vertically. Note this
@@ -1672,7 +2271,7 @@ function boxOf(
 export function rafterCleatGeometry(
   cfg: RafterSupportConfig,
   pos: RafterSupportCleatPosition,
-  level: Pick<RafterSupportResolvedLevel, "kind" | "spacingMm">,
+  level: RafterSupportGeometryLevel,
   rafterOpts: { flangeThicknessMm?: number; depthMm?: number; widthMm?: number } = {},
 ): RafterCleatGeometry {
   const mm = (v: number) => v / 1000;
@@ -1715,20 +2314,37 @@ export function rafterCleatGeometry(
   const zCoverFar = zTubeFar + dir * coverT;
 
   const halfDetail = mm(Math.max(cleat.lengthMm, cfg.detailSegmentLengthMm)) / 2;
-  const bay = mm(level.spacingMm);
+
+  /* ---- the covering strip THIS line carries ---- */
+  // Half the REAL bay to each neighbour, clipped to the covered span — never `spacingMm / 2` either
+  // side of the centreline, which drew a full-module strip on a short closing bay (duplicated board),
+  // ran half a bay outside the building at both boundaries, and on a roof used the RAKE bay as a PLAN
+  // width. The line list is the single source of both the strip and the module.
+  const line = level.lines?.find((l) => l.id === pos.lineId);
+  const coverFrom = line ? Math.min(line.coverFromM, line.coverToM) : acrossC - mm(level.spacingMm) / 2;
+  const coverTo = line ? Math.max(line.coverFromM, line.coverToM) : acrossC + mm(level.spacingMm) / 2;
 
   /* ---- the rafter reference stub ---- */
   const rFlange = mm(rafterOpts.flangeThicknessMm && rafterOpts.flangeThicknessMm > 0 ? rafterOpts.flangeThicknessMm : 6);
   const rDepth = mm(rafterOpts.depthMm && rafterOpts.depthMm > 0 ? rafterOpts.depthMm : 150);
   const rWidth = mm(rafterOpts.widthMm && rafterOpts.widthMm > 0 ? rafterOpts.widthMm : 100);
+  const rafterN0 = cleatCentreN - cleatW / 2 - 0.05;
+  const rafterN1 = cleatCentreN + cleatW / 2 + 0.05;
+  const zRafterFlangeBack = zSeat - dir * rFlange;
 
-  const rafterBox = boxOf(
+  const rafterBox = boxOf(runAxis, alongC - rWidth / 2, alongC + rWidth / 2, rafterN0, rafterN1, zSeat, zSeat - dir * rDepth);
+  // The bolt stack was already computed against a `rFlange`-thick flange while the stub was DRAWN as a
+  // solid rDepth block, so every nut, lower washer and projecting thread ended up buried inside it —
+  // invisible in exactly the view whose whole point is the visible nut-bolt. The stub is now modelled
+  // as the open section it is: a flange plate at the seat and a web below it, between the bolt rows.
+  const rafterFlangeBox = boxOf(runAxis, alongC - rWidth / 2, alongC + rWidth / 2, rafterN0, rafterN1, zSeat, zRafterFlangeBack);
+  const rafterWebBox = boxOf(
     runAxis,
-    alongC - rWidth / 2,
-    alongC + rWidth / 2,
-    cleatCentreN - cleatW / 2 - 0.05,
-    cleatCentreN + cleatW / 2 + 0.05,
-    zSeat,
+    alongC - rFlange / 2,
+    alongC + rFlange / 2,
+    rafterN0,
+    rafterN1,
+    zRafterFlangeBack,
     zSeat - dir * rDepth,
   );
 
@@ -1755,8 +2371,8 @@ export function rafterCleatGeometry(
     runAxis,
     alongC - halfDetail,
     alongC + halfDetail,
-    acrossC - bay / 2,
-    acrossC + bay / 2,
+    coverFrom,
+    coverTo,
     zTubeFar,
     zCoverFar,
   );
@@ -1768,7 +2384,6 @@ export function rafterCleatGeometry(
   const washT = mm(bolt.washerThicknessMm);
   const headH = mm(bolt.headHeightMm);
   const nutH = mm(bolt.nutHeightMm);
-  const proj = mm(bolt.projectionMm);
 
   const cleatBolts: RafterSupportBoltSolids[] = cleatBoltOffsets(cfg).map(([da, dn]) => {
     const a = alongC + mm(da);
@@ -1781,6 +2396,11 @@ export function rafterCleatGeometry(
     const zFlangeBack = zSeat - dir * rFlange;
     const zWashBot1 = zFlangeBack - dir * washT;
     const zNut1 = zWashBot1 - dir * nutH;
+    // THE SPECIFIED BOLT IS THE BOLT THAT IS DRAWN. The projection is what is left of the shank once
+    // the grip is taken up, not an unconditional `projectionMm` block: an M12 × 12 used to be drawn
+    // fully engaged with 10 mm of thread showing, so drawing note 8 ("check that the thread projects
+    // beyond the tightened nut") could never fail in the picture it asks an inspector to check.
+    const proj = Math.max(0, mm(bolt.lengthMm) - Math.abs(zNut1 - zWashTop1));
     const zProj1 = zNut1 - dir * proj;
     return {
       axis: "z" as const,
@@ -1801,7 +2421,11 @@ export function rafterCleatGeometry(
   });
 
   /* ---- the web bolts: HORIZONTAL, through the web and both tube walls ---- */
-  const zWebBolt = (zTubeNear + zTubeFar) / 2;   // mid-depth of the tube, always inside the web lap
+  // THE CENTRE OF THE REAL LAP, not the mid-depth of the tube. The two coincide only at zero face
+  // offset; at a 31 mm offset on a 50 mm tube the mid-tube-depth line sits 6 mm ABOVE the top of the
+  // web, so the bolt missed the purlin entirely and only `web-bolt-edge-distance` warned about it —
+  // a model with no errors in which the tube is bolted to nothing.
+  const zWebBolt = zPurlinFar - dir * mm(webLapMm(cfg)) / 2;
   const webBolts: RafterSupportBoltSolids[] = webBoltOffsets(cfg).map((da) => {
     const a = alongC + mm(da);
     // outward from the web's back face: washer, head
@@ -1811,7 +2435,9 @@ export function rafterCleatGeometry(
     // and out beyond the tube's far face: washer, nut, projecting thread
     const nWashB1 = tubeFarN + s * washT;
     const nNut1 = nWashB1 + s * nutH;
-    const nProj1 = nNut1 + s * proj;
+    // the projection is the balance of the SPECIFIED web bolt over its grip — see the cleat bolt above
+    const webProj = Math.max(0, mm(bolt.webLengthMm) - Math.abs(nNut1 - nWash1));
+    const nProj1 = nNut1 + s * webProj;
     return {
       axis: (runAxis === "x" ? "y" : "x") as "x" | "y",
       centre: {
@@ -1834,6 +2460,8 @@ export function rafterCleatGeometry(
 
   return {
     rafter: rafterBox,
+    rafterFlange: rafterFlangeBox,
+    rafterWeb: rafterWebBox,
     cleat: cleatBox,
     purlin: purlinBox,
     purlinWeb: webBox,
@@ -1886,7 +2514,21 @@ export interface TubeRunGeometry {
   purlin: RafterSupportBox;
   purlinWeb: RafterSupportBox;
   tube: RafterSupportBox;
+  /**
+   * The covering strip this run carries, as an axis-aligned box: the line's REAL half-bay to each
+   * neighbour, clipped to the covered span, lying on the tube's fixing face.
+   */
   covering: RafterSupportBox;
+  /**
+   * The FOUR CORNERS of the true covering strip, in fitted order (low-across near, low-across far,
+   * high-across far, high-across near). On a ceiling this is the box itself; on a SLOPE it is the
+   * tilted quad the box can only bound — an axis-aligned box cannot be pitched, and drawing each strip
+   * flat at its own tube left 325 mm of open air between adjacent "panels" on a 20.6° gable. A renderer
+   * that wants a continuous roof surface must use this, not `covering`.
+   */
+  coveringQuad: { x: number; y: number; z: number }[];
+  /** Pitch of that quad above horizontal (degrees). 0 for a ceiling and for a flat roof. */
+  coveringPitchDeg: number;
   webFaceAtM: number;
 }
 
@@ -1894,7 +2536,7 @@ export interface TubeRunGeometry {
 export function tubeRunGeometry(
   cfg: RafterSupportConfig,
   line: RafterSupportTubeLine,
-  level: Pick<RafterSupportResolvedLevel, "kind" | "spacingMm">,
+  level: RafterSupportGeometryLevel,
 ): TubeRunGeometry {
   const mm = (v: number) => v / 1000;
   const { cleat, purlin, tube } = cfg;
@@ -1922,13 +2564,36 @@ export function tubeRunGeometry(
   const zTubeFar = zPurlinFar + dir * offset;
   const zTubeNear = zTubeFar - dir * tubeD;
   const coverT = mm(level.kind === "ceiling" ? cfg.ceilingSheet.thicknessMm : cfg.roofPanel.thicknessMm);
-  const bay = mm(level.spacingMm);
+
+  // The strip is the line's REAL half-bay to each neighbour, clipped to the covered span. Drawing it
+  // `level.spacingMm` wide about the centreline duplicated 540 mm of board across an 8.00 m ceiling's
+  // 680 mm closing bay, over-ran the building by 610 mm at every boundary, and on a flat roof pushed
+  // 57.1 mm of every PUF strip through the next one.
+  const coverFrom = Number.isFinite(line.coverFromM) ? Math.min(line.coverFromM, line.coverToM) : acrossC - mm(level.spacingMm) / 2;
+  const coverTo = Number.isFinite(line.coverToM) ? Math.max(line.coverFromM, line.coverToM) : acrossC + mm(level.spacingMm) / 2;
+
+  // The true (sloping) strip: the fixing-face plane through this line, at the slope this line carries.
+  // A ceiling and a flat roof have zero slope, so the quad is simply the box's own top face.
+  const slope = level.kind === "ceiling" ? 0 : numOr(line.coverSlope, 0);
+  const zAt = (across: number) => zTubeFar + slope * (across - acrossC);
+  const zLo = zAt(coverFrom);
+  const zHi = zAt(coverTo);
+  const pt = (along: number, across: number, z: number) =>
+    runAxis === "x" ? { x: round4(along), y: round4(across), z: round4(z) } : { x: round4(across), y: round4(along), z: round4(z) };
+  const coveringQuad = [
+    pt(line.fromM, coverFrom, zLo),
+    pt(line.toM, coverFrom, zLo),
+    pt(line.toM, coverTo, zHi),
+    pt(line.fromM, coverTo, zHi),
+  ];
 
   return {
     purlin: boxOf(runAxis, line.fromM, line.toM, purlinOuter, webFace, zCleatFar, zPurlinFar),
     purlinWeb: boxOf(runAxis, line.fromM, line.toM, webBack, webFace, zCleatFar, zPurlinFar),
     tube: boxOf(runAxis, line.fromM, line.toM, webFace, tubeFarN, zTubeNear, zTubeFar),
-    covering: boxOf(runAxis, line.fromM, line.toM, acrossC - bay / 2, acrossC + bay / 2, zTubeFar, zTubeFar + dir * coverT),
+    covering: boxOf(runAxis, line.fromM, line.toM, coverFrom, coverTo, zTubeFar, zTubeFar + dir * coverT),
+    coveringQuad,
+    coveringPitchDeg: round2((Math.atan(Math.abs(slope)) * 180) / Math.PI),
     webFaceAtM: round4(webFace),
   };
 }
@@ -2028,15 +2693,35 @@ export function validateRafterSupport(
     warn("washer-count",
       `${bolt.washersPerBolt} washer per bolt — the detail fits one under the head AND one under the nut.`);
   }
-  // the bolt gauge must clear the widest member the cleat carries, or the nut cannot be reached
-  const clearNeeded = round2(Math.max(purlin.flangeMm, tube.widthMm) + cleat.boltHoleDiaMm / 2);
-  if (cleat.holeGaugeMm / 2 + 1e-9 < clearNeeded) {
-    warn("bolt-clashes-member",
-      `Bolt gauge ${cleat.holeGaugeMm} mm puts a cleat bolt under the C-purlin flange or the tube — the nut cannot be tightened. Needs at least ${round2(clearNeeded * 2)} mm.`);
+  // The bolt gauge must clear the widest member the cleat carries, or the nut cannot be reached. Two
+  // thresholds, because a 4 mm shortfall used to produce steel embedded in steel and still pass as
+  // buildable: the HOLE under the member is an error (C 150 × 65 at the 140 mm gauge drove the washer
+  // 2.5 mm — the whole flange thickness — into the flange), while a head/washer that merely oversails
+  // the member is a warning.
+  const widest = Math.max(purlin.flangeMm, tube.widthMm);
+  const holeNeeded = round2(widest + cleat.boltHoleDiaMm / 2);
+  const solidNeeded = round2(widest + Math.max(bolt.washerOuterDiaMm, bolt.acrossFlatsMm) / 2);
+  if (cleat.holeGaugeMm / 2 + 1e-9 < holeNeeded) {
+    err("bolt-clashes-member",
+      `Bolt gauge ${cleat.holeGaugeMm} mm puts a cleat bolt hole under the C-purlin flange or the tube — the bolt cannot be entered and the nut cannot be tightened. Needs at least ${round2(holeNeeded * 2)} mm.`);
+  } else if (cleat.holeGaugeMm / 2 + 1e-9 < solidNeeded) {
+    warn("bolt-washer-clashes-member",
+      `Bolt gauge ${cleat.holeGaugeMm} mm leaves the head / washer sitting on the C-purlin flange or the tube. Needs at least ${round2(solidNeeded * 2)} mm for a flat bearing.`);
   }
-  if (cleat.holeGaugeMm / 2 + cleat.edgeDistanceMm > cleat.widthMm / 2 + 1e-9) {
+  // strictly stronger than the edge-distance case below, so it is tested first
+  if (cleat.holeGaugeMm / 2 > cleat.widthMm / 2 + 1e-9) {
+    err("bolt-off-cleat",
+      `Bolt gauge ${cleat.holeGaugeMm} mm puts the bolt hole ${round2((cleat.holeGaugeMm - cleat.widthMm) / 2)} mm OUTSIDE a ${cleat.widthMm} mm cleat — there is no plate to drill.`);
+  } else if (cleat.holeGaugeMm / 2 + cleat.edgeDistanceMm > cleat.widthMm / 2 + 1e-9) {
     warn("bolt-off-cleat",
       `Bolt gauge ${cleat.holeGaugeMm} mm leaves less than the ${cleat.edgeDistanceMm} mm edge distance on a ${cleat.widthMm} mm cleat.`);
+  }
+  // the same edge-distance question on the OTHER member the bolt passes through: nothing used to test
+  // the bolt pitch against the rafter flange it is drilled into
+  const rafterWidthMm = ctx.rafterWidthMm !== undefined && ctx.rafterWidthMm > 0 ? ctx.rafterWidthMm : 0;
+  if (rafterWidthMm > 0 && cleat.holePitchMm / 2 + minEdge > rafterWidthMm / 2 + 1e-9) {
+    warn("bolt-edge-distance-rafter",
+      `A ${cleat.holePitchMm} mm bolt pitch on a ${rafterWidthMm} mm wide rafter leaves ${round2(rafterWidthMm / 2 - cleat.holePitchMm / 2)} mm to the rafter edge — below the 1.5 × M${bolt.diameterMm} = ${minEdge} mm minimum.`);
   }
 
   /* ---- the C-purlin ---- */
@@ -2072,20 +2757,74 @@ export function validateRafterSupport(
     warn("web-bolt-edge-distance",
       `The tube overlaps the web by only ${lap} mm, giving ${round2(lap / 2)} mm to the bolt centre — below the 1.5 × M${bolt.diameterMm} = ${minEdge} mm minimum.`);
   }
+  // a lap that cannot even contain the hole is not a connection, it is a drawing
+  if (lap > 0 && cleat.boltHoleDiaMm > 0 && lap + 1e-9 < cleat.boltHoleDiaMm) {
+    err("web-bolt-hole-off-lap",
+      `The tube overlaps the C-purlin web by only ${lap} mm — a Ø${cleat.boltHoleDiaMm} mm hole does not fit inside the lap, so the bolt cannot pass through both members.`);
+  }
   if (tube.faceOffsetMm > 0 && tube.faceOffsetMm >= tube.depthMm) {
     err("tube-off-web",
       `A ${tube.faceOffsetMm} mm face offset lifts the ${tube.depthMm} mm tube clear of the C-purlin web — there is nothing left to bolt through.`);
   }
-  // an override that fights the geometry by more than 10 % is a data-entry error, not a catalogue value
+  /* ---- what the tube is actually billed at ---- */
   const geo = tubeSectionKgPerM(tube);
   const used = tubeKgPerM(tube);
-  if (geo > 0 && used > 0 && Math.abs(used - geo) / geo > 0.1) {
+  const catalogue = tubeCatalogueKgPerM(tube);
+  const catalogueRow = tubeSectionOption(tube.materialKey);
+  if (catalogueRow && catalogue === undefined && tube.widthMm > 0 && tube.depthMm > 0 && tube.wallThicknessMm > 0) {
+    warn("tube-section-mismatch",
+      `The tube is keyed to ${tube.materialKey} (${catalogueRow.widthMm} × ${catalogueRow.depthMm} × ${catalogueRow.wallThicknessMm} mm) but is dimensioned ${tube.widthMm} × ${tube.depthMm} × ${tube.wallThicknessMm} mm — the Material Master rate and weight belong to a different section.`);
+  }
+  if (catalogue !== undefined && catalogue > 0 && used > 0 && Math.abs(used - catalogue) / catalogue > 0.02) {
+    // a tabulated section is the authority; anything more than 2 % off it is a data-entry error
+    warn("tube-unit-weight-drift",
+      `The tube is taken off at ${used} kg/m but the Material Master's ${tube.materialKey} row is ${catalogue} kg/m — check the override against the Material Master.`);
+  } else if (catalogue === undefined && geo > 0 && used > 0 && Math.abs(used - geo) / geo > 0.1) {
     warn("tube-unit-weight-drift",
       `The tube unit weight override ${used} kg/m differs from the ${geo} kg/m the ${tube.designation} section derives — check the Material Master row.`);
   }
+  if (geo > 0 && used > geo + 1e-9) {
+    warn("tube-unit-weight-above-bound",
+      `The tube is taken off at ${used} kg/m, heavier than the ${geo} kg/m sharp-corner upper bound for a ${tube.widthMm} × ${tube.depthMm} × ${tube.wallThicknessMm} mm hollow section — a rolled section cannot exceed it.`);
+  }
+  // one override cannot answer for two very different lengths — see boltUnitWeightKg
+  if (bolt.unitWeightKgOverride !== undefined && bolt.webUnitWeightKgOverride === undefined
+      && Math.abs(bolt.webLengthMm - bolt.lengthMm) > 1e-9) {
+    warn("web-bolt-weight-not-overridden",
+      `A unit weight is set for the M${bolt.diameterMm} × ${bolt.lengthMm} cleat bolt but not for the M${bolt.diameterMm} × ${bolt.webLengthMm} web bolt — the web bolt is being derived, not read from the Material Master.`);
+  }
+
+  /* ---- the covering specifications themselves ---- */
+  // Nothing used to check any of these, so a cleared field produced 62 000 000 ceiling boards, 20 000
+  // roof panels, 720 000 purlin pieces or a RangeError, all with an empty (or 6 075-long) issue list.
+  if (!(ceilingSheet.sheetLengthMm > 0) || !(ceilingSheet.sheetWidthMm > 0)) {
+    if (levels.some((l) => l.kind === "ceiling")) {
+      err("sheet-size-invalid",
+        `The ceiling board is ${ceilingSheet.sheetLengthMm} × ${ceilingSheet.sheetWidthMm} mm — a board with no size cannot be laid out.`);
+    }
+  }
+  if (!(roofPanel.coverWidthMm > 0) && levels.some((l) => l.kind === "roof")) {
+    err("panel-cover-width-invalid",
+      `The roof panel cover width is ${roofPanel.coverWidthMm} mm — no panel layout can be produced.`);
+  }
+  if (!(purlin.lengthMm > 0)) {
+    err("stock-length-invalid",
+      `The C-purlin stock length is ${purlin.lengthMm} mm — a piece count cannot be taken off a stock length of zero.`);
+  }
+  if (!(tube.lengthMm > 0)) {
+    err("stock-length-invalid",
+      `The MS tube stock length is ${tube.lengthMm} mm — a piece count cannot be taken off a stock length of zero.`);
+  }
 
   /* ---- the covering module, per level ---- */
+  let levelWithoutCleats = false;
   for (const lv of enabled) {
+    // no spacing, no lines — tubeLinesFor refuses to lay a level out below MIN_TUBE_SPACING_MM
+    if (!(lv.spacingMm >= MIN_TUBE_SPACING_MM)) {
+      err("tube-spacing-invalid",
+        `${lv.label}: the tube spacing is ${lv.spacingMm} mm — below the ${MIN_TUBE_SPACING_MM} mm minimum this system will lay out, so no tube line, cleat or covering can be set out.`,
+        lv.id);
+    }
     if (lv.kind === "ceiling") {
       const sp = lv.spacing;
       if (sp && !sp.divides) {
@@ -2097,14 +2836,27 @@ export function validateRafterSupport(
       if (layout) {
         const acrossFrom = lv.runAxis === "x" ? ctx.body.y0 : ctx.body.x0;
         const stations = lv.lines.map((l) => (l.acrossM - acrossFrom) * 1000);
-        for (const j of layout.unsupportedJointsMm) {
-          const off = round2(
-            stations.length
-              ? Math.min(...stations.map((s) => Math.abs(j - s)))
-              : Math.abs(j - Math.round(j / Math.max(1, lv.spacingMm)) * lv.spacingMm),
-          );
+        const nearestStation = (j: number): number => {
+          if (!stations.length) return Math.abs(j - Math.round(j / Math.max(1, lv.spacingMm)) * lv.spacingMm);
+          let best = Infinity;                     // a loop, not Math.min(...): spread arity throws
+          for (const s of stations) {
+            const d = Math.abs(j - s);
+            if (d < best) best = d;
+          }
+          return best;
+        };
+        // capped: one issue per joint used to let a bad board size push 6 075 entries into an array
+        // the admin UI has to render
+        const reported = layout.unsupportedJointsMm.slice(0, MAX_JOINT_ISSUES_PER_LEVEL);
+        for (const j of reported) {
+          const off = round2(nearestStation(j));
           err("sheet-joint-off-tube",
             `${lv.label}: the sheet joint at ${j} mm is ${off} mm off the nearest tube centreline (tolerance ${ceilingSheet.edgeToleranceMm} mm).`,
+            lv.id);
+        }
+        if (layout.unsupportedJointsMm.length > reported.length) {
+          err("sheet-joint-off-tube-more",
+            `${lv.label}: a further ${layout.unsupportedJointsMm.length - reported.length} sheet joint(s) miss a tube centreline — fix the tube spacing before reading the rest.`,
             lv.id);
         }
         if (layout.cutSheetLengthMm > 0 && layout.cutSheetLengthMm < ceilingSheet.sheetLengthMm / 4) {
@@ -2118,11 +2870,23 @@ export function validateRafterSupport(
             lv.id);
         }
       }
-      // the closing line must not leave the board cantilevering past the last tube
-      const lastOnModule = [...lv.lines].reverse().find((l) => l.onModule);
-      if (lastOnModule && !lv.lines.some((l) => !l.onModule)) {
+      /* ---- the board must not cantilever past the last tube ---- */
+      // This used to be guarded by `!lv.lines.some(l => !l.onModule)` — "only check when there is NO
+      // closing line" — while `tubeLinesFor` adds a closing line whenever the residual exceeds 1 mm.
+      // The rule could therefore only ever ask whether a ≤ 1 mm residual exceeded the 150 mm limit,
+      // which it never can: 20 000 brute-forced spans from 0.002 m to 40 m never fired it at ANY limit
+      // down to 0. It now measures the REAL cantilever off the real line list — the invariant the
+      // closing line exists to hold, verified rather than assumed.
+      if (lv.lines.length) {
+        const acrossFrom = lv.runAxis === "x" ? ctx.body.y0 : ctx.body.x0;
         const acrossTo = lv.runAxis === "x" ? ctx.body.y1 : ctx.body.x1;
-        const over = round2((acrossTo - lastOnModule.acrossM) * 1000);
+        let first = Infinity;
+        let last = -Infinity;
+        for (const l of lv.lines) {
+          if (l.acrossM < first) first = l.acrossM;
+          if (l.acrossM > last) last = l.acrossM;
+        }
+        const over = round2(Math.max(first - Math.min(acrossFrom, acrossTo), Math.max(acrossFrom, acrossTo) - last) * 1000);
         if (over > ceilingSheet.maxOverhangMm) {
           warn("covering-overhang",
             `${lv.label}: the ceiling cantilevers ${over} mm past the last tube (limit ${ceilingSheet.maxOverhangMm} mm).`,
@@ -2132,8 +2896,10 @@ export function validateRafterSupport(
     } else {
       for (const pl of lv.panelLayouts) {
         if (pl.hasCutPanel) {
+          // named per slope: a gable emitted two byte-identical warnings with nothing to tell them apart
+          const slopeRef = pl.levelId.includes(":") ? pl.levelId.slice(pl.levelId.indexOf(":") + 1) : pl.levelId;
           warn("panel-cut-required",
-            `${lv.label}: the ${round2(lv.spanAlongM * 1000)} mm slope width is not a whole multiple of the ${roofPanel.coverWidthMm} mm panel cover width — ${pl.wholePanels} whole panels plus one cut panel ${pl.cutPanelWidthMm} mm wide.`,
+            `${lv.label} (${slopeRef}): the ${round2(lv.spanAlongM * 1000)} mm slope width is not a whole multiple of the ${roofPanel.coverWidthMm} mm panel cover width — ${pl.wholePanels} whole panels plus one cut panel ${pl.cutPanelWidthMm} mm wide.`,
             lv.id);
         }
         if (!pl.spanOk) {
@@ -2147,13 +2913,10 @@ export function validateRafterSupport(
             lv.id);
         }
       }
-      if (!(roofPanel.coverWidthMm > 0)) {
-        err("panel-cover-width-invalid", "The roof panel cover width is zero — no panel layout can be produced.");
-      }
       const eave = round2(ctx.slope.overhangM * 1000);
       if (eave > roofPanel.maxOverhangMm) {
         warn("covering-overhang",
-          `${lv.label}: the panel overhangs the eave by ${eave} mm past the last tube (limit ${roofPanel.maxOverhangMm} mm).`,
+          `${lv.label}: the panel overhangs the eave by ${eave} mm past the last tube (limit ${roofPanel.maxOverhangMm} mm). The eave overhang is NOT included in the panel take-off — see roofEaveUncoveredAreaSqm.`,
           lv.id);
       }
     }
@@ -2161,9 +2924,13 @@ export function validateRafterSupport(
     /* ---- the tube cantilever beyond the outermost cleat ---- */
     const onLevel = positions.filter((p) => p.levelId === lv.id);
     if (onLevel.length) {
-      const alongs = onLevel.map((p) => (lv.runAxis === "x" ? p.xM : p.yM));
-      const lo = Math.min(...alongs);
-      const hi = Math.max(...alongs);
+      let lo = Infinity;                          // a loop, not Math.min(...alongs): spread arity throws
+      let hi = -Infinity;
+      for (const p of onLevel) {
+        const a = lv.runAxis === "x" ? p.xM : p.yM;
+        if (a < lo) lo = a;
+        if (a > hi) hi = a;
+      }
       const from = lv.runAxis === "x" ? ctx.body.x0 : ctx.body.y0;
       const to = lv.runAxis === "x" ? ctx.body.x1 : ctx.body.y1;
       const over = round2(Math.max(lo - from, to - hi) * 1000);
@@ -2172,7 +2939,11 @@ export function validateRafterSupport(
           `${lv.label}: the MS tube cantilevers ${over} mm beyond the outermost cleat (limit ${tube.maxOverhangMm} mm).`,
           lv.id);
       }
-    } else if (lv.lines.length) {
+    } else if (lv.lines.length && !cfg.layoutEdited) {
+      // `level-no-cleats` diagnoses the AUTO layout — tube lines that no rafter crosses. Once the user
+      // has edited the layout, an empty level is their own decision and the single global `no-cleats`
+      // says so: two errors for one problem is one error too many.
+      levelWithoutCleats = true;
       err("level-no-cleats",
         `${lv.label}: ${lv.lines.length} tube line(s) are laid out but no rafter crosses them — there is nothing to bolt a cleat to.`,
         lv.id);
@@ -2180,8 +2951,20 @@ export function validateRafterSupport(
   }
 
   /* ---- the cleat layout ---- */
-  if (enabled.length && !positions.length) {
+  // one problem, one error: `level-no-cleats` already names the level and the reason
+  if (enabled.length && !positions.length && !levelWithoutCleats) {
     err("no-cleats", "The rafter support system is enabled but no cleat is placed.");
+  }
+  // A stored cleat on a level that no longer exists is DRAWN (resolveCleatPositions returns every
+  // stored position) but never PRICED (the take-off filters on the level id), so saving on G+2 and
+  // reopening as G+1 silently orphaned 121 cleats — 223 kg of plate and 726 bolts that appeared in the
+  // drawings and in no schedule, with no issue raised at all.
+  const knownLevelIds = new Set(levels.map((l) => l.id));
+  const orphans = positions.filter((p) => !knownLevelIds.has(p.levelId));
+  if (orphans.length) {
+    const marks = orphans.slice(0, 6).map((p) => p.mark).join(", ");
+    err("cleat-orphan-level",
+      `${orphans.length} stored cleat(s) belong to level(s) that no longer exist (${marks}${orphans.length > 6 ? ", …" : ""}) — they are drawn but not priced. Restore the level or delete the cleats.`);
   }
   const ids = new Set<string>();
   const coords = new Set<string>();
@@ -2206,7 +2989,10 @@ export interface RafterSupportLevelTakeoff {
   kind: RafterSupportLevelKind;
   floorIndex: number;
   label: string;
+  /** The REQUESTED tube spacing (mm). */
   spacingMm: number;
+  /** The spacing the level is actually BUILT at (mm) — smaller than `spacingMm` on a roof. */
+  actualSpacingMm: number;
   tubeLines: number;
   cleats: number;
   cleatBolts: number;
@@ -2214,7 +3000,10 @@ export interface RafterSupportLevelTakeoff {
   bolts: number;
   nuts: number;
   washers: number;
+  /** Erected (net-of-holes) cleat weight (kg). */
   cleatKg: number;
+  /** Purchased (gross, undrilled) cleat weight (kg) — what a plate order must carry. */
+  cleatGrossKg: number;
   purlinPieces: number;
   purlinRunningLengthM: number;
   purlinKg: number;
@@ -2223,6 +3012,8 @@ export interface RafterSupportLevelTakeoff {
   tubeKg: number;
   nogginPieces: number;
   nogginRunningLengthM: number;
+  /** 6 m stock lengths the noggins are CUT FROM — priced but never previously ordered. */
+  nogginStockPieces: number;
   nogginKg: number;
   /** Ceiling levels only. */
   sheetsWhole: number;
@@ -2239,6 +3030,8 @@ export interface RafterSupportLevelTakeoff {
   panelAreaSqm: number;
   panelPurchasedAreaSqm: number;
   panelKg: number;
+  /** Roof levels only: the sloping eave overhang NOT included in the panel take-off (m²). */
+  eaveUncoveredAreaSqm: number;
   screws: number;
   steelKg: number;
 }
@@ -2260,6 +3053,8 @@ export interface RafterSupportTakeoff {
   tubeRunningLengthM: number;
   nogginPieces: number;
   nogginRunningLengthM: number;
+  /** 6 m stock lengths the noggins are cut from — a real purchase line, absent before. */
+  nogginStockPieces: number;
   ceilingSheetsWhole: number;
   ceilingSheetsCut: number;
   ceilingSheets: number;
@@ -2270,9 +3065,13 @@ export interface RafterSupportTakeoff {
   roofPanels: number;
   roofPanelAreaSqm: number;
   roofPanelPurchasedAreaSqm: number;
+  /** The sloping eave overhang across all roof levels NOT included in `roofPanelAreaSqm` (m²). */
+  roofEaveUncoveredAreaSqm: number;
   screws: number;
   /* unit weights */
   cleatUnitKg: number;
+  /** Purchased (gross, undrilled) weight of one cleat plate (kg). */
+  cleatGrossUnitKg: number;
   cleatBoltUnitKg: number;
   webBoltUnitKg: number;
   nutUnitKg: number;

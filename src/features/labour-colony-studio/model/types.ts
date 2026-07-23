@@ -264,6 +264,15 @@ export interface ColonyModel {
    * re-derive a pocket width or a piece count. Type: PufLockDerived (model/pufLock).
    */
   pufLock?: import("./pufLock").PufLockDerived;
+  /**
+   * The resolved RAFTER SUPPORT system — config, derived levels, cleat positions, take-off and
+   * validation issues, exactly as the `rsup-*` parts above were built from. Carried on the model for
+   * the same reason `pufLock` is: the detail sheets, the assembly video captions, the schedules and
+   * the reports must read the SAME numbers the geometry was built from and never re-derive a tube
+   * spacing, a sheet count or a weight of their own.
+   * Type: RafterSupportDerived (model/rafterSupport).
+   */
+  rafterSupport?: import("./rafterSupport").RafterSupportDerived;
   /** Convenience header echoed from the config (metres), for titles / labels. */
   meta: {
     projectName: string;

@@ -19,7 +19,13 @@
 import type {
   ColonyAssemblyStep, ColonyModel, ColonyPart, ColonyPartKind,
 } from "@/features/labour-colony-studio/model/types";
-import { CONNECTION_DETAIL, isPufLockKind } from "@/features/labour-colony-studio/model/assembly";
+import {
+  CONNECTION_DETAIL, isPufLockKind, isRafterSupportKind,
+} from "@/features/labour-colony-studio/model/assembly";
+import type {
+  RafterSupportDerived, RafterSupportLevelKind,
+} from "@/features/labour-colony-studio/model/rafterSupport";
+import { rafterSupportOf, type DetailAssemblyGroup } from "./assemblyDetailTour";
 import type { StepEngineeringRow } from "./assemblyTypes";
 
 /* ----------------------------------------------------------------- context --------------------- */
@@ -81,6 +87,78 @@ export interface ColonyAssemblyContext {
   pufLockWeldM: number;
   /** How far the panel is pushed down into the pocket (mm). */
   pufLockInsertionMm: number;
+
+  /* ---- RAFTER SUPPORT SYSTEM (model/rafterSupport) ----
+   * True when the model actually carries rafter-support parts — the ONE gate every clause added to
+   * the standing step-18 / step-19 copy is written against, so a colony without the system reads
+   * exactly as it did before this feature existed. */
+  hasRafterSupport: boolean;
+  /**
+   * The system's own facts, read from `model.rafterSupport` — the SAME resolved bundle the geometry,
+   * the detail sheets and the take-off were built from. Null when the system is absent or did not
+   * resolve; every caption clause that would print one of these numbers is dropped in that case, so a
+   * caption can never carry "undefined" or "NaN".
+   */
+  rafterSupport: RafterSupportFacts | null;
+}
+
+/* ----------------------------------------------------------------- rafter-support facts -------- */
+
+/** One level the rafter-support system is built at, as the captions need it. */
+export interface RafterSupportLevelFacts {
+  id: string;
+  label: string;
+  kind: RafterSupportLevelKind;
+  /** Tube centre-to-centre spacing in force at this level (mm). */
+  spacingMm: number;
+}
+
+/** One cleat's setting-out, keyed by its fabrication mark — what a per-assembly caption names. */
+export interface RafterSupportCleatFacts {
+  mark: string;
+  levelId: string;
+  levelLabel: string;
+  levelKind: RafterSupportLevelKind;
+  /** Nearest gridline, e.g. "A-1". */
+  gridRef: string;
+  /** Offset from that gridline along the run (mm). */
+  offsetMm: number;
+  spacingMm: number;
+  floorIndex: number;
+}
+
+/**
+ * Everything the captions may state about the rafter support system. Every value is READ from
+ * `deriveRafterSupport()`'s resolved bundle — the config, the resolved levels and the take-off —
+ * and NOTHING here recomputes a spacing, a count or a weight of its own.
+ */
+export interface RafterSupportFacts {
+  cleats: number;
+  purlinDesignation: string;
+  tubeDesignation: string;
+  /** "150 × 200 × 8 mm". */
+  cleatPlate: string;
+  cleatGrade: string;
+  /** "M12 × 50 gr 8.8" — the cleat-to-rafter bolt. */
+  cleatBoltSpec: string;
+  /** "M12 × 100 gr 8.8" — the longer bolt that crosses the web AND both tube walls. */
+  webBoltSpec: string;
+  boltsPerCleat: number;
+  webBoltsPerConnection: number;
+  /** Vertical lap between the tube face and the purlin web the web bolt passes through (mm). */
+  webLapMm: number;
+  /** "2440 × 1220 × 18 mm Fibre cement / bison board". */
+  ceilingSheet: string;
+  ceilingSpacingMm: number;
+  ceilingSheets: number;
+  /** "1000 mm cover-width 50 mm PUF roof panel". */
+  roofPanel: string;
+  roofSpacingMm: number;
+  roofPanels: number;
+  totalSteelKg: number;
+  levels: RafterSupportLevelFacts[];
+  /** Per-cleat setting-out, by fabrication mark. */
+  byMark: Record<string, RafterSupportCleatFacts>;
 }
 
 const hasKind = (parts: ColonyPart[], kind: ColonyPartKind): boolean => parts.some((p) => p.kind === kind);
@@ -92,6 +170,75 @@ const countKind = (parts: ColonyPart[], kind: ColonyPartKind): number =>
 /** A model value only when it is a usable finite number; otherwise the part-count fallback. */
 const numOr = (v: number | undefined, fallback: number): number =>
   typeof v === "number" && Number.isFinite(v) ? v : fallback;
+
+/**
+ * Flatten the resolved rafter-support bundle into caption facts.
+ *
+ * Reads ONLY `d.config`, `d.levels` and `d.takeoff` — the single source of truth the geometry, the
+ * drawings and the schedules were all built from — so a caption can never state a section, a spacing,
+ * a bolt length or a weight the model does not show. Values that do not resolve stay 0 / "" and the
+ * clauses that would print them are dropped downstream.
+ */
+function rafterSupportFactsOf(d: RafterSupportDerived): RafterSupportFacts {
+  const c = d.config;
+  const t = d.takeoff;
+  const levels: RafterSupportLevelFacts[] = d.levels
+    .filter((l) => l.enabled)
+    .map((l) => ({ id: l.id, label: l.label, kind: l.kind, spacingMm: numOr(l.spacingMm, 0) }));
+  const levelById = new Map(levels.map((l) => [l.id, l]));
+
+  const byMark: Record<string, RafterSupportCleatFacts> = {};
+  for (const p of d.positions) {
+    const lv = levelById.get(p.levelId);
+    byMark[p.mark] = {
+      mark: p.mark,
+      levelId: p.levelId,
+      levelLabel: lv?.label ?? "",
+      levelKind: p.levelKind,
+      gridRef: isText(p.gridRef) && p.gridRef !== "?" ? p.gridRef : "",
+      offsetMm: numOr(p.offsetMm, 0),
+      spacingMm: lv?.spacingMm ?? 0,
+      floorIndex: numOr(p.floorIndex, 0),
+    };
+  }
+
+  const boltStem = `M${trimNum(numOr(c.bolt.diameterMm, 0))}`;
+  const grade = isText(c.bolt.grade) ? ` gr ${c.bolt.grade}` : "";
+  return {
+    cleats: numOr(t.cleats, d.positions.length),
+    purlinDesignation: isText(c.purlin.designation) ? c.purlin.designation : "",
+    tubeDesignation: isText(c.tube.designation) ? c.tube.designation : "",
+    cleatPlate: [c.cleat.lengthMm, c.cleat.widthMm, c.cleat.thicknessMm].every((v) => isPos(v))
+      ? `${trimNum(c.cleat.lengthMm)} × ${trimNum(c.cleat.widthMm)} × ${trimNum(c.cleat.thicknessMm)} mm`
+      : "",
+    cleatGrade: isText(c.cleat.grade) ? c.cleat.grade : "",
+    cleatBoltSpec: isPos(c.bolt.diameterMm) && isPos(c.bolt.lengthMm)
+      ? `${boltStem} × ${trimNum(c.bolt.lengthMm)}${grade}`
+      : "",
+    webBoltSpec: isPos(c.bolt.diameterMm) && isPos(c.bolt.webLengthMm)
+      ? `${boltStem} × ${trimNum(c.bolt.webLengthMm)}${grade}`
+      : "",
+    boltsPerCleat: numOr(c.bolt.perCleat, 0),
+    webBoltsPerConnection: numOr(c.tube.boltsPerConnection, 0),
+    webLapMm: numOr(t.webLapMm, 0),
+    ceilingSheet: isPos(c.ceilingSheet.sheetLengthMm) && isPos(c.ceilingSheet.sheetWidthMm)
+      ? `${trimNum(c.ceilingSheet.sheetLengthMm)} × ${trimNum(c.ceilingSheet.sheetWidthMm)}`
+        + `${isPos(c.ceilingSheet.thicknessMm) ? ` × ${trimNum(c.ceilingSheet.thicknessMm)}` : ""} mm`
+        + `${isText(c.ceilingSheet.material) ? ` ${c.ceilingSheet.material.toLowerCase()}` : ""}`
+      : "",
+    ceilingSpacingMm: numOr(c.ceilingSheet.tubeSpacingMm, 0),
+    ceilingSheets: numOr(t.ceilingSheets, 0),
+    roofPanel: isPos(c.roofPanel.coverWidthMm)
+      ? `${trimNum(c.roofPanel.coverWidthMm)} mm cover-width`
+        + `${isPos(c.roofPanel.thicknessMm) ? ` ${trimNum(c.roofPanel.thicknessMm)} mm` : ""} PUF roof panel`
+      : "",
+    roofSpacingMm: numOr(c.roofPanel.tubeSpacingMm, 0),
+    roofPanels: numOr(t.roofPanels, 0),
+    totalSteelKg: numOr(t.totalSteelKg, 0),
+    levels,
+    byMark,
+  };
+}
 
 export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
   const parts = model.parts;
@@ -108,6 +255,13 @@ export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
   const purlinsFromParts =
     countKind(parts, "puf-lock-c-purlin-left") + countKind(parts, "puf-lock-c-purlin-right");
   const boltsFromParts = countKind(parts, "puf-lock-anchor-bolt");
+
+  /* ---- rafter support system -----------------------------------------------------------------
+   * "Present" means the model actually EMITTED its parts — the same rule the PUF lock uses, and the
+   * only honest one for an animation, which can narrate nothing it does not show. The numbers then
+   * come from the resolved bundle when it is on the model, and stay null when it is not. */
+  const hasRafterSupport = parts.some((p) => isRafterSupportKind(p.kind));
+  const rsup = rafterSupportOf(model);
 
   return {
     projectName: m.projectName,
@@ -152,6 +306,8 @@ export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
     pufLockBolts: numOr(t?.bolts, boltsFromParts),
     pufLockWeldM: numOr(t?.weldTotalLengthM, 0),
     pufLockInsertionMm: numOr(lock?.config.iface.insertionDepthMm, 0),
+    hasRafterSupport,
+    rafterSupport: rsup ? rafterSupportFactsOf(rsup) : null,
   };
 }
 
@@ -234,6 +390,79 @@ function pufLockCopyOf(ctx: ColonyAssemblyContext): PufLockCopy {
     assemblies: isPos(nPlates)
       ? `all ${trimNum(nPlates)} assembl${nPlates === 1 ? "y" : "ies"}`
       : "every assembly",
+  };
+}
+
+/* ----------------------------------------------------------------- rafter-support copy --------- */
+
+/**
+ * Ready-to-interpolate fragments for the rafter support system, built ONCE per step from the facts
+ * (which only mirror `model.rafterSupport`).
+ *
+ * Same discipline as `pufLockCopyOf`: every fragment is a complete noun phrase, and a value that did
+ * not resolve produces wording that carries NO number at all rather than a bare "0 mm" — the
+ * timeline validator rejects any caption containing "undefined" or "NaN" outright, and a caption
+ * quoting a zero section would be worse than one quoting none.
+ */
+interface RafterSupportCopy {
+  /** "196 connections" — or "the rafter connections". */
+  connections: string;
+  /** "150 × 200 × 8 mm cleat plate" — or "the cleat plate". */
+  cleatPlate: string;
+  /** "C 100 × 50 × 15 × 2.0 mm C-purlin" — or "the C-purlin". */
+  purlin: string;
+  /** "SHS 50 × 50 × 2.0 mm MS tube" — or "the MS tube". */
+  tube: string;
+  /** "4 × M12 × 50 gr 8.8", or "" when unresolved (the clause is dropped). */
+  cleatBolts: string;
+  /** "2 × M12 × 100 gr 8.8", or "". */
+  webBolts: string;
+  /** "50 mm", or "". */
+  lap: string;
+  /** "2440 × 1220 × 18 mm fibre cement / bison board at 1220 mm c/c", or "". */
+  ceiling: string;
+  /** "1000 mm cover-width 50 mm PUF roof panel at 1200 mm c/c", or "". */
+  roof: string;
+  /** "Ground-floor ceiling @ 1220 mm c/c; Top-floor sloped roof @ 1200 mm c/c", or "". */
+  spacings: string;
+  /** "482.6 kg", or "". */
+  steelKg: string;
+  /** "196 ceiling boards", or "". */
+  ceilingSheets: string;
+  /** "84 roof panels", or "". */
+  roofPanels: string;
+}
+
+const countText = (n: number, one: string, many: string): string =>
+  isPos(n) ? `${trimNum(n)} ${n === 1 ? one : many}` : "";
+
+function rafterSupportCopyOf(ctx: ColonyAssemblyContext): RafterSupportCopy {
+  const f = ctx.rafterSupport;
+  const boltGroup = (per: number, spec: string): string =>
+    isPos(per) && spec ? `${trimNum(per)} × ${spec}` : spec || "";
+
+  const ceilingSpacing = mmText(f?.ceilingSpacingMm ?? 0);
+  const roofSpacing = mmText(f?.roofSpacingMm ?? 0);
+
+  return {
+    connections: countText(f?.cleats ?? 0, "rafter connection", "rafter connections") || "the rafter connections",
+    cleatPlate: f?.cleatPlate ? `${f.cleatPlate} cleat plate` : "the cleat plate",
+    purlin: f?.purlinDesignation ? `${f.purlinDesignation} C-purlin` : "the C-purlin",
+    tube: f?.tubeDesignation ? `${f.tubeDesignation} MS tube` : "the MS tube",
+    cleatBolts: boltGroup(f?.boltsPerCleat ?? 0, f?.cleatBoltSpec ?? ""),
+    webBolts: boltGroup(f?.webBoltsPerConnection ?? 0, f?.webBoltSpec ?? ""),
+    lap: mmText(f?.webLapMm ?? 0),
+    ceiling: f?.ceilingSheet
+      ? `${f.ceilingSheet}${ceilingSpacing ? ` at ${ceilingSpacing} c/c` : ""}`
+      : "",
+    roof: f?.roofPanel ? `${f.roofPanel}${roofSpacing ? ` at ${roofSpacing} c/c` : ""}` : "",
+    spacings: (f?.levels ?? [])
+      .filter((l) => isPos(l.spacingMm) && isText(l.label))
+      .map((l) => `${l.label} @ ${trimNum(l.spacingMm)} mm c/c`)
+      .join("; "),
+    steelKg: isPos(f?.totalSteelKg ?? 0) ? `${(f as RafterSupportFacts).totalSteelKg.toFixed(1)} kg` : "",
+    ceilingSheets: countText(f?.ceilingSheets ?? 0, "ceiling board", "ceiling boards"),
+    roofPanels: countText(f?.roofPanels ?? 0, "roof panel", "roof panels"),
   };
 }
 
@@ -481,30 +710,80 @@ export function describeColonyStep(
         safety: "Trusses stay slung and laterally restrained until at least two purlins or ties are fixed.",
         inspection: "Truss spacing, bearing and ridge / eave connection bolting checked before the sling is released.",
       };
-    case 18:
+    case 18: {
+      // The RAFTER SUPPORT steel erects in the SAME operation as the purlins: the cleat is bolted to
+      // the rafter, the C-purlin bears on it and the MS tube is bolted through the purlin web. Every
+      // clause is gated on ctx.hasRafterSupport, so a colony without the system reads exactly as it
+      // did before — the same additive pattern the PUF lock uses at steps 5 and 20.
+      const rs = ctx.hasRafterSupport ? rafterSupportCopyOf(ctx) : null;
       return {
         title: "Roof purlins & bracing",
         description:
           "Purlins and the roof wind-bracing are fixed across the trusses, stabilising the roof plane " +
-          "and providing the fixing line for the sheeting.",
-        captionCustomer: "Purlins and roof bracing tie the roof structure together.",
-        captionEngineering: "Purlins at design c/c with roof plan bracing; cleats bolted to every truss top chord.",
-        tools: "Screw gun, spanner set, purlin cleats, safety net or fall-arrest line",
-        safety: "Fall-arrest anchored to the truss top chord; never traverse on unfixed purlins.",
-        inspection: "Purlin spacing, cleat bolting and roof bracing tension checked before sheeting starts.",
+          "and providing the fixing line for the sheeting." +
+          (rs
+            ? ` In the same operation the rafter support system is erected at ${rs.connections}: `
+              + `a ${rs.cleatPlate} is bolted to the rafter${rs.cleatBolts ? ` with ${rs.cleatBolts}` : ""}, `
+              + `a ${rs.purlin} bears on the cleat, and a ${rs.tube} is bolted through the purlin WEB `
+              + `${rs.webBolts ? `with ${rs.webBolts} ` : ""}with its face flush to the web`
+              + `${rs.lap ? ` over a ${rs.lap} lap` : ""}.`
+            : ""),
+        captionCustomer:
+          "Purlins and roof bracing tie the roof structure together." +
+          (rs ? " Bolted cleats carry the C-purlins, and the square tubes that hold the covering bolt onto them." : ""),
+        captionEngineering:
+          "Purlins at design c/c with roof plan bracing; cleats bolted to every truss top chord." +
+          (rs
+            ? ` Rafter support: ${rs.connections}${rs.steelKg ? `, ${rs.steelKg} of steel` : ""} — cleat → C-purlin → `
+              + `MS tube bolted through the web and BOTH tube walls`
+              + `${rs.spacings ? `; tube centrelines ${rs.spacings}` : ""}.`
+            : ""),
+        tools:
+          "Screw gun, spanner set, purlin cleats, safety net or fall-arrest line" +
+          (rs ? ", magnetic drill / drilling template, torque wrench, string line" : ""),
+        safety:
+          "Fall-arrest anchored to the truss top chord; never traverse on unfixed purlins." +
+          (rs ? " Never stand on a tube until both web bolts are in — a single-wall fixing has nothing to bear against." : ""),
+        inspection:
+          "Purlin spacing, cleat bolting and roof bracing tension checked before sheeting starts." +
+          (rs
+            ? ` Flush web bearing, tube centreline setting-out, bolt tightness and thread projection recorded at ${rs.connections}.`
+            : ""),
       };
-    case 19:
+    }
+    case 19: {
+      // The COVERING the rafter support carries: an 8' × 4' board under a ceiling level, a 1000 mm
+      // cover-width PUF panel down the sloped roof. Gated exactly like step 18.
+      const rs = ctx.hasRafterSupport ? rafterSupportCopyOf(ctx) : null;
+      const coverBits = rs ? [rs.ceiling, rs.roof].filter(Boolean) : [];
       return {
         title: "Roof sheeting & ceiling",
         description:
-          `Roofing sheets are laid to falls with ridge and eave flashing${ctx.hasCeiling ? ", and the internal ceiling lining is fixed below" : ""}.`,
-        captionCustomer: "The roof is sheeted and sealed.",
+          `Roofing sheets are laid to falls with ridge and eave flashing${ctx.hasCeiling ? ", and the internal ceiling lining is fixed below" : ""}.` +
+          (rs && coverBits.length
+            ? ` The covering carried by the rafter support system is fixed to the MS tubes — ${coverBits.join(" on the ceiling levels, and ")}`
+              + ` — so every board edge and every panel side lap lands on a tube centreline.`
+            : ""),
+        captionCustomer:
+          "The roof is sheeted and sealed." +
+          (rs ? " The ceiling boards and roof panels are fixed onto the square tubes below." : ""),
         captionEngineering:
-          `Roof sheeting laid to falls with the specified end / side laps and flashing${ctx.hasCeiling ? "; ceiling lining fixed below the roof structure" : ""}.`,
-        tools: "Sheet lifting clamps, self-drilling screw gun, sealant gun, crimping tool",
-        safety: "Sheets never left unfixed in wind; crawl boards over the purlins; fall-arrest at all times.",
-        inspection: "Lap lengths, fixing pattern and flashing seal verified; roof rain-tightness checked.",
+          `Roof sheeting laid to falls with the specified end / side laps and flashing${ctx.hasCeiling ? "; ceiling lining fixed below the roof structure" : ""}.` +
+          (rs
+            ? ` Rafter-support covering: ${[rs.ceilingSheets, rs.roofPanels].filter(Boolean).join(" + ") || "boards and panels"}`
+              + ` fixed to the MS tubes${rs.spacings ? ` set out at ${rs.spacings}` : ""}.`
+            : ""),
+        tools:
+          "Sheet lifting clamps, self-drilling screw gun, sealant gun, crimping tool" +
+          (rs ? ", board lifter, chalk line" : ""),
+        safety:
+          "Sheets never left unfixed in wind; crawl boards over the purlins; fall-arrest at all times." +
+          (rs ? " Never load a board or panel edge that is not landed on a tube." : ""),
+        inspection:
+          "Lap lengths, fixing pattern and flashing seal verified; roof rain-tightness checked." +
+          (rs ? " Every covering edge confirmed to bear on a tube centreline within the stated tolerance." : ""),
       };
+    }
     case 20: {
       // The pocket was finished at step 5; this is where the panel actually drops into it. The
       // locking-system sentence below is a spec requirement and is reproduced verbatim.
@@ -600,6 +879,96 @@ export function describeColonyStep(
         inspection: "Final joint inspection and snag close-out against the full ITP record.",
       };
   }
+}
+
+/* ----------------------------------------------------------------- per-assembly detail copy ---- */
+
+/** One detail shot's copy — the step copy plus a short label naming the assembly being held on. */
+export interface RafterSupportAssemblyCopy extends ColonyStepCopy {
+  subTitle: string;
+}
+
+/**
+ * The copy for ONE zoomed rafter-connection shot.
+ *
+ * Names the cleat mark, its level and grid setting-out, the C-purlin section, the MS tube section,
+ * the bolt spec and count at BOTH joints, and the covering that this connection carries — every one
+ * of them read from `ctx.rafterSupport` (i.e. from `model.rafterSupport`, the same resolved bundle
+ * the geometry and the take-off came from). Nothing is hardcoded and nothing is recomputed.
+ *
+ * Every interpolation passes an `isPos` / `isText` gate first, so a value that did not resolve drops
+ * its whole clause instead of printing "undefined", "NaN" or a meaningless zero — the invariant the
+ * timeline validator enforces on every caption string.
+ */
+export function describeRafterSupportAssembly(
+  ctx: ColonyAssemblyContext,
+  group: DetailAssemblyGroup,
+  ordinal: number,
+  total: number,
+): RafterSupportAssemblyCopy {
+  const rs = rafterSupportCopyOf(ctx);
+  const cleat = ctx.rafterSupport?.byMark[group.mark];
+  const mark = isText(group.mark) ? group.mark : "this connection";
+
+  const level = isText(cleat?.levelLabel) ? (cleat as RafterSupportCleatFacts).levelLabel : "";
+  const grid = isText(cleat?.gridRef) ? (cleat as RafterSupportCleatFacts).gridRef : "";
+  const spacing = mmText(cleat?.spacingMm ?? 0);
+  const offset = cleat && Number.isFinite(cleat.offsetMm) && cleat.offsetMm !== 0
+    ? `${trimNum(cleat.offsetMm)} mm from grid ${grid || "the nearest gridline"}`
+    : "";
+
+  // which covering this connection carries follows from its own level, never from a guess
+  const covering = cleat?.levelKind === "ceiling" ? rs.ceiling : cleat?.levelKind === "roof" ? rs.roof : "";
+  const coveringPhrase = covering ? `carries ${covering}` : "";
+
+  const place = [level, grid ? `grid ${grid}` : ""].filter(Boolean).join(" · ");
+  const shotOf = isPos(ordinal) && isPos(total) ? `Detail ${trimNum(ordinal)} of ${trimNum(total)}` : "Detail view";
+  const subTitle = [mark, place].filter(Boolean).join(" · ");
+
+  if (group.phase === "covering") {
+    const what = cleat?.levelKind === "roof" ? "PUF roof panel" : cleat?.levelKind === "ceiling" ? "ceiling board" : "covering";
+    return {
+      subTitle,
+      title: `${mark} — ${what} on the MS tube`,
+      description:
+        `${shotOf}. The covering at connection ${mark}${place ? ` (${place})` : ""} is fixed down onto the MS tube. `
+        + (covering
+          ? `It is ${covering}, so its edge lands on the tube centreline rather than between tubes.`
+          : "Its edge lands on the tube centreline rather than between tubes."),
+      captionCustomer: `The ${what} is fixed onto the square tube at ${mark}.`,
+      captionEngineering:
+        `${mark}${place ? ` (${place})` : ""}: ${covering || "covering"} fixed to the ${rs.tube}`
+        + `${spacing ? ` at ${spacing} c/c` : ""}; every edge borne on a tube centreline.`,
+      tools: "Board lifter, self-drilling screw gun, chalk line, sealant gun",
+      safety: "Never load an edge that is not landed on a tube; nothing left unfixed in wind.",
+      inspection: `Edge bearing, fixing centres and the joint line recorded at ${mark}.`,
+    };
+  }
+
+  return {
+    subTitle,
+    title: `${mark} — cleat, C-purlin & MS tube`,
+    description:
+      `${shotOf}. At ${mark}${place ? ` (${place})` : ""} the ${rs.cleatPlate} is bolted to the rafter`
+      + `${rs.cleatBolts ? ` with ${rs.cleatBolts}` : ""}; the ${rs.purlin} bears on the cleat; and the `
+      + `${rs.tube} is bolted THROUGH the purlin web${rs.webBolts ? ` with ${rs.webBolts}` : ""}, its face flush `
+      + `against the web${rs.lap ? ` over a ${rs.lap} lap` : ""} and the bolt passing through both tube walls.`
+      + (coveringPhrase ? ` This connection ${coveringPhrase}.` : ""),
+    captionCustomer:
+      `Connection ${mark}: the steel bracket is bolted to the rafter, the channel sits on it, and the square `
+      + "tube bolts through the side of the channel.",
+    captionEngineering:
+      `${mark}${place ? ` (${place})` : ""}${offset ? ` — set out ${offset}` : ""}: `
+      + `${rs.cleatPlate}${rs.cleatBolts ? ` + ${rs.cleatBolts}` : ""} to the rafter; ${rs.purlin} seated on the cleat; `
+      + `${rs.tube} bolted to the web${rs.webBolts ? ` on ${rs.webBolts}` : ""}, faces flush`
+      + `${rs.lap ? `, ${rs.lap} web lap` : ""}${spacing ? `; tube line at ${spacing} c/c` : ""}`
+      + `${covering ? `; carries ${covering}` : ""}.`,
+    tools: "Drilling template or magnetic drill, podger spanner, torque wrench, string line, deburring tool",
+    safety:
+      "Do not release the lift until the cleat bolts are made up; never fix a tube through one wall only.",
+    inspection:
+      `Flush web bearing, tube centreline, bolt tightness and thread projection past every nut checked at ${mark}.`,
+  };
 }
 
 /* ----------------------------------------------------------------- marks / bolts --------------- */

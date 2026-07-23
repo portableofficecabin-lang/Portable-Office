@@ -38,6 +38,11 @@ import {
 } from "./assembly";
 import { msSectionToDims, parseSectionDims, parseSectionFromSpec, type SectionDims } from "./sectionDims";
 import { derivePufLock, platePocketGeometry, type PufLockDerived } from "./pufLock";
+import {
+  deriveRafterSupport, rafterCleatGeometry, tubeRunGeometry,
+  type RafterSupportBox, type RafterSupportDerived, type RafterSupportRafterLine,
+  type RafterSupportTubeLine,
+} from "./rafterSupport";
 import type {
   BoqSource, ColonyModel, ColonyPart, ColonyPartKind, ModelBounds, ModelWarning, PartSolid, PartSpec, Pt, Vec3,
 } from "./types";
@@ -470,8 +475,98 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   /* ================================================================= BRACING ============== */
   buildBracing(s, elev, body, colXs, rowYs, { firstLineByPrefix, sectionForLine, lineForLength });
 
+  /* ================================================================= RAFTER SUPPORT SYSTEM */
+  /**
+   * The bolted cleat → C-purlin → MS tube → covering system, resolved ONCE from the same building the
+   * roof is built on, exactly as `derivePufLock` is resolved from the plinth grid. Resolved BEFORE
+   * `buildRoof` because the roof builder has to know whether the generic roof-sheet slab is being
+   * replaced by the real PUF panel layout (see the double-counting decision below).
+   *
+   * Everything the layout engine needs is taken STRUCTURALLY (the module is a zero-import leaf):
+   *   • `rafterLines`  — the SAME `roofTrussXs` the roof steel was erected on, so a cleat always lands
+   *                      on a rafter that really exists. Each truss runs along y (a fixed x ordinate),
+   *                      which is what makes `runAxisFor` resolve the purlin / tube run to x — the
+   *                      same direction `buildRoof` runs its own purlins in;
+   *   • `floorCeilingZM` — `ceilOf(f)`, the ceiling framing level of every floor;
+   *   • `roofBaseZM`   — `roofBaseZ`, the rafter top at the eave the roof assembly builds UP from;
+   *   • `slope`        — the elevation engine's own roof form. A "hip" roof is handed over as a gable
+   *                      because `buildRoof` already models it that way (`hasRidge = !flat && !mono`,
+   *                      and `zApex` uses the gable rule), so the tube lines follow the planes the
+   *                      model actually draws;
+   *   • the rafter section, for the reference stub drawn inside the connection detail.
+   */
+  const rafterDims = sectionForLine(firstLineByPrefix("roof:rafter") ?? "roof:rafter", "roofFrame");
+  const rsupTrussXs = roofTrussXs(colXs, body.x0, body.x0 + body.w);
+  const rsupRafterLines: RafterSupportRafterLine[] = rsupTrussXs.map((x, i) => ({
+    id: `roof:truss:t${i + 1}`,
+    axis: "y",
+    atM: x,
+    fromM: body.y0,
+    toM: body.y0 + body.d,
+    mark: `T${i + 1}`,
+  }));
+  const rafterSupport = deriveRafterSupport(cfg.rafterSupport, {
+    grid: grid.map((c) => ({ grid: c.grid, xM: c.xM, yM: c.yM })),
+    body: { x0: body.x0, y0: body.y0, x1: body.x0 + body.w, y1: body.y0 + body.d },
+    floors,
+    floorCeilingZM: Array.from({ length: floors }, (_, f) => ceilOf(f)),
+    roofBaseZM: roofBaseZ,
+    slope: {
+      type: roof.type === "flat" ? "flat" : roof.type === "mono" ? "mono" : "gable",
+      riseM: roof.riseM,
+      overhangM: roof.overhangM,
+    },
+    rafterLines: rsupRafterLines,
+    rafterFlangeThicknessMm: rafterDims.thicknessMm > 0 ? rafterDims.thicknessMm : undefined,
+    rafterDepthMm: rafterDims.depthMm,
+    rafterWidthMm: rafterDims.widthMm,
+  });
+
+  /**
+   * DOUBLE-COUNTING DECISION — option (i), scoped to exactly the covering the system replaces.
+   *
+   * The model already emits a generic `roof-sheet` slab and a generic `ceiling` slab. The
+   * `rsup-puf-roof-panel` / `rsup-cement-sheet` parts are not an extra covering — they are the SAME
+   * physical covering expressed as a real, laid-out sheet / panel run. Two rules resolve it:
+   *
+   *  1. ROOF — when the rafter-support roof level is enabled and has produced tube lines, the generic
+   *     `roof-sheet` slab is NOT emitted and the rsup PUF roof panels are the covering. They HAVE to
+   *     replace it rather than sit beside it: the generic slab lies in the rafter-top plane, which is
+   *     precisely where the cleat and the C-purlin now are, so keeping both would put the slab
+   *     THROUGH the support steel and leave two roof surfaces 108 mm apart. The panels carry the same
+   *     `boqLineId: "roof:sheet"`, so the priced line still owns exactly ONE set of geometry and every
+   *     BOQ↔drawing highlight, inspector lookup and placement count keeps resolving. Switch the system
+   *     (or just its roof level) off and the generic slab comes straight back.
+   *
+   *  2. CEILING — nothing is suppressed, because there was never a duplicate. The generic `ceiling`
+   *     part is the TOP-floor ceiling at `roofBaseZ`; `autoLevels` only ever gives the rafter-support
+   *     system the INTERMEDIATE floor ceilings (`ceilOf(f)` for f ≤ floors−2), which no generic part
+   *     covers. A G-only colony gets no rsup ceiling level at all.
+   *
+   * Quantities can therefore never be counted twice: each covering has exactly one geometry set, the
+   * rsup board / panel counts live only in `model.rafterSupport.takeoff`, and no `rsup-*` kind is a
+   * member of any existing schedule's kind set (STRUCTURAL_KINDS / PLATE_KINDS / BOLT_KINDS).
+   */
+  const rsupRoofLevel = rafterSupport.config.enabled
+    ? rafterSupport.levels.find((lv) => lv.kind === "roof" && lv.enabled && lv.lines.length)
+    : undefined;
+
   /* ================================================================= ROOF (trusses/rafters/purlins) */
-  buildRoof(s, { colXs, rowYs, body, roofBaseZ, roof, frame, firstLineByPrefix, sectionForLine, connDetail });
+  buildRoof(s, {
+    colXs, rowYs, body, roofBaseZ, roof, frame, firstLineByPrefix, sectionForLine, connDetail,
+    suppressRoofSheet: !!rsupRoofLevel,
+  });
+
+  buildRafterSupportAssemblies(
+    s,
+    rafterSupport,
+    {
+      flangeThicknessMm: rafterDims.thicknessMm > 0 ? rafterDims.thicknessMm : undefined,
+      depthMm: rafterDims.depthMm,
+      widthMm: rafterDims.widthMm,
+    },
+    connDetail,
+  );
 
   /* ================================================================= ENVELOPE (skins) ===== */
   buildEnvelope(s, { body, plinthM, roofBaseZ, cfg });
@@ -499,6 +594,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
     bounds,
     warnings: s.warnings,
     pufLock,
+    rafterSupport,
     meta: {
       projectName: cfg.projectName || result.config.projectName || "Labour Colony",
       title: `${cfg.projectName || "Labour Colony"} — G+${floors - 1}`,
@@ -800,6 +896,367 @@ function buildPufLockAssemblies(s: ModelSink, d: PufLockDerived, plinthM: number
   });
 }
 
+/**
+ * RAFTER SUPPORT SYSTEM — position every fabricated assembly.
+ *
+ * Geometry, quantities, weights, spacings and validation all come from `rafterSupport.ts`; this
+ * function ONLY turns the already-resolved system into addressable model parts. It never computes a
+ * spacing, a sheet count, a piece count or a weight of its own, so the 3D model, the assembly video,
+ * the detail sheets and the schedules are guaranteed to agree — the same contract
+ * `buildPufLockAssemblies` holds for the plinth-level locking system.
+ *
+ * WHAT IS EMITTED, AND WHY IT SPLITS THIS WAY
+ *   • per TUBE LINE (`tubeRunGeometry`) — the CONTINUOUS C-purlin, the CONTINUOUS MS tube bolted to
+ *     its web, and the covering strip that tube carries. These are the real, full-length members;
+ *   • per CLEAT (`rafterCleatGeometry`) — the cleat plate and every solid of every nut-bolt: the
+ *     head, both washers, the shank, the hex nut and the thread projecting beyond it, for BOTH the
+ *     cleat bolts (vertical, into the rafter flange) and the web bolts (horizontal, through the
+ *     purlin web and both walls of the tube). The visible nut-bolt IS the photographed detail, so
+ *     every piece of it is its own selectable, inspectable solid.
+ *   The per-cleat geometry ALSO returns a typical-detail segment of the purlin, tube and covering;
+ *   those are deliberately NOT emitted here — the continuous run members above already occupy that
+ *   space, and emitting both would put two solids in one place. The detail segment belongs to the
+ *   enlarged 2D typical-detail sheet, not to the 3D building model.
+ *
+ * IDs — the join key shared with every other surface (drawings, video, inspector, schedules):
+ *     part         rsup:<levelId>:<mark>:<partRole>      e.g. rsup:lvl-roof:RS-07:cleat
+ *     connection   rsup:<levelId>:<cleatMark>            e.g. rsup:lvl-roof:RS-07
+ *     assembly     rsup-asm:<levelId>:<cleatMark>
+ * Every bolt, nut and washer carries the CLEAT's `connectionId`, so selecting any one of them
+ * highlights the whole bolted connection everywhere, and the connection schedule rolls them up
+ * without a single one being orphaned.
+ *
+ * The MS TUBE additionally gets a per-part explode vector with a SIDEWAYS component along the web
+ * normal: it is bolted to the SIDE of the C-purlin web, so lifting it straight up (the default for
+ * its kind) would drag it through the purlin and hide the very joint the exploded view exists to
+ * show. Sliding it off sideways reveals the bolts, the washers and the flush bearing face.
+ */
+function buildRafterSupportAssemblies(
+  s: ModelSink,
+  d: RafterSupportDerived,
+  rafterOpts: { flangeThicknessMm?: number; depthMm?: number; widthMm?: number },
+  /**
+   * Emit the individual nut-bolt solids (head / washers / shank / nut / thread). ON by default —
+   * the visible nut-bolt IS the photographed detail, so the assembly video and the 3D scene both
+   * need it — but it is by far the heaviest part of the system (six solids per bolt, six bolts per
+   * cleat), so it honours the SAME `connectionDetail` switch that already gates the column base
+   * plates and anchors. Switching it off still emits every cleat plate, C-purlin, MS tube and
+   * covering, so the system never disappears; only the fastener detail is deferred.
+   */
+  connDetail: boolean,
+): void {
+  if (!d.config.enabled) return;
+
+  /* Surface every engineering issue as a deterministic model warning, exactly as the PUF lock does —
+   * a detail that cannot be built must never be silently drawn as if it could. */
+  for (const issue of d.issues) {
+    s.warn({
+      code: `rafter-support-${issue.code}`,
+      message: `Rafter support — ${issue.message}`,
+      memberId: issue.memberId,
+    });
+  }
+
+  const { config: c, takeoff: t } = d;
+  const live = d.levels.filter((lv) => lv.enabled && lv.lines.length);
+  if (!live.length && !d.positions.length) return;
+
+  const solidOf = (b: RafterSupportBox): PartSolid => box(b.x0, b.y0, b.z0, b.x1, b.y1, b.z1);
+  const levelById = new Map(d.levels.map((lv) => [lv.id, lv] as const));
+  const levelTakeoffById = new Map(t.levels.map((lt) => [lt.levelId, lt] as const));
+
+  const cleatBoltSpec = `M${c.bolt.diameterMm} × ${c.bolt.lengthMm} gr ${c.bolt.grade}`;
+  const webBoltSpec = `M${c.bolt.diameterMm} × ${c.bolt.webLengthMm} gr ${c.bolt.grade}`;
+  const afM = (c.bolt.acrossFlatsMm > 0 ? c.bolt.acrossFlatsMm : c.bolt.diameterMm * 1.5) / 1000;
+  const nutsPerBolt = Math.max(0, Math.round(c.bolt.nutsPerBolt));
+  const washersPerBolt = Math.max(0, Math.round(c.bolt.washersPerBolt));
+
+  /**
+   * Apportion a LEVEL total across that level's tube runs so the parts sum EXACTLY back to the
+   * take-off: floor(total·(i+1)/n) − floor(total·i/n). This distributes a number the core already
+   * computed; it never invents one, and Σ over the runs is identically the take-off's own count.
+   */
+  const shareOf = (total: number, i: number, n: number): number =>
+    n <= 0 ? 0 : Math.floor((total * (i + 1)) / n) - Math.floor((total * i) / n);
+
+  /* ============================================ the continuous run members, per tube line ==== */
+  for (const lv of live) {
+    const lt = levelTakeoffById.get(lv.id);
+    const alongX = lv.runAxis === "x";
+    /**
+     * TRIBUTARY WIDTH of each covering strip.
+     *
+     * `tubeRunGeometry` returns the covering a tube carries as a strip ONE FULL BAY wide, centred on
+     * the tube centreline — the right answer for a typical interior tube in isolation. Laid out across
+     * a real building it is not a partition of the covering: the two outermost strips cantilever half
+     * a bay past the walled body (driving a ceiling board out through the external wall), and where a
+     * CLOSING line sits less than a full bay from its neighbour — the ordinary case whenever the span
+     * is not a whole number of bays — the two strips overlap.
+     *
+     * Each strip is therefore clamped to the span it is really responsible for: half-way to the
+     * neighbouring tube on each side, and the edge of the covered span at the two ends. The strips
+     * then tile the covering exactly once — no gap, no overlap, nothing poking through a wall.
+     *
+     * This only ever SHRINKS the box the core returned; it never moves a tube, changes a spacing or
+     * touches a quantity. Every area, board count, panel count and weight still comes from the
+     * take-off, which was computed from the span itself and not from the drawn strip.
+     */
+    const acrossLo = Math.min(...lv.lines.map((l) => l.acrossM));
+    const acrossHi = acrossLo + lv.spanAcrossM;
+    const ordered = [...lv.lines].sort((p, q) => p.acrossM - q.acrossM);
+    const tributary = new Map<string, { lo: number; hi: number }>();
+    ordered.forEach((l, k) => {
+      tributary.set(l.id, {
+        lo: k === 0 ? acrossLo : (ordered[k - 1].acrossM + l.acrossM) / 2,
+        hi: k === ordered.length - 1 ? acrossHi : (l.acrossM + ordered[k + 1].acrossM) / 2,
+      });
+    });
+    const clipAcross = (b: RafterSupportBox, lineId: string): RafterSupportBox => {
+      const trib = tributary.get(lineId) ?? { lo: acrossLo, hi: acrossHi };
+      return alongX
+        ? { ...b, y0: Math.max(b.y0, trib.lo), y1: Math.min(b.y1, trib.hi) }
+        : { ...b, x0: Math.max(b.x0, trib.lo), x1: Math.min(b.x1, trib.hi) };
+    };
+
+    lv.lines.forEach((line: RafterSupportTubeLine, li) => {
+      const g = tubeRunGeometry(c, line, lv);
+      const runId = `rsup:${line.id}`;
+      const asm = `rsup-asm:${line.id}`;
+      const runNo = `${li + 1}/${lv.lines.length}`;
+      const cleatsOnLine = d.positions.filter((p) => p.lineId === line.id).length;
+
+      /* ---- the C-purlin bearing on the cleats ---- */
+      s.add(`${runId}:purlin`, "rsup-c-purlin", `Rafter support C-purlin — ${lv.label} ${runNo}`,
+        solidOf(g.purlin), {
+          assemblyId: asm, geomKey: line.id, floor: lv.floorIndex, partMark: c.purlin.partMark,
+          fabrication: "shop",
+          spec: {
+            material: "MS C-purlin", grade: c.purlin.grade, sectionSize: c.purlin.designation,
+            lengthM: round(line.lengthM, 3),
+            widthMm: c.purlin.flangeMm, heightMm: c.purlin.depthMm, thicknessMm: c.purlin.thicknessMm,
+            quantity: 1,
+            unitWeightKg: t.purlinKgPerM,
+            totalWeightKg: round(line.lengthM * t.purlinKgPerM, 3),
+            note:
+              `Bears on ${cleatsOnLine} cleat${cleatsOnLine === 1 ? "" : "s"} at ${lv.spacingMm} mm c/c. `
+              + `Flanges turned AWAY from the tube so the web face stays flat. Cut from `
+              + `${c.purlin.lengthMm} mm stock (${c.purlin.finish}).`,
+          },
+        });
+
+      /* ---- the MS tube bolted FLUSH to the purlin web ---- */
+      const tubeAcross = alongX ? (g.tube.y0 + g.tube.y1) / 2 : (g.tube.x0 + g.tube.x1) / 2;
+      // +1 / −1: which way the tube sits off the web face — read straight off the returned geometry
+      const webSide = tubeAcross >= g.webFaceAtM ? 1 : -1;
+      const tubeLift = EXPLODE_OF_KIND["rsup-ms-tube"].z;
+      s.add(`${runId}:tube`, "rsup-ms-tube", `Rafter support MS tube — ${lv.label} ${runNo}`,
+        solidOf(g.tube), {
+          assemblyId: asm, geomKey: line.id, floor: lv.floorIndex, partMark: c.tube.partMark,
+          fabrication: "shop",
+          // slide the tube SIDEWAYS off the web so the exploded view reveals the bolted joint
+          explode: alongX
+            ? { x: 0, y: webSide * 2.4, z: tubeLift }
+            : { x: webSide * 2.4, y: 0, z: tubeLift },
+          spec: {
+            material: "MS hollow section", grade: c.tube.grade, sectionSize: c.tube.designation,
+            lengthM: round(line.lengthM, 3),
+            widthMm: c.tube.widthMm, heightMm: c.tube.depthMm, thicknessMm: c.tube.wallThicknessMm,
+            quantity: 1,
+            unitWeightKg: t.tubeKgPerM,
+            totalWeightKg: round(line.lengthM * t.tubeKgPerM, 3),
+            boltSpec: webBoltSpec,
+            boltCount: cleatsOnLine * Math.max(0, Math.round(c.tube.boltsPerConnection)),
+            holeDiaMm: c.cleat.boltHoleDiaMm,
+            note:
+              `Side face FLUSH against the C-purlin web over a ${t.webLapMm} mm lap — no packing, no `
+              + `gap. Every bolt passes through the ${c.purlin.thicknessMm} mm web and BOTH walls of `
+              + `the tube (required grip ${t.requiredWebBoltLengthMm} mm). The tube CENTRELINE is the `
+              + `covering module line.`,
+          },
+        });
+
+      /* ---- the covering this tube carries ---- */
+      const cover = clipAcross(g.covering, line.id);
+      const coverW = alongX ? cover.y1 - cover.y0 : cover.x1 - cover.x0;
+      if (coverW > 1e-6) {
+        const ceilingLevel = lv.kind === "ceiling";
+        const kind: ColonyPartKind = ceilingLevel ? "rsup-cement-sheet" : "rsup-puf-roof-panel";
+        const qty = lt ? shareOf(ceilingLevel ? lt.sheets : lt.panels, li, lv.lines.length) : 0;
+        s.add(`${runId}:${ceilingLevel ? "sheet" : "panel"}`, kind,
+          ceilingLevel
+            ? `Ceiling board run — ${lv.label} ${runNo}`
+            : `PUF roof panel run — ${lv.label} ${runNo}`,
+          solidOf(cover), {
+            assemblyId: asm, geomKey: line.id, floor: lv.floorIndex,
+            partMark: ceilingLevel ? "CB" : "RP",
+            fabrication: "site",
+            opacity: 0.95,
+            /* The sloped roof covering inherits the priced `roof:sheet` line: it REPLACES the generic
+             * roof-sheet slab (see the decision comment in buildColonyModel), so the priced line keeps
+             * exactly one set of geometry and every BOQ↔drawing highlight still resolves. The ceiling
+             * boards are an intermediate-floor covering the priced model does not carry a line for. */
+            boqLineId: ceilingLevel ? undefined : "roof:sheet",
+            spec: ceilingLevel
+              ? {
+                  material: c.ceilingSheet.material,
+                  sectionSize: `${c.ceilingSheet.sheetLengthMm} × ${c.ceilingSheet.sheetWidthMm} × ${c.ceilingSheet.thicknessMm} mm`,
+                  thicknessMm: c.ceilingSheet.thicknessMm,
+                  widthMm: round(coverW * 1000),
+                  lengthM: round(line.lengthM, 3),
+                  quantity: qty,
+                  unitWeightKg: t.ceilingSheetKgPerSqm,
+                  totalWeightKg: round(coverW * line.lengthM * t.ceilingSheetKgPerSqm, 3),
+                  note:
+                    `${lt?.sheets ?? 0} board${(lt?.sheets ?? 0) === 1 ? "" : "s"} at this level `
+                    + `(${lt?.sheetsWhole ?? 0} whole + ${lt?.sheetsCut ?? 0} cut, `
+                    + `${(lt?.sheetAreaSqm ?? 0).toFixed(2)} m²). Screwed UNDER the tubes with `
+                    + `${c.ceilingSheet.fixingSpec}. Every board edge lands on a tube — the `
+                    + `${lv.spacingMm} mm spacing divides the ${c.ceilingSheet.sheetLengthMm} mm sheet exactly.`,
+                }
+              : {
+                  material: c.roofPanel.panelType,
+                  sectionSize: `${c.roofPanel.coverWidthMm} mm cover width × ${c.roofPanel.thicknessMm} mm`,
+                  thicknessMm: c.roofPanel.thicknessMm,
+                  widthMm: round(coverW * 1000),
+                  lengthM: round(line.lengthM, 3),
+                  quantity: qty,
+                  unitWeightKg: t.roofPanelKgPerSqm,
+                  totalWeightKg: round(coverW * line.lengthM * t.roofPanelKgPerSqm, 3),
+                  note:
+                    `${lt?.panels ?? 0} panel${(lt?.panels ?? 0) === 1 ? "" : "s"} at this level `
+                    + `(${(lt?.panelAreaSqm ?? 0).toFixed(2)} m²), laid DOWN the slope one interlocking `
+                    + `into the next. ${c.roofPanel.sideLapDetail}. Span between tubes ${lv.spacingMm} mm `
+                    + `(limit ${c.roofPanel.maxSpanMm} mm). Fixed with ${c.roofPanel.fixingSpec}. `
+                    + `${c.roofPanel.colour} · ${c.roofPanel.finish}.`,
+                },
+          });
+      }
+    });
+  }
+
+  /* ============================================ the bolted connection, per cleat ============= */
+  for (const pos of d.positions) {
+    const lv = levelById.get(pos.levelId);
+    if (!lv || !lv.enabled) continue;
+    const g = rafterCleatGeometry(c, pos, lv, rafterOpts);
+    const id = `rsup:${pos.levelId}:${pos.mark}`;
+    const conn = id;
+    const asm = `rsup-asm:${pos.levelId}:${pos.mark}`;
+    const common = {
+      connectionId: conn,
+      assemblyId: asm,
+      grid: pos.gridRef,
+      floor: pos.floorIndex,
+    } as const;
+
+    /* ---- the cleat / seat plate bolted to the rafter ---- */
+    s.add(`${id}:cleat`, "rsup-cleat-plate", `Rafter cleat ${pos.mark} — ${lv.label}`, solidOf(g.cleat), {
+      ...common, fabrication: "shop", partMark: pos.mark,
+      spec: {
+        material: c.cleat.material, grade: c.cleat.grade,
+        sectionSize: `${c.cleat.lengthMm} × ${c.cleat.widthMm} × ${c.cleat.thicknessMm} mm`,
+        widthMm: c.cleat.widthMm, heightMm: c.cleat.lengthMm, thicknessMm: c.cleat.thicknessMm,
+        quantity: 1, unitWeightKg: t.cleatUnitKg, totalWeightKg: t.cleatUnitKg,
+        boltSpec: cleatBoltSpec, boltCount: c.bolt.perCleat, holeDiaMm: c.cleat.boltHoleDiaMm,
+        note:
+          `${c.cleat.mark} · bolted to rafter ${pos.rafterId} where tube line ${pos.lineId} crosses it, `
+          + `${pos.offsetMm} mm from gridline ${pos.gridRef}. ${c.cleat.holeCount} × Ø${c.cleat.boltHoleDiaMm} mm `
+          + `holes on a ${c.cleat.holePitchMm} mm pitch × ${c.cleat.holeGaugeMm} mm gauge, `
+          + `${c.cleat.edgeDistanceMm} mm edge distance. Centred on the web/tube interface so the bolt `
+          + `heads clear both the purlin flange and the tube. ${c.cleat.finish}.`,
+      },
+    });
+
+    /**
+     * One complete nut-bolt, as separate solids in fitted order: head → washer → [the parts it
+     * clamps] → washer → nut → projecting thread. A VERTICAL (cleat) bolt renders its head and nut as
+     * true hexagon prisms — the prism primitive extrudes in z, which is exactly that bolt's axis — so
+     * the hex flats an inspector actually looks for are visible; a HORIZONTAL (web) bolt keeps the
+     * core's boxes, because a hexagon cannot be extruded sideways with this primitive. The across-
+     * flats dimension is identical either way, so the two forms describe the same fastener.
+     */
+    const addBoltSolids = (
+      b: (typeof g.cleatBolts)[number],
+      role: string,
+      boltSpec: string,
+      boltLengthMm: number,
+      unitKg: number,
+      note: string,
+    ): void => {
+      const hexOrBox = (bx: RafterSupportBox): PartSolid =>
+        b.axis === "z" ? prism(hexPoly(b.centre.x, b.centre.y, afM), bx.z0, bx.z1) : solidOf(bx);
+      const boltSpecEntry: PartSpec = {
+        grade: c.bolt.grade, boltSpec, thicknessMm: c.bolt.diameterMm,
+        holeDiaMm: c.cleat.boltHoleDiaMm, lengthM: round(boltLengthMm / 1000, 4),
+        quantity: 1, unitWeightKg: unitKg, totalWeightKg: unitKg, note,
+      };
+      s.add(`${id}:${role}-head`, "rsup-bolt", `Bolt head ${pos.mark} ${role}`, hexOrBox(b.head), {
+        ...common, fabrication: "site", partMark: "BLT", spec: boltSpecEntry,
+      });
+      s.add(`${id}:${role}-shank`, "rsup-bolt", `Bolt ${pos.mark} ${role}`, solidOf(b.shank), {
+        ...common, fabrication: "site", partMark: "BLT", spec: boltSpecEntry,
+      });
+      s.add(`${id}:${role}-thread`, "rsup-bolt", `Thread projection ${pos.mark} ${role}`,
+        solidOf(b.projection), {
+          ...common, fabrication: "site", partMark: "BLT",
+          spec: {
+            ...boltSpecEntry, quantity: 1, unitWeightKg: undefined, totalWeightKg: undefined,
+            note:
+              `${c.bolt.projectionMm} mm of thread must project beyond the tightened nut — this is the `
+              + `check an inspector makes to confirm the bolt is fully engaged.`,
+          },
+        });
+      b.washers.slice(0, washersPerBolt).forEach((w, wi) => {
+        s.add(`${id}:${role}-washer-${wi + 1}`, "rsup-washer", `Washer ${pos.mark} ${role}-${wi + 1}`,
+          solidOf(w), {
+            ...common, fabrication: "site", partMark: "WSR",
+            spec: {
+              boltSpec, thicknessMm: c.bolt.washerThicknessMm, widthMm: c.bolt.washerOuterDiaMm,
+              quantity: 1, unitWeightKg: t.washerUnitKg, totalWeightKg: t.washerUnitKg,
+              note: wi === 0 ? "Plain washer under the bolt head." : "Plain washer under the nut.",
+            },
+          });
+      });
+      if (nutsPerBolt > 0) {
+        s.add(`${id}:${role}-nut`, "rsup-nut", `Nut ${pos.mark} ${role}`, hexOrBox(b.nut), {
+          ...common, fabrication: "site", partMark: "NUT",
+          spec: {
+            grade: c.bolt.grade, boltSpec, thicknessMm: c.bolt.nutHeightMm,
+            widthMm: c.bolt.acrossFlatsMm,
+            quantity: 1, unitWeightKg: t.nutUnitKg, totalWeightKg: t.nutUnitKg,
+            note: c.bolt.tighteningNote,
+          },
+        });
+      }
+    };
+
+    if (!connDetail) continue;
+
+    /* ---- the cleat bolts: vertical, through the cleat and the rafter flange ---- */
+    g.cleatBolts.forEach((b, bi) => {
+      addBoltSolids(
+        b, `cleat-bolt-${String(bi + 1).padStart(2, "0")}`, cleatBoltSpec, c.bolt.lengthMm,
+        t.cleatBoltUnitKg,
+        `Cleat-to-rafter bolt ${bi + 1} of ${g.cleatBolts.length}. Required grip `
+        + `${t.requiredCleatBoltLengthMm} mm (washer + ${c.cleat.thicknessMm} mm cleat + rafter flange `
+        + `+ washer + nut + ${c.bolt.projectionMm} mm projection). ${c.bolt.tighteningNote}`,
+      );
+    });
+
+    /* ---- the web bolts: HORIZONTAL, through the web and BOTH walls of the tube ---- */
+    g.webBolts.forEach((b, bi) => {
+      addBoltSolids(
+        b, `web-bolt-${String(bi + 1).padStart(2, "0")}`, webBoltSpec, c.bolt.webLengthMm,
+        t.webBoltUnitKg,
+        `Tube-to-web bolt ${bi + 1} of ${g.webBolts.length} at ${c.tube.boltPitchMm} mm pitch. Passes `
+        + `through the ${c.purlin.thicknessMm} mm C-purlin web and BOTH walls of the `
+        + `${c.tube.designation} — a bolt fixed into a single wall has nothing to bear against. `
+        + `Required grip ${t.requiredWebBoltLengthMm} mm.`,
+      );
+    });
+  }
+}
+
 function buildWallFraming(
   s: ModelSink, body: Body,
   floors: number, fflOf: (f: number) => number, ceilOf: (f: number) => number, r: Resolvers,
@@ -940,6 +1397,15 @@ interface RoofArgs {
   firstLineByPrefix: (p: string) => string | undefined;
   sectionForLine: (id: string | undefined, m: keyof MemberSections | null) => SectionDims;
   connDetail: boolean;
+  /**
+   * True when the RAFTER SUPPORT system is covering the slope with a real PUF roof-panel layout, in
+   * which case the generic schematic roof-sheet slab must NOT also be emitted — it is the same
+   * physical covering, and the slab lies in the rafter-top plane the cleat and C-purlin now occupy.
+   * The rsup panels inherit the `roof:sheet` BOQ line, so the priced line still owns exactly one set
+   * of geometry. Defaults to false, so every other caller and every disabled-system build is
+   * unchanged. See the decision comment in `buildColonyModel`.
+   */
+  suppressRoofSheet?: boolean;
 }
 
 function buildRoof(s: ModelSink, a: RoofArgs): void {
@@ -965,8 +1431,7 @@ function buildRoof(s: ModelSink, a: RoofArgs): void {
   const pt = Math.max(MIN_VIS, Math.max(pd.widthMm, pd.depthMm) / 1000);
 
   // one truss at each grid column line that falls on the body (spaced along the length)
-  const inner = a.colXs.filter((x) => x > xLo + 1e-3 && x < xHi - 1e-3);
-  const trussXs = uniqSorted([xLo, ...inner, xHi]);
+  const trussXs = roofTrussXs(a.colXs, xLo, xHi);
   const zApex = (y: number): number => {
     if (flat) return roofBaseZ + rise;
     if (mono) return roofBaseZ + (rise * (y - yLo)) / Math.max(1e-6, blockDM);
@@ -1030,7 +1495,9 @@ function buildRoof(s: ModelSink, a: RoofArgs): void {
 
   // roof sheets (quads) + ceiling — extended by the real eave overhang
   const sx0 = xLo - eave, sx1 = xHi + eave, sy0 = yLo - eave, sy1 = yHi + eave;
-  if (flat) {
+  if (a.suppressRoofSheet) {
+    // the rafter-support system lays the real PUF roof panels — see `suppressRoofSheet`
+  } else if (flat) {
     s.add("roof:sheet", "roof-sheet", "Roof sheet (flat)",
       box(sx0, sy0, roofBaseZ + rise + pt, sx1, sy1, roofBaseZ + rise + pt + 0.05), { boqLineId: "roof:sheet" });
   } else if (mono) {
@@ -1044,6 +1511,21 @@ function buildRoof(s: ModelSink, a: RoofArgs): void {
   }
   s.add("roof:ceiling", "ceiling", "Ceiling lining",
     box(xLo, yLo, roofBaseZ - 0.03, xHi, yHi, roofBaseZ), { boqLineId: "roof:ceiling", opacity: 0.85 });
+}
+
+/**
+ * The TRUSS / RAFTER x-positions: one truss on every structural grid line that falls strictly INSIDE
+ * the walled body, plus one on each body edge.
+ *
+ * Extracted so `buildRoof` and the rafter-support context read the SAME list. A cleat is placed where
+ * a tube line crosses a rafter line, so the rafter lines handed to `deriveRafterSupport` must be the
+ * rafters the model actually erects — otherwise a cleat would hang off a rafter that is not there.
+ * This is the exact counterpart of the PUF-lock rule that a locking plate always lands on a real
+ * plinth beam.
+ */
+function roofTrussXs(colXs: number[], xLo: number, xHi: number): number[] {
+  const inner = colXs.filter((x) => x > xLo + 1e-3 && x < xHi - 1e-3);
+  return uniqSorted([xLo, ...inner, xHi]);
 }
 
 /** A rafter as a sloped quad spanning y0..y1 at x (thin in x). */

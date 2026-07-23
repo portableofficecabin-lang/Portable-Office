@@ -15,7 +15,10 @@ import type {
   AssemblyOptions, AssemblyTimeline, CameraKeyframe, CaptionState, PartRenderState,
   PartScheduleEntry, SceneSample, StepEngineeringRow, Vec3T,
 } from "./assemblyTypes";
-import { lerp3, modelBoxOf, orbitShot, planShot, type Box3 } from "./assemblyCamera";
+import {
+  DETAIL_DWELL_DOLLY, DETAIL_ORBIT_RAD, lerp, lerp3, modelBoxOf, orbitAroundTarget, orbitShot,
+  planShot, type Box3,
+} from "./assemblyCamera";
 
 /* ----------------------------------------------------------------- easing ---------------------- */
 
@@ -89,6 +92,17 @@ export function sampleCamera(timeline: AssemblyTimeline, timeMs: number): Camera
   const local = clamp01((timeMs - step.startMs) / span);
   const installFrac = span > 0 ? step.installMs / span : 1;
   const tt = installFrac > 0 && local <= installFrac ? easeInOutCubic(local / installFrac) : 1;
+
+  // A DETAIL SUB-STEP (one rafter connection in macro close-up) keeps moving through its dwell: the
+  // camera drifts a few degrees around the joint and creeps in slightly, so a 1–3 second hold on a
+  // bolted connection reads as cinematography rather than a stalled render. Every other step keeps
+  // its original behaviour exactly — arrive on `to`, then hold perfectly still.
+  if (step.subIndex !== undefined && tt >= 1) {
+    const dwellT = clamp01((local - installFrac) / Math.max(1e-6, 1 - installFrac));
+    const e = easeInOutCubic(dwellT);
+    return orbitAroundTarget(step.camera.to, DETAIL_ORBIT_RAD * e, lerp(1, DETAIL_DWELL_DOLLY, e));
+  }
+
   return lerpKeyframe(step.camera.from, step.camera.to, tt);
 }
 
@@ -170,6 +184,8 @@ function engineeringRowsForStep(
   step: AssemblyTimeline["steps"][number],
 ): StepEngineeringRow[] {
   const rows: StepEngineeringRow[] = [];
+  // a detail sub-step names the assembly it is holding on, before anything else
+  if (step.subTitle) rows.push({ label: "Assembly", note: step.subTitle });
   if (step.memberMarks) rows.push({ label: "Members", note: step.memberMarks });
   if (step.connectionMarks) rows.push({ label: "Connections", note: step.connectionMarks });
   if (step.boltSpec) rows.push({ label: "Bolts", note: step.boltSpec });

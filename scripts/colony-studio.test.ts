@@ -13,6 +13,8 @@ import { calculateLabourColony, type LabourColonyConfig, type LabourColonyResult
 import { buildConstructionPlan } from "../src/lib/quotation/labourColonyPlan";
 import { calculateCivilWork, DEFAULT_CIVIL_CONFIG, type CivilContext, type CivilWorkResult } from "../src/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
+import { RAFTER_SUPPORT_KINDS } from "../src/features/labour-colony-studio/model/assembly";
+import { DEFAULT_RAFTER_SUPPORT_CONFIG } from "../src/features/labour-colony-studio/model/rafterSupport";
 import type { ColonyModel, ColonyPart, Vec3 } from "../src/features/labour-colony-studio/model/types";
 import type { SectionDims } from "../src/features/labour-colony-studio/model/sectionDims";
 
@@ -71,6 +73,14 @@ function planBox(p: ColonyPart): { x0: number; y0: number; x1: number; y1: numbe
   return {
     x0: Math.min(...vs.map((v) => v.x)), y0: Math.min(...vs.map((v) => v.y)),
     x1: Math.max(...vs.map((v) => v.x)), y1: Math.max(...vs.map((v) => v.y)),
+  };
+}
+/** Full 3-D bounding box of a part (metres) — works for boxes, prisms and quads alike. */
+function bbox(p: ColonyPart): { x0: number; y0: number; z0: number; x1: number; y1: number; z1: number } {
+  const vs = verts(p);
+  return {
+    x0: Math.min(...vs.map((v) => v.x)), y0: Math.min(...vs.map((v) => v.y)), z0: Math.min(...vs.map((v) => v.z)),
+    x1: Math.max(...vs.map((v) => v.x)), y1: Math.max(...vs.map((v) => v.y)), z1: Math.max(...vs.map((v) => v.z)),
   };
 }
 function centre(p: ColonyPart): { x: number; y: number; z: number } {
@@ -324,6 +334,237 @@ for (const roofType of ["mono", "flat"] as const) {
   const ridges = rm.parts.filter((p) => p.kind === "ridge").length;
   ok(ridges === 0, `R6: ${roofType} roof emits no ridge member (${ridges})`);
   runChecks(`${roofType} roof`, rm);
+}
+
+/* ============================================================================================
+ * RAFTER SUPPORT SYSTEM — the bolted cleat → C-purlin → MS tube → covering assemblies.
+ *
+ * The engineering core (model/rafterSupport.ts) owns every spacing, count, length and weight; this
+ * block proves the MODEL emits exactly what that core resolved — no invented member, no missing one,
+ * no quantity counted twice — and that the emitted solids form a real, buildable connection:
+ * everything bears on the thing below it, nothing floats and nothing but a bolt shank passes through
+ * another solid.
+ * ========================================================================================== */
+{
+  const d = model.rafterSupport;
+  ok(!!d, "RS0: the model carries the resolved rafter support system");
+
+  if (d) {
+    const t = d.takeoff;
+    const c = d.config;
+    const parts = model.parts;
+    const rsup = parts.filter((p) => RAFTER_SUPPORT_KINDS.has(p.kind));
+    const of = (kind: ColonyPart["kind"]) => parts.filter((p) => p.kind === kind);
+    const liveLevels = d.levels.filter((lv) => lv.enabled && lv.lines.length);
+    const lineCount = liveLevels.reduce((a, lv) => a + lv.lines.length, 0);
+    /** Length of a run member along its own axis (the across / depth dimensions are millimetres). */
+    const runLen = (p: ColonyPart) => { const b = bbox(p); return Math.max(b.x1 - b.x0, b.y1 - b.y0); };
+    const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+
+    ok(c.enabled && liveLevels.length > 0,
+      `RS1: the system is enabled with ${liveLevels.length} live level(s) and ${lineCount} tube line(s)`);
+    ok(rsup.length > 0, `RS1b: the model emits rafter-support parts (${rsup.length})`);
+
+    /* ---- (A) every emitted part count IS the take-off, exactly ---- */
+    ok(of("rsup-cleat-plate").length === t.cleats,
+      `RS2: cleat plates match the take-off (${of("rsup-cleat-plate").length} vs ${t.cleats})`);
+
+    ok(of("rsup-c-purlin").length === lineCount,
+      `RS3: one C-purlin run per tube line (${of("rsup-c-purlin").length} vs ${lineCount})`);
+    ok(of("rsup-ms-tube").length === lineCount,
+      `RS3b: one MS tube run per tube line (${of("rsup-ms-tube").length} vs ${lineCount})`);
+    ok(Math.abs(sum(of("rsup-c-purlin").map(runLen)) - t.purlinRunningLengthM) < 1e-3,
+      `RS3c: modelled C-purlin length equals the take-off (${sum(of("rsup-c-purlin").map(runLen)).toFixed(3)} vs ${t.purlinRunningLengthM} m)`);
+    ok(Math.abs(sum(of("rsup-ms-tube").map(runLen)) - t.tubeRunningLengthM) < 1e-3,
+      `RS3d: modelled MS tube length equals the take-off (${sum(of("rsup-ms-tube").map(runLen)).toFixed(3)} vs ${t.tubeRunningLengthM} m)`);
+
+    // one nut-bolt is drawn as head + shank + projecting thread, so the SHANK is the bolt instance
+    const boltParts = of("rsup-bolt");
+    const shanks = boltParts.filter((p) => p.id.endsWith("-shank"));
+    const heads = boltParts.filter((p) => p.id.endsWith("-head"));
+    const threads = boltParts.filter((p) => p.id.endsWith("-thread"));
+    ok(shanks.length === t.bolts, `RS4: bolts match the take-off (${shanks.length} vs ${t.bolts})`);
+    ok(heads.length === shanks.length && threads.length === shanks.length,
+      `RS4b: every bolt is drawn with a head and a projecting thread (${heads.length}/${shanks.length}/${threads.length})`);
+    ok(boltParts.length === shanks.length * 3,
+      `RS4c: no stray bolt solid (${boltParts.length} solids for ${shanks.length} bolts)`);
+    ok(shanks.length === t.cleatBolts + t.webBolts,
+      `RS4d: cleat bolts + web bolts are all placed (${t.cleatBolts} + ${t.webBolts})`);
+    ok(of("rsup-nut").length === t.nuts, `RS5: nuts match the take-off (${of("rsup-nut").length} vs ${t.nuts})`);
+    ok(of("rsup-washer").length === t.washers,
+      `RS5b: washers match the take-off (${of("rsup-washer").length} vs ${t.washers})`);
+
+    const ceilLines = liveLevels.filter((lv) => lv.kind === "ceiling").reduce((a, lv) => a + lv.lines.length, 0);
+    const roofLines = liveLevels.filter((lv) => lv.kind === "roof").reduce((a, lv) => a + lv.lines.length, 0);
+    const sheets = of("rsup-cement-sheet");
+    const panels = of("rsup-puf-roof-panel");
+    ok(sheets.length === ceilLines, `RS6: one ceiling-board run per ceiling tube line (${sheets.length} vs ${ceilLines})`);
+    ok(panels.length === roofLines, `RS6b: one PUF roof-panel run per roof tube line (${panels.length} vs ${roofLines})`);
+    ok(sum(sheets.map((p) => p.spec.quantity ?? 0)) === t.ceilingSheets,
+      `RS6c: apportioned ceiling boards sum to the take-off (${sum(sheets.map((p) => p.spec.quantity ?? 0))} vs ${t.ceilingSheets})`);
+    ok(sum(panels.map((p) => p.spec.quantity ?? 0)) === t.roofPanels,
+      `RS6d: apportioned roof panels sum to the take-off (${sum(panels.map((p) => p.spec.quantity ?? 0))} vs ${t.roofPanels})`);
+
+    /* ---- (B) every fastener belongs to a real cleat connection group ---- */
+    const cleatConn = new Set(of("rsup-cleat-plate").map((p) => p.connectionId ?? ""));
+    const fasteners = rsup.filter((p) => p.kind === "rsup-bolt" || p.kind === "rsup-nut" || p.kind === "rsup-washer");
+    const orphan = fasteners.filter((p) => !p.connectionId || !cleatConn.has(p.connectionId));
+    ok(orphan.length === 0, `RS7: no bolt / nut / washer outside a real cleat connection group (${orphan.length})`);
+    ok(cleatConn.size === t.cleats, `RS7b: one connection group per cleat (${cleatConn.size} vs ${t.cleats})`);
+    const perGroup = c.bolt.perCleat + c.tube.boltsPerConnection;
+    let wrongGroup = 0;
+    for (const cid of cleatConn) {
+      const inGroup = fasteners.filter((p) => p.connectionId === cid);
+      const gShanks = inGroup.filter((p) => p.kind === "rsup-bolt" && p.id.endsWith("-shank")).length;
+      const gNuts = inGroup.filter((p) => p.kind === "rsup-nut").length;
+      const gWash = inGroup.filter((p) => p.kind === "rsup-washer").length;
+      if (gShanks !== perGroup || gNuts !== perGroup * c.bolt.nutsPerBolt || gWash !== perGroup * c.bolt.washersPerBolt) wrongGroup++;
+    }
+    ok(wrongGroup === 0,
+      `RS7c: every connection carries ${c.bolt.perCleat} cleat bolts + ${c.tube.boltsPerConnection} web bolts with their nuts and washers (${wrongGroup} bad group(s))`);
+    ok(rsup.every((p) => !!p.assemblyId && p.layer === "rafter-support"),
+      "RS7d: every rafter-support part carries an assembly id and sits on the rafter-support layer");
+    ok(rsup.every((p) => p.id.startsWith("rsup:")), "RS7e: every rafter-support id follows the rsup: convention");
+    ok(rsup.every((p) => p.assemblyStep === 18 || p.assemblyStep === 19),
+      "RS7f: the steel erects at step 18 and the covering at step 19");
+
+    /* ---- (C) nothing floats: every solid bears on the one below it ---- */
+    const byId = new Map(parts.map((p) => [p.id, p] as const));
+    const EPS = 1.5e-3;
+    let floatingCleat = 0, floatingPurlin = 0, floatingTube = 0, floatingCover = 0, clash = 0;
+    for (const lv of liveLevels) {
+      const alongX = lv.runAxis === "x";
+      const acrossLo = Math.min(...lv.lines.map((l) => l.acrossM));
+      const acrossHi = acrossLo + lv.spanAcrossM;
+      for (const line of lv.lines) {
+        const purlin = byId.get(`rsup:${line.id}:purlin`);
+        const tube = byId.get(`rsup:${line.id}:tube`);
+        const cover = byId.get(`rsup:${line.id}:${lv.kind === "ceiling" ? "sheet" : "panel"}`);
+        if (!purlin || !tube) { floatingPurlin++; continue; }
+        const pb = bbox(purlin), tb = bbox(tube);
+
+        // the tube's side face is FLUSH against the purlin web — they touch on exactly one plane and
+        // never overlap in the across direction (that is what "bolted side by side" means)
+        const pLo = alongX ? pb.y0 : pb.x0, pHi = alongX ? pb.y1 : pb.x1;
+        const tLo = alongX ? tb.y0 : tb.x0, tHi = alongX ? tb.y1 : tb.x1;
+        const touches = Math.abs(tLo - pHi) < EPS || Math.abs(tHi - pLo) < EPS;
+        const overlaps = Math.min(pHi, tHi) - Math.max(pLo, tLo) > EPS;
+        if (!touches || overlaps) floatingTube++;
+
+        // the tube's FIXING face is flush with the purlin's outer face (dir = +1 roof, −1 ceiling)
+        const fixingFlush = line.dir > 0 ? Math.abs(tb.z1 - pb.z1) < EPS : Math.abs(tb.z0 - pb.z0) < EPS;
+        if (!fixingFlush) floatingTube++;
+
+        // the covering bears on (roof) / hangs under (ceiling) that same fixing face
+        if (cover) {
+          const cb = bbox(cover);
+          const seated = line.dir > 0 ? Math.abs(cb.z0 - tb.z1) < EPS : Math.abs(cb.z1 - tb.z0) < EPS;
+          if (!seated) floatingCover++;
+          // and it never runs outside the span it covers (the outermost bay is clipped to the body)
+          const cLo = alongX ? cb.y0 : cb.x0, cHi = alongX ? cb.y1 : cb.x1;
+          if (cLo < acrossLo - EPS || cHi > acrossHi + EPS) floatingCover++;
+        }
+
+        // the purlin bears on the cleats of this line — cleat far face == purlin near face
+        for (const pos of d.positions.filter((p) => p.lineId === line.id)) {
+          const cleat = byId.get(`rsup:${pos.levelId}:${pos.mark}:cleat`);
+          if (!cleat) { floatingCleat++; continue; }
+          const kb = bbox(cleat);
+          // the cleat's near face IS the rafter face it bolts to
+          const onRafter = pos.dir > 0 ? Math.abs(kb.z0 - pos.seatZM) < EPS : Math.abs(kb.z1 - pos.seatZM) < EPS;
+          if (!onRafter) floatingCleat++;
+          const seated = pos.dir > 0 ? Math.abs(pb.z0 - kb.z1) < EPS : Math.abs(pb.z1 - kb.z0) < EPS;
+          if (!seated) floatingPurlin++;
+          // and the plate never interpenetrates the purlin it carries
+          if (Math.min(kb.z1, pb.z1) - Math.max(kb.z0, pb.z0) > EPS) clash++;
+        }
+      }
+
+      // no two covering strips of one level may occupy the same volume (they tile, they never stack)
+      const covers = lv.lines
+        .map((l) => byId.get(`rsup:${l.id}:${lv.kind === "ceiling" ? "sheet" : "panel"}`))
+        .filter((p): p is ColonyPart => !!p)
+        .map(bbox);
+      for (let i = 0; i < covers.length; i++) {
+        for (let j = i + 1; j < covers.length; j++) {
+          const a = covers[i], b = covers[j];
+          const ov = (lo1: number, hi1: number, lo2: number, hi2: number) => Math.min(hi1, hi2) - Math.max(lo1, lo2);
+          if (ov(a.x0, a.x1, b.x0, b.x1) > EPS && ov(a.y0, a.y1, b.y0, b.y1) > EPS && ov(a.z0, a.z1, b.z0, b.z1) > EPS) clash++;
+        }
+      }
+      // …and together they must tile the covered span exactly once — no gap, no double layer
+      const strips = covers
+        .map((b) => (alongX ? [b.y0, b.y1] : [b.x0, b.x1]) as [number, number])
+        .sort((p, q) => p[0] - q[0]);
+      const tiled = strips.length > 0
+        && Math.abs(strips[0][0] - acrossLo) < EPS
+        && Math.abs(strips[strips.length - 1][1] - acrossHi) < EPS
+        && strips.every((sp, i) => i === 0 || Math.abs(sp[0] - strips[i - 1][1]) < EPS);
+      if (!tiled) floatingCover++;
+    }
+    ok(floatingCleat === 0, `RS8: every cleat plate bolts flat onto its rafter face (${floatingCleat} floating)`);
+    ok(floatingPurlin === 0, `RS8b: every C-purlin bears on its cleats (${floatingPurlin} floating)`);
+    ok(floatingTube === 0, `RS8c: every MS tube sits FLUSH on the purlin web without overlapping it (${floatingTube} bad)`);
+    ok(floatingCover === 0, `RS8d: every covering bears on its tube and stays inside the span it covers (${floatingCover} bad)`);
+    ok(clash === 0, `RS8e: no rafter-support solid interpenetrates another (${clash} clash(es))`);
+
+    /* ---- (D) the MS tube slides SIDEWAYS off the web when exploded ---- */
+    let badExplode = 0;
+    for (const lv of liveLevels) {
+      for (const line of lv.lines) {
+        const tube = byId.get(`rsup:${line.id}:tube`);
+        if (!tube) { badExplode++; continue; }
+        const side = lv.runAxis === "x" ? tube.explode.y : tube.explode.x;
+        const along = lv.runAxis === "x" ? tube.explode.x : tube.explode.y;
+        // a sideways component along the web normal, and none along the run itself
+        if (Math.abs(side) < 1e-6 || Math.abs(along) > 1e-6) badExplode++;
+      }
+    }
+    ok(badExplode === 0, `RS9: every MS tube explodes sideways off the purlin web (${badExplode} bad vector(s))`);
+
+    /* ---- (E) the covering is never counted twice ---- */
+    const rsupRoof = liveLevels.some((lv) => lv.kind === "roof");
+    ok(!rsupRoof || of("roof-sheet").length === 0,
+      `RS10: the generic roof-sheet slab is replaced by the real PUF panel layout (${of("roof-sheet").length} generic slab(s))`);
+    ok(panels.every((p) => p.boqLineId === "roof:sheet"),
+      "RS10b: the PUF roof panels inherit the priced roof:sheet line, so it still owns exactly one geometry set");
+    ok(of("ceiling").length === 1,
+      `RS10c: the generic top-floor ceiling is untouched — the rsup ceilings are the INTERMEDIATE floors (${of("ceiling").length})`);
+    const rsupCeilingZs = liveLevels.filter((lv) => lv.kind === "ceiling").flatMap((lv) => lv.lines.map((l) => l.seatZM));
+    const genericCeilingZ = bbox(of("ceiling")[0]).z1;
+    ok(rsupCeilingZs.every((z) => Math.abs(z - genericCeilingZ) > 0.1),
+      "RS10d: no rsup ceiling level coincides with the generic ceiling slab (nothing double-covered)");
+  }
+}
+
+/* (RS11) the whole system switches off cleanly — no orphan part, and the generic slab comes back. */
+{
+  const offCfg: LabourColonyConfig = {
+    ...BASE_CONFIG,
+    rafterSupport: { ...DEFAULT_RAFTER_SUPPORT_CONFIG, enabled: false },
+  };
+  const offResult = calculateLabourColony(offCfg);
+  const offCivil = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(offResult));
+  const offModel = buildColonyModel({ result: offResult, civil: offCivil, columnGrid: null });
+  const offRsup = offModel.parts.filter((p) => RAFTER_SUPPORT_KINDS.has(p.kind));
+  ok(offRsup.length === 0, `RS11: a disabled rafter support system emits zero rsup parts (${offRsup.length})`);
+  ok(offModel.rafterSupport?.config.enabled === false, "RS11b: the disabled system is still carried on the model for the UI");
+  ok(offModel.parts.filter((p) => p.kind === "roof-sheet").length > 0,
+    "RS11c: the generic roof-sheet slab is restored when the system is off — nothing was deleted");
+  ok(offModel.warnings.every((w) => !w.code.startsWith("rafter-support-")),
+    "RS11d: a disabled system raises no rafter-support warning");
+  runChecks("rafter support disabled", offModel);
+}
+
+/* (RS12) the connection-detail switch defers only the fasteners — never the members themselves. */
+{
+  const lite = buildColonyModel({ result, civil, columnGrid: null }, { connectionDetail: false });
+  const liteRsup = lite.parts.filter((p) => RAFTER_SUPPORT_KINDS.has(p.kind));
+  const fastenerKinds = new Set(["rsup-bolt", "rsup-nut", "rsup-washer"]);
+  ok(liteRsup.length > 0 && liteRsup.every((p) => !fastenerKinds.has(p.kind)),
+    `RS12: connectionDetail:false defers the nut-bolt solids (${liteRsup.length} rsup parts, none a fastener)`);
+  ok(lite.parts.filter((p) => p.kind === "rsup-cleat-plate").length === (model.rafterSupport?.takeoff.cleats ?? -1),
+    "RS12b: every cleat plate, C-purlin, MS tube and covering is still placed");
 }
 
 /* ================================================================= report ================= */

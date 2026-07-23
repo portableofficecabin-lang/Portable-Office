@@ -183,6 +183,54 @@ export interface AssemblyOptions {
   ghostFuture: boolean;
   /** dim already-installed parts to spotlight the current step. */
   dimInstalled: boolean;
+
+  /* ---- per-assembly zoomed detail tour (rafter cleat → C-purlin → MS tube → covering) ---- */
+  /**
+   * Fly to EVERY rafter-support connection in turn and build it up part by part in close-up.
+   * `undefined` = AUTO: on exactly when the model carries rafter-support assemblies, off otherwise —
+   * so a colony without the system produces the timeline it produced before this feature existed.
+   */
+  detailTour?: boolean;
+  /**
+   * The dwell the admin ASKS for on each assembly (ms) — how long the camera holds on the finished
+   * connection. The builder may shorten it to keep the whole tour inside `detailTourBudgetMs`, but
+   * never lengthens it beyond this.
+   */
+  detailDwellMs: number;
+  /**
+   * Runtime budget for the WHOLE tour (ms). The per-assembly shot length is `budget / assemblies`,
+   * clamped between a readable floor and the requested dwell, so a 20-connection colony gets long
+   * luxurious shots and a 200-connection colony still lands in the same total runtime.
+   */
+  detailTourBudgetMs: number;
+  /**
+   * 0 = tour EVERY assembly (the default — a partial tour would misrepresent the building).
+   * A positive value explicitly tours only the first N; the rest are still erected, together, in
+   * their step's overview shot, and the caption says so. Never a silent truncation.
+   */
+  detailTourMaxAssemblies: number;
+}
+
+/**
+ * What the per-assembly detail tour actually resolved to, so the UI can state the trade-off honestly
+ * instead of the user discovering a 20-minute export. Always present; `assemblies: 0` when the colony
+ * carries no rafter-support connections.
+ */
+export interface DetailTourSummary {
+  /** True when detail sub-steps were emitted. */
+  enabled: boolean;
+  /** Rafter-support assemblies found in the model. */
+  assemblies: number;
+  /** Assemblies that actually got their own shot. Equals `assemblies` unless a cap was applied. */
+  toured: number;
+  /** True when a cap was applied — the untoured assemblies are erected in their step's overview shot. */
+  capped: boolean;
+  /** Fly-in duration of one detail shot (ms). */
+  installMs: number;
+  /** Dwell of one detail shot (ms). */
+  holdMs: number;
+  /** Σ of every detail shot (ms) — what the tour adds to the runtime. */
+  tourMs: number;
 }
 
 /** The whole deterministic timeline — the single object the player, scene and exporter consume. */
@@ -204,6 +252,8 @@ export interface AssemblyTimeline {
   /** Precomputed intro title-card + outro completion-card copy. */
   intro: { title: string; subtitle: string };
   outro: { title: string; subtitle: string };
+  /** How the per-assembly rafter-support detail tour resolved (0 assemblies ⇒ nothing was added). */
+  detailTour: DetailTourSummary;
   /** aggregate build warnings (missing explode vectors substituted, empty steps skipped, …). */
   warnings: string[];
 }
