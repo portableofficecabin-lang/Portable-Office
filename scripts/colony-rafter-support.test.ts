@@ -1262,8 +1262,9 @@ const REF = deriveRafterSupport(undefined, refCtx());
   // D5 — one end lap per run, not per piece.
   const long = panelLayoutFor({ id: "R", kind: "roof", spacingMm: 1200 }, 12.0, 25.0, D.roofPanel);
   eq(long.piecesPerRun, 3, "D5: a 25 m rake is 3 panel pieces");
-  eq(round3(long.panelLengthMm * long.piecesPerRun), round3(25.0 * 1000 + D.roofPanel.endLapMm),
-    "D5: a run totals rake + exactly ONE end lap (2 laps for 3 pieces), not 3");
+  // 3 pieces make 2 laps, not 3: total = rake + (pieces − 1) × lap = 25000 + 2 × 200 = 25400
+  eq(long.panelLengthMm * long.piecesPerRun, 25.0 * 1000 + D.roofPanel.endLapMm * (long.piecesPerRun - 1),
+    "D5: a run totals rake + (pieces − 1) end laps, not one lap per piece", 0.05);
 
   // D6 — a NaN covering dimension is coerced back to the default; no NaN reaches the take-off.
   eq(resolveRafterSupportConfig({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: Number.NaN } } as Partial<RafterSupportConfig>).ceilingSheet.tubeSpacingMm,
@@ -1316,7 +1317,7 @@ const REF = deriveRafterSupport(undefined, refCtx());
   const tinySp = deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: 5 } } as Partial<RafterSupportConfig>, bigCtx);
   ok(tinySp.errors.some((i) => i.code === "tube-spacing-invalid"), "VD3: a 5 mm tube spacing is invalid, not 6000 lines");
   eq(tinySp.levels[0].lines.length, 0, "VD3: …and lays out no tube line");
-  ok(tinySp.takeoff.purlinRunningLengthM < 100, "VD3: …and no absurd purlin running length");
+  eq(tinySp.takeoff.levels[0].purlinRunningLengthM, 0, "VD3: …so that level takes off no purlin, not 3618 m");
   ok(deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: 0 } } as Partial<RafterSupportConfig>, refCtx())
     .errors.some((i) => i.code === "tube-spacing-invalid"), "VD3: an explicit zero spacing is invalid too");
 
@@ -1360,7 +1361,7 @@ const REF = deriveRafterSupport(undefined, refCtx());
     eq(tubeCatalogueKgPerM({ ...D.tube, materialKey: s.materialKey, widthMm: s.widthMm, depthMm: s.depthMm, wallThicknessMm: s.wallThicknessMm, unitWeightKgPerMOverride: undefined }) ?? -1,
       s.masterKgPerM, `VD8a: ${s.materialKey} catalogue weight matches the Material Master row`);
   }
-  eq(tubeCatalogueKgPerM({ ...D.tube, materialKey: "shs-50x50x2", widthMm: 60 }), undefined,
+  ok(tubeCatalogueKgPerM({ ...D.tube, materialKey: "shs-50x50x2", widthMm: 60 }) === undefined,
     "VD8a: a retyped dimension abandons the catalogue weight (tube-section-mismatch territory)");
   ok(deriveRafterSupport({ tube: { ...D.tube, unitWeightKgPerMOverride: 4 } } as Partial<RafterSupportConfig>, refCtx()).warnings.some((i) => i.code === "tube-unit-weight-drift"),
     "VD8a: an override 2 % off the tabulated row warns");
