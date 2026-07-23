@@ -68,13 +68,44 @@ export interface StepEngineeringRow {
   note?: string;
 }
 
-/** One installation step in the compacted timeline (empty assembly steps are dropped). */
+/**
+ * One installation step in the compacted timeline (empty assembly steps are dropped).
+ *
+ * SUB-STEPS. A single construction step can be broken into an ordered series of SHOTS that share its
+ * `assemblyStep` — the per-assembly zoomed detail tour of the rafter cleat / C-purlin / MS tube
+ * connections lives here, because "show every rafter connection in close-up" is N shots inside the one
+ * canonical step 18, and `ColonyAssemblyStep` is a closed 1..24 literal union that must NOT be
+ * renumbered (the model, the drawings, the schedules and the reports all key off it).
+ *
+ * The rules the rest of the system relies on:
+ *   • `subIndex` ABSENT  ⇒ the step is the whole construction step, id `step-${assemblyStep}` —
+ *     byte-identical to a timeline built before sub-steps existed;
+ *   • `subIndex` PRESENT ⇒ id `step-${assemblyStep}-${subIndex}`, so React keys stay unique and a
+ *     validator issue can name exactly one shot;
+ *   • the steps sharing one `assemblyStep` PARTITION its parts — every part appears in exactly one of
+ *     them, never twice and never nowhere (validateAssemblyTimeline proves this globally).
+ */
 export interface TimelineStep {
   id: string;
   /** 0-based position in the compacted step list (NOT the raw 1..23 assemblyStep). */
   index: number;
   /** The canonical 1..23 construction step this maps to. */
   assemblyStep: ColonyAssemblyStep;
+  /**
+   * 1-based position WITHIN `assemblyStep` when this step is one shot of a multi-shot construction
+   * step; absent when the step covers the whole construction step. Ordering across the timeline is
+   * lexicographic on (assemblyStep, subIndex ?? -1), so the overview shot of a step always precedes
+   * its detail shots.
+   */
+  subIndex?: number;
+  /** Short label for the shot itself, e.g. "Connection RS-07 · Ground-floor ceiling". */
+  subTitle?: string;
+  /**
+   * The parts the CAMERA frames on — always a subset of `partIds`. A detail shot installs the whole
+   * assembly (including the covering bay it carries, which is metres wide) but frames only the joint
+   * core, so the bolt heads stay readable.
+   */
+  focusPartIds?: string[];
   title: string;
   description: string;
   /** Non-technical customer line. */
