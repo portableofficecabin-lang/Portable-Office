@@ -524,22 +524,28 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
     if (f === 0) {
       ([bodyY0 + jw / 2, bodyY1 - jw / 2] as const).forEach((yc, si) => {
         const side = si === 0 ? "rear" : "front";
+        /* THE SIDE RAFTER STANDS ABOVE THE PIPE LINE (user rule): nothing crosses it — the GF pipes
+         * run PARALLEL — so it is NOT dropped by the tube height the way a field rafter is. Its top
+         * chord sits at the DECK SOFFIT, proud of the MS pipe soffit line, carrying the deck edge
+         * and the wall base directly. */
+        const sideChordTop = z;
         const sideSpec = {
           role:
-            "Ground-floor SIDE rafter — runs the full length under the side wall. Takes the panel "
-            + "base and floor-edge loads; the floor field itself bears on the filled plinth, which "
-            + "is why the ground floor has no transverse rafters.",
+            "Ground-floor SIDE rafter — runs the full length under the side wall, its top chord AT "
+            + "the deck soffit, standing ABOVE the MS pipe line (the pipes run parallel, never over "
+            + "it). Takes the panel base and floor-edge loads; the floor field itself bears on the "
+            + "filled plinth, which is why the ground floor has no transverse rafters.",
           loadPath: "Wall base + deck edge → side rafter → hold-down bolts at every grid line → base frame → plinth → footing.",
           note:
             "Shop-welded lattice unit, SITE-bolted down at every grid line — a removable joint: "
             + "undo the nut-bolts and the rafter lifts out for relocation.",
         } as const;
         s.add(`gf:side-rafter:${side}:chord`, "joist", `GF side rafter (${side}) — top chord`,
-          box(bodyX0, yc - jw / 2, chordTop - jh, bodyX1, yc + jw / 2, chordTop),
+          box(bodyX0, yc - jw / 2, sideChordTop - jh, bodyX1, yc + jw / 2, sideChordTop),
           { floor: 0, partMark: "SR", fabrication: "shop", spec: { ...dimsSpec(jDims, bodyWM), ...sideSpec } });
-        const gap = Math.min(RAFTER_WEB_GAP, chordTop - 2 * jh - 0.05);
+        const gap = Math.min(RAFTER_WEB_GAP, sideChordTop - 2 * jh - 0.05);
         if (gap >= 0.05) {
-          const topSoffit = chordTop - jh;
+          const topSoffit = sideChordTop - jh;
           const botTop = topSoffit - gap;
           const webT = Math.max(0.025, Math.min(jw, 0.04));
           s.add(`gf:side-rafter:${side}:bottom`, "joist-web", `GF side rafter (${side}) — bottom chord`,
@@ -565,7 +571,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
               assemblyId: "gf:deck",
               label: `GF side rafter (${side}) wall end`,
               axis: "x", at: xEnd, dir: dir as 1 | -1, cross: yc,
-              z, memberWM: jw, memberHM: jh, floor: 0,
+              z, memberWM: jw, memberHM: jh, floor: 0, flushTop: true,
             });
           });
         }
@@ -579,7 +585,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
               const cid = `srafter:${side}:${pad2(gi + 1)}`;
               const idBase = `gf:conn:srafter:${side}:${pad2(gi + 1)}`;
               const pT = 0.008, pHalf = 0.05;
-              const chordBot = chordTop - jh;
+              const chordBot = sideChordTop - jh;
               s.add(`${idBase}:plate`, "cleat", "Side-rafter hold-down plate",
                 box(xg - pHalf, yc - pHalf, chordBot - pT, xg + pHalf, yc + pHalf, chordBot),
                 { connectionId: cid, assemblyId: "gf:deck", partMark: "HD", floor: 0, fabrication: "shop",
@@ -2431,11 +2437,14 @@ function addRafterEndPlate(
     idBase: string; connectionId: string; assemblyId: string; label: string;
     axis: "x" | "y"; at: number; dir: 1 | -1; cross: number;
     z: number; memberWM: number; memberHM: number; floor: number;
+    /** True for the GF side rafters, whose top chord sits AT the deck soffit (above the pipe line)
+     *  rather than one tube below it like a field rafter that carries pipes over it. */
+    flushTop?: boolean;
   },
 ): void {
   const pT = 0.008;
   const pw = Math.max(0.1, o.memberWM + 0.05);
-  const chordTop = o.z - FLOOR_TUBE_H;
+  const chordTop = o.z - (o.flushTop ? 0 : FLOOR_TUBE_H);
   const zTop = chordTop + 0.01;
   const zBot = chordTop - o.memberHM - 0.03;
   const boltSpec = "M12 gr 8.8";

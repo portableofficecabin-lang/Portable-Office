@@ -739,7 +739,7 @@ export function describeColonyStep(
             : "Floor joists at design c/c between the base beams"}${pipes
             ? "; MS pipe frame (SHS 50×50 @ 1220 c/c) site-bolted over the chords at crossing plates — rafter first, then tubes, then deck"
             : ""}${gfSideOnly
-            ? ". GF: side-wall rafters + longitudinal tubes only — no transverse members (plinth-borne)"
+            ? ". GF: side-wall rafters (top chord at deck level, ABOVE the pipe line) + longitudinal tubes only — no transverse members (plinth-borne)"
             : ""}; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
           (deck
             ? ` ${ctx.gfSheeted ? "All decks (GF sheet field enabled)" : "Upper decks"}: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
