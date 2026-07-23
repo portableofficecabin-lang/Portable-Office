@@ -68,6 +68,7 @@ const KIND_GROUPS: { id: string; label: string; kinds: ColonyPartKind[] }[] = [
   { id: "columns", label: "Columns", kinds: ["column", "pedestal"] },
   { id: "beams", label: "Beams", kinds: ["base-beam", "floor-beam", "plinth-beam", "veranda-beam"] },
   { id: "joists", label: "Joists / floor rafters", kinds: ["joist", "joist-web", "veranda-joist"] },
+  { id: "floor-tubes", label: "MS pipe frame", kinds: ["floor-tube"] },
   { id: "studs", label: "Studs / rails", kinds: ["stud", "rail"] },
   { id: "bracing", label: "Bracing", kinds: ["brace"] },
   { id: "trusses", label: "Trusses / rafters", kinds: ["roof-truss", "rafter", "truss-web", "ridge"] },

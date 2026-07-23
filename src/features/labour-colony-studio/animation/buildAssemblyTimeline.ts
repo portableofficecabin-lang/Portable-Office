@@ -70,7 +70,9 @@ const ENVELOPE_KINDS = new Set<ColonyPartKind>([
 
 export const DEFAULT_ASSEMBLY_OPTIONS: AssemblyOptions = {
   mode: "customer",
-  background: "studio",
+  // The film opens on the realistic site backdrop by default — the same sky / grass / haze world
+  // the 3D viewer shows — so the exported video reads as a building on a site, not a CAD dump.
+  background: "realistic",
   companyName: "PORTABLE OFFICE CABIN",
   projectName: "",
   customerName: undefined,
@@ -153,13 +155,32 @@ function approachOffset(part: ColonyPart, ctx: SceneCtx, modelBox: Box3): Vec3T 
   return finite3(off) ? off : [0, ASSEMBLY_GAP_M, 0];
 }
 
-/** Readable install order: sweep left→right (x), back→front (z), bottom→top (y). Deterministic —
- *  ties break on the stable part id, so the same model always yields the same order. */
+/**
+ * ERECTION PHASE within a construction step — the build-up order the site actually follows, and the
+ * order the user asked the film to show on the floor decks: the rafter goes in FIRST, then its
+ * bolted plates, then the MS pipe frame over it, and only then the deck layers. Kinds not listed
+ * share phase 0 and keep the plain spatial sweep. Applies to every step (structure before its own
+ * covering is the right order everywhere), and is fully deterministic.
+ */
+const INSTALL_PHASE: Partial<Record<ColonyPartKind, number>> = {
+  joist: 0, "joist-web": 0,
+  cleat: 1, weld: 1,
+  bolt: 2, nut: 2, washer: 2,
+  "floor-tube": 3,
+  noggin: 4,
+  "floor-board": 5,
+  "floor-sheet": 6,
+  "floor-finish": 7,
+};
+
+/** Readable install order: erection phase first (structure before covering), then sweep
+ *  left→right (x), back→front (z), bottom→top (y). Deterministic — ties break on the stable part
+ *  id, so the same model always yields the same order. */
 function sortForInstall(parts: ColonyPart[], ctx: SceneCtx, modelCenter: Vec3T): ColonyPart[] {
   return parts
-    .map((p) => ({ p, c: partCenterThree(p, ctx, modelCenter) }))
+    .map((p) => ({ p, c: partCenterThree(p, ctx, modelCenter), ph: INSTALL_PHASE[p.kind] ?? 0 }))
     .sort((a, b) =>
-      a.c[0] - b.c[0] || a.c[2] - b.c[2] || a.c[1] - b.c[1] || a.p.id.localeCompare(b.p.id))
+      a.ph - b.ph || a.c[0] - b.c[0] || a.c[2] - b.c[2] || a.c[1] - b.c[1] || a.p.id.localeCompare(b.p.id))
     .map((x) => x.p);
 }
 

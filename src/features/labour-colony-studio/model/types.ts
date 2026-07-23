@@ -100,7 +100,7 @@ export type ColonyPartKind =
   // steel-to-foundation connection
   | "base-plate" | "anchor-bolt" | "levelling-plate"
   // primary steel frame
-  | "column" | "stud" | "rail" | "base-beam" | "floor-beam" | "joist" | "joist-web" | "brace"
+  | "column" | "stud" | "rail" | "base-beam" | "floor-beam" | "joist" | "joist-web" | "floor-tube" | "brace"
   /** Transverse member added under a flooring-sheet cross joint that lands mid-bay (sheetLayout.ts). */
   | "noggin"
   // roof steelwork

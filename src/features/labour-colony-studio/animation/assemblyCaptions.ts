@@ -689,6 +689,7 @@ export function describeColonyStep(
       const deck = ctx.hasSheetSetOut ? ctx.deck : undefined;
       const cleat = ctx.hasDeckCleat;
       const lattice = hasKind(parts, "joist-web");
+      const pipes = hasKind(parts, "floor-tube");
       return {
         title: "Ground-floor joists & deck",
         description:
@@ -698,6 +699,11 @@ export function describeColonyStep(
               "craned-in unit — and the structural deck and floor finish are fixed over them."
             : "Floor joists are laid between the base beams at the designed spacing and the structural deck " +
               "and floor finish are fixed over them.") +
+          (pipes
+            ? " The floor goes up in a FIXED order: rafters first, then the MS pipe frame — SHS tubes " +
+              "bolted over the rafter top chords at a sheet-modular 1220 mm — and only then the deck, " +
+              "so every board and sheet-end joint bears on a tube centreline."
+            : "") +
           (deck ? ` ${sheetSetOutParagraph(deck, ctx.gfSheeted)}` : "") +
           (cleat
             ? " Every rafter end is made up the same way: the cleat is SHOP-welded to the beam and " +
@@ -707,7 +713,7 @@ export function describeColonyStep(
             : ""),
         captionCustomer:
           (lattice
-            ? "Lattice steel floor rafters are bolted in — removable joints, so the building can be dismantled and relocated. The floor is then decked and finished."
+            ? `Lattice steel floor rafters are bolted in first${pipes ? ", then the square-tube frame is bolted over them," : ""} — removable joints, so the building can be dismantled and relocated. The floor is then decked and finished.`
             : "The ground floor is decked and finished.") +
           (deck
             ? ctx.gfSheeted
@@ -717,7 +723,9 @@ export function describeColonyStep(
         captionEngineering:
           `${lattice
             ? "Lattice floor rafters (shop-welded chords + webs) at design c/c between the base beams — site joints are the bolted end cleats only (demountable)"
-            : "Floor joists at design c/c between the base beams"}; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
+            : "Floor joists at design c/c between the base beams"}${pipes
+            ? "; MS pipe frame (SHS 50×50 @ 1220 c/c) site-bolted over the chords at crossing plates — rafter first, then tubes, then deck"
+            : ""}; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
           (deck
             ? ` ${ctx.gfSheeted ? "All decks (GF sheet field enabled)" : "Upper decks"}: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
               `, ${deck.fullCount} full / ${deck.cutCount} cut, joints on members at ` +

@@ -66,6 +66,23 @@ const BASE_PLATE = 0.32;    // base-plate side (m)
 const BASE_PLATE_T = 0.016;
 const BOLT_D = 0.024;       // anchor / connection bolt visual diameter (m)
 const DECK_T = 0.05;        // floor deck thickness (m)
+/** 50 × 50 SHS — the MS pipe frame bolted over the floor rafters, directly under the deck (m). */
+const FLOOR_TUBE_H = 0.05;
+/** Pipe-frame tube spacing across the rafters — 4 ft, so every 8 ft sheet-end joint lands on a tube (m). */
+const FLOOR_TUBE_SPACING = 1.2192;
+/** The pipe frame's tube centrelines across the deck depth — ONE derivation shared by the emitter
+ *  and the sheet layout's support lines, so the sheets can never claim a tube that is not drawn. */
+function floorTubeYs(y0: number, y1: number): number[] {
+  const half = FLOOR_TUBE_H / 2;
+  /* Interior runs sit on EXACT sheet-module multiples from the deck origin — that is the whole
+   * point of the 1220 spacing (an 8 ft sheet-end joint at 2440 lands dead on a centreline; a
+   * half-tube offset would miss it by 25 mm and fail the edge-snap check). Only the two EDGE runs
+   * pull in half a tube so nothing overhangs the body; those edges bear on the C-bend anyway. */
+  const out: number[] = [y0 + half];
+  for (let yk = y0 + FLOOR_TUBE_SPACING; yk < y1 - half - 1e-6; yk += FLOOR_TUBE_SPACING) out.push(yk);
+  out.push(y1 - half);
+  return out;
+}
 const RAIL_H = 1.0;         // handrail height (m)
 const SKIN_T = 0.06, INS_T = 0.05, LIN_T = 0.02;
 
@@ -465,6 +482,21 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
    * exactly one part per priced piece. The SITE joints are the bolted end cleats — a REMOVABLE
    * (demountable) system: undo the nut-bolts and the rafter lifts out for relocation, no cutting. */
   const RAFTER_WEB_GAP = 0.16;       // clear zig-zag zone between the chords (m)
+  /* THE MS PIPE FRAME (company rule, 2026-07-23): the deck build-up is rafter FIRST, then a frame of
+   * MS square tubes bolted OVER the rafter top chords, and only then the deck — so the whole floor
+   * zone drops by the tube height and the board bears on the TUBES, exactly as built on site. The
+   * tubes run PERPENDICULAR to the rafters at a sheet-modular 1220 mm, so every 8 ft sheet-end joint
+   * lands on a tube centreline. Unpriced engineering detail — no BOQ line is touched. */
+  const TUBE_SPEC = {
+    sectionSize: "SHS 50 × 50 × 2 mm",
+    role:
+      "MS pipe frame member. Runs across the floor rafters at a sheet-modular 1220 mm spacing, so "
+      + "the deck (and every 8 ft sheet-end joint) bears on a tube centreline rather than mid-span.",
+    loadPath: "Deck load → MS tube → bolted crossing plates → rafter top chord → end cleats → beam → column → footing.",
+    note:
+      "Bolted DOWN onto the rafter top chords at the crossing plates — a removable joint, so the "
+      + "pipe frame unbolts with the rafters when the building is dismantled and relocated.",
+  } as const;
   const RAFTER_SPEC = {
     role:
       "Web member of the lattice floor rafter. The open web gives the rafter its depth (and so its "
@@ -480,6 +512,8 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   for (let f = 0; f < floors; f++) {
     const z = fflOf(f);
     const floorTag = f === 0 ? "gf" : `f${f}`;
+    /* Rafter top chords sit ONE TUBE below the deck soffit — the pipe frame occupies that band. */
+    const chordTop = z - FLOOR_TUBE_H;
     joistXs.forEach((x, i) => {
       for (let b = 0; b < joistBayYs.length - 1; b++) {
         const y0 = joistBayYs[b], y1 = joistBayYs[b + 1];
@@ -488,23 +522,23 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
         const jd = sectionForLine(lineId, "baseFrame");
         const jw2 = Math.max(MIN_VIS, jd.widthMm / 1000), jh2 = Math.max(MIN_VIS, jd.depthMm / 1000);
         s.add(`${floorTag}:joist:${i}:${b}`, "joist", "Floor rafter — top chord (priced joist)",
-          box(x - jw2 / 2, y0, z - jh2, x + jw2 / 2, y1, z),
+          box(x - jw2 / 2, y0, chordTop - jh2, x + jw2 / 2, y1, chordTop),
           {
             boqLineId: lineId, floor: f, partMark: "J", fabrication: "shop",
             spec: {
               ...dimsSpec(jd, span),
               note: "Top chord of the lattice floor rafter — the priced joist member. "
-                + "The chords and webs ship as one shop-welded unit; the end cleats are the "
-                + "removable site joints.",
+                + "The chords and webs ship as one shop-welded unit; the MS pipe frame bolts over "
+                + "this chord, and the end cleats are the removable site joints.",
             },
           });
 
         /* ---- the lattice body. On the GROUND floor the web zone is clamped so the bottom chord
          * never digs below ground when the plinth is low; a plinth too shallow for any honest
          * lattice keeps the plain chord alone rather than drawing a buried truss. */
-        const gap = f === 0 ? Math.min(RAFTER_WEB_GAP, z - 2 * jh2 - 0.05) : RAFTER_WEB_GAP;
+        const gap = f === 0 ? Math.min(RAFTER_WEB_GAP, chordTop - 2 * jh2 - 0.05) : RAFTER_WEB_GAP;
         if (gap >= 0.05) {
-          const topSoffit = z - jh2;
+          const topSoffit = chordTop - jh2;
           const botTop = topSoffit - gap;
           const webT = Math.max(0.025, Math.min(jw2, 0.04));
           s.add(`${floorTag}:rafter:${i}:${b}:chord`, "joist-web", "Floor rafter — bottom chord",
@@ -527,6 +561,55 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
         }
       }
     });
+
+    /* ---- MS PIPE FRAME — SHS tubes bolted OVER the rafters, carrying the deck ---------------- *
+     * Erection order (and the order the assembly video installs): rafter FIRST, then this pipe
+     * frame, then the deck. Tubes run across the rafters at a sheet-modular 1220 mm along the
+     * depth, edge runs pulled in half a tube so nothing overhangs the body. */
+    {
+      const half = FLOOR_TUBE_H / 2;
+      const tubeYs = floorTubeYs(bodyY0, bodyY1);
+      tubeYs.forEach((yk, k) => {
+        s.add(`${floorTag}:tube:${pad2(k + 1)}`, "floor-tube", "MS pipe frame — floor tube",
+          box(bodyX0, yk - half, z - FLOOR_TUBE_H, bodyX1, yk + half, z),
+          { floor: f, partMark: "FT", fabrication: "site", assemblyId: `${floorTag}:deck`, spec: { ...TUBE_SPEC, lengthM: round(bodyWM, 3) } });
+
+        /* Bolted crossing plates — the removable tube-to-rafter joint, sampled on the GROUND and
+         * FIRST floor (the same two-storey rule as the joist-end cleats; higher storeys repeat the
+         * identical detail without multiplying the part count). */
+        if (connDetail && f <= 1) {
+          joistXs.forEach((x, i) => {
+            const cid = `ftube:${floorTag}:${pad2(i + 1)}:${pad2(k + 1)}`;
+            const idBase = `${floorTag}:conn:tube:${pad2(i + 1)}:${pad2(k + 1)}`;
+            const pT = 0.008, pHalf = 0.05;
+            s.add(`${idBase}:plate`, "cleat", "Tube crossing plate",
+              box(x - pHalf, yk - pHalf, chordTop, x + pHalf, yk + pHalf, chordTop + pT),
+              {
+                connectionId: cid, assemblyId: `${floorTag}:deck`, partMark: "TP", floor: f,
+                fabrication: "shop",
+                spec: {
+                  widthMm: 100, heightMm: 100, thicknessMm: 8, boltCount: 1, boltSpec: "M12 gr 8.8",
+                  role: "Seats the MS tube on the rafter top chord and takes the holding-down bolt.",
+                  loadPath: "Tube → crossing plate → rafter top chord → end cleats → beam → column.",
+                  note: "SHOP-welded to the chord; the tube is SITE-bolted through it — undo the nut and the tube lifts off.",
+                },
+              });
+            s.add(`${idBase}:bolt`, "bolt", "Tube holding-down bolt M12",
+              box(x - 0.006, yk - 0.006, chordTop - 0.03, x + 0.006, yk + 0.006, chordTop + pT + 0.014),
+              { connectionId: cid, assemblyId: `${floorTag}:deck`, partMark: "TB", floor: f, fabrication: "site",
+                spec: { boltSpec: "M12 × 60 gr 8.8", note: "Vertical bolt through tube bottom wall, plate and chord flange." } });
+            s.add(`${idBase}:washer`, "washer", "Tube bolt washer",
+              box(x - 0.012, yk - 0.012, chordTop - 0.033, x + 0.012, yk + 0.012, chordTop - 0.03),
+              { connectionId: cid, assemblyId: `${floorTag}:deck`, floor: f, fabrication: "site" });
+            s.add(`${idBase}:nut`, "nut", "Tube bolt nut M12",
+              box(x - 0.0095, yk - 0.0095, chordTop - 0.043, x + 0.0095, yk + 0.0095, chordTop - 0.033),
+              { connectionId: cid, assemblyId: `${floorTag}:deck`, floor: f, fabrication: "site",
+                spec: { note: "Nut + washer under the chord top flange — the removable joint of the pipe frame." } });
+          });
+        }
+      });
+    }
+
     // deck: board + finish — over the walled body (the veranda gets its own chequered walkway plate)
     s.add(`${floorTag}:deck-board`, "floor-board", "Floor deck board",
       box(bodyX0, bodyY0, z, bodyX1, bodyY1, z + DECK_T), { boqLineId: "floor:board", floor: f });
@@ -1929,7 +2012,13 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
    *   ys — every member running along the deck (longitudinal base beams on the grid rows). These
    *        are on the COLUMN GRID, metres apart, which is exactly why cross joints need noggins. */
   const supportXs = uniqSorted([body.x0, body.x1, ...a.joistXs.filter(inBodyX), ...a.colXs.filter(inBodyX)]);
-  const supportYs = uniqSorted([body.y0, body.y1, ...a.rowYs.filter(inBodyY), ...a.joistBayYs.filter(inBodyY)]);
+  /* The MS pipe frame's tubes are real Y-direction support lines: they run across the rafters at a
+   * sheet-modular 1220 mm on EVERY deck, so the 8 ft sheet-end joints land on tube centrelines and
+   * most transverse bearers become unnecessary. Same derivation as the emitted tubes (floorTubeYs). */
+  const supportYs = uniqSorted([
+    body.y0, body.y1, ...a.rowYs.filter(inBodyY), ...a.joistBayYs.filter(inBodyY),
+    ...floorTubeYs(body.y0, body.y1).filter(inBodyY),
+  ]);
 
   const layout = buildSheetLayout({
     x0: body.x0, y0: body.y0, x1: body.x1, y1: body.y1,
@@ -1969,7 +2058,9 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
   }
 
   const zTopOf = (z: number) => z + DECK_T;
-  const zBotOf = (z: number) => z - joistHM;
+  /* The floor zone now stacks rafter chord → MS tube → deck, so the deck edge member and the
+   * joist-end connections sit one tube lower than the deck soffit. */
+  const zBotOf = (z: number) => z - FLOOR_TUBE_H - joistHM;
 
   for (let f = 0; f < a.floors; f++) {
     const z = a.fflOf(f);
@@ -2088,7 +2179,7 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
              * cleat can never join a ground-floor connection group. */
             const connTag = f === 0 ? "" : `${tag}:`;
             const connectionId = `joist:${connTag}${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
-            const cz = z - joistHM / 2;
+            const cz = z - FLOOR_TUBE_H - joistHM / 2;
             const cy = yEnd + dir * 0.05;
             addBoltedJoistCleat(s, {
               idBase, connectionId,

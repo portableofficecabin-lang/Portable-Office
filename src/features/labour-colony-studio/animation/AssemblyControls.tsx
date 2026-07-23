@@ -130,6 +130,7 @@ export function AssemblyControls(props: AssemblyControlsProps) {
             disabled={d}
             className="rounded-md border border-border bg-background px-1.5 py-1 text-xs text-foreground disabled:opacity-50"
           >
+            <option value="realistic">Realistic site</option>
             <option value="studio">Studio</option>
             <option value="white">White</option>
             <option value="site">Site</option>

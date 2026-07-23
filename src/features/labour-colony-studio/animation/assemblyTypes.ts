@@ -32,7 +32,9 @@ export type Vec3T = [number, number, number];
 export type PresentationMode = ViewMode;
 
 /** Neutral studio backdrops for the animation / export. "transparent" only where the encoder supports it. */
-export type AssemblyBackground = "studio" | "white" | "site" | "transparent";
+/** "realistic" = the shared sky / grass / haze site backdrop (viewer3d/SiteBackdrop) — the same
+ *  environment the interactive 3D viewer renders, in the player AND in every exported frame. */
+export type AssemblyBackground = "realistic" | "studio" | "white" | "site" | "transparent";
 
 /** A camera pose in three space. */
 export interface CameraKeyframe {

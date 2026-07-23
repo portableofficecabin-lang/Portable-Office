@@ -119,7 +119,7 @@ export const GROUP_OF_KIND: Record<ColonyPartKind, ColonyColorGroup> = {
   pcc: "foundation", footing: "foundation", pedestal: "foundation", "plinth-beam": "foundation",
   "levelling-plate": "baseConnection", "base-plate": "baseConnection", "anchor-bolt": "baseConnection",
   column: "column", "base-beam": "beam", "floor-beam": "beam",
-  joist: "joist", "joist-web": "joist", noggin: "noggin", brace: "brace",
+  joist: "joist", "joist-web": "joist", "floor-tube": "joist", noggin: "noggin", brace: "brace",
   stud: "column", rail: "beam",
   "roof-truss": "truss", rafter: "truss", "truss-web": "truss", ridge: "truss", purlin: "purlin",
   "c-channel": "cChannel", "u-channel": "uChannel",

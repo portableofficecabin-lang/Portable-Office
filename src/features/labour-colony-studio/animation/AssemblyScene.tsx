@@ -26,6 +26,7 @@ import {
   boxOfSolid, quadOfSolid, sceneCtxOf, MIN_VIS_M, type SceneCtx,
 } from "@/features/labour-colony-studio/viewer3d/partGeometry";
 import { resolvePartColor, type ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { HAZE, SiteAtmosphere } from "@/features/labour-colony-studio/viewer3d/SiteBackdrop";
 import type { AssemblyBackground, AssemblyTimeline, Vec3T } from "./assemblyTypes";
 import {
   activeStepCutawayAt, activeStepIndexAt, clamp01, sampleCamera, samplePart,
@@ -66,12 +67,14 @@ export interface AssemblySceneProps {
   palette?: ColonyPalette | null;
 }
 
-/* LITERAL HEX only — never oklch / CSS vars, so PNG + WebM export is colour-safe. */
+/* LITERAL HEX only — never oklch / CSS vars, so PNG + WebM export is colour-safe.
+ * "realistic" clears to the shared HAZE and draws the SiteAtmosphere (sky + grass + fog) instead of
+ * a flat ground plane, so the film and the 3D viewer share one world. */
 const BG_HEX: Record<AssemblyBackground, string | null> = {
-  studio: "#eef2f6", white: "#ffffff", site: "#e6e3dc", transparent: null,
+  realistic: HAZE, studio: "#eef2f6", white: "#ffffff", site: "#e6e3dc", transparent: null,
 };
 const GROUND_HEX: Record<AssemblyBackground, string | null> = {
-  studio: "#e2e8f0", white: "#f1f5f9", site: "#d3cec2", transparent: null,
+  realistic: null, studio: "#e2e8f0", white: "#f1f5f9", site: "#d3cec2", transparent: null,
 };
 const SELECT_HEX = "#f59e0b";
 const SELECT_EMISSIVE = "#7c3a00";
@@ -331,6 +334,7 @@ function SceneContents(props: AssemblySceneProps) {
       />
       <directionalLight position={[-radius * 3, radius * 3, -radius * 2]} intensity={0.4} />
 
+      {props.background === "realistic" && <SiteAtmosphere radius={radius} />}
       {ground && (
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.004, 0]} receiveShadow>
           <planeGeometry args={[radius * 20, radius * 20]} />
