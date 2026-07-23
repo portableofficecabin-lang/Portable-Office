@@ -852,7 +852,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   );
 
   /* ================================================================= ENVELOPE (skins) ===== */
-  buildEnvelope(s, { body, plinthM, roofBaseZ, cfg });
+  buildEnvelope(s, { body, plinthM, roofBaseZ, cfg, colXs, rowYs, floors, fflOf });
 
   /* ================================================================= OPENINGS ============= */
   buildOpenings(s, geoms, floors, fflOf);
@@ -2793,7 +2793,12 @@ const pad2 = (n: number): string => (n < 10 ? `0${n}` : `${n}`);
 
 function buildEnvelope(
   s: ModelSink,
-  a: { body: Body; plinthM: number; roofBaseZ: number; cfg: LabourColonyResult["config"] },
+  a: {
+    body: Body; plinthM: number; roofBaseZ: number; cfg: LabourColonyResult["config"];
+    /** Wall vertical (C-purlin) lines along each axis, and the storey bands — the PUF panels are
+     *  emitted PER BAY PER FLOOR between them, exactly as the elevations draw them. */
+    colXs: number[]; rowYs: number[]; floors: number; fflOf: (f: number) => number;
+  },
 ): void {
   const { body, plinthM: z0, roofBaseZ: z1, cfg } = a;
   const panel = cfg.panelType ? `${cfg.panelType} panel` : "wall panel";
@@ -2805,8 +2810,22 @@ function buildEnvelope(
     { face: "left", horiz: false, at: body.x0, lo: body.y0, dir: 1 },
     { face: "right", horiz: false, at: body.x1, lo: body.y0, dir: -1 },
   ];
+  /* Storey bands: each floor's panel drops from the band above; the top band closes at the eave. */
+  const bands: [number, number][] = [];
+  for (let f = 0; f < Math.max(1, a.floors); f++) {
+    const bz0 = a.fflOf(f);
+    const bz1 = f === a.floors - 1 ? z1 : a.fflOf(f + 1);
+    if (bz1 - bz0 > 0.05) bands.push([bz0, bz1]);
+  }
+  if (!bands.length) bands.push([z0, z1]);
+
   faces.forEach(({ face, horiz, at, lo, dir }) => {
     const wallLen = horiz ? body.w : body.d;
+    const hi = lo + wallLen;
+    /* Bay boundaries = the wall's C-purlin vertical lines (the BLUE members of the elevation). */
+    const lines = (horiz ? a.colXs : a.rowYs).filter((v) => v > lo + 1e-3 && v < hi - 1e-3);
+    const bounds = uniqSorted([lo, ...lines, hi]);
+
     const layers: { kind: ColonyPartKind; t: number; boq: string; on: boolean; label: string; op?: number }[] = [
       { kind: "ext-panel", t: SKIN_T, boq: `${face}:cladding`, on: true, label: `External ${panel} — ${face}`, op: 0.92 },
       { kind: "insulation", t: INS_T, boq: `${face}:insulation`, on: gi, label: `Wall insulation — ${face}` },
@@ -2819,10 +2838,43 @@ function buildEnvelope(
       const t0 = at + dir * inset;
       const t1 = at + dir * (inset + layer.t);
       const lo0 = Math.min(t0, t1), hi0 = Math.max(t0, t1);
-      const solid: PartSolid = horiz
-        ? box(lo, lo0, z0, lo + wallLen, hi0, z1)
-        : box(lo0, lo, z0, hi0, lo + wallLen, z1);
-      s.add(`${face}:${layer.kind}`, layer.kind, layer.label, solid, { boqLineId: layer.boq, opacity: layer.op });
+      if (layer.kind !== "ext-panel") {
+        /* insulation / lining stay one slab per face — they are not the sliding module */
+        const solid: PartSolid = horiz
+          ? box(lo, lo0, z0, hi, hi0, z1)
+          : box(lo0, lo, z0, hi0, hi, z1);
+        s.add(`${face}:${layer.kind}`, layer.kind, layer.label, solid, { boqLineId: layer.boq, opacity: layer.op });
+      } else {
+        /* THE SLIDING PUF PANELS (user rule, from the elevation set): the WHITE areas are panels
+         * that SLIDE DOWN between the C-purlin verticals (the BLUE lines) — one bay per storey per
+         * panel, each stacking onto the one before. No MS pipe anywhere in a wall: C purlin and
+         * panel alone. Same priced `${face}:cladding` AREA line — the split changes geometry, not
+         * a single rupee. */
+        bands.forEach(([bz0, bz1], f) => {
+          for (let bi = 0; bi < bounds.length - 1; bi++) {
+            const b0 = bounds[bi], b1 = bounds[bi + 1];
+            if (b1 - b0 < 0.05) continue;
+            const solid: PartSolid = horiz
+              ? box(b0, lo0, bz0, b1, hi0, bz1)
+              : box(lo0, b0, bz0, hi0, b1, bz1);
+            s.add(`${face}:ext-panel:${f}:${pad2(bi + 1)}`, "ext-panel",
+              `${panel} — ${face}, ${f === 0 ? "ground floor" : `floor ${f}`}, bay ${bi + 1}`,
+              solid,
+              {
+                boqLineId: layer.boq, opacity: layer.op, floor: f,
+                spec: {
+                  widthMm: Math.round((b1 - b0) * 1000),
+                  heightMm: Math.round((bz1 - bz0) * 1000),
+                  thicknessMm: Math.round(SKIN_T * 1000),
+                  role: "Sliding wall panel — dropped DOWN between the C-purlin verticals of its bay.",
+                  note: "Slides down from the top between the C purlins and stacks onto the panel "
+                    + "before it; the bottom edge lands in the PUF locking pocket. No MS pipe in "
+                    + "any wall — C purlin and panel alone, slid and locked.",
+                },
+              });
+          }
+        });
+      }
       inset += layer.t;
     }
   });

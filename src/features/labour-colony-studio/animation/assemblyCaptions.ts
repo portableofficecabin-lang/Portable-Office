@@ -837,9 +837,9 @@ export function describeColonyStep(
               "These MS sections are engineering detail the take-off does not itemise; the priced " +
               "cladding line remains the source of truth for the cost of the panel itself."
             : ""),
-        captionCustomer: "The wall framework is built up between the columns." +
-          (seated ? " The steel channels the wall panels will slide into are fixed and checked first." : ""),
-        captionEngineering: "Wall studs at design c/c with top / bottom rails and cleats on every wall line." +
+        captionCustomer: "The vertical C purlins of the wall framework go up between the columns — the tracks the wall panels will slide down between." +
+          (seated ? " The steel channels the panels lock into are fixed and checked first." : ""),
+        captionEngineering: "Wall C-purlin studs at design c/c with top / bottom rails and cleats on every wall line." +
           (seated
             ? ` Panel seating framework complete before any panel — ${seats.map((s) => s.sectionCall).join(", ")}. ${spec.note}`
             : ""),
@@ -1024,6 +1024,9 @@ export function describeColonyStep(
         description:
           `External cladding${ctx.hasInsulation ? ", cavity insulation" : ""}${ctx.hasLining ? ", internal lining" : ""}` +
           `${ctx.hasPartition ? " and the internal partitions" : ""} are installed over the wall framing.` +
+          " Each PUF panel SLIDES DOWN from the top between the C-purlin verticals of its bay and " +
+          "stacks onto the panel before it — no MS pipe anywhere in a wall: C purlin and panel " +
+          "alone, slid and locked, one to another." +
           (lock.length
             ? " The panels are LOCKED into that framework in a fixed order rather than simply stood " +
               `up: ${lock.map((s) => `${s.step}. ${s.title} — ${s.restrainedEdges}`).join(" ")} ` +
@@ -1038,9 +1041,8 @@ export function describeColonyStep(
               `base plate to form a receiving pocket matching the selected PUF-panel thickness. This limits ` +
               `sideways movement and avoids excessive shaking or open gaps.`
             : ""),
-        captionCustomer: "The walls are clad, lined and divided into rooms." +
-          (lock.length ? " Each panel slides into its steel channel and locks onto the one before it." : "") +
-          (puf ? " Each wall panel drops into the locking channel at its base so it cannot shake or gap." : ""),
+        captionCustomer: "Each wall panel slides DOWN between the C-purlin verticals and locks onto the one before it — the walls close bay by bay into rooms." +
+          (puf ? " At its base every panel drops into the locking channel so it cannot shake or gap." : ""),
         captionEngineering:
           `External cladding fixed to the stud frame${ctx.hasInsulation ? "; cavity insulation to the specification" : ""}` +
           `${ctx.hasLining ? "; internal lining board over the studwork" : ""}` +

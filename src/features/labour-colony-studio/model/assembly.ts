@@ -195,7 +195,10 @@ export const EXPLODE_OF_KIND: Record<ColonyPartKind, Vec3> = {
   purlin: { x: 0, y: 0, z: 2.0 },
   "roof-sheet": { x: 0, y: 0, z: 3.0 },
   ceiling: { x: 0, y: 0, z: 1.7 },
-  "ext-panel": { x: 0, y: 0, z: 0 },      // overridden per-face
+  /* The panel's approach IS its site insertion: it SLIDES DOWN from the top between the C-purlin
+   * verticals — so it enters the film from above, and the exploded view lifts it back up and out
+   * of its channels. Never pushed in sideways. */
+  "ext-panel": { x: 0, y: 0, z: 1.15 },
   insulation: { x: 0, y: 0, z: 0 },       // overridden per-face
   "int-finish": { x: 0, y: 0, z: 0 },     // overridden per-face
   partition: { x: 0, y: 0, z: 0.9 },
