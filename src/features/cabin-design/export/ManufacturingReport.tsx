@@ -10,6 +10,8 @@
  */
 
 import type { BoqLine, BoqResult, CuttingRow } from "@/lib/boq/types";
+import type { CabinConfig } from "@/components/home/cabin-calculator/pricing";
+import { buildFloorSheetSchedule } from "@/features/cabin-design/model/floorSheets";
 
 const th: React.CSSProperties = { textAlign: "left", padding: "3px 8px", fontSize: 9, color: "#0f172a", borderBottom: "1.5px solid #0f172a", textTransform: "uppercase", letterSpacing: "0.04em" };
 const td: React.CSSProperties = { padding: "3px 8px", fontSize: 11, color: "#334155", borderBottom: "1px solid #e2e8f0" };
@@ -72,7 +74,95 @@ function CuttingTable({ rows }: { rows: CuttingRow[] }) {
   );
 }
 
-export function ManufacturingReport({ boqResult }: { boqResult?: BoqResult | null }) {
+/**
+ * FLOORING SHEET SCHEDULE (8 ft × 4 ft). Explains the priced floor-board quantity: the area basis
+ * (exact → rounded up), the physical cutting layout, the waste, and the per-floor / per-room split.
+ * It never overrides the BOQ — the priced line stays the procurement truth.
+ */
+function FlooringSheetSection({ boqResult, config }: { boqResult: BoqResult; config: CabinConfig }) {
+  const boqSheets = boqResult.lines.find((l) => l.id === "floor:board")?.sheets ?? null;
+  const sch = buildFloorSheetSchedule(config, boqSheets, Math.max(1, Math.round(config.boqOptions?.floors ?? 1)));
+  const t = sch.totals;
+  const Fig = ({ k, v, strong }: { k: string; v: string; strong?: boolean }) => (
+    <div className="flex justify-between gap-3 border-b border-dashed border-slate-200 py-0.5">
+      <span className="text-slate-600">{k}</span>
+      <span className={strong ? "font-bold text-slate-900" : "font-medium"}>{v}</span>
+    </div>
+  );
+  return (
+    <Section title={`Flooring sheet schedule — ${sch.sheetLengthFt} ft × ${sch.sheetWidthFt} ft (${sch.sheetAreaSqft} sq ft/sheet)`}>
+      <div className="grid gap-x-6 gap-y-1 text-[11px] sm:grid-cols-2">
+        <Fig k="Total flooring area" v={`${t.floorAreaSqft} sq ft`} />
+        <Fig k="Area covered by one sheet" v={`${sch.sheetAreaSqft} sq ft`} />
+        <Fig k="Exact sheets required (area ÷ 32)" v={`${t.exactSheets}`} />
+        <Fig k="Rounded up to complete sheets" v={`${t.roundedSheets} sheets`} strong />
+        <Fig k="Sheets placed by the cutting layout" v={`${t.layoutSheets} (${t.fullSheets} full · ${t.cutSheets} cut)`} />
+        <Fig k="Used sheet area" v={`${t.usedAreaSqft} sq ft`} />
+        <Fig k="Gross board area bought" v={`${t.grossAreaSqft} sq ft`} />
+        <Fig k="Balance / leftover (reusable off-cut)" v={`${t.balanceAreaSqft} sq ft`} />
+        <Fig k="Cutting waste" v={`${t.cuttingWasteSqft} sq ft`} />
+        <Fig k="Wastage percentage" v={`${t.wastagePercent}%`} />
+        <Fig k="Priced BOQ quantity (incl. wastage)" v={boqSheets == null ? "—" : `${boqSheets} sheets`} />
+        <Fig k="GRAND TOTAL flooring sheets" v={`${t.grandTotalSheets} sheets`} strong />
+      </div>
+
+      <div className="mt-2 overflow-x-auto">
+        <table className="w-full border-collapse text-[10.5px]">
+          <thead>
+            <tr className="bg-slate-100 text-left">
+              {["Floor", "Sheets", "Full", "Cut", "Area (sq ft)"].map((h) => (
+                <th key={h} className="border border-slate-300 px-1.5 py-1">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sch.perFloor.map((f) => (
+              <tr key={f.floor}>
+                <td className="border border-slate-300 px-1.5 py-1 font-medium">{f.label}</td>
+                <td className="border border-slate-300 px-1.5 py-1 text-right">{f.sheets}</td>
+                <td className="border border-slate-300 px-1.5 py-1 text-right">{f.fullSheets}</td>
+                <td className="border border-slate-300 px-1.5 py-1 text-right">{f.cutSheets}</td>
+                <td className="border border-slate-300 px-1.5 py-1 text-right">{f.floorAreaSqft}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-2 overflow-x-auto">
+        <table className="w-full border-collapse text-[10.5px]">
+          <thead>
+            <tr className="bg-slate-100 text-left">
+              {["Sheet", "Floor", "Room", "Cut size (ft)", "Full / cut", "Area (sq ft)"].map((h) => (
+                <th key={h} className="border border-slate-300 px-1.5 py-1">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sch.rows.map((r) => (
+              <tr key={r.no}>
+                <td className="border border-slate-300 px-1.5 py-1 font-medium">{r.mark}</td>
+                <td className="border border-slate-300 px-1.5 py-1">{r.floor}</td>
+                <td className="border border-slate-300 px-1.5 py-1">{r.room}</td>
+                <td className="border border-slate-300 px-1.5 py-1">
+                  {(r.cutLengthMm / 304.8).toFixed(2)} × {(r.cutWidthMm / 304.8).toFixed(2)}
+                </td>
+                <td className="border border-slate-300 px-1.5 py-1">{r.full ? "Full" : "Cut"}</td>
+                <td className="border border-slate-300 px-1.5 py-1 text-right">{r.areaSqft}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ul className="mt-2 list-disc space-y-0.5 pl-4 text-[10px] text-slate-500">
+        {sch.notes.map((n) => <li key={n}>{n}</li>)}
+      </ul>
+    </Section>
+  );
+}
+
+export function ManufacturingReport({ boqResult, config }: { boqResult?: BoqResult | null; config?: CabinConfig | null }) {
   if (!boqResult) {
     return (
       <div className="rounded-xl border border-dashed border-border p-4 text-center text-sm text-muted-foreground">
@@ -108,6 +198,7 @@ export function ManufacturingReport({ boqResult }: { boqResult?: BoqResult | nul
 
       <Section title="Steel / tube cutting list"><CuttingTable rows={steelCut} /></Section>
       <Section title="Sheet cutting & nesting"><LineTable lines={sheetLines} extra="area" /></Section>
+      {config && <FlooringSheetSection boqResult={boqResult} config={config} />}
       <Section title="Paint, primer & sealant"><LineTable lines={finishing} extra="area" /></Section>
       <Section title="Hardware & fasteners"><LineTable lines={hardware} /></Section>
       <Section title="Electrical schedule"><LineTable lines={electrical} /></Section>

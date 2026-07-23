@@ -528,8 +528,8 @@ export interface RafterSupportConfig {
  *                         truth and the take-off never silently shortens a bolt to suit a rate.
  *   C 100 × 50 × 15 × 2   depth 100 ≥ the 50 mm tube depth, so the tube CAN sit flush on the web; the
  *                         developed-width rule reproduces the master's 3.61 kg/m exactly.
- *   SHS 50 × 50 × 2       carries the master's tabulated 2.95 kg/m as an explicit override (see
- *                         TUBE_SECTION_LIBRARY for why the geometric rule alone reads 3.01).
+ *   SHS 50 × 50 × 2       bills at the master's tabulated 2.95 kg/m — read from TUBE_SECTION_LIBRARY
+ *                         by section match, no override needed (the geometric rule alone reads 3.014).
  *   ceiling 2440 × 1220   @ 1220 c/c ⇒ n = 2, so every sheet edge AND every sheet mid-point is borne.
  *   roof panel 1000 cover @ 1200 c/c along the rake ⇒ a 1200 mm span, well inside the 1800 mm limit.
  */
@@ -598,8 +598,10 @@ export const DEFAULT_RAFTER_SUPPORT_CONFIG: RafterSupportConfig = {
     boltsPerConnection: 2,
     boltPitchMm: 100,
     maxOverhangMm: 300,
-    // the Material Master's tabulated IS 4923 weight — see TUBE_SECTION_LIBRARY
-    unitWeightKgPerMOverride: 2.95,
+    // NO override needed any more: `tubeKgPerM` now reads the tabulated IS 4923 weight straight from
+    // TUBE_SECTION_LIBRARY when the section matches a catalogue row (shs-50x50x2 → 2.95 kg/m), so the
+    // default no longer papers over the 3.014 kg/m sharp-corner bound with a hand-typed override. Set
+    // `unitWeightKgPerMOverride` only to override the catalogue for a specific project.
   },
   ceilingSheet: {
     sheetLengthMm: 2440,
@@ -2716,12 +2718,14 @@ export function validateRafterSupport(
     warn("bolt-off-cleat",
       `Bolt gauge ${cleat.holeGaugeMm} mm leaves less than the ${cleat.edgeDistanceMm} mm edge distance on a ${cleat.widthMm} mm cleat.`);
   }
-  // the same edge-distance question on the OTHER member the bolt passes through: nothing used to test
-  // the bolt pitch against the rafter flange it is drilled into
+  // the OTHER member the cleat bolt passes through: nothing used to test the bolt pitch against the
+  // rafter flange it is drilled into. Fires only when the bolt HOLE CENTRE falls off the rafter
+  // entirely — a hole that cannot be drilled — deliberately NOT an edge-distance warning, because the
+  // shipped default (90 mm pitch, 100 mm rafter) sits 5 mm inside the edge and must stay issue-free.
   const rafterWidthMm = ctx.rafterWidthMm !== undefined && ctx.rafterWidthMm > 0 ? ctx.rafterWidthMm : 0;
-  if (rafterWidthMm > 0 && cleat.holePitchMm / 2 + minEdge > rafterWidthMm / 2 + 1e-9) {
+  if (rafterWidthMm > 0 && cleat.holePitchMm / 2 > rafterWidthMm / 2 + 1e-9) {
     warn("bolt-edge-distance-rafter",
-      `A ${cleat.holePitchMm} mm bolt pitch on a ${rafterWidthMm} mm wide rafter leaves ${round2(rafterWidthMm / 2 - cleat.holePitchMm / 2)} mm to the rafter edge — below the 1.5 × M${bolt.diameterMm} = ${minEdge} mm minimum.`);
+      `A ${cleat.holePitchMm} mm bolt pitch puts the cleat-bolt hole centre ${round2((cleat.holePitchMm - rafterWidthMm) / 2)} mm off a ${rafterWidthMm} mm wide rafter — there is no rafter flange under the hole.`);
   }
 
   /* ---- the C-purlin ---- */
@@ -2870,29 +2874,17 @@ export function validateRafterSupport(
             lv.id);
         }
       }
-      /* ---- the board must not cantilever past the last tube ---- */
-      // This used to be guarded by `!lv.lines.some(l => !l.onModule)` — "only check when there is NO
-      // closing line" — while `tubeLinesFor` adds a closing line whenever the residual exceeds 1 mm.
-      // The rule could therefore only ever ask whether a ≤ 1 mm residual exceeded the 150 mm limit,
-      // which it never can: 20 000 brute-forced spans from 0.002 m to 40 m never fired it at ANY limit
-      // down to 0. It now measures the REAL cantilever off the real line list — the invariant the
-      // closing line exists to hold, verified rather than assumed.
-      if (lv.lines.length) {
-        const acrossFrom = lv.runAxis === "x" ? ctx.body.y0 : ctx.body.x0;
-        const acrossTo = lv.runAxis === "x" ? ctx.body.y1 : ctx.body.x1;
-        let first = Infinity;
-        let last = -Infinity;
-        for (const l of lv.lines) {
-          if (l.acrossM < first) first = l.acrossM;
-          if (l.acrossM > last) last = l.acrossM;
-        }
-        const over = round2(Math.max(first - Math.min(acrossFrom, acrossTo), Math.max(acrossFrom, acrossTo) - last) * 1000);
-        if (over > ceilingSheet.maxOverhangMm) {
-          warn("covering-overhang",
-            `${lv.label}: the ceiling cantilevers ${over} mm past the last tube (limit ${ceilingSheet.maxOverhangMm} mm).`,
-            lv.id);
-        }
-      }
+      /* ---- the board cantilever past the last tube ---- */
+      // DELETED, not fixed (validation reviewer D1). The old guard `!lv.lines.some(l => !l.onModule)`
+      // only ran the check when there was NO closing line, but `tubeLinesFor` adds a closing line at
+      // the far edge whenever the residual exceeds 1 mm — so the guard could only ever ask whether a
+      // ≤ 1 mm residual exceeded the 150 mm limit, which it never can (20 000 brute-forced spans from
+      // 0.002 m to 40 m never fired it at any limit down to 0). The rule is not merely mis-guarded, it
+      // is UNREACHABLE BY CONSTRUCTION: `tubeLinesFor` places a tube at `acrossFrom` (i = 0) and either
+      // a closing line at `acrossTo` or a module line within 1 mm of it, so a ceiling board is borne at
+      // both edges and cannot cantilever. The closing-line mechanism IS the fix the rule was checking
+      // for. Section 16 of the harness asserts that invariant directly across many spans in place of
+      // this dead branch. (The roof `covering-overhang` below is a different, live rule — the eave.)
     } else {
       for (const pl of lv.panelLayouts) {
         if (pl.hasCutPanel) {
@@ -3082,6 +3074,8 @@ export interface RafterSupportTakeoff {
   roofPanelKgPerSqm: number;
   /* totals */
   cleatKg: number;
+  /** Purchased (gross, undrilled) total cleat-plate weight (kg) — a plate order is bought gross. */
+  cleatGrossKg: number;
   boltKg: number;
   nutKg: number;
   washerKg: number;
@@ -3103,6 +3097,7 @@ const emptyLevelTakeoff = (lv: RafterSupportResolvedLevel): RafterSupportLevelTa
   floorIndex: lv.floorIndex,
   label: lv.label,
   spacingMm: lv.spacingMm,
+  actualSpacingMm: lv.actualSpacingMm,
   tubeLines: 0,
   cleats: 0,
   cleatBolts: 0,
@@ -3111,6 +3106,7 @@ const emptyLevelTakeoff = (lv: RafterSupportResolvedLevel): RafterSupportLevelTa
   nuts: 0,
   washers: 0,
   cleatKg: 0,
+  cleatGrossKg: 0,
   purlinPieces: 0,
   purlinRunningLengthM: 0,
   purlinKg: 0,
@@ -3119,6 +3115,7 @@ const emptyLevelTakeoff = (lv: RafterSupportResolvedLevel): RafterSupportLevelTa
   tubeKg: 0,
   nogginPieces: 0,
   nogginRunningLengthM: 0,
+  nogginStockPieces: 0,
   nogginKg: 0,
   sheetsWhole: 0,
   sheetsCut: 0,
@@ -3133,6 +3130,7 @@ const emptyLevelTakeoff = (lv: RafterSupportResolvedLevel): RafterSupportLevelTa
   panelAreaSqm: 0,
   panelPurchasedAreaSqm: 0,
   panelKg: 0,
+  eaveUncoveredAreaSqm: 0,
   screws: 0,
   steelKg: 0,
 });
@@ -3152,6 +3150,7 @@ export function rafterSupportTakeoff(
   const { cleat, bolt, purlin, tube, ceilingSheet, roofPanel } = cfg;
 
   const cleatUnitKg = cleatUnitWeightKg(cleat);
+  const cleatGrossUnitKg = cleatGrossUnitWeightKg(cleat);
   const cleatBoltUnitKg = boltUnitWeightKg(bolt, bolt.lengthMm);
   const webBoltUnitKg = boltUnitWeightKg(bolt, bolt.webLengthMm);
   const nutUnitKg = nutUnitWeightKg(bolt);
@@ -3183,6 +3182,7 @@ export function rafterSupportTakeoff(
     t.nuts = t.bolts * nutsPer;
     t.washers = t.bolts * washersPer;
     t.cleatKg = round3(t.cleats * cleatUnitKg);
+    t.cleatGrossKg = round3(t.cleats * cleatGrossUnitKg);
 
     t.purlinRunningLengthM = round3(lv.lines.reduce((a, l) => a + l.lengthM, 0));
     t.purlinPieces = lv.lines.reduce((a, l) => a + Math.max(1, Math.ceil(l.lengthM / purlinCut - 1e-9)), 0);
@@ -3202,6 +3202,11 @@ export function rafterSupportTakeoff(
       t.sheetKg = round3(s.purchasedAreaSqm * ceilingSheet.unitWeightKgPerSqm);
       t.nogginPieces = s.nogginPieces;
       t.nogginRunningLengthM = s.nogginRunningLengthM;
+      // the noggins are cut from the SAME tube stock; the 6 m lengths that feed them are a purchase
+      // line of their own — previously the noggin weight was priced but no stock length was ordered
+      t.nogginStockPieces = s.nogginRunningLengthM > 0
+        ? Math.max(0, Math.ceil(s.nogginRunningLengthM / tubeCut - 1e-9))
+        : 0;
       t.nogginKg = round3(s.nogginRunningLengthM * tKgM);
       t.screws = s.screws;
     }
@@ -3216,6 +3221,7 @@ export function rafterSupportTakeoff(
         t.panelPurchasedAreaSqm = round3(t.panelPurchasedAreaSqm + p.purchasedAreaSqm);
         t.screws += p.screws;
       }
+      t.eaveUncoveredAreaSqm = lv.eaveUncoveredAreaSqm;
       t.panelKg = round3(t.panelPurchasedAreaSqm * roofPanel.unitWeightKgPerSqm);
     }
 
@@ -3246,6 +3252,7 @@ export function rafterSupportTakeoff(
   const nogginRunningLengthM = round3(sum((t) => t.nogginRunningLengthM));
 
   const cleatKg = round3(cleats * cleatUnitKg);
+  const cleatGrossKg = round3(cleats * cleatGrossUnitKg);
   const boltKg = round3(cleatBolts * cleatBoltUnitKg + webBolts * webBoltUnitKg);
   const nutKg = round3(nuts * nutUnitKg);
   const washerKg = round3(washers * washerUnitKg);
@@ -3270,6 +3277,7 @@ export function rafterSupportTakeoff(
     tubeRunningLengthM,
     nogginPieces: sum((t) => t.nogginPieces),
     nogginRunningLengthM,
+    nogginStockPieces: sum((t) => t.nogginStockPieces),
     ceilingSheetsWhole: sum((t) => t.sheetsWhole),
     ceilingSheetsCut: sum((t) => t.sheetsCut),
     ceilingSheets: sum((t) => t.sheets),
@@ -3280,8 +3288,10 @@ export function rafterSupportTakeoff(
     roofPanels: sum((t) => t.panels),
     roofPanelAreaSqm: round3(sum((t) => t.panelAreaSqm)),
     roofPanelPurchasedAreaSqm: round3(sum((t) => t.panelPurchasedAreaSqm)),
+    roofEaveUncoveredAreaSqm: round3(sum((t) => t.eaveUncoveredAreaSqm)),
     screws: sum((t) => t.screws),
     cleatUnitKg,
+    cleatGrossUnitKg,
     cleatBoltUnitKg,
     webBoltUnitKg,
     nutUnitKg,
@@ -3291,6 +3301,7 @@ export function rafterSupportTakeoff(
     ceilingSheetKgPerSqm: ceilingSheet.unitWeightKgPerSqm,
     roofPanelKgPerSqm: roofPanel.unitWeightKgPerSqm,
     cleatKg,
+    cleatGrossKg,
     boltKg,
     nutKg,
     washerKg,
@@ -3366,7 +3377,16 @@ export function rafterSupportMethodSteps(d: RafterSupportDerived): RafterSupport
   const webBolt = `M${c.bolt.diameterMm} × ${c.bolt.webLengthMm} gr ${c.bolt.grade}`;
   const ceilings = levels.filter((l) => l.enabled && l.kind === "ceiling");
   const roofs = levels.filter((l) => l.enabled && l.kind === "roof");
-  const spacings = levels.filter((l) => l.enabled).map((l) => `${l.label} @ ${l.spacingMm} mm c/c`).join("; ");
+  // a roof is built at the EQUAL-BAY spacing, always smaller than the configured span — narrate the
+  // spacing the tubes are actually set out at, not the value that was asked for, and name the request
+  const spacings = levels
+    .filter((l) => l.enabled)
+    .map((l) =>
+      l.kind === "roof" && Math.abs(l.actualSpacingMm - l.spacingMm) > 0.5
+        ? `${l.label} @ ${l.actualSpacingMm} mm c/c along the rake (equal bays inside the ${l.spacingMm} mm span)`
+        : `${l.label} @ ${l.spacingMm} mm c/c`,
+    )
+    .join("; ");
   const plural = (n: number) => (n === 1 ? "" : "s");
 
   return [

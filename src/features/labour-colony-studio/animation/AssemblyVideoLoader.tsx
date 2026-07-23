@@ -17,6 +17,7 @@ import { Component, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { Film } from "lucide-react";
 import type { ColonyModel, ViewMode } from "@/features/labour-colony-studio/model/types";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
 import type { BoqResult } from "@/lib/boq/types";
 import { GlFailureNotice } from "@/features/labour-colony-studio/studio/GlFailureNotice";
 
@@ -29,6 +30,9 @@ export interface AssemblyVideoLoaderProps {
   customerName?: string;
   selectedId?: string | null;
   onSelectPart?: (id: string | null) => void;
+  /** Shared with the 3D tab so a colour chosen in either place shows in both, and in the export. */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 function Skeleton() {

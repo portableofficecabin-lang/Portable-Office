@@ -28,6 +28,9 @@
  * public bundle.
  */
 
+import type { SheetLayoutResult } from "./sheetLayout";
+import type { PanelSupportSpec } from "./panelSupport";
+
 /** A 2-D point in plan metres (footprint polygons). */
 export interface Pt {
   x: number;
@@ -98,8 +101,17 @@ export type ColonyPartKind =
   | "base-plate" | "anchor-bolt" | "levelling-plate"
   // primary steel frame
   | "column" | "stud" | "rail" | "base-beam" | "floor-beam" | "joist" | "brace"
+  /** Transverse member added under a flooring-sheet cross joint that lands mid-bay (sheetLayout.ts). */
+  | "noggin"
   // roof steelwork
   | "roof-truss" | "rafter" | "truss-web" | "purlin" | "ridge"
+  /**
+   * PANEL-SUPPORT SECTIONS — the MS framework a sandwich panel is CAPTURED by (panelSupport.ts).
+   * A PUF panel has no edge strength, so it is never simply placed on steel: the U-channel grips it
+   * at the base, the C-channel receives its vertical edge (and forms the perimeter deck edge member),
+   * the angle restrains its head without loading it, and the framed pocket captures it on three sides.
+   */
+  | "c-channel" | "u-channel" | "angle-support" | "pocket-support"
   // fabricated connections (synthesized engineering detail)
   | "gusset" | "cleat" | "end-plate" | "splice-plate" | "stiffener"
   | "bolt" | "nut" | "washer" | "weld"
@@ -115,6 +127,8 @@ export type ColonyPartKind =
   | "rsup-cleat-plate" | "rsup-bolt" | "rsup-nut" | "rsup-washer"
   | "rsup-c-purlin" | "rsup-ms-tube" | "rsup-cement-sheet" | "rsup-puf-roof-panel"
   // envelope
+  /** One numbered 8'×4' deck sheet in the setting-out (sheetLayout.ts). */
+  | "floor-sheet"
   | "floor-board" | "floor-finish" | "ext-panel" | "insulation" | "int-finish"
   | "roof-sheet" | "ceiling" | "partition"
   // openings
@@ -161,6 +175,24 @@ export interface PartSpec {
   holeDiaMm?: number;
   weldSpec?: string;      // "6 mm fillet · shop weld"
   weldLengthMm?: number;
+  // flooring-sheet setting-out (sheetLayout.ts)
+  /** Laying sequence mark of a deck sheet, e.g. "S07". */
+  sheetMark?: string;
+  /** true ⇒ laid whole; false ⇒ cut to fit the perimeter. */
+  sheetFull?: boolean;
+  /** Support-member centres carrying this sheet (mm). */
+  supportSpacingMm?: number;
+  /** Bearing available to each sheet at a joint landing on a member (mm). */
+  bearingMm?: number;
+  // panel seating (panelSupport.ts)
+  /** Clear slot width a captured panel edge enters (mm). */
+  slotWidthMm?: number;
+  /** Minimum depth the panel edge must sit into the section (mm). */
+  minInsertionMm?: number;
+  /** What this member is structurally doing — surfaced verbatim by the inspector. */
+  role?: string;
+  /** How the load this member receives reaches the foundation. */
+  loadPath?: string;
   note?: string;
 }
 
@@ -273,6 +305,15 @@ export interface ColonyModel {
    * Type: RafterSupportDerived (model/rafterSupport).
    */
   rafterSupport?: import("./rafterSupport").RafterSupportDerived;
+  /**
+   * The flooring-sheet setting-out for one deck: how the 8'×4' sheets tile it, whether every joint
+   * lands on a member, the bearing achieved, and the ordering arithmetic (full / cut / offcut /
+   * wastage / rounded purchase quantity). ENGINEERING DETAIL — the priced `floor:board` line remains
+   * the source of truth for cost; this explains how that area is physically cut and laid.
+   */
+  deck?: SheetLayoutResult;
+  /** How the configured PUF panel thickness is seated and locked into the MS support framework. */
+  panelSupport?: PanelSupportSpec;
   /** Convenience header echoed from the config (metres), for titles / labels. */
   meta: {
     projectName: string;

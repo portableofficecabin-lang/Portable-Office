@@ -13,11 +13,18 @@
  * or a quantity, and nothing here needs the live BoqResult, which is what keeps the timeline
  * deterministic for a given model.
  *
+ * The deck sheet setting-out (`model.deck`) and the panel seating system (`model.panelSupport`) are
+ * read the same way — the layout and the lock sequence are quoted from the modules that resolved
+ * them rather than retold here, so the narration cannot drift from the drawing set. Both are
+ * ENGINEERING DETAIL: the sheet quantity is a cutting / ordering figure and the MS seating sections
+ * are not itemised at all, so the copy says outright that the priced deck-board and cladding lines
+ * remain the source of truth for cost.
+ *
  * Pure: no React / three / DOM.
  */
 
 import type {
-  ColonyAssemblyStep, ColonyModel, ColonyPart, ColonyPartKind,
+  ColonyAssemblyStep, ColonyModel, ColonyPart, ColonyPartKind, PartSpec,
 } from "@/features/labour-colony-studio/model/types";
 import {
   CONNECTION_DETAIL, isPufLockKind, isRafterSupportKind,
@@ -26,6 +33,13 @@ import type {
   RafterSupportDerived, RafterSupportLevelKind,
 } from "@/features/labour-colony-studio/model/rafterSupport";
 import { rafterSupportOf, type DetailAssemblyGroup } from "./assemblyDetailTour";
+import {
+  MIN_EDGE_BEARING_MM, SHEET_LABEL, SHEET_SHORT_MM, isModularSpacing, recommendedSpacingMm,
+  type SheetLayoutResult,
+} from "@/features/labour-colony-studio/model/sheetLayout";
+import {
+  buildPanelLockSequence, type PanelSupportSpec,
+} from "@/features/labour-colony-studio/model/panelSupport";
 import type { StepEngineeringRow } from "./assemblyTypes";
 
 /* ----------------------------------------------------------------- context --------------------- */
@@ -67,6 +81,32 @@ export interface ColonyAssemblyContext {
   hasSplice: boolean;
   hasBrace: boolean;
   upperFloor: boolean;
+
+  /* ---- the detailing systems, present only when this colony actually carries them ----
+   * Same rule as every flag above: a colony with no sandwich panel must never gain panel copy, and a
+   * model built before these systems existed must still narrate cleanly. The two spec objects are
+   * carried through so the step copy can quote the model's OWN resolved numbers instead of a second,
+   * drifting derivation of them. */
+  hasCBend: boolean;
+  hasSheetSetOut: boolean;
+
+  /**
+   * A fully TRIANGULATED truss (king post + webs + tie chord), as opposed to a single mono-pitch
+   * rafter. A mono roof emits one `rafter` and no `truss-web` at all, so narrating an apex, a king
+   * post or web members there would describe a truss that was never built.
+   */
+  hasTrussFrame: boolean;
+  /**
+   * The truss's own welds / splice plates / bolts are present. `buildColonyModel` gates every one of
+   * them behind `connectionDetail`, so a model built with it off has a truss and no joint hardware —
+   * and must not be narrated with weld sizes, plate thicknesses and bolt groups that are not there.
+   */
+  hasTrussConnDetail: boolean;
+  hasDeckCleat: boolean;
+  hasPanelSeating: boolean;
+  deck?: SheetLayoutResult;
+  panelSupport?: PanelSupportSpec;
+
   /* ---- PUF panel bottom locking system (model/pufLock) ----
    * Read from `model.pufLock.takeoff` — the ONE take-off the model, the drawings and the schedules
    * were all built from — falling back to counting the emitted parts. Nothing here recomputes a
@@ -240,6 +280,18 @@ function rafterSupportFactsOf(d: RafterSupportDerived): RafterSupportFacts {
   };
 }
 
+/**
+ * A `c-channel` part is one of TWO different members: the perimeter C-bend that edges the deck, or a
+ * jamb / closing channel that receives a panel edge. Only the panel ones carry a slot width, so that
+ * field — not the kind — is what tells them apart wherever the copy has to name one of them.
+ */
+const isPanelSeat = (p: ColonyPart): boolean => p.spec.slotWidthMm != null;
+const isPerimeterCBend = (p: ColonyPart): boolean => p.kind === "c-channel" && !isPanelSeat(p);
+
+/** The joist-end cleats belong to the deck assembly, not to the wall cleats that share the kind. */
+const isDeckCleat = (p: ColonyPart): boolean =>
+  p.kind === "cleat" && (p.assemblyId ?? "").endsWith(":deck");
+
 export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
   const parts = model.parts;
   const m = model.meta;
@@ -308,6 +360,17 @@ export function colonyContextOf(model: ColonyModel): ColonyAssemblyContext {
     pufLockInsertionMm: numOr(lock?.config.iface.insertionDepthMm, 0),
     hasRafterSupport,
     rafterSupport: rsup ? rafterSupportFactsOf(rsup) : null,
+    hasCBend: parts.some(isPerimeterCBend),
+    hasSheetSetOut: hasKind(parts, "floor-sheet") && (model.deck?.sheets.length ?? 0) > 0,
+    hasTrussFrame: hasKind(parts, "truss-web"),
+    hasTrussConnDetail: parts.some((p) =>
+      (p.assemblyId ?? "").startsWith("truss:")
+      && (p.kind === "weld" || p.kind === "splice-plate" || p.kind === "bolt")),
+    hasDeckCleat: parts.some(isDeckCleat),
+    hasPanelSeating: hasAnyKind(parts, ["u-channel", "angle-support", "pocket-support"])
+      || parts.some(isPanelSeat),
+    deck: model.deck,
+    panelSupport: model.panelSupport,
   };
 }
 
@@ -562,18 +625,46 @@ export function describeColonyStep(
             : ""),
       };
     }
-    case 6:
+    case 6: {
+      /* The base frame now also lands the PERIMETER C-BEND, and that is the one member of the whole
+       * floor a reader is most likely to dismiss as trim. So the copy names all four jobs the single
+       * section does and gives the load path end to end: an unsupported deck edge is the defect this
+       * member exists to prevent, and a caption that only says it is there does not say that. */
+      const cb = ctx.hasCBend;
       return {
         title: "Ground-floor base frame",
         description:
           "The longitudinal and transverse base-frame members are landed on the base plates and bolted " +
-          "up, setting the building footprint square and level.",
-        captionCustomer: "The steel base frame is landed and bolted down.",
-        captionEngineering: "Base-frame longitudinal + transverse members bolted to the base plates; frame squared to diagonals.",
-        tools: "Mobile crane or chain block, tag lines, spanner set, torque wrench, spirit level",
+          "up, setting the building footprint square and level." +
+          (cb
+            ? " The perimeter C-bend edge member is then set on all four sides — the LEFT-hand run " +
+              "FIRST, because every joist end and the whole deck sheet setting-out is measured from " +
+              "that line. One cold-formed section does four jobs at once. EDGE SUPPORT: its top " +
+              "flange is a continuous bearing ledge for the outer sheet edge, which has no joist " +
+              "beyond the last grid line. PERIMETER MEMBER: its web ties every joist end into one " +
+              "rim, so a point load is shared across several joists instead of punching a single " +
+              "one. PANEL-HOLDING SUPPORT: its upstand carries the panel base track, so the wall " +
+              "lands on steel and not on the edge of a floor sheet. STIFFENING MEMBER: the return " +
+              "lip raises the torsional stiffness of the section, so the free edge cannot roll under " +
+              "the eccentric load of a wall and a handrail standing on it."
+            : ""),
+        captionCustomer: "The steel base frame is landed and bolted down." +
+          (cb ? " A folded steel rim is set around the floor edge first — everything else is measured from it." : ""),
+        captionEngineering:
+          "Base-frame longitudinal + transverse members bolted to the base plates; frame squared to diagonals." +
+          (cb
+            ? " Perimeter C-bend erected left-hand run first (the setting-out datum): edge support + " +
+              "rim member + panel seat + stiffener in one section. Load path — sheet / wall base load " +
+              "→ C-bend top flange → web acting as a rim beam column to column → bolted cleat → base " +
+              "beam → column → base plate → anchor bolts → pedestal → footing."
+            : ""),
+        tools: "Mobile crane or chain block, tag lines, spanner set, torque wrench, spirit level" +
+          (cb ? ", string line, auto level" : ""),
         safety: "Tag lines on every lift; nobody passes under a suspended load; frame stays slung until bolted.",
-        inspection: "Base frame diagonals, level and bolt torque checked before any column is erected.",
+        inspection: "Base frame diagonals, level and bolt torque checked before any column is erected." +
+          (cb ? " C-bend line, top-flange level and the left-hand datum recorded before any joist is laid." : ""),
       };
+    }
     case 7:
       return {
         title: "Ground-floor columns",
@@ -586,19 +677,43 @@ export function describeColonyStep(
         safety: "Never release a lift until temporary guys are tensioned; exclusion zone under the erection radius.",
         inspection: "Column verticality (both axes), grid position and base bolt torque signed off before load transfer.",
       };
-    case 8:
+    case 8: {
+      /* Three facts land in this step and every one of them is a defect if it stays implicit: whether
+       * the support spacing is sheet-modular, whether each sheet joint has steel under it, and how a
+       * joist end is actually made up. All of it is read off `model.deck` and the parts themselves, so
+       * a frame that IS on the sheet module narrates as a pass rather than as a warning. */
+      const deck = ctx.hasSheetSetOut ? ctx.deck : undefined;
+      const cleat = ctx.hasDeckCleat;
       return {
         title: "Ground-floor joists & deck",
         description:
           "Floor joists are laid between the base beams at the designed spacing and the structural deck " +
-          "and floor finish are fixed over them.",
-        captionCustomer: "The ground floor is decked and finished.",
+          "and floor finish are fixed over them." +
+          (deck ? ` ${sheetSetOutParagraph(deck)}` : "") +
+          (cleat
+            ? " Every joist end is made up the same way: the cleat is SHOP-welded to the base beam and " +
+              "the joist is SITE-bolted to that cleat. A sound weld needs a shop; a bolt needs neither " +
+              "power nor a certificate and can be inspected by eye on site."
+            : ""),
+        captionCustomer: "The ground floor is decked and finished." +
+          (deck ? " On the upper decks the floor sheets are numbered and cut so that every joint sits on a steel member — the ground floor bears directly on the plinth and needs none." : ""),
         captionEngineering:
-          `Floor joists at design c/c between the base beams; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.`,
+          `Floor joists at design c/c between the base beams; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
+          (deck
+            ? ` Upper decks: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
+              `, ${deck.fullCount} full / ${deck.cutCount} cut, joints on members at ` +
+              `${fmtMm(deck.edgeBearingMm)} mm edge bearing. GF lays no sheet field (bears on the plinth).`
+            : "") +
+          (cleat ? " Joist ends: shop-welded cleat, site-bolted joist." : ""),
         tools: "Chain block, screw gun, joist cleats, chalk line, circular saw",
         safety: "Edge protection before any decking work; no unfixed deck sheet left as a walking surface.",
-        inspection: "Joist spacing, bearing length and deck fixing pattern verified against the floor framing plan.",
+        inspection: "Joist spacing, bearing length and deck fixing pattern verified against the floor framing plan." +
+          (deck
+            ? ` Every sheet joint confirmed to land on a member with ${fmtMm(deck.edgeBearingMm)} mm bearing ` +
+              `each side (minimum ${MIN_EDGE_BEARING_MM} mm) before the next sheet is fixed.`
+            : ""),
       };
+    }
     case 9:
       return {
         title: "Ground-floor bracing",
@@ -658,18 +773,43 @@ export function describeColonyStep(
         safety: "Edge protection and a covered leading edge; never work off an unfixed deck sheet.",
         inspection: "Joist bearing, spacing and deck fixings verified before any load is placed on the upper floor.",
       };
-    case 14:
+    case 14: {
+      /* The panel SEATING framework is erected with the studwork, not with the panels, and that
+       * ordering is the entire point of putting it here: a channel cannot be threaded onto a panel
+       * that is already standing. Each seat is named only if the model actually placed one, and its
+       * own `role` text is quoted rather than paraphrased so the caption cannot drift from the
+       * section the drawing set details. */
+      const spec = ctx.hasPanelSeating ? ctx.panelSupport : undefined;
+      const seats = spec ? spec.seats.filter((s) => hasKind(parts, s.kind)) : [];
+      const seated = seats.length > 0 && spec != null;
       return {
         title: "Wall studs & rails",
         description:
           "Wall studs and the top / bottom framing rails are fixed between the columns on every wall " +
-          "line, forming the frame the cladding and linings fix back to.",
-        captionCustomer: "The wall framework is built up between the columns.",
-        captionEngineering: "Wall studs at design c/c with top / bottom rails and cleats on every wall line.",
-        tools: "Screw gun, chop saw, chalk line, spirit level, cleats and fixings",
+          "line, forming the frame the cladding and linings fix back to." +
+          (seated
+            ? " The panel seating framework goes up with the studwork and must be complete, plumb and " +
+              "signed off BEFORE the first panel arrives — a channel cannot be threaded onto a panel " +
+              `that is already standing. ${seats.map((s) => `${s.label} (${s.sectionCall}): ${s.role}`).join(" ")} ` +
+              "These MS sections are engineering detail the take-off does not itemise; the priced " +
+              "cladding line remains the source of truth for the cost of the panel itself."
+            : ""),
+        captionCustomer: "The wall framework is built up between the columns." +
+          (seated ? " The steel channels the wall panels will slide into are fixed and checked first." : ""),
+        captionEngineering: "Wall studs at design c/c with top / bottom rails and cleats on every wall line." +
+          (seated
+            ? ` Panel seating framework complete before any panel — ${seats.map((s) => s.sectionCall).join(", ")}. ${spec.note}`
+            : ""),
+        tools: "Screw gun, chop saw, chalk line, spirit level, cleats and fixings" +
+          (seated ? ", slot gauge" : ""),
         safety: "Stack studs flat, never on end against a frame; keep cut-off zones clear of the walkway.",
-        inspection: "Stud spacing, plumb and rail fixing verified against the wall framing elevations.",
+        inspection: "Stud spacing, plumb and rail fixing verified against the wall framing elevations." +
+          (seated
+            ? ` Every panel seat straight, plumb and free of weld spatter, with the ${fmtMm(spec.slotWidthMm)} mm ` +
+              "slot proved with a gauge before the first panel is offered up."
+            : ""),
       };
+    }
     case 15:
       return {
         title: "Staircase",
@@ -695,21 +835,63 @@ export function describeColonyStep(
         safety: "Edge protection along the open corridor edge before the walkway plate is walked on.",
         inspection: "Walkway level, plate fixing and post bases verified before the railing step.",
       };
-    case 17:
+    case 17: {
+      /* The truss step carries the fullest fabrication story in the sequence, so the copy is layered:
+       * the CUSTOMER caption explains it plainly, the ENGINEERING caption states how it is made and
+       * joined. Both are gated on what the model ACTUALLY contains, because "sloped" alone is not
+       * enough to justify the narration:
+       *   • a MONO-pitch roof emits one rafter and no `truss-web`, so it has no apex, no king post
+       *     and no web members — describing them would narrate a truss that was never built;
+       *   • `connectionDetail: false` builds the truss with NO welds, plates or bolts, so the joint
+       *     specification must disappear with them.
+       * The weld / plate / bolt FIGURES below are the detailing constants `buildColonyModel` uses;
+       * they are literals here, not read from the parts, so `hasTrussConnDetail` only decides whether
+       * they are shown at all. The weld and bolt SCHEDULES remain the authority on those values. */
+      const triangulated = ctx.sloped && ctx.hasTrussFrame;
+      const jointSpec = ctx.hasTrussConnDetail;
       return {
         title: "Roof trusses & rafters",
-        description: ctx.sloped
-          ? "Roof trusses and rafters are landed on the column heads and connected at the ridge and eave, " +
-            "setting the roof pitch."
-          : "Roof rafters and the top frame are landed on the column heads, setting the roof falls.",
-        captionCustomer: "The roof structure is lifted into place.",
-        captionEngineering: ctx.sloped
-          ? "Roof trusses / rafters landed on the column heads; ridge and eave connections bolted through gussets."
-          : "Roof rafters and top frame landed on the column heads to the designed falls.",
-        tools: "Mobile crane, spreader beam, tag lines, gusset plates, torque wrench",
-        safety: "Trusses stay slung and laterally restrained until at least two purlins or ties are fixed.",
-        inspection: "Truss spacing, bearing and ridge / eave connection bolting checked before the sling is released.",
+        description: triangulated
+          ? "Each roof truss arrives as ONE ready-fabricated unit: the top chords, bottom tie chord, king " +
+            "post and web members are already welded together in the shop. The finished truss is craned " +
+            "onto the column heads, seated at the heels and joined at the apex" +
+            (jointSpec
+              ? " — the site joints are bolted, not welded, through a pair of plates fitted on BOTH faces of the truss."
+              : ".")
+          : ctx.sloped
+            ? "Sloping roof rafters are landed on the column heads and seated at the eaves, setting the roof falls."
+            : "Roof rafters and the top frame are landed on the column heads, setting the roof falls.",
+        captionCustomer: triangulated
+          ? "The roof truss comes ready-made from the factory — already welded — and is simply lifted on" +
+            (jointSpec ? " and bolted down." : " and seated.")
+          : "The roof structure is lifted into place.",
+        captionEngineering: triangulated && jointSpec
+          ? "Shop-welded truss: 6 mm continuous fillet weld at every panel point (apex, both heels, king-post " +
+            "foot, web-to-chord). Site joints bolted — paired 10 mm splice / cleat plates on BOTH faces, " +
+            "4 × M16 gr 8.8 per joint through Ø18 holes; apex gauge 120 / pitch 100 / edge 35, heel gauge 100 / " +
+            "pitch 80 / edge 30. One washer and one nut per bolt."
+          : triangulated
+            ? "Shop-welded triangulated truss lifted in as one unit and seated on the column heads. " +
+              "Connection detailing is not modelled in this view — see the weld and bolt schedules."
+            : ctx.sloped
+              ? "Sloping rafters landed on the column heads to the designed falls and fixed at the eaves."
+              : "Roof rafters and top frame landed on the column heads to the designed falls.",
+        tools: "Mobile crane, spreader beam, tag lines, spirit level"
+          + (jointSpec ? ", podger spanner, calibrated torque wrench" : ""),
+        safety: triangulated
+          ? "Trusses stay slung and laterally restrained until at least two purlins or ties are fixed. "
+            + (jointSpec ? "Never release the sling on a truss held by fewer than the full bolt group." : "")
+          : "Rafters stay slung and laterally restrained until the purlins or ties that stabilise them are fixed.",
+        inspection: triangulated
+          ? "Shop welds visually checked for full continuous profile before dispatch. On site: truss "
+            + "spacing, heel bearing"
+            + (jointSpec
+              ? ", plate seating on both faces, full bolt complement (no open holes) and torque check on every bolt"
+              : "")
+            + " before the sling is released."
+          : "Rafter spacing, eaves bearing and fixing checked before the sling is released.",
       };
+    }
     case 18: {
       // The RAFTER SUPPORT steel erects in the SAME operation as the purlins: the cleat is bolted to
       // the rafter, the C-purlin bears on it and the MS tube is bolted through the purlin web. Every
@@ -788,24 +970,48 @@ export function describeColonyStep(
       // The pocket was finished at step 5; this is where the panel actually drops into it. The
       // locking-system sentence below is a spec requirement and is reproduced verbatim.
       const puf = ctx.hasPufLock ? pufLockCopyOf(ctx) : null;
+      /* A sandwich panel is never "placed on" the frame, it is CAPTURED by it, and the order in which
+       * it gains that capture is what stops a wall going up loose. The sequence is therefore read
+       * straight out of buildPanelLockSequence() — the same steps the installation crew works to —
+       * rather than retold here, so the narration and the method statement cannot diverge. */
+      const spec = ctx.hasPanelSeating ? ctx.panelSupport : undefined;
+      const lock = spec ? buildPanelLockSequence(spec) : [];
       return {
         title: "Wall panels & partitions",
         description:
           `External cladding${ctx.hasInsulation ? ", cavity insulation" : ""}${ctx.hasLining ? ", internal lining" : ""}` +
           `${ctx.hasPartition ? " and the internal partitions" : ""} are installed over the wall framing.` +
+          (lock.length
+            ? " The panels are LOCKED into that framework in a fixed order rather than simply stood " +
+              `up: ${lock.map((s) => `${s.step}. ${s.title} — ${s.restrainedEdges}`).join(" ")} ` +
+              "The rule that order exists to enforce is that no panel is ever left holding on fewer " +
+              "than two edges before the next one arrives, and that the head is fixed LAST so the " +
+              "panel is never wedged vertically."
+            : "") +
+          (spec ? ` ${spec.note}` : "") +
           (puf
             ? ` Each${puf.panelMm ? ` ${puf.panelMm}` : ""} PUF wall panel is ${puf.lowered} the C-purlin pocket ` +
               `already welded up on the plinth beam at ${puf.assemblies}. Two C-purlins are welded to each ` +
               `base plate to form a receiving pocket matching the selected PUF-panel thickness. This limits ` +
               `sideways movement and avoids excessive shaking or open gaps.`
             : ""),
-        captionCustomer:
-          "The walls are clad, lined and divided into rooms." +
+        captionCustomer: "The walls are clad, lined and divided into rooms." +
+          (lock.length ? " Each panel slides into its steel channel and locks onto the one before it." : "") +
           (puf ? " Each wall panel drops into the locking channel at its base so it cannot shake or gap." : ""),
         captionEngineering:
           `External cladding fixed to the stud frame${ctx.hasInsulation ? "; cavity insulation to the specification" : ""}` +
           `${ctx.hasLining ? "; internal lining board over the studwork" : ""}` +
           `${ctx.hasPartition ? `; partitions setting out ${ctx.rooms} rooms` : ""}.` +
+          (spec && lock.length
+            /* "head fixed last" would contradict the sequence printed beside it — step 7 is the head
+             * restraint but step 8 is the closing panel, which is entered afterwards (and gets its own
+             * head restraint). Describe the RULE the order encodes instead of the final step. */
+            ? ` Panel lock sequence, ${lock.length} steps — each panel gains two edges before the next ` +
+              `arrives and no head is fixed until its panel is home: ${fmtMm(spec.thicknessMm)} mm ` +
+              `panel into a ${fmtMm(spec.slotWidthMm)} mm slot, ${fmtMm(spec.clearanceMm)} mm free play, ` +
+              `${fmtMm(spec.minInsertionMm)} mm minimum insertion on every captured edge. A panel edge ` +
+              "bears on steel — never packed with timber or foam."
+            : "") +
           (puf
             ? ` PUF bottom lock: panel edge${puf.panelMm ? ` (${puf.panelMm})` : ""} seated into the ` +
               `${puf.pocketMm ? `${puf.pocketMm} ` : ""}clear pocket between the paired C-purlins on ${puf.assemblies}; ` +
@@ -819,6 +1025,10 @@ export function describeColonyStep(
           (puf ? " Never force a panel into the pocket — check the gap before seating it." : ""),
         inspection:
           "Panel fixing centres, sheet alignment and partition line verified against the room layout." +
+          (spec
+            ? ` Insertion depth, joint closure and the open head movement gap checked panel by panel; ` +
+              "no panel accepted that has been forced or packed at an edge."
+            : "") +
           (puf
             ? ` Panel insertion, plumb and a uniform side gap recorded along the full pocket length on ${puf.assemblies}.`
             : ""),
@@ -971,6 +1181,53 @@ export function describeRafterSupportAssembly(
   };
 }
 
+/* ----------------------------------------------------------------- deck set-out copy ----------- */
+
+/** "4 ft width across the joists" — the lay the layout actually resolved, not an assumed one. */
+function sheetLayWords(d: SheetLayoutResult): string {
+  return d.orientation === "width-across-joists"
+    ? "4 ft width across the joists"
+    : "8 ft length across the joists";
+}
+
+/** "S01–S60" — the laying-sequence range the numbered sheets cover. */
+function sheetMarkRange(d: SheetLayoutResult): string {
+  const last = d.sheets.length ? d.sheets[d.sheets.length - 1].mark : "";
+  return last && d.sheets.length > 1 ? `${d.sheets[0].mark}–${last}` : last;
+}
+
+/**
+ * The deck setting-out told as one paragraph, read entirely off the layout the model already
+ * resolved — spacing, bearing, bearers, sheet counts and the ordering figure.
+ *
+ * The sheet quantity is a CUTTING and ordering figure, so the paragraph says that outright: the
+ * priced deck-board line stays the source of truth for cost, and nothing here is a second purchase.
+ */
+function sheetSetOutParagraph(d: SheetLayoutResult): string {
+  const bearers = d.bearers.length;
+  const spacing = d.spacing.modular
+    ? `Support members at ${fmtMm(d.spacing.actualMm)} mm centres divide the sheet exactly, so every ` +
+      "joint already lands on steel with no added member"
+    : `Support members at ${fmtMm(d.spacing.actualMm)} mm centres do not divide the ` +
+      `${fmtMm(SHEET_SHORT_MM)} mm sheet width, so ${bearers} bearer line${bearers === 1 ? "" : "s"} ` +
+      `${bearers === 1 ? "is" : "are"} added to close every joint the priced frame leaves floating — ` +
+      `${d.bearersAvoidableBySpacing} of them a ${fmtMm(d.spacing.recommendedMm)} mm frame would not need at all`;
+  const edges = d.unsupportedSheets === 0
+    ? "no sheet is left with an unsupported edge"
+    : `${d.unsupportedSheets} sheet${d.unsupportedSheets === 1 ? "" : "s"} remain short of full edge support`;
+  /* Every count below is ONE deck, and the field goes on the UPPER decks only — the ground floor
+   * bears on the filled plinth and lays no sheets. Saying "per deck" is what stops the paragraph
+   * disagreeing with the step's own part count, which spans every floor the step installs. */
+  return `Each upper deck (the ground floor bears on the plinth and takes no sheet field) is then ` +
+    `set out as a field of ${d.moduleLabel} sheets laid ${sheetLayWords(d)} and ` +
+    `numbered ${sheetMarkRange(d)} in laying sequence, row by row from the origin corner: ` +
+    `${d.laidCount} sheets per deck, ${d.fullCount} laid whole and ${d.cutCount} cut to the perimeter. ` +
+    `${spacing}. A joint landing on a member gives ${fmtMm(d.edgeBearingMm)} mm bearing to each sheet ` +
+    `against a ${MIN_EDGE_BEARING_MM} mm minimum, and ${edges}. Order ${d.purchaseSheets} sheets per ` +
+    `deck at ${d.wastagePct.toFixed(1)}% wastage — a cutting and ordering figure only; the priced ` +
+    "deck-board line remains the source of truth for cost.";
+}
+
 /* ----------------------------------------------------------------- marks / bolts --------------- */
 
 const MAX_MARKS = 8;
@@ -1050,11 +1307,105 @@ export function colonyDimensionsLine(ctx: ColonyAssemblyContext): string {
 
 /* ----------------------------------------------------------------- engineering rows ------------ */
 
+/** Detail rows lead a step's row list, so cap them well below the row budget the overlay paints. */
+const MAX_DETAIL_ROWS = 3;
+
+/**
+ * The rows that carry a NUMBER a reader has to act on — support spacing, edge bearing, sheet counts,
+ * panel slot width, insertion depth — derived from the setting-out fields the parts themselves carry.
+ *
+ * They exist as their own rows because these are the values that decide whether the step is right: a
+ * spacing that is not sheet-modular, or an insertion depth that is not achieved, is a defect, whereas
+ * the grouped material rows below restate what the priced take-off already prints. A step with none
+ * of the new detailing produces no rows here at all and reads exactly as it did before.
+ */
+function detailRowsOf(parts: ColonyPart[]): StepEngineeringRow[] {
+  const rows: StepEngineeringRow[] = [];
+
+  const cbend = parts.find(isPerimeterCBend);
+  if (cbend) {
+    rows.push({
+      label: "Perimeter C-bend",
+      material: isText(cbend.spec.sectionSize) ? cbend.spec.sectionSize : undefined,
+      section: cbend.spec.lengthM != null && Number.isFinite(cbend.spec.lengthM)
+        ? `${trimNum(cbend.spec.lengthM)} m run`
+        : undefined,
+      note: "Edge support · rim member · panel seat · stiffener",
+    });
+  }
+
+  const sheets = parts.filter((p) => isText(p.spec.sheetMark));
+  if (sheets.length) {
+    const full = sheets.filter((p) => p.spec.sheetFull === true).length;
+    rows.push({
+      label: "Deck sheets",
+      material: SHEET_LABEL,
+      qty: `${sheets.length} laid`,
+      note: `${full} full · ${sheets.length - full} cut — setting-out, never a priced quantity`,
+    });
+  }
+
+  const spacingMm = firstSpecValue(parts, (sp) => sp.supportSpacingMm);
+  if (spacingMm != null) {
+    rows.push({
+      label: "Support spacing",
+      section: `${fmtMm(spacingMm)} mm c/c`,
+      note: isModularSpacing(spacingMm, SHEET_SHORT_MM)
+        ? "Sheet-modular — every joint lands on a member"
+        : `Not sheet-modular — re-space to ${fmtMm(recommendedSpacingMm(spacingMm))} mm`,
+    });
+  }
+
+  const bearingMm = firstSpecValue(parts, (sp) => sp.bearingMm);
+  if (bearingMm != null) {
+    rows.push({
+      label: "Edge bearing",
+      section: `${fmtMm(bearingMm)} mm per sheet`,
+      note: `Minimum ${MIN_EDGE_BEARING_MM} mm — ` +
+        (bearingMm >= MIN_EDGE_BEARING_MM ? "achieved" : "SHORT, widen the member top face"),
+    });
+  }
+
+  const seatParts = parts.filter(isPanelSeat);
+  if (seatParts.length) {
+    const slotMm = firstSpecValue(seatParts, (sp) => sp.slotWidthMm);
+    const insertions = seatParts
+      .map((p) => p.spec.minInsertionMm)
+      .filter((v): v is number => v != null && Number.isFinite(v));
+    rows.push({
+      label: "Panel seat",
+      section: slotMm != null ? `${fmtMm(slotMm)} mm slot` : undefined,
+      qty: `${seatParts.length} nos`,
+      note: insertions.length
+        ? `${fmtMm(Math.min(...insertions))} mm minimum insertion — the edge bears on steel, never packed`
+        : "The panel edge bears on steel, never packed with timber or foam",
+    });
+  }
+
+  const cleat = parts.find(isDeckCleat);
+  if (cleat) {
+    rows.push({
+      label: "Joist-end cleat",
+      material: isText(cleat.spec.weldSpec) ? cleat.spec.weldSpec : undefined,
+      section: isText(cleat.spec.boltSpec)
+        ? `${cleat.spec.boltSpec} × ${cleat.spec.boltCount ?? 2}`
+        : undefined,
+      note: "Shop-welded to the beam · joist site-bolted to it",
+    });
+  }
+
+  return rows.slice(0, MAX_DETAIL_ROWS);
+}
+
 /**
  * Engineering caption rows for a step — the real material / section / grade / quantity / weight / BOQ
  * line each group of parts carries, grouped by `boqLineId` (falling back to kind). Every value is READ
  * from `part.spec`, which the model builder populated from the two priced take-offs; nothing is
  * recomputed here. Capped so the overlay stays legible.
+ *
+ * The setting-out detail rows are prepended, not appended, because the overlay paints only the first
+ * few rows and on the steps that carry them those numbers ARE the step. The grouped rows keep their
+ * own budget untouched, so a step with no detailing produces byte-identical output.
  */
 export function buildColonyStepEngineeringRows(parts: ColonyPart[]): StepEngineeringRow[] {
   const groups = new Map<string, { rep: ColonyPart; count: number }>();
@@ -1065,7 +1416,7 @@ export function buildColonyStepEngineeringRows(parts: ColonyPart[]): StepEnginee
     else groups.set(key, { rep: p, count: 1 });
   }
 
-  const rows: StepEngineeringRow[] = [];
+  const grouped: StepEngineeringRow[] = [];
   for (const { rep, count } of groups.values()) {
     const sp = rep.spec;
     const material = isText(sp.material) ? sp.material : kindWords(rep.kind);
@@ -1075,7 +1426,7 @@ export function buildColonyStepEngineeringRows(parts: ColonyPart[]): StepEnginee
     const weight = sp.totalWeightKg != null && Number.isFinite(sp.totalWeightKg)
       ? `${sp.totalWeightKg.toFixed(1)} kg`
       : undefined;
-    rows.push({
+    grouped.push({
       label: groupLabel(rep, count),
       material: material || undefined,
       section: isText(sp.sectionSize) ? sp.sectionSize : undefined,
@@ -1084,9 +1435,21 @@ export function buildColonyStepEngineeringRows(parts: ColonyPart[]): StepEnginee
       boqRef: isText(rep.boqLineId) ? rep.boqLineId : undefined,
       note: isText(sp.grade) ? sp.grade : isText(rep.partMark) ? `Mark ${rep.partMark}` : undefined,
     });
-    if (rows.length >= 6) break;
+    if (grouped.length >= 6) break;
   }
-  return rows;
+  /* THE OVERLAY PAINTS ONLY THE FIRST SIX ROWS (assemblyOverlayDraw.ts drawAssemblyOverlay →
+   * `cap.engineeringRows.slice(0, 6)`), so the six slots are a SHARED budget, not one budget each.
+   * Prepending the detail rows unconditionally therefore pushed priced, BOQ-referenced rows off the
+   * rendered and exported frame — step 14 silently lost its "Wall stud … (BOQ front:stud:…)" row.
+   *
+   * Detail rows still lead, because a step's explanation is what the viewer is there to read, but
+   * they are capped at two and the grouped rows are trimmed to fill exactly the six visible slots.
+   * That keeps at least four priced rows on screen in every step, so the explanation can never
+   * displace the take-off it is explaining. */
+  const OVERLAY_ROW_BUDGET = 6;
+  const MAX_DETAIL_ROWS = 2;
+  const detail = detailRowsOf(parts).slice(0, MAX_DETAIL_ROWS);
+  return [...detail, ...grouped.slice(0, Math.max(0, OVERLAY_ROW_BUDGET - detail.length))];
 }
 
 /* ----------------------------------------------------------------- helpers --------------------- */
@@ -1118,6 +1481,21 @@ function kindWords(kind: ColonyPartKind): string {
 
 function fmtM(v: number): string {
   return Number.isFinite(v) ? v.toFixed(1) : "0.0";
+}
+
+/** Millimetres read as a whole number wherever they are one — 609.6 mm stays 609.6, 1000 mm stays 1000. */
+function fmtMm(v: number): string {
+  if (!Number.isFinite(v)) return "0";
+  return Number.isInteger(v) ? `${v}` : v.toFixed(1);
+}
+
+/** The first defined value of a spec field across a step's parts (they share it within a group). */
+function firstSpecValue(parts: ColonyPart[], pick: (sp: PartSpec) => number | undefined): number | undefined {
+  for (const p of parts) {
+    const v = pick(p.spec);
+    if (v != null && Number.isFinite(v)) return v;
+  }
+  return undefined;
 }
 
 function trimNum(n: number): string {

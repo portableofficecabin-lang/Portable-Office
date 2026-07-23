@@ -43,8 +43,13 @@ import {
   type RafterSupportBox, type RafterSupportDerived, type RafterSupportRafterLine,
   type RafterSupportTubeLine,
 } from "./rafterSupport";
+import {
+  buildSheetLayout, MIN_EDGE_BEARING_MM, SHEET_LABEL, type SheetLayoutResult,
+} from "./sheetLayout";
+import { buildPanelSupportSpec, type PanelSupportSpec } from "./panelSupport";
 import type {
-  BoqSource, ColonyModel, ColonyPart, ColonyPartKind, ModelBounds, ModelWarning, PartSolid, PartSpec, Pt, Vec3,
+  BoqSource, ColonyAssemblyStep, ColonyModel, ColonyPart, ColonyPartKind, ModelBounds, ModelWarning,
+  PartSolid, PartSpec, Pt, Vec3,
 } from "./types";
 
 /* ------------------------------------------------------------------ constants + helpers ------ */
@@ -128,6 +133,13 @@ class ModelSink {
       grid?: string;
       fabrication?: "shop" | "site" | "reference";
       colorHex?: string;
+      /**
+       * Override the family's default construction step. Connection hardware belongs to the member
+       * it joins, not to its own kind: a truss's welds and splice bolts are erected WITH the truss
+       * (step 17), even though `bolt`/`weld` default to the base-frame step. Without this the
+       * exploded view and the assembly video would install truss hardware before the truss exists.
+       */
+      assemblyStep?: ColonyAssemblyStep;
     } = {},
   ): ColonyPart {
     const source: BoqSource =
@@ -145,7 +157,7 @@ class ModelSink {
       boqLineId: opts.boqLineId,
       boqSource: source,
       geomKey: opts.geomKey,
-      assemblyStep: STEP_OF_KIND[kind],
+      assemblyStep: opts.assemblyStep ?? STEP_OF_KIND[kind],
       explode: opts.explode ?? EXPLODE_OF_KIND[kind],
       spec: opts.spec ?? {},
       viewMask: viewMaskOf(kind),
@@ -444,7 +456,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
    * ROOM depth, so a joist run across the whole body would match no priced line and orphan every one
    * of them from the cutting list. */
   const joistBayYs = uniqSorted([bodyY0, ...rowYs.filter((y) => y > bodyY0 + 1e-3 && y < bodyY1 - 1e-3), bodyY1]);
-  void jw; void jh; void jDims;
+  void jDims;
   for (let f = 0; f < floors; f++) {
     const z = fflOf(f);
     const floorTag = f === 0 ? "gf" : `f${f}`;
@@ -468,6 +480,24 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   }
 
   const body: Body = { x0: bodyX0, x1: bodyX1, y0: bodyY0, y1: bodyY1, w: bodyWM, d: bodyDM };
+
+  /* ================================================================= DECK ENGINEERING DETAIL ===
+   * The priced model above says WHAT steel is in the floor. This says whether that steel actually
+   * carries an 8'×4' sheet: it sets the sheets out one by one, checks every joint lands on a member,
+   * adds the perimeter C-channel edge member and any noggin the layout proves is missing, and bolts
+   * the joists down. Everything it emits is engineering detail the take-off does not itemise, so it
+   * carries `boqSource: "none"` and never invents a price. */
+  const deck = buildDeckSystem(s, {
+    body, floors, fflOf, joistXs, joistBayYs, colXs, rowYs,
+    joistWM: jw, joistHM: jh, connDetail,
+  });
+
+  /* ================================================================= PANEL SEATING SYSTEM ======
+   * How the PUF panels are actually held by the MS framework — base track, jamb / closing channels,
+   * head restraint and the framed pockets at the columns, all sized from the configured panel
+   * thickness so a 30 mm and a 70 mm panel each get a detail that fits. */
+  const panelSpec = buildPanelSupportSpec(cfg.panelThicknessMm ?? 50);
+  buildPanelSeating(s, { body, floors, fflOf, ceilOf, colXs, spec: panelSpec, connDetail });
 
   /* ================================================================= WALL STUDS + RAILS === */
   buildWallFraming(s, body, floors, fflOf, ceilOf, { countByPrefix, firstLineByPrefix, sectionForLine });
@@ -595,6 +625,8 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
     warnings: s.warnings,
     pufLock,
     rafterSupport,
+    deck,
+    panelSupport: panelSpec,
     meta: {
       projectName: cfg.projectName || result.config.projectName || "Labour Colony",
       title: `${cfg.projectName || "Labour Colony"} — G+${floors - 1}`,
@@ -717,12 +749,13 @@ function buildColumnBases(s: ModelSink, grid: ColumnMark[], plinthM: number): vo
         box(bx - BOLT_D / 2, by - BOLT_D / 2, plinthM - 0.25, bx + BOLT_D / 2, by + BOLT_D / 2, plinthM + BASE_PLATE_T + 0.03),
         { connectionId: cid, grid: cm.grid, floor: 0, partMark: "AB", fabrication: "site",
           spec: { boltSpec: bolt, holeDiaMm: 18, note: "Holding-down bolt embedded in pedestal" } });
+      // nuts + washers belong to the base-plate step (5), not the base-frame step their kinds default to
       s.add(`conn:base:${cm.grid}:washer:${i}`, "washer", `Washer ${cm.grid}-${i + 1}`,
         box(bx - BOLT_D, by - BOLT_D, plinthM + BASE_PLATE_T, bx + BOLT_D, by + BOLT_D, plinthM + BASE_PLATE_T + 0.004),
-        { connectionId: cid, grid: cm.grid, floor: 0, fabrication: "site" });
+        { connectionId: cid, grid: cm.grid, floor: 0, fabrication: "site", assemblyStep: 5 });
       s.add(`conn:base:${cm.grid}:nut:${i}`, "nut", `Nut ${cm.grid}-${i + 1}`,
         prism(hexPoly(bx, by, BOLT_D * 1.6), plinthM + BASE_PLATE_T + 0.004, plinthM + BASE_PLATE_T + 0.02),
-        { connectionId: cid, grid: cm.grid, floor: 0, fabrication: "site" });
+        { connectionId: cid, grid: cm.grid, floor: 0, fabrication: "site", assemblyStep: 5 });
     });
   });
 }
@@ -1469,10 +1502,74 @@ function buildRoof(s: ModelSink, a: RoofArgs): void {
           braceQuad(false, x, ridgeY, roofBaseZ + rise, y1, roofBaseZ, rt),
           { partMark: `T${ti + 1}`, fabrication: "shop", assemblyId: `truss:${tag}` });
       });
+      /* ---- FABRICATION DETAILING -------------------------------------------------------- *
+       * The truss ships as ONE shop-welded unit: every internal panel point below is a fillet
+       * weld (fabrication "shop"). The SITE joints are bolted — a pair of splice plates on BOTH
+       * faces of the truss, drawn through with a real bolt group. Gated behind connDetail so the
+       * default scene stays light; the exploded view / assembly video turn it on. */
       if (a.connDetail) {
-        s.add(`roof:truss:${tag}:gusset:ridge`, "gusset", `Ridge gusset ${tag}`,
-          box(x - rt / 2 - 0.02, ridgeY - 0.12, roofBaseZ + rise - 0.12, x + rt / 2 + 0.02, ridgeY + 0.12, roofBaseZ + rise + PLATE_T),
-          { connectionId: `truss:${tag}:ridge`, fabrication: "shop", partMark: "GP" });
+        const asm = `truss:${tag}`;
+        const apexZ = roofBaseZ + rise;
+        const webFeet = [yLo + blockDM * 0.25, yHi - blockDM * 0.25];
+
+        /* WELDS — all main joints of the ready-fabricated truss */
+        const welds: { key: string; label: string; cy: number; cz: number; runY: number; runZ: number; len: number }[] = [
+          { key: "apex", label: "Apex — rafter to rafter + king post", cy: ridgeY, cz: apexZ, runY: 0.16, runZ: 0.10, len: 320 },
+          { key: "heel-a", label: "Heel — rafter to tie chord (rear)", cy: yLo + 0.06, cz: roofBaseZ, runY: 0.16, runZ: 0.08, len: 260 },
+          { key: "heel-b", label: "Heel — rafter to tie chord (front)", cy: yHi - 0.06, cz: roofBaseZ, runY: 0.16, runZ: 0.08, len: 260 },
+          { key: "king-foot", label: "King post foot to tie chord", cy: ridgeY, cz: roofBaseZ, runY: 0.12, runZ: 0.06, len: 200 },
+          { key: "web-a", label: "Web to tie chord (rear)", cy: webFeet[0], cz: roofBaseZ, runY: 0.10, runZ: 0.06, len: 180 },
+          { key: "web-b", label: "Web to tie chord (front)", cy: webFeet[1], cz: roofBaseZ, runY: 0.10, runZ: 0.06, len: 180 },
+        ];
+        for (const w of welds) {
+          addWeld(s, {
+            id: `roof:truss:${tag}:weld:${w.key}`,
+            connectionId: `${asm}:${w.key}`,
+            assemblyId: asm,
+            label: `Truss ${tag} — ${w.label}`,
+            cx: x, cy: w.cy, cz: w.cz, runY: w.runY, runZ: w.runZ,
+            lengthMm: w.len,
+            step: 17,   // erected WITH the truss, not at the default weld step
+          });
+        }
+
+        /* APEX SITE SPLICE — paired plates + 4-bolt group joining the two shop-welded halves */
+        addBoltedSidePlates(s, {
+          idBase: `roof:truss:${tag}:conn:apex`,
+          connectionId: `${asm}:apex-splice`,
+          assemblyId: asm,
+          label: `Truss ${tag} apex splice`,
+          partMark: `SP-${ti + 1}`,
+          x, memberT: rt,
+          cy: ridgeY, cz: apexZ - 0.10,
+          halfY: 0.13, halfZ: 0.11,
+          bolts: [
+            { dy: -0.06, dz: -0.05 }, { dy: 0.06, dz: -0.05 },
+            { dy: -0.06, dz: 0.05 }, { dy: 0.06, dz: 0.05 },
+          ],
+          gaugeMm: 120, pitchMm: 100, edgeMm: 35,
+          step: 17,
+        });
+
+        /* HEEL / EAVE SEATING — paired cleat plates + 4-bolt group onto each column head */
+        ([[yLo + 0.10, "a"], [yHi - 0.10, "b"]] as const).forEach(([cy, key]) => {
+          addBoltedSidePlates(s, {
+            idBase: `roof:truss:${tag}:conn:heel-${key}`,
+            connectionId: `${asm}:heel-${key}`,
+            assemblyId: asm,
+            label: `Truss ${tag} heel connection`,
+            partMark: `CP-${ti + 1}`,
+            x, memberT: rt,
+            cy, cz: roofBaseZ - 0.09,
+            halfY: 0.11, halfZ: 0.09,
+            bolts: [
+              { dy: -0.05, dz: -0.04 }, { dy: 0.05, dz: -0.04 },
+              { dy: -0.05, dz: 0.04 }, { dy: 0.05, dz: 0.04 },
+            ],
+            gaugeMm: 100, pitchMm: 80, edgeMm: 30,
+            step: 17,
+          });
+        });
       }
     }
   });
@@ -1550,6 +1647,792 @@ function slopeQuadPlane(x0: number, x1: number, y0: number, z0: number, y1: numb
     ],
   };
 }
+
+/* ============================================================ truss connection detailing ====
+ * A roof truss is SHOP-FABRICATED: every internal panel point (apex, heels, king-post feet, web-to-
+ * chord) is fully WELDED, and the finished truss is lifted in as one piece. The SITE joint is a
+ * bolted one — a pair of splice / cleat plates sandwiching the truss on BOTH faces, drawn through
+ * with a real bolt group (head · shank · washer · nut). That split is what these helpers model:
+ * welds carry `fabrication: "shop"`, the bolted plates carry `fabrication: "site"`.
+ *
+ * The truss lies in a plane at constant x, so its two faces are the ±x faces and every bolt runs
+ * along X. Bolt heads / nuts are drawn as across-flats boxes rather than hex prisms because
+ * PartSolid's prism extrudes in Z — at this scale a box reads correctly, and the full hardware
+ * specification travels in `spec` (grade, dia, grip, hole, gauge / edge / pitch) for the schedules.
+ */
+
+const TRUSS_PLATE_T = 0.010;  // 10 mm splice / gusset plate
+const TRUSS_BOLT_D = 0.016;   // M16
+const BOLT_HEAD_T = 0.010;
+const NUT_T = 0.013;
+const WASHER_T = 0.003;
+const WELD_LEG = 0.006;       // 6 mm fillet leg
+
+/** A simplified weld bead with the COMPLETE weld specification retained for the weld schedule. */
+function addWeld(
+  s: ModelSink,
+  o: {
+    id: string; connectionId: string; label: string; assemblyId: string;
+    /** Bead centre + the run it follows. */
+    cx: number; cy: number; cz: number; runY: number; runZ: number;
+    lengthMm: number; site?: boolean; step?: ColonyAssemblyStep;
+  },
+): void {
+  const half = WELD_LEG;
+  const ly = Math.max(half, Math.abs(o.runY) / 2);
+  const lz = Math.max(half, Math.abs(o.runZ) / 2);
+  s.add(
+    o.id, "weld", o.label,
+    box(o.cx - half * 1.2, o.cy - ly, o.cz - lz, o.cx + half * 1.2, o.cy + ly, o.cz + lz),
+    {
+      connectionId: o.connectionId,
+      assemblyId: o.assemblyId,
+      partMark: "W1",
+      assemblyStep: o.step,
+      fabrication: o.site ? "site" : "shop",
+      spec: {
+        weldSpec: `${WELD_LEG * 1000} mm fillet · ${o.site ? "site" : "shop"} weld · continuous`,
+        weldLengthMm: Math.round(o.lengthMm),
+        note: "Fillet weld both sides at panel point",
+      },
+    },
+  );
+}
+
+/** One complete bolt assembly — head · shank · washer · nut — through an X-axis sandwiched joint. */
+function addBoltAssembly(
+  s: ModelSink,
+  o: {
+    id: string; connectionId: string; assemblyId: string; label: string;
+    /** Outer faces of the two side plates (the grip). */
+    xOuter0: number; xOuter1: number;
+    cy: number; cz: number;
+    dia: number; boltSpec: string; holeDiaMm: number; floor?: number; step?: ColonyAssemblyStep;
+  },
+): void {
+  const r = o.dia / 2;
+  const af = o.dia * 1.6 / 2;          // half across-flats for head / nut
+  const proj = 0.006;                  // thread projection past the nut
+  const gripMm = Math.round((o.xOuter1 - o.xOuter0) * 1000);
+  const common = {
+    connectionId: o.connectionId,
+    assemblyId: o.assemblyId,
+    floor: o.floor,
+    fabrication: "site" as const,
+    assemblyStep: o.step,
+  };
+  const spec: PartSpec = {
+    boltSpec: o.boltSpec,
+    holeDiaMm: o.holeDiaMm,
+    thicknessMm: gripMm,
+    note: `Grip ${gripMm} mm · one washer + one nut per bolt`,
+  };
+  /* ONE part per physical fastener. The head is integral to the bolt, not a separate item — drawing
+   * it as its own `bolt` part would make every schedule count two bolts per hole and then report a
+   * false "nuts ≠ bolts" mismatch. The bolt therefore spans head-bearing face → thread projection,
+   * and the washer + nut at the far end carry the visual hardware read. */
+  s.add(`${o.id}:shank`, "bolt", o.label,
+    box(o.xOuter0 - BOLT_HEAD_T, o.cy - r, o.cz - r, o.xOuter1 + WASHER_T + NUT_T + proj, o.cy + r, o.cz + r),
+    {
+      ...common,
+      partMark: "B",
+      spec: { ...spec, note: `${spec.note} · head bears on the near plate face` },
+      explode: { x: 1.2, y: 0, z: 0.25 },
+    });
+  void af;
+  // washer then nut on the far face (engineering order)
+  s.add(`${o.id}:washer`, "washer", `${o.label} — washer`,
+    box(o.xOuter1, o.cy - o.dia, o.cz - o.dia, o.xOuter1 + WASHER_T, o.cy + o.dia, o.cz + o.dia),
+    { ...common, partMark: "W", spec, explode: { x: 1.9, y: 0, z: 0.25 } });
+  s.add(`${o.id}:nut`, "nut", `${o.label} — nut`,
+    box(o.xOuter1 + WASHER_T, o.cy - af, o.cz - af, o.xOuter1 + WASHER_T + NUT_T, o.cy + af, o.cz + af),
+    { ...common, partMark: "N", spec, explode: { x: 2.3, y: 0, z: 0.25 } });
+}
+
+/**
+ * A bolted connection: TWO side plates (one on each face of the truss) plus its bolt group. The
+ * plates explode in OPPOSITE directions so the exploded view reads as a sandwich coming apart.
+ */
+function addBoltedSidePlates(
+  s: ModelSink,
+  o: {
+    idBase: string; connectionId: string; assemblyId: string; label: string; partMark: string;
+    /** Truss plane + member thickness (the plates clamp this). */
+    x: number; memberT: number;
+    cy: number; cz: number;
+    halfY: number; halfZ: number;               // plate half-size
+    bolts: { dy: number; dz: number }[];        // bolt offsets from the joint centre
+    gaugeMm: number; pitchMm: number; edgeMm: number;
+    floor?: number; step?: ColonyAssemblyStep;
+  },
+): void {
+  const inner = o.memberT / 2;
+  const nearOuter = o.x - inner - TRUSS_PLATE_T;
+  const farOuter = o.x + inner + TRUSS_PLATE_T;
+  const holeDiaMm = Math.round(TRUSS_BOLT_D * 1000) + 2;
+  const boltSpec = `M${Math.round(TRUSS_BOLT_D * 1000)} gr 8.8`;
+  const plateSpec: PartSpec = {
+    widthMm: Math.round(o.halfY * 2000),
+    heightMm: Math.round(o.halfZ * 2000),
+    thicknessMm: Math.round(TRUSS_PLATE_T * 1000),
+    boltCount: o.bolts.length,
+    holeDiaMm,
+    boltSpec,
+    weldSpec: `${WELD_LEG * 1000} mm fillet · shop weld to member`,
+    note: `Gauge ${o.gaugeMm} mm · pitch ${o.pitchMm} mm · edge distance ${o.edgeMm} mm`,
+  };
+  ([
+    ["near", nearOuter, o.x - inner, -1],
+    ["far", o.x + inner, farOuter, 1],
+  ] as const).forEach(([side, x0, x1, dir]) => {
+    s.add(`${o.idBase}:plate-${side}`, "splice-plate", `${o.label} — ${side} side plate`,
+      box(x0, o.cy - o.halfY, o.cz - o.halfZ, x1, o.cy + o.halfY, o.cz + o.halfZ),
+      {
+        connectionId: o.connectionId,
+        assemblyId: o.assemblyId,
+        partMark: o.partMark,
+        floor: o.floor,
+        fabrication: "site",
+        assemblyStep: o.step,
+        spec: plateSpec,
+        explode: { x: dir * 1.5, y: 0, z: 0.3 },
+      });
+  });
+  o.bolts.forEach((b, i) => {
+    addBoltAssembly(s, {
+      id: `${o.idBase}:bolt:${i + 1}`,
+      connectionId: o.connectionId,
+      assemblyId: o.assemblyId,
+      label: `${o.label} — bolt ${i + 1}`,
+      xOuter0: nearOuter,
+      xOuter1: farOuter,
+      cy: o.cy + b.dy,
+      cz: o.cz + b.dz,
+      dia: TRUSS_BOLT_D,
+      boltSpec,
+      holeDiaMm,
+      floor: o.floor,
+      step: o.step,
+    });
+  });
+}
+
+/* ==================================================== DECK ENGINEERING DETAIL =================
+ * The priced take-off puts joists in the floor and buys a deck area. What it cannot say is whether
+ * that steel actually CARRIES an 8'×4' sheet — and a sheet whose edge lands mid-bay has no bearing,
+ * so it deflects, the joint telegraphs through the finish and the fixings work loose. This section
+ * closes that gap.
+ *
+ * WHERE THE SHEETS GO — upper decks (floors 1+) ONLY. The ground floor bears on the filled plinth,
+ * so it needs no 8'×4' sheet field; the numbered setting-out, and the bearers that exist only to
+ * support its joints, are laid on the first and second floor decks. The perimeter C-bend and the
+ * joist-end connection detail stay on every deck including the ground floor, because the rim and
+ * the joist bolting are real on every storey.
+ *
+ *   1. it measures the support the priced frame provides and sets the sheets out on it one by one;
+ *   2. it adds the PERIMETER C-BEND, which is what gives the outer sheet edge something to sit on
+ *      (a joist stops at the last grid line — the deck edge beyond it would otherwise cantilever);
+ *   3. it adds a NOGGIN wherever the layout proves a cross joint has no member under it;
+ *   4. it bolts the joists down through shop-welded cleats, so the load path from sheet to footing
+ *      is complete and visible.
+ *
+ * Everything here is engineering detail the take-off does not itemise, so every part carries
+ * `boqSource: "none"` — the priced `floor:board` line stays the single source of truth for cost.
+ */
+
+const CBEND_GAUGE = 0.003;      // 3 mm cold-formed C-bend
+const CBEND_FLANGE = 0.04;      // 40 mm flange — the bearing ledge the outer sheet edge sits on
+const CBEND_LIP = 0.015;        // 15 mm return lip — what makes it stiff in torsion
+const CLEAT_T = 0.008;          // 8 mm joist-end cleat
+const DECK_BOLT_D = 0.012;      // M12
+const SHEET_JOINT = 0.003;      // 3 mm expansion gap between laid sheets
+
+interface DeckArgs {
+  body: Body;
+  floors: number;
+  fflOf: (f: number) => number;
+  joistXs: number[];
+  joistBayYs: number[];
+  colXs: number[];
+  rowYs: number[];
+  joistWM: number;
+  joistHM: number;
+  connDetail: boolean;
+}
+
+function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
+  const { body, joistWM, joistHM } = a;
+  const inBodyX = (v: number) => v >= body.x0 - 1e-6 && v <= body.x1 + 1e-6;
+  const inBodyY = (v: number) => v >= body.y0 - 1e-6 && v <= body.y1 + 1e-6;
+
+  /* The support the frame ACTUALLY provides.
+   *   xs — every member running across the deck (joists + transverse base beams) gives a support
+   *        LINE at its own x, which is what a sheet edge parallel to y can land on;
+   *   ys — every member running along the deck (longitudinal base beams on the grid rows). These
+   *        are on the COLUMN GRID, metres apart, which is exactly why cross joints need noggins. */
+  const supportXs = uniqSorted([body.x0, body.x1, ...a.joistXs.filter(inBodyX), ...a.colXs.filter(inBodyX)]);
+  const supportYs = uniqSorted([body.y0, body.y1, ...a.rowYs.filter(inBodyY), ...a.joistBayYs.filter(inBodyY)]);
+
+  const layout = buildSheetLayout({
+    x0: body.x0, y0: body.y0, x1: body.x1, y1: body.y1,
+    support: { xs: supportXs, ys: supportYs },
+    memberWidthM: joistWM,
+  });
+
+  /* ---- deterministic engineering warnings (never silently "fix" the frame) ------------------ *
+   * Gated on an upper deck existing at all: the 8'×4' field is laid on floors 1+ only (the ground
+   * floor bears on the filled plinth), so a single-storey colony lays no sheet field and there is
+   * nothing for the spacing to defect against. */
+  if (a.floors > 1 && !layout.spacing.modular) {
+    s.warn({
+      code: "sheet-spacing-not-modular",
+      required: round(layout.spacing.recommendedMm, 1),
+      available: round(layout.spacing.actualMm, 1),
+      message:
+        `Floor support members are at ${layout.spacing.actualMm.toFixed(0)} mm centres, which does not `
+        + `divide the ${SHEET_LABEL} sheet. Sheet joints will not all land on steel. Re-space the joists `
+        + `to ${layout.spacing.recommendedMm.toFixed(1)} mm centres (joistSpacingM in the BOQ norms) so `
+        + `every joint bears. ${layout.bearers.length} bearer line(s) have been added as the interim `
+        + `fix, of which ${layout.bearersAvoidableBySpacing} would be unnecessary at the recommended spacing.`,
+    });
+  }
+  if (a.floors > 1 && layout.edgeBearingMm < MIN_EDGE_BEARING_MM) {
+    s.warn({
+      code: "sheet-edge-bearing-short",
+      required: MIN_EDGE_BEARING_MM,
+      available: round(layout.edgeBearingMm, 1),
+      message:
+        `A sheet joint landing on the ${Math.round(joistWM * 1000)} mm joist gives only `
+        + `${layout.edgeBearingMm.toFixed(1)} mm bearing per sheet (minimum ${MIN_EDGE_BEARING_MM} mm). `
+        + `Widen the joist to at least ${MIN_EDGE_BEARING_MM * 2} mm on the top face, or run a cover `
+        + `cleat under every joint.`,
+    });
+  }
+
+  const zTopOf = (z: number) => z + DECK_T;
+  const zBotOf = (z: number) => z - joistHM;
+
+  for (let f = 0; f < a.floors; f++) {
+    const z = a.fflOf(f);
+    const tag = f === 0 ? "gf" : `f${f}`;
+    const zBot = zBotOf(z), zTop = zTopOf(z);
+
+    /* ---- 1. PERIMETER C-BEND — the edge member the whole deck edge depends on --------------- */
+    addPerimeterCBend(s, { tag, floor: f, body, zBot, zTop });
+
+    /* THE 8'×4' SHEET FIELD IS LAID ON THE UPPER DECKS ONLY. The ground floor bears on the filled
+     * plinth, so it takes no sheet setting-out — and therefore none of the bearers whose only job
+     * is to close that field's joints. The GF keeps its C-bend (deck edge rim + panel seat) and its
+     * priced board/finish; only the UNPRICED numbered setting-out is restricted, so what the deck
+     * costs (`floor:board`) is untouched by this rule. */
+    if (f >= 1) {
+
+    /* ---- 2. BEARERS under every sheet joint the priced frame does not already carry --------- *
+     * Cut between the members either side of the joint, so each bearer is a real fabricable piece
+     * with a real cut length rather than a line drawn across the whole deck. */
+    layout.bearers.forEach((bearer, bi) => {
+      const cross = bearer.axis === "x" ? supportYs : supportXs;
+      for (let i = 0; i < cross.length - 1; i++) {
+        const c0 = cross[i], c1 = cross[i + 1];
+        if (c1 - c0 < 1e-3) continue;
+        const half = joistWM / 2;
+        const solid = bearer.axis === "x"
+          /* fixed X, runs along Y — supports a sheet edge parallel to Y */
+          ? box(bearer.atM - half, c0, zBot, bearer.atM + half, c1, z)
+          /* fixed Y, runs along X — supports a sheet edge parallel to X */
+          : box(c0, bearer.atM - half, zBot, c1, bearer.atM + half, z);
+        s.add(
+          `${tag}:noggin:${bearer.axis}:${pad2(bi + 1)}:${pad2(i + 1)}`,
+          "noggin",
+          `Sheet bearer — ${bearer.axis === "x" ? "longitudinal" : "transverse"} joint at ${bearer.atM.toFixed(3)} m`,
+          solid,
+          {
+            floor: f,
+            partMark: "NG",
+            fabrication: "site",
+            assemblyId: `${tag}:deck`,
+            spec: {
+              widthMm: Math.round(joistWM * 1000),
+              heightMm: Math.round(joistHM * 1000),
+              lengthM: round(c1 - c0, 3),
+              bearingMm: round(layout.edgeBearingMm, 1),
+              role:
+                "Sheet-edge support. This sheet joint falls between two members of the priced frame, "
+                + "so without this bearer both sheet edges at the joint are unsupported and will "
+                + "deflect, telegraph through the finish and work their fixings loose.",
+              loadPath:
+                "Sheet edge load → bearer → welded/bolted to the two adjacent members → base beam → "
+                + "column → base plate → footing.",
+              note:
+                `${bearer.reason}. ${layout.spacing.modular
+                  ? ""
+                  : `A ${layout.spacing.recommendedMm.toFixed(1)} mm joist spacing would remove `
+                    + `${layout.bearersAvoidableBySpacing} bearer line(s) of this kind entirely.`}`,
+            },
+          },
+        );
+      }
+    });
+
+    /* ---- 3. THE SHEETS THEMSELVES, numbered in laying sequence ------------------------------ */
+    for (const sh of layout.sheets) {
+      const g = SHEET_JOINT / 2;
+      s.add(
+        `${tag}:floor-sheet:${pad2(sh.no)}`,
+        "floor-sheet",
+        `Deck sheet ${sh.mark}${sh.full ? "" : " (cut)"}`,
+        box(sh.x0 + g, sh.y0 + g, z, sh.x1 - g, sh.y1 - g, zTop + 0.001),
+        {
+          floor: f,
+          partMark: sh.mark,
+          fabrication: "site",
+          assemblyId: `${tag}:deck`,
+          spec: {
+            sheetMark: sh.mark,
+            sheetFull: sh.full,
+            widthMm: sh.widthMm,
+            heightMm: sh.lengthMm,
+            thicknessMm: Math.round(DECK_T * 1000),
+            supportSpacingMm: round(layout.spacing.actualMm, 1),
+            bearingMm: round(layout.edgeBearingMm, 1),
+            role: sh.full
+              ? `Full ${SHEET_LABEL} sheet, laid ${sh.supportedEdges}/4 edges on steel.`
+              : `Cut sheet ${sh.widthMm} × ${sh.lengthMm} mm (cut on ${sh.cutOn}), `
+                + `${sh.offcutM2.toFixed(2)} m² offcut.`,
+            loadPath: "Sheet → joist / noggin top face → base beam → column → base plate → footing.",
+            note:
+              `Laying sequence ${sh.no} of ${layout.sheets.length}. `
+              + `${SHEET_JOINT * 1000} mm expansion gap at every joint; fixings at 150 mm c/c on edges, `
+              + `300 mm c/c at intermediate supports.`,
+          },
+        },
+      );
+    }
+
+    } // end upper-deck-only sheet field (f >= 1)
+
+    /* ---- 4. JOIST-END CONNECTIONS — shop-welded cleat, site-bolted joist -------------------- *
+     * Ground floor only: this is the floor the detailing is being asked to explain, and emitting a
+     * full bolt group at every joist end on every storey would multiply the part count without
+     * adding an engineering fact the ground floor has not already made. */
+    if (a.connDetail && f === 0) {
+      a.joistXs.forEach((x, i) => {
+        for (let b = 0; b < a.joistBayYs.length - 1; b++) {
+          const ends: [number, number][] = [[a.joistBayYs[b], 1], [a.joistBayYs[b + 1], -1]];
+          ends.forEach(([yEnd, dir], e) => {
+            const idBase = `gf:conn:joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
+            const connectionId = `joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
+            const cz = z - joistHM / 2;
+            const cy = yEnd + dir * 0.05;
+            addBoltedJoistCleat(s, {
+              idBase, connectionId,
+              assemblyId: "gf:deck",
+              label: `Joist ${i + 1} end cleat`,
+              x, memberT: joistWM,
+              cy, cz,
+              halfY: 0.045, halfZ: Math.max(0.03, joistHM / 2 - 0.01),
+              floor: 0,
+            });
+          });
+        }
+      });
+    }
+  }
+
+  return layout;
+}
+
+/**
+ * The perimeter C-bend, modelled as the three folds it is actually made from — web, top flange (the
+ * bearing ledge), bottom flange — plus the return lip that makes it stiff. Drawing it as one solid
+ * box would hide the very thing the detail exists to show: that the sheet edge lands on a FLANGE,
+ * not on the edge of a plate.
+ *
+ * The LEFT edge is called out separately because it is the one the erection sequence starts from and
+ * the one the drawing set details — its spec carries the full "why it is here" text.
+ */
+function addPerimeterCBend(
+  s: ModelSink,
+  o: { tag: string; floor: number; body: Body; zBot: number; zTop: number },
+): void {
+  const { body, zBot, zTop } = o;
+  const depth = Math.max(0.05, zTop - zBot);
+
+  const EDGES = [
+    { key: "left", axis: "y" as const, at: body.x0, inward: 1, mark: "CB1", first: true },
+    { key: "right", axis: "y" as const, at: body.x1, inward: -1, mark: "CB2", first: false },
+    { key: "rear", axis: "x" as const, at: body.y0, inward: 1, mark: "CB3", first: false },
+    { key: "front", axis: "x" as const, at: body.y1, inward: -1, mark: "CB4", first: false },
+  ];
+
+  for (const e of EDGES) {
+    const runM = e.axis === "y" ? body.d : body.w;
+    const spec: PartSpec = {
+      sectionSize: `MS C-bend ${Math.round(depth * 1000)} × ${CBEND_FLANGE * 1000} × ${CBEND_LIP * 1000} × ${CBEND_GAUGE * 1000} mm`,
+      thicknessMm: CBEND_GAUGE * 1000,
+      widthMm: CBEND_FLANGE * 1000,
+      heightMm: Math.round(depth * 1000),
+      lengthM: round(runM, 3),
+      role:
+        "EDGE SUPPORT + PERIMETER MEMBER + PANEL SEAT + STIFFENER — one section doing four jobs. "
+        + "(1) Edge support: its top flange is a continuous bearing ledge for the outer sheet edge, "
+        + "which has no joist beyond the last grid line. (2) Perimeter member: it closes the deck "
+        + "edge and ties every joist end into one rim, so a point load is shared across several "
+        + "joists instead of punching one. (3) Panel seat: its upstand carries the PUF base track, "
+        + "so the wall lands on steel, not on the sheet edge. (4) Stiffener: the return lip raises "
+        + "the section's torsional stiffness so the free edge cannot roll under the eccentric load "
+        + "of the wall and handrail standing on it.",
+      loadPath:
+        "Sheet edge + wall base load → C-bend top flange (bearing) → C-bend web (acting as a rim "
+        + "beam spanning column to column) → bolted end cleat → base beam → column → base plate → "
+        + "anchor bolts → pedestal → footing.",
+      note: e.first
+        ? "FIRST C-BEND — the left-hand edge member. Erection starts here: it is set, levelled and "
+          + "bolted before any joist, because every joist end and the whole sheet setting-out is "
+          + "measured from this line."
+        : `Perimeter edge member — ${e.key} edge.`,
+    };
+
+    /* The three folds. All share one assemblyId so they fly in together as the single section they
+     * physically are, and one connectionId so selecting any fold highlights the whole member. */
+    const folds: { part: string; solid: PartSolid; label: string }[] = [];
+    if (e.axis === "y") {
+      const xWeb0 = e.inward > 0 ? e.at - CBEND_GAUGE : e.at;
+      const xWeb1 = xWeb0 + CBEND_GAUGE;
+      const fx0 = e.inward > 0 ? xWeb0 : xWeb1 - CBEND_FLANGE;
+      const fx1 = fx0 + CBEND_FLANGE;
+      folds.push(
+        { part: "web", label: "web", solid: box(xWeb0, body.y0, zBot, xWeb1, body.y1, zTop) },
+        { part: "flange-top", label: "top flange (sheet bearing ledge)", solid: box(fx0, body.y0, zTop - CBEND_GAUGE, fx1, body.y1, zTop) },
+        { part: "flange-bot", label: "bottom flange", solid: box(fx0, body.y0, zBot, fx1, body.y1, zBot + CBEND_GAUGE) },
+      );
+    } else {
+      const yWeb0 = e.inward > 0 ? e.at - CBEND_GAUGE : e.at;
+      const yWeb1 = yWeb0 + CBEND_GAUGE;
+      const fy0 = e.inward > 0 ? yWeb0 : yWeb1 - CBEND_FLANGE;
+      const fy1 = fy0 + CBEND_FLANGE;
+      folds.push(
+        { part: "web", label: "web", solid: box(body.x0, yWeb0, zBot, body.x1, yWeb1, zTop) },
+        { part: "flange-top", label: "top flange (sheet bearing ledge)", solid: box(body.x0, fy0, zTop - CBEND_GAUGE, body.x1, fy1, zTop) },
+        { part: "flange-bot", label: "bottom flange", solid: box(body.x0, fy0, zBot, body.x1, fy1, zBot + CBEND_GAUGE) },
+      );
+    }
+
+    for (const fold of folds) {
+      s.add(
+        `${o.tag}:c-bend:${e.key}:${fold.part}`,
+        "c-channel",
+        `${e.first ? "First C-bend" : "Perimeter C-bend"} — ${e.key} ${fold.label}`,
+        fold.solid,
+        {
+          floor: o.floor,
+          partMark: e.mark,
+          fabrication: "shop",
+          assemblyId: `${o.tag}:c-bend:${e.key}`,
+          connectionId: `${o.tag}:c-bend:${e.key}`,
+          explode: e.axis === "y"
+            ? { x: -e.inward * 1.4, y: 0, z: -0.2 }
+            : { x: 0, y: -e.inward * 1.4, z: -0.2 },
+          spec,
+        },
+      );
+    }
+  }
+}
+
+/**
+ * A joist-end connection: ONE cleat plate shop-welded to the beam, with the joist site-bolted to it.
+ *
+ * That split is the point of the detail — the cleat is fabricated in the shop where a weld can be
+ * made properly, and the only site operation is a bolt, which needs no power, no skill certificate
+ * and can be inspected by eye. Every bolt is emitted through `addBoltAssembly` so the model keeps
+ * exactly one nut and one washer per bolt (the schedules assert that parity globally).
+ */
+function addBoltedJoistCleat(
+  s: ModelSink,
+  o: {
+    idBase: string; connectionId: string; assemblyId: string; label: string;
+    x: number; memberT: number;
+    cy: number; cz: number;
+    halfY: number; halfZ: number;
+    floor: number;
+  },
+): void {
+  const holeDiaMm = Math.round(DECK_BOLT_D * 1000) + 2;
+  const boltSpec = `M${Math.round(DECK_BOLT_D * 1000)} gr 8.8`;
+  const nearOuter = o.x - o.memberT / 2 - CLEAT_T;
+
+  s.add(
+    `${o.idBase}:cleat`, "cleat", `${o.label} — cleat plate`,
+    box(nearOuter, o.cy - o.halfY, o.cz - o.halfZ, o.x - o.memberT / 2, o.cy + o.halfY, o.cz + o.halfZ),
+    {
+      connectionId: o.connectionId,
+      assemblyId: o.assemblyId,
+      partMark: "CL",
+      floor: o.floor,
+      fabrication: "shop",
+      explode: { x: -1.3, y: 0, z: 0.2 },
+      spec: {
+        widthMm: Math.round(o.halfY * 2000),
+        heightMm: Math.round(o.halfZ * 2000),
+        thicknessMm: Math.round(CLEAT_T * 1000),
+        boltCount: 2,
+        holeDiaMm,
+        boltSpec,
+        weldSpec: `${WELD_LEG * 1000} mm fillet · shop weld to the beam web`,
+        role: "Carries the joist end reaction into the base beam and holds the joist upright.",
+        loadPath: "Joist end shear → bolts → cleat → shop weld → beam web → column.",
+        note: "Cleat is SHOP-welded to the beam; the joist is SITE-bolted to the cleat.",
+      },
+    },
+  );
+
+  /* The shop weld that fixes the cleat to the beam. */
+  addWeld(s, {
+    id: `${o.idBase}:weld`,
+    connectionId: o.connectionId,
+    assemblyId: o.assemblyId,
+    label: `${o.label} — cleat to beam fillet weld`,
+    cx: nearOuter + CLEAT_T / 2,
+    cy: o.cy,
+    cz: o.cz,
+    runY: o.halfY * 2,
+    runZ: 0.01,
+    lengthMm: Math.round(o.halfY * 2000),
+  });
+
+  /* Two bolts, vertically pitched — one bolt would let the joist rotate about it. */
+  ([-1, 1] as const).forEach((sgn, i) => {
+    addBoltAssembly(s, {
+      id: `${o.idBase}:bolt:${i + 1}`,
+      connectionId: o.connectionId,
+      assemblyId: o.assemblyId,
+      label: `${o.label} — bolt ${i + 1}`,
+      xOuter0: nearOuter,
+      xOuter1: o.x + o.memberT / 2,
+      cy: o.cy,
+      cz: o.cz + sgn * Math.min(0.035, o.halfZ * 0.55),
+      dia: DECK_BOLT_D,
+      boltSpec,
+      holeDiaMm,
+      floor: o.floor,
+    });
+  });
+}
+
+/* ==================================================== PUF PANEL SEATING SYSTEM ================
+ * How the sandwich panels are HELD. See model/panelSupport.ts for the engineering rationale — this
+ * only places the sections the spec derives, sized to whatever panel thickness the calculator is
+ * configured with. Engineering detail, never priced: the panel itself is already bought as
+ * `${face}:cladding`, and these are the MS sections that receive it.
+ */
+
+interface PanelSeatArgs {
+  body: Body;
+  floors: number;
+  fflOf: (f: number) => number;
+  ceilOf: (f: number) => number;
+  colXs: number[];
+  spec: PanelSupportSpec;
+  connDetail: boolean;
+}
+
+function buildPanelSeating(s: ModelSink, a: PanelSeatArgs): void {
+  const { body, spec } = a;
+  const slot = spec.slotWidthMm / 1000;
+  const baseLeg = spec.seats[0].legMm / 1000;
+  const jambLeg = spec.seats[1].legMm / 1000;
+  const headLeg = spec.seats[2].legMm / 1000;
+  const gauge = spec.seats[0].gaugeMm / 1000;
+
+  const FACES = [
+    { key: "left", axis: "y" as const, at: body.x0, inward: 1 },
+    { key: "right", axis: "y" as const, at: body.x1, inward: -1 },
+    { key: "rear", axis: "x" as const, at: body.y0, inward: 1 },
+    { key: "front", axis: "x" as const, at: body.y1, inward: -1 },
+  ];
+
+  for (let f = 0; f < a.floors; f++) {
+    const z0 = a.fflOf(f) + DECK_T;   // the track sits ON the finished deck
+    const z1 = a.ceilOf(f);
+    const tag = f === 0 ? "gf" : `f${f}`;
+
+    for (const face of FACES) {
+      const common = {
+        floor: f,
+        fabrication: "shop" as const,
+        assemblyId: `${tag}:panel-seat:${face.key}`,
+      };
+
+      /* ---- BASE TRACK (U-channel) — the panel is dropped into this first ------------------- */
+      const seatBase = spec.seats[0];
+      const uSolid = face.axis === "y"
+        ? box(face.at, body.y0, z0, face.at + face.inward * slot, body.y1, z0 + baseLeg)
+        : box(body.x0, face.at, z0, body.x1, face.at + face.inward * slot, z0 + baseLeg);
+      s.add(
+        `${tag}:u-track:${face.key}`, "u-channel",
+        `PUF base track (U-channel) — ${face.key}`,
+        normBox(uSolid),
+        {
+          ...common,
+          partMark: "UT",
+          explode: face.axis === "y"
+            ? { x: -face.inward * 1.1, y: 0, z: -0.4 }
+            : { x: 0, y: -face.inward * 1.1, z: -0.4 },
+          spec: {
+            sectionSize: seatBase.sectionCall,
+            slotWidthMm: spec.slotWidthMm,
+            minInsertionMm: seatBase.minInsertionMm,
+            thicknessMm: seatBase.gaugeMm,
+            lengthM: round(face.axis === "y" ? body.d : body.w, 3),
+            role: seatBase.role,
+            loadPath: seatBase.loadPath,
+            note:
+              `${spec.thicknessMm} mm panel → ${spec.slotWidthMm} mm slot `
+              + `(${spec.clearanceMm} mm free play). Bolt down at ${spec.fixingPitchMm} mm c/c, `
+              + `${spec.fixingPitchCornerMm} mm within 300 mm of a corner. STEP 1 of the lock sequence.`,
+          },
+        },
+      );
+
+      /* ---- HEAD RESTRAINT (angle) — fixed LAST so the panel is never wedged --------------- */
+      const seatHead = spec.seats[2];
+      const aSolid = face.axis === "y"
+        ? box(face.at, body.y0, z1 - headLeg, face.at + face.inward * gauge, body.y1, z1)
+        : box(body.x0, face.at, z1 - headLeg, body.x1, face.at + face.inward * gauge, z1);
+      s.add(
+        `${tag}:head-angle:${face.key}`, "angle-support",
+        `PUF head restraint (angle) — ${face.key}`,
+        normBox(aSolid),
+        {
+          ...common,
+          partMark: "HA",
+          explode: face.axis === "y"
+            ? { x: -face.inward * 1.1, y: 0, z: 0.9 }
+            : { x: 0, y: -face.inward * 1.1, z: 0.9 },
+          spec: {
+            sectionSize: seatHead.sectionCall,
+            slotWidthMm: spec.slotWidthMm,
+            minInsertionMm: seatHead.minInsertionMm,
+            thicknessMm: seatHead.gaugeMm,
+            lengthM: round(face.axis === "y" ? body.d : body.w, 3),
+            role: seatHead.role,
+            loadPath: seatHead.loadPath,
+            note:
+              "STEP 7 of the lock sequence — fixed LAST, after the panel is home in its track and "
+              + "its joint. Leave the movement gap open; never pack it solid.",
+          },
+        },
+      );
+    }
+
+    /* ---- JAMB / CLOSING CHANNELS at the corners ------------------------------------------- *
+     * Modelled as a real C-shaped PRISM: a vertical member's cross-section lies in the xy plane, so
+     * the extrusion can show the actual open channel the panel edge slides into. */
+    const seatJamb = spec.seats[1];
+    const CORNERS: { key: string; x: number; y: number; sx: number; sy: number }[] = [
+      { key: "a", x: body.x0, y: body.y0, sx: 1, sy: 1 },
+      { key: "b", x: body.x1, y: body.y0, sx: -1, sy: 1 },
+      { key: "c", x: body.x0, y: body.y1, sx: 1, sy: -1 },
+      { key: "d", x: body.x1, y: body.y1, sx: -1, sy: -1 },
+    ];
+    for (const c of CORNERS) {
+      s.add(
+        `${tag}:jamb-channel:${c.key}`, "c-channel",
+        `PUF jamb / closing channel — corner ${c.key.toUpperCase()}`,
+        prism(cChannelPoly(c.x, c.y, c.sx, c.sy, slot, jambLeg, gauge), z0, z1),
+        {
+          floor: f,
+          partMark: "JC",
+          fabrication: "shop",
+          assemblyId: `${tag}:panel-seat:corner-${c.key}`,
+          /* Jamb channels serve the WALL, not the deck, so they install with the wall framing —
+           * overriding the c-channel family default (which is the base-frame perimeter member). */
+          assemblyStep: 14,
+          explode: { x: -c.sx * 1.2, y: -c.sy * 1.2, z: 0.3 },
+          spec: {
+            sectionSize: seatJamb.sectionCall,
+            slotWidthMm: spec.slotWidthMm,
+            minInsertionMm: seatJamb.minInsertionMm,
+            thicknessMm: seatJamb.gaugeMm,
+            lengthM: round(z1 - z0, 3),
+            role: seatJamb.role,
+            loadPath: seatJamb.loadPath,
+            note:
+              `STEP 2 of the lock sequence — plumbed and fixed BEFORE the first panel, because the `
+              + `first panel is entered sideways into it and gains its second restrained edge from it.`,
+          },
+        },
+      );
+    }
+
+    /* ---- FRAMED POCKETS at the intermediate columns ---------------------------------------- */
+    if (a.connDetail) {
+      const seatPocket = spec.seats[3];
+      const inner = a.colXs.filter((x) => x > body.x0 + 1e-3 && x < body.x1 - 1e-3);
+      inner.forEach((x, i) => {
+        ([[body.y0, 1], [body.y1, -1]] as const).forEach(([yAt, sy], e) => {
+          s.add(
+            `${tag}:panel-pocket:${pad2(i + 1)}:${e === 0 ? "r" : "f"}`, "pocket-support",
+            `Framed panel pocket at column — ${e === 0 ? "rear" : "front"}`,
+            box(x - jambLeg / 2, yAt, z0, x + jambLeg / 2, yAt + sy * slot, z0 + Math.min(1.2, (z1 - z0) * 0.5)),
+            {
+              floor: f,
+              partMark: "PP",
+              fabrication: "shop",
+              assemblyId: `${tag}:panel-seat:pocket`,
+              assemblyStep: 14,
+              explode: { x: 0, y: -sy * 1.2, z: 0.5 },
+              spec: {
+                sectionSize: seatPocket.sectionCall,
+                slotWidthMm: spec.slotWidthMm,
+                minInsertionMm: seatPocket.minInsertionMm,
+                thicknessMm: seatPocket.gaugeMm,
+                role: seatPocket.role,
+                loadPath: seatPocket.loadPath,
+                note:
+                  "Captures the panel on THREE sides where the run dies into a column — the one place "
+                  + "a panel edge would otherwise be a free cantilever.",
+              },
+            },
+          );
+        });
+      });
+    }
+  }
+}
+
+/** A C-shaped plan polygon for a vertical channel, opening along (sx, sy). */
+function cChannelPoly(
+  x: number, y: number, sx: number, sy: number, slot: number, leg: number, gauge: number,
+): Pt[] {
+  /* Built in a local frame then mirrored by (sx, sy): the web runs along the local +y, the two legs
+   * return along the local +x, leaving an open slot of `slot` between them. */
+  const p = (dx: number, dy: number): Pt => ({ x: x + sx * dx, y: y + sy * dy });
+  return [
+    p(0, 0),
+    p(leg, 0),
+    p(leg, gauge),
+    p(gauge, gauge),
+    p(gauge, gauge + slot),
+    p(leg, gauge + slot),
+    p(leg, gauge * 2 + slot),
+    p(0, gauge * 2 + slot),
+  ];
+}
+
+/** Normalise a box whose min/max may be inverted by an inward direction of -1. */
+function normBox(solid: PartSolid): PartSolid {
+  if (solid.kind !== "box") return solid;
+  const { min, max } = solid;
+  return {
+    kind: "box",
+    min: { x: Math.min(min.x, max.x), y: Math.min(min.y, max.y), z: Math.min(min.z, max.z) },
+    max: { x: Math.max(min.x, max.x), y: Math.max(min.y, max.y), z: Math.max(min.z, max.z) },
+  };
+}
+
+const pad2 = (n: number): string => (n < 10 ? `0${n}` : `${n}`);
 
 function buildEnvelope(
   s: ModelSink,

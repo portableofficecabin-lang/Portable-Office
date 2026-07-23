@@ -32,6 +32,8 @@ import {
   RAFTER_SUPPORT_EXPLANATION, type RafterSupportDerived,
 } from "@/features/labour-colony-studio/model/rafterSupport";
 import { rafterSupportOf } from "./assemblyDetailTour";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { PaletteEditor } from "@/features/labour-colony-studio/palette/PaletteEditor";
 import type { BoqResult } from "@/lib/boq/types";
 import { AssemblyScene, type AssemblyExportController } from "./AssemblyScene";
 import { AssemblyOverlay } from "./AssemblyOverlay";
@@ -57,6 +59,9 @@ export interface AssemblyVideoViewProps {
   companyName?: string;
   selectedId?: string | null;
   onSelectPart?: (id: string | null) => void;
+  /** Shared with the 3D tab so a colour chosen in either place shows in both, and in the export. */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 const RESOLUTION_PRESETS: { id: string; label: string; w: number; h: number }[] = [
@@ -293,6 +298,7 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
               autoCamera={options.autoCamera} mode={options.mode} background={options.background}
               quality={quality} selectedId={props.selectedId ?? null} seek={player.seek}
               onTick={player.reportTick} onSelect={onSelect} onExportReady={onExportReady} onReady={onReady}
+              palette={props.palette}
             />
             {options.showLabels && <AssemblyOverlay caption={caption} extras={extras} labels={labels} />}
             {!sceneReady && (
@@ -322,6 +328,16 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
             quality={quality} onQuality={setQuality} onFullscreen={goFullscreen}
             onExport={() => setShowExport((v) => !v)} exporting={running}
           />
+
+          {/* Component colours — the same palette the 3D tab uses, so the video and every exported
+              frame carry exactly what the admin picked. */}
+          {props.onPaletteChange && (
+            <PaletteEditor
+              model={model}
+              palette={props.palette ?? {}}
+              onChange={props.onPaletteChange}
+            />
+          )}
 
           {showExport && (
             <ExportPanel

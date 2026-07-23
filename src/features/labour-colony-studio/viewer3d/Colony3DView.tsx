@@ -24,12 +24,14 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useThree, type ThreeEvent } from "@react-three/fiber";
-import { OrbitControls, Grid, Html, Line, Edges } from "@react-three/drei";
+import { OrbitControls, Grid, Html, Line, Edges, Sky } from "@react-three/drei";
 import * as THREE from "three";
 import type {
   ColonyModel, ColonyPart, ColonyPartKind, ColonyPartLayer, ViewMode,
 } from "@/features/labour-colony-studio/model/types";
 import { CONNECTION_DETAIL } from "@/features/labour-colony-studio/model/assembly";
+import { resolvePartColor, type ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { buildExplodedExplanation, type ExplodedExplanation } from "./explodedAnnotations";
 import {
   boxOfSolid, explodeOffset, quadOfSolid, sceneCtxOf, MIN_VIS_M, type SceneCtx,
 } from "./partGeometry";
@@ -60,6 +62,18 @@ export interface ColonyView3DSettings {
   section: { enabled: boolean; axis: SectionAxis; position: number };
   /** Overlay fabrication part-mark labels on structural members. */
   showPartMarks: boolean;
+  /**
+   * Overlay the EXPLANATION layer — leader-line callouts and dimension runs that say what each key
+   * member is for, how the load leaves it, and what the spacing and bearing measure. Independent of
+   * `showPartMarks`: a mark tells you the piece number, a callout tells you why the piece exists.
+   */
+  showAnnotations: boolean;
+  /**
+   * Per-colour-group overrides. Resolved through `resolvePartColor` so the SAME colour a group is
+   * given here also appears in the exploded view, the assembly video and every exported frame —
+   * there is one resolver and every surface calls it. Undefined ⇒ the model's own engineering colours.
+   */
+  palette?: ColonyPalette | null;
   /** Higher device-pixel-ratio ceiling for crisper (heavier) rendering. */
   hd: boolean;
   /**
@@ -157,7 +171,7 @@ const PartMesh = memo(function PartMesh({
   const opacity = opacityOf(part, mode);
   const wireframe = mode === "wireframe";
   const transparent = !wireframe && (opacity < 1 || mode === "xray" || mode === "hidden-line");
-  const color = selected ? "#f59e0b" : part.colorHex;
+  const color = selected ? "#f59e0b" : resolvePartColor(part, settings.palette);
   const emissive = selected ? "#7c3a00" : hovered ? "#334155" : "#000000";
   const overlay = OVERLAY_KINDS.has(part.kind);
   const showEdges = !wireframe && (mode === "hidden-line" || EDGE_LAYERS.has(part.layer));
@@ -225,14 +239,32 @@ const PartMesh = memo(function PartMesh({
 
 /* ------------------------------------------------------------------ part-mark labels ---------- */
 
-const PartMarkLabels = memo(function PartMarkLabels({ parts, ctx }: { parts: ColonyPart[]; ctx: SceneCtx }) {
+/**
+ * Fabrication part marks floating on their members.
+ *
+ * The mark must travel with its part: it carries the SAME explode offset the mesh does (and falls
+ * back to a quad's centroid the way the callout layer below does), otherwise a mark stays welded to
+ * the assembled position and, as the explode slider opens, ends up labelling empty space — or worse,
+ * sitting over a different member and mis-identifying it to the fabricator.
+ */
+const PartMarkLabels = memo(function PartMarkLabels({
+  parts, ctx, settings,
+}: { parts: ColonyPart[]; ctx: SceneCtx; settings: ColonyView3DSettings }) {
   return (
     <>
       {parts.map((p) => {
         const b = boxOfSolid(p.solid, ctx);
-        if (!b) return null;
+        const base = b ? b.center : quadCentre(p, ctx);
+        if (!base) return null;
+        const off = explodeOffset(p, settings.explode, SEP_GAP_M);
         return (
-          <Html key={`mark-${p.id}`} position={b.center} center distanceFactor={12} occlude={false}>
+          <Html
+            key={`mark-${p.id}`}
+            position={[base[0] + off[0], base[1] + off[1], base[2] + off[2]]}
+            center
+            distanceFactor={12}
+            occlude={false}
+          >
             <div style={{ background: "#0f172a", color: "#fff", fontSize: 9, padding: "0 4px", borderRadius: 3, whiteSpace: "nowrap", pointerEvents: "none" }}>
               {p.partMark}
             </div>
@@ -242,6 +274,171 @@ const PartMarkLabels = memo(function PartMarkLabels({ parts, ctx }: { parts: Col
     </>
   );
 });
+
+/* ------------------------------------------------------------------ explanation layer --------- */
+
+/**
+ * Leader-line callouts + dimension runs that explain the exploded model.
+ *
+ * Positions are resolved HERE, not in the pure builder, because each anchor must carry the same
+ * explode offset its part does — otherwise every label would stay welded to the assembled position
+ * and drift away from the member it describes as the slider opens.
+ */
+const ExplodedExplanationLayer = memo(function ExplodedExplanationLayer({
+  explanation, partIndex, ctx, settings, radius,
+}: {
+  explanation: ExplodedExplanation;
+  partIndex: Map<string, ColonyPart>;
+  ctx: SceneCtx;
+  settings: ColonyView3DSettings;
+  radius: number;
+}) {
+  const anchorOf = (partId: string): [number, number, number] | null => {
+    const part = partIndex.get(partId);
+    if (!part) return null;
+    const b = boxOfSolid(part.solid, ctx);
+    const base = b ? b.center : quadCentre(part, ctx);
+    if (!base) return null;
+    const off = explodeOffset(part, settings.explode, SEP_GAP_M);
+    return [base[0] + off[0], base[1] + off[1], base[2] + off[2]];
+  };
+
+  return (
+    <>
+      {explanation.annotations.map((a) => {
+        const anchor = anchorOf(a.partId);
+        if (!anchor) return null;
+        const d = radius * a.distR;
+        const label: [number, number, number] = [
+          anchor[0] + a.dir[0] * d, anchor[1] + a.dir[1] * d, anchor[2] + a.dir[2] * d,
+        ];
+        return (
+          <group key={a.id}>
+            {/* leader line + a dot on the member it points at */}
+            <Line points={[anchor, label]} color={a.accent} lineWidth={1.4} dashed dashSize={0.12} gapSize={0.08} />
+            <mesh position={anchor}>
+              <sphereGeometry args={[Math.max(MIN_VIS_M, radius * 0.012), 10, 10]} />
+              <meshBasicMaterial color={a.accent} />
+            </mesh>
+            <Html position={label} center={false} distanceFactor={radius * 1.1} occlude={false} zIndexRange={[20, 0]}>
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.96)", border: `1.5px solid ${a.accent}`,
+                  borderRadius: 6, padding: "5px 8px", minWidth: 190, maxWidth: 300,
+                  boxShadow: "0 2px 8px rgba(15,23,42,0.18)", pointerEvents: "none",
+                  fontFamily: '"Inter", system-ui, sans-serif',
+                }}
+              >
+                <div style={{ color: a.accent, fontWeight: 800, fontSize: 9.5, letterSpacing: 0.2, marginBottom: 2 }}>
+                  {a.title}
+                </div>
+                {a.lines.map((ln, i) => (
+                  <div key={i} style={{ color: "#0f172a", fontSize: 8.4, lineHeight: 1.32, whiteSpace: "pre" }}>{ln}</div>
+                ))}
+              </div>
+            </Html>
+          </group>
+        );
+      })}
+
+      {explanation.dimensions.map((dm) => {
+        const a = anchorOf(dm.fromPartId);
+        const b = anchorOf(dm.toPartId);
+        if (!a || !b) return null;
+        const d = radius * dm.distR;
+        const off: [number, number, number] = [dm.dir[0] * d, dm.dir[1] * d, dm.dir[2] * d];
+        const a2: [number, number, number] = [a[0] + off[0], a[1] + off[1], a[2] + off[2]];
+        const b2: [number, number, number] = [b[0] + off[0], b[1] + off[1], b[2] + off[2]];
+        const mid: [number, number, number] = [(a2[0] + b2[0]) / 2, (a2[1] + b2[1]) / 2, (a2[2] + b2[2]) / 2];
+        return (
+          <group key={dm.id}>
+            {/* witness lines from each member down to the dimension line, then the run itself */}
+            <Line points={[a, a2]} color={dm.accent} lineWidth={1} dashed dashSize={0.08} gapSize={0.06} />
+            <Line points={[b, b2]} color={dm.accent} lineWidth={1} dashed dashSize={0.08} gapSize={0.06} />
+            <Line points={[a2, b2]} color={dm.accent} lineWidth={2} />
+            <Html position={mid} center distanceFactor={radius * 1.1} occlude={false} zIndexRange={[20, 0]}>
+              <div
+                style={{
+                  background: dm.accent, color: "#fff", borderRadius: 4, padding: "2px 6px",
+                  textAlign: "center", pointerEvents: "none", fontFamily: '"Inter", system-ui, sans-serif',
+                }}
+              >
+                <div style={{ fontSize: 10, fontWeight: 800, whiteSpace: "nowrap" }}>{dm.text}</div>
+                {dm.note && <div style={{ fontSize: 8, opacity: 0.95, whiteSpace: "nowrap" }}>{dm.note}</div>}
+              </div>
+            </Html>
+          </group>
+        );
+      })}
+    </>
+  );
+});
+
+/** Centre of a sloped-quad part (the only solid `boxOfSolid` cannot reduce). */
+function quadCentre(part: ColonyPart, ctx: SceneCtx): [number, number, number] | null {
+  const q = quadOfSolid(part.solid, ctx);
+  if (!q || q.length !== 4) return null;
+  return [
+    q.reduce((a, p) => a + p[0], 0) / 4,
+    q.reduce((a, p) => a + p[1], 0) / 4,
+    q.reduce((a, p) => a + p[2], 0) / 4,
+  ];
+}
+
+/* ------------------------------------------------------------------ site backdrop ------------- */
+
+/** Horizon / haze colour shared by the fog, the ground's far edge and the canvas clear colour. */
+const HAZE = "#dbe7f2";
+
+/**
+ * The realistic site ground — a big grass disc whose colour runs from turf at the centre to the
+ * fog's haze at the rim, so the ground dissolves into the horizon instead of ending at a hard edge.
+ *
+ * The texture is a locally-generated canvas gradient with a little mottling: nothing is fetched
+ * (the viewer must work offline and the CSP-free export must stay self-contained), and the same
+ * backdrop therefore appears in the captured PNG. Client-only by construction — this component
+ * renders inside <Canvas>, which never runs on the server.
+ */
+function SiteGround({ radius }: { radius: number }) {
+  const texture = useMemo(() => {
+    if (typeof document === "undefined") return null;
+    const c = document.createElement("canvas");
+    c.width = c.height = 512;
+    const g = c.getContext("2d");
+    if (!g) return null;
+    const grad = g.createRadialGradient(256, 256, 0, 256, 256, 256);
+    grad.addColorStop(0, "#93a678");
+    grad.addColorStop(0.45, "#9cad82");
+    grad.addColorStop(0.78, "#b7c2a4");
+    grad.addColorStop(1, HAZE);
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 512, 512);
+    // faint mottling so the ground reads as turf rather than flat paint
+    for (let i = 0; i < 900; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      const r = Math.hypot(x - 256, y - 256);
+      if (r > 240) continue; // keep the hazy rim clean
+      g.fillStyle = Math.random() > 0.5 ? "rgba(120,140,95,0.12)" : "rgba(160,175,130,0.12)";
+      g.beginPath();
+      g.arc(x, y, 1 + Math.random() * 2.5, 0, Math.PI * 2);
+      g.fill();
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }, []);
+  useEffect(() => () => texture?.dispose(), [texture]);
+
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.03, 0]} receiveShadow>
+      <circleGeometry args={[radius * 20, 96]} />
+      {texture
+        ? <meshStandardMaterial map={texture} roughness={1} metalness={0} />
+        : <meshStandardMaterial color="#9cad82" roughness={1} metalness={0} />}
+    </mesh>
+  );
+}
 
 /* ------------------------------------------------------------------ camera + capture ---------- */
 
@@ -313,12 +510,24 @@ export function Colony3DView(props: Colony3DViewProps) {
   // would put hundreds of labels on screen.
   const markParts = useMemo(
     () => (settings.showPartMarks
-      ? parts.filter((p) => !!p.partMark && (
-          p.layer === "structure" || p.layer === "foundation" || p.layer === "roof"
-          || p.kind === "puf-lock-base-plate"))
+      // `connection` is included so splice plates, bolts, nuts and welds carry their fabrication
+      // marks in the exploded view — that detailing is the whole point of turning part marks on.
+      ? parts.filter((p) => !!p.partMark
+          && (p.layer === "structure" || p.layer === "foundation" || p.layer === "roof"
+            || p.layer === "connection" || p.kind === "puf-lock-base-plate"))
       : []),
     [parts, settings.showPartMarks],
   );
+
+  /* The explanation layer is derived from the WHOLE model, not the filtered `parts`, so a callout
+   * survives its anchor being hidden by a layer toggle — it simply resolves no position and skips.
+   * Indexed once so each annotation is an O(1) lookup rather than a scan of a few thousand parts. */
+  const explanation = useMemo(() => buildExplodedExplanation(model), [model]);
+  const partIndex = useMemo(() => {
+    const m = new Map<string, ColonyPart>();
+    for (const p of parts) m.set(p.id, p);
+    return m;
+  }, [parts]);
 
   // Section clipping plane along the chosen axis (three-space). The plane's constant is set INSIDE
   // the memo (never mutated during render); the array reference stays stable while off so
@@ -353,6 +562,11 @@ export function Colony3DView(props: Colony3DViewProps) {
     onSelect(id);
   }, [measureMode, model, ctx, onSelect]);
 
+  /* Presentation modes (solid / x-ray) get the realistic site backdrop — procedural sky, grass
+   * ground and distance haze. The drafting modes (wireframe / hidden-line) keep the flat paper-grey
+   * background, because a technical linework view over a landscape reads as noise. */
+  const realistic = settings.renderMode === "solid" || settings.renderMode === "xray";
+
   const measureM = measurePts.length === 2
     ? Math.hypot(
         measurePts[0][0] - measurePts[1][0],
@@ -372,19 +586,39 @@ export function Colony3DView(props: Colony3DViewProps) {
       onPointerMissed={() => !measureMode && onSelect(null)}
       style={{ background: "transparent" }}
     >
-      <color attach="background" args={["#eef2f7"]} />
-      <hemisphereLight args={["#ffffff", "#cbd5e1", 0.9]} />
-      <ambientLight intensity={0.4} />
+      <color attach="background" args={[realistic ? HAZE : "#eef2f7"]} />
+      {realistic && <fog attach="fog" args={[HAZE, radius * 7, radius * 26]} />}
+      {realistic && (
+        /* Procedural atmosphere — no HDRI, nothing fetched. The sun sits on the key light's axis so
+         * the sky's bright quadrant and the cast shadows agree. Distance kept inside the camera's
+         * far plane (radius * 40) or the sky sphere itself would be clipped. */
+        <Sky
+          distance={radius * 32}
+          sunPosition={[radius * 3, radius * 5, radius * 2]}
+          turbidity={5.5}
+          rayleigh={1.1}
+          mieCoefficient={0.004}
+          mieDirectionalG={0.85}
+        />
+      )}
+      <hemisphereLight args={realistic ? ["#eaf3ff", "#8f9c7d", 0.85] : ["#ffffff", "#cbd5e1", 0.9]} />
+      <ambientLight intensity={realistic ? 0.32 : 0.4} />
       <directionalLight position={[radius * 3, radius * 5, radius * 2]} intensity={1.3} castShadow
-        shadow-mapSize-width={2048} shadow-mapSize-height={2048} shadow-bias={-0.0004} shadow-normalBias={0.02} />
+        shadow-mapSize-width={2048} shadow-mapSize-height={2048} shadow-bias={-0.0004} shadow-normalBias={0.02}
+        shadow-camera-left={-radius * 2} shadow-camera-right={radius * 2}
+        shadow-camera-top={radius * 2} shadow-camera-bottom={-radius * 2}
+        shadow-camera-near={0.5} shadow-camera-far={radius * 12} />
       <directionalLight position={[-radius * 3, radius * 3, -radius * 2]} intensity={0.45} />
 
-      <Grid
-        args={[radius * 8, radius * 8]}
-        cellSize={1} cellThickness={0.6} cellColor="#cbd5e1"
-        sectionSize={5} sectionThickness={1} sectionColor="#94a3b8"
-        position={[0, -0.002, 0]} infiniteGrid fadeDistance={radius * 14} fadeStrength={1.5}
-      />
+      {realistic && <SiteGround radius={radius} />}
+      {!realistic && (
+        <Grid
+          args={[radius * 8, radius * 8]}
+          cellSize={1} cellThickness={0.6} cellColor="#cbd5e1"
+          sectionSize={5} sectionThickness={1} sectionColor="#94a3b8"
+          position={[0, -0.002, 0]} infiniteGrid fadeDistance={radius * 14} fadeStrength={1.5}
+        />
+      )}
 
       {parts.map((p) => (
         <PartMesh
@@ -394,7 +628,13 @@ export function Colony3DView(props: Colony3DViewProps) {
         />
       ))}
 
-      {markParts.length > 0 && <PartMarkLabels parts={markParts} ctx={ctx} />}
+      {markParts.length > 0 && <PartMarkLabels parts={markParts} ctx={ctx} settings={settings} />}
+
+      {settings.showAnnotations && (
+        <ExplodedExplanationLayer
+          explanation={explanation} partIndex={partIndex} ctx={ctx} settings={settings} radius={radius}
+        />
+      )}
 
       {/* measurement */}
       {measurePts.map((pt, i) => (

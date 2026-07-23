@@ -73,6 +73,12 @@ export interface TimelineStep {
   captionCustomer: string;
   /** Optional engineering summary line. */
   captionEngineering?: string;
+  /** Ordered fixing / installation sub-steps for the fitter (spec: step-by-step installation). */
+  instructions?: string[];
+  /** Tooling call-out for the step. */
+  tools?: string;
+  /** What the supervisor signs off before the next step. */
+  inspection?: string;
   partIds: string[];
   /** timeline-absolute milliseconds. */
   startMs: number;

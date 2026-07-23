@@ -24,7 +24,9 @@ import {
   RAFTER_SUPPORT_EXPLANATION,
   TUBE_SECTION_LIBRARY,
   autoLevels,
+  boltUnitWeightKg,
   cleatBoltOffsets,
+  cleatGrossUnitWeightKg,
   cleatUnitWeightKg,
   deriveRafterSupport,
   nutUnitWeightKg,
@@ -35,12 +37,14 @@ import {
   rafterCleatGeometry,
   rafterSupportAssemblyCallout,
   rafterSupportMethodSteps,
+  renumberCleats,
   requiredCleatBoltLengthMm,
   requiredCleatWidthMm,
   requiredWebBoltLengthMm,
   resolveRafterSupportConfig,
   roofSlopePlanes,
   sheetLayoutFor,
+  tubeCatalogueKgPerM,
   tubeKgPerM,
   tubeRunGeometry,
   tubeSectionKgPerM,
@@ -167,7 +171,10 @@ const finite = (xs: number[]): boolean => xs.every((n) => Number.isFinite(n));
   const at1000 = tubeSpacingForSheet(D.ceilingSheet, 1000);
   ok(!at1000.divides, "1000 c/c does NOT divide a 2440 sheet");
   eq(at1000.spacingMm, 1000, "a non-dividing spacing is respected, never silently snapped");
-  eq(at1000.nearestDividingMm, 1220, "the nearest dividing spacing to 1000 is reported as 1220");
+  // the GENUINELY nearest dividing spacing, not the nearest division COUNT: 2440/3 = 813.333 is
+  // 187 mm from 1000, nearer than 2440/2 = 1220 which is 220 mm away (modules reviewer D2)
+  eq(at1000.nearestDividingMm, 813.333, "the nearest dividing spacing to 1000 is 2440/3 = 813.333, not 1220");
+  ok(tubeSpacingForSheet(D.ceilingSheet, 813.333).divides, "…and that suggestion round-trips: 813.333 c/c DOES divide the sheet");
   eq(at1000.residualMm, 440, "a 2440 sheet on 1000 c/c overruns the last whole bay by 440 mm");
 
   for (const [n, s] of [[1, 2440], [2, 1220], [4, 610], [5, 488], [8, 305]] as const) {
@@ -311,7 +318,10 @@ const finite = (xs: number[]): boolean => xs.every((n) => Number.isFinite(n));
   // a rake longer than the maximum panel length is made up with an end lap
   const long = panelLayoutFor(lvl, 12.0, 20.0, D.roofPanel);
   eq(long.piecesPerRun, 2, "a 20 m rake needs 2 panel pieces per run");
-  eq(long.panelLengthMm, 10200, "each piece is 10 000 mm plus the 200 mm end lap");
+  // 2 pieces share ONE 200 mm end lap, not two: 20000 + 200 = 20200 over 2 pieces = 10100 each
+  // (modules reviewer D5 / validation D9d — the old 10200 bought a whole extra lap per run)
+  eq(long.panelLengthMm, 10100, "each of the 2 pieces is 10 100 mm — the rake plus ONE shared 200 mm lap, halved");
+  eq(round3(long.panelLengthMm * 2), 20200, "the run totals rake + exactly one end lap, not two");
   eq(long.totalPanels, 24, "12 runs × 2 pieces = 24 panels");
 
   ok(finite([whole.coveredAreaSqm, whole.purchasedAreaSqm, cut.cutPanelWidthMm, long.panelLengthMm]),
@@ -611,8 +621,16 @@ const REF = deriveRafterSupport(undefined, refCtx());
       ok(!boxesOverlap(b.head, g.tube), `${label}: the web-bolt head is clear of the tube`);
       ok(b.washers.length === 2, `${label}: a washer under the head and under the nut`);
       ok(b.projection.y1 - b.projection.y0 > 0, `${label}: the thread projects beyond the nut and is visible`);
-      eq(Math.abs(b.projection.y1 - b.projection.y0), cfg.bolt.projectionMm / 1000,
-        `${label}: the projection is exactly as specified`, 1e-9);
+      // THE DRAWN BOLT IS THE SPECIFIED BOLT (geometry #6 / validation D7): under-head to thread tip
+      // (shank + nut region + projection) equals cfg.bolt.webLengthMm, so the projection is the
+      // BALANCE over the grip, not a constant projectionMm. A 100 mm web bolt over a 68 mm grip shows
+      // 32 mm, not 10 mm.
+      const webUnderHeadToTip =
+        Math.max(b.shank.y1, b.nut.y1, b.projection.y1) - Math.min(b.shank.y0, b.nut.y0, b.projection.y0);
+      eq(round3(webUnderHeadToTip), round3(cfg.bolt.webLengthMm / 1000),
+        `${label}: the drawn web bolt is exactly the specified M12 × ${cfg.bolt.webLengthMm}`, 1e-6);
+      ok(b.projection.y1 - b.projection.y0 > cfg.bolt.projectionMm / 1000 + 1e-6,
+        `${label}: the 100 mm web bolt over a 68 mm grip projects MORE than the 10 mm minimum — the real balance`);
       ok(finite(nums(b.head).concat(nums(b.shank), nums(b.nut), nums(b.projection))),
         `${label}: no web-bolt solid contains NaN`);
     }
@@ -741,7 +759,8 @@ const REF = deriveRafterSupport(undefined, refCtx());
   ok(badSpacing.includes("sheet-joint-off-tube"), "…and each sheet edge that misses a tube is reported individually");
   const badD = deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: 1000 } } as Partial<RafterSupportConfig>, refCtx());
   ok(badD.errors.some((i) => i.code === "sheet-edge-unsupported"), "sheet-edge-unsupported is an error, not a warning");
-  ok(badD.errors.some((i) => i.message.includes("1220")), "…and the message names the 1220 mm fix");
+  // the suggested fix names the truly-nearest dividing spacing (2440/3 = 813.333), and it round-trips
+  ok(badD.errors.some((i) => i.message.includes("813.333")), "…and the message names the nearest dividing 813.333 mm fix");
   ok(!issueCodes({}).includes("sheet-edge-unsupported"), "the shipped 1220 c/c raises no such error");
 
   // --- slope width not a whole multiple of the cover width
@@ -1100,6 +1119,312 @@ const REF = deriveRafterSupport(undefined, refCtx());
   ok(thickBoard.takeoff.ceilingSheetKg > REF.takeoff.ceilingSheetKg, "a heavier board raises the board weight");
   eq(thickBoard.takeoff.totalSteelKg, REF.takeoff.totalSteelKg, "…and never contaminates the STEEL weight", 0.01);
   eq(thickBoard.takeoff.ceilingSheets, REF.takeoff.ceilingSheets, "…and never changes the board count");
+}
+
+/* ================================================================== 16. reviewer regressions === */
+/*
+ * One assertion (or block) per defect the three adversarial reviewers reported, so none can silently
+ * come back. Grouped by reviewer; the code comment names the finding.
+ */
+
+/* ---- GEOMETRY reviewer ---- */
+{
+  const cfg = REF.config;
+  const ceil = REF.levels[0];
+  const roof = REF.levels[1];
+
+  // G#1/#2/#3 — the covering strip is the REAL half-bay, clipped to the body: no duplicated board on
+  // a short closing bay, nothing outside the building, no plan-vs-rake width error.
+  const acrossLo = 0;
+  const acrossHi = 7.4;
+  const ceilRuns = ceil.lines.map((l) => ({ l, g: tubeRunGeometry(cfg, l, ceil) })).sort((a, b) => a.l.acrossM - b.l.acrossM);
+  for (const { g } of ceilRuns) {
+    ok(g.covering.y0 >= acrossLo - 1e-6 && g.covering.y1 <= acrossHi + 1e-6,
+      "G#2: no ceiling covering strip runs outside the building body");
+  }
+  for (let i = 1; i < ceilRuns.length; i++) {
+    ok(!boxesOverlap(ceilRuns[i - 1].g.covering, ceilRuns[i].g.covering),
+      "G#1: adjacent ceiling covering strips never duplicate board");
+  }
+  const closingRun = ceilRuns.find((r) => !r.l.onModule);
+  ok(!!closingRun && closingRun.g.covering.y1 - closingRun.g.covering.y0 < 1.22 - 1e-6,
+    "G#1: the short closing bay carries a narrow strip, not a full 1220 module");
+
+  // G#3 (flat roof) — the one case with no z-step to hide it: adjacent covering strips must not overlap.
+  const flatD = deriveRafterSupport(undefined, refCtx({ slope: { type: "flat", riseM: 0.3, overhangM: 0.3 } }));
+  const flatRoof = flatD.levels[1];
+  const flatRuns = flatRoof.lines.map((l) => tubeRunGeometry(flatD.config, l, flatRoof))
+    .sort((a, b) => (a.covering.y0 + a.covering.y1) - (b.covering.y0 + b.covering.y1));
+  for (let i = 1; i < flatRuns.length; i++) {
+    ok(!boxesOverlap(flatRuns[i - 1].covering, flatRuns[i].covering),
+      "G#3: adjacent flat-roof PUF strips never interpenetrate");
+  }
+
+  // G#4 — the roof covering follows the pitch (a tilted quad), not 9 floating horizontal slabs.
+  const roofRuns = roof.lines.map((l) => tubeRunGeometry(cfg, l, roof));
+  ok(roofRuns.some((g) => g.coveringPitchDeg > 1), "G#4: roof covering strips are pitched to the slope");
+  for (const g of roofRuns) {
+    const zs = g.coveringQuad.map((p) => p.z);
+    ok(Math.max(...zs) - Math.min(...zs) > 1e-4 || g.coveringPitchDeg === 0,
+      "G#4: a pitched roof strip actually rises across its width");
+  }
+
+  // G#5 — with a face offset the web bolt sits at the CENTRE OF THE LAP, not mid-tube-depth, so it
+  // still passes through the web. At offset 30 the old mid-tube line was 5 mm above the web entirely.
+  const offD = deriveRafterSupport({ tube: { ...D.tube, faceOffsetMm: 30 } } as Partial<RafterSupportConfig>, refCtx());
+  const offRoof = offD.levels[1];
+  const offPos = offD.positions.find((p) => p.levelId === offRoof.id);
+  ok(!!offPos, "G#5: a cleat exists on the offset roof level");
+  if (offPos) {
+    const og = rafterCleatGeometry(offD.config, offPos, offRoof);
+    for (const b of og.webBolts) {
+      const wLo = Math.min(og.purlinWeb.z0, og.purlinWeb.z1);
+      const wHi = Math.max(og.purlinWeb.z0, og.purlinWeb.z1);
+      ok(b.centre.z > wLo + 1e-9 && b.centre.z < wHi - 1e-9, "G#5: a face-offset web bolt still sits inside the web lap");
+      ok(b.shank.y0 < Math.min(og.purlinWeb.y0, og.purlinWeb.y1) + 1e-9 && b.shank.y1 > Math.max(og.purlinWeb.y0, og.purlinWeb.y1) - 1e-9,
+        "G#5: …and its shank passes clean through the web");
+    }
+  }
+
+  // G#6 — the DRAWN bolt is the SPECIFIED bolt: a longer bolt is drawn longer (not a constant grip).
+  const posC = REF.positions.find((p) => p.levelId === ceil.id)!;
+  const g50 = rafterCleatGeometry(cfg, posC, ceil);
+  for (const b of g50.cleatBolts) {
+    const underHeadToTip = Math.max(b.shank.z1, b.nut.z1, b.projection.z1) - Math.min(b.shank.z0, b.nut.z0, b.projection.z0);
+    eq(round3(underHeadToTip), round3(cfg.bolt.lengthMm / 1000), "G#6: the drawn cleat bolt is exactly the specified length", 1e-6);
+  }
+  const longBoltD = deriveRafterSupport({ bolt: { ...D.bolt, lengthMm: 80 } } as Partial<RafterSupportConfig>, refCtx());
+  const lbPos = longBoltD.positions.find((p) => p.levelId === longBoltD.levels[0].id)!;
+  const glb = rafterCleatGeometry(longBoltD.config, lbPos, longBoltD.levels[0]);
+  const lbLen = Math.max(...glb.cleatBolts.map((b) => Math.max(b.shank.z1, b.nut.z1, b.projection.z1) - Math.min(b.shank.z0, b.nut.z0, b.projection.z0)));
+  eq(round3(lbLen), round3(0.08), "G#6: an 80 mm cleat bolt is drawn 80 mm — the projection follows the length", 1e-6);
+
+  // G#7 — the cleat-bolt nut, lower washer and projecting thread are CLEAR of the rafter steel (the
+  // rafter is modelled as flange + web, not a solid block that buries the visible nut-bolt).
+  for (const b of g50.cleatBolts) {
+    ok(!boxesOverlap(b.nut, g50.rafterFlange) && !boxesOverlap(b.nut, g50.rafterWeb), "G#7: the cleat-bolt nut is clear of the rafter steel");
+    ok(!boxesOverlap(b.projection, g50.rafterFlange) && !boxesOverlap(b.projection, g50.rafterWeb), "G#7: …and so is the projecting thread");
+    for (const w of b.washers) ok(!boxesOverlap(w, g50.rafterWeb), "G#7: …and the washers clear the rafter web");
+  }
+
+  // G#8 — a bolt gauge that drives the HOLE under the member is now an ERROR, not a mere warning.
+  ok(deriveRafterSupport({ purlin: { ...D.purlin, depthMm: 150, flangeMm: 65, lipMm: 20, thicknessMm: 2.5 }, cleat: { ...D.cleat, holeGaugeMm: 120 } } as Partial<RafterSupportConfig>, refCtx())
+    .errors.some((i) => i.code === "bolt-clashes-member"),
+    "G#8: a gauge that puts the bolt hole under the flange is an error, not just a warning");
+
+  // G#9 — requiredCleatWidthMm needs 2×max(flange, tube) for a web-centred plate, not flange + tube.
+  const g9 = {
+    ...D,
+    purlin: { ...D.purlin, flangeMm: 65, depthMm: 150, lipMm: 20, thicknessMm: 2.5 },
+    tube: { ...D.tube, widthMm: 25, depthMm: 50 },
+    cleat: { ...D.cleat, widthMm: 100, holeGaugeMm: 40, edgeDistanceMm: 30 },
+  };
+  eq(requiredCleatWidthMm(g9), 130, "G#9: cleat width needs 2×max(65,25)=130, not 65+25=90");
+  ok(deriveRafterSupport(g9 as Partial<RafterSupportConfig>, refCtx()).errors.some((i) => i.code === "cleat-too-narrow"),
+    "G#9: …so a 100 mm cleat under a 65 mm flange is correctly caught as too narrow");
+
+  // G#10 — a bolt pitch that puts the hole centre off a narrow rafter warns; the default does not.
+  ok(deriveRafterSupport(undefined, refCtx({ rafterWidthMm: 80 })).warnings.some((i) => i.code === "bolt-edge-distance-rafter"),
+    "G#10: a 90 mm pitch on an 80 mm rafter warns the hole is off the rafter");
+  ok(!codesOf(REF).includes("bolt-edge-distance-rafter"), "G#10: the shipped 100 mm rafter raises no such warning");
+}
+
+/* ---- MODULES reviewer ---- */
+{
+  // D1 — noggin/screw bays follow the REAL tube lines, never round(across / spacing).
+  const d = deriveRafterSupport(undefined, refCtx({ body: { x0: 0, y0: 0, x1: 10, y1: 6.2 } }));
+  const cl = d.levels[0];
+  const layout = cl.sheetLayout!;
+  eq(layout.supportLines, cl.lines.length, "D1: sheet-layout support lines == the real tube-line count");
+  eq(layout.bays, cl.lines.length - 1, "D1: sheet-layout bays == tube lines − 1 (6, not round(6200/1220)=5)");
+  eq(layout.nogginPieces, layout.crossJointStationsMm.length * layout.bays, "D1: noggins = cross joints × REAL bays");
+  eq(d.takeoff.levels[0].tubeLines - 1, layout.bays, "D1: the take-off's tube-line count and its bay count agree in one row");
+
+  // D2 — nearestDividingMm names the genuinely nearest dividing spacing, and it round-trips.
+  eq(tubeSpacingForSheet(D.ceilingSheet, 700).nearestDividingMm, 610, "D2: nearest dividing spacing to 700 is 610 (n=4), not 813.333");
+  for (const s of [813.333, 610, 488, 406.667] as const) {
+    ok(tubeSpacingForSheet(D.ceilingSheet, s).divides, `D2: the suggested ${s} mm round-trips — divides the sheet`);
+  }
+
+  // D3 — residualMm is never a whole bay wrong at a 3-dp dividing spacing.
+  const at406 = tubeSpacingForSheet(D.ceilingSheet, 406.667);
+  ok(at406.divides, "D3: 2440/6 = 406.667 divides despite the 3-dp rounding");
+  eq(at406.residualMm, 0, "D3: …and reports 0 residual, not a full 406 mm bay");
+  eq(Math.round(at406.divisions), 6, "D3: …with 6 divisions");
+
+  // D4 — a sub-cut residual is a CUT board, decoupled from the support tolerance; area never over-billed.
+  const lvl: RafterSupportLayoutLevel = { id: "L", kind: "ceiling", spacingMm: 1220 };
+  const tight = sheetLayoutFor(lvl, 4.89, 7.33, { ...D.ceilingSheet, edgeToleranceMm: 10 });
+  eq(tight.cutSheetLengthMm, 10, "D4: a 10 mm residual is a cut board even under a 10 mm SUPPORT tolerance");
+  ok(tight.cutSheets > 0, "D4: …and cut boards are counted");
+  ok(tight.purchasedAreaSqm >= tight.coveredAreaSqm - 1e-9, "D4: purchased board area is never less than covered area");
+
+  // D5 — one end lap per run, not per piece.
+  const long = panelLayoutFor({ id: "R", kind: "roof", spacingMm: 1200 }, 12.0, 25.0, D.roofPanel);
+  eq(long.piecesPerRun, 3, "D5: a 25 m rake is 3 panel pieces");
+  eq(round3(long.panelLengthMm * long.piecesPerRun), round3(25.0 * 1000 + D.roofPanel.endLapMm),
+    "D5: a run totals rake + exactly ONE end lap (2 laps for 3 pieces), not 3");
+
+  // D6 — a NaN covering dimension is coerced back to the default; no NaN reaches the take-off.
+  eq(resolveRafterSupportConfig({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: Number.NaN } } as Partial<RafterSupportConfig>).ceilingSheet.tubeSpacingMm,
+    1220, "D6: a NaN tube spacing is coerced to the default");
+  const nanD = deriveRafterSupport({ roofPanel: { ...D.roofPanel, coverWidthMm: Number.NaN } } as Partial<RafterSupportConfig>, refCtx());
+  ok(Object.values(nanD.takeoff).filter((v): v is number => typeof v === "number").every(Number.isFinite),
+    "D6: a NaN cover width leaves every take-off number finite");
+
+  // D7 — zero / blank covering dimensions produce a bounded issue list and no absurd counts.
+  const zeroCover = deriveRafterSupport({ roofPanel: { ...D.roofPanel, coverWidthMm: 0 } } as Partial<RafterSupportConfig>, refCtx());
+  ok(zeroCover.errors.some((i) => i.code === "panel-cover-width-invalid"), "D7: a zero cover width is an error");
+  eq(zeroCover.takeoff.roofPanels, 0, "D7: …and produces zero panels, not 20 000");
+  const zeroSheet = deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, sheetLengthMm: 0, sheetWidthMm: 0 } } as Partial<RafterSupportConfig>, refCtx());
+  ok(zeroSheet.errors.some((i) => i.code === "sheet-size-invalid"), "D7: a zero board size is an error");
+  eq(zeroSheet.takeoff.ceilingSheets, 0, "D7: …and produces zero boards, not 62 million");
+  ok(zeroSheet.issues.length < 25, "D7: …and a bounded issue list, not thousands of joint issues");
+
+  // D8 — jointGapMm is read: it is carried into the layout and taken out of the laid board size.
+  const gapped = sheetLayoutFor(lvl, 12.2, 7.32, { ...D.ceilingSheet, jointGapMm: 5 });
+  eq(gapped.jointGapMm, 5, "D8: the movement gap is carried into the layout");
+  eq(gapped.laidSheetLengthMm, 2435, "D8: …and taken out of the board (2440 − 5)");
+  const nogap = sheetLayoutFor(lvl, 12.2, 7.32, { ...D.ceilingSheet, jointGapMm: 0 });
+  ok(gapped.laidSheetLengthMm < nogap.laidSheetLengthMm, "D8: a bigger gap cuts the board smaller");
+}
+
+/* ---- VALIDATION reviewer ---- */
+{
+  // D1 — the ceiling covering-overhang rule was dead; the closing-line invariant it depended on is
+  // asserted directly instead: a tube always lands within 1 mm of the far edge, so no ceiling
+  // cantilevers and none raises covering-overhang.
+  for (const acrossM of [2.0, 3.13, 5.5, 8.0, 12.0, 12.2, 19.37, 27.5, 40.0]) {
+    const d = deriveRafterSupport(undefined, refCtx({ body: { x0: 0, y0: 0, x1: 12.2, y1: acrossM } }));
+    const c = d.levels[0];
+    let last = -Infinity;
+    for (const l of c.lines) if (l.acrossM > last) last = l.acrossM;
+    ok(acrossM - last <= 0.001 + 1e-9, `VD1: ceiling span ${acrossM} m — a tube lands within 1 mm of the far edge`);
+    ok(!d.issues.some((i) => i.code === "covering-overhang" && i.memberId === c.id),
+      `VD1: ceiling span ${acrossM} m — no ceiling covering-overhang`);
+  }
+
+  // D2 — sheet-edge-unsupported no longer false-positives at 2440/3 and 2440/6.
+  for (const s of [813.333, 406.667] as const) {
+    const d = deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: s } } as Partial<RafterSupportConfig>, refCtx());
+    ok(!codesOf(d).includes("sheet-edge-unsupported"), `VD2: ${s} (a dividing spacing) does not false-positive sheet-edge-unsupported`);
+    ok(d.levels[0].spacing?.divides === true, `VD2: …because it genuinely divides the sheet`);
+  }
+
+  // D3 — a sub-minimum / zero tube spacing is reported, not clamped to 1 mm centres and crashed.
+  const bigCtx = refCtx({ body: { x0: 0, y0: 0, x1: 30, y1: 12 } });
+  const tinySp = deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: 5 } } as Partial<RafterSupportConfig>, bigCtx);
+  ok(tinySp.errors.some((i) => i.code === "tube-spacing-invalid"), "VD3: a 5 mm tube spacing is invalid, not 6000 lines");
+  eq(tinySp.levels[0].lines.length, 0, "VD3: …and lays out no tube line");
+  ok(tinySp.takeoff.purlinRunningLengthM < 100, "VD3: …and no absurd purlin running length");
+  ok(deriveRafterSupport({ ceilingSheet: { ...D.ceilingSheet, tubeSpacingMm: 0 } } as Partial<RafterSupportConfig>, refCtx())
+    .errors.some((i) => i.code === "tube-spacing-invalid"), "VD3: an explicit zero spacing is invalid too");
+
+  // D4 — renumberCleats and the full pipeline survive malformed / older-shape stored positions.
+  let threw = false;
+  try {
+    renumberCleats([
+      { ...({} as RafterSupportCleatPosition), id: "a" },
+      { ...({} as RafterSupportCleatPosition), id: "b" },
+    ]);
+  } catch { threw = true; }
+  ok(!threw, "VD4: renumberCleats does not throw on positions missing levelId");
+  const malformed = deriveRafterSupport(
+    { layoutEdited: true, positions: [{ id: "a" }, { id: "b" }] as unknown as RafterSupportCleatPosition[] } as Partial<RafterSupportConfig>,
+    refCtx(),
+  );
+  ok(malformed.positions.length === 2, "VD4: older-shape stored positions load without crashing the studio");
+
+  // D5 — cleats on a level that no longer exists are flagged, not silently drawn-but-unpriced.
+  const g2 = deriveRafterSupport(undefined, refCtx({ floors: 3, floorCeilingZM: [3.15, 6.0, 8.85], roofBaseZM: 8.85 }));
+  const reopened = deriveRafterSupport(
+    { layoutEdited: true, positions: g2.positions } as Partial<RafterSupportConfig>,
+    refCtx({ floors: 2 }),
+  );
+  ok(reopened.errors.some((i) => i.code === "cleat-orphan-level"),
+    "VD5: cleats belonging to a deleted level raise cleat-orphan-level (drawn but not priced)");
+
+  // D6 — the roof is built at a SMALLER spacing than requested, and the narration says so.
+  const roof = REF.levels[1];
+  ok(roof.actualSpacingMm < roof.spacingMm - 0.5, "VD6: the roof's actual rake spacing is smaller than the requested span");
+  ok(roof.actualSpacingMm > 0, "VD6: …and positive");
+  ok(rafterSupportMethodSteps(REF)[1].detail.includes("along the rake"),
+    "VD6: the method statement narrates the real rake spacing, not the requested span");
+
+  // D8a — a catalogue tube bills at the tabulated weight with NO override, and drift is meaningful.
+  const noOv = deriveRafterSupport({ tube: { ...D.tube, unitWeightKgPerMOverride: undefined } } as Partial<RafterSupportConfig>, refCtx());
+  eq(noOv.takeoff.tubeKgPerM, 2.95, "VD8a: shs-50x50x2 bills at the tabulated 2.95 with no override, not the 3.014 bound");
+  ok(!codesOf(noOv).includes("tube-unit-weight-drift"), "VD8a: …and raises no drift");
+  ok(!codesOf(noOv).includes("tube-unit-weight-above-bound"), "VD8a: …and is not above the sharp-corner bound");
+  for (const s of TUBE_SECTION_LIBRARY) {
+    eq(tubeCatalogueKgPerM({ ...D.tube, materialKey: s.materialKey, widthMm: s.widthMm, depthMm: s.depthMm, wallThicknessMm: s.wallThicknessMm, unitWeightKgPerMOverride: undefined }) ?? -1,
+      s.masterKgPerM, `VD8a: ${s.materialKey} catalogue weight matches the Material Master row`);
+  }
+  eq(tubeCatalogueKgPerM({ ...D.tube, materialKey: "shs-50x50x2", widthMm: 60 }), undefined,
+    "VD8a: a retyped dimension abandons the catalogue weight (tube-section-mismatch territory)");
+  ok(deriveRafterSupport({ tube: { ...D.tube, unitWeightKgPerMOverride: 4 } } as Partial<RafterSupportConfig>, refCtx()).warnings.some((i) => i.code === "tube-unit-weight-drift"),
+    "VD8a: an override 2 % off the tabulated row warns");
+
+  // D8b — a bolt weight override applies only to its OWN length; a web override exists.
+  eq(boltUnitWeightKg({ ...D.bolt, unitWeightKgOverride: 0.09 }, D.bolt.lengthMm), 0.09, "VD8b: the cleat-bolt override applies to the 50 mm bolt");
+  ok(boltUnitWeightKg({ ...D.bolt, unitWeightKgOverride: 0.09 }, D.bolt.webLengthMm) !== 0.09,
+    "VD8b: …but NOT to the 100 mm web bolt — that would halve it");
+  eq(boltUnitWeightKg({ ...D.bolt, webUnitWeightKgOverride: 0.18 }, D.bolt.webLengthMm), 0.18, "VD8b: a web-bolt override applies to the web bolt");
+  ok(boltUnitWeightKg(D.bolt, D.bolt.webLengthMm) > boltUnitWeightKg(D.bolt, D.bolt.lengthMm),
+    "VD8b: the derived 100 mm web bolt outweighs the 50 mm cleat bolt");
+  ok(issueCodes({ bolt: { ...D.bolt, unitWeightKgOverride: 0.09 } }).includes("web-bolt-weight-not-overridden"),
+    "VD8b: a cleat-only weight override warns the web bolt is still derived");
+  ok(!issueCodes({ bolt: { ...D.bolt, unitWeightKgOverride: 0.09, webUnitWeightKgOverride: 0.18 } }).includes("web-bolt-weight-not-overridden"),
+    "VD8b: …and setting both clears the warning");
+
+  // D9 — the previously-omitted quantities are now reported.
+  ok(REF.takeoff.roofEaveUncoveredAreaSqm > 0, "VD9a: the eave-overhang area is reported, not silently omitted");
+  ok(deriveRafterSupport(undefined, refCtx({ slope: { type: "gable", riseM: 1.2, overhangM: 0.6 } })).takeoff.roofEaveUncoveredAreaSqm
+    > REF.takeoff.roofEaveUncoveredAreaSqm, "VD9a: a bigger eave overhang means more uncovered area");
+  ok(REF.takeoff.nogginStockPieces > 0, "VD9b: the 6 m stock the noggins are cut from is now ordered");
+  ok(REF.takeoff.cleatGrossKg > REF.takeoff.cleatKg, "VD9c: purchased (gross) cleat weight exceeds erected net weight");
+  ok(cleatGrossUnitWeightKg(D.cleat) > cleatUnitWeightKg(D.cleat), "VD9c: gross plate weight is heavier than net-of-holes");
+
+  // D10 — the resolver coerces strings, validates level elements, and honours an empty edited list.
+  const coerced = resolveRafterSupportConfig({
+    bolt: { ...D.bolt, projectionMm: "10" as unknown as number, nutHeightMm: "10" as unknown as number },
+    cleat: { ...D.cleat, thicknessMm: "8" as unknown as number },
+  } as Partial<RafterSupportConfig>);
+  eq(coerced.bolt.projectionMm, 10, "VD10b: a form-stored string projection is coerced to a number");
+  eq(requiredCleatBoltLengthMm(coerced, 6), 40, "VD10b: …so the grip is 40 mm, not 201010");
+  const badLevelD = deriveRafterSupport(
+    { levelsEdited: true, levels: [{ id: "lvl-x", floorIndex: 0, enabled: true }] as unknown as RafterSupportConfig["levels"] } as Partial<RafterSupportConfig>,
+    refCtx(),
+  );
+  ok(!rafterSupportMethodSteps(badLevelD).some((s) => /undefined/.test(s.title + s.detail)),
+    "VD10a: an unlabelled stored level never prints 'undefined' in the method statement");
+  const emptied = deriveRafterSupport({ levelsEdited: true, levels: [] } as Partial<RafterSupportConfig>, refCtx());
+  eq(emptied.levels.length, 0, "VD10d: deleting every level is honoured, not silently regenerated");
+  ok(issueCodes({ purlin: { ...D.purlin, lengthMm: 0 } }).includes("stock-length-invalid"), "VD10c: a zero purlin stock length is an error");
+  ok(issueCodes({ tube: { ...D.tube, lengthMm: 0 } }).includes("stock-length-invalid"), "VD10c: a zero tube stock length is an error");
+
+  // D11 — duplicate diagnostics collapsed, panel-cut named per slope, roof lineIndex in layout order.
+  const noRaft = deriveRafterSupport(undefined, refCtx({ rafterLines: [] }));
+  eq(noRaft.errors.filter((i) => i.code === "no-cleats").length, 0, "VD11: no-cleats does not pile on top of level-no-cleats");
+  ok(noRaft.errors.some((i) => i.code === "level-no-cleats"), "VD11: …level-no-cleats alone diagnoses the auto no-rafter case");
+  const cuts = REF.warnings.filter((i) => i.code === "panel-cut-required");
+  eq(cuts.length, 2, "VD11: a gable reports a cut panel per slope");
+  ok(cuts[0].message !== cuts[1].message, "VD11: …and the two messages are distinguishable, not byte-identical");
+  const roofLines = REF.levels[1].lines;
+  for (let i = 1; i < roofLines.length; i++) {
+    ok(roofLines[i].acrossM >= roofLines[i - 1].acrossM - 1e-9, "VD11: roof lines are ordered by across position");
+    ok(roofLines[i].index > roofLines[i - 1].index, "VD11: …and lineIndex is monotonic with layout order, not emission order");
+  }
+  ok(issueCodes({ cleat: { ...D.cleat, holeGaugeMm: 220, widthMm: 200 } }).includes("bolt-off-cleat"),
+    "VD11: a gauge that puts the hole outside the plate is now an error");
+
+  // the whole shipped-default building on a whole-multiple footprint still raises ZERO issues.
+  const cleanCtx = refCtx({
+    body: { x0: 0, y0: 0, x1: 30, y1: 12 },
+    rafterLines: Array.from({ length: 11 }, (_, i) => ({ id: `t${i + 1}`, axis: "y" as const, atM: i * 3, fromM: 0, toM: 12, mark: `T${i + 1}` })),
+  });
+  const clean = deriveRafterSupport(undefined, cleanCtx);
+  eq(clean.issues.length, 0, `VD: a 30×12 whole-multiple building raises ZERO issues (got ${clean.issues.map((i) => i.code).join(", ")})`);
 }
 
 /* ------------------------------------------------------------------ helpers -------------------- */

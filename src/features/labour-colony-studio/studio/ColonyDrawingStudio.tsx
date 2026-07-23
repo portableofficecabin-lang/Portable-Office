@@ -36,6 +36,7 @@ import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "@/features/labour-colony-studio/model/colonyModel";
 import { parseSectionFromSpec, type SectionDims } from "@/features/labour-colony-studio/model/sectionDims";
 import type { ColonyDrawingMeta, ColonyModel, ViewMode } from "@/features/labour-colony-studio/model/types";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
 import { ComponentInspector } from "@/features/labour-colony-studio/inspector/ComponentInspector";
 import { EngineeringSheets } from "@/features/labour-colony-studio/drawing/EngineeringSheets";
 import { ManufacturingReport } from "@/features/labour-colony-studio/reports/ManufacturingReport";
@@ -183,6 +184,10 @@ export function ColonyDrawingStudio({
   const [viewMode, setViewMode] = useState<ViewMode>("engineering");
   const [tab, setTab] = useState<StudioTab>("2d");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  /* ONE palette for the whole studio. Owned here rather than inside either viewer so a colour picked
+   * on the 3D tab is already applied when the admin switches to the Assembly Video tab (and into its
+   * export), instead of each surface keeping a private copy that silently diverges. */
+  const [palette, setPalette] = useState<ColonyPalette>({});
   const selectedPart = useMemo(
     () => (selectedId ? model.parts.find((p) => p.id === selectedId) ?? null : null),
     [selectedId, model],
@@ -351,7 +356,13 @@ export function ColonyDrawingStudio({
         /* ---------------- 3D ---------------- */
         <div className="grid gap-3 lg:grid-cols-[1fr_320px]">
           <StudioTabBoundary label="3D model">
-            <Colony3DLoader model={model} selectedId={selectedId} onSelect={setSelectedId} />
+            <Colony3DLoader
+              model={model}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              palette={palette}
+              onPaletteChange={setPalette}
+            />
           </StudioTabBoundary>
           <ComponentInspector part={selectedPart} boqResult={boqResult} civil={civil} onClose={() => setSelectedId(null)} />
         </div>
@@ -385,6 +396,8 @@ export function ColonyDrawingStudio({
             customerName={customer || undefined}
             selectedId={selectedId}
             onSelectPart={setSelectedId}
+            palette={palette}
+            onPaletteChange={setPalette}
           />
         </StudioTabBoundary>
       )}
