@@ -23,7 +23,13 @@ export function Layout({ children }: LayoutProps) {
       <AnalyticsTracker />
       <GlobalGeoSignals />
       <Header />
-      <main className="flex-1">{children}</main>
+      {/* Target of the header's "Skip to main content" link. tabIndex={-1} makes it
+          programmatically focusable so activating the skip link actually moves focus
+          here rather than only scrolling; the outline is suppressed because the user
+          did not focus it directly. */}
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+        {children}
+      </main>
       <GlobalInternalLinks />
       <Footer />
       <WhatsAppButton />
