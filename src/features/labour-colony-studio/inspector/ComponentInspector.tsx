@@ -127,9 +127,13 @@ export function ComponentInspector({
         <Row label="Part mark" value={part.partMark} />
         <Row label="Grid" value={part.grid} />
         <Row label="Floor" value={floorLabel(part.floor)} />
+        {/* the canonical step count is COUNTED from the sequence, never spelled: the assembly video
+            may film one construction step as several shots, but the step numbering is still this */}
         <Row
           label="Assembly step"
-          value={stepTitle ? `${part.assemblyStep} of 24 — ${stepTitle}` : `${part.assemblyStep} of 24`}
+          value={stepTitle
+            ? `${part.assemblyStep} of ${ASSEMBLY_SEQUENCE.length} — ${stepTitle}`
+            : `${part.assemblyStep} of ${ASSEMBLY_SEQUENCE.length}`}
         />
         <Row label="Fabrication" value={part.fabrication ? FABRICATION_LABEL[part.fabrication] : undefined} />
 

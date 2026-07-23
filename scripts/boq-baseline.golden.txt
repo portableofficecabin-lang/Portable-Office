@@ -502,15 +502,15 @@ ISSUES errors=0 warnings=0
 SCENARIO :: 4. G+1 Labour Colony — 12 rooms, 3.0 x 3.0 x 2.7 m, centre corridor, staircase
 ################################################################
 META  L=9.000 W=6.000 H=2.700 floors=2 rooms=12 partitions=14 doors=12 windows=12 stairs=1 verandas=2 modules=16 floorArea=162.000 roof=gable
-TOTALS netSteel=6909.850 totSteel=7343.830 totWeight=15762.070 material=1142354 charges=295513 subtotal=1437867 gst=258816 grand=1696683 rsPerSqft=973.01
-  CHARGE Fabrication / welding [per_kg] = 132189
+TOTALS netSteel=7175.350 totSteel=7625.260 totWeight=16043.500 material=1161491 charges=303955 subtotal=1465447 gst=263780 grand=1729227 rsPerSqft=991.67
+  CHARGE Fabrication / welding [per_kg] = 137255
   CHARGE Installation [amount] = 15000
-  CHARGE Labour [per_kg] = 88126
+  CHARGE Labour [per_kg] = 91503
   CHARGE Painting (primer + enamel) [per_sqm] = 42198
   CHARGE Transport [amount] = 18000
 SECTIONS:
   SEC electrical  steelKg=0.000 totKg=128.800 material=89800 lines=4
-  SEC floor       steelKg=1763.250 totKg=4834.770 material=172245 lines=4
+  SEC floor       steelKg=2044.680 totKg=5116.200 material=191382 lines=5
   SEC front       steelKg=468.810 totKg=781.440 material=68381 lines=14
   SEC left        steelKg=455.400 totKg=806.450 material=71564 lines=11
   SEC misc        steelKg=0.000 totKg=52.880 material=12672 lines=1
@@ -522,7 +522,7 @@ SECTIONS:
   SEC roof        steelKg=721.680 totKg=1409.780 material=63541 lines=4
   SEC staircase   steelKg=307.510 totKg=555.510 material=39910 lines=7
   SEC veranda     steelKg=1299.370 totKg=2291.350 material=164120 lines=6
-LINES (131):
+LINES (132):
   LINE electrical:db                      src=auto   en=Y qty=2.000 nos   pcs=2 cut=- run=- net=- sheets=- totKg=6.400 rate=4200.00 amt=8400 mat=elec-db
   LINE electrical:fans                    src=auto   en=Y qty=24.000 nos   pcs=24 cut=- run=- net=- sheets=- totKg=108.000 rate=2500.00 amt=60000 mat=elec-fan
   LINE electrical:lights                  src=auto   en=Y qty=20.000 nos   pcs=20 cut=- run=- net=- sheets=- totKg=12.000 rate=800.00 amt=16000 mat=elec-led-panel
@@ -530,6 +530,7 @@ LINES (131):
   LINE floor:base-beam:3000               src=auto   en=Y qty=102.000 m     pcs=34 cut=3.000 run=102.000 net=- sheets=- totKg=1033.630 rate=65.00 amt=67186 mat=ismc-100x50
   LINE floor:board                        src=auto   en=Y qty=108.000 sqm   pcs=- cut=- run=- net=108.000 sheets=41 totKg=2855.740 rate=320.00 amt=39053 mat=cementboard-18
   LINE floor:joist:3000                   src=auto   en=Y qty=72.000 m     pcs=24 cut=3.000 run=72.000 net=- sheets=- totKg=729.620 rate=65.00 amt=47425 mat=ismc-100x50
+  LINE floor:tube                         src=auto   en=Y qty=90.000 m     pcs=10 cut=9.000 run=90.000 net=- sheets=- totKg=281.430 rate=68.00 amt=19137 mat=shs-50x50x2
   LINE floor:vinyl                        src=auto   en=Y qty=108.000 sqm   pcs=- cut=- run=- net=108.000 sheets=3 totKg=215.780 rate=155.00 amt=18581 mat=vinyl-2mm
   LINE front:cladding                     src=auto   en=Y qty=28.854 sqm   pcs=- cut=- run=- net=28.854 sheets=10 totKg=312.630 rate=1150.00 amt=36500 mat=puf-panel-50
   LINE front:column-post                  src=auto   en=Y qty=21.600 m     pcs=8 cut=2.700 run=21.600 net=- sheets=- totKg=153.630 rate=68.00 amt=10447 mat=rhs-100x50x3
@@ -654,7 +655,7 @@ LINES (131):
   LINE veranda:plate                      src=auto   en=Y qty=27.000 sqm   pcs=- cut=- run=- net=27.000 sheets=10 totKg=991.980 rate=78.00 amt=77374 mat=chequered-plate-4
   LINE veranda:rail-post:900              src=auto   en=Y qty=25.200 m     pcs=28 cut=0.900 run=25.200 net=- sheets=- totKg=61.780 rate=72.00 amt=4448 mat=pipe-od48x2
   LINE veranda:rail:1500                  src=auto   en=Y qty=108.000 m     pcs=72 cut=1.500 run=108.000 net=- sheets=- totKg=264.770 rate=72.00 amt=19064 mat=pipe-od48x2
-CUTTING (97):
+CUTTING (98):
   CUT angle-50x50x5        Cross bracing (X) — Left elevation         cut=4.036 qty=8 totLen=32.288 kg=122.690
   CUT angle-50x50x5        Cross bracing (X) — Right elevation        cut=4.036 qty=8 totLen=32.288 kg=122.690
   CUT angle-50x50x5        Staircase A — tread framing angle          cut=1.500 qty=14 totLen=21.000 kg=79.800
@@ -700,6 +701,7 @@ CUTTING (97):
   CUT shs-50x50x2          Left W3 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
   CUT shs-50x50x2          Left W4 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
   CUT shs-50x50x2          Left W4 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          MS pipe frame — SHS 50 × 50 × 2 floor tube (secondary, above the rafters) cut=9.000 qty=10 totLen=90.000 kg=265.500
   CUT shs-50x50x2          Partition P1 · L0 — top & bottom rail (shared: rooms 4/5) cut=3.000 qty=2 totLen=6.000 kg=17.700
   CUT shs-50x50x2          Partition P1 · L0 — wall studs (shared: rooms 4/5) cut=2.700 qty=4 totLen=10.800 kg=31.860
   CUT shs-50x50x2          Partition P10 · L1 — top & bottom rail (shared: rooms 11/12) cut=3.000 qty=2 totLen=6.000 kg=17.700
@@ -775,7 +777,7 @@ PURCHASE (28):
   BUY sheet-ceiling-0.5    net=54.000 sqm   wst=11.00 buy=59.940 stock=20 offcut=6.000 kg=235.560 amt=4555
   BUY sheet-int-ppgi-0.5   net=226.800 sqm   wst=11.00 buy=251.748 stock=84 offcut=25.200 kg=989.380 amt=19636
   BUY sheet-roof-0.5       net=93.135 sqm   wst=13.00 buy=105.243 stock=34 offcut=13.965 kg=452.540 amt=9261
-  BUY shs-50x50x2          net=571.200 m     wst=6.00 buy=605.472 stock=102 offcut=40.800 kg=1786.020 amt=121458
+  BUY shs-50x50x2          net=661.200 m     wst=6.00 buy=700.872 stock=112 offcut=40.800 kg=2067.450 amt=140595
   BUY shs-50x50x3          net=87.318 m     wst=6.00 buy=92.557 stock=18 offcut=20.682 kg=397.070 amt=27001
   BUY vinyl-2mm            net=108.000 sqm   wst=11.00 buy=119.880 stock=3 offcut=12.000 kg=215.780 amt=18581
   BUY window-frame-40x40   net=58.056 m     wst=8.00 buy=62.700 stock=11 offcut=7.944 kg=145.460 amt=9892
@@ -804,7 +806,7 @@ WEIGHT SUMMARY (28):
   WT sheet-ceiling-0.5    net=212.220 tot=235.560
   WT sheet-int-ppgi-0.5   net=891.380 tot=989.380
   WT sheet-roof-0.5       net=400.480 tot=452.540
-  WT shs-50x50x2          net=1685.040 tot=1786.020
+  WT shs-50x50x2          net=1950.540 tot=2067.450
   WT shs-50x50x3          net=374.590 tot=397.070
   WT vinyl-2mm            net=194.400 tot=215.780
   WT window-frame-40x40   net=134.700 tot=145.460
@@ -816,15 +818,15 @@ ISSUES errors=0 warnings=0
 SCENARIO :: 5. Labour Colony — 20 rooms, G+1, TWO staircases, TWO verandas, railings
 ################################################################
 META  L=15.000 W=6.000 H=2.700 floors=2 rooms=20 partitions=26 doors=20 windows=20 stairs=2 verandas=2 modules=26 floorArea=270.000 roof=gable
-TOTALS netSteel=10971.930 totSteel=11662.730 totWeight=25367.290 material=1810925 charges=452881 subtotal=2263806 gst=407485 grand=2671292 rsPerSqft=919.15
-  CHARGE Fabrication / welding [per_kg] = 209929
+TOTALS netSteel=11414.430 totSteel=12131.780 totWeight=25836.340 material=1842820 charges=466953 subtotal=2309773 gst=415759 grand=2725532 rsPerSqft=937.82
+  CHARGE Fabrication / welding [per_kg] = 218372
   CHARGE Installation [amount] = 15000
-  CHARGE Labour [per_kg] = 139953
+  CHARGE Labour [per_kg] = 145581
   CHARGE Painting (primer + enamel) [per_sqm] = 70000
   CHARGE Transport [amount] = 18000
 SECTIONS:
   SEC electrical  steelKg=0.000 totKg=216.000 material=151400 lines=4
-  SEC floor       steelKg=2857.670 totKg=7976.870 material=281806 lines=4
+  SEC floor       steelKg=3326.720 totKg=8445.920 material=313701 lines=5
   SEC front       steelKg=755.750 totKg=1276.810 material=112227 lines=22
   SEC left        steelKg=455.400 totKg=806.450 material=71564 lines=11
   SEC misc        steelKg=0.000 totKg=85.920 material=20592 lines=1
@@ -836,7 +838,7 @@ SECTIONS:
   SEC roof        steelKg=1145.160 totKg=2273.150 material=101568 lines=4
   SEC staircase   steelKg=569.020 totKg=965.820 material=69093 lines=14
   SEC veranda     steelKg=2119.210 totKg=3772.510 material=270475 lines=6
-LINES (190):
+LINES (191):
   LINE electrical:db                      src=auto   en=Y qty=4.000 nos   pcs=4 cut=- run=- net=- sheets=- totKg=12.800 rate=4200.00 amt=16800 mat=elec-db
   LINE electrical:fans                    src=auto   en=Y qty=40.000 nos   pcs=40 cut=- run=- net=- sheets=- totKg=180.000 rate=2500.00 amt=100000 mat=elec-fan
   LINE electrical:lights                  src=auto   en=Y qty=32.000 nos   pcs=32 cut=- run=- net=- sheets=- totKg=19.200 rate=800.00 amt=25600 mat=elec-led-panel
@@ -844,6 +846,7 @@ LINES (190):
   LINE floor:base-beam:3000               src=auto   en=Y qty=162.000 m     pcs=54 cut=3.000 run=162.000 net=- sheets=- totKg=1641.640 rate=65.00 amt=106707 mat=ismc-100x50
   LINE floor:board                        src=auto   en=Y qty=180.000 sqm   pcs=- cut=- run=- net=180.000 sheets=69 totKg=4759.560 rate=320.00 amt=65088 mat=cementboard-18
   LINE floor:joist:3000                   src=auto   en=Y qty=120.000 m     pcs=40 cut=3.000 run=120.000 net=- sheets=- totKg=1216.030 rate=65.00 amt=79042 mat=ismc-100x50
+  LINE floor:tube                         src=auto   en=Y qty=150.000 m     pcs=10 cut=15.000 run=150.000 net=- sheets=- totKg=469.050 rate=68.00 amt=31895 mat=shs-50x50x2
   LINE floor:vinyl                        src=auto   en=Y qty=180.000 sqm   pcs=- cut=- run=- net=180.000 sheets=5 totKg=359.640 rate=155.00 amt=30969 mat=vinyl-2mm
   LINE front:cladding                     src=auto   en=Y qty=48.090 sqm   pcs=- cut=- run=- net=48.090 sheets=16 totKg=521.060 rate=1150.00 amt=60834 mat=puf-panel-50
   LINE front:column-post                  src=auto   en=Y qty=32.400 m     pcs=12 cut=2.700 run=32.400 net=- sheets=- totKg=230.450 rate=68.00 amt=15670 mat=rhs-100x50x3
@@ -1027,7 +1030,7 @@ LINES (190):
   LINE veranda:plate                      src=auto   en=Y qty=45.000 sqm   pcs=- cut=- run=- net=45.000 sheets=16 totKg=1653.300 rate=78.00 amt=128957 mat=chequered-plate-4
   LINE veranda:rail-post:900              src=auto   en=Y qty=39.600 m     pcs=44 cut=0.900 run=39.600 net=- sheets=- totKg=97.080 rate=72.00 amt=6990 mat=pipe-od48x2
   LINE veranda:rail:1500                  src=auto   en=Y qty=180.000 m     pcs=120 cut=1.500 run=180.000 net=- sheets=- totKg=441.290 rate=72.00 amt=31773 mat=pipe-od48x2
-CUTTING (143):
+CUTTING (144):
   CUT angle-50x50x5        Cross bracing (X) — Left elevation         cut=4.036 qty=8 totLen=32.288 kg=122.690
   CUT angle-50x50x5        Cross bracing (X) — Right elevation        cut=4.036 qty=8 totLen=32.288 kg=122.690
   CUT angle-50x50x5        Staircase 1 — tread framing angle          cut=1.200 qty=14 totLen=16.800 kg=63.840
@@ -1087,6 +1090,7 @@ CUTTING (143):
   CUT shs-50x50x2          Left W3 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
   CUT shs-50x50x2          Left W4 · L1 — top & bottom rail           cut=3.000 qty=2 totLen=6.000 kg=17.700
   CUT shs-50x50x2          Left W4 · L1 — wall studs                  cut=2.700 qty=4 totLen=10.800 kg=31.860
+  CUT shs-50x50x2          MS pipe frame — SHS 50 × 50 × 2 floor tube (secondary, above the rafters) cut=15.000 qty=10 totLen=150.000 kg=442.500
   CUT shs-50x50x2          Partition P1 · L0 — top & bottom rail (shared: rooms 9/10) cut=3.000 qty=2 totLen=6.000 kg=17.700
   CUT shs-50x50x2          Partition P1 · L0 — wall studs (shared: rooms 9/10) cut=2.700 qty=4 totLen=10.800 kg=31.860
   CUT shs-50x50x2          Partition P10 · L0 — top & bottom rail (shared: rooms 10/5) cut=3.000 qty=2 totLen=6.000 kg=17.700
@@ -1194,7 +1198,7 @@ PURCHASE (28):
   BUY sheet-ceiling-0.5    net=90.000 sqm   wst=11.00 buy=99.900 stock=34 offcut=12.000 kg=392.610 amt=7592
   BUY sheet-int-ppgi-0.5   net=421.200 sqm   wst=11.00 buy=467.532 stock=156 offcut=46.800 kg=1837.420 amt=36468
   BUY sheet-roof-0.5       net=151.344 sqm   wst=13.00 buy=171.019 stock=55 offcut=21.906 kg=735.380 amt=15050
-  BUY shs-50x50x2          net=907.200 m     wst=6.00 buy=961.632 stock=162 offcut=64.800 kg=2836.620 amt=192904
+  BUY shs-50x50x2          net=1057.200 m     wst=6.00 buy=1120.632 stock=172 offcut=64.800 kg=3305.670 amt=224799
   BUY shs-50x50x3          net=135.828 m     wst=6.00 buy=143.978 stock=28 offcut=32.172 kg=617.660 amt=42001
   BUY vinyl-2mm            net=180.000 sqm   wst=11.00 buy=199.800 stock=5 offcut=20.000 kg=359.640 amt=30969
   BUY window-frame-40x40   net=96.760 m     wst=8.00 buy=104.501 stock=18 offcut=11.240 kg=242.450 amt=16486
@@ -1223,7 +1227,7 @@ WEIGHT SUMMARY (28):
   WT sheet-ceiling-0.5    net=353.700 tot=392.610
   WT sheet-int-ppgi-0.5   net=1655.420 tot=1837.420
   WT sheet-roof-0.5       net=650.780 tot=735.380
-  WT shs-50x50x2          net=2676.240 tot=2836.620
+  WT shs-50x50x2          net=3118.740 tot=3305.670
   WT shs-50x50x3          net=582.700 tot=617.660
   WT vinyl-2mm            net=324.000 tot=359.640
   WT window-frame-40x40   net=224.480 tot=242.450

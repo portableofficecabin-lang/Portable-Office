@@ -114,14 +114,53 @@ export function validateAssemblyTimeline(timeline: AssemblyTimeline, model: Colo
   }
 
   /* ---- steps: monotonic times, no overlap, erection order, captions, camera ---- */
+  /*
+   * ERECTION ORDER — a LEXICOGRAPHIC strict increase on (assemblyStep, subIndex ?? -1).
+   *
+   * WHY THE RELAXATION IS SAFE. The old rule was `assemblyStep` strictly increasing, which encoded
+   * two things at once: "the sequence never runs backwards" AND "one construction step is one shot".
+   * The second was an accident of the original design, and it is what made a per-assembly detail tour
+   * unrepresentable — `ColonyAssemblyStep` is a closed 1..24 union that must not be renumbered,
+   * because the model, the 2D sheets, the schedules and the reports all key off those numbers.
+   *
+   * Ordering on the PAIR keeps every guarantee the old rule gave:
+   *   • across construction steps the order is still strictly increasing, so erection can never run
+   *     backwards (a step-17 shot after a step-18 shot is still an error);
+   *   • within one construction step the sub-shots are still strictly ordered, so the same shot can
+   *     never be emitted twice and two shots can never claim the same slot;
+   *   • `subIndex` absent sorts as -1, so a step's overview shot always precedes its detail shots,
+   *     and a timeline with no sub-steps validates exactly as it did before.
+   * What the relaxation deliberately does NOT touch is the part-level invariant: every model part is
+   * still scheduled EXACTLY once (see the schedule + unscheduled checks above). That is what makes a
+   * detail tour a PARTITION of its construction step rather than a duplicate or a subset — split a
+   * step into shots and the parts must add back up, or this validator fails.
+   */
   let prevEnd = timeline.introMs;
   let prevAssemblyStep = 0;
+  let prevSubIndex = -1;
+  const seenStepIds = new Set<string>();
   timeline.steps.forEach((s, i) => {
     if (s.index !== i) err("step-order", `Step "${s.id}" reports index ${s.index} at position ${i}.`, s.id);
-    if (s.assemblyStep <= prevAssemblyStep) {
-      err("step-order", `Erection order runs backwards at construction step ${s.assemblyStep}.`, s.id);
+
+    const sub = s.subIndex ?? -1;
+    if (s.subIndex !== undefined && (!Number.isInteger(s.subIndex) || s.subIndex < 0)) {
+      err("step-order", `Step "${s.id}" has a non-integer sub-step index.`, s.id);
+    }
+    if (s.assemblyStep < prevAssemblyStep || (s.assemblyStep === prevAssemblyStep && sub <= prevSubIndex)) {
+      err(
+        "step-order",
+        `Erection order runs backwards at construction step ${s.assemblyStep}${s.subIndex === undefined ? "" : `.${s.subIndex}`}.`,
+        s.id,
+      );
     }
     prevAssemblyStep = s.assemblyStep;
+    prevSubIndex = sub;
+
+    // the id convention IS the join key for React keys, validator refs and jump-to-step
+    const expectedId = s.subIndex === undefined ? `step-${s.assemblyStep}` : `step-${s.assemblyStep}-${s.subIndex}`;
+    if (s.id !== expectedId) err("structure", `Step at position ${i} has id "${s.id}" but should be "${expectedId}".`, s.id);
+    if (seenStepIds.has(s.id)) err("structure", `Duplicate step id "${s.id}".`, s.id);
+    seenStepIds.add(s.id);
 
     if (!(s.startMs >= prevEnd - 1)) err("step-overlap", `Step "${s.id}" starts before the previous step ends.`, s.id);
     if (!(finite(s.startMs) && finite(s.endMs) && s.endMs > s.startMs)) err("step-duration", `Step "${s.id}" has a non-monotonic time range.`, s.id);
@@ -132,10 +171,23 @@ export function validateAssemblyTimeline(timeline: AssemblyTimeline, model: Colo
     if (!s.partIds.length) warn("step-missing-part", `Step "${s.id}" has no parts.`, s.id);
     for (const id of s.partIds) if (!ids.has(id)) err("step-missing-part", `Step "${s.id}" references missing part "${id}".`, s.id);
 
+    // the camera frames `focusPartIds`, so anything it names must be a part this shot actually
+    // installs — otherwise the close-up would be framed on geometry that is not there yet
+    if (s.focusPartIds?.length) {
+      const own = new Set(s.partIds);
+      const stray = s.focusPartIds.find((id) => !own.has(id));
+      if (stray !== undefined) {
+        err("step-missing-part", `Step "${s.id}" focuses on part "${stray}", which it does not install.`, s.id);
+      }
+    }
+
     if (!keyframeFinite(s.camera.from) || !keyframeFinite(s.camera.to)) err("camera", `Step "${s.id}" has a non-finite camera pose.`, s.id);
 
     if (!s.title || !s.captionCustomer) err("caption", `Step "${s.id}" is missing caption text.`, s.id);
-    const captionText = [s.title, s.description, s.captionCustomer, s.captionEngineering ?? "", s.tools, s.safety, s.inspection].join(" ");
+    const captionText = [
+      s.title, s.description, s.captionCustomer, s.captionEngineering ?? "", s.subTitle ?? "",
+      s.tools, s.safety, s.inspection,
+    ].join(" ");
     if (captionText.includes("undefined") || captionText.includes("NaN")) err("caption", `Step "${s.id}" caption contains an undefined value.`, s.id);
     if (!s.tools) warn("caption", `Step "${s.id}" has no tool list.`, s.id);
     if (!s.safety) warn("caption", `Step "${s.id}" has no safety note.`, s.id);

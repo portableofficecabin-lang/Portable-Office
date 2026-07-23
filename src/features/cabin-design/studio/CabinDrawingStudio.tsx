@@ -332,7 +332,7 @@ export function CabinDrawingStudio({ config, onLoadConfig, estimateTotal, boqRes
           <div>
             <div className="mb-2 text-sm font-semibold">Manufacturing outputs</div>
             <div className="light rounded-xl border border-border p-4" style={{ background: "#ffffff" }}>
-              <ManufacturingReport boqResult={boqResult} />
+              <ManufacturingReport boqResult={boqResult} config={config} />
             </div>
           </div>
         </div>

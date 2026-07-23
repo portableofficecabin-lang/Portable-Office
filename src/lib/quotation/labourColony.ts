@@ -25,6 +25,8 @@
 // Type-only: LabourColonyConfig carries the Material BOQ's saved settings so they persist inside the
 // project's `data` jsonb. Type-only, so this engine keeps zero runtime dependency on the BOQ engine.
 import type { BoqSettings } from "@/lib/boq/types";
+import type { PufLockConfig } from "@/features/labour-colony-studio/model/pufLock";
+import type { RafterSupportConfig } from "@/features/labour-colony-studio/model/rafterSupport";
 
 export type PanelType = "PUF" | "EPS" | "GI";
 export type FloorCount = 1 | 2 | 3; // 1 = Ground, 2 = G+1, 3 = G+2
@@ -307,7 +309,13 @@ export interface LabourColonyConfig {
   lengthUnit?: "ft" | "ftin" | "m" | "cm" | "mm";
 
   panelType: PanelType;
-  panelThicknessMm: number; // 30 / 40 / 50 / 60 / 75
+  /**
+   * Sandwich-panel core thickness (mm). A FREE numeric value, not an enum — the trade sizes in
+   * regular use are 30 / 40 / 50 / 60 / 65 / 70 / 75, and the studio's seating detail
+   * (`panelSupport.ts`) DERIVES its channel slot, insertion depth and gauge from whatever value is
+   * set, so an unlisted thickness still resolves to a buildable detail rather than falling back.
+   */
+  panelThicknessMm: number;
   /** PUF/EPS steel skin thickness (mm), per face. Default 0.5. */
   panelSkinThicknessMm?: number;
   wastagePercent: number;
@@ -321,6 +329,14 @@ export interface LabourColonyConfig {
 
   /** Cement / bison board flooring thickness (mm): 16 / 18 / 20 / 25. */
   cementBoardThicknessMm?: number;
+
+  /**
+   * Lay the 8'×4' sheet field on the GROUND floor too. Default false — the company rule is that the
+   * ground floor bears on the filled plinth and needs no sheet field (floors 1+ always get it); this
+   * is the per-project opt-in for the jobs that do want it. Drawing / setting-out only: the priced
+   * `floor:board` line is unaffected either way.
+   */
+  gfSheetField?: boolean;
 
   /** Connection / cross-support bolt size. Default M12. */
   boltSize?: BoltSize;
@@ -338,6 +354,28 @@ export interface LabourColonyConfig {
    *  separate models, and tuning a BOQ rate must not move the structure/panel/weight results. It lives
    *  here only so it persists inside labour_colony_projects.data (jsonb) with no migration. */
   materialBoq?: BoqSettings;
+
+  /** PUF panel bottom locking system — base plates + paired C-purlin receiving pocket on the plinth
+   *  beam. Engineering / drawing detail only: calculateLabourColony() does not read it, exactly like
+   *  `materialBoq` above, so tuning the locking detail can never move the structure / panel / weight
+   *  results. It lives here so it persists inside labour_colony_projects.data (jsonb) with no
+   *  migration. OPTIONAL and defaulted at the point of use (resolvePufLockConfig) so every project
+   *  saved before this field existed still loads. Type: PufLockConfig from
+   *  @/features/labour-colony-studio/model/pufLock, which is a deliberate zero-import leaf module so
+   *  this type-only reference can never create a cycle. */
+  pufLock?: PufLockConfig;
+
+  /** Rafter support system — a bolted cleat / seat plate on the rafter carries an MS C-purlin, and an
+   *  MS square / rectangular tube is bolted THROUGH the C-purlin web (faces flush) to carry the
+   *  covering: an 8 ft × 4 ft fibre-cement board at a ceiling level, or a 1000 mm cover-width PUF
+   *  panel on the sloped roof. Engineering / drawing detail only: calculateLabourColony() does not
+   *  read it, exactly like `materialBoq` and `pufLock` above, so tuning the support detail can never
+   *  move the structure / panel / weight results. It lives here so it persists inside
+   *  labour_colony_projects.data (jsonb) with no migration. OPTIONAL and defaulted at the point of use
+   *  (resolveRafterSupportConfig) so every project saved before this field existed still loads.
+   *  Type: RafterSupportConfig from @/features/labour-colony-studio/model/rafterSupport, which is a
+   *  deliberate zero-import leaf module so this type-only reference can never create a cycle. */
+  rafterSupport?: RafterSupportConfig;
 
   norms?: Partial<LabourColonyNorms>;
 }

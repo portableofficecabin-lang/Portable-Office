@@ -19,6 +19,12 @@ import { FURNITURE_MATERIALS } from "@/lib/boq/furnitureMaterials";
 import type { Material, MaterialCategory, RateUnit, Uom, WeightBasis } from "@/lib/boq/types";
 /* ==========================================================================
  * SEED — must stay byte-for-byte in sync with the migration's VALUES list
+ *
+ * "The migration" is 20260713140000_material_master_boq.sql plus the ADDITIVE follow-ups that each
+ * insert later rows without touching an applied one:
+ *   • 20260719120000_boq_rhs_50x25.sql          → rhs-50x25x2
+ *   • 20260722120000_boq_puf_lock_materials.sql → the PUF bottom-lock rows (C sections, MS plate,
+ *                                                 holding-down set, electrode, strip, sealant)
  * ========================================================================== */
 
 /**
@@ -74,6 +80,12 @@ const CABIN_SEED_MATERIALS: Material[] = [
   seed("rhs-50x25x2",    "MS Rectangular Tube 50 × 25 × 2 mm",  "steel_section", "50 × 25 mm RHS",       2,    "IS 4923 YSt 210", "m",   2.23,  "kg_per_m",    6.0,  null,  null,  68,   "per_kg",  3),
   seed("ismc-100x50",    "MS C-Channel ISMC 100 × 50",          "steel_section", "ISMC 100 × 50",        6,    "IS 2062 E250",    "m",   9.56,  "kg_per_m",    6.0,  null,  null,  65,   "per_kg",  3),
   seed("c-purlin-75x40", "C-Purlin 75 × 40 × 2 mm",             "steel_section", "C 75 × 40 mm",         2,    "IS 811",          "m",   2.90,  "kg_per_m",    6.0,  null,  null,  70,   "per_kg",  3),
+  /* Deeper lipped C sections — the alternative pocket-forming purlins the PUF bottom-locking system
+   * offers. Key shape is c-purlin-<web>x<flange> because materialKeyForSection() synthesises exactly
+   * that. kg/m = (web + 2 × flange + 2 × lip) × t × 0.00785, i.e. the same rule c-purlin-75x40 obeys. */
+  seed("c-purlin-100x50","C-Purlin 100 × 50 × 2 mm",            "steel_section", "C 100 × 50 mm",        2,    "IS 811",          "m",   3.61,  "kg_per_m",    6.0,  null,  null,  70,   "per_kg",  3),
+  seed("c-purlin-125x50","C-Purlin 125 × 50 × 2 mm",            "steel_section", "C 125 × 50 mm",        2,    "IS 811",          "m",   4.16,  "kg_per_m",    6.0,  null,  null,  70,   "per_kg",  3),
+  seed("c-purlin-150x65","C-Purlin 150 × 65 × 2.5 mm",          "steel_section", "C 150 × 65 mm",        2.5,  "IS 811",          "m",   6.28,  "kg_per_m",    6.0,  null,  null,  70,   "per_kg",  3),
   seed("angle-50x50x5",  "MS Angle 50 × 50 × 5 mm",             "steel_section", "MS Angle 50 × 50 mm",  5,    "IS 2062 E250",    "m",   3.80,  "kg_per_m",    6.0,  null,  null,  65,   "per_kg",  3),
   seed("angle-40x40x5",  "MS Angle 40 × 40 × 5 mm",             "steel_section", "MS Angle 40 × 40 mm",  5,    "IS 2062 E250",    "m",   2.90,  "kg_per_m",    6.0,  null,  null,  65,   "per_kg",  3),
   seed("pipe-od48x2",    "MS Pipe OD 48 × 2 mm (handrail)",     "steel_section", "Pipe OD 48 mm",        2,    "IS 1239",         "m",   2.27,  "kg_per_m",    6.0,  null,  null,  72,   "per_kg",  5),
@@ -84,6 +96,13 @@ const CABIN_SEED_MATERIALS: Material[] = [
   seed("sheet-roof-0.5",     "Roofing Sheet 0.5 mm (trapezoidal)", "sheet", "Trapezoidal profile",  0.5, "PPGL AZ150",   "sqm", 4.30,  "kg_per_sqm", null, 3.0,  1.05, 88,   "per_sqm", 8),
   seed("sheet-ceiling-0.5",  "Ceiling Sheet 0.5 mm",               "sheet", "PPGI plain sheet",     0.5, "PPGI RAL9010", "sqm", 3.93,  "kg_per_sqm", null, 3.0,  1.0,  76,   "per_sqm", 6),
   seed("chequered-plate-4",  "MS Chequered Plate 4 mm",            "sheet", "Chequered plate",      4,   "IS 3502",      "sqm", 33.40, "kg_per_sqm", null, 2.5,  1.25, 78,   "per_kg",  5),
+  /* Plain MS plate stock — base / anchor plates (the PUF bottom-lock plate is cut from ms-plate-10).
+   * kg/m² = thickness_mm × 7.85. Bought by weight off a 2500 × 1250 mm plate, like the chequered row. */
+  seed("ms-plate-6",         "MS Plate 6 mm",                      "sheet", "6 mm MS plate",        6,   "IS 2062 E250", "sqm", 47.10, "kg_per_sqm", null, 2.5,  1.25, 68,   "per_kg",  5),
+  seed("ms-plate-8",         "MS Plate 8 mm",                      "sheet", "8 mm MS plate",        8,   "IS 2062 E250", "sqm", 62.80, "kg_per_sqm", null, 2.5,  1.25, 66,   "per_kg",  5),
+  seed("ms-plate-10",        "MS Plate 10 mm",                     "sheet", "10 mm MS plate",       10,  "IS 2062 E250", "sqm", 78.50, "kg_per_sqm", null, 2.5,  1.25, 65,   "per_kg",  5),
+  seed("ms-plate-12",        "MS Plate 12 mm",                     "sheet", "12 mm MS plate",       12,  "IS 2062 E250", "sqm", 94.20, "kg_per_sqm", null, 2.5,  1.25, 65,   "per_kg",  5),
+  seed("ms-plate-16",        "MS Plate 16 mm",                     "sheet", "16 mm MS plate",       16,  "IS 2062 E250", "sqm", 125.60,"kg_per_sqm", null, 2.5,  1.25, 64,   "per_kg",  5),
   seed("puf-panel-50",       "PUF Sandwich Panel 50 mm",           "panel", "50 mm PUF panel",      50,  "PUF 40 kg/m³", "sqm", 9.85,  "kg_per_sqm", null, 3.0,  1.15, 1150, "per_sqm", 5),
 
   /* ---- insulation / boards / finishes ---- */
@@ -102,6 +121,17 @@ const CABIN_SEED_MATERIALS: Material[] = [
   /* ---- hardware / fixings ---- */
   seed("bolt-m12",         "Nut Bolt M12 assembly",          "hardware", "M12 × 50 mm", null, "8.8 grade", "nos", 0.09, "kg_per_nos", null, null, null, 22,  "per_nos", 2),
   seed("selfdrill-screw",  "Self-drilling Screw w/ washer",  "hardware", "12 × 50 mm",  null, "Zn plated", "nos", 0.01, "kg_per_nos", null, null, null, 3.5, "per_nos", 5),
+  /* Holding-down set for a base / anchor plate — the PUF bottom-lock plate uses the M16 set by
+   * default. Unit weights are the tabulated stud / hex-nut / plain-washer weights for the size. */
+  seed("anchor-bolt-m12",  "Anchor Bolt M12 × 150 mm",       "hardware", "M12 × 150 mm", null, "8.8 grade",         "nos", 0.13,  "kg_per_nos", null, null, null, 55,  "per_nos", 2),
+  seed("anchor-bolt-m16",  "Anchor Bolt M16 × 200 mm",       "hardware", "M16 × 200 mm", null, "8.8 grade",         "nos", 0.32,  "kg_per_nos", null, null, null, 110, "per_nos", 2),
+  seed("anchor-bolt-m20",  "Anchor Bolt M20 × 250 mm",       "hardware", "M20 × 250 mm", null, "8.8 grade",         "nos", 0.62,  "kg_per_nos", null, null, null, 210, "per_nos", 2),
+  seed("nut-m12",          "Hex Nut M12",                    "hardware", "M12",          null, "IS 1364 Gr 8",      "nos", 0.015, "kg_per_nos", null, null, null, 6,   "per_nos", 2),
+  seed("nut-m16",          "Hex Nut M16",                    "hardware", "M16",          null, "IS 1364 Gr 8",      "nos", 0.034, "kg_per_nos", null, null, null, 12,  "per_nos", 2),
+  seed("nut-m20",          "Hex Nut M20",                    "hardware", "M20",          null, "IS 1364 Gr 8",      "nos", 0.066, "kg_per_nos", null, null, null, 24,  "per_nos", 2),
+  seed("washer-m12",       "Plain Washer M12",               "hardware", "M12",          null, "IS 2016 Zn plated", "nos", 0.006, "kg_per_nos", null, null, null, 3,   "per_nos", 2),
+  seed("washer-m16",       "Plain Washer M16",               "hardware", "M16",          null, "IS 2016 Zn plated", "nos", 0.011, "kg_per_nos", null, null, null, 5,   "per_nos", 2),
+  seed("washer-m20",       "Plain Washer M20",               "hardware", "M20",          null, "IS 2016 Zn plated", "nos", 0.017, "kg_per_nos", null, null, null, 8,   "per_nos", 2),
 
   /* ---- electrical ---- */
   seed("elec-led-panel", "LED Panel Light 18 W",     "electrical", "18 W",          null, "BIS",     "nos", 0.6,  "kg_per_nos", null, null, null, 800,  "per_nos", 0),
@@ -120,6 +150,14 @@ const CABIN_SEED_MATERIALS: Material[] = [
   /* ---- finishing ---- */
   seed("primer-red-oxide", "Red Oxide Primer",       "finishing", "1 coat",  null, "IS 2074", "ltr", 1.0, "none", null, null, null, 240, "per_ltr", 5),
   seed("enamel-paint",     "Synthetic Enamel Paint", "finishing", "2 coats", null, "IS 2932", "ltr", 1.0, "none", null, null, null, 380, "per_ltr", 5),
+
+  /* ---- welding, sealing + isolation consumables ---- */
+  /* The welded / sealed side of the PUF bottom-locking pocket. The electrode is bought BY WEIGHT, so
+   * one unit IS one kilogram (uom kg, 1.0 kg_per_nos) and the per_kg rate stays priceable. The strip
+   * and the sealant are taken off by the running metre of pocket, so both carry a per_m rate. */
+  seed("welding-electrode","MS Welding Electrode 3.15 mm",   "misc",       "3.15 mm electrode",     3.15, "IS 814 E6013",     "kg", 1.0,  "kg_per_nos", null, null, null, 125, "per_kg", 5),
+  seed("epdm-strip-3",     "EPDM Isolation Strip 3 × 50 mm", "insulation", "3 × 50 mm strip",       3,    "EPDM 60 Shore A",  "m",  0.18, "kg_per_m",   null, null, null, 45,  "per_m",  5),
+  seed("sealant-silicone", "Neutral-cure Silicone Sealant",  "finishing",  "6 × 6 mm bead",         null, "ASTM C920",        "m",  0.04, "kg_per_m",   null, null, null, 38,  "per_m",  8),
 ];
 
 /**

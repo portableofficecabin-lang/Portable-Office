@@ -1,7 +1,8 @@
 /**
  * LABOUR COLONY STUDIO — report table registry (pure, framework-free).
  *
- * `schedules.ts` produces the typed row arrays a fabrication shop works from. This module is the ONE
+ * `schedules.ts` (and, for the PUF panel bottom locking system, `pufLockSchedules.ts`) produces the
+ * typed row arrays a fabrication shop works from. This module is the ONE
  * place that decides, for each of those schedules, how it is presented: column headers, alignment,
  * decimal places, section grouping, which columns subtotal, and which reconciliation remarks must be
  * surfaced. It erases each strongly-typed row array into a common `ReportTable` shape so the UI
@@ -16,9 +17,20 @@
  * No React, no three.js, no DOM.
  */
 
-import type { BoqResult } from "@/lib/boq/types";
+import type { BoqResult, MaterialIndex } from "@/lib/boq/types";
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import type { ColonyModel } from "../model/types";
+import { PUF_LOCK_EXPLANATION } from "../model/pufLock";
+import {
+  buildPufLockAnchorSchedule,
+  buildPufLockOrderingSummary,
+  buildPufLockPanelSchedule,
+  buildPufLockPlateSchedule,
+  buildPufLockPurlinSchedule,
+  buildPufLockWeldSchedule,
+  type RateSource,
+} from "./pufLockSchedules";
+import { buildSpacingRecommendation } from "../model/sheetLayout";
 import {
   buildBeamSchedule,
   buildBoltSchedule,
@@ -26,11 +38,14 @@ import {
   buildConnectionSchedule,
   buildCuttingList,
   buildDispatchList,
+  buildFloorSheetSchedule,
   buildFootingSchedule,
   buildMemberList,
   buildNutSchedule,
+  buildPanelSeatingSchedule,
   buildPlateSchedule,
   buildRailingSchedule,
+  buildSheetSummary,
   buildStaircaseSchedule,
   buildTrussSchedule,
   buildWasherSchedule,
@@ -55,7 +70,7 @@ export interface ReportTableSection {
 export interface ReportTable {
   id: ReportTableId;
   title: string;
-  /** Toolbar / picker grouping ("Fabrication", "Connections", "Assemblies", "Substructure", "Summary"). */
+  /** Toolbar / picker grouping ("Fabrication", "Connections", "Assemblies", "Substructure", "Deck & panels", "Summary", "PUF Lock"). */
   group: string;
   /** One-line explanation of what the schedule is and where its numbers come from. */
   note: string;
@@ -94,7 +109,16 @@ export type ReportTableId =
   | "column-schedule"
   | "beam-schedule"
   | "weight-summary"
-  | "dispatch-list";
+  | "dispatch-list"
+  | "puf-lock-plate-schedule"
+  | "puf-lock-anchor-schedule"
+  | "puf-lock-purlin-schedule"
+  | "puf-lock-weld-schedule"
+  | "puf-lock-panel-schedule"
+  | "puf-lock-ordering-summary"
+  | "floor-sheet-schedule"
+  | "sheet-summary"
+  | "panel-seating-schedule";
 
 /* ============================================================ column definition ========== */
 
@@ -228,14 +252,40 @@ function makeTable<T>(spec: TableSpec<T>): ReportTable {
 
 const NO_BOQ = "No priced Material BOQ is loaded yet — run the BOQ so quantities and weights can be read from it.";
 
+/** Rate / amount columns are blank whenever no priced material backs a PUF-lock line. */
+const NO_RATES =
+  "No Material Master rate resolves for these items, so the Rate and Amount columns are left blank "
+  + "rather than assumed. Link the material keys in the Material Master (or set a per-project rate "
+  + "override) to price this schedule.";
+
+/** True when the schedule has rows but not one of them resolved a rate. */
+function allUnpriced(rows: { rateSource: RateSource }[]): boolean {
+  return rows.length > 0 && rows.every((r) => r.rateSource === "none");
+}
+
+/** Pass / warning / error tally for the PUF-lock panel pocket schedule, stated up front. */
+function pufPanelStatusRemark(rows: { status: "Pass" | "Warning" | "Error" }[]): string {
+  const pass = rows.filter((r) => r.status === "Pass").length;
+  const warn = rows.filter((r) => r.status === "Warning").length;
+  const err = rows.filter((r) => r.status === "Error").length;
+  return `Panel pocket check: ${pass} of ${rows.length} pass, ${warn} warning${warn === 1 ? "" : "s"}, `
+    + `${err} error${err === 1 ? "" : "s"}.`
+    + (err > 0 ? " An error means the connection as configured cannot be built — resolve it before fabrication." : "");
+}
+
 /**
  * Build every fabrication schedule as a ready-to-render / ready-to-export table.
  * Order is the order the picker and the drawing set present them in.
+ *
+ * `materials` is optional: the PUF-lock schedules resolve their rates through the Material Master
+ * when one is supplied, and leave the money columns blank when it is not. Every existing caller keeps
+ * working unchanged.
  */
 export function buildReportTables(
   model: ColonyModel,
   boqResult: BoqResult | null,
   civil: CivilWorkResult | null,
+  materials?: MaterialIndex | null,
 ): ReportTable[] {
   const hasBoq = !!boqResult && boqResult.lines.length > 0;
 
@@ -255,6 +305,26 @@ export function buildReportTables(
   const beamRows = buildBeamSchedule(model, boqResult, civil);
   const dispatchRows = buildDispatchList(model, boqResult);
   const weight = buildWeightSummary(model, boqResult);
+  const sheetRows = buildFloorSheetSchedule(model);
+  const sheetSummaryRows = buildSheetSummary(model);
+  const panelSeatRows = buildPanelSeatingSchedule(model);
+
+  /* The PUF panel bottom locking system, read from the ONE bundle the model geometry was built from.
+     Nothing here re-derives a pocket width, a piece count or a weight — see model/pufLock.ts. */
+  const puf = model.pufLock ?? null;
+  const pufPlateRows = puf ? buildPufLockPlateSchedule(puf, materials) : [];
+  const pufAnchorRows = puf ? buildPufLockAnchorSchedule(puf, materials) : [];
+  const pufPurlinRows = puf ? buildPufLockPurlinSchedule(puf, materials) : [];
+  const pufWeldRows = puf ? buildPufLockWeldSchedule(puf) : [];
+  const pufPanelRows = puf ? buildPufLockPanelSchedule(puf) : [];
+  const pufOrderingRows = puf ? buildPufLockOrderingSummary(puf, materials) : [];
+
+  /** Why a PUF-lock schedule came back empty — the three states are genuinely different. */
+  const pufEmpty = !puf
+    ? "The PUF panel bottom locking system has not been resolved for this model — rebuild the colony model to schedule it."
+    : !puf.config.enabled
+      ? "The PUF panel bottom locking system is switched off for this project."
+      : "The PUF panel bottom locking system is on but no locking plates are placed — set the plate layout in the PUF lock editor.";
 
   const tables: ReportTable[] = [];
 
@@ -642,6 +712,340 @@ export function buildReportTables(
       { header: "Members", value: (r) => r.memberCount, dp: 0, sum: true },
       { header: "Fabrication", value: (r) => r.fabrication },
       { header: "Weight (kg)", value: (r) => r.weightKg, dp: 1, sum: true },
+    ],
+  }));
+
+  /* ==================================================================== PUF panel bottom lock ===
+   * Six fabrication schedules for the PUF panel bottom locking system. Every figure below is read
+   * from `model.pufLock` — the same resolved bundle the 3D geometry, the detail sheets and the
+   * exploded view were built from — so a schedule can never disagree with the drawing.
+   */
+
+  /* -------------------------------------------------- 17. PUF lock — base plate schedule */
+  tables.push(makeTable({
+    id: "puf-lock-plate-schedule",
+    title: "PUF lock — base plate schedule",
+    group: "PUF Lock",
+    note: "One MS base / anchor plate per locking assembly, set out from the nearest gridline on its plinth-beam run. Sizes, weights and rates come from the resolved PUF-lock configuration.",
+    fileStem: "colony-puf-lock-plate-schedule",
+    rows: pufPlateRows,
+    extraRemarks: allUnpriced(pufPlateRows) ? [NO_RATES] : [],
+    emptyReason: pufEmpty,
+    columns: [
+      { header: "Mark", value: (r) => r.mark, totalLabel: "Total" },
+      { header: "Plate mark", value: (r) => r.plateMark },
+      { header: "Assembly", value: (r) => r.assemblyMark },
+      { header: "Grid ref", value: (r) => r.gridRef },
+      { header: "Offset (mm)", value: (r) => r.offsetMm, dp: 0 },
+      { header: "Host beam", value: (r) => r.hostBeam },
+      { header: "Size L×W (mm)", value: (r) => r.sizeMm },
+      { header: "Thickness (mm)", value: (r) => r.thicknessMm, dp: 0 },
+      { header: "Grade", value: (r) => r.grade },
+      { header: "Holes", value: (r) => r.holeCount, dp: 0, sum: true },
+      { header: "Hole dia (mm)", value: (r) => r.holeDiaMm, dp: 0 },
+      { header: "Unit wt (kg)", value: (r) => r.unitWeightKg, dp: 3 },
+      { header: "Qty", value: (r) => r.quantity, dp: 0, sum: true },
+      { header: "Total wt (kg)", value: (r) => r.totalWeightKg, dp: 3, sum: true },
+      { header: "Rate (₹)", value: (r) => r.rate, dp: 2 },
+      { header: "Amount (₹)", value: (r) => r.amount, dp: 2, sum: true },
+      { header: "Rate source", value: (r) => r.rateSource },
+      { header: "Layout source", value: (r) => r.source },
+    ],
+  }));
+
+  /* -------------------------------------------------- 18. PUF lock — anchor bolt schedule */
+  tables.push(makeTable({
+    id: "puf-lock-anchor-schedule",
+    title: "PUF lock — anchor bolt schedule",
+    group: "PUF Lock",
+    note: "The holding-down assembly fixing each base plate to the RCC plinth beam: bolts, nuts and washers per plate, with embedment and tightening requirement.",
+    fileStem: "colony-puf-lock-anchor-schedule",
+    rows: pufAnchorRows,
+    extraRemarks: [
+      ...(pufAnchorRows[0]?.tighteningNote ? [pufAnchorRows[0].tighteningNote] : []),
+      ...(allUnpriced(pufAnchorRows) ? [NO_RATES] : []),
+    ],
+    emptyReason: pufEmpty,
+    columns: [
+      { header: "Plate mark", value: (r) => r.plateMark, totalLabel: "Total" },
+      { header: "Bolt spec", value: (r) => r.boltSpec },
+      { header: "Dia (mm)", value: (r) => r.diameterMm, dp: 0 },
+      { header: "Length (mm)", value: (r) => r.lengthMm, dp: 0 },
+      { header: "Grade", value: (r) => r.grade },
+      { header: "Anchor type", value: (r) => r.anchorType },
+      { header: "Embedment (mm)", value: (r) => r.embedmentMm, dp: 0 },
+      { header: "Bolts / plate", value: (r) => r.boltsPerPlate, dp: 0 },
+      { header: "Total bolts", value: (r) => r.totalBolts, dp: 0, sum: true },
+      { header: "Nuts", value: (r) => r.nuts, dp: 0, sum: true },
+      { header: "Washers", value: (r) => r.washers, dp: 0, sum: true },
+      { header: "Total wt (kg)", value: (r) => r.totalWeightKg, dp: 3, sum: true },
+      { header: "Rate (₹)", value: (r) => r.rate, dp: 2 },
+      { header: "Amount (₹)", value: (r) => r.amount, dp: 2, sum: true },
+      { header: "Rate source", value: (r) => r.rateSource },
+    ],
+  }));
+
+  /* -------------------------------------------------- 19. PUF lock — C-purlin schedule */
+  tables.push(makeTable({
+    id: "puf-lock-purlin-schedule",
+    title: "PUF lock — C-purlin schedule",
+    group: "PUF Lock",
+    note: "The paired MS C-purlins welded upright on each base plate. Their two webs bound the receiving pocket the PUF panel drops into.",
+    fileStem: "colony-puf-lock-purlin-schedule",
+    rows: pufPurlinRows,
+    extraRemarks: [
+      ...(puf && pufPurlinRows.length
+        ? [
+            `The C-purlin piece count is DERIVED, never hardcoded: ${puf.takeoff.plates} plate`
+            + `${puf.takeoff.plates === 1 ? "" : "s"} × ${puf.config.purlin.perPlate} purlins per plate `
+            + `= ${puf.takeoff.purlinPieces} pieces (${puf.takeoff.purlinTotalLengthM.toFixed(2)} m running length). `
+            + "Change the plate layout and every quantity in this schedule follows.",
+          ]
+        : []),
+      ...(allUnpriced(pufPurlinRows) ? [NO_RATES] : []),
+    ],
+    emptyReason: pufEmpty,
+    columns: [
+      { header: "Mark", value: (r) => r.mark, totalLabel: "Total" },
+      { header: "Plate mark", value: (r) => r.plateMark },
+      { header: "Side", value: (r) => r.side },
+      { header: "Section", value: (r) => r.section },
+      { header: "Depth (mm)", value: (r) => r.depthMm, dp: 0 },
+      { header: "Flange (mm)", value: (r) => r.flangeMm, dp: 0 },
+      { header: "Lip (mm)", value: (r) => r.lipMm, dp: 0 },
+      { header: "Thickness (mm)", value: (r) => r.thicknessMm, dp: 2 },
+      { header: "Length (mm)", value: (r) => r.lengthMm, dp: 0 },
+      { header: "Orientation", value: (r) => r.orientation },
+      { header: "Qty / assembly", value: (r) => r.perAssembly, dp: 0 },
+      { header: "Qty", value: (r) => r.quantity, dp: 0, sum: true },
+      { header: "Running length (m)", value: (r) => r.runningLengthM, dp: 3, sum: true },
+      { header: "Unit wt (kg/m)", value: (r) => r.unitWeightKgPerM, dp: 3 },
+      { header: "Total wt (kg)", value: (r) => r.totalWeightKg, dp: 3, sum: true },
+      { header: "Rate (₹)", value: (r) => r.rate, dp: 2 },
+      { header: "Amount (₹)", value: (r) => r.amount, dp: 2, sum: true },
+      { header: "Rate source", value: (r) => r.rateSource },
+    ],
+  }));
+
+  /* -------------------------------------------------- 20. PUF lock — weld schedule */
+  tables.push(makeTable({
+    id: "puf-lock-weld-schedule",
+    title: "PUF lock — weld schedule",
+    group: "PUF Lock",
+    note: "Plate-to-C-purlin welds per locking assembly, with deposited weld metal and the electrode allowance that covers stub, spatter and slag loss.",
+    fileStem: "colony-puf-lock-weld-schedule",
+    rows: pufWeldRows,
+    extraRemarks: [
+      ...(pufWeldRows[0]?.note ? [pufWeldRows[0].note] : []),
+      ...(pufWeldRows.length
+        ? ["Weld size, throat and length are indicative detailing — they must be confirmed by the project engineer before fabrication."]
+        : []),
+    ],
+    emptyReason: pufEmpty,
+    columns: [
+      { header: "Assembly", value: (r) => r.assemblyMark, totalLabel: "Total" },
+      { header: "Plate", value: (r) => r.plateMark },
+      { header: "Weld type", value: (r) => r.weldType },
+      { header: "Size (mm)", value: (r) => r.weldSizeMm, dp: 0 },
+      { header: "Run length (mm)", value: (r) => r.weldLengthMm, dp: 0 },
+      { header: "Welds / assembly", value: (r) => r.weldsPerAssembly, dp: 0, sum: true },
+      { header: "Total weld length (mm)", value: (r) => r.totalWeldLengthMm, dp: 0, sum: true },
+      { header: "Deposited wt (kg)", value: (r) => r.depositedWeightKg, dp: 3, sum: true },
+      { header: "Electrode allowance (kg)", value: (r) => r.electrodeAllowanceKg, dp: 3, sum: true },
+    ],
+  }));
+
+  /* -------------------------------------------------- 21. PUF lock — panel pocket schedule */
+  tables.push(makeTable({
+    id: "puf-lock-panel-schedule",
+    title: "PUF lock — panel pocket schedule",
+    group: "PUF Lock",
+    note: "The panel-to-pocket interface at every plate. Clear pocket width = selected PUF panel thickness + installation clearance; the status column carries the validation verdict for that plate.",
+    fileStem: "colony-puf-lock-panel-schedule",
+    rows: pufPanelRows,
+    // Plate-SPECIFIC validation messages already name their own plate ("Plate P03 …"), while a global
+    // issue repeats on every row — so the mark is deliberately NOT prefixed here: makeTable then
+    // dedupes one global warning to a single bullet instead of printing it once per panel.
+    remarkOf: (r) => (r.status === "Pass" ? "" : r.remark),
+    extraRemarks: [
+      ...(pufPanelRows.length ? [pufPanelStatusRemark(pufPanelRows)] : []),
+      PUF_LOCK_EXPLANATION,
+    ],
+    emptyReason: pufEmpty,
+    columns: [
+      { header: "Panel mark", value: (r) => r.panelMark },
+      { header: "Panel thickness (mm)", value: (r) => r.panelThicknessMm, dp: 0 },
+      { header: "Pocket clear width (mm)", value: (r) => r.pocketClearWidthMm, dp: 2 },
+      { header: "Installation clearance (mm)", value: (r) => r.installationClearanceMm, dp: 2 },
+      { header: "Side gap (mm)", value: (r) => r.sideGapMm, dp: 2 },
+      { header: "Max side gap (mm)", value: (r) => r.maxSideGapMm, dp: 2 },
+      { header: "Insertion depth (mm)", value: (r) => r.insertionDepthMm, dp: 0 },
+      { header: "Seating depth (mm)", value: (r) => r.seatingDepthMm, dp: 0 },
+      { header: "Supported plate", value: (r) => r.supportedByPlate },
+      { header: "Host beam", value: (r) => r.hostBeam },
+      { header: "Isolation strip", value: (r) => r.isolationStrip },
+      { header: "Sealant", value: (r) => r.sealant },
+      { header: "Status", value: (r) => r.status },
+      { header: "Remark", value: (r) => r.remark },
+    ],
+  }));
+
+  /* -------------------------------------------------- 22. PUF lock — ordering summary */
+  tables.push(makeTable({
+    id: "puf-lock-ordering-summary",
+    title: "PUF lock — ordering summary",
+    group: "PUF Lock",
+    note: "What to fabricate and what to buy: the typical-assembly bill, the per-wall (plinth-beam run) quantity and the whole-building purchase list, sectioned by scope.",
+    fileStem: "colony-puf-lock-ordering-summary",
+    rows: pufOrderingRows,
+    sectionOf: (r) => r.scope,
+    // "Per assembly", each wall and "Whole building" deliberately describe the SAME steel at three
+    // levels of detail — a grand total across the sections would count it three times.
+    noGrand: true,
+    extraRemarks: [
+      ...(pufOrderingRows.length
+        ? ["The scope sections restate the same locking system at three levels — per typical assembly, per plinth-beam run and for the whole building — so no grand total is shown. The 'Whole building' subtotal is the purchase quantity."]
+        : []),
+      ...(allUnpriced(pufOrderingRows) ? [NO_RATES] : []),
+    ],
+    emptyReason: pufEmpty,
+    columns: [
+      { header: "Scope", value: (r) => r.scope, totalLabel: "Total" },
+      { header: "Item", value: (r) => r.item },
+      { header: "Spec", value: (r) => r.spec },
+      { header: "Unit", value: (r) => r.unit },
+      { header: "Qty", value: (r) => r.quantity, dp: 3 },
+      { header: "Unit wt (kg)", value: (r) => r.unitWeightKg, dp: 3 },
+      { header: "Total wt (kg)", value: (r) => r.totalWeightKg, dp: 3, sum: true },
+      { header: "Rate (₹)", value: (r) => r.rate, dp: 2 },
+      { header: "Amount (₹)", value: (r) => r.amount, dp: 2, sum: true },
+      { header: "Rate source", value: (r) => r.rateSource },
+    ],
+  }));
+
+  /* -------------------------------------------------- 23-25. deck sheets + panel seating *
+   * Setting-out, not procurement. Both schedules describe how an ALREADY-PRICED quantity is cut,
+   * laid and held, so every one of them repeats the reconciliation in its remarks — a reader
+   * arriving at a sheet count must not read it as a second purchase. */
+  const deck = model.deck;
+  /* Sheeted deck levels are read back from the placed sheets, not from meta.floors: the 8'×4' field
+   * is laid on the UPPER storeys only (the ground floor bears on the filled plinth), so a G+2 colony
+   * has 2 sheeted decks, not 3. */
+  const deckLevelSet = new Set<number>();
+  for (const p of model.parts) if (p.kind === "floor-sheet") deckLevelSet.add(p.floor ?? 0);
+  const deckLevels = deckLevelSet.size;
+  const NOT_A_PURCHASE =
+    "SETTING-OUT, NOT A PURCHASE: this is how the priced floor:board deck area is physically cut and "
+    + "laid. The deck sheets carry no BOQ line of their own and the priced board area remains the "
+    + "source of truth for cost — the sheet counts here are ordering guidance, never a second line.";
+  const failedSheetChecks = (deck?.checks ?? [])
+    .filter((c) => !c.pass)
+    .map((c) => `${c.code} FAILED — ${c.title}: ${c.detail}`);
+  const spacingRemark = deck ? `Joist / bearer spacing: ${deck.spacing.note}` : "";
+  /* The company-standard recommendation travels WITH the schedule, because the spacing defect and its
+   * fix are the same fact — and the fix is a configuration action the reader can take, not a code
+   * change. Stated as advice with a cost: nothing here alters the priced geometry or the saved
+   * default (see model/sheetLayout.ts COMPANY_STANDARD_SPACING_MM). */
+  const spacingAdvice = deck
+    ? (() => {
+      const rec = buildSpacingRecommendation(deck);
+      return rec.alreadyModular
+        ? `Company standard: ${rec.headline}`
+        : `Company standard (RECOMMENDATION — nothing changed automatically): ${rec.detail} `
+          + `Set it at ${rec.settingPath}.`;
+    })()
+    : "";
+
+  /* -------------------------------------------------- 23. floor sheet schedule */
+  tables.push(makeTable({
+    id: "floor-sheet-schedule",
+    title: "Flooring sheet schedule",
+    group: "Deck & panels",
+    note: `Every 8'×4' deck sheet in laying sequence with its cut size, offcut and edge support. The layout is solved once and laid on ${deckLevelSet.has(0) ? "EVERY storey — the ground-floor sheet option is on for this project" : "each UPPER storey — the ground floor bears on the plinth and carries no sheet field"} — so areas are for ONE deck level.`,
+    fileStem: "colony-flooring-sheet-schedule",
+    rows: sheetRows,
+    sectionOf: (r) => (r.full ? "Full sheets" : "Cut sheets"),
+    remarkOf: (r) => (r.remark ? `${r.mark}: ${r.remark}` : ""),
+    extraRemarks: sheetRows.length
+      ? [
+          NOT_A_PURCHASE,
+          `Area and offcut totals are for ONE deck level (${deck ? deck.deckAreaM2.toFixed(2) : "0"} m²); the identical field is laid on each of the ${deckLevels} sheeted deck level(s)${deckLevelSet.has(0) ? " (ground floor included — its sheet option is on)" : " — upper storeys only, the ground floor bears on the plinth and takes no sheets"}. The 'Decks' column totals the physical sheets to be cut across the whole building.`,
+          spacingRemark,
+          ...failedSheetChecks,
+        ]
+      : [],
+    emptyReason: "This colony has no modelled deck, so there is no flooring sheet setting-out to schedule.",
+    columns: [
+      { header: "Mark", value: (r) => r.mark },
+      { header: "Seq", value: (r) => r.no, dp: 0 },
+      { header: "Row", value: (r) => r.row, dp: 0 },
+      { header: "Col", value: (r) => r.col, dp: 0 },
+      { header: "Size W×L (mm)", value: (r) => r.sizeMm },
+      { header: "Full / cut", value: (r) => r.cut },
+      { header: "Area (m²)", value: (r) => r.areaM2, dp: 3, sum: true },
+      { header: "Offcut (m²)", value: (r) => r.offcutM2, dp: 3, sum: true },
+      { header: "Supported edges", value: (r) => `${r.supportedEdges}/4`, align: "right" },
+      { header: "Floors", value: (r) => r.floors },
+      { header: "Decks", value: (r) => r.deckCount, dp: 0, sum: true },
+      { header: "Remark", value: (r) => r.remark || "" },
+    ],
+  }));
+
+  /* -------------------------------------------------- 24. sheet ordering + check summary */
+  tables.push(makeTable({
+    id: "sheet-summary",
+    title: "Flooring sheet ordering & check summary",
+    group: "Deck & panels",
+    note: "Sheet quantity reported three ways (no re-use, area-only floor, recommended purchase) with the support spacing, edge bearing, bearer count and every pass/fail layout check behind them.",
+    fileStem: "colony-flooring-sheet-summary",
+    rows: sheetSummaryRows,
+    sectionOf: (r) => r.group,
+    extraRemarks: sheetSummaryRows.length
+      ? [NOT_A_PURCHASE, spacingRemark, spacingAdvice, ...failedSheetChecks]
+      : [],
+    emptyReason: "This colony has no modelled deck, so there is no sheet layout to summarise.",
+    columns: [
+      { header: "Ref", value: (r) => r.code || "" },
+      { header: "Item", value: (r) => r.item },
+      { header: "Figure", value: (r) => r.figure, align: "right" },
+      { header: "Status", value: (r) => r.status || "" },
+      { header: "Basis / note", value: (r) => r.detail || "" },
+    ],
+  }));
+
+  /* -------------------------------------------------- 25. panel seating schedule */
+  const panelSpec = model.panelSupport;
+  tables.push(makeTable({
+    id: "panel-seating-schedule",
+    title: "Panel seating & fixing schedule",
+    group: "Deck & panels",
+    note: "How the configured PUF panel is captured by the MS framework — base track, jamb / closing channel, head restraint and framed pocket — followed by the slot and insertion required at every trade thickness.",
+    fileStem: "colony-panel-seating-schedule",
+    rows: panelSeatRows,
+    sectionOf: (r) => r.group,
+    extraRemarks: panelSpec
+      ? [
+          panelSpec.note,
+          `Fixings: ${panelSpec.fixingSpec} at ${panelSpec.fixingPitchMm} mm centres, tightened to ${panelSpec.fixingPitchCornerMm} mm within 300 mm of every corner and opening.`,
+          "The seating sections are un-priced engineering detail and carry no BOQ line — panel AREA is priced by the wall / partition lines, which remain the source of truth for cost.",
+          "Nothing here is a lookup: the seating geometry is derived from the thickness, so a thickness outside the trade list still produces a buildable, self-consistent detail.",
+        ]
+      : [],
+    emptyReason: "No panel thickness is configured for this colony, so no seating detail can be derived.",
+    columns: [
+      { header: "Position", value: (r) => r.position },
+      { header: "Seat", value: (r) => r.label },
+      { header: "Section call-out", value: (r) => r.sectionCall },
+      { header: "Panel (mm)", value: (r) => r.thicknessMm, dp: 0 },
+      { header: "Slot width (mm)", value: (r) => r.slotWidthMm, dp: 0 },
+      { header: "Clearance (mm)", value: (r) => r.clearanceMm, dp: 0 },
+      { header: "Leg (mm)", value: (r) => r.legMm, dp: 0 },
+      { header: "Min insertion (mm)", value: (r) => r.minInsertionMm, dp: 0 },
+      { header: "Gauge (mm)", value: (r) => r.gaugeMm, dp: 1 },
+      { header: "Fixing pitch (mm)", value: (r) => r.fixingPitchMm, dp: 0 },
+      { header: "Configured", value: (r) => (r.configured ? "Yes" : "") },
+      { header: "Role", value: (r) => r.role },
+      { header: "Load path", value: (r) => r.loadPath },
     ],
   }));
 

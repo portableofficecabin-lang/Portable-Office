@@ -43,6 +43,9 @@ export interface FramingElevationSheetProps {
 /** Families drawn as framing members on the elevation. */
 const FRAME_KINDS = new Set<ColonyPartKind>([
   "column", "stud", "rail", "base-beam", "floor-beam", "brace", "veranda-post", "veranda-beam",
+  /* The floor's two SEPARATE members: primary rafter (joist family) and the secondary MS pipe
+   * above it — both drawn so the side elevation / cross-section shows the two-layer deck. */
+  "joist", "floor-tube",
 ]);
 /** Families drawn as the roof profile (projected over the whole face, not only the face band). */
 const ROOF_KINDS = new Set<ColonyPartKind>(["rafter", "truss-web", "ridge", "purlin", "roof-sheet"]);
@@ -56,6 +59,8 @@ const COLOR_OF: Partial<Record<ColonyPartKind, string>> = {
   rail: PLAN.beam,
   "base-beam": PLAN.beam,
   "floor-beam": PLAN.beam,
+  joist: PLAN.joist,
+  "floor-tube": "#1380a1",
   "veranda-beam": PLAN.beam,
   brace: PLAN.brace,
   rafter: PLAN.beam,

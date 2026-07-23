@@ -14,11 +14,15 @@ import { calculateLabourColony, type LabourColonyConfig, type LabourColonyResult
 import { buildConstructionPlan } from "../src/lib/quotation/labourColonyPlan";
 import { calculateCivilWork, DEFAULT_CIVIL_CONFIG, type CivilContext, type CivilWorkResult } from "../src/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
+import { isRafterSupportKind } from "../src/features/labour-colony-studio/model/assembly";
 import { buildAssemblyTimeline } from "../src/features/labour-colony-studio/animation/buildAssemblyTimeline";
 import { validateAssemblyTimeline } from "../src/features/labour-colony-studio/animation/validateAssemblyTimeline";
 import {
   sampleAssembly, samplePart, activeStepIndexAt, activeStepCutawayAt,
 } from "../src/features/labour-colony-studio/animation/assemblyMotion";
+import {
+  buildColonyStepEngineeringRows, colonyContextOf, describeColonyStep,
+} from "../src/features/labour-colony-studio/animation/assemblyCaptions";
 
 let passed = 0;
 let failed = 0;
@@ -147,6 +151,162 @@ const single = calculateLabourColony({ ...CONFIG, floors: 1, capacity: 40 });
 const civilS = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(single));
 const tS = buildAssemblyTimeline(buildColonyModel({ result: single, civil: civilS, columnGrid: null }));
 ok(tS.steps.length > 0 && tS.totalMs > 0, "ground-floor-only model still produces a timeline");
+
+/* ---- the per-assembly ZOOMED DETAIL TOUR of the rafter-support connections -------------------
+ * The requirement: every rafter connection is flown to, held on in close-up and built up part by
+ * part. That is N shots inside the single canonical construction step 18, so it rests on the
+ * sub-step layer (TimelineStep.subIndex) and on the tour being a PARTITION of that step's parts.
+ * These assertions guard exactly those two things, plus the runtime the user accepted (5–7 min). */
+const rsupParts = model.parts.filter((p) => isRafterSupportKind(p.kind));
+const rsupConns = new Set(rsupParts.map((p) => p.connectionId).filter((x): x is string => !!x));
+
+if (rsupConns.size > 0) {
+  ok(t.detailTour.enabled, "detail tour switches itself on when rafter-support assemblies exist");
+  ok(t.detailTour.assemblies === rsupConns.size,
+    `detail tour finds every connection (${t.detailTour.assemblies} of ${rsupConns.size})`);
+  ok(t.detailTour.toured === t.detailTour.assemblies && !t.detailTour.capped,
+    `a typical colony tours every assembly (${t.detailTour.toured}/${t.detailTour.assemblies})`);
+
+  /* Sub-steps now come from TWO systems: the rafter-support tour (steps 18/19) and the per-tube
+   * deck insertion sequence (step 8). The tour assertions below check the TOUR subs only. */
+  const subs = t.steps.filter((s) => s.subIndex !== undefined);
+  const tourSubs = subs.filter((s) => s.assemblyStep >= 18);
+  ok(tourSubs.length === t.detailTour.toured, `one sub-step per toured assembly (${tourSubs.length})`);
+  ok(tourSubs.every((s) => s.shot === "detail-closeup"), "every detail sub-step uses the macro shot");
+
+  // ids: the convention IS the join key — duplicates would collide as React keys + validator refs
+  const stepIds = t.steps.map((s) => s.id);
+  ok(new Set(stepIds).size === stepIds.length, "every timeline step id is unique");
+  ok(
+    t.steps.every((s) => s.id === (s.subIndex === undefined ? `step-${s.assemblyStep}` : `step-${s.assemblyStep}-${s.subIndex}`)),
+    "step ids follow the step-<n>[-<sub>] convention",
+  );
+
+  // ordering: lexicographic (assemblyStep, subIndex ?? -1) strictly increasing
+  let lexOk = true;
+  for (let i = 1; i < t.steps.length; i++) {
+    const p = t.steps[i - 1];
+    const c = t.steps[i];
+    const ps = p.subIndex ?? -1;
+    const cs = c.subIndex ?? -1;
+    if (c.assemblyStep < p.assemblyStep || (c.assemblyStep === p.assemblyStep && cs <= ps)) lexOk = false;
+  }
+  ok(lexOk, "erection order increases lexicographically on (assemblyStep, subIndex)");
+
+  // THE PARTITION INVARIANT: the steps of one construction step split its parts, never duplicate
+  // them and never drop them — this is what keeps "every part scheduled exactly once" true.
+  const union = t.steps.flatMap((s) => s.partIds);
+  ok(new Set(union).size === union.length, "no part appears in two timeline steps");
+  ok(union.length === model.parts.length, `the steps partition the whole model (${union.length} of ${model.parts.length})`);
+
+  // the camera must be a genuine macro shot, not the "close-up" a 12 m building normally allows
+  const detailDist = tourSubs.map((s) => Math.hypot(
+    s.camera.to.position[0] - s.camera.to.target[0],
+    s.camera.to.position[1] - s.camera.to.target[1],
+    s.camera.to.position[2] - s.camera.to.target[2],
+  ));
+  ok(detailDist.every((d) => d > 0 && d < 2.5),
+    `every detail shot is framed inside 2.5 m (max ${Math.max(...detailDist).toFixed(2)} m)`);
+
+  // focusPartIds must be installable by the shot that frames them
+  ok(subs.every((s) => (s.focusPartIds ?? []).every((id) => s.partIds.includes(id))),
+    "every focused part is installed by the shot that frames it");
+
+  // the per-assembly caption must name real model values and never leak an unresolved one
+  const capText = (s: (typeof subs)[number]) =>
+    [s.title, s.description, s.captionCustomer, s.captionEngineering ?? "", s.subTitle ?? ""].join(" ");
+  ok(!subs.some((s) => /undefined|NaN/.test(capText(s))), "no detail caption carries undefined / NaN");
+  ok(tourSubs.every((s) => /M\d+/.test(s.description)), "every detail caption names the bolt spec");
+  ok(tourSubs.every((s) => s.description.includes("flush")), "every detail caption states the flush web bearing");
+
+  // the camera keeps moving through the dwell (cinematography, not a freeze-frame)
+  const d0 = tourSubs[0];
+  const camA = sampleAssembly(t, d0.startMs + d0.installMs + 5).camera;
+  const camB = sampleAssembly(t, d0.endMs - 5).camera;
+  const drift = Math.hypot(
+    camA.position[0] - camB.position[0], camA.position[1] - camB.position[1], camA.position[2] - camB.position[2],
+  );
+  ok(drift > 0.01, `the detail camera drifts during the dwell (${drift.toFixed(3)} m)`);
+
+  // runtime: the user explicitly accepted 5–7 minutes for complete detail
+  const mins = t.totalMs / 60000;
+  ok(mins >= 3 && mins <= 12, `tour runtime is a watchable film (${mins.toFixed(2)} min)`);
+
+  // an explicit cap must still schedule every part, and must SAY it is partial
+  const capped = buildAssemblyTimeline(model, { detailTourMaxAssemblies: 5 });
+  ok(capped.detailTour.toured === Math.min(5, rsupConns.size), "an explicit tour cap is honoured");
+  ok(new Set(capped.steps.flatMap((s) => s.partIds)).size === model.parts.length,
+    "a capped tour still schedules every part exactly once");
+  ok(capped.steps.some((s) => s.description.includes("erected together")),
+    "a capped tour states in the caption that the rest are erected together");
+  ok(validateAssemblyTimeline(capped, model).issues.filter((i) => i.severity === "error").length === 0,
+    "a capped timeline still validates");
+}
+
+/* ---- the tour is OPTIONAL and degrades to the pre-existing timeline -------------------------- */
+const noTour = buildAssemblyTimeline(model, { detailTour: false });
+ok(noTour.steps.filter((s) => s.assemblyStep >= 18).every((s) => s.subIndex === undefined), "detail tour off ⇒ no rafter-tour sub-steps (the per-tube deck sequence is not the tour)");
+ok(!noTour.detailTour.enabled, "detail tour off is reported on the timeline");
+ok(new Set(noTour.steps.flatMap((s) => s.partIds)).size === model.parts.length,
+  "detail tour off still schedules every part exactly once");
+ok(validateAssemblyTimeline(noTour, model).issues.filter((i) => i.severity === "error").length === 0,
+  "the tour-off timeline validates");
+
+/* a model with NO rafter-support parts must produce exactly the timeline it always did */
+const stripped = { ...model, parts: model.parts.filter((p) => !isRafterSupportKind(p.kind)), rafterSupport: undefined };
+const tStripped = buildAssemblyTimeline(stripped);
+ok(!tStripped.detailTour.enabled && tStripped.detailTour.assemblies === 0,
+  "a colony without the rafter-support system gets no tour");
+ok(tStripped.steps.filter((s) => s.assemblyStep >= 18).every((s) => s.subIndex === undefined), "…and no tour sub-steps");
+ok(validateAssemblyTimeline(tStripped, stripped).issues.filter((i) => i.severity === "error").length === 0,
+  "…and still validates");
+
+/* ---- CAPTIONS MUST NEVER NARRATE A PART THE MODEL DOES NOT CONTAIN ---------------------------
+ * The step copy is the one place in the studio that can lie without failing a type check or a
+ * geometry invariant: it is prose, so an assertion about a king post survives happily in a colony
+ * that has no king post. These checks pin the two ways that actually happened. */
+{
+  const stepCopy = (m: ReturnType<typeof buildColonyModel>, step: number) =>
+    describeColonyStep(step as never, colonyContextOf(m), m.parts.filter((p) => p.assemblyStep === step));
+
+  /* (1) A MONO-PITCH roof emits one rafter and NO truss webs — so it has no apex and no king post. */
+  const mono = calculateLabourColony({ ...CONFIG, roofType: "mono" } as LabourColonyConfig);
+  const monoCivil = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(mono));
+  const monoModel = buildColonyModel({ result: mono, civil: monoCivil, columnGrid: null });
+  const monoWebs = monoModel.parts.filter((p) => p.kind === "truss-web").length;
+  if (monoWebs === 0) {
+    const c = stepCopy(monoModel, 17);
+    const prose = `${c.description} ${c.captionCustomer} ${c.captionEngineering}`;
+    ok(!/king post/i.test(prose), "captions: a roof with no truss webs is never told it has a king post");
+    ok(!/apex/i.test(prose), "captions: a single-slope roof is never told it has an apex");
+    ok(!/web member/i.test(prose), "captions: a roof with no webs is never told it has web members");
+  } else {
+    ok(true, `captions: mono roof still emits ${monoWebs} webs — apex/king-post check not applicable`);
+  }
+
+  /* (2) connectionDetail:false builds the truss with NO welds, plates or bolts at all. */
+  const bare = buildColonyModel({ result, civil, columnGrid: null }, { connectionDetail: false });
+  const bareHw = bare.parts.filter((p) => (p.assemblyId ?? "").startsWith("truss:")
+    && (p.kind === "weld" || p.kind === "splice-plate" || p.kind === "bolt")).length;
+  ok(bareHw === 0, `captions: connectionDetail:false really removes the truss hardware (${bareHw})`);
+  const bc = stepCopy(bare, 17);
+  const bareProse = `${bc.description} ${bc.captionCustomer} ${bc.captionEngineering}`;
+  ok(!/fillet weld/i.test(bareProse) && !/M16/.test(bareProse) && !/Ø18/.test(bareProse),
+    "captions: a truss with no modelled hardware is never given weld sizes, bolt grades or hole diameters");
+  ok(!/torque/i.test(bc.inspection ?? ""),
+    "captions: the ITP does not demand a torque check on bolts that were never modelled");
+
+  /* (3) THE OVERLAY PAINTS ONLY SIX ROWS — the explanation must not push priced rows off the frame.
+   *     Regression guard: detail rows were prepended without trimming, silently dropping a
+   *     BOQ-referenced row from every exported frame of steps 6, 8 and 14. */
+  for (const step of [6, 8, 14, 17, 20]) {
+    const parts = model.parts.filter((p) => p.assemblyStep === step);
+    if (!parts.length) continue;
+    const rows = buildColonyStepEngineeringRows(parts);
+    ok(rows.length <= 6,
+      `captions: step ${step} engineering rows fit the overlay's 6-row budget (${rows.length})`);
+  }
+}
 
 console.log(`\ncolony-studio-animation.test.ts — ${passed} passed, ${failed} failed\n`);
 if (failed) {

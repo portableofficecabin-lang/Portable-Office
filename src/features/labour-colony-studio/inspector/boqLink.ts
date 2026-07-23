@@ -71,6 +71,16 @@ const STEEL_KEYWORD: Partial<Record<ColonyPartKind, string>> = {
   "veranda-joist": "joist",
   "veranda-post": "post",
   "walkway-plate": "walkway",
+  /* Deck + panel-support sections are engineering detail the take-off does not itemise. They are
+   * routed at the nearest priced relative so the inspector can still show the admin what material
+   * family they belong to, rather than showing nothing at all. */
+  "c-channel": "channel",
+  "u-channel": "channel",
+  "angle-support": "angle",
+  "pocket-support": "channel",
+  noggin: "joist",
+  "floor-sheet": "floor",
+  "floor-tube": "floor",
   "floor-board": "floor",
   "floor-finish": "floor",
   "ext-panel": "sheet",

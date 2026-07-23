@@ -13,7 +13,8 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
-  Box, Camera, Eye, EyeOff, Grid3x3, Layers, Maximize2, Move3d, RotateCcw, Ruler,
+  Box, Camera, Crosshair, Eye, EyeOff, Grid3x3, Layers, Lock, Maximize2, MessageSquare, Move3d,
+  RotateCcw, Ruler,
   Scissors, Sparkles, Tag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,8 @@ import { cn } from "@/lib/utils";
 import type {
   ColonyModel, ColonyPartKind, ColonyPartLayer, ViewMode,
 } from "@/features/labour-colony-studio/model/types";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { PaletteEditor } from "@/features/labour-colony-studio/palette/PaletteEditor";
 import {
   Colony3DView, type CameraPreset, type ColonyView3DSettings, type RenderMode, type SectionAxis,
 } from "./Colony3DView";
@@ -29,6 +32,12 @@ export interface Colony3DProps {
   model: ColonyModel;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  /**
+   * Per-group colour overrides. Owned by ColonyDrawingStudio so the SAME palette drives the assembly
+   * video; when omitted the viewer falls back to its own local state and still works standalone.
+   */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 const PRESETS: { id: CameraPreset; label: string }[] = [
@@ -50,13 +59,16 @@ const LAYERS: { id: ColonyPartLayer; label: string }[] = [
   { id: "roof", label: "Roof" }, { id: "openings", label: "Openings" },
   { id: "stair", label: "Stair" }, { id: "electrical", label: "Electrical" },
   { id: "plumbing", label: "Plumbing" }, { id: "furniture", label: "Furniture" },
+  // master show / hide for the PUF panel bottom locking assemblies
+  { id: "puf-lock", label: "PUF lock" },
 ];
 
 /** Kind-group toggles → the ColonyPartKinds each hides when switched off. */
 const KIND_GROUPS: { id: string; label: string; kinds: ColonyPartKind[] }[] = [
   { id: "columns", label: "Columns", kinds: ["column", "pedestal"] },
   { id: "beams", label: "Beams", kinds: ["base-beam", "floor-beam", "plinth-beam", "veranda-beam"] },
-  { id: "joists", label: "Joists", kinds: ["joist", "veranda-joist"] },
+  { id: "joists", label: "Joists / floor rafters", kinds: ["joist", "joist-web", "veranda-joist"] },
+  { id: "floor-tubes", label: "MS pipe frame", kinds: ["floor-tube"] },
   { id: "studs", label: "Studs / rails", kinds: ["stud", "rail"] },
   { id: "bracing", label: "Bracing", kinds: ["brace"] },
   { id: "trusses", label: "Trusses / rafters", kinds: ["roof-truss", "rafter", "truss-web", "ridge"] },
@@ -64,15 +76,46 @@ const KIND_GROUPS: { id: string; label: string; kinds: ColonyPartKind[] }[] = [
   { id: "plates", label: "Plates", kinds: ["base-plate", "levelling-plate", "gusset", "cleat", "end-plate", "splice-plate", "stiffener", "walkway-plate"] },
   { id: "bolts", label: "Bolts", kinds: ["bolt", "nut", "washer", "anchor-bolt"] },
   { id: "welds", label: "Welds", kinds: ["weld"] },
+  { id: "edge-members", label: "C / U / angle / pocket", kinds: ["c-channel", "u-channel", "angle-support", "pocket-support"] },
+  { id: "bearers", label: "Sheet bearers", kinds: ["noggin"] },
+  { id: "floor-sheets", label: "Deck sheets (8'×4')", kinds: ["floor-sheet"] },
   { id: "staircase", label: "Staircase", kinds: ["stair-stringer", "stair-tread", "landing"] },
   { id: "railings", label: "Railings", kinds: ["handrail", "handrail-post", "toe-plate"] },
+  // PUF panel bottom locking system — spec sub-toggles under the "puf-lock" master layer
+  { id: "puflock-plates", label: "PUF lock plates", kinds: ["puf-lock-base-plate"] },
+  { id: "puflock-bolts", label: "PUF lock bolts", kinds: ["puf-lock-anchor-bolt", "puf-lock-nut", "puf-lock-washer"] },
+  { id: "puflock-purlins", label: "PUF lock C-purlins", kinds: ["puf-lock-c-purlin-left", "puf-lock-c-purlin-right"] },
+  { id: "puflock-panels", label: "PUF panel seating", kinds: ["puf-lock-panel-seat", "puf-lock-sealant", "puf-lock-isolation-strip"] },
+  { id: "puflock-welds", label: "PUF lock welds", kinds: ["puf-lock-weld"] },
 ];
 
 const ALL_LAYERS: ColonyPartLayer[] = LAYERS.map((l) => l.id);
 
-export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
+/** The kind-group ids the PUF-lock isolate actions switch between. */
+const PUF_LOCK_GROUPS = [
+  "puflock-plates", "puflock-bolts", "puflock-purlins", "puflock-panels", "puflock-welds",
+] as const;
+type PufLockGroupId = (typeof PUF_LOCK_GROUPS)[number];
+
+/** "Show only this part of the locking system" shortcuts. */
+const PUF_LOCK_ISOLATES: { id: PufLockGroupId; label: string }[] = [
+  { id: "puflock-plates", label: "Plates only" },
+  { id: "puflock-bolts", label: "Bolts only" },
+  { id: "puflock-purlins", label: "C-purlins only" },
+];
+
+/** The connectionId prefix every PUF locking assembly carries ("pufl:<mark>"). */
+const PUF_LOCK_CONN_PREFIX = "pufl:";
+
+export function Colony3D({ model, selectedId, onSelect, palette, onPaletteChange }: Colony3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const captureRef = useRef<null | (() => string | null)>(null);
+
+  /* The palette is CONTROLLED when the studio supplies one (so the video shares it) and falls back
+   * to local state otherwise, keeping the viewer usable on its own. */
+  const [localPalette, setLocalPalette] = useState<ColonyPalette>({});
+  const activePalette = palette ?? localPalette;
+  const setPalette = onPaletteChange ?? setLocalPalette;
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [preset, setPreset] = useState<{ view: CameraPreset; nonce: number }>({ view: "iso", nonce: 0 });
@@ -82,6 +125,7 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   const [explode, setExplode] = useState(0);
   const [showConnectionDetail, setShowConnectionDetail] = useState(false);
   const [showPartMarks, setShowPartMarks] = useState(false);
+  const [showAnnotations, setShowAnnotations] = useState(false);
   const [measureMode, setMeasureMode] = useState(false);
   const [hd, setHd] = useState(false);
 
@@ -93,6 +137,8 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   const [hiddenLayers, setHiddenLayers] = useState<Set<ColonyPartLayer>>(() => new Set());
   const [offGroups, setOffGroups] = useState<Set<string>>(() => new Set());
   const [hiddenFloors, setHiddenFloors] = useState<Set<number>>(() => new Set());
+  /** When set, only the parts of this connection group are drawn. null = normal visibility. */
+  const [isolateConnectionId, setIsolateConnectionId] = useState<string | null>(null);
 
   const hiddenKinds = useMemo(() => {
     const s = new Set<ColonyPartKind>();
@@ -112,8 +158,8 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   const settings: ColonyView3DSettings = useMemo(() => ({
     hiddenLayers, hiddenKinds, hiddenFloors, viewMode, renderMode, explode, showConnectionDetail,
     section: { enabled: sectionEnabled, axis: sectionAxis, position: sectionPos },
-    showPartMarks, hd,
-  }), [hiddenLayers, hiddenKinds, hiddenFloors, viewMode, renderMode, explode, showConnectionDetail, sectionEnabled, sectionAxis, sectionPos, showPartMarks, hd]);
+    showPartMarks, showAnnotations, hd, palette: activePalette, isolateConnectionId,
+  }), [hiddenLayers, hiddenKinds, hiddenFloors, viewMode, renderMode, explode, showConnectionDetail, sectionEnabled, sectionAxis, sectionPos, showPartMarks, showAnnotations, hd, activePalette, isolateConnectionId]);
 
   const toggleLayer = (id: ColonyPartLayer) => setHiddenLayers((prev) => {
     const n = new Set(prev);
@@ -133,12 +179,43 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   /** Show ONLY this storey — the "ground-floor-only" / "first-floor-only" engineering views. */
   const isolateFloor = (f: number) => setHiddenFloors(new Set(floors.filter((x) => x !== f)));
 
+  /**
+   * Show ONLY one part of the locking system — plates, bolts or C-purlins. Switches the other
+   * puf-lock kind-groups OFF through the SAME offGroups state the normal toggles use and leaves the
+   * rest of the model exactly as the user left it.
+   */
+  const isolatePufLockGroup = (keep: PufLockGroupId) => setOffGroups((prev) => {
+    const n = new Set(prev);
+    for (const id of PUF_LOCK_GROUPS) {
+      if (id === keep) n.delete(id); else n.add(id);
+    }
+    return n;
+  });
+
+  /** Undo every puf-lock isolation: all kind-groups back on, the layer visible, assembly released. */
+  const showAllPufLock = () => {
+    setOffGroups((prev) => {
+      if (!PUF_LOCK_GROUPS.some((id) => prev.has(id))) return prev;
+      const n = new Set(prev);
+      for (const id of PUF_LOCK_GROUPS) n.delete(id);
+      return n;
+    });
+    setHiddenLayers((prev) => {
+      if (!prev.has("puf-lock")) return prev;
+      const n = new Set(prev);
+      n.delete("puf-lock");
+      return n;
+    });
+    setIsolateConnectionId(null);
+  };
+
   const resetView = useCallback(() => {
     setPreset((p) => ({ view: "iso", nonce: p.nonce + 1 }));
     setViewMode("engineering"); setRenderMode("solid"); setExplode(0);
     setShowConnectionDetail(false); setShowPartMarks(false); setMeasureMode(false);
     setSectionEnabled(false); setSectionAxis("z"); setSectionPos(0.5);
     setHiddenLayers(new Set()); setOffGroups(new Set()); setHiddenFloors(new Set());
+    setIsolateConnectionId(null);
     onSelect(null);
   }, [onSelect]);
 
@@ -159,6 +236,25 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
   };
 
   const selectedPart = selectedId ? model.parts.find((p) => p.id === selectedId) ?? null : null;
+
+  /* ---- PUF panel bottom locking system ------------------------------------------------------- */
+
+  /**
+   * The resolved locking system the model was BUILT from — never recomputed here. Absent / disabled
+   * ⇒ the whole PUF-lock control row and its readout stay off the screen.
+   */
+  const pufTakeoff = model.pufLock?.takeoff ?? null;
+  const pufEnabled = !!pufTakeoff?.enabled;
+  const pufReadout = pufTakeoff && pufEnabled
+    ? `${pufTakeoff.plates} PUF lock assembl${pufTakeoff.plates === 1 ? "y" : "ies"} — pocket ${pufTakeoff.pocketClearGapMm} mm for ${pufTakeoff.panelThicknessMm} mm panel`
+    : null;
+
+  /** The locking assembly the selected part belongs to, e.g. "pufl:P07" — null for anything else. */
+  const selectedPufAssembly = selectedPart?.connectionId?.startsWith(PUF_LOCK_CONN_PREFIX)
+    ? selectedPart.connectionId
+    : null;
+  const isolateTarget = isolateConnectionId ?? selectedPufAssembly;
+  const isolateMark = isolateTarget?.slice(PUF_LOCK_CONN_PREFIX.length) ?? "";
 
   return (
     <div className="space-y-3">
@@ -217,6 +313,9 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
         {([
           { on: showConnectionDetail, set: setShowConnectionDetail, icon: Sparkles, label: "Connection detail" },
           { on: showPartMarks, set: setShowPartMarks, icon: Tag, label: "Part marks" },
+          /* A mark says WHICH piece; an annotation says WHY the piece is shaped that way. Separate
+           * toggles because a fabricator wants marks only, while a customer wants the explanation. */
+          { on: showAnnotations, set: setShowAnnotations, icon: MessageSquare, label: "Explain" },
           { on: measureMode, set: setMeasureMode, icon: Move3d, label: "Measure" },
           { on: sectionEnabled, set: setSectionEnabled, icon: Scissors, label: "Section cut" },
           { on: hd, set: setHd, icon: Sparkles, label: "HD" },
@@ -262,6 +361,9 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
 
         {measureMode && <span className="text-xs text-red-600">Click two components to measure</span>}
       </div>
+
+      {/* component colours — the same palette the assembly video renders with */}
+      <PaletteEditor model={model} palette={activePalette} onChange={setPalette} />
 
       {/* layer toggles */}
       <div className="flex flex-wrap items-center gap-1.5">
@@ -331,6 +433,51 @@ export function Colony3D({ model, selectedId, onSelect }: Colony3DProps) {
           );
         })}
       </div>
+
+      {/* PUF locking system — isolate shortcuts + the take-off readout (only when it is enabled) */}
+      {pufEnabled && (
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground">
+            <Lock className="h-3.5 w-3.5" /> PUF lock
+          </span>
+
+          {PUF_LOCK_ISOLATES.map((iso) => (
+            <button
+              key={iso.id}
+              onClick={() => isolatePufLockGroup(iso.id)}
+              title={`Show only the ${iso.label.replace(/ only$/, "").toLowerCase()} of the locking system`}
+              className="rounded-md border border-border px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              {iso.label}
+            </button>
+          ))}
+
+          {(selectedPufAssembly || isolateConnectionId) && (
+            <button
+              onClick={() => setIsolateConnectionId((cur) => (cur ? null : selectedPufAssembly))}
+              title={isolateConnectionId
+                ? "Show the rest of the model again"
+                : `Show only locking assembly ${isolateMark}`}
+              className={cn("inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium",
+                isolateConnectionId ? "border-accent/40 bg-accent/10 text-foreground" : "border-border text-muted-foreground hover:text-foreground")}
+            >
+              <Crosshair className="h-3 w-3" />
+              {isolateConnectionId ? `Isolated: ${isolateMark}` : `Isolate ${isolateMark}`}
+            </button>
+          )}
+
+          <button
+            onClick={showAllPufLock}
+            className="px-1.5 py-1 text-xs font-medium text-accent hover:underline"
+          >
+            Show all PUF lock
+          </button>
+
+          {pufReadout && (
+            <span className="ml-auto text-xs tabular-nums text-muted-foreground">{pufReadout}</span>
+          )}
+        </div>
+      )}
 
       <div className="grid gap-3 lg:grid-cols-[1fr_280px]">
         {/* canvas */}

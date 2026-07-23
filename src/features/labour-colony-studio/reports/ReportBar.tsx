@@ -4,8 +4,9 @@
  * LABOUR COLONY STUDIO — report / export toolbar.
  *
  * One row of one-click exports over the fabrication schedules: member list, cutting list, bolt + nut,
- * plate, weld, connection, truss + staircase, footing, weight summary and dispatch packing list as
- * Excel, plus the composed fabrication drawing set as a paginated PDF.
+ * plate, weld, connection, truss + staircase, footing, weight summary, dispatch packing list and the
+ * six PUF panel bottom-lock schedules as Excel, plus the composed fabrication drawing set as a
+ * paginated PDF.
  *
  * Every Excel export is generated from the SAME registry the on-screen ManufacturingReport renders
  * (`reportTables.ts`), so a downloaded workbook always matches what the shop was shown — including
@@ -19,7 +20,7 @@
 
 import * as React from "react";
 import {
-  Boxes, FileSpreadsheet, FileText, Hammer, Layers, Loader2, Package, Ruler, Scissors, Weight, Wrench,
+  Anchor, Boxes, FileSpreadsheet, FileText, Hammer, Layers, Loader2, Package, Ruler, Scissors, Weight, Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -62,6 +63,21 @@ const EXCEL_BUTTONS: ExcelButton[] = [
   { key: "footing", label: "Footing schedule", icon: Layers, ids: ["footing-schedule"], fileStem: "colony-footing-schedule", sheetName: "Footings" },
   { key: "weight", label: "Weight summary", icon: Weight, ids: ["weight-summary"], fileStem: "colony-weight-summary", sheetName: "Weight summary" },
   { key: "dispatch", label: "Dispatch packing list", icon: Package, ids: ["dispatch-list"], fileStem: "colony-dispatch-packing-list", sheetName: "Dispatch list" },
+  {
+    key: "puflock",
+    label: "PUF Lock",
+    icon: Anchor,
+    ids: [
+      "puf-lock-plate-schedule",
+      "puf-lock-anchor-schedule",
+      "puf-lock-purlin-schedule",
+      "puf-lock-weld-schedule",
+      "puf-lock-panel-schedule",
+      "puf-lock-ordering-summary",
+    ],
+    fileStem: "colony-puf-lock-schedules",
+    sheetName: "PUF lock",
+  },
 ];
 
 /** Drawing-number suffix so a downloaded file is traceable to a drawing revision. */

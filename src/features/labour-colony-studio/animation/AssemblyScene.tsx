@@ -25,6 +25,8 @@ import type { ColonyModel, ColonyPart, ViewMode } from "@/features/labour-colony
 import {
   boxOfSolid, quadOfSolid, sceneCtxOf, MIN_VIS_M, type SceneCtx,
 } from "@/features/labour-colony-studio/viewer3d/partGeometry";
+import { resolvePartColor, type ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { HAZE, SiteAtmosphere } from "@/features/labour-colony-studio/viewer3d/SiteBackdrop";
 import type { AssemblyBackground, AssemblyTimeline, Vec3T } from "./assemblyTypes";
 import {
   activeStepCutawayAt, activeStepIndexAt, clamp01, sampleCamera, samplePart,
@@ -58,16 +60,26 @@ export interface AssemblySceneProps {
   onSelect: (id: string | null) => void;
   onExportReady?: (controller: AssemblyExportController | null) => void;
   onReady?: () => void;
+  /**
+   * Per-group colour overrides, resolved through the SAME `resolvePartColor` the 3D viewer uses, so
+   * the video and every exported frame carry exactly the colours chosen in the studio.
+   */
+  palette?: ColonyPalette | null;
 }
 
-/* LITERAL HEX only — never oklch / CSS vars, so PNG + WebM export is colour-safe. */
+/* LITERAL HEX only — never oklch / CSS vars, so PNG + WebM export is colour-safe.
+ * "realistic" clears to the shared HAZE and draws the SiteAtmosphere (sky + grass + fog) instead of
+ * a flat ground plane, so the film and the 3D viewer share one world. */
 const BG_HEX: Record<AssemblyBackground, string | null> = {
-  studio: "#eef2f6", white: "#ffffff", site: "#e6e3dc", transparent: null,
+  realistic: HAZE, studio: "#eef2f6", white: "#ffffff", site: "#e6e3dc", transparent: null,
 };
 const GROUND_HEX: Record<AssemblyBackground, string | null> = {
-  studio: "#e2e8f0", white: "#f1f5f9", site: "#d3cec2", transparent: null,
+  realistic: null, studio: "#e2e8f0", white: "#f1f5f9", site: "#d3cec2", transparent: null,
 };
 const SELECT_HEX = "#f59e0b";
+/* "Dim installed" tint — dimmed parts LERP toward this at full opacity (solid, crisp), never via
+ * transparency, which loses depth-write and blurs the whole structure. */
+const DIM_TINT = new THREE.Color("#ccd4db");
 const SELECT_EMISSIVE = "#7c3a00";
 const HIGHLIGHT_EMISSIVE = "#b45309";
 const NO_EMISSIVE = "#000000";
@@ -156,6 +168,9 @@ function SceneContents(props: AssemblySceneProps) {
   const autoCameraRef = useRef(props.autoCamera); autoCameraRef.current = props.autoCamera;
   const modeRef = useRef(props.mode); modeRef.current = props.mode;
   const selectedRef = useRef(props.selectedId); selectedRef.current = props.selectedId;
+  /* Read through a ref for the same reason mode and selection are: `applyFrame` is memoised and also
+   * driven by the exporter, so it must always see the CURRENT palette without being rebuilt. */
+  const paletteRef = useRef(props.palette); paletteRef.current = props.palette;
   const onTickRef = useRef(props.onTick); onTickRef.current = props.onTick;
   const exportingRef = useRef(false);
   const playheadRef = useRef(0);
@@ -201,9 +216,11 @@ function SceneContents(props: AssemblySceneProps) {
       if (isSel) {
         mat.color.set(SELECT_HEX); mat.emissive.set(SELECT_EMISSIVE); mat.emissiveIntensity = 0.6;
       } else if (st.highlight) {
-        mat.color.set(rec.part.colorHex); mat.emissive.set(HIGHLIGHT_EMISSIVE); mat.emissiveIntensity = 0.5;
+        mat.color.set(resolvePartColor(rec.part, paletteRef.current)); mat.emissive.set(HIGHLIGHT_EMISSIVE); mat.emissiveIntensity = 0.5;
       } else {
-        mat.color.set(rec.part.colorHex); mat.emissive.set(NO_EMISSIVE); mat.emissiveIntensity = 0;
+        mat.color.set(resolvePartColor(rec.part, paletteRef.current));
+        if (st.dimmed) mat.color.lerp(DIM_TINT, 0.55);
+        mat.emissive.set(NO_EMISSIVE); mat.emissiveIntensity = 0;
       }
     }
 
@@ -251,7 +268,7 @@ function SceneContents(props: AssemblySceneProps) {
   useEffect(() => {
     if (!props.playing) { applyFrame(playheadRef.current); invalidate(); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.playing, props.mode, props.selectedId, props.background, props.autoCamera, props.quality, timeline]);
+  }, [props.playing, props.mode, props.selectedId, props.background, props.autoCamera, props.quality, timeline, props.palette]);
 
   /* ---- first mount: intro frame + export controller + cleanup ---- */
   useEffect(() => {
@@ -322,6 +339,7 @@ function SceneContents(props: AssemblySceneProps) {
       />
       <directionalLight position={[-radius * 3, radius * 3, -radius * 2]} intensity={0.4} />
 
+      {props.background === "realistic" && <SiteAtmosphere radius={radius} />}
       {ground && (
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.004, 0]} receiveShadow>
           <planeGeometry args={[radius * 20, radius * 20]} />
@@ -332,7 +350,7 @@ function SceneContents(props: AssemblySceneProps) {
       {renderList.map((it) => (
         it.geo ? (
           <mesh key={it.part.id} ref={refCbs.get(it.part.id)} geometry={it.geo} onClick={handleSelect(it.part.id)}>
-            <meshStandardMaterial color={it.part.colorHex} side={THREE.DoubleSide} roughness={0.85} metalness={0.05} transparent opacity={1} />
+            <meshStandardMaterial color={resolvePartColor(it.part, props.palette)} side={THREE.DoubleSide} roughness={0.85} metalness={0.05} transparent opacity={1} />
           </mesh>
         ) : (
           <mesh
@@ -341,7 +359,7 @@ function SceneContents(props: AssemblySceneProps) {
             onClick={handleSelect(it.part.id)}
           >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={it.part.colorHex} roughness={0.82} metalness={0.05} transparent opacity={1} />
+            <meshStandardMaterial color={resolvePartColor(it.part, props.palette)} roughness={0.82} metalness={0.05} transparent opacity={1} />
           </mesh>
         )
       ))}

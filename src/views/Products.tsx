@@ -13,6 +13,7 @@ import dynamic from "next/dynamic";
 import { Product, Category, getProductDetailPath } from "@/data/products";
 import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
+import { CATEGORY_H1, PortableCabinsCategoryContent } from "@/components/products/PortableCabinsCategoryContent";
 import { cn } from "@/lib/utils";
 
 // Enquiry form is click-only — defer its chunk out of the listing first-load JS.
@@ -121,7 +122,14 @@ export function ProductsPageContent({
             ? [{ name: "Products", href: "/products" }, { name: activeCategoryObj.name }]
             : [{ name: "Products" }]),
         ]}
-        title={activeCategoryObj ? activeCategoryObj.name : "Our Products"}
+        /* Per-category SEO H1 override (one H1 per page — this REPLACES the category
+           name, never adds a second heading). PageHero renders `title` as the page's
+           <h1>, so the override keeps working exactly as it did in the old band. */
+        title={
+          activeCategoryObj
+            ? (CATEGORY_H1[activeCategoryObj.slug] ?? activeCategoryObj.name)
+            : "Our Products"
+        }
         description={
           activeCategoryObj ? (
             activeCategoryObj.description
@@ -235,7 +243,10 @@ export function ProductsPageContent({
                 </h2>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {activeCategoryObj
-                    ? `${activeCategoryObj.description}. Browse every ${activeCategoryObj.name.toLowerCase()} model below — each unit is engineered for Indian site conditions, delivered factory-finished, and backed by our standard warranty. Prices shown are base prices in INR (excluding GST, transport and installation).`
+                    /* Price wording MUST match the cards below, which render sellPrice() figures
+                     * labelled "incl. GST" — the previous "excluding GST" text contradicted them
+                     * on the same screen (the exact mismatch class behind the Merchant suspension). */
+                    ? `${activeCategoryObj.description}. Browse every ${activeCategoryObj.name.toLowerCase()} model below — each unit is engineered for Indian site conditions, delivered factory-finished, and backed by our standard warranty. Prices shown are fixed GST-inclusive prices in INR; transport and installation are quoted separately for your site.`
                     : "Explore our complete catalogue of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers. Every product is manufactured in-house at our Tamil Nadu and Karnataka factories, delivered installation-ready across India. Filter by category on the left or browse the paginated list — each card links to a full product page with specifications, dimensions and pricing."}
                 </p>
               </div>
@@ -344,6 +355,11 @@ export function ProductsPageContent({
                     ))}
                   </ul>
                 </section>
+              )}
+
+              {/* Per-category SEO content — buying guide, live price table, FAQ (schema-matched). */}
+              {activeCategory === "portable-cabins" && (
+                <PortableCabinsCategoryContent products={products} />
               )}
             </div>
           </div>

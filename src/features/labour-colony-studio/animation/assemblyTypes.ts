@@ -32,7 +32,9 @@ export type Vec3T = [number, number, number];
 export type PresentationMode = ViewMode;
 
 /** Neutral studio backdrops for the animation / export. "transparent" only where the encoder supports it. */
-export type AssemblyBackground = "studio" | "white" | "site" | "transparent";
+/** "realistic" = the shared sky / grass / haze site backdrop (viewer3d/SiteBackdrop) — the same
+ *  environment the interactive 3D viewer renders, in the player AND in every exported frame. */
+export type AssemblyBackground = "realistic" | "studio" | "white" | "site" | "transparent";
 
 /** A camera pose in three space. */
 export interface CameraKeyframe {
@@ -53,6 +55,7 @@ export type CameraShotKind =
   | "roof-elevated"    // elevated view for trusses / purlins / roof sheeting
   | "interior"         // interior / section view for panels / partitions / MEP (cutaway)
   | "opening-closeup"  // door / window close-up
+  | "detail-closeup"   // MACRO shot on one bolted connection — bolt heads must be readable
   | "orbit"            // final completed-colony orbit
   | "hero";            // final front three-quarter hero
 
@@ -67,13 +70,44 @@ export interface StepEngineeringRow {
   note?: string;
 }
 
-/** One installation step in the compacted timeline (empty assembly steps are dropped). */
+/**
+ * One installation step in the compacted timeline (empty assembly steps are dropped).
+ *
+ * SUB-STEPS. A single construction step can be broken into an ordered series of SHOTS that share its
+ * `assemblyStep` — the per-assembly zoomed detail tour of the rafter cleat / C-purlin / MS tube
+ * connections lives here, because "show every rafter connection in close-up" is N shots inside the one
+ * canonical step 18, and `ColonyAssemblyStep` is a closed 1..24 literal union that must NOT be
+ * renumbered (the model, the drawings, the schedules and the reports all key off it).
+ *
+ * The rules the rest of the system relies on:
+ *   • `subIndex` ABSENT  ⇒ the step is the whole construction step, id `step-${assemblyStep}` —
+ *     byte-identical to a timeline built before sub-steps existed;
+ *   • `subIndex` PRESENT ⇒ id `step-${assemblyStep}-${subIndex}`, so React keys stay unique and a
+ *     validator issue can name exactly one shot;
+ *   • the steps sharing one `assemblyStep` PARTITION its parts — every part appears in exactly one of
+ *     them, never twice and never nowhere (validateAssemblyTimeline proves this globally).
+ */
 export interface TimelineStep {
   id: string;
   /** 0-based position in the compacted step list (NOT the raw 1..23 assemblyStep). */
   index: number;
   /** The canonical 1..23 construction step this maps to. */
   assemblyStep: ColonyAssemblyStep;
+  /**
+   * 1-based position WITHIN `assemblyStep` when this step is one shot of a multi-shot construction
+   * step; absent when the step covers the whole construction step. Ordering across the timeline is
+   * lexicographic on (assemblyStep, subIndex ?? -1), so the overview shot of a step always precedes
+   * its detail shots.
+   */
+  subIndex?: number;
+  /** Short label for the shot itself, e.g. "Connection RS-07 · Ground-floor ceiling". */
+  subTitle?: string;
+  /**
+   * The parts the CAMERA frames on — always a subset of `partIds`. A detail shot installs the whole
+   * assembly (including the covering bay it carries, which is metres wide) but frames only the joint
+   * core, so the bolt heads stay readable.
+   */
+  focusPartIds?: string[];
   title: string;
   description: string;
   /** Non-technical customer line. */
@@ -151,6 +185,54 @@ export interface AssemblyOptions {
   ghostFuture: boolean;
   /** dim already-installed parts to spotlight the current step. */
   dimInstalled: boolean;
+
+  /* ---- per-assembly zoomed detail tour (rafter cleat → C-purlin → MS tube → covering) ---- */
+  /**
+   * Fly to EVERY rafter-support connection in turn and build it up part by part in close-up.
+   * `undefined` = AUTO: on exactly when the model carries rafter-support assemblies, off otherwise —
+   * so a colony without the system produces the timeline it produced before this feature existed.
+   */
+  detailTour?: boolean;
+  /**
+   * The dwell the admin ASKS for on each assembly (ms) — how long the camera holds on the finished
+   * connection. The builder may shorten it to keep the whole tour inside `detailTourBudgetMs`, but
+   * never lengthens it beyond this.
+   */
+  detailDwellMs: number;
+  /**
+   * Runtime budget for the WHOLE tour (ms). The per-assembly shot length is `budget / assemblies`,
+   * clamped between a readable floor and the requested dwell, so a 20-connection colony gets long
+   * luxurious shots and a 200-connection colony still lands in the same total runtime.
+   */
+  detailTourBudgetMs: number;
+  /**
+   * 0 = tour EVERY assembly (the default — a partial tour would misrepresent the building).
+   * A positive value explicitly tours only the first N; the rest are still erected, together, in
+   * their step's overview shot, and the caption says so. Never a silent truncation.
+   */
+  detailTourMaxAssemblies: number;
+}
+
+/**
+ * What the per-assembly detail tour actually resolved to, so the UI can state the trade-off honestly
+ * instead of the user discovering a 20-minute export. Always present; `assemblies: 0` when the colony
+ * carries no rafter-support connections.
+ */
+export interface DetailTourSummary {
+  /** True when detail sub-steps were emitted. */
+  enabled: boolean;
+  /** Rafter-support assemblies found in the model. */
+  assemblies: number;
+  /** Assemblies that actually got their own shot. Equals `assemblies` unless a cap was applied. */
+  toured: number;
+  /** True when a cap was applied — the untoured assemblies are erected in their step's overview shot. */
+  capped: boolean;
+  /** Fly-in duration of one detail shot (ms). */
+  installMs: number;
+  /** Dwell of one detail shot (ms). */
+  holdMs: number;
+  /** Σ of every detail shot (ms) — what the tour adds to the runtime. */
+  tourMs: number;
 }
 
 /** The whole deterministic timeline — the single object the player, scene and exporter consume. */
@@ -172,6 +254,8 @@ export interface AssemblyTimeline {
   /** Precomputed intro title-card + outro completion-card copy. */
   intro: { title: string; subtitle: string };
   outro: { title: string; subtitle: string };
+  /** How the per-assembly rafter-support detail tour resolved (0 assemblies ⇒ nothing was added). */
+  detailTour: DetailTourSummary;
   /** aggregate build warnings (missing explode vectors substituted, empty steps skipped, …). */
   warnings: string[];
 }
@@ -207,6 +291,12 @@ export interface PartRenderState {
   highlight: boolean;
   /** future part shown faint (only when ghostFuture is on). */
   ghost: boolean;
+  /**
+   * Installed in an EARLIER step while "Dim installed" is on. Rendered as a COLOUR fade toward a
+   * quiet grey at FULL opacity — never as transparency, which loses depth-write and turns the whole
+   * structure into the blurred X-ray the option was reported broken for.
+   */
+  dimmed: boolean;
 }
 
 /** A cheap, whole-scene sample (camera + caption + progress) — the per-part states are applied

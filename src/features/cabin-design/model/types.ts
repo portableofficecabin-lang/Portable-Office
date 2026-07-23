@@ -77,6 +77,8 @@ export type AssemblyStep =
 export type PartKind =
   // structure
   | "base-frame" | "joist" | "column" | "stud" | "rail" | "mdf-support" | "roof-frame" | "lifting-hook"
+  // connection detailing (presentation only — never priced)
+  | "gusset-plate" | "fastener"
   // envelope
   | "floor-board" | "floor-finish" | "ext-panel" | "insulation" | "int-finish"
   | "roof-sheet" | "ceiling"
@@ -107,6 +109,22 @@ export interface PartSpec {
   rate?: number;          // ₹ per unit (from the Material Master)
   amount?: number;        // ₹ line total
   note?: string;
+
+  /* ---- engineering DETAILING (presentation only — never priced, never read by the take-off) ----
+   * Populated for fabricated assemblies (e.g. the roof truss) so the exploded view, the assembly
+   * video and the inspector can show shop-standard connection information. Every field is optional,
+   * so no existing part, no BOQ line and no golden baseline is affected. */
+  partMark?: string;      // shop mark, e.g. "T3"
+  connectionId?: string;  // joint reference, e.g. "C1 — eave heel"
+  plateThkMm?: number;    // connection/gusset plate thickness
+  plateSizeMm?: string;   // e.g. "200 × 150 mm"
+  boltSpec?: string;      // e.g. "M12 × 40 property class 8.8"
+  boltCount?: number;     // bolts in this connection
+  holeDiaMm?: number;     // drilled hole diameter (bolt dia + clearance)
+  weldType?: string;      // e.g. "6 mm fillet, all round"
+  weldSizeMm?: number;    // leg length
+  weldLengthMm?: number;  // total run
+  torqueNm?: number;      // tightening torque
 }
 
 /**

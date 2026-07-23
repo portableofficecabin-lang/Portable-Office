@@ -4,8 +4,9 @@
  * Pure builders that turn the shared ColonyModel (+ the LIVE priced Material BoqResult + the priced
  * CivilWorkResult) into the flat, typed row arrays a fabrication shop works from: member list,
  * cutting list, bolt / nut / washer schedules, plate + weld + connection schedules, truss / stair /
- * railing / footing / column / beam schedules, a floor- and assembly-wise weight summary and an
- * assembly-wise dispatch (packing) list.
+ * railing / footing / column / beam schedules, a floor- and assembly-wise weight summary, an
+ * assembly-wise dispatch (packing) list, the flooring-sheet setting-out + ordering summary and the
+ * PUF panel seating schedule.
  *
  * NON-NEGOTIABLE (same rule the model itself holds): a schedule NEVER re-prices or re-quantifies.
  *   • Priced steel members read their piece count, cut length, unit weight, total weight and rate
@@ -17,6 +18,9 @@
  *   • Only connection hardware the priced take-off does not itemise (base/gusset/splice plates,
  *     bolts, nuts, washers, welds) is quantified geometrically here — it has no BOQ line to preserve,
  *     so it is engineering detail, flagged `boqSource: "none"`, never a price.
+ *   • The deck sheet setting-out and the panel seating system are SETTING-OUT, not procurement. The
+ *     priced `floor:board` area remains the source of truth for the deck's cost; a sheet count says
+ *     how that already-bought area is physically cut and laid, and is never a second purchase.
  *
  * Units follow the model: METRES / KILOGRAMS. Millimetre fields are labelled `Mm`. No React, no
  * three.js, no DOM — server-safe and unit-testable, consumed by ManufacturingReport / ReportBar.
@@ -25,6 +29,8 @@
 import type { BoqLine, BoqResult } from "@/lib/boq/types";
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import { ASSEMBLY_SEQUENCE } from "../model/assembly";
+import { buildPanelThicknessTable, MIN_INSERTION_MM } from "../model/panelSupport";
+import { MIN_EDGE_BEARING_MM } from "../model/sheetLayout";
 import type {
   ColonyAssemblyStep, ColonyModel, ColonyPart, ColonyPartKind, PartSolid, Vec3,
 } from "../model/types";
@@ -220,6 +226,12 @@ const STRUCTURAL_KINDS = new Set<ColonyPartKind>([
   "roof-truss", "rafter", "truss-web", "purlin", "ridge",
   "stair-stringer", "stair-tread", "landing", "handrail", "handrail-post", "toe-plate",
   "veranda-beam", "veranda-joist", "veranda-post", "walkway-plate",
+  /* Deck + panel-support sections. These are cut, fabricated and erected exactly like any other
+   * member, so they belong in the member / cutting / dispatch lists even though the priced take-off
+   * does not itemise them — the lists show them with no BOQ line, which is the honest state. */
+  "c-channel", "u-channel", "angle-support", "pocket-support", "noggin",
+  /* The MS pipe frame — the floor's SECONDARY member, priced on its own floor:tube line. */
+  "floor-tube", "joist-web",
 ]);
 
 const PLATE_KINDS = new Set<ColonyPartKind>([
@@ -1056,4 +1068,303 @@ export function buildDispatchList(model: ColonyModel, boq?: BoqResult | null): D
     });
   }
   return rows.sort((a, b) => b.weightKg - a.weightKg || a.packageId.localeCompare(b.packageId));
+}
+
+/* ============================================================ 15. FLOOR SHEET SCHEDULE == */
+
+export interface FloorSheetScheduleRow {
+  /** Laying sequence mark, "S01" … */
+  mark: string;
+  no: number;
+  /** Floors the mark is actually laid on, read back from the placed `floor-sheet` parts. */
+  floors: string;
+  /** How many decks carry this mark — the same field repeats on every storey. */
+  deckCount: number;
+  /** 1-based for the drawing; `SheetPlacement.row` / `.col` are 0-based. */
+  row: number;
+  col: number;
+  sizeMm: string;
+  widthMm: number;
+  lengthMm: number;
+  /** "Full", or the axis the sheet had to be cut on. */
+  cut: string;
+  full: boolean;
+  areaM2: number;
+  offcutM2: number;
+  supportedEdges: number;
+  fullySupported: boolean;
+  remark: string;
+}
+
+/**
+ * Every 8'×4' deck sheet in laying sequence, with its cut size, offcut and edge support.
+ *
+ * The layout is solved ONCE for the deck footprint and then laid on every UPPER storey — the ground
+ * floor bears on the filled plinth and carries no sheet field — so a row's area is one sheet on ONE
+ * deck. `floors` and `deckCount` are read back from the placed `floor-sheet` parts rather than
+ * multiplied out, so the schedule states how many times that sheet is really cut — and a
+ * mark the layout produced but the model never placed is kept and flagged, never dropped.
+ *
+ * SETTING-OUT, NOT A PURCHASE: these sheets carry no BOQ line. The priced `floor:board` area remains
+ * the source of truth for the deck's cost; this says how that area is cut and laid.
+ */
+export function buildFloorSheetSchedule(model: ColonyModel): FloorSheetScheduleRow[] {
+  const deck = model.deck;
+  if (!deck) return [];
+  const placedByMark = groupBy(
+    model.parts.filter((p) => p.kind === "floor-sheet"),
+    (p) => p.spec?.sheetMark ?? p.partMark ?? "",
+  );
+  return deck.sheets.map((s) => {
+    const placed = placedByMark.get(s.mark) ?? [];
+    const remarks: string[] = [];
+    if (!s.fullySupported) {
+      remarks.push(
+        `Only ${s.supportedEdges} of 4 edges bear on steel — the free edge needs a bearer under it`,
+      );
+    }
+    if (!placed.length) remarks.push("Set out by the layout but not placed in the model");
+    return {
+      mark: s.mark,
+      no: s.no,
+      floors: uniq(placed.map((p) => floorLabel(p.floor))).join(", ") || "—",
+      deckCount: placed.length,
+      row: s.row + 1,
+      col: s.col + 1,
+      sizeMm: `${s.widthMm} × ${s.lengthMm}`,
+      widthMm: s.widthMm,
+      lengthMm: s.lengthMm,
+      cut: s.full ? "Full" : `Cut (${s.cutOn ?? "—"})`,
+      full: s.full,
+      areaM2: round(s.areaM2, 3),
+      offcutM2: round(s.offcutM2, 3),
+      supportedEdges: s.supportedEdges,
+      fullySupported: s.fullySupported,
+      remark: remarks.join("; "),
+    };
+  });
+}
+
+/* ============================================================ 16. SHEET ORDERING SUMMARY = */
+
+export interface SheetSummaryRow {
+  group: string;
+  /** Check code (SL-1 …) on a check row; "" on a figure row. */
+  code: string;
+  item: string;
+  /** Pre-formatted, because this one column carries areas, counts, millimetres and percentages. */
+  figure: string;
+  /** "PASS" / "FAIL" on a check row; "" on a figure row. */
+  status: string;
+  detail: string;
+}
+
+/**
+ * The ordering + checking summary behind the sheet schedule.
+ *
+ * Quantity is reported THREE ways on purpose — one number would hide whether offcuts get re-used, and
+ * the gap between the three is the honest measure of how much the frame's spacing is costing. The
+ * spacing, bearing and bearer figures sit alongside them because they are the same decision: a
+ * sheet-modular frame buys fewer sheets AND needs fewer added members.
+ *
+ * Every figure here is engineering detail. The priced `floor:board` line is still what the deck costs.
+ */
+export function buildSheetSummary(model: ColonyModel): SheetSummaryRow[] {
+  const d = model.deck;
+  if (!d) return [];
+  /* Read the deck count back from the sheets the model actually PLACED, the same way
+   * `buildFloorSheetSchedule` does, rather than trusting `meta.floors`. The sheet field goes on the
+   * UPPER decks only (the ground floor bears on the filled plinth), so on a G+2 colony this is 2,
+   * not 3 — and on a single-storey colony it is honestly 0, so the multiplied ORDER row below says
+   * to buy nothing rather than a deck's worth of sheets nobody will lay. */
+  const deckFloors = new Set<number>();
+  for (const p of model.parts) if (p.kind === "floor-sheet") deckFloors.add(p.floor ?? 0);
+  const decks = deckFloors.size;
+  const fig = (v: number, dp = 2): string => v.toFixed(dp);
+  const figure = (group: string, item: string, value: string, detail: string): SheetSummaryRow =>
+    ({ group, code: "", item, figure: value, status: "", detail });
+
+  const rows: SheetSummaryRow[] = [
+    figure("Deck & sheet module", "Total flooring area (one deck)", `${fig(d.deckAreaM2)} m²`,
+      "The area the sheets have to cover on a single storey."),
+    figure("Deck & sheet module", "Deck levels (sheeted)", `${decks}`,
+      deckFloors.has(0)
+        ? "The identical sheet field is laid on EVERY storey including the ground floor (the "
+          + "per-project ground-floor sheet option is on), so every figure below repeats per level."
+        : "The identical sheet field is laid on each UPPER storey only — the ground floor bears on the "
+          + "filled plinth and carries no 8'×4' field — so every figure below repeats per sheeted level."),
+    figure("Deck & sheet module", "Total sheeted area (all levels)", `${fig(d.deckAreaM2 * decks)} m²`,
+      "Upper decks only. The priced floor:board line still covers every storey including the ground "
+      + "floor; this figure never adds to it."),
+    figure("Deck & sheet module", "Sheet module", d.moduleLabel,
+      `Nominal ${Math.round(d.longMm)} × ${Math.round(d.shortMm)} mm.`),
+    figure("Deck & sheet module", "Area of one sheet", `${fig(d.sheetAreaM2, 3)} m²`, ""),
+    figure("Deck & sheet module", "Sheet field", `${d.rows} rows × ${d.cols} columns`,
+      `Sheets are numbered S01… row by row from the origin corner. Orientation: ${d.orientation}.`),
+
+    figure("Sheet count (one deck)", "Full sheets", `${d.fullCount}`, "Laid whole, no cutting."),
+    figure("Sheet count (one deck)", "Cut sheets", `${d.cutCount}`, "Cut to close the perimeter."),
+    figure("Sheet count (one deck)", "Laid positions", `${d.laidCount}`, "Full + cut."),
+    figure("Sheet count (one deck)", "Area actually laid", `${fig(d.laidAreaM2)} m²`,
+      "Equals the deck area when the field closes completely."),
+    figure("Sheet count (one deck)", "Offcut generated", `${fig(d.offcutAreaM2)} m²`,
+      "Everything left on the bench after the cut sheets are made."),
+    figure("Sheet count (one deck)", "Re-usable offcut", `${fig(d.reusableOffcutM2)} m²`,
+      "Offcut whose widest leftover strip is still a workable width."),
+    figure("Sheet count (one deck)", "Unusable scrap", `${fig(d.wasteAreaM2)} m²`,
+      "Offcut too narrow to lay anywhere — the real waste."),
+
+    /* FOUR DISTINCT FIGURES, deliberately never collapsed into one. Each answers a different
+     * question, and quoting only the last one would hide the assumption it rests on. */
+    figure("Ordering quantity (ONE deck)", "1 · Physical placement (no offcut re-use)", `${d.sheetsIfNoReuse}`,
+      "One fresh sheet per laid position — what the site actually handles. The safe figure when "
+      + "offcuts are not tracked or cannot be carried between bays."),
+    figure("Ordering quantity (ONE deck)", "2 · Whole sheets recovered from offcut", `${d.sheetsIfNoReuse - d.purchaseSheets}`,
+      /* Quote the credited AREA as the whole-sheet equivalent actually used, not the 2-dp rounded
+       * offcut total: re-deriving the count from a rounded area lands one sheet low in about 0.2% of
+       * deck geometries, and the whole point of splitting this into four numbered figures is that a
+       * reader can check the arithmetic by hand. */
+      `The optimisation step: ${fig((d.sheetsIfNoReuse - d.purchaseSheets) * d.sheetAreaM2)} m² of the `
+      + `${fig(d.reusableOffcutM2)} m² re-usable offcut is credited back — only in WHOLE-sheet `
+      + "equivalents, because a part sheet cannot be ordered."),
+    figure("Ordering quantity (ONE deck)", "3 · Area-only theoretical minimum", `${d.sheetsByAreaOnly}`,
+      "ceil(deck area ÷ sheet area). A floor the arithmetic can never go below, and one no real cutting "
+      + "plan achieves — shown so the recommendation can be judged against it."),
+    figure("Ordering quantity (ONE deck)", "4 · RECOMMENDED ORDER (per deck)", `${d.purchaseSheets}`,
+      `Figure 1 less figure 2, never below figure 3 (${d.sheetsIfNoReuse} − ${d.sheetsIfNoReuse - d.purchaseSheets} `
+      + `→ ${d.purchaseSheets}, floor ${d.sheetsByAreaOnly}). Assumes offcuts ARE sorted and re-used on the same deck; `
+      + "if they will not be, order figure 1 instead. ORDERING GUIDANCE ONLY — the priced floor:board "
+      + "line remains what the deck costs."),
+    /* THE NUMBER A BUYER ACTUALLY ORDERS AGAINST. Every figure above is for one storey, because the
+     * layout is solved once and repeated — so on a G+1 or G+2 job the per-deck recommendation is a
+     * third to a half of what the building needs. Stating the multiplied total explicitly is the
+     * difference between a correct order and a site that runs out of decking. */
+    figure("Ordering quantity (WHOLE BUILDING)", "5 · ORDER FOR THE BUILDING", `${d.purchaseSheets * decks}`,
+      `${d.purchaseSheets} sheets per deck × ${decks} sheeted deck level(s)${deckFloors.has(0)
+        ? " — the ground floor included (its sheet option is on for this project)"
+        : " — upper storeys only, the ground floor bears on the plinth and takes none"}. `
+      + `This is the procurement figure — every other row in this schedule describes ONE storey. `
+      + `Still ordering guidance only: the priced floor:board line remains what the deck costs.`),
+    figure("Ordering quantity (WHOLE BUILDING)", "Placement total (no offcut re-use)", `${d.sheetsIfNoReuse * decks}`,
+      `${d.sheetsIfNoReuse} × ${decks} sheeted deck level(s) — order this instead if offcuts will not be sorted and re-used.`),
+
+    figure("Ordering quantity (ONE deck)", "Wastage on the recommendation", `${fig(d.wastagePct, 1)} %`,
+      `${fig(d.purchaseSheets * d.sheetAreaM2)} m² bought against a ${fig(d.deckAreaM2)} m² deck.`),
+
+    figure("Support & bearing", "Support spacing (actual)", `${fig(d.spacing.actualMm, 1)} mm`,
+      "Measured from the member lines the priced frame actually provides."),
+    figure("Support & bearing", "Support spacing (recommended)", `${fig(d.spacing.recommendedMm, 1)} mm`,
+      d.spacing.note),
+    figure("Support & bearing", "Spacing divides the sheet", d.spacing.modular ? "Yes" : "No",
+      d.spacing.modular
+        ? "Every sheet joint lands on a member."
+        : "Sheet joints fall between members — bearers are the interim fix, re-spacing is the cure."),
+    figure("Support & bearing", "Supports per sheet width", `${d.spacing.supportsPerSheetWidth}`,
+      "Bays across the sheet dimension crossing the joists."),
+    figure("Support & bearing", "Edge bearing at a joint", `${fig(d.edgeBearingMm, 1)} mm`,
+      `Each sheet at a joint landing on a member (minimum ${MIN_EDGE_BEARING_MM} mm for both sheets to `
+      + "bear and be screwed on their own steel)."),
+    figure("Support & bearing", "Support lines across the deck", `${d.supportLineCount.acrossDeck}`,
+      "Including any bearer the layout had to add."),
+    figure("Support & bearing", "Support lines along the deck", `${d.supportLineCount.alongDeck}`,
+      "Including any bearer the layout had to add."),
+    figure("Support & bearing", "Bearer lines added", `${d.bearers.length}`,
+      "Members the layout proves are needed because a sheet joint has no steel under it."),
+    figure("Support & bearing", "Bearers avoidable by re-spacing", `${d.bearersAvoidableBySpacing}`,
+      "Bearers a sheet-modular joist spacing would make unnecessary altogether."),
+    figure("Support & bearing", "Sheets short of full edge support", `${d.unsupportedSheets}`,
+      "After the bearers are added this should be zero."),
+  ];
+
+  for (const c of d.checks) {
+    rows.push({
+      group: "Engineering checks",
+      code: c.code,
+      item: c.title,
+      figure: c.pass ? "PASS" : "FAIL",
+      status: c.pass ? "PASS" : "FAIL",
+      detail: c.detail,
+    });
+  }
+  return rows;
+}
+
+/* ============================================================ 17. PANEL SEATING SCHEDULE = */
+
+export interface PanelSeatingScheduleRow {
+  /** Section heading — the configured system, or the trade-thickness comparison. */
+  group: string;
+  thicknessMm: number;
+  /** Seat position for a configured row; "All four seats" on a comparison row. */
+  position: string;
+  label: string;
+  sectionCall: string;
+  slotWidthMm: number;
+  clearanceMm: number;
+  /** Leg / flange length (mm); null on a comparison row, which spans four different legs. */
+  legMm: number | null;
+  minInsertionMm: number;
+  gaugeMm: number;
+  fixingPitchMm: number;
+  role: string;
+  loadPath: string;
+  /** true ⇒ this row is the thickness the calculator is configured with. */
+  configured: boolean;
+}
+
+/**
+ * How the configured PUF panel is held by the MS framework, seat by seat — then the same two governing
+ * dimensions across every trade thickness.
+ *
+ * The comparison half is the point of the schedule: nothing here is a lookup, the seating geometry is
+ * DERIVED from the thickness, so a reader can see immediately what changes when the panel changes and
+ * an unlisted thickness still produces a buildable detail. The configured thickness is flagged in the
+ * comparison too, so the two halves are visibly the same system.
+ *
+ * The seating sections are un-priced engineering detail; panel AREA is priced by the wall lines.
+ */
+export function buildPanelSeatingSchedule(model: ColonyModel): PanelSeatingScheduleRow[] {
+  const spec = model.panelSupport;
+  if (!spec) return [];
+
+  const rows: PanelSeatingScheduleRow[] = spec.seats.map((seat) => ({
+    group: `Configured system — ${spec.thicknessMm} mm panel`,
+    thicknessMm: spec.thicknessMm,
+    position: seat.position,
+    label: seat.label,
+    sectionCall: seat.sectionCall,
+    slotWidthMm: seat.internalWidthMm,
+    clearanceMm: spec.clearanceMm,
+    legMm: seat.legMm,
+    minInsertionMm: seat.minInsertionMm,
+    gaugeMm: seat.gaugeMm,
+    fixingPitchMm: spec.fixingPitchMm,
+    role: seat.role,
+    loadPath: seat.loadPath,
+    configured: true,
+  }));
+
+  for (const t of buildPanelThicknessTable()) {
+    const [base, jamb, head] = t.seats;
+    rows.push({
+      group: "Support arrangement by panel thickness",
+      thicknessMm: t.thicknessMm,
+      position: "All four seats",
+      label: `${t.thicknessMm} mm panel`,
+      sectionCall:
+        `U ${base.legMm} / C ${jamb.legMm} / angle ${head.legMm} mm legs @ ${t.slotWidthMm} mm slot`,
+      slotWidthMm: t.slotWidthMm,
+      clearanceMm: t.clearanceMm,
+      legMm: null,
+      minInsertionMm: t.minInsertionMm,
+      gaugeMm: base.gaugeMm,
+      fixingPitchMm: t.fixingPitchMm,
+      role: t.note,
+      loadPath:
+        `Insertion is scaled from the thickness and floored at ${MIN_INSERTION_MM} mm, so a thicker, `
+        + "heavier panel always sits proportionally deeper inside the steel.",
+      configured: t.thicknessMm === spec.thicknessMm,
+    });
+  }
+  return rows;
 }

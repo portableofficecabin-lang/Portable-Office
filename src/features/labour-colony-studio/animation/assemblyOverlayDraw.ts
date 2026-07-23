@@ -14,6 +14,7 @@
  * Browser-only (Canvas 2D), but framework-free — no React, no three.
  */
 
+import { ASSEMBLY_SEQUENCE } from "@/features/labour-colony-studio/model/assembly";
 import type { AssemblyTimeline, CaptionState } from "./assemblyTypes";
 import { activeStepIndexAt } from "./assemblyMotion";
 
@@ -71,8 +72,13 @@ export function overlayExtrasFor(timeline: AssemblyTimeline, timeMs: number): Ov
   const step = idx >= 0 && idx < timeline.steps.length ? timeline.steps[idx] : null;
   const chips: string[] = [];
   if (step) {
+    // "STEP" counts SHOTS (a construction step split into detail shots contributes several); "SEQ"
+    // counts the canonical construction steps, taken from the sequence itself rather than a literal
+    // 24, and carries the sub-step ordinal so a 40-shot detail tour never reads as 40 × "SEQ 18".
     chips.push(`STEP ${pad2(step.index + 1)} / ${timeline.steps.length}`);
-    chips.push(`SEQ ${pad2(step.assemblyStep)} / 24`);
+    chips.push(
+      `SEQ ${pad2(step.assemblyStep)}${step.subIndex === undefined ? "" : `.${step.subIndex}`} / ${ASSEMBLY_SEQUENCE.length}`,
+    );
     if (step.cutaway) chips.push("CUTAWAY");
   } else if (idx < 0) {
     chips.push("INTRO");

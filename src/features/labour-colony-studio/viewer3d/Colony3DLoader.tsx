@@ -15,11 +15,16 @@ import { Component, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "lucide-react";
 import type { ColonyModel } from "@/features/labour-colony-studio/model/types";
+import { GlFailureNotice } from "@/features/labour-colony-studio/studio/GlFailureNotice";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
 
 export interface Colony3DLoaderProps {
   model: ColonyModel;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  /** Per-group colour overrides, shared with the assembly video so both surfaces always match. */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 function Skeleton() {
@@ -48,18 +53,21 @@ class Viewer3DErrorBoundary extends Component<{ children: ReactNode }, BoundaryS
     return { error };
   }
 
-  componentDidCatch(error: Error) {
+  componentDidCatch(error: Error, info: { componentStack?: string | null }) {
     // Surface for debugging without crashing the studio page.
-    console.error("Colony 3D viewer failed:", error);
+    console.error("Colony 3D viewer failed:", error, info?.componentStack);
   }
 
   render() {
-    if (this.state.error) {
+    const err = this.state.error;
+    if (err) {
       return (
-        <div className="flex h-[clamp(360px,60vh,640px)] w-full flex-col items-center justify-center gap-2 rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center text-sm text-muted-foreground">
-          <span className="font-medium text-destructive">The 3D viewer could not be displayed.</span>
-          <span className="text-xs">Your browser may not support WebGL, or the model failed to build. The 2D drawings and BOQ remain available.</span>
-        </div>
+        <GlFailureNotice
+          label="3D viewer"
+          stillAvailable="The 2D drawings and BOQ are unaffected."
+          error={err}
+          onRetry={() => this.setState({ error: null })}
+        />
       );
     }
     return this.props.children;
@@ -68,10 +76,16 @@ class Viewer3DErrorBoundary extends Component<{ children: ReactNode }, BoundaryS
 
 /* ------------------------------------------------------------------ public wrapper ------------ */
 
-export function Colony3DLoader({ model, selectedId, onSelect }: Colony3DLoaderProps) {
+export function Colony3DLoader({ model, selectedId, onSelect, palette, onPaletteChange }: Colony3DLoaderProps) {
   return (
     <Viewer3DErrorBoundary>
-      <Colony3D model={model} selectedId={selectedId} onSelect={onSelect} />
+      <Colony3D
+        model={model}
+        selectedId={selectedId}
+        onSelect={onSelect}
+        palette={palette}
+        onPaletteChange={onPaletteChange}
+      />
     </Viewer3DErrorBoundary>
   );
 }

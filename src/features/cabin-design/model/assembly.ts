@@ -48,6 +48,8 @@ export const STEP_OF_KIND: Record<PartKind, AssemblyStep> = {
   "door-swing": 10,
   window: 10,
   "roof-frame": 11,
+  "gusset-plate": 11,
+  fastener: 11,
   "lifting-hook": 11,
   "roof-sheet": 12,
   ceiling: 13,
@@ -86,6 +88,8 @@ export const EXPLODE_OF_KIND: Record<PartKind, Vec3> = {
   "door-swing": { x: 0, y: 0, z: 0 },
   window: { x: 0, y: 0, z: 0 },            // overridden per-face
   "roof-frame": { x: 0, y: 0, z: 2.2 },
+  "gusset-plate": { x: 0, y: 0, z: 2.5 },
+  fastener: { x: 0, y: 0, z: 3.0 },
   "lifting-hook": { x: 0, y: 0, z: 2.6 },
   "roof-sheet": { x: 0, y: 0, z: 2.9 },
   ceiling: { x: 0, y: 0, z: 1.9 },

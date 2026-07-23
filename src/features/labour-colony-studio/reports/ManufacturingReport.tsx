@@ -5,13 +5,17 @@
  *
  * The shop-floor view of the studio: a picker across every fabrication schedule (member list, cutting
  * list, bolt / nut / washer, plate, weld, connection, truss, staircase, railing, footing, column, beam,
- * weight summary and dispatch packing list), rendering the chosen one as a grouped table with section
- * subtotals, a grand total and a per-schedule Excel export.
+ * weight summary, dispatch packing list, flooring sheet schedule + ordering summary and panel seating
+ * schedule), rendering the chosen one as a grouped table with section subtotals, a grand total and a
+ * per-schedule Excel export.
  *
  * Reconciliation is the point of this screen, so it is never hidden: whenever a schedule's PLACEMENT
  * count (members the model positioned) disagrees with the PRICED piece count on the BOQ line, the
  * difference is printed both in the row's own Remark column and in a reconciliation panel above the
  * table. The priced BOQ always remains the billed quantity — nothing here re-prices or re-quantifies.
+ *
+ * The deck and panel schedules are DERIVED detail rather than a reading of a priced line, so the
+ * footer note is switched for them: a reader must not take a sheet count for a second purchase.
  *
  * Columns, totals and Excel rows all come from the shared registry in `reportTables.ts`, so the
  * exported workbook is always the table on screen.
@@ -35,6 +39,17 @@ import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import type { LabourColonyResult } from "@/lib/quotation/labourColony";
 import type { ColonyDrawingMeta, ColonyModel } from "../model/types";
 import { buildReportTables, formatCell, type ReportTable, type ReportTableId } from "./reportTables";
+
+/**
+ * Schedules whose numbers are DERIVED from the model geometry instead of read off a priced line. They
+ * detail how an already-priced quantity is cut, laid and held, so the footer must not claim the BOQ as
+ * their source — that reading would turn a setting-out into a second purchase.
+ */
+const DERIVED_DETAIL_IDS = new Set<ReportTableId>([
+  "floor-sheet-schedule",
+  "sheet-summary",
+  "panel-seating-schedule",
+]);
 
 export interface ManufacturingReportProps {
   model: ColonyModel;
@@ -199,8 +214,8 @@ export function ManufacturingReport({ model, boqResult, civil, result, meta }: M
             <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>
               No priced Material BOQ is loaded. Geometry-derived schedules (plates, bolts, welds,
-              connections) are still available, but member quantities, weights and reconciliation
-              require the priced BOQ.
+              connections, flooring sheets, panel seating) are still available, but member quantities,
+              weights and reconciliation require the priced BOQ.
             </span>
           </div>
         )}
@@ -306,7 +321,10 @@ export function ManufacturingReport({ model, boqResult, civil, result, meta }: M
         {!active.empty && (
           <p className="text-[11px] text-muted-foreground">
             {active.rowCount} row{active.rowCount === 1 ? "" : "s"} · lengths in metres, weights in
-            kilograms · quantities read from the priced BOQ and civil work result, never recomputed.
+            kilograms ·{" "}
+            {DERIVED_DETAIL_IDS.has(active.id)
+              ? "setting-out derived from the model geometry — the priced BOQ line remains the source of truth for cost, and these quantities are never billed a second time."
+              : "quantities read from the priced BOQ and civil work result, never recomputed."}
           </p>
         )}
       </CardContent>

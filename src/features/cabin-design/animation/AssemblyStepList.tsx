@@ -49,6 +49,29 @@ export function AssemblyStepList({
                       {[s.engineering[0].material, s.engineering[0].section, s.engineering[0].weight].filter(Boolean).join(" · ")}
                     </span>
                   )}
+                  {/* Step-by-step fixing procedure — expanded for the step being played. */}
+                  {active && s.instructions && s.instructions.length > 0 && (
+                    <span className="mt-1.5 block rounded border border-accent/30 bg-background/60 p-2">
+                      <span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-accent">
+                        Fixing &amp; installation procedure
+                      </span>
+                      <span className="block space-y-0.5">
+                        {s.instructions.map((ins) => (
+                          <span key={ins} className="block text-[11px] leading-snug text-foreground/80">{ins}</span>
+                        ))}
+                      </span>
+                      {s.tools && (
+                        <span className="mt-1.5 block text-[10px] text-muted-foreground">
+                          <b>Tools:</b> {s.tools}
+                        </span>
+                      )}
+                      {s.inspection && (
+                        <span className="block text-[10px] text-muted-foreground">
+                          <b>Check:</b> {s.inspection}
+                        </span>
+                      )}
+                    </span>
+                  )}
                 </span>
                 <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{s.partIds.length}p</span>
               </button>

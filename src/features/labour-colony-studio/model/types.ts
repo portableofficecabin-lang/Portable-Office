@@ -28,6 +28,9 @@
  * public bundle.
  */
 
+import type { SheetLayoutResult } from "./sheetLayout";
+import type { PanelSupportSpec } from "./panelSupport";
+
 /** A 2-D point in plan metres (footprint polygons). */
 export interface Pt {
   x: number;
@@ -97,13 +100,35 @@ export type ColonyPartKind =
   // steel-to-foundation connection
   | "base-plate" | "anchor-bolt" | "levelling-plate"
   // primary steel frame
-  | "column" | "stud" | "rail" | "base-beam" | "floor-beam" | "joist" | "brace"
+  | "column" | "stud" | "rail" | "base-beam" | "floor-beam" | "joist" | "joist-web" | "floor-tube" | "brace"
+  /** Transverse member added under a flooring-sheet cross joint that lands mid-bay (sheetLayout.ts). */
+  | "noggin"
   // roof steelwork
   | "roof-truss" | "rafter" | "truss-web" | "purlin" | "ridge"
+  /**
+   * PANEL-SUPPORT SECTIONS — the MS framework a sandwich panel is CAPTURED by (panelSupport.ts).
+   * A PUF panel has no edge strength, so it is never simply placed on steel: the U-channel grips it
+   * at the base, the C-channel receives its vertical edge (and forms the perimeter deck edge member),
+   * the angle restrains its head without loading it, and the framed pocket captures it on three sides.
+   */
+  | "c-channel" | "u-channel" | "angle-support" | "pocket-support"
   // fabricated connections (synthesized engineering detail)
   | "gusset" | "cleat" | "end-plate" | "splice-plate" | "stiffener"
   | "bolt" | "nut" | "washer" | "weld"
+  // PUF panel bottom locking system (paired C-purlin receiving pocket on the plinth beam)
+  | "puf-lock-base-plate" | "puf-lock-anchor-bolt" | "puf-lock-nut" | "puf-lock-washer"
+  | "puf-lock-c-purlin-left" | "puf-lock-c-purlin-right" | "puf-lock-weld"
+  | "puf-lock-panel-seat" | "puf-lock-sealant" | "puf-lock-isolation-strip"
+  /* RAFTER SUPPORT SYSTEM — a bolted cleat on the rafter carries a C-purlin, and an MS square /
+   * rectangular tube is bolted THROUGH THE C-PURLIN WEB (faces flush) to carry the covering: an
+   * 8' × 4' fibre-cement sheet at a ceiling level, or a 1000 mm cover-width PUF panel on the sloped
+   * roof. Deliberately distinct from the generic `purlin` / `roof-sheet` / `ceiling` kinds so the
+   * fabricated support system is scheduled and priced separately and can never double-count them. */
+  | "rsup-cleat-plate" | "rsup-bolt" | "rsup-nut" | "rsup-washer"
+  | "rsup-c-purlin" | "rsup-ms-tube" | "rsup-cement-sheet" | "rsup-puf-roof-panel"
   // envelope
+  /** One numbered 8'×4' deck sheet in the setting-out (sheetLayout.ts). */
+  | "floor-sheet"
   | "floor-board" | "floor-finish" | "ext-panel" | "insulation" | "int-finish"
   | "roof-sheet" | "ceiling" | "partition"
   // openings
@@ -118,7 +143,11 @@ export type ColonyPartKind =
 /** Which coarse visibility layer a toggle controls. */
 export type ColonyPartLayer =
   | "foundation" | "structure" | "connection" | "walls" | "roof" | "openings" | "stair"
-  | "electrical" | "plumbing" | "furniture";
+  | "electrical" | "plumbing" | "furniture"
+  /** The PUF panel bottom locking assemblies — one toggle hides / shows every plate + purlin pair. */
+  | "puf-lock"
+  /** The rafter cleat / C-purlin / MS tube support system and the covering it carries. */
+  | "rafter-support";
 
 /** The two viewing modes. A part visible in customer mode is also visible in engineering. */
 export type ViewMode = "engineering" | "customer";
@@ -146,6 +175,24 @@ export interface PartSpec {
   holeDiaMm?: number;
   weldSpec?: string;      // "6 mm fillet · shop weld"
   weldLengthMm?: number;
+  // flooring-sheet setting-out (sheetLayout.ts)
+  /** Laying sequence mark of a deck sheet, e.g. "S07". */
+  sheetMark?: string;
+  /** true ⇒ laid whole; false ⇒ cut to fit the perimeter. */
+  sheetFull?: boolean;
+  /** Support-member centres carrying this sheet (mm). */
+  supportSpacingMm?: number;
+  /** Bearing available to each sheet at a joint landing on a member (mm). */
+  bearingMm?: number;
+  // panel seating (panelSupport.ts)
+  /** Clear slot width a captured panel edge enters (mm). */
+  slotWidthMm?: number;
+  /** Minimum depth the panel edge must sit into the section (mm). */
+  minInsertionMm?: number;
+  /** What this member is structurally doing — surfaced verbatim by the inspector. */
+  role?: string;
+  /** How the load this member receives reaches the foundation. */
+  loadPath?: string;
   note?: string;
 }
 
@@ -242,6 +289,31 @@ export interface ColonyModel {
   assembly: AssemblyStepInfo[];
   bounds: ModelBounds;
   warnings: ModelWarning[];
+  /**
+   * The resolved PUF panel bottom locking system — config, plate positions, take-off and validation
+   * issues, exactly as the parts above were built from. Carried on the model so the detail sheets,
+   * the schedules and the reports read the SAME numbers the geometry was built from and never
+   * re-derive a pocket width or a piece count. Type: PufLockDerived (model/pufLock).
+   */
+  pufLock?: import("./pufLock").PufLockDerived;
+  /**
+   * The resolved RAFTER SUPPORT system — config, derived levels, cleat positions, take-off and
+   * validation issues, exactly as the `rsup-*` parts above were built from. Carried on the model for
+   * the same reason `pufLock` is: the detail sheets, the assembly video captions, the schedules and
+   * the reports must read the SAME numbers the geometry was built from and never re-derive a tube
+   * spacing, a sheet count or a weight of their own.
+   * Type: RafterSupportDerived (model/rafterSupport).
+   */
+  rafterSupport?: import("./rafterSupport").RafterSupportDerived;
+  /**
+   * The flooring-sheet setting-out for one deck: how the 8'×4' sheets tile it, whether every joint
+   * lands on a member, the bearing achieved, and the ordering arithmetic (full / cut / offcut /
+   * wastage / rounded purchase quantity). ENGINEERING DETAIL — the priced `floor:board` line remains
+   * the source of truth for cost; this explains how that area is physically cut and laid.
+   */
+  deck?: SheetLayoutResult;
+  /** How the configured PUF panel thickness is seated and locked into the MS support framework. */
+  panelSupport?: PanelSupportSpec;
   /** Convenience header echoed from the config (metres), for titles / labels. */
   meta: {
     projectName: string;

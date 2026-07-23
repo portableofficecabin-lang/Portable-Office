@@ -18,10 +18,22 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Film, Loader2, X } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronRight, Film, Loader2, ScanSearch, Wrench, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { ColonyModel, ViewMode } from "@/features/labour-colony-studio/model/types";
+import { ASSEMBLY_SEQUENCE } from "@/features/labour-colony-studio/model/assembly";
+import {
+  assemblyCallout, pufLockMethodSteps, PUF_LOCK_EXPLANATION,
+  type PufLockDerived,
+} from "@/features/labour-colony-studio/model/pufLock";
+import {
+  rafterSupportAssemblyCallout, rafterSupportMethodSteps, RAFTER_SUPPORT_APPROVAL_DISCLAIMER,
+  RAFTER_SUPPORT_EXPLANATION, type RafterSupportDerived,
+} from "@/features/labour-colony-studio/model/rafterSupport";
+import { rafterSupportOf } from "./assemblyDetailTour";
+import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
+import { PaletteEditor } from "@/features/labour-colony-studio/palette/PaletteEditor";
 import type { BoqResult } from "@/lib/boq/types";
 import { AssemblyScene, type AssemblyExportController } from "./AssemblyScene";
 import { AssemblyOverlay } from "./AssemblyOverlay";
@@ -33,7 +45,9 @@ import { sampleCaption } from "./assemblyMotion";
 import { overlayExtrasFor, DEFAULT_LABEL_OPTIONS, type OverlayLabelOptions } from "./assemblyOverlayDraw";
 import { validateAssemblyTimeline, estimateExport } from "./validateAssemblyTimeline";
 import { runAssemblyExport, downloadExport, isWebMSupported, MP4_AVAILABLE } from "./exportAssemblyVideo";
-import type { AssemblyOptions, ExportProgress, ExportResult, ExportSettings } from "./assemblyTypes";
+import type {
+  AssemblyOptions, DetailTourSummary, ExportProgress, ExportResult, ExportSettings,
+} from "./assemblyTypes";
 
 export interface AssemblyVideoViewProps {
   model: ColonyModel;
@@ -45,6 +59,9 @@ export interface AssemblyVideoViewProps {
   companyName?: string;
   selectedId?: string | null;
   onSelectPart?: (id: string | null) => void;
+  /** Shared with the 3D tab so a colour chosen in either place shows in both, and in the export. */
+  palette?: ColonyPalette | null;
+  onPaletteChange?: (next: ColonyPalette) => void;
 }
 
 const RESOLUTION_PRESETS: { id: string; label: string; w: number; h: number }[] = [
@@ -211,6 +228,26 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
   const extras = useMemo(() => overlayExtrasFor(timeline, player.timeMs), [timeline, player.timeMs]);
   const webmSupported = isWebMSupported();
 
+  /* ---- PUF panel bottom locking system — the erection method statement that accompanies the video.
+   *      The 16 steps come straight from the engineering core (model.pufLock, the same bundle the
+   *      geometry and the schedules were built from), so this panel can never narrate a quantity the
+   *      animation does not show. Rendered only when the system is actually on this colony. ---- */
+  const pufLock = model.pufLock;
+  const showPufLock = !!pufLock?.config.enabled && pufLock.positions.length > 0;
+
+  /* ---- RAFTER SUPPORT — the erection method statement + the detail-tour control.
+   *      `rafterSupportOf` returns the resolved bundle only when the system is enabled AND cleats are
+   *      placed, so a colony that does not build it renders neither the panel nor the control and the
+   *      timeline is the one it produced before this feature existed. ---- */
+  const rafterSupport = useMemo(() => rafterSupportOf(model), [model]);
+  const tour = timeline.detailTour;
+
+  /* ---- how many of the canonical construction steps this design uses, and in how many shots ---- */
+  const stageCount = useMemo(
+    () => new Set(timeline.steps.map((s) => s.assemblyStep)).size,
+    [timeline.steps],
+  );
+
   if (validation.errors.length) {
     return (
       <div className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">
@@ -233,7 +270,9 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
           <div>
             <div className="text-sm font-bold leading-tight">Assembly animation — {model.meta.title}</div>
             <div className="text-xs text-muted-foreground">
-              {timeline.steps.length} of 24 erection steps · {timeline.dimensionsLine} · generated from the live model · {options.mode} mode
+              {stageCount} of {ASSEMBLY_SEQUENCE.length} erection steps
+              {timeline.steps.length !== stageCount ? ` in ${timeline.steps.length} shots` : ""} ·{" "}
+              {(timeline.totalMs / 60000).toFixed(1)} min · {timeline.dimensionsLine} · generated from the live model · {options.mode} mode
               {boqLink ? ` · ${boqLink.matched}/${boqLink.referenced} BOQ refs resolved` : ""}
             </div>
           </div>
@@ -259,6 +298,7 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
               autoCamera={options.autoCamera} mode={options.mode} background={options.background}
               quality={quality} selectedId={props.selectedId ?? null} seek={player.seek}
               onTick={player.reportTick} onSelect={onSelect} onExportReady={onExportReady} onReady={onReady}
+              palette={props.palette}
             />
             {options.showLabels && <AssemblyOverlay caption={caption} extras={extras} labels={labels} />}
             {!sceneReady && (
@@ -289,6 +329,16 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
             onExport={() => setShowExport((v) => !v)} exporting={running}
           />
 
+          {/* Component colours — the same palette the 3D tab uses, so the video and every exported
+              frame carry exactly what the admin picked. */}
+          {props.onPaletteChange && (
+            <PaletteEditor
+              model={model}
+              palette={props.palette ?? {}}
+              onChange={props.onPaletteChange}
+            />
+          )}
+
           {showExport && (
             <ExportPanel
               settings={exportSettings} preset={expPreset} onPreset={applyPreset}
@@ -304,6 +354,16 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
               onClose={() => setShowExport(false)}
             />
           )}
+
+          {(tour.assemblies > 0 || rafterSupport) && (
+            <DetailTourControls
+              tour={tour} options={options} onOption={onOption} totalMs={timeline.totalMs}
+            />
+          )}
+
+          {showPufLock && pufLock && <PufLockMethodPanel lock={pufLock} />}
+
+          {rafterSupport && <RafterSupportMethodPanel support={rafterSupport} tour={tour} />}
         </div>
 
         {/* erection step list */}
@@ -317,6 +377,303 @@ export function AssemblyVideoView(props: AssemblyVideoViewProps) {
 }
 
 export default AssemblyVideoView;
+
+/* ----------------------------------------------------------------- PUF lock method statement --- */
+
+/**
+ * The PUF panel bottom locking system's 16-step erection method statement, shown ALONGSIDE the
+ * animation (the locking system itself erects inside the canonical 24-step sequence: the plate,
+ * anchors and welded C-purlin pair at step 5, the panel dropping into the finished pocket at step 20).
+ *
+ * Every line is read from `pufLockMethodSteps(model.pufLock)` — the same resolved bundle the geometry,
+ * the detail sheets and the fabrication schedules were built from — so nothing here can state a
+ * quantity, a pocket width or a weld length that disagrees with the model. Collapsed by default so it
+ * never pushes the player or the controls off screen; it sits outside the captured stage, so it can
+ * never appear in an export.
+ */
+function PufLockMethodPanel({ lock }: { lock: PufLockDerived }) {
+  const [open, setOpen] = useState(false);
+  const steps = useMemo(() => pufLockMethodSteps(lock), [lock]);
+  const callout = useMemo(() => assemblyCallout(lock.config), [lock.config]);
+  const t = lock.takeoff;
+
+  return (
+    <div className="rounded-xl border border-border bg-background text-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center gap-2 px-3 py-2 text-left"
+      >
+        {open ? <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+              : <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />}
+        <Wrench className="h-4 w-4 shrink-0 text-accent" />
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold leading-tight">
+            PUF panel bottom locking — erection method statement
+          </span>
+          <span className="block text-xs text-muted-foreground">
+            {steps.length} steps · {t.plates} assembl{t.plates === 1 ? "y" : "ies"} ·{" "}
+            {t.pocketClearGapMm} mm pocket for a {t.panelThicknessMm} mm panel · erects at sequence steps 5 and 20
+          </span>
+        </span>
+      </button>
+
+      {open && (
+        <div className="space-y-2 border-t border-border/60 px-3 py-2.5">
+          <div className="rounded-lg bg-muted/50 px-2.5 py-1.5 text-xs">
+            <div className="font-medium text-foreground/80">{callout}</div>
+            <div className="mt-0.5 text-muted-foreground">
+              {t.purlinPieces} C-purlin pieces · {t.bolts} anchor bolts · {t.weldTotalLengthM.toFixed(2)} m of weld ·{" "}
+              {t.sideGapMm} mm side gap
+            </div>
+          </div>
+
+          <ol className="space-y-1.5">
+            {steps.map((s) => (
+              <li key={s.no} className="flex gap-2">
+                <span className="mt-0.5 inline-flex h-5 min-w-[1.4rem] shrink-0 items-center justify-center rounded bg-muted px-1 text-xs font-bold tabular-nums text-muted-foreground">
+                  {s.no}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs font-semibold leading-snug">{s.title}</span>
+                  <span className="block text-xs leading-relaxed text-muted-foreground">{s.detail}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          {lock.errors.length > 0 && (
+            <div className="rounded-md border border-red-300 bg-red-50 px-2 py-1 text-xs text-red-700">
+              <span className="font-semibold">Locking system errors:</span>{" "}
+              {lock.errors.slice(0, 3).map((e) => e.message).join(" ")}
+            </div>
+          )}
+          {lock.errors.length === 0 && lock.warnings.length > 0 && (
+            <div className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-xs text-amber-800">
+              <span className="font-semibold">Note:</span>{" "}
+              {lock.warnings.slice(0, 3).map((w) => w.message).join(" ")}
+            </div>
+          )}
+
+          <p className="border-t border-border/60 pt-2 text-[11px] leading-relaxed text-muted-foreground">
+            {PUF_LOCK_EXPLANATION}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------- detail tour controls -------- */
+
+const DWELL_PRESETS: { ms: number; label: string }[] = [
+  { ms: 1200, label: "Brisk — 1.2 s" },
+  { ms: 2200, label: "Standard — 2.2 s" },
+  { ms: 3500, label: "Detailed — 3.5 s" },
+  { ms: 5000, label: "Very detailed — 5.0 s" },
+];
+const BUDGET_PRESETS: { ms: number; label: string }[] = [
+  { ms: 180_000, label: "3 min" },
+  { ms: 300_000, label: "5 min" },
+  { ms: 420_000, label: "7 min" },
+  { ms: 600_000, label: "10 min" },
+];
+const LIMIT_PRESETS: { n: number; label: string }[] = [
+  { n: 0, label: "Every assembly" },
+  { n: 25, label: "First 25" },
+  { n: 50, label: "First 50" },
+  { n: 100, label: "First 100" },
+];
+
+/**
+ * The admin's control over the per-assembly zoomed tour: whether to fly to every rafter connection,
+ * how long to hold on each, and the runtime budget the shot length is divided out of.
+ *
+ * The readout states the resulting runtime BEFORE the user exports, because the trade-off this panel
+ * exists for is exactly "more detail per connection ⇄ a longer film" — the user accepted 5–7 minutes,
+ * and this is where that is chosen rather than discovered.
+ */
+function DetailTourControls({
+  tour, options, onOption, totalMs,
+}: {
+  tour: DetailTourSummary;
+  options: AssemblyOptions;
+  onOption: (patch: Partial<AssemblyOptions>) => void;
+  totalMs: number;
+}) {
+  const on = options.detailTour !== false;
+  const mins = (ms: number): string => `${(ms / 60000).toFixed(1)} min`;
+
+  return (
+    <div className="rounded-xl border border-border bg-background p-3 text-sm">
+      <div className="mb-2 flex flex-wrap items-center gap-2">
+        <ScanSearch className="h-4 w-4 shrink-0 text-accent" />
+        <span className="font-semibold">Rafter assembly detail tour</span>
+        <label className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground">
+          <input
+            type="checkbox" checked={on}
+            onChange={(e) => onOption({ detailTour: e.target.checked })}
+            className="h-3.5 w-3.5 accent-orange-500"
+          />
+          Fly to every connection in close-up
+        </label>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <label className="text-xs text-muted-foreground">Hold on each assembly
+          <select
+            value={options.detailDwellMs} disabled={!on}
+            onChange={(e) => onOption({ detailDwellMs: parseInt(e.target.value, 10) })}
+            className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-sm disabled:opacity-50"
+          >
+            {DWELL_PRESETS.map((d) => <option key={d.ms} value={d.ms}>{d.label}</option>)}
+          </select>
+        </label>
+
+        <label className="text-xs text-muted-foreground">Tour runtime budget
+          <select
+            value={options.detailTourBudgetMs} disabled={!on}
+            onChange={(e) => onOption({ detailTourBudgetMs: parseInt(e.target.value, 10) })}
+            className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-sm disabled:opacity-50"
+          >
+            {BUDGET_PRESETS.map((b) => <option key={b.ms} value={b.ms}>{b.label}</option>)}
+          </select>
+        </label>
+
+        <label className="text-xs text-muted-foreground">Assemblies toured
+          <select
+            value={options.detailTourMaxAssemblies} disabled={!on}
+            onChange={(e) => onOption({ detailTourMaxAssemblies: parseInt(e.target.value, 10) })}
+            className="mt-0.5 w-full rounded-md border border-border bg-background px-2 py-1 text-sm disabled:opacity-50"
+          >
+            {LIMIT_PRESETS.map((l) => <option key={l.n} value={l.n}>{l.label}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <div className="mt-2 text-xs text-muted-foreground">
+        {tour.enabled ? (
+          <>
+            {tour.toured} of {tour.assemblies} assembl{tour.assemblies === 1 ? "y" : "ies"} shown individually ·{" "}
+            {(tour.installMs / 1000).toFixed(1)} s build + {(tour.holdMs / 1000).toFixed(1)} s hold each ·{" "}
+            tour {mins(tour.tourMs)} of {mins(totalMs)} total
+          </>
+        ) : tour.assemblies > 0 ? (
+          <>Detail tour off — the {tour.assemblies} rafter assemblies are erected together in their construction step.</>
+        ) : (
+          <>This colony has no rafter-support assemblies to tour.</>
+        )}
+      </div>
+
+      {tour.capped && (
+        <div className="mt-2 rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-xs text-amber-800">
+          <span className="font-semibold">Partial tour:</span> {tour.toured} of {tour.assemblies} assemblies get their
+          own shot; the remaining {tour.assemblies - tour.toured} are erected together in their construction step, and the
+          caption says so. Raise the limit or the runtime budget to visit them all.
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------- rafter support method ------- */
+
+/**
+ * The rafter support system's erection method statement, shown ALONGSIDE the animation — mirroring
+ * PufLockMethodPanel exactly, including being rendered OUTSIDE the R3F <Canvas> (a DOM node inside
+ * the canvas tree throws) and therefore never appearing in an export.
+ *
+ * Every line comes from `rafterSupportMethodSteps(model.rafterSupport)` — the same resolved bundle
+ * the geometry, the detail sheets and the take-off were built from — so this panel can never narrate
+ * a spacing, a count or a weight the animation does not show. Collapsed by default so it cannot push
+ * the player or the transport off screen.
+ */
+function RafterSupportMethodPanel({ support, tour }: { support: RafterSupportDerived; tour: DetailTourSummary }) {
+  const [open, setOpen] = useState(false);
+  const steps = useMemo(() => rafterSupportMethodSteps(support), [support]);
+  const callout = useMemo(() => rafterSupportAssemblyCallout(support.config), [support.config]);
+  const t = support.takeoff;
+  const c = support.config;
+
+  return (
+    <div className="rounded-xl border border-border bg-background text-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center gap-2 px-3 py-2 text-left"
+      >
+        {open ? <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+              : <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />}
+        <Wrench className="h-4 w-4 shrink-0 text-accent" />
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold leading-tight">
+            Rafter support &amp; MS tube — erection method statement
+          </span>
+          <span className="block text-xs text-muted-foreground">
+            {steps.length} steps · {t.cleats} connection{t.cleats === 1 ? "" : "s"} · {c.purlin.designation} +{" "}
+            {c.tube.designation} · erects at sequence steps 18 and 19
+            {tour.enabled ? ` · ${tour.toured} shown in zoomed detail` : ""}
+          </span>
+        </span>
+      </button>
+
+      {open && (
+        <div className="space-y-2 border-t border-border/60 px-3 py-2.5">
+          <div className="rounded-lg bg-muted/50 px-2.5 py-1.5 text-xs">
+            <div className="font-medium text-foreground/80">{callout}</div>
+            <div className="mt-0.5 text-muted-foreground">
+              {t.bolts} bolt{t.bolts === 1 ? "" : "s"} ({t.cleatBolts} at the cleats, {t.webBolts} through the web) ·{" "}
+              {t.nuts} nuts · {t.washers} washers · {t.purlinRunningLengthM.toFixed(2)} m C-purlin ·{" "}
+              {t.tubeRunningLengthM.toFixed(2)} m MS tube · {t.webLapMm} mm web lap ·{" "}
+              {t.totalSteelKg.toFixed(1)} kg of steel
+            </div>
+            <div className="mt-0.5 text-muted-foreground">
+              Covering: {t.ceilingSheets} ceiling board{t.ceilingSheets === 1 ? "" : "s"} (
+              {c.ceilingSheet.sheetLengthMm} × {c.ceilingSheet.sheetWidthMm} mm) ·{" "}
+              {t.roofPanels} roof panel{t.roofPanels === 1 ? "" : "s"} ({c.roofPanel.coverWidthMm} mm cover width)
+            </div>
+          </div>
+
+          <ol className="space-y-1.5">
+            {steps.map((s) => (
+              <li key={s.no} className="flex gap-2">
+                <span className="mt-0.5 inline-flex h-5 min-w-[1.4rem] shrink-0 items-center justify-center rounded bg-muted px-1 text-xs font-bold tabular-nums text-muted-foreground">
+                  {s.no}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs font-semibold leading-snug">{s.title}</span>
+                  <span className="block text-xs leading-relaxed text-muted-foreground">{s.detail}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          {support.errors.length > 0 && (
+            <div className="rounded-md border border-red-300 bg-red-50 px-2 py-1 text-xs text-red-700">
+              <span className="font-semibold">Rafter support errors:</span>{" "}
+              {support.errors.slice(0, 3).map((e) => e.message).join(" ")}
+            </div>
+          )}
+          {support.errors.length === 0 && support.warnings.length > 0 && (
+            <div className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-xs text-amber-800">
+              <span className="font-semibold">Note:</span>{" "}
+              {support.warnings.slice(0, 3).map((w) => w.message).join(" ")}
+            </div>
+          )}
+
+          <p className="border-t border-border/60 pt-2 text-[11px] leading-relaxed text-muted-foreground">
+            {RAFTER_SUPPORT_EXPLANATION}
+          </p>
+          <p className="text-[11px] font-medium leading-relaxed text-amber-800">
+            {RAFTER_SUPPORT_APPROVAL_DISCLAIMER}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ----------------------------------------------------------------- export panel ---------------- */
 

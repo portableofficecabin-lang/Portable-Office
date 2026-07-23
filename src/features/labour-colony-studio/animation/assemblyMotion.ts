@@ -15,7 +15,10 @@ import type {
   AssemblyOptions, AssemblyTimeline, CameraKeyframe, CaptionState, PartRenderState,
   PartScheduleEntry, SceneSample, StepEngineeringRow, Vec3T,
 } from "./assemblyTypes";
-import { lerp3, modelBoxOf, orbitShot, planShot, type Box3 } from "./assemblyCamera";
+import {
+  DETAIL_DWELL_DOLLY, DETAIL_ORBIT_RAD, lerp, lerp3, modelBoxOf, orbitAroundTarget, orbitShot,
+  planShot, type Box3,
+} from "./assemblyCamera";
 
 /* ----------------------------------------------------------------- easing ---------------------- */
 
@@ -89,6 +92,17 @@ export function sampleCamera(timeline: AssemblyTimeline, timeMs: number): Camera
   const local = clamp01((timeMs - step.startMs) / span);
   const installFrac = span > 0 ? step.installMs / span : 1;
   const tt = installFrac > 0 && local <= installFrac ? easeInOutCubic(local / installFrac) : 1;
+
+  // A DETAIL SUB-STEP (one rafter connection in macro close-up) keeps moving through its dwell: the
+  // camera drifts a few degrees around the joint and creeps in slightly, so a 1–3 second hold on a
+  // bolted connection reads as cinematography rather than a stalled render. Every other step keeps
+  // its original behaviour exactly — arrive on `to`, then hold perfectly still.
+  if (step.subIndex !== undefined && tt >= 1) {
+    const dwellT = clamp01((local - installFrac) / Math.max(1e-6, 1 - installFrac));
+    const e = easeInOutCubic(dwellT);
+    return orbitAroundTarget(step.camera.to, DETAIL_ORBIT_RAD * e, lerp(1, DETAIL_DWELL_DOLLY, e));
+  }
+
   return lerpKeyframe(step.camera.from, step.camera.to, tt);
 }
 
@@ -118,7 +132,7 @@ export interface PartSampleCtx {
   options: AssemblyOptions;
 }
 
-const HIDDEN: PartRenderState = { visible: false, offset: [0, 0, 0], opacity: 0, highlight: false, ghost: false };
+const HIDDEN: PartRenderState = { visible: false, offset: [0, 0, 0], opacity: 0, highlight: false, ghost: false, dimmed: false };
 
 /** One part's render state at `timeMs`. Deterministic; the render loop applies it to the mesh. */
 export function samplePart(entry: PartScheduleEntry, timeMs: number, ctx: PartSampleCtx): PartRenderState {
@@ -127,7 +141,7 @@ export function samplePart(entry: PartScheduleEntry, timeMs: number, ctx: PartSa
   // not yet installed
   if (timeMs < enterStartMs) {
     if (!ctx.options.ghostFuture) return HIDDEN;
-    return { visible: true, offset: [0, 0, 0], opacity: 0.07, highlight: false, ghost: true };
+    return { visible: true, offset: [0, 0, 0], opacity: 0.07, highlight: false, ghost: true, dimmed: false };
   }
 
   // flying into place
@@ -142,6 +156,7 @@ export function samplePart(entry: PartScheduleEntry, timeMs: number, ctx: PartSa
       opacity: clamp01(0.25 + local * 1.5),
       highlight: true,
       ghost: false,
+      dimmed: false,
     };
   }
 
@@ -149,14 +164,18 @@ export function samplePart(entry: PartScheduleEntry, timeMs: number, ctx: PartSa
   // camera can see the interior work. The current step's own envelope subject (cladding / lining /
   // partition) must NOT fade itself out, so it is excluded here and highlighted below.
   if (ctx.activeStepCutaway && envelope && stepIndex < ctx.activeStepIndex) {
-    return { visible: true, offset: [0, 0, 0], opacity: 0.12, highlight: false, ghost: false };
+    return { visible: true, offset: [0, 0, 0], opacity: 0.12, highlight: false, ghost: false, dimmed: false };
   }
 
   const realStep = ctx.activeStepIndex >= 0 && ctx.activeStepIndex < ctx.stepCount;
   const highlight = ctx.activeStepIndex === stepIndex;
-  let opacity = 1;
-  if (ctx.options.dimInstalled && realStep && stepIndex < ctx.activeStepIndex && !highlight) opacity = 0.7;
-  return { visible: true, offset: [0, 0, 0], opacity, highlight, ghost: false };
+  /* DIM = a COLOUR statement, not an opacity one. Earlier opacity-based dimming (0.7 / 0.85) made
+   * every installed member transparent, transparency drops depth-write, and dozens of overlapping
+   * translucent members read as a blurred X-ray — the "Dim installed is not working" report. The
+   * renderer now fades a dimmed part's colour toward a quiet grey at FULL opacity, so the option
+   * visibly mutes earlier work while the structure stays crisp. */
+  const dimmed = ctx.options.dimInstalled && realStep && stepIndex < ctx.activeStepIndex && !highlight;
+  return { visible: true, offset: [0, 0, 0], opacity: 1, highlight, ghost: false, dimmed };
 }
 
 /* ----------------------------------------------------------------- caption --------------------- */
@@ -170,6 +189,8 @@ function engineeringRowsForStep(
   step: AssemblyTimeline["steps"][number],
 ): StepEngineeringRow[] {
   const rows: StepEngineeringRow[] = [];
+  // a detail sub-step names the assembly it is holding on, before anything else
+  if (step.subTitle) rows.push({ label: "Assembly", note: step.subTitle });
   if (step.memberMarks) rows.push({ label: "Members", note: step.memberMarks });
   if (step.connectionMarks) rows.push({ label: "Connections", note: step.connectionMarks });
   if (step.boltSpec) rows.push({ label: "Bolts", note: step.boltSpec });
