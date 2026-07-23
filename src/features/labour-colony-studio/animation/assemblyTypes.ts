@@ -53,6 +53,7 @@ export type CameraShotKind =
   | "roof-elevated"    // elevated view for trusses / purlins / roof sheeting
   | "interior"         // interior / section view for panels / partitions / MEP (cutaway)
   | "opening-closeup"  // door / window close-up
+  | "detail-closeup"   // MACRO shot on one bolted connection — bolt heads must be readable
   | "orbit"            // final completed-colony orbit
   | "hero";            // final front three-quarter hero
 
