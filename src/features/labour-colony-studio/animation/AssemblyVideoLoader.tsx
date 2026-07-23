@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import { Film } from "lucide-react";
 import type { ColonyModel, ViewMode } from "@/features/labour-colony-studio/model/types";
 import type { BoqResult } from "@/lib/boq/types";
+import { GlFailureNotice } from "@/features/labour-colony-studio/studio/GlFailureNotice";
 
 export interface AssemblyVideoLoaderProps {
   model: ColonyModel;
@@ -56,18 +57,21 @@ class AssemblyErrorBoundary extends Component<{ children: ReactNode }, BoundaryS
     return { error };
   }
 
-  componentDidCatch(error: Error) {
+  componentDidCatch(error: Error, info: { componentStack?: string | null }) {
     // Surface for debugging without crashing the studio page.
-    console.error("Colony assembly animation failed:", error);
+    console.error("Colony assembly animation failed:", error, info?.componentStack);
   }
 
   render() {
-    if (this.state.error) {
+    const err = this.state.error;
+    if (err) {
       return (
-        <div className="flex h-[clamp(360px,60vh,640px)] w-full flex-col items-center justify-center gap-2 rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center text-sm text-muted-foreground">
-          <span className="font-medium text-destructive">The assembly animation could not be displayed.</span>
-          <span className="text-xs">Your browser may not support WebGL, or the model failed to build. The 2D drawings, BOQs and reports remain available.</span>
-        </div>
+        <GlFailureNotice
+          label="assembly animation"
+          stillAvailable="The 2D drawings, BOQs and reports are unaffected."
+          error={err}
+          onRetry={() => this.setState({ error: null })}
+        />
       );
     }
     return this.props.children;

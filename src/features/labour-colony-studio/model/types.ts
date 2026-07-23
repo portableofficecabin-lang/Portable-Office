@@ -107,6 +107,13 @@ export type ColonyPartKind =
   | "puf-lock-base-plate" | "puf-lock-anchor-bolt" | "puf-lock-nut" | "puf-lock-washer"
   | "puf-lock-c-purlin-left" | "puf-lock-c-purlin-right" | "puf-lock-weld"
   | "puf-lock-panel-seat" | "puf-lock-sealant" | "puf-lock-isolation-strip"
+  /* RAFTER SUPPORT SYSTEM — a bolted cleat on the rafter carries a C-purlin, and an MS square /
+   * rectangular tube is bolted THROUGH THE C-PURLIN WEB (faces flush) to carry the covering: an
+   * 8' × 4' fibre-cement sheet at a ceiling level, or a 1000 mm cover-width PUF panel on the sloped
+   * roof. Deliberately distinct from the generic `purlin` / `roof-sheet` / `ceiling` kinds so the
+   * fabricated support system is scheduled and priced separately and can never double-count them. */
+  | "rsup-cleat-plate" | "rsup-bolt" | "rsup-nut" | "rsup-washer"
+  | "rsup-c-purlin" | "rsup-ms-tube" | "rsup-cement-sheet" | "rsup-puf-roof-panel"
   // envelope
   | "floor-board" | "floor-finish" | "ext-panel" | "insulation" | "int-finish"
   | "roof-sheet" | "ceiling" | "partition"
@@ -124,7 +131,9 @@ export type ColonyPartLayer =
   | "foundation" | "structure" | "connection" | "walls" | "roof" | "openings" | "stair"
   | "electrical" | "plumbing" | "furniture"
   /** The PUF panel bottom locking assemblies — one toggle hides / shows every plate + purlin pair. */
-  | "puf-lock";
+  | "puf-lock"
+  /** The rafter cleat / C-purlin / MS tube support system and the covering it carries. */
+  | "rafter-support";
 
 /** The two viewing modes. A part visible in customer mode is also visible in engineering. */
 export type ViewMode = "engineering" | "customer";

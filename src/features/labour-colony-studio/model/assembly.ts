@@ -104,6 +104,17 @@ export const STEP_OF_KIND: Record<ColonyPartKind, ColonyAssemblyStep> = {
   "puf-lock-isolation-strip": 20,
   "puf-lock-sealant": 20,
   "puf-lock-panel-seat": 20,
+  // RAFTER SUPPORT — the bolted cleat, its C-purlin and the MS tube go up WITH the purlin system
+  // (step 18); the covering they carry is fixed with the sheeting / ceiling (step 19). Mapping onto
+  // the existing 24-step canon keeps the erection sequence additive — nothing is renumbered.
+  "rsup-cleat-plate": 18,
+  "rsup-bolt": 18,
+  "rsup-nut": 18,
+  "rsup-washer": 18,
+  "rsup-c-purlin": 18,
+  "rsup-ms-tube": 18,
+  "rsup-cement-sheet": 19,
+  "rsup-puf-roof-panel": 19,
   light: 23,
   fan: 23,
   socket: 23,
@@ -183,6 +194,18 @@ export const EXPLODE_OF_KIND: Record<ColonyPartKind, Vec3> = {
   "puf-lock-isolation-strip": { x: 0, y: 0, z: 1.1 },
   "puf-lock-sealant": { x: 0, y: 0, z: 1.3 },
   "puf-lock-panel-seat": { x: 0, y: 0, z: 1.8 },
+  // RAFTER SUPPORT — exploded bottom-up in build order so the detail reads as it is erected:
+  // cleat → bolt/nut/washer → C-purlin → MS tube → covering. The tube additionally gets a per-part
+  // sideways component at build time (it bolts to the purlin WEB, so it must slide off sideways to
+  // reveal the bolted joint rather than lift straight up through the purlin).
+  "rsup-cleat-plate": { x: 0, y: 0, z: 1.8 },
+  "rsup-bolt": { x: 0, y: 0, z: 2.0 },
+  "rsup-nut": { x: 0, y: 0, z: 2.0 },
+  "rsup-washer": { x: 0, y: 0, z: 2.0 },
+  "rsup-c-purlin": { x: 0, y: 0, z: 2.1 },
+  "rsup-ms-tube": { x: 0, y: 0, z: 2.3 },
+  "rsup-cement-sheet": { x: 0, y: 0, z: 2.6 },
+  "rsup-puf-roof-panel": { x: 0, y: 0, z: 3.2 },
   light: { x: 0, y: 0, z: 1.4 },
   fan: { x: 0, y: 0, z: 1.4 },
   socket: { x: 0, y: 0, z: 0 },           // overridden per-face
@@ -215,6 +238,9 @@ export const LAYER_OF_KIND: Record<ColonyPartKind, ColonyPartLayer> = {
   "puf-lock-washer": "puf-lock", "puf-lock-c-purlin-left": "puf-lock", "puf-lock-c-purlin-right": "puf-lock",
   "puf-lock-weld": "puf-lock", "puf-lock-panel-seat": "puf-lock", "puf-lock-sealant": "puf-lock",
   "puf-lock-isolation-strip": "puf-lock",
+  "rsup-cleat-plate": "rafter-support", "rsup-bolt": "rafter-support", "rsup-nut": "rafter-support",
+  "rsup-washer": "rafter-support", "rsup-c-purlin": "rafter-support", "rsup-ms-tube": "rafter-support",
+  "rsup-cement-sheet": "rafter-support", "rsup-puf-roof-panel": "rafter-support",
 };
 
 /** Engineering-mode colour per kind (LITERAL hex — export safe). */
@@ -240,6 +266,11 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
   "puf-lock-washer": "#3f3f46", "puf-lock-c-purlin-left": "#0f766e", "puf-lock-c-purlin-right": "#15803d",
   "puf-lock-weld": "#ef4444", "puf-lock-panel-seat": "#cbd5e1", "puf-lock-sealant": "#a3a3a3",
   "puf-lock-isolation-strip": "#1f2937",
+  // Rafter support — the C-purlin and the MS tube take the blue of real painted structural steel, in
+  // two distinct shades so the viewer can see the tube is a SEPARATE member bolted to the purlin web.
+  "rsup-cleat-plate": "#7c2d12", "rsup-bolt": "#18181b", "rsup-nut": "#0f0f11",
+  "rsup-washer": "#3f3f46", "rsup-c-purlin": "#0369a1", "rsup-ms-tube": "#0891b2",
+  "rsup-cement-sheet": "#d6d3d1", "rsup-puf-roof-panel": "#e2e8f0",
 };
 
 /** Which part families are engineering-only (hidden in the clean customer view). */
@@ -253,7 +284,24 @@ export const ENG_ONLY = new Set<ColonyPartKind>([
   "puf-lock-base-plate", "puf-lock-anchor-bolt", "puf-lock-nut", "puf-lock-washer",
   "puf-lock-c-purlin-left", "puf-lock-c-purlin-right", "puf-lock-weld",
   "puf-lock-panel-seat", "puf-lock-sealant", "puf-lock-isolation-strip",
+  // The rafter-support STEEL is fabrication detail. Its COVERINGS are deliberately NOT listed: the
+  // ceiling board and the roof panel are the finishes a customer actually sees.
+  "rsup-cleat-plate", "rsup-bolt", "rsup-nut", "rsup-washer", "rsup-c-purlin", "rsup-ms-tube",
 ]);
+
+/**
+ * The rafter-support part families, as one set — the "show / hide rafter support" toggle and every
+ * schedule filter keys off this rather than re-listing the kinds.
+ */
+export const RAFTER_SUPPORT_KINDS = new Set<ColonyPartKind>([
+  "rsup-cleat-plate", "rsup-bolt", "rsup-nut", "rsup-washer",
+  "rsup-c-purlin", "rsup-ms-tube", "rsup-cement-sheet", "rsup-puf-roof-panel",
+]);
+
+/** True when a part belongs to the rafter cleat / C-purlin / MS tube support system. */
+export function isRafterSupportKind(kind: ColonyPartKind): boolean {
+  return RAFTER_SUPPORT_KINDS.has(kind);
+}
 
 /**
  * The PUF-lock part families, as one set — the "show / hide locking assemblies" toggle and every
