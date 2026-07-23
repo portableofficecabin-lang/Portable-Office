@@ -555,6 +555,21 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
               { floor: 0, partMark: "SR", fabrication: "shop", spec: { ...sideSpec } });
           }
         }
+        /* rafter ends on the END WALLS — the photographed connection: MS end plate SHOP-welded to
+         * the rafter, SITE-bolted through the C wall purlin web at each end of the run. */
+        if (connDetail) {
+          ([[bodyX0, 1], [bodyX1, -1]] as const).forEach(([xEnd, dir], e) => {
+            addRafterEndPlate(s, {
+              idBase: `gf:conn:rend:${side}:${e === 0 ? "a" : "b"}`,
+              connectionId: `rend:gf:${side}:${e === 0 ? "a" : "b"}`,
+              assemblyId: "gf:deck",
+              label: `GF side rafter (${side}) wall end`,
+              axis: "x", at: xEnd, dir: dir as 1 | -1, cross: yc,
+              z, memberWM: jw, memberHM: jh, floor: 0,
+            });
+          });
+        }
+
         /* hold-down plates — the removable side-rafter joints, one at every grid line */
         if (connDetail) {
           colXs
@@ -2255,6 +2270,21 @@ function buildDeckSystem(s: ModelSink, a: DeckArgs): SheetLayoutResult {
         for (let b = 0; b < a.joistBayYs.length - 1; b++) {
           const ends: [number, number][] = [[a.joistBayYs[b], 1], [a.joistBayYs[b + 1], -1]];
           ends.forEach(([yEnd, dir], e) => {
+            /* A rafter end ON THE WALL LINE gets the photographed site connection — MS end plate
+             * bolted through the C wall purlin; interior ends (internal beam lines) keep the
+             * shop-welded cleat + site-bolted joint. */
+            const atWall = Math.abs(yEnd - body.y0) < 1e-3 || Math.abs(yEnd - body.y1) < 1e-3;
+            if (atWall) {
+              addRafterEndPlate(s, {
+                idBase: `${tag}:conn:rend:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`,
+                connectionId: `rend:${tag}:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`,
+                assemblyId: `${tag}:deck`,
+                label: `Floor ${f} rafter ${i + 1} wall end`,
+                axis: "y", at: yEnd, dir: dir as 1 | -1, cross: x,
+                z, memberWM: joistWM, memberHM: joistHM, floor: f,
+              });
+              return;
+            }
             const idBase = `${tag}:conn:joist:${pad2(i + 1)}:${pad2(b + 1)}:${e === 0 ? "a" : "b"}`;
             /* Floor-tagged connection ids, so a first-floor cleat can never join another storey's
              * connection group. */
@@ -2385,6 +2415,73 @@ function addPerimeterCBend(
  * and can be inspected by eye. Every bolt is emitted through `addBoltAssembly` so the model keeps
  * exactly one nut and one washer per bolt (the schedules assert that parity globally).
  */
+/**
+ * RAFTER END → C WALL PURLIN connection (the photographed site detail): the rafter end is seated in
+ * an MS END PLATE that is SHOP-welded to the rafter and SITE-bolted through the web of the perimeter
+ * C member ("C wall purlin" — the deck's C-bend edge run). Two bolts, nuts and washers on the far
+ * side of the web — a removable joint, like every site joint in this building.
+ *
+ * `axis` is the direction the rafter RUNS (the plate stands perpendicular to it at the wall line):
+ * "y" for the transverse field rafters ending on the side walls, "x" for the ground-floor side
+ * rafters ending on the end walls. `dir` points INTO the body from the wall line at `at`.
+ */
+function addRafterEndPlate(
+  s: ModelSink,
+  o: {
+    idBase: string; connectionId: string; assemblyId: string; label: string;
+    axis: "x" | "y"; at: number; dir: 1 | -1; cross: number;
+    z: number; memberWM: number; memberHM: number; floor: number;
+  },
+): void {
+  const pT = 0.008;
+  const pw = Math.max(0.1, o.memberWM + 0.05);
+  const chordTop = o.z - FLOOR_TUBE_H;
+  const zTop = chordTop + 0.01;
+  const zBot = chordTop - o.memberHM - 0.03;
+  const boltSpec = "M12 gr 8.8";
+
+  /* An axis-aware box: `a0..a1` along the run axis, `c0..c1` across it. */
+  const axBox = (a0: number, a1: number, c0: number, c1: number, zLo: number, zHi: number): PartSolid =>
+    o.axis === "y"
+      ? box(c0, Math.min(a0, a1), zLo, c1, Math.max(a0, a1), zHi)
+      : box(Math.min(a0, a1), c0, zLo, Math.max(a0, a1), c1, zHi);
+
+  /* end plate — hard against the inside face of the C purlin web */
+  const p0 = o.at + o.dir * CBEND_GAUGE;
+  const p1 = p0 + o.dir * pT;
+  s.add(`${o.idBase}:plate`, "end-plate", `${o.label} — MS end plate to C wall purlin`,
+    axBox(p0, p1, o.cross - pw / 2, o.cross + pw / 2, zBot, zTop),
+    {
+      connectionId: o.connectionId, assemblyId: o.assemblyId, partMark: "EP", floor: o.floor,
+      fabrication: "shop",
+      spec: {
+        widthMm: Math.round(pw * 1000), heightMm: Math.round((zTop - zBot) * 1000), thicknessMm: 8,
+        boltCount: 2, boltSpec,
+        role: "Seats the rafter end and carries its reaction into the C wall purlin.",
+        loadPath: "Rafter end → MS end plate → site bolts → C wall purlin web → beam → column → footing.",
+        note: "SHOP-welded to the rafter end; SITE-bolted through the C wall purlin web — undo the "
+          + "two nut-bolts and the rafter lifts out. The photographed site connection.",
+      },
+    });
+
+  /* two site bolts through plate + C web, nut + washer on the FAR (outside) face of the web */
+  ([-1, 1] as const).forEach((sgn, i) => {
+    const cz = (zTop + zBot) / 2 + sgn * Math.min(0.035, o.memberHM * 0.3);
+    const bOut = o.at - o.dir * 0.024;               // thread projection past the nut, outside the web
+    const bIn = p1 + o.dir * 0.012;                  // into the rafter end
+    s.add(`${o.idBase}:bolt:${i + 1}`, "bolt", `${o.label} — bolt ${i + 1} (${boltSpec})`,
+      axBox(bOut, bIn, o.cross - 0.006, o.cross + 0.006, cz - 0.006, cz + 0.006),
+      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site",
+        spec: { boltSpec, note: "Through the end plate AND the C wall purlin web." } });
+    s.add(`${o.idBase}:washer:${i + 1}`, "washer", `${o.label} — washer ${i + 1}`,
+      axBox(o.at - o.dir * 0.003, o.at - o.dir * 0.006, o.cross - 0.012, o.cross + 0.012, cz - 0.012, cz + 0.012),
+      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site" });
+    s.add(`${o.idBase}:nut:${i + 1}`, "nut", `${o.label} — nut ${i + 1}`,
+      axBox(o.at - o.dir * 0.006, o.at - o.dir * 0.016, o.cross - 0.0095, o.cross + 0.0095, cz - 0.0095, cz + 0.0095),
+      { connectionId: o.connectionId, assemblyId: o.assemblyId, floor: o.floor, fabrication: "site" });
+  });
+}
+
 function addBoltedJoistCleat(
   s: ModelSink,
   o: {

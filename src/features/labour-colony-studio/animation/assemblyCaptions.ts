@@ -691,6 +691,7 @@ export function describeColonyStep(
       const lattice = hasKind(parts, "joist-web");
       const pipes = hasKind(parts, "floor-tube");
       const gfSideOnly = parts.some((p) => p.id.startsWith("gf:side-rafter"));
+      const wallEnd = parts.some((p) => (p.connectionId ?? "").startsWith("rend:"));
       return {
         title: "Ground-floor joists & deck",
         description:
@@ -717,6 +718,11 @@ export function describeColonyStep(
               "the rafter is SITE-bolted to that cleat — a REMOVABLE joint. A sound weld needs a shop; " +
               "a nut-bolt needs neither power nor a certificate, can be inspected by eye on site, and " +
               "can be undone again when the building is dismantled and relocated."
+            : "") +
+          (wallEnd
+            ? " Where a rafter meets the WALL LINE it is seated in an MS END PLATE — shop-welded to " +
+              "the rafter, site-bolted through the web of the C wall purlin with two nut-bolts — the " +
+              "same connection as on site, and just as removable."
             : ""),
         captionCustomer:
           (lattice
