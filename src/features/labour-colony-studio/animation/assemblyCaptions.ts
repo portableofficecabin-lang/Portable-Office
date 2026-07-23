@@ -688,25 +688,36 @@ export function describeColonyStep(
        * a frame that IS on the sheet module narrates as a pass rather than as a warning. */
       const deck = ctx.hasSheetSetOut ? ctx.deck : undefined;
       const cleat = ctx.hasDeckCleat;
+      const lattice = hasKind(parts, "joist-web");
       return {
         title: "Ground-floor joists & deck",
         description:
-          "Floor joists are laid between the base beams at the designed spacing and the structural deck " +
-          "and floor finish are fixed over them." +
+          (lattice
+            ? "The floor rafters are laid between the base beams at the designed spacing — each one a " +
+              "shop-welded LATTICE truss: top chord, bottom chord and zig-zag web members in one " +
+              "craned-in unit — and the structural deck and floor finish are fixed over them."
+            : "Floor joists are laid between the base beams at the designed spacing and the structural deck " +
+              "and floor finish are fixed over them.") +
           (deck ? ` ${sheetSetOutParagraph(deck, ctx.gfSheeted)}` : "") +
           (cleat
-            ? " Every joist end is made up the same way: the cleat is SHOP-welded to the base beam and " +
-              "the joist is SITE-bolted to that cleat. A sound weld needs a shop; a bolt needs neither " +
-              "power nor a certificate and can be inspected by eye on site."
+            ? " Every rafter end is made up the same way: the cleat is SHOP-welded to the beam and " +
+              "the rafter is SITE-bolted to that cleat — a REMOVABLE joint. A sound weld needs a shop; " +
+              "a nut-bolt needs neither power nor a certificate, can be inspected by eye on site, and " +
+              "can be undone again when the building is dismantled and relocated."
             : ""),
-        captionCustomer: "The ground floor is decked and finished." +
+        captionCustomer:
+          (lattice
+            ? "Lattice steel floor rafters are bolted in — removable joints, so the building can be dismantled and relocated. The floor is then decked and finished."
+            : "The ground floor is decked and finished.") +
           (deck
             ? ctx.gfSheeted
               ? " On every deck — the ground floor included — the floor sheets are numbered and cut so that every joint sits on a steel member."
               : " On the upper decks the floor sheets are numbered and cut so that every joint sits on a steel member — the ground floor bears directly on the plinth and needs none."
             : ""),
         captionEngineering:
-          `Floor joists at design c/c between the base beams; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
+          `${lattice
+            ? "Lattice floor rafters (shop-welded chords + webs) at design c/c between the base beams — site joints are the bolted end cleats only (demountable)"
+            : "Floor joists at design c/c between the base beams"}; deck board${hasKind(parts, "floor-finish") ? " and floor finish" : ""} fixed over.` +
           (deck
             ? ` ${ctx.gfSheeted ? "All decks (GF sheet field enabled)" : "Upper decks"}: ${deck.moduleLabel} sheets ${sheetMarkRange(deck)} laid ${sheetLayWords(deck)}` +
               `, ${deck.fullCount} full / ${deck.cutCount} cut, joints on members at ` +

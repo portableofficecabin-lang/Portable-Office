@@ -51,6 +51,8 @@ export const STEP_OF_KIND: Record<ColonyPartKind, ColonyAssemblyStep> = {
   "base-beam": 6,
   column: 7,
   joist: 8,
+  /* The lattice body of a floor rafter goes in WITH its top chord — one shop-welded unit. */
+  "joist-web": 8,
   /* The noggin is part of the sheet-bearing frame, so it goes in with the joists — BEFORE any sheet
    * is laid over it, which is the whole reason it exists. */
   noggin: 8,
@@ -156,6 +158,7 @@ export const EXPLODE_OF_KIND: Record<ColonyPartKind, Vec3> = {
   "base-beam": { x: 0, y: 0, z: -1.1 },
   column: { x: 0, y: 0, z: 0.4 },
   joist: { x: 0, y: 0, z: -0.6 },
+  "joist-web": { x: 0, y: 0, z: -0.75 },
   noggin: { x: 0, y: 0, z: -0.75 },
   /* The sheets lift CLEAR of the joists in the exploded view — that separation is what lets the
    * viewer read the support grid underneath and see that every joint lands on a member. */
@@ -247,7 +250,7 @@ export const LAYER_OF_KIND: Record<ColonyPartKind, ColonyPartLayer> = {
   pcc: "foundation", footing: "foundation", pedestal: "foundation", "plinth-beam": "foundation",
   "levelling-plate": "foundation", "base-plate": "connection", "anchor-bolt": "connection",
   column: "structure", stud: "structure", rail: "structure", "base-beam": "structure",
-  "floor-beam": "structure", joist: "structure", brace: "structure", noggin: "structure",
+  "floor-beam": "structure", joist: "structure", "joist-web": "structure", brace: "structure", noggin: "structure",
   "c-channel": "structure", "u-channel": "structure",
   "angle-support": "structure", "pocket-support": "structure",
   "roof-truss": "roof", rafter: "roof", "truss-web": "roof", purlin: "roof", ridge: "roof",
@@ -277,7 +280,7 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
   pcc: "#9ca3af", footing: "#78716c", pedestal: "#8b8377", "plinth-beam": "#a8a29e",
   "levelling-plate": "#52525b", "base-plate": "#3f3f46", "anchor-bolt": "#27272a",
   column: "#475569", stud: "#94a3b8", rail: "#64748b", "base-beam": "#334155",
-  "floor-beam": "#3b4a5e", joist: "#94a3b8", brace: "#0ea5e9", noggin: "#a3b3c6",
+  "floor-beam": "#3b4a5e", joist: "#94a3b8", "joist-web": "#7e94ab", brace: "#0ea5e9", noggin: "#a3b3c6",
   /* Panel-support sections read as a distinct TEAL family so the MS support framework the panels seat
    * into is instantly separable from the primary grey frame in both the 3D and the video. */
   "c-channel": "#0d9488", "u-channel": "#14b8a6", "angle-support": "#2dd4bf", "pocket-support": "#0f766e",
@@ -309,7 +312,7 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
 /** Which part families are engineering-only (hidden in the clean customer view). */
 export const ENG_ONLY = new Set<ColonyPartKind>([
   "pcc", "footing", "pedestal", "plinth-beam", "levelling-plate", "base-plate", "anchor-bolt",
-  "column", "stud", "rail", "base-beam", "floor-beam", "joist", "brace", "noggin",
+  "column", "stud", "rail", "base-beam", "floor-beam", "joist", "joist-web", "brace", "noggin",
   "c-channel", "u-channel", "angle-support", "pocket-support",
   /* The numbered sheet setting-out is a fabrication overlay ON the deck the customer already sees
    * (floor-board / floor-finish stay in the customer view untouched) — so it is engineering-only. */

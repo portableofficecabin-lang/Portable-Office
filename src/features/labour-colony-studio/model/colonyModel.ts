@@ -457,6 +457,26 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
    * of them from the cutting list. */
   const joistBayYs = uniqSorted([bodyY0, ...rowYs.filter((y) => y > bodyY0 + 1e-3 && y < bodyY1 - 1e-3), bodyY1]);
   void jDims;
+  /* FLOOR RAFTERS ARE LATTICE TRUSSES (company rule, 2026-07-23, from the site photo): each priced
+   * joist run is the TOP CHORD of a shop-welded open-web rafter — the bottom chord, end posts and
+   * zig-zag web members are drawn with it, so the model shows the member that is actually craned in
+   * rather than a plain bar. The lattice body is engineering detail (no BOQ line of its own): the
+   * priced `floor:joist` line buys the WHOLE welded unit, so placement counts against that line stay
+   * exactly one part per priced piece. The SITE joints are the bolted end cleats — a REMOVABLE
+   * (demountable) system: undo the nut-bolts and the rafter lifts out for relocation, no cutting. */
+  const RAFTER_WEB_GAP = 0.16;       // clear zig-zag zone between the chords (m)
+  const RAFTER_SPEC = {
+    role:
+      "Web member of the lattice floor rafter. The open web gives the rafter its depth (and so its "
+      + "stiffness) at a fraction of a solid beam's weight, and leaves routes for services through "
+      + "the floor zone.",
+    loadPath:
+      "Deck load → top chord → web members (alternating tension / compression) → bottom chord → "
+      + "end posts → bolted end cleats → beam → column → footing.",
+    note:
+      "Shop-welded as ONE unit with the top chord; the only SITE joints are the nut-bolted end "
+      + "cleats, so the rafter is removable — unbolt and lift out, no site cutting or welding.",
+  } as const;
   for (let f = 0; f < floors; f++) {
     const z = fflOf(f);
     const floorTag = f === 0 ? "gf" : `f${f}`;
@@ -467,9 +487,44 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
         const lineId = bindByLength("floor:joist", span, joistLineId);
         const jd = sectionForLine(lineId, "baseFrame");
         const jw2 = Math.max(MIN_VIS, jd.widthMm / 1000), jh2 = Math.max(MIN_VIS, jd.depthMm / 1000);
-        s.add(`${floorTag}:joist:${i}:${b}`, "joist", "Floor joist",
+        s.add(`${floorTag}:joist:${i}:${b}`, "joist", "Floor rafter — top chord (priced joist)",
           box(x - jw2 / 2, y0, z - jh2, x + jw2 / 2, y1, z),
-          { boqLineId: lineId, floor: f, partMark: "J", fabrication: "shop", spec: dimsSpec(jd, span) });
+          {
+            boqLineId: lineId, floor: f, partMark: "J", fabrication: "shop",
+            spec: {
+              ...dimsSpec(jd, span),
+              note: "Top chord of the lattice floor rafter — the priced joist member. "
+                + "The chords and webs ship as one shop-welded unit; the end cleats are the "
+                + "removable site joints.",
+            },
+          });
+
+        /* ---- the lattice body. On the GROUND floor the web zone is clamped so the bottom chord
+         * never digs below ground when the plinth is low; a plinth too shallow for any honest
+         * lattice keeps the plain chord alone rather than drawing a buried truss. */
+        const gap = f === 0 ? Math.min(RAFTER_WEB_GAP, z - 2 * jh2 - 0.05) : RAFTER_WEB_GAP;
+        if (gap >= 0.05) {
+          const topSoffit = z - jh2;
+          const botTop = topSoffit - gap;
+          const webT = Math.max(0.025, Math.min(jw2, 0.04));
+          s.add(`${floorTag}:rafter:${i}:${b}:chord`, "joist-web", "Floor rafter — bottom chord",
+            box(x - jw2 / 2, y0, botTop - jh2, x + jw2 / 2, y1, botTop),
+            { floor: f, partMark: "FR", fabrication: "shop", spec: { ...dimsSpec(jd, span), ...RAFTER_SPEC } });
+          ([y0 + jw2 / 2, y1 - jw2 / 2] as const).forEach((yp, pi) => {
+            s.add(`${floorTag}:rafter:${i}:${b}:post:${pi}`, "joist-web", "Floor rafter — end post",
+              box(x - jw2 / 2, yp - jw2 / 2, botTop, x + jw2 / 2, yp + jw2 / 2, topSoffit),
+              { floor: f, partMark: "FR", fabrication: "shop", spec: { ...RAFTER_SPEC } });
+          });
+          const panels = Math.max(2, Math.round(span / 0.35));
+          for (let wseg = 0; wseg < panels; wseg++) {
+            const ya = y0 + (span * wseg) / panels;
+            const yb = y0 + (span * (wseg + 1)) / panels;
+            const up = wseg % 2 === 0;
+            s.add(`${floorTag}:rafter:${i}:${b}:web:${wseg}`, "joist-web", "Floor rafter — web member",
+              braceQuad(false, x, ya, up ? botTop : topSoffit, yb, up ? topSoffit : botTop, webT),
+              { floor: f, partMark: "FR", fabrication: "shop", spec: { ...RAFTER_SPEC } });
+          }
+        }
       }
     });
     // deck: board + finish — over the walled body (the veranda gets its own chequered walkway plate)
