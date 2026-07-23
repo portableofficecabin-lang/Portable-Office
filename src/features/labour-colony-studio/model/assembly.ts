@@ -374,4 +374,9 @@ export function viewMaskOf(kind: ColonyPartKind): ViewMode[] {
 export const CONNECTION_DETAIL = new Set<ColonyPartKind>([
   "base-plate", "anchor-bolt", "gusset", "cleat", "end-plate", "splice-plate", "stiffener",
   "bolt", "nut", "washer", "weld",
+  /* The framed panel pocket is seating DETAIL for a wall that is not up yet in the structural view —
+   * standing alone it reads as a stray pipe at the wall line (user report). Gated like the other
+   * connection hardware: shown with the Connection-detail toggle, when selected, and in the assembly
+   * video at its own wall-framing step, where the studs and panels give it context. */
+  "pocket-support",
 ]);

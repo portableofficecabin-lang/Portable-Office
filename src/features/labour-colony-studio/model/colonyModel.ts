@@ -641,7 +641,11 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
      * depth, edge runs pulled in half a tube so nothing overhangs the body. */
     {
       const half = FLOOR_TUBE_H / 2;
-      const tubeYs = floorTubeYs(bodyY0, bodyY1);
+      /* GROUND floor: the two EDGE runs are dropped — each would lie ON the side rafter that
+       * already owns that line (the "pipe beside the rafter" defect); the interior module runs
+       * are the whole pipe frame the GF needs. Upper floors keep their edge runs over the field. */
+      const tubeYsAll = floorTubeYs(bodyY0, bodyY1);
+      const tubeYs = f === 0 ? tubeYsAll.slice(1, -1) : tubeYsAll;
       tubeYs.forEach((yk, k) => {
         s.add(`${floorTag}:tube:${pad2(k + 1)}`, "floor-tube", "MS pipe frame — floor tube",
           box(bodyX0, yk - half, z - FLOOR_TUBE_H, bodyX1, yk + half, z),
