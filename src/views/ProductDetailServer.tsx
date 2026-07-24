@@ -371,7 +371,10 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                    comes from sellPrice()/gstAmount() so the page can never drift from the
                    arithmetic used everywhere else on the site. */
                 <div className="bg-muted rounded-xl p-6 mb-6">
-                  <div className="text-sm font-medium text-muted-foreground">Starting from</div>
+                  <div className="text-sm font-medium text-muted-foreground">
+                    Starting from
+                    {commerce.size ? ` · ${commerce.size}` : ""}
+                  </div>
                   <div className="mt-1 flex flex-wrap items-baseline gap-x-2">
                     <span className="font-display text-4xl font-bold text-foreground">
                       {formatINR(sellPrice(commerce.basePrice))}
@@ -403,10 +406,10 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   </dl>
 
                   <p className="text-sm text-muted-foreground mt-3">
-                    Indicative project price for a standard configuration. Transport and
-                    installation are quoted separately by site. Send us your capacity,
-                    layout and location and our team will share a written quotation with
-                    the binding figure.
+                    Indicative project price for the configuration above
+                    {commerce.size ? ` (${commerce.size})` : ""}. Transport and installation
+                    are quoted separately by site. Send us your capacity, layout and location
+                    and our team will share a written quotation with the binding figure.
                   </p>
                 </div>
               ) : (

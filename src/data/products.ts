@@ -1518,6 +1518,11 @@ export const products: Product[] = [
     description: "Prefabricated labour colony — structured worker accommodation for construction sites, metro rail projects, refineries, and industrial plants. Single-storey, G+1, and G+2 modular configurations with dormitories, kitchens, toilets, and dining halls. 20–40% cheaper than RCC with 2–4 week installation across India.",
     shortDescription: "Prefab labour colonies for 50–500+ workers — G+1/G+2 modular blocks with turnkey delivery across India.",
     specifications: [
+      // First row on purpose: this is the configuration the indicative price on the page
+      // is quoted for. 80 × 24 ft = 1,920 sq ft per floor across 3 levels (G+2) = 5,760
+      // sq ft, which puts ₹42,00,000 at ~₹729/sq ft — inside the Standard PUF band listed
+      // below, so the figures on this page corroborate each other rather than conflict.
+      { label: "Priced Configuration", value: "80 ft × 24 ft, Ground + 2 Floors (G+2) — 5,760 sq ft built-up" },
       { label: "Capacity Range", value: "50–500+ workers per colony" },
       { label: "Configurations", value: "Single-storey, G+1, G+2 modular blocks" },
       { label: "Structural System", value: "MS columns & rafters, PEB structures, container modules" },

@@ -456,7 +456,11 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     showIndicativePrice: true,
     h1Title: "Labour Colony",
     feedTitle: "Prefab Labour Colony G+1 and G+2 Modular for 50-500 Workers | Portable Office Cabin",
-    size: "G+1 / G+2, 50–500+ workers", material: "50–100mm PUF/EPS Panels, PPGI", bestFor: "Labour Colonies",
+    // The size chip states the SPECIFIC configuration the indicative ₹42L price covers.
+    // It used to read "G+1 / G+2, 50–500+ workers" — a range, which was fine while the
+    // product showed no price, but alongside a figure it left the customer unable to
+    // tell what that figure actually buys. Price and size must describe the same thing.
+    size: "80 ft × 24 ft, Ground + 2 Floors (G+2)", material: "50–100mm PUF/EPS Panels, PPGI", bestFor: "Labour Colonies",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "G+1 Workmen Accommodation",
     note: "Project-scale build, priced by the labour-colony calculator.",
   },
