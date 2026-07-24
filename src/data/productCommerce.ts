@@ -78,6 +78,27 @@ export interface ProductCommerce {
    * It does NOT make the product purchasable and does NOT put it in the Merchant feed
    * — isPurchasable() and feedEligible() both still require priceConfirmed && kind
    * === "product". Set this ONLY where the owner has given you the number.
+   *
+   * ── DO NOT "PROMOTE" A showIndicativePrice SKU BY FLIPPING THE GATES ─────────────
+   * Seeing an indicative price here and thinking "it has a price, so it can go in the
+   * feed" is the exact mistake that gets a Merchant account suspended. An indicative
+   * project price is NOT a fixed payable price.
+   *
+   * Making one of these feed-eligible is a PROJECT, not a flag change. Owner-confirmed
+   * checklist — ALL of it must be true before setting kind:"product" + priceConfirmed:
+   *
+   *   1. ONE fixed, purchasable configuration exists as its own SKU
+   *      (e.g. "80 ft × 24 ft G+2 Labour Colony — ₹49,56,000 incl. GST"), not a range.
+   *   2. Add to Cart / Buy Now work for it.
+   *   3. Online checkout and payment complete end to end.
+   *   4. The SAME price appears on the card, the page, the cart, checkout, the Razorpay
+   *      order, the JSON-LD and the feed. No drift, no "starting from".
+   *   5. Availability reflects the real purchasing status.
+   *   6. Final transport + installation charges are shown BEFORE payment.
+   *   7. A successful checkout produces an order confirmation.
+   *
+   * Until every one of those holds, the correct and safest state is the current one:
+   * quote-only, live on the site for SEO and enquiries, and absent from the feed.
    */
   showIndicativePrice?: boolean;
 
