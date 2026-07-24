@@ -65,6 +65,21 @@ export interface ProductCommerce {
   compareAtBasePrice?: number;
   /** Owner has verified basePrice is a real, fixed, payable price. Gate #2. */
   priceConfirmed: boolean;
+  /**
+   * OPT-IN: show an indicative "starting from" price on a QUOTE-ONLY build.
+   *
+   * By default a quote-only SKU shows NO number — an unconfirmed figure presented as
+   * if it were payable is the misrepresentation that got the Merchant account
+   * suspended. This flag is the narrow, owner-approved exception described in
+   * src/lib/company.ts: a project build MAY show an indicative starting price so long
+   * as it is labelled as such, is shown before transport and installation, and the
+   * binding figure still comes from a written quotation.
+   *
+   * It does NOT make the product purchasable and does NOT put it in the Merchant feed
+   * — isPurchasable() and feedEligible() both still require priceConfirmed && kind
+   * === "product". Set this ONLY where the owner has given you the number.
+   */
+  showIndicativePrice?: boolean;
 
   // ── CLASSIFICATION ────────────────────────────────────────────────────────────────
   kind: ProductKind;
@@ -434,10 +449,18 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     note: "Project-scale build, priced by the labour-colony calculator.",
   },
   {
-    id: "40", sku: "POC-LC-PREFAB", basePrice: 2200000, priceConfirmed: false, kind: "custom", inStock: true,
+    // Owner-supplied indicative project price: ₹42,00,000 ex-GST → ₹49,56,000 inc. 18% GST.
+    // Stays kind:"custom" + priceConfirmed:false, so it remains quote-only (no Add to Cart)
+    // and stays OUT of the Merchant feed; showIndicativePrice only reveals the figure.
+    id: "40", sku: "POC-LC-PREFAB", basePrice: 4200000, priceConfirmed: false, kind: "custom", inStock: true,
+    showIndicativePrice: true,
     h1Title: "Labour Colony",
     feedTitle: "Prefab Labour Colony G+1 and G+2 Modular for 50-500 Workers | Portable Office Cabin",
-    size: "G+1 / G+2, 50–500+ workers", material: "50–100mm PUF/EPS Panels, PPGI", bestFor: "Labour Colonies",
+    // The size chip states the SPECIFIC configuration the indicative ₹42L price covers.
+    // It used to read "G+1 / G+2, 50–500+ workers" — a range, which was fine while the
+    // product showed no price, but alongside a figure it left the customer unable to
+    // tell what that figure actually buys. Price and size must describe the same thing.
+    size: "80 ft × 24 ft, Ground + 2 Floors (G+2)", material: "50–100mm PUF/EPS Panels, PPGI", bestFor: "Labour Colonies",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "G+1 Workmen Accommodation",
     note: "Project-scale build, priced by the labour-colony calculator.",
   },

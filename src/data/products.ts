@@ -1,6 +1,14 @@
 import msContainerOfficeCabinMain from "@/assets/products/ms-container-office-cabin-main.webp";
 import officePortableCabinMain from "@/assets/products/office-portable-cabin-main.webp";
 import labourHutmentsMain from "@/assets/products/labour-hutments-staff-accommodation-1.webp";
+// Labour Colony gallery (product id 40): the existing aerial image (already the live
+// main image, via the single-image map in productImages.ts) followed by four
+// owner-supplied site photos of real prefab labour colonies. Five images total.
+import labourColonyAerial from "@/assets/products/labour-colony-aerial.png";
+import labourColonyNew1 from "@/assets/products/labour-colony-new-1.webp";
+import labourColonyNew2 from "@/assets/products/labour-colony-new-2.webp";
+import labourColonyNew3 from "@/assets/products/labour-colony-new-3.webp";
+import labourColonyNew4 from "@/assets/products/labour-colony-new-4.webp";
 
 export interface Product {
   id: string;
@@ -20,7 +28,16 @@ export interface Product {
     value: string;
   }[];
   features: string[];
-  images: string[];
+  /**
+   * Either a public-path string ("/images/products/foo.webp") or a static import.
+   *
+   * Both forms have always been used here — a static import is what lets Next
+   * fingerprint and optimize the asset — but the field was typed `string[]`, so every
+   * static-import entry was a type error. The shape below matches what
+   * resolveImageUrl() actually accepts (it reads `.src` when present), so the type
+   * now describes the real contract instead of contradicting it.
+   */
+  images: Array<string | { src: string }>;
   price?: number;
   priceLabel?: string;
   featured: boolean;
@@ -1501,6 +1518,11 @@ export const products: Product[] = [
     description: "Prefabricated labour colony — structured worker accommodation for construction sites, metro rail projects, refineries, and industrial plants. Single-storey, G+1, and G+2 modular configurations with dormitories, kitchens, toilets, and dining halls. 20–40% cheaper than RCC with 2–4 week installation across India.",
     shortDescription: "Prefab labour colonies for 50–500+ workers — G+1/G+2 modular blocks with turnkey delivery across India.",
     specifications: [
+      // First row on purpose: this is the configuration the indicative price on the page
+      // is quoted for. 80 × 24 ft = 1,920 sq ft per floor across 3 levels (G+2) = 5,760
+      // sq ft, which puts ₹42,00,000 at ~₹729/sq ft — inside the Standard PUF band listed
+      // below, so the figures on this page corroborate each other rather than conflict.
+      { label: "Priced Configuration", value: "80 ft × 24 ft, Ground + 2 Floors (G+2) — 5,760 sq ft built-up" },
       { label: "Capacity Range", value: "50–500+ workers per colony" },
       { label: "Configurations", value: "Single-storey, G+1, G+2 modular blocks" },
       { label: "Structural System", value: "MS columns & rafters, PEB structures, container modules" },
@@ -1522,8 +1544,17 @@ export const products: Product[] = [
       "Compliance with BIS, NBC 2016, BOCW Act, and client EHS/ESG audit standards",
       "Pan-India delivery across Mumbai, Ahmedabad, Hyderabad, Kanpur, and 20+ states with after-sales support",
     ],
-    images: [],
-    price: 2200000,
+    // Five-image gallery. The page previously fell back to a single image because this
+    // array was empty (see galleryImages in ProductDetailServer) — these five assets
+    // were already in the repo but only the aerial one was ever reachable.
+    images: [
+      labourColonyAerial,
+      labourColonyNew1,
+      labourColonyNew2,
+      labourColonyNew3,
+      labourColonyNew4,
+    ],
+    price: 4200000,
     priceLabel: "Starting Price (GST & Transport Extra)",
     featured: true,
     inStock: true,
