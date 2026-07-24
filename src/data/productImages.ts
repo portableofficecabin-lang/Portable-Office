@@ -176,7 +176,11 @@ export const getProductImage = (categorySlug: string): string => {
 export const getBestProductImage = (
   productId: string,
   categorySlug: string,
-  existingImage?: string,
+  // Accepts a path string OR a static image import ({ src }). The body already
+  // normalises via resolveImageUrl(), so this only widens the type to match what
+  // callers pass (product.images[0] is Array<string | { src }>). Fixing it here fixes
+  // every call site — ProductCard, FeaturedProducts and the [slug] page — at once.
+  existingImage?: string | { src: string },
   sku?: string
 ): string => {
   // First, check for product-specific image

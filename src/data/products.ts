@@ -1,13 +1,14 @@
 import msContainerOfficeCabinMain from "@/assets/products/ms-container-office-cabin-main.webp";
 import officePortableCabinMain from "@/assets/products/office-portable-cabin-main.webp";
 import labourHutmentsMain from "@/assets/products/labour-hutments-staff-accommodation-1.webp";
-// Labour Colony gallery (product id 40). All five already lived in src/assets/products/
-// but only the aerial one was wired up, via the single-image map in productImages.ts.
+// Labour Colony gallery (product id 40): the existing aerial image (already the live
+// main image, via the single-image map in productImages.ts) followed by four
+// owner-supplied site photos of real prefab labour colonies. Five images total.
 import labourColonyAerial from "@/assets/products/labour-colony-aerial.png";
-import labourColonyCamp from "@/assets/products/labour-colony-camp.webp";
-import labourColonyG1 from "@/assets/products/labour-colony-g1.webp";
-import labourColonyModular from "@/assets/products/labour-colony-modular.webp";
-import labourColonySite from "@/assets/products/labour-colony-site.webp";
+import labourColonyNew1 from "@/assets/products/labour-colony-new-1.webp";
+import labourColonyNew2 from "@/assets/products/labour-colony-new-2.webp";
+import labourColonyNew3 from "@/assets/products/labour-colony-new-3.webp";
+import labourColonyNew4 from "@/assets/products/labour-colony-new-4.webp";
 
 export interface Product {
   id: string;
@@ -1543,10 +1544,10 @@ export const products: Product[] = [
     // were already in the repo but only the aerial one was ever reachable.
     images: [
       labourColonyAerial,
-      labourColonyCamp,
-      labourColonyG1,
-      labourColonyModular,
-      labourColonySite,
+      labourColonyNew1,
+      labourColonyNew2,
+      labourColonyNew3,
+      labourColonyNew4,
     ],
     price: 4200000,
     priceLabel: "Starting Price (GST & Transport Extra)",
