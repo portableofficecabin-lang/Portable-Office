@@ -22,7 +22,7 @@ import { getImageCaption } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
 import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
-import { formatINR, sellPrice } from "@/lib/pricing/gst";
+import { GST_PERCENT_LABEL, formatINR, gstAmount, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { getProductH1, getProductPrimaryKeyword, getProductSEO } from "@/data/productSEO";
@@ -80,7 +80,9 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
   const fallbackImage = getBestProductImage(
     product.id,
     product.categorySlug,
-    product.images?.[0],
+    // images[] holds either a path string or a static import; normalise to a URL
+    // first, exactly as galleryImages does below, so both forms behave identically.
+    resolveImageUrl(product.images?.[0]) || undefined,
     product.sku,
   );
   const galleryImages = (() => {
@@ -358,6 +360,53 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   <p className="text-sm text-muted-foreground mt-3">
                     Transport &amp; installation charges calculated at checkout based on delivery
                     pincode.
+                  </p>
+                </div>
+              ) : commerce?.showIndicativePrice ? (
+                /* QUOTE-ONLY, but the owner has supplied an indicative project price.
+                   The figure is shown as a clearly-labelled "starting from" with GST
+                   broken out and the total spelled in full, so nothing is implied to be
+                   payable online: there is no Add to Cart, and feedEligible() still
+                   excludes this SKU (kind:"custom" + priceConfirmed:false). Every number
+                   comes from sellPrice()/gstAmount() so the page can never drift from the
+                   arithmetic used everywhere else on the site. */
+                <div className="bg-muted rounded-xl p-6 mb-6">
+                  <div className="text-sm font-medium text-muted-foreground">Starting from</div>
+                  <div className="mt-1 flex flex-wrap items-baseline gap-x-2">
+                    <span className="font-display text-4xl font-bold text-foreground">
+                      {formatINR(sellPrice(commerce.basePrice))}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      incl. {GST_PERCENT_LABEL} GST
+                    </span>
+                  </div>
+
+                  <dl className="mt-4 space-y-1.5 border-t border-border/60 pt-3 text-sm">
+                    <div className="flex items-center justify-between gap-4">
+                      <dt className="text-muted-foreground">Base price (excl. GST)</dt>
+                      <dd className="font-medium text-foreground">
+                        {formatINR(commerce.basePrice)}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <dt className="text-muted-foreground">GST @ {GST_PERCENT_LABEL}</dt>
+                      <dd className="font-medium text-foreground">
+                        {formatINR(gstAmount(commerce.basePrice))}
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 border-t border-border/60 pt-2">
+                      <dt className="font-semibold text-foreground">Total payable</dt>
+                      <dd className="font-display text-lg font-bold text-foreground">
+                        {formatINR(sellPrice(commerce.basePrice))}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <p className="text-sm text-muted-foreground mt-3">
+                    Indicative project price for a standard configuration. Transport and
+                    installation are quoted separately by site. Send us your capacity,
+                    layout and location and our team will share a written quotation with
+                    the binding figure.
                   </p>
                 </div>
               ) : (

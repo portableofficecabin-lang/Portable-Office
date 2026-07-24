@@ -1,6 +1,13 @@
 import msContainerOfficeCabinMain from "@/assets/products/ms-container-office-cabin-main.webp";
 import officePortableCabinMain from "@/assets/products/office-portable-cabin-main.webp";
 import labourHutmentsMain from "@/assets/products/labour-hutments-staff-accommodation-1.webp";
+// Labour Colony gallery (product id 40). All five already lived in src/assets/products/
+// but only the aerial one was wired up, via the single-image map in productImages.ts.
+import labourColonyAerial from "@/assets/products/labour-colony-aerial.png";
+import labourColonyCamp from "@/assets/products/labour-colony-camp.webp";
+import labourColonyG1 from "@/assets/products/labour-colony-g1.webp";
+import labourColonyModular from "@/assets/products/labour-colony-modular.webp";
+import labourColonySite from "@/assets/products/labour-colony-site.webp";
 
 export interface Product {
   id: string;
@@ -20,7 +27,16 @@ export interface Product {
     value: string;
   }[];
   features: string[];
-  images: string[];
+  /**
+   * Either a public-path string ("/images/products/foo.webp") or a static import.
+   *
+   * Both forms have always been used here — a static import is what lets Next
+   * fingerprint and optimize the asset — but the field was typed `string[]`, so every
+   * static-import entry was a type error. The shape below matches what
+   * resolveImageUrl() actually accepts (it reads `.src` when present), so the type
+   * now describes the real contract instead of contradicting it.
+   */
+  images: Array<string | { src: string }>;
   price?: number;
   priceLabel?: string;
   featured: boolean;
@@ -1522,8 +1538,17 @@ export const products: Product[] = [
       "Compliance with BIS, NBC 2016, BOCW Act, and client EHS/ESG audit standards",
       "Pan-India delivery across Mumbai, Ahmedabad, Hyderabad, Kanpur, and 20+ states with after-sales support",
     ],
-    images: [],
-    price: 2200000,
+    // Five-image gallery. The page previously fell back to a single image because this
+    // array was empty (see galleryImages in ProductDetailServer) — these five assets
+    // were already in the repo but only the aerial one was ever reachable.
+    images: [
+      labourColonyAerial,
+      labourColonyCamp,
+      labourColonyG1,
+      labourColonyModular,
+      labourColonySite,
+    ],
+    price: 4200000,
     priceLabel: "Starting Price (GST & Transport Extra)",
     featured: true,
     inStock: true,
