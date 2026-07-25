@@ -109,6 +109,14 @@ interface Quotation {
   client_state: string;
   client_pincode: string;
   client_gst: string;
+  // Buyer PAN and a generic buyer tax identifier, shown on every document type
+  // (quotation / proforma / invoice / challan). Kept alongside client_gst because
+  // they are the same kind of buyer statutory reference and render in the same block.
+  // Like client_gst, these live in the full Quote object (localStorage) and are NOT
+  // columns on the lightweight `quotations` sync table, so they need no migration to
+  // appear on documents.
+  client_pan: string;
+  client_tax_id: string;
   contact_person: string;
   contact_number: string;
   client_email: string;
@@ -527,6 +535,8 @@ interface SavedClient {
   state?: string;
   pincode?: string;
   gst: string;
+  pan?: string;
+  tax_id?: string;
   contact_person: string;
   contact_number: string;
   email: string;
@@ -647,6 +657,8 @@ const blankQuotation = (): Quotation => ({
   client_state: "",
   client_pincode: "",
   client_gst: "",
+  client_pan: "",
+  client_tax_id: "",
   contact_person: "",
   contact_number: "",
   client_email: "",
@@ -921,6 +933,7 @@ export default function QuotationPro() {
       const hay = [
         q.quotation_number, q.client_name, q.client_company, q.contact_person,
         q.client_email, q.contact_number, q.site_location, q.po_number,
+        q.client_gst, q.client_pan, q.client_tax_id,
         ...(q.items || []).map((i) => `${i.product_name} ${i.cabin_type}`),
       ].filter(Boolean).join(" ").toLowerCase();
       return hay.includes(term);
@@ -2259,6 +2272,10 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
       state: p.state || "",
       pincode: p.pincode || "",
       gst: p.gstin || "",
+      // Reading a column that may not exist yet (pre-migration) is safe — it just
+      // yields undefined and falls back to "". Writing them is guarded in saveAsClient.
+      pan: p.pan || "",
+      tax_id: p.tax_id || "",
       contact_person: p.contact_person || "",
       contact_number: p.phone || "",
       email: p.email || "",
@@ -2293,6 +2310,8 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
       client_state: c.state || "",
       client_pincode: c.pincode || "",
       client_gst: c.gst,
+      client_pan: c.pan || "",
+      client_tax_id: c.tax_id || "",
       contact_person: c.contact_person,
       contact_number: c.contact_number,
       client_email: c.email,
@@ -2338,22 +2357,43 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
       state: q.client_state || null,
       pincode: q.client_pincode || null,
       gstin: q.client_gst || null,
+      pan: q.client_pan || null,
+      tax_id: q.client_tax_id || null,
       contact_person: q.contact_person || null,
       phone: q.contact_number || null,
       email: q.client_email || null,
       site_location: q.site_location || null,
       party_type: "customer",
     };
+    // pan / tax_id require the parties columns from migration 20260725 (pan already
+    // exists via 20260708120000; tax_id is the new one). If the DB has not been
+    // migrated yet, PostgREST rejects the whole write (PGRST204: "Could not find the
+    // 'tax_id' column ... in the schema cache"). We retry without those two so the
+    // client still saves — the values already print on the document (they live in the
+    // Quote object); only the saved-client memory of them waits for the migration.
+    const isMissingNewCol = (error: { code?: string; message?: string } | null) =>
+      !!error && (error.code === "PGRST204" || /schema cache|'?pan'?|'?tax_id'?/i.test(error.message || ""));
+    const { pan: _pan, tax_id: _taxId, ...legacyPayload } = payload;
+    // Single untyped handle: `parties` is not in the generated Supabase types, which is
+    // why every call in this view reaches it through one cast rather than many.
+    const db = supabase as unknown as { from: (t: string) => any };
+
     if (selectedId) {
-      const { error } = await (supabase as any).from("parties").update(payload).eq("id", selectedId);
+      let { error } = await db.from("parties").update(payload).eq("id", selectedId);
+      if (isMissingNewCol(error)) {
+        ({ error } = await db.from("parties").update(legacyPayload).eq("id", selectedId));
+      }
       if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
       await reloadClients();
       toast({ title: "Client updated", description: q.client_name });
     } else {
-      const { data, error } = await (supabase as any).from("parties").insert(payload).select("id").single();
-      if (error) return toast({ title: "Error", description: error.message, variant: "destructive" });
+      let ins = await db.from("parties").insert(payload).select("id").single();
+      if (isMissingNewCol(ins.error)) {
+        ins = await db.from("parties").insert(legacyPayload).select("id").single();
+      }
+      if (ins.error) return toast({ title: "Error", description: ins.error.message, variant: "destructive" });
       await reloadClients();
-      setSelectedId(data.id);
+      setSelectedId(ins.data.id);
       toast({ title: "Client saved", description: q.client_name });
     }
   };
@@ -2585,6 +2625,11 @@ function ClientTab({ q, set }: { q: Quotation; set: (patch: Partial<Quotation>) 
               />
             </Field>
             <Field label="GST Number"><Input value={q.client_gst} onChange={(e) => set({ client_gst: e.target.value.toUpperCase() })} placeholder="29ABCDE1234F1Z5" /></Field>
+            {/* PAN is uppercased and capped at 10 chars (ABCDE1234F). Buyer Tax ID is a
+                free-form identifier (no format enforced — it may be a foreign TIN, a
+                TAN, etc.), so it is only trimmed of surrounding whitespace on blur. */}
+            <Field label="PAN Card Detail"><Input value={q.client_pan} onChange={(e) => set({ client_pan: e.target.value.toUpperCase().slice(0, 10) })} placeholder="ABCDE1234F" /></Field>
+            <Field label="Buyer Tax ID"><Input value={q.client_tax_id} onChange={(e) => set({ client_tax_id: e.target.value })} placeholder="Tax identification number" /></Field>
             <Field label="Contact Person"><Input value={q.contact_person} onChange={(e) => set({ contact_person: e.target.value })} /></Field>
             <Field label="Contact Number"><Input value={q.contact_number} onChange={(e) => set({ contact_number: e.target.value })} /></Field>
             <Field label="Email ID"><Input type="email" value={q.client_email} onChange={(e) => set({ client_email: e.target.value })} /></Field>
@@ -3018,6 +3063,8 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         doc.text(sp, M + 2, yL); yL += 4;
       }
       if (q.client_gst) { doc.text(`GSTIN: ${q.client_gst}`, M + 2, yL); yL += 4; }
+      if (q.client_pan) { doc.text(`PAN: ${q.client_pan}`, M + 2, yL); yL += 4; }
+      if (q.client_tax_id) { doc.text(`Tax ID: ${q.client_tax_id}`, M + 2, yL); yL += 4; }
       if (q.contact_person) { doc.text(`Contact: ${q.contact_person}`, M + 2, yL); yL += 4; }
       if (q.contact_number) { doc.text(`Phone: ${q.contact_number}`, M + 2, yL); yL += 4; }
       if (q.client_email) { doc.text(`Email: ${q.client_email}`, M + 2, yL); yL += 4; }
@@ -3864,6 +3911,8 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
                 </div>
               )}
               {q.client_gst && <div className="mt-0.5 break-all">GSTIN: <span className="font-mono">{q.client_gst}</span></div>}
+              {q.client_pan && <div className="break-all">PAN: <span className="font-mono">{q.client_pan}</span></div>}
+              {q.client_tax_id && <div className="break-all">Tax ID: <span className="font-mono">{q.client_tax_id}</span></div>}
               {q.contact_person && <div className="text-gray-700 break-words">Contact: {q.contact_person}</div>}
               {q.contact_number && <div className="text-gray-700 break-words">Phone: {q.contact_number}</div>}
               {q.client_email && <div className="text-gray-700 break-all">Email: {q.client_email}</div>}
