@@ -31,7 +31,6 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { imageToPngDataUrl } from "@/lib/pdf/imageToPng";
 import logoImg from "@/assets/logo.webp";
-import sealImg from "@/assets/signature-seal.webp";
 
 /* ==================== TYPES ==================== */
 interface ProductItem {
@@ -2835,33 +2834,9 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
       try { localStorage.setItem(wmKey, JSON.stringify(next)); } catch { /* ignore */ }
       return next;
     });
-  const APPROVAL_ROLES = [
-    "Managing Director (MD) / Director",
-    "CEO / General Manager",
-    "Purchase Manager / Procurement Manager",
-    "Commercial Manager",
-    "Project Manager",
-    "Contracts Manager",
-    "Operations Manager",
-  ] as const;
-  type ApprovalRole = typeof APPROVAL_ROLES[number];
-  // Persist the chosen approver per quotation (same approach as watermarks) so it
-  // is restored without rework when the quotation is reopened.
-  const apprKey = `poc_qp_appr_${q.id}`;
-  const [approver, setApproverState] = useState<ApprovalRole | null>(() => {
-    try {
-      const saved = typeof window !== "undefined" ? localStorage.getItem(apprKey) : null;
-      if (saved && (APPROVAL_ROLES as readonly string[]).includes(saved)) return saved as ApprovalRole;
-    } catch { /* ignore */ }
-    return null;
-  });
-  const setApprover = (role: ApprovalRole | null) => {
-    setApproverState(role);
-    try {
-      if (role) localStorage.setItem(apprKey, role);
-      else localStorage.removeItem(apprKey);
-    } catch { /* ignore */ }
-  };
+  // The "Approved By" selector and its per-quotation persistence were removed together with the
+  // "APPROVED BY" stamp they existed solely to drive. The green APPROVED *watermark* is unrelated —
+  // it is driven by the quotation status, not by any approver state.
   const [upiQr, setUpiQr] = useState<string>("");
   const upiNote = `${q.quotation_number} ${q.client_name || ""}`.trim();
   const upiUri = useMemo(() => buildUpiUri(payable, upiNote), [payable, upiNote]);
@@ -3557,37 +3532,13 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         y += blockH + 2;
       }
 
-      // Signature — large real seal (~75mm × 45mm)
-      if (y + 60 > 285) { doc.addPage(); y = 210; }
-      try {
-        const sealData = await imageToPngDataUrl(sealImg, { maxWidth: 700, format: "jpeg", quality: 0.82, background: "#ffffff" });
-        if (sealData) doc.addImage(sealData, "JPEG", W - M - 78, y, 75, 45);
-      } catch {}
-      doc.setFontSize(8); doc.setFont("helvetica", "normal");
-      doc.text("For " + COMPANY.name, W - M - 2, y + 51, { align: "right" });
-      doc.setFont("helvetica", "bold"); doc.text("Authorized Signatory (Digitally Signed)", W - M - 2, y + 55, { align: "right" });
+      // Signature block removed. The seal image, "Authorized Signatory" line and the
+      // "Approved By" stamp were dropped per request; only the computer-generated-document
+      // disclaimer remains so the quote still states it is valid without a physical signature.
+      if (y + 12 > 285) { doc.addPage(); y = 210; }
       doc.setFont("helvetica", "italic"); doc.setFontSize(7); doc.setTextColor(100);
-      doc.text("This is a computer-generated document. No physical signature or seal is required.", W / 2, y + 62, { align: "center" });
+      doc.text("This is a computer-generated document. No physical signature or seal is required.", W / 2, y + 6, { align: "center" });
       doc.setTextColor(0);
-
-      // Approval stamp under signature
-      if (approver) {
-        const sx = W - M - 78;
-        const sy = y + 66;
-        const sw = 75;
-        const sh = 16;
-        doc.setDrawColor(30, 64, 175);
-        doc.setLineWidth(0.6);
-        doc.roundedRect(sx, sy, sw, sh, 1.5, 1.5);
-        doc.setTextColor(30, 64, 175);
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(8);
-        doc.text("APPROVED BY", sx + sw / 2, sy + 5, { align: "center" });
-        doc.setFontSize(7.5);
-        const lines = doc.splitTextToSize(approver, sw - 4);
-        doc.text(lines, sx + sw / 2, sy + 10, { align: "center" });
-        doc.setTextColor(0);
-      }
 
 
       // Footer
@@ -3661,15 +3612,13 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
 
   const printIt = () => window.print();
 
-  // Save PDF: persist the selected watermark + approver for this quotation (so they
-  // are remembered on reopen), then generate and download the PDF.
+  // Save PDF: persist the selected watermark for this quotation (so it is
+  // remembered on reopen), then generate and download the PDF.
   const saveSettingsAndDownload = async () => {
     try {
       localStorage.setItem(wmKey, JSON.stringify(watermarks));
-      if (approver) localStorage.setItem(apprKey, approver);
-      else localStorage.removeItem(apprKey);
     } catch { /* ignore */ }
-    toast({ title: "Settings saved", description: "Watermark & approver will be remembered for this quotation." });
+    toast({ title: "Settings saved", description: "Watermark will be remembered for this quotation." });
     await downloadPdf();
   };
 
@@ -3733,30 +3682,6 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
             <span>{w.label}</span>
           </label>
         ))}
-      </div>
-
-      {/* Approval (Approved By) toolbar */}
-      <div className="print:hidden flex flex-wrap items-center gap-2 rounded-lg border bg-muted/30 p-2.5">
-        <span className="text-xs font-semibold text-muted-foreground px-1">Approved By:</span>
-        {APPROVAL_ROLES.map((role) => {
-          const active = approver === role;
-          return (
-            <Button
-              key={role}
-              size="sm"
-              variant={active ? "accent" : "outline"}
-              onClick={() => setApprover(active ? null : role)}
-              className="h-7 text-xs"
-            >
-              {role}
-            </Button>
-          );
-        })}
-        {approver && (
-          <Button size="sm" variant="ghost" onClick={() => setApprover(null)} className="h-7 text-xs text-muted-foreground">
-            Clear
-          </Button>
-        )}
       </div>
 
       {/* A4 preview */}
@@ -4302,26 +4227,11 @@ function QuotationPreview({ quotation, onBack, onEdit, onConvert }: { quotation:
         )}
 
 
-        {/* Signature */}
-        <div className="mt-8 flex justify-between items-end">
-          <div className="text-[10px] text-gray-600">
-            <div>Thank you for your business.</div>
-            <div className="mt-1">For queries: {COMPANY.phone}</div>
-          </div>
-          <div className="text-right text-xs">
-            <img src={resolveImageUrl(sealImg)} alt="Company Seal & Digital Signature" className="w-72 h-44 object-contain ml-auto" />
-            <div className="mt-1">For <b>{COMPANY.name}</b></div>
-            <div className="font-bold border-t pt-1 mt-1">Authorized Signatory (Digitally Signed)</div>
-            {approver && (
-              <div
-                className="mt-2 ml-auto inline-block rounded-md border-2 px-3 py-1.5 text-right"
-                style={{ borderColor: "#1e40af", color: "#1e40af", transform: "rotate(-3deg)", maxWidth: "18rem" }}
-              >
-                <div className="text-[9px] font-bold tracking-wider">APPROVED BY</div>
-                <div className="text-[10px] font-bold leading-tight">{approver}</div>
-              </div>
-            )}
-          </div>
+        {/* Signature block removed per request — no seal image, "Authorized Signatory" line or
+            "Approved By" stamp. The courtesy note and the disclaimers below are kept. */}
+        <div className="mt-8 text-[10px] text-gray-600">
+          <div>Thank you for your business.</div>
+          <div className="mt-1">For queries: {COMPANY.phone}</div>
         </div>
         <div className="mt-2 text-center text-[9px] italic text-gray-500">
           This is a computer-generated document. No physical signature or seal is required.
