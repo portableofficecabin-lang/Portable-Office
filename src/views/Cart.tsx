@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { SEOHead } from "@/components/SEOHead";
 import { computeTotals } from "@/lib/pricing/orderTotals";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
-import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ShoppingBag, Loader2 } from "lucide-react";
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Loader2 } from "lucide-react";
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, isLoading } = useCart();
@@ -32,11 +33,23 @@ export default function CartPage() {
   return (
     <Layout>
       <SEOHead title="Cart | Portable Office Cabin" description="View and manage the products in your cart." />
+
+      {/* This page used to open on a bare in-flow <h1>, so it began abruptly while every other
+          page on the site opens on the navy PageHero band. Same hero here for consistency —
+          there was no contrast defect to fix, only an inconsistency. */}
+      <PageHero
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Cart" }]}
+        title="Your Cart"
+        meta={
+          !isLoading && items.length > 0
+            ? `${items.length} ${items.length === 1 ? "item" : "items"} ready for checkout`
+            : undefined
+        }
+        size="compact"
+      />
+
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
-          <h1 className="font-display text-3xl font-bold text-foreground mb-8 flex items-center gap-3">
-            <ShoppingCart className="h-8 w-8 text-accent" /> Your Cart
-          </h1>
 
           {isLoading ? (
             <div className="text-center py-16">

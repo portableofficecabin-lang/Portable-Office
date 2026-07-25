@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -137,43 +138,42 @@ export default function MyAccountPage() {
     <Layout>
       <SEOHead title="My Account | Portable Office Cabin" description="Manage your profile and track your quote requests." />
 
-      {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/80">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
-        </div>
-        <div className="container-custom relative z-10 py-10 md:py-14">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="flex items-center gap-4">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center">
-                <span className="text-3xl md:text-4xl font-bold text-accent">{firstName.charAt(0).toUpperCase()}</span>
-              </div>
-              <div>
-                <p className="text-primary-foreground/70 text-sm font-medium">{greeting} 👋</p>
-                <h1 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">{firstName}</h1>
-                <div className="flex items-center gap-3 mt-1">
-                  <span className="text-primary-foreground/60 text-sm flex items-center gap-1">
-                    <Award className="h-3.5 w-3.5" /> Member since {memberSince}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex gap-2 flex-wrap">
-              {!authLoading && isAdmin && (
-                <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg">
-                  <Link href="/admin">
-                    <Shield className="mr-2 h-4 w-4" /> Admin Dashboard
-                  </Link>
-                </Button>
-              )}
-              <Button variant="outline" size="sm" onClick={handleLogout} className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground">
-                <LogOut className="mr-2 h-4 w-4" /> Logout
+      {/* Hero Banner.
+          Was `bg-gradient-to-br from-primary ...` with `text-primary-foreground` copy. In this theme
+          --primary is AMBER and --primary-foreground is DARK NAVY, so the band rendered dark navy on
+          orange: the greeting sat at ~4.4:1 and "Member since" at ~3.5:1, both under AA. Worse, the
+          avatar initial was `text-accent` on `bg-accent/20` — amber on amber, ~1:1, invisible. Now
+          the shared PageHero band, where the same amber initial reads at 7.0:1. */}
+      <PageHero
+        eyebrow={`${greeting} 👋`}
+        title={firstName}
+        meta={
+          <span className="flex items-center gap-1.5">
+            <Award className="h-3.5 w-3.5 text-accent" /> Member since {memberSince}
+          </span>
+        }
+        leading={
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+              <span className="text-3xl md:text-4xl font-bold text-accent">{firstName.charAt(0).toUpperCase()}</span>
+            </div>
+          </motion.div>
+        }
+        actions={
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex gap-2 flex-wrap">
+            {!authLoading && isAdmin && (
+              <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg">
+                <Link href="/admin">
+                  <Shield className="mr-2 h-4 w-4" /> Admin Dashboard
+                </Link>
               </Button>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+            )}
+            <Button variant="outline" size="sm" onClick={handleLogout} className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white">
+              <LogOut className="mr-2 h-4 w-4" /> Logout
+            </Button>
+          </motion.div>
+        }
+      />
 
       {/* Tab Navigation */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-md border-b border-border/50">
