@@ -465,10 +465,19 @@ export default function CheckoutPage() {
                   <h2 className="font-display font-semibold text-lg mb-4">Order Summary</h2>
 
                   <div className="space-y-3 mb-4">
+                    {/* grid-cols-[minmax(0,1fr)_auto], NOT flex — truncate only ellipsizes once
+                        its box is constrained, but nothing constrained it: in intrinsic (min-
+                        content) sizing the nowrap product name counts at full width, and
+                        min-width can only RAISE a contribution, never cap it, so as a flex row
+                        this name propagated ~347px of min-content up through the card and held
+                        the whole checkout wider than a small phone. A minmax(0,1fr) track's
+                        minimum genuinely is 0, so the name column shrinks and the ellipsis
+                        finally engages; the auto column keeps the price hugged to the right
+                        edge exactly as justify-between did. */}
                     {totals.lines.map(line => (
-                      <div key={line.productId} className="flex justify-between text-sm gap-2">
+                      <div key={line.productId} className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 text-sm">
                         <span className="text-muted-foreground truncate">{line.name} × {line.quantity}</span>
-                        <span className="font-medium shrink-0">{formatINR(line.lineTotal)}</span>
+                        <span className="font-medium text-right">{formatINR(line.lineTotal)}</span>
                       </div>
                     ))}
                   </div>
@@ -479,11 +488,13 @@ export default function CheckoutPage() {
                       <span className="font-medium">{formatINR(totals.itemsSubtotal)}</span>
                     </div>
 
-                    <div className="flex justify-between gap-2">
+                    {/* Same minmax(0,1fr) grid as the line items above — a long zone name
+                        must not set the card's minimum width either. */}
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
                       <span className="text-muted-foreground truncate">
                         {totals.zone ? `Transport (${totals.zone.name})` : "Transport"}
                       </span>
-                      <span className="font-medium shrink-0">
+                      <span className="font-medium text-right">
                         {totals.shipping === null
                           ? <span className="text-muted-foreground">Enter pincode</span>
                           : totals.shipping === 0
@@ -540,11 +551,21 @@ export default function CheckoutPage() {
                       The override is `!`-important: tailwind-merge can't dedupe `shadow-accent`
                       (it reads the theme's `accent` token as a shadow COLOUR, not a box-shadow), so
                       without `!` both shadows would apply and CSS source order would decide. */}
+                  {/* Below lg: whitespace-normal + h-auto override the button base's
+                      whitespace-nowrap and size-lg's fixed h-12. With nowrap, the longest
+                      state label ("Enter your contact details to continue" + the lock icon
+                      + px-8) has a min-content of ~387px; the card's p-6 turned that into a
+                      435px grid track, dragging the whole checkout to 451px scrollWidth on
+                      phones — THE mobile overflow.
+                      At lg+ the nowrap/h-12 pair is deliberately RESTORED: the three-column
+                      grid has room for the label, and that same min-content is what has
+                      always sized the desktop summary column at ~435px — keeping it makes
+                      the desktop render pixel-identical to before this fix. */}
                   <Button
                     type="submit"
                     variant="accent"
                     size="lg"
-                    className="w-full mt-6 !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
+                    className="w-full mt-6 h-auto min-h-12 whitespace-normal lg:h-12 lg:whitespace-nowrap !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
                     disabled={loading || !totals.payable || !contactComplete}
                   >
                     <Lock className="mr-2 h-4 w-4" />
