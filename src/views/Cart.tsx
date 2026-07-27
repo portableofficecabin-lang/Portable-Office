@@ -71,12 +71,19 @@ export default function CartPage() {
             <div className="space-y-4">
               {items.map(item => {
                 const line = lineByProduct.get(item.product_id);
+                /* Below sm the row's fixed parts (image + qty controls + remove + gaps +
+                   padding) alone exceed a 320px viewport, so the name column was crushed to
+                   nothing and the remove button pushed past the screen edge. Wrapping lets
+                   the qty/remove controls drop to their own line on phones — nothing hidden,
+                   nothing truncated away. The name block's basis reserves the rest of row 1
+                   beside the image (5rem image + 1.25rem gap = 6.25rem) so the wrap point is
+                   deterministic. sm+ restores the exact single-line layout. */
                 return (
-                <div key={item.id} className="bg-card rounded-xl border border-border/50 p-5 flex items-center gap-5">
+                <div key={item.id} className="bg-card rounded-xl border border-border/50 p-5 flex flex-wrap sm:flex-nowrap items-center gap-5">
                   <div className="w-20 h-20 rounded-lg bg-muted overflow-hidden shrink-0">
                     {item.product?.image_url && <img src={item.product.image_url} alt={item.product.name} className="w-full h-full object-cover" />}
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 basis-[calc(100%-6.25rem)] sm:basis-auto sm:flex-1">
                     <h3 className="font-semibold text-foreground truncate">{item.product?.name || "Product"}</h3>
                     <p className="text-sm text-muted-foreground">{item.product?.category}</p>
                     {line ? (
@@ -128,8 +135,14 @@ export default function CartPage() {
                   installation are calculated at checkout from your delivery pincode, and shown in
                   full before you pay.
                 </p>
-                <div className="flex gap-3">
-                  <Button variant="accent" size="lg" className="flex-1" asChild>
+                {/* Buttons carry whitespace-nowrap (ui/button base), so side by side their
+                    min-content is ~552px and the pair cannot shrink into a phone viewport —
+                    the row itself was dragging document scrollWidth to 552 on mobile. Stack
+                    them full-width below sm; sm+ is byte-identical to the old row layout.
+                    flex-1 becomes sm:flex-1 because in column direction it would stretch
+                    button HEIGHTS, not widths. */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button variant="accent" size="lg" className="sm:flex-1" asChild>
                     <Link href="/checkout">
                       Proceed to Checkout <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
