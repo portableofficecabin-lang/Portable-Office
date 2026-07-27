@@ -580,24 +580,28 @@ export default function CheckoutPage() {
                       The override is `!`-important: tailwind-merge can't dedupe `shadow-accent`
                       (it reads the theme's `accent` token as a shadow COLOUR, not a box-shadow), so
                       without `!` both shadows would apply and CSS source order would decide. */}
-                  {/* Below lg: whitespace-normal + h-auto override the button base's
-                      whitespace-nowrap and size-lg's fixed h-12. With nowrap, the longest
-                      state label ("Enter your contact details to continue" + the lock icon
-                      + px-8) has a min-content of ~387px; the card's p-6 turned that into a
-                      435px grid track, dragging the whole checkout to 451px scrollWidth on
-                      phones — THE mobile overflow.
-                      At lg+ the nowrap/h-12 pair is deliberately RESTORED: the three-column
-                      grid has room for the label, and that same min-content is what has
-                      always sized the desktop summary column at ~435px — keeping it makes
-                      the desktop render pixel-identical to before this fix. */}
+                  {/* WRAP AT EVERY BREAKPOINT (protected spec: "long checkout button text must
+                      wrap safely on mobile"): whitespace-normal + h-auto override the button
+                      base's whitespace-nowrap and size-lg's fixed h-12; min-h-12 keeps the
+                      normal 48px pill whenever the label fits on one line, and h-auto grows it
+                      to two centred lines when it does not.
+                      The earlier fix restored nowrap/h-12 at lg+ on the assumption the desktop
+                      summary column always fits the label — but the label CONTAINS THE AMOUNT,
+                      and a premium order ("Pay ₹16,52,000 securely") is wider than the desktop
+                      summary column, so the text ran past the pill's rounded ends (the reported
+                      defect). No breakpoint may pin nowrap: the amount is unbounded, the column
+                      is not. px-5/py-3 + text-balance/leading-snug give the wrapped label an
+                      even, readable break. */}
                   <Button
                     type="submit"
                     variant="accent"
                     size="lg"
-                    className="w-full mt-6 h-auto min-h-12 whitespace-normal lg:h-12 lg:whitespace-nowrap !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
+                    className="w-full mt-6 h-auto min-h-12 px-5 py-3 whitespace-normal text-balance leading-snug !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
                     disabled={loading || !totals.payable || !contactComplete}
                   >
-                    <Lock className="mr-2 h-4 w-4" />
+                    {/* No mr-2: the Button base spaces icon↔label with gap-2; both together
+                        doubled the gap and squeezed the wrapped label on narrow screens. */}
+                    <Lock className="h-4 w-4" />
                     {loading
                       ? "Processing..."
                       : totals.skipped.length > 0
