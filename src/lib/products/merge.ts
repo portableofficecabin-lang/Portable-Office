@@ -37,10 +37,24 @@ export const convertDBCategory = (dbCategory: DBCategory, productCount: number):
 });
 
 export const mergeProducts = (dbProducts: Product[], fallbackProducts: Product[]) => {
+  /* A DB row overrides its static twin's CONTENT — but never its IDENTITY. The static
+   * catalog id (and sku) is the join key for everything that makes a product sellable:
+   * getCommerce()/isPurchasable() (the fixed price, Add to Cart, the JSON-LD offers
+   * block, merchant-feed eligibility), getProductSEO() and getBestProductImage(). A DB
+   * row carries a uuid (and convertDBProduct synthesizes a sku), so letting it replace
+   * the whole object severed those joins: every product with a DB row rendered as
+   * quote-only — no price, no Add to Cart — which is exactly Google Merchant Center's
+   * "user cannot complete purchase" rejection. Keep the static identity, take the DB
+   * presentation. A DB-only product (no static twin) keeps its uuid and is simply not
+   * sellable online until the owner adds it to the commerce catalog — correct, because
+   * price truth lives there, never in the DB row. */
+  const staticBySlug = new Map(fallbackProducts.map((p) => [getProductSlug(p), p]));
   const merged = new Map<string, Product>();
 
   dbProducts.forEach((product) => {
-    merged.set(getProductSlug(product), product);
+    const key = getProductSlug(product);
+    const staticTwin = staticBySlug.get(key);
+    merged.set(key, staticTwin ? { ...product, id: staticTwin.id, sku: staticTwin.sku } : product);
   });
 
   fallbackProducts.forEach((product) => {
