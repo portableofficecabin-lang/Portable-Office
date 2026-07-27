@@ -96,6 +96,131 @@ Do not mark Merchant Center work as complete until every submitted product passe
 - Shipping
 - Direct purchase test
 
+## Protected anonymous purchase flow — do not modify without approval
+
+The Google Merchant Center anonymous purchase flow is production-critical and is currently approved and working.
+
+### Mandatory protected behaviour
+
+- Customers must be able to use Cart and Checkout without signing in.
+- Never display “Please Sign In”, “Login Required” or any similar restriction on Cart or Checkout.
+- Guest cart information must persist in localStorage and survive page reloads.
+- Checkout must wait until guest-cart hydration is complete before checking whether the cart is empty.
+- Never redirect Checkout during SSR, initial render or before cart hydration finishes.
+- Empty-cart redirection may run only after hydration and inside a client-side effect.
+- Fixed-price purchasable products must show the approved GST-inclusive price and Add to Cart button.
+- Quote-only, custom-price, unavailable and price-unconfirmed products must remain excluded from online purchase and the Merchant feed.
+- Cart, Checkout, JSON-LD, Merchant feed and Razorpay must use the same approved price.
+- Do not change GST, shipping, transport, subtotal or Razorpay calculations during unrelated tasks.
+
+### Protected product identity behaviour
+
+Supabase or admin product records must not replace the static catalogue identity used by commerce logic.
+
+During product merging:
+
+- Preserve the static product `id`.
+- Preserve the static product `sku`.
+- Preserve the commerce identity used by:
+  - `getCommerce()`
+  - `isPurchasable()`
+  - Add to Cart
+  - Cart pricing
+  - Checkout pricing
+  - Product JSON-LD offers
+  - Merchant feed eligibility
+  - Razorpay order validation
+- Database records may update approved presentation and content fields.
+- Never replace a valid static product identifier with a Supabase UUID when commerce configuration is keyed by the static identifier.
+
+### Protected mobile layout behaviour
+
+- Cart and Checkout must not create horizontal scrolling.
+- Cart buttons must remain inside the viewport.
+- Product images, quantity controls and remove controls must remain visible.
+- Long checkout button text must wrap safely on mobile.
+- Long product names must not push prices outside the viewport.
+- Do not use `overflow-x-hidden` to conceal layout defects.
+- Preserve the approved Cart and Checkout layout at:
+  - 320px
+  - 360px
+  - 390px
+  - 430px
+  - 768px
+  - 1440px
+
+### Protected files and logic
+
+Treat the following as protected production areas:
+
+- `src/contexts/CartContext.tsx`
+- `src/lib/products/merge.ts`
+- `src/views/Cart.tsx`
+- `src/views/Checkout.tsx`
+- Product commerce identity and purchasability logic
+- Merchant feed eligibility logic
+- Product JSON-LD offer logic
+- Razorpay order calculation and server-side validation logic
+
+Do not modify these protected files during an unrelated task merely because it is convenient.
+
+### Required approval before changing protected behaviour
+
+Before modifying any protected file or behaviour:
+
+1. Stop before editing.
+2. Explain exactly why the protected file must be changed.
+3. List every protected file proposed for modification.
+4. Explain whether the change affects:
+   - Guest checkout
+   - Cart persistence
+   - Product identity
+   - Product pricing
+   - Merchant feed eligibility
+   - JSON-LD
+   - GST
+   - Shipping
+   - Razorpay
+   - Mobile overflow
+5. Show the intended behavioural change.
+6. Explain the regression risk.
+7. Wait for explicit user approval.
+
+General requests such as “improve checkout”, “update the UI”, “refactor”, “optimise”, “clean the code” or “make it responsive” do not count as approval to change protected commerce behaviour.
+
+Approval is valid only when the user clearly states:
+
+“I approve changing the protected Merchant purchase flow.”
+
+Without that approval, preserve the current implementation.
+
+### Mandatory regression verification
+
+Any approved modification involving the protected flow must be tested in a completely fresh anonymous browser context with no login and no pre-seeded cart.
+
+Verify at both 320px and 1440px:
+
+- A feed-eligible fixed-price product page loads.
+- Approved price is visible.
+- Add to Cart is visible and works.
+- Cart contains the correct product.
+- No login requirement appears.
+- Guest cart survives reload.
+- Checkout waits for cart hydration.
+- Checkout does not redirect prematurely.
+- Contact fields render.
+- A valid delivery PIN code can be entered.
+- Transport calculation completes.
+- Cart and Checkout totals match.
+- Payment button becomes enabled.
+- No horizontal overflow exists.
+- No hydration warning occurs.
+- No SSR `location is not defined` error occurs.
+- Quote-only products remain non-purchasable.
+- Merchant feed products resolve through valid commerce identities.
+
+Do not mark any related task complete unless these tests pass.
+
 ## Pricing rules
 
 - Product prices displayed to customers must clearly state whether GST is included.
@@ -188,6 +313,7 @@ After every implementation:
 10. Test affected customer-facing workflows.
 11. Test affected calculations, exports and database operations.
 12. Perform manual verification where automation is insufficient.
+13. When Cart, Checkout, product merging, product identity, pricing or Merchant feed logic is touched, run the complete protected anonymous purchase-flow regression test at 320px and 1440px.
 
 Do not claim a task is complete when:
 
@@ -202,6 +328,8 @@ Do not claim a task is complete when:
 - Merchant prices remain inconsistent.
 - Checkout or shipping remains unverified.
 - Manual verification has not been completed.
+- The protected anonymous purchase flow has not been regression-tested after a related file was changed.
+- A protected file was changed without explicit user approval.
 
 ## Completion report
 
