@@ -52,6 +52,15 @@ interface CartContextType {
   items: CartItem[];
   itemCount: number;
   isLoading: boolean;
+  /**
+   * True once the FIRST cart load has completed (guest localStorage read or DB fetch).
+   * `isLoading` cannot express this: it starts false, so on the very first render
+   * "not loaded yet" and "loaded and empty" are indistinguishable — and a consumer that
+   * treats an empty pre-hydration cart as a really-empty cart acts on state that does
+   * not exist yet (the /checkout page was bouncing every direct guest visit back to
+   * /cart exactly this way). Anything that DECIDES from emptiness must wait for this.
+   */
+  hydrated: boolean;
   addToCart: (productId: string, quantity?: number) => Promise<void>;
   removeFromCart: (itemId: string) => Promise<void>;
   updateQuantity: (itemId: string, quantity: number) => Promise<void>;
@@ -109,6 +118,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [items, setItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   // Tracks the previous user id so a null→user transition can merge the guest cart exactly once.
   const prevUserIdRef = useRef<string | null>(null);
 
@@ -177,18 +187,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const currUserId = user?.id ?? null;
     prevUserIdRef.current = currUserId;
 
+    /* Whichever path runs, the first completed load flips `hydrated` — from then on an
+     * empty `items` really means an empty cart, and consumers may act on it. Set in a
+     * finally-style tail (not inside the loaders) so a failed DB fetch still hydrates:
+     * the decision "this cart is empty" is then at least made on settled state. */
     if (currUserId) {
       // Signed in. If we just transitioned from logged-out, fold the guest cart in first.
       if (prevUserId !== currUserId) {
         (async () => {
           await mergeGuestCartIntoDb(currUserId);
           await fetchDbCart();
-        })();
+        })().finally(() => setHydrated(true));
       } else {
-        fetchDbCart();
+        fetchDbCart().finally(() => setHydrated(true));
       }
     } else {
-      loadGuestCart();
+      loadGuestCart().finally(() => setHydrated(true));
     }
   }, [user, fetchDbCart, loadGuestCart, mergeGuestCartIntoDb]);
 
@@ -270,7 +284,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const getCartTotal = () => items.reduce((sum, i) => sum + (i.product?.price || 0) * i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, itemCount: items.reduce((s, i) => s + i.quantity, 0), isLoading, addToCart, removeFromCart, updateQuantity, clearCart, getCartTotal }}>
+    <CartContext.Provider value={{ items, itemCount: items.reduce((s, i) => s + i.quantity, 0), isLoading, hydrated, addToCart, removeFromCart, updateQuantity, clearCart, getCartTotal }}>
       {children}
     </CartContext.Provider>
   );
@@ -280,6 +294,9 @@ const defaultCart: CartContextType = {
   items: [],
   itemCount: 0,
   isLoading: false,
+  /* The no-provider default reports NOT hydrated — a consumer outside the provider must
+   * never conclude "cart is really empty" from this stub. */
+  hydrated: false,
   addToCart: async () => {},
   removeFromCart: async () => {},
   updateQuantity: async () => {},

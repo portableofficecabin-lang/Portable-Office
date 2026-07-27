@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ import { PaymentMethods } from "@/components/PaymentMethods";
 import { computeTotals } from "@/lib/pricing/orderTotals";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 import { INSTALLATION, deliveryEstimate } from "@/data/shippingZones";
-import { AlertCircle, CheckCircle2, Lock, Truck, User as UserIcon } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Lock, Truck, User as UserIcon } from "lucide-react";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
 
@@ -71,7 +71,7 @@ const POLICY_LINKS = [
 ];
 
 export default function CheckoutPage() {
-  const { items, clearCart } = useCart();
+  const { items, clearCart, isLoading: cartLoading, hydrated } = useCart();
   const { user } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -112,6 +112,20 @@ export default function CheckoutPage() {
   const pincodeIncomplete = pincodeEntered && pincode.length < 6;
   const pincodeUnserviceable = pincode.length === 6 && totals.zone === null;
   const eta = totals.zone ? deliveryEstimate(totals.zone) : null;
+
+  /* Send a genuinely-empty cart back to /cart — but only once the cart has actually been
+   * read. This used to be a render-time `router.push` gated on `items.length === 0` alone,
+   * which broke the anonymous flow twice over:
+   *   • a guest cart lives in localStorage and loads AFTER mount, so items is always []
+   *     on the first client render — every direct /checkout visit bounced to /cart even
+   *     with a full cart. Google Merchant Center's purchase check fails exactly here.
+   *   • during SSR the push executed on the server (`location is not defined` in the
+   *     server log on every cold /checkout hit).
+   * `hydrated` is CartContext's "first load completed" signal; `placed` guards the
+   * post-payment confirmation, whose cart is legitimately empty after clearCart(). */
+  useEffect(() => {
+    if (hydrated && !cartLoading && items.length === 0 && !placed) router.push("/cart");
+  }, [hydrated, cartLoading, items.length, placed, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -287,7 +301,22 @@ export default function CheckoutPage() {
     );
   }
 
-  if (items.length === 0) { router.push("/cart"); return null; }
+  /* Before hydration, or while the redirect-to-cart effect is in flight, hold a neutral
+   * loading shell. NEVER a login prompt and NEVER a premature redirect: an anonymous
+   * customer landing here with a guest cart must reach the form the moment it loads. */
+  if (!hydrated || items.length === 0) {
+    return (
+      <Layout>
+        <SEOHead title="Checkout | Portable Office Cabin" description="Complete your purchase securely." />
+        <section className="section-padding">
+          <div className="container-custom max-w-4xl text-center py-16">
+            <Loader2 className="mx-auto h-10 w-10 animate-spin text-muted-foreground" />
+            <p className="mt-4 text-muted-foreground">Loading your checkout…</p>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
