@@ -18,7 +18,8 @@ The app already emits the right `Cache-Control` headers (see `next.config.ts`
 
 | Route(s) | `Cache-Control` (from `next.config.ts`) | Cache at edge? |
 |---|---|---|
-| `/`, `/products`, `/products/[slug]`, `/products/category/[slug]`, `/blog`, `/blog/[slug]`, `/about-us`, `/faq`, `/gallery`, `/rental-service`, `/marketplace`, `/contact`, policy pages, `/sitemap.xml`, `/robots.txt` | `public, max-age=0, s-maxage=3600, stale-while-revalidate=86400` | **Yes** — edge caches HTML, browser revalidates |
+| `/`, `/products`, `/products/category/[slug]`, `/blog`, `/blog/[slug]`, `/about-us`, `/faq`, `/gallery`, `/rental-service`, `/marketplace`, `/contact`, policy pages, `/sitemap.xml`, `/robots.txt` | `public, max-age=0, s-maxage=3600, stale-while-revalidate=86400` | **Yes** — edge caches HTML, browser revalidates |
+| `/products/[slug]` (Merchant landing pages) | `public, max-age=0, s-maxage=300, stale-while-revalidate=600` | **Yes** — short window: a poisoned edge copy of a clean canonical product URL is a Merchant Center incident (?srsltid variants bust the cache and mask it), so it must heal in minutes, not a day |
 | `/_next/static/*` | `public, max-age=31536000, immutable` | Yes — forever |
 | `/_next/image` (optimized images) | `public, max-age=31536000, immutable` | Yes — forever |
 | `/admin/*`, `/cart`, `/checkout`, `/login`, `/register`, `/my-account/*`, `/forgot-password`, `/reset-password`, `/auth/*` | `private, no-store, no-cache, must-revalidate, max-age=0` | **No — bypass** |
@@ -77,6 +78,7 @@ bypassed), so this is naturally safe.
 
 ```bash
 # Public page → expect: cache-control: public, ... s-maxage=3600 ... and after a
+# (product detail /products/<slug> pages expect s-maxage=300, stale-while-revalidate=600)
 # second request, cf-cache-status: HIT
 curl -sI https://portableofficecabin.com/products | grep -i 'cache-control\|cf-cache-status'
 

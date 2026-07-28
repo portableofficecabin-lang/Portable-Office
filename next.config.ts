@@ -71,6 +71,16 @@ const NO_STORE = "private, no-store, no-cache, must-revalidate, max-age=0";
 // roughly mirrors the ISR `revalidate` windows used by the route segments (home /
 // listings 1h, product/category 30m, blog 24h); Cloudflare can refine per-path.
 const PUBLIC_HTML_CACHE = "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400";
+
+// MERCHANT LANDING PAGES (/products/<slug>) get a much shorter edge window. These are the
+// exact URLs Googlebot fetches from the Merchant feed, and they are the ONLY URLs a shopper
+// reaches from Shopping. A transient bad response (deploy restart, truncated stream, origin
+// error) cached at the edge poisons precisely the CLEAN canonical URL — while every tracked
+// ?srsltid=... variant busts the cache and renders fine — which Google reports as "user
+// cannot complete purchase". With s-maxage 3600 + SWR 86400 a poisoned copy could survive a
+// DAY; with 300/600 it heals in minutes, and the origin is ISR-cached so the extra CDN
+// misses stay cheap.
+const PRODUCT_HTML_CACHE = "public, max-age=0, s-maxage=300, stale-while-revalidate=600";
 // Matches every path EXCEPT the private routes above, Next internals and API.
 // Errs on the safe side: anything starting with a private prefix is excluded, so a
 // session/cart/admin response can never receive the cacheable public header.
@@ -190,6 +200,14 @@ const nextConfig: NextConfig = {
       {
         source: PUBLIC_HTML_MATCHER,
         headers: [{ key: "Cache-Control", value: PUBLIC_HTML_CACHE }],
+      },
+      // Merchant landing pages — LAST so it overrides the public default for the same key.
+      // "/products/:slug" matches exactly one segment: every product detail URL, but NOT
+      // "/products" itself and NOT "/products/category/<slug>" (two segments), which keep
+      // the longer public window.
+      {
+        source: "/products/:slug",
+        headers: [{ key: "Cache-Control", value: PRODUCT_HTML_CACHE }],
       },
     ];
   },
