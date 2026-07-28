@@ -120,15 +120,21 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const normalized = slug.replace(/\.html$/i, "");
   // Preserve current behavior: only static-catalog slugs render (DB edits override
   // a static product, but DB-only slugs are not exposed here).
-  const exists = products.some((p) => getProductSlug(p) === normalized);
-  if (!exists) notFound();
+  const staticProduct = products.find((p) => getProductSlug(p) === normalized);
+  if (!staticProduct) notFound();
 
-  const [product, reviewData, allProducts] = await Promise.all([
+  const [merged, reviewData, allProducts] = await Promise.all([
     getProductBySlugMerged(normalized),
     getProductReviewData(normalized),
     getAllProductsMerged(),
   ]);
-  if (!product) notFound();
+  /* A MERCHANT LANDING URL MUST NEVER 404 OR RENDER EMPTY because of a data hiccup: this is
+   * the slug of a real static-catalog product (checked above), so if the DB merge fails or
+   * omits it for any transient reason we render the STATIC product — exactly the fallback
+   * generateMetadata() has always used. An ISR regeneration that 404'd here would be frozen
+   * into the edge cache on the clean canonical URL (the one Googlebot fetches) and reported
+   * as "user cannot complete purchase". */
+  const product = merged ?? staticProduct;
 
   return (
     <ProductDetailServer
