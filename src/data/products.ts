@@ -1448,6 +1448,7 @@ export const products: Product[] = [
     description: "Cargo shipping container — ISO standardized steel boxes for intermodal freight transport and modular building conversions. 20ft, 40ft, and 40ft High Cube units available for offices, homes, labour colonies, and site facilities across India.",
     shortDescription: "ISO cargo shipping containers for freight, storage, and modular conversions — 20ft, 40ft & HC sizes with pan-India delivery.",
     specifications: [
+      { label: "Size (L × W)", value: "20 ft × 8 ft" },
       { label: "Standard Sizes", value: "20 ft GP, 40 ft GP, 40 ft High Cube" },
       { label: "Standards", value: "ISO 668, ISO 6346, CSC 1972" },
       { label: "Material", value: "Corten Weathering Steel (2–4 mm sidewalls)" },
@@ -1468,8 +1469,17 @@ export const products: Product[] = [
       "One-trip, cargo-worthy, WWT, and as-is condition grades available",
       "Pan-India delivery with crane installation from Portable Office Cabin",
     ],
-    images: [],
-    price: 125000,
+    // Main image FIRST (unchanged) — it stays the LCP preload / JSON-LD / OG image, so the gallery
+    // additions are presentation-only. The interior shot sits LAST by request. The fourth exterior
+    // photo from the original upload batch (AI-generated, blue sky) was rejected and is not used.
+    images: [
+      "/images/products/cargo-shipping-container-main.webp",
+      "/images/products/cargo-shipping-container-gallery-1.webp",
+      "/images/products/cargo-shipping-container-gallery-2.webp",
+      "/images/products/cargo-shipping-container-gallery-3.webp",
+      "/images/products/cargo-shipping-container-interior.webp",
+    ],
+    price: 145000,
     priceLabel: "Starting Price (GST & Transport Extra)",
     featured: false,
     inStock: true,

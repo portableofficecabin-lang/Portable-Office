@@ -501,10 +501,10 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "38", sku: "POC-SC-CARGO", basePrice: 125000, priceConfirmed: false, kind: "guide", inStock: true,
+    id: "38", sku: "POC-SC-CARGO", basePrice: 145000, priceConfirmed: false, kind: "guide", inStock: true,
     h1Title: "Cargo Shipping Container",
     feedTitle: "Cargo Shipping Container Corten Steel ISO for Freight & Storage | Portable Office Cabin",
-    size: "20ft / 40ft", material: "Corten Weathering Steel (2–4mm)", bestFor: "Freight & Storage",
+    size: "20 ft × 8 ft", material: "Corten Weathering Steel (2–4mm)", bestFor: "Freight & Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
 
