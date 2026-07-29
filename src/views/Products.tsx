@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useRef, useState, useMemo, useEffect } from "react";
+import { Suspense, useCallback, useState, useMemo, useEffect } from "react";
 import { BadgeCheck, Factory, Filter, Search, Grid, List, Truck, X, ArrowRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero, PageHeroChip } from "@/components/layout/PageHero";
@@ -515,50 +515,43 @@ export function ProductsListingWithParams({
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    const sp = new URLSearchParams(window.location.search);
-    setActiveCategory(sp.get("category") || undefined);
-    const pageParam = sp.get("page");
-    setCurrentPage(pageParam ? parseInt(pageParam, 10) || 1 : 1);
-  }, []);
-
   /**
-   * `?search=` needs REACTIVE reading, unlike ?category= and ?page= above.
+   * ALL THREE params (?search=, ?category=, ?page=) need REACTIVE reading.
    *
-   * A header search submitted while the user is already on /products changes only
-   * the query string. Next treats that as the same route segment, so this component
-   * re-renders but never remounts — a mount-only effect would miss it. Reading
-   * window.location during render does not work either: Next writes the new URL in
-   * the commit phase, so the render triggered by router.push() still sees the old
-   * query and nothing schedules a further render.
+   * The pagination controls are plain <Link>s to /products?page=N. That navigation
+   * changes only the query string; Next treats it as the same route segment, so this
+   * component re-renders but never REMOUNTS — a mount-only effect reads ?page= once
+   * and then never again, which left "Next →" updating the URL while the list stayed
+   * frozen on page 1 (the exact bug this bridge now fixes; ?search= had already hit
+   * the same trap and been moved to the bridge earlier). Reading window.location
+   * during render does not work either: Next writes the new URL in the commit phase,
+   * so the render triggered by the navigation still sees the old query.
    *
    * useSearchParams() is the only reactive source, and it must sit inside a Suspense
    * boundary or it opts the whole route out of static rendering. The bridge below
    * renders NOTHING, so the boundary wraps zero markup: /products stays fully
    * static/ISR (verified in the build output) and every crawlable product/category
    * link stays in the HTML.
+   *
+   * The URL is the single source of truth, applied atomically in one callback per
+   * URL change — so there is exactly one state writer and no ordering races. The old
+   * "reset to page 1 when the search term changes" special case is subsumed: a header
+   * search navigates to /products?search=term with NO page param, which IS page 1,
+   * while a deep-linked /products?search=cabin&page=3 keeps its page 3.
    */
-  // Tracks the last term the bridge reported. A ref, not state, because it must be
-  // readable without adding a dependency that would re-create this callback.
-  // `null` means "nothing reported yet".
-  const lastReportedSearch = useRef<string | null>(null);
-
-  const handleSearchChange = useCallback((value: string) => {
-    const previous = lastReportedSearch.current;
-    lastReportedSearch.current = value;
-    setSearch(value);
-
-    // Reset pagination when the term genuinely CHANGES — otherwise searching from
-    // ?page=4 strands the user on the last page of a smaller result set. Skipped on
-    // the first report, which would otherwise clobber a deep-linked
-    // /products?search=cabin&page=3 back to page 1.
-    if (previous !== null && previous !== value) setCurrentPage(1);
-  }, []);
+  const handleParamsChange = useCallback(
+    (params: { search: string; category?: string; page: number }) => {
+      setSearch(params.search);
+      setActiveCategory(params.category);
+      setCurrentPage(params.page);
+    },
+    [],
+  );
 
   return (
     <>
       <Suspense fallback={null}>
-        <SearchParamBridge onChange={handleSearchChange} />
+        <ListingParamsBridge onChange={handleParamsChange} />
       </Suspense>
       <ProductsPageContent
         products={products}
@@ -573,18 +566,46 @@ export function ProductsListingWithParams({
 }
 
 /**
- * Reports the current `?search=` value to its parent and renders nothing.
+ * Reports the current `?search=` / `?category=` / `?page=` values to its parent and
+ * renders nothing.
  *
  * Isolated in its own component purely so the Suspense boundary that
  * useSearchParams() requires contains no markup — see ProductsListingWithParams.
+ * One effect fires per URL change with ALL params together, so the parent applies
+ * them atomically (a page change can never race a search change).
  */
-function SearchParamBridge({ onChange }: { onChange: (value: string) => void }) {
+function ListingParamsBridge({
+  onChange,
+}: {
+  onChange: (params: { search: string; category?: string; page: number }) => void;
+}) {
   const searchParams = useSearchParams();
-  const value = searchParams.get("search") ?? "";
+  const search = searchParams.get("search") ?? "";
+  const category = searchParams.get("category") || undefined;
+  const pageParam = searchParams.get("page");
+  const page = pageParam ? parseInt(pageParam, 10) || 1 : 1;
 
   useEffect(() => {
-    onChange(value);
-  }, [value, onChange]);
+    onChange({ search, category, page });
+  }, [search, category, page, onChange]);
+
+  return null;
+}
+
+/**
+ * Reports the current `?page=` value and renders nothing — the category-route
+ * counterpart of ListingParamsBridge (category comes from the PATH there, and the
+ * header search always leaves /products/category/* for /products, so only the page
+ * number needs reactive reading).
+ */
+function PageParamBridge({ onChange }: { onChange: (page: number) => void }) {
+  const searchParams = useSearchParams();
+  const pageParam = searchParams.get("page");
+  const page = pageParam ? parseInt(pageParam, 10) || 1 : 1;
+
+  useEffect(() => {
+    onChange(page);
+  }, [page, onChange]);
 
   return null;
 }
@@ -611,18 +632,22 @@ export function CategoryListingWithParams({
 }) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const pageParam = new URLSearchParams(window.location.search).get("page");
-    setCurrentPage(pageParam ? parseInt(pageParam, 10) || 1 : 1);
-  }, []);
-
+  // Reactive, not mount-only: the pagination <Link>s change only the query string,
+  // which re-renders WITHOUT remounting — a mount-only read left "Next →" dead on
+  // the category routes exactly as it was on /products. Same null-rendering bridge
+  // inside Suspense, so the route stays SSG/ISR with all content in the HTML.
   return (
-    <ProductsPageContent
-      products={products}
-      categories={categories}
-      activeCategory={activeCategory}
-      currentPage={currentPage}
-      basePath={basePath}
-    />
+    <>
+      <Suspense fallback={null}>
+        <PageParamBridge onChange={setCurrentPage} />
+      </Suspense>
+      <ProductsPageContent
+        products={products}
+        categories={categories}
+        activeCategory={activeCategory}
+        currentPage={currentPage}
+        basePath={basePath}
+      />
+    </>
   );
 }

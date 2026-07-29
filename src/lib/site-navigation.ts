@@ -277,8 +277,25 @@ export const socialLinks = [
  */
 export const topBarTrustItems = [
   { label: "Manufacturer in Bangalore", icon: "pin" },
-  { label: "Custom sizes available", icon: "tag" },
+  // Custom builds are the documented quote-only path, so this links to the existing
+  // customer-facing size/price calculator (CabinCalculatorSection, id="cabin-calculator")
+  // rather than a purchasable listing — clicking it opens that calculator.
+  { label: "Custom sizes available", icon: "tag", href: "/#cabin-calculator" },
   { label: "Delivery across India", icon: "truck" },
+] as const;
+
+/**
+ * Statutory registrations surfaced in the trust bar as CLICK-TO-REVEAL badges.
+ *
+ * The "… Verified" label is always visible; the registration number appears only when
+ * the visitor clicks the badge (see VerifiedBadges.tsx). Both values come from COMPANY —
+ * the single source of truth for the GSTIN and the Udyam / MSME number — so the trust bar
+ * can never drift from the certificate or print a stale number. `srLabel` is the plain
+ * name of the field for assistive tech and the revealed popover heading.
+ */
+export const topBarVerifications = [
+  { id: "gst", label: "GST Verified", srLabel: "GSTIN", value: COMPANY.gstin },
+  { id: "msme", label: "MSME Verified", srLabel: "Udyam / MSME", value: COMPANY.udyam },
 ] as const;
 
 export const footerTrustItems = [
