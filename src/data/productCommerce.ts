@@ -507,6 +507,17 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     size: "20 ft × 8 ft", material: "Corten Weathering Steel (2–4mm)", bestFor: "Freight & Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
+  {
+    // Container Site Office — base ₹6,20,000 + 18% GST = ₹7,31,600 total (owner-supplied, 2026-07-29).
+    // kind:"guide" + priceConfirmed:false ⇒ NOT in the automated Merchant feed and NOT purchasable
+    // online; the page shows the price with an enquiry flow. The owner submits this one to Merchant
+    // Centre manually. Flipping it to online purchase requires the protected-purchase-flow checklist.
+    id: "42", sku: "POC-CSO-4010", basePrice: 620000, priceConfirmed: false, kind: "guide", inStock: true,
+    h1Title: "Container Site Office",
+    feedTitle: "Container Site Office 40x10 ft MS with 15 Workstations | Portable Office Cabin",
+    size: "40 ft × 10 ft", material: "MS (Mild Steel) Container Structure", bestFor: "Site Offices & Project Teams",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Site Office Containers",
+  },
 
   // ═════════ LOCATION LANDING PAGES — the SAME container at six different prices ═════════
   // Feeding these would submit duplicate offers for one item at conflicting prices, which is

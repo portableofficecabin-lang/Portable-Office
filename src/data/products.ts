@@ -1612,6 +1612,58 @@ export const products: Product[] = [
     featured: true,
     inStock: true,
   },
+  {
+    id: "42",
+    sku: "POC-CSO-4010",
+    name: "Container Site Office",
+    slug: "container-site-office",
+    category: "Site Office Containers",
+    categorySlug: "site-office-containers",
+    description:
+      "The Container Site Office by Portable Office Cabin is a ready-to-use office built inside a strong 40 ft x 10 ft MS (mild steel) container structure. It is made for project sites where a proper working office is needed quickly, without any civil construction.\n\n" +
+      "The cabin comes fully fitted from the factory. Inside, there are 15 workstation tables, each with its own overhead file cabinet so drawings, bills and registers stay organised at every seat. All 15 workstations come with revolving chairs, so a full site team of engineers, supervisors and admin staff can be seated comfortably.\n\n" +
+      "A half-portion partition inside the cabin creates a separate enclosed space, which works well as a project manager's cabin or a small meeting room for private discussions.\n\n" +
+      "The cabin has provision for 2 air conditioners, with openings and electrical points ready. Every workstation table is fitted with 2 sockets and 5A switches for laptops, chargers and desk equipment. The complete internal wiring is done neatly at the factory, so only the main power connection is needed at site.\n\n" +
+      "The heavy MS frame handles rough site conditions, rain, heat and transport without trouble. The whole unit can be lifted onto a truck and shifted when the project moves to a new location, so the same office serves project after project. Only a simple levelled surface is needed at site, with no foundation work.\n\n" +
+      "Key details: size 40 ft x 10 ft, MS container structure, 15 workstation tables with overhead file cabinets, 15 revolving chairs, 1 half-portion partition cabin, provision for 2 ACs, 2 sockets with 5A switches on each table. Suitable for construction sites, highway and infrastructure projects, builder sites, factories, warehouses, solar and power projects and mining sites. Layout can be customised on request.",
+    shortDescription:
+      "Ready-to-use 40 ft × 10 ft MS container site office — 15 workstations with overhead file cabinets and revolving chairs, manager cabin, provision for 2 ACs. Factory-wired, no foundation needed, shifts with your project.",
+    specifications: [
+      { label: "Size (L × W)", value: "40 ft × 10 ft" },
+      { label: "Structure", value: "MS (Mild Steel) container" },
+      { label: "Workstations", value: "15 tables, each with overhead file cabinet" },
+      { label: "Seating", value: "15 revolving chairs" },
+      { label: "Manager Cabin", value: "1 half-portion partition cabin / meeting room" },
+      { label: "Air Conditioning", value: "Provision for 2 ACs (openings + points ready)" },
+      { label: "Power per Table", value: "2 sockets with 5A switches" },
+      { label: "Wiring", value: "Complete internal wiring factory-fitted" },
+      { label: "Foundation", value: "None — simple levelled surface only" },
+      { label: "Relocation", value: "Craneable — lifts onto a truck and shifts with the project" },
+    ],
+    features: [
+      "Ready-to-use office in a strong 40 ft × 10 ft MS container — no civil construction needed",
+      "15 workstation tables, each with its own overhead file cabinet for drawings, bills and registers",
+      "15 revolving chairs — seats a full site team of engineers, supervisors and admin staff",
+      "Half-portion partition creates a project manager's cabin or private meeting room",
+      "Provision for 2 air conditioners with openings and electrical points ready",
+      "2 sockets and 5A switches at every workstation for laptops, chargers and desk equipment",
+      "Complete internal wiring done at the factory — only the main power connection needed at site",
+      "Heavy MS frame handles rough site conditions, rain, heat and transport; relocates project after project",
+    ],
+    // Main exterior FIRST (clean front elevation — the GMC/JSON-LD/OG primary), then the two
+    // three-quarter views and the rear; the 15-workstation interior sits LAST as the closer.
+    images: [
+      "/images/products/container-site-office-main.webp",
+      "/images/products/container-site-office-side.webp",
+      "/images/products/container-site-office-side-angle.webp",
+      "/images/products/container-site-office-rear.webp",
+      "/images/products/container-site-office-interior.webp",
+    ],
+    price: 620000,
+    priceLabel: "+ 18% GST — Total ₹7,31,600",
+    featured: false,
+    inStock: true,
+  },
 ];
 
 export const getProductsByCategory = (categorySlug: string): Product[] => {
