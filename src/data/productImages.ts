@@ -158,6 +158,11 @@ export const productImages: Record<string, string> = {
   "40": labourColonyAerial,
   "POC-LC-PREFAB": labourColonyAerial,
   "labour-colony": labourColonyAerial,
+  // Public-path strings (not bundled imports) — the map is Record<string, string>, and this is the
+  // type-clean pattern products 7/9/10/11 already use.
+  "42": "/images/products/container-site-office-main.webp",
+  "POC-CSO-4010": "/images/products/container-site-office-main.webp",
+  "container-site-office": "/images/products/container-site-office-main.webp",
 };
 
 // Get image for a specific product

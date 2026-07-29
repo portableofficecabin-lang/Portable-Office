@@ -251,6 +251,12 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Premium VIP container office for sale & rent in India. Fully furnished, AC, insulated, glass façade & executive interiors. Get a free quote from Portable Office Cabin.",
     keywords: "VIP container office, luxury container office, VIP portable office cabin, executive container office, premium office container, VIP container office price, furnished container office, modern container office, VIP office cabin India",
   },
+  "42": {
+    title: "Container Site Office 40x10 ft — 15 Workstations | Portable Office Cabin",
+    h1: "Container Site Office",
+    description: "Ready-to-use 40x10 ft MS container site office with 15 workstations, overhead file cabinets, revolving chairs, manager cabin & provision for 2 ACs. Factory-wired, no foundation needed — shifts with your project.",
+    keywords: "container site office, site office container 40x10, MS container office, portable site office with workstations, project site office cabin, construction site office container, ready made site office, container office with manager cabin, site office container price India",
+  },
 };
 
 export function getProductSEO(productId: string, productName: string): ProductSEOData {
