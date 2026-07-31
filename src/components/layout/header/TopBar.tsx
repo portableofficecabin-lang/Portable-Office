@@ -8,9 +8,10 @@
  * the same commit. It also carries NO border: a border would sit outside the h-9 box
  * and leave a 1px sliver above the pinned bar below.
  *
- * Desktop shows three trust statements; mobile drops them for the two things a phone
- * user actually wants in reach — call and WhatsApp. Every string is backed by
- * existing site content (see topBarTrustItems in src/lib/site-navigation.ts).
+ * Desktop shows two trust statements ("Manufacturer in Bangalore" moved up into the
+ * LocationStrip above this bar, so it is not repeated here); mobile drops them for the
+ * two things a phone user actually wants in reach — call and WhatsApp. Every string is
+ * backed by existing site content (see topBarTrustItems in src/lib/site-navigation.ts).
  *
  * "Custom sizes available" is a LINK to the customer-facing size/price calculator
  * (/#cabin-calculator), so clicking the trust statement opens the calculator. The two
@@ -27,7 +28,6 @@ import { primaryPhone, topBarTrustItems, whatsappUrl } from "@/lib/site-navigati
 import { VerifiedBadges } from "./VerifiedBadges";
 
 const trustIcons: Record<string, LucideIcon> = {
-  pin: MapPin,
   tag: Tag,
   truck: Truck,
 };
@@ -38,14 +38,10 @@ export function TopBar() {
       <div className="container-custom">
         <div className="flex h-9 items-center gap-5 text-[11px] sm:text-xs lg:gap-7">
           {/* ---------- Desktop: trust statements ---------- */}
-          {topBarTrustItems.map((item, index) => {
+          {topBarTrustItems.map((item) => {
             const Icon = trustIcons[item.icon] ?? MapPin;
             const href = "href" in item ? item.href : undefined;
-            // The third statement is the first to drop when space is tight.
-            const visibility =
-              index === 2
-                ? "hidden items-center gap-1.5 whitespace-nowrap lg:inline-flex"
-                : "hidden items-center gap-1.5 whitespace-nowrap md:inline-flex";
+            const visibility = "hidden items-center gap-1.5 whitespace-nowrap md:inline-flex";
             const inner = (
               <>
                 <Icon className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true" />
@@ -87,17 +83,14 @@ export function TopBar() {
             WhatsApp
           </a>
 
-          {/* ---------- Desktop right: verifications + contact ---------- */}
-          {/* Always-flex so `ml-auto` keeps the cluster right-aligned; every child sets its
+          {/* ---------- Desktop right: verifications + hours ---------- */}
+          {/* The sales email is NOT here any more — it moved one row up to the right side of
+              the LocationStrip (visible from lg there, wider coverage than the old xl), so
+              this crowded cluster keeps only the badges and the business hours.
+              Always-flex so `ml-auto` keeps the cluster right-aligned; every child sets its
               own breakpoint, so the cluster is simply empty (harmless) on small phones. */}
           <div className="ml-auto flex items-center gap-4 lg:gap-6">
             <VerifiedBadges />
-            <a
-              href={`mailto:${COMPANY.email.sales}`}
-              className="hidden whitespace-nowrap transition-colors hover:text-accent xl:inline"
-            >
-              {COMPANY.email.sales}
-            </a>
             <span className="hidden whitespace-nowrap text-white/70 2xl:inline">
               {COMPANY.businessHours.weekdays.display}
             </span>

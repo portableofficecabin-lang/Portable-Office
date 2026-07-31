@@ -267,16 +267,17 @@ export const socialLinks = [
  * inconsistent across the site and are not in the verified-facts file.
  */
 /**
- * The three statements in the slim bar above the header.
+ * The statements in the slim bar above the header.
  *
- * All three are substantiated by content already on this site: the Karnataka works
- * is at Hoskote near Bangalore (COMPANY.addresses.karnatakaFactory) and the site
- * publishes a "portable cabin manufacturers in Bangalore" page; customisation is the
- * documented quote-only build path; and PAN-India delivery restates the
- * LocalBusiness areaServed. No unbacked figure (years, project counts) appears here.
+ * "Manufacturer in Bangalore" is deliberately NOT here any more: the LocationStrip above
+ * this bar now opens every page with "Portable Cabin Manufacturer in Bangalore • Serving
+ * Karnataka & Tamil Nadu", so repeating it one row below said the same thing twice.
+ *
+ * Both remaining statements are substantiated by content already on this site:
+ * customisation is the documented quote-only build path, and PAN-India delivery restates
+ * the LocalBusiness areaServed. No unbacked figure (years, project counts) appears here.
  */
 export const topBarTrustItems = [
-  { label: "Manufacturer in Bangalore", icon: "pin" },
   // Custom builds are the documented quote-only path, so this links to the existing
   // customer-facing size/price calculator (CabinCalculatorSection, id="cabin-calculator")
   // rather than a purchasable listing — clicking it opens that calculator.
