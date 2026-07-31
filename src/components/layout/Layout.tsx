@@ -23,11 +23,13 @@ export function Layout({ children }: LayoutProps) {
     <div className="min-h-screen flex flex-col">
       <AnalyticsTracker />
       <GlobalGeoSignals />
-      <Header />
-      {/* Server-rendered geo/SEO line under the menu, on every Layout page. Sits outside
-          the Header client island so it is in the initial HTML for crawlers, and outside
-          the sticky element so the header's h-9/-top-9 offset contract is untouched. */}
+      {/* Server-rendered geo/SEO line at the very top of the page, ABOVE the trust bar and
+          verified badges, on every Layout page. Sits outside the Header client island so it
+          is in the initial HTML for crawlers, and outside the sticky element so the header's
+          h-9/-top-9 offset contract is untouched — the strip scrolls away first, then the
+          header pins exactly as before. */}
       <LocationStrip />
+      <Header />
       {/* Target of the header's "Skip to main content" link. tabIndex={-1} makes it
           programmatically focusable so activating the skip link actually moves focus
           here rather than only scrolling; the outline is suppressed because the user
