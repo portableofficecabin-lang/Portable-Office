@@ -16,8 +16,10 @@
  * Escape to close. The numbers come from `topBarVerifications` (→ COMPANY), never hard-coded
  * here, so this component can never show a stale registration.
  *
- * Shown from `md` up, matching the trust statements beside it; on phones the same
- * registrations remain available in the footer (registrationBadges).
+ * Shown from `md` up, matching the trust statements beside it; an item can defer itself to
+ * `lg` via `showFrom: "lg"` (the long ISO badge does, mirroring how the third trust statement
+ * on the left is the first to drop) so the h-9 bar can never overflow at tablet widths. On
+ * phones the same registrations remain available in the footer (registrationBadges).
  */
 import { useEffect, useRef, useState } from "react";
 import { BadgeCheck } from "lucide-react";
@@ -50,8 +52,11 @@ export function VerifiedBadges() {
       {topBarVerifications.map((v) => {
         const open = openId === v.id;
         const panelId = `verified-${v.id}`;
+        // The container is `hidden md:flex`; a badge with showFrom "lg" stays hidden
+        // one breakpoint longer so the longest label never squeezes the tablet bar.
+        const deferToLg = "showFrom" in v && v.showFrom === "lg";
         return (
-          <div key={v.id} className="relative">
+          <div key={v.id} className={deferToLg ? "relative hidden lg:block" : "relative"}>
             <button
               type="button"
               onClick={() => setOpenId(open ? null : v.id)}
