@@ -295,7 +295,19 @@ export const topBarTrustItems = [
  */
 export const topBarVerifications = [
   { id: "gst", label: "GST Verified", srLabel: "GSTIN", value: COMPANY.gstin },
-  { id: "msme", label: "MSME Verified", srLabel: "Udyam / MSME", value: COMPANY.udyam },
+  // "Registered", not "Verified": Udyam is a REGISTRATION, and this is the approved wording.
+  { id: "msme", label: "MSME Registered", srLabel: "Udyam / MSME", value: COMPANY.udyam },
+  // Same wording as the footer's registrationBadges, so the certification is stated
+  // identically everywhere. By far the longest label, so it is the first to drop when
+  // space is tight: `showFrom: "lg"` keeps it hidden below lg (see VerifiedBadges) the
+  // same way the third trust statement on the left drops below lg.
+  {
+    id: "iso",
+    label: "ISO 9001:2015 Certified Company",
+    srLabel: "ISO 9001:2015",
+    value: `QMS · Cert. No. ${COMPANY.isoCertificate}`,
+    showFrom: "lg",
+  },
 ] as const;
 
 export const footerTrustItems = [
