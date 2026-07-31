@@ -1,0 +1,47 @@
+# ROBOTS POLICY GATE — protects the Merchant Center "User cannot complete purchase" fix (PR #13).
+#
+# Fails the PR when app/robots.ts regresses any of:
+#   • Storebot-Google / Googlebot crawl access to /cart + /checkout (lose it → every GMC offer
+#     is disapproved again);
+#   • the pagination (?page=/&page=), /admin/ and /api/ blocks (except /api/merchant-feed,
+#     which must stay allowed for Google's feed fetcher);
+#   • the default `User-agent: *` policy shape (exact disallow-set snapshot, group existence).
+#
+# The test (scripts/robots-policy.test.ts) evaluates the file with Google's own robots semantics —
+# most-specific group selection + longest-match with Allow winning ties — so subtle rule-precedence
+# mistakes fail here instead of in production.
+#
+# REPRODUCIBLE: Node 20 (the version the production Dockerfile builds with), npm cache, and
+# `npm ci` against the committed lockfile — the test runs the tsx version PINNED in
+# devDependencies/package-lock.json, never a version downloaded ad hoc at CI time.
+name: robots-policy
+
+on:
+  pull_request:
+    paths:
+      - "app/robots.ts"
+      - "scripts/robots-policy.test.ts"
+      - ".github/workflows/robots-policy.yml"
+      - "package.json"
+      - "package-lock.json"
+  push:
+    branches: [main]
+    paths:
+      - "app/robots.ts"
+      - "scripts/robots-policy.test.ts"
+      - ".github/workflows/robots-policy.yml"
+
+jobs:
+  robots-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci
+      - name: Robots policy regression test
+        run: npm run robots:test
