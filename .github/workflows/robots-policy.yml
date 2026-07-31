@@ -1,0 +1,39 @@
+# ROBOTS POLICY GATE — protects the Merchant Center "User cannot complete purchase" fix (PR #13).
+#
+# Fails the PR when app/robots.ts regresses any of:
+#   • Storebot-Google / Googlebot crawl access to /cart + /checkout (loses → every GMC offer
+#     is disapproved again);
+#   • the pagination (?page=/&page=), /admin/ and /api/ blocks (except /api/merchant-feed,
+#     which must stay allowed for Google's feed fetcher);
+#   • the default `User-agent: *` policy shape.
+#
+# The test itself (scripts/robots-policy.test.ts) evaluates the file with Google's own robots
+# semantics — group selection + longest-match — so subtle rule-precedence mistakes fail here
+# instead of in production. It only imports app/robots.ts with a type-only `next` import, so
+# `npx tsx` can run it without installing the project's node_modules — the job stays fast.
+name: robots-policy
+
+on:
+  pull_request:
+    paths:
+      - "app/robots.ts"
+      - "scripts/robots-policy.test.ts"
+      - ".github/workflows/robots-policy.yml"
+  push:
+    branches: [main]
+    paths:
+      - "app/robots.ts"
+      - "scripts/robots-policy.test.ts"
+      - ".github/workflows/robots-policy.yml"
+
+jobs:
+  robots-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Robots policy regression test
+        run: npx tsx scripts/robots-policy.test.ts
