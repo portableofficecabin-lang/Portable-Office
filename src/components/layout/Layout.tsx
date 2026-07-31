@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
+import { LocationStrip } from "./LocationStrip";
 import { Footer } from "./Footer";
 import { WhatsAppButton } from "../WhatsAppButton";
 import { AnalyticsTracker } from "./AnalyticsTracker";
@@ -23,6 +24,10 @@ export function Layout({ children }: LayoutProps) {
       <AnalyticsTracker />
       <GlobalGeoSignals />
       <Header />
+      {/* Server-rendered geo/SEO line under the menu, on every Layout page. Sits outside
+          the Header client island so it is in the initial HTML for crawlers, and outside
+          the sticky element so the header's h-9/-top-9 offset contract is untouched. */}
+      <LocationStrip />
       {/* Target of the header's "Skip to main content" link. tabIndex={-1} makes it
           programmatically focusable so activating the skip link actually moves focus
           here rather than only scrolling; the outline is suppressed because the user

@@ -310,6 +310,19 @@ export const topBarVerifications = [
   },
 ] as const;
 
+/**
+ * The geo line in the slim strip under the header (LocationStrip.tsx) — SERVER-RENDERED on
+ * every Layout page so crawlers see the manufacturer location + service area in the initial
+ * HTML of the whole site, not just on the pages that mention it in body copy.
+ *
+ * Both halves are backed by existing verified facts: the works is at Hoskote near Bangalore
+ * (COMPANY.addresses.karnatakaFactory) and the company is registered in Tamil Nadu (GSTIN
+ * state code 33, UDYAM-TN), so "Serving Karnataka & Tamil Nadu" states the two home states —
+ * it narrows nothing: PAN-India delivery remains claimed one row above in the top bar.
+ */
+export const locationStripText =
+  "Portable Cabin Manufacturer in Bangalore • Serving Karnataka & Tamil Nadu";
+
 export const footerTrustItems = [
   { label: "ISO 9001:2015 Certified", icon: "badge" },
   { label: "GST Invoice", icon: "receipt" },
