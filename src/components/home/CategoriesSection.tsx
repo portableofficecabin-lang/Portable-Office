@@ -76,7 +76,11 @@ export function CategoriesSection() {
                     )}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-accent font-semibold bg-accent/10 px-3 py-1 rounded-full">
-                        {category.productCount} products
+                        {/* A category with no ready catalogue items is made-to-order, not empty —
+                            "0 products" reads as a dead end, so it offers a quotation instead. */}
+                        {category.productCount > 0
+                          ? `${category.productCount} products`
+                          : "Custom quotation available"}
                       </span>
                       <ArrowRight className="w-5 h-5 text-accent opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     </div>
