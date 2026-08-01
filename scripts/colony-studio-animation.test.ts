@@ -308,6 +308,31 @@ ok(validateAssemblyTimeline(tStripped, stripped).issues.filter((i) => i.severity
   }
 }
 
+/* ---- DETAIL SUB-STEPS INSTALL ONE PART AT A TIME -------------------------------------------
+ * The whole point of a close-up is watching the plate, each bolt, each washer, each nut, the
+ * C-purlin, the tube and the covering land INDIVIDUALLY. Regression guard for the lane bug:
+ * sub-step parts were bucketed into up to 12 parallel lanes, so the hardware arrived as one
+ * cloud. Every detail sub-step's schedule must be strictly sequential and non-overlapping,
+ * covering the install window with no gaps. */
+{
+  const subs = t.steps.filter((s) => s.subIndex !== undefined);
+  ok(subs.length > 0, "sequential-install guard has sub-steps to check");
+  let overlaps = 0, gaps = 0, checked = 0;
+  for (const s of subs) {
+    const entries = t.schedule
+      .filter((e) => e.stepIndex === s.index)
+      .sort((a, b) => a.enterStartMs - b.enterStartMs);
+    for (let k = 1; k < entries.length; k++) {
+      checked++;
+      if (entries[k].enterStartMs < entries[k - 1].enterEndMs - 1) overlaps++;
+      if (entries[k].enterStartMs > entries[k - 1].enterEndMs + 1) gaps++;
+    }
+  }
+  ok(checked > 0, `sequential-install guard compared consecutive windows (${checked})`);
+  ok(overlaps === 0, `detail sub-step parts never move simultaneously (${overlaps} overlapping windows)`);
+  ok(gaps === 0, `detail sub-step install windows tile the step with no dead air (${gaps} gaps)`);
+}
+
 console.log(`\ncolony-studio-animation.test.ts — ${passed} passed, ${failed} failed\n`);
 if (failed) {
   for (const f of fails) console.log(`  ✗ ${f}`);

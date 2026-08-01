@@ -401,25 +401,46 @@ export function buildAssemblyTimeline(
     const startMs = cursor;
     const endMs = startMs + installMs + holdMs;
 
-    // per-part staggered fly-in windows, grouped into lanes so hundreds of members stay legible —
-    // and so a detail shot's cleat, bolts, nuts, purlin and tube land one visibly after another
-    const lanes = Math.max(1, Math.min(N, 12));
-    const staggerSpan = installMs * 0.55;
-    const laneWindow = installMs * 0.45;
-    parts.forEach((p, k) => {
-      const lane = lanes > 1 ? Math.floor((k * lanes) / N) : 0;
-      const laneFrac = lanes > 1 ? lane / (lanes - 1) : 0;
-      const enterStartMs = startMs + laneFrac * staggerSpan;
-      schedule.push({
-        partId: p.id,
-        stepIndex: i,
-        assemblyStep,
-        enterStartMs,
-        enterEndMs: enterStartMs + laneWindow,
-        enterOffset: approachOffset(p, sceneCtx, modelBox),
-        envelope: ENVELOPE_KINDS.has(p.kind),
+    if (spec.subIndex !== undefined) {
+      /* DETAIL SUB-STEP — the entire point of the close-up is watching each item FIXED ONE AT A
+       * TIME: plate, then its first bolt, its washer, its nut, the next bolt … then the C-purlin,
+       * then the tube, then the covering. The lane system below staggers parts into up to 12
+       * PARALLEL lanes, which reads as a cloud of hardware arriving together — so sub-steps use
+       * strictly SEQUENTIAL, non-overlapping windows instead: part k+1 does not start moving until
+       * part k has landed. `parts` arrives already in fabrication role order (DETAIL_PART_RANK),
+       * and the small floor keeps a single window readable when an assembly has very few parts. */
+      const slot = installMs / N;
+      parts.forEach((p, k) => {
+        schedule.push({
+          partId: p.id,
+          stepIndex: i,
+          assemblyStep,
+          enterStartMs: startMs + k * slot,
+          enterEndMs: startMs + (k + 1) * slot,
+          enterOffset: approachOffset(p, sceneCtx, modelBox),
+          envelope: ENVELOPE_KINDS.has(p.kind),
+        });
       });
-    });
+    } else {
+      // per-part staggered fly-in windows, grouped into lanes so hundreds of members stay legible
+      const lanes = Math.max(1, Math.min(N, 12));
+      const staggerSpan = installMs * 0.55;
+      const laneWindow = installMs * 0.45;
+      parts.forEach((p, k) => {
+        const lane = lanes > 1 ? Math.floor((k * lanes) / N) : 0;
+        const laneFrac = lanes > 1 ? lane / (lanes - 1) : 0;
+        const enterStartMs = startMs + laneFrac * staggerSpan;
+        schedule.push({
+          partId: p.id,
+          stepIndex: i,
+          assemblyStep,
+          enterStartMs,
+          enterEndMs: enterStartMs + laneWindow,
+          enterOffset: approachOffset(p, sceneCtx, modelBox),
+          envelope: ENVELOPE_KINDS.has(p.kind),
+        });
+      });
+    }
 
     // camera chained from the previous shot so the move is always continuous — never a cut
     const from = prevTo ?? widenKeyframe(spec.to, 1.18, modelBox);
