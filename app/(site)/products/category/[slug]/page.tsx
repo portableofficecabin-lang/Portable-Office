@@ -4,7 +4,7 @@ import { CategoryListingWithParams } from "@/views/Products";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
-import { categories as staticCategories } from "@/data/products";
+import { categories as staticCategories, getProductSlug } from "@/data/products";
 import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
 import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
@@ -88,7 +88,10 @@ export default async function Page({ params }: PageProps) {
             item: {
               "@type": "Product",
               name: p.name,
-              url: `${SITE}/products/${p.slug}`,
+              // p.slug is an optional OVERRIDE most products don't set — the canonical URL comes
+              // from getProductSlug(). The raw field emitted "/products/undefined" into this
+              // schema for every product without an explicit slug.
+              url: `${SITE}/products/${getProductSlug(p)}`,
               offers: {
                 "@type": "Offer",
                 priceCurrency: "INR",
