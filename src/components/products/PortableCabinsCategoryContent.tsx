@@ -20,7 +20,7 @@
  */
 
 import Link from "next/link";
-import { products as catalogProducts, type Product } from "@/data/products";
+import { products as catalogProducts, getProductSlug, type Product } from "@/data/products";
 import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 
@@ -40,7 +40,10 @@ export function portableCabinModels(products: Product[]) {
       const c = getCommerce(p.id)!;
       return {
         name: p.name,
-        slug: p.slug,
+        // `p.slug` is an OPTIONAL override most products don't set — the canonical URL slug is
+        // derived by getProductSlug(). Reading the raw field gave every row key={undefined}
+        // (React's "unique key" warning) and a broken /products/undefined link.
+        slug: getProductSlug(p),
         price: sellPrice(c.basePrice),
         bestFor: c.bestFor,
       };
