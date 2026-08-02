@@ -146,9 +146,9 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   },
   {
     id: "12", sku: "POC-CSC-2040", basePrice: 185000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "20ft & 40ft Storage Container",
-    feedTitle: "Storage Container 20ft & 40ft Corten Steel for Secure Site Storage | Portable Office Cabin",
-    size: "160 sq ft / 320 sq ft", material: "Corten Weathering Steel", bestFor: "Secure Storage",
+    h1Title: "20ft Storage Container",
+    feedTitle: "Storage Container 20ft Corten Steel for Secure Site Storage | Portable Office Cabin",
+    size: "20 ft — 160 sq ft", material: "Corten Weathering Steel", bestFor: "Secure Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
@@ -524,7 +524,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     // in <city>" listings at six prices — Google reads that as one product duplicated with
     // conflicting offers. Each is now a DISTINCT configuration (grade ascends with price);
     // the city names the delivery area, not the product.
-    h1Title: "Used 20 ft Shipping Container (As-Is Grade) – Koramangala",
+    h1Title: "Used 20 ft Shipping Container (As-Is Grade)",
     feedTitle: "Used 20 ft Shipping Container As-Is Grade, Koramangala Bangalore Delivery | Portable Office Cabin",
     size: "20 ft × 8 ft — used, as-is grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
@@ -550,7 +550,7 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     // owner supplied (Aug 2026). Never "correct" this base to a round number: the customer
     // price is the spec, the base is derived.
     id: "32", sku: "POC-SC-CHN", basePrice: 126271, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Used 20 ft Shipping Container (Wind & Water Tight) – Chennai",
+    h1Title: "Used 20 ft Shipping Container (Wind & Water Tight)",
     feedTitle: "Used 20 ft Shipping Container WWT Grade, Chennai Port Delivery | Portable Office Cabin",
     size: "20 ft × 8 ft — used, wind & water tight", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
