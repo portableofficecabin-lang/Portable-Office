@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Shield, Droplets, Leaf, Lock, Wrench, FileCheck, Accessibility, IndianRupee, Factory, Truck, CheckCircle2, Sparkles, Phone } from "lucide-react";
+import { Shield, Droplets, Leaf, Lock, Wrench, FileCheck, Accessibility, IndianRupee, Factory, Truck, CheckCircle2, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 const keyFeatures = [
   { icon: Factory, title: "Built-Type Prefab Construction", desc: "Rapid deployment and easy relocation — portable toilets are easy to install and move, emphasizing portability and quick setup." },
@@ -36,7 +36,7 @@ const pricingTiers = [
  * lower price for the very product being sold. With `offer` set they are replaced by the one
  * real, chargeable figure.
  */
-export function PortableToiletContent({ offer }: { offer?: FixedOffer }) {
+export function PortableToiletContent({ offer }: { offer?: FixedOffer & { productId?: string } }) {
   return (
     <div className="space-y-10 mb-12">
       {/* Hero Introduction */}
@@ -329,18 +329,16 @@ export function PortableToiletContent({ offer }: { offer?: FixedOffer }) {
       <div className="relative bg-gradient-to-r from-accent via-amber-500 to-accent rounded-2xl p-8 text-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.15),transparent_60%)]" />
         <div className="relative">
-          <h3 className="font-display font-bold text-2xl text-white mb-3">Get Your Custom Quote Today</h3>
+          <h3 className="font-display font-bold text-2xl text-white mb-3">
+            {offer?.productId ? "Ready to Order?" : "Get Your Custom Quote Today"}
+          </h3>
           <p className="text-white/80 text-sm mb-6 max-w-xl mx-auto">
-            Whether you need 5 units for a small site or 500 for a township project, our team will provide a tailored quote that fits your budget and timeline.
+            {offer?.productId
+              ? "Buy online with secure payment — delivery across India."
+              : "Whether you need 5 units for a small site or 500 for a township project, our team will provide a tailored quote that fits your budget and timeline."}
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-accent font-bold px-6 py-3 rounded-xl hover:bg-white/90 transition-colors shadow-lg"
-            >
-              <Phone className="w-4 h-4" />
-              Request a Callback
-            </Link>
+            <BuyNowCTA productId={offer?.productId} tone="dark" />
             <a
               href="https://wa.me/919731897976?text=Hi%2C%20I%20need%20a%20quote%20for%20portable%20toilets"
               target="_blank"

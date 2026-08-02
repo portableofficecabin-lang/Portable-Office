@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Building2, Users, Shield, Wrench, Clock, IndianRupee, Truck, Thermometer, Droplets, Zap, Leaf, HardHat, Phone, MessageSquare, CheckCircle2, Home, LayoutGrid, Layers } from "lucide-react";
+import { Building2, Users, Shield, Wrench, Clock, IndianRupee, Truck, Thermometer, Droplets, Zap, Leaf, HardHat, Phone, MessageCircle, CheckCircle2, Home, LayoutGrid, Layers } from "lucide-react";
+import { COMPANY } from "@/lib/company";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
@@ -320,10 +321,14 @@ export function LabourColonyContent() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
-            <Link href="/contact">
-              <MessageSquare className="mr-2 h-5 w-5" />
-              Get a Free Quote
-            </Link>
+            <a
+              href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in a labour colony setup")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              WhatsApp Us
+            </a>
           </Button>
           <Button size="lg" variant="outline" asChild>
             <a href="tel:+919731897976">

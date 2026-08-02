@@ -1,7 +1,8 @@
-import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home, Zap, Calendar, IndianRupee, Settings, Hammer, Lightbulb, TrendingUp } from "lucide-react";
+import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home, Zap, Calendar, IndianRupee, Settings, Hammer, Lightbulb, TrendingUp } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 /**
  * `offer` is present when the CURRENT product page is purchasable (passed in by
@@ -11,7 +12,7 @@ import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
  * fixed checkout price is a self-contradiction: 480 sq ft × the page's own top rate would "prove"
  * a different price than the one being charged.
  */
-export function PortaCabinContent({ offer }: { offer?: FixedOffer }) {
+export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?: string } }) {
   return (
     <div className="space-y-16">
       {/* Hero Introduction */}
@@ -652,17 +653,16 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer }) {
           Ready to Get Started with Your Porta Cabin?
         </h2>
         <p className="text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed">
-          Whether you need a single guard cabin or a complete labour colony, share your requirements with us. Provide your layout preferences, capacity needs, and location details to receive a tailored design, exact pricing, and realistic project timeline.
+          {offer
+            ? "Ready to order? Buy your porta cabin online with secure payment and delivery across India — or call us and our team will help you choose the right configuration."
+            : "Whether you need a single guard cabin or a complete labour colony, share your requirements with us. Provide your layout preferences, capacity needs, and location details to receive a tailored design, exact pricing, and realistic project timeline."}
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 bg-white text-accent font-semibold px-8 py-3 rounded-full hover:bg-white/90 transition-colors">
             <Phone className="h-5 w-5" />
             Call Now
           </a>
-          <a href="/contact" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 transition-colors">
-            Request a Quote
-            <ChevronRight className="h-5 w-5" />
-          </a>
+          <BuyNowCTA productId={offer?.productId} tone="dark" />
         </div>
       </section>
     </div>

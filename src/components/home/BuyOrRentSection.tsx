@@ -8,10 +8,10 @@ import { BuyOrRentHelper } from "./BuyOrRentHelper";
 /**
  * BUY OR RENT — the purchase-vs-rental decision section (light contrast band on the dark homepage,
  * matching the approved mockup 1:1): eyebrow + title, the two offer cards, the 8-row comparison
- * table, the "Still unsure?" band (3-question helper dialog + quote CTA) and the four trust chips.
+ * table, the "Still unsure?" band (3-question helper dialog + contact CTA) and the four trust chips.
  *
  * Server component — the only interactive piece is the <BuyOrRentHelper /> client island. CTAs:
- * buy → /products, rent → /rental-service, quote → /contact. Palette is the mockup's: blue #2563EB
+ * buy → /products, rent → /rental-service, contact → /contact. Palette is the mockup's: blue #2563EB
  * for purchase, orange #EA580C for rental, green #16A34A accents, on white/slate-50.
  */
 
@@ -229,7 +229,7 @@ export function BuyOrRentSection() {
               href="/contact"
               className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#2563EB] bg-white px-5 py-2.5 font-semibold text-[#2563EB] transition-colors hover:bg-[#EFF4FB]"
             >
-              Request a Quote <ArrowRight className="h-4 w-4" />
+              Contact Us <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

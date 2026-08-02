@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Factory, Truck, Wrench } from "lucide-react";
+import { Factory, Truck, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import tataProjects from "@/assets/clients/tata-projects.jpg";
 import asianPaints from "@/assets/clients/asian-paints.jpg";
@@ -63,12 +63,6 @@ export function TrustedClientsSection() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Button variant="accent" size="lg" asChild>
-              <Link href="/contact">
-                Get a Free Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
               <Link href="#cabin-calculator">Customize Your Cabin</Link>
             </Button>
           </div>

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Phone, ChevronRight, CheckCircle, Building2, Factory, Zap, MapPin, Users, Shield, Wrench, Thermometer, Home, Layers, Truck, HardHat, IndianRupee, Clock, Star, Hammer, Leaf } from "lucide-react";
+import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Building2, Factory, Zap, MapPin, Users, Shield, Wrench, Thermometer, Home, Layers, Truck, HardHat, IndianRupee, Clock, Star, Hammer, Leaf } from "lucide-react";
+import { COMPANY } from "@/lib/company";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroImage from "@/assets/blog/portable-cabin-manufacturers-bangalore-factory.webp";
 import transportImage from "@/assets/blog/portable-cabin-manufacturers-bangalore-transport.webp";
@@ -425,14 +426,14 @@ export default function PortableCabinManufacturersBangalore() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-4">Need a Portable Cabin in Bangalore?</h2>
           <p className="text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Get a free quote from Portable Office Cabin. We manufacture and deliver MS cabins, container offices, security cabins, and prefab homes across Bengaluru.
+            Call or WhatsApp Portable Office Cabin. We manufacture and deliver MS cabins, container offices, security cabins, and prefab homes across Bengaluru.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="secondary" className="font-semibold">
-                Get Free Quote
+                <MessageCircle className="w-4 h-4 mr-2" /> WhatsApp Us
               </Button>
-            </Link>
+            </a>
             <a href="tel:+919731897976">
               <Button size="lg" variant="outline" className="font-semibold border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
                 <Phone className="w-4 h-4 mr-2" /> +91 97318 97976

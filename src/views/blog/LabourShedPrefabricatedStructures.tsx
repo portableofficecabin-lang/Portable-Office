@@ -3,7 +3,8 @@ import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Phone, Calendar, ChevronRight, CheckCircle, Clock, Shield, IndianRupee, Wrench, Building2, Users, Factory, Truck, HardHat } from "lucide-react";
+import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Clock, Shield, IndianRupee, Wrench, Building2, Users, Factory, Truck, HardHat } from "lucide-react";
+import { COMPANY } from "@/lib/company";
 import labourShedSteelFrame from "@/assets/blog/labour-shed-steel-frame-construction.webp";
 import prefabLabourColonyAerial from "@/assets/blog/prefab-labour-colony-aerial-view.webp";
 import modularLabourCamp from "@/assets/blog/modular-labour-accommodation-camp.webp";
@@ -534,20 +535,20 @@ export default function LabourShedPrefabricatedStructures() {
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Need a Labour Shed for Your Project?</h2>
           <p className="text-primary-foreground/80 mb-8">
-            Get a free consultation and customized quotation from our prefab experts. We serve projects across India with 10–30 day installation timelines.
+            Talk to our prefab experts on call or WhatsApp. We serve projects across India with 10–30 day installation timelines.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="default" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/contact">
+              <a href={`tel:${COMPANY.phones[0].e164}`}>
                 <Phone className="mr-2 h-5 w-5" />
-                Get Free Quote
-              </Link>
+                Call Now
+              </a>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-              <Link href="/book-appointment">
-                <Calendar className="mr-2 h-5 w-5" />
-                Book Consultation
-              </Link>
+              <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 h-5 w-5" />
+                WhatsApp Us
+              </a>
             </Button>
           </div>
         </div>

@@ -15,7 +15,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Executive Portable Cabin 20ft
   "1": {
     title: "Executive Portable Cabin 20ft | Portable Office Cabin",
-    description: "Get a quote for a 20ft executive portable cabin with 50mm PUF insulation, complete wiring & AC provision. Ideal for site offices. Delivery across India.",
+    description: "20ft executive portable cabin with 50mm PUF insulation, complete wiring & AC provision. Ideal for site offices. Delivery across India. Call or WhatsApp us.",
     keywords: "executive portable cabin, 20ft portable cabin, portable site office, PUF insulated cabin, portable cabin price India, prefab office cabin, portable cabin manufacturer",
   },
   // Standard Site Office Container
@@ -33,13 +33,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Family Prefab Home 2BHK
   "4": {
     title: "2BHK Prefab Home | Portable Office Cabin",
-    description: "Complete 2BHK prefab home with modular kitchen, bathroom & 10-year warranty. Ideal for farmhouses & resorts. Get a free quote today!",
+    description: "Complete 2BHK prefab home with modular kitchen, bathroom & 10-year warranty. Ideal for farmhouses & resorts. Call or WhatsApp us today!",
     keywords: "2BHK prefab home, prefab house India, prefabricated home price, modular home 2BHK, quick build home, farmhouse prefab, prefab home manufacturer India",
   },
   // Portable Toilet Block - 4 Unit
   "5": {
     title: "4-Unit Portable Toilet Block | Portable Office Cabin",
-    description: "4-unit MS portable toilet block with ceramic fittings, exhaust fans & 500L water tank. Hygienic sanitation for construction sites & events. Request a quote.",
+    description: "4-unit MS portable toilet block with ceramic fittings, exhaust fans & 500L water tank. Hygienic sanitation for construction sites & events. Call us today.",
     keywords: "portable toilet block, 4 unit portable toilet, MS toilet cabin, construction site toilet, mobile toilet India, portable sanitation unit, toilet cabin price",
   },
   // Guard Security Cabin
@@ -51,7 +51,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Portable Cabin 40ft Bunkhouse
   "7": {
     title: "40ft Portable Bunkhouse – 12 Person | Portable Office Cabin",
-    description: "40ft portable bunkhouse for 8–12 workers with attached bathroom, pantry & split AC. Meets welfare standards. Ideal for remote sites. Get a free quote!",
+    description: "40ft portable bunkhouse for 8–12 workers with attached bathroom, pantry & split AC. Meets welfare standards. Ideal for remote sites. Call us today!",
     keywords: "portable bunkhouse, 40ft bunkhouse, worker accommodation cabin, labour camp cabin, site accommodation India, portable bunkhouse price, prefab bunkhouse",
   },
   // Luxury Prefab Villa G+1 Floors
@@ -63,13 +63,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Container Office — INTENT: Buy single standard unit (transactional)
   "10": {
     title: "Container Office for Sale in India | Portable Office Cabin",
-    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Request a quote.",
+    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Call or WhatsApp us.",
     keywords: "container office for sale India, buy container office, 20ft container office price, 40ft container office price, ready container office, container office delivery India",
   },
   // Porta Cabin
   "9": {
     title: "Porta Cabin Manufacturer India | Portable Office Cabin",
-    description: "Porta cabin with MS steel frame, PUF insulated panels & quick on-site installation. 30–40% cheaper than traditional construction. Free quote available!",
+    description: "Porta cabin with MS steel frame, PUF insulated panels & quick on-site installation. 30–40% cheaper than traditional construction. Call or WhatsApp us!",
     keywords: "porta cabin, porta cabin price, porta cabin manufacturer India, portable cabin, prefab porta cabin, MS steel porta cabin, porta cabin for site office",
   },
   // MS Portable Cabin
@@ -82,13 +82,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // 20ft & 40ft Storage Container – Corten Steel
   "12": {
     title: "20ft & 40ft Storage Container | Portable Office Cabin",
-    description: "20ft & 40ft Corten steel storage containers with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Get a quote!",
+    description: "20ft & 40ft Corten steel storage containers with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Call us today!",
     keywords: "20ft storage container, 40ft storage container, Corten steel container, cargo storage container India, heavy duty storage container, site storage container price",
   },
   // Prefabricated Portable Cabin
   "13": {
     title: "Prefabricated Portable Cabin | Portable Office Cabin",
-    description: "Prefabricated portable cabins with quick 2-4 hour assembly, weather-resistant steel frame & PUF insulation. 60% cheaper than construction. Get a free quote!",
+    description: "Prefabricated portable cabins with quick 2-4 hour assembly, weather-resistant steel frame & PUF insulation. 60% cheaper than construction. Call us today!",
     keywords: "prefabricated portable cabin, prefab cabin India, portable cabin manufacturer, modular portable cabin, prefab site office, prefabricated cabin price, quick install cabin",
   },
   // New & Used Shipping Container for Sale in India
@@ -144,7 +144,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Prefabricated Labour Hutments & Staff Accommodation
   "22": {
     title: "Prefab Labour Hutments & Staff Housing",
-    description: "Prefabricated labour hutments & staff accommodation in India. Modular G+1/G+2 colonies for 50–500 workers. 20–30% cheaper than RCC. Get a free quote!",
+    description: "Prefabricated labour hutments & staff accommodation in India. Modular G+1/G+2 colonies for 50–500 workers. 20–30% cheaper than RCC. Call us today!",
     keywords: "prefabricated labour hutments, staff accommodation, labour colony, worker housing India, prefab labour camp, modular staff quarters, construction worker accommodation, BOCW compliant housing",
   },
   // Prefab Porta Cabin
@@ -156,13 +156,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Labor Hutments
   "24": {
     title: "Labor Hutments – Prefab Worker Accommodation",
-    description: "Prefabricated labor hutments in India for construction sites & industrial projects. Move-in ready with insulated panels. 20–35% lifecycle savings. Get a quote!",
+    description: "Prefabricated labor hutments in India for construction sites & industrial projects. Move-in ready with insulated panels. 20–35% lifecycle savings. Call us!",
     keywords: "labor hutments, prefab labor hutments, worker accommodation India, labour hutment manufacturer, construction worker housing, prefabricated labour huts, labor camp India",
   },
   // Cabin Portable
   "25": {
     title: "Cabin Portable – Offices, Sites & Solutions",
-    description: "Guide to portable cabin solutions in India — site offices, worker accommodation, security cabins, toilets & containers. 40–60% cheaper than RCC. Get a quote!",
+    description: "Guide to portable cabin solutions in India — site offices, worker accommodation, security cabins, toilets & containers. 40–60% cheaper than RCC. Call us today!",
     keywords: "cabin portable, portable cabin India, portable office cabin, site office cabin, container office, security cabin, portable toilet, labour accommodation cabin, prefab cabin",
   },
   // Security Cabin
@@ -231,7 +231,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "38": {
     title: "Cargo Container for Sale Bangalore | Portable Office Cabin",
-    description: "20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. Request a quote.",
+    description: "20ft & 40ft cargo shipping containers in Bangalore & across India. ISO-certified new & used units for storage, freight & office use. Contact us for pricing.",
     keywords: "cargo shipping container for sale Bangalore, buy cargo container India, 20ft shipping container price Bangalore, 40ft cargo container India, ISO shipping container Bangalore, used cargo container for sale, shipping container price India, cargo container manufacturer Bangalore",
   },
   "39": {

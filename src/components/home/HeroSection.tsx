@@ -169,11 +169,6 @@ export function HeroSection() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline-light" size="xl" asChild>
-                <Link href="/contact">
-                  Free Consultation
-                </Link>
-              </Button>
             </div>
 
             {/* Stats */}

@@ -6,9 +6,9 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
-  title: "Contact Us & Get a Free Quote",
+  title: "Contact Us",
   description:
-    "Contact Portable Office Cabin for a free quotation on cabins and containers. Call, email or send an enquiry — pan-India delivery and installation support.",
+    "Contact Portable Office Cabin about cabins and containers. Call, WhatsApp, email or send an enquiry — pan-India delivery and installation support.",
   path: "/contact",
 });
 

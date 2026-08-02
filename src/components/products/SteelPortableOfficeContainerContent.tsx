@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Building2, Shield, Truck, Wrench, ThermometerSun, Zap, Ruler, Users, IndianRupee, Factory, HardHat, Recycle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import steelContainerInterior from "@/assets/products/steel-portable-office-container-interior.webp";
 import steelContainerSite from "@/assets/products/steel-portable-office-container-site.webp";
@@ -346,9 +346,7 @@ export function SteelPortableOfficeContainerContent() {
           <div className="flex items-start gap-2"><Factory className="h-5 w-5 text-accent shrink-0" /> Track record across Maharashtra, Gujarat, Bengaluru, Hyderabad, and pan-India</div>
         </div>
         <div className="mt-6 flex flex-wrap gap-4">
-          <Link href="/contact" className="inline-flex items-center px-6 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity">
-            Request a Quote
-          </Link>
+          <BuyNowCTA productId="28" />
           <a href="tel:+919731897976" className="inline-flex items-center px-6 py-3 border border-border rounded-lg font-semibold text-foreground hover:bg-muted transition-colors">
             Call +91-9731897976
           </a>

@@ -200,12 +200,16 @@ export const products: Product[] = [
       "Can be loaded on truck and moved easily",
       "We customise layouts based on your needs",
     ],
+    // Owner-supplied photo set (Aug 2026) IS the gallery — the older renders/installed shots
+    // were removed from display by owner decision (files kept on disk). FIRST image = the FRONT
+    // photo: it is also the LCP preload, JSON-LD, OG and Merchant feed image for this feed SKU
+    // (POC-PC-20EX, no FEED_IMAGE_POLICY entry). Interior sits last.
     images: [
-      "/images/products/executive-portable-cabin-20ft-front.webp",
-      "/images/products/executive-portable-cabin-20ft-side.webp",
-      "/images/products/executive-portable-cabin-20ft-installed-1.webp",
-      "/images/products/executive-portable-cabin-20ft-installed-2.webp",
-      "/images/products/executive-portable-cabin-20ft.webp",
+      "/images/products/executive-portable-cabin-20ft-front-view.webp",
+      "/images/products/executive-portable-cabin-20ft-right-side.webp",
+      "/images/products/executive-portable-cabin-20ft-side-view.webp",
+      "/images/products/executive-portable-cabin-20ft-back-side.webp",
+      "/images/products/executive-portable-cabin-20ft-interior.webp",
     ],
     price: 285000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",

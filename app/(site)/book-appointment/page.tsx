@@ -8,7 +8,7 @@ import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 export const metadata = buildPageMetadata({
   title: "Book an Appointment",
   description:
-    "Book a free consultation or factory visit with Portable Office Cabin. Discuss your portable cabin, container office or prefab requirements with our team.",
+    "Book an appointment or factory visit with Portable Office Cabin. Discuss your portable cabin, container office or prefab requirements with our team.",
   path: "/book-appointment",
 });
 

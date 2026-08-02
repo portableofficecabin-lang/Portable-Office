@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { COMPANY } from "@/lib/company";
 import {
   Accordion,
   AccordionContent,
@@ -474,11 +475,15 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
           Contact Portable Office Cabin with your city, preferred size, intended use (shop, office, storage, café), and timeline. Receive a customised quotation with layout proposal. The number of businesses choosing pink grows each year—join them.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <Link href="/contact">
+          <a
+            href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in a pink cargo storage container")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Get a Free Quote
+              WhatsApp Us
             </Button>
-          </Link>
+          </a>
           <a href="tel:+919731897976">
             <Button size="lg" variant="outline">
               Call +91-9731897976

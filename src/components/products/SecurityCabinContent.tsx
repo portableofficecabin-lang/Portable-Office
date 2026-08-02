@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Shield, Building, Factory, Landmark, School, Hospital, Truck, CheckCircle, ArrowRight, Phone } from "lucide-react";
+import { Shield, Building, Factory, Landmark, School, Hospital, Truck, CheckCircle, Phone } from "lucide-react";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import securityCabinResidential from "@/assets/products/security-cabin-residential-gate.webp";
@@ -526,17 +526,12 @@ export function SecurityCabinContent() {
 
       {/* CTA */}
       <section className="bg-accent/10 rounded-2xl p-8 text-center">
-        <h3 className="text-xl font-bold text-foreground mb-2">Get Your Security Cabin Quote Today</h3>
+        <h3 className="text-xl font-bold text-foreground mb-2">Ready to Order Your Security Cabin?</h3>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Send your enquiry with required size, location, and preferred material. Our team will provide a customised quote with complete specifications.
+          Buy online with secure payment — delivery across India. Need a custom size or material? Call us and we will help you configure the right cabin for your site.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-          >
-            Request a Quote <ArrowRight className="w-4 h-4" />
-          </Link>
+          <BuyNowCTA productId="26" />
           <a
             href="tel:+919731897976"
             className="inline-flex items-center gap-2 border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent/5 transition-colors"

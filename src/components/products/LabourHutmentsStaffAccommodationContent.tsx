@@ -1,4 +1,5 @@
 import { Check, Zap, Shield, Settings, Thermometer, RotateCcw, Users, Building2, HardHat, Leaf, ClipboardCheck, Phone } from "lucide-react";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import labourHutments2 from "@/assets/products/labour-hutments-staff-accommodation-2.webp";
@@ -541,15 +542,13 @@ export function LabourHutmentsStaffAccommodationContent() {
       {/* CTA */}
       <section className="bg-accent/10 rounded-2xl p-8 text-center">
         <h2 className="font-display text-2xl font-bold text-foreground mb-3">
-          Contact Portable Office Cabin
+          Ready to Order Your Labour Hutments?
         </h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Ready to discuss your prefabricated labour hutments requirements? Share your project location, required bed count, and preferred timeline. Our engineering team provides preliminary layout suggestions within days of receiving inputs.
+          Buy the labour hutment unit on this page online with secure payment — transport and optional installation are calculated at checkout from your delivery pincode. For complete colony packages, share your project location, required bed count, and preferred timeline, and our engineering team provides preliminary layout suggestions within days of receiving inputs.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-6 py-3 font-semibold hover:bg-accent/90 transition-colors">
-            Request a Quote
-          </a>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <BuyNowCTA productId="22" />
           <a href="tel:+919731897976" className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 font-semibold text-foreground hover:bg-muted transition-colors">
             <Phone className="h-4 w-4 mr-2" />
             Call Us Now

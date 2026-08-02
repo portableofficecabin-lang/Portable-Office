@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { CheckCircle, ArrowRight, Phone, Building, Lightbulb, Shield, Volume2, Layout, Paintbrush } from "lucide-react";
+import { CheckCircle, Phone, Building, Lightbulb, Shield, Volume2, Layout, Paintbrush } from "lucide-react";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import cabinsModern from "@/assets/products/cabins-in-office-modern.webp";
@@ -406,17 +406,12 @@ export function CabinsInOfficeContent() {
 
       {/* CTA */}
       <section className="bg-accent/10 rounded-2xl p-8 text-center">
-        <h3 className="text-xl font-bold text-foreground mb-2">Ready to Create Your Modern Office Workspace?</h3>
+        <h3 className="text-xl font-bold text-foreground mb-2">Ready to Order Your Modern Office Workspace?</h3>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Start with a pilot of 4–6 cabins and refine your approach. Contact our facilities experts to discuss your requirements and get a customized quote.
+          Buy the office cabin on this page online with secure payment — transport and optional installation are calculated at checkout from your delivery pincode. For multi-cabin pilots or custom fit-outs, call our facilities experts.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-          >
-            Request a Quote <ArrowRight className="w-4 h-4" />
-          </Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <BuyNowCTA productId="27" />
           <a
             href="tel:+919731897976"
             className="inline-flex items-center gap-2 border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent/5 transition-colors"

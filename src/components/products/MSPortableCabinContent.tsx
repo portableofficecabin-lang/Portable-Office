@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   Bath,
   BedDouble,
@@ -23,6 +22,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 const advantages = [
   "Speed: Ready-to-use cabins arrive at your site, eliminating months of construction time",
@@ -466,14 +466,12 @@ export function MSPortableCabinContent() {
       </section>
 
       <section className="rounded-3xl bg-accent/10 p-8 text-center md:p-10">
-        <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">Get the Best Quote for Your MS Portable Cabin</h2>
+        <h2 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">Ready to Order Your MS Portable Cabin?</h2>
         <p className="mx-auto mb-6 max-w-3xl text-muted-foreground">
-          Share your layout, size, location, and timeline to get a tailored proposal for office cabins, security cabins, accommodation blocks, toilet cabins, or complete labour colony setups.
+          Buy online with secure payment and delivery across India, or call us to discuss office cabins, security cabins, accommodation blocks, toilet cabins, or complete labour colony setups.
         </p>
-        <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <Link href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-3 font-semibold text-accent-foreground transition-colors hover:bg-accent/90">
-            Request a Quote
-          </Link>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="11" />
           <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
             <Phone className="h-4 w-4" />
             Call Us Now

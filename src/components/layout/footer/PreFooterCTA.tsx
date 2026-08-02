@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { ArrowRight, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
@@ -18,8 +17,9 @@ import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
  * against the amber — comfortably past AA for body text. Do not swap in
  * `text-primary-foreground` here without re-checking it.
  *
- * Every destination is an existing route: /contact is the enquiry form, and the phone
- * and WhatsApp links use the verified numbers from src/lib/company.ts.
+ * The phone and WhatsApp links use the verified numbers from src/lib/company.ts.
+ * No "Request a Quote" button here by owner decision — quote CTAs are not promoted
+ * in global chrome; direct contact (call/WhatsApp) is the enquiry path.
  */
 export function PreFooterCTA() {
   return (
@@ -48,17 +48,6 @@ export function PreFooterCTA() {
               asChild
               size="lg"
               className="h-12 bg-navy-deep px-6 text-white shadow-lg hover:-translate-y-0.5 hover:bg-navy-medium focus-visible:ring-navy-deep motion-reduce:hover:translate-y-0"
-            >
-              <Link href="/contact">
-                Request a Quote
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </Button>
-
-            <Button
-              asChild
-              size="lg"
-              className="h-12 border-2 border-navy-deep/35 bg-white/25 px-6 text-navy-deep hover:bg-white/45 focus-visible:ring-navy-deep"
             >
               <a href={`tel:${primaryPhone.e164}`}>
                 <Phone className="h-4 w-4" aria-hidden="true" />

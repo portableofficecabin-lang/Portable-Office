@@ -135,7 +135,7 @@ export async function FeaturedProducts() {
                   ) : (
                     <div>
                       <span className="text-xs text-muted-foreground">Made to order</span>
-                      <div className="font-display font-bold text-lg text-foreground">Request a quote</div>
+                      <div className="font-display font-bold text-lg text-foreground">Contact us for pricing</div>
                     </div>
                   )}
                   <Link 

@@ -1,6 +1,6 @@
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Clock, Truck, IndianRupee, Shield, Factory, Wrench, CheckCircle, MapPin, Phone, Building2, Container, Users } from "lucide-react";
+import { Clock, Truck, IndianRupee, Shield, Factory, Wrench, CheckCircle, MapPin, MessageCircle, Phone, Building2, Container, Users } from "lucide-react";
 import peenyaIndustrial from "@/assets/products/shipping-container-peenya-industrial.webp";
 import peenyaYard from "@/assets/products/shipping-container-peenya-yard.webp";
 import peenyaStorage from "@/assets/products/shipping-container-peenya-storage.webp";
@@ -454,9 +454,9 @@ export function ShippingContainerPeenyaContent() {
         </div>
       </section>
 
-      {/* How to Get a Quote */}
+      {/* How to Get Started */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-4">How to Get a Quote for Peenya Industrial Area</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-4">How to Get Started in Peenya Industrial Area</h2>
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
           <p>Obtaining a quote is straightforward via phone, email, or website enquiry form.</p>
           <div className="grid md:grid-cols-2 gap-6">
@@ -503,12 +503,13 @@ export function ShippingContainerPeenyaContent() {
         <h2 className="text-2xl font-bold mb-4">Need a Shipping Container in Peenya Industrial Area?</h2>
         <p className="mb-6 opacity-90">Share your requirements and get a tailored quote with transparent price and delivery information.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 bg-background text-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-            <Phone className="h-5 w-5" />
-            +91 97318 97976
+          <a href="https://wa.me/919731897976?text=Hi%2C%20I%20need%20a%20shipping%20container%20in%20Peenya%20Industrial%20Area" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-background text-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+            <MessageCircle className="h-5 w-5" />
+            WhatsApp Us
           </a>
-          <a href="/contact" className="inline-flex items-center justify-center gap-2 border-2 border-accent-foreground px-6 py-3 rounded-lg font-semibold hover:bg-accent-foreground/10 transition-colors">
-            Request a Quote
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 border-2 border-accent-foreground px-6 py-3 rounded-lg font-semibold hover:bg-accent-foreground/10 transition-colors">
+            <Phone className="h-5 w-5" />
+            Call +91 97318 97976
           </a>
         </div>
       </section>

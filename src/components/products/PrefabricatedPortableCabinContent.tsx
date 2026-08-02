@@ -1,5 +1,6 @@
 import { Check, Zap, Shield, Settings, Thermometer, RotateCcw } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 export function PrefabricatedPortableCabinContent() {
   return (
@@ -129,9 +130,7 @@ export function PrefabricatedPortableCabinContent() {
           The cabin on this page is sold at the single price shown at the top, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. For a custom size or layout, send us your requirements or request a callback from our manufacturing team.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-6 py-3 font-semibold hover:bg-accent/90 transition-colors">
-            Request a Quote
-          </a>
+          <BuyNowCTA productId="13" />
           <a href="tel:+919731897976" className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 font-semibold text-foreground hover:bg-muted transition-colors">
             Call Us Now
           </a>

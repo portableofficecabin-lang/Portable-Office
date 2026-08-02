@@ -1,6 +1,7 @@
 import { Check, Zap, Shield, Settings, Thermometer, RotateCcw, Users, Building2, HardHat, Leaf, ClipboardCheck, Phone, Wrench, Home } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import laborHutmentsAerial from "@/assets/products/labor-hutments-aerial.webp";
 import laborHutmentsConstruction from "@/assets/products/labor-hutments-construction.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
@@ -369,15 +370,15 @@ export function LaborHutmentsContent() {
       {/* CTA */}
       <section className="bg-accent/10 rounded-2xl p-8 text-center">
         <h2 className="font-display text-2xl font-bold text-foreground mb-3">
-          Ready to Discuss Your Workforce Accommodation?
+          Ready to Order Your Labor Hutment?
         </h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Share your layout requirements or worker strength with our team for a customized prefabricated labor hutments proposal. Contact Portable Office Cabin via phone, email, or the enquiry form at portableofficecabin.com to work hard together on your perfect solution.
+          Buy the labor hutment unit on this page online with secure payment — delivery across India. For larger colonies sized to your layout and worker strength, call Portable Office Cabin and our team will prepare a customized prefabricated labor hutments proposal.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-6 py-3 font-semibold hover:bg-accent/90 transition-colors">
-            Request a Quote
-          </a>
+          <div className="flex justify-center">
+            <BuyNowCTA productId="24" />
+          </div>
           <a href="tel:+919731897976" className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 font-semibold text-foreground hover:bg-muted transition-colors">
             <Phone className="h-4 w-4 mr-2" />
             Call Us Now

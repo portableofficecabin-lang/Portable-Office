@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Eye, MessageSquare, ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Eye, MessageCircle, Phone, ShoppingCart, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Product, getProductDetailPath } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
@@ -9,17 +10,21 @@ import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productC
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
+import { COMPANY } from "@/lib/company";
 
 interface ProductCardProps {
   product: Product;
+  /** @deprecated The card no longer renders an enquiry trigger — quote-only SKUs
+   *  show WhatsApp + Call CTAs instead. Kept so existing call sites compile. */
   onEnquire?: (product: Product) => void;
   /** Eager-load + fetchPriority high for the first above-the-fold card so it can
    *  be the LCP element on listing/category pages without a lazy-load round-trip. */
   priority?: boolean;
 }
 
-export function ProductCard({ product, onEnquire, priority = false }: ProductCardProps) {
+export function ProductCard({ product, priority = false }: ProductCardProps) {
   const { addToCart } = useCart();
+  const router = useRouter();
   const productImage = getBestProductImage(product.id, product.categorySlug, product.images?.[0], product.sku);
 
   // Same commerce catalog, same isPurchasable() gate as the product page and the JSON-LD, so
@@ -133,7 +138,7 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
               <span className="text-xs text-muted-foreground">Incl. taxes</span>
             </div>
           ) : (
-            <span className="text-muted-foreground text-sm font-medium">Request a quote for pricing</span>
+            <span className="text-muted-foreground text-sm font-medium">Contact us for pricing</span>
           )}
           <Link
             href={getProductDetailPath(product)}
@@ -144,30 +149,54 @@ export function ProductCard({ product, onEnquire, priority = false }: ProductCar
           </Link>
         </div>
 
-        {/* Purchasable → buying is the primary path (fixed price, payable in full).
-            Quote-only → a written quotation is the only honest path. */}
+        {/* Purchasable → buying is the primary path (fixed price, payable in full):
+            Buy Now adds the item and goes to the cart; Add to Cart stays on the page.
+            Quote-only → talk to us directly on WhatsApp or by phone (owner-chosen CTA). */}
         {purchasable ? (
-          <Button
-            variant="accent"
-            className="w-full mt-5"
-            onClick={() => addToCart(product.id)}
-            aria-label={`Add ${product.name} to cart`}
-          >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Cart
-          </Button>
-        ) : (
-          onEnquire && (
+          <div className="grid grid-cols-2 gap-3 mt-5">
             <Button
               variant="accent"
-              className="w-full mt-5"
-              onClick={() => onEnquire(product)}
-              aria-label={`Request a quote for ${product.name}`}
+              onClick={async () => {
+                await addToCart(product.id);
+                router.push("/cart");
+              }}
+              aria-label={`Buy ${product.name} now`}
             >
-              <MessageSquare className="mr-2 h-4 w-4" />
-              Request a Quote
+              <Zap className="mr-2 h-4 w-4" />
+              Buy Now
             </Button>
-          )
+            <Button
+              variant="outline"
+              onClick={() => addToCart(product.id)}
+              aria-label={`Add ${product.name} to cart`}
+            >
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Add to Cart
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3 mt-5">
+            <Button variant="accent" asChild>
+              <a
+                href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent(`Hi, I'm interested in ${product.name}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`WhatsApp us about ${product.name}`}
+              >
+                <MessageCircle className="mr-2 h-4 w-4" />
+                WhatsApp
+              </a>
+            </Button>
+            <Button variant="outline" asChild>
+              <a
+                href={`tel:${COMPANY.phones[0].e164}`}
+                aria-label={`Call us about ${product.name}`}
+              >
+                <Phone className="mr-2 h-4 w-4" />
+                Call Us
+              </a>
+            </Button>
+          </div>
         )}
       </div>
     </div>

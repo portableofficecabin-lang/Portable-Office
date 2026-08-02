@@ -7,9 +7,6 @@
 //
 // The photographs are REAL project/product shots from the existing asset library (no stock,
 // no AI). Copy rules (site-wide): no unbacked figures — no project counts or years.
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
@@ -51,12 +48,6 @@ export function IndustriesSection() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href="/contact">
-                Get a Quote
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                 <WhatsAppGlyph className="mr-2 h-4 w-4" />
                 WhatsApp

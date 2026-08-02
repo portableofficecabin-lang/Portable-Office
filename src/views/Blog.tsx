@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { COMPANY } from "@/lib/company";
 import { motion } from "@/components/ui/static-motion";
 import labourShedImage from "@/assets/blog/labour-shed-steel-frame-construction.webp";
 import portaCabinRentImage from "@/assets/blog/porta-cabins-on-rent.webp";
@@ -417,11 +418,16 @@ export default function Blog() {
                 <div className="relative z-10">
                   <h3 className="text-lg font-bold mb-2">Need a Custom Cabin?</h3>
                   <p className="text-sm opacity-95 mb-4">
-                    Get a free quote for portable cabins, container offices, and prefab structures tailored to your project.
+                    Call or WhatsApp us about portable cabins, container offices, and prefab structures tailored to your project.
                   </p>
-                  <Button asChild variant="outline" className="w-full bg-accent-foreground/10 border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/20">
-                    <Link href="/contact">Get Free Quote →</Link>
-                  </Button>
+                  <div className="space-y-2">
+                    <Button asChild variant="outline" className="w-full bg-accent-foreground/10 border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/20">
+                      <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">WhatsApp Us →</a>
+                    </Button>
+                    <Button asChild variant="outline" className="w-full bg-accent-foreground/10 border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/20">
+                      <a href={`tel:${COMPANY.phones[0].e164}`}>Call {COMPANY.phones[0].display}</a>
+                    </Button>
+                  </div>
                 </div>
               </div>
 

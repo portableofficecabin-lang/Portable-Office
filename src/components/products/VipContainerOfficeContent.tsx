@@ -67,16 +67,16 @@ function SectionHeading({ id, icon: Icon, children }: { id: string; icon: React.
   );
 }
 
-function QuoteCta({ label = "Get a Free Quote" }: { label?: string }) {
+function QuoteCta() {
   return (
     <div className="flex flex-wrap gap-3">
-      <Link href="/contact" className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full hover:bg-accent/90 transition-colors">
-        {label}
-        <ChevronRight className="h-4 w-4" />
-      </Link>
-      <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border-2 border-accent text-accent font-semibold px-6 py-3 rounded-full hover:bg-accent/10 transition-colors">
+      <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full hover:bg-accent/90 transition-colors">
         <MessageCircle className="h-4 w-4" />
-        Call / WhatsApp Us
+        WhatsApp Us
+      </a>
+      <a href={`tel:${CONTACT.tel}`} className="inline-flex items-center gap-2 border-2 border-accent text-accent font-semibold px-6 py-3 rounded-full hover:bg-accent/10 transition-colors">
+        <Phone className="h-4 w-4" />
+        Call {CONTACT.telDisplay}
       </a>
     </div>
   );
@@ -103,7 +103,7 @@ const COMPARISON = [
 
 const PROCESS = [
   { icon: ClipboardList, title: "Tell us your requirement", desc: "Location, size, finish level, and whether you want to buy or rent." },
-  { icon: IndianRupee, title: "Get a free quote", desc: "We recommend the right unit and send transparent pricing." },
+  { icon: IndianRupee, title: "Get transparent pricing", desc: "We recommend the right unit and send transparent pricing." },
   { icon: CalendarCheck, title: "Confirm & schedule", desc: "Approve the quote and pick your delivery date." },
   { icon: Truck, title: "Delivery & installation", desc: "We transport, place, and set up the unit at your site." },
   { icon: PackageCheck, title: "Move in & work", desc: "Your VIP container office is ready from day one." },
@@ -231,7 +231,7 @@ export function VipContainerOfficeContent() {
             </div>
           ))}
         </div>
-        <QuoteCta label="Get Started — Request a Quote" />
+        <QuoteCta />
         <p className="mt-4 text-sm text-muted-foreground">
           New to portable workspaces? Explore our <Link href="/" className="text-accent hover:underline">portable office cabin</Link> range or browse all <Link href="/products/category/container-offices" className="text-accent hover:underline">container offices</Link>.
         </p>
@@ -261,10 +261,7 @@ export function VipContainerOfficeContent() {
           Get a fully furnished, air-conditioned, premium workspace delivered to your site — for sale or on rent — without the cost and delay of construction. Portable Office Cabin builds VIP container offices that make the right impression.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-full hover:bg-white/90 transition-colors">
-            Request a Free Quote
-          </Link>
-          <a href={`tel:${CONTACT.tel}`} className="inline-flex items-center gap-2 border-2 border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white/10 transition-colors">
+          <a href={`tel:${CONTACT.tel}`} className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-full hover:bg-white/90 transition-colors">
             <Phone className="h-4 w-4" /> Call {CONTACT.telDisplay}
           </a>
           <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border-2 border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white/10 transition-colors">

@@ -2,6 +2,7 @@ import { Check, Zap, Shield, Settings, Thermometer, RotateCcw, Building2, HardHa
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import prefabPortaCabinExterior from "@/assets/products/prefab-porta-cabin-exterior.webp";
 import prefabPortaCabinBunkhouse from "@/assets/products/prefab-porta-cabin-bunkhouse.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
@@ -503,12 +504,12 @@ export function PrefabPortaCabinContent() {
           Prefab porta cabins deliver what modern architecture and construction projects demand: rapid deployment, relocatable flexibility, significant cost effectiveness, and professional quality. From compact guard cabins to sophisticated G+1 office complexes, these modular structures solve space challenges across industries.
         </p>
         <p className="text-muted-foreground mb-6 max-w-3xl mx-auto">
-          Before contacting suppliers, prepare your requirements: purpose, approximate size, location access, timeline, and budget range. This helps leading manufacturers provide accurate quotations and realistic customization options.
+          Ready to order? Buy the standard build online with secure payment. For a custom size or made-to-order specification, call us with your purpose, approximate size, location access, and timeline, and our team will help you configure the right cabin.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent text-white px-6 py-3 font-semibold hover:bg-accent/90 transition-colors">
-            Request a Quote
-          </a>
+          <div className="flex justify-center">
+            <BuyNowCTA productId="23" />
+          </div>
           <a href="tel:+919731897976" className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 font-semibold text-foreground hover:bg-muted transition-colors">
             <Phone className="h-4 w-4 mr-2" />
             Call Us Now

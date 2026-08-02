@@ -1,9 +1,10 @@
-import Link from "next/link";
-import { ArrowRight, Phone, MapPin, Award, Clock } from "lucide-react";
+import { Phone, MapPin, Award, Clock, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
+import { whatsappUrl } from "@/lib/site-navigation";
 
 const ctaPoints = [
-  { icon: Phone, text: "Free consultation & site survey — no obligation" },
+  { icon: ShieldCheck, text: "Transparent pricing and secure online payment" },
   { icon: MapPin, text: "National teams of experts all over India" },
   { icon: Award, text: "15+ years delivering outstanding results" },
   { icon: Clock, text: "From enquiry to move-in, faster than you'd think" },
@@ -30,8 +31,8 @@ export function CTASection() {
             <span className="text-gradient">In Place Today</span>
           </h2>
           <p className="text-lg lg:text-xl text-white/70 mb-10 max-w-2xl mx-auto">
-            Whether you need a portable cabin, container office, or a shipping container for cargo storage — 
-            give us a call for a free consultation and site survey. No obligation.
+            Whether you need a portable cabin, container office, or a shipping container for cargo storage —
+            give us a call or message us on WhatsApp and our team will help you choose. No obligation.
           </p>
           
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
@@ -45,10 +46,10 @@ export function CTASection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="xl" asChild>
-              <Link href="/contact">
-                Request a Free Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                <WhatsAppGlyph className="mr-2 h-5 w-5" />
+                WhatsApp Us
+              </a>
             </Button>
             <Button variant="outline-light" size="xl" asChild>
               <a href="tel:+919731897976">

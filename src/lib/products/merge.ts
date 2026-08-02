@@ -54,7 +54,24 @@ export const mergeProducts = (dbProducts: Product[], fallbackProducts: Product[]
   dbProducts.forEach((product) => {
     const key = getProductSlug(product);
     const staticTwin = staticBySlug.get(key);
-    merged.set(key, staticTwin ? { ...product, id: staticTwin.id, sku: staticTwin.sku } : product);
+    merged.set(
+      key,
+      staticTwin
+        ? {
+            ...product,
+            id: staticTwin.id,
+            sku: staticTwin.sku,
+            /* The DB schema stores a single image_url, so a converted DB row can only
+             * ever carry a ONE-image gallery (or the placeholder). Letting it override
+             * a multi-image static gallery collapsed every admin-edited product to one
+             * photo (owner-reported defect, Aug 2026). The static catalog owns the
+             * gallery — image order there is an owner decision (first image = LCP,
+             * JSON-LD, OG and Merchant feed image). The DB image fills in only for a
+             * static product that has no images of its own. */
+            images: staticTwin.images?.length ? staticTwin.images : product.images,
+          }
+        : product,
+    );
   });
 
   fallbackProducts.forEach((product) => {
