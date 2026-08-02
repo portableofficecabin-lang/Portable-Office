@@ -149,7 +149,7 @@ export const megaMenuFeatured: NavLinkItem[] = [
   { name: "View All Products", href: "/products", description: "The complete range, with specs and prices" },
   { name: "Cabins on Rent", href: "/rental-service", description: "Monthly rental with delivery and installation" },
   { name: "Marketplace", href: "/marketplace", description: "Ready stock available for immediate dispatch" },
-  { name: "Book a Consultation", href: "/book-appointment", description: "Talk sizing and layout with our team" },
+  { name: "Shop Portable Cabins", href: "/products/category/portable-cabins", description: "Fixed-price cabins, ready to order online" },
   { name: "Offers & Promotions", href: "/promotions", description: "Current deals on ready-stock units" },
 ];
 
@@ -187,8 +187,8 @@ export const footerCompanyLinks: NavLinkItem[] = [
 ];
 
 export const footerSupportLinks: NavLinkItem[] = [
-  { name: "Request a Quote", href: "/contact" },
-  { name: "Book an Appointment", href: "/book-appointment" },
+  // No "Request a Quote" here by owner decision: quote CTAs are not promoted in
+  // global chrome. /contact stays reachable via the header nav and the bottom bar.
   { name: "Cabins on Rent", href: "/rental-service" },
   { name: "FAQs", href: "/faq" },
   { name: "Shipping & Delivery Policy", href: "/shipping" },

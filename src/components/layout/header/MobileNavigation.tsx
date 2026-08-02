@@ -36,7 +36,7 @@ import { resolveCategoryIcon } from "./categoryIcons";
  * an explicit onClick, and the `[pathname]` effect is a backstop for navigations
  * triggered some other way. Both are needed: the effect alone misses the case where
  * the tapped link IS the current route (pathname never changes, so the drawer would
- * sit there open with no feedback — e.g. tapping "Get a Quote" while on /contact).
+ * sit there open with no feedback — e.g. tapping the link for the page already open).
  * Nothing here can open the drawer on its own.
  *
  * Product categories sit in an Accordion so the drawer opens to a short, readable
@@ -231,13 +231,28 @@ export function MobileNavigation() {
             </span>
           </p>
 
-          {/* text-navy-deep: white on the amber gradient fails contrast — see the
-              note in HeaderActions. */}
-          <Button variant="accent" size="lg" className="w-full text-navy-deep" asChild>
-            <Link href="/contact" onClick={close}>
-              Get a Quote
-            </Link>
-          </Button>
+          {/* Same two contact CTAs as the desktop header (Call outlined, WhatsApp
+              filled #0B7A43 — see the contrast note in HeaderActions). */}
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href={`tel:${primaryPhone.e164}`}
+              onClick={close}
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-navy-deep/20 bg-white text-sm font-semibold text-navy-deep transition-colors duration-200 hover:border-navy-deep/35 hover:bg-navy-deep/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 motion-reduce:transition-none"
+            >
+              <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+              Call
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={close}
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#0B7A43] text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#096436] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B7A43] focus-visible:ring-offset-2 motion-reduce:transition-none"
+            >
+              <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+              WhatsApp
+            </a>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

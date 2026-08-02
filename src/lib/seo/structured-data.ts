@@ -46,9 +46,9 @@ export const seoData = {
       "portable cabin manufacturer, prefab company India, modular building supplier, portable office manufacturer, about portable cabin company",
   },
   contact: {
-    title: "Contact Us | Free Quote for Portable Cabins",
+    title: "Contact Us | Portable Office Cabin Manufacturer",
     description:
-      "Reach Portable Office Cabin for quotes & support. Call, email, or visit our facility. Fast response on all portable cabin enquiries.",
+      "Reach Portable Office Cabin for sales & support. Call, WhatsApp, email, or visit our facility. Fast response on all portable cabin enquiries.",
     keywords:
       "contact portable cabin, portable office quote, prefab home inquiry, site office price, portable cabin manufacturer contact",
   },
@@ -62,7 +62,7 @@ export const seoData = {
   appointment: {
     title: "Book Appointment | Schedule a Consultation for Portable Cabins",
     description:
-      "Book a free consultation with our portable cabin experts. Discuss your requirements, get customized solutions, and receive a detailed quote for your project.",
+      "Book an appointment with our portable cabin experts. Discuss your requirements, get customized solutions, and receive a detailed quote for your project.",
     keywords:
       "book portable cabin consultation, schedule prefab meeting, portable office appointment, cabin manufacturer visit",
   },

@@ -10,7 +10,7 @@ import {
 /**
  * "Help Me Decide" — the 3-question buy-vs-rent helper promised by the Still-unsure band.
  * Pure client-side scoring (no network): each answer pushes toward purchase or rental, ties go to
- * "get a quote" because a genuinely split brief needs a human. The recommendation links straight to
+ * "contact us" because a genuinely split brief needs a human. The recommendation links straight to
  * the matching CTA (/products, /rental-service or /contact) so the dialog ends in an action.
  */
 
@@ -88,8 +88,8 @@ export function BuyOrRentHelper() {
             border: "#BBE5C8",
             icon: CalendarRange,
             title: "It's a close call — let's price both",
-            body: "Your brief sits right between buying and renting. Share the details and we'll quote both options so you can compare real numbers.",
-            cta: { href: "/contact", label: "Request a Quote" },
+            body: "Your brief sits right between buying and renting. Share the details and our team will help you compare both options with real numbers.",
+            cta: { href: "/contact", label: "Contact Us" },
           };
 
   const reset = () => setAnswers({});

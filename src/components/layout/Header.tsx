@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
+import { Phone } from "lucide-react";
 
+import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 import logo from "@/assets/logo.webp";
 
 import { CartButton } from "./header/HeaderActions";
@@ -135,24 +137,42 @@ export function Header() {
               </span>
             </Link>
 
-            {/* Desktop: search, account, cart, then Call / WhatsApp / Get Quote */}
+            {/* Desktop: search, account, cart, then Call / WhatsApp */}
             <HeaderActions />
 
-            {/* Mobile / tablet */}
+            {/* Mobile / tablet — same two contact CTAs as the desktop cluster,
+                compacted. Hidden below sm (the TopBar already carries call/WhatsApp
+                links on phones); the WhatsApp label drops below md so the pair fits
+                beside search + cart + hamburger on narrow tablets. */}
             <div className="flex shrink-0 items-center gap-1 lg:hidden">
               <HeaderSearch />
               <CartButton itemCount={itemCount} />
-              <Link
-                href="/contact"
+              <a
+                href={`tel:${primaryPhone.e164}`}
                 className={cn(
-                  "hidden h-11 items-center gap-1.5 rounded-lg bg-[hsl(22_90%_38%)] px-3.5 text-sm font-semibold text-white sm:inline-flex",
-                  "transition-colors duration-200 hover:bg-[hsl(22_90%_32%)] motion-reduce:transition-none",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(22_90%_38%)] focus-visible:ring-offset-2",
+                  "hidden h-11 items-center gap-1.5 rounded-lg border border-navy-deep/20 bg-white px-3.5 text-sm font-semibold text-navy-deep sm:inline-flex",
+                  "transition-colors duration-200 hover:border-navy-deep/35 hover:bg-navy-deep/[0.04] motion-reduce:transition-none",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
                 )}
               >
-                <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
-                Quote
-              </Link>
+                <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+                Call
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  // #0B7A43, not brand green: see the contrast note in HeaderActions.
+                  "hidden h-11 items-center gap-1.5 rounded-lg bg-[#0B7A43] px-3.5 text-sm font-semibold text-white sm:inline-flex",
+                  "transition-colors duration-200 hover:bg-[#096436] motion-reduce:transition-none",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B7A43] focus-visible:ring-offset-2",
+                )}
+              >
+                <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+                <span className="hidden md:inline">WhatsApp</span>
+                <span className="sr-only md:hidden">WhatsApp</span>
+              </a>
               <MobileNavigation />
             </div>
           </div>

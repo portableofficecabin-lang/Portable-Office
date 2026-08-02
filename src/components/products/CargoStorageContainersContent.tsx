@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { Package, Shield, Truck, Factory, Wrench, CheckCircle, Building2, Thermometer, Anchor, HardHat, ArrowRight } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { COMPANY } from "@/lib/company";
 import cargoStoragePort from "@/assets/products/cargo-storage-containers-port.webp";
 import cargoStorageInspection from "@/assets/products/cargo-storage-containers-inspection.webp";
 import cargoStorage20ft from "@/assets/products/cargo-storage-containers-20ft.webp";
@@ -447,12 +447,22 @@ export function CargoStorageContainersContent() {
       <section className="bg-accent/10 border border-accent/20 rounded-2xl p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground mb-3">Ready to Source Your Cargo Storage Containers?</h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India with 500+ completed projects.</p>
-        <Link
-          href="/contact"
-          className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-        >
-          Get a Free Quote <ArrowRight className="h-4 w-4" />
-        </Link>
+        <div className="flex flex-wrap justify-center gap-4">
+          <a
+            href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in cargo storage containers")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+          >
+            WhatsApp Us <ArrowRight className="h-4 w-4" />
+          </a>
+          <a
+            href={`tel:${COMPANY.phones[0].e164}`}
+            className="inline-flex items-center gap-2 border border-accent text-accent px-8 py-3 rounded-lg font-semibold hover:bg-accent/10 transition-colors"
+          >
+            Call {COMPANY.phones[0].display}
+          </a>
+        </div>
       </section>
 
       {/* FAQ */}

@@ -63,7 +63,7 @@ const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "Article",
   headline: "Porta Cabins on Rent – Flexible Portable Space by Portable Office Cabin",
-  description: "Complete guide to renting porta cabins in India. Learn about rental types, pricing, delivery timelines, customization options, and how to get a quote from India's leading manufacturer.",
+  description: "Complete guide to renting porta cabins in India. Learn about rental types, pricing, delivery timelines, customization options, and how to enquire with India's leading manufacturer.",
   image: "https://portableofficecabin.com/blog/porta-cabins-on-rent.png",
   author: {
     "@type": "Organization",
@@ -587,9 +587,9 @@ export default function PortaCabinsOnRent() {
               </div>
             </section>
 
-            {/* How to Get Quote */}
+            {/* How to enquire */}
             <section className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How to Get a Porta Cabin Rental Quote</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How to Enquire About a Porta Cabin Rental</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Ready to explore porta cabins on rent for your upcoming project? Share the following details for a tailored quote within 24–48 working hours:
               </p>

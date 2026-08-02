@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CheckCircle, Building2, Truck, Shield, Wrench, Leaf, Palette, HardHat, Factory, GraduationCap, Landmark, ShoppingBag, Phone, Users, Lock, Wifi, Clock, DollarSign, Hammer, Eye, Thermometer, Paintbrush } from "lucide-react";
+import { CheckCircle, Building2, Truck, Shield, Wrench, Leaf, Palette, HardHat, Factory, GraduationCap, Landmark, ShoppingBag, Phone, Users, Lock, Wifi, Clock, DollarSign, Hammer, Eye, Thermometer, Paintbrush, MessageCircle } from "lucide-react";
+import { COMPANY } from "@/lib/company";
 import {
   Accordion,
   AccordionContent,
@@ -634,10 +635,14 @@ export function ContainerOfficeGenericContent() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="accent" size="lg" asChild>
-              <Link href="/contact">
-                <Phone className="mr-2 h-5 w-5" />
-                Get a Free Quote
-              </Link>
+              <a
+                href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in a container office")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="mr-2 h-5 w-5" />
+                WhatsApp Us
+              </a>
             </Button>
             <Button variant="outline" size="lg" asChild>
               <a href="tel:+919731897976">

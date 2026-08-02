@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Phone, ChevronRight, CheckCircle, Shield, Wrench, Building2, Factory, Zap, Recycle } from "lucide-react";
+import { ArrowLeft, Phone, MessageCircle, ChevronRight, CheckCircle, Shield, Wrench, Building2, Factory, Zap, Recycle } from "lucide-react";
+import { COMPANY } from "@/lib/company";
 import msPortableCabinHero from "@/assets/blog/ms-portable-cabin-hero.webp";
 import msPortableCabinCover from "@/assets/blog/ms-portable-cabin-cover.webp";
 import portaCabinRentImage from "@/assets/blog/porta-cabins-on-rent.webp";
@@ -242,7 +243,7 @@ export default function MSPortableCabinBlog() {
                 Educational institutions interested in prefabricated portable cabin solutions find rapid classroom deployment invaluable for enrollment surges. This office built type also serves guard room applications, portable toilet facilities, and multi-purpose site office requirements across origin pan India projects.
               </p>
               <p className="font-semibold text-foreground">
-                For the best offers on MS portable cabins, contact Portable Office Cabin today for your custom consultation and discover why leading organization clients trust our quality products for their portable cabin needs.
+                For the best offers on MS portable cabins, contact Portable Office Cabin today and discover why leading organization clients trust our quality products for their portable cabin needs.
               </p>
             </div>
           </section>
@@ -258,14 +259,17 @@ export default function MSPortableCabinBlog() {
           {/* CTA Section */}
           <section className="rounded-2xl p-8 md:p-12 text-center mb-14" style={{ background: 'var(--gradient-accent)' }}>
             <h2 className="text-2xl md:text-3xl font-bold text-accent-foreground mb-4">
-              Get a Free Quote for MS Portable Cabins
+              Talk to Us About MS Portable Cabins
             </h2>
             <p className="text-accent-foreground/90 mb-6 max-w-xl mx-auto">
-              Contact us today for custom consultation, bulk pricing, and fast delivery across India.
+              Contact us today for bulk pricing and fast delivery across India.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" variant="outline" className="bg-accent-foreground/10 border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/20">
-                <Link href="/contact">Request a Quote</Link>
+                <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  WhatsApp Us
+                </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="bg-accent-foreground/10 border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/20">
                 <a href="tel:+919731897976">

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FileText, LogIn, Phone, ShoppingCart, User } from "lucide-react";
+import { LogIn, Phone, ShoppingCart, User } from "lucide-react";
 
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { useAuth } from "@/contexts/AuthContext";
@@ -12,18 +12,14 @@ import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 import { HeaderSearch } from "./HeaderSearch";
 
 /**
- * Action cluster on the white brand bar: search, account, cart, then the three
- * contact CTAs — Call, WhatsApp, Get Quote.
+ * Action cluster on the white brand bar: search, account, cart, then the two
+ * contact CTAs — Call, WhatsApp.
  *
- * COLOUR CHOICES ARE CONTRAST-DRIVEN, not arbitrary. The obvious treatments both
- * fail WCAG 1.4.3 on 14px button text:
- *   - white on WhatsApp brand green (#25D366)    = 2.0:1
- *   - white on the site's amber hsl(32 95% 52%)  = 2.4:1
- * Both are far under the 4.5:1 floor. The fills below are deepened just enough to
- * clear it while still reading as "WhatsApp green" and "brand orange":
- *   - #0B7A43            + white = 5.4:1
- *   - hsl(22 90% 38%)    + white = 5.4:1
- * Do not swap these back to the bright shades without re-checking contrast.
+ * COLOUR CHOICE IS CONTRAST-DRIVEN, not arbitrary. The obvious treatment fails
+ * WCAG 1.4.3 on 14px button text: white on WhatsApp brand green (#25D366) is
+ * 2.0:1, far under the 4.5:1 floor. The fill below is deepened just enough to
+ * clear it while still reading as "WhatsApp green": #0B7A43 + white = 5.4:1.
+ * Do not swap it back to the bright shade without re-checking contrast.
  *
  * HYDRATION: `user` and `itemCount` both start empty (AuthContext resolves the
  * session in an effect; CartContext starts with an empty array), so the server HTML
@@ -115,19 +111,6 @@ export function HeaderActions() {
           <WhatsAppGlyph className="h-4 w-4 shrink-0" />
           WhatsApp
         </a>
-
-        <Link
-          href="/contact"
-          className={cn(
-            "inline-flex h-11 items-center gap-2 rounded-lg bg-[hsl(22_90%_38%)] px-4 text-sm font-semibold text-white shadow-sm",
-            "transition-colors duration-200 motion-reduce:transition-none",
-            "hover:bg-[hsl(22_90%_32%)]",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(22_90%_38%)] focus-visible:ring-offset-2",
-          )}
-        >
-          <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
-          Get Quote
-        </Link>
       </div>
     </div>
   );

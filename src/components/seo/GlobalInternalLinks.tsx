@@ -43,9 +43,9 @@ const routeLinks: Array<{ match: RegExp; links: InternalLinkItem[] }> = [
         description: "Explore buying guides, technical explainers, and project insights.",
       },
       {
-        label: "Book an Appointment",
-        href: "/book-appointment",
-        description: "Schedule a consultation for your next modular building requirement.",
+        label: "Shop Portable Cabins",
+        href: "/products/category/portable-cabins",
+        description: "Order fixed-price portable cabins online with secure checkout.",
       },
     ],
   },

@@ -792,7 +792,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
       <section>
         <div className="bg-accent/10 border border-accent/20 rounded-2xl p-8 sm:p-10 text-center">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
-            Get a Quote for Your Office in Container
+            Plan Your Office in Container
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
             Whether you need a compact 20 ft site office or a full 40 ft project headquarters with conference room and toilet, the right solution starts with understanding your specific requirements. We work with clients across India, offering design support, transparent pricing, and reliable delivery timelines.

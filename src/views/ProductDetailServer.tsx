@@ -121,7 +121,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
    */
   const contentOffer =
     purchasable && commerce && sellingPrice !== undefined
-      ? { sellPriceInr: sellingPrice, name: commerce.h1Title }
+      ? { productId: product.id, sellPriceInr: sellingPrice, name: commerce.h1Title }
       : undefined;
 
   // The <h1> is the commerce catalog's short, clean product name. getProductH1() still drives
@@ -415,7 +415,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               ) : (
                 <div className="bg-muted rounded-xl p-6 mb-6">
                   <div className="font-display text-2xl font-bold text-foreground">
-                    Request a quote for pricing
+                    Contact us for pricing
                   </div>
                   <p className="text-sm text-muted-foreground mt-2">
                     This unit is priced per requirement. Send us your size, specification and
@@ -509,7 +509,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "portable-cabins" && slug === "prefab-porta-cabin" && <div className="mt-16"><PrefabPortaCabinContent /></div>}
           {cs === "portable-cabins" && slug === "labor-hutments" && <div className="mt-16"><LaborHutmentsContent /></div>}
           {cs === "portable-cabins" && slug === "cabin-portable" && <div className="mt-16"><CabinPortableContent /></div>}
-          {isStaticProduct && cs === "portable-cabins" && !["porta-cabin","ms-portable-cabin","office-portable-cabin","prefabricated-portable-cabin","prefabricated-labour-hutments-staff-accommodation","prefab-porta-cabin","labor-hutments","cabin-portable"].includes(slug) && <div className="mt-16"><PortableCabinContent /></div>}
+          {isStaticProduct && cs === "portable-cabins" && !["porta-cabin","ms-portable-cabin","office-portable-cabin","prefabricated-portable-cabin","prefabricated-labour-hutments-staff-accommodation","prefab-porta-cabin","labor-hutments","cabin-portable"].includes(slug) && <div className="mt-16"><PortableCabinContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}

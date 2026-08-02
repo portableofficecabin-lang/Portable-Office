@@ -57,7 +57,7 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "Do you provide design consultation before manufacturing?",
-        a: "Yes, we offer free design consultations. Our team will visit your site (or discuss remotely), understand your needs, and share detailed layout drawings and 3D visuals before we begin production. No surprises — you'll know exactly what you're getting.",
+        a: "Yes, we provide design consultation before manufacturing. Our team will visit your site (or discuss remotely), understand your needs, and share detailed layout drawings and 3D visuals before we begin production. No surprises — you'll know exactly what you're getting.",
       },
       {
         q: "Can I add features like AC, plumbing, or insulation?",

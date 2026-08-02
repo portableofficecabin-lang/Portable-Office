@@ -346,12 +346,11 @@ export function ShippingContainerBangaloreContent() {
 
       {/* CTA */}
       <section className="bg-gradient-to-br from-primary via-primary/95 to-secondary text-primary-foreground rounded-3xl p-8 lg:p-12 text-center">
-        <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">Get a Free Quote Today</h2>
+        <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">Start Your Container Project Today</h2>
         <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-7">
-          Planning a shipping container project in Bangalore? Share your size, use case, and location, and we&apos;ll respond with a written quotation and delivery timeline — usually within 24 hours.
+          Planning a shipping container project in Bangalore? Call or WhatsApp us with your size, use case, and location, and we&apos;ll respond with a written quotation and delivery timeline — usually within 24 hours.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-full hover:bg-white/90 transition-colors">Request a Free Quote</Link>
           <a href={`tel:${CONTACT.tel}`} className="inline-flex items-center gap-2 border-2 border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white/10 transition-colors"><Phone className="h-4 w-4" /> {CONTACT.telDisplay}</a>
           <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border-2 border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white/10 transition-colors"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
         </div>

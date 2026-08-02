@@ -313,7 +313,7 @@ const META_DESC_MAX = 158;
 const titleSuffixes = [
   " | Manufacturer",
   " | Supplier",
-  " | Get a Quote",
+  " | Enquire Today",
   " | From ₹1.5L",
   " | Fast Delivery",
   " | ISO Grade",
@@ -322,9 +322,9 @@ const titleSuffixes = [
   " | Custom Built",
   " | Factory Direct",
   " | Best Price",
-  " | Free Quote",
+  " | Call Us Today",
   " | Manufacturer & Supplier",
-  " | Best Price, Free Quote",
+  " | Best Price, Call Today",
   " | ISO-Grade, Fast Delivery",
   " | Manufacturer in India",
   " | Factory Direct Pricing",
@@ -353,16 +353,16 @@ function generateMetaTitle(keyword: string, location: string, variation: number)
 function generateMetaDescription(keyword: string, location: string, variation: number): string {
   const mainKeyword = `${keyword} in ${location}`;
   const templates = [
-    `Get a quote for ${mainKeyword} from India's trusted prefab maker. PUF insulated units, custom sizes & pan-India delivery to ${location}. Enquire today!`,
-    `Looking for ${mainKeyword}? 10-year warranty, IS-grade steel & full customization across ${location}. Call +91 9731897976 for a free quotation.`,
-    `Need ${mainKeyword}? Factory-direct from ₹1.5L. Weatherproof PUF panels, on-site setup & expert support in ${location}. Request your quote.`,
+    `${mainKeyword} from India's trusted prefab maker. PUF insulated units, custom sizes & pan-India delivery to ${location}. Enquire today!`,
+    `Looking for ${mainKeyword}? 10-year warranty, IS-grade steel & full customization across ${location}. Call +91 9731897976 to discuss your requirement.`,
+    `Need ${mainKeyword}? Factory-direct from ₹1.5L. Weatherproof PUF panels, on-site setup & expert support in ${location}. Call or WhatsApp us.`,
     `${mainKeyword} supplier with 15+ years experience. Galvanized frames, turnkey delivery & flexible layouts for every site in ${location}. Enquire now.`,
     `Premium ${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics with local teams in ${location}. Book a site visit.`,
     `Affordable ${mainKeyword} for contractors & builders. Quick install, relocatable design & ISO-grade materials supplied across ${location}. Talk to us.`,
-    `Top-rated ${mainKeyword} manufacturer. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Free consultation.`,
-    `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & on-time delivery throughout ${location}. Quote today.`,
+    `Top-rated ${mainKeyword} manufacturer. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Call us today.`,
+    `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & on-time delivery throughout ${location}. Call today.`,
     `Get ${mainKeyword} at the best price. Modular design, 10-year structural warranty & professional installation teams serving ${location}. Contact us.`,
-    `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Ask for a quote.`,
+    `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Talk to our team.`,
     `Expert ${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,
     `Leading ${mainKeyword} provider. PUF sandwich panels, anti-corrosion coating & complete electrical fit-outs delivered across ${location}. Call now.`,
   ];

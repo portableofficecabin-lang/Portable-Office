@@ -465,9 +465,8 @@ export function ProductsPageContent({
                 {[
                   { label: "Labour Shed Guide (Blog)", href: "/blog/labour-shed-prefabricated-structures" },
                   { label: "Our Completed Projects", href: "/gallery" },
-                  { label: "Book a Consultation", href: "/book-appointment" },
                   { label: "About Us", href: "/about-us" },
-                  { label: "Contact for Free Quote", href: "/contact" },
+                  { label: "Contact Us", href: "/contact" },
                 ].map((l) => (
                   <li key={l.label}>
                     <Link href={l.href} className="text-sm text-muted-foreground hover:text-accent transition-colors flex items-center gap-1.5 group">

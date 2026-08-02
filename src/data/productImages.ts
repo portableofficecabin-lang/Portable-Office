@@ -7,7 +7,6 @@ import containerOffice from "@/assets/products/container-office.webp";
 import prefabHome from "@/assets/products/prefab-home.webp";
 import portableToilet from "@/assets/products/portable-toilet.jpg";
 import securityCabin from "@/assets/products/security-cabin.jpg";
-import executivePortableCabin20ft from "@/assets/products/executive-portable-cabin-20ft.webp";
 import standardSiteOfficeContainer from "@/assets/products/standard-site-office-container.webp";
 import luxuryPrefabVilla from "@/assets/products/luxury-prefab-villa.webp";
 import luxuryPrefabVillaG1 from "@/assets/products/luxury-prefab-villa-g1.webp";
@@ -55,9 +54,11 @@ export const categoryImages: Record<string, string> = {
 
 // Product-specific images by product ID or SKU
 export const productImages: Record<string, string> = {
-  "1": executivePortableCabin20ft,
-  "POC-PC-20EX": executivePortableCabin20ft,
-  "executive-portable-cabin-20ft": executivePortableCabin20ft,
+  // Owner-supplied FRONT photo (Aug 2026) — must match products.ts images[0] so the
+  // card, page, OG and feed all show the same primary image.
+  "1": "/images/products/executive-portable-cabin-20ft-front-view.webp",
+  "POC-PC-20EX": "/images/products/executive-portable-cabin-20ft-front-view.webp",
+  "executive-portable-cabin-20ft": "/images/products/executive-portable-cabin-20ft-front-view.webp",
   "2": standardSiteOfficeContainer,
   "POC-SOC-20ST": standardSiteOfficeContainer,
   "standard-site-office-container": standardSiteOfficeContainer,

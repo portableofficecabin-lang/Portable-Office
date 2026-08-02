@@ -63,7 +63,7 @@ const faqs = [
   { q: "What foundation is needed for container placement on KIADB plots?", a: "Simple PCC pads or concrete blocks at the four corners are sufficient. No deep foundations or extensive site preparation is required, enabling rapid deployment." },
   { q: "Do you provide container offices with AC and electrical fit-outs?", a: "Yes. Our container offices include PUF/Rockwool insulation, UPVC windows, LED lighting, split AC provisions, IS 732-compliant wiring, and modular workstation layouts." },
   { q: "What industries do you serve in the Narsapura cluster?", a: "We serve automotive OEMs, engineering firms, FMCG warehouses, logistics operators, construction companies, and educational institutes across Narsapura, Vemgal, Malur, and Hoskote." },
-  { q: "How do I get a quote for shipping containers in Narsapura?", a: "Contact Portable Office Cabin via phone, email, or our website form. Share your site location, intended use, required sizes, expected delivery date, and any special features needed. We typically respond within 24 hours." },
+  { q: "How do I get started with shipping containers in Narsapura?", a: "Contact Portable Office Cabin by phone, WhatsApp, or email. Share your site location, intended use, required sizes, expected delivery date, and any special features needed. We typically respond within 24 hours." },
 ];
 
 export function ShippingContainerNarsapuraContent() {
@@ -315,7 +315,7 @@ export function ShippingContainerNarsapuraContent() {
       {/* CTA */}
       <section className="bg-primary/5 border border-primary/20 rounded-xl p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground mb-3">
-          Get a Quote for Shipping Containers in Narsapura
+          Plan Your Shipping Containers in Narsapura
         </h2>
         <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
           Share your site location, intended use, required sizes, expected delivery date, and any special features. We provide site visits for large or complex setups across Narsapura, Vemgal, Malur, and Hoskote.

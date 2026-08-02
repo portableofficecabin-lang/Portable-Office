@@ -358,7 +358,7 @@ export function ShippingContainerForSaleContent({ offer }: { offer?: FixedOffer 
         </div>
 
         <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">How to get a quote</h3>
+          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">How to get started</h3>
           <div className="space-y-4 text-muted-foreground">
             <p>Share your city, exact site location, required size, quantity, and intended use such as storage, office, accommodation, café, or labour colony.</p>
             <p>We then prepare a technical and commercial proposal covering unit grade, customization scope, price, delivery timeline, and dispatch plan.</p>

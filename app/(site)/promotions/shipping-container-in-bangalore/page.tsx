@@ -29,7 +29,7 @@ export const revalidate = 86400; // 24h
 export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: "Shipping Container in Bangalore | Price, Sizes & Supplier",
   description:
-    "Buy shipping containers in Bangalore from a local manufacturer. 10ft, 20ft & 40ft units for storage, offices & housing. Price from ₹1.5 lakh. Free quote.",
+    "Buy shipping containers in Bangalore from a local manufacturer. 10ft, 20ft & 40ft units for storage, offices & housing. Price from ₹1.5 lakh. Call us today.",
   keywords:
     "shipping container in Bangalore, shipping container price Bangalore, 20ft shipping container, 40ft container, storage container Bangalore, container office Bangalore, used shipping container Bangalore, container manufacturer Bangalore",
   path: PATH,
@@ -102,9 +102,6 @@ export default function ShippingContainerBangalorePage() {
                 Every unit is built with IS-grade steel, a galvanized frame for corrosion resistance, and optional 50mm PUF insulated panels for thermal comfort in Bangalore&apos;s climate. Prices start from ₹1.5 lakh, and every container carries a 10-year structural warranty.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link href="/contact" className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full hover:bg-accent/90 transition-colors">
-                  Get a Free Quote <ChevronRight className="h-4 w-4" />
-                </Link>
                 <a href="tel:+919731897976" className="inline-flex items-center gap-2 border-2 border-accent text-accent font-semibold px-6 py-3 rounded-full hover:bg-accent/10 transition-colors">
                   <Phone className="h-4 w-4" /> +91 97318 97976
                 </a>

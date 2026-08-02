@@ -450,10 +450,10 @@ export function ShippingContainerChennaiContent() {
         </Accordion>
       </section>
 
-      {/* How to Get a Quote */}
+      {/* How to Get Started */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-          How to Get a Quote
+          How to Get Started
         </h2>
         <p className="text-muted-foreground mb-4">Share these details for a customized quotation within 24 hours:</p>
         <ul className="space-y-2 mb-4">

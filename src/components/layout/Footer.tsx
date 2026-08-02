@@ -33,8 +33,10 @@ import { PreFooterCTA } from "./footer/PreFooterCTA";
  * ── LINK INVENTORY ──────────────────────────────────────────────────────────────
  * Every link the old footer carried is still here — the six product categories, the
  * five company links, the four support links and all five Merchant Center policies —
- * plus additions (all 15 categories rather than six, rental, promotions, appointments
- * and the full policy set). Nothing was dropped.
+ * plus additions (all 15 categories rather than six, rental, promotions and the full
+ * policy set). The appointments and "Request a Quote" links were later removed —
+ * the owner keeps /book-appointment and /contact reachable (header nav, bottom bar)
+ * but no longer promotes consultation or quote CTAs in global chrome.
  *
  * Deliberately NOT added: /my-account. It is robots-disallowed and noindex,nofollow,
  * so a sitewide footer link would spend crawl budget on a page we ask not to be

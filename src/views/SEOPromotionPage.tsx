@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEOContent } from "@/data/seoPromotions";
 import { ArrowRight, CheckCircle, Phone, Mail, MapPin, Star, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { COMPANY } from "@/lib/company";
 
 interface SEOPromotionPageProps {
   content: SEOContent;
@@ -26,7 +27,7 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="accent" size="lg" className="text-lg font-bold px-8 py-6" asChild>
-                <Link href="/contact">Get Free Quote</Link>
+                <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
               </Button>
               <Button variant="outline" size="lg" className="bg-white/10 text-white border-white/30 hover:bg-white/20 text-lg font-bold px-8 py-6" asChild>
                 <Link href="tel:+919731897976">Call Now</Link>
@@ -128,7 +129,7 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                   Ready to Get Started?
                 </h3>
                 <p className="text-white/90 mb-6">
-                  Contact us today for a free consultation and customized quote for your {content.imageAlt}.
+                  Call or WhatsApp us today to discuss sizes, specifications and delivery for your {content.imageAlt}.
                 </p>
                 <div className="space-y-4">
                   <a href="tel:+919731897976" className="flex items-center gap-3 bg-white/10 rounded-xl p-4 hover:bg-white/20 transition-all">
@@ -147,9 +148,9 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                   </div>
                 </div>
                 <Button variant="accent" size="lg" className="w-full mt-6 text-lg font-bold" asChild>
-                  <Link href="/contact">
-                    Get Free Quote
-                  </Link>
+                  <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">
+                    WhatsApp Us
+                  </a>
                 </Button>
               </div>
 

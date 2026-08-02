@@ -1,11 +1,12 @@
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Building2, Clock, Shield, Users, Wrench, Leaf, MapPin, CheckCircle2, Home, Truck } from "lucide-react";
+import { Building2, Clock, Shield, Users, Wrench, Leaf, MapPin, CheckCircle2, Home, Truck, MessageCircle, Phone } from "lucide-react";
 import workmenMain from "@/assets/products/workmen-accommodation-main.webp";
 import workmenDouble from "@/assets/products/workmen-accommodation-double-storey.webp";
 import workmenModular from "@/assets/products/workmen-accommodation-modular.webp";
 import workmenSite from "@/assets/products/workmen-accommodation-site.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 
 export const WorkmenAccommodationContent = () => {
   const keyFeatures = [
@@ -419,11 +420,13 @@ export const WorkmenAccommodationContent = () => {
           Prepare your project address, estimated workforce by category, land availability, and desired camp lifespan. Contact Portable Office Cabin today for a detailed proposal for your workmen accommodation needs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/contact" className="inline-flex items-center justify-center rounded-lg bg-accent text-accent-foreground px-8 py-3 font-semibold hover:bg-accent/90 transition-colors">
-            Request a Proposal
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full hover:bg-accent/90 transition-colors">
+            <MessageCircle className="h-4 w-4" />
+            WhatsApp Us
           </a>
-          <a href="tel:+919731897976" className="inline-flex items-center justify-center rounded-lg bg-primary-foreground/10 text-primary-foreground border border-primary-foreground/20 px-8 py-3 font-semibold hover:bg-primary-foreground/20 transition-colors">
-            Call +91 97318 97976
+          <a href={`tel:${primaryPhone.e164}`} className="inline-flex items-center justify-center gap-2 border-2 border-accent text-accent font-semibold px-6 py-3 rounded-full hover:bg-accent/10 transition-colors">
+            <Phone className="h-4 w-4" />
+            Call {primaryPhone.display}
           </a>
         </div>
       </section>

@@ -1,12 +1,13 @@
-import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home } from "lucide-react";
+import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Leaf, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, Bath, Factory, GraduationCap, Heart, ShoppingBag, Home } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import portableCabinSiteOffice from "@/assets/content/portable-cabin-site-office.jpg";
 import portableCabinInterior from "@/assets/content/portable-cabin-interior.jpg";
 import portableCabinAccommodation from "@/assets/content/portable-cabin-accommodation.jpg";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
-export function PortableCabinContent() {
+export function PortableCabinContent({ offer }: { offer?: { productId?: string; sellPriceInr?: number; name?: string } }) {
   return (
     <div className="space-y-16">
       {/* Hero Introduction */}
@@ -388,17 +389,16 @@ export function PortableCabinContent() {
           Ready to Get Started?
         </h2>
         <p className="text-white/85 max-w-2xl mx-auto mb-6">
-          Share your layout, required size, and site location details with us to receive a customized quotation and technical suggestion. We're here to help you find the right porta cabin for your project needs.
+          {offer?.productId
+            ? "Buy online with secure payment, or call us to talk through your layout and site details first. We're here to help you find the right porta cabin for your project needs."
+            : "Call us to discuss your layout, required size, and site location details. We're here to help you find the right porta cabin for your project needs."}
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a href="tel:+919731897976" className="inline-flex items-center gap-2 bg-white text-accent font-semibold px-6 py-3 rounded-full hover:bg-white/90 transition-colors">
             <Phone className="h-4 w-4" />
             Call Us Now
           </a>
-          <a href="/contact" className="inline-flex items-center gap-2 border-2 border-white text-white font-semibold px-6 py-3 rounded-full hover:bg-white/10 transition-colors">
-            Request a Quote
-            <ChevronRight className="h-4 w-4" />
-          </a>
+          <BuyNowCTA productId={offer?.productId} tone="dark" />
         </div>
       </section>
     </div>

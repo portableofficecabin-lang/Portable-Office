@@ -18,7 +18,7 @@ import { PaymentMethods } from "@/components/PaymentMethods";
 import { computeTotals } from "@/lib/pricing/orderTotals";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 import { INSTALLATION, deliveryEstimate } from "@/data/shippingZones";
-import { AlertCircle, CheckCircle2, Loader2, Lock, Truck, User as UserIcon } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2, Loader2, Lock, Truck, User as UserIcon } from "lucide-react";
 
 const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
 
@@ -85,13 +85,13 @@ export default function CheckoutPage() {
     address_line1: "", address_line2: "", city: "", state: "", pincode: "", notes: "",
   });
 
-  // Guests must give us a way to reach and deliver to them; that is ALL we ask — no company,
-  // GSTIN or business details. Logged-in buyers already have an account, so this is skipped.
+  // Guest contact details are OPTIONAL — direct pay. Razorpay's own modal collects
+  // phone/email when these are blank, so nothing here gates the Pay button. When filled,
+  // they flow into the order payload and the Razorpay prefill exactly as before. The
+  // validity checks below drive soft format hints only — they never block payment.
   const isGuest = !user;
-  const nameValid = form.name.trim().length > 1;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
   const phoneValid = /^\d{10}$/.test(form.phone.trim());
-  const contactComplete = !isGuest || (nameValid && emailValid && phoneValid);
 
   // The single source of order maths — the very same function the server re-runs before
   // charging. What is rendered below is exactly what Razorpay will be asked for.
@@ -140,7 +140,7 @@ export default function CheckoutPage() {
 
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!totals.payable || loading || !contactComplete) return;
+    if (!totals.payable || loading) return;
     setLoading(true);
 
     try {
@@ -276,9 +276,13 @@ export default function CheckoutPage() {
                 <span className="font-semibold text-accent">{formatINR(placed.amount)}</span>
               </div>
               <p className="text-sm text-muted-foreground pt-2 border-t border-border leading-relaxed">
-                A confirmation has been sent to <strong className="text-foreground">{placed.email}</strong>. Please
-                keep your order reference — quote it in any correspondence. Our team will be in touch with your
-                dispatch schedule.
+                {/* Contact details are optional at direct-pay checkout, so a guest may have no
+                    email on the order form — only promise a confirmation email when we have one. */}
+                {placed.email.trim().length > 0 && (
+                  <>A confirmation has been sent to <strong className="text-foreground">{placed.email}</strong>. </>
+                )}
+                Please keep your order reference — quote it in any correspondence. Our team will be in touch with
+                your dispatch schedule.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -335,10 +339,12 @@ export default function CheckoutPage() {
           <form onSubmit={handlePay}>
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
-                {/* Contact details — GUESTS ONLY. Logged-in buyers already have an account, so we
-                    never re-ask. We collect ONLY what is needed to deliver and confirm the order —
-                    no company name, GSTIN or business registration. Checking out as a guest is the
-                    default; signing in is an optional shortcut. */}
+                {/* Contact details — GUESTS ONLY, and OPTIONAL. Logged-in buyers already have an
+                    account, so we never re-ask. Every field here is optional (direct pay): the
+                    secure payment window collects phone/email itself when these are blank. We ask
+                    ONLY what helps deliver and confirm the order — no company name, GSTIN or
+                    business registration. Checking out as a guest is the default; signing in is an
+                    optional shortcut. */}
                 {isGuest && (
                   <div className="bg-card rounded-xl border border-border/50 p-6">
                     <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
@@ -354,24 +360,25 @@ export default function CheckoutPage() {
                       </p>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">
-                      You can check out as a guest — no account needed. We use these details to send your order
-                      confirmation and coordinate delivery.
+                      You can check out as a guest — no account needed. These details are optional: if you leave
+                      them blank, the secure payment window will ask for your phone and email. When provided, we
+                      use them to send your order confirmation and coordinate delivery.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
-                        <Label htmlFor="name">Full Name *</Label>
-                        <Input id="name" name="name" value={form.name} onChange={handleChange} required autoComplete="name" className="mt-1.5" />
+                        <Label htmlFor="name">Full Name (Optional)</Label>
+                        <Input id="name" name="name" value={form.name} onChange={handleChange} autoComplete="name" className="mt-1.5" />
                       </div>
                       <div>
-                        <Label htmlFor="email">Email *</Label>
-                        <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} required autoComplete="email" inputMode="email" placeholder="you@example.com" className="mt-1.5" />
+                        <Label htmlFor="email">Email (Optional)</Label>
+                        <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} autoComplete="email" inputMode="email" placeholder="you@example.com" className="mt-1.5" />
                         {form.email.length > 0 && !emailValid && (
                           <p className="mt-1.5 text-xs text-destructive">Enter a valid email address.</p>
                         )}
                       </div>
                       <div>
-                        <Label htmlFor="phone">Phone *</Label>
-                        <Input id="phone" name="phone" value={form.phone} onChange={handleChange} required autoComplete="tel" inputMode="numeric" placeholder="10-digit mobile number" className="mt-1.5" />
+                        <Label htmlFor="phone">Phone (Optional)</Label>
+                        <Input id="phone" name="phone" value={form.phone} onChange={handleChange} autoComplete="tel" inputMode="numeric" placeholder="10-digit mobile number" className="mt-1.5" />
                         {form.phone.length > 0 && !phoneValid && (
                           <p className="mt-1.5 text-xs text-destructive">Enter a 10-digit mobile number.</p>
                         )}
@@ -387,20 +394,20 @@ export default function CheckoutPage() {
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="sm:col-span-2">
-                      <Label htmlFor="address_line1">Address Line 1 *</Label>
-                      <Input id="address_line1" name="address_line1" value={form.address_line1} onChange={handleChange} required className="mt-1.5" />
+                      <Label htmlFor="address_line1">Address Line 1 (Optional)</Label>
+                      <Input id="address_line1" name="address_line1" value={form.address_line1} onChange={handleChange} className="mt-1.5" />
                     </div>
                     <div className="sm:col-span-2">
                       <Label htmlFor="address_line2">Address Line 2</Label>
                       <Input id="address_line2" name="address_line2" value={form.address_line2} onChange={handleChange} className="mt-1.5" />
                     </div>
                     <div>
-                      <Label htmlFor="city">City *</Label>
-                      <Input id="city" name="city" value={form.city} onChange={handleChange} required className="mt-1.5" />
+                      <Label htmlFor="city">City (Optional)</Label>
+                      <Input id="city" name="city" value={form.city} onChange={handleChange} className="mt-1.5" />
                     </div>
                     <div>
-                      <Label htmlFor="state">State *</Label>
-                      <Input id="state" name="state" value={form.state} onChange={handleChange} required className="mt-1.5" />
+                      <Label htmlFor="state">State (Optional)</Label>
+                      <Input id="state" name="state" value={form.state} onChange={handleChange} className="mt-1.5" />
                     </div>
                     <div className="sm:col-span-2">
                       <Label htmlFor="pincode">Pincode *</Label>
@@ -592,26 +599,45 @@ export default function CheckoutPage() {
                       defect). No breakpoint may pin nowrap: the amount is unbounded, the column
                       is not. px-5/py-3 + text-balance/leading-snug give the wrapped label an
                       even, readable break. */}
-                  <Button
-                    type="submit"
-                    variant="accent"
-                    size="lg"
-                    className="w-full mt-6 h-auto min-h-12 px-5 py-3 whitespace-normal text-balance leading-snug !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
-                    disabled={loading || !totals.payable || !contactComplete}
-                  >
-                    {/* No mr-2: the Button base spaces icon↔label with gap-2; both together
-                        doubled the gap and squeezed the wrapped label on narrow screens. */}
-                    <Lock className="h-4 w-4" />
-                    {loading
-                      ? "Processing..."
-                      : totals.skipped.length > 0
-                        ? "Remove quote-only items to continue"
-                        : !contactComplete
-                          ? "Enter your contact details to continue"
-                          : totals.shipping === null
-                            ? "Enter pincode to continue"
-                            : `Pay ${formatINR(totals.grandTotal)} securely`}
-                  </Button>
+                  {totals.skipped.length === 0 && totals.shipping === null && !loading ? (
+                    /* No valid pincode yet → no final total exists to charge. Owner decision:
+                       instead of a disabled "Enter pincode to continue" pill, show an ACTIVE
+                       "Continue" button that walks the customer to the pincode field. Payment
+                       still cannot start before transport is known — the submit button below
+                       only renders once shipping is resolved, and the server re-validates —
+                       which is the Merchant Center requirement (shipping known before payment). */
+                    <Button
+                      type="button"
+                      variant="accent"
+                      size="lg"
+                      className="w-full mt-6 h-auto min-h-12 px-5 py-3 whitespace-normal text-balance leading-snug !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
+                      onClick={() => {
+                        const el = document.getElementById("pincode");
+                        el?.scrollIntoView({ behavior: "smooth", block: "center" });
+                        (el as HTMLInputElement | null)?.focus({ preventScroll: true });
+                      }}
+                    >
+                      Continue
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="accent"
+                      size="lg"
+                      className="w-full mt-6 h-auto min-h-12 px-5 py-3 whitespace-normal text-balance leading-snug !shadow-[0_0_24px_0_hsl(32_95%_52%/0.35)] hover:!shadow-[0_0_32px_2px_hsl(32_95%_52%/0.5)]"
+                      disabled={loading || !totals.payable}
+                    >
+                      {/* No mr-2: the Button base spaces icon↔label with gap-2; both together
+                          doubled the gap and squeezed the wrapped label on narrow screens. */}
+                      <Lock className="h-4 w-4" />
+                      {loading
+                        ? "Processing..."
+                        : totals.skipped.length > 0
+                          ? "Remove quote-only items to continue"
+                          : `Pay ${formatINR(totals.grandTotal)} securely`}
+                    </Button>
+                  )}
 
                   {/* Do NOT re-list the payment methods here. They are rendered once, from
                       <PaymentMethods />, in the left-hand column above. Two lists drift. */}

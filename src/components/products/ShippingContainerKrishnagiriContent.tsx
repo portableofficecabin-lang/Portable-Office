@@ -264,7 +264,7 @@ export function ShippingContainerKrishnagiriContent() {
       {/* How to Order */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-          How to Get a Quote
+          How to Get Started
         </h2>
         <p className="text-muted-foreground mb-4">Share these details with us for a budgetary estimate within 24 hours:</p>
         <ul className="space-y-2 mb-4">

@@ -70,10 +70,9 @@ const linkClusters = [
     description: "From rental services and custom fabrication to UPVC windows — explore our complete service offering.",
     links: [
       { label: "Portable Cabin Rental Service", href: "/rental-service" },
-      { label: "Book a Free Consultation", href: "/book-appointment" },
       { label: "Our Projects & Case Studies", href: "/gallery" },
       { label: "About Portable Office Cabin", href: "/about-us" },
-      { label: "Contact Us for a Free Quote", href: "/contact" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
 ];
@@ -197,8 +196,7 @@ export function InternalLinkingHub() {
                   { label: "Rental Services", href: "/rental-service" },
                   { label: "Blog – Industry Guides", href: "/blog" },
                   { label: "Our Projects", href: "/gallery" },
-                  { label: "Book Free Consultation", href: "/book-appointment" },
-                  { label: "Get a Free Quote", href: "/contact" },
+                  { label: "Contact Us", href: "/contact" },
                 ].map((item) => (
                   <li key={item.label}>
                     <Link
