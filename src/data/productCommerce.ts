@@ -531,36 +531,45 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   },
   {
     id: "30", sku: "POC-SC-KRSH", basePrice: 150000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Refurbished 20 ft Shipping Container (Premium) – Krishnagiri",
-    feedTitle: "Refurbished 20 ft Shipping Container Premium Grade, Krishnagiri Delivery | Portable Office Cabin",
+    // Owner correction (Aug 2026): city removed from the title — the page still serves the
+    // Krishnagiri area, but the product is the grade, not the place.
+    h1Title: "Refurbished 20 ft Shipping Container (Premium)",
+    feedTitle: "Refurbished 20 ft Shipping Container Premium Grade | Portable Office Cabin",
     size: "20 ft × 8 ft — refurbished, premium grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
     id: "31", sku: "POC-SC-SIPCOT", basePrice: 150000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Refurbished 20 ft Shipping Container (Industrial) – SIPCOT",
-    feedTitle: "Refurbished 20 ft Shipping Container Industrial Grade, SIPCOT Estates Delivery | Portable Office Cabin",
+    h1Title: "Refurbished 20 ft Shipping Container (Industrial)",
+    feedTitle: "Refurbished 20 ft Shipping Container Industrial Grade | Portable Office Cabin",
     size: "20 ft × 8 ft — refurbished, industrial grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "32", sku: "POC-SC-CHN", basePrice: 80000, priceConfirmed: true, kind: "product", inStock: true,
+    // basePrice chosen so sellPrice() = exactly ₹1,49,000 incl. GST — the FINAL price the
+    // owner supplied (Aug 2026). Never "correct" this base to a round number: the customer
+    // price is the spec, the base is derived.
+    id: "32", sku: "POC-SC-CHN", basePrice: 126271, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Used 20 ft Shipping Container (Wind & Water Tight) – Chennai",
     feedTitle: "Used 20 ft Shipping Container WWT Grade, Chennai Port Delivery | Portable Office Cabin",
     size: "20 ft × 8 ft — used, wind & water tight", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "33", sku: "POC-SC-NRSP", basePrice: 95000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Refurbished 20 ft Shipping Container – Narsapura",
-    feedTitle: "Refurbished 20 ft Shipping Container, Narsapura KIADB Delivery | Portable Office Cabin",
+    // basePrice chosen so sellPrice() = exactly ₹1,48,000 incl. GST (owner-supplied final price).
+    id: "33", sku: "POC-SC-NRSP", basePrice: 125424, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Refurbished 20 ft Shipping Container",
+    feedTitle: "Refurbished 20 ft Shipping Container | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel — 350 MPa Yield", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "34", sku: "POC-SC-PNYA", basePrice: 85000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Used 20 ft Shipping Container (Cargo-Worthy) – Peenya",
-    feedTitle: "Used 20 ft Cargo-Worthy Shipping Container, Peenya Industrial Area Delivery | Portable Office Cabin",
+    // basePrice 139830.51 is deliberately fractional: it is the ONLY value whose sellPrice()
+    // rounds to exactly ₹1,65,000 incl. GST — the final price the owner supplied. Every
+    // customer surface derives from sellPrice(), so the fraction never leaks.
+    id: "34", sku: "POC-SC-PNYA", basePrice: 139830.51, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Used 20 ft Shipping Container (Cargo-Worthy)",
+    feedTitle: "Used 20 ft Cargo-Worthy Shipping Container | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel, Marine Plywood Floor", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
