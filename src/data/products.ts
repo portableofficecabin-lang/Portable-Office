@@ -577,11 +577,15 @@ export const products: Product[] = [
   {
     id: "12",
     sku: "POC-CSC-2040",
-    name: "20ft & 40ft Storage Container – Corten Steel",
+    // Renamed from "20ft & 40ft Storage Container" (owner, Aug 2026): the fixed price buys the
+    // 20 ft unit, so the 40 ft mention read as a second size the price didn't cover. Explicit
+    // slug keeps the long-standing URL (it also has a 301 pointing at it in next.config.ts).
+    name: "20ft Storage Container – Corten Steel",
+    slug: "20ft-40ft-storage-container-corten-steel",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    description: "Heavy-duty cargo storage and shipping containers built to handle the toughest storage demands. Available in standard 20ft and 40ft sizes with Corten steel construction for maximum weather resistance. Ideal for secure on-site material storage, warehousing, and logistics. These containers feature reinforced flooring, lockable cargo doors, and anti-corrosion treatment — ready to deploy at construction sites, factories, ports, and commercial facilities across India.",
-    shortDescription: "20ft & 40ft steel storage containers — secure, weatherproof, relocatable",
+    description: "Heavy-duty cargo storage container built to handle the toughest storage demands. Standard 20ft size with Corten steel construction for maximum weather resistance. Ideal for secure on-site material storage, warehousing, and logistics. These containers feature reinforced flooring, lockable cargo doors, and anti-corrosion treatment — ready to deploy at construction sites, factories, ports, and commercial facilities across India.",
+    shortDescription: "20ft steel storage container — secure, weatherproof, relocatable",
     specifications: [
       { label: "Sizes Available", value: "20ft x 8ft x 8.5ft / 40ft x 8ft x 8.5ft" },
       { label: "Floor Area", value: "160 sq ft / 320 sq ft" },
@@ -1123,7 +1127,7 @@ export const products: Product[] = [
     sku: "POC-SC-KRMG",
     // Renamed + explicit slug (Aug 2026 GMC correction): distinct configuration per city SKU,
     // URL unchanged. Same pattern for the five sibling city products below.
-    name: "Used 20 ft Shipping Container (As-Is Grade) – Koramangala",
+    name: "Used 20 ft Shipping Container (As-Is Grade)",
     slug: "shipping-container-in-kormangala",
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
@@ -1241,7 +1245,7 @@ export const products: Product[] = [
   {
     id: "32",
     sku: "POC-SC-CHN",
-    name: "Used 20 ft Shipping Container (WWT) – Chennai",
+    name: "Used 20 ft Shipping Container (WWT)",
     slug: "shipping-container-in-chennai",
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
