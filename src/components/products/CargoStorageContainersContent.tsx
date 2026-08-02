@@ -2,6 +2,9 @@ import { Package, Shield, Truck, Factory, Wrench, CheckCircle, Building2, Thermo
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { COMPANY } from "@/lib/company";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import cargoStoragePort from "@/assets/products/cargo-storage-containers-port.webp";
 import cargoStorageInspection from "@/assets/products/cargo-storage-containers-inspection.webp";
 import cargoStorage20ft from "@/assets/products/cargo-storage-containers-20ft.webp";
@@ -9,13 +12,7 @@ import cargoStorage40ft from "@/assets/products/cargo-storage-containers-40ft.we
 import cargoStorageISO from "@/assets/products/cargo-storage-containers-iso.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
-const pricingRows = [
-  ["20 ft Used GP", "₹90,000–₹1,40,000", "Based on 2015–2020 build year, CSC status, rust grade"],
-  ["40 ft Used GP", "₹1,40,000–₹2,10,000", "Condition-dependent, vary depending on source port"],
-  ["40 ft HC Used", "₹1,60,000–₹2,30,000", "Premium for extra height, popular for conversions"],
-  ["40 ft Working Reefer", "₹3,00,000–₹5,00,000", "Functional plug-in genset, compressor 13.5E class"],
-  ["DNV 2.7-1 Offshore (10–20 ft)", "₹2,50,000–₹4,00,000", "Blast-proof certifications"],
-];
+const cargoContainerPrice = formatINR(sellPrice(getCommerce("35")!.basePrice));
 
 const containerTypes = [
   { icon: Package, title: "General Purpose (Dry)", desc: "Fully enclosed double-door steel box with EPDM seals. Handles 90% of global non-perishable trade. Excellent for on-site storage of tools, cement, electronics, and textiles." },
@@ -42,7 +39,7 @@ const gradeTable = [
 ];
 
 const faqs = [
-  { q: "What is the price of a 20 ft used cargo storage container in India?", a: "Used 20 ft GP containers typically range from ₹90,000 to ₹1,40,000 depending on build year (2015–2020 preferred), CSC status, rust grade, and source port. Prices fluctuate with steel and freight market conditions." },
+  { q: "What is the price of a cargo storage container from Portable Office Cabin?", a: `Our cargo storage container is available to buy online at a fixed, GST-inclusive price of ${cargoContainerPrice} — the same price shown on the product page, in the cart, and at checkout. Custom configurations, specialized units, and full conversions are available on request.` },
   { q: "What is the difference between cargo-worthy and wind & water-tight containers?", a: "Cargo-worthy (CW) containers have valid CSC approval for continued sea transport with minor wear acceptable. Wind & water-tight (WWT) units may have minor dents but are suitable for static storage — they keep weather out but aren't certified for shipping." },
   { q: "Can cargo containers be converted into offices or homes?", a: "Yes. Portable Office Cabin converts GP and HC containers into fully equipped offices, homes, cafés, and labour colonies using frame-preserving cuts, welding reinforcements per IS 800, PUF insulation panels, and comprehensive electrical and plumbing fit-outs." },
   { q: "What steel types are used in cargo storage containers?", a: "Three main types: Corten (weathering) steel (ASTM A588, 355 MPa yield, self-passivating) is the industry standard. Mild steel (IS 2062 Grade B, 250 MPa) costs 20–30% less but needs protective coatings. Stainless steel (AISI 304/316L) is used for food and pharmaceutical applications." },
@@ -245,43 +242,23 @@ export function CargoStorageContainersContent() {
 
       {/* Pricing */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-6">New vs Used Cargo Storage Containers & Typical Price Ranges (India, 2024–2026)</h2>
-        <p className="text-muted-foreground mb-6">New containers from Chinese mills offer pristine CSC validity (5 years), zero dents, and 30+ year service life—but cost 50–100% more than used units. Used (WWT, 5–15 years old) containers dominate at 70–80% savings.</p>
-        
-        <div className="bg-card rounded-xl shadow-card overflow-hidden mb-6">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-accent/10 text-foreground">
-                  <th className="text-left px-6 py-4 font-semibold">Container Type</th>
-                  <th className="text-left px-6 py-4 font-semibold">Price Range (₹)</th>
-                  <th className="text-left px-6 py-4 font-semibold">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pricingRows.map((row, i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
-                    <td className="px-6 py-3 font-medium text-foreground">{row[0]}</td>
-                    <td className="px-6 py-3 text-accent font-semibold">{row[1]}</td>
-                    <td className="px-6 py-3 text-muted-foreground">{row[2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Cargo Storage Container Price: Fixed and GST-Inclusive</h2>
+        <p className="text-muted-foreground mb-6">
+          Our cargo storage container is available to buy online at a fixed, GST-inclusive price of{" "}
+          <span className="font-semibold text-foreground">{cargoContainerPrice}</span> — the same price shown in the buy box, the cart, and at checkout. No quotation round-trips: add it to your cart, confirm delivery details, and pay securely online.
+        </p>
 
         <div className="bg-muted/50 p-6 rounded-xl">
-          <h4 className="font-semibold text-foreground mb-2">Factors Affecting Price</h4>
+          <h4 className="font-semibold text-foreground mb-2">What Shapes the Cost of Custom Configurations</h4>
           <div className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-            <p>• Steel grade and manufacturer origin</p>
-            <p>• Age (manufacture year on CSC plate)</p>
-            <p>• Prior usage: marine versus domestic</p>
-            <p>• Modification level and IICL grading (A–D)</p>
-            <p>• Steel prices (currently ₹60–80/kg)</p>
-            <p>• Post-2024 Red Sea disruptions added ~20% premiums</p>
+            <p>• Container size and high cube vs standard height</p>
+            <p>• Condition grade: new one-trip, cargo-worthy, or WWT</p>
+            <p>• Steel grade and protective coating system</p>
+            <p>• Modification level: doors, windows, insulation, fit-out</p>
+            <p>• Certification needs, such as valid CSC for transport use</p>
+            <p>• Delivery distance and site placement requirements</p>
           </div>
-          <p className="text-xs text-muted-foreground mt-3 italic">Pricing subject to market fluctuations. Industry forecasts suggest 10–15% price increases by end of 2026.</p>
+          <p className="text-sm text-muted-foreground mt-3">Need a specialized unit — reefer, offshore-rated, open top, or a complete conversion? Contact our team and we will configure it for your project.</p>
         </div>
       </section>
 
@@ -445,14 +422,15 @@ export function CargoStorageContainersContent() {
 
       {/* CTA */}
       <section className="bg-accent/10 border border-accent/20 rounded-2xl p-8 text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-3">Ready to Source Your Cargo Storage Containers?</h2>
-        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India with 500+ completed projects.</p>
-        <div className="flex flex-wrap justify-center gap-4">
+        <h2 className="text-2xl font-bold text-foreground mb-3">Buy Your Cargo Storage Container Online</h2>
+        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Order at the fixed GST-inclusive price with secure online payment and PAN-India delivery, backed by 500+ completed projects. Prefer to discuss conversions, specialized units, or complete prefab solutions first? Our team is one message away.</p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
+          <BuyNowCTA productId="35" />
           <a
             href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in cargo storage containers")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+            className="inline-flex items-center gap-2 border border-accent text-accent px-8 py-3 rounded-lg font-semibold hover:bg-accent/10 transition-colors"
           >
             WhatsApp Us <ArrowRight className="h-4 w-4" />
           </a>

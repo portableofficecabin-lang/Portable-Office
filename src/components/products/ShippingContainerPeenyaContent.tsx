@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Clock, Truck, IndianRupee, Shield, Factory, Wrench, CheckCircle, MapPin, MessageCircle, Phone, Building2, Container, Users } from "lucide-react";
@@ -7,6 +8,13 @@ import peenyaStorage from "@/assets/products/shipping-container-peenya-storage.w
 import peenyaPort from "@/assets/products/shipping-container-peenya-port.webp";
 import peenyaOffice from "@/assets/products/shipping-container-peenya-office.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
+
+const PEENYA_PRODUCT_ID = "34";
+// Single authoritative customer price — same source as the buy box, cart, checkout and JSON-LD.
+const peenyaPrice = formatINR(sellPrice(getCommerce(PEENYA_PRODUCT_ID)!.basePrice));
 
 const highlights = [
   { icon: Clock, title: "2–5 Day Setup", description: "Quick deployment versus weeks for traditional construction on Peenya's leased plots" },
@@ -24,17 +32,6 @@ const containerTypes = [
   { type: "Labour Accommodation Block", use: "Contract workers and night-shift teams with bunk beds and ventilation" },
   { type: "Portable Toilet Block", use: "Staff sanitation where permanent drainage is delayed" },
   { type: "Specialized Conversions", use: "Workshops, maintenance rooms, prefab canteens, rooftop cafés" },
-];
-
-const pricingRows = [
-  { type: "Used 20 ft Storage Container", price: "₹85,000 – ₹1,30,000" },
-  { type: "Used 40 ft Storage Container", price: "₹1,40,000 – ₹2,10,000" },
-  { type: "New/One-Trip 20 ft Container", price: "₹1,50,000 – ₹2,20,000" },
-  { type: "New/One-Trip 40 ft Container", price: "₹2,30,000 – ₹3,50,000" },
-  { type: "Container Office (20 ft, fitted)", price: "₹2,65,000 – ₹3,80,000" },
-  { type: "Container Office (40 ft, fitted)", price: "₹3,80,000 – ₹5,50,000" },
-  { type: "Security Cabin (8x8 ft)", price: "₹85,000 – ₹1,20,000" },
-  { type: "Monthly Rental (20 ft storage)", price: "₹5,500 – ₹8,500/month" },
 ];
 
 const industries = [
@@ -69,8 +66,8 @@ const faqs = [
     a: "In-stock standard containers can be delivered within 2–4 working days from our Bengaluru yards via Tumkur Road. Complete setup including placement, electrical connections, and AC installation typically takes 2–5 days depending on customization level."
   },
   {
-    q: "What is the price range for shipping containers in Peenya?",
-    a: "Used 20 ft storage containers start from ₹85,000, while new/one-trip 20 ft units start from ₹1,50,000. Fully fitted container offices range from ₹2,65,000 (20 ft) to ₹5,50,000 (40 ft). Monthly rentals for 20 ft storage units start at ₹5,500. All prices exclude GST and transport."
+    q: "What is the price of a shipping container in Peenya?",
+    a: `The shipping container for Peenya Industrial Area can be ordered online at a fixed price of ${peenyaPrice} including GST — the same price shown in the buy box, cart and checkout. Transport is calculated at checkout from your delivery PIN code. Custom sizes and fitted container offices are available on request.`
   },
   {
     q: "Can containers be relocated if our factory moves from Peenya?",
@@ -87,10 +84,6 @@ const faqs = [
   {
     q: "Do you provide container offices with AC and electrical fit-out?",
     a: "Yes, our container offices come with PUF or Rockwool insulation, UPVC windows, split AC provisions, MCB-based electrical wiring with earthing, LED lighting, power sockets, and optional data cabling. Interior partitions and furniture can be customized."
-  },
-  {
-    q: "Can I rent a shipping container instead of buying?",
-    a: "Yes, we offer flexible rental options starting from ₹5,500/month for 20 ft storage containers. Both short-term (1–6 months) and long-term (1–5 years) leases are available. Rental includes delivery, and pickup is arranged at lease end."
   },
   {
     q: "What compliance and safety features are included?",
@@ -153,10 +146,10 @@ export function ShippingContainerPeenyaContent() {
         <h2 className="text-2xl font-bold text-foreground mb-4">Why Shipping Containers Suit Peenya Industrial Units</h2>
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
           <p>
-            Peenya's space-constrained plots, high rentals, and frequent 3–5 year leases make containers an ideal product for quick expansion without permanent construction.
+            Peenya's space-constrained plots, high property costs, and frequent 3–5 year leases make containers an ideal product for quick expansion without permanent construction.
           </p>
           <ul className="space-y-2">
-            <li>Quick plug-in storage or office capacity for rented industrial sheds</li>
+            <li>Quick plug-in storage or office capacity for leased industrial sheds</li>
             <li>Popular in Tumkur Road auto ancillaries, Peenya 2nd Stage FMCG warehousing, and electrical machine shops</li>
             <li>Lower upfront cost and 2–5 day setup versus building new permanent sheds</li>
             <li>Weather-resistant ISO containers protect materials during Bengaluru's monsoon and dust-heavy conditions</li>
@@ -184,7 +177,7 @@ export function ShippingContainerPeenyaContent() {
           />
         </div>
         <p className="text-muted-foreground mt-4">
-          The price of a shipping container in Bengaluru depends on several factors, including the manufacturer, size, condition (new or used), and any specific modifications or specifications requested by the client. With their ease of transport and quick installation, shipping containers are a preferred choice for businesses seeking efficient and scalable solutions in the industrial sector.
+          Market prices for shipping containers in Bengaluru vary by manufacturer, size, condition (new or used) and modifications — which is why Portable Office Cabin offers a fixed, GST-inclusive online price you can order directly, with custom modifications available on request. With their ease of transport and quick installation, shipping containers are a preferred choice for businesses seeking efficient and scalable solutions in the industrial sector.
         </p>
       </section>
 
@@ -314,26 +307,16 @@ export function ShippingContainerPeenyaContent() {
 
       {/* Pricing */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-6">Indicative Pricing for Peenya Industrial Area</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-card rounded-xl overflow-hidden shadow-sm">
-            <thead>
-              <tr className="bg-accent/10">
-                <th className="text-left p-4 font-semibold text-foreground">Container Type</th>
-                <th className="text-left p-4 font-semibold text-foreground">Price Range (Ex-Works)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingRows.map((row, i) => (
-                <tr key={i} className="border-t border-border">
-                  <td className="p-4 font-medium text-foreground">{row.type}</td>
-                  <td className="p-4 text-muted-foreground">{row.price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Fixed Online Price for Peenya Industrial Area</h2>
+        <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+          <p className="text-muted-foreground mb-2">
+            The shipping container for Peenya Industrial Area is available to buy online at a fixed price of{" "}
+            <span className="font-semibold text-foreground">{peenyaPrice}</span> including GST — the same price shown in the buy box, cart and checkout.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Transport to your site is calculated at checkout from your delivery PIN code. Custom sizes and fitted container offices are available on request. Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
+          </p>
         </div>
-        <p className="text-sm text-muted-foreground mt-3">* Prices are indicative and exclude GST, transport, and crane/hydra charges. Contact us for exact quotations.</p>
       </section>
 
       {/* Logistics & Delivery */}
@@ -458,7 +441,7 @@ export function ShippingContainerPeenyaContent() {
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">How to Get Started in Peenya Industrial Area</h2>
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
-          <p>Obtaining a quote is straightforward via phone, email, or website enquiry form.</p>
+          <p>You can order online directly, or reach us by phone, email, or the website enquiry form for custom requirements.</p>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-card border border-border rounded-xl p-6">
               <h3 className="font-semibold text-foreground mb-3">Share with Us</h3>
@@ -500,9 +483,10 @@ export function ShippingContainerPeenyaContent() {
 
       {/* CTA */}
       <section className="bg-accent text-accent-foreground rounded-2xl p-8 text-center">
-        <h2 className="text-2xl font-bold mb-4">Need a Shipping Container in Peenya Industrial Area?</h2>
-        <p className="mb-6 opacity-90">Share your requirements and get a tailored quote with transparent price and delivery information.</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <h2 className="text-2xl font-bold mb-4">Buy Your Shipping Container in Peenya Industrial Area</h2>
+        <p className="mb-6 opacity-90">Order online at a fixed GST-inclusive price with secure payment — or WhatsApp/call us for custom requirements and delivery information.</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <BuyNowCTA productId={PEENYA_PRODUCT_ID} tone="dark" />
           <a href="https://wa.me/919731897976?text=Hi%2C%20I%20need%20a%20shipping%20container%20in%20Peenya%20Industrial%20Area" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-background text-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
             <MessageCircle className="h-5 w-5" />
             WhatsApp Us

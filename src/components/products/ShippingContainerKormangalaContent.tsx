@@ -3,14 +3,22 @@ import shippingContainerCafe from "@/assets/products/shipping-container-kormanga
 import shippingContainerOffice from "@/assets/products/shipping-container-kormangala-office.webp";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckCircle2, Container, Home, ShieldCheck, Truck, Warehouse, Wrench, MapPin } from "lucide-react";
+import { CheckCircle2, Container, Home, Phone, ShieldCheck, Truck, Warehouse, Wrench, MapPin } from "lucide-react";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import Link from "next/link";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
+
+// Live GST-inclusive online price — the same source of truth as the buy box, cart,
+// checkout and Razorpay. Never hardcode a rupee figure beside it.
+const onlinePrice = formatINR(sellPrice(getCommerce("29")!.basePrice));
 
 const highlights = [
   { icon: Container, title: "20 ft & 40 ft ISO stock", description: "Standard and high-cube containers available for offices, cafés, storage, and labour accommodation in Koramangala." },
   { icon: MapPin, title: "Koramangala delivery", description: "Same-week delivery for standard units within Koramangala — 1st to 8th Block, HSR Layout, Ejipura, and Domlur." },
   { icon: Home, title: "Homes, cafés & rooftop", description: "Container homes, rooftop cafés, studios, and modular retail structures with PUF insulation and acoustic treatment." },
-  { icon: Truck, title: "Rental & purchase", description: "Flexible options — rent from ₹5,000/month or purchase with full customization and relocation freedom." },
+  { icon: Truck, title: "Buy online", description: "Outright purchase at one fixed GST-inclusive price with full customization and relocation freedom." },
 ];
 
 const containerTypes = [
@@ -59,20 +67,19 @@ const storageFeatures = [
   "Yard layout planning with driveways and loading clearance",
 ];
 
-const rentalVsPurchase = [
-  ["Factor", "Purchase", "Rental"],
-  ["Best for", "Long-term use, customization, relocation", "Short-term projects, events, renovations"],
-  ["Duration", "18+ months", "3–36 months"],
-  ["Cost (20 ft)", "₹40,000–₹1,00,000 (used)", "₹5,000–₹8,000/month"],
-  ["Customization", "Full flexibility", "Limited"],
+const whyBuy = [
+  ["Factor", "Buying outright"],
+  ["Best for", "Long-term use, full customization, relocation freedom"],
+  ["Service life", "20+ years with basic maintenance"],
+  ["Cost (20 ft)", `${onlinePrice} incl. GST — buy online`],
+  ["Ownership", "Yours to modify, relocate, or resell — no recurring charges"],
 ];
 
 const pricingRows = [
-  ["New container (20 ft–40 ft)", "₹1,50,000 – ₹5,00,000"],
-  ["Used container (20 ft–40 ft)", "₹50,000 – ₹2,00,000"],
-  ["Container office (fitted)", "₹1,80,000 – ₹5,50,000+"],
-  ["Container café / home", "₹2,50,000 – ₹8,00,000+"],
-  ["Rental (20 ft basic)", "₹5,000 – ₹8,000/month"],
+  ["Shipping container (this page's offer)", `${onlinePrice} — GST included, buy online`],
+  ["Container office (fitted)", "Custom quote"],
+  ["Container café / home", "Custom quote"],
+  ["Special types (reefer, open-top, flat rack)", "Custom quote"],
 ];
 
 const strengths = [
@@ -85,8 +92,7 @@ const strengths = [
 
 const faqs = [
   { q: "What types of shipping containers are available in Koramangala?", a: "We supply 20 ft, 40 ft, and high-cube containers in cargo-worthy, WWT, and refurbished grades — suitable for offices, cafés, storage, homes, and labour accommodation." },
-  { q: "How much does a shipping container cost in Koramangala?", a: "New containers range from ₹1.5–5 lakhs; used containers from ₹50,000–₹2 lakhs. Fitted container offices start around ₹1.8 lakhs. Rental starts at ₹5,000/month for 20 ft units." },
-  { q: "Can I rent a shipping container in Koramangala?", a: "Yes. Rental is available for 3–36 month periods, including maintenance. Rental avoids upfront transport costs and pays back versus purchase in 18–24 months at 70% utilization." },
+  { q: "How much does a shipping container cost in Koramangala?", a: `The container offered on this page has one fixed online price — ${onlinePrice}, GST included — and you can buy it directly on this page with secure checkout. Fitted offices, cafés, homes, and special container types are quoted to your specification.` },
   { q: "Do you deliver to Koramangala's narrow lanes?", a: "Yes. We use 20/32 ft multi-axle trucks and hydra/crane trucks for placement. Our team coordinates timing (9 AM–6 PM) and provides AutoCAD drawings for local approvals." },
   { q: "Can a shipping container be converted into a café or home?", a: "Absolutely. We fabricate container cafés with serving counters, seating for 20–30, exhaust hoods, and branding. Container homes include bedrooms, kitchenettes, toilets, and balcony cutouts." },
   { q: "What permissions are needed for a container in Koramangala?", a: "Commercial cafés, offices, and rooftop containers may require BBMP/BDA approvals. We provide 1:50 scale AutoCAD drawings to support your application." },
@@ -114,7 +120,7 @@ export function ShippingContainerKormangalaContent() {
             Shipping Container in Koramangala — Office, Café, Home & Storage
           </h2>
           <p className="mb-4 text-lg leading-relaxed text-muted-foreground">
-            Koramangala (560034) has become one of Bengaluru's most dynamic neighbourhoods for startups, IT firms, and retail ventures. With high rental costs averaging ₹100–200 per sq ft and ongoing redevelopment along 80 Feet Road, Inner Ring Road, and nearby Ejipura, HSR Layout, and Domlur, businesses are searching for cost-effective alternatives.
+            Koramangala (560034) has become one of Bengaluru's most dynamic neighbourhoods for startups, IT firms, and retail ventures. With high commercial lease costs and ongoing redevelopment along 80 Feet Road, Inner Ring Road, and nearby Ejipura, HSR Layout, and Domlur, businesses are searching for cost-effective alternatives.
           </p>
           <p className="leading-relaxed text-muted-foreground">
             Portable Office Cabin is a Bengaluru-based manufacturer and supplier of prefabricated and modular building solutions. We serve both B2B and B2C customers with new and used containers — from compact storage units to fully fitted container offices, cafés, homes, and rooftop structures.
@@ -176,7 +182,7 @@ export function ShippingContainerKormangalaContent() {
       <section className="rounded-3xl border border-border bg-card p-8">
         <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Container offices in Koramangala</h3>
         <p className="mb-5 text-muted-foreground">
-          Container offices address the stress of high commercial rents while providing rapid deployment. Startups near Forum Mall, project sites across Koramangala 1st–8th Block, and sales offices along Sarjapur Road are choosing this route — 50–70% cost savings over traditional construction.
+          Container offices address the stress of high commercial lease costs while providing rapid deployment. Startups near Forum Mall, project sites across Koramangala 1st–8th Block, and sales offices along Sarjapur Road are choosing this route — 50–70% cost savings over traditional construction.
         </p>
         <div className="space-y-3">
           {officeSpecs.map((item) => (
@@ -231,31 +237,30 @@ export function ShippingContainerKormangalaContent() {
         </div>
       </section>
 
-      {/* Rental vs Purchase */}
+      {/* Why buy */}
       <section>
-        <h3 className="mb-6 font-display text-2xl font-bold text-foreground">Rental vs purchase: what suits Koramangala customers?</h3>
+        <h3 className="mb-6 font-display text-2xl font-bold text-foreground">Why buy a shipping container in Koramangala?</h3>
         <div className="overflow-hidden rounded-3xl border border-border bg-card">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-accent/10">
-                {rentalVsPurchase[0].map((h) => (
+                {whyBuy[0].map((h) => (
                   <th key={h} className="px-5 py-4 text-left font-semibold text-foreground">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {rentalVsPurchase.slice(1).map((row, i) => (
+              {whyBuy.slice(1).map((row, i) => (
                 <tr key={row[0]} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
                   <td className="px-5 py-4 font-medium text-foreground">{row[0]}</td>
                   <td className="px-5 py-4 text-muted-foreground">{row[1]}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{row[2]}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Rental avoids upfront transport costs (₹20,000–₹50,000) and includes maintenance. Purchase pays back in 18–24 months at 70% utilization.
+          A purchased container pays for itself within 18–24 months compared with recurring commercial space costs. Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
         </p>
       </section>
 
@@ -263,14 +268,14 @@ export function ShippingContainerKormangalaContent() {
       <section className="space-y-6">
         <div>
           <h3 className="mb-2 font-display text-2xl font-bold text-foreground">Pricing & costs in Koramangala</h3>
-          <p className="text-muted-foreground">Prices vary by size, condition, and fit-out level. Here are indicative 2026 benchmarks:</p>
+          <p className="text-muted-foreground">The container offered on this page has one fixed online price — GST included, the same amount you pay at checkout. Fit-outs, conversions, and special container types are quoted to your specification:</p>
         </div>
         <div className="overflow-hidden rounded-3xl border border-border bg-card">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-accent/10">
                 <th className="px-5 py-4 text-left font-semibold text-foreground">Type</th>
-                <th className="px-5 py-4 text-left font-semibold text-foreground">Indicative Price</th>
+                <th className="px-5 py-4 text-left font-semibold text-foreground">Price</th>
               </tr>
             </thead>
             <tbody>
@@ -339,6 +344,21 @@ export function ShippingContainerKormangalaContent() {
             </AccordionItem>
           ))}
         </Accordion>
+      </section>
+
+      {/* Closing CTA */}
+      <section className="rounded-3xl bg-accent/10 p-8 text-center md:p-10">
+        <h3 className="mb-3 font-display text-2xl font-bold text-foreground md:text-3xl">Buy Your Shipping Container in Koramangala Online</h3>
+        <p className="mx-auto mb-6 max-w-3xl text-muted-foreground">
+          Order online at {onlinePrice} — GST included — with secure payment and delivery across Koramangala, or call us to discuss fitted offices, cafés, and rooftop structures.
+        </p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="29" />
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
+            <Phone className="h-4 w-4" />
+            Call Us Now
+          </a>
+        </div>
       </section>
     </div>
   );

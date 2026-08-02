@@ -642,21 +642,23 @@ export const products: Product[] = [
   {
     id: "17",
     sku: "POC-CC-FS",
-    name: "Cargo Container – Buy, Rent or Convert",
+    // Renamed from "Cargo Container – Buy, Rent or Convert" (Aug 2026, owner GMC correction):
+    // a FEED item must read as a straightforward sale offer — no rental framing on the card,
+    // cart line or landing page. The slug override below keeps the URL unchanged.
+    name: "Cargo Container for Sale",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     slug: "cargo-container-for-sale",
-    description: "Cargo containers for sale in India for storage, transport, rentals, and modular conversions. Available in 10 ft, 20 ft GP, 30 ft custom, 40 ft GP, 40 ft HC, and reefer formats with pan-India supply.",
-    shortDescription: "Buy, rent, or convert cargo containers across India with delivery and fabrication support",
+    description: "Cargo containers for sale in India for storage, transport, and modular conversions. Available in 10 ft, 20 ft GP, 30 ft custom, 40 ft GP, 40 ft HC, and reefer formats with pan-India supply.",
+    shortDescription: "Buy cargo containers across India with delivery and fabrication support",
     specifications: [
       { label: "Popular Sizes", value: "10 ft fabricated / 20 ft GP / 30 ft custom / 40 ft GP / 40 ft HC" },
       { label: "Condition Grades", value: "One-trip / Cargo-Worthy / Wind & Water Tight / As-Is" },
       { label: "Construction", value: "Corten steel shell with marine plywood or chequered steel flooring" },
       { label: "Applications", value: "Storage, transport, office conversion, homes, cafés, labour accommodation" },
-      { label: "Supply Model", value: "Sale, rental, lease, and turnkey conversion" },
+      { label: "Supply Model", value: "Outright sale and turnkey conversion" },
       { label: "Coverage", value: "Pan-India delivery from major ports and inland depots" },
       { label: "Condition Options", value: "Cargo-worthy used 20 ft containers — this listing is priced above" },
-      { label: "Rental Option", value: "Monthly rental available on quotation" },
     ],
     features: [
       "New, used, and custom-length cargo containers available",
@@ -664,7 +666,7 @@ export const products: Product[] = [
       "Pan-India transport, unloading, and installation coordination",
       "In-house conversion for insulated offices and prefab structures",
       "Bulk supply support for contractors, factories, institutions, and government buyers",
-      "Available on outright purchase, rental, and lease models",
+      "Available on outright purchase with turnkey conversion support",
     ],
     images: ["/placeholder.svg"],
     price: 125000,
@@ -1119,10 +1121,13 @@ export const products: Product[] = [
   {
     id: "29",
     sku: "POC-SC-KRMG",
-    name: "Shipping Container in Kormangala",
+    // Renamed + explicit slug (Aug 2026 GMC correction): distinct configuration per city SKU,
+    // URL unchanged. Same pattern for the five sibling city products below.
+    name: "Used 20 ft Shipping Container (As-Is Grade) – Koramangala",
+    slug: "shipping-container-in-kormangala",
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    shortDescription: "Buy, rent or convert 20 ft & 40 ft shipping containers in Koramangala, Bangalore — offices, cafés, homes, storage & labour camps with same-week local delivery.",
+    shortDescription: "Buy 20 ft & 40 ft shipping containers in Koramangala, Bangalore — offices, cafés, homes, storage & labour camps with same-week local delivery.",
     description: "Portable Office Cabin supplies and converts new and used 20 ft and 40 ft shipping containers in Koramangala (560034), Bangalore. From container offices near Forum Mall to rooftop cafés on 5th Block, we deliver modular solutions with 50–70% cost savings over traditional construction. Karnataka-based operations ensure quicker site visits, same-week delivery for standard units, and comprehensive after-sales support across Koramangala, HSR Layout, Ejipura, and Domlur.",
     specifications: [
       { label: "Sizes Available", value: "20 ft, 40 ft standard & high cube" },
@@ -1158,10 +1163,11 @@ export const products: Product[] = [
   {
     id: "30",
     sku: "POC-SC-KRSH",
-    name: "Shipping Container in Krishnagiri",
+    name: "Refurbished 20 ft Shipping Container (Premium) – Krishnagiri",
+    slug: "shipping-container-in-krishnagiri",
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    shortDescription: "Buy or rent 20 ft & 40 ft shipping containers in Krishnagiri — storage, site offices, container homes, cafés & labour camps with delivery across Hosur, Rayakottai & Dharmapuri.",
+    shortDescription: "Buy 20 ft & 40 ft shipping containers in Krishnagiri — storage, site offices, container homes, cafés & labour camps with delivery across Hosur, Rayakottai & Dharmapuri.",
     description: "Portable Office Cabin manufactures and supplies new and used 20 ft and 40 ft shipping containers in Krishnagiri, Tamil Nadu. From SIPCOT industrial storage to fully fitted container offices and modular homes, we deliver cost-effective solutions with 20–35% savings over conventional construction. Our Karnataka and Tamil Nadu-based operations ensure fast site visits, 3–5 day delivery for stock units, and comprehensive after-sales support across Krishnagiri, Hosur, Rayakottai, Vellore, and Dharmapuri.",
     specifications: [
       { label: "Sizes Available", value: "10 ft, 20 ft, 40 ft standard & high cube" },
@@ -1196,10 +1202,11 @@ export const products: Product[] = [
   {
     id: "31",
     sku: "POC-SC-SIPCOT",
-    name: "Shipping Container in SIPCOT",
+    name: "Refurbished 20 ft Shipping Container (Industrial) – SIPCOT",
+    slug: "shipping-container-in-sipcot",
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    shortDescription: "Buy or rent 20 ft & 40 ft shipping containers for SIPCOT industrial estates — storage, site offices, labour colonies & security cabins across Sriperumbudur, Oragadam, Hosur & Gummidipoondi.",
+    shortDescription: "Buy 20 ft & 40 ft shipping containers for SIPCOT industrial estates — storage, site offices, labour colonies & security cabins across Sriperumbudur, Oragadam, Hosur & Gummidipoondi.",
     description: "Portable Office Cabin manufactures and supplies shipping containers and container-based structures designed specifically for SIPCOT industrial estates across Tamil Nadu. From storage containers and site offices to prefab labour colonies and security cabins, we serve automotive, electronics, FMCG, and engineering companies in Sriperumbudur, Oragadam, Irungattukottai, Gummidipoondi, Ranipet, and Hosur with 7–15 day delivery and estate-to-estate relocation support.",
     specifications: [
       { label: "Sizes Available", value: "20 ft, 40 ft standard & high cube" },
@@ -1234,10 +1241,11 @@ export const products: Product[] = [
   {
     id: "32",
     sku: "POC-SC-CHN",
-    name: "Shipping Container in Chennai",
+    name: "Used 20 ft Shipping Container (WWT) – Chennai",
+    slug: "shipping-container-in-chennai",
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    shortDescription: "Buy, rent or convert 20 ft & 40 ft shipping containers in Chennai — storage, offices, homes, cafés & labour camps with 24–72 hour dispatch from Chennai Port yards.",
+    shortDescription: "Buy 20 ft & 40 ft shipping containers in Chennai — storage, offices, homes, cafés & labour camps with 24–72 hour dispatch from Chennai Port yards.",
     description: "Portable Office Cabin supplies new and used shipping containers across Chennai — from Chennai Port and Ennore to OMR, ECR, Sriperumbudur, and Oragadam. We offer sales, rentals, and turnkey modular conversions for container offices, homes, cafés, laboratories, and labour accommodation. With Corten steel construction, marine-grade anti-corrosion coatings, and PUF/Rockwool insulation suited to Chennai's coastal climate, our containers deliver fast deployment, cost savings, and eco-friendly construction.",
     specifications: [
       { label: "Sizes Available", value: "10 ft, 20 ft, 40 ft GP & 40 ft HC" },
@@ -1272,7 +1280,8 @@ export const products: Product[] = [
   {
     id: "33",
     sku: "POC-SC-NRSP",
-    name: "Shipping Container in Narsapura Industrial",
+    name: "Refurbished 20 ft Shipping Container – Narsapura",
+    slug: "shipping-container-in-narsapura-industrial",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     description: "Shipping containers for Narsapura Industrial Area — storage, offices, labour colonies, and modular solutions for KIADB plots along NH-75. New, used, and refurbished units from 10 ft to 40 ft with customization for Honda, Volvo, and Lumax corridor factories.",
@@ -1307,7 +1316,8 @@ export const products: Product[] = [
   {
     id: "34",
     sku: "POC-SC-PNYA",
-    name: "Shipping Container in Peenya Industrial",
+    name: "Used 20 ft Shipping Container (Cargo-Worthy) – Peenya",
+    slug: "shipping-container-in-peenya-industrial",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     description: "Shipping containers for Peenya Industrial Area, Bengaluru — new and used 20 ft & 40 ft ISO units for storage, container offices, security cabins, labour accommodation, and modular conversions. 2–5 day setup across all four phases of Asia's largest industrial hub.",
@@ -1542,9 +1552,10 @@ export const products: Product[] = [
       { label: "Structural System", value: "MS columns & rafters, PEB structures, container modules" },
       { label: "Wall Panels", value: "50–100 mm PUF/EPS sandwich panels, PPGI, Aerocon" },
       { label: "Roofing", value: "Sloped steel with PUF/EPS insulation, ridge vents, gutters" },
-      { label: "Pricing (Economy)", value: "₹350–450/sq ft (EPS panels, 10–15 year life)" },
-      { label: "Pricing (Standard)", value: "₹650–900/sq ft (PUF panels, 15–25 year life)" },
-      { label: "Pricing (Premium)", value: "₹1,000+/sq ft (PEB systems, 25–40+ year life)" },
+      // Per-sq-ft pricing tiers were removed here (Aug 2026): the product now sells online at
+      // ONE fixed GST-inclusive price for the priced configuration above, and rate ranges in
+      // the spec table would contradict it. Panel/build tiers live on as material options.
+      { label: "Build Tiers", value: "Economy (EPS, 10–15 yr) · Standard (PUF, 15–25 yr) · Premium (PEB, 25–40+ yr)" },
       { label: "Installation Time", value: "2–4 weeks for 100–300 worker camps" },
       { label: "Cost Savings", value: "20–40% lower than conventional RCC construction" },
     ],

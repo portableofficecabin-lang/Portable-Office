@@ -4,6 +4,9 @@ import { COMPANY } from "@/lib/company";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import labourColonyAerial from "@/assets/products/labour-colony-aerial.png";
 import labourColonyCamp from "@/assets/products/labour-colony-camp.webp";
 import labourColonyG1 from "@/assets/products/labour-colony-g1.webp";
@@ -11,10 +14,14 @@ import labourColonyModular from "@/assets/products/labour-colony-modular.webp";
 import labourColonySite from "@/assets/products/labour-colony-site.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
-const pricingRows = [
-  ["Economy EPS Panel", "₹350–450/sq ft", "Short-term projects (3–5 years)"],
-  ["Standard PUF Panel", "₹650–900/sq ft", "Metro, highway, industrial sites"],
-  ["Premium PEB Systems", "₹1,000+/sq ft", "Long-life installations (25+ years)"],
+const LABOUR_COLONY_ID = "40";
+// Single source of truth for the customer price — same figure the buy box shows.
+const listedPrice = formatINR(sellPrice(getCommerce(LABOUR_COLONY_ID)!.basePrice));
+
+const materialRows = [
+  ["Economy EPS Panel", "Budget-friendly", "Short-term projects (3–5 years)"],
+  ["Standard PUF Panel", "Mid-range", "Metro, highway, industrial sites"],
+  ["Premium PEB Systems", "Premium", "Long-life installations (25+ years)"],
 ];
 
 const lifespanRows = [
@@ -46,7 +53,7 @@ const faqs = [
   { q: "How quickly can a prefab labour colony be installed?", a: "Camps for 50–100 workers are typically installed in 2–3 weeks. Large colonies for 500+ workers take 4–8 weeks depending on site preparation and layout complexity." },
   { q: "What materials are used for labour colony construction?", a: "We use mild steel structural frames with PUF/EPS sandwich panels, PPGI sheets, or Aerocon panels for walls and roofs. All materials are corrosion-resistant with anti-rust coatings for coastal and humid locations." },
   { q: "Can labour colonies be relocated to another project site?", a: "Yes. Prefab labour colonies are designed for disassembly and relocation. Modular panels and steel frames can be transported and reinstalled at new sites, retaining 80–90% of material value." },
-  { q: "What is the cost of a prefab labour colony?", a: "Costs range from ₹350/sq ft for economy EPS panels to ₹1,000+/sq ft for premium PEB systems. Final pricing depends on capacity, configuration, insulation, and fit-out level. Contact us for a detailed quotation." },
+  { q: "What is the cost of a prefab labour colony?", a: `The listed 80 ft × 24 ft G+2 labour colony configuration has a fixed price of ${listedPrice} including 18% GST and can be purchased online with secure payment. Custom capacities, configurations, insulation, and fit-out levels are priced separately — contact us for a tailored proposal.` },
   { q: "What compliance standards do your labour colonies meet?", a: "Our designs comply with BIS standards, NBC 2016, BOCW Act guidelines, and client-specified EHS/ESG audit requirements. We provide documentation for tender submissions and third-party inspections." },
   { q: "Do you provide integrated facilities like kitchens and toilets?", a: "Yes. We deliver complete labour colony ecosystems including dormitories, prefab canteens, portable toilets, kitchens, dining halls, recreation rooms, first-aid cabins, and security cabins." },
   { q: "What is the lifespan of a prefab labour colony?", a: "Economy EPS panels last 10–15 years, standard PUF panels 15–25 years, and premium PEB systems 25–40+ years with proper maintenance including periodic repainting and fastener checks." },
@@ -66,7 +73,7 @@ export function LabourColonyContent() {
               A labour colony is a structured worker accommodation facility deployed near project sites, factories, and infrastructure works. In India's construction industry, housing large workforces efficiently directly impacts project timelines, worker retention, and operational costs.
             </p>
             <p>
-              Portable Office Cabin is a leading manufacturer of prefabricated labour colonies, serving construction firms, industrial plants, and government tenders across Mumbai, Thane, Ahmedabad, Hyderabad, Kanpur, and remote project sites. Our modular structures offer quick installation, cost effective pricing per square foot, relocatability, and hygienic living conditions—advantages traditional brick-and-mortar camps cannot match.
+              Portable Office Cabin is a leading manufacturer of prefabricated labour colonies, serving construction firms, industrial plants, and government tenders across Mumbai, Thane, Ahmedabad, Hyderabad, Kanpur, and remote project sites. Our modular structures offer quick installation, cost-effective pricing, relocatability, and hygienic living conditions—advantages traditional brick-and-mortar camps cannot match.
             </p>
           </div>
           <OptimizedImage
@@ -104,20 +111,23 @@ export function LabourColonyContent() {
         </div>
       </section>
 
-      {/* Pricing Table */}
+      {/* Pricing & Material Guidance */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-6">Labour Colony Pricing Overview (2025–2026)</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Labour Colony Pricing & Material Options</h2>
+        <p className="text-muted-foreground leading-relaxed mb-6">
+          The 80 ft × 24 ft Ground + 2 Floors (G+2) labour colony listed on this page is available for direct online purchase at a fixed price of <span className="font-semibold text-foreground">{listedPrice} including 18% GST</span>. The comparison below shows how material choice positions overall cost and lifespan when planning a custom configuration.
+        </p>
         <div className="bg-card rounded-xl shadow-card overflow-hidden border border-border">
           <table className="w-full">
             <thead>
               <tr className="bg-accent/10">
                 <th className="px-6 py-4 text-left font-semibold text-foreground">Material Type</th>
-                <th className="px-6 py-4 text-left font-semibold text-foreground">Price Range (INR/sq ft)</th>
+                <th className="px-6 py-4 text-left font-semibold text-foreground">Cost Positioning</th>
                 <th className="px-6 py-4 text-left font-semibold text-foreground">Typical Use</th>
               </tr>
             </thead>
             <tbody>
-              {pricingRows.map((row, i) => (
+              {materialRows.map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
                   <td className="px-6 py-4 font-medium text-foreground">{row[0]}</td>
                   <td className="px-6 py-4 text-accent font-semibold">{row[1]}</td>
@@ -127,7 +137,7 @@ export function LabourColonyContent() {
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-muted-foreground mt-3">* Prices are indicative and vary based on capacity, configuration, insulation, and fit-out level. Contact us for a detailed quotation.</p>
+        <p className="text-sm text-muted-foreground mt-3">* The listed configuration has a fixed all-inclusive price and can be ordered online. Custom capacities, materials, and fit-out levels are priced separately — contact us for a tailored proposal.</p>
       </section>
 
       {/* Types of Labour Colonies */}
@@ -314,13 +324,14 @@ export function LabourColonyContent() {
       {/* CTA */}
       <section className="bg-accent/5 rounded-2xl p-8 md:p-12 text-center border border-accent/20">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          Ready to Build Your Labour Colony?
+          Ready to Order Your Labour Colony?
         </h2>
         <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Share your location, number of workers, project duration, and preferred materials. Our team will provide a customized layout, technical proposal, and price estimate.
+          Buy the listed G+2 labour colony online with secure payment and pan-India delivery, or talk to our team about custom capacities, layouts, materials, and turnkey site requirements.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center">
+          <BuyNowCTA productId={LABOUR_COLONY_ID} />
+          <Button size="lg" variant="outline" asChild>
             <a
               href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in a labour colony setup")}`}
               target="_blank"

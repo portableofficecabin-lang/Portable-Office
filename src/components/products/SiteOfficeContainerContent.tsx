@@ -1,6 +1,7 @@
 import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Factory, GraduationCap, HardHat, LayoutGrid, Ruler, PaintBucket, ClipboardCheck, Phone, ChevronRight, Zap, Package, Settings, Shield, Thermometer, MapPin, Calendar, IndianRupee, ArrowRightLeft, HelpCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 /**
  * `offer` is present when the CURRENT product page is purchasable (isPurchasable() — passed in by
@@ -752,7 +753,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
               a: "Yes, containers can be stacked with proper structural reinforcement and engineering assessment. This is common for larger site setups requiring reception on ground floor and offices above. Stacking requires certified corner castings and professional installation.",
             },
             {
-              q: "Is special government approval needed for using container offices on rented land?",
+              q: "Is special government approval needed for using container offices on leased land?",
               a: "Container offices typically qualify as temporary structures and may not require building permission in many states. However, requirements vary by location and land use classification. Check with local municipal authorities for your specific site.",
             },
             {
@@ -788,17 +789,27 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
         </Accordion>
       </section>
 
-      {/* CTA */}
+      {/* CTA — offer-aware: on a purchasable page (offer present) the band leads with the buy
+          action; the enquiry checklist stays as the secondary path for custom configurations. */}
       <section>
         <div className="bg-accent/10 border border-accent/20 rounded-2xl p-8 sm:p-10 text-center">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
-            Plan Your Office in Container
+            {offer ? "Order Your Container Office Online" : "Plan Your Office in Container"}
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-            Whether you need a compact 20 ft site office or a full 40 ft project headquarters with conference room and toilet, the right solution starts with understanding your specific requirements. We work with clients across India, offering design support, transparent pricing, and reliable delivery timelines.
+            {offer
+              ? "The standard configuration shown above can be ordered online at the fixed GST-inclusive price — secure payment, PAN-India delivery. For a custom 20–40 ft layout with conference room, toilet or branding, talk to our team first."
+              : "Whether you need a compact 20 ft site office or a full 40 ft project headquarters with conference room and toilet, the right solution starts with understanding your specific requirements. We work with clients across India, offering design support, transparent pricing, and reliable delivery timelines."}
           </p>
+          {offer?.productId && (
+            <div className="flex justify-center mb-8">
+              <BuyNowCTA productId={offer.productId} />
+            </div>
+          )}
           <div className="text-left max-w-lg mx-auto mb-8">
-            <h3 className="font-semibold text-foreground mb-3">Information to include in your enquiry:</h3>
+            <h3 className="font-semibold text-foreground mb-3">
+              {offer ? "For custom builds, include in your enquiry:" : "Information to include in your enquiry:"}
+            </h3>
             <div className="space-y-2">
               {[
                 "Project location and tentative delivery date",

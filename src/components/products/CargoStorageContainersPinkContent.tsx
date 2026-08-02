@@ -68,10 +68,6 @@ const faqs = [
     a: "Popular applications include pop-up retail stores, container cafés and bakeries, beauty brand kiosks, site offices with branded façades, event registration booths, women-centric NGO awareness camps, and Instagram-friendly commercial spaces.",
   },
   {
-    q: "Are pink containers available for rent?",
-    a: "Yes. Rental starts at ₹20,000–40,000/month depending on size and fit-out level. This is ideal for seasonal campaigns, events, and short-term brand activations.",
-  },
-  {
     q: "How long does it take to get a pink container delivered?",
     a: "Repainting with light modifications takes 2–3 weeks. Fully customised units with interiors, electrical, AC, and glazing take 4–6 weeks. Transport via 16-tyre trailers with hydra crane setup is available across India.",
   },
@@ -88,10 +84,10 @@ const faqs = [
 /**
  * `offer` is present when the CURRENT product page is purchasable (passed in by
  * ProductDetailServer from isPurchasable()). This SKU (POC-CSC-PINK) sells at a fixed price, so
- * every generic ₹ figure in this guide — the basic/fitted range table, the fit-out add-on prices,
- * the crane / rental / relocation figures and the rental FAQ — renders ONLY when `offer` is
- * absent. A range or an add-on price beside a fixed checkout price is the landing-page
- * contradiction that got the Merchant Center account suspended.
+ * every generic ₹ figure in this guide — the basic/fitted range table, the fit-out add-on prices
+ * and the crane / relocation figures — renders ONLY when `offer` is absent. A range or an add-on
+ * price beside a fixed checkout price is the landing-page contradiction that got the Merchant
+ * Center account suspended.
  */
 export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffer }) {
   return (
@@ -356,7 +352,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
       {/* Pricing */}
       <section>
         <h2 className="text-3xl font-bold text-foreground mb-6">
-          {offer ? "Price, Delivery Timelines & Buying vs. Renting" : "Pricing, Delivery Timelines & Buying vs. Renting"}
+          {offer ? "Price & Delivery Timelines" : "Pricing & Delivery Timelines"}
         </h2>
         <div className="space-y-4">
           {offer ? (
@@ -428,12 +424,18 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
             </Card>
             <Card className="border-border">
               <CardContent className="p-4">
-                <h3 className="font-bold text-foreground text-sm mb-2">Buy vs. Rent</h3>
+                <h3 className="font-bold text-foreground text-sm mb-2">Why Buy</h3>
                 <ul className="text-muted-foreground text-xs space-y-1">
-                  <li>• Buy: long-term use & branding</li>
-                  <li>{offer ? "• Rent option for events — quoted monthly" : "• Rent: ₹20–40k/month for events"}</li>
+                  <li>• One-time investment for long-term use & branding</li>
                   <li>• MCD/BMC permits: 15–30 days</li>
                   <li>• PAN-India delivery available</li>
+                  <li>
+                    • Prefer renting instead? See our{" "}
+                    <Link href="/rental-service" className="text-primary hover:underline">
+                      rental service
+                    </Link>
+                    .
+                  </li>
                 </ul>
               </CardContent>
             </Card>
@@ -496,8 +498,8 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
       <section>
         <h2 className="text-3xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
         <Accordion type="single" collapsible className="w-full">
-          {/* The rental-rate FAQ (₹20,000–40,000/month) renders only on a quote-only page — on the
-              purchasable page a monthly figure beside the fixed sale price reads as a second,
+          {/* Any FAQ answer containing a ₹ figure renders only on a quote-only page — on the
+              purchasable page a second figure beside the fixed sale price reads as a
               contradicting price. */}
           {faqs.filter((faq) => !offer || !faq.a.includes("₹")).map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`}>

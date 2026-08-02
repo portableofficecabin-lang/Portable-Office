@@ -3,6 +3,7 @@ import cargoContainerInspection from "@/assets/products/cargo-container-for-sale
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BadgeIndianRupee, Building2, CheckCircle2, Container, Home, PackageCheck, Truck, Warehouse } from "lucide-react";
+import Link from "next/link";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 
@@ -129,12 +130,6 @@ const commercialModels = {
     "Container homes, farmhouses, and repeat internal deployment",
     "Full ownership preferred over recurring payments",
   ],
-  rent: [
-    "Short-term sites, event storage, and temporary exhibitions",
-    "Project offices where capex must stay low",
-    "Concept testing before full purchase",
-    "No resale or disposal burden after the project ends",
-  ],
   lease: [
     "Multi-year corporate or institutional projects",
     "Predictable monthly operating costs",
@@ -142,12 +137,6 @@ const commercialModels = {
     "Potential tax advantages from lease treatment",
   ],
 };
-
-const rentalRows = [
-  ["20 ft used container", "₹6,000–₹10,000 / month"],
-  ["40 ft used container", "₹10,000–₹16,000 / month"],
-  ["20 ft converted office cabin", "₹12,000–₹18,000 / month"],
-];
 
 const strengths = [
   "End-to-end delivery from sourcing and survey support to fabrication, interiors, MEP, transport, and installation",
@@ -161,9 +150,9 @@ const strengths = [
  * `offer` is present when the CURRENT product page is purchasable (passed in by
  * ProductDetailServer from isPurchasable()). This page sells at a fixed price, so every generic
  * ₹ figure in this guide — the overview "start around" figure, the ex-yard price prose, the
- * 2025–2026 pricing table, the new-vs-used comparison table and the monthly rental table — renders
- * ONLY when `offer` is absent. An indicative range or rental figure beside a fixed checkout price
- * is the landing-page contradiction that got the Merchant Center account suspended.
+ * 2025–2026 pricing table and the new-vs-used comparison table — renders ONLY when `offer` is
+ * absent. An indicative range beside a fixed checkout price is the landing-page contradiction
+ * that got the Merchant Center account suspended.
  */
 export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) {
   return (
@@ -194,7 +183,7 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
             <span className="text-sm font-semibold uppercase tracking-wider text-accent">Cargo Container Guide</span>
           </div>
           <h2 className="mb-5 font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Cargo Container For Sale – Buy, Rent & Convert In India
+            Cargo Container For Sale – Buy & Convert In India
           </h2>
           <p className="mb-4 text-lg leading-relaxed text-muted-foreground">
             Looking for a cargo container for sale in India? Whether you need robust storage, efficient transportation,
@@ -471,22 +460,11 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-3">
+      <section className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-3xl border border-border bg-card p-8">
           <h3 className="mb-5 font-display text-2xl font-bold text-foreground">When to buy</h3>
           <div className="space-y-3">
             {commercialModels.buy.map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                <span className="text-muted-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">When to rent</h3>
-          <div className="space-y-3">
-            {commercialModels.rent.map((item) => (
               <div key={item} className="flex items-start gap-3">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                 <span className="text-muted-foreground">{item}</span>
@@ -507,44 +485,23 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">
-            {offer ? "Rental options" : "Indicative rental rates"}
-          </h3>
-          <div className="overflow-hidden rounded-2xl border border-border">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border bg-muted/30">
-                  <th className="px-4 py-3 text-left font-semibold text-foreground">Container Type</th>
-                  <th className="px-4 py-3 text-left font-semibold text-foreground">{offer ? "Monthly Rental" : "Monthly Rental (₹)"}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rentalRows.map(([type, rent], index) => (
-                  <tr key={type} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
-                    <td className="px-4 py-3 text-foreground">{type}</td>
-                    {/* Purchasable page: a monthly ₹ figure beside the fixed sale price reads as
-                        a second, contradicting price — rentals are quoted, not published. */}
-                    <td className="px-4 py-3 text-muted-foreground">{offer ? "Monthly rental on quotation" : rent}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4 text-sm text-muted-foreground">Typical rentals carry 6–12 month lock-ins, 2–3 months security deposit, and separate transport charges.</p>
+      <section className="rounded-3xl border border-border bg-muted/30 p-8">
+        <h3 className="mb-5 font-display text-2xl font-bold text-foreground">How to choose the right cargo container</h3>
+        <div className="space-y-3">
+          {buyerChecklist.map((item) => (
+            <div key={item} className="flex items-start gap-3">
+              <Truck className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+              <span className="text-muted-foreground">{item}</span>
+            </div>
+          ))}
         </div>
-        <div className="rounded-3xl border border-border bg-muted/30 p-8">
-          <h3 className="mb-5 font-display text-2xl font-bold text-foreground">How to choose the right cargo container</h3>
-          <div className="space-y-3">
-            {buyerChecklist.map((item) => (
-              <div key={item} className="flex items-start gap-3">
-                <Truck className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                <span className="text-muted-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p className="mt-5 text-sm text-muted-foreground">
+          Prefer renting instead of buying? See our{" "}
+          <Link href="/rental-service" className="font-medium text-accent underline-offset-4 hover:underline">
+            rental service
+          </Link>
+          .
+        </p>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
@@ -565,7 +522,7 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
             <p>Electrical work is aligned with IS standards, with earthing, protected circuits, and fire-safe material choices where required.</p>
             <p>Engineered support structures can be provided for stacked container layouts, labour colonies, and container-based office clusters.</p>
             <p>Reusing shipping containers cuts embodied carbon, reduces concrete dependency, and supports lower-waste modular construction.</p>
-            <p>Tell us your size, quantity, location, purpose, and timeline, and we will recommend the right buy, rent, or conversion model.</p>
+            <p>Tell us your size, quantity, location, purpose, and timeline, and we will recommend the right container and conversion package to purchase.</p>
           </div>
         </div>
       </section>
@@ -589,12 +546,6 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
             <AccordionTrigger>Should I buy new or used cargo containers?</AccordionTrigger>
             <AccordionContent>
               New units work best for premium visible projects and export use, while used cargo-worthy or WWT containers are cost-effective for storage, internal operations, and budget-friendly modular builds.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="rent">
-            <AccordionTrigger>Do you offer cargo containers on rent or lease?</AccordionTrigger>
-            <AccordionContent>
-              Yes. Short-term rental, long-term lease, and outright purchase models are available depending on project duration, location, quantity, and intended use.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="delivery">

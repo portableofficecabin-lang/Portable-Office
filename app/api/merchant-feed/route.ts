@@ -75,6 +75,29 @@ const FEED_IMAGE_POLICY: Record<string, { drop?: string[]; blockReason?: string 
   "POC-SC-SECAB": { blockReason: "GMC image replacement required — only image has 'SECURITY' text + a logo baked in" },
   // All five gallery images carry a baked-in 'MODU-L' / 'UNIT 0x' brand wordmark — no clean image.
   "POC-VIP-40": { blockReason: "GMC image replacement required — every gallery image carries a 'MODU-L' brand wordmark" },
+
+  // ── Aug 2026: owner enabled ON-SITE purchase for every remaining SKU (Buy Now sitewide). ──
+  // These 17 stay OUT of the feed deliberately: the feed keeps exactly the item set Google
+  // approved. Before feeding any of them, review per SKU: one exact deliverable configuration,
+  // clean photos (no baked-in text), landing copy consistent with a single fixed price, and a
+  // passing scripts/merchant-url-audit.mjs run. Remove its entry here only after that review.
+  "POC-CO-GEN": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-PH-2BHK": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-PH-3LUX": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-WA-G1": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-LC-PREFAB": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-SC-RENT": { blockReason: "monthly rental charged as a one-time booking on-site — never a GMC product offer" },
+  "POC-SOC-MFR": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-CSC-GUIDE": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-CC-GUIDE": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-SC-CARGO": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-CSO-4010": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  "POC-SC-KRMG": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
+  "POC-SC-KRSH": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
+  "POC-SC-SIPCOT": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
+  "POC-SC-CHN": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
+  "POC-SC-NRSP": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
+  "POC-SC-PNYA": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
 };
 
 /**

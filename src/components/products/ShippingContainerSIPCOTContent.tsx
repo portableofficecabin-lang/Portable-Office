@@ -1,16 +1,23 @@
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Truck, IndianRupee, Recycle, Clock, Wrench, MapPin, Building2, Factory, Leaf, Lock, Users } from "lucide-react";
+import { Shield, Truck, IndianRupee, Recycle, Clock, Wrench, MapPin, Building2, Factory, Leaf, Lock, Users, Phone } from "lucide-react";
 import sipcotYard from "@/assets/products/shipping-container-sipcot-yard.webp";
 import sipcotPort from "@/assets/products/shipping-container-sipcot-port.webp";
 import sipcotOpen from "@/assets/products/shipping-container-sipcot-open.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import Link from "next/link";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
+
+/** Single source of truth for the on-page price — matches the buy box, cart and Razorpay. */
+const sipcotPrice = formatINR(sellPrice(getCommerce("31")!.basePrice));
 
 const highlights = [
   { icon: Factory, title: "Built for SIPCOT Estates", description: "Purpose-designed containers for Sriperumbudur, Oragadam, Hosur, and Gummidipoondi industrial parks" },
   { icon: Clock, title: "7–15 Day Delivery", description: "Factory-to-site delivery across Tamil Nadu SIPCOT locations" },
-  { icon: IndianRupee, title: "Rent or Purchase", description: "Flexible options — rental packages with transport included or outright purchase" },
+  { icon: IndianRupee, title: "Buy Online", description: "One fixed GST-inclusive price — order online with secure checkout and delivery" },
   { icon: Truck, title: "Estate-to-Estate Relocation", description: "Move containers between Sriperumbudur, Oragadam, and other SIPCOT estates" },
   { icon: Lock, title: "Industrial Security", description: "Heavy-duty locking systems, CCTV provisions, and weather-resistant doors" },
   { icon: Users, title: "Labour Accommodation", description: "G+1 stacked dormitories with attached toilets, dining, and fire safety provisions" },
@@ -37,19 +44,18 @@ const sipcotEstates = [
   "SIPCOT Hosur",
 ];
 
-const rentalVsPurchase = [
-  { factor: "Best for", purchase: "Permanent plant offices, long-term stores, fixed labour colonies", rental: "Temporary project offices, short-duration works, seasonal storage" },
-  { factor: "Duration", purchase: "18+ months", rental: "1–36 months" },
-  { factor: "Typical cost (20 ft)", purchase: "₹1,50,000 – ₹2,50,000", rental: "₹5,000 – ₹10,000/month" },
-  { factor: "Customization", purchase: "Full flexibility", rental: "Standard configurations" },
-  { factor: "Includes", purchase: "Container + delivery", rental: "Transport, delivery, installation, pick-up" },
+const whyBuy = [
+  { factor: "Best for", purchase: "Permanent plant offices, long-term stores, fixed labour colonies" },
+  { factor: "Service life", purchase: "20–25 years with proper foundation and maintenance" },
+  { factor: "Price", purchase: `${sipcotPrice} incl. GST — buy online` },
+  { factor: "Customization", purchase: "Full flexibility" },
+  { factor: "Includes", purchase: "Container + delivery" },
 ];
 
 const faqs = [
   { q: "Which SIPCOT estates do you serve?", a: "We deliver to all major SIPCOT estates including Sriperumbudur, Oragadam, Irungattukottai, Gummidipoondi, Ranipet, and Hosur. Site surveys and proposals are provided within 48–72 hours." },
   { q: "What container sizes are available for SIPCOT projects?", a: "We offer 20 ft, 40 ft standard and high cube containers. Custom lengths and multi-container complexes can be fabricated to your specifications." },
   { q: "Can containers be used as permanent plant offices?", a: "Yes. With proper foundation, insulation, anti-corrosive coatings, and periodic maintenance, containers serve as permanent structures lasting 20–25 years." },
-  { q: "Do you offer rental options for SIPCOT projects?", a: "Yes. Rental packages include transportation, delivery, installation, and pick-up with clear billing. Monthly rentals start from ₹5,000 for 20 ft units." },
   { q: "How quickly can you deliver to SIPCOT Sriperumbudur?", a: "Standard cabins ship within 7–15 working days. Stock units may be available for faster dispatch — contact us for current availability." },
   { q: "Can I relocate containers between SIPCOT estates?", a: "Absolutely. We provide relocation support via crane and flatbed trailer between estates like Sriperumbudur and Oragadam with scheduled deliveries to minimise production disruption." },
   { q: "What customization options are available?", a: "Full customization including partitions, restrooms, pantry sections, data cabling, extra doors/windows, company branding, and documentation support for plant engineering teams." },
@@ -237,10 +243,10 @@ export function ShippingContainerSIPCOTContent() {
         </div>
       </section>
 
-      {/* Rental vs Purchase */}
+      {/* Why Buy */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Rental vs Purchase for SIPCOT Projects
+          Why Buy for SIPCOT Projects
         </h2>
         <div className="bg-card rounded-xl shadow-card overflow-hidden">
           <table className="w-full">
@@ -248,20 +254,21 @@ export function ShippingContainerSIPCOTContent() {
               <tr className="bg-muted">
                 <th className="px-6 py-3 text-left font-semibold text-foreground">Factor</th>
                 <th className="px-6 py-3 text-left font-semibold text-foreground">Purchase</th>
-                <th className="px-6 py-3 text-left font-semibold text-foreground">Rental</th>
               </tr>
             </thead>
             <tbody>
-              {rentalVsPurchase.map((row, i) => (
+              {whyBuy.map((row, i) => (
                 <tr key={row.factor} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
                   <td className="px-6 py-3 font-medium text-foreground">{row.factor}</td>
                   <td className="px-6 py-3 text-muted-foreground">{row.purchase}</td>
-                  <td className="px-6 py-3 text-muted-foreground">{row.rental}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p className="text-muted-foreground mt-4 text-sm">
+          Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
+        </p>
       </section>
 
       {/* Service Areas */}
@@ -311,7 +318,7 @@ export function ShippingContainerSIPCOTContent() {
         <ul className="space-y-3">
           {[
             "Direct manufacturer with competitive pricing — no middlemen",
-            "Flexible rental and purchase options for any project duration",
+            "One fixed GST-inclusive online price with straightforward outright purchase",
             "Fast delivery and installation support across all SIPCOT estates",
             "Full customization to meet plant engineering and corporate standards",
             "Quality assurance: high-grade steel, anti-rust coatings, fire-retardant insulation",
@@ -347,11 +354,18 @@ export function ShippingContainerSIPCOTContent() {
       {/* CTA */}
       <section className="bg-muted/30 rounded-xl p-8 text-center">
         <h2 className="font-display text-2xl font-bold text-foreground mb-3">
-          Start Your SIPCOT Container Project Today
+          Buy Your SIPCOT Shipping Container Online
         </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Contact Portable Office Cabin for a quotation tailored to your SIPCOT estate. Whether you need storage, site offices, labour accommodation, or security cabins — we deliver on time and within budget across Sriperumbudur, Oragadam, Irungattukottai, Gummidipoondi, Ranipet, and Hosur.
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+          Order online at {sipcotPrice} including GST with secure payment and delivery to your SIPCOT estate. Whether you need storage, site offices, labour accommodation, or security cabins — we deliver on time across Sriperumbudur, Oragadam, Irungattukottai, Gummidipoondi, Ranipet, and Hosur. Prefer to talk first? Call us to plan your setup.
         </p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="31" />
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
+            <Phone className="h-4 w-4" />
+            Call Us Now
+          </a>
+        </div>
       </section>
     </div>
   );

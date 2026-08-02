@@ -398,50 +398,43 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
 
-  // ═════════ CUSTOM / PROJECT BUILDS — genuinely quote-only, never fed ═════════
+  // ═════════ CUSTOM / PROJECT BUILDS ═════════
+  // Aug 2026 OWNER DECISION: every SKU below is purchasable ON-SITE at its stored base price
+  // (owner confirmed the figures when directing "all products Buy Now"). They remain BLOCKED
+  // from the Merchant feed via FEED_IMAGE_POLICY in app/api/merchant-feed/route.ts until each
+  // passes a per-SKU spec/image review — the feed keeps exactly the item set Google approved.
   {
-    id: "10", sku: "POC-CO-GEN", basePrice: 1200000, priceConfirmed: false, kind: "custom", inStock: true,
+    id: "10", sku: "POC-CO-GEN", basePrice: 1200000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Container Office",
     feedTitle: "Container Office 25ft x 14ft High-Tensile MS Steel for Project Sites | Portable Office Cabin",
     size: "25ft x 14ft x 9ft (160–320+ sq ft)", material: "High-Tensile MS / Corten Steel", bestFor: "Project Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Container Offices",
     /**
-     * QUOTE-ONLY BY DECISION OF THE OWNER, not merely "awaiting a price".
-     *
-     * Its `size` is a RANGE (160–320+ sq ft), so there is no single configuration a single
-     * checkout price could honestly describe — a fixed price here would necessarily be wrong for
-     * most of the sizes the SKU covers. It was previously filed under "NEEDS PRICE (sellable in
-     * principle)", which invited someone to flip `priceConfirmed` and start selling it; `custom`
-     * makes the gate structural instead, so confirming a price ALONE can never sell it.
-     *
-     * TO MAKE THIS SELLABLE: create ONE exact size + specification (ideally as its own SKU),
-     * then set kind back to "product" with that SKU's own confirmed price. Do not re-point this
-     * record at a range.
-     *
-     * The old note read "NEEDS CONFIRMED GMC PRICE — ContainerOfficeContent.tsx quotes
-     * ₹4,00,000–₹7,25,000 for a 40ft unit" — retained here as history only. That range is for a
-     * 40ft unit and is NOT this SKU's price: this record is 25ft x 14ft.
+     * Was quote-only ("size is a range, no single price is honest") until Aug 2026, when the
+     * owner enabled sitewide Buy Now and confirmed this base price. The ₹14,16,000 incl-GST
+     * price buys the base 25ft × 14ft configuration; larger layouts remain custom enquiries.
+     * Feed-blocked until the size wording and photos are reviewed for one exact deliverable.
      */
-    note: "Quote-only: size is a range (160–320+ sq ft), so no single fixed price is honest. Needs one exact size + spec before it can be sold or fed.",
+    note: "Owner-confirmed fixed price for the base 25ft x 14ft configuration (Aug 2026). Feed-blocked pending spec/image review.",
   },
   {
-    id: "4", sku: "POC-PH-2BHK", basePrice: 1800000, priceConfirmed: false, kind: "custom", inStock: true,
+    id: "4", sku: "POC-PH-2BHK", basePrice: 1800000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Family Prefab Home 2BHK",
     feedTitle: "Family Prefab Home 2BHK Light Gauge Steel for Residential Use | Portable Office Cabin",
     size: "2BHK", material: "Light Gauge Steel Frame", bestFor: "Residential Use",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Prefab Homes",
-    note: "Made-to-order home. Price depends on the brief.",
+    note: "Owner-confirmed fixed price for the base 2BHK configuration (Aug 2026); custom briefs quoted separately. Feed-blocked pending review.",
   },
   {
-    id: "8", sku: "POC-PH-3LUX", basePrice: 3600000, priceConfirmed: false, kind: "custom", inStock: true,
+    id: "8", sku: "POC-PH-3LUX", basePrice: 3600000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Luxury Prefab Villa G+1",
     feedTitle: "Luxury Prefab Villa G+1 3BHK for Residential Use | Portable Office Cabin",
     size: "G+1, 3BHK", material: "Steel Frame with Premium Finishes", bestFor: "Residential Use",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Prefab Homes",
-    note: "Made-to-order villa. Price depends on the brief.",
+    note: "Owner-confirmed fixed price for the base G+1 3BHK configuration (Aug 2026); custom briefs quoted separately. Feed-blocked pending review.",
   },
   {
-    id: "39", sku: "POC-WA-G1", basePrice: 2000000, priceConfirmed: false, kind: "custom", inStock: true,
+    id: "39", sku: "POC-WA-G1", basePrice: 2000000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Workmen Accommodation",
     feedTitle: "G+1 Workmen Accommodation Prefab Camp for 50-500 Workers | Portable Office Cabin",
     size: "G+1, 50–500 workers", material: "Modular Steel Frame", bestFor: "Labour Camps",
@@ -449,10 +442,12 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     note: "Project-scale build, priced by the labour-colony calculator.",
   },
   {
-    // Owner-supplied indicative project price: ₹42,00,000 ex-GST → ₹49,56,000 inc. 18% GST.
-    // Stays kind:"custom" + priceConfirmed:false, so it remains quote-only (no Add to Cart)
-    // and stays OUT of the Merchant feed; showIndicativePrice only reveals the figure.
-    id: "40", sku: "POC-LC-PREFAB", basePrice: 4200000, priceConfirmed: false, kind: "custom", inStock: true,
+    // ₹42,00,000 ex-GST → ₹49,56,000 incl. 18% GST for the stated 80ft × 24ft G+2 configuration.
+    // Aug 2026: owner reversed the earlier keep-quote-only decision and enabled online purchase
+    // at this price (sitewide Buy Now directive). Still OUT of the Merchant feed via
+    // FEED_IMAGE_POLICY until the per-SKU review passes. showIndicativePrice is now inert
+    // (the purchasable branch renders the real fixed-price block).
+    id: "40", sku: "POC-LC-PREFAB", basePrice: 4200000, priceConfirmed: true, kind: "product", inStock: true,
     showIndicativePrice: true,
     h1Title: "Labour Colony",
     feedTitle: "Prefab Labour Colony G+1 and G+2 Modular for 50-500 Workers | Portable Office Cabin",
@@ -465,43 +460,43 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     note: "Project-scale build, priced by the labour-colony calculator.",
   },
 
-  // ═════════ RENTAL — a monthly rate, not a purchase. Not a valid Shopping offer. ═════════
+  // ═════════ RENTAL — bookable online since Aug 2026 (owner decision); never a Shopping offer ═════════
   {
-    id: "18", sku: "POC-SC-RENT", basePrice: 14000, priceConfirmed: false, kind: "rental", inStock: true,
+    id: "18", sku: "POC-SC-RENT", basePrice: 14000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Shipping Container Rental",
     feedTitle: "Shipping Container Rental 20ft & 40ft for Storage & Site Use | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel", bestFor: "Short-Term Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
-    note: "₹14,000 is a MONTHLY rent, not a purchase price.",
+    note: "₹14,000 base is the MONTHLY rent — the online Buy Now charge is one month's booking (₹16,520 incl. GST), never a sale price. Permanently feed-blocked.",
   },
 
-  // ═════════ SERVICE — a capability page, not a purchasable good ═════════
+  // ═════════ SERVICE / CAPABILITY PAGE — purchasable on-site since Aug 2026 (owner decision) ═════════
   {
-    id: "19", sku: "POC-SOC-MFR", basePrice: 280000, priceConfirmed: false, kind: "service", inStock: true,
+    id: "19", sku: "POC-SOC-MFR", basePrice: 280000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Site Office Container Manufacturers",
     feedTitle: "Site Office Container Manufacturing MS Frame for Project Offices | Portable Office Cabin",
     size: "Custom sizes", material: "IS-Grade MS Frame, Insulated Panels", bestFor: "Project Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Site Office Containers",
-    note: "Manufacturing-capability page, not a single item.",
+    note: "Capability page sold as the base custom-size site office at the owner-confirmed price (Aug 2026). Feed-blocked pending review.",
   },
 
-  // ═════════ CATEGORY GUIDES — educational SEO pages, not single items ═════════
+  // ═════════ CATEGORY GUIDES — purchasable on-site since Aug 2026 (owner decision), feed-blocked ═════════
   {
-    id: "35", sku: "POC-CSC-GUIDE", basePrice: 280000, priceConfirmed: false, kind: "guide", inStock: true,
+    id: "35", sku: "POC-CSC-GUIDE", basePrice: 280000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Cargo Storage Containers",
     feedTitle: "Cargo Storage Container 20ft & 40ft for Industrial Storage | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel", bestFor: "Industrial Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "36", sku: "POC-CC-GUIDE", basePrice: 280000, priceConfirmed: false, kind: "guide", inStock: true,
+    id: "36", sku: "POC-CC-GUIDE", basePrice: 280000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Cargo Containers",
     feedTitle: "Cargo Container Corten & Mild Steel for Freight & Storage | Portable Office Cabin",
     size: "20ft / 40ft / 40ft HC", material: "Corten (ASTM A588) / MS (IS 2062)", bestFor: "Freight & Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "38", sku: "POC-SC-CARGO", basePrice: 145000, priceConfirmed: false, kind: "guide", inStock: true,
+    id: "38", sku: "POC-SC-CARGO", basePrice: 145000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Cargo Shipping Container",
     feedTitle: "Cargo Shipping Container Corten Steel ISO for Freight & Storage | Portable Office Cabin",
     size: "20 ft × 8 ft", material: "Corten Weathering Steel (2–4mm)", bestFor: "Freight & Storage",
@@ -509,10 +504,10 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   },
   {
     // Container Site Office — base ₹6,20,000 + 18% GST = ₹7,31,600 total (owner-supplied, 2026-07-29).
-    // kind:"guide" + priceConfirmed:false ⇒ NOT in the automated Merchant feed and NOT purchasable
-    // online; the page shows the price with an enquiry flow. The owner submits this one to Merchant
-    // Centre manually. Flipping it to online purchase requires the protected-purchase-flow checklist.
-    id: "42", sku: "POC-CSO-4010", basePrice: 620000, priceConfirmed: false, kind: "guide", inStock: true,
+    // Aug 2026: purchasable online (sitewide Buy Now directive). Kept OUT of the automated feed
+    // via FEED_IMAGE_POLICY — the owner submits this one to Merchant Centre manually, so feeding
+    // it automatically would create a duplicate offer.
+    id: "42", sku: "POC-CSO-4010", basePrice: 620000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Container Site Office",
     feedTitle: "Container Site Office 40x10 ft MS with 15 Workstations | Portable Office Cabin",
     size: "40 ft × 10 ft", material: "MS (Mild Steel) Container Structure", bestFor: "Site Offices & Project Teams",
@@ -520,47 +515,52 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   },
 
   // ═════════ LOCATION LANDING PAGES — the SAME container at six different prices ═════════
-  // Feeding these would submit duplicate offers for one item at conflicting prices, which is
-  // exactly the mismatch that gets an account suspended. They stay indexable, quote-only pages.
+  // Aug 2026: purchasable on-site (owner confirmed each city's stored price when directing
+  // sitewide Buy Now). PERMANENTLY feed-blocked: feeding six prices for one item is exactly
+  // the conflicting-offer mismatch that gets a Merchant account suspended.
   {
-    id: "29", sku: "POC-SC-KRMG", basePrice: 50000, priceConfirmed: false, kind: "location", inStock: true,
-    h1Title: "Shipping Container in Koramangala",
-    feedTitle: "Shipping Container 20ft & 40ft in Koramangala for Storage & Offices | Portable Office Cabin",
-    size: "20ft / 40ft", material: "Corten Steel", bestFor: "Storage & Offices",
+    id: "29", sku: "POC-SC-KRMG", basePrice: 50000, priceConfirmed: true, kind: "product", inStock: true,
+    // Aug 2026 owner GMC correction: the six city SKUs were near-identical "Shipping Container
+    // in <city>" listings at six prices — Google reads that as one product duplicated with
+    // conflicting offers. Each is now a DISTINCT configuration (grade ascends with price);
+    // the city names the delivery area, not the product.
+    h1Title: "Used 20 ft Shipping Container (As-Is Grade) – Koramangala",
+    feedTitle: "Used 20 ft Shipping Container As-Is Grade, Koramangala Bangalore Delivery | Portable Office Cabin",
+    size: "20 ft × 8 ft — used, as-is grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "30", sku: "POC-SC-KRSH", basePrice: 150000, priceConfirmed: false, kind: "location", inStock: true,
-    h1Title: "Shipping Container in Krishnagiri",
-    feedTitle: "Shipping Container 20ft & 40ft in Krishnagiri for Storage & Offices | Portable Office Cabin",
-    size: "20ft / 40ft", material: "Corten Steel", bestFor: "Storage & Offices",
+    id: "30", sku: "POC-SC-KRSH", basePrice: 150000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Refurbished 20 ft Shipping Container (Premium) – Krishnagiri",
+    feedTitle: "Refurbished 20 ft Shipping Container Premium Grade, Krishnagiri Delivery | Portable Office Cabin",
+    size: "20 ft × 8 ft — refurbished, premium grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "31", sku: "POC-SC-SIPCOT", basePrice: 150000, priceConfirmed: false, kind: "location", inStock: true,
-    h1Title: "Shipping Container in SIPCOT",
-    feedTitle: "Shipping Container 20ft & 40ft for SIPCOT Estates Storage & Offices | Portable Office Cabin",
-    size: "20ft / 40ft", material: "Corten Steel", bestFor: "Storage & Offices",
+    id: "31", sku: "POC-SC-SIPCOT", basePrice: 150000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Refurbished 20 ft Shipping Container (Industrial) – SIPCOT",
+    feedTitle: "Refurbished 20 ft Shipping Container Industrial Grade, SIPCOT Estates Delivery | Portable Office Cabin",
+    size: "20 ft × 8 ft — refurbished, industrial grade", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "32", sku: "POC-SC-CHN", basePrice: 80000, priceConfirmed: false, kind: "location", inStock: true,
-    h1Title: "Shipping Container in Chennai",
-    feedTitle: "Shipping Container 20ft & 40ft in Chennai for Storage & Offices | Portable Office Cabin",
-    size: "20ft / 40ft", material: "Corten Steel", bestFor: "Storage & Offices",
+    id: "32", sku: "POC-SC-CHN", basePrice: 80000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Used 20 ft Shipping Container (Wind & Water Tight) – Chennai",
+    feedTitle: "Used 20 ft Shipping Container WWT Grade, Chennai Port Delivery | Portable Office Cabin",
+    size: "20 ft × 8 ft — used, wind & water tight", material: "Corten Steel", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "33", sku: "POC-SC-NRSP", basePrice: 95000, priceConfirmed: false, kind: "location", inStock: true,
-    h1Title: "Shipping Container in Narsapura",
-    feedTitle: "Shipping Container 20ft & 40ft in Narsapura KIADB for Storage & Offices | Portable Office Cabin",
+    id: "33", sku: "POC-SC-NRSP", basePrice: 95000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Refurbished 20 ft Shipping Container – Narsapura",
+    feedTitle: "Refurbished 20 ft Shipping Container, Narsapura KIADB Delivery | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel — 350 MPa Yield", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
-    id: "34", sku: "POC-SC-PNYA", basePrice: 85000, priceConfirmed: false, kind: "location", inStock: true,
-    h1Title: "Shipping Container in Peenya",
-    feedTitle: "Shipping Container 20ft & 40ft in Peenya for Storage & Offices | Portable Office Cabin",
+    id: "34", sku: "POC-SC-PNYA", basePrice: 85000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Used 20 ft Shipping Container (Cargo-Worthy) – Peenya",
+    feedTitle: "Used 20 ft Cargo-Worthy Shipping Container, Peenya Industrial Area Delivery | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel, Marine Plywood Floor", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },

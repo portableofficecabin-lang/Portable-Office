@@ -141,6 +141,17 @@ export default function CheckoutPage() {
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!totals.payable || loading) return;
+    // Belt-and-braces on top of the inputs' native `required`/`pattern` validation:
+    // a guest order must carry a real name, email and 10-digit phone (owner decision).
+    // Signed-in users are identified by their account instead.
+    if (isGuest && (!form.name.trim() || !emailValid || !phoneValid)) {
+      toast({
+        title: "Contact details needed",
+        description: "Please fill your full name, a valid email and a 10-digit mobile number before paying.",
+        variant: "destructive",
+      });
+      return;
+    }
     setLoading(true);
 
     try {
@@ -359,26 +370,29 @@ export default function CheckoutPage() {
                         <span className="text-muted-foreground">(optional — your cart is kept)</span>
                       </p>
                     </div>
+                    {/* Name, email and phone are REQUIRED (owner decision, Aug 2026) — the order
+                        confirmation, invoice and delivery coordination all need a reachable
+                        customer. Guest checkout itself stays: no account, no login — required
+                        fields do not mean a required sign-in. */}
                     <p className="text-sm text-muted-foreground mb-4">
-                      You can check out as a guest — no account needed. These details are optional: if you leave
-                      them blank, the secure payment window will ask for your phone and email. When provided, we
-                      use them to send your order confirmation and coordinate delivery.
+                      You can check out as a guest — no account needed. We use these details to send
+                      your order confirmation and coordinate delivery.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="sm:col-span-2">
-                        <Label htmlFor="name">Full Name (Optional)</Label>
-                        <Input id="name" name="name" value={form.name} onChange={handleChange} autoComplete="name" className="mt-1.5" />
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input id="name" name="name" value={form.name} onChange={handleChange} required autoComplete="name" className="mt-1.5" />
                       </div>
                       <div>
-                        <Label htmlFor="email">Email (Optional)</Label>
-                        <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} autoComplete="email" inputMode="email" placeholder="you@example.com" className="mt-1.5" />
+                        <Label htmlFor="email">Email *</Label>
+                        <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} required autoComplete="email" inputMode="email" placeholder="you@example.com" className="mt-1.5" />
                         {form.email.length > 0 && !emailValid && (
                           <p className="mt-1.5 text-xs text-destructive">Enter a valid email address.</p>
                         )}
                       </div>
                       <div>
-                        <Label htmlFor="phone">Phone (Optional)</Label>
-                        <Input id="phone" name="phone" value={form.phone} onChange={handleChange} autoComplete="tel" inputMode="numeric" placeholder="10-digit mobile number" className="mt-1.5" />
+                        <Label htmlFor="phone">Phone *</Label>
+                        <Input id="phone" name="phone" value={form.phone} onChange={handleChange} required pattern="[0-9]{10}" title="10-digit mobile number" autoComplete="tel" inputMode="numeric" placeholder="10-digit mobile number" className="mt-1.5" />
                         {form.phone.length > 0 && !phoneValid && (
                           <p className="mt-1.5 text-xs text-destructive">Enter a 10-digit mobile number.</p>
                         )}

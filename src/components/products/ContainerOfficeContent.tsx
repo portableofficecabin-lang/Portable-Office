@@ -136,14 +136,14 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
           /* Purchasable SKU: the same argument, minus the per-sq-ft figures that would sit on the
              page contradicting the fixed offer price. */
           <p className="text-muted-foreground">
-            A container office is a manufactured capital asset, not a site-built structure: zero rent for
-            10–15 years, reuse across multiple projects, and strong resale value keep its Total Cost of
+            A container office is a manufactured capital asset, not a site-built structure: zero lease
+            costs for 10–15 years, reuse across multiple projects, and strong resale value keep its Total Cost of
             Ownership well below a traditional office of the same size. This unit sells at the fixed,
             all-inclusive price shown above.
           </p>
         ) : (
           <p className="text-muted-foreground">
-            Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification—significantly less than the ₹3,500–₹5,000+ per sq. ft required for traditional offices. When you factor in zero rent for 10–15 years, reuse across multiple projects, and strong resale value, the Total Cost of Ownership makes container offices a cost effective choice for most project-based businesses.
+            Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification—significantly less than the ₹3,500–₹5,000+ per sq. ft required for traditional offices. When you factor in zero lease costs for 10–15 years, reuse across multiple projects, and strong resale value, the Total Cost of Ownership makes container offices a cost effective choice for most project-based businesses.
           </p>
         )}
       </section>
@@ -217,7 +217,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             {
               icon: CheckCircle,
               title: "Cost-Effectiveness",
-              desc: "Reduced material wastage, shorter project overheads, and lower financing costs. A well-specified container office can pay for itself within 3–5 years of avoided rent.",
+              desc: "Reduced material wastage, shorter project overheads, and lower financing costs. A well-specified container office can pay for itself within 3–5 years of avoided office leasing costs.",
             },
             {
               icon: Truck,
@@ -541,7 +541,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
           <div className="bg-muted/50 rounded-xl p-5">
             <h4 className="font-display font-semibold text-foreground mb-2">Operating Savings</h4>
             <p className="text-muted-foreground text-sm">
-              Proper insulation reduces AC loads. Zero rent accumulation over 10–15 years represents substantial savings versus leasing. Reusing the same container across multiple projects avoids repeated construction costs.
+              Proper insulation reduces AC loads. Buying outright eliminates 10–15 years of leasing costs for an equivalent space. Reusing the same container across multiple projects avoids repeated construction costs.
             </p>
           </div>
           <div className="bg-muted/50 rounded-xl p-5">

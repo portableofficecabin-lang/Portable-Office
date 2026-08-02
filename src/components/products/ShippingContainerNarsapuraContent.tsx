@@ -1,9 +1,16 @@
 import { CheckCircle, Factory, Truck, Shield, Thermometer, Recycle, Building, MapPin, Wrench } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import narsapuraYard from "@/assets/products/shipping-container-narsapura-yard.webp";
 import narsapuraSite from "@/assets/products/shipping-container-narsapura-site.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+
+const NARSAPURA_PRODUCT_ID = "33";
+// Single authoritative customer price — same source as the buy box, cart, checkout and JSON-LD.
+const narsapuraPrice = formatINR(sellPrice(getCommerce(NARSAPURA_PRODUCT_ID)!.basePrice));
 
 const highlights = [
   { icon: Truck, title: "7–15 Day Delivery", desc: "Fast dispatch from our Bengaluru fabrication facility to Narsapura Industrial Area" },
@@ -23,15 +30,6 @@ const containerTypes = [
   ["Reefer Container", "20/40 ft", "-20°C to +20°C", "Pharma cold chain, food processing"],
   ["Open-Top / Flat-Rack", "Various", "Custom", "Oversized machinery, die-sets"],
   ["Custom Modified", "10–40 ft", "Partitioned layouts", "Office + storage combos, roller shutters"],
-];
-
-const pricingRows = [
-  ["New 20 ft container", "₹2,00,000 – ₹2,80,000"],
-  ["New 40 ft container", "₹3,50,000 – ₹4,80,000"],
-  ["Used 20 ft (CSC recertified)", "₹95,000 – ₹1,50,000"],
-  ["Used 40 ft (CSC recertified)", "₹1,50,000 – ₹2,20,000"],
-  ["Refurbished conversion (20 ft)", "₹1,40,000 – ₹2,00,000"],
-  ["Container office fit-out (20 ft)", "₹2,50,000 – ₹3,50,000"],
 ];
 
 const industries = [
@@ -58,7 +56,7 @@ const solutions = [
 const faqs = [
   { q: "What shipping container sizes are available for Narsapura Industrial Area?", a: "We supply 10 ft, 20 ft, 40 ft GP, and 40 ft High Cube containers — both new and used. Custom-built units with partitions, roller shutters, and PUF insulation are also available for KIADB plots." },
   { q: "How quickly can you deliver containers to Narsapura?", a: "Bare containers dispatch within 7–10 working days from our Bengaluru facility. Customized container offices and fitted units take 10–15 working days depending on scope." },
-  { q: "Do you supply used shipping containers for Narsapura factories?", a: "Yes. We stock CSC-recertified used containers that are rust-treated and repainted. Used 20 ft units start around ₹95,000 and offer 10–15 years of extended service life for storage and utility applications." },
+  { q: "Do you supply used shipping containers for Narsapura factories?", a: "Yes. We stock CSC-recertified used containers that are rust-treated and repainted, offering 10–15 years of extended service life for storage and utility applications." },
   { q: "Can containers be relocated within Narsapura or to other industrial areas?", a: "Absolutely. Containers retain 80% material value and can be shifted within the same campus or relocated to Malur, Hoskote, or other KIADB zones as operations grow." },
   { q: "What foundation is needed for container placement on KIADB plots?", a: "Simple PCC pads or concrete blocks at the four corners are sufficient. No deep foundations or extensive site preparation is required, enabling rapid deployment." },
   { q: "Do you provide container offices with AC and electrical fit-outs?", a: "Yes. Our container offices include PUF/Rockwool insulation, UPVC windows, LED lighting, split AC provisions, IS 732-compliant wiring, and modular workstation layouts." },
@@ -224,28 +222,18 @@ export function ShippingContainerNarsapuraContent() {
         </div>
       </section>
 
-      {/* Pricing Table */}
+      {/* Fixed Online Price */}
       <section>
-        <h2 className="text-2xl font-bold text-foreground mb-4">Indicative Pricing — Narsapura 2026</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-border text-sm">
-            <thead>
-              <tr className="bg-muted">
-                <th className="border border-border p-3 text-left font-semibold">Configuration</th>
-                <th className="border border-border p-3 text-left font-semibold">Price Range (Ex-Works)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricingRows.map((row, i) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-background" : "bg-muted/50"}>
-                  <td className="border border-border p-3 text-muted-foreground">{row[0]}</td>
-                  <td className="border border-border p-3 text-muted-foreground font-medium">{row[1]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <h2 className="text-2xl font-bold text-foreground mb-4">Fixed Online Price — Narsapura</h2>
+        <div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
+          <p className="text-muted-foreground mb-2">
+            The shipping container for Narsapura Industrial Area is available to buy online at a fixed price of{" "}
+            <span className="font-semibold text-foreground">{narsapuraPrice}</span> including GST — the same price shown in the buy box, cart and checkout.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Transport to your site is calculated at checkout from your delivery PIN code. Custom sizes, fitted container offices and modified configurations are available on request.
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground mt-2">* Prices are indicative ex-works; GST & transport extra. Volume discounts available for large Narsapura campus orders.</p>
       </section>
 
       {/* Industries Served */}
@@ -315,13 +303,16 @@ export function ShippingContainerNarsapuraContent() {
       {/* CTA */}
       <section className="bg-primary/5 border border-primary/20 rounded-xl p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground mb-3">
-          Plan Your Shipping Containers in Narsapura
+          Buy Your Shipping Container in Narsapura
         </h2>
-        <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
-          Share your site location, intended use, required sizes, expected delivery date, and any special features. We provide site visits for large or complex setups across Narsapura, Vemgal, Malur, and Hoskote.
+        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+          Order online at a fixed GST-inclusive price with secure payment and delivery to your site. We provide site visits for large or complex setups across Narsapura, Vemgal, Malur, and Hoskote.
         </p>
+        <div className="flex flex-wrap justify-center gap-3 mb-4">
+          <BuyNowCTA productId={NARSAPURA_PRODUCT_ID} />
+        </div>
         <p className="text-sm text-muted-foreground">
-          Contact Portable Office Cabin today — initial consultation → layout suggestion → itemized quotation → fabrication → delivery and installation.
+          Need customization first? Contact Portable Office Cabin — layout suggestion → fabrication → delivery and installation.
         </p>
       </section>
     </div>
