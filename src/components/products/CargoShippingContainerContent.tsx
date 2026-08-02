@@ -6,6 +6,7 @@ import cargoShippingPort from "@/assets/products/cargo-shipping-container-port.w
 import cargoShippingYard from "@/assets/products/cargo-shipping-container-yard.webp";
 import cargoShippingWorkers from "@/assets/products/cargo-shipping-container-workers.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 const containerSizes = [
   { size: "20 ft GP", external: "6.058 × 2.438 × 2.591 m", volume: "~33 m³ (1 TEU)", tare: "2,200 kg", payload: "28,280 kg" },
@@ -481,15 +482,16 @@ export function CargoShippingContainerContent() {
 
       {/* CTA */}
       <section className="bg-primary/5 border border-primary/20 rounded-2xl p-6 md:p-8 text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-3">Work with Portable Office Cabin</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-3">Buy Your Cargo Shipping Container Online</h2>
         <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
-          Whether you need to ship goods across oceans or build a complete site facility, the cargo shipping container offers proven versatility. Share your project requirements for a tailored container or prefab proposal.
+          Order your cargo shipping container online at a fixed GST-inclusive price with secure payment and delivery across India. For custom conversions or complete site facilities, call or WhatsApp us with your project requirements.
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <BuyNowCTA productId="38" />
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
             📞 Call +91-9731897976
           </a>
-          <a href="https://wa.me/919731897976" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors">
+          <a href="https://wa.me/919731897976" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
             💬 WhatsApp Us
           </a>
         </div>

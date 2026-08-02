@@ -1,12 +1,19 @@
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Truck, IndianRupee, Recycle, Clock, Wrench, MapPin, Building2 } from "lucide-react";
+import { Shield, Truck, IndianRupee, Recycle, Clock, Wrench, MapPin, Building2, Phone } from "lucide-react";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import krishnagiriStorage from "@/assets/products/shipping-container-krishnagiri-storage.webp";
 import krishnagiriOffice from "@/assets/products/shipping-container-krishnagiri-office.webp";
 import krishnagiriSite from "@/assets/products/shipping-container-krishnagiri-site.webp";
 import krishnagiriYard from "@/assets/products/shipping-container-krishnagiri-yard.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+
+// Live GST-inclusive online price — the same source of truth as the buy box, cart,
+// checkout and Razorpay. Never hardcode a rupee figure beside it.
+const onlinePrice = formatINR(sellPrice(getCommerce("30")!.basePrice));
 
 const highlights = [
   { icon: Shield, title: "Corten Steel Durability", description: "Corrosion-resistant steel withstands hot summers and monsoon rains in Krishnagiri" },
@@ -39,10 +46,9 @@ const applications = [
 ];
 
 const pricingRows = [
-  { type: "Used 20 ft storage container", range: "₹1,50,000 – ₹2,00,000" },
-  { type: "Used 40 ft storage container", range: "₹2,00,000 – ₹3,00,000" },
-  { type: "Finished 20 ft container office", range: "₹1,80,000 – ₹2,50,000" },
-  { type: "Finished 40 ft container office", range: "₹3,00,000 – ₹5,00,000+" },
+  { type: "Shipping container (this page's offer)", range: `${onlinePrice} — GST included, buy online` },
+  { type: "Finished 20 ft container office", range: "Custom quote" },
+  { type: "Finished 40 ft container office", range: "Custom quote" },
   { type: "Container home (fully fitted)", range: "Custom quote" },
 ];
 
@@ -53,7 +59,7 @@ const faqs = [
   { q: "What is the delivery timeline for containers in Krishnagiri?", a: "Stock units deliver in 3–5 days. Custom-built containers with interior fit-out take 15–30 days from design freeze." },
   { q: "Can I relocate the container later?", a: "Absolutely. Containers are designed for relocation via crane and flatbed trailer. We handle logistics for moves within Tamil Nadu and across India." },
   { q: "What is the difference between cargo-worthy and refurbished containers?", a: "Cargo-worthy containers have minor dents and are suitable for basic storage. Refurbished containers are sandblasted, repainted, and fitted with new flooring—ideal for offices and homes." },
-  { q: "Do you offer rental options in Krishnagiri?", a: "Yes. We offer monthly rentals starting from ₹5,000 for 20 ft units. Rental includes maintenance and avoids upfront transport costs." },
+  { q: "Can I get help with custom container requirements in Krishnagiri?", a: "Yes. Beyond the fixed-price container on this page, our team supports custom sizes, fitted offices and container homes — call or WhatsApp us with your requirement." },
   { q: "What customization options are available?", a: "Full customization including PUF insulation (50–100 mm), electrical wiring, AC provisions, modular workstations, security locks, shelving, vinyl flooring, and external branding." },
 ];
 
@@ -204,14 +210,14 @@ export function ShippingContainerKrishnagiriContent() {
       {/* Pricing */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Price Range (2025–2026)
+          Pricing (2025–2026)
         </h2>
         <div className="bg-card rounded-xl shadow-card overflow-hidden">
           <table className="w-full">
             <thead>
               <tr className="bg-muted">
                 <th className="px-6 py-3 text-left font-semibold text-foreground">Container Type</th>
-                <th className="px-6 py-3 text-left font-semibold text-foreground">Indicative Price</th>
+                <th className="px-6 py-3 text-left font-semibold text-foreground">Price</th>
               </tr>
             </thead>
             <tbody>
@@ -225,7 +231,7 @@ export function ShippingContainerKrishnagiriContent() {
           </table>
         </div>
         <p className="text-sm text-muted-foreground mt-3">
-          * Prices are indicative and exclude GST, transport, and installation. Contact us for detailed quotations after site assessment.
+          The buy-online price includes GST — it is the same amount you pay at checkout, with transport calculated for your delivery PIN code. Custom configurations are quoted individually after site assessment.
         </p>
       </section>
 
@@ -266,7 +272,7 @@ export function ShippingContainerKrishnagiriContent() {
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
           How to Get Started
         </h2>
-        <p className="text-muted-foreground mb-4">Share these details with us for a budgetary estimate within 24 hours:</p>
+        <p className="text-muted-foreground mb-4">The standard container on this page can be bought online right away at the fixed GST-inclusive price shown above. For custom builds, share these details with us for a detailed proposal within 24 hours:</p>
         <ul className="space-y-2 mb-4">
           {[
             "Intended use (storage, office, home, café, labour camp)",
@@ -283,7 +289,7 @@ export function ShippingContainerKrishnagiriContent() {
           ))}
         </ul>
         <p className="text-muted-foreground">
-          Quotations include container cost, fabrication charges, basic electrical/plumbing, delivery within Tamil Nadu, and optional installation. Site visits in Krishnagiri can be scheduled within 1–3 days for complex projects.
+          Custom-project quotations include container cost, fabrication charges, basic electrical/plumbing, delivery within Tamil Nadu, and optional installation. Site visits in Krishnagiri can be scheduled within 1–3 days for complex projects.
         </p>
       </section>
 
@@ -309,11 +315,18 @@ export function ShippingContainerKrishnagiriContent() {
       {/* Conclusion */}
       <section className="bg-muted/30 rounded-xl p-8 text-center">
         <h2 className="font-display text-2xl font-bold text-foreground mb-3">
-          Start Your Container Project in Krishnagiri Today
+          Buy Your Shipping Container in Krishnagiri Today
         </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Request a customized quote from Portable Office Cabin — committed to quality, efficiency, and sustainability. Call, email, or fill out an enquiry form on our website. Mention "shipping container in Krishnagiri" so we can prioritise your local requirements.
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+          Order the standard container online at {onlinePrice} — GST included — with secure payment, or call us about custom sizes, fitted offices, and container homes. Mention "shipping container in Krishnagiri" so we can prioritise your local requirements.
         </p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="30" />
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
+            <Phone className="h-4 w-4" />
+            Call Us Now
+          </a>
+        </div>
       </section>
     </div>
   );

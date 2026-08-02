@@ -27,14 +27,9 @@ export const VIP_FAQS: { question: string; answer: string }[] = [
       "A VIP container office is a premium, fully finished portable office cabin with high-grade insulation, modern interiors, air conditioning, large glass windows, and optional executive furniture — built for client meetings, sales lounges, and leadership offices.",
   },
   {
-    question: "Is the VIP container office available for rent or only for sale?",
-    answer:
-      "Both. You can buy a VIP container office outright or rent one on flexible monthly terms across India.",
-  },
-  {
     question: "How much does the VIP container office on this page cost?",
     answer:
-      "The standard 40×14×9 ft VIP container office is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode. Different sizes, finishes, furnishing packages, and rental terms are quoted separately.",
+      "The standard 40×14×9 ft VIP container office is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode. Different sizes, finishes, and furnishing packages are quoted separately.",
   },
   {
     question: "Is the VIP container office air-conditioned?",
@@ -102,17 +97,17 @@ const COMPARISON = [
 ];
 
 const PROCESS = [
-  { icon: ClipboardList, title: "Tell us your requirement", desc: "Location, size, finish level, and whether you want to buy or rent." },
+  { icon: ClipboardList, title: "Tell us your requirement", desc: "Location, size, finish level, and your delivery timeline." },
   { icon: IndianRupee, title: "Get transparent pricing", desc: "We recommend the right unit and send transparent pricing." },
   { icon: CalendarCheck, title: "Confirm & schedule", desc: "Approve the quote and pick your delivery date." },
   { icon: Truck, title: "Delivery & installation", desc: "We transport, place, and set up the unit at your site." },
   { icon: PackageCheck, title: "Move in & work", desc: "Your VIP container office is ready from day one." },
-  { icon: Headset, title: "Support", desc: "Servicing during the term and pickup when you're done (for rentals)." },
+  { icon: Headset, title: "Support", desc: "After-sales servicing, modifications, and relocation assistance whenever you need it." },
 ];
 
 const WHY_US = [
   "Premium build quality — executive finish, insulation, and AC as standard",
-  "Sale & rental options — flexible terms to suit your project",
+  "Full ownership — a premium, relocatable asset that serves project after project",
   "Pan-India delivery — units transported and installed across the country",
   "Full customisation — sizes, layouts, furniture, washrooms, and branding",
   "Transparent pricing — clear quotes with no hidden costs",
@@ -183,24 +178,26 @@ export function VipContainerOfficeContent() {
         </div>
       </section>
 
-      {/* Buy or rent */}
+      {/* Why buy */}
       <section>
-        <SectionHeading id="buy-or-rent" icon={Building2}>Buy or Rent — Your Choice</SectionHeading>
+        <SectionHeading id="why-buy" icon={Building2}>Why Buy a VIP Container Office</SectionHeading>
         <div className="grid sm:grid-cols-2 gap-5">
           <div className="bg-card border border-border rounded-2xl p-6">
-            <h3 className="font-display font-bold text-lg text-foreground mb-2">Buy a VIP container office</h3>
+            <h3 className="font-display font-bold text-lg text-foreground mb-2">Own a premium asset</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Choose to <Link href="/products/category/container-offices" className="text-accent hover:underline">buy</Link> if you need a long-term, permanent workspace and want full ownership of a premium asset.
+              <Link href="/products/category/container-offices" className="text-accent hover:underline">Buying</Link> gives you a long-term, permanent workspace with full ownership — relocate it between projects, rebrand it, and use it for years.
             </p>
           </div>
           <div className="bg-card border border-border rounded-2xl p-6">
-            <h3 className="font-display font-bold text-lg text-foreground mb-2">Rent a VIP container office</h3>
+            <h3 className="font-display font-bold text-lg text-foreground mb-2">One clear price, delivered</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Prefer to <Link href="/rental-service" className="text-accent hover:underline">rent</Link>? Get flexible monthly terms with no large upfront cost — we handle delivery, setup, maintenance, and pickup.
+              Order at the fixed GST-inclusive price shown above, with transport and optional installation calculated at checkout — we deliver, place, and set up the unit at your site.
             </p>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mt-4">Either way, you get the same premium build quality and end-to-end service.</p>
+        <p className="text-sm text-muted-foreground mt-4">
+          Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
+        </p>
       </section>
 
       {/* Process */}
@@ -258,7 +255,7 @@ export function VipContainerOfficeContent() {
       <section className="bg-gradient-to-br from-primary via-primary/95 to-secondary text-primary-foreground rounded-3xl p-8 lg:p-12 text-center">
         <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">Ready for Your VIP Container Office?</h2>
         <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-7">
-          Get a fully furnished, air-conditioned, premium workspace delivered to your site — for sale or on rent — without the cost and delay of construction. Portable Office Cabin builds VIP container offices that make the right impression.
+          Get a fully furnished, air-conditioned, premium workspace delivered to your site — without the cost and delay of construction. Portable Office Cabin builds VIP container offices that make the right impression.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a href={`tel:${CONTACT.tel}`} className="inline-flex items-center gap-2 bg-white text-primary font-bold px-6 py-3 rounded-full hover:bg-white/90 transition-colors">

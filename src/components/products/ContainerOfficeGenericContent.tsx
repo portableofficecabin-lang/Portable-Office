@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 export function ContainerOfficeGenericContent() {
   return (
@@ -628,13 +629,14 @@ export function ContainerOfficeGenericContent() {
 
         <div className="bg-accent/10 rounded-xl p-8 text-center">
           <h3 className="font-display text-2xl font-bold text-foreground mb-4">
-            Ready to Start Your Container Office Project?
+            Ready to Order Your Container Office?
           </h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Contact Portable Office Cabin today to discuss your container office requirements and receive a customized design consultation. Our team delivers turnkey solutions—from initial concept through installation and beyond.
+            Buy your container office online with secure payment and delivery across India. Our team delivers turnkey solutions—from initial concept through installation and beyond. For multi-container complexes or custom configurations, reach us on WhatsApp or by phone.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="accent" size="lg" asChild>
+          <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
+            <BuyNowCTA productId="10" />
+            <Button variant="outline" size="lg" asChild>
               <a
                 href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in a container office")}`}
                 target="_blank"

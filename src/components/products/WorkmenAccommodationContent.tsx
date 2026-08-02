@@ -7,6 +7,7 @@ import workmenModular from "@/assets/products/workmen-accommodation-modular.webp
 import workmenSite from "@/assets/products/workmen-accommodation-site.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 
 export const WorkmenAccommodationContent = () => {
   const keyFeatures = [
@@ -414,13 +415,14 @@ export const WorkmenAccommodationContent = () => {
       {/* CTA */}
       <section className="bg-primary rounded-2xl p-8 sm:p-12 text-center">
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-primary-foreground mb-4">
-          Plan Worker Housing Early for Optimal Results
+          Order Your Workmen Accommodation Online
         </h2>
         <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-6">
-          Prepare your project address, estimated workforce by category, land availability, and desired camp lifespan. Contact Portable Office Cabin today for a detailed proposal for your workmen accommodation needs.
+          Buy the G+1 workmen accommodation online with secure payment and delivery across India. For larger colonies or site-specific layouts, prepare your project address, estimated workforce by category, land availability, and desired camp lifespan, then reach us on WhatsApp or by phone.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-6 py-3 rounded-full hover:bg-accent/90 transition-colors">
+        <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
+          <BuyNowCTA productId="39" tone="dark" />
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 border-2 border-accent text-accent font-semibold px-6 py-3 rounded-full hover:bg-accent/10 transition-colors">
             <MessageCircle className="h-4 w-4" />
             WhatsApp Us
           </a>

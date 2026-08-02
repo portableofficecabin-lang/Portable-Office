@@ -242,7 +242,7 @@ export function LaborHutmentsContent() {
               {[
                 ["Specification Drivers", "Panel thickness (30mm vs 60mm), floors, interior furnishings, sanitary provisions, foundation"],
                 ["Lifecycle Value", "Amortizes to 20–35% savings over 5–10 years through reusability across 3–10 projects"],
-                ["Ownership vs Rental", "Prefab ownership offers better control and reuse than renting accommodation near the site"],
+                ["Ownership Value", "Buying prefab hutments makes them a company asset — full control over layout, and reuse across 3–10 projects"],
               ].map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : ""}>
                   <td className="px-4 py-3 font-medium text-foreground border border-border">{row[0]}</td>

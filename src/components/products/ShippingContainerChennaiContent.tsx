@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Truck, IndianRupee, Recycle, Clock, Wrench, MapPin, Building2, Factory, Leaf, Lock, Users, Anchor, Home } from "lucide-react";
+import { Shield, Truck, IndianRupee, Recycle, Clock, Wrench, MapPin, Building2, Factory, Leaf, Lock, Users, Anchor, Home, Phone } from "lucide-react";
 import chennaiPort from "@/assets/products/shipping-container-chennai-port.webp";
 import chennaiOffice from "@/assets/products/shipping-container-chennai-office.webp";
 import chennaiYard from "@/assets/products/shipping-container-chennai-yard.webp";
@@ -9,11 +10,17 @@ import chennaiWet from "@/assets/products/shipping-container-chennai-wet.webp";
 import chennaiDock from "@/assets/products/shipping-container-chennai-dock.webp";
 import chennaiStorage from "@/assets/products/shipping-container-chennai-storage.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
+
+/** Single source of truth for the on-page price — matches the buy box, cart and Razorpay. */
+const chennaiPrice = formatINR(sellPrice(getCommerce("32")!.basePrice));
 
 const highlights = [
   { icon: Anchor, title: "Chennai Port Proximity", description: "Fast dispatch within 24–72 hours from yards near Chennai Port, Ennore, and Kattupalli" },
   { icon: Clock, title: "Same-Day to 6 Weeks", description: "Bare containers in 48 hours; fitted offices in 2–4 weeks; full homes in 3–6 weeks" },
-  { icon: IndianRupee, title: "Buy or Rent", description: "Used containers from ₹80,000; rentals with delivery, insurance, and pickup included" },
+  { icon: IndianRupee, title: "Fixed Online Price", description: `Buy online at ${chennaiPrice} incl. GST — the same price at cart, checkout, and payment` },
   { icon: Truck, title: "Turnkey Delivery", description: "20–40 ton trailers with Hydra crane placement across North and South Chennai" },
   { icon: Factory, title: "Industrial Coverage", description: "Sriperumbudur, Oragadam, OMR, ECR, Ennore, Kattupalli — all zones served" },
   { icon: Lock, title: "Coastal-Grade Build", description: "Corten steel with marine-grade epoxy coatings (120 microns DFT) for Chennai's salinity" },
@@ -64,8 +71,7 @@ const techSpecs = [
 
 const faqs = [
   { q: "What sizes of shipping containers are available in Chennai?", a: "We supply 10 ft, 20 ft, 40 ft GP and 40 ft HC containers. Custom sizes can be fabricated. The most common lengths are 20 ft and 40 ft, designed for transporting goods over long distances." },
-  { q: "How much does a used shipping container cost in Chennai?", a: "Used 20 ft containers start from approximately ₹80,000–₹1,50,000 depending on condition. 40 ft units range from ₹1,45,000–₹2,50,000. One-trip containers cost more but offer near-new condition." },
-  { q: "Do you offer container rentals in Chennai?", a: "Yes. Monthly rentals include depreciation and insurance, plus one-time transport/handling and refundable security deposit. Minimum periods are typically 3–6 months with discounts for 12+ month commitments." },
+  { q: "How much does a used shipping container cost in Chennai?", a: `Our shipping container is priced at ${chennaiPrice} including GST — one fixed price you can order online with secure checkout. One-trip containers offer near-new condition; contact us for current grade availability.` },
   { q: "Can containers withstand Chennai's coastal climate?", a: "Absolutely. Our containers use ISO-grade Corten steel with corrosion resistance suited to Chennai's coastal salinity. We apply marine-grade epoxy coatings (120 microns DFT) and recommend 1–2m roof overhangs for monsoon protection." },
   { q: "How quickly can you deliver containers in Chennai?", a: "Bare containers dispatch within 24–72 hours. Fitted container offices take 2–4 weeks. Container homes with full interiors require 3–6 weeks from design freeze." },
   { q: "Do I need approvals for container structures in Chennai?", a: "Temporary structure permits (valid 1–3 years, renewable) may be required. Setback requirements are typically 3–5m. We guide clients on CMDA bylaws and Chennai Corporation documentation." },
@@ -133,7 +139,7 @@ export function ShippingContainerChennaiContent() {
       {/* Introduction */}
       <section>
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-          Shipping Containers in Chennai — Sales, Rentals & Modular Conversions
+          Shipping Containers in Chennai — Sales & Modular Conversions
         </h2>
         <p className="text-muted-foreground mb-4">
           Chennai's position as India's eastern maritime gateway has driven remarkable demand for shipping containers across the region. With Chennai Port achieving a record 1.83 million TEUs by early 2026 and industrial belts like Sriperumbudur and Oragadam expanding rapidly, businesses need reliable storage solutions and modular construction options. IT parks along OMR, construction projects near Ennore, and logistics hubs around Kattupalli all require standardized metal containers for diverse applications.
@@ -206,33 +212,8 @@ export function ShippingContainerChennaiContent() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground mt-4">
-          Every used container undergoes inspection for Corten steel integrity, door alignment, locking bars, floor condition, and rust treatment before sale. Used 20 ft containers start from approximately ₹80,000 in Chennai.
+          Every used container undergoes inspection for Corten steel integrity, door alignment, locking bars, floor condition, and rust treatment before sale. Buy online at {chennaiPrice} including GST. Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
         </p>
-      </section>
-
-      {/* Rentals */}
-      <section>
-        <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-          Container Rentals in Chennai — Short-Term & Long-Term
-        </h2>
-        <p className="text-muted-foreground mb-4">
-          Rental containers serve temporary site storage, equipment rooms for metro rail works, seasonal warehousing near Chennai Port, and construction projects along OMR/ECR. Rentals can reduce logistics costs by 20–30% compared to buying for short-term needs.
-        </p>
-        <ul className="space-y-2 mb-4">
-          {[
-            "20 ft and 40 ft GP/HC units available",
-            "Minimum rental periods: typically 3–6 months",
-            "Discounts available for 12+ month commitments",
-            "Delivery via flatbed trucks with Hydra crane placement",
-            "Optional add-ons: padlock hasps, louvered vents, LED lighting",
-            "Pricing: monthly rental + one-time transport/handling + refundable deposit",
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-2">
-              <IndianRupee className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-              <span className="text-muted-foreground">{item}</span>
-            </li>
-          ))}
-        </ul>
       </section>
 
       {/* Container Offices */}
@@ -455,12 +436,12 @@ export function ShippingContainerChennaiContent() {
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
           How to Get Started
         </h2>
-        <p className="text-muted-foreground mb-4">Share these details for a customized quotation within 24 hours:</p>
+        <p className="text-muted-foreground mb-4">Buy the standard container online at the fixed GST-inclusive price shown above, or share these details for a customized proposal within 24 hours:</p>
         <ul className="space-y-2 mb-4">
           {[
             "Intended use (storage, office, home, café, workshop, lab)",
             "Required size (20 ft, 40 ft, HC, or custom)",
-            "Buy vs. rent preference and duration",
+            "Number of units required",
             "Site location and project timeline",
             "Any specific features or modifications needed",
           ].map((item) => (
@@ -475,11 +456,18 @@ export function ShippingContainerChennaiContent() {
       {/* CTA */}
       <section className="bg-muted/30 rounded-xl p-8 text-center">
         <h2 className="font-display text-2xl font-bold text-foreground mb-3">
-          Ready to Secure Your Shipping Container in Chennai?
+          Buy Your Shipping Container in Chennai Online
         </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Contact Portable Office Cabin today for competitive quotes on sales, rentals, or turnkey container construction. Our team delivers the ideal solution for storage, offices, homes, cafés, and labour accommodation across Chennai, Ennore, Kattupalli, OMR, ECR, Sriperumbudur, and Oragadam.
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+          Order online at {chennaiPrice} including GST with secure payment, or call us about turnkey container construction. Our team delivers the ideal solution for storage, offices, homes, cafés, and labour accommodation across Chennai, Ennore, Kattupalli, OMR, ECR, Sriperumbudur, and Oragadam.
         </p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="32" />
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
+            <Phone className="h-4 w-4" />
+            Call Us Now
+          </a>
+        </div>
       </section>
     </div>
   );

@@ -230,7 +230,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
 
       <section>
         <h3 className="font-display text-2xl font-bold text-foreground mb-6">
-          {offer ? "Price" : "Buying vs. renting and indicative pricing"}
+          {offer ? "Price" : "Indicative purchase pricing"}
         </h3>
         {offer ? (
           /* Purchasable SKU: the indicative range table is replaced by the one real figure — a
@@ -309,8 +309,8 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
               answer: "Most standard units are fabricated in 10–20 working days and placed on site within hours once transport and crane access are arranged.",
             },
             {
-              question: "Should I buy or rent a site office cabin?",
-              answer: "Buying works best for contractors with repeated project use and branding needs, while rental is better suited for short-duration or pilot projects.",
+              question: "Is buying a site office cabin a good investment?",
+              answer: "Yes. A purchased cabin redeploys across successive projects, carries your branding, and retains strong resale value, so the cost is typically recovered within a few project cycles.",
             },
             {
               question: "Can the office include toilets, pantry, or meeting rooms?",

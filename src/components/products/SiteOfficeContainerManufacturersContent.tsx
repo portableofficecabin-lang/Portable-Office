@@ -6,9 +6,14 @@ import {
   Building2,
   CheckCircle2,
   Factory,
+  Phone,
   ShieldCheck,
   Wrench,
 } from "lucide-react";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { COMPANY } from "@/lib/company";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import exteriorImage from "@/assets/products/site-office-container-manufacturers-exterior.webp";
 import interiorImage from "@/assets/products/site-office-container-manufacturers-interior.webp";
 import complexImage from "@/assets/products/site-office-container-manufacturers-complex.webp";
@@ -81,13 +86,12 @@ const applications = [
   "Government, PSU, smart city, and emergency response coordination sites",
 ];
 
-const pricingRows = [
-  ["Basic 20 ft site office shell", "₹1.8–2.2 lakh"],
-  ["Standard 20 ft with full interiors", "₹2.5–3.5 lakh"],
-  ["Premium 20 ft executive finish", "₹3.5–4.5 lakh"],
-  ["40 ft office with MD cabin + staff cabin", "₹4.0–6.0 lakh"],
-  ["Joined container pair / larger office", "₹5.5–8.0 lakh"],
-  ["Multi-container complexes", "Custom quote based on scope"],
+const costFactors = [
+  "Container size and single vs multi-container layout",
+  "Insulation system and interior finish package",
+  "Electrical load, AC provision, and furniture scope",
+  "Attached toilet, pantry, or utility integration",
+  "Transport distance and site placement requirements",
 ];
 
 const faqs = [
@@ -292,38 +296,32 @@ export function SiteOfficeContainerManufacturersContent() {
 
       <section className="grid gap-8 lg:grid-cols-2">
         <div className="rounded-3xl border border-border bg-card p-6 shadow-card">
-          <h3 className="font-display text-2xl font-bold text-foreground">Pricing overview and cost factors</h3>
+          <h3 className="font-display text-2xl font-bold text-foreground">Fixed online price and cost factors</h3>
           <p className="mt-3 leading-7 text-muted-foreground">
-            Site office container pricing depends on size, insulation, interior quality, electrical load, pantry or toilet integration, furniture package, and transport distance.
+            Our standard site office container is available to buy online at a fixed, GST-inclusive price of{" "}
+            <span className="font-semibold text-foreground">{formatINR(sellPrice(getCommerce("19")!.basePrice))}</span> — the same price shown in the buy box, the cart, and at checkout, with secure payment and delivery across India.
           </p>
-          <div className="mt-5 overflow-hidden rounded-2xl border border-border">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/50 text-foreground">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Configuration</th>
-                  <th className="px-4 py-3 font-semibold">Indicative price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pricingRows.map(([config, price], index) => (
-                  <tr key={config} className={index % 2 === 0 ? "bg-card" : "bg-muted/20"}>
-                    <td className="px-4 py-3 text-foreground">{config}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <p className="mt-3 leading-7 text-muted-foreground">
+            Need a different configuration? Larger offices, premium interiors, joined pairs, double-storey blocks, and multi-container complexes are configured to your project. Their cost depends on:
+          </p>
+          <ul className="mt-4 space-y-2">
+            {costFactors.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+                <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-accent" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="rounded-3xl border border-border bg-card p-6 shadow-card">
-          <h3 className="font-display text-2xl font-bold text-foreground">Own vs rent: what suits your project?</h3>
+          <h3 className="font-display text-2xl font-bold text-foreground">Why buying pays off</h3>
           <div className="mt-4 space-y-4 text-sm leading-6 text-muted-foreground">
             <p>
-              Renting makes sense for short-term projects or standard requirements. Buying becomes more attractive for multi-year projects, custom specifications, branding-heavy setups, or repeated redeployment across sites.
+              Buying pays off for multi-year projects, custom specifications, branding-heavy setups, and repeated redeployment across sites — the container remains a company asset with resale value after every project. Prefer renting for a short-duration project instead? See our <Link href="/rental-service" className="font-medium text-accent underline-offset-4 hover:underline">rental service</Link>.
             </p>
             <p>
-              If your team is comparing options, also explore our <Link href="/products/construction-site-portable-office" className="font-medium text-accent underline-offset-4 hover:underline">Construction Site Portable Office</Link>, <Link href="/products/container-office" className="font-medium text-accent underline-offset-4 hover:underline">Container Office</Link>, and <Link href="/products/shipping-container-rental" className="font-medium text-accent underline-offset-4 hover:underline">Shipping Container Rental</Link> pages.
+              If your team is comparing options, also explore our <Link href="/products/construction-site-portable-office" className="font-medium text-accent underline-offset-4 hover:underline">Construction Site Portable Office</Link> and <Link href="/products/container-office" className="font-medium text-accent underline-offset-4 hover:underline">Container Office</Link> pages.
             </p>
             <p>
               For complete site infrastructure, we can also combine office cabins with labour accommodation, sanitation blocks, security cabins, and rooftop sheds under one modular delivery plan.
@@ -342,6 +340,23 @@ export function SiteOfficeContainerManufacturersContent() {
             </AccordionItem>
           ))}
         </Accordion>
+      </section>
+
+      <section className="rounded-3xl border border-accent/20 bg-accent/10 p-8 text-center md:p-10">
+        <h3 className="font-display text-2xl font-bold text-foreground md:text-3xl">Ready to Order Your Site Office Container?</h3>
+        <p className="mx-auto mt-3 mb-6 max-w-3xl text-muted-foreground">
+          Buy online at the fixed GST-inclusive price with secure payment and delivery across India, or call us to plan multi-container office blocks, labour accommodation, and complete site infrastructure.
+        </p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="19" />
+          <a
+            href={`tel:${COMPANY.phones[0].e164}`}
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted"
+          >
+            <Phone className="h-4 w-4" />
+            Call {COMPANY.phones[0].display}
+          </a>
+        </div>
       </section>
     </div>
   );

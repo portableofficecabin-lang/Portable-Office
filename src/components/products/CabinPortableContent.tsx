@@ -623,7 +623,7 @@ export function CabinPortableContent() {
             { q: "Can cabins be air-conditioned?", a: "Yes, portable cabins come with pre-provisioned AC points and electrical capacity for split AC units." },
             { q: "What about fire safety?", a: "Fire-retardant panels and compliant electrical systems are available on request to meet safety norms." },
             { q: "How do delivery timelines vary?", a: "Metro cities typically see 2-week delivery; remote or hilly terrain may require 4+ weeks due to logistics challenges. Please wait for confirmation of lead times based on your specific location." },
-            { q: "Purchase vs rental?", a: "Outright purchase suits projects over 12 months; rental works for short-term needs with 20-30% lower monthly costs but less flexibility." },
+            { q: "Why buy a portable cabin outright?", a: "Outright purchase makes the cabin a company asset: it pays for itself through reuse across 3-5 projects, can be refitted internally between deployments, and gives you full control over customization and relocation." },
           ].map((faq, idx) => (
             <AccordionItem key={idx} value={`faq-${idx}`} className="border border-border/40 rounded-xl px-4 bg-card">
               <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">{faq.q}</AccordionTrigger>

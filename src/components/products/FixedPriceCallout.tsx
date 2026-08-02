@@ -21,6 +21,9 @@ export interface FixedOffer {
   sellPriceInr: number;
   /** The product's display name, so the callout says exactly what the price buys. */
   name: string;
+  /** Static catalog id of the rendered product — lets a SHARED content component pass the
+   *  right identity to BuyNowCTA (which renders nothing unless isPurchasable(id)). */
+  productId?: string;
 }
 
 /** The one price block a purchasable product's content section is allowed to show. */

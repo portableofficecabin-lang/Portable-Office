@@ -1,12 +1,22 @@
 import Link from "next/link";
-import { ArrowRight, Clock3, Container, IndianRupee, ShieldCheck, Truck } from "lucide-react";
+import { ArrowRight, Clock3, Container, IndianRupee, Phone, ShieldCheck, Truck } from "lucide-react";
 import rentalYardImage from "@/assets/products/shipping-container-rental-yard.webp";
 import rentalTransportImage from "@/assets/products/shipping-container-rental-transport.webp";
 import rentalOfficeImage from "@/assets/products/shipping-container-rental-office.webp";
 import rentalSiteOfficeImage from "@/assets/products/shipping-container-rental-site-office.webp";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { getCommerce } from "@/data/productCommerce";
+import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+
+const RENTAL_PRODUCT_ID = "18";
+
+// The ONLY rupee figure allowed on this page: the fixed online booking amount
+// (first month of rental, inclusive of GST), derived from the same source of
+// truth as the buy box, cart and checkout. Never hardcode a rate beside it.
+const bookingAmount = formatINR(sellPrice(getCommerce(RENTAL_PRODUCT_ID)!.basePrice));
 
 const highlights = [
   {
@@ -44,19 +54,11 @@ const gradeRows = [
   ["Wind & water tight", "Ideal for static storage where weatherproofing matters more than appearance"],
 ];
 
-const rentalRows = [
-  ["20 ft used storage", "Rs 8,500 – 9,500 / month"],
-  ["40 ft / 40 ft HC used storage", "Rs 10,500 – 13,500 / month"],
-  ["20 ft fitted container office", "Rs 15,000 – 25,000 / month"],
-  ["Labour accommodation", "Custom quote based on headcount and fit-out"],
-  ["Container café / canteen", "Custom quote based on kitchen and branding scope"],
-];
-
 const steps = [
-  "Share your city, site address, size, duration, and intended use.",
+  "Book the standard rental container online at the fixed first-month amount, or share your city, site address, size, duration, and intended use for a modified configuration.",
   "We recommend the right container type, grade, and modification package.",
-  "You receive an itemised quote covering rent, transport, pickup, deposit, and lock-in period.",
-  "After approval, we arrange dispatch, crane placement, and installation support.",
+  "We confirm transport, pickup, deposit, and lock-in terms for your rental agreement before dispatch.",
+  "After confirmation, we arrange dispatch, crane placement, and installation support.",
   "During rental, we support maintenance queries and extension planning.",
   "At off-hire, we inspect the unit, close out the agreement, and pick it up.",
 ];
@@ -114,7 +116,7 @@ export function ShippingContainerRentalContent() {
             Portable Office Cabin rents ISO shipping containers across India for storage, site offices, labour accommodation, cafés, security cabins, and prefab modular spaces. We support short projects, long leases, and customised container conversions without forcing buyers into heavy upfront capital spend.
           </p>
           <p className="text-base leading-7 text-muted-foreground">
-            Typical 2025 rental benchmarks start around Rs 8,500–9,500 per month for 20 ft used storage containers, while 40 ft and 40 ft High Cube formats generally range from Rs 10,500–13,500 per month depending on city, duration, and configuration.
+            The standard rental container listed on this page can be booked online for {bookingAmount} — your first month of rental, inclusive of 18% GST. Transport is calculated at checkout from your delivery pincode, and our team then confirms the rental agreement, delivery schedule, and extension options with you.
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
@@ -122,8 +124,8 @@ export function ShippingContainerRentalContent() {
               <div className="mt-2 font-display text-2xl font-bold text-foreground">1 month–5 years</div>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <div className="text-sm text-muted-foreground">Storage rent</div>
-              <div className="mt-2 font-display text-2xl font-bold text-foreground">From Rs 8,500</div>
+              <div className="text-sm text-muted-foreground">Book online — first month, incl. GST</div>
+              <div className="mt-2 font-display text-2xl font-bold text-foreground">{bookingAmount}</div>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="text-sm text-muted-foreground">Coverage</div>
@@ -213,34 +215,24 @@ export function ShippingContainerRentalContent() {
         <div className="rounded-3xl border border-border bg-card p-6 shadow-card">
           <div className="flex items-center gap-3 text-foreground">
             <IndianRupee className="h-6 w-6 text-accent" />
-            <h3 className="font-display text-2xl font-bold">Indicative 2025 monthly rentals</h3>
+            <h3 className="font-display text-2xl font-bold">Book your container rental online</h3>
           </div>
           <p className="mt-3 leading-7 text-muted-foreground">
-            Rental pricing depends on size, condition, duration, city, and fit-out level. We share itemised quotes covering rent, delivery, pickup, deposit, and modifications so clients can compare options clearly.
+            The standard rental container on this page has one fixed online booking amount — it covers your first month of rental and includes 18% GST. Pay securely online and our team confirms the rental agreement, delivery schedule, deposit, and extension terms with you.
           </p>
-          <div className="mt-5 overflow-hidden rounded-2xl border border-border">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/50 text-foreground">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Container type</th>
-                  <th className="px-4 py-3 font-semibold">Monthly rent</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rentalRows.map(([type, price], index) => (
-                  <tr key={type} className={index % 2 === 0 ? "bg-card" : "bg-muted/20"}>
-                    <td className="px-4 py-3 text-foreground">{type}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-5 rounded-2xl border border-border bg-muted/30 p-6 text-center">
+            <div className="text-sm text-muted-foreground">Online booking amount — first month, incl. GST</div>
+            <div className="mt-2 font-display text-3xl font-bold text-foreground">{bookingAmount}</div>
           </div>
           <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-            <li>• One-time transportation and pickup are quoted separately.</li>
+            <li>• Transport is calculated at checkout from your delivery pincode; pickup at off-hire is arranged with our team.</li>
+            <li>• Fitted container offices, labour accommodation, and container cafés are configured and priced per fit-out scope.</li>
             <li>• Crane costs apply where direct side-loader access is not possible.</li>
             <li>• Long-term agreements can qualify for lower effective monthly rates.</li>
           </ul>
+          <div className="mt-6">
+            <BuyNowCTA productId={RENTAL_PRODUCT_ID} />
+          </div>
         </div>
       </section>
 
@@ -319,6 +311,20 @@ export function ShippingContainerRentalContent() {
             </AccordionItem>
           ))}
         </Accordion>
+      </section>
+
+      <section className="rounded-3xl bg-accent/10 p-8 text-center md:p-10">
+        <h3 className="mb-3 font-display text-2xl font-bold text-foreground md:text-3xl">Ready to Book Your Rental Container?</h3>
+        <p className="mx-auto mb-6 max-w-3xl text-muted-foreground">
+          Book your first month online with secure payment and delivery coordination across India, or call us to plan fitted offices, labour accommodation, container cafés, or long-term rental agreements.
+        </p>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId={RENTAL_PRODUCT_ID} />
+          <a href="tel:+919731897976" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted">
+            <Phone className="h-4 w-4" />
+            Call Us Now
+          </a>
+        </div>
       </section>
     </div>
   );

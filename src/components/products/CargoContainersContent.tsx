@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 import {
   Box,
   Truck,
@@ -66,7 +67,7 @@ const faqs = [
   },
   {
     q: "How do I choose between new and used cargo containers?",
-    a: "New containers offer pristine condition and 30+ year life but cost 50–100% more. Used wind-water-tight units suit static storage at 70–80% savings. For offices, refurbished or one-trip containers are recommended.",
+    a: "New containers offer pristine condition and 30+ year life at a higher cost, while used wind-water-tight units suit static storage on a tighter budget. For offices, refurbished or one-trip containers are recommended.",
   },
   {
     q: "What materials are cargo containers made from?",
@@ -739,24 +740,25 @@ export function CargoContainersContent() {
             </div>
           </div>
           <p className="text-muted-foreground text-sm">
-            Portable Office Cabin guides customers through these steps, from concept and design through manufacturing, delivery, and installation across India. Prepare basic site data—location, access conditions, and layout sketches—before engaging to speed up proposals and costing.
+            Portable Office Cabin guides customers through these steps, from concept and design through manufacturing, delivery, and installation across India. Standard cargo containers can be ordered directly online at a fixed GST-inclusive price; for custom conversions, prepare basic site data—location, access conditions, and layout sketches—to speed up the design discussion.
           </p>
         </div>
       </section>
 
       {/* CTA */}
       <section className="bg-primary/5 rounded-2xl p-8 text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-4">Ready to Get Started with Cargo Containers?</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-4">Buy Your Cargo Container Online</h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Whether you need raw containers for storage, converted modular buildings, or complete prefab solutions, Portable Office Cabin delivers end-to-end services across India. With 500+ completed projects, we bring engineering expertise and reliable execution to every project.
+          Order your cargo container online at a fixed GST-inclusive price with secure payment and PAN-India delivery. Need converted modular buildings or a complete prefab solution instead? With 500+ completed projects, Portable Office Cabin brings engineering expertise and reliable execution to every project—reach us on WhatsApp or by phone.
         </p>
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BuyNowCTA productId="36" />
           <a
             href={`${COMPANY.whatsapp.url}?text=${encodeURIComponent("Hi, I'm interested in cargo containers")}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button size="lg" variant="outline">
               WhatsApp Us
             </Button>
           </a>
