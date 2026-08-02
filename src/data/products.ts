@@ -613,14 +613,17 @@ export const products: Product[] = [
   {
     id: "14",
     sku: "POC-SC-40HC",
-    name: "New & Used Shipping Container for Sale in India",
+    // Renamed from "New & Used Shipping Container for Sale in India" (owner, Aug 2026):
+    // the fixed price buys the 20 ft GP unit, so the multi-size framing was narrowed to
+    // match. Slug override keeps the canonical URL.
+    name: "Shipping Container GP",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     slug: "shipping-container-for-sale",
-    description: "Shipping containers for sale in India for storage, site offices, and modular buildings. Available in 20 ft, 40 ft, and high cube options with delivery, installation, and custom conversion support.",
+    description: "Shipping containers for sale in India for storage, site offices, and modular buildings. Available in 20 ft with delivery, installation, and custom conversion support.",
     shortDescription: "New and used shipping containers for storage, offices, and modular projects",
     specifications: [
-      { label: "Formats", value: "20 ft GP / 40 ft GP / 40 ft high cube" },
+      { label: "Formats", value: "20 ft GP" },
       { label: "Primary Use", value: "Storage, site office, modular building, cargo support" },
       { label: "Structure", value: "ISO-grade corrugated steel container shell" },
       { label: "Coverage", value: "Pan-India supply, delivery, and installation support" },

@@ -9,7 +9,7 @@ import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 const highlights = [
   {
     icon: Package,
-    title: "20 ft & 40 ft ready stock",
+    title: "20 ft GP ready stock",
     description: "Standard ISO containers available for immediate dispatch across major Indian cities.",
   },
   {
@@ -96,7 +96,7 @@ const buyingChecklist = [
   "Inspect doors, locking gear, and rubber gaskets for smooth operation and proper sealing.",
   "Check corner posts, floor crossmembers, side walls, and timber flooring for major corrosion or damage.",
   "Confirm the unit is wind-and-water tight and review the CSC plate where relevant.",
-  "Choose between 20 ft, 40 ft, and high cube based on site access, internal space, and future expansion.",
+  "The 20 ft GP format suits most site-access and internal-space requirements; other formats can be arranged on request.",
   "Account for transport, crane handling, foundation blocks, and dense-city permit requirements.",
   "Confirm whether the container is suitable for welding, cut-outs, insulation, and structural reinforcement.",
 ];
@@ -181,7 +181,7 @@ export function ShippingContainerForSaleContent({ offer }: { offer?: FixedOffer 
           </p>
           <div className="space-y-3">
             {[
-              "20 ft and 40 ft containers in stock for immediate dispatch",
+              "20 ft GP containers in stock for immediate dispatch",
               "Delivery and installation support for sites, factories, and campuses",
               "Multiple grades including cargo-grade, one-trip, and fully converted units",
               "Custom conversions for offices, homes, cafés, labour blocks, and security cabins",

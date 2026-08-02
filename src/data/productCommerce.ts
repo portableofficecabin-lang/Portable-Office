@@ -160,9 +160,9 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   },
   {
     id: "14", sku: "POC-SC-40HC", basePrice: 135000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Shipping Container for Sale",
-    feedTitle: "Shipping Container 20ft & 40ft ISO Steel for Storage & Office Conversion | Portable Office Cabin",
-    size: "20ft / 40ft", material: "ISO-Grade Corrugated Steel", bestFor: "Storage & Office Conversion",
+    h1Title: "Shipping Container GP",
+    feedTitle: "Shipping Container 20ft GP ISO Steel for Storage & Office Conversion | Portable Office Cabin",
+    size: "20 ft GP", material: "ISO-Grade Corrugated Steel", bestFor: "Storage & Office Conversion",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
