@@ -127,7 +127,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "Used ISO container versus purpose-built office shell",
         paragraphs: [
-          "A retired 20ft shipping container starts at around ₹1.45 lakh in the Chennai port belt. A purpose-built container office shell — same external dimensions but with proper cut-outs for windows, an insulated roof and an internal frame to take partition walls — starts at around ₹2.85 lakh from our Krishnagiri factory.",
+          "A retired 20ft shipping container from the Chennai port belt costs noticeably less than a purpose-built container office shell — same external dimensions but with proper cut-outs for windows, an insulated roof and an internal frame to take partition walls — from our Krishnagiri factory.",
           "Both can be turned into an office. The used container will always look slightly uneven inside because the corrugated walls are part of its structural strength and cannot be fully flattened. The purpose-built shell has flush interior walls because the structure is in the steel frame, not the skin. Choose based on how the office will be used, not on the per-square-foot rate.",
         ],
       },
@@ -177,11 +177,11 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "Foundation, plumbing and the things that have to be done by you",
         paragraphs: [
-          "We build the house in the factory and assemble it on site, but the foundation pad — usually a 6-inch RCC raft or a set of column footings — has to be ready before our team arrives. Most clients arrange this through a local contractor for about ₹85,000 to ₹1,40,000 depending on soil and access.",
+          "We build the house in the factory and assemble it on site, but the foundation pad — usually a 6-inch RCC raft or a set of column footings — has to be ready before our team arrives. Most clients arrange this through a local contractor; the cost depends on soil and access.",
           "Plumbing and septic must terminate at the locations marked on the drawing we send. If you change them later, expect a small extra charge and a day or two of delay. Electrical entry needs a service cable from the meter to a pre-marked point on the rear wall — we connect from there into the house.",
         ],
         checklist: [
-          "Foundation ready before our installation team mobilises (avoids ₹6,000–₹9,000 per day idle charges)",
+          "Foundation ready before our installation team mobilises (avoids per-day idle charges)",
           "Septic tank dug to drawing depth, with an inspection chamber",
           "Power: minimum 5 kW sanctioned load for a 2BHK with one AC",
           "Borewell or municipal connection routed to the pre-marked inlet",

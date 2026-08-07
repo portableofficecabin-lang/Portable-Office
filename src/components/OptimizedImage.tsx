@@ -14,6 +14,17 @@ interface OptimizedImageProps {
   width?: number;
   height?: number;
   priority?: boolean; // Load immediately (eager + fetchpriority high) — LCP images only
+  /**
+   * Fetch NOW, but at LOW network priority.
+   *
+   * For images that are mounted but not yet visible (e.g. the inactive frames of a gallery stacked
+   * behind the active one) and must be fully downloaded + decoded BEFORE the user asks for them.
+   * `priority` is wrong there — it would compete with the LCP fetch — and the default lazy path is
+   * also wrong: these elements sit inside the viewport, so the lazy observer fires immediately at
+   * normal priority. `eager + fetchPriority=low` is the only combination that says "get it, but
+   * behind everything that is actually on screen".
+   */
+  prefetch?: boolean;
   /** Responsive `sizes` hint so next/image fetches a variant matched to the slot,
    *  not the full-resolution file. Default biases slightly large (full-width on
    *  mobile, half-width on desktop) to avoid under-fetch/blur on section images. */
@@ -24,6 +35,10 @@ interface OptimizedImageProps {
   productName?: string; // For product-specific title generation
   onLoad?: () => void;
   onError?: () => void;
+  /** Hide this image from assistive tech while leaving `alt` in the markup for crawlers — used by
+   *  the gallery so the four stacked-but-invisible frames are not announced alongside the visible
+   *  one. Applied to the wrapper so the whole slot (image + any placeholder) is skipped together. */
+  "aria-hidden"?: boolean;
 }
 
 const aspectRatioClasses: Record<string, string> = {
@@ -48,6 +63,7 @@ export function OptimizedImage({
   width,
   height,
   priority = false,
+  prefetch = false,
   sizes = "(max-width: 768px) 100vw, 50vw",
   aspectRatio = "auto",
   objectFit = "cover",
@@ -55,6 +71,7 @@ export function OptimizedImage({
   productName,
   onLoad,
   onError,
+  "aria-hidden": ariaHidden,
 }: OptimizedImageProps) {
   const resolvedSrc = resolveImageUrl(src);
   // Auto geo-tag alt and title for image SEO
@@ -103,6 +120,7 @@ export function OptimizedImage({
 
   return (
     <div
+      aria-hidden={ariaHidden}
       className={cn("relative overflow-hidden bg-muted", keywordAspect, className)}
       style={{
         width: width ? `${width}px` : undefined,
@@ -120,6 +138,9 @@ export function OptimizedImage({
           fill
           sizes={sizes}
           priority={priority}
+          {...(prefetch && !priority
+            ? { loading: "eager" as const, fetchPriority: "low" as const }
+            : {})}
           onLoad={onLoad}
           onError={() => setOptimizedFailed(true)}
           className={cn("w-full h-full", objectFitClass)}

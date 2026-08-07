@@ -695,7 +695,7 @@ export const products: Product[] = [
       { label: "Primary Use", value: "Storage, offices, labour accommodation, cafés, classrooms, security cabins" },
       { label: "Condition Options", value: "New / one-trip / cargo-worthy used / wind & water tight" },
       { label: "Fit-Out Options", value: "Insulation, windows, doors, electrical, AC provision, washroom, branding" },
-      { label: "Monthly Rent", value: "From Rs 8,500 for 20 ft storage containers" },
+      { label: "Monthly Rent", value: "₹14,000 + 18% GST for the 20 ft unit (booked online as the first month)" },
       { label: "Coverage", value: "Pan-India delivery with crane and trailer coordination" },
       { label: "Commercial Model", value: "Monthly rental, long-term lease, and rent-plus-buy options" },
     ],
@@ -761,7 +761,6 @@ export const products: Product[] = [
       { label: "Electrical", value: "MCB DB, IS-marked copper wiring, LED lights, AC provision" },
       { label: "Mobility", value: "Crane-liftable, transport-ready, reusable across projects" },
       { label: "Applications", value: "Construction, EPC, mining, logistics, real estate, government projects" },
-      { label: "Indicative Price Range", value: "From ₹1.8 lakh depending on size and fit-out scope" },
     ],
     features: [
       "Factory-built site offices delivered ready for use",
@@ -1144,9 +1143,6 @@ export const products: Product[] = [
       { label: "Acoustic Reduction", value: "Up to 40 dB" },
       { label: "Delivery Area", value: "Koramangala 1st–8th Block, HSR Layout, Ejipura, Domlur" },
       { label: "Delivery Time", value: "3–7 days (in-stock); 12–20 days (custom)" },
-      { label: "Rental", value: "From ₹5,000/month (20 ft)" },
-      { label: "Used Container Price", value: "₹50,000 – ₹2,00,000" },
-      { label: "New Container Price", value: "₹1,50,000 – ₹5,00,000" },
     ],
     features: [
       "20 ft and 40 ft ISO containers — standard and high cube",
@@ -1157,7 +1153,7 @@ export const products: Product[] = [
       "Labour accommodation with bunk layouts for 8–12 per unit",
       "Security guard cabins, portable toilets, prefab canteens",
       "Same-week delivery for standard units in Koramangala",
-      "Rental from ₹5,000/month or purchase with full customization",
+      "Available to rent or purchase with full customization",
       "AutoCAD drawings (1:50 scale) for BBMP/BDA approvals",
       "90% container reuse — minimal debris vs brick-and-mortar",
     ],
@@ -1183,8 +1179,6 @@ export const products: Product[] = [
       { label: "AC Provision", value: "1.5–2 ton split AC" },
       { label: "Delivery Area", value: "Krishnagiri, Hosur, Rayakottai, Dharmapuri, Vellore" },
       { label: "Delivery Time", value: "3–5 days (stock); 15–30 days (custom)" },
-      { label: "Used Container Price", value: "₹1,50,000 – ₹3,00,000" },
-      { label: "Finished Office Price", value: "₹1,80,000 – ₹5,00,000+" },
       { label: "Design Life", value: "25+ years with maintenance" },
     ],
     features: [
@@ -1222,8 +1216,6 @@ export const products: Product[] = [
       { label: "AC Provision", value: "1.5–2 ton split AC" },
       { label: "Service Area", value: "All SIPCOT estates — Sriperumbudur, Oragadam, Hosur, Gummidipoondi, Ranipet" },
       { label: "Delivery Time", value: "7–15 working days" },
-      { label: "Rental", value: "From ₹5,000/month (20 ft)" },
-      { label: "Purchase Price", value: "From ₹1,50,000 (20 ft)" },
       { label: "Design Life", value: "20–25 years with maintenance" },
     ],
     features: [
@@ -1263,7 +1255,6 @@ export const products: Product[] = [
       { label: "Anti-Corrosion", value: "SA2.5 sandblasting + marine epoxy 120 microns DFT" },
       { label: "Service Area", value: "Chennai Port, Ennore, Kattupalli, OMR, ECR, Sriperumbudur, Oragadam" },
       { label: "Dispatch Time", value: "24–72 hours (bare); 2–6 weeks (fitted)" },
-      { label: "Used Container Price", value: "From ₹80,000 (20 ft)" },
     ],
     features: [
       "20 ft, 40 ft GP and 40 ft HC ISO containers — new and used",
@@ -1300,7 +1291,6 @@ export const products: Product[] = [
       { label: "Anti-Corrosion", value: "Epoxy paint with anti-rust primer" },
       { label: "Service Area", value: "Narsapura, Vemgal, Malur, Hoskote, Kolar, NH-75 corridor" },
       { label: "Delivery Time", value: "7–15 working days from Bengaluru" },
-      { label: "Used Container Price", value: "From ₹95,000 (20 ft CSC recertified)" },
     ],
     features: [
       "20 ft and 40 ft dry, high cube, reefer, and open-top containers",
@@ -1336,7 +1326,6 @@ export const products: Product[] = [
       { label: "Anti-Corrosion", value: "Epoxy paint with anti-rust primer" },
       { label: "Service Area", value: "Peenya 1st–4th Phase, Rajajinagar, Yeshwanthpur, Tumkur Road corridor" },
       { label: "Delivery Time", value: "2–4 working days from Bengaluru yards" },
-      { label: "Used Container Price", value: "From ₹85,000 (20 ft cargo-grade)" },
     ],
     features: [
       "20 ft and 40 ft ISO storage containers for raw materials, spares, and finished goods",

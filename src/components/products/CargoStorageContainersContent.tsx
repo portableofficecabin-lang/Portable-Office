@@ -365,7 +365,7 @@ export function CargoStorageContainersContent() {
       {/* Applications */}
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-6">Applications in Indian Industry & Infrastructure</h2>
-        <p className="text-muted-foreground mb-6">India's ₹5,000 crore prefab sector continues growing at approximately 20% CAGR, driven by versatile container applications.</p>
+        <p className="text-muted-foreground mb-6">India's prefab sector continues growing rapidly year on year, driven by versatile container applications.</p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applications.map((app) => (
             <div key={app.title} className="bg-card border border-border rounded-xl p-6">

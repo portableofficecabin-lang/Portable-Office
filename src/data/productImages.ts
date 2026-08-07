@@ -9,37 +9,22 @@ import portableToilet from "@/assets/products/portable-toilet.jpg";
 import securityCabin from "@/assets/products/security-cabin.jpg";
 import standardSiteOfficeContainer from "@/assets/products/standard-site-office-container.webp";
 import luxuryPrefabVilla from "@/assets/products/luxury-prefab-villa.webp";
-import luxuryPrefabVillaG1 from "@/assets/products/luxury-prefab-villa-g1.webp";
 import portaCabin from "@/assets/products/porta-cabin.webp";
-import familyPrefabHome2bhk from "@/assets/products/family-prefab-home-2bhk.webp";
 import msPortableCabin from "@/assets/products/ms-portable-cabin.webp";
 import cargoStorageContainer40ft from "@/assets/rental/cargo-storage-container-40ft.webp";
 import shippingContainerMain from "@/assets/products/shipping-container-stacked.webp";
 import usedShippingContainerMain from "@/assets/products/used-shipping-container-main.webp";
 import usedShippingContainerDisplay from "@/assets/products/used-shipping-container-third.webp";
 import cargoContainerForSaleMain from "@/assets/products/cargo-container-for-sale-main.webp";
-import shippingContainerRentalMain from "@/assets/products/shipping-container-rental-yard.webp";
-import constructionSitePortableOffice from "@/assets/products/construction-site-portable-office-site-office.webp";
-import siteOfficeContainerManufacturersExterior from "@/assets/products/site-office-container-manufacturers-exterior.webp";
 import labourHutmentsMain from "@/assets/products/labour-hutments-staff-accommodation-1.webp";
 import prefabPortaCabinCrane from "@/assets/products/prefab-porta-cabin-exterior.webp";
 import laborHutmentsAerial from "@/assets/products/labor-hutments-aerial.webp";
 import cabinPortableSite from "@/assets/products/cabin-portable-site.webp";
-import securityCabinResidential from "@/assets/products/security-cabin-residential-gate.webp";
 import cabinsInOfficeModern from "@/assets/products/cabins-in-office-modern.webp";
 import steelPortableOfficeContainerCrane from "@/assets/products/steel-portable-office-container-crane.webp";
-import shippingContainerKormangalaCrane from "@/assets/products/shipping-container-kormangala-crane.webp";
-import shippingContainerKrishnagiriStorage from "@/assets/products/shipping-container-krishnagiri-storage.webp";
-import shippingContainerSipcotYard from "@/assets/products/shipping-container-sipcot-yard.webp";
-import shippingContainerChennaiPort from "@/assets/products/shipping-container-chennai-port.webp";
-import shippingContainerNarsapuraYard from "@/assets/products/shipping-container-narsapura-yard.webp";
-import shippingContainerPeenyaIndustrial from "@/assets/products/shipping-container-peenya-industrial.webp";
 import cargoStorageContainersMain from "@/assets/products/cargo-storage-containers-main.webp";
 import cargoContainersMain from "@/assets/products/cargo-containers-main.webp";
 import cargoStorageContainersPinkMain from "@/assets/products/cargo-storage-containers-pink-main.webp";
-import cargoShippingContainerMain from "@/assets/products/cargo-shipping-container-main.webp";
-import workmenAccommodationMain from "@/assets/products/workmen-accommodation-main.webp";
-import labourColonyAerial from "@/assets/products/labour-colony-aerial.png";
 
 // Category-level images
 export const categoryImages: Record<string, string> = {
@@ -62,18 +47,18 @@ export const productImages: Record<string, string> = {
   "2": standardSiteOfficeContainer,
   "POC-SOC-20ST": standardSiteOfficeContainer,
   "standard-site-office-container": standardSiteOfficeContainer,
-  "8": luxuryPrefabVillaG1,
-  "POC-PH-3LUX": luxuryPrefabVillaG1,
-  "luxury-prefab-villa": luxuryPrefabVillaG1,
+  "8": "/images/products/luxury-prefab-villa-g1-main.webp",
+  "POC-PH-3LUX": "/images/products/luxury-prefab-villa-g1-main.webp",
+  "luxury-prefab-villa": "/images/products/luxury-prefab-villa-g1-main.webp",
   "9": "/images/products/porta-cabin-front.webp",
   "POC-PC-PORTA": "/images/products/porta-cabin-front.webp",
   "porta-cabin": "/images/products/porta-cabin-front.webp",
   "7": "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
   "POC-PC-40BH": "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
   "portable-cabin-40ft-bunkhouse": "/images/products/portable-cabin-40ft-bunkhouse-front.webp",
-  "4": familyPrefabHome2bhk,
-  "POC-PH-2BHK": familyPrefabHome2bhk,
-  "family-prefab-home-2bhk": familyPrefabHome2bhk,
+  "4": "/images/products/family-prefab-home-2bhk-main.webp",
+  "POC-PH-2BHK": "/images/products/family-prefab-home-2bhk-main.webp",
+  "family-prefab-home-2bhk": "/images/products/family-prefab-home-2bhk-main.webp",
   "10": "/images/products/container-office-front.webp",
   "POC-CO-GEN": "/images/products/container-office-front.webp",
   "container-office": "/images/products/container-office-front.webp",
@@ -93,15 +78,15 @@ export const productImages: Record<string, string> = {
   "17": cargoContainerForSaleMain,
   "POC-CC-FS": cargoContainerForSaleMain,
   "cargo-container-for-sale": cargoContainerForSaleMain,
-  "18": shippingContainerRentalMain,
-  "POC-SC-RENT": shippingContainerRentalMain,
-  "shipping-container-rental": shippingContainerRentalMain,
-  "15": constructionSitePortableOffice,
-  "POC-SOC-CSPO": constructionSitePortableOffice,
-  "construction-site-portable-office": constructionSitePortableOffice,
-  "19": siteOfficeContainerManufacturersExterior,
-  "POC-SOC-MFR": siteOfficeContainerManufacturersExterior,
-  "site-office-container-manufacturers": siteOfficeContainerManufacturersExterior,
+  "18": "/images/products/shipping-container-rental-yard.webp",
+  "POC-SC-RENT": "/images/products/shipping-container-rental-yard.webp",
+  "shipping-container-rental": "/images/products/shipping-container-rental-yard.webp",
+  "15": "/images/products/construction-site-portable-office-site-office.webp",
+  "POC-SOC-CSPO": "/images/products/construction-site-portable-office-site-office.webp",
+  "construction-site-portable-office": "/images/products/construction-site-portable-office-site-office.webp",
+  "19": "/images/products/site-office-container-manufacturers-exterior.webp",
+  "POC-SOC-MFR": "/images/products/site-office-container-manufacturers-exterior.webp",
+  "site-office-container-manufacturers": "/images/products/site-office-container-manufacturers-exterior.webp",
   "22": labourHutmentsMain,
   "POC-LH-STAFF": labourHutmentsMain,
   "prefabricated-labour-hutments-&-staff-accommodation": labourHutmentsMain,
@@ -114,33 +99,33 @@ export const productImages: Record<string, string> = {
   "25": cabinPortableSite,
   "POC-PC-CABPORT": cabinPortableSite,
   "cabin-portable": cabinPortableSite,
-  "26": securityCabinResidential,
-  "POC-SC-SECAB": securityCabinResidential,
-  "security-cabin": securityCabinResidential,
+  "26": "/images/products/security-cabin-residential-gate.webp",
+  "POC-SC-SECAB": "/images/products/security-cabin-residential-gate.webp",
+  "security-cabin": "/images/products/security-cabin-residential-gate.webp",
   "27": cabinsInOfficeModern,
   "POC-CO-CABIN": cabinsInOfficeModern,
   "cabins-in-office": cabinsInOfficeModern,
   "28": steelPortableOfficeContainerCrane,
   "POC-SOC-SPOC": steelPortableOfficeContainerCrane,
   "steel-portable-office-container": steelPortableOfficeContainerCrane,
-  "29": shippingContainerKormangalaCrane,
-  "POC-SC-KRMG": shippingContainerKormangalaCrane,
-  "shipping-container-in-kormangala": shippingContainerKormangalaCrane,
-  "30": shippingContainerKrishnagiriStorage,
-  "POC-SC-KRSH": shippingContainerKrishnagiriStorage,
-  "shipping-container-in-krishnagiri": shippingContainerKrishnagiriStorage,
-  "31": shippingContainerSipcotYard,
-  "POC-SC-SIPCOT": shippingContainerSipcotYard,
-  "shipping-container-in-sipcot": shippingContainerSipcotYard,
-  "32": shippingContainerChennaiPort,
-  "POC-SC-CHN": shippingContainerChennaiPort,
-  "shipping-container-in-chennai": shippingContainerChennaiPort,
-  "33": shippingContainerNarsapuraYard,
-  "POC-SC-NRSP": shippingContainerNarsapuraYard,
-  "shipping-container-in-narsapura-industrial": shippingContainerNarsapuraYard,
-  "34": shippingContainerPeenyaIndustrial,
-  "POC-SC-PNYA": shippingContainerPeenyaIndustrial,
-  "shipping-container-in-peenya-industrial": shippingContainerPeenyaIndustrial,
+  "29": "/images/products/shipping-container-kormangala-crane.webp",
+  "POC-SC-KRMG": "/images/products/shipping-container-kormangala-crane.webp",
+  "shipping-container-in-kormangala": "/images/products/shipping-container-kormangala-crane.webp",
+  "30": "/images/products/shipping-container-krishnagiri-storage.webp",
+  "POC-SC-KRSH": "/images/products/shipping-container-krishnagiri-storage.webp",
+  "shipping-container-in-krishnagiri": "/images/products/shipping-container-krishnagiri-storage.webp",
+  "31": "/images/products/shipping-container-sipcot-yard.webp",
+  "POC-SC-SIPCOT": "/images/products/shipping-container-sipcot-yard.webp",
+  "shipping-container-in-sipcot": "/images/products/shipping-container-sipcot-yard.webp",
+  "32": "/images/products/shipping-container-chennai-port.webp",
+  "POC-SC-CHN": "/images/products/shipping-container-chennai-port.webp",
+  "shipping-container-in-chennai": "/images/products/shipping-container-chennai-port.webp",
+  "33": "/images/products/shipping-container-narsapura-yard.webp",
+  "POC-SC-NRSP": "/images/products/shipping-container-narsapura-yard.webp",
+  "shipping-container-in-narsapura-industrial": "/images/products/shipping-container-narsapura-yard.webp",
+  "34": "/images/products/shipping-container-peenya-industrial.webp",
+  "POC-SC-PNYA": "/images/products/shipping-container-peenya-industrial.webp",
+  "shipping-container-in-peenya-industrial": "/images/products/shipping-container-peenya-industrial.webp",
   "35": cargoStorageContainersMain,
   "POC-CSC-GUIDE": cargoStorageContainersMain,
   "cargo-storage-containers": cargoStorageContainersMain,
@@ -150,15 +135,15 @@ export const productImages: Record<string, string> = {
   "37": cargoStorageContainersPinkMain,
   "POC-CSC-PINK": cargoStorageContainersPinkMain,
   "cargo-storage-containers-pink": cargoStorageContainersPinkMain,
-  "38": cargoShippingContainerMain,
-  "POC-SC-CARGO": cargoShippingContainerMain,
-  "cargo-shipping-container": cargoShippingContainerMain,
-  "39": workmenAccommodationMain,
-  "POC-WA-G1": workmenAccommodationMain,
-  "workmen-accommodation": workmenAccommodationMain,
-  "40": labourColonyAerial,
-  "POC-LC-PREFAB": labourColonyAerial,
-  "labour-colony": labourColonyAerial,
+  "38": "/images/products/cargo-shipping-container-main.webp",
+  "POC-SC-CARGO": "/images/products/cargo-shipping-container-main.webp",
+  "cargo-shipping-container": "/images/products/cargo-shipping-container-main.webp",
+  "39": "/images/products/workmen-accommodation-g1-main.webp",
+  "POC-WA-G1": "/images/products/workmen-accommodation-g1-main.webp",
+  "workmen-accommodation": "/images/products/workmen-accommodation-g1-main.webp",
+  "40": "/images/products/labour-colony-aerial-main.png",
+  "POC-LC-PREFAB": "/images/products/labour-colony-aerial-main.png",
+  "labour-colony": "/images/products/labour-colony-aerial-main.png",
   // Public-path strings (not bundled imports) — the map is Record<string, string>, and this is the
   // type-clean pattern products 7/9/10/11 already use.
   "42": "/images/products/container-site-office-main.webp",
