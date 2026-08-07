@@ -180,6 +180,7 @@ export const footerProductsViewAll: NavLinkItem = { name: "View All Products", h
 export const footerCompanyLinks: NavLinkItem[] = [
   { name: "About Us", href: "/about-us" },
   { name: "Projects & Gallery", href: "/gallery" },
+  { name: "Cities We Serve", href: "/cities-we-serve" },
   { name: "Marketplace", href: "/marketplace" },
   { name: "Offers & Promotions", href: "/promotions" },
   { name: "Blog", href: "/blog" },
