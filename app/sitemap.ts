@@ -37,6 +37,7 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/about-us", 0.7, "monthly"),
   entry("/contact", 0.7, "monthly"),
   entry("/gallery", 0.7, "monthly"),
+  entry("/cities-we-serve", 0.6, "monthly"),
   entry("/book-appointment", 0.6, "monthly"),
   entry("/faq", 0.5, "monthly"),
   entry("/careers", 0.4, "monthly"),
