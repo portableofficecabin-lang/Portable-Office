@@ -5,7 +5,7 @@ import { locationStripText } from "@/lib/site-navigation";
 
 /**
  * Slim geo/SEO strip at the VERY TOP of the page — above the navy trust bar, so
- * "Portable Cabin Manufacturer in Bangalore • Serving Karnataka & Tamil Nadu" is the first
+ * "Portable Cabin Manufacturer Serving Bangalore • Karnataka & Tamil Nadu" is the first
  * visible line of every page that uses Layout.
  *
  * SERVER COMPONENT, deliberately: mounted from the server-rendered Layout (NOT inside the

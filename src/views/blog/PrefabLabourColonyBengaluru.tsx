@@ -93,7 +93,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Intro paragraph */}
           <section className="prose prose-lg max-w-none">
             <p className="text-foreground/85 leading-relaxed">
-              At <strong>Portable Office Cabin</strong>, we design, manufacture and install turnkey prefab labour colonies across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a leading manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
+              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a leading manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
             </p>
           </section>
 
@@ -150,7 +150,7 @@ export default function PrefabLabourColonyBengaluru() {
               Bengaluru's project environment presents a unique combination of challenges. Land costs in the city are among the highest in the country, project timelines are aggressive, and regulatory approvals for permanent structures can take months. For temporary housing needs that might last two to five years, investing in conventional RCC labour sheds simply doesn't make business sense.
             </p>
             <p className="text-foreground/85 leading-relaxed">
-              Prefabricated labour colonies address these realities through a fundamentally different approach. Units are manufactured in controlled factory environments near Bengaluru using advanced machinery for quality control, then transported to site for quick assembly. This means your colony can be operational in days rather than months, with minimal foundation work and almost no wet construction.
+              Prefabricated labour colonies address these realities through a fundamentally different approach. Units are manufactured in the controlled environment of our Tamil Nadu factory at Kamandoddi near Hosur — roughly 40 km from Bengaluru — using advanced machinery for quality control, then transported to site for quick assembly. This means your colony can be operational in days rather than months, with minimal foundation work and almost no wet construction.
             </p>
             <div className="bg-card border border-border/50 rounded-xl p-6 space-y-3">
               <h3 className="font-bold text-foreground">Key advantages for Bengaluru projects:</h3>

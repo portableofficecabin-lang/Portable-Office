@@ -36,6 +36,12 @@ export interface CompanyAddress {
   postalCode: string;
   /** schema.org addressCountry */
   country: string;
+  /**
+   * Phone numbers that reach THIS location specifically, when they differ from the
+   * company-wide numbers in COMPANY.phones. Optional: most locations are reached on the
+   * main numbers. `e164` is for tel: links, `display` is what a human reads.
+   */
+  phones?: readonly { e164: string; display: string }[];
 }
 
 /** Formats a CompanyAddress as a single-line string for footers, PDFs and emails. */
@@ -81,6 +87,17 @@ export const COMPANY = Object.freeze({
       postalCode: "635117",
       country: "India",
     } as CompanyAddress,
+    /**
+     * @deprecated RETIRED FROM PUBLIC DISPLAY — 2026-08-09, on the owner's instruction.
+     *
+     * The Hoskote works address is no longer shown as a company location: the Karnataka
+     * presence is now stated as `bangaloreOffice` (Electronic City) below. The record is
+     * KEPT, not deleted, because it is still a verified historical fact and this file is
+     * the only place it is written down — deleting it would lose it outright.
+     *
+     * Do NOT add this back to a customer-facing surface (footer, contact page, schema,
+     * quotations, PDFs) without the owner confirming the location is current again.
+     */
     karnatakaFactory: {
       label: "Karnataka Factory (Bangalore)",
       street: "Sy. No. 51",
@@ -88,6 +105,22 @@ export const COMPANY = Object.freeze({
       region: "Karnataka",
       postalCode: "562114",
       country: "India",
+    } as CompanyAddress,
+    /**
+     * Current Karnataka location — replaced the Hoskote works on all public surfaces.
+     * Reached on its own two numbers, NOT the company-wide numbers above.
+     */
+    bangaloreOffice: {
+      label: "Bangalore Office (Electronic City)",
+      street: "Flat No. 280, Building No. 6, 7",
+      locality: "Electronic City Phase 1, Bommasadra, Chandapura, Jigani, Bengaluru",
+      region: "Karnataka",
+      postalCode: "560105",
+      country: "India",
+      phones: [
+        { e164: "+918310372601", display: "+91 83103 72601" },
+        { e164: "+918073102817", display: "+91 80731 02817" },
+      ],
     } as CompanyAddress,
   },
 

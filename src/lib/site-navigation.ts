@@ -270,8 +270,8 @@ export const socialLinks = [
 /**
  * The statements in the slim bar above the header.
  *
- * "Manufacturer in Bangalore" is deliberately NOT here any more: the LocationStrip above
- * this bar now opens every page with "Portable Cabin Manufacturer in Bangalore • Serving
+ * A manufacturer-location statement is deliberately NOT here: the LocationStrip above this
+ * bar already opens every page with "Portable Cabin Manufacturer Serving Bangalore •
  * Karnataka & Tamil Nadu", so repeating it one row below said the same thing twice.
  *
  * Both remaining statements are substantiated by content already on this site:
@@ -317,13 +317,16 @@ export const topBarVerifications = [
  * every Layout page so crawlers see the manufacturer location + service area in the initial
  * HTML of the whole site, not just on the pages that mention it in body copy.
  *
- * Both halves are backed by existing verified facts: the works is at Hoskote near Bangalore
- * (COMPANY.addresses.karnatakaFactory) and the company is registered in Tamil Nadu (GSTIN
- * state code 33, UDYAM-TN), so "Serving Karnataka & Tamil Nadu" states the two home states —
- * it narrows nothing: PAN-India delivery remains claimed one row above in the top bar.
+ * WORDING IS LOAD-BEARING: this says "Serving Bangalore", NOT "Manufacturer in Bangalore".
+ * Manufacturing happens at ONE place only — the Tamil Nadu factory at Kamandoddi near Hosur
+ * (COMPANY.addresses.tamilNaduFactory). Bangalore is an OFFICE only
+ * (COMPANY.addresses.bangaloreOffice, Electronic City); the Hoskote works was retired on
+ * 2026-08-09, so any "manufacturer IN Bangalore" phrasing is now a false location claim.
+ * "Karnataka & Tamil Nadu" states the two home states and narrows nothing: PAN-India
+ * delivery remains claimed one row above in the top bar.
  */
 export const locationStripText =
-  "Portable Cabin Manufacturer in Bangalore • Serving Karnataka & Tamil Nadu";
+  "Portable Cabin Manufacturer Serving Bangalore • Karnataka & Tamil Nadu";
 
 export const footerTrustItems = [
   { label: "ISO 9001:2015 Certified", icon: "badge" },

@@ -143,7 +143,7 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                   <div className="flex items-start gap-3 bg-white/10 rounded-xl p-4">
                     <MapPin className="w-6 h-6 text-accent shrink-0 mt-1" />
                     <span className="font-bold">
-                      Factory in Tamil Nadu & Karnataka, Serving {content.location}
+                      Tamil Nadu Factory & Bangalore Office, Serving {content.location}
                     </span>
                   </div>
                 </div>

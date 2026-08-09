@@ -63,7 +63,7 @@ const faqs = [
   },
   {
     q: "How quickly can a container be delivered and set up in Peenya?",
-    a: "In-stock standard containers can be delivered within 2–4 working days from our Bengaluru yards via Tumkur Road. Complete setup including placement, electrical connections, and AC installation typically takes 2–5 days depending on customization level."
+    a: "In-stock standard containers can be delivered within 2–4 working days from our Tamil Nadu factory near Hosur — roughly 40 km from Bengaluru — reaching Peenya via the Outer Ring Road and Tumkur Road. Complete setup including placement, electrical connections, and AC installation typically takes 2–5 days depending on customization level."
   },
   {
     q: "What is the price of a shipping container in Peenya?",
@@ -122,7 +122,7 @@ export function ShippingContainerPeenyaContent() {
             Peenya Industrial Area stands as one of Asia's largest industrial hubs, spanning approximately 1,200 to 1,800 acres across four phases along the Tumkur Road corridor in Bengaluru, Karnataka. This manufacturing powerhouse hosts over 3,500 MSME industries covering engineering fabrication, auto ancillaries, electronics, machine tools, and pharmaceuticals.
           </p>
           <p>
-            Portable Office Cabin supplies new and used shipping containers, container offices, and prefab solutions specifically to Peenya industries, with regular dispatch from Bengaluru yards. Typical use cases include raw material storage, finished goods storage, factory expansion offices, security cabins, labour accommodation, and temporary project facilities.
+            Portable Office Cabin supplies new and used shipping containers, container offices, and prefab solutions specifically to Peenya industries, with regular dispatch from our Tamil Nadu factory near Hosur, just about 40 km from Bengaluru. Typical use cases include raw material storage, finished goods storage, factory expansion offices, security cabins, labour accommodation, and temporary project facilities.
           </p>
         </div>
       </section>
@@ -325,7 +325,7 @@ export function ShippingContainerPeenyaContent() {
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
           <p>Portable Office Cabin arranges end-to-end transport, unloading, and placement for containers throughout Peenya.</p>
           <ul className="space-y-2">
-            <li>Delivery from Bengaluru container yards via Tumkur Road / Outer Ring Road</li>
+            <li>Delivery from our Tamil Nadu factory near Hosur — about 40 km from Bengaluru — via Outer Ring Road / Tumkur Road</li>
             <li>Trailers for 40 ft containers, multi-axle trucks for 20 ft units</li>
             <li>On-site crane or hydra support for unloading where required</li>
             <li>In-stock units delivered within 2–4 working days, depending on customization</li>

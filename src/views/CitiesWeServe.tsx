@@ -35,11 +35,11 @@ const fadeUp = {
  * the schema must claim the same coverage, never more.
  */
 const MAJOR_CITIES = [
-  { city: "Bengaluru", state: "Karnataka", note: "Factory city — fastest delivery and installation" },
+  { city: "Bengaluru", state: "Karnataka", note: "~40 km from our factory — fastest delivery and installation" },
   { city: "Hosur", state: "Tamil Nadu", note: "Factory belt — local-zone delivery" },
   { city: "Krishnagiri", state: "Tamil Nadu", note: "Factory belt — local-zone delivery" },
   { city: "Chennai", state: "Tamil Nadu", note: "Port city — container stock dispatched fast" },
-  { city: "Coimbatore", state: "Tamil Nadu", note: "2–4 day transit from our factories" },
+  { city: "Coimbatore", state: "Tamil Nadu", note: "2–4 day transit from our factory" },
   { city: "Hyderabad", state: "Telangana", note: "South-zone transport" },
   { city: "Mumbai", state: "Maharashtra", note: "Pan-India zone delivery" },
   { city: "Pune", state: "Maharashtra", note: "Pan-India zone delivery" },
@@ -77,7 +77,7 @@ export default function CitiesWeServe() {
               {
                 icon: Factory,
                 title: "Made near Bengaluru",
-                desc: "Our units are fabricated at our Bengaluru and Hosur–Krishnagiri belt facilities, then transported to your site by road.",
+                desc: "Our units are fabricated in-house at our Tamil Nadu factory on the Hosur–Krishnagiri belt, barely 40 km from Bengaluru, then transported to your site by road.",
               },
               {
                 icon: Truck,
@@ -228,7 +228,7 @@ export default function CitiesWeServe() {
               "Secure online payment via UPI, cards and net banking",
               "Crane/unloading coordination guidance for your site",
               "Installation support available as an optional add-on",
-              "Pan-India dispatch from our Karnataka–Tamil Nadu facilities",
+              "Pan-India dispatch from our Tamil Nadu factory near Hosur",
             ].map((item) => (
               <p key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" aria-hidden="true" />

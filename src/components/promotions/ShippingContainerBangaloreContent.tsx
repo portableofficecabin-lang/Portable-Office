@@ -23,7 +23,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "How long does delivery take in Bangalore?",
     answer:
-      "Standard units are dispatched within 7–15 working days of order confirmation and receipt of the advance, with transit typically taking 1–5 days. Larger or custom projects take longer. Our Hoskote factory location keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
+      "Standard units are dispatched within 7–15 working days of order confirmation and receipt of the advance, with transit typically taking 1–5 days. Larger or custom projects take longer. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
   },
   {
     question: "Do you sell both new and used shipping containers?",
@@ -53,7 +53,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "Can you deliver outside Bangalore?",
     answer:
-      "Yes. We deliver pan-India from our Karnataka and Tamil Nadu factories, including Hosur, Tumakuru, Mysuru, Chennai, and Hyderabad.",
+      "Yes. We deliver pan-India from our Tamil Nadu factory near Hosur, including Hosur, Tumakuru, Mysuru, Chennai, and Hyderabad.",
   },
 ];
 
@@ -119,7 +119,7 @@ const CUSTOMIZATION = [
 const DELIVERY_AREAS = ["Whitefield", "Electronic City", "Peenya", "Bommasandra", "Jigani", "Yelahanka", "Devanahalli", "Sarjapur Road", "Hebbal", "Tumakuru Road", "Hosur"];
 
 const WHY_US = [
-  "Manufacturer, not middleman — factory-direct pricing from our Hoskote (Karnataka) and Kamandoddi (Tamil Nadu) plants",
+  "Manufacturer, not middleman — factory-direct pricing from our own Kamandoddi (Tamil Nadu) factory near Hosur, about 40 km from Bangalore",
   "15+ years of manufacturing experience and 500+ projects delivered across India",
   "10-year structural warranty on every unit",
   "End-to-end service: design, fabrication, delivery, installation, and after-sales support",
@@ -223,7 +223,7 @@ export function ShippingContainerBangaloreContent() {
           </table>
         </div>
         <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote with no hidden charges.</p>
-        <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture at Hoskote rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
+        <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture in-house at our own Tamil Nadu factory near Hosur rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
       </section>
 
       {/* New vs Used */}
@@ -297,7 +297,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our Karnataka factory is at Hoskote (Sy. No. 51, Mylapur Post, Mugabala), 30 minutes from Whitefield — so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 days.
+              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 days.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (

@@ -92,7 +92,6 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     const list = extras.length > 0 ? extras : [fallbackImage];
     return Array.from(new Set(list));
   })();
-  const productImage = resolveImageUrl(galleryImages[0]);
 
   const relatedProducts = allProducts
     .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
@@ -204,14 +203,21 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
       {/* ▶ LCP ELEMENT (product detail, mobile): the main product gallery image.
           On mobile the lg:grid-cols-2 layout stacks, so this image is the first and
           largest above-the-fold paint (the H1 sits below it). It is optimized three
-          ways: (1) this <link rel=preload as=image fetchpriority=high> starts the
-          fetch at <head> parse, before the gallery island markup; (2) ProductGallery
-          renders it via next/image with `priority` + `sizes="(max-width:1024px) 100vw,
-          50vw"` (AVIF/WebP, slot-sized); (3) the 4/3 aspect-ratio box reserves space
-          → no CLS. No further code change improves this element. */}
-      {productImage && (
-        <link rel="preload" as="image" href={productImage} fetchPriority="high" />
-      )}
+          ways: (1) ProductGallery renders it via next/image with `priority`, which
+          ITSELF injects the correct <link rel=preload as=image imagesrcset=…
+          imagesizes=…> into <head> — pointing at the /_next/image variant the browser
+          will actually request; (2) `sizes="(max-width:1024px) 100vw, 50vw"` keeps
+          that variant slot-sized (AVIF/WebP); (3) the 4/3 aspect-ratio box reserves
+          space → no CLS.
+
+          There is deliberately NO hand-written preload here any more. The previous one
+          pointed at the RAW file (`/images/products/x.webp`) while next/image fetches
+          `/_next/image?url=…&w=750&q=75` — a different URL, so it preloaded a file the
+          optimized path never uses. Verified in the served HTML: it downloaded the
+          full-size original at fetchPriority=high alongside the real LCP fetch, taking
+          bandwidth from the image it was meant to accelerate. The raw file is only ever
+          used by OptimizedImage's stage-2 fallback, i.e. when the optimizer has already
+          failed — which is not a path worth preloading for. */}
       <Layout>
         <JsonLd data={[structuredData, breadcrumb]} />
 

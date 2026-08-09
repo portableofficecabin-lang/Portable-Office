@@ -6,9 +6,9 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 export const metadata = buildPageMetadata({
-  title: "About Our Company & Factory Units",
+  title: "About Our Company & Tamil Nadu Factory",
   description:
-    "Learn about Portable Office Cabin — our Tamil Nadu and Karnataka manufacturing units, build process, quality standards and modular building expertise.",
+    "Learn about Portable Office Cabin — our Tamil Nadu factory near Hosur, ~40 km from Bangalore, build process, quality standards and modular building expertise.",
   path: "/about-us",
 });
 

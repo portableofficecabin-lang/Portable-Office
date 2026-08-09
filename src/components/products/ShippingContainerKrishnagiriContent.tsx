@@ -241,7 +241,7 @@ export function ShippingContainerKrishnagiriContent() {
           How We Work
         </h2>
         <p className="text-muted-foreground mb-4">
-          Our process covers requirement analysis, design proposals, manufacturing, quality checks, transportation, and after-sales support — ensuring customer satisfaction and meeting project timelines. From your initial enquiry to final handover, our Bengaluru-based team manages every step with clear communication and defined milestones.
+          Our process covers requirement analysis, design proposals, manufacturing, quality checks, transportation, and after-sales support — ensuring customer satisfaction and meeting project timelines. From your initial enquiry to final handover, our Tamil Nadu factory team, coordinated from our Bangalore office, manages every step with clear communication and defined milestones.
         </p>
       </section>
 
@@ -256,7 +256,7 @@ export function ShippingContainerKrishnagiriContent() {
             "Diverse project experience across construction, industrial, education, and government sectors",
             "Full customization strength — from basic storage to premium fitted offices",
             "Local understanding of Krishnagiri's terrain, climate, and logistics",
-            "Karnataka and Tamil Nadu-based operations for quicker site visits and delivery",
+            "Tamil Nadu factory near Hosur with a Bangalore office — quicker site visits and delivery",
             "Sustainability: 90% container reuse, minimal debris versus brick-and-mortar",
           ].map((point) => (
             <li key={point} className="flex items-start gap-3">
