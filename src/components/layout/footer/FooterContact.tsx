@@ -89,9 +89,12 @@ export function FooterContact() {
         </div>
       </div>
 
-      {/* ---------- Factory addresses ---------- */}
+      {/* ---------- Factory & office addresses ----------
+          Tamil Nadu works + the Bangalore (Electronic City) office. The Hoskote works
+          address was retired from public display on 2026-08-09 — see the @deprecated note
+          on COMPANY.addresses.karnatakaFactory before re-adding it here. */}
       <div className="mt-6 space-y-4">
-        {[COMPANY.addresses.tamilNaduFactory, COMPANY.addresses.karnatakaFactory].map((address) => (
+        {[COMPANY.addresses.tamilNaduFactory, COMPANY.addresses.bangaloreOffice].map((address) => (
           <div key={address.label} className="flex items-start gap-2.5">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
             <address className="not-italic text-sm text-white/75">

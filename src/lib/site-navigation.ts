@@ -317,8 +317,8 @@ export const topBarVerifications = [
  * every Layout page so crawlers see the manufacturer location + service area in the initial
  * HTML of the whole site, not just on the pages that mention it in body copy.
  *
- * Both halves are backed by existing verified facts: the works is at Hoskote near Bangalore
- * (COMPANY.addresses.karnatakaFactory) and the company is registered in Tamil Nadu (GSTIN
+ * Both halves are backed by existing verified facts: there is a Bangalore location at
+ * Electronic City (COMPANY.addresses.bangaloreOffice) and the company is registered in Tamil Nadu (GSTIN
  * state code 33, UDYAM-TN), so "Serving Karnataka & Tamil Nadu" states the two home states —
  * it narrows nothing: PAN-India delivery remains claimed one row above in the top bar.
  */
