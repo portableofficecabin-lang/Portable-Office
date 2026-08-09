@@ -85,7 +85,7 @@ const pricingRows = [
 const strengths = [
   "Marine-grade steel and PIR insulation for 20-year durability",
   "Experience across site offices, labour colonies, container homes, cafés, guard cabins, and portable toilets",
-  "Karnataka-based operations for quicker site visits and after-sales support",
+  "Bangalore office plus a Tamil Nadu factory ~40 km away — quicker site visits and after-sales support",
   "Sustainability: 90% container reuse, minimal debris versus brick-and-mortar",
   "Flexibility for homeowners, corporate offices, construction firms, and government bodies",
 ];
@@ -123,7 +123,7 @@ export function ShippingContainerKormangalaContent() {
             Koramangala (560034) has become one of Bengaluru's most dynamic neighbourhoods for startups, IT firms, and retail ventures. With high commercial lease costs and ongoing redevelopment along 80 Feet Road, Inner Ring Road, and nearby Ejipura, HSR Layout, and Domlur, businesses are searching for cost-effective alternatives.
           </p>
           <p className="leading-relaxed text-muted-foreground">
-            Portable Office Cabin is a Bengaluru-based manufacturer and supplier of prefabricated and modular building solutions. We serve both B2B and B2C customers with new and used containers — from compact storage units to fully fitted container offices, cafés, homes, and rooftop structures.
+            Portable Office Cabin manufactures at its Tamil Nadu factory near Hosur, just ~40 km from Bengaluru, and supplies prefabricated and modular building solutions from its Bangalore office. We serve both B2B and B2C customers with new and used containers — from compact storage units to fully fitted container offices, cafés, homes, and rooftop structures.
           </p>
         </div>
 
@@ -295,7 +295,7 @@ export function ShippingContainerKormangalaContent() {
         <div className="rounded-3xl border border-border bg-card p-8">
           <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Delivery & installation in Koramangala</h3>
           <div className="space-y-4 text-muted-foreground">
-            <p><strong className="text-foreground">Delivery:</strong> 20/32 ft multi-axle trucks from Bengaluru yards; 3–7 days for in-stock units.</p>
+            <p><strong className="text-foreground">Delivery:</strong> 20/32 ft multi-axle trucks from our Tamil Nadu factory near Hosur; 3–7 days for in-stock units.</p>
             <p><strong className="text-foreground">Installation:</strong> Hydra or crane trucks; placement on concrete blocks or steel supports; levelling and fit-out checks.</p>
             <p><strong className="text-foreground">Permissions:</strong> Commercial cafés, offices, and rooftop containers may require BBMP/BDA approvals — we provide AutoCAD drawings (1:50 scale).</p>
             <p><strong className="text-foreground">Timing:</strong> Daytime installation (9 AM–6 PM) to comply with noise bylaws.</p>

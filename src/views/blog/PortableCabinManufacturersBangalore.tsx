@@ -123,7 +123,7 @@ export default function PortableCabinManufacturersBangalore() {
         <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/20">
           <img
             src={resolveImageUrl(heroImage)}
-            alt="Portable cabin manufacturing facility in Bangalore industrial area with modular office cabins lined up for dispatch by Portable Office Cabin"
+            alt="Portable cabin manufacturing facility near Hosur, Tamil Nadu with modular office cabins lined up for dispatch to Bangalore by Portable Office Cabin"
             className="w-full h-auto object-cover"
             loading="eager"
           />
@@ -276,7 +276,7 @@ export default function PortableCabinManufacturersBangalore() {
                 ["Material Choice", "Basic MS shells: ₹1,200–1,800/sq.ft.; fully finished with insulation: ₹2,500–3,500/sq.ft.; FRP adds 20% premium for lightness"],
                 ["Specification Level", "Shell-only at ₹1,000/sq.ft. vs turnkey at ₹3,000+/sq.ft. with false ceilings (₹200/sq.ft.), UPVC windows (₹400/sq.ft.), attached toilets (+₹1–2 lakh)"],
                 ["Bulk Orders", "Ordering 10+ units for large projects brings 15–25% volume discounts from business manufacturer suppliers"],
-                ["Transport & Installation", "Distance from fabrication units in Hoskote or Peenya adds ₹10,000–25,000 (50–100km radius) plus ₹20,000–40,000 crane setup"],
+                ["Transport & Installation", "Distance from the manufacturer's fabrication unit adds ₹10,000–25,000 (50–100km radius) plus ₹20,000–40,000 crane setup"],
               ].map(([factor, details], idx) => (
                 <tr key={idx} className={idx % 2 === 0 ? "bg-card" : "bg-muted/20"}>
                   <td className="p-3 font-medium text-foreground border-b border-border/20 whitespace-nowrap">{factor}</td>
@@ -353,7 +353,7 @@ export default function PortableCabinManufacturersBangalore() {
           {[
             { step: "1", title: "Site Assessment", desc: "Brief visit or online discussion using site photos to check crane access, base preparation needs, and power/water points" },
             { step: "2", title: "Design & Quotation", desc: "Sharing layouts with detailed breakup covering cabin cost, transport, taxes, and portable cabin installation service charges" },
-            { step: "3", title: "Fabrication", desc: "1–3 week manufacturing at facilities in Hoskote, Peenya, or Bommasandra covering structure, insulation, electricals, and painting" },
+            { step: "3", title: "Fabrication", desc: "1–3 week manufacturing at the manufacturer's own works — ours is at Kamandoddi, near Hosur — covering structure, insulation, electricals, and painting" },
             { step: "4", title: "Delivery & Installation", desc: "Transport by trailer, positioning using Hydra crane, levelling, and utility connections—typically completed in 1–2 days" },
           ].map((step, idx) => (
             <div key={idx} className="flex gap-4 items-start">
@@ -413,7 +413,7 @@ export default function PortableCabinManufacturersBangalore() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="bg-accent/10 border border-accent/30 rounded-xl p-6">
           <p className="text-muted-foreground leading-relaxed mb-4">
-            <strong className="text-foreground">Portable Office Cabin</strong> is a leading manufacturer of portable cabins, container offices, prefab homes, and modular structures in Bangalore and across India. With over a decade of experience, we deliver customized, high-quality portable solutions for construction, industrial, commercial, and residential applications.
+            <strong className="text-foreground">Portable Office Cabin</strong> is a leading manufacturer of portable cabins, container offices, prefab homes, and modular structures serving Bangalore and customers across India from our own Tamil Nadu factory at Kamandoddi, Hosur — barely 40 km from the city — backed by our Bangalore office in Electronic City. With over a decade of experience, we deliver customized, high-quality portable solutions for construction, industrial, commercial, and residential applications.
           </p>
           <Link href="/" className="text-primary font-semibold hover:underline">
             Visit Portable Office Cabin →
@@ -426,7 +426,7 @@ export default function PortableCabinManufacturersBangalore() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-4">Need a Portable Cabin in Bangalore?</h2>
           <p className="text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Call or WhatsApp Portable Office Cabin. We manufacture and deliver MS cabins, container offices, security cabins, and prefab homes across Bengaluru.
+            Call or WhatsApp Portable Office Cabin. We manufacture at our Tamil Nadu factory near Hosur — around 40 km away — and deliver MS cabins, container offices, security cabins, and prefab homes across Bengaluru.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={COMPANY.whatsapp.url} target="_blank" rel="noopener noreferrer">

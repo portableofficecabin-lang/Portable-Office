@@ -247,7 +247,7 @@ export function ProductsPageContent({
                      * labelled "incl. GST" — the previous "excluding GST" text contradicted them
                      * on the same screen (the exact mismatch class behind the Merchant suspension). */
                     ? `${activeCategoryObj.description}. Browse every ${activeCategoryObj.name.toLowerCase()} model below — each unit is engineered for Indian site conditions, delivered factory-finished, and backed by our standard warranty. Prices shown are fixed GST-inclusive prices in INR; transport and installation are quoted separately for your site.`
-                    : "Explore our complete catalogue of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers. Every product is manufactured in-house at our Tamil Nadu and Karnataka factories, delivered installation-ready across India. Filter by category on the left or browse the paginated list — each card links to a full product page with specifications, dimensions and pricing."}
+                    : "Explore our complete catalogue of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers. Every product is manufactured in-house at our Tamil Nadu factory near Hosur — just 40 km from Bangalore — and delivered installation-ready across India. Filter by category on the left or browse the paginated list — each card links to a full product page with specifications, dimensions and pricing."}
                 </p>
               </div>
 

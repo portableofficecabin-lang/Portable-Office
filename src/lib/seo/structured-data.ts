@@ -25,9 +25,9 @@ function absoluteUrl(url: string): string {
 
 export const seoData = {
   home: {
-    title: "Portable Office Cabin Manufacturer in Bangalore | India",
+    title: "Portable Office Cabin Manufacturer Serving Bangalore | India",
     description:
-      "Leading portable office cabin manufacturer in Bangalore offering container offices, site cabins & prefab structures. 7-15 days delivery. Call now!",
+      "Leading portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7-15 days delivery. Call now!",
     keywords:
       "portable office cabin manufacturer Bangalore, container office, site cabin, prefab structure, porta cabin India",
   },
@@ -688,6 +688,11 @@ export function generatePromotionStructuredData(content: {
     url: content.canonicalUrl,
     image,
     serviceType: content.keyword,
+    // provider.address is a premises claim, so it must be OUR address, not the page's target
+    // city. These pages are generated for ten states/cities we sell into (Kerala, Maharashtra,
+    // West Bengal, Karnataka …) and we occupy exactly one of them — the Tamil Nadu factory.
+    // The page's own city and coordinates belong on areaServed below, which is what
+    // schema.org actually means by "where this service is provided".
     provider: {
       "@type": "LocalBusiness",
       name: "Portable Office Cabin",
@@ -696,13 +701,16 @@ export function generatePromotionStructuredData(content: {
       email: "sales@portableofficecabin.com",
       address: {
         "@type": "PostalAddress",
-        addressLocality: content.location,
+        streetAddress: "Survey No. 222 Door No: 2/149-6 Road 1C, Kamandoddi",
+        addressLocality: "Hosur",
+        addressRegion: "Tamil Nadu",
+        postalCode: "635117",
         addressCountry: "IN",
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude,
-        longitude,
+        latitude: "12.7409",
+        longitude: "77.8253",
       },
     },
     areaServed: {
@@ -712,6 +720,11 @@ export function generatePromotionStructuredData(content: {
         "@type": "PostalAddress",
         addressLocality: content.location,
         addressCountry: "IN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude,
+        longitude,
       },
     },
   };

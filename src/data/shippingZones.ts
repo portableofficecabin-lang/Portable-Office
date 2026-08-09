@@ -58,7 +58,7 @@ export const SHIPPING_ZONES: ShippingZone[] = [
     rate: 0,
     transitDaysMin: 1,
     transitDaysMax: 2,
-    // Bengaluru + Hoskote/Kolar belt and the Hosur/Krishnagiri belt around the two factories.
+    // Bengaluru + Hoskote/Kolar belt and the Hosur/Krishnagiri belt around our Tamil Nadu factory.
     pincodePrefixes: ["560", "562", "563", "635"],
   },
   {

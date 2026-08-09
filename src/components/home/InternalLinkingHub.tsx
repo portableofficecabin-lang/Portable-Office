@@ -95,7 +95,7 @@ export function InternalLinkingHub() {
             <Link href="/products/category/prefab-homes" className="text-accent hover:underline font-medium">prefab homes</Link>,{" "}
             <Link href="/products/category/security-cabins" className="text-accent hover:underline font-medium">security cabins</Link>, and{" "}
             <Link href="/products/category/cargo-storage-shipping-containers" className="text-accent hover:underline font-medium">cargo storage containers</Link>.{" "}
-            Manufactured at our Bangalore facility and delivered pan-India.
+            Manufactured at our Tamil Nadu factory near Hosur — just 40 km from Bangalore — and delivered pan-India.
           </p>
         </div>
 

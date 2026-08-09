@@ -13,7 +13,7 @@ const NARSAPURA_PRODUCT_ID = "33";
 const narsapuraPrice = formatINR(sellPrice(getCommerce(NARSAPURA_PRODUCT_ID)!.basePrice));
 
 const highlights = [
-  { icon: Truck, title: "7–15 Day Delivery", desc: "Fast dispatch from our Bengaluru fabrication facility to Narsapura Industrial Area" },
+  { icon: Truck, title: "7–15 Day Delivery", desc: "Fast dispatch from our Tamil Nadu factory near Hosur to Narsapura Industrial Area" },
   { icon: Factory, title: "KIADB Plot Ready", desc: "Customized for KIADB plot specifications with minimal site preparation on PCC pads" },
   { icon: Shield, title: "Corten Steel Build", desc: "350 MPa yield strength with anti-corrosive epoxy paint for Kolar's climate" },
   { icon: Thermometer, title: "Climate Resistant", desc: "Handles 37°C summer peaks and heavy monsoon rains better than temporary alternatives" },
@@ -55,7 +55,7 @@ const solutions = [
 
 const faqs = [
   { q: "What shipping container sizes are available for Narsapura Industrial Area?", a: "We supply 10 ft, 20 ft, 40 ft GP, and 40 ft High Cube containers — both new and used. Custom-built units with partitions, roller shutters, and PUF insulation are also available for KIADB plots." },
-  { q: "How quickly can you deliver containers to Narsapura?", a: "Bare containers dispatch within 7–10 working days from our Bengaluru facility. Customized container offices and fitted units take 10–15 working days depending on scope." },
+  { q: "How quickly can you deliver containers to Narsapura?", a: "Bare containers dispatch within 7–10 working days from our Tamil Nadu factory near Hosur, just off the Bengaluru road corridor. Customized container offices and fitted units take 10–15 working days depending on scope." },
   { q: "Do you supply used shipping containers for Narsapura factories?", a: "Yes. We stock CSC-recertified used containers that are rust-treated and repainted, offering 10–15 years of extended service life for storage and utility applications." },
   { q: "Can containers be relocated within Narsapura or to other industrial areas?", a: "Absolutely. Containers retain 80% material value and can be shifted within the same campus or relocated to Malur, Hoskote, or other KIADB zones as operations grow." },
   { q: "What foundation is needed for container placement on KIADB plots?", a: "Simple PCC pads or concrete blocks at the four corners are sufficient. No deep foundations or extensive site preparation is required, enabling rapid deployment." },
@@ -99,7 +99,7 @@ export function ShippingContainerNarsapuraContent() {
           Portable Office Cabin supplies and customizes shipping containers for factories, warehouses, and project sites across Narsapura Industrial Area and surrounding clusters including Vemgal, Malur, and Hoskote. Whether you need storage for raw materials, container offices for OEM administration, worker accommodation, or temporary site facilities during plant construction, our shipping container products serve as practical alternatives to traditional RCC structures.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Contact Portable Office Cabin directly — a trusted manufacturer who understands your industrial requirements — for fast delivery from our Bengaluru fabrication facility within 7–15 working days, customization for KIADB plot specifications, and end-to-end services from design to installation.
+          Contact Portable Office Cabin directly — a trusted manufacturer who understands your industrial requirements — for fast delivery from our Tamil Nadu factory at Kamandoddi near Hosur, roughly 40 km from Bengaluru, within 7–15 working days, customization for KIADB plot specifications, and end-to-end services from design to installation.
         </p>
       </section>
 
@@ -200,7 +200,7 @@ export function ShippingContainerNarsapuraContent() {
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">Design, Fabrication & Customization</h2>
         <p className="text-muted-foreground mb-4">
-          Portable Office Cabin handles design, engineering, fabrication, painting, and on-site installation from our prefabrication facility in Karnataka.
+          Portable Office Cabin handles design, engineering, fabrication, painting, and on-site installation from our prefabrication facility at Kamandoddi near Hosur, Tamil Nadu — on the Hosur road corridor just across the Karnataka border.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-muted/50 rounded-lg p-4">
@@ -256,7 +256,7 @@ export function ShippingContainerNarsapuraContent() {
           <div>
             <h3 className="font-semibold text-foreground mb-2">Delivery & Placement</h3>
             <ul className="space-y-1 text-sm text-muted-foreground">
-              <li>• Truck trailer delivery from Bengaluru to Narsapura (55 km)</li>
+              <li>• Truck trailer delivery to Narsapura, 55 km east of Bengaluru on NH-75</li>
               <li>• Hydra/crane unloading with safe lifting point alignment</li>
               <li>• Simple PCC pad or concrete block foundation</li>
               <li>• Coordination for 3-phase electrical, plumbing, and drainage</li>

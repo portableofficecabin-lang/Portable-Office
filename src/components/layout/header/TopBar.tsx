@@ -8,7 +8,7 @@
  * the same commit. It also carries NO border: a border would sit outside the h-9 box
  * and leave a 1px sliver above the pinned bar below.
  *
- * Desktop shows two trust statements ("Manufacturer in Bangalore" moved up into the
+ * Desktop shows two trust statements (the manufacturer/location line lives in the
  * LocationStrip above this bar, so it is not repeated here); mobile drops them for the
  * two things a phone user actually wants in reach — call and WhatsApp. Every string is
  * backed by existing site content (see topBarTrustItems in src/lib/site-navigation.ts).

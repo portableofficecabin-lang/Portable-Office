@@ -9,7 +9,7 @@
  * price, so this copy can never contradict the cards rendered above it or the feed.
  *
  * Facts policy: every claim below is verifiable elsewhere on this site — ISO 9001:2015 certificate
- * QT-99968/0726 (IsoCertificationBadge), MSME/Udyam registration and both factory addresses
+ * QT-99968/0726 (IsoCertificationBadge), MSME/Udyam registration and our Tamil Nadu factory address
  * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart), client
  * names (TrustedClientsSection), 7–21 working days dispatch (productCommerce DELIVERY). Claims from
  * draft copy that could NOT be verified against site data (10×8 ft standard size, business hours,
@@ -104,7 +104,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "Do you deliver portable cabins outside Bangalore?",
     answer:
-      "Yes — we deliver and install across India from our factories in Hoskote (Karnataka) and Kamandoddi (Tamil Nadu). Transport is quoted based on distance to your site, and our team manages the crane and placement at delivery.",
+      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is quoted based on distance to your site, and our team manages the crane and placement at delivery.",
   },
   {
     question: "Are portable cabins cheaper than brick-and-mortar construction?",
@@ -125,7 +125,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
       <div className="space-y-4 text-muted-foreground leading-relaxed">
         <p>
           Portable cabins from Portable Office Cabin are complete, ready-to-use buildings —
-          manufactured, insulated, wired and finished in our own factories, then delivered to your
+          manufactured, insulated, wired and finished in our own factory, then delivered to your
           site in days instead of months. Whether you need a site office for a construction project,
           secure staff accommodation, a sales office or a{" "}
           <Link href="/products/category/security-cabins" className="text-accent hover:underline">security cabin</Link>,
@@ -134,8 +134,8 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
         </p>
         <p>
           We are an ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726) with 15+
-          years in modular construction, two in-house factories — Hoskote, Karnataka and Kamandoddi,
-          Tamil Nadu — and 500+ projects delivered across India for clients including Tata Projects,
+          years in modular construction, our own in-house factory at Kamandoddi, Hosur — Tamil Nadu,
+          just ~40 km from Bangalore — and 500+ projects delivered across India for clients including Tata Projects,
           Ashok Leyland, Asian Paints and Brigade Group.
           {minPrice !== null && <> Prices start at <strong className="text-foreground">{inr(minPrice)} (incl. GST)</strong>.</>}
         </p>
@@ -259,7 +259,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
       <div>
         <h2 className="font-display text-2xl font-bold mb-3">Why Buy From Portable Office Cabin</h2>
         <ul className="space-y-2 text-muted-foreground leading-relaxed list-disc pl-5">
-          <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Two factories in Karnataka and Tamil Nadu mean factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
+          <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Our own factory at Kamandoddi, Hosur in Tamil Nadu means factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
           <li><strong className="text-foreground">ISO 9001:2015 certified.</strong> Documented quality processes on every build (Certificate No. QT-99968/0726); GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
           <li><strong className="text-foreground">15+ years, 500+ projects delivered.</strong> Trusted by Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.</li>
           <li><strong className="text-foreground">Up to 60% cheaper than civil construction</strong> — and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>

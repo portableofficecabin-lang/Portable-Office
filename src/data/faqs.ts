@@ -23,7 +23,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Where are your manufacturing facilities located?",
-        a: "Our production units are based in Hosur (Tamil Nadu) and Bangalore (Karnataka). This central location allows us to serve clients across South India quickly, and we regularly ship structures to other parts of the country as well.",
+        a: "All of our manufacturing happens at our Tamil Nadu factory in Kamandoddi, near Hosur, and we also have a Bangalore office in Electronic City for sales and support. The factory is just about 40 km from Bangalore on the Hosur road corridor, so we can serve clients across South India quickly, and we regularly ship structures to other parts of the country as well.",
       },
       {
         q: "Which areas do you serve?",
@@ -76,7 +76,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Can I visit your factory before placing an order?",
-        a: "You're welcome to visit our manufacturing units in Hosur or Bangalore anytime. Seeing our production process firsthand gives you a better sense of the quality and craftsmanship we put into every unit. Just book an appointment and we'll arrange everything.",
+        a: "You're welcome to visit our Tamil Nadu factory at Kamandoddi, near Hosur, anytime — it is only about 40 km from Bangalore, so it is an easy drive. Seeing our production process firsthand gives you a better sense of the quality and craftsmanship we put into every unit. Just book an appointment and we'll arrange everything.",
       },
     ],
   },
