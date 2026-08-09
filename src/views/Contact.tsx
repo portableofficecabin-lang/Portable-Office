@@ -290,7 +290,7 @@ export default function ContactPage() {
     { icon: Phone, title: "Phone", details: ["+91 9731897976", "+91 90199 10931"], action: "tel:+919731897976" },
     { icon: Mail, title: "Email", details: ["sales@portableofficecabin.com", "portableofficecabin@gmail.com"], action: "mailto:sales@portableofficecabin.com" },
     { icon: MapPin, title: "Tamil Nadu Factory", details: ["Survey No. 222, Door No. 2/149-6, Road 1C", "Post Addakurukki, Kamandoddi, Tamil Nadu 635117", "Phone: +91 90199 10931"], action: "#" },
-    { icon: MapPin, title: "Bangalore Office (Electronic City)", details: ["Flat No. 280, Building No. 6, 7", "Electronic City Phase 1, Bommasadra, Chandapura", "Jigani, Bengaluru, Karnataka 560105", "Phone: +91 83103 72601 / +91 80731 02817"], action: "#" },
+    { icon: MapPin, title: "Bangalore Office (Electronic City)", details: ["Flat No. 280, Building No. 6, 7", "Electronic City Phase 1, Bommasandra Jigani", "Taluk Anekal, Chandapura, Bengaluru, Karnataka 560105", "Phone: +91 83103 72601 / +91 80731 02817"], action: "#" },
     { icon: Clock, title: "Business Hours", details: ["Mon - Sat: 7:00 AM - 10:00 PM", "Sunday: 10:00 AM - 7:00 PM"], action: "#" },
   ];
 
