@@ -113,7 +113,7 @@ export const COMPANY = Object.freeze({
     bangaloreOffice: {
       label: "Bangalore Office (Electronic City)",
       street: "Flat No. 280, Building No. 6, 7",
-      locality: "Electronic City Phase 1, Bommasadra, Chandapura, Jigani, Bengaluru",
+      locality: "Electronic City Phase 1, Bommasandra Jigani, Taluk Anekal, Chandapura, Bengaluru",
       region: "Karnataka",
       postalCode: "560105",
       country: "India",
