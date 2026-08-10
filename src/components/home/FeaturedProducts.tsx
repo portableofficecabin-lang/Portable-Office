@@ -42,7 +42,7 @@ export async function FeaturedProducts() {
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-4">
           <div>
             <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-              Featured Products
+              FEATURED PRODUCTS
             </span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground">
               Popular Choices
@@ -114,7 +114,7 @@ export async function FeaturedProducts() {
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-1 h-4 bg-gradient-to-b from-accent to-amber-light rounded-full" />
                   <span className="text-xs text-accent font-bold uppercase tracking-wider">
-                    {product.category}
+                    {product.category.toUpperCase()}
                   </span>
                 </div>
                 <h3 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors">

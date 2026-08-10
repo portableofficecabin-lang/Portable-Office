@@ -114,7 +114,7 @@ export function BuyOrRentSection() {
         {/* ---------------- header ---------------- */}
         <div className="mb-10 text-center">
           <span className="mb-3 inline-block text-sm font-bold uppercase tracking-[0.2em] text-[#16A34A]">
-            Buy&nbsp;&nbsp;•&nbsp;&nbsp;Rent&nbsp;&nbsp;•&nbsp;&nbsp;Customise
+            BUY&nbsp;&nbsp;•&nbsp;&nbsp;RENT&nbsp;&nbsp;•&nbsp;&nbsp;CUSTOMISE
           </span>
           <h2 className="font-display mb-4 text-3xl font-bold text-slate-900 sm:text-4xl lg:text-5xl">
             Buy or Rent — Choose What Works for You
@@ -132,7 +132,7 @@ export function BuyOrRentSection() {
             <div className="text-center sm:text-left">
               <div className="font-display text-2xl font-extrabold tracking-wide text-[#2563EB]">PURCHASE</div>
               <span className="mt-2 inline-block rounded-md border border-[#BFD5F6] bg-white px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#2563EB]">
-                Best for long-term
+                BEST FOR LONG-TERM
               </span>
               <p className="mt-3 text-lg leading-snug text-slate-700">
                 Own the asset and customise every detail.
@@ -152,7 +152,7 @@ export function BuyOrRentSection() {
             <div className="text-center sm:text-left">
               <div className="font-display text-2xl font-extrabold tracking-wide text-[#EA580C]">RENTAL</div>
               <span className="mt-2 inline-block rounded-md border border-[#F6CDAF] bg-white px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#EA580C]">
-                Lower upfront cost
+                LOWER UPFRONT COST
               </span>
               <p className="mt-3 text-lg leading-snug text-slate-700">
                 Deploy quickly for temporary project needs.
@@ -172,9 +172,9 @@ export function BuyOrRentSection() {
           <table className="w-full min-w-[640px] text-left text-sm sm:text-base">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50/80">
-                <th scope="col" className="px-5 py-3.5 font-bold uppercase tracking-wide text-slate-700">Compare</th>
-                <th scope="col" className="px-5 py-3.5 font-bold uppercase tracking-wide text-[#2563EB]">Purchase</th>
-                <th scope="col" className="px-5 py-3.5 font-bold uppercase tracking-wide text-[#EA580C]">Rental</th>
+                <th scope="col" className="px-5 py-3.5 font-bold uppercase tracking-wide text-slate-700">COMPARE</th>
+                <th scope="col" className="px-5 py-3.5 font-bold uppercase tracking-wide text-[#2563EB]">PURCHASE</th>
+                <th scope="col" className="px-5 py-3.5 font-bold uppercase tracking-wide text-[#EA580C]">RENTAL</th>
               </tr>
             </thead>
             <tbody>

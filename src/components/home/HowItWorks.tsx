@@ -49,7 +49,7 @@ export function HowItWorks() {
       <div className="container-custom relative z-10">
         <div className="text-center mb-14">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-            Our Process
+            OUR PROCESS
           </span>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5">
             How Our Portable Cabin Process Works

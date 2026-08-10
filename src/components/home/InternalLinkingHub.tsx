@@ -84,7 +84,7 @@ export function InternalLinkingHub() {
         {/* Header */}
         <div className="text-center mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-            Complete Product Guide
+            COMPLETE PRODUCT GUIDE
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Explore Everything We Manufacture

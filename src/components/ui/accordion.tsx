@@ -34,13 +34,28 @@ const AccordionTrigger = React.forwardRef<
 ));
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
+/**
+ * SEO-CRITICAL DEVIATION FROM STOCK SHADCN — `forceMount` + hide-when-closed.
+ *
+ * Stock Radix renders NOTHING for a closed panel, so every FAQ answer on this site (the /faq
+ * page, the homepage FAQ and ~36 product landing pages) was absent from the server HTML —
+ * present only in the RSC payload and the FAQPage JSON-LD, i.e. invisible to non-JS crawlers
+ * and inconsistent with the schema (the project rule is that JSON-LD must match VISIBLE
+ * content). `forceMount` keeps the content in the server-rendered DOM; the
+ * `data-[state=closed]:hidden` class hides it exactly while closed.
+ *
+ * Known, accepted trade-offs: the CLOSE animation is skipped (display:none applies the moment
+ * the state flips — opening still animates normally), and closed panels now exist in the DOM
+ * (they are display:none, so they are unfocusable and inert for AT, same as before).
+ */
 const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    forceMount
+    className="overflow-hidden text-sm transition-all data-[state=closed]:hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
     <div className={cn("pb-4 pt-0", className)}>{children}</div>

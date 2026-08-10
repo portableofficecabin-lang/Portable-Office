@@ -35,6 +35,23 @@ type BlogListPost = {
   featured: boolean;
 };
 
+/**
+ * The `blog_posts` columns the listing consumes — the shape the SERVER seed (blog page.tsx)
+ * passes in and the client refresh below reads. Plain JSON, so it serializes across the
+ * server→client boundary.
+ */
+export interface BlogDbRow {
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  category: string | null;
+  author: string | null;
+  featured: boolean | null;
+  featured_image_url: string | null;
+  published_at: string | null;
+  created_at: string | null;
+}
+
 const staticBlogPosts: BlogListPost[] = [
   {
     title: "Portable Cabin Manufacturers in Bangalore",
@@ -112,11 +129,38 @@ const popularTags = [
   "Labour Shed", "Modular Building", "Construction", "Prefab Home",
 ];
 
-export default function Blog() {
+/** Admin-authored rows → list posts, dropping any slug the static list already covers. Used by
+ *  BOTH the server-seeded initial state and the client refresh, so the two can never diverge. */
+function mapDbPosts(rows: BlogDbRow[]): BlogListPost[] {
+  const staticSlugs = new Set(staticBlogPosts.map((p) => p.slug));
+  return rows
+    .filter((p) => !staticSlugs.has(p.slug))
+    .map((p) => ({
+      title: p.title,
+      description: p.excerpt || "",
+      slug: p.slug,
+      date: formatDateSafe(p.published_at || p.created_at, "MMMM d, yyyy", ""),
+      readTime: "5 min read",
+      author: p.author || "Portable Office Cabin",
+      category: p.category || "Industry Insights",
+      tags: [],
+      image: p.featured_image_url || msPortableCabinHero,
+      featured: p.featured ?? false,
+    }));
+}
+
+export default function Blog({ initialDbRows = [] }: { initialDbRows?: BlogDbRow[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All Articles");
-  const [allPosts, setAllPosts] = useState<BlogListPost[]>(staticBlogPosts);
+  /* Seeded with the SERVER-fetched rows (app/(site)/blog/page.tsx), so admin-authored posts are
+   * in the initial HTML for crawlers — previously they appeared only after the client fetch. */
+  const [allPosts, setAllPosts] = useState<BlogListPost[]>(() => [
+    ...staticBlogPosts,
+    ...mapDbPosts(initialDbRows),
+  ]);
 
+  /* Client refresh kept as a safety net: if the ISR-cached seed is stale or Supabase was
+   * unreachable at revalidation time, the live list self-heals after hydration. */
   useEffect(() => {
     const fetchDbPosts = async () => {
       const { data, error } = await supabase
@@ -126,24 +170,7 @@ export default function Blog() {
         .order("published_at", { ascending: false });
 
       if (error || !data?.length) return;
-
-      const staticSlugs = new Set(staticBlogPosts.map((p) => p.slug));
-      const dbPosts: BlogListPost[] = data
-        .filter((p) => !staticSlugs.has(p.slug))
-        .map((p) => ({
-          title: p.title,
-          description: p.excerpt || "",
-          slug: p.slug,
-          date: formatDateSafe(p.published_at || p.created_at, "MMMM d, yyyy", ""),
-          readTime: "5 min read",
-          author: p.author || "Portable Office Cabin",
-          category: p.category || "Industry Insights",
-          tags: [],
-          image: p.featured_image_url || msPortableCabinHero,
-          featured: p.featured ?? false,
-        }));
-
-      setAllPosts([...staticBlogPosts, ...dbPosts]);
+      setAllPosts([...staticBlogPosts, ...mapDbPosts(data as BlogDbRow[])]);
     };
 
     fetchDbPosts();

@@ -27,7 +27,7 @@ export function CategoriesSection() {
         {/* Header */}
         <div className="text-center mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-            What We Build
+            WHAT WE BUILD
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Pick What You Need
