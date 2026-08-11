@@ -44,7 +44,7 @@ export function PortableToiletContent({ offer }: { offer?: FixedOffer & { produc
         <div className="absolute top-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent/5 rounded-full blur-[80px]" />
         <div className="relative">
-          <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">Complete Guide</span>
+          <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">COMPLETE GUIDE</span>
           <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 leading-tight">
             Portable Toilet: MS Portable Toilet Cabin, Mobile & Prefab Units
           </h2>

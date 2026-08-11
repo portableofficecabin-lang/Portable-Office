@@ -162,7 +162,12 @@ export function PageHero({
       )}
 
       {eyebrow && (
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-accent">{eyebrow}</p>
+        /* String eyebrows are literal-uppercased so the rendered text (CSS `uppercase`)
+           byte-matches the raw HTML for SSR audits; non-string ReactNode eyebrows pass
+           through untouched — the CSS still uppercases whatever text they contain. */
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-accent">
+          {typeof eyebrow === "string" ? eyebrow.toUpperCase() : eyebrow}
+        </p>
       )}
 
       {heading}

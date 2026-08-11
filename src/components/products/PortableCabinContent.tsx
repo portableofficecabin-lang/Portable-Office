@@ -14,7 +14,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
       <section>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-accent rounded-full" />
-          <span className="text-accent font-semibold uppercase tracking-wider text-sm">Complete Guide</span>
+          <span className="text-accent font-semibold uppercase tracking-wider text-sm">COMPLETE GUIDE</span>
         </div>
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-6">
           Portable Cabin: The Complete Buyer's Guide

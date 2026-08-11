@@ -36,13 +36,13 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
               <>
                 {/* Purchasable SKU: the hero badge shows THE price — not a "starting" figure that
                     the checkout would then contradict. */}
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">Fixed Price</div>
+                <div className="text-xs text-muted-foreground uppercase tracking-wide">FIXED PRICE</div>
                 <div className="font-display text-xl md:text-2xl font-bold text-foreground">{formatINR(offer.sellPriceInr)}</div>
                 <div className="text-[10px] text-muted-foreground">Incl. GST · transport & installation at checkout</div>
               </>
             ) : (
               <>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">Starting Price</div>
+                <div className="text-xs text-muted-foreground uppercase tracking-wide">STARTING PRICE</div>
                 <div className="font-display text-xl md:text-2xl font-bold text-foreground">₹7,00,000/-</div>
                 <div className="text-[10px] text-muted-foreground">Base price, excl. GST, transport & installation</div>
               </>

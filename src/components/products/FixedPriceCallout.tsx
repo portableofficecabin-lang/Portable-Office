@@ -31,7 +31,7 @@ export function FixedPriceCallout({ offer, note }: { offer: FixedOffer; note?: s
   return (
     <div className="bg-card border border-accent/30 rounded-xl p-6 shadow-card">
       <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-        Fixed price — {offer.name}
+        FIXED PRICE — {offer.name.toUpperCase()}
       </p>
       <p className="font-display text-2xl md:text-3xl font-bold text-foreground">
         {formatINR(offer.sellPriceInr)}

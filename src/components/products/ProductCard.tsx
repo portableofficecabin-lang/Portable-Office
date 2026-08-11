@@ -48,8 +48,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
           <OptimizedImage
             src={productImage}
-            alt={`${product.name} – ${product.category} by Portable Office Cabin, India`}
-            title={`${product.name} | ${product.category} – Portable Office Cabin`}
+            alt={`${product.name} – ${product.category.toUpperCase()} by Portable Office Cabin, India`}
+            title={`${product.name} | ${product.category.toUpperCase()} – Portable Office Cabin`}
             aspectRatio="4/3"
             className="w-full h-full"
             priority={priority}
@@ -108,7 +108,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <div className="flex items-center gap-2">
             <div className="w-1 h-4 bg-gradient-to-b from-accent to-amber-light rounded-full" />
             <span className="text-xs text-accent font-bold uppercase tracking-wider">
-              {product.category}
+              {product.category.toUpperCase()}
             </span>
           </div>
           <span className="text-xs text-muted-foreground font-mono bg-muted px-2 py-1 rounded">
