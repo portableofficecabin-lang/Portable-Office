@@ -209,13 +209,25 @@ export function HeroSection() {
             <div className="relative">
               <div className="absolute -inset-8 bg-gradient-to-r from-accent/30 to-amber-light/20 rounded-3xl blur-3xl" />
               <div className="relative bg-gradient-to-br from-white/12 to-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-2xl">
-                <img
-                  src={resolveImageUrl(heroCabin)}
-                  alt="Premium Portable Cabin - Ready to Deploy"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-auto rounded-xl object-cover shadow-xl"
-                />
+                {/* ART-DIRECTED loading — a revised trade-off, changed deliberately.
+                    This card is desktop-only (`hidden lg:block`); it was `loading="lazy"` so
+                    display:none mobile browsers never fetched it, but a lazy above-the-fold
+                    image is counted as client-rendered by SSR audits. The <picture> keeps
+                    BOTH properties: ≥lg the <source> serves the real photo eagerly (painted
+                    straight from server HTML, fetchPriority low so the hero-background LCP
+                    fetch stays ahead); <lg the fallback <img src> is a 1×1 transparent GIF —
+                    a data URI costs zero network bytes — so mobile still downloads nothing. */}
+                <picture>
+                  <source media="(min-width: 1024px)" srcSet={resolveImageUrl(heroCabin)} />
+                  <img
+                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                    alt="Premium Portable Cabin - Ready to Deploy"
+                    loading="eager"
+                    fetchPriority="low"
+                    decoding="async"
+                    className="w-full h-auto rounded-xl object-cover shadow-xl"
+                  />
+                </picture>
                 <div className="absolute bottom-8 left-6 right-6">
                   <div className="bg-gradient-to-r from-primary via-navy-deep to-primary rounded-xl p-5 border border-accent/40 shadow-2xl backdrop-blur-md">
                     <div className="flex items-center gap-3 mb-2">

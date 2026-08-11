@@ -112,18 +112,21 @@ export function Header() {
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white",
               )}
             >
-              {/* loading="lazy" is deliberate and load-bearing: the logo is header
-                  chrome, NOT the LCP element. Without it an eagerly-fetched SSR'd
-                  <img> gets a <link rel=preload as=image> emitted as the first head
-                  hint, so on slow 4G it competes with the hero background during the
-                  exact LCP window. Explicit width/height (the asset is 400x400)
-                  reserve the box so lazy-loading cannot shift the header. */}
+              {/* Eager at LOW fetch priority — a revised trade-off, changed deliberately.
+                  The logo was lazy to suppress React's auto-emitted preload competing with
+                  the hero LCP preload; but a lazy above-the-fold image is counted as
+                  client-rendered by SSR audits. fetchPriority="low" keeps the 8 KB logo
+                  (and any preload hint React emits for it) BEHIND the hero in the browser's
+                  priority scheduler, so the LCP window stays protected while the logo is
+                  painted straight from the server HTML. Explicit width/height (the asset is
+                  400x400) reserve the box so loading can never shift the header. */}
               <img
                 src={resolveImageUrl(logo)}
                 alt="Portable Office Cabin"
                 width={400}
                 height={400}
-                loading="lazy"
+                loading="eager"
+                fetchPriority="low"
                 decoding="async"
                 className="h-11 w-11 shrink-0 rounded-lg object-contain lg:h-12 lg:w-12"
               />
