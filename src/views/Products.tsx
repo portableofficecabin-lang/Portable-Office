@@ -252,12 +252,15 @@ export function ProductsPageContent({
               </div>
 
               <div className="flex items-center justify-between mb-6">
+                {/* ONE template literal → ONE contiguous text node. The previous markup
+                    interleaved JSX expressions and styled spans, so React emitted
+                    `<!-- -->` separators between the fragments ("Showing<!-- --> <span>1
+                    <!-- -->–5</span>…") and the rendered sentence could never be found
+                    as contiguous bytes in the server HTML — the last element SSR audits
+                    flagged on listing/category pages. Traded for it: the numbers lose
+                    their font-medium emphasis. */}
                 <div className="text-sm text-muted-foreground">
-                  Showing{" "}
-                  <span className="font-medium text-foreground">
-                    {pagedProducts.length > 0 ? (safePage - 1) * PAGE_SIZE + 1 : 0}–{(safePage - 1) * PAGE_SIZE + pagedProducts.length}
-                  </span>{" "}
-                  of <span className="font-medium text-foreground">{filteredProducts.length}</span> products
+                  {`Showing ${pagedProducts.length > 0 ? (safePage - 1) * PAGE_SIZE + 1 : 0}–${(safePage - 1) * PAGE_SIZE + pagedProducts.length} of ${filteredProducts.length} products`}
                   {activeCategory && (
                     <Link href="/products" className="ml-2 inline-flex items-center gap-1 text-accent hover:underline">
                       <X className="h-3 w-3" />
