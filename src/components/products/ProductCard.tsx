@@ -20,9 +20,13 @@ interface ProductCardProps {
   /** Eager-load + fetchPriority high for the first above-the-fold card so it can
    *  be the LCP element on listing/category pages without a lazy-load round-trip. */
   priority?: boolean;
+  /** Eager-load at LOW fetch priority (no preload) — for the rest of the first
+   *  visible row(s): painted straight from the server HTML so SSR audits don't
+   *  count them as client-rendered, while staying behind the LCP fetch. */
+  prefetch?: boolean;
 }
 
-export function ProductCard({ product, priority = false }: ProductCardProps) {
+export function ProductCard({ product, priority = false, prefetch = false }: ProductCardProps) {
   const { addToCart } = useCart();
   const router = useRouter();
   const productImage = getBestProductImage(product.id, product.categorySlug, product.images?.[0], product.sku);
@@ -48,11 +52,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
           <OptimizedImage
             src={productImage}
-            alt={`${product.name} – ${product.category.toUpperCase()} by Portable Office Cabin, India`}
-            title={`${product.name} | ${product.category.toUpperCase()} – Portable Office Cabin`}
+            alt={`${product.name} – ${product.category} by Portable Office Cabin, India`}
+            title={`${product.name} | ${product.category} – Portable Office Cabin`}
             aspectRatio="4/3"
             className="w-full h-full"
             priority={priority}
+            prefetch={prefetch}
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         </div>

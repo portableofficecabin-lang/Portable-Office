@@ -281,11 +281,17 @@ export function ProductsPageContent({
                     {pagedProducts.map((product, index) => (
                       <div key={product.id}>
                         {/* First card on the first page is the above-the-fold LCP
-                            candidate — load it eagerly at high priority. */}
+                            candidate — load it eagerly at high priority. Cards 2–6
+                            (the rest of the first visible rows) eager-load at LOW
+                            priority: painted straight from the server HTML so SSR
+                            audits don't count them as deferred/client-rendered,
+                            while staying behind the LCP fetch in the scheduler.
+                            Everything further down stays lazy. */}
                         <ProductCard
                           product={product}
                           onEnquire={handleEnquire}
                           priority={safePage === 1 && index === 0}
+                          prefetch={safePage === 1 && index > 0 && index < 6}
                         />
                       </div>
                     ))}
