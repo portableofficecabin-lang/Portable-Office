@@ -20,7 +20,7 @@ export function IndustriesSection() {
         {/* Header */}
         <div className="mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-            Industries We Serve
+            INDUSTRIES WE SERVE
           </span>
           <h2 id="industries-heading" className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Built for Every Industry

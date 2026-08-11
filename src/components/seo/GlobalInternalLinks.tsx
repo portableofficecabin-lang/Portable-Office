@@ -143,7 +143,7 @@ export function GlobalInternalLinks() {
       <div className="container-custom py-10">
         <div className="mb-6 flex items-center gap-3">
           <div className="h-1 w-12 rounded-full bg-accent" />
-          <span className="text-sm font-semibold uppercase tracking-wider text-accent">Internal Links</span>
+          <span className="text-sm font-semibold uppercase tracking-wider text-accent">INTERNAL LINKS</span>
         </div>
         <div className="mb-6 max-w-3xl">
           <h2 className="font-display text-2xl font-bold text-foreground">Keep exploring Portable Office Cabin</h2>

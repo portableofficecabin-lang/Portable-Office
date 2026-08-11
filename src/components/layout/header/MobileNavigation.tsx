@@ -224,10 +224,11 @@ export function MobileNavigation() {
           </a>
           <p className="flex items-start gap-3 px-1 text-xs text-navy-deep/60">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+            {/* One element per line (no <br/>) so each line's rendered text byte-matches the raw
+                HTML — same SSR-diff-tool reasoning as the footer hours block. */}
             <span>
-              {COMPANY.businessHours.weekdays.display}
-              <br />
-              {COMPANY.businessHours.sunday.display}
+              <span className="block">{COMPANY.businessHours.weekdays.display}</span>
+              <span className="block">{COMPANY.businessHours.sunday.display}</span>
             </span>
           </p>
 

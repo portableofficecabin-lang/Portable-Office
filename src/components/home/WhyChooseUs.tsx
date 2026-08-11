@@ -39,7 +39,7 @@ export function WhyChooseUs() {
       <div className="container-custom">
         <div className="text-center mb-14">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-            Why Choose Us
+            WHY CHOOSE US
           </span>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-5">
             Why Choose Our Portable Cabin Solutions?

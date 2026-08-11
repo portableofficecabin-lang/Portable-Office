@@ -45,7 +45,7 @@ export function ProductRangeSection() {
       <div className="container-custom">
         <div className="text-center mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
-            Our Catalogue
+            OUR CATALOGUE
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Our Product Range

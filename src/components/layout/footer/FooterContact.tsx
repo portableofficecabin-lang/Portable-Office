@@ -23,7 +23,7 @@ export function FooterContact() {
   return (
     <div className="min-w-0">
       <h3 className="font-display text-sm font-bold uppercase tracking-wider text-accent">
-        Get in Touch
+        GET IN TOUCH
       </h3>
 
       <ul className="mt-4 space-y-3.5">
@@ -81,11 +81,11 @@ export function FooterContact() {
         <Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
         <div className="text-sm text-white/80">
           <div className="font-semibold text-white">Working Hours</div>
-          <div className="mt-1 leading-relaxed">
-            {COMPANY.businessHours.weekdays.display}
-            <br />
-            {COMPANY.businessHours.sunday.display}
-          </div>
+          {/* One element PER line (no <br/>): an SSR-diff tool reads a node's rendered text as a
+              single string, and a <br/>-joined pair can never byte-match the raw HTML. Two block
+              elements render identically and each line matches its own markup exactly. */}
+          <div className="mt-1 leading-relaxed">{COMPANY.businessHours.weekdays.display}</div>
+          <div className="leading-relaxed">{COMPANY.businessHours.sunday.display}</div>
         </div>
       </div>
 

@@ -109,8 +109,10 @@ export function HeroSection() {
                 <Calculator className="h-6 w-6 text-accent" />
               </span>
               <span className="flex-1 text-left">
+                {/* Literal uppercase (not CSS-only): rendered text must byte-match the raw HTML
+                    so SSR-diff tools don't false-flag this chip as client-rendered. */}
                 <span className="block text-[11px] font-bold uppercase tracking-wider text-accent">
-                  Customized Cabin · Estimated Price
+                  CUSTOMIZED CABIN · ESTIMATED PRICE
                 </span>
                 <span className="block font-display text-2xl font-extrabold leading-tight text-white lg:text-3xl">
                   from {formatINR(fromPrice)}

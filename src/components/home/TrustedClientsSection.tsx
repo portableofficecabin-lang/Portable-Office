@@ -80,7 +80,7 @@ export function TrustedClientsSection() {
 
       <div className="container-custom relative">
         <p className="text-center text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6">
-          Some of the organisations we have served
+          SOME OF THE ORGANISATIONS WE HAVE SERVED
         </p>
       </div>
 

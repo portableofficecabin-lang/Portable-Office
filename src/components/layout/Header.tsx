@@ -132,7 +132,7 @@ export function Header() {
                   Portable Office <span className="text-accent">Cabin</span>
                 </span>
                 <span className="mt-1 hidden truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-navy-deep/55 sm:block">
-                  Prefab &amp; Modular Manufacturer
+                  PREFAB &amp; MODULAR MANUFACTURER
                 </span>
               </span>
             </Link>
