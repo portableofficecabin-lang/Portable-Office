@@ -192,8 +192,9 @@ export function resolveStructure(
   };
 }
 
-/** Default window sill: lintel ~0.3 m below the ceiling, sill ≥ 0.15 m. */
-function sillFor(floorH: number, winH: number): number {
+/** Default window sill: lintel ~0.3 m below the ceiling, sill ≥ 0.15 m.
+ *  Exported so the 3D engineering model hangs windows at the SAME level the elevations draw them. */
+export function sillFor(floorH: number, winH: number): number {
   return Math.max(0.15, floorH - 0.3 - winH);
 }
 

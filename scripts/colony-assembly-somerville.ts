@@ -162,6 +162,34 @@ console.log("\n=== 4 · G+1: first-floor structure above FFL1 +3150 ===");
   const win = parts.filter((p) => p.kind === "window");
   const door = parts.filter((p) => p.kind === "door");
   ok("windows + doors placed (blue/red on the elevations)", win.length >= 8 && door.length >= 8, `${win.length} windows · ${door.length} doors`);
+
+  // --- door/window PARITY with the elevation drawing (positions, sizes AND levels) ---
+  const gFront = buildElevation(result, cfg.floorPlan!, "front", { plinthM: PLINTH }) as unknown as {
+    openings: { kind: string; floor: number; x0: number; wM: number; sillM: number; hM: number }[];
+  };
+  const dWin = gFront.openings.filter((o) => o.kind === "window");
+  const dDoor = gFront.openings.filter((o) => o.kind === "door");
+  ok("per-face counts match the drawing (8 windows + 8 doors on the front elevation)",
+    dWin.length === 8 && dDoor.length === 8, `${dWin.length}+${dDoor.length}`);
+  // every drawn window must exist in the model at the SAME x, width, sill and head (per floor)
+  const zLo = (p: ColonyPart) => (p.solid as { min: { z: number } }).min.z;
+  const matchWin = dWin.filter((o) => win.some((p) => {
+    const s = p.solid as { min: { x: number; z: number }; max: { x: number; z: number } };
+    const ffl = PLINTH + o.floor * 2.7;
+    return Math.abs(s.min.x - o.x0) < 0.005 && Math.abs((s.max.x - s.min.x) - o.wM) < 0.005 &&
+           Math.abs((s.min.z - ffl) - o.sillM) < 0.005 && Math.abs((s.max.z - s.min.z) - o.hM) < 0.005;
+  }));
+  ok("EVERY drawn window matches a model window (x, width, sill, head)", matchWin.length === dWin.length, `${matchWin.length}/${dWin.length}`);
+  const matchDoor = dDoor.filter((o) => door.some((p) => {
+    const s = p.solid as { min: { x: number; z: number }; max: { x: number; z: number } };
+    const ffl = PLINTH + o.floor * 2.7;
+    return Math.abs(s.min.x - o.x0) < 0.005 && Math.abs((s.max.x - s.min.x) - o.wM) < 0.01 &&
+           Math.abs(s.min.z - ffl) < 0.005 && Math.abs((s.max.z - s.min.z) - o.hM) < 0.01;
+  }));
+  ok("EVERY drawn door matches a model door (x, width, floor level, height)", matchDoor.length === dDoor.length, `${matchDoor.length}/${dDoor.length}`);
+  const sampleSill = dWin[0].sillM;
+  ok("window sill follows the drawing rule (lintel 0.3 below ceiling ⇒ 1.20 m)", Math.abs(sampleSill - 1.2) < 0.01, `${sampleSill.toFixed(2)} m`);
+  ok("windows + doors are scheduled in the video (step 21)", parts.filter((p) => (p.kind === "window" || p.kind === "door") && p.assemblyStep === 21).length === win.length + door.length);
 }
 
 console.log("\n=== 5 · The assembly VIDEO shows all of it, in build order ===");

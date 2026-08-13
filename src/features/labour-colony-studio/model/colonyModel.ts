@@ -34,7 +34,7 @@ import type { LabourColonyResult, MemberSections, MsSection } from "@/lib/quotat
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import { buildColumnMarks, type ColumnMark } from "@/lib/quotation/labourColonyRebar";
 import { buildRoomFloorPlan, type FPRoom, type FPStair, type FPVeranda, type RoomFloorPlanGeom } from "@/lib/quotation/roomFloorPlan";
-import { buildElevation, type ElevationFace, type ElevationGeom } from "@/lib/quotation/elevation";
+import { buildElevation, sillFor, type ElevationFace, type ElevationGeom } from "@/lib/quotation/elevation";
 import {
   ASSEMBLY_SEQUENCE, COLOR_OF_KIND, EXPLODE_OF_KIND, LAYER_OF_KIND, STEP_OF_KIND, viewMaskOf,
 } from "./assembly";
@@ -858,7 +858,7 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   buildEnvelope(s, { body, plinthM, roofBaseZ, cfg, colXs, rowYs, floors, fflOf });
 
   /* ================================================================= OPENINGS ============= */
-  buildOpenings(s, geoms, floors, fflOf);
+  buildOpenings(s, geoms, floors, fflOf, floorHM);
 
   /* ================================================================= PARTITIONS =========== */
   buildPartitions(s, geoms, floors, fflOf, ceilOf);
@@ -2883,7 +2883,7 @@ function buildEnvelope(
   });
 }
 
-function buildOpenings(s: ModelSink, geoms: RoomFloorPlanGeom[], floors: number, fflOf: (f: number) => number): void {
+function buildOpenings(s: ModelSink, geoms: RoomFloorPlanGeom[], floors: number, fflOf: (f: number) => number, floorHM: number): void {
   for (let f = 0; f < floors; f++) {
     const g = geoms[f];
     if (!g) continue;
@@ -2892,7 +2892,9 @@ function buildOpenings(s: ModelSink, geoms: RoomFloorPlanGeom[], floors: number,
       // window on the external (veranda-facing) wall
       if (room.winWM > 0) {
         const wx0 = room.x + room.winFromLeftM;
-        const sill = z0 + 0.9, top = z0 + 0.9 + Math.max(0.6, room.winHM || 1.2);
+        // SAME level the elevations draw: sillFor() = lintel 0.3 m below the ceiling (elevation.ts).
+        const winH = Math.max(0.6, room.winHM || 1.2);
+        const sill = z0 + sillFor(floorHM, winH), top = sill + winH;
         const yWall = room.wallY;
         s.add(`${f === 0 ? "gf" : `f${f}`}:window:r${room.no}`, "window", `Window — Room ${room.no}`,
           box(wx0, yWall - 0.03, sill, wx0 + room.winWM, yWall + 0.03, top),
