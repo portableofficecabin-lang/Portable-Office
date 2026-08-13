@@ -2912,8 +2912,11 @@ function buildOpenings(s: ModelSink, geoms: RoomFloorPlanGeom[], floors: number,
         const along = d.wall === "top" || d.wall === "bottom";
         const dh = z0 + Math.max(1.9, d.heightM || 2.0);
         let x0: number, y0: number, x1: number, y1: number;
-        if (d.wall === "bottom") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y - 0.09; y1 = room.y + 0.09; }
-        else if (d.wall === "top") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y + room.d - 0.09; y1 = room.y + room.d + 0.09; }
+        /* The plan's wall labels are SVG-y (downward): plan-"bottom" is the FRONT face = model y-MAX,
+         * plan-"top" is the REAR face = model y-MIN (elevation.ts:258 viewerWall mapping). Mapping them
+         * literally put every door on the central spine wall instead of the walkway face. */
+        if (d.wall === "bottom") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y + room.d - 0.09; y1 = room.y + room.d + 0.09; }
+        else if (d.wall === "top") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y - 0.09; y1 = room.y + 0.09; }
         else if (d.wall === "left") { y0 = room.y + d.posM; y1 = y0 + d.widthM; x0 = room.x - 0.09; x1 = room.x + 0.09; }
         else { y0 = room.y + d.posM; y1 = y0 + d.widthM; x0 = room.x + room.w - 0.09; x1 = room.x + room.w + 0.09; }
         void along;

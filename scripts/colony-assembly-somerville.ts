@@ -181,12 +181,20 @@ console.log("\n=== 4 · G+1: first-floor structure above FFL1 +3150 ===");
   }));
   ok("EVERY drawn window matches a model window (x, width, sill, head)", matchWin.length === dWin.length, `${matchWin.length}/${dWin.length}`);
   const matchDoor = dDoor.filter((o) => door.some((p) => {
-    const s = p.solid as { min: { x: number; z: number }; max: { x: number; z: number } };
+    const s = p.solid as { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } };
     const ffl = PLINTH + o.floor * 2.7;
     return Math.abs(s.min.x - o.x0) < 0.005 && Math.abs((s.max.x - s.min.x) - o.wM) < 0.01 &&
-           Math.abs(s.min.z - ffl) < 0.005 && Math.abs((s.max.z - s.min.z) - o.hM) < 0.01;
+           Math.abs(s.min.z - ffl) < 0.005 && Math.abs((s.max.z - s.min.z) - o.hM) < 0.01 &&
+           Math.abs((s.min.y + s.max.y) / 2 - 8.3) < 0.12; // FRONT face = the y-max walkway wall plane
   }));
-  ok("EVERY drawn door matches a model door (x, width, floor level, height)", matchDoor.length === dDoor.length, `${matchDoor.length}/${dDoor.length}`);
+  ok("EVERY drawn door matches a model door (x, width, floor level, height, WALL PLANE)", matchDoor.length === dDoor.length, `${matchDoor.length}/${dDoor.length}`);
+  // no door may sit at the internal spine wall — every door lives on a walkway face (y 0.90 or 8.30)
+  const spineDoors = door.filter((p) => {
+    const s = p.solid as { min: { y: number }; max: { y: number } };
+    const ym = (s.min.y + s.max.y) / 2;
+    return Math.abs(ym - 0.9) > 0.12 && Math.abs(ym - 8.3) > 0.12;
+  });
+  ok("NO door at the partition/spine wall — all on the walkway faces", spineDoors.length === 0, `${spineDoors.length} misplaced`);
   const sampleSill = dWin[0].sillM;
   ok("window sill follows the drawing rule (lintel 0.3 below ceiling ⇒ 1.20 m)", Math.abs(sampleSill - 1.2) < 0.01, `${sampleSill.toFixed(2)} m`);
   ok("windows + doors are scheduled in the video (step 21)", parts.filter((p) => (p.kind === "window" || p.kind === "door") && p.assemblyStep === 21).length === win.length + door.length);
