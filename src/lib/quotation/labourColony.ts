@@ -338,6 +338,12 @@ export interface LabourColonyConfig {
    */
   gfSheetField?: boolean;
 
+  /** Include the GROUND-FLOOR flooring (deck board + vinyl finish). Default TRUE — switching it off
+   *  removes the GF board + vinyl from the quantities, the priced BOQ, the 3D model and the assembly
+   *  video (for buildings whose ground floor bears directly on the finished plinth). The steel floor
+   *  structure (joists / tubes / base frame) is deliberately unchanged. */
+  groundFloorFlooring?: boolean;
+
   /** Connection / cross-support bolt size. Default M12. */
   boltSize?: BoltSize;
 
@@ -805,9 +811,13 @@ export function calculateLabourColony(input: LabourColonyConfig): LabourColonyRe
   };
 
   /* ---------- FLOORING ---------- */
-  const floorArea = builtUpTotal * 1.05;
+  // Ground-floor flooring is OPTIONAL (default on): when off, the GF share of the flooring — one
+  // floor's built-up area of board + vinyl, and the GF's proportional skirting — leaves the take-off.
+  const gfFlooringOn = input.groundFloorFlooring !== false;
+  const flooringShare = gfFlooringOn ? 1 : Math.max(0, floors - 1) / floors;
+  const floorArea = (builtUpTotal - (gfFlooringOn ? 0 : builtUpPerFloor)) * 1.05;
   const cementBoardKgSqm = boardThk * (norms.cementBoardDensity / 1000);
-  const skirtingPerimeter = modules * perim + corridorTotal / Math.max(corridorWidth, 0.1);
+  const skirtingPerimeter = (modules * perim + corridorTotal / Math.max(corridorWidth, 0.1)) * flooringShare;
   const flooring: FlooringResult = {
     cementBoardSqm: round(floorArea), cementBoardThicknessMm: boardThk, cementBoardKg: round(floorArea * cementBoardKgSqm),
     vinylSqm: round(floorArea), vinylKg: round(floorArea * norms.vinylKgSqm), skirtingM: round(skirtingPerimeter),

@@ -846,6 +846,7 @@ export function buildColonyTakeoff(
   const joists = new Map<number, number>();
   const joistLines: number[] = [];
   let roomSqm = 0;
+  let gfRoomSqm = 0;
   let deckSqm = 0;
   let topRoomSqm = 0;
 
@@ -853,6 +854,7 @@ export function buildColonyTakeoff(
     const g = geoms[f];
     for (const r of g.rooms) {
       roomSqm += r.w * r.d;
+      if (f === 0) gfRoomSqm += r.w * r.d;
       if (f === floors - 1) topRoomSqm += r.w * r.d;
       const n = intermediateLines(r.w, norms.joistSpacingM);
       bump(joists, r.d, n);
@@ -878,15 +880,20 @@ export function buildColonyTakeoff(
     });
   }
 
+  // Ground-floor flooring is OPTIONAL (LabourColonyConfig.groundFloorFlooring, default on): when
+  // off, the GF room area leaves the board + vinyl take-off — the GF bears on the finished plinth.
+  const gfFlooringOn = result.config.groundFloorFlooring !== false;
+  const flooringSqm = roomSqm - (gfFlooringOn ? 0 : gfRoomSqm);
+  const flooringNote = gfFlooringOn ? "" : ` (ground floor excluded — bears on the plinth: −${m2(gfRoomSqm)} m²)`;
   sheet({
     kind: "sheet",
     id: "floor:board",
     section: "floor",
     materialKey: BOARD_KEY,
     description: `Cement / bison board decking ${boardThk} mm`,
-    formula: `Σ room footprints over ${floors} storey(s) = ${m2(roomSqm)} m²`,
+    formula: `Σ room footprints over ${floors} storey(s) = ${m2(flooringSqm)} m²${flooringNote}`,
     drawingRef: PLAN,
-    grossAreaSqm: round(roomSqm, 3),
+    grossAreaSqm: round(flooringSqm, 3),
     deductions: [],
     faces: 1,
   });
@@ -896,9 +903,9 @@ export function buildColonyTakeoff(
     section: "floor",
     materialKey: VINYL_KEY,
     description: "Vinyl floor finish",
-    formula: `Same area as the board decking = ${m2(roomSqm)} m²`,
+    formula: `Same area as the board decking = ${m2(flooringSqm)} m²${flooringNote}`,
     drawingRef: PLAN,
-    grossAreaSqm: round(roomSqm, 3),
+    grossAreaSqm: round(flooringSqm, 3),
     deductions: [],
     faces: 1,
   });
