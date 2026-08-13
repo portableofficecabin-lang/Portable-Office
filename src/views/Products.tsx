@@ -252,12 +252,15 @@ export function ProductsPageContent({
               </div>
 
               <div className="flex items-center justify-between mb-6">
+                {/* ONE template literal → ONE contiguous text node. The previous markup
+                    interleaved JSX expressions and styled spans, so React emitted
+                    `<!-- -->` separators between the fragments ("Showing<!-- --> <span>1
+                    <!-- -->–5</span>…") and the rendered sentence could never be found
+                    as contiguous bytes in the server HTML — the last element SSR audits
+                    flagged on listing/category pages. Traded for it: the numbers lose
+                    their font-medium emphasis. */}
                 <div className="text-sm text-muted-foreground">
-                  Showing{" "}
-                  <span className="font-medium text-foreground">
-                    {pagedProducts.length > 0 ? (safePage - 1) * PAGE_SIZE + 1 : 0}–{(safePage - 1) * PAGE_SIZE + pagedProducts.length}
-                  </span>{" "}
-                  of <span className="font-medium text-foreground">{filteredProducts.length}</span> products
+                  {`Showing ${pagedProducts.length > 0 ? (safePage - 1) * PAGE_SIZE + 1 : 0}–${(safePage - 1) * PAGE_SIZE + pagedProducts.length} of ${filteredProducts.length} products`}
                   {activeCategory && (
                     <Link href="/products" className="ml-2 inline-flex items-center gap-1 text-accent hover:underline">
                       <X className="h-3 w-3" />
@@ -281,11 +284,17 @@ export function ProductsPageContent({
                     {pagedProducts.map((product, index) => (
                       <div key={product.id}>
                         {/* First card on the first page is the above-the-fold LCP
-                            candidate — load it eagerly at high priority. */}
+                            candidate — load it eagerly at high priority. Cards 2–6
+                            (the rest of the first visible rows) eager-load at LOW
+                            priority: painted straight from the server HTML so SSR
+                            audits don't count them as deferred/client-rendered,
+                            while staying behind the LCP fetch in the scheduler.
+                            Everything further down stays lazy. */}
                         <ProductCard
                           product={product}
                           onEnquire={handleEnquire}
                           priority={safePage === 1 && index === 0}
+                          prefetch={safePage === 1 && index > 0 && index < 6}
                         />
                       </div>
                     ))}
@@ -370,7 +379,7 @@ export function ProductsPageContent({
       <section className="section-padding bg-muted/40 border-t border-border/40">
         <div className="container-custom">
           <div className="text-center mb-10">
-            <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">Browse By Category</span>
+            <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">BROWSE BY CATEGORY</span>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3">Find the Right Portable Structure</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
               Whether you need a{" "}
@@ -403,7 +412,7 @@ export function ProductsPageContent({
 
           <div className="grid md:grid-cols-4 gap-6 pt-8 border-t border-border/50">
             <div>
-              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">Top Products</h3>
+              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">TOP PRODUCTS</h3>
               <ul className="space-y-2">
                 {[
                   { label: "Porta Cabin", href: "/products/porta-cabin" },
@@ -422,7 +431,7 @@ export function ProductsPageContent({
               </ul>
             </div>
             <div>
-              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">Homes & Accommodation</h3>
+              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">HOMES & ACCOMMODATION</h3>
               <ul className="space-y-2">
                 {[
                   { label: "Family Prefab Home 2BHK", href: "/products/family-prefab-home-2bhk" },
@@ -441,7 +450,7 @@ export function ProductsPageContent({
               </ul>
             </div>
             <div>
-              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">Popular Applications</h3>
+              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">POPULAR APPLICATIONS</h3>
               <ul className="space-y-2">
                 {[
                   { label: "Construction Site Office", href: "/products/category/site-office-containers" },
@@ -460,7 +469,7 @@ export function ProductsPageContent({
               </ul>
             </div>
             <div>
-              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">Resources</h3>
+              <h3 className="font-display font-bold text-sm text-foreground mb-3 uppercase tracking-wide">RESOURCES</h3>
               <ul className="space-y-2">
                 {[
                   { label: "Labour Shed Guide (Blog)", href: "/blog/labour-shed-prefabricated-structures" },

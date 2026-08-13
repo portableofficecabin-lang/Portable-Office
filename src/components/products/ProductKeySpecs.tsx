@@ -29,7 +29,7 @@ export function ProductKeySpecs({
           key={spec.label}
           className="bg-card border border-border/60 rounded-xl px-4 py-3 min-w-0"
         >
-          <dt className="text-xs uppercase tracking-wider text-muted-foreground">{spec.label}</dt>
+          <dt className="text-xs uppercase tracking-wider text-muted-foreground">{spec.label.toUpperCase()}</dt>
           <dd className="mt-1 text-sm font-medium text-foreground break-words">{spec.value}</dd>
         </div>
       ))}

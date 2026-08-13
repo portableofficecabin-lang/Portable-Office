@@ -180,7 +180,7 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
         <div>
           <div className="mb-5 flex items-center gap-3">
             <div className="h-1 w-12 rounded-full bg-accent" />
-            <span className="text-sm font-semibold uppercase tracking-wider text-accent">Cargo Container Guide</span>
+            <span className="text-sm font-semibold uppercase tracking-wider text-accent">CARGO CONTAINER GUIDE</span>
           </div>
           <h2 className="mb-5 font-display text-3xl font-bold text-foreground sm:text-4xl">
             Cargo Container For Sale – Buy & Convert In India

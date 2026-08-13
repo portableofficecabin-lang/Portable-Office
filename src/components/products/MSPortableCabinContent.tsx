@@ -185,7 +185,7 @@ export function MSPortableCabinContent() {
       <section className="space-y-6">
         <div className="flex items-center gap-3">
           <div className="h-1 w-12 rounded-full bg-accent" />
-          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Portable Cabins</span>
+          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">PORTABLE CABINS</span>
         </div>
         <div className="space-y-4">
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">

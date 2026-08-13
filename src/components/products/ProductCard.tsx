@@ -20,9 +20,13 @@ interface ProductCardProps {
   /** Eager-load + fetchPriority high for the first above-the-fold card so it can
    *  be the LCP element on listing/category pages without a lazy-load round-trip. */
   priority?: boolean;
+  /** Eager-load at LOW fetch priority (no preload) — for the rest of the first
+   *  visible row(s): painted straight from the server HTML so SSR audits don't
+   *  count them as client-rendered, while staying behind the LCP fetch. */
+  prefetch?: boolean;
 }
 
-export function ProductCard({ product, priority = false }: ProductCardProps) {
+export function ProductCard({ product, priority = false, prefetch = false }: ProductCardProps) {
   const { addToCart } = useCart();
   const router = useRouter();
   const productImage = getBestProductImage(product.id, product.categorySlug, product.images?.[0], product.sku);
@@ -53,6 +57,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             aspectRatio="4/3"
             className="w-full h-full"
             priority={priority}
+            prefetch={prefetch}
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         </div>
@@ -108,7 +113,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <div className="flex items-center gap-2">
             <div className="w-1 h-4 bg-gradient-to-b from-accent to-amber-light rounded-full" />
             <span className="text-xs text-accent font-bold uppercase tracking-wider">
-              {product.category}
+              {product.category.toUpperCase()}
             </span>
           </div>
           <span className="text-xs text-muted-foreground font-mono bg-muted px-2 py-1 rounded">

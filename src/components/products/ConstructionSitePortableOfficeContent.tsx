@@ -63,7 +63,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
         <div>
           <div className="flex items-center gap-3 mb-5">
             <div className="h-1 w-12 rounded-full bg-accent" />
-            <span className="text-sm font-semibold uppercase tracking-wider text-accent">Complete Guide</span>
+            <span className="text-sm font-semibold uppercase tracking-wider text-accent">COMPLETE GUIDE</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-5">
             Construction Site Portable Office: The Complete Guide for Indian Projects

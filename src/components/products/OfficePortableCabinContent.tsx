@@ -145,7 +145,7 @@ export function OfficePortableCabinContent() {
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <div className="h-1 w-12 rounded-full bg-accent" />
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Portable Cabins</span>
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">PORTABLE CABINS</span>
           </div>
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
             Office Portable Cabin – Fast, Flexible Workspaces by Portable Office Cabin

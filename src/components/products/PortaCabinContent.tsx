@@ -19,7 +19,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
       <section>
         <div className="flex items-center gap-3 mb-6">
           <div className="h-1 w-12 bg-accent rounded-full" />
-          <span className="text-accent font-semibold uppercase tracking-wider text-sm">Complete Guide 2025</span>
+          <span className="text-accent font-semibold uppercase tracking-wider text-sm">COMPLETE GUIDE 2025</span>
         </div>
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-6">
           Porta Cabin: Portable Cabins, Container Offices & Modular Buildings

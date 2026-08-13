@@ -7,9 +7,10 @@ import autoTable from "jspdf-autotable";
 import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
-  Home, ShieldCheck, HardHat, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler, Boxes, Lock,
+  Home, ShieldCheck, HardHat, Wind, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler, Boxes, Lock,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import StructuralBasisTab from "@/components/admin/labour-colony/StructuralBasisTab";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -397,6 +398,7 @@ export default function LabourColonyQuotation() {
             <TabsTrigger value="project" className="gap-1.5"><Building2 className="h-4 w-4" /> Project</TabsTrigger>
             <TabsTrigger value="structure" className="gap-1.5"><LayoutGrid className="h-4 w-4" /> Structure &amp; Drawings</TabsTrigger>
             <TabsTrigger value="civil" className="gap-1.5"><HardHat className="h-4 w-4" /> Civil Work</TabsTrigger>
+            <TabsTrigger value="structural" className="gap-1.5"><Wind className="h-4 w-4" /> Structural</TabsTrigger>
             <TabsTrigger value="puflock" className="gap-1.5"><Lock className="h-4 w-4" /> PUF Lock</TabsTrigger>
             <TabsTrigger value="material" className="gap-1.5"><Package className="h-4 w-4" /> Material BOQ</TabsTrigger>
             <TabsTrigger value="drawing" className="gap-1.5"><Ruler className="h-4 w-4" /> Construction Drawing</TabsTrigger>
@@ -818,6 +820,14 @@ export default function LabourColonyQuotation() {
               Complete the Structure tab (capacity + room size) to size the civil work.
             </AdminCardContent></AdminCard>
           )}
+        </TabsContent>
+
+        {/* ============ STRUCTURAL DESIGN BASIS (IS 875 loading + wind + stability dossier) ============
+            Answers: connection details, structure analysis, technical loading, wind load — and prepares
+            the certificate-READY dossier a licensed structural engineer signs. Software never certifies.
+            Site parameters persist at config.structuralSite (optional jsonb, no migration). */}
+        <TabsContent value="structural" className="mt-6">
+          <StructuralBasisTab config={config} result={result} civilResult={civilResult} onConfigChange={setConfig} />
         </TabsContent>
 
         {/* ============ PUF PANEL BOTTOM LOCKING SYSTEM ============

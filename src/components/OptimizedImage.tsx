@@ -157,9 +157,13 @@ export function OptimizedImage({
           title={imgTitle}
           width={isFixedBox ? undefined : width}
           height={isFixedBox ? undefined : height}
-          loading={priority ? "eager" : "lazy"}
+          loading={priority || prefetch ? "eager" : "lazy"}
           decoding={priority ? "sync" : "async"}
-          {...(priority ? { fetchPriority: "high" as const } : {})}
+          {...(priority
+            ? { fetchPriority: "high" as const }
+            : prefetch
+              ? { fetchPriority: "low" as const }
+              : {})}
           onLoad={onLoad}
           onError={() => {
             setRawFailed(true);
