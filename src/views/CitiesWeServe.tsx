@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CITY_PAGES } from "@/data/cityPages";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
@@ -237,6 +238,30 @@ export default function CitiesWeServe() {
             ))}
           </div>
         </section>
+
+        {/* Local area guides — one landing page per industrial hub (data-driven, src/data/cityPages.ts) */}
+        {CITY_PAGES.length > 0 && (
+          <section aria-label="Local area guides" className="mb-16">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3 text-center">
+              Local Area Guides
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto text-center">
+              Detailed guides for the industrial hubs we serve most — what we deliver, sizes, options
+              and answers for your location.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {CITY_PAGES.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/cities-we-serve/${c.slug}`}
+                  className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition hover:border-primary/60 hover:bg-muted"
+                >
+                  {c.metaTitle}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* CTA */}
         <section aria-label="Order or contact us" className="text-center">
