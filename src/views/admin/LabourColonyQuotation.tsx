@@ -602,6 +602,17 @@ export default function LabourColonyQuotation() {
                   <h3 className="font-display font-bold flex items-center gap-2"><Layers className="h-4 w-4 text-amber" /> Flooring</h3>
                   <FacilityToggle
                     icon={Layers}
+                    label="Ground-floor flooring (board + vinyl)"
+                    checked={config.groundFloorFlooring ?? true}
+                    onChange={(v) => setConfig((c) => ({ ...c, groundFloorFlooring: v }))}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    On by default. Switch OFF when the ground floor bears directly on the finished plinth —
+                    the GF board + vinyl leave the quantities, the priced BOQ, the 3D model and the assembly
+                    video. The steel floor structure is unchanged either way.
+                  </p>
+                  <FacilityToggle
+                    icon={Layers}
                     label="Ground-floor 8'×4' sheet field"
                     checked={config.gfSheetField ?? false}
                     onChange={(v) => setConfig((c) => ({ ...c, gfSheetField: v }))}

@@ -724,11 +724,15 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
       });
     }
 
-    // deck: board + finish — over the walled body (the veranda gets its own chequered walkway plate)
-    s.add(`${floorTag}:deck-board`, "floor-board", "Floor deck board",
-      box(bodyX0, bodyY0, z, bodyX1, bodyY1, z + DECK_T), { boqLineId: "floor:board", floor: f });
-    s.add(`${floorTag}:deck-finish`, "floor-finish", "Floor finish (vinyl)",
-      box(bodyX0, bodyY0, z + DECK_T, bodyX1, bodyY1, z + DECK_T + 0.006), { boqLineId: "floor:vinyl", floor: f, opacity: 0.9 });
+    // deck: board + finish — over the walled body (the veranda gets its own chequered walkway plate).
+    // The GROUND-floor board + vinyl are optional (cfg.groundFloorFlooring, default on) — when off,
+    // the GF bears on the finished plinth and the model/video shows no GF flooring, matching the BOQ.
+    if (f !== 0 || cfg.groundFloorFlooring !== false) {
+      s.add(`${floorTag}:deck-board`, "floor-board", "Floor deck board",
+        box(bodyX0, bodyY0, z, bodyX1, bodyY1, z + DECK_T), { boqLineId: "floor:board", floor: f });
+      s.add(`${floorTag}:deck-finish`, "floor-finish", "Floor finish (vinyl)",
+        box(bodyX0, bodyY0, z + DECK_T, bodyX1, bodyY1, z + DECK_T + 0.006), { boqLineId: "floor:vinyl", floor: f, opacity: 0.9 });
+    }
   }
 
   const body: Body = { x0: bodyX0, x1: bodyX1, y0: bodyY0, y1: bodyY1, w: bodyWM, d: bodyDM };

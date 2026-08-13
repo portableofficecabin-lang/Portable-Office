@@ -16,6 +16,8 @@
  */
 import { calculateLabourColony, type LabourColonyConfig } from "../src/lib/quotation/labourColony";
 import { buildElevation } from "../src/lib/quotation/elevation";
+import { buildColonyTakeoff } from "../src/lib/boq/colonyTakeoff";
+import { DEFAULT_NORMS } from "../src/lib/boq/types";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
 import { buildAssemblyTimeline } from "../src/features/labour-colony-studio/animation/buildAssemblyTimeline";
 import type { ColonyPart } from "../src/features/labour-colony-studio/model/types";
@@ -235,6 +237,42 @@ console.log("\n=== 5 · The assembly VIDEO shows all of it, in build order ===")
   const verandaParts = parts.filter((p) => p.kind.startsWith("veranda"));
   ok("every veranda member is scheduled in the video", verandaParts.every((p) => scheduled.has(p.id)), `${verandaParts.length} parts`);
   ok("timeline is non-empty and finite", tl.steps.length >= 15 && Number.isFinite(tl.totalMs), `${tl.steps.length} steps · ${(tl.totalMs / 1000).toFixed(0)} s`);
+}
+
+console.log("\n=== 6 · OPTIONAL ground-floor flooring (default ON — off removes GF board + vinyl everywhere) ===");
+{
+  ok("default ON: GF deck board in the model", parts.some((p) => p.id === "gf:deck-board"));
+  ok("default ON: first-floor deck board in the model", parts.some((p) => p.id === "f1:deck-board"));
+
+  const cfgOff = { ...cfg, groundFloorFlooring: false } as LabourColonyConfig;
+  const resOff = calculateLabourColony(cfgOff);
+  const resOn = result;
+
+  // engine quantities: exactly one floor's (×1.05) built-up area leaves board + vinyl
+  const expected = resOn.flooring.cementBoardSqm - resOn.area.builtUpPerFloorSqm * 1.05;
+  ok("OFF: cement-board area drops by one floor's share", near(resOff.flooring.cementBoardSqm, expected, 0.5),
+    `${resOff.flooring.cementBoardSqm} vs ${expected.toFixed(1)}`);
+  ok("OFF: vinyl drops identically", near(resOff.flooring.vinylSqm, expected, 0.5));
+  ok("OFF: skirting scales to the remaining floors", resOff.flooring.skirtingM < resOn.flooring.skirtingM);
+
+  // priced BOQ take-off: floor:board / floor:vinyl gross halves (two identical floors)
+  const tkOn = buildColonyTakeoff(resOn, DEFAULT_NORMS, { plinthM: PLINTH });
+  const tkOff = buildColonyTakeoff(resOff, DEFAULT_NORMS, { plinthM: PLINTH });
+  const gross = (tk: { items: { id: string }[] }, id: string) =>
+    (tk.items.find((i) => i.id === id) as { grossAreaSqm?: number } | undefined)?.grossAreaSqm ?? NaN;
+  ok("OFF: BOQ floor:board = first-floor rooms only (half of ON)", near(gross(tkOff, "floor:board"), gross(tkOn, "floor:board") / 2, 0.2),
+    `${gross(tkOff, "floor:board")} vs ${(gross(tkOn, "floor:board") / 2).toFixed(1)}`);
+  ok("OFF: BOQ floor:vinyl likewise", near(gross(tkOff, "floor:vinyl"), gross(tkOn, "floor:vinyl") / 2, 0.2));
+  // the steel floor structure is deliberately unchanged
+  const joistQty = (tk: { items: { id: string; }[] }) =>
+    tk.items.filter((i) => i.id.startsWith("floor:joist")).reduce((s, i) => s + ((i as { qty?: number }).qty ?? 0), 0);
+  ok("OFF: floor JOISTS unchanged (structure stays)", joistQty(tkOff) === joistQty(tkOn), `${joistQty(tkOff)}`);
+
+  // model/video: GF deck disappears, FF deck stays
+  const modelOff = buildColonyModel({ result: resOff, plinthM: PLINTH });
+  ok("OFF: NO ground-floor deck board in the 3D/video", !modelOff.parts.some((p) => p.id === "gf:deck-board"));
+  ok("OFF: NO ground-floor vinyl in the 3D/video", !modelOff.parts.some((p) => p.id === "gf:deck-finish"));
+  ok("OFF: first-floor deck REMAINS", modelOff.parts.some((p) => p.id === "f1:deck-board"));
 }
 
 console.log(`\n================  ASSEMBLY VIDEO MATCHES THE ELEVATION DRAWINGS (${passed} checks)  ================`);
