@@ -15,6 +15,7 @@
  * Run:  npx tsx scripts/colony-assembly-somerville.ts
  */
 import { calculateLabourColony, type LabourColonyConfig } from "../src/lib/quotation/labourColony";
+import { buildElevation } from "../src/lib/quotation/elevation";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
 import { buildAssemblyTimeline } from "../src/features/labour-colony-studio/animation/buildAssemblyTimeline";
 import type { ColonyPart } from "../src/features/labour-colony-studio/model/types";
@@ -125,6 +126,25 @@ console.log("\n=== 3 · Verandas 900 mm on BOTH long sides, with railings ===");
   ok("veranda framing on the REAR side", ys.some((y) => y > depth - 1.2), `max y ${(Math.max(...ys) * 1000).toFixed(0)} mm`);
   const rails = parts.filter((p) => p.kind === "handrail" || p.kind === "handrail-post" || p.kind === "toe-plate");
   ok("railings present (drawing shows green rails both floors)", rails.length > 0, `${rails.length} parts`);
+
+  // --- the WALKWAY-END units the SIDE elevations draw (ElevDeck.railing grid in every 900 band) ---
+  const endRails = parts.filter((p) => p.kind === "handrail" && p.id.includes(":end:") && !p.id.includes("rail-mid"));
+  const endMids = parts.filter((p) => p.kind === "handrail" && p.id.includes(":end:") && p.id.includes("rail-mid"));
+  ok("walkway END guard rails: 2 verandas × 2 ends × 2 floors = 8", endRails.length === 8, `${endRails.length}`);
+  ok("…each with a MID rail (the grid the drawing shows)", endMids.length === 8, `${endMids.length}`);
+  const roomL = 12.2; // walkway ends at the room band edges = what the left/right elevations show
+  const endX = endRails.map(xMid);
+  ok("end guards sit on the LEFT face (x≈0)", endX.filter((x) => Math.abs(x) < 0.15).length === 4, `${endX.filter((x) => Math.abs(x) < 0.15).length}`);
+  ok("end guards sit on the RIGHT face (x≈12200)", endX.filter((x) => Math.abs(x - roomL) < 0.15).length === 4, `${endX.filter((x) => Math.abs(x - roomL) < 0.15).length}`);
+  const gfEnd = endRails.filter((p) => zTop(p) < 2.0).length;
+  const ffEnd = endRails.filter((p) => zTop(p) > 3.5).length;
+  ok("end guards on BOTH floors (as the side elevations draw)", gfEnd === 4 && ffEnd === 4, `GF ${gfEnd} · FF ${ffEnd}`);
+  // parity with the elevation SOURCE OF TRUTH: railed decks[] on a side face == end guards per face
+  const leftGeom = buildElevation(result, cfg.floorPlan!, "left", { plinthM: 0.45 }) as unknown as { decks: { railing: boolean }[] };
+  const railedDecks = leftGeom.decks.filter((d) => d.railing).length;
+  ok(`end guards per face == the side elevation's railed decks (${railedDecks})`, endRails.length / 2 === railedDecks, `${endRails.length / 2} vs ${railedDecks}`);
+  const longMids = parts.filter((p) => p.kind === "handrail" && p.id.endsWith(":rail-mid") && !p.id.includes(":end:"));
+  ok("long walkway railing now has top + mid rails (drawing grid)", longMids.length === 4, `${longMids.length} mid rails`);
 }
 
 console.log("\n=== 4 · G+1: first-floor structure above FFL1 +3150 ===");

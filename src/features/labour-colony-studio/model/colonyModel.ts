@@ -3062,6 +3062,7 @@ function buildVeranda(
         box(v.x, v.y, z, v.x + v.w, v.y + v.d, z + 0.006), { boqLineId: r.firstLineByPrefix("veranda:plate"), floor: f, opacity: 0.95 });
       // railing along the outer edge
       if (v.railing) {
+        const railLine = r.firstLineByPrefix("veranda:rail");
         const edgeAlong = horiz ? v.w : v.d;
         const posts = Math.max(2, Math.round(edgeAlong / 1.5) + 1);
         for (let p = 0; p < posts; p++) {
@@ -3072,11 +3073,36 @@ function buildVeranda(
             box(px - 0.025, py - 0.025, z, px + 0.025, py + 0.025, z + RAIL_H),
             { boqLineId: postLine, floor: f, fabrication: "shop" });
         }
-        // top rail
+        // top + MID rail — the elevation draws the walkway railing as a two-rail grid
+        // (LabourColonyDrawings: top rail at +1.0 m, mid rail at half height), so the video must too.
+        const railBoxes = (h0: number, h1: number) =>
+          horiz ? box(v.x, v.y + (v.side === "top" ? 0 : v.d) - 0.02, h0, v.x + v.w, v.y + (v.side === "top" ? 0 : v.d) + 0.02, h1)
+                : box(v.x + (v.side === "left" ? 0 : v.w) - 0.02, v.y, h0, v.x + (v.side === "left" ? 0 : v.w) + 0.02, v.y + v.d, h1);
         s.add(`veranda:${f}:${vi}:rail`, "handrail", `Handrail — ${v.label}`,
-          horiz ? box(v.x, v.y + (v.side === "top" ? 0 : v.d) - 0.02, z + RAIL_H - 0.04, v.x + v.w, v.y + (v.side === "top" ? 0 : v.d) + 0.02, z + RAIL_H)
-                : box(v.x + (v.side === "left" ? 0 : v.w) - 0.02, v.y, z + RAIL_H - 0.04, v.x + (v.side === "left" ? 0 : v.w) + 0.02, v.y + v.d, z + RAIL_H),
-          { boqLineId: r.firstLineByPrefix("veranda:rail"), floor: f, fabrication: "shop" });
+          railBoxes(z + RAIL_H - 0.04, z + RAIL_H), { boqLineId: railLine, floor: f, fabrication: "shop" });
+        s.add(`veranda:${f}:${vi}:rail-mid`, "handrail", `Handrail mid rail — ${v.label}`,
+          railBoxes(z + RAIL_H * 0.5 - 0.02, z + RAIL_H * 0.5 + 0.02), { boqLineId: railLine, floor: f, fabrication: "shop" });
+
+        /* END GUARD RETURNS across the walkway ends — the railed walkway units the SIDE elevations
+         * draw in every veranda band (ElevDeck.railing, LabourColonyDrawings "open veranda / walkway
+         * decks"): a railing grid closing the open end of the walkway at each floor. Without them the
+         * assembly video shows a bare gap on the left/right faces where the drawing shows the unit. */
+        const ends: [string, number][] = horiz ? [["start", v.x], ["end", v.x + v.w]] : [["start", v.y], ["end", v.y + v.d]];
+        for (const [tag, at] of ends) {
+          const endRail = (h0: number, h1: number) =>
+            horiz ? box(at - 0.02, v.y, h0, at + 0.02, v.y + v.d, h1)
+                  : box(v.x, at - 0.02, h0, v.x + v.w, at + 0.02, h1);
+          s.add(`veranda:${f}:${vi}:end:${tag}:rail`, "handrail", `Walkway end guard rail — ${v.label} (${tag})`,
+            endRail(z + RAIL_H - 0.04, z + RAIL_H), { boqLineId: railLine, floor: f, fabrication: "shop" });
+          s.add(`veranda:${f}:${vi}:end:${tag}:rail-mid`, "handrail", `Walkway end guard mid rail — ${v.label} (${tag})`,
+            endRail(z + RAIL_H * 0.5 - 0.02, z + RAIL_H * 0.5 + 0.02), { boqLineId: railLine, floor: f, fabrication: "shop" });
+          // inner (wall-side) post — the outer corner post already exists on the long edge
+          const ipx = horiz ? at : v.x + (v.side === "left" ? v.w : 0);
+          const ipy = horiz ? v.y + (v.side === "top" ? v.d : 0) : at;
+          s.add(`veranda:${f}:${vi}:end:${tag}:post`, "handrail-post", `Walkway end guard post — ${v.label} (${tag})`,
+            box(ipx - 0.025, ipy - 0.025, z, ipx + 0.025, ipy + 0.025, z + RAIL_H),
+            { boqLineId: postLine, floor: f, fabrication: "shop" });
+        }
       }
     });
   }
