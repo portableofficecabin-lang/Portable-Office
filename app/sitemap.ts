@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { seoPromotions } from "@/data/seoPromotions";
+import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
 
@@ -38,6 +39,8 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/contact", 0.7, "monthly"),
   entry("/gallery", 0.7, "monthly"),
   entry("/cities-we-serve", 0.6, "monthly"),
+  // City / area landing pages (data-driven from src/data/cityPages.ts)
+  ...CITY_PAGES.map((c) => entry(`/cities-we-serve/${c.slug}`, 0.6, "monthly")),
   entry("/book-appointment", 0.6, "monthly"),
   entry("/faq", 0.5, "monthly"),
   entry("/careers", 0.4, "monthly"),
