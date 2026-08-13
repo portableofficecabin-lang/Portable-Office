@@ -756,7 +756,10 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   buildWallFraming(s, body, floors, fflOf, ceilOf, { countByPrefix, firstLineByPrefix, sectionForLine });
 
   /* ================================================================= BRACING ============== */
-  buildBracing(s, elev, body, colXs, rowYs, { firstLineByPrefix, sectionForLine, lineForLength });
+  // countByPrefix is REQUIRED here: buildBracing reads the priced piece count via
+  // r.countByPrefix?.() and treats "absent" as zero — omitting it silently deleted every
+  // cross brace from the model/video even though the BOQ priced them and the elevations draw them.
+  buildBracing(s, elev, body, colXs, rowYs, { countByPrefix, firstLineByPrefix, sectionForLine, lineForLength });
 
   /* ================================================================= RAFTER SUPPORT SYSTEM */
   /**
