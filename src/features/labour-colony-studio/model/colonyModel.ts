@@ -753,7 +753,12 @@ export function buildColonyModel(input: BuildColonyModelInput, opts: BuildColony
   buildPanelSeating(s, { body, floors, fflOf, ceilOf, colXs, spec: panelSpec, connDetail });
 
   /* ================================================================= WALL STUDS + RAILS === */
-  buildWallFraming(s, body, floors, fflOf, ceilOf, { countByPrefix, firstLineByPrefix, sectionForLine });
+  /* SANDWICH-PANEL walls (PUF / EPS) are C-purlin + panel ALONE — the panels slide between the
+   * C-purlin verticals and join to each other (the rule buildEnvelope encodes, and the elevations
+   * draw no stud/rail grid). Stud + rail wall framing belongs to GI sheet-clad walls only. */
+  if (cfg.panelType === "GI") {
+    buildWallFraming(s, body, floors, fflOf, ceilOf, { countByPrefix, firstLineByPrefix, sectionForLine });
+  }
 
   /* ================================================================= BRACING ============== */
   // countByPrefix is REQUIRED here: buildBracing reads the priced piece count via
