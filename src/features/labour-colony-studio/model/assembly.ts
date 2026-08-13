@@ -26,7 +26,7 @@ export const ASSEMBLY_SEQUENCE: AssemblyStepInfo[] = [
   { step: 11, title: "First-floor beams", description: "First-floor perimeter and transverse floor beams landed on the ground-floor columns." },
   { step: 12, title: "First-floor columns & splices", description: "First-floor columns spliced onto the ground-floor columns and plumbed." },
   { step: 13, title: "First-floor joists & deck", description: "First-floor joists and deck fixed to carry the upper accommodation." },
-  { step: 14, title: "Wall studs & rails", description: "Wall studs and top / bottom framing rails fixed between the columns on every wall line." },
+  { step: 14, title: "Wall framing & panel seating", description: "Panel seating angles and framed pockets fixed at the columns; on GI sheet-clad walls, studs and top / bottom rails between the columns." },
   { step: 15, title: "Staircase", description: "Staircase stringers, treads, landings and their support framing erected and connected at both ends." },
   { step: 16, title: "Corridor & veranda framing", description: "Corridor / veranda beams, joists and chequered walkway plate installed along the access side." },
   { step: 17, title: "Roof trusses & rafters", description: "Roof trusses / rafters landed on the top of the columns and connected at ridge and eave." },

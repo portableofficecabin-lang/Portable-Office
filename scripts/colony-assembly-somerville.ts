@@ -192,6 +192,23 @@ console.log("\n=== 4 · G+1: first-floor structure above FFL1 +3150 ===");
   ok("windows + doors are scheduled in the video (step 21)", parts.filter((p) => (p.kind === "window" || p.kind === "door") && p.assemblyStep === 21).length === win.length + door.length);
 }
 
+console.log("\n=== 4b · PUF wall system: outer C-purlin frame + panels ONLY (no stud/rail grid) ===");
+{
+  const studs = parts.filter((p) => p.kind === "stud");
+  const wallRails = parts.filter((p) => p.kind === "rail");
+  ok("NO wall studs on a PUF colony (C-purlin + panel alone)", studs.length === 0, `${studs.length}`);
+  ok("NO wall framing rails on a PUF colony", wallRails.length === 0, `${wallRails.length}`);
+  const panels = parts.filter((p) => p.kind === "ext-panel");
+  ok("PUF panels present, split per bay/storey (panels JOIN each other)", panels.length >= 16, `${panels.length} panels`);
+  const columns = parts.filter((p) => p.kind === "column");
+  ok("outer C-purlin verticals (columns) still present", columns.length > 0, `${columns.length}`);
+  // the FIXING detail the video must demonstrate: PUF-lock + panel seating hardware
+  const lock = parts.filter((p) => p.kind.startsWith("puf-lock"));
+  const seating = parts.filter((p) => p.kind === "angle-support" || p.kind === "pocket-support" || p.kind === "c-channel");
+  ok("PUF-lock fixing assemblies present (base plates / anchors / purlins)", lock.length > 0, `${lock.length} parts`);
+  ok("panel seating / pocket supports present at the columns", seating.length > 0, `${seating.length} parts`);
+}
+
 console.log("\n=== 5 · The assembly VIDEO shows all of it, in build order ===");
 {
   const tl = buildAssemblyTimeline(model);
