@@ -298,7 +298,7 @@ export const COLOR_OF_KIND: Record<ColonyPartKind, string> = {
   "floor-sheet": "#c79a63",
   "floor-board": "#b98a52", "floor-finish": "#d9bb8f", "ext-panel": "#cbd5e1", insulation: "#facc15",
   "int-finish": "#e7ecf2", "roof-sheet": "#9aa7b4", ceiling: "#eef2f7", partition: "#c7b299",
-  door: "#8b5a2b", "door-swing": "#cbd5e1", window: "#a8c8e0",
+  door: "#8b5a2b", "door-swing": "#cbd5e1", window: "#3b82c4",
   "stair-stringer": "#57534e", "stair-tread": "#a8a29e", landing: "#78716c",
   handrail: "#0891b2", "handrail-post": "#0e7490", "toe-plate": "#155e75",
   "veranda-beam": "#3b4a5e", "veranda-joist": "#94a3b8", "veranda-post": "#475569", "walkway-plate": "#71717a",

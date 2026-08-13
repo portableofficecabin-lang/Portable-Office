@@ -2897,18 +2897,20 @@ function buildOpenings(s: ModelSink, geoms: RoomFloorPlanGeom[], floors: number,
         const sill = z0 + sillFor(floorHM, winH), top = sill + winH;
         const yWall = room.wallY;
         s.add(`${f === 0 ? "gf" : `f${f}`}:window:r${room.no}`, "window", `Window — Room ${room.no}`,
-          box(wx0, yWall - 0.03, sill, wx0 + room.winWM, yWall + 0.03, top),
-          { floor: f, opacity: 0.5, spec: { widthMm: room.winWM * 1000, heightMm: (room.winHM || 1.2) * 1000 } });
+          // 90 mm proud of the 60 mm cladding + near-solid, so the unit READS at video distance
+          // (at ±30 mm / 0.5 opacity the windows washed out into the 0.92-opacity panel behind).
+          box(wx0, yWall - 0.09, sill, wx0 + room.winWM, yWall + 0.09, top),
+          { floor: f, opacity: 0.85, spec: { widthMm: room.winWM * 1000, heightMm: (room.winHM || 1.2) * 1000 } });
       }
       // doors
       room.doors.forEach((d, di) => {
         const along = d.wall === "top" || d.wall === "bottom";
         const dh = z0 + Math.max(1.9, d.heightM || 2.0);
         let x0: number, y0: number, x1: number, y1: number;
-        if (d.wall === "bottom") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y - 0.03; y1 = room.y + 0.03; }
-        else if (d.wall === "top") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y + room.d - 0.03; y1 = room.y + room.d + 0.03; }
-        else if (d.wall === "left") { y0 = room.y + d.posM; y1 = y0 + d.widthM; x0 = room.x - 0.03; x1 = room.x + 0.03; }
-        else { y0 = room.y + d.posM; y1 = y0 + d.widthM; x0 = room.x + room.w - 0.03; x1 = room.x + room.w + 0.03; }
+        if (d.wall === "bottom") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y - 0.09; y1 = room.y + 0.09; }
+        else if (d.wall === "top") { x0 = room.x + d.posM; x1 = x0 + d.widthM; y0 = room.y + room.d - 0.09; y1 = room.y + room.d + 0.09; }
+        else if (d.wall === "left") { y0 = room.y + d.posM; y1 = y0 + d.widthM; x0 = room.x - 0.09; x1 = room.x + 0.09; }
+        else { y0 = room.y + d.posM; y1 = y0 + d.widthM; x0 = room.x + room.w - 0.09; x1 = room.x + room.w + 0.09; }
         void along;
         s.add(`${f === 0 ? "gf" : `f${f}`}:door:r${room.no}:${di}`, "door", `Door — Room ${room.no}`,
           box(x0, y0, z0, x1, y1, dh),
