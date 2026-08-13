@@ -235,6 +235,158 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Ready to set up a smart, secure, and professional workspace at your site? Portable Office Cabin is just a call away. Get a free consultation and quotation for your container office in Jigani — buy or rent, standard or fully customized.",
   },
+
+  {
+    slug: "container-office-in-bommasandra",
+    city: "Bommasandra",
+    metaTitle: "Container Office in Bommasandra",
+    metaDescription:
+      "Buy or rent a container office in Bommasandra from Portable Office Cabin. Durable, customized & ready-to-use office cabins with quick delivery. Enquire now!",
+    keywords:
+      "Container Office in Bommasandra, portable office cabin Bommasandra, prefab office container Bommasandra, site office cabin Bommasandra, container office manufacturer Bommasandra, office container on rent Bommasandra Industrial Area",
+    geo: { region: "IN-KA", placename: "Bommasandra, Bengaluru, Karnataka, India", position: "12.8090;77.7030", icbm: "12.8090, 77.7030" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-bommasandra.webp",
+      alt: "Container office in Bommasandra — ready-to-use portable container office with lockable entrance door and grilled sliding windows by Portable Office Cabin",
+      width: 1024,
+      height: 1024,
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-bommasandra-interior.webp",
+      alt: "Inside a container office for Bommasandra — laminated wood-finish wall panels, false ceiling, vinyl flooring, grilled windows and office furniture",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-bommasandra-corner-view.webp",
+        alt: "Corner view of a container office for Bommasandra industrial sites — grilled windows, external lights and weatherproof steel cladding",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/container-office-in-bommasandra-roof-side-view.webp",
+        alt: "Leak-proof sheet roof with turbo ventilators and long side elevation of a container office for Bommasandra",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/container-office-in-bommasandra-end-view.webp",
+        alt: "End elevation of a Bommasandra container office with louvre ventilation and external electrical points",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Container Office in Bommasandra",
+    tagline: "Durable, Ready-to-Use Container Offices in Bommasandra by Portable Office Cabin",
+    intro: [
+      "Setting up an office in an industrial area should not take months of construction. If your business needs a container office in Bommasandra, Portable Office Cabin can deliver a fully finished, secure, and comfortable workspace directly to your site — ready to occupy within days. As a direct manufacturer of container offices, portable cabins, and prefab structures, we help companies across Bommasandra get professional office space at a fraction of the cost of conventional buildings.",
+      "Bommasandra is one of Bengaluru's most important industrial zones. Located on Hosur Road with excellent connectivity to Electronic City, Hebbagodi, Chandapura, Attibele, and the Jigani-Bommasandra Link Road, the area is home to the Bommasandra Industrial Area (KIADB), large pharma and biotech campuses, engineering units, automotive component manufacturers, warehouses, and countless growing businesses. With the metro now reaching Bommasandra, the region is expanding faster than ever — and with that growth comes an urgent need for quick, flexible office space. That is exactly the need our container offices are built to solve.",
+    ],
+
+    whyHeading: "What Is a Container Office and Why Does It Make Sense in Bommasandra?",
+    whyIntro:
+      "A container office is a steel-structured, factory-built office cabin that arrives at your site complete with insulated walls, flooring, windows, doors, and electrical fittings. Unlike civil construction, there is no digging, no curing time, no scaffolding, and no months of waiting. The cabin is simply transported to your location, placed on a level surface, connected to power — and your team starts working. For businesses in Bommasandra, this approach has clear advantages:",
+    whyBullets: [
+      { title: "Speed", text: "Factories expanding their capacity, contractors starting new projects, and companies waiting for permanent buildings cannot afford delays. A container office gives you usable workspace in days." },
+      { title: "Lower cost", text: "You avoid the heavy expenses of foundations, masonry, labour contracts, and finishing work. The total cost is far below traditional construction — and rental options bring the entry cost down even further." },
+      { title: "Relocatable asset", text: "Industrial plots change, projects finish, and companies shift. Your container office is not tied to the ground. Lift it, load it, and take it to your next site anywhere in or around Bengaluru." },
+      { title: "Built for industrial conditions", text: "Dust, heat, and monsoon rain are part of daily life on Hosur Road. Our cabins are engineered with anti-corrosive steel frames, insulated panels, and leak-proof roofing to handle it all." },
+      { title: "Secure workspace", text: "With strong steel walls and lockable doors, your computers, files, and site documents stay protected round the clock." },
+    ],
+
+    solutionsHeading: "Container Office Options We Offer in Bommasandra",
+    solutionsIntro:
+      "Portable Office Cabin manufactures a full range of container office models. Whatever your team size or budget, we have a solution for your Bommasandra site:",
+    solutions: [
+      { title: "Standard Site Office Container", text: "A practical, ready-made cabin with insulation, windows, lockable door, lights, fans, and plug points. The go-to choice for site engineers, supervisors, and small teams." },
+      { title: "Custom-Designed Office Container", text: "Tell us your layout and we will build it — manager cabins, staff workstations, reception area, meeting room, partitions, and storage, all inside a single container structure sized to your requirement." },
+      { title: "AC Executive Office Container", text: "A premium cabin with high-grade insulation, laminated interior panels, false ceiling, modern lighting, and air-conditioning provision. Ideal for client meetings, marketing offices, and executive use at industrial campuses in Bommasandra." },
+      { title: "Office Container with Attached Toilet & Pantry", text: "A self-sufficient unit that combines workspace with an attached washroom and pantry — extremely useful at construction sites and locations where separate facilities are not yet built." },
+      { title: "Multi-Cabin Office Complex", text: "Need space for a bigger team? We build large and multi-unit container offices with several rooms, conference space, and storage areas for long-term projects." },
+      { title: "Container Office on Rent in Bommasandra", text: "For short-term projects, our rental container offices give you a complete working office without capital expenditure. Use it for the project duration and return it when you are done." },
+    ],
+
+    featuresHeading: "Standard Features of Our Container Offices",
+    featuresIntro: "Every container office we supply in Bommasandra includes:",
+    features: [
+      "Robust steel framework with anti-rust treatment for long service life",
+      "Insulated sandwich panels (PUF / EPS / Rockwool) for temperature and noise control",
+      "Durable flooring — plywood, cement board, or vinyl finish",
+      "Windows with safety grills and quality aluminium / UPVC frames",
+      "Heavy-duty lockable entrance door",
+      "Complete internal electricals: lights, fans, switches, sockets, MCB",
+      "AC, networking, and CCTV provisions on request",
+      "Weatherproof, leak-proof roof design",
+      "Optional attached toilet, pantry, ramp, and staircase",
+    ],
+    sizesNote:
+      "Available sizes: 10x10 ft, 20x10 ft, 30x10 ft, and 40x10 ft — plus fully custom dimensions built to suit your plot and team size.",
+
+    industriesHeading: "Who Uses Our Container Offices in Bommasandra?",
+    industriesIntro: "The Bommasandra belt hosts a wide mix of industries, and our cabins serve them all:",
+    industries: [
+      { title: "Pharma, biotech & healthcare manufacturers", text: "temporary admin offices during plant construction and expansion" },
+      { title: "Engineering & automotive component units", text: "supervisor cabins, quality offices, HR and time-office cabins" },
+      { title: "Construction & infrastructure contractors", text: "site offices, engineer rooms, meeting cabins" },
+      { title: "Warehouses & logistics companies", text: "billing counters, dispatch offices, security-cum-office cabins" },
+      { title: "Real estate developers", text: "sales and marketing offices at apartment and layout projects" },
+      { title: "IT & corporate campuses under construction", text: "project management offices and consultant cabins" },
+    ],
+
+    customHeading: "Customize Every Detail",
+    customIntro:
+      "When you order a container office in Bommasandra from us, you are not choosing from a fixed catalogue — you are designing your own workspace:",
+    customBullets: [
+      { title: "Size & layout", text: "single room, partitioned cabins, or open-plan office" },
+      { title: "Interior finish", text: "laminated walls, false ceiling, premium flooring" },
+      { title: "Electrical plan", text: "extra points for ACs, servers, printers, and appliances" },
+      { title: "Furniture provision", text: "workstations, storage units, and seating arrangements" },
+      { title: "Branding", text: "exterior painted in your company colours with logo and signage" },
+      { title: "Utility add-ons", text: "attached toilet, pantry counter, sun shade, ramp, and steps" },
+    ],
+    customOutro: "Send us your requirement and our team will share a layout drawing and a clear, itemised quotation.",
+
+    whyUsHeading: "Why Portable Office Cabin Is the Right Choice in Bommasandra",
+    whyUsIntro: "Here is what sets us apart when you order your container office in Bommasandra:",
+    whyUsBullets: [
+      { title: "We are the manufacturer", text: "You buy directly from the factory — better prices, faster timelines, and full control over quality." },
+      { title: "Proven build quality", text: "Tested steel sections, branded insulation materials, and reliable electrical fittings in every cabin." },
+      { title: "Quick delivery to Bommasandra", text: "Our logistics team manages transport, unloading, and positioning at your site on Hosur Road, in the KIADB industrial area, or anywhere nearby." },
+      { title: "Flexible options", text: "Buy new, customize fully, or rent for your project period." },
+      { title: "Complete range", text: "Along with container offices, we supply security cabins, bunk houses, portable toilets, and site accommodation units — everything your site needs from one supplier." },
+      { title: "Dependable support", text: "Our relationship does not end at delivery; we provide prompt after-sales service whenever you need it." },
+    ],
+
+    areasHeading: "Areas We Serve Around Bommasandra",
+    areasText:
+      "Along with Bommasandra and the Bommasandra Industrial Area, we regularly deliver container offices across the entire South Bengaluru corridor, including Jigani, Electronic City, Hebbagodi, Chandapura, Anekal, Attibele, Hosur Road, Bannerghatta Road, Harohalli, and Sarjapur. Wherever your project is located, we will get your office there.",
+
+    howHeading: "From Enquiry to Working Office — In 4 Simple Steps",
+    howSteps: [
+      { title: "Tell us what you need", text: "Call or WhatsApp us with your size, layout, and site details." },
+      { title: "Receive your quotation", text: "We share design options and transparent pricing — free of charge." },
+      { title: "We manufacture your cabin", text: "Your container office is built at our facility under strict quality checks." },
+      { title: "Delivery & handover at your Bommasandra site", text: "We transport, place, and hand over your office ready to use." },
+    ],
+
+    faqs: [
+      { question: "How much does a container office cost in Bommasandra?", answer: "Pricing depends on size, insulation, interiors, and add-ons. A basic site cabin is very economical, while fully furnished AC offices cost more. Share your requirement and we will send an exact, no-obligation quotation." },
+      { question: "How quickly can you deliver to Bommasandra?", answer: "Ready-stock cabins can reach your site within a few days. Customized offices typically take 1–3 weeks depending on specifications. Bommasandra's location on Hosur Road makes transport and installation quick and easy for our team." },
+      { question: "Is renting available instead of buying?", answer: "Yes. Rental container offices are available for project-based needs — a popular choice for contractors and companies with temporary requirements in the industrial area." },
+      { question: "Will the cabin stay cool in summer?", answer: "Yes. Insulated PUF/EPS/Rockwool panels keep the interior noticeably cooler than outside. With the AC provision we include, the cabin remains comfortable in every season." },
+      { question: "Can I move the office to a different site later?", answer: "Of course. That is the core benefit of a container office — it can be lifted onto a truck and relocated to any new site whenever your project moves." },
+      { question: "What sizes do you offer?", answer: "Standard options are 10x10, 20x10, 30x10, and 40x10 ft. Custom sizes and multi-cabin configurations are also manufactured on request." },
+      { question: "Do I need a foundation at my site?", answer: "No major civil work is required. A level surface or simple concrete blocks are enough. Our team will guide you on basic site preparation before delivery." },
+      { question: "Can you add a toilet or pantry to the office?", answer: "Yes. We build combination units with attached toilets and pantry sections, and we also supply standalone portable toilet units for your site." },
+    ],
+
+    ctaHeading: "Book Your Container Office in Bommasandra Today",
+    ctaText:
+      "Give your team a professional, secure, and comfortable workspace — without waiting for construction. Contact Portable Office Cabin today for a free consultation and quotation on your container office in Bommasandra. Buy or rent, standard or fully customized — we will build it your way and deliver it to your site.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
