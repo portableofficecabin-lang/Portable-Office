@@ -348,6 +348,8 @@ export interface LabourColonyConfig {
 
   /** Room-wise construction floor-plan (door/window positions & veranda). Drawing only. */
   floorPlan?: RoomFloorPlanConfig;
+  /** Site wind/loading parameters for the Structural Design Basis dossier (optional, jsonb-persisted). */
+  structuralSite?: import("./labourColonyStructural").StructuralSiteConfig;
 
   /** Material BOQ settings — rates, wastage, structural norms, per-line overrides, charges, template.
    *  calculateLabourColony() does not read this: the legacy quantity engine and the Material BOQ are
