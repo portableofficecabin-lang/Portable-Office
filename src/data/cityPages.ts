@@ -387,6 +387,144 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Give your team a professional, secure, and comfortable workspace — without waiting for construction. Contact Portable Office Cabin today for a free consultation and quotation on your container office in Bommasandra. Buy or rent, standard or fully customized — we will build it your way and deliver it to your site.",
   },
+  {
+    slug: "container-office-in-doddaballapura",
+    city: "Doddaballapura",
+    metaTitle: "Container Office in Doddaballapura",
+    metaDescription:
+      "Get a ready-to-use container office in Doddaballapura from Portable Office Cabin. Custom sizes, fast delivery, buy or rent options. Request a free quote!",
+    keywords:
+      "Container Office in Doddaballapura, portable office cabin Doddaballapura, prefab office container Doddaballapura, site office cabin Doddaballapura, container office manufacturer Doddaballapura, office container on rent Doddaballapura Industrial Area",
+    geo: { region: "IN-KA", placename: "Doddaballapura, Bengaluru, Karnataka, India", position: "13.2919;77.5388", icbm: "13.2919, 77.5388" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-doddaballapura.webp",
+      alt: "Container office in Doddaballapura — double-storey stacked portable container office with steel access staircase and upper-floor windows by Portable Office Cabin",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-doddaballapura-front-view.webp",
+        alt: "Front elevation of a double-storey container office for Doddaballapura — balcony walkway with railing, full-height windows and lockable entrance doors",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/container-office-in-doddaballapura-end-view.webp",
+        alt: "End elevation of a stacked two-floor container office for Doddaballapura with ventilation louvre and blue steel walkway framing",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Container Office in Doddaballapura",
+    tagline: "Smart, Ready-Made Container Offices in Doddaballapura by Portable Office Cabin",
+    intro: [
+      "When your business needs office space at a factory, warehouse, or project site, waiting months for construction is simply not an option. Portable Office Cabin brings you the smarter alternative — a fully finished container office in Doddaballapura, manufactured at our facility and delivered to your site ready to use. With insulated walls, complete electricals, secure doors, and a professional finish, our container offices let your team start working within days of your order.",
+      "Doddaballapura, in the northern part of Bengaluru, has grown into a major industrial and manufacturing destination. The KIADB Doddaballapura Industrial Area at Bashettihalli, the well-known Apparel Park, and a growing cluster of textile, garment, engineering, pharma, and food processing units have made the region a hub of activity. Its location near Devanahalli and Kempegowda International Airport, with good road connectivity to Yelahanka, Rajanakunte, Nelamangala, and Dabaspet, is attracting new warehouses, logistics parks, and construction projects every year. All of this growth needs one thing in common — fast, flexible, affordable workspace. That is exactly what our container offices provide.",
+    ],
+
+    whyHeading: "The Advantages of a Container Office for Your Doddaballapura Site",
+    whyIntro:
+      "A container office is a factory-built steel cabin that works as a complete office the moment it lands at your site. For businesses in and around Doddaballapura, the benefits are hard to ignore:",
+    whyBullets: [
+      { title: "Ready in days, not months", text: "Because the cabin is manufactured off-site, there is no construction activity at your location. Delivery, placement, and power connection are all it takes to make your office operational." },
+      { title: "Major cost savings", text: "No foundation, no brickwork, no plastering, no long labour engagement. You get a finished office at a fraction of the cost of a permanent structure — and rental plans reduce the upfront cost even further." },
+      { title: "Move it anytime", text: "Projects end, plots change, and businesses grow. A container office is a movable asset — lift it onto a truck and shift it to your next site in Doddaballapura, Devanahalli, or anywhere across Karnataka." },
+      { title: "Weather-ready construction", text: "Our cabins are built with anti-corrosive steel frames, insulated sandwich panels, and leak-proof roofing that stand up to hot summers, heavy rain, and dusty industrial surroundings." },
+      { title: "Safe and lockable", text: "Strong steel walls and secure doors protect your computers, documents, and valuables day and night — important for sites that remain unattended after working hours." },
+    ],
+
+    solutionsHeading: "Container Office Models We Deliver in Doddaballapura",
+    solutionsIntro: "We manufacture every type of container office your site may need:",
+    solutions: [
+      { title: "Standard Site Office Cabin", text: "A compact, ready-made office with insulation, windows, a lockable door, lights, fans, and power points. Perfect for site engineers, supervisors, and small admin teams." },
+      { title: "Fully Customized Office Container", text: "Designed around your exact requirement — cabins for managers, open workstations, reception counter, meeting space, partitions, and storage, all built into one unit in the size you choose." },
+      { title: "Premium AC Office Container", text: "High-grade insulation, laminated interiors, false ceiling, elegant lighting, and air-conditioning provision — a polished executive office for client meetings and management teams." },
+      { title: "Office with Attached Toilet & Pantry", text: "A complete self-contained unit combining office space with a washroom and pantry — the practical choice for construction sites and locations without existing facilities." },
+      { title: "Large Multi-Room Office Units", text: "For bigger teams and long-duration projects, we build multi-cabin container offices with conference rooms, several work areas, and storage sections." },
+      { title: "Rental Container Offices", text: "Working on a short-term project near Doddaballapura? Take a container office on rent — full functionality, zero capital investment, returned when your project ends." },
+    ],
+
+    featuresHeading: "What Comes Standard in Every Cabin",
+    featuresIntro: "Each container office we deliver to Doddaballapura includes:",
+    features: [
+      "Heavy-duty steel structure with anti-rust coating",
+      "Insulated wall and roof panels (PUF / EPS / Rockwool options)",
+      "Finished flooring — plywood, cement board, or vinyl",
+      "Aluminium / UPVC windows fitted with safety grills",
+      "Sturdy lockable entrance door",
+      "Full electrical setup — lights, fans, switches, sockets, and MCB",
+      "Provisions for AC, LAN/networking, and CCTV",
+      "Weatherproof, leak-proof roof",
+      "Optional extras: attached toilet, pantry, ramp, staircase, and shade awning",
+    ],
+    sizesNote:
+      "Sizes available: 10x10 ft, 20x10 ft, 30x10 ft, and 40x10 ft, along with fully customized dimensions to match your plot and team strength.",
+
+    industriesHeading: "Industries We Serve in the Doddaballapura Region",
+    industriesIntro: "Our container offices support the full range of industries active in North Bengaluru:",
+    industries: [
+      { title: "Textile, garment & apparel units", text: "Admin offices, time offices, and supervisor cabins at Apparel Park and nearby factories." },
+      { title: "Engineering & manufacturing companies", text: "Quality control rooms, HR cabins, and plant offices in the KIADB industrial area." },
+      { title: "Warehousing & logistics parks", text: "Dispatch offices, billing counters, and security-cum-office cabins along the airport corridor." },
+      { title: "Construction & infrastructure projects", text: "Site offices and engineer cabins for roads, layouts, and commercial buildings." },
+      { title: "Food processing & agro industries", text: "Hygienic, insulated office cabins near production units." },
+      { title: "Real estate developers", text: "Marketing and sales offices at plotted developments and apartment projects around Doddaballapura and Devanahalli." },
+    ],
+
+    customHeading: "Design It Your Way",
+    customIntro: "Every business works differently, so every cabin we build can be tailored:",
+    customBullets: [
+      { title: "Size & layout", text: "Single cabin, partitioned rooms, or open-plan workspace." },
+      { title: "Interiors", text: "Laminated wall panels, false ceiling, and premium flooring." },
+      { title: "Electrical plan", text: "Additional points for ACs, servers, printers, and equipment." },
+      { title: "Furniture provision", text: "Workstations, chairs, and storage as needed." },
+      { title: "Branding", text: "Exterior in your company colours with your logo and signage." },
+      { title: "Add-ons", text: "Attached toilet, pantry counter, ramp, steps, and sun shade." },
+    ],
+    customOutro:
+      "Share your requirement and we will respond with a layout drawing and a clear, itemised quotation — free of cost.",
+
+    whyUsHeading: "Why Portable Office Cabin?",
+    whyUsIntro: "Here is why businesses across Doddaballapura and North Bengaluru choose Portable Office Cabin:",
+    whyUsBullets: [
+      { title: "Factory-direct pricing", text: "We manufacture everything ourselves, so you skip dealer margins and get better value." },
+      { title: "Consistent quality", text: "Tested steel, branded insulation, and reliable electrical fittings go into every single cabin." },
+      { title: "Doorstep delivery in Doddaballapura", text: "Our team manages transport, unloading, and precise placement at your site — whether it is in the KIADB area, Apparel Park, or a remote project location." },
+      { title: "Buy, customize, or rent", text: "Flexible commercial options for every budget and project duration." },
+      { title: "One supplier for everything", text: "Besides container offices, we make security cabins, bunk houses, portable toilets, and site accommodation — your entire site setup from a single source." },
+      { title: "Support after delivery", text: "We remain available for service and modifications long after your cabin is installed." },
+    ],
+
+    areasHeading: "Areas We Cover Around Doddaballapura",
+    areasText:
+      "In addition to Doddaballapura town and the Doddaballapura Industrial Area, we deliver container offices across all of North Bengaluru, including Devanahalli, Yelahanka, Rajanakunte, Nelamangala, Dabaspet, Chikkaballapur, Hesaraghatta, Bagalur, and the airport corridor. Wherever your site is, our delivery team will reach it.",
+
+    howHeading: "Getting Your Office Is Simple",
+    howSteps: [
+      { title: "Share your requirement", text: "Call or WhatsApp us with the size, layout, and location details." },
+      { title: "Get your free quotation", text: "We send design options with transparent, itemised pricing." },
+      { title: "We build your cabin", text: "Manufactured at our facility under strict quality checks." },
+      { title: "Delivery and handover", text: "We transport and install the cabin at your Doddaballapura site, ready to occupy." },
+    ],
+
+    faqs: [
+      { question: "What does a container office cost in Doddaballapura?", answer: "It depends on the size, insulation, interior finish, and add-ons. Basic site cabins are very affordable, while furnished AC offices cost more. Send us your requirement and we will share an exact quotation with no hidden charges." },
+      { question: "How soon can you deliver to Doddaballapura?", answer: "Ready cabins can be delivered within a few days. Customized offices generally take 1–3 weeks depending on the design. Doddaballapura's highway connectivity makes transport straightforward for our team." },
+      { question: "Can I take a container office on rent?", answer: "Yes. Rental units are available for project-based requirements — ideal for contractors and companies working on temporary sites in North Bengaluru." },
+      { question: "Will the cabin be comfortable in summer?", answer: "Yes. The insulated panels significantly reduce interior heat, and with the built-in AC provision the cabin stays comfortable throughout the year." },
+      { question: "Can the office be relocated later?", answer: "Absolutely — that is the biggest advantage. The cabin can be loaded onto a truck and moved to any new location whenever your project shifts." },
+      { question: "Which sizes do you manufacture?", answer: "Standard sizes are 10x10, 20x10, 30x10, and 40x10 ft. We also build custom sizes and multi-room configurations on request." },
+      { question: "Does my site need a foundation?", answer: "No major civil work is needed. A level surface or simple concrete blocks are sufficient. We will guide you on basic site preparation before delivery." },
+      { question: "Can a toilet or pantry be included?", answer: "Yes. We build combined office units with attached toilets and pantries, and we also supply standalone portable toilet units." },
+    ],
+
+    ctaHeading: "Order Your Container Office in Doddaballapura Today",
+    ctaText:
+      "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
