@@ -13,7 +13,7 @@ export function ApplicationsSection() {
   return (
     <section className="section-padding bg-muted/30 cv-section">
       <div className="container-custom">
-        <div className="text-center mb-12">
+        <div className="reveal text-center mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
             WHERE WE BUILD
           </span>
@@ -25,7 +25,7 @@ export function ApplicationsSection() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {apps.map((a) => (
             <div key={a.name} className="bg-card border border-border/50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">

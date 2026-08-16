@@ -25,7 +25,7 @@ export function CategoriesSection() {
     <section className="section-padding bg-background cv-section">
       <div className="container-custom">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="reveal text-center mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
             WHAT WE BUILD
           </span>
@@ -45,7 +45,7 @@ export function CategoriesSection() {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category, index) => {
             const Icon = iconMap[category.icon] || Building;
             return (

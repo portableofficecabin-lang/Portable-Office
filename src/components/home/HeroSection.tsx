@@ -165,7 +165,7 @@ export function HeroSection() {
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up"
               style={{ animationDelay: "0.4s" }}
             >
-              <Button variant="hero" size="xl" asChild>
+              <Button variant="hero" size="xl" asChild className="btn-sheen">
                 <Link href="/products">
                   Explore Products
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -206,7 +206,7 @@ export function HeroSection() {
             className="hidden lg:block relative animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            <div className="relative">
+            <div className="relative animate-float">
               <div className="absolute -inset-8 bg-gradient-to-r from-accent/30 to-amber-light/20 rounded-3xl blur-3xl" />
               <div className="relative bg-gradient-to-br from-white/12 to-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-2xl">
                 {/* ART-DIRECTED loading — a revised trade-off, changed deliberately.

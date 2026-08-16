@@ -18,7 +18,7 @@ export function IndustriesSection() {
     <section className="section-padding bg-background cv-section" aria-labelledby="industries-heading">
       <div className="container-custom">
         {/* Header */}
-        <div className="mb-12">
+        <div className="reveal mb-12">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
             INDUSTRIES WE SERVE
           </span>

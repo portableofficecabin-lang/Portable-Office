@@ -33,6 +33,7 @@ import { ContainerOfficeContent } from "@/components/products/ContainerOfficeCon
 import { MSContainerOfficeCabinContent } from "@/components/products/MSContainerOfficeCabinContent";
 import { ContainerOfficeGenericContent } from "@/components/products/ContainerOfficeGenericContent";
 import { FreshInsightSection } from "@/components/products/FreshInsightSection";
+import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 import { PortaCabinContent } from "@/components/products/PortaCabinContent";
 import { MSPortableCabinContent } from "@/components/products/MSPortableCabinContent";
 import { OfficePortableCabinContent } from "@/components/products/OfficePortableCabinContent";
@@ -545,6 +546,12 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
 
           {/* Fresh, in-depth, original sections for SEO pages */}
           <FreshInsightSection slug={slug || ""} />
+
+          {/* Child tier of the SEO hierarchy: "Guides & buying help" grid linking every
+              /products/<slug>/<child> page. Registry-driven (productChildPages.ts) and
+              renders nothing for products without children, so mounting it unconditionally
+              is free today and lights up per product as child groups are authored. */}
+          <ProductGuidesSection parentSlug={slug || ""} />
 
           {/* Customer Reviews (server-rendered list + client submit) */}
           <ProductReviews
