@@ -257,6 +257,12 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Ready-to-use 40x10 ft MS container site office with 15 workstations, overhead file cabinets, revolving chairs, manager cabin & provision for 2 ACs. Factory-wired, no foundation needed — shifts with your project.",
     keywords: "container site office, site office container 40x10, MS container office, portable site office with workstations, project site office cabin, construction site office container, ready made site office, container office with manager cabin, site office container price India",
   },
+  "43": {
+    title: "Marketing Office Container for Project Sales | Portable Office Cabin",
+    h1: "Marketing Office",
+    description: "Branded container marketing offices & sales galleries for project launches — insulated, AC, tiled, delivered finished in weeks. Buy or rent, then relocate to your next launch.",
+    keywords: "marketing office container, sales gallery container, real estate marketing office, project marketing office cabin, portable sales office, container sales gallery India, site marketing office on rent, relocatable marketing office, sales lounge container, property launch office",
+  },
 };
 
 export function getProductSEO(productId: string, productName: string): ProductSEOData {
