@@ -927,8 +927,8 @@ export const CITY_PAGES: CityPage[] = [
      * entrance revealing the fitted interior, and the drone aerial of the joined units.
      * Converted from 1376×768 PNG masters to webp (~108–256 KB, quality 82). Captions and alt
      * text describe the ACTUAL photos; the body copy's imagined image captions were not reused
-     * where they differ from what the photos show. No fourth image was supplied, so the
-     * optional gallery is unset — add one later without any code change. */
+     * where they differ from what the photos show. The fourth photo (fitted workspace interior
+     * with the solar power unit) arrived after the first three and sits in the gallery. */
     heroImage: {
       src: "/images/cities/container-office-in-sipcot-krishnagiri-exterior.webp",
       alt: "Container office in SIPCOT Krishnagiri — twin grey corrugated units with a glazed double entry door, barred sliding window, white skirting and a rooftop solar array",
@@ -948,6 +948,14 @@ export const CITY_PAGES: CityPage[] = [
       width: 1376,
       height: 768,
     },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-sipcot-krishnagiri-workspace.webp",
+        alt: "Working interior of a solar-powered container office in Krishnagiri — desk with the solar inverter and monitoring unit, equipment rack with batteries, chequered steel floor, tall barred windows and skylight strips under the panel canopy",
+        width: 1376,
+        height: 768,
+      },
+    ],
 
     h1: "Container Office in SIPCOT Krishnagiri",
     tagline: "Ready-to-use container offices, delivered finished across Krishnagiri district.",
