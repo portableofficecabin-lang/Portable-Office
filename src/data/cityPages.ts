@@ -86,6 +86,13 @@ export interface CityPage {
 
   ctaHeading: string;
   ctaText: string;
+
+  /**
+   * Optional legal note rendered muted below the CTA. REQUIRED whenever the page names a
+   * real company, brand or landmark (nominative use): state independence / non-affiliation
+   * and trademark ownership explicitly.
+   */
+  disclaimer?: string;
 }
 
 export const CITY_PAGES: CityPage[] = [
@@ -1126,6 +1133,232 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Send Us Your Site Details",
     ctaText:
       "Size, what you'll use it for, and where in Krishnagiri district the site is. You'll have a clear price inside a day, with nothing attached to it.",
+  },
+
+  {
+    slug: "container-office-near-tata-electronics-hosur",
+    city: "Near Tata Electronics, Hosur",
+    metaTitle: "Container Office Near Tata Electronics, Hosur",
+    metaDescription:
+      "Container offices for vendor and supplier units near the Tata Electronics plant in Hosur — insulated, audit-ready portable offices delivered finished, for sale or rent. Independent supplier.",
+    keywords:
+      "container office near Tata Electronics Hosur, vendor site office Hosur, portable office cabin Hosur industrial belt, supplier office container Hosur, container office on rent Hosur, audit ready site office Hosur",
+    geo: { region: "IN-TN", placename: "Hosur industrial belt, Krishnagiri district, Tamil Nadu, India", position: "12.7409;77.8253", icbm: "12.7409, 77.8253" },
+
+    /* Owner-supplied set for this page (4 photos, dropped 2026-08-16 in "container office in
+     * tata electronic"): straight-on front elevation of a glass-front unit (hero), drone
+     * aerial of the flat-roof unit between shipping containers (feature band), the furnished
+     * interior, and a 3/4 angle view (gallery). Converted from 1376×768 PNG masters to webp
+     * q82 (~82–168 KB). Captions and alt text describe the ACTUAL photos (flat-roof glass
+     * unit) — the draft's canopy-roof image captions were not reused where they differ. */
+    heroImage: {
+      src: "/images/cities/container-office-near-tata-electronics-hosur-exterior.webp",
+      alt: "Container office for vendor units near Tata Electronics, Hosur — light-grey glass-front portable office with four full-height window bays and a glazed entry door",
+      width: 1376,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-near-tata-electronics-hosur-aerial-view.webp",
+      alt: "Drone view of a flat-roof glass-front container office standing between shipping containers in a Hosur yard",
+      width: 1376,
+      height: 768,
+      caption: "Delivered into a working container yard — set down, levelled and handed over between the boxes already on site.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-near-tata-electronics-hosur-interior.webp",
+      alt: "Inside a glass-front container office near Hosur — desk with a monitor, wood-finish flooring, panelled ceiling with linear LED lights and full-height glazing to the yard",
+      width: 1376,
+      height: 768,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-near-tata-electronics-hosur-angle-view.webp",
+        alt: "Three-quarter view of a light-grey glass-front container office in a Hosur container yard, up on steel base plates",
+        width: 1376,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Office Near Tata Electronics, Hosur",
+    tagline: "Finished vendor and supplier offices, delivered to the belt around the plant.",
+    intro: [
+      "When a plant that size lands in a town, everything around it has to move at its speed. The Tata Electronics facility in Hosur pulled in an entire supporting layer with it — component vendors, contract packers, logistics operators, staffing agencies, transport contractors, canteen and housekeeping firms — and most of them needed somewhere to work long before they had a building.",
+      "That's who calls us. Not the plant itself, but the businesses setting up around it, all facing the same squeeze: a purchase order with a start date, a plot or a rented yard nearby, and a schedule that won't wait nine months for civil work.",
+      "We build container offices and deliver them finished to sites across this belt. Walls insulated, wiring run, lights up, floor laid, windows and doors fitted. It comes off the trailer and your team works in it that afternoon.",
+    ],
+
+    whyHeading: "Why Vendors Around This Belt Call Us",
+    whyIntro:
+      "Most of our first calls from this belt sound identical: we've got the order, we've got the land, and we need to be operational next month.",
+    whyBullets: [
+      {
+        title: "The clock is set by someone else.",
+        text: "When your start date is tied to an OEM's ramp schedule, you don't get to add six months for a building. A cabin on site in two weeks is the difference between hitting the date and explaining why you didn't.",
+      },
+      {
+        title: "Rented land needs movable assets.",
+        text: "A lot of units around here are on leased plots or shared yards. Pouring a foundation on land you don't own is a bad trade. A container office isn't — when the lease ends, it goes with you.",
+      },
+      {
+        title: "Audits happen without much notice.",
+        text: "Working with a large customer means people turn up to look at your setup. An insulated cabin with a false ceiling, tiled floor, proper lighting and a clean meeting corner presents very differently from a tin shed.",
+      },
+      {
+        title: "Headcount moves fast in both directions.",
+        text: "Add a module when the volume comes. Take one off when the programme changes. You're not stuck with a building sized for a forecast that shifted.",
+      },
+      {
+        title: "Built for Hosur, not for a brochure.",
+        text: "April and May here punish a badly built cabin, and plenty of what gets sold locally is a painted steel box. Ours aren't. Walls and roof are PUF or rockwool insulated sandwich panels, and we fit a pitched canopy roof that stands clear above the cabin on its own posts — it shades the roof through the day and throws monsoon rain well past the doors. With the AC connected it's an ordinary office at two in the afternoon, which matters when your team is in it for a full shift.",
+      },
+    ],
+
+    solutionsHeading: "What We Build for This Belt",
+    solutionsIntro:
+      "From a single check post to a stacked office block, every unit is fabricated at our workshop and arrives ready to occupy.",
+    solutions: [
+      {
+        title: "Vendor and project offices",
+        text: "The common one. Desks, storage, decent lighting, and enough sockets that nobody's daisy-chaining extension boards. Good for a supplier team running a programme close to the plant.",
+      },
+      {
+        title: "Gate and security cabins",
+        text: "Wide glass so the guard can actually see who's arriving. Used at vendor unit entrances, yard gates and vehicle check points across the area.",
+      },
+      {
+        title: "Admin and meeting cabins",
+        text: "Where you'll take a customer or an auditor. False ceiling, tiled floor, split AC, a partitioned cabin for the manager, and a finish that reads permanent.",
+      },
+      {
+        title: "Joined and stacked units",
+        text: "Two or three modules combined into a meeting room, an open work area and a pantry under one roof. Stack them if your yard footprint is tight. From the end, the join line is the only clue there were ever two units.",
+      },
+      {
+        title: "Canteen and pantry cabins",
+        text: "Wipe-clean interiors built for shift catering. Worth planning early if your headcount is going to climb.",
+      },
+      {
+        title: "Toilets, storage and accommodation",
+        text: "Plumbed washroom units, sealed storage containers for tools and consumables, and insulated bunk houses with attached or separate toilet blocks.",
+      },
+    ],
+
+    featuresHeading: "Sizes and Standard Specification",
+    featuresIntro: "Standard on every unit:",
+    features: [
+      "MS structural frame, anti-corrosive primer, industrial paint finish",
+      "PUF or rockwool insulated sandwich panels, walls and roof",
+      "Pitched canopy roof above the cabin, overhangs on both sides",
+      "Tile, vinyl or laminate flooring",
+      "Powder-coated aluminium sliding windows, grills and mosquito mesh",
+      "Concealed wiring, MCB distribution board, LED lighting, switch and socket points",
+      "External floodlights on the corners and along the overhang",
+      "AC provision ready to connect",
+      "Lockable doors, fire extinguisher point, fire-retardant options on request",
+    ],
+    sizesNote:
+      "A 10 ft unit works as a gate cabin, check post or single desk for 1–2 people. A 20 ft unit is the standard vendor site office, comfortable for 4–6. A 40 ft unit carries an admin block or a full team of 10–14. Joined and stacked configurations give a multi-room setup for as many as you need. Ask and we'll add false ceiling, internal partitions, plumbing, a pantry counter, furniture, or your own paint scheme and logo.",
+
+    industriesHeading: "Who We Supply Here",
+    industriesIntro:
+      "Different businesses, same requirement — a clean, working office standing on site before the deadline.",
+    industries: [
+      { title: "Electronics component and sub-assembly vendors", text: "Supplier teams standing up programmes close to the plant, often on someone else's ramp schedule." },
+      { title: "Contract manufacturers and packers", text: "Units that need working floors and offices running before their sheds are finished." },
+      { title: "Plastic moulding and precision engineering", text: "Toolroom, moulding and machining units across the belt's vendor yards." },
+      { title: "Logistics, warehousing and transport contractors", text: "Yard offices, check posts and dispatch cabins along the corridor." },
+      { title: "Staffing, canteen and facility providers", text: "Staffing, housekeeping and canteen firms — plus civil and MEP contractors on expansion packages and maintenance crews." },
+    ],
+
+    customHeading: "Buy or Rent",
+    customIntro:
+      "If the office is part of how the unit runs — your layout, your branding, in use beyond a year and a half — buy it. You end up owning a movable asset instead of a stack of rent receipts.",
+    customBullets: [
+      {
+        title: "Buy",
+        text: "When the office is part of how the unit runs: your layout, your branding, in use beyond a year and a half. You own a movable asset.",
+      },
+      {
+        title: "Rent",
+        text: "When it's tied to a programme with an end date, a ramp phase, or a contract term. Monthly payment, and we handle delivery and collection at both ends.",
+      },
+    ],
+    customOutro:
+      "Tell us the number of months and we'll show you both figures. Sometimes rental clearly wins. Sometimes it doesn't, and we'll say so rather than sell you the wrong one.",
+
+    whyUsHeading: "Set Up Near the Plant Without Waiting on a Building",
+    whyUsIntro:
+      "The sequence is simple. You tell us the size and what it's for. We build it at our workshop, check it, load it on a trailer. It reaches your gate, we set it down with a crane or hydraulic unloading depending on the room you've got, level it, connect the power, hand you the keys.",
+    whyUsBullets: [
+      { title: "No foundation.", text: "Firm, level ground is enough; on soft or uneven ground a few concrete pedestals do it." },
+      { title: "No three-month civil programme.", text: "The unit is fabricated and finished at our workshop, then delivered as one job." },
+      { title: "No mason who disappears halfway through.", text: "There is no site-side construction stage to stall." },
+      { title: "Tight access or an uneven yard?", text: "Mention it when you call and we'll plan the lift before anything gets loaded." },
+    ],
+
+    areasHeading: "The Area We Cover",
+    areasText:
+      "The industrial belt around the Tata Electronics plant in Hosur; SIPCOT Hosur Phase 1 and Phase 2, and Hosur Industrial Estate; Zuzuvadi, Mookandapalli, Belagondapalli and Bagalur Road; Hosur town and the surrounding vendor yards; SIPCOT Shoolagiri and the NH-44 corridor; Krishnagiri, Bargur and Kaveripattinam; Attibele, Anekal, Bommasandra, Jigani and Electronic City. If your site isn't listed, still ask. We move units across Tamil Nadu, Karnataka and Andhra Pradesh regularly.",
+
+    howHeading: "How the Order Runs",
+    howSteps: [
+      { title: "You give us the basics.", text: "Size, purpose, headcount, where the site is." },
+      { title: "We send a price.", text: "Itemised, usually inside 24 hours. Not a range." },
+      { title: "You approve the layout.", text: "Drawing and finish options first, for anything custom." },
+      { title: "We build and inspect it.", text: "At our workshop, checked before it moves." },
+      { title: "It reaches your site.", text: "By trailer, to your gate, on the agreed date." },
+      { title: "We place and hand over.", text: "Set down, levelled, connected, keys to you." },
+    ],
+
+    faqs: [
+      {
+        question: "How fast can you deliver?",
+        answer: "Standard stock unit, 2 to 5 days. Built to your specification, usually 2 to 4 weeks depending on the finish.",
+      },
+      {
+        question: "Will it pass a customer audit?",
+        answer: "The cabins we build for vendor units are specified for exactly that — insulated panels, false ceiling, tiled floor, proper lighting, fire extinguisher point and a presentable meeting area. Tell us what your customer looks for and we'll spec to it.",
+      },
+      {
+        question: "Do I need to do civil work first?",
+        answer: "No. Firm, level ground is enough. On soft or uneven ground a few concrete pedestals do it, and we'll tell you exactly what's needed.",
+      },
+      {
+        question: "Our plot is on lease. Is that a problem?",
+        answer: "It's usually the reason people choose this. The cabin is equipment, not a structure, and it leaves with you when the lease does.",
+      },
+      {
+        question: "Can we add more later?",
+        answer: "Yes. Add modules alongside or on top as the headcount grows. Planning for it at the start makes the join cleaner, so mention it early if you expect to expand.",
+      },
+      {
+        question: "Is it comfortable through summer?",
+        answer: "With the insulation and the canopy roof together, yes. Either one on its own isn't enough in a Hosur April.",
+      },
+      {
+        question: "Can it carry our branding?",
+        answer: "Paint colours, logo, internal layout, flooring, partitions, furniture — all yours to specify.",
+      },
+      {
+        question: "What about toilets and water?",
+        answer: "Attached washrooms, standalone toilet containers, water tanks and drainage connections are all available.",
+      },
+      {
+        question: "How long will it last?",
+        answer: "With basic upkeep and a repaint every few years, 15 to 20 years and often longer.",
+      },
+      {
+        question: "How does payment work?",
+        answer: "Advance on order confirmation, balance before dispatch. Rentals are monthly against a refundable deposit.",
+      },
+    ],
+
+    ctaHeading: "Tell Us What You Need",
+    ctaText:
+      "Size, what it's for, and where your site is. You'll have a clear price inside a day, with no obligation attached.",
+
+    disclaimer:
+      "We are an independent manufacturer and supplier of portable container offices. We are not affiliated with, endorsed by, or an authorised vendor of Tata Electronics Private Limited or any Tata Group company. References to the Hosur plant describe the location we deliver to. All trademarks are the property of their respective owners.",
   },
 ];
 
