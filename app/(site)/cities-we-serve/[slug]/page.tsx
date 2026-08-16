@@ -257,6 +257,13 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             </Link>
           </div>
         </section>
+
+        {/* Optional legal/affiliation disclaimer — REQUIRED on any page that names a real
+            company or landmark (e.g. the Tata Electronics belt page): renders muted, below
+            the CTA, exactly where such notices belong. Pages without one are unaffected. */}
+        {page.disclaimer && (
+          <p className="mt-8 text-xs leading-relaxed text-muted-foreground/80">{page.disclaimer}</p>
+        )}
       </main>
     </>
   );
