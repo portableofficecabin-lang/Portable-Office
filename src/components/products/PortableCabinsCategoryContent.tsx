@@ -24,9 +24,13 @@ import { products as catalogProducts, getProductSlug, type Product } from "@/dat
 import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 
-/** The one-H1-per-page override for this category (used by the listing view). */
+/**
+ * One-H1-per-page overrides, keyed by category slug (used by the listing view). Shared map: it
+ * lives here for historical reasons, but any category with a rich landing page adds its H1 here.
+ */
 export const CATEGORY_H1: Record<string, string> = {
   "portable-cabins": "Portable Cabins — Factory-Built, Delivered Anywhere in India",
+  "prefab-building": "Prefab Buildings — Panel-Built, Assembled On Your Site",
 };
 
 /** ₹ formatter, Indian grouping. */
