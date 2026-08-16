@@ -34,6 +34,13 @@ export interface CityPage {
 
   /** Hero image (also the page's og:image). Root-relative path under /public. */
   heroImage: { src: string; alt: string; width: number; height: number };
+  /**
+   * Optional full-width FEATURE BAND rendered between the "why" bullets and the solutions
+   * list — a deliberate visual break in the longest stretch of text on the page, not a second
+   * hero. Cropped to 3:2 and carries a short caption over a scrim, so it reads as an editorial
+   * plate rather than another product shot. Unset on the sibling city pages.
+   */
+  featureImage?: { src: string; alt: string; width: number; height: number; caption: string };
   /** Optional second image shown beside the customization section. */
   interiorImage?: { src: string; alt: string; width: number; height: number };
   /** Optional gallery (rendered as a grid after the features section). */
@@ -524,6 +531,174 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Order Your Container Office in Doddaballapura Today",
     ctaText:
       "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
+  },
+
+  {
+    slug: "container-office-in-sipcot-hosur",
+    city: "SIPCOT Hosur",
+    metaTitle: "Container Office in SIPCOT Hosur",
+    metaDescription:
+      "Container office in SIPCOT Hosur, built at our own Hosur-belt factory. Insulated, AC-ready portable office cabins for sale or rent, delivered ready to use.",
+    keywords:
+      "container office SIPCOT Hosur, portable office cabin Hosur, office container Hosur, prefab site office SIPCOT, container office on rent Hosur, site office cabin Hosur Industrial Area",
+    geo: { region: "IN-TN", placename: "SIPCOT Industrial Complex, Hosur, Tamil Nadu, India", position: "12.7409;77.8253", icbm: "12.7409, 77.8253" },
+
+    // Owner-supplied set for this page (4 images, dropped 2026-08-16). All four are unique to
+    // this page — hash-checked against every other image in public/images before wiring, so
+    // nothing here is reused from the product pages or a sibling city page.
+    // Owner-supplied set for this page (4 images, 2026-08-16). All four are unique to this
+    // page — hash-checked against every other image in public/images before wiring, so nothing
+    // here is reused from a product page or a sibling city page. Hero is the 3/4 exterior;
+    // the fitted interior sits with the customisation section, as on the sibling pages.
+    // NOTE: the hero is "-exterior.webp", not the bare slug name. During this page's build the
+    // bare name briefly held a different (white/blue) placeholder render, so that URL is burned
+    // in browser and CDN caches. Renaming guarantees the old picture can never be served again.
+    // Do not rename this back to /images/cities/container-office-in-sipcot-hosur.webp.
+    heroImage: {
+      src: "/images/cities/container-office-in-sipcot-hosur-exterior.webp",
+      alt: "Container office in SIPCOT Hosur — black corrugated shipping-container office with a full-height sliding glass wall and warm timber-lined interior, by Portable Office Cabin",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sipcot-hosur-entrance-view.webp",
+      alt: "Entrance elevation of a container office cabin — solid steel door with steps, corrugated side wall and a glazed end bay",
+      width: 1024,
+      height: 1024,
+      caption: "Entrance side — steel door, steps and a glazed end bay. Delivered as one sealed unit, so it is level and locked up the day it lands.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sipcot-hosur-interior.webp",
+      alt: "Inside a fitted container office — timber slat wall panelling, recessed LED lighting, seating area and a compact kitchenette along the rear wall",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-sipcot-hosur-workspace.webp",
+        alt: "Container office workspace — desk with a laptop beside the full-height glazing, timber ceiling and slat wall finish",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Container Office in SIPCOT Hosur",
+    tagline: "Portable Office Cabins Delivered Ready-to-Use Across SIPCOT Hosur",
+    intro: [
+      "SIPCOT Hosur runs on speed. New lines get commissioned, contracts get awarded, and teams need a working office on the ground in days — not the six months a masonry structure takes. That is exactly the gap a container office fills, and it is the reason supervisors, contractors and plant managers across the estate keep coming back to us.",
+      "Portable Office Cabin supplies and installs container offices across SIPCOT Hosur Phase 1 and Phase 2, the Hosur Industrial Estate and the surrounding belt. Our own factory sits in that same belt — at Kamandoddi, just outside Hosur — so SIPCOT is one of the shortest delivery runs we make. Each unit arrives fully built, with insulated walls, wiring, lighting, flooring, windows and doors already in place. You place it, connect the power, and start working.",
+    ],
+
+    whyHeading: "Why SIPCOT Hosur Industries Choose Container Offices",
+    whyIntro:
+      "A masonry site office ties up capital, needs approvals, and cannot follow you when the project moves. On a leased SIPCOT plot with a running production line next door, that is a poor fit. A container office answers all of it at once:",
+    whyBullets: [
+      { title: "Ready in days, not months", text: "Standard cabins reach your gate within a few days of confirmation. Custom builds typically take two to four weeks depending on the specification." },
+      { title: "Built for Hosur's climate", text: "PUF or rockwool insulated panels with a weatherproof roof keep interiors workable through the peak summer months, and every cabin is wired with AC provision as standard." },
+      { title: "Relocatable capital", text: "When a contract ends or the plant expands, the office is lifted onto a trailer and moved with you. Nothing is written off." },
+      { title: "Zero disruption to production", text: "No foundation work, no wet construction, no debris and no shutdown of the adjacent bay while the cabin is installed." },
+      { title: "Predictable cost", text: "One quoted figure covering fabrication, transport and placement, so there is no cost creep halfway through the job." },
+      { title: "Movable plant, not a permanent structure", text: "Because the cabin is not built into the ground, it suits leased SIPCOT plots where putting up a permanent building is not practical." },
+      { title: "Delivered from inside the belt", text: "Our factory is in the Hosur area itself, which keeps transport short, freight low and site visits easy to arrange." },
+    ],
+
+    solutionsHeading: "Container Office Types We Supply in SIPCOT Hosur",
+    solutionsIntro:
+      "We build the full range in-house, so a single supplier covers everything from a gate post to a multi-room admin block:",
+    solutions: [
+      { title: "Site Office Cabins", text: "For project and construction sites across the Hosur industrial belt, with desks, storage, lighting and power points ready to use from day one." },
+      { title: "Security and Guard Cabins", text: "Compact gatehouse units with wide viewing glass, ideal for SIPCOT factory entrances, weighbridge points and contractor gates." },
+      { title: "Executive and Admin Office Containers", text: "Finished interiors with false ceiling, vinyl or laminate flooring, split AC provision and partitioned cabins for managers, QC teams and visiting clients." },
+      { title: "Multi-Unit Office Complexes", text: "Two or more containers joined side by side or stacked to create meeting rooms, open workspaces and pantry areas for larger site teams." },
+      { title: "Labour Accommodation and Bunk Houses", text: "Ventilated, insulated units with attached or separate toilet blocks for contractor and shift workforces." },
+      { title: "Toilet and Washroom Containers", text: "Plumbed portable sanitation units for site and factory use, supplied standalone or attached to the office." },
+      { title: "Canteen and Pantry Cabins", text: "Hygienic, easy-clean interiors built for shift catering and rest breaks." },
+      { title: "Container Office on Rent", text: "For a fixed-duration project or an expansion phase, take the cabin on monthly rental instead — we handle delivery and removal." },
+    ],
+
+    featuresHeading: "Sizes, Specifications and Build Quality",
+    featuresIntro: "Every cabin we deliver into SIPCOT Hosur is built to handle transport loads, monsoon exposure and long-term outdoor placement:",
+    features: [
+      "MS structural frame with anti-corrosive primer and industrial-grade paint",
+      "Insulated PUF / rockwool sandwich panel walls and roof",
+      "Vinyl, laminate or ceramic tile flooring options",
+      "Powder-coated aluminium sliding windows with grills and mosquito mesh",
+      "Concealed wiring, MCB distribution board, LED lighting, switch and socket points",
+      "AC-ready provision for split or window units",
+      "Lockable doors, with fire-retardant options on request",
+      "Weatherproof, leak-proof roofing",
+      "Optional false ceiling, partitions, plumbing, pantry fit-out and custom branding",
+    ],
+    sizesNote:
+      "Popular sizes: 10 ft for a security cabin or single workstation, 20 ft for a standard site office seating four to six, and 40 ft for an admin block seating ten to fourteen. Multi-unit and stacked configurations are built to your requirement.",
+
+    industriesHeading: "Industries We Serve in and around Hosur",
+    industriesIntro: "Hosur's automotive and engineering cluster is our largest customer base, and our layouts reflect what those plants actually ask for:",
+    industries: [
+      { title: "Automotive and auto-component manufacturing", text: "supervisor cabins near the shop floor, QC rooms and contractor site offices" },
+      { title: "Electronics and electrical assembly", text: "clean, insulated admin cabins and testing rooms" },
+      { title: "Engineering and fabrication units", text: "site offices, stores cabins and shift supervisor posts" },
+      { title: "Logistics, warehousing and transport yards", text: "dispatch offices, weighbridge cabins and billing counters" },
+      { title: "Pharmaceutical and chemical plants", text: "temporary offices during plant expansion and shutdown work" },
+      { title: "Construction and infrastructure contractors", text: "engineer cabins, labour accommodation and toilet blocks" },
+      { title: "Solar and renewable energy projects", text: "control room and site office containers for remote plots" },
+      { title: "Textile and packaging units", text: "canteen cabins, admin offices and security posts" },
+    ],
+
+    customHeading: "Fully Customisable — Built the Way Your Site Needs",
+    customIntro:
+      "No two SIPCOT plots have the same access, headcount or layout, so nothing here is off-the-shelf unless you want it to be. You can specify:",
+    customBullets: [
+      { title: "Size and layout", text: "single room, multi-room, open workspace or cabin-style with partitions" },
+      { title: "Interiors", text: "laminated panels, false ceiling, modular flooring and lighting design" },
+      { title: "Furniture provision", text: "tables, chairs, storage cabinets and workstations" },
+      { title: "Electricals", text: "extra points for AC, servers, printers and machinery interfaces" },
+      { title: "Exterior finish", text: "company colours, logo application, branding and signage" },
+      { title: "Add-ons", text: "attached toilet, pantry, ramp, staircase and awnings" },
+    ],
+    customOutro: "Tell us the size, purpose, headcount and where the cabin has to stand, and we will come back with a layout and a quotation that fits.",
+
+    whyUsHeading: "Buy or Rent — and Why Portable Office Cabin",
+    whyUsIntro:
+      "Buy if the office is permanent to your operations, if you want a customised layout and finish, or if you expect to use it beyond roughly eighteen to twenty-four months — you end up owning a relocatable asset. Rent if you have a fixed-duration project, an expansion phase or a shutdown requirement. Tell us the duration and we will run both numbers for you. Either way:",
+    whyUsBullets: [
+      { title: "Direct manufacturer", text: "we build in-house at our Tamil Nadu factory near Hosur, so there is no middleman margin and full control over quality." },
+      { title: "Local to SIPCOT", text: "our factory is in the Hosur belt itself, which makes delivery, site visits and after-sales callouts fast." },
+      { title: "Quality materials", text: "tested steel sections, branded insulation and reliable electrical fittings throughout." },
+      { title: "One supplier for the whole site", text: "offices, security cabins, bunk houses, toilets, canteens and storage units from a single order." },
+      { title: "Buy or rent", text: "flexible plans covering both short-term project work and long-term installations." },
+      { title: "After-sales support", text: "we stand behind every cabin we deliver, with service support across the Hosur and Krishnagiri belt." },
+    ],
+
+    areasHeading: "Areas We Deliver Around SIPCOT Hosur",
+    areasText:
+      "Along with SIPCOT Industrial Complex Phase 1 and Phase 2, we deliver across the Hosur Industrial Estate, Zuzuvadi, Mookandapalli, Belagondapalli, Bagalur Road, and the Hosur–Krishnagiri and Hosur–Bengaluru corridors. We also cover Attibele, Anekal, Bommasandra, Jigani, Electronic City and the South Bengaluru industrial zones, plus Krishnagiri, Dharmapuri and surrounding Tamil Nadu districts. If your site is outside this list, ask us — we transport regularly across Tamil Nadu, Karnataka and Andhra Pradesh.",
+
+    howHeading: "How It Works — From Enquiry to Installation",
+    howSteps: [
+      { title: "Share your requirement", text: "Call or WhatsApp us with the size, purpose, headcount and your site location in Hosur." },
+      { title: "Get a quotation", text: "We send a clear, itemised price, normally within twenty-four hours." },
+      { title: "Approve the layout", text: "For custom builds we share drawings and finish options before anything is cut." },
+      { title: "Fabrication and quality check", text: "Your cabin is built at our Tamil Nadu factory and inspected before dispatch." },
+      { title: "Delivery to your SIPCOT gate", text: "Transported by trailer, with crane or hydraulic unloading depending on your site access." },
+      { title: "Placement and handover", text: "Positioned, levelled, connected and handed over ready to use — usually within a few hours of arrival." },
+    ],
+
+    faqs: [
+      { question: "How long does it take to get a container office in SIPCOT Hosur?", answer: "Standard cabins can reach your site within a few days of order confirmation. Custom-built offices usually take two to four weeks depending on the specification and finish. Because our factory is in the Hosur belt itself, transport time into SIPCOT is short." },
+      { question: "What does a container office cost in Hosur?", answer: "It depends on the size, insulation, interior finish and add-ons you choose — a basic security cabin and a fully furnished AC admin block are very different builds. Send us your requirement and we will share an exact, itemised quotation with no hidden charges. Standard listed cabins can also be bought outright online at a fixed, GST-inclusive price." },
+      { question: "Do I need a foundation or civil work?", answer: "No. A level, firm surface is enough. On soft ground we recommend simple concrete pedestals or plinth blocks, and our team will advise you on site preparation before delivery." },
+      { question: "Is a container office comfortable in Hosur's summer?", answer: "Yes, when it is insulated properly. Our PUF and rockwool panels with a weatherproof roof significantly reduce heat gain, and every cabin is wired with AC provision as standard." },
+      { question: "Can I move it later if my plant relocates?", answer: "Yes — that is one of the main advantages. The cabin is designed to be lifted and transported again, so it can follow you to the next plot or project site." },
+      { question: "Can it be customised to my company's branding?", answer: "Absolutely. Paint colours, logo application, internal layout, flooring, partitions and furniture provision can all be specified before fabrication." },
+      { question: "Do you provide toilets and plumbing?", answer: "Yes. We supply attached washrooms, standalone toilet containers, water tank provision and drainage connections alongside the office unit." },
+      { question: "Can I rent a container office instead of buying?", answer: "Yes. Rental is popular with contractors running fixed-duration work inside SIPCOT and along the Hosur corridor. We handle delivery at the start and removal at the end." },
+      { question: "How long does a container office last?", answer: "With basic maintenance and periodic repainting, fifteen to twenty years or more. The structure is built for continuous outdoor exposure." },
+    ],
+
+    ctaHeading: "Get a Container Office Quote for SIPCOT Hosur",
+    ctaText:
+      "Tell us the size, purpose and your site location in Hosur, and you will have a clear price with no obligation. Buy or rent, standard or fully customised — built at our Tamil Nadu factory just outside Hosur and delivered ready to use to your SIPCOT gate.",
   },
 ];
 
