@@ -152,6 +152,9 @@ export const productImages: Record<string, string> = {
   "43": "/images/products/marketing-office-main.webp",
   "POC-MO-CNTR": "/images/products/marketing-office-main.webp",
   "marketing-office": "/images/products/marketing-office-main.webp",
+  "44": "/images/products/prefab-marketing-office-main.webp",
+  "POC-PMO-165": "/images/products/prefab-marketing-office-main.webp",
+  "prefab-marketing-office": "/images/products/prefab-marketing-office-main.webp",
 };
 
 // Get image for a specific product

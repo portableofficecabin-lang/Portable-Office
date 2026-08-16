@@ -263,6 +263,12 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Branded container marketing offices & sales galleries for project launches — insulated, AC, tiled, delivered finished in weeks. Buy or rent, then relocate to your next launch.",
     keywords: "marketing office container, sales gallery container, real estate marketing office, project marketing office cabin, portable sales office, container sales gallery India, site marketing office on rent, relocatable marketing office, sales lounge container, property launch office",
   },
+  "44": {
+    title: "Prefab Marketing Office — Sales Gallery Built to Plan | Portable Office Cabin",
+    h1: "Prefab Marketing Office",
+    description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, assembled on site in days and relocatable to your next launch.",
+    keywords: "prefab marketing office, prefab sales gallery, prefabricated marketing office, sales gallery structure, real estate sales gallery, prefab sales office India, township launch gallery, relocatable sales gallery, prefab pavilion, project launch office",
+  },
 };
 
 export function getProductSEO(productId: string, productName: string): ProductSEOData {

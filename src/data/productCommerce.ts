@@ -519,6 +519,21 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Container Offices",
   },
   {
+    // PRODUCT CHILD of Marketing Office (id 43) — prefab building system, not a container.
+    // ₹1,16,00,000 INCL. 18% GST is the owner-supplied FINAL customer price (2026-08-16,
+    // "incl. GST" chosen explicitly). basePrice 9830508.47 is deliberately fractional: it is
+    // the ONLY value whose sellPrice() rounds to exactly ₹1,16,00,000 (no whole-rupee base
+    // lands there), and every customer surface derives from sellPrice(), so the fraction
+    // never leaks. Never "correct" the base — the customer price is the spec. size = the
+    // 165 ft × 58 ft build the listed price buys. Purchasable on-site; kept OUT of the
+    // automated Merchant feed via FEED_IMAGE_POLICY until the per-SKU spec/image review.
+    id: "44", sku: "POC-PMO-165", basePrice: 9830508.47, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Prefab Marketing Office",
+    feedTitle: "Prefab Marketing Office Sales Gallery Built to Plan | Portable Office Cabin",
+    size: "165 ft × 58 ft", material: "Steel truss-roof frame, insulated PUF/rockwool sandwich panels", bestFor: "Township & Large-Launch Sales Galleries",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Container Offices",
+  },
+  {
     // Container Site Office — base ₹6,20,000 + 18% GST = ₹7,31,600 total (owner-supplied, 2026-07-29).
     // Aug 2026: purchasable online (sitewide Buy Now directive). Kept OUT of the automated feed
     // via FEED_IMAGE_POLICY — the owner submits this one to Merchant Centre manually, so feeding
