@@ -700,6 +700,218 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Tell us the size, purpose and your site location in Hosur, and you will have a clear price with no obligation. Buy or rent, standard or fully customised — built at our Tamil Nadu factory just outside Hosur and delivered ready to use to your SIPCOT gate.",
   },
+
+  {
+    slug: "container-office-in-sipcot-shoolagiri",
+    city: "SIPCOT Shoolagiri",
+    metaTitle: "Container Office in SIPCOT Shoolagiri",
+    metaDescription:
+      "Container office in SIPCOT Shoolagiri — insulated, AC-ready portable offices delivered finished to your plot on NH-44. Site offices, gate cabins and admin blocks, for sale or rent.",
+    keywords:
+      "container office SIPCOT Shoolagiri, portable office cabin Shoolagiri, site office container Shoolagiri, prefab office Shoolagiri NH-44, container office on rent Shoolagiri, office container Krishnagiri district",
+    geo: { region: "IN-TN", placename: "SIPCOT Shoolagiri, Krishnagiri district, Tamil Nadu, India", position: "12.6740;77.9694", icbm: "12.6740, 77.9694" },
+
+    /* Owner-supplied set for this page (4 photos shared 2026-08-16): front gable exterior
+     * (hero), fitted interior hall, container side elevation with canopy (feature band) and
+     * the aerial roof view (gallery). The files were NOT yet in the repo when this entry was
+     * authored — save the four approved photos to public/images/cities/ under EXACTLY these
+     * names (webp, landscape ~1376×768) and the page lights up without any code change. */
+    heroImage: {
+      src: "/images/cities/container-office-in-sipcot-shoolagiri-exterior.webp",
+      alt: "Container office in SIPCOT Shoolagiri — white insulated portable office with grey skirting, barred sliding windows and a brown gable canopy roof on open ground",
+      width: 1376,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sipcot-shoolagiri-side-view.webp",
+      alt: "Side elevation of a joined container office for SIPCOT Shoolagiri — twin white insulated units under a projecting brown canopy roof with a grilled ventilator window",
+      width: 1376,
+      height: 768,
+      caption: "Two units joined under one canopy roof — delivered finished, levelled and handed over the day they land on your Shoolagiri plot.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sipcot-shoolagiri-interior.webp",
+      alt: "Inside a container office hall for SIPCOT Shoolagiri — insulated white panel walls, steel truss ceiling, barred windows, LED lights and a tiled floor ready for desks",
+      width: 1376,
+      height: 768,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-sipcot-shoolagiri-roof-view.webp",
+        alt: "Aerial view of the brown sheet canopy roof over a container office in SIPCOT Shoolagiri, with mounted flood lights covering the surrounding yard",
+        width: 1376,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Office in SIPCOT Shoolagiri",
+    tagline: "Ready-to-use container offices, delivered finished to your plot on NH-44.",
+    intro: [
+      "Shoolagiri has changed fast. What used to be a stop on the highway between Hosur and Krishnagiri is now a serious industrial address, with SIPCOT plots being allotted, EV and mobility suppliers moving in, and boundary walls going up on land that was farmland a few years ago.",
+      "And every one of those projects hits the same wall in month one. The plot is yours. The plan is approved. Your team is ready to start. But there's nowhere to sit, nowhere to keep drawings, and nowhere to take a client who's driven down from Bengaluru.",
+      "That's the problem we solve. We build container offices and deliver them to your plot in SIPCOT Shoolagiri, finished. Not a shell you fit out later — walls insulated, wiring done, lights fitted, floor laid, windows in. It comes off the trailer and you work in it the same afternoon.",
+    ],
+
+    whyHeading: "Why Shoolagiri Plots Suit Container Offices So Well",
+    whyIntro:
+      "New plots along this stretch of NH-44 share the same first-year story — and a container office answers every part of it.",
+    whyBullets: [
+      {
+        title: "You'll need it standing before your building is.",
+        text: "Civil work on a SIPCOT plot takes the better part of a year once you count approvals. Your project team needs a desk long before that.",
+      },
+      {
+        title: "It's honest about the heat.",
+        text: "April and May here are no joke, and a plain steel box is a mistake. Ours are built with PUF or rockwool panels and a reflective roof, and every unit is wired for AC before it leaves us. People actually stay inside them at 2 pm.",
+      },
+      {
+        title: "It's not money you write off.",
+        text: "When the permanent block is ready, the container doesn't get demolished. Move it to the far corner as a security post, or to your next site entirely.",
+      },
+      {
+        title: "You know the price up front.",
+        text: "One quote covers building it, bringing it, and putting it down. Nothing turns up later.",
+      },
+      {
+        title: "It's equipment, not a structure.",
+        text: "Which keeps things a lot simpler on leased industrial land than pouring a foundation does.",
+      },
+    ],
+
+    solutionsHeading: "What We Build for Shoolagiri Sites",
+    solutionsIntro:
+      "From a single gate cabin to a stacked multi-room office block, every unit is fabricated at our workshop and arrives ready to occupy.",
+    solutions: [
+      {
+        title: "Site offices",
+        text: "The workhorse. Desks, storage, decent lighting and enough plug points that nobody's fighting over an extension board. This is what most Shoolagiri projects start with.",
+      },
+      {
+        title: "Security and gate cabins",
+        text: "Small units with wide glass so the guard can actually see the gate. Good for main entrances and weighbridge points.",
+      },
+      {
+        title: "Admin and executive cabins",
+        text: "When visitors are coming. False ceiling, proper flooring, split AC, a partitioned cabin for the manager, and a finish that doesn't look temporary.",
+      },
+      {
+        title: "Joined and stacked units",
+        text: "Two, three or more containers put together to give you a meeting room, an open work area and a pantry. Stack them and you get the same floor area on half the footprint.",
+      },
+      {
+        title: "Bunk houses and labour accommodation",
+        text: "Insulated, properly ventilated, with attached or separate toilet blocks.",
+      },
+      {
+        title: "Toilets, pantry and storage",
+        text: "Plumbed washroom units, easy-clean canteen cabins for shift catering, and sealed storage containers for tools and spares.",
+      },
+    ],
+
+    featuresHeading: "Sizes and What Actually Goes Inside",
+    featuresIntro: "Every unit leaves us with:",
+    features: [
+      "MS structural frame, anti-corrosive primer, industrial paint finish",
+      "PUF or rockwool insulated sandwich panels on walls and roof",
+      "Vinyl, laminate or tile flooring",
+      "Powder-coated aluminium sliding windows, with grills and mosquito mesh",
+      "Concealed wiring, MCB board, LED lights and switch-socket points",
+      "AC provision ready to connect",
+      "Lockable doors, fire-retardant options on request",
+    ],
+    sizesNote:
+      "A 10 ft unit makes a gate cabin or single-desk office for 1–2 people. A 20 ft unit is the standard site office, comfortable for 4–6. A 40 ft unit carries an admin block or a full team of 10–14. Joined and stacked configurations give you a multi-room setup sized to whatever you need. Ask and we'll add false ceiling, internal partitions, plumbing, a pantry counter, furniture, or your paint scheme and logo.",
+
+    industriesHeading: "The People Who Call Us From This Belt",
+    industriesIntro:
+      "Most of the calls sound the same in the first minute: we've got the land, we need somewhere to sit by next month.",
+    industries: [
+      { title: "EV and future-mobility suppliers", text: "Setting up near the Shoolagiri parks and needing project offices before their sheds stand." },
+      { title: "Auto-component and engineering units", text: "Machine shops and component plants along the belt, from project stage to running operations." },
+      { title: "Fabrication shops and logistics operators", text: "Fabricators, warehousing and logistics yards along the highway that need offices and gate cabins." },
+      { title: "Contractors on civil packages", text: "Teams running construction on newly allotted plots who need a site office from day one." },
+      { title: "Solar, packaging and textile units", text: "Developers and manufacturers across the wider Krishnagiri district." },
+    ],
+
+    customHeading: "Should You Buy One or Rent One?",
+    customIntro:
+      "Simple way to think about it. If the office is going to be part of how you run the plant — you want your layout, your finish, your branding, and you'll use it well past a year and a half — buy it. You end up owning something you can move rather than something you paid rent on.",
+    customBullets: [
+      {
+        title: "Buy",
+        text: "When the office is part of how you'll run the plant: your layout, your finish, your branding, in use well past a year and a half. You own something you can move.",
+      },
+      {
+        title: "Rent",
+        text: "When it's tied to a project with an end date, an expansion phase, or a shutdown. You pay monthly, and we handle bringing it and taking it back.",
+      },
+    ],
+    customOutro:
+      "Not sure which way it works out? Tell us how many months and we'll put both numbers in front of you. Sometimes rental is obviously cheaper. Sometimes it isn't, and we'll say so.",
+
+    whyUsHeading: "An Office That Shows Up Finished",
+    whyUsIntro:
+      "Here's how it usually goes. You tell us the size and what you'll use it for. We build it at our workshop, check it over, and load it onto a trailer. It reaches your gate, we set it down with a crane or hydraulic unloading depending on how much room you've got, level it, connect the power, and hand you the keys.",
+    whyUsBullets: [
+      { title: "No foundation.", text: "Firm, level ground is enough — and if the soil is soft, a few concrete pedestals do the job." },
+      { title: "No masons on site for three months.", text: "The unit is fabricated and finished at our workshop, not built on your plot." },
+      { title: "No cement dust drifting into a line that's already running.", text: "Delivery day is a lift and a set-down, not a construction phase." },
+      { title: "Tight access? Tell us on the call.", text: "If your plot is on a slope or the entry is narrow, we plan the lift before we load." },
+    ],
+
+    areasHeading: "Where We Deliver Around Shoolagiri",
+    areasText:
+      "SIPCOT Shoolagiri and the industrial plots along NH-44; Shoolagiri town, Berigai, Samanapalli and Rayakottai Road; Hosur, SIPCOT Hosur Phase 1 and 2, and Zuzuvadi; Bagalur Road, Mookandapalli and Belagondapalli; Krishnagiri, Bargur and the Hosur–Krishnagiri stretch; Attibele, Anekal, Bommasandra, Jigani and Electronic City; Dharmapuri and the wider Krishnagiri district. Being right on NH-44 makes this an easy run for us. If your site isn't on the list, still ask — we move units across Tamil Nadu, Karnataka and Andhra Pradesh regularly.",
+
+    howHeading: "From Your Call to Your First Day Inside",
+    howSteps: [
+      { title: "You tell us the basics.", text: "Size, what it's for, how many people, where the plot is." },
+      { title: "We send a price.", text: "Itemised, usually within 24 hours. No vague ranges." },
+      { title: "You approve the layout.", text: "For anything custom, we share a drawing and finish options first." },
+      { title: "We build and check it.", text: "Fabricated at our workshop, inspected before it goes anywhere." },
+      { title: "It reaches Shoolagiri.", text: "By trailer, to your gate, on the agreed date." },
+      { title: "We place and hand over.", text: "Set down, levelled, connected, keys to you." },
+    ],
+
+    faqs: [
+      {
+        question: "How soon can I get one?",
+        answer: "If it's a standard unit we have in stock, 2 to 5 days. Built to your spec, usually 2 to 4 weeks depending on the finish you want.",
+      },
+      {
+        question: "Do I have to do any civil work first?",
+        answer: "No. Firm, level ground is enough. If the soil is soft or the plot is uneven, a few concrete pedestals do the job and we'll tell you exactly what's needed.",
+      },
+      {
+        question: "Will it be bearable in summer?",
+        answer: "Yes, if it's insulated properly — and ours are. PUF or rockwool panels plus a reflective roof make a big difference, and with the AC connected it's a normal office.",
+      },
+      {
+        question: "Can I move it when my building is ready?",
+        answer: "That's the whole point. It's designed to be lifted and shifted again, to another corner of the plot or another site.",
+      },
+      {
+        question: "Can it look like our company?",
+        answer: "Paint colours, logo, internal layout, flooring, partitions, furniture — all yours to specify.",
+      },
+      {
+        question: "What about toilets and water?",
+        answer: "Attached washrooms, standalone toilet containers, water tanks and drainage connections are all available.",
+      },
+      {
+        question: "How long will it last?",
+        answer: "With basic upkeep and a repaint every few years, 15 to 20 years and often longer.",
+      },
+      {
+        question: "How does payment work?",
+        answer: "An advance when you confirm the order, balance before dispatch. Rentals are monthly against a refundable deposit.",
+      },
+    ],
+
+    ctaHeading: "Tell Us About Your Shoolagiri Site",
+    ctaText:
+      "Give us the size, what you'll use it for, and where the plot is. You'll have a clear price within a day, and there's no obligation attached to it.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
