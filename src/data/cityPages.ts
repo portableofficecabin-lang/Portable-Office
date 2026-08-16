@@ -1127,6 +1127,228 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Size, what you'll use it for, and where in Krishnagiri district the site is. You'll have a clear price inside a day, with nothing attached to it.",
   },
+
+  {
+    slug: "container-office-in-sipcot-coimbatore",
+    city: "SIPCOT Coimbatore",
+    metaTitle: "Container Office in SIPCOT Coimbatore",
+    metaDescription:
+      "Container office in SIPCOT Coimbatore — insulated portable offices craned into full compounds across the Kongu belt. QC rooms, supervisor cabins and admin blocks, for sale or rent.",
+    keywords:
+      "container office SIPCOT Coimbatore, portable office cabin Coimbatore, site office container Coimbatore, QC room cabin Coimbatore, container office on rent Coimbatore, supervisor cabin Kongu belt",
+    geo: { region: "IN-TN", placename: "SIPCOT Coimbatore, Coimbatore, Tamil Nadu, India", position: "11.0168;76.9558", icbm: "11.0168, 76.9558" },
+
+    /* Owner-supplied set for this page (4 photos, dropped 2026-08-16 in "city serve page
+     * sipcot coimbatore"): a blue 20 ft "Site Office 01" unit set down inside a brick-walled
+     * compound — front elevation (hero), elevated view with the AC unit landed (feature band),
+     * the fitted interior, and a 3/4 angle (gallery). Converted from 1376×768 PNG masters to
+     * webp q82 (~55–238 KB). Captions and alt text describe the ACTUAL photos (flat-roof unit
+     * in a walled compound); the draft's canopy-roof image captions were not reused. */
+    heroImage: {
+      src: "/images/cities/container-office-in-sipcot-coimbatore-exterior.webp",
+      alt: "Container office in SIPCOT Coimbatore — blue 20 ft portable site office with a personnel door and shaded sliding window, set down on pedestals inside a walled compound",
+      width: 1376,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sipcot-coimbatore-aerial-view.webp",
+      alt: "Elevated view of a blue container site office placed in the corner of a brick-walled compound in Coimbatore, with the AC outdoor unit landed beside it",
+      width: 1376,
+      height: 768,
+      caption: "Craned into the corner of a working compound — set down on pedestals, levelled and connected without touching the shed floor.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sipcot-coimbatore-interior.webp",
+      alt: "Inside a Coimbatore container site office — insulated white panel walls, desk with computer, storage cupboard, water dispenser, louvre vent and wood-finish flooring",
+      width: 1376,
+      height: 768,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-sipcot-coimbatore-angle-view.webp",
+        alt: "Three-quarter view of a blue Site Office 01 container cabin on concrete pedestals in a Coimbatore compound, with vent, floodlight and shaded window",
+        width: 1376,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Office in SIPCOT Coimbatore",
+    tagline: "Offices craned into full compounds — without losing an inch of production floor.",
+    intro: [
+      "Coimbatore isn't a place waiting to become industrial. It already is, and has been for eighty years. Pumps and motors, textile machinery, foundries, wet grinders, precision machining, auto components — thousands of units, most of them family-run, most of them on compounds that filled up a long time ago.",
+      "Which makes the problem here different from a greenfield belt. Nobody's asking us for an office because they've got empty land. They're asking because they've run out of it. The shed is full of machines, the yard is full of material, and somewhere in that they need a QC room, a supervisor's cabin, a place to sit a customer down.",
+      "A container office solves it because it doesn't need a footing, doesn't need a wall knocked through, and doesn't take your shed floor away. It gets craned into the corner of the yard, connected, and used the same day.",
+    ],
+
+    whyHeading: "Space Is the Problem Here, Not Land",
+    whyIntro:
+      "Ask a Coimbatore unit owner what he's short of and he won't say money or orders. He'll say room. Compounds in Ganapathy, Kurichi, Peelamedu and along the Sathy and Avinashi roads were laid out when the business was half its current size, and every square foot has been spoken for since.",
+    whyBullets: [
+      {
+        title: "Against the boundary wall.",
+        text: "Put a 20 ft unit against the compound wall and you've got an office without losing an inch of production floor.",
+      },
+      {
+        title: "Stack two.",
+        text: "A first-floor meeting room on the same footprint — worth asking about here specifically, because ground area is the thing you're short of.",
+      },
+      {
+        title: "When the layout changes.",
+        text: "And in this city it always does — you lift the cabin and put it somewhere else instead of demolishing it.",
+      },
+      {
+        title: "No three months of civil work.",
+        text: "If you've been putting off building an office because you can't spare the ground for a civil programme, this is the way round it.",
+      },
+      {
+        title: "Built for foundry yards, Ghat rain and humidity.",
+        text: "Coimbatore is kinder on a cabin than Hosur — the wind gap keeps summers manageable — but it has its own tests. Rain arrives hard from both monsoons, so the pitched canopy roof stands clear above the cabin on its own posts and throws water well past the walls. Damp air plus a foundry or plating yard is what eats steel, so every unit gets an MS frame with anti-corrosive primer under an industrial paint finish — and we'll upgrade the coating if you tell us what's happening in the compound. If the cabin is going near a furnace, a shot-blast bay or a grinding section, say so: insulated panels, sealed window frames with mesh and a smooth sweepable floor make the difference between an office people use and one they avoid.",
+      },
+    ],
+
+    solutionsHeading: "What Coimbatore Units Actually Ask For",
+    solutionsIntro:
+      "From a supervisor's cabin beside the machines to a stacked admin block, every unit is fabricated at our workshop and arrives ready to occupy.",
+    solutions: [
+      {
+        title: "Supervisor and shop-floor cabins",
+        text: "Small, close to the machines, somewhere to keep drawings and route cards without shouting over the shed. The most common single request we get from this city.",
+      },
+      {
+        title: "QC and inspection rooms",
+        text: "Clean, lit, temperature-controlled space for gauges and instruments, kept out of the dust. Popular with machining and pump component units working to a customer specification.",
+      },
+      {
+        title: "Admin and customer-facing cabins",
+        text: "Where you'll sit a buyer or an auditor. False ceiling, tiled floor, split AC, partitioned manager's cabin, and a finish that doesn't undercut the impression your shop floor just made.",
+      },
+      {
+        title: "Gate and security cabins",
+        text: "Wide glass, compact footprint, fits beside an existing gate without rebuilding it.",
+      },
+      {
+        title: "Joined and stacked units",
+        text: "Two or three modules combined for a meeting room, open work area and pantry. From the end, the join line is the only sign there were ever two.",
+      },
+      {
+        title: "Canteen, toilets and storage",
+        text: "Wipe-clean canteen cabins for shift meals, plumbed washroom units, and sealed storage containers for tooling, gauges and consumables.",
+      },
+    ],
+
+    featuresHeading: "Sizes and What's Inside",
+    featuresIntro: "Standard on every unit:",
+    features: [
+      "MS structural frame, anti-corrosive primer, industrial paint finish",
+      "PUF or rockwool insulated sandwich panels, walls and roof",
+      "Pitched canopy roof above the cabin, overhangs on both sides",
+      "Tile, vinyl or laminate flooring",
+      "Powder-coated aluminium sliding windows, grills and mosquito mesh",
+      "Concealed wiring, MCB distribution board, LED lighting, switch and socket points",
+      "External floodlights on the corners and along the overhang",
+      "AC provision ready to connect",
+      "Lockable doors, fire extinguisher point, fire-retardant options on request",
+    ],
+    sizesNote:
+      "A 10 ft unit works as a gate cabin, supervisor cabin or single desk for 1–2 people. A 20 ft unit carries a site office or QC room for 4–6. A 40 ft unit is an admin block for a full team of 10–14. Joined and stacked configurations give a multi-room setup on a tight footprint for as many as you need. Ask and we'll add false ceiling, internal partitions, plumbing, a pantry counter, furniture, or your own paint scheme and logo.",
+
+    industriesHeading: "Who Calls Us From Coimbatore",
+    industriesIntro:
+      "Different trades, one recurring sentence: we need an office, and we can't afford to lose the space or the time.",
+    industries: [
+      { title: "Pump and motor manufacturers", text: "The city's signature trade — compound after compound of pump, motor and spares units." },
+      { title: "Textile machinery and spares units", text: "Machinery builders and the spares ecosystem around Coimbatore and Tiruppur." },
+      { title: "Foundries and casting shops", text: "Casting, machining and finishing yards where dust, heat and corrosion set the specification." },
+      { title: "Precision machining and toolrooms", text: "Machining, toolroom and auto and tractor component suppliers working to customer specs." },
+      { title: "Appliance, aerospace and logistics", text: "Wet grinder and appliance makers, aerospace and defence-corridor suppliers, contractors on plant expansions, and logistics operators along the Avinashi and Sathy roads." },
+    ],
+
+    customHeading: "Buy or Rent",
+    customIntro:
+      "Most Coimbatore units buy. When the cabin is going to sit in your own compound for years and carry your name on the door, renting it makes little sense — and you keep an asset you can move whenever the layout changes.",
+    customBullets: [
+      {
+        title: "Buy",
+        text: "For a cabin that lives in your own compound for years, carrying your name on the door. You keep a movable asset.",
+      },
+      {
+        title: "Rent",
+        text: "For a fixed-duration job: a project office for an expansion, a temporary block during a shed rebuild, a site cabin for a contractor working inside your premises. Monthly payment, and we handle delivery and collection.",
+      },
+    ],
+    customOutro:
+      "Tell us how many months and we'll put both numbers side by side. If buying is cheaper over your timeline, we'll say so.",
+
+    whyUsHeading: "Delivered Finished, Set Down in a Working Compound",
+    whyUsIntro:
+      "We build it at our workshop — insulated walls, wiring, lights, flooring, windows, doors, the lot — inspect it, and put it on a trailer. It reaches your gate, we set it down with a crane or hydraulic unloading depending on the swing room available, level it, connect the power and hand over the keys.",
+    whyUsBullets: [
+      { title: "Live compounds take planning, and we're used to it.", text: "Placing a cabin in a working compound takes a bit more thought than dropping one on open land." },
+      { title: "Tell us the constraints.", text: "Where the overhead lines run, how wide the gate is, and where the crane can stand — and we'll work out the lift before we load anything." },
+      { title: "Most placements are done inside a morning.", text: "Without stopping your line." },
+    ],
+
+    areasHeading: "Where We Deliver Across the Kongu Belt",
+    areasText:
+      "SIPCOT Coimbatore and the district industrial parks; SIPCOT Sulur and SIPCOT Pollachi; Coimbatore city — Ganapathy, Peelamedu, Kurichi, Singanallur and Saravanampatti; the Avinashi Road, Sathy Road and Trichy Road industrial stretches; Karumathampatti, Annur, Arasur, Kalapatti and Neelambur; Tiruppur, Avinashi and Palladam; SIPCOT Perundurai and the Erode belt; Pollachi, Mettupalayam and the surrounding taluks. Anywhere else in the western districts, ask — we move units across Tamil Nadu, Karnataka and Kerala regularly. A straight word on transport: Coimbatore is a long haul from most container fabricators, and anyone telling you transport is negligible is either absorbing it into an inflated unit price or hasn't costed it. We quote it separately and openly so you can see the number and judge it. Two things bring it down — ordering more than one unit at a time, since a second cabin costs far less to move than the first did, and flexibility on the delivery date, which lets us pair your load with another going the same way. If either applies to you, mention it and we'll price accordingly.",
+
+    howHeading: "How the Order Runs",
+    howSteps: [
+      { title: "You give us the basics.", text: "Size, purpose, headcount, and where in the compound it's going." },
+      { title: "We send a price.", text: "Itemised, with transport shown separately, usually inside 24 hours." },
+      { title: "You approve the layout.", text: "Drawing and finish options first, for anything custom." },
+      { title: "We build and inspect it.", text: "Made at our workshop, checked before it moves." },
+      { title: "It travels to Coimbatore.", text: "By trailer, to your gate, on the agreed date." },
+      { title: "We place and hand over.", text: "Set down, levelled, connected, keys to you." },
+    ],
+
+    faqs: [
+      {
+        question: "Can you place it inside a compound that's already full?",
+        answer: "Usually yes. We need to know the gate width, where the crane can stand, and whether there are overhead cables in the way. Send a photo of the spot when you enquire and we'll tell you straight away whether it works.",
+      },
+      {
+        question: "How long does the placement take?",
+        answer: "Most are done in a morning. Production doesn't normally have to stop.",
+      },
+      {
+        question: "Can it go next to a furnace or a blasting bay?",
+        answer: "With the right specification, yes. Tell us what's happening nearby and we'll adjust the insulation, seals and coating rather than sell you a standard unit and hope.",
+      },
+      {
+        question: "Can we stack two to save ground area?",
+        answer: "Yes, and in Coimbatore it's often the smarter answer. Stacked units need a level, firm base and an external stair, both of which we plan with you.",
+      },
+      {
+        question: "Do I need to do civil work first?",
+        answer: "No. Firm, level ground is enough. On soft or uneven ground a few concrete pedestals do the job, and we'll specify them before delivery.",
+      },
+      {
+        question: "How soon can I get one?",
+        answer: "Standard stock unit, within a week including travel. Built to your specification, usually 2 to 4 weeks depending on the finish.",
+      },
+      {
+        question: "Can I move it later if the layout changes?",
+        answer: "That's the main reason to choose one. Lift it, shift it, put it back down.",
+      },
+      {
+        question: "Can it be finished in our company colours?",
+        answer: "Paint, logo, layout, flooring, partitions, furniture — all specifiable.",
+      },
+      {
+        question: "How long will it last?",
+        answer: "With basic upkeep and a repaint every few years, 15 to 20 years and often longer. In a humid or corrosive compound, budget for repainting a little sooner.",
+      },
+      {
+        question: "How does payment work?",
+        answer: "Advance on order confirmation, balance before dispatch. Rentals are monthly against a refundable deposit.",
+      },
+    ],
+
+    ctaHeading: "Tell Us About Your Compound",
+    ctaText:
+      "Size, what it's for, and where it's going to stand. A photo of the spot helps more than anything. You'll have a clear price inside a day, with no obligation attached.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
