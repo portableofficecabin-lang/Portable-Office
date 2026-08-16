@@ -46,7 +46,7 @@ export function ProductCard({ product, priority = false, prefetch = false }: Pro
       : undefined;
 
   return (
-    <div className="group bg-gradient-to-br from-card via-card to-muted/30 rounded-2xl overflow-hidden shadow-card hover:shadow-2xl transition-all duration-500 border border-border/50 hover:border-accent/30">
+    <div className="group bg-gradient-to-br from-card via-card to-muted/30 rounded-2xl overflow-hidden shadow-card hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 border border-border/50 hover:border-accent/30">
       {/* Image */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">

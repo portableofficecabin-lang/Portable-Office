@@ -44,7 +44,7 @@ export function FAQSection() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <div className="container-custom">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="reveal text-center mb-12">
             <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
               GOT QUESTIONS?
             </span>

@@ -47,7 +47,7 @@ export function HowItWorks() {
       />
       
       <div className="container-custom relative z-10">
-        <div className="text-center mb-14">
+        <div className="reveal text-center mb-14">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
             OUR PROCESS
           </span>
@@ -62,7 +62,7 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
             <div
               key={step.title}

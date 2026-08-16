@@ -287,3 +287,130 @@
     }
   }
 }
+
+/* ============================================================================
+ * PRO-MAX MOTION SYSTEM — SSR-safe, CSS-first (2026-08 UI/UX pass)
+ *
+ * DESIGN CONTRACT (do not break):
+ *  • The 100% SSR score is load-bearing. Reveal effects therefore hide content
+ *    ONLY inside `@supports (animation-timeline: view())` — browsers that will
+ *    definitely animate it back in. Crawlers, no-JS visitors and older browsers
+ *    get the fully visible static page; the raw HTML never hides content.
+ *  • The CWV pass removed framer-motion from SEO pages (static-motion shim).
+ *    These utilities are pure CSS — zero JS, zero hydration cost — and real
+ *    framer-motion stays confined to client islands (dialogs, admin).
+ *  • Every effect is disabled under prefers-reduced-motion.
+ * ==========================================================================*/
+@layer utilities {
+  /* ---- Scroll-driven reveals (progressive enhancement only) ---- */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: proReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: translateY(16px) scale(0.97);
+      animation: proRevealScale 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+    /* Stagger: each direct child reveals on its own view timeline, so grid rows
+       cascade naturally as they enter — no JS, no IntersectionObserver. */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: proReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+  }
+  @keyframes proReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes proRevealScale {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ---- Hover physics (cards, tiles) ---- */
+  .hover-lift {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px);
+  }
+
+  /* ---- Pressable feel for buttons/CTAs ---- */
+  .press {
+    transition: transform 0.15s ease;
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+
+  /* ---- CTA sheen sweep (premium button shine on hover) ---- */
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 40%, hsl(0 0% 100% / 0.35) 50%, transparent 60%);
+    transform: translateX(-150%);
+    transition: transform 0.6s ease;
+  }
+  .btn-sheen:hover::after {
+    transform: translateX(150%);
+  }
+
+  /* ---- Gentle float for decorative hero elements ---- */
+  .animate-float {
+    animation: proFloat 6s ease-in-out infinite;
+  }
+  @keyframes proFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ---- Animated gradient text (accent headings) ---- */
+  .text-gradient-animate {
+    background-size: 200% auto;
+    animation: proGradientShift 6s ease-in-out infinite alternate;
+  }
+  @keyframes proGradientShift {
+    from { background-position: 0% center; }
+    to { background-position: 100% center; }
+  }
+
+  /* ---- Accent glow ring on hover (cards that want the premium edge) ---- */
+  .card-glow {
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .card-glow:hover {
+    box-shadow: 0 20px 40px -12px hsl(222 47% 11% / 0.18), 0 0 0 1px hsl(32 95% 52% / 0.35), 0 8px 24px -8px hsl(32 95% 52% / 0.25);
+  }
+
+  /* ---- Accessibility: kill it all for reduced-motion users ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-scale, .reveal-stagger > * {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .hover-lift, .hover-lift:hover, .press, .press:active, .animate-float, .text-gradient-animate {
+      animation: none;
+      transform: none;
+      transition: none;
+    }
+    .btn-sheen::after {
+      display: none;
+    }
+  }
+}

@@ -16,6 +16,7 @@
  */
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { LazyMotion, MotionConfig, domAnimation, m } from "framer-motion";
 
 import { OptimizedImage } from "@/components/OptimizedImage";
 import {
@@ -28,7 +29,7 @@ export function IndustriesGrid() {
 
   return (
     <>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {industries.map((ind) => (
           <button
             key={ind.name}
@@ -79,58 +80,84 @@ export function IndustriesGrid() {
       <Dialog open={active !== null} onOpenChange={(open) => !open && setActive(null)}>
         <DialogContent className="max-w-3xl gap-0 overflow-hidden rounded-2xl border-border/50 p-0">
           {active && (
-            <>
-              {/* Hero image with the title overlaid on a navy gradient */}
-              <div className="relative">
-                <OptimizedImage
-                  src={active.card.image}
-                  alt={active.card.alt}
-                  aspectRatio="16/9"
-                  sizes="(max-width: 768px) 100vw, 768px"
-                  className="w-full"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/60 to-transparent px-6 pb-4 pt-12">
-                  <DialogTitle className="flex items-center gap-3 font-display text-xl font-bold text-white sm:text-2xl">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
-                      <active.icon className="h-5 w-5 text-accent" aria-hidden="true" />
-                    </span>
-                    {active.name}
-                  </DialogTitle>
-                </div>
-              </div>
+            /* Framer-motion lives HERE and only here on the public site: inside an
+               already-client island whose content mounts on open, so it costs the static
+               page nothing and can never affect the SSR score. LazyMotion + `m` keeps the
+               chunk small; MotionConfig honours prefers-reduced-motion automatically. */
+            <LazyMotion features={domAnimation}>
+              <MotionConfig reducedMotion="user">
+                {/* Hero image with the title overlaid on a navy gradient */}
+                <m.div
+                  className="relative"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 28 }}
+                >
+                  <OptimizedImage
+                    src={active.card.image}
+                    alt={active.card.alt}
+                    aspectRatio="16/9"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                    className="w-full"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/60 to-transparent px-6 pb-4 pt-12">
+                    <DialogTitle className="flex items-center gap-3 font-display text-xl font-bold text-white sm:text-2xl">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
+                        <active.icon className="h-5 w-5 text-accent" aria-hidden="true" />
+                      </span>
+                      {active.name}
+                    </DialogTitle>
+                  </div>
+                </m.div>
 
-              <div className="space-y-4 p-6">
-                <DialogDescription className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  {active.desc}
-                </DialogDescription>
+                <div className="space-y-4 p-6">
+                  <m.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.08 }}
+                  >
+                    <DialogDescription className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                      {active.desc}
+                    </DialogDescription>
+                  </m.div>
 
-                <div className="flex flex-wrap gap-2">
-                  {active.chips.map((chip) => (
-                    <span
-                      key={chip}
-                      className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent"
-                    >
-                      {chip}
-                    </span>
-                  ))}
-                </div>
+                  <div className="flex flex-wrap gap-2">
+                    {active.chips.map((chip, i) => (
+                      <m.span
+                        key={chip}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ type: "spring", stiffness: 350, damping: 26, delay: 0.12 + i * 0.05 }}
+                        className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent"
+                      >
+                        {chip}
+                      </m.span>
+                    ))}
+                  </div>
 
-                {/* Two more real project shots */}
-                <div className="grid grid-cols-2 gap-3">
-                  {active.gallery.map((g) => (
-                    <div key={g.alt} className="overflow-hidden rounded-xl border border-border/50">
-                      <OptimizedImage
-                        src={g.image}
-                        alt={g.alt}
-                        aspectRatio="4/3"
-                        sizes="(max-width: 768px) 50vw, 370px"
-                        className="w-full"
-                      />
-                    </div>
-                  ))}
+                  {/* Two more real project shots — staggered in */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {active.gallery.map((g, i) => (
+                      <m.div
+                        key={g.alt}
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ type: "spring", stiffness: 280, damping: 28, delay: 0.16 + i * 0.08 }}
+                        className="overflow-hidden rounded-xl border border-border/50"
+                      >
+                        <OptimizedImage
+                          src={g.image}
+                          alt={g.alt}
+                          aspectRatio="4/3"
+                          sizes="(max-width: 768px) 50vw, 370px"
+                          className="w-full"
+                        />
+                      </m.div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </>
+              </MotionConfig>
+            </LazyMotion>
           )}
         </DialogContent>
       </Dialog>

@@ -31,7 +31,7 @@ export function CabinCalculatorSection() {
             <Hammer className="h-4 w-4" /> Build Your Dream Cabin
           </span>
           <h2 id="cabin-calc-heading" className="mt-5 font-display text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-            Customize Your Cabin & <span className="text-gradient">Get an Instant Price Estimate</span>
+            Customize Your Cabin & <span className="text-gradient text-gradient-animate">Get an Instant Price Estimate</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base text-white/70 lg:text-lg">
             Design your portable cabin in a few simple steps — pick the size, structure, interiors, electricals and

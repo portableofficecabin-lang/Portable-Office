@@ -60,7 +60,7 @@ export async function FeaturedProducts() {
         </p>
 
         {/* Products Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayProducts.map((product, index) => (
             <div
               key={product.id}

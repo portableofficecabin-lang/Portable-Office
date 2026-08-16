@@ -37,7 +37,7 @@ export function WhyChooseUs() {
   return (
     <section className="section-padding bg-background">
       <div className="container-custom">
-        <div className="text-center mb-14">
+        <div className="reveal text-center mb-14">
           <span className="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-3">
             WHY CHOOSE US
           </span>
@@ -52,7 +52,7 @@ export function WhyChooseUs() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {reasons.map((reason, index) => (
             <div
               key={reason.title}
