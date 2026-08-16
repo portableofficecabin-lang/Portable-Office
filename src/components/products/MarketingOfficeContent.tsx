@@ -242,6 +242,7 @@ export function MarketingOfficeContent() {
             </thead>
             <tbody>
               {[
+                ["40 ft × 65 ft compound — as listed", "The complete launch-ready sales gallery this page prices", "Launch-weekend crowds, several families in parallel"],
                 ["20 ft single", "Plotted layouts, early-stage presence", "Reception + 1 family at a time"],
                 ["40 ft single", "Single-tower or villa project", "Reception + 2–3 families"],
                 ["2–3 joined", "Full sales gallery with model area", "Walk-in weekend crowds"],

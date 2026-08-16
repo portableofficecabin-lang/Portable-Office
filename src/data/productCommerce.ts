@@ -510,10 +510,12 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     // and JSON-LD all land on the owner's figure. Never "correct" this base to a round number —
     // the customer price is the spec, the base is derived. Purchasable on-site; kept OUT of the
     // automated Merchant feed via FEED_IMAGE_POLICY until the per-SKU spec/image review passes.
+    // size = the 40 ft × 65 ft compound the listed price buys (owner-supplied, 2026-08-16) —
+    // NOT the generic size menu; the fixed price must name one exact configuration.
     id: "43", sku: "POC-MO-CNTR", basePrice: 7118644, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Marketing Office",
     feedTitle: "Marketing Office Container Sales Gallery for Project Launches | Portable Office Cabin",
-    size: "20 ft / 40 ft / joined / double-storey", material: "MS container modules, insulated PUF/rockwool panels", bestFor: "Project Sales Galleries & Launches",
+    size: "40 ft × 65 ft", material: "MS container modules, insulated PUF/rockwool panels", bestFor: "Project Sales Galleries & Launches",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Container Offices",
   },
   {

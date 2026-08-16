@@ -1687,6 +1687,8 @@ export const products: Product[] = [
     shortDescription:
       "Finished container marketing offices for project launches — branded, air-conditioned sales galleries delivered in weeks, not months, and relocatable to your next launch.",
     specifications: [
+      // Owner-supplied footprint of the as-listed ₹84,00,000 compound (2026-08-16).
+      { label: "Overall Size", value: "40 ft × 65 ft" },
       { label: "20 ft single", value: "Plotted layouts — reception + 1 family at a time" },
       { label: "40 ft single", value: "Single-tower or villa project — reception + 2–3 families" },
       { label: "2–3 joined", value: "Full sales gallery with model area — walk-in weekend crowds" },
