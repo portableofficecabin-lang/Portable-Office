@@ -98,6 +98,35 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
 
+        {/* Feature band — a single editorial plate breaking the longest text run on the page.
+            Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
+            full-width square from swallowing a whole viewport), with the caption sitting on a
+            bottom scrim rather than below the frame, so the image reads as one composed unit.
+            The scrim is dark-on-image in both themes, which is why its text colour is fixed. */}
+        {page.featureImage && (
+          <figure className="relative mt-10 overflow-hidden rounded-2xl border shadow-sm">
+            <div className="relative aspect-[3/2] w-full">
+              <Image
+                src={page.featureImage.src}
+                alt={page.featureImage.alt}
+                fill
+                sizes="(max-width: 896px) 100vw, 896px"
+                className="object-cover object-center"
+                loading="lazy"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/80 via-black/45 to-transparent"
+              />
+            </div>
+            <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-6">
+              <p className="max-w-xl text-sm leading-relaxed text-white/95 sm:text-base">
+                {page.featureImage.caption}
+              </p>
+            </figcaption>
+          </figure>
+        )}
+
         <h2 className={h2}>{page.solutionsHeading}</h2>
         <p className={p}>{page.solutionsIntro}</p>
         {page.solutions.map((s0, i) => (
@@ -116,9 +145,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         </ul>
         <p className={`${p} mt-4`}><strong className="text-foreground">{page.sizesNote}</strong></p>
 
-        {/* gallery — every angle of the cabin, lazy-loaded */}
+        {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
+            1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
         {page.gallery && page.gallery.length > 0 && (
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          <div
+            className={`mt-6 grid gap-4 ${
+              page.gallery.length === 1 ? "" : page.gallery.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"
+            }`}
+          >
             {page.gallery.map((g) => (
               <figure key={g.src} className="overflow-hidden rounded-xl border bg-muted/30">
                 <Image
@@ -126,8 +160,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                   alt={g.alt}
                   width={g.width}
                   height={g.height}
-                  sizes="(max-width: 640px) 100vw, 300px"
-                  className="h-auto w-full"
+                  sizes={page.gallery!.length === 1 ? "(max-width: 896px) 100vw, 896px" : "(max-width: 640px) 100vw, 300px"}
+                  className={page.gallery!.length === 1 ? "mx-auto h-auto w-full max-w-2xl" : "h-auto w-full"}
                   loading="lazy"
                 />
               </figure>
