@@ -64,6 +64,7 @@ import { LabourColonyContent } from "@/components/products/LabourColonyContent";
 import { SiteOfficeContainerContent } from "@/components/products/SiteOfficeContainerContent";
 import { PortableCabinContent } from "@/components/products/PortableCabinContent";
 import { VipContainerOfficeContent } from "@/components/products/VipContainerOfficeContent";
+import { MarketingOfficeContent } from "@/components/products/MarketingOfficeContent";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -525,6 +526,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}
           {cs === "container-offices" && slug === "vip-container-office" && <div className="mt-16"><VipContainerOfficeContent /></div>}
+          {cs === "container-offices" && slug === "marketing-office" && <div className="mt-16"><MarketingOfficeContent /></div>}
           {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-for-sale" && <div className="mt-16"><ShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent offer={contentOffer} /></div>}

@@ -1675,6 +1675,61 @@ export const products: Product[] = [
     featured: false,
     inStock: true,
   },
+  {
+    id: "43",
+    sku: "POC-MO-CNTR",
+    name: "Marketing Office",
+    slug: "marketing-office",
+    category: "Container Offices",
+    categorySlug: "container-offices",
+    description:
+      "Marketing office containers that sell before the project does. We build marketing offices out of container modules and deliver them finished — insulated, air-conditioned, tile-floored, lit properly, and wrapped in your project branding inside and out. It arrives on a trailer, gets set down in a morning, and your sales team is closing in it the same week your hoarding goes up. Single-module sales offices, joined sales galleries, and double-storey gallery-plus-office configurations; when the project sells out, the office lifts onto a trailer and launches your next one.",
+    shortDescription:
+      "Finished container marketing offices for project launches — branded, air-conditioned sales galleries delivered in weeks, not months, and relocatable to your next launch.",
+    specifications: [
+      // Owner-supplied footprint of the as-listed ₹84,00,000 compound (2026-08-16).
+      { label: "Overall Size", value: "40 ft × 65 ft" },
+      { label: "20 ft single", value: "Plotted layouts — reception + 1 family at a time" },
+      { label: "40 ft single", value: "Single-tower or villa project — reception + 2–3 families" },
+      { label: "2–3 joined", value: "Full sales gallery with model area — walk-in weekend crowds" },
+      { label: "Stacked (double-storey)", value: "Gallery below, sales team & back office above" },
+      { label: "Cooling", value: "Insulated PUF/rockwool panels, canopy roof, split AC standard" },
+      { label: "Interior", value: "False ceiling, recessed lighting, vitrified tile or laminate floor" },
+      { label: "Branding", value: "Exterior painted or vinyl-wrapped to your project creative" },
+      { label: "Glass Front", value: "Optional full-height glazing on the entry face" },
+      { label: "Electrical", value: "Concealed wiring, display/screen points, LED + floodlights" },
+      { label: "Add-ons", value: "Washroom, pantry, deck/pergola, security cabin, CCTV & networking" },
+    ],
+    features: [
+      "Fabricated off-site and delivered finished — stock units in days, custom builds in 2–4 weeks",
+      "Insulated panels, canopy roof and split AC as standard — cool the moment buyers enter",
+      "Finished like an interior: false ceiling, tiled floor, glass manager cabin, display walls",
+      "Exterior painted or vinyl-wrapped in your project branding, end to end",
+      "Optional full-height glass front that reads as a modern sales pavilion",
+      "Layouts to match how you sell: single module, joined gallery, or double-storey",
+      "Washroom, pantry, covered deck, matched security cabin and CRM wiring add-ons",
+      "Relocatable — re-wrap in the next project's branding and launch again",
+    ],
+    // Hero = the branded three-quarter exterior; interiors and layout shots follow; the
+    // double-storey and gallery-hall images match the layout sections of the content page.
+    images: [
+      "/images/products/marketing-office-main.webp",
+      "/images/products/marketing-office-front-branded.webp",
+      "/images/products/marketing-office-double-storey.webp",
+      "/images/products/marketing-office-elevation.webp",
+      "/images/products/marketing-office-interior.webp",
+      "/images/products/marketing-office-gallery-hall.webp",
+      "/images/products/marketing-office-lounge-view.webp",
+      "/images/products/marketing-office-mezzanine.webp",
+    ],
+    // ₹84,00,000 incl. 18% GST — owner-supplied FINAL customer price (2026-08-16). This legacy
+    // field mirrors the commerce base (sellPrice(7118644) = exactly ₹84,00,000); every customer
+    // surface renders from productCommerce.ts, never from here.
+    price: 7118644,
+    priceLabel: "+ 18% GST — Total ₹84,00,000",
+    featured: false,
+    inStock: true,
+  },
 ];
 
 export const getProductsByCategory = (categorySlug: string): Product[] => {

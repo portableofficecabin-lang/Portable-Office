@@ -503,6 +503,22 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
+    // Marketing Office — QUOTE-ONLY by design (2026-08-16). The page copy is explicitly
+    // ₹84,00,000 INCL. 18% GST is the owner-supplied FINAL customer price (2026-08-16 — owner
+    // chose "incl. GST" explicitly). basePrice 7118644 is derived: it is the whole-rupee base
+    // whose sellPrice() rounds to exactly ₹84,00,000, so card, page, cart, checkout, Razorpay
+    // and JSON-LD all land on the owner's figure. Never "correct" this base to a round number —
+    // the customer price is the spec, the base is derived. Purchasable on-site; kept OUT of the
+    // automated Merchant feed via FEED_IMAGE_POLICY until the per-SKU spec/image review passes.
+    // size = the 40 ft × 65 ft compound the listed price buys (owner-supplied, 2026-08-16) —
+    // NOT the generic size menu; the fixed price must name one exact configuration.
+    id: "43", sku: "POC-MO-CNTR", basePrice: 7118644, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Marketing Office",
+    feedTitle: "Marketing Office Container Sales Gallery for Project Launches | Portable Office Cabin",
+    size: "40 ft × 65 ft", material: "MS container modules, insulated PUF/rockwool panels", bestFor: "Project Sales Galleries & Launches",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Container Offices",
+  },
+  {
     // Container Site Office — base ₹6,20,000 + 18% GST = ₹7,31,600 total (owner-supplied, 2026-07-29).
     // Aug 2026: purchasable online (sitewide Buy Now directive). Kept OUT of the automated feed
     // via FEED_IMAGE_POLICY — the owner submits this one to Merchant Centre manually, so feeding
