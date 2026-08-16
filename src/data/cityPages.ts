@@ -911,6 +911,214 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Give us the size, what you'll use it for, and where the plot is. You'll have a clear price within a day, and there's no obligation attached to it.",
   },
+
+  {
+    slug: "container-office-in-sipcot-krishnagiri",
+    city: "SIPCOT Krishnagiri",
+    metaTitle: "Container Office in SIPCOT Krishnagiri",
+    metaDescription:
+      "Container office in SIPCOT Krishnagiri — insulated, AC-ready portable offices delivered finished across Krishnagiri district on NH-44. Site offices, gate cabins and admin blocks, for sale or rent.",
+    keywords:
+      "container office SIPCOT Krishnagiri, portable office cabin Krishnagiri, site office container Krishnagiri, prefab office Krishnagiri NH-44, container office on rent Krishnagiri, quarry site office Krishnagiri district",
+    geo: { region: "IN-TN", placename: "SIPCOT Krishnagiri, Krishnagiri, Tamil Nadu, India", position: "12.5186;78.2137", icbm: "12.5186, 78.2137" },
+
+    /* Owner-supplied set for this page (3 photos, dropped 2026-08-16 in "city serve page
+     * krishnagiri"): twin grey container units with rooftop solar (hero), the open double-door
+     * entrance revealing the fitted interior, and the drone aerial of the joined units.
+     * Converted from 1376×768 PNG masters to webp (~108–256 KB, quality 82). Captions and alt
+     * text describe the ACTUAL photos; the body copy's imagined image captions were not reused
+     * where they differ from what the photos show. No fourth image was supplied, so the
+     * optional gallery is unset — add one later without any code change. */
+    heroImage: {
+      src: "/images/cities/container-office-in-sipcot-krishnagiri-exterior.webp",
+      alt: "Container office in SIPCOT Krishnagiri — twin grey corrugated units with a glazed double entry door, barred sliding window, white skirting and a rooftop solar array",
+      width: 1376,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sipcot-krishnagiri-aerial-view.webp",
+      alt: "Drone view of a joined container office in Krishnagiri district — two grey units with rooftop solar panels, paved apron and a hedged compound wall",
+      width: 1376,
+      height: 768,
+      caption: "The joined units from above — two modules, one office, with the rooftop carrying a solar array. Delivered, levelled and handed over as one job.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sipcot-krishnagiri-interior.webp",
+      alt: "Open double doors of a container office in Krishnagiri showing the fitted interior — wood-finish flooring, desk by the barred window, seating and cove lighting",
+      width: 1376,
+      height: 768,
+    },
+
+    h1: "Container Office in SIPCOT Krishnagiri",
+    tagline: "Ready-to-use container offices, delivered finished across Krishnagiri district.",
+    intro: [
+      "Krishnagiri is where two highways cross. NH-44 running Bengaluru to Chennai, NH-844 heading off towards Salem and Tirupattur, and a district that has quietly filled up with SIPCOT plots, granite units, cold storages, godowns and mango processing lines.",
+      "Which means a lot of people around here own land that's doing something before there's a building on it. A quarry office. A weighbridge post. A packing shed's site cabin. An allotted SIPCOT plot with a project team standing on it and nowhere to sit.",
+      "We build container offices for exactly that gap, and we deliver them right across Krishnagiri district. Insulated walls, wiring run, lights fitted, floor laid, windows and doors in. It arrives finished. You don't build anything.",
+    ],
+
+    whyHeading: "Built for Dust, Heat and Long Summers",
+    whyIntro:
+      "A container office in Krishnagiri has a harder life than one in a city. Quarry and crusher sites throw dust. The stretch from March to June is genuinely punishing. And when the rain comes it comes hard.",
+    whyBullets: [
+      {
+        title: "On heat:",
+        text: "Plain steel is a mistake and we don't sell it. Walls and roof are PUF or rockwool insulated sandwich panels, and we fit a pitched canopy roof that stands clear above the cabin on its own posts. It keeps the sun off the roof all day and throws rain well past the doors. With the AC connected, it's an ordinary office at two in the afternoon.",
+      },
+      {
+        title: "On dust:",
+        text: "Sealed window frames with mesh, proper door seals, and a smooth tiled or vinyl floor you can actually sweep. Nothing that traps grit in a corner you can't reach.",
+      },
+      {
+        title: "On rain:",
+        text: "The canopy overhang means water lands away from the walls, not down them. Small thing that adds years to the paint.",
+      },
+    ],
+
+    solutionsHeading: "What We Supply Around Krishnagiri",
+    solutionsIntro:
+      "From a single weighbridge post to a stacked office block, every unit is fabricated at our workshop and arrives ready to occupy.",
+    solutions: [
+      {
+        title: "Site and project offices",
+        text: "The one most people start with. Desk space, storage, decent lighting, and enough sockets that nobody's running an extension board across the floor.",
+      },
+      {
+        title: "Gate cabins and weighbridge posts",
+        text: "Compact units with wide glass so whoever's inside can actually see the vehicle. Common at quarry gates, godown entrances and factory main gates across the district.",
+      },
+      {
+        title: "Admin and executive cabins",
+        text: "For when buyers or auditors are coming. False ceiling, proper flooring, split AC, a partitioned manager's cabin, and a finish nobody would call temporary.",
+      },
+      {
+        title: "Joined and stacked units",
+        text: "Put two or three modules together and you've got a meeting room, an open work area and a pantry under one roof. Stack them if your footprint is tight. From the end, the join line is the only sign there were ever two units.",
+      },
+      {
+        title: "Bunk houses and labour accommodation",
+        text: "Insulated and properly ventilated, with attached or separate toilet blocks. Useful on quarry and construction sites where the crew stays on.",
+      },
+      {
+        title: "Toilets, canteen and storage",
+        text: "Plumbed washroom units, wipe-clean canteen cabins for shift meals, and sealed storage containers for tools, spares and samples.",
+      },
+    ],
+
+    featuresHeading: "Sizes, and What's Actually Inside",
+    featuresIntro: "What every unit comes with as standard:",
+    features: [
+      "MS structural frame, anti-corrosive primer, industrial paint finish",
+      "PUF or rockwool insulated sandwich panels, walls and roof",
+      "Pitched canopy roof above the cabin, with overhangs on both sides",
+      "Tile, vinyl or laminate flooring",
+      "Powder-coated aluminium sliding windows with grills and mosquito mesh",
+      "Concealed wiring, MCB distribution board, LED lighting, switch and socket points",
+      "External floodlights on the corners and along the overhang",
+      "AC provision ready to connect",
+      "Lockable doors, fire extinguisher point, fire-retardant options on request",
+    ],
+    sizesNote:
+      "A 10 ft unit serves as a gate cabin, weighbridge post or single desk for 1–2 people. A 20 ft unit is the standard site office, comfortable for 4–6. A 40 ft unit carries an admin block or a full project team of 10–14. Joined and stacked configurations give you a multi-room setup for as many as you need. Ask for it and we'll add a false ceiling, internal partitions, plumbing, pantry counter, furniture, or your own paint scheme and logo.",
+
+    industriesHeading: "Who Calls Us From Krishnagiri District",
+    industriesIntro:
+      "The first minute of the call is almost always the same: the land is ready, we need somewhere to sit before the month is out.",
+    industries: [
+      { title: "Granite and stone processing units", text: "Processing yards and quarry operators who need a gate post and a site office that stand up to the dust." },
+      { title: "Cold storages and processing lines", text: "Mango and vegetable processing units, agri traders and godown owners across the district." },
+      { title: "Logistics and transport operators", text: "Fleet yards and transporters working the NH-44 corridor between Bengaluru and Chennai." },
+      { title: "Contractors on SIPCOT plots", text: "Civil teams running packages on newly allotted plots who need an office standing in week one." },
+      { title: "Engineering, fabrication and solar", text: "Workshops and solar developers building out sites across Krishnagiri and the Salem road side." },
+    ],
+
+    customHeading: "Buying vs Renting in Krishnagiri",
+    customIntro:
+      "If the cabin is going to be part of how the place runs — your layout, your colours, in use well past a year and a half — buy it. At the end you own something you can pick up and move, instead of a pile of rent receipts.",
+    customBullets: [
+      {
+        title: "Buy",
+        text: "When the office is part of how the place runs: your layout, your colours, in use well past a year and a half. You end up owning something movable.",
+      },
+      {
+        title: "Rent",
+        text: "When it's tied to a project with a finish date, a season, or a shutdown. Monthly payment, and we handle delivery and collection at both ends.",
+      },
+    ],
+    customOutro:
+      "Genuinely not sure? Tell us how many months and we'll put both figures side by side. Sometimes renting is obviously the cheaper call. Sometimes it isn't, and we'll tell you that too.",
+
+    whyUsHeading: "Delivered to Your Gate, Working the Same Day",
+    whyUsIntro:
+      "You tell us what you need and where. We build it at our workshop, inspect it, and put it on a trailer. It reaches your site, we set it down — crane or hydraulic unloading, depending how much room there is to swing — level it, connect the power, hand over the keys.",
+    whyUsBullets: [
+      { title: "No foundation to pour.", text: "Firm, level ground is enough; on soft or uneven ground a few concrete pedestals do the job." },
+      { title: "No masons camped on your land for months.", text: "The whole unit is fabricated and finished at our workshop, then delivered as one job." },
+      { title: "Narrow approach or sloping ground?", text: "Say so when you call and we'll sort the lift out before we load anything." },
+      { title: "The junction works in your favour.", text: "Sitting on NH-44 with NH-844 branching off, our trailer gets close to almost any site in the district on good road — and we run this corridor to Hosur and Shoolagiri constantly, so your delivery slots into a route we're already driving. That keeps transport off your quote." },
+    ],
+
+    areasHeading: "Towns and Estates We Cover",
+    areasText:
+      "SIPCOT Krishnagiri and the industrial plots around the town; SIPCOT Kurubarapalli and the Krishnagiri district parks; Krishnagiri town, Kaveripattinam, Bargur and Barur; Uthangarai, Pochampalli, Mathur and Veppanapalli; the NH-44 stretch towards Shoolagiri and Hosur; SIPCOT Shoolagiri and SIPCOT Hosur Phase 1 and 2; Dharmapuri, Palacode and the Salem road side on NH-844. Outside that list? Still ask. We move units across Tamil Nadu, Karnataka and Andhra Pradesh every month — and if you've been quoted a scary transport figure by someone shipping from further out, it's worth getting a second number from us before you decide.",
+
+    howHeading: "What Happens After You Call",
+    howSteps: [
+      { title: "You give us the basics.", text: "Size, what it's for, how many people, where the site is." },
+      { title: "We send a price.", text: "Itemised, normally inside 24 hours. Not a range." },
+      { title: "You sign off the layout.", text: "For custom builds we share a drawing and finish options first." },
+      { title: "We build it and check it.", text: "Made at our workshop, inspected before it moves." },
+      { title: "It travels to Krishnagiri.", text: "By trailer, to your gate, on the day we agreed." },
+      { title: "We place it and hand over.", text: "Set down, levelled, connected, keys in your hand." },
+    ],
+
+    faqs: [
+      {
+        question: "How quickly can one reach my site?",
+        answer: "A standard unit from stock, 2 to 5 days. Built to your specification, usually 2 to 4 weeks depending on the finish.",
+      },
+      {
+        question: "Will transport to Krishnagiri cost a lot?",
+        answer: "Less than people expect. You're on NH-44, and we're already running this corridor. Transport is quoted separately and openly so you can see exactly what it is.",
+      },
+      {
+        question: "Do I need to do civil work first?",
+        answer: "No. Firm, level ground is enough. On soft or uneven ground a few concrete pedestals do the job, and we'll tell you precisely what's needed before delivery.",
+      },
+      {
+        question: "Can it handle a quarry or crusher site?",
+        answer: "Yes. Sealed frames, meshed windows and a floor you can sweep properly. Tell us it's a dusty site and we'll spec the seals accordingly.",
+      },
+      {
+        question: "Is it bearable in summer?",
+        answer: "With insulation and the canopy roof, yes. Those two together are what make the difference — insulation alone in a Krishnagiri April is only half the answer.",
+      },
+      {
+        question: "Can I shift it later?",
+        answer: "That's the point of it. Lift it, move it to another corner of the plot or another site entirely.",
+      },
+      {
+        question: "Can we get it in our company colours?",
+        answer: "Paint, logo, internal layout, flooring, partitions, furniture — all specifiable.",
+      },
+      {
+        question: "What about toilets and water?",
+        answer: "Attached washrooms, standalone toilet containers, water tanks and drainage connections are all available.",
+      },
+      {
+        question: "How long does one last?",
+        answer: "With basic upkeep and a repaint every few years, 15 to 20 years, often more.",
+      },
+      {
+        question: "How is payment handled?",
+        answer: "Advance on order confirmation, balance before dispatch. Rentals are monthly against a refundable deposit.",
+      },
+    ],
+
+    ctaHeading: "Send Us Your Site Details",
+    ctaText:
+      "Size, what you'll use it for, and where in Krishnagiri district the site is. You'll have a clear price inside a day, with nothing attached to it.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
