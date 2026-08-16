@@ -264,6 +264,20 @@ export function MarketingOfficeContent() {
           floodlights, lockable doors and a fire extinguisher point. Branding, glass front,
           partitions, furniture and washrooms are specified per project.
         </p>
+        {/* Product child cross-link — the prefab build lives at the nested URL under this page. */}
+        <div className="mt-6 rounded-xl border border-accent/30 bg-accent/5 p-4 sm:p-5">
+          <p className="text-foreground leading-relaxed">
+            <strong>Need more width than a container gives?</strong> When the scale model needs
+            walking-around room and Saturday footfall means six families at once, see our{" "}
+            <Link
+              href="/products/marketing-office/prefab-marketing-office"
+              className="text-accent font-semibold underline-offset-4 hover:underline"
+            >
+              Prefab Marketing Office
+            </Link>
+            {" "}— a clear-span sales gallery built to your floor plan, assembled on site in days.
+          </p>
+        </div>
       </div>
 
       {/* ------------------------------------------------ reuse ---------------------------- */}

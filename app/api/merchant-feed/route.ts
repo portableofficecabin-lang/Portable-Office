@@ -95,6 +95,8 @@ const FEED_IMAGE_POLICY: Record<string, { drop?: string[]; blockReason?: string 
   // Aug 2026: owner priced Marketing Office at ₹84,00,000 incl. GST and enabled Buy Now. Same
   // hold as the 17 above — the feed keeps exactly the item set Google approved until review.
   "POC-MO-CNTR": { blockReason: "newly purchasable on-site — feed after spec/image review" },
+  // Aug 2026: Prefab Marketing Office (product child of POC-MO-CNTR) — same hold.
+  "POC-PMO-165": { blockReason: "newly purchasable on-site — feed after spec/image review" },
   "POC-SC-KRMG": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
   "POC-SC-KRSH": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
   "POC-SC-SIPCOT": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
