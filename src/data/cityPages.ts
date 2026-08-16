@@ -944,21 +944,21 @@ export const CITY_PAGES: CityPage[] = [
     },
     featureImage: {
       src: "/images/cities/container-office-in-sipcot-krishnagiri-aerial-view.webp",
-      alt: "Drone view of a joined container office in Krishnagiri district — two grey units with rooftop solar panels, paved apron and a hedged compound wall",
+      alt: "Drone view of a joined container office in SIPCOT Krishnagiri — two grey units with rooftop solar panels, paved apron and a hedged compound wall",
       width: 1376,
       height: 768,
       caption: "The joined units from above — two modules, one office, with the rooftop carrying a solar array. Delivered, levelled and handed over as one job.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-sipcot-krishnagiri-interior.webp",
-      alt: "Open double doors of a container office in Krishnagiri showing the fitted interior — wood-finish flooring, desk by the barred window, seating and cove lighting",
+      alt: "Open double doors of a container office in SIPCOT Krishnagiri showing the fitted interior — wood-finish flooring, desk by the barred window, seating and cove lighting",
       width: 1376,
       height: 768,
     },
     gallery: [
       {
         src: "/images/cities/container-office-in-sipcot-krishnagiri-workspace.webp",
-        alt: "Working interior of a solar-powered container office in Krishnagiri — desk with the solar inverter and monitoring unit, equipment rack with batteries, chequered steel floor, tall barred windows and skylight strips under the panel canopy",
+        alt: "Working interior of a solar-powered container office in SIPCOT Krishnagiri — desk with the solar inverter and monitoring unit, equipment rack with batteries, chequered steel floor, tall barred windows and skylight strips under the panel canopy",
         width: 1376,
         height: 768,
       },
@@ -1159,21 +1159,21 @@ export const CITY_PAGES: CityPage[] = [
     },
     featureImage: {
       src: "/images/cities/container-office-near-tata-electronics-hosur-aerial-view.webp",
-      alt: "Drone view of a flat-roof glass-front container office standing between shipping containers in a Hosur yard",
+      alt: "Drone view of a flat-roof glass-front container office near Tata Electronics, Hosur — standing between shipping containers in the vendor yard",
       width: 1376,
       height: 768,
       caption: "Delivered into a working container yard — set down, levelled and handed over between the boxes already on site.",
     },
     interiorImage: {
       src: "/images/cities/container-office-near-tata-electronics-hosur-interior.webp",
-      alt: "Inside a glass-front container office near Hosur — desk with a monitor, wood-finish flooring, panelled ceiling with linear LED lights and full-height glazing to the yard",
+      alt: "Inside a glass-front container office near Tata Electronics, Hosur — desk with a monitor, wood-finish flooring, panelled ceiling with linear LED lights and full-height glazing to the yard",
       width: 1376,
       height: 768,
     },
     gallery: [
       {
         src: "/images/cities/container-office-near-tata-electronics-hosur-angle-view.webp",
-        alt: "Three-quarter view of a light-grey glass-front container office in a Hosur container yard, up on steel base plates",
+        alt: "Three-quarter view of a light-grey glass-front container office near Tata Electronics, Hosur, in a container yard, up on steel base plates",
         width: 1376,
         height: 768,
       },
@@ -1384,21 +1384,21 @@ export const CITY_PAGES: CityPage[] = [
     },
     featureImage: {
       src: "/images/cities/container-office-in-sipcot-coimbatore-aerial-view.webp",
-      alt: "Elevated view of a blue container site office placed in the corner of a brick-walled compound in Coimbatore, with the AC outdoor unit landed beside it",
+      alt: "Elevated view of a blue container site office placed in the corner of a brick-walled compound in SIPCOT Coimbatore, with the AC outdoor unit landed beside it",
       width: 1376,
       height: 768,
       caption: "Craned into the corner of a working compound — set down on pedestals, levelled and connected without touching the shed floor.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-sipcot-coimbatore-interior.webp",
-      alt: "Inside a Coimbatore container site office — insulated white panel walls, desk with computer, storage cupboard, water dispenser, louvre vent and wood-finish flooring",
+      alt: "Inside a SIPCOT Coimbatore container site office — insulated white panel walls, desk with computer, storage cupboard, water dispenser, louvre vent and wood-finish flooring",
       width: 1376,
       height: 768,
     },
     gallery: [
       {
         src: "/images/cities/container-office-in-sipcot-coimbatore-angle-view.webp",
-        alt: "Three-quarter view of a blue Site Office 01 container cabin on concrete pedestals in a Coimbatore compound, with vent, floodlight and shaded window",
+        alt: "Three-quarter view of a blue Site Office 01 container cabin on concrete pedestals in a SIPCOT Coimbatore compound, with vent, floodlight and shaded window",
         width: 1376,
         height: 768,
       },
