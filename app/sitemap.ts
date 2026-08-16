@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { allChildParams } from "@/data/productChildPages";
 import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, categories } from "@/data/products";
@@ -32,6 +33,8 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   // emitted by the product loop below — do not list it here (avoids a duplicate).
   entry("/products/portable-cabin", 0.8, "weekly"),
   entry("/products/portable-toilet-cabin", 0.8, "weekly"),
+  // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
+  ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
   entry("/marketplace", 0.85, "weekly"),
   entry("/promotions", 0.85, "weekly"),
   entry("/rental-service", 0.8, "monthly"),

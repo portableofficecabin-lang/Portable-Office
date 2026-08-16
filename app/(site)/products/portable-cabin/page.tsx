@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { PortableCabinContent } from "@/components/products/PortableCabinContent";
+import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 
 // Dedicated, indexable landing page for the high-intent "portable cabin" query.
 // This static segment takes precedence over /products/[slug], so it does NOT need
@@ -80,6 +81,10 @@ export default function PortableCabinPage() {
             <p className="text-lg text-muted-foreground">{DESCRIPTION}</p>
           </div>
           <PortableCabinContent />
+
+          {/* Child tier of the SEO hierarchy — every guide under /products/portable-cabin/…
+              (registry-driven; the grid and the routes can never go out of sync). */}
+          <ProductGuidesSection parentSlug="portable-cabin" />
         </div>
       </section>
     </Layout>
