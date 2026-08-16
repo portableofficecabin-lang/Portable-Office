@@ -711,11 +711,10 @@ export const CITY_PAGES: CityPage[] = [
       "container office SIPCOT Shoolagiri, portable office cabin Shoolagiri, site office container Shoolagiri, prefab office Shoolagiri NH-44, container office on rent Shoolagiri, office container Krishnagiri district",
     geo: { region: "IN-TN", placename: "SIPCOT Shoolagiri, Krishnagiri district, Tamil Nadu, India", position: "12.6740;77.9694", icbm: "12.6740, 77.9694" },
 
-    /* Owner-supplied set for this page (4 photos shared 2026-08-16): front gable exterior
+    /* Owner-supplied set for this page (4 photos, dropped 2026-08-16): front gable exterior
      * (hero), fitted interior hall, container side elevation with canopy (feature band) and
-     * the aerial roof view (gallery). The files were NOT yet in the repo when this entry was
-     * authored — save the four approved photos to public/images/cities/ under EXACTLY these
-     * names (webp, landscape ~1376×768) and the page lights up without any code change. */
+     * the aerial roof view (gallery). Converted from the owner's 1376×768 PNG masters to
+     * webp (~50–135 KB each, quality 82) and committed alongside this entry. */
     heroImage: {
       src: "/images/cities/container-office-in-sipcot-shoolagiri-exterior.webp",
       alt: "Container office in SIPCOT Shoolagiri — white insulated portable office with grey skirting, barred sliding windows and a brown gable canopy roof on open ground",
