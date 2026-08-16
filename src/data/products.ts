@@ -1720,13 +1720,11 @@ export const products: Product[] = [
       "/images/products/marketing-office-lounge-view.webp",
       "/images/products/marketing-office-mezzanine.webp",
     ],
-    // QUOTE-ONLY: no owner-approved fixed price exists for this configurable build. The commerce
-    // catalog entry (kind:"custom", priceConfirmed:false, no showIndicativePrice) makes every
-    // surface — card, page, JSON-LD, feed — show "Contact us for pricing" and NO figure; this
-    // price field renders nowhere on that path and is kept at 0 deliberately. Do NOT set a real
-    // number here without the owner's confirmed figure.
-    price: 0,
-    priceLabel: "Price on Request",
+    // ₹84,00,000 incl. 18% GST — owner-supplied FINAL customer price (2026-08-16). This legacy
+    // field mirrors the commerce base (sellPrice(7118644) = exactly ₹84,00,000); every customer
+    // surface renders from productCommerce.ts, never from here.
+    price: 7118644,
+    priceLabel: "+ 18% GST — Total ₹84,00,000",
     featured: false,
     inStock: true,
   },

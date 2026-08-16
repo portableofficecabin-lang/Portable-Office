@@ -10,10 +10,11 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 
 // Rich narrative content for the Marketing Office PRODUCT page (owner-approved copy).
 // The product template (ProductDetailServer) already renders the image gallery, the
-// quote-only price box, specifications and key features — this component adds the
-// story sections, the sizes table, the buy-vs-rent split, the process, and an FAQ
-// with FAQPage JSON-LD. Marketing Office is QUOTE-ONLY: no ₹ figure appears anywhere
-// in this copy by design; every price question routes to a quotation.
+// price box, specifications and key features — this component adds the story sections,
+// the sizes table, the buy-vs-rent split, the process, and an FAQ with FAQPage JSON-LD.
+// PRICED (Aug 2026): ₹84,00,000 incl. GST via productCommerce.ts (basePrice 7118644) —
+// the template renders the figure and Buy Now/Add to Cart. This copy still carries NO
+// ₹ figure of its own, so the commerce source of truth can never be contradicted here.
 
 const CONTACT = {
   tel: "+919731897976",

@@ -504,13 +504,13 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   },
   {
     // Marketing Office — QUOTE-ONLY by design (2026-08-16). The page copy is explicitly
-    // quote-driven ("tell us your sales timeline and we'll put both figures in front of you"),
-    // every unit is specified per project, and rentals exist alongside purchase — so there is
-    // no single honest fixed price. kind:"custom" + priceConfirmed:false + basePrice:0 (never
-    // rendered on this path) ⇒ card and page show "Contact us for pricing", JSON-LD emits no
-    // offers, and the Merchant feed excludes it. Do NOT add showIndicativePrice or a basePrice
-    // without an owner-confirmed figure.
-    id: "43", sku: "POC-MO-CNTR", basePrice: 0, priceConfirmed: false, kind: "custom", inStock: true,
+    // ₹84,00,000 INCL. 18% GST is the owner-supplied FINAL customer price (2026-08-16 — owner
+    // chose "incl. GST" explicitly). basePrice 7118644 is derived: it is the whole-rupee base
+    // whose sellPrice() rounds to exactly ₹84,00,000, so card, page, cart, checkout, Razorpay
+    // and JSON-LD all land on the owner's figure. Never "correct" this base to a round number —
+    // the customer price is the spec, the base is derived. Purchasable on-site; kept OUT of the
+    // automated Merchant feed via FEED_IMAGE_POLICY until the per-SKU spec/image review passes.
+    id: "43", sku: "POC-MO-CNTR", basePrice: 7118644, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Marketing Office",
     feedTitle: "Marketing Office Container Sales Gallery for Project Launches | Portable Office Cabin",
     size: "20 ft / 40 ft / joined / double-storey", material: "MS container modules, insulated PUF/rockwool panels", bestFor: "Project Sales Galleries & Launches",
