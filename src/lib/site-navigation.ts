@@ -99,9 +99,13 @@ export interface MegaMenuGroup {
 }
 
 /**
- * The 15 real categories, grouped into four readable columns. Grouping is
- * presentation only — it invents no routes. If a slug is ever deleted from
- * src/data/products.ts it simply drops out of the menu (see megaMenuColumns).
+ * Every real category, grouped into four readable columns. Grouping is presentation only —
+ * it invents no routes. If a slug is deleted from src/data/products.ts it simply drops out
+ * of the menu (see megaMenuColumns).
+ *
+ * THIS LIST IS OPT-IN, unlike footerProductLinks which is derived from `categories`. A new
+ * category therefore appears in the footer automatically but is INVISIBLE in the mega menu
+ * until its slug is added to a column here. When you add a category, add it here too.
  */
 export const megaMenuGroups: MegaMenuGroup[] = [
   {
@@ -117,8 +121,11 @@ export const megaMenuGroups: MegaMenuGroup[] = [
     slugs: ["portable-toilet-cabins", "cargo-storage-shipping-containers", "storage-shed"],
   },
   {
+    // prefab-building leads this column: it is the only slug here with products in the
+    // catalogue, and it is the one genuine "building" offer — the other three are still
+    // placeholder categories awaiting products.
     title: "Buildings & Fit-out",
-    slugs: ["peb-building", "fabrication", "upvc-windows-doors", "modular-furniture"],
+    slugs: ["prefab-building", "peb-building", "fabrication", "upvc-windows-doors", "modular-furniture"],
   },
 ];
 
