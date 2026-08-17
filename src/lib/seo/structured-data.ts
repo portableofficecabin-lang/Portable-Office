@@ -104,6 +104,16 @@ function oneYearFromNow(): string {
   return d.toISOString().slice(0, 10);
 }
 
+/** `validFrom` for an Offer: the render date, as YYYY-MM-DD.
+ *
+ *  Paired with oneYearFromNow() so the offer states a coherent one-year validity window
+ *  rather than an open-ended end date, which is what Google's "Missing field validFrom"
+ *  notice asks for. Computed, never hard-coded: pages revalidate, so a literal would go
+ *  stale and start describing a window that closed. */
+function todayISO(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
 /* ────────────────────────────────────────────────────────────────────────────────────────
  *  SHIPPING — modelled from SHIPPING_ZONES, never flattened to a single rate.
  *
@@ -360,6 +370,9 @@ export function generateProductStructuredData(product: {
               ? "https://schema.org/InStock"
               : "https://schema.org/BackOrder",
             itemCondition: "https://schema.org/NewCondition",
+            // Both ends of the validity window. validFrom answers Google's "Missing field
+            // 'validFrom'" notice — without it the offer declares an expiry but no start.
+            validFrom: todayISO(),
             priceValidUntil: oneYearFromNow(),
             seller: {
               "@type": "Organization",
