@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { PortableToiletContent } from "@/components/products/PortableToiletContent";
+import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 
 // Dedicated, indexable landing page for the high-intent "portable toilet cabin"
 // query. This static segment takes precedence over /products/[slug], so it does NOT
@@ -80,6 +81,11 @@ export default function PortableToiletCabinPage() {
             <p className="text-lg text-muted-foreground">{DESCRIPTION}</p>
           </div>
           <PortableToiletContent />
+
+          {/* Child tier of the SEO hierarchy — every guide under /products/portable-toilet-cabin/…
+              (registry-driven; the grid and the routes can never go out of sync). Renders nothing
+              until a child group is registered for this parent, so it is safe to mount now. */}
+          <ProductGuidesSection parentSlug="portable-toilet-cabin" />
         </div>
       </section>
     </Layout>

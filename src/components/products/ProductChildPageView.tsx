@@ -21,21 +21,21 @@ import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { products, getProductDetailPath } from "@/data/products";
 import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 import { whatsappUrl } from "@/lib/site-navigation";
 import type { ProductChildGroup, ProductChildPage } from "@/data/productChildPages";
 
 export function ProductChildPageView({ group, page }: { group: ProductChildGroup; page: ProductChildPage }) {
-  const parentPath = `/products/${group.parentSlug}`;
+  const parentPath = group.parentPath ?? `/products/${group.parentSlug}`;
   const siblings = group.children.filter((c) => c.slug !== page.slug);
 
   /* Live GST-inclusive prices of the parent category's purchasable SKUs — same source as
    * the product page, cart, JSON-LD and Merchant feed, so this table can never disagree. */
   const pricedProducts = page.showPriceTable
     ? products
-        .filter((p) => p.categorySlug === group.categorySlug && isPurchasable(p.id))
+        .filter((p) => p.categorySlug === group.categorySlug && isOutrightSale(p.id))
         .map((p) => ({ p, price: sellPrice(getCommerce(p.id)!.basePrice) }))
         .filter((x) => x.price > 0)
     : [];

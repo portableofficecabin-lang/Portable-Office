@@ -4,7 +4,7 @@ import {
   BRAND,
   getCommerce,
   hasGenuineSalePrice,
-  isPurchasable,
+  isOutrightSale,
 } from "@/data/productCommerce";
 import { priceForFeed, sellPrice } from "@/lib/pricing/gst";
 import {
@@ -313,7 +313,11 @@ export function generateProductStructuredData(product: {
 
   // The commerce catalog is the authority on money and on what may be sold.
   const commerce = product.id ? getCommerce(product.id) : undefined;
-  const purchasable = !!product.id && isPurchasable(product.id) && !!commerce;
+  // isOutrightSale, NOT isPurchasable: a schema.org Offer states the price of BUYING the item,
+  // and Google reads this block into Shopping. The rental SKU is payable online (so it is
+  // "purchasable") but its figure is monthly rent — emitting it here advertised recurring rent
+  // as an outright price with availability InStock.
+  const purchasable = !!product.id && isOutrightSale(product.id) && !!commerce;
 
   // A genuine strike-through: offers.price stays the CURRENT (lower) price, and the higher
   // "was" price is carried as a ListPrice UnitPriceSpecification — the only correct way to

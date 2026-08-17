@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 import { categories as staticCategories, getProductSlug } from "@/data/products";
 import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 import { portableCabinsFaqs } from "@/components/products/PortableCabinsCategoryContent";
 import { prefabBuildingFaqs } from "@/components/products/PrefabBuildingCategoryContent";
@@ -95,7 +95,7 @@ export default async function Page({ params }: PageProps) {
         "@type": "ItemList",
         name: category.name,
         itemListElement: products
-          .filter((p) => p.categorySlug === slug && isPurchasable(p.id))
+          .filter((p) => p.categorySlug === slug && isOutrightSale(p.id))
           .map((p) => ({ p, price: sellPrice(getCommerce(p.id)!.basePrice) }))
           .sort((a, b) => a.price - b.price)
           .map(({ p, price }, i) => ({

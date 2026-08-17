@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { ProductCard } from "@/components/products/ProductCard";
 import dynamic from "next/dynamic";
 import { Product, Category, getProductDetailPath } from "@/data/products";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isPurchasable, priceUnitSuffix } from "@/data/productCommerce";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { CATEGORY_H1, PortableCabinsCategoryContent } from "@/components/products/PortableCabinsCategoryContent";
 import { PrefabBuildingCategoryContent } from "@/components/products/PrefabBuildingCategoryContent";
@@ -354,7 +354,7 @@ export function ProductsPageContent({
                             {(() => {
                               const c = getCommerce(p.id);
                               return isPurchasable(p.id) && c
-                                ? `${formatINR(sellPrice(c.basePrice))} incl. GST`
+                                ? `${formatINR(sellPrice(c.basePrice))} incl. GST${priceUnitSuffix(p.id)}`
                                 : "Contact for price";
                             })()}
                           </span>

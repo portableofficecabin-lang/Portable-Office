@@ -6,7 +6,7 @@ import { ArrowRight, Eye, MessageCircle, Phone, ShoppingCart, Zap } from "lucide
 import { Button } from "@/components/ui/button";
 import { Product, getProductDetailPath } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
-import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, hasGenuineSalePrice, isPurchasable, priceUnitSuffix } from "@/data/productCommerce";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { useCart } from "@/contexts/CartContext";
@@ -137,7 +137,7 @@ export function ProductCard({ product, priority = false, prefetch = false }: Pro
                   </span>
                 )}
                 <div className="font-display font-bold text-xl bg-gradient-to-r from-accent to-amber-light bg-clip-text text-transparent">
-                  {formatINR(sellingPrice)}
+                  {formatINR(sellingPrice)}{priceUnitSuffix(product.id)}
                 </div>
               </div>
               <span className="text-xs text-muted-foreground">Incl. taxes</span>

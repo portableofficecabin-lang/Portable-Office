@@ -23,7 +23,7 @@
 
 import Link from "next/link";
 import { products as catalogProducts, getProductSlug, type Product } from "@/data/products";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 
 const SLUG = "prefab-building";
@@ -34,7 +34,7 @@ const inr = (n: number): string => `₹${n.toLocaleString("en-IN")}`;
 /** The category's purchasable models with their LIVE customer-facing (GST-inclusive) prices. */
 export function prefabBuildingModels(products: Product[]) {
   return products
-    .filter((p) => p.categorySlug === SLUG && isPurchasable(p.id))
+    .filter((p) => p.categorySlug === SLUG && isOutrightSale(p.id))
     .map((p) => {
       const c = getCommerce(p.id)!;
       return {
@@ -51,7 +51,7 @@ export function prefabBuildingModels(products: Product[]) {
 /* Price band from the SAME catalog + commerce data the cards use, so the FAQ (and its schema copy)
  * can never quote a figure the product pages do not show. */
 const CATEGORY_PRICES = catalogProducts
-  .filter((p) => p.categorySlug === SLUG && isPurchasable(p.id))
+  .filter((p) => p.categorySlug === SLUG && isOutrightSale(p.id))
   .map((p) => sellPrice(getCommerce(p.id)!.basePrice));
 const PRICE_MIN = CATEGORY_PRICES.length ? Math.min(...CATEGORY_PRICES) : 0;
 
