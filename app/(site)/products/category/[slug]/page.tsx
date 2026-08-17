@@ -6,9 +6,16 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 import { categories as staticCategories, getProductSlug } from "@/data/products";
 import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 import { portableCabinsFaqs } from "@/components/products/PortableCabinsCategoryContent";
+import { prefabBuildingFaqs } from "@/components/products/PrefabBuildingCategoryContent";
+
+/** Categories that ship a rich landing page (copy + FAQ + ItemList schema), keyed by slug. */
+const RICH_CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
+  "portable-cabins": portableCabinsFaqs,
+  "prefab-building": prefabBuildingFaqs,
+};
 
 export const revalidate = 1800; // 30 minutes
 
@@ -35,6 +42,15 @@ const CATEGORY_META: Record<string, { title: string; description: string; keywor
       "portable cabins, portable cabin manufacturer in India, porta cabin, portable cabin price, "
       + "portable office cabin, prefabricated portable cabin, MS portable cabin, "
       + "20ft portable cabin, 40ft portable cabin bunkhouse",
+  },
+  "prefab-building": {
+    title: "Prefab Buildings — Panel-Built Structures, Made to Your Plan",
+    description:
+      "Prefab buildings assembled on your site in days — insulated panels, steel truss roof, clear-span width and any footprint. ISO 9001 manufacturer, built in Tamil Nadu, delivered pan-India.",
+    keywords:
+      "prefab building, prefabricated building manufacturer, prefab building system, "
+      + "panel built structure, prefab office building, prefab sales gallery, "
+      + "prefab marketing office, modular building India",
   },
 };
 
@@ -73,13 +89,13 @@ export default async function Page({ params }: PageProps) {
    * `isPurchasable` predicate that gates Add-to-Cart, product JSON-LD and the Merchant feed — so a
    * quote-only product can never leak an offer here, and a price here can never differ from the
    * card, the product page or the feed. */
-  const itemListSchema = slug === "portable-cabins"
+  const itemListSchema = RICH_CATEGORY_FAQS[slug]
     ? {
         "@context": "https://schema.org",
         "@type": "ItemList",
         name: category.name,
         itemListElement: products
-          .filter((p) => p.categorySlug === slug && isPurchasable(p.id))
+          .filter((p) => p.categorySlug === slug && isOutrightSale(p.id))
           .map((p) => ({ p, price: sellPrice(getCommerce(p.id)!.basePrice) }))
           .sort((a, b) => a.price - b.price)
           .map(({ p, price }, i) => ({
@@ -114,7 +130,7 @@ export default async function Page({ params }: PageProps) {
       />
       {itemListSchema && <JsonLd data={itemListSchema} />}
       {/* FAQPage schema — the SAME array the on-page FAQ renders, so copy and schema always match. */}
-      {slug === "portable-cabins" && <JsonLd data={generateFAQSchema(portableCabinsFaqs)} />}
+      {RICH_CATEGORY_FAQS[slug] && <JsonLd data={generateFAQSchema(RICH_CATEGORY_FAQS[slug])} />}
       {/* No searchParams in the page → static/ISR (revalidate=1800 now effective).
           activeCategory comes from the path slug so content stays server-rendered
           and crawlable; ?page deep-links are resolved client-side after hydration. */}

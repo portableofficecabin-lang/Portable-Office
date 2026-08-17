@@ -4,7 +4,7 @@ import {
   BRAND,
   getCommerce,
   hasGenuineSalePrice,
-  isPurchasable,
+  isOutrightSale,
 } from "@/data/productCommerce";
 import { priceForFeed, sellPrice } from "@/lib/pricing/gst";
 import {
@@ -102,6 +102,16 @@ function oneYearFromNow(): string {
   const d = new Date();
   d.setFullYear(d.getFullYear() + 1);
   return d.toISOString().slice(0, 10);
+}
+
+/** `validFrom` for an Offer: the render date, as YYYY-MM-DD.
+ *
+ *  Paired with oneYearFromNow() so the offer states a coherent one-year validity window
+ *  rather than an open-ended end date, which is what Google's "Missing field validFrom"
+ *  notice asks for. Computed, never hard-coded: pages revalidate, so a literal would go
+ *  stale and start describing a window that closed. */
+function todayISO(): string {
+  return new Date().toISOString().slice(0, 10);
 }
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
@@ -313,7 +323,11 @@ export function generateProductStructuredData(product: {
 
   // The commerce catalog is the authority on money and on what may be sold.
   const commerce = product.id ? getCommerce(product.id) : undefined;
-  const purchasable = !!product.id && isPurchasable(product.id) && !!commerce;
+  // isOutrightSale, NOT isPurchasable: a schema.org Offer states the price of BUYING the item,
+  // and Google reads this block into Shopping. The rental SKU is payable online (so it is
+  // "purchasable") but its figure is monthly rent — emitting it here advertised recurring rent
+  // as an outright price with availability InStock.
+  const purchasable = !!product.id && isOutrightSale(product.id) && !!commerce;
 
   // A genuine strike-through: offers.price stays the CURRENT (lower) price, and the higher
   // "was" price is carried as a ListPrice UnitPriceSpecification — the only correct way to
@@ -356,6 +370,9 @@ export function generateProductStructuredData(product: {
               ? "https://schema.org/InStock"
               : "https://schema.org/BackOrder",
             itemCondition: "https://schema.org/NewCondition",
+            // Both ends of the validity window. validFrom answers Google's "Missing field
+            // 'validFrom'" notice — without it the offer declares an expiry but no start.
+            validFrom: todayISO(),
             priceValidUntil: oneYearFromNow(),
             seller: {
               "@type": "Organization",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { type Product } from "@/data/products";
 import { getProductSEO } from "@/data/productSEO";
 import { getBestProductImage } from "@/data/productImages";
-import { getCommerce, isPurchasable, type ProductCommerce } from "@/data/productCommerce";
+import { getCommerce, isPurchasable, priceUnitSuffix, type ProductCommerce } from "@/data/productCommerce";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -65,7 +65,7 @@ function truncateOnWordBoundary(text: string, max: number): string {
  * material first (longest, and it is repeated in the on-page spec grid), then size.
  */
 function buildCommerceDescription(commerce: ProductCommerce): string {
-  const tail = `${formatINR(sellPrice(commerce.basePrice))} (incl. GST). Delivery ${commerce.deliveryDays}. Buy online with UPI, cards or net banking.`;
+  const tail = `${formatINR(sellPrice(commerce.basePrice))}${priceUnitSuffix(commerce.id)} (incl. GST). Delivery ${commerce.deliveryDays}. Buy online with UPI, cards or net banking.`;
 
   const variants = [
     [commerce.h1Title, commerce.size, commerce.material, tail], // richest

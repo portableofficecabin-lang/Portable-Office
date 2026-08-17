@@ -1825,6 +1825,19 @@ export const products: Product[] = [
   },
 ];
 
+/**
+ * `productCount` is DERIVED here, never hand-maintained.
+ *
+ * It used to be typed by hand in each category literal and had drifted on six of them at once
+ * (portable-cabins 9 vs 10, site-office 8 vs 5, prefab-homes 7 vs 2, toilet 4 vs 1, security
+ * 5 vs 2, cargo 5 vs 14) — the homepage was advertising counts the catalogue did not have.
+ * Computing it from the single source of truth means adding, moving or removing a product can
+ * never leave a stale number behind. The literals above are now only a starting value.
+ */
+for (const c of categories) {
+  c.productCount = products.filter((p) => p.categorySlug === c.slug).length;
+}
+
 export const getProductsByCategory = (categorySlug: string): Product[] => {
   return products.filter((p) => p.categorySlug === categorySlug);
 };

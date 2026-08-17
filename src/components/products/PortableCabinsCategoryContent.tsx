@@ -21,12 +21,16 @@
 
 import Link from "next/link";
 import { products as catalogProducts, getProductSlug, type Product } from "@/data/products";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 
-/** The one-H1-per-page override for this category (used by the listing view). */
+/**
+ * One-H1-per-page overrides, keyed by category slug (used by the listing view). Shared map: it
+ * lives here for historical reasons, but any category with a rich landing page adds its H1 here.
+ */
 export const CATEGORY_H1: Record<string, string> = {
   "portable-cabins": "Portable Cabins — Factory-Built, Delivered Anywhere in India",
+  "prefab-building": "Prefab Buildings — Panel-Built, Assembled On Your Site",
 };
 
 /** ₹ formatter, Indian grouping. */
@@ -35,7 +39,7 @@ const inr = (n: number): string => `₹${n.toLocaleString("en-IN")}`;
 /** The category's purchasable models with their LIVE customer-facing (GST-inclusive) prices. */
 export function portableCabinModels(products: Product[]) {
   return products
-    .filter((p) => p.categorySlug === "portable-cabins" && isPurchasable(p.id))
+    .filter((p) => p.categorySlug === "portable-cabins" && isOutrightSale(p.id))
     .map((p) => {
       const c = getCommerce(p.id)!;
       return {
@@ -54,7 +58,7 @@ export function portableCabinModels(products: Product[]) {
 /* The category's price band, computed from the SAME catalog + commerce data the cards use — so the
  * FAQ (and its schema copy) can never quote a price the product pages do not show. */
 const CATEGORY_PRICES = catalogProducts
-  .filter((p) => p.categorySlug === "portable-cabins" && isPurchasable(p.id))
+  .filter((p) => p.categorySlug === "portable-cabins" && isOutrightSale(p.id))
   .map((p) => sellPrice(getCommerce(p.id)!.basePrice));
 const PRICE_MIN = CATEGORY_PRICES.length ? Math.min(...CATEGORY_PRICES) : 0;
 const PRICE_MAX = CATEGORY_PRICES.length ? Math.max(...CATEGORY_PRICES) : 0;

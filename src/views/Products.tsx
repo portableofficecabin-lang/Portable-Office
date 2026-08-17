@@ -11,9 +11,10 @@ import { Input } from "@/components/ui/input";
 import { ProductCard } from "@/components/products/ProductCard";
 import dynamic from "next/dynamic";
 import { Product, Category, getProductDetailPath } from "@/data/products";
-import { getCommerce, isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isPurchasable, priceUnitSuffix } from "@/data/productCommerce";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { CATEGORY_H1, PortableCabinsCategoryContent } from "@/components/products/PortableCabinsCategoryContent";
+import { PrefabBuildingCategoryContent } from "@/components/products/PrefabBuildingCategoryContent";
 import { cn } from "@/lib/utils";
 
 // Enquiry form is click-only — defer its chunk out of the listing first-load JS.
@@ -353,7 +354,7 @@ export function ProductsPageContent({
                             {(() => {
                               const c = getCommerce(p.id);
                               return isPurchasable(p.id) && c
-                                ? `${formatINR(sellPrice(c.basePrice))} incl. GST`
+                                ? `${formatINR(sellPrice(c.basePrice))} incl. GST${priceUnitSuffix(p.id)}`
                                 : "Contact for price";
                             })()}
                           </span>
@@ -369,6 +370,9 @@ export function ProductsPageContent({
               {/* Per-category SEO content — buying guide, live price table, FAQ (schema-matched). */}
               {activeCategory === "portable-cabins" && (
                 <PortableCabinsCategoryContent products={products} />
+              )}
+              {activeCategory === "prefab-building" && (
+                <PrefabBuildingCategoryContent products={products} />
               )}
             </div>
           </div>

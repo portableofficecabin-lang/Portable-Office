@@ -23,6 +23,8 @@ export const productApplications: Record<string, string> = {
     "Large project worker housing, construction labour colonies, infrastructure & industrial site camps",
   "bunker-bed-container-cabin":
     "Worker dormitories, labour accommodation, site camps & temporary workforce housing",
+  "prefab-building":
+    "Project sales galleries, marketing offices, site admin blocks, multi-storey offices & permanent-feel commercial spaces",
   "peb-building":
     "Warehouses, factories, godowns, workshops & commercial buildings",
   "storage-shed":
