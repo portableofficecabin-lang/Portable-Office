@@ -674,6 +674,13 @@ export const products: Product[] = [
       { label: "Living Room", value: "300 sq ft" },
       { label: "Deck", value: "Wraparound porch" },
       { label: "Ceiling Height", value: "10ft" },
+      // Owner-supplied construction (2026-08-19). Thickness was not stated for the glasswool and
+      // is deliberately NOT guessed here; frame sections, roof build-up and the first-floor deck
+      // are still outstanding.
+      { label: "External Wall", value: "ACP cladding" },
+      { label: "Internal Finish", value: "WPC / PVC" },
+      { label: "Insulation", value: "Glasswool" },
+      { label: "Flooring", value: "Tiles" },
     ],
     features: [
       "Real wood finish interiors",
