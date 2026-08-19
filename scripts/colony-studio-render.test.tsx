@@ -24,6 +24,13 @@ import type { ColonyDrawingMeta } from "../src/features/labour-colony-studio/mod
 import { EngineeringSheets } from "../src/features/labour-colony-studio/drawing/EngineeringSheets";
 import { ManufacturingReport } from "../src/features/labour-colony-studio/reports/ManufacturingReport";
 import { ComponentInspector } from "../src/features/labour-colony-studio/inspector/ComponentInspector";
+import { buildRoomFloorPlan } from "../src/lib/quotation/roomFloorPlan";
+import { ReferenceGASheet } from "../src/features/labour-colony-studio/reference/ReferenceGASheet";
+import { ReferenceBomSheet } from "../src/features/labour-colony-studio/reference/ReferenceBomSheet";
+import type { ReferenceTitleBlockMeta } from "../src/features/labour-colony-studio/reference/ReferenceTitleBlock";
+import {
+  buildBracingNote, buildEnvelopeCallouts, buildMaterialRegister, buildOpeningSchedule,
+} from "../src/features/labour-colony-studio/reference/referenceRegister";
 
 let passed = 0;
 let failed = 0;
@@ -77,6 +84,26 @@ const META: ColonyDrawingMeta = {
   date: "20 Jul 2026",
   scale: "NTS",
   status: "NOT FOR CONSTRUCTION",
+};
+
+const REF_META: ReferenceTitleBlockMeta = {
+  projectName: "Render Harness Colony",
+  clientName: "Test Client",
+  location: "Test",
+  title: "General Arrangement Layout",
+  drawingNumber: "LC-GA-2F-01",
+  revision: "0",
+  scale: "NTS",
+  sheet: "1",
+  date: "20/07/2026",
+  releasedFor: "Preliminary",
+  designedBy: "RSR",
+  drawnBy: "RSR",
+  checkedBy: "CRJ",
+  approvedBy: "",
+  lengthLabel: "29.70 M",
+  widthLabel: "6.90 M",
+  heightLabel: "6.00 M",
 };
 
 const result = calculateLabourColony(CONFIG);
@@ -176,6 +203,117 @@ const noCivilSheets = render(
   }),
 );
 ok(!!noCivilSheets && noCivilSheets.length > 1000, "drawing set renders with civil work disabled");
+
+/* ---- 6. the REFERENCE GA sheet + bill of materials ------------------------------------------- */
+const refOpenings = buildOpeningSchedule(model, null);
+const refCallouts = buildEnvelopeCallouts(model, result, null);
+const refBracing = buildBracingNote(model, result, null);
+const refRegister = buildMaterialRegister(model, null, civil, refOpenings, refBracing);
+const refGeoms = Array.from(
+  { length: Math.max(1, model.meta.floors) },
+  (_, f) => buildRoomFloorPlan(result, result.config.floorPlan, f),
+);
+
+ok(refOpenings.length > 0, `opening schedule is populated (${refOpenings.length} rows)`);
+ok(refOpenings.every((r) => r.mark.length > 0 && r.qty > 0), "every opening row carries a mark and a quantity");
+ok(refCallouts.some((c) => c.id === "wall"), "the wall cladding callout names the configured panel");
+ok(refRegister.groups.length >= 6, `material register builds all its groups (${refRegister.groups.length})`);
+ok(
+  refRegister.groups.every((g) => g.rows.length > 0 || !!g.emptyReason),
+  "an empty register group always explains why it is empty rather than showing a blank table",
+);
+ok(!refRegister.priced, "with no priced BOQ the register reports itself as unpriced");
+
+/* ---- the three families the elevations must call out: bracing, railing, staircase ------------ */
+ok(!!refBracing, "the bracing note resolves from the priced calculation");
+if (refBracing) {
+  ok(refBracing.braceCount > 0, `braces are placed on the model (${refBracing.braceCount})`);
+  ok(refBracing.boltsPerEnd > 0, `nut-bolts per brace end come from the norms (${refBracing.boltsPerEnd})`);
+  ok(refBracing.crossSupportBolts > 0, `cross-support bolts are counted (${refBracing.crossSupportBolts})`);
+  ok(/^M\d/.test(refBracing.boltSize), `bolt size is a real assembly size (${refBracing.boltSize})`);
+  ok(refBracing.section.length > 1, `the brace section is named (${refBracing.section})`);
+}
+ok(model.parts.some((p) => p.kind === "handrail"), "the model carries hand railing");
+ok(model.parts.some((p) => p.kind === "stair-tread"), "the model carries a staircase");
+/* Every brace is face-tagged, which is how the elevation selects them — an untagged brace would
+ * silently vanish from the drawing exactly as it did before. */
+const taggedBraces = model.parts.filter((p) => p.kind === "brace");
+ok(
+  taggedBraces.length > 0 && taggedBraces.every((p) => /^brace:(front|rear|left|right):/.test(p.id)),
+  `every brace carries a face tag (${taggedBraces.length})`,
+);
+
+const refSheet = render(
+  "ReferenceGASheet",
+  React.createElement(ReferenceGASheet, {
+    model, result, geoms: refGeoms, openings: refOpenings, callouts: refCallouts,
+    bracing: refBracing, meta: REF_META,
+  }),
+);
+if (refSheet) {
+  ok(refSheet.length > 5000, `ReferenceGASheet renders substantial markup (${refSheet.length} chars)`);
+  ok((refSheet.match(/<svg/g) ?? []).length >= 5, `reference sheet draws every plan and elevation (${(refSheet.match(/<svg/g) ?? []).length} svg)`);
+  ok(refSheet.includes("reference-drawing-block"), "reference views are wrapped in paginatable blocks");
+  ok(!/oklch\(/i.test(refSheet), "no oklch() colours on the reference sheet (PDF-export safe)");
+  ok(!/url\(#/.test(refSheet), "no paint-server refs on the reference sheet (standalone-SVG safe)");
+  ok(/Schedule of doors/i.test(refSheet), "the door / window / ventilator schedule is printed");
+  ok(/General Arrangement Layout/.test(refSheet), "the title block carries the drawing title");
+  ok(/Front Side Elevation/.test(refSheet) && /Back Side Elevation/.test(refSheet), "all four elevations are captioned");
+  ok(/All dimensions are in mm/.test(refSheet), "the sheet states its unit convention");
+  /* A NaN anywhere in an SVG silently drops the shape it belongs to, so the sheet looks "fine" while
+   * a plan, a swing arc or a dimension is simply missing. Fail loudly instead. */
+  ok(!/NaN/.test(refSheet), "no NaN coordinates or labels on the reference sheet");
+  /* The millimetre conversion actually reaches the paper, AND the plan, the elevations, the
+   * building-data block and the title block all dimension the SAME overall extent — the whole
+   * colony including verandas and staircases, not the smaller room-block footprint. */
+  const overallMm = Math.round((refGeoms[0].bounds.maxX - refGeoms[0].bounds.minX) * 1000);
+  const footprintMm = Math.round(result.area.footprintLengthM * 1000);
+  ok(refSheet.includes(`>${overallMm}<`), `overall length is dimensioned in mm (${overallMm})`);
+  ok(overallMm !== footprintMm, "the harness colony really does have a veranda/stair overhang to disagree about");
+  ok(
+    (refSheet.match(new RegExp(`>${overallMm}<`, "g")) ?? []).length >= 3,
+    "the plan and both elevation pairs all state the same overall length",
+  );
+  ok(/\[D/.test(refSheet) && /\[W/.test(refSheet), "door and window marks are tagged on the views");
+  /* The elevations must actually SHOW what their caption promises. Before the face-tag fix every
+   * brace failed the depth-band test and no elevation drew a single one. */
+  ok(/Cross bracing/.test(refSheet), "the elevations call out the cross bracing");
+  ok(/Hand railing/.test(refSheet), "the elevations call out the hand railing");
+  ok(/Staircase/.test(refSheet), "the elevations call out the staircase");
+  ok(/Bolted cross-support node/.test(refSheet), "the bolted cross-support node is in the elevation key");
+  if (refBracing) {
+    /* The callout word-wraps, so assert the token that survives a line break rather than the whole
+     * sentence — the point is that the SIZE and the PER-END COUNT on the drawing are the priced
+     * calculation's, not a plausible-looking invention. */
+    ok(
+      refSheet.includes(`bolted ${refBracing.boltSize} × ${refBracing.boltsPerEnd}`),
+      "the bracing callout states the real nut-bolt assembly, not an invented one",
+    );
+    ok(refSheet.includes(refBracing.section), "the bracing callout states the priced brace section");
+  }
+}
+
+const refBom = render("ReferenceBomSheet", React.createElement(ReferenceBomSheet, { register: refRegister }));
+if (refBom) {
+  ok(refBom.length > 1000, `ReferenceBomSheet renders (${refBom.length} chars)`);
+  ok(/Bill of materials/i.test(refBom), "the bill of materials is titled");
+  ok(!/oklch\(/i.test(refBom), "no oklch() colours in the bill of materials (PDF-export safe)");
+}
+
+/* single-storey + no-civil reference sheet must not crash either */
+const refSingle = render(
+  "ReferenceGASheet (ground floor only, no civil)",
+  React.createElement(ReferenceGASheet, {
+    model: buildColonyModel({ result: single, civil: null, columnGrid: null }),
+    result: single,
+    geoms: [buildRoomFloorPlan(single, single.config.floorPlan, 0)],
+    openings: [],
+    callouts: [],
+    meta: REF_META,
+    watermark: false,
+  }),
+);
+ok(!!refSingle && refSingle.length > 1000, "reference sheet renders for a ground-floor-only colony with no civil work");
 
 console.log(`\ncolony-studio-render.test.tsx — ${passed} passed, ${failed} failed\n`);
 if (failed) {
