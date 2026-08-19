@@ -13,7 +13,7 @@
  * And for every product URL in the SITEMAP that is NOT in the feed:
  *   5. the page is 200, non-blank, and INTERNALLY CONSISTENT: offer structured data and
  *      Add to Cart appear together or not at all. A page here may legitimately be purchasable
- *      (feed-excluded by FEED_IMAGE_POLICY) or quote-only (no offer, no ATC) — but a page
+ *      (feed-excluded by src/data/merchantFeedPolicy.ts) or quote-only (no offer, no ATC) — but a page
  *      showing an offer without a working Add to Cart (or vice versa) is a defect.
  *      The "quote-only must never be IN the feed" direction is enforced by checks 1-4:
  *      every feed URL must render price + availability + Add to Cart, which a quote-only
@@ -154,7 +154,7 @@ for (const url of nonFeed) {
   ok(a.hasProductSchema, `${tag}: missing Product JSON-LD (soft-error shell?)`);
   ok(hasOffer === a.addToCart,
     `${tag}: INCONSISTENT — offer schema ${hasOffer ? "present" : "absent"} but Add to Cart ${a.addToCart ? "present" : "absent"}`);
-  if (hasOffer) console.log(`  info ${tag}: purchasable but feed-excluded (price=${a.price}) — expected when FEED_IMAGE_POLICY blocks the SKU`);
+  if (hasOffer) console.log(`  info ${tag}: purchasable but feed-excluded (price=${a.price}) — expected when merchantFeedPolicy.ts holds the SKU back`);
 }
 
 console.log(`\n=== merchant-url-audit: ${pass} passed, ${fail} failed ===`);

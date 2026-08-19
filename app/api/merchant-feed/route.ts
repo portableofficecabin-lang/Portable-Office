@@ -4,6 +4,7 @@ import { sellPrice, priceForFeed } from "@/lib/pricing/gst";
 import { SHIPPING_ZONES, DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { getBestProductImage } from "@/data/productImages";
+import { excludedSkus, feedExclusionFor, feedImageDropsFor } from "@/data/merchantFeedPolicy";
 
 /**
  * ══════════════════════════════════════════════════════════════════════════════════════
@@ -37,73 +38,20 @@ import { getBestProductImage } from "@/data/productImages";
 const SITE_URL = "https://portableofficecabin.com";
 
 /**
- * ── GMC IMAGE POLICY ────────────────────────────────────────────────────────────────────────────
- * Result of a visual inspection of EVERY image this feed submits (rendered from the live server and
- * eyeballed one by one, 2026-07). Google disapproves a product image that carries baked-in
- * promotional / brand TEXT or a logo over the product — watermarks, added banners, "SITE OFFICE",
- * "MODU-L", etc. (Real, incidental container ID markings on a genuine container photo are NOT a
- * violation and are left alone; CSS "Featured" badges are not in the image file and never reach
- * Google.)
+ * ── WHICH SKUs ARE HELD OUT OF THE FEED ─────────────────────────────────────────────────────────
+ * The exclusion list is NOT in this file. It lives as declarative data in
+ * `src/data/merchantFeedPolicy.ts` — one entry per SKU, each carrying a category and the reason it
+ * is held back — so the rule "may we advertise this?" is reviewable in one place, in a diff,
+ * without reading XML-generation code. This route only asks the policy; it never names a product.
  *
- * Two levers, both feed-only — NOTHING here touches the product pages, the gallery, the JSON-LD or
+ * Two levers, both feed-only — NOTHING there touches the product pages, the gallery, the JSON-LD or
  * the on-disk image files:
- *   • `drop`        — remove specific NON-COMPLIANT images (matched by filename fragment) from BOTH
- *                     the primary and the additional slots. If a CLEAN image remains it becomes the
- *                     primary automatically (galleryImagesFor preserves order), which is exactly the
- *                     "use the clean gallery image as the Merchant image" rule.
- *   • `blockReason` — the product has NO clean image at all, so it is TEMPORARILY EXCLUDED from the
- *                     feed with this reason logged. The page stays live and indexable; only the
- *                     Shopping offer pauses until clean photography is supplied. Delete the entry to
- *                     re-enable once a compliant image exists.
+ *   • an EXCLUSION   — the SKU is skipped entirely, with its reason logged.
+ *   • an IMAGE DROP  — specific non-compliant images (matched by filename fragment) are removed
+ *                      from both the primary and the additional slots. If a CLEAN image remains it
+ *                      becomes the primary automatically (galleryImagesFor preserves order), which
+ *                      is exactly the "use the clean gallery image as the Merchant image" rule.
  */
-const FEED_IMAGE_POLICY: Record<string, { drop?: string[]; blockReason?: string }> = {
-  // 4 of 5 exterior shots carry a baked-in "MS PORTABLE CABIN" signboard; the interior is clean and
-  // survives as the sole feed image.
-  "POC-PC-MSPC": {
-    drop: [
-      "ms-portable-cabin-front",
-      "ms-portable-cabin-side",
-      "ms-portable-cabin-back",
-      "ms-portable-cabin-angle",
-    ],
-  },
-  // Sole image has "SITE OFFICE" text baked onto the cabin — no clean alternative in the gallery.
-  "POC-SOC-CSPO": { blockReason: "GMC image replacement required — only image has 'SITE OFFICE' text baked in" },
-  // Sole image carries an embedded 'MST' brand logo on the cabin — no clean alternative.
-  "POC-CO-MSCO": { blockReason: "GMC image replacement required — only image has an embedded 'MST' logo" },
-  // Sole image has 'SECURITY' text + a small logo baked on the guard cabin — no clean alternative.
-  "POC-SC-SECAB": { blockReason: "GMC image replacement required — only image has 'SECURITY' text + a logo baked in" },
-  // All five gallery images carry a baked-in 'MODU-L' / 'UNIT 0x' brand wordmark — no clean image.
-  "POC-VIP-40": { blockReason: "GMC image replacement required — every gallery image carries a 'MODU-L' brand wordmark" },
-
-  // ── Aug 2026: owner enabled ON-SITE purchase for every remaining SKU (Buy Now sitewide). ──
-  // These 17 stay OUT of the feed deliberately: the feed keeps exactly the item set Google
-  // approved. Before feeding any of them, review per SKU: one exact deliverable configuration,
-  // clean photos (no baked-in text), landing copy consistent with a single fixed price, and a
-  // passing scripts/merchant-url-audit.mjs run. Remove its entry here only after that review.
-  "POC-CO-GEN": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-PH-2BHK": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-PH-3LUX": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-WA-G1": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-LC-PREFAB": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-SC-RENT": { blockReason: "monthly rental charged as a one-time booking on-site — never a GMC product offer" },
-  "POC-SOC-MFR": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-CSC-GUIDE": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-CC-GUIDE": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-SC-CARGO": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-CSO-4010": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  // Aug 2026: owner priced Marketing Office at ₹84,00,000 incl. GST and enabled Buy Now. Same
-  // hold as the 17 above — the feed keeps exactly the item set Google approved until review.
-  "POC-MO-CNTR": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  // Aug 2026: Prefab Marketing Office (product child of POC-MO-CNTR) — same hold.
-  "POC-PMO-165": { blockReason: "newly purchasable on-site — feed after spec/image review" },
-  "POC-SC-KRMG": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
-  "POC-SC-KRSH": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
-  "POC-SC-SIPCOT": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
-  "POC-SC-CHN": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
-  "POC-SC-NRSP": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
-  "POC-SC-PNYA": { blockReason: "city landing page — one exact unit/config must be defined before feeding" },
-};
 
 /**
  * ── STABLE FEED IMAGES ──────────────────────────────────────────────────────────────────────────
@@ -141,6 +89,16 @@ const STABLE_IMAGE_BASENAMES = new Set<string>([
   "prefab-porta-cabin-exterior.webp",             // POC-PC-PREFAB + POC-PC-PPCB (shared photo)
   "shipping-container-stacked.webp",              // POC-SC-40HC
   "steel-portable-office-container-crane.webp",   // POC-SOC-SPOC
+  /* POC-LC-PREFAB — its whole gallery is imported, so without these five the feed dropped every
+   * image and excluded the item. The aerial is registered as `.png` because that is the import's
+   * extension and therefore the basename webpack emits; the public twin was RE-ENCODED to a real
+   * PNG (the source file is WebP bytes under a .png name, which would be served as image/png and
+   * risk an "Unable to show image" disapproval). */
+  "labour-colony-aerial.png",                     // POC-LC-PREFAB
+  "labour-colony-new-1.webp",                     // POC-LC-PREFAB
+  "labour-colony-new-2.webp",                     // POC-LC-PREFAB
+  "labour-colony-new-3.webp",                     // POC-LC-PREFAB
+  "labour-colony-new-4.webp",                     // POC-LC-PREFAB
 ]);
 
 /** Rewrite a bundler-hashed asset URL to its permanent public twin; unknown URLs pass through. */
@@ -441,7 +399,34 @@ function shippingElements(): string {
  * A product whose specifications table is empty simply gets neither block.
  */
 function specAttributes(product: Product): string {
-  const specs = (product.specifications || []).filter((s) => s.label?.trim() && s.value?.trim());
+  const all = (product.specifications || []).filter((s) => s.label?.trim() && s.value?.trim());
+
+  /**
+   * ── SPEC ROWS GET THE SAME GUARD AS THE DESCRIPTION ────────────────────────────────────────
+   * `g:product_detail` and `g:product_highlight` are submitted product data, judged by exactly the
+   * same rules as <g:description> — yet this function used to pass every spec row through
+   * untouched while feedDescription() stripped promotional and price-claim sentences. A row such as
+   * "Cost Savings: 20–40% lower than conventional RCC construction" therefore reached Google as a
+   * highlight: a comparative pricing claim, which is the class of statement that contributed to
+   * this account's suspension.
+   *
+   * Same policy as everywhere else in this file: DROP the offending row, never rewrite it. The
+   * spec still appears on the landing page; it simply is not submitted. Both attributes are
+   * optional, so dropping a row costs the item nothing.
+   */
+  const specs = all.filter((s) => {
+    const text = `${s.label.trim()}: ${s.value.trim()}`;
+    const promo = isPromotional(text);
+    const price = priceClaimIn(text);
+    if (promo || price) {
+      console.warn(
+        `[merchant-feed] dropped spec row from product data (${promo ? "promotional" : "price claim"}): "${text}"`,
+      );
+      return false;
+    }
+    return true;
+  });
+
   if (specs.length === 0) return "";
 
   const details = specs
@@ -463,6 +448,18 @@ function specAttributes(product: Product): string {
   return `${highlights}\n${details}\n`;
 }
 
+/**
+ * One <item>.
+ *
+ * ── NO <g:mpn> AND NO <g:gtin>, DELIBERATELY ────────────────────────────────────────────────────
+ * These cabins are made-to-order steel structures: there is no manufacturer part number and no
+ * barcode. `<g:identifier_exists>no</g:identifier_exists>` is the correct, complete declaration of
+ * that. The feed previously ALSO emitted `<g:mpn>{sku}</g:mpn>`, which contradicted it — our SKU is
+ * an internal code, not a recognised MPN — and Google resolves such a contradiction by trusting the
+ * supplied identifier and ignoring the flag, which weakens product matching and can raise an
+ * "incorrect identifier" disapproval. One statement about identifiers, not two. Do not re-add an
+ * identifier element unless a genuine GTIN/MPN exists, in which case identifier_exists must go.
+ */
 function buildItem(commerce: ProductCommerce, product: Product, images: string[]): string {
   const [primaryImage, ...additionalImages] = images;
 
@@ -504,7 +501,6 @@ function buildItem(commerce: ProductCommerce, product: Product, images: string[]
 ${additional ? `${additional}\n` : ""}      <g:availability>${commerce.inStock ? "in_stock" : "out_of_stock"}</g:availability>
       <g:price>${listPrice}</g:price>
 ${salePrice ? `      <g:sale_price>${salePrice}</g:sale_price>\n` : ""}      <g:brand>${xmlEscape(BRAND)}</g:brand>
-      <g:mpn>${xmlEscape(commerce.sku)}</g:mpn>
       <g:identifier_exists>no</g:identifier_exists>
       <g:condition>new</g:condition>
       <g:product_type>${xmlEscape(commerce.productType)}</g:product_type>
@@ -553,10 +549,12 @@ function generateFeed(): { xml: string; count: number } {
       continue;
     }
 
-    // GMC IMAGE POLICY — a product with no clean image is excluded outright (see FEED_IMAGE_POLICY).
-    const policy = FEED_IMAGE_POLICY[commerce.sku];
-    if (policy?.blockReason) {
-      console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: ${policy.blockReason}`);
+    // FEED POLICY — purchasable on-site does not mean advertisable. A SKU held back by
+    // merchantFeedPolicy.ts (no compliant image, not a Shopping product, city page, review
+    // pending, or submitted manually) is skipped with its reason logged.
+    const exclusion = feedExclusionFor(commerce.sku);
+    if (exclusion) {
+      console.warn(`[merchant-feed] EXCLUDE ${commerce.sku} [${exclusion.category}]: ${exclusion.reason}`);
       continue;
     }
 
@@ -579,8 +577,9 @@ function generateFeed(): { xml: string; count: number } {
     let images = galleryImagesFor(product);
     // Drop any individually non-compliant image (baked-in text/logo). A surviving clean image keeps
     // its gallery order, so the first clean one becomes the primary automatically.
-    if (policy?.drop?.length) {
-      images = images.filter((url) => !policy.drop!.some((frag) => url.includes(frag)));
+    const drops = feedImageDropsFor(commerce.sku);
+    if (drops.length > 0) {
+      images = images.filter((url) => !drops.some((frag) => url.includes(frag)));
     }
     if (images.length === 0) {
       console.warn(`[merchant-feed] EXCLUDE ${commerce.sku}: GMC image replacement required — no compliant image left after policy filtering`);
@@ -626,7 +625,11 @@ export const revalidate = 3600;
 
 export function GET(): Response {
   const { xml, count } = generateFeed();
-  console.log(`[merchant-feed] generated ${count} item(s)`);
+  const eligible = feedEligible().length;
+  const held = excludedSkus().length;
+  console.log(
+    `[merchant-feed] generated ${count} item(s) — ${eligible} purchasable SKU(s), ${held} held back by merchantFeedPolicy.ts`,
+  );
 
   return new Response(xml, {
     status: 200,
