@@ -679,7 +679,17 @@ export const products: Product[] = [
       "Full modular kitchen included",
       "Garden landscaping available",
     ],
-    images: ["/placeholder.svg"],
+    /* Owner-supplied render set (2026-08-19), replacing the placeholder. Exterior first: the
+     * FIRST entry is the LCP preload, the JSON-LD image, the OG image AND the Merchant feed's
+     * primary image, so it must show the whole building rather than a room. All five were checked
+     * by eye for baked-in text, logos and watermarks before being added. */
+    images: [
+      "/images/products/luxury-prefab-villa-g1-front-elevation.webp",
+      "/images/products/luxury-prefab-villa-g1-hillside-view.webp",
+      "/images/products/luxury-prefab-villa-g1-corner-pool.webp",
+      "/images/products/luxury-prefab-villa-g1-poolside-living.webp",
+      "/images/products/luxury-prefab-villa-g1-interior-living.webp",
+    ],
     price: 3600000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,
