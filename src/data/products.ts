@@ -665,7 +665,10 @@ export const products: Product[] = [
     description: "Our top-end offering — 3 bedrooms, 2 bathrooms, big living room, full kitchen. We use premium wood finishes, proper ceiling height so it doesn't feel cramped. Popular for farmhouses around Bangalore and resort projects in Coorg. Looks like a real home because it is one.",
     shortDescription: "Premium 3BHK villa with high-end finishes",
     specifications: [
-      { label: "Total Area", value: "1500 sq ft" },
+      // Owner-supplied overall size (2026-08-19). 60 x 25 = 1,500 sq ft, which matches the
+      // area figure this SKU was already priced against.
+      { label: "Overall Size", value: "60 ft x 25 ft" },
+      { label: "Total Area", value: "1,500 sq ft" },
       { label: "Bedrooms", value: "3" },
       { label: "Bathrooms", value: "2" },
       { label: "Living Room", value: "300 sq ft" },
@@ -679,7 +682,17 @@ export const products: Product[] = [
       "Full modular kitchen included",
       "Garden landscaping available",
     ],
-    images: ["/placeholder.svg"],
+    /* Owner-supplied render set (2026-08-19), replacing the placeholder. Exterior first: the
+     * FIRST entry is the LCP preload, the JSON-LD image, the OG image AND the Merchant feed's
+     * primary image, so it must show the whole building rather than a room. All five were checked
+     * by eye for baked-in text, logos and watermarks before being added. */
+    images: [
+      "/images/products/luxury-prefab-villa-g1-front-elevation.webp",
+      "/images/products/luxury-prefab-villa-g1-hillside-view.webp",
+      "/images/products/luxury-prefab-villa-g1-corner-pool.webp",
+      "/images/products/luxury-prefab-villa-g1-poolside-living.webp",
+      "/images/products/luxury-prefab-villa-g1-interior-living.webp",
+    ],
     price: 3600000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,
