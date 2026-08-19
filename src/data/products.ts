@@ -260,12 +260,16 @@ export const products: Product[] = [
     shortDescription:
       "Finished container marketing offices for project launches — branded, air-conditioned sales galleries delivered in weeks, not months, and relocatable to your next launch.",
     specifications: [
-      // Owner-supplied footprint of the as-listed ₹84,00,000 compound (2026-08-16).
-      { label: "Overall Size", value: "40 ft × 65 ft" },
-      { label: "20 ft single", value: "Plotted layouts — reception + 1 family at a time" },
-      { label: "40 ft single", value: "Single-tower or villa project — reception + 2–3 families" },
-      { label: "2–3 joined", value: "Full sales gallery with model area — walk-in weekend crowds" },
-      { label: "Stacked (double-storey)", value: "Gallery below, sales team & back office above" },
+      /* Owner-supplied footprint of the as-listed ₹84,00,000 compound (2026-08-16). The label reads
+       * "Priced Configuration", not "Overall Size", because these rows are submitted to Google as
+       * product highlights and details: beside four other layout rows, a bare size could be read as
+       * one option among several at the listed price. The four below are therefore labelled as
+       * general layout options — they are NOT included at ₹84,00,000. */
+      { label: "Priced Configuration", value: "40 ft × 65 ft" },
+      { label: "Other layout option — 20 ft single", value: "Plotted layouts — reception + 1 family at a time" },
+      { label: "Other layout option — 40 ft single", value: "Single-tower or villa project — reception + 2–3 families" },
+      { label: "Other layout option — 2–3 joined", value: "Full sales gallery with model area — walk-in weekend crowds" },
+      { label: "Other layout option — stacked (double-storey)", value: "Gallery below, sales team & back office above" },
       { label: "Cooling", value: "Insulated PUF/rockwool panels, canopy roof, split AC standard" },
       { label: "Interior", value: "False ceiling, recessed lighting, vitrified tile or laminate floor" },
       { label: "Branding", value: "Exterior painted or vinyl-wrapped to your project creative" },
