@@ -26,16 +26,15 @@
  * WebGL islands are lazier still so three.js only loads when those tabs are opened.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { AlertTriangle, Boxes, FileBarChart, Film, Layers, Loader2, Ruler, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { BoqResult } from "@/lib/boq/types";
 import type { LabourColonyResult } from "@/lib/quotation/labourColony";
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
-import { buildColonyModel } from "@/features/labour-colony-studio/model/colonyModel";
-import { parseSectionFromSpec, type SectionDims } from "@/features/labour-colony-studio/model/sectionDims";
-import type { ColonyDrawingMeta, ColonyModel, ViewMode } from "@/features/labour-colony-studio/model/types";
+import { useColonyStudioModel } from "@/features/labour-colony-studio/model/useColonyStudioModel";
+import type { ColonyDrawingMeta, ViewMode } from "@/features/labour-colony-studio/model/types";
 import type { ColonyPalette } from "@/features/labour-colony-studio/model/palette";
 import { ComponentInspector } from "@/features/labour-colony-studio/inspector/ComponentInspector";
 import { EngineeringSheets } from "@/features/labour-colony-studio/drawing/EngineeringSheets";
@@ -77,108 +76,10 @@ type StudioTab = "2d" | "3d" | "reports" | "video";
 export function ColonyDrawingStudio({
   result, civil = null, boqResult = null, projectName, clientName, location,
 }: ColonyDrawingStudioProps) {
-  /* ---- LIVE SECTION RESOLVER — the real cross-section each member is PRICED with ------------- */
-  const sectionByLine = useMemo(() => {
-    const map = new Map<string, SectionDims | null>();
-    for (const l of boqResult?.lines ?? []) {
-      if (l.cutLengthM != null) map.set(l.id, parseSectionFromSpec(l.spec));
-    }
-    return map;
-  }, [boqResult]);
-  const resolveSection = useCallback((id: string) => sectionByLine.get(id) ?? null, [sectionByLine]);
-
-  /* ---- LIVE QUANTITY RESOLVER — the PRICED piece count (incl. manual override / lock) --------- */
-  const qtyByLine = useMemo(() => {
-    const map = new Map<string, number>();
-    for (const l of boqResult?.lines ?? []) {
-      if (l.cutLengthM != null && l.pieces != null) map.set(l.id, l.pieces);
-    }
-    return map;
-  }, [boqResult]);
-  const resolveQty = useCallback((id: string) => qtyByLine.get(id) ?? null, [qtyByLine]);
-
-  /* ---- geometry signature: sections + piece counts, but NEVER rates ------------------------- */
-  const sectionSig = useMemo(
-    () => (boqResult?.lines ?? []).filter((l) => l.cutLengthM != null).map((l) => `${l.id}=${l.materialKey}`).join(","),
-    [boqResult],
-  );
-  const qtySig = useMemo(
-    () => (boqResult?.lines ?? []).filter((l) => l.cutLengthM != null).map((l) => `${l.id}=${l.pieces}`).join(","),
-    [boqResult],
-  );
-  /** The civil substructure geometry that positions the foundation + the column grid. */
-  const civilSig = useMemo(() => {
-    const f = civil?.foundation;
-    if (!f) return "none";
-    return JSON.stringify({
-      xs: f.grid?.xsM, ys: f.grid?.ysM,
-      sec: f.section,
-      ft: (f.footingTypes ?? []).map((t) => `${t.mark}:${t.sideM}:${t.depthM}:${t.count}`),
-    });
-  }, [civil]);
-  const configSig = useMemo(() => JSON.stringify(result.config), [result.config]);
-
-  /* ---- STALENESS GUARD — the priced BOQ can silently belong to a PREVIOUS colony -------------
-   * `boqResult` is produced by ColonyBoqPanel, which lives inside the Material BOQ tab, and tab
-   * content is UNMOUNTED while that tab is closed. So editing capacity or room size on the
-   * Structure tab and coming straight here leaves `boqResult` pinned to the old colony while the
-   * geometry below has already moved on — the resolvers would then paint the previous colony's
-   * sections and piece counts onto the new grid and present them as priced fact.
-   *
-   * Two independent checks, because neither alone is sufficient:
-   *   1. configSig vs. accepted — a ref records the configSig that was in force when each NEW
-   *      `boqResult` identity arrived. A configSig change with an unchanged boqResult identity is
-   *      exactly the "config edited, never re-priced" signature. This catches EVERY config edit,
-   *      including room dimensions, which TakeoffMeta cannot express without re-deriving the
-   *      take-off's own internals (lengthM/widthM are computed from external wall runs, not read
-   *      off `result`).
-   *   2. TakeoffMeta vs. result — covers the FIRST render, where a boqResult already present on
-   *      mount is accepted at face value by (1) because there is no earlier configSig to compare
-   *      it against. Only meta fields the take-off reads STRAIGHT off `result` are compared, so
-   *      this recomputes nothing.
-   * When stale we withhold the resolvers entirely rather than mix two colonies — buildColonyModel
-   * then falls back to its own take-off, which is always self-consistent — and we say so plainly. */
-  const acceptedBoq = useRef<BoqResult | null>(null);
-  const acceptedConfigSig = useRef<string | null>(null);
-  if (acceptedBoq.current !== boqResult) {
-    // Render-phase derived state: a new boqResult identity means ColonyBoqPanel has just re-priced,
-    // so the config in force right now is the config it was priced against.
-    acceptedBoq.current = boqResult;
-    acceptedConfigSig.current = boqResult ? configSig : null;
-  }
-  const boqMetaMismatch = useMemo(() => {
-    const m = boqResult?.meta;
-    if (!m) return false;
-    return (
-      m.source !== "colony"
-      || m.rooms !== result.occupancy.rooms
-      || m.modules !== result.structural.modules
-      || m.floors !== Math.max(1, result.config.floors)
-    );
-  }, [boqResult, result.occupancy.rooms, result.structural.modules, result.config.floors]);
-  const boqStale = boqResult != null && (acceptedConfigSig.current !== configSig || boqMetaMismatch);
-
-  /* `boqStale` joins the key so that clearing staleness rebuilds even when the fresh BOQ happens to
-   * land on identical sections and piece counts — otherwise the cached take-off fallback would be
-   * served while the banner claims the priced BOQ is linked. */
-  const geomKey = useMemo(
-    () => [configSig, civilSig, sectionSig, qtySig, boqStale ? "stale" : "priced"].join("|"),
-    [configSig, civilSig, sectionSig, qtySig, boqStale],
-  );
-
-  /* ---- build the model once per geometry change (a rate change reuses the cached model) ------ */
-  const modelCache = useRef<{ key: string; model: ColonyModel } | null>(null);
-  const model = useMemo(() => {
-    if (modelCache.current && modelCache.current.key === geomKey) return modelCache.current.model;
-    // Stale BOQ ⇒ no resolvers, so the model derives sections and counts from its own take-off of
-    // the CURRENT result instead of half-adopting the previous colony's priced values.
-    const built = buildColonyModel(
-      { result, civil, columnGrid: null },
-      boqStale ? {} : { resolveSection, resolveQty },
-    );
-    modelCache.current = { key: geomKey, model: built };
-    return built;
-  }, [geomKey, result, civil, resolveSection, resolveQty, boqStale]);
+  /* ---- the shared structural model + its priced-BOQ staleness guard -------------------------
+   * ONE implementation, in `useColonyStudioModel`, shared with the Reference Drawing tab — see the
+   * hook for the geometry-vs-price caching rules and the two staleness checks. */
+  const { model, boqStale } = useColonyStudioModel({ result, civil, boqResult });
 
   /* ---- studio state ------------------------------------------------------------------------- */
   const [viewMode, setViewMode] = useState<ViewMode>("engineering");
