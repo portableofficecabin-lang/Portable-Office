@@ -679,7 +679,13 @@ export const products: Product[] = [
       // are still outstanding.
       { label: "External Wall", value: "ACP cladding" },
       { label: "Internal Finish", value: "WPC / PVC" },
-      { label: "Insulation", value: "Glasswool" },
+      // Frame + roof build-up supplied by the owner 2026-08-19 as SHEET / SECTION THICKNESSES.
+      // The frame MATERIAL (MS / GI) was not stated and is not assumed here.
+      { label: "Structural Frame", value: "4 mm base frame, 2 mm top framing, 1.2 mm exterior framing" },
+      { label: "Roof Structure", value: "1.2 mm" },
+      { label: "Ceiling Finish", value: "MDF" },
+      { label: "Insulation", value: "Glasswool 25 mm" },
+      { label: "Roof Insulation", value: "Glasswool" },
       { label: "Flooring", value: "Tiles" },
     ],
     features: [
