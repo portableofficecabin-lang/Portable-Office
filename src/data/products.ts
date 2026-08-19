@@ -665,7 +665,10 @@ export const products: Product[] = [
     description: "Our top-end offering — 3 bedrooms, 2 bathrooms, big living room, full kitchen. We use premium wood finishes, proper ceiling height so it doesn't feel cramped. Popular for farmhouses around Bangalore and resort projects in Coorg. Looks like a real home because it is one.",
     shortDescription: "Premium 3BHK villa with high-end finishes",
     specifications: [
-      { label: "Total Area", value: "1500 sq ft" },
+      // Owner-supplied overall size (2026-08-19). 60 x 25 = 1,500 sq ft, which matches the
+      // area figure this SKU was already priced against.
+      { label: "Overall Size", value: "60 ft x 25 ft" },
+      { label: "Total Area", value: "1,500 sq ft" },
       { label: "Bedrooms", value: "3" },
       { label: "Bathrooms", value: "2" },
       { label: "Living Room", value: "300 sq ft" },
