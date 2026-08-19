@@ -21,6 +21,15 @@ export interface Product {
    *  JSON-LD) instead of the name-derived slug. Use it to give a product a short,
    *  keyword-rich URL; 301 the old name-derived slug to it in next.config.ts. */
   slug?: string;
+  /** PRODUCT CHILD PAGE: the slug of this product's PARENT product. When set, the
+   *  canonical URL nests under the parent — /products/<parentSlug>/<slug> — served by
+   *  the [slug]/[child] route (which unions these combos into its static params), while
+   *  the flat /products/<slug> URL 308-redirects there. getProductDetailPath() is the
+   *  single place that branches on this, so cards, sitemap, JSON-LD, breadcrumbs and
+   *  the Merchant feed <g:link> all agree automatically. Unlike registry child pages
+   *  (productChildPages.ts — informational, price-free), a product child is a full
+   *  product: own SKU, commerce row, price box and cart CTAs. */
+  parentSlug?: string;
   description: string;
   shortDescription: string;
   specifications: {
@@ -76,7 +85,8 @@ export const categories: Category[] = [
     slug: "container-offices",
     description: "Modern workspaces that don't look like containers from inside",
     icon: "layout",
-    productCount: 6,
+    // 5 since Marketing Office (43) and Prefab Marketing Office (44) moved to Prefab Building.
+    productCount: 5,
   },
   {
     id: "4",
@@ -115,6 +125,18 @@ export const categories: Category[] = [
     name: "G+1 Workmen Accommodation",
     slug: "g1-workmen-accommodation",
     description: "Double-storey modular accommodation blocks for large workforce housing",
+    icon: "building2",
+    productCount: 2,
+  },
+  {
+    // Sits here, after the populated categories, rather than at the end of the array: the
+    // homepage grid renders in ARRAY order, and the seven ids below are still placeholders
+    // with no products. The id is 16 because ids 9-15 are already taken — array position and
+    // id are independent, nothing keys off the numbering.
+    id: "16",
+    name: "Prefab Building",
+    slug: "prefab-building",
+    description: "Panel-built structures raised on site in weeks — sales galleries, offices and multi-storey blocks",
     icon: "building2",
     productCount: 2,
   },
@@ -214,6 +236,136 @@ export const products: Product[] = [
     price: 285000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,
+    inStock: true,
+  },
+  {
+    // Catalog position 2 (owner request 2026-08-16: the new page "not showing under product
+    // section") — /products paginates 12/page in ARRAY order, so the tail of this file is the
+    // LAST page. Slot 2 puts the card on page 1 while the Executive Portable Cabin keeps the
+    // stable first-card LCP preload. Array order also leads the Prefab Building category.
+    //
+    // Category (owner request 2026-08-16): this is a panel-built prefab structure, not a
+    // container conversion — its own product child is described as "prefab building system,
+    // not a container" — so it sits under Prefab Building, not Container Offices. Commerce
+    // identity is untouched: id 43 / POC-MO-CNTR still key getCommerce(), pricing and the
+    // feed, and <g:product_type> is read off the commerce record, not categorySlug.
+    id: "43",
+    sku: "POC-MO-CNTR",
+    name: "Marketing Office",
+    slug: "marketing-office",
+    category: "Prefab Building",
+    categorySlug: "prefab-building",
+    description:
+      "Marketing office containers that sell before the project does. We build marketing offices out of container modules and deliver them finished — insulated, air-conditioned, tile-floored, lit properly, and wrapped in your project branding inside and out. It arrives on a trailer, gets set down in a morning, and your sales team is closing in it the same week your hoarding goes up. Single-module sales offices, joined sales galleries, and double-storey gallery-plus-office configurations; when the project sells out, the office lifts onto a trailer and launches your next one.",
+    shortDescription:
+      "Finished container marketing offices for project launches — branded, air-conditioned sales galleries delivered in weeks, not months, and relocatable to your next launch.",
+    specifications: [
+      /* Owner-supplied footprint of the as-listed ₹84,00,000 compound (2026-08-16). The label reads
+       * "Priced Configuration", not "Overall Size", because these rows are submitted to Google as
+       * product highlights and details: beside four other layout rows, a bare size could be read as
+       * one option among several at the listed price. The four below are therefore labelled as
+       * general layout options — they are NOT included at ₹84,00,000. */
+      { label: "Priced Configuration", value: "40 ft × 65 ft" },
+      { label: "Other layout option — 20 ft single", value: "Plotted layouts — reception + 1 family at a time" },
+      { label: "Other layout option — 40 ft single", value: "Single-tower or villa project — reception + 2–3 families" },
+      { label: "Other layout option — 2–3 joined", value: "Full sales gallery with model area — walk-in weekend crowds" },
+      { label: "Other layout option — stacked (double-storey)", value: "Gallery below, sales team & back office above" },
+      { label: "Cooling", value: "Insulated PUF/rockwool panels, canopy roof, split AC standard" },
+      { label: "Interior", value: "False ceiling, recessed lighting, vitrified tile or laminate floor" },
+      { label: "Branding", value: "Exterior painted or vinyl-wrapped to your project creative" },
+      { label: "Glass Front", value: "Optional full-height glazing on the entry face" },
+      { label: "Electrical", value: "Concealed wiring, display/screen points, LED + floodlights" },
+      { label: "Add-ons", value: "Washroom, pantry, deck/pergola, security cabin, CCTV & networking" },
+    ],
+    features: [
+      "Fabricated off-site and delivered finished — stock units in days, custom builds in 2–4 weeks",
+      "Insulated panels, canopy roof and split AC as standard — cool the moment buyers enter",
+      "Finished like an interior: false ceiling, tiled floor, glass manager cabin, display walls",
+      "Exterior painted or vinyl-wrapped in your project branding, end to end",
+      "Optional full-height glass front that reads as a modern sales pavilion",
+      "Layouts to match how you sell: single module, joined gallery, or double-storey",
+      "Washroom, pantry, covered deck, matched security cabin and CRM wiring add-ons",
+      "Relocatable — re-wrap in the next project's branding and launch again",
+    ],
+    // Hero = the branded three-quarter exterior; interiors and layout shots follow; the
+    // double-storey and gallery-hall images match the layout sections of the content page.
+    images: [
+      "/images/products/marketing-office-main.webp",
+      "/images/products/marketing-office-front-branded.webp",
+      "/images/products/marketing-office-double-storey.webp",
+      "/images/products/marketing-office-elevation.webp",
+      "/images/products/marketing-office-interior.webp",
+      "/images/products/marketing-office-gallery-hall.webp",
+      "/images/products/marketing-office-lounge-view.webp",
+      "/images/products/marketing-office-mezzanine.webp",
+    ],
+    // ₹84,00,000 incl. 18% GST — owner-supplied FINAL customer price (2026-08-16). This legacy
+    // field mirrors the commerce base (sellPrice(7118644) = exactly ₹84,00,000); every customer
+    // surface renders from productCommerce.ts, never from here.
+    price: 7118644,
+    priceLabel: "+ 18% GST — Total ₹84,00,000",
+    featured: false,
+    inStock: true,
+  },
+  {
+    // PRODUCT CHILD of Marketing Office (owner request 2026-08-16): full product page at
+    // /products/marketing-office/prefab-marketing-office (parentSlug drives the nested
+    // canonical). Sits directly after its parent so the two cards appear together.
+    // Category follows its parent into Prefab Building (2026-08-16). This one is the clearest
+    // case in the catalogue: its own description opens "isn't a box that arrives on a trailer —
+    // it's a building system". Leaving the child under Container Offices while the parent moved
+    // would have split a parent/child pair across two categories.
+    id: "44",
+    sku: "POC-PMO-165",
+    name: "Prefab Marketing Office",
+    slug: "prefab-marketing-office",
+    parentSlug: "marketing-office",
+    category: "Prefab Building",
+    categorySlug: "prefab-building",
+    description:
+      "A sales gallery built to your plan, up in days. A prefab marketing office isn't a box that arrives on a trailer — it's a building system: insulated wall panels, a steel truss roof, doors, windows and flooring, all fabricated in our workshop and assembled on your site in a matter of days. Any footprint, any layout, one large open hall or a warren of cabins — the plan is yours, we build to it. Clear-span width for the scale model and Saturday footfall, ceiling height a container can't give, and access by hand to sites a trailer can't reach. When the project sells out, the same panels unbolt, load onto a truck, and stand up again at your next launch.",
+    shortDescription:
+      "Prefab sales galleries built to your floor plan — clear-span halls, steel truss roof, insulated panels, assembled on site in days and relocatable to your next launch.",
+    specifications: [
+      // Owner-supplied footprint of the as-listed ₹1,16,00,000 build (2026-08-16).
+      { label: "Overall Size", value: "165 ft × 58 ft" },
+      { label: "Single hall", value: "~20 × 20 ft up — plotted layouts, early-stage launch presence" },
+      { label: "Hall + cabins", value: "~20 × 40 ft up — apartment launches: gallery, closing rooms, pantry" },
+      { label: "Full sales gallery", value: "~30 × 60 ft up — townships and villa projects with weekend crowds" },
+      { label: "Custom plan", value: "To your drawing — anything the architect has already imagined" },
+      { label: "Structure", value: "Steel frame and truss roof, anti-corrosive primer, industrial paint" },
+      { label: "Walls & Roof", value: "PUF or rockwool insulated sandwich panels" },
+      { label: "Roof Overhangs", value: "All sides, with verandah depth on the entry face if you want it" },
+      { label: "Flooring", value: "Tile, vinyl or laminate" },
+      { label: "Windows", value: "Powder-coated aluminium with grills and mesh, placed to your plan" },
+      { label: "Electrical", value: "Concealed wiring, MCB board, LED lighting, screen & display points" },
+      { label: "Assembly", value: "Single hall 3–5 working days; multi-room gallery about 7–10 days" },
+    ],
+    features: [
+      "Clear-span open halls — 20, 30, 40 ft across without walls forced by a module",
+      "Built to your floor plan: reception, model gallery, closing cabins, pantry, washrooms",
+      "Panels come off a truck by hand — reaches sites a trailer and crane can't",
+      "Truss-roof height and wall-to-wall windows that read as a pavilion, not a cabin",
+      "Insulated walls and roof, wide shading overhangs, AC sized to the hall volume",
+      "External floodlights along the roof line for evening walk-ins",
+      "Exterior paint or vinyl wrap in your project's creative, end to end",
+      "Unbolts, travels, stands up again — one structure across four or five launches",
+    ],
+    // Hero = the entrance-frontage exterior; the wide-overhang roofline and screened upper
+    // floor follow; the two double-height interiors (hall + entry) close the gallery.
+    images: [
+      "/images/products/prefab-marketing-office-main.webp",
+      "/images/products/prefab-marketing-office-roof-overhangs.webp",
+      "/images/products/prefab-marketing-office-exterior-screen.webp",
+      "/images/products/prefab-marketing-office-hall-interior.webp",
+      "/images/products/prefab-marketing-office-entry-interior.webp",
+    ],
+    // ₹1,16,00,000 incl. 18% GST — owner-supplied FINAL customer price (2026-08-16). This
+    // legacy field mirrors the commerce base (sellPrice(9830508.47) = exactly ₹1,16,00,000);
+    // every customer surface renders from productCommerce.ts, never from here.
+    price: 9830508.47,
+    priceLabel: "+ 18% GST — Total ₹1,16,00,000",
+    featured: false,
     inStock: true,
   },
   {
@@ -1677,6 +1829,19 @@ export const products: Product[] = [
   },
 ];
 
+/**
+ * `productCount` is DERIVED here, never hand-maintained.
+ *
+ * It used to be typed by hand in each category literal and had drifted on six of them at once
+ * (portable-cabins 9 vs 10, site-office 8 vs 5, prefab-homes 7 vs 2, toilet 4 vs 1, security
+ * 5 vs 2, cargo 5 vs 14) — the homepage was advertising counts the catalogue did not have.
+ * Computing it from the single source of truth means adding, moving or removing a product can
+ * never leave a stale number behind. The literals above are now only a starting value.
+ */
+for (const c of categories) {
+  c.productCount = products.filter((p) => p.categorySlug === c.slug).length;
+}
+
 export const getProductsByCategory = (categorySlug: string): Product[] => {
   return products.filter((p) => p.categorySlug === categorySlug);
 };
@@ -1701,6 +1866,9 @@ export const getProductDetailPath = (product: Product): string => {
   // Clean URL (no `.html`) — this is the single canonical product URL form used by
   // internal links, the sitemap and JSON-LD, matching the `rel=canonical` tag.
   // Legacy `.html` URLs 301-redirect here (see next.config.ts redirects).
+  // A product child (parentSlug set) canonically nests under its parent; the flat
+  // slug URL redirects there (app/(site)/products/[slug]/page.tsx).
+  if (product.parentSlug) return `/products/${product.parentSlug}/${getProductSlug(product)}`;
   return `/products/${getProductSlug(product)}`;
 };
 

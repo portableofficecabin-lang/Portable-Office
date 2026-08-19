@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { allChildParams } from "@/data/productChildPages";
 import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
-import { products, getProductSlug, categories } from "@/data/products";
+import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
 
 const SITE_URL = "https://portableofficecabin.com";
@@ -106,11 +106,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  // Clean canonical product URL via getProductSlug → honours the `slug` override,
-  // so flipped products emit ONLY their short slug (the 301 target), never the
-  // legacy long slug that now redirects.
+  // Clean canonical product URL via getProductDetailPath → honours the `slug` override
+  // (flipped products emit ONLY their short slug, never the legacy long slug that now
+  // redirects) AND the `parentSlug` nesting (product children emit ONLY the nested
+  // /products/<parent>/<child> canonical, never the flat slug that 308-redirects there).
   const productPages: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${SITE_URL}/products/${getProductSlug(product)}`,
+    url: `${SITE_URL}${getProductDetailPath(product)}`,
     lastModified: LAST_MOD,
     changeFrequency: "weekly",
     priority: 0.8,

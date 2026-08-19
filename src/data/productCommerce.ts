@@ -37,6 +37,20 @@
  */
 export type ProductKind = "product" | "custom" | "rental" | "service" | "guide" | "location";
 
+/**
+ * What the money on a SKU MEANS — orthogonal to `kind`.
+ *
+ * `kind` answers "can this be bought online" (a rental booking can, so the rental SKU carries
+ * kind:"product"). It does NOT answer "is this figure the price of owning the unit". Without
+ * that distinction a monthly rent passes every isPurchasable() filter and lands in price
+ * tables, category price bands and schema.org Offers beside outright-sale units.
+ *
+ *  · "outright"       — the price of buying and keeping the unit. The default when absent.
+ *  · "monthly-rental" — RECURRING rent. Never a Shopping offer, never in a sale-price table,
+ *                       and never shown unqualified next to purchase prices.
+ */
+export type PriceBasis = "outright" | "monthly-rental";
+
 export interface KeySpec {
   label: string;
   value: string;
@@ -84,6 +98,12 @@ export interface ProductCommerce {
   // ── CLASSIFICATION ────────────────────────────────────────────────────────────────
   kind: ProductKind;
   inStock: boolean;
+  /**
+   * What basePrice MEANS. Omit for a normal outright sale (the default).
+   * Set "monthly-rental" and the SKU is excluded from feedEligible(), from every sale-price
+   * table and from the JSON-LD Offer block, while staying bookable on-site.
+   */
+  priceBasis?: PriceBasis;
 
   // ── PRESENTATION / SEO ────────────────────────────────────────────────────────────
   /** Short, clean product name for the on-page <h1>. Never keyword-stuffed. */
@@ -463,6 +483,10 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
   // ═════════ RENTAL — bookable online since Aug 2026 (owner decision); never a Shopping offer ═════════
   {
     id: "18", sku: "POC-SC-RENT", basePrice: 14000, priceConfirmed: true, kind: "product", inStock: true,
+    // basePrice is RECURRING MONTHLY RENT, not a purchase price. This flag is what keeps it out
+    // of feedEligible(), sale-price tables and the JSON-LD Offer block — it must not rely on a
+    // whitelist entry someone could remove.
+    priceBasis: "monthly-rental",
     h1Title: "Shipping Container Rental",
     feedTitle: "Shipping Container Rental 20ft & 40ft for Storage & Site Use | Portable Office Cabin",
     size: "20ft / 40ft", material: "Corten Steel", bestFor: "Short-Term Storage",
@@ -501,6 +525,37 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     feedTitle: "Cargo Shipping Container Corten Steel ISO for Freight & Storage | Portable Office Cabin",
     size: "20 ft × 8 ft", material: "Corten Weathering Steel (2–4mm)", bestFor: "Freight & Storage",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
+  },
+  {
+    // Marketing Office — QUOTE-ONLY by design (2026-08-16). The page copy is explicitly
+    // ₹84,00,000 INCL. 18% GST is the owner-supplied FINAL customer price (2026-08-16 — owner
+    // chose "incl. GST" explicitly). basePrice 7118644 is derived: it is the whole-rupee base
+    // whose sellPrice() rounds to exactly ₹84,00,000, so card, page, cart, checkout, Razorpay
+    // and JSON-LD all land on the owner's figure. Never "correct" this base to a round number —
+    // the customer price is the spec, the base is derived. Purchasable on-site; kept OUT of the
+    // automated Merchant feed via FEED_IMAGE_POLICY until the per-SKU spec/image review passes.
+    // size = the 40 ft × 65 ft compound the listed price buys (owner-supplied, 2026-08-16) —
+    // NOT the generic size menu; the fixed price must name one exact configuration.
+    id: "43", sku: "POC-MO-CNTR", basePrice: 7118644, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Marketing Office",
+    feedTitle: "Marketing Office Container Sales Gallery for Project Launches | Portable Office Cabin",
+    size: "40 ft × 65 ft", material: "MS container modules, insulated PUF/rockwool panels", bestFor: "Project Sales Galleries & Launches",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Container Offices",
+  },
+  {
+    // PRODUCT CHILD of Marketing Office (id 43) — prefab building system, not a container.
+    // ₹1,16,00,000 INCL. 18% GST is the owner-supplied FINAL customer price (2026-08-16,
+    // "incl. GST" chosen explicitly). basePrice 9830508.47 is deliberately fractional: it is
+    // the ONLY value whose sellPrice() rounds to exactly ₹1,16,00,000 (no whole-rupee base
+    // lands there), and every customer surface derives from sellPrice(), so the fraction
+    // never leaks. Never "correct" the base — the customer price is the spec. size = the
+    // 165 ft × 58 ft build the listed price buys. Purchasable on-site; kept OUT of the
+    // automated Merchant feed via FEED_IMAGE_POLICY until the per-SKU spec/image review.
+    id: "44", sku: "POC-PMO-165", basePrice: 9830508.47, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Prefab Marketing Office",
+    feedTitle: "Prefab Marketing Office Sales Gallery Built to Plan | Portable Office Cabin",
+    size: "165 ft × 58 ft", material: "Steel truss-roof frame, insulated PUF/rockwool sandwich panels", bestFor: "Township & Large-Launch Sales Galleries",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Container Offices",
   },
   {
     // Container Site Office — base ₹6,20,000 + 18% GST = ₹7,31,600 total (owner-supplied, 2026-07-29).
@@ -583,17 +638,61 @@ export function getCommerce(productId: string): ProductCommerce | undefined {
 
 /**
  * Can a customer put this in the cart and pay for it right now?
- * The SINGLE predicate gating Add to Cart, the JSON-LD `offers` block, and feed inclusion —
- * so those three can never drift apart.
+ * Gates Add to Cart / Buy Now. TRUE for a rental booking too — the rental IS payable online.
+ *
+ * NOT the right predicate for anything that presents a price as the cost of OWNING the unit.
+ * Use isOutrightSale() for that (price tables, category price bands, ItemList/Offer schema,
+ * the Merchant feed). See PriceBasis on ProductCommerce.
  */
 export function isPurchasable(productId: string): boolean {
   const c = BY_ID.get(productId);
   return !!c && c.kind === "product" && c.priceConfirmed && c.inStock;
 }
 
-/** Everything that may be submitted to Google Merchant Center. */
+/** What the money on a SKU actually means. Absent = "outright". */
+export function priceBasisOf(productId: string): PriceBasis {
+  return BY_ID.get(productId)?.priceBasis ?? "outright";
+}
+
+/** True when the figure is RECURRING RENT, not the price of owning the unit. */
+export function isRentalPrice(productId: string): boolean {
+  return priceBasisOf(productId) === "monthly-rental";
+}
+
+/**
+ * Suffix that must follow ANY human-visible price for this SKU.
+ *
+ * A rental figure is not hidden — the unit is genuinely bookable — but it is never shown bare,
+ * because "₹16,520 incl. GST" beside outright-sale cards reads as the cost of owning it.
+ * Returns "" for a normal sale, so call sites can append unconditionally.
+ */
+export function priceUnitSuffix(productId: string): string {
+  return isRentalPrice(productId) ? " / month" : "";
+}
+
+/**
+ * Payable online AND the figure is the outright purchase price of the unit.
+ *
+ * This is the predicate for every surface that states or compares a SALE price: price tables,
+ * category price bands, ItemList/Offer structured data and the Merchant feed. A monthly rent
+ * shown beside outright-sale units — or emitted as a schema.org Offer, which is what Google
+ * reads into Shopping — misstates what the customer is buying.
+ */
+export function isOutrightSale(productId: string): boolean {
+  return isPurchasable(productId) && !isRentalPrice(productId);
+}
+
+/**
+ * Everything that may be submitted to Google Merchant Center.
+ *
+ * Rentals are excluded STRUCTURALLY, not by whitelist: a recurring rent can never be a
+ * Shopping offer, so this must not depend on someone remembering to block the SKU in
+ * FEED_IMAGE_POLICY. That block still exists as a second layer.
+ */
 export function feedEligible(): ProductCommerce[] {
-  return PRODUCT_COMMERCE.filter((c) => c.kind === "product" && c.priceConfirmed && c.inStock);
+  return PRODUCT_COMMERCE.filter(
+    (c) => c.kind === "product" && c.priceConfirmed && c.inStock && (c.priceBasis ?? "outright") === "outright",
+  );
 }
 
 /**

@@ -8,6 +8,7 @@ import {
   Building2, Download, Printer, Save, Trash2, Users, LayoutGrid, Layers,
   Zap, Droplets, Package, FileText, DoorOpen, Bath, BedDouble,
   Home, ShieldCheck, HardHat, Wind, FilePlus2, Copy, UserSearch, Sheet as SheetIcon, MapPin, Eye, Ruler, Boxes, Lock,
+  ClipboardList,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import StructuralBasisTab from "@/components/admin/labour-colony/StructuralBasisTab";
@@ -93,6 +94,23 @@ const ColonyDrawingStudio = dynamic(
     loading: () => (
       <div className="flex h-[420px] items-center justify-center rounded-xl border border-border bg-muted/30 text-sm text-muted-foreground">
         Loading engineering studio…
+      </div>
+    ),
+  },
+);
+
+/* The consultant-style REFERENCE issue: a General Arrangement sheet (plans, four elevations, the
+ * door/window/ventilator schedule, notes and a CAD title block) plus the complete bill of materials
+ * naming the exact model of every component. ADDITIVE: it reads the live result, the priced BOQs and
+ * the shared engineering model, and changes nothing. Split out of the main bundle because it builds
+ * the full structural model, which only matters once an admin actually opens the tab. */
+const ReferenceDrawingTab = dynamic(
+  () => import("@/features/labour-colony-studio/reference/ReferenceDrawingTab").then((m) => m.ReferenceDrawingTab),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[420px] items-center justify-center rounded-xl border border-border bg-muted/30 text-sm text-muted-foreground">
+        Loading reference drawing…
       </div>
     ),
   },
@@ -402,6 +420,7 @@ export default function LabourColonyQuotation() {
             <TabsTrigger value="puflock" className="gap-1.5"><Lock className="h-4 w-4" /> PUF Lock</TabsTrigger>
             <TabsTrigger value="material" className="gap-1.5"><Package className="h-4 w-4" /> Material BOQ</TabsTrigger>
             <TabsTrigger value="drawing" className="gap-1.5"><Ruler className="h-4 w-4" /> Construction Drawing</TabsTrigger>
+            <TabsTrigger value="reference" className="gap-1.5"><ClipboardList className="h-4 w-4" /> Reference Drawing</TabsTrigger>
             <TabsTrigger value="studio" className="gap-1.5"><Boxes className="h-4 w-4" /> Engineering Studio</TabsTrigger>
             <TabsTrigger value="reports" className="gap-1.5"><FileText className="h-4 w-4" /> Reports &amp; Saved</TabsTrigger>
           </TabsList>
@@ -887,6 +906,31 @@ export default function LabourColonyQuotation() {
             <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
               <Building2 className="h-10 w-10 mx-auto mb-3 opacity-40" />
               Complete the Structure tab (capacity + room size) and keep Civil Work enabled to generate the construction drawing.
+            </AdminCardContent></AdminCard>
+          )}
+        </TabsContent>
+
+        {/* ============ REFERENCE DRAWING (GA sheet + complete bill of materials) ============
+            The consultant-style issue: General Arrangement plans + four elevations + the door /
+            window / ventilator schedule + a CAD title block, and beneath it the bill of materials
+            naming the exact model of every component (PUF panel, rafter C purlin, MS pipe, bolts,
+            nuts, washers, plates, civil). Reads the priced BOQs and the shared model — it reports
+            the design, it never re-derives it. */}
+        <TabsContent value="reference" className="mt-6">
+          {result ? (
+            <ReferenceDrawingTab
+              result={result}
+              civil={civilResult}
+              boqResult={boqResult}
+              projectName={meta.projectName || config.projectName}
+              clientName={meta.customerName}
+              location={meta.location || config.location}
+            />
+          ) : (
+            <AdminCard><AdminCardContent className="py-16 text-center text-muted-foreground">
+              <ClipboardList className="h-10 w-10 mx-auto mb-3 opacity-40" />
+              Complete the Structure tab (capacity + room size) to generate the reference General
+              Arrangement drawing and its bill of materials.
             </AdminCardContent></AdminCard>
           )}
         </TabsContent>

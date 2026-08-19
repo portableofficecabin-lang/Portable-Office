@@ -49,10 +49,23 @@ export interface ProductChildPage {
 }
 
 export interface ProductChildGroup {
-  /** Parent URL segment, e.g. "portable-cabin" → /products/portable-cabin. */
+  /**
+   * Parent URL segment, e.g. "portable-cabin" → /products/portable-cabin.
+   *
+   * INVARIANT: a page MUST exist at /products/<parentSlug> — either a real catalogue product
+   * slug or a dedicated route under app/(site)/products/. The breadcrumb, the "View range" CTA,
+   * every sibling card AND the BreadcrumbList JSON-LD all point at it, so registering a group
+   * whose parent has no page ships a 404 inside structured data on a sitemap-submitted URL.
+   */
   parentSlug: string;
   parentName: string;
-  /** Category whose purchasable SKUs feed the live price table + related products. */
+  /**
+   * Overrides the parent LINK only (not the child URLs), for a group whose parent is not at
+   * /products/<parentSlug> — e.g. a category-nested parent at /products/category/<slug>.
+   * Defaults to `/products/${parentSlug}`. Exists so that decision stays a data change.
+   */
+  parentPath?: string;
+  /** Category whose OUTRIGHT-SALE SKUs feed the live price table + related products. */
   categorySlug: string;
   children: ProductChildPage[];
 }

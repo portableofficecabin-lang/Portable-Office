@@ -64,6 +64,8 @@ import { LabourColonyContent } from "@/components/products/LabourColonyContent";
 import { SiteOfficeContainerContent } from "@/components/products/SiteOfficeContainerContent";
 import { PortableCabinContent } from "@/components/products/PortableCabinContent";
 import { VipContainerOfficeContent } from "@/components/products/VipContainerOfficeContent";
+import { MarketingOfficeContent } from "@/components/products/MarketingOfficeContent";
+import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarketingOfficeContent";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -154,16 +156,25 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     description: productSEO.description,
     images: galleryImages,
     sku: product.sku,
-    slug: productSlug,
+    // The slug AS IT SITS UNDER /products/ (the schema helper composes `/products/${slug}`):
+    // nested "parent/child" for a product child, so url and offers.url equal the canonical
+    // page URL — a JSON-LD offer pointing at the flat redirecting URL would be a mismatch.
+    slug: getProductDetailPath(product).replace(/^\/products\//, ""),
     keywords: productSEO.keywords,
     category: product.category,
     reviews,
     ratingSummary: reviewSummary,
   });
+  // A product child's crumb trail includes its parent product between the category and
+  // itself — matching the nested URL (/products/<parent>/<child>) segment for segment.
+  const parentProduct = product.parentSlug ? getProductBySlug(product.parentSlug) : undefined;
   const breadcrumb = generateBreadcrumbSchema([
     { name: "Home", url: SITE },
     { name: "Products", url: `${SITE}/products` },
     { name: product.category, url: `${SITE}${categoryPath}` },
+    ...(parentProduct
+      ? [{ name: getCommerce(parentProduct.id)?.h1Title || parentProduct.name, url: `${SITE}${getProductDetailPath(parentProduct)}` }]
+      : []),
     { name: pageH1, url: productCanonicalUrl },
   ]);
 
@@ -525,7 +536,17 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}
           {cs === "container-offices" && slug === "vip-container-office" && <div className="mt-16"><VipContainerOfficeContent /></div>}
-          {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent offer={contentOffer} /></div>}
+          {/* SLUG-ONLY on purpose: the owner recategorises products in the admin DB (2026-08-16:
+              Marketing Office moved to the DB-driven "Prefab Building" category), and a cs guard
+              here silently dropped the whole owner-written narrative when categorySlug changed.
+              These copy blocks belong to the PRODUCT (its slug is its identity), not to whatever
+              category it is filed under this month. */}
+          {slug === "marketing-office" && <div className="mt-16"><MarketingOfficeContent /></div>}
+          {slug === "prefab-marketing-office" && <div className="mt-16"><PrefabMarketingOfficeContent /></div>}
+          {/* marketing-office + prefab-marketing-office carry their own full narrative above —
+              without them in this exclusion list the generic container copy rendered TWICE-over
+              beneath the owner's copy (live bug fixed 2026-08-16). */}
+          {isStaticProduct && cs === "container-offices" && !["container-office","ms-container-office-cabin","cabins-in-office","vip-container-office","marketing-office","prefab-marketing-office"].includes(slug) && <div className="mt-16"><ContainerOfficeContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "shipping-container-for-sale" && <div className="mt-16"><ShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "used-shipping-container-for-sale" && <div className="mt-16"><UsedShippingContainerForSaleContent offer={contentOffer} /></div>}
           {cs === "cargo-storage-shipping-containers" && slug === "cargo-container-for-sale" && <div className="mt-16"><CargoContainerForSaleContent offer={contentOffer} /></div>}
