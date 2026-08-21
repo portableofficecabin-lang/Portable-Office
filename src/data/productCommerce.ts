@@ -628,6 +628,24 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     size: "20ft / 40ft", material: "Corten Steel, Marine Plywood Floor", bestFor: "Storage & Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
+  {
+    /* CONSTRUCTION INDIVIDUAL BUILDING — a civil-construction SERVICE, deliberately not a product.
+     * kind:"service" and priceConfirmed:false make isPurchasable() false, which removes Add to Cart,
+     * removes the JSON-LD Offer price and keeps the SKU out of feedEligible() structurally rather
+     * than by a merchantFeedPolicy entry. That is correct and must stay: the job is priced PER SQ FT
+     * after a site visit, and a per-sq-ft rate is a price signal Google Shopping rejects outright.
+     * basePrice is 0 because there is no unit price to state — do not put a placeholder figure here. */
+    id: "45", sku: "POC-CIB-RCC", basePrice: 0, priceConfirmed: false, kind: "service", inStock: true,
+    h1Title: "Construction Individual Building",
+    feedTitle: "Construction Individual Building — RCC Individual House Construction | Portable Office Cabin",
+    size: "Built to your plot — G+1 to G+5",
+    material: "RCC frame with block masonry walls",
+    bestFor: "Owners building a permanent individual house on their own plot",
+    deliveryDays: "Programme agreed after the site visit",
+    googleProductCategory: "Hardware > Building Consumables",
+    productType: "Home Construction",
+    note: "Priced per sq ft of built-up area after a site visit; rate depends on the agreed specification.",
+  },
 ];
 
 const BY_ID = new Map(PRODUCT_COMMERCE.map((c) => [c.id, c]));

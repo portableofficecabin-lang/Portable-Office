@@ -122,10 +122,10 @@ export const megaMenuGroups: MegaMenuGroup[] = [
   },
   {
     // prefab-building leads this column: it is the only slug here with products in the
-    // catalogue, and it is the one genuine "building" offer — the other three are still
-    // placeholder categories awaiting products.
+    // catalogue. home-construction was added 2026-08-21 on owner request and, like the three
+    // below it, is still a placeholder category awaiting products.
     title: "Buildings & Fit-out",
-    slugs: ["prefab-building", "peb-building", "fabrication", "upvc-windows-doors", "modular-furniture"],
+    slugs: ["prefab-building", "home-construction", "peb-building", "fabrication", "upvc-windows-doors", "modular-furniture"],
   },
 ];
 

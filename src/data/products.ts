@@ -189,6 +189,17 @@ export const categories: Category[] = [
     productCount: 0,
   },
   {
+    // Added 2026-08-21 on owner request. Sits alongside Prefab Homes rather than replacing it:
+    // Prefab Homes lists the finished units we sell, this is the build-to-plan home-construction
+    // offer. Its first product is Construction Individual Building (id 45).
+    id: "17",
+    name: "Home Construction",
+    slug: "home-construction",
+    description: "Homes built to your plan — structure, roofing, interiors and finishing",
+    icon: "home",
+    productCount: 1,
+  },
+  {
     id: "15",
     name: "Modular Furniture",
     slug: "modular-furniture",
@@ -1850,6 +1861,48 @@ export const products: Product[] = [
     ],
     price: 620000,
     priceLabel: "+ 18% GST — Total ₹7,31,600",
+    featured: false,
+    inStock: true,
+  },
+  {
+    // CIVIL CONSTRUCTION SERVICE, not a manufactured unit — an RCC house cast on the customer's
+    // own plot. kind:"service" + priceConfirmed:false in productCommerce.ts keep it out of
+    // isPurchasable(), so no Add to Cart, no JSON-LD Offer price and no Merchant feed entry.
+    // Priced per sq ft after a site visit; the rate band is NOT published until the owner
+    // supplies it.
+    id: "45",
+    sku: "POC-CIB-RCC",
+    name: "Construction Individual Building",
+    category: "Home Construction",
+    categorySlug: "home-construction",
+    slug: "construction-individual-building",
+    description:
+      "Individual house construction on your own plot, built in reinforced cement concrete. One house, one plot, one owner — footings, columns, beams and slabs cast in place, with block masonry walls between them. Floor plans, room sizes, floor count and finishes are decided by you at design stage rather than handed to you. G+1 through G+5 frames, designed against your plot size, the setbacks your local authority requires and the soil below it.",
+    shortDescription:
+      "RCC individual house construction on your plot — design, structure and finishing",
+    specifications: [
+      { label: "Construction Type", value: "RCC frame — footings, columns, beams and slabs" },
+      { label: "Walls", value: "Block masonry between the frame" },
+      { label: "Floors", value: "G+1 to G+5, subject to local building rules" },
+      { label: "Built On", value: "Customer's own plot" },
+      { label: "Pricing Basis", value: "Per sq ft of built-up area, quoted after site visit" },
+      { label: "Scope Options", value: "Construction only, or design, drawings and approvals included" },
+    ],
+    features: [
+      "Designed around your plot, its setbacks and the road it faces",
+      "Structural drawings prepared before anything is cast",
+      "G+1 to G+5 frames — sized at design stage for the final height",
+      "Specification agreed in writing before work starts",
+      "Electrical and plumbing points set against your furniture layout",
+      "Handover with the drawings that describe what was actually built",
+    ],
+    images: [
+      "/images/products/construction-individual-building-front-elevation.webp",
+      "/images/products/construction-individual-building-street-view.webp",
+      "/images/products/construction-individual-building-side-elevation.webp",
+      "/images/products/construction-individual-building-entrance-hall.webp",
+      "/images/products/construction-individual-building-living-room.webp",
+    ],
     featured: false,
     inStock: true,
   },

@@ -66,6 +66,7 @@ import { PortableCabinContent } from "@/components/products/PortableCabinContent
 import { VipContainerOfficeContent } from "@/components/products/VipContainerOfficeContent";
 import { MarketingOfficeContent } from "@/components/products/MarketingOfficeContent";
 import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarketingOfficeContent";
+import { ConstructionIndividualBuildingContent } from "@/components/products/ConstructionIndividualBuildingContent";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -543,6 +544,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               category it is filed under this month. */}
           {slug === "marketing-office" && <div className="mt-16"><MarketingOfficeContent /></div>}
           {slug === "prefab-marketing-office" && <div className="mt-16"><PrefabMarketingOfficeContent /></div>}
+          {slug === "construction-individual-building" && <div className="mt-16"><ConstructionIndividualBuildingContent /></div>}
           {/* marketing-office + prefab-marketing-office carry their own full narrative above —
               without them in this exclusion list the generic container copy rendered TWICE-over
               beneath the owner's copy (live bug fixed 2026-08-16). */}

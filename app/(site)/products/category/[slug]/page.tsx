@@ -43,6 +43,18 @@ const CATEGORY_META: Record<string, { title: string; description: string; keywor
       + "portable office cabin, prefabricated portable cabin, MS portable cabin, "
       + "20ft portable cabin, 40ft portable cabin bunkhouse",
   },
+  /* Home Construction. Deliberately makes NO claim about price, timeline or scope beyond what the
+   * company demonstrably does elsewhere in the catalogue — the category has no products yet, so
+   * there is nothing to cite. Revisit this copy once SKUs are assigned. */
+  "home-construction": {
+    title: "Home Construction — Prefab Houses & Villas Built to Your Plan",
+    description:
+      "Homes built to your own plan by an ISO 9001 manufacturer — steel structure, insulated walls, "
+      + "roofing, interiors and finishing. Manufactured in Tamil Nadu and built on site across India.",
+    keywords:
+      "home construction, prefab house construction, villa construction, "
+      + "prefabricated home builder India, modular home construction, house building contractor",
+  },
   "prefab-building": {
     title: "Prefab Buildings — Panel-Built Structures, Made to Your Plan",
     description:

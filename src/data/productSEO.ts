@@ -12,6 +12,15 @@ interface ProductSEOData {
 }
 
 const productSEOMap: Record<string, ProductSEOData> = {
+  /* Construction Individual Building (id 45) — a civil-construction SERVICE. The generic fallback
+   * described it as a "quality portable structure", which is wrong in kind: nothing is delivered,
+   * it is cast on the customer's plot. No rate is stated because the owner prices per sq ft after
+   * a site visit and has not supplied the band. */
+  "45": {
+    title: "Construction Individual Building — RCC Individual House Construction | Portable Office Cabin",
+    description: "Individual house construction on your own plot — RCC frame, block masonry and full finishing. G+1 to G+5 designed to your plot, setbacks and soil. Priced per sq ft after a site visit.",
+    keywords: "construction individual building, individual house construction, civil construction contractor, modern house construction, G+1 house construction, G+2 house construction, G+3 house construction, G+4 house construction, G+5 house construction, 40x30 house construction, residential building construction, turnkey house construction, house construction cost",
+  },
   // Executive Portable Cabin 20ft
   "1": {
     title: "Executive Portable Cabin 20ft | Portable Office Cabin",
