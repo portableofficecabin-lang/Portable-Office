@@ -117,12 +117,19 @@ export const FEED_EXCLUSIONS: Readonly<Record<string, FeedExclusion>> = {
   "POC-CO-GEN": {
     category: "image-policy",
     reason:
-      "TWO issues. (1) Images are clean but not product-accurate — all five show a timber/composite-"
-      + "clad garden module, while the listing sells a 25ft x 14ft high-tensile MS steel container "
-      + "office for project sites. (2) The spec table offers a RANGE, not one configuration: "
-      + "'Sizes Available: 20ft x 8ft / 40ft x 8ft / Custom' and 'Floor Area: 160-320+ sq ft' "
-      + "alongside the 25ft x 14ft dimension the price is set against. Fix: a render of the actual "
-      + "MS steel unit, and one stated priced configuration.",
+      "ONE issue remaining (was two). RESOLVED 2026-08-21: the owner confirmed this SKU is the "
+      + "25 ft x 14 ft configuration, and it is now catalogued as that size of the Container Office "
+      + "Cabin family (src/data/productFamilies.ts). Its commerce record states 'Size: 25 ft x 14 ft' "
+      + "with no range and no unconfirmed height, so the old 'the spec table offers a RANGE' blocker "
+      + "is gone. STILL BLOCKING: the images are clean but not product-accurate — all five show a "
+      + "timber/composite-clad garden module, while the listing sells a high-tensile MS steel "
+      + "container office for project sites. Fix: supply a photograph or render of the actual MS "
+      + "steel unit and delete this entry. NOTE public/images/products/container-office-1..5.webp "
+      + "are owner-supplied, watermark-free steel container-office renders that look like the right "
+      + "subject — they are NOT wired in yet because it has not been confirmed which size (if any) "
+      + "they depict. Two catalogue rows in products.ts also still carry the old ranges "
+      + "('Sizes Available: 20ft x 8ft / 40ft x 8ft / Custom', 'Floor Area: 160-320+ sq ft') and "
+      + "one unconfirmed 'H 9 ft'; those are owner copy and need the owner's decision.",
   },
 
   /* POC-WA-G1 — HELD 2026-08-18 on the fixed-configuration audit, not on images (its render is

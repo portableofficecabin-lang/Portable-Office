@@ -21,6 +21,9 @@ import { getBestProductImage } from "@/data/productImages";
 import { getImageCaption } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
+import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
+import { ProductSizeSelector } from "@/components/products/ProductSizeSelector";
+import { generateProductGroupSchema, productGroupNodeId } from "@/lib/seo/productGroupSchema";
 import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 import { GST_PERCENT_LABEL, formatINR, gstAmount, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
@@ -148,7 +151,41 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
       ? Math.round(((compareAtPrice - sellingPrice) / compareAtPrice) * 100)
       : undefined;
 
+  /**
+   * ── PRODUCT FAMILY (this page is a size ladder's PARENT / overview page) ──────────────
+   *
+   * Set only when a published family in src/data/productFamilies.ts declares this slug as
+   * its parent. Three things follow, all purely additive:
+   *
+   *   1. A "Choose your size" panel of REAL crawlable links, server-rendered above the
+   *      price, so every standard size is discoverable in the first HTTP response.
+   *   2. A `ProductGroup` JSON-LD node beside the existing Product node — byte-identical
+   *      to the one every size page emits, so a crawler resolves the whole ladder to ONE
+   *      group.
+   *   3. If one of the family's sizes is served BY THIS PAGE (`rendersAtParent`), the
+   *      page's existing Product node gains `size` + `isVariantOf`. The Container Office
+   *      Cabin's 25 ft x 14 ft build is exactly that: a real, owner-priced size that has
+   *      lived here for a long time. Without this it would be the one PRICED size in the
+   *      ladder sitting OUTSIDE the group Google is shown. Its offers, aggregateRating and
+   *      reviews are untouched — this only adds the two variant properties.
+   */
+  const family = getFamilyBySlug(slug);
+  const parentRenderedVariant = family
+    ? publishedVariants(family).find((v) => v.rendersAtParent)
+    : undefined;
+  const sizeVariantOf =
+    family && parentRenderedVariant
+      ? {
+          size: parentRenderedVariant.sizeLabelPlain,
+          groupNodeId: productGroupNodeId(family),
+          productGroupID: family.productGroupId,
+          groupName: family.groupTitle,
+          groupUrl: `${SITE}/products/${family.slug}`,
+        }
+      : undefined;
+
   const structuredData = generateProductStructuredData({
+    ...(sizeVariantOf ? { sizeVariantOf } : {}),
     // `id` lets the schema helper read the same commerce catalog and apply the same
     // isPurchasable() gate — no price/availability is emitted for quote-only products.
     id: product.id,
@@ -178,6 +215,8 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
       : []),
     { name: pageH1, url: productCanonicalUrl },
   ]);
+
+  const productGroupSchema = family ? generateProductGroupSchema(family, galleryImages) : undefined;
 
   const cs = product.categorySlug;
 
@@ -232,7 +271,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           used by OptimizedImage's stage-2 fallback, i.e. when the optimizer has already
           failed — which is not a path worth preloading for. */}
       <Layout>
-        <JsonLd data={[structuredData, breadcrumb]} />
+        <JsonLd data={productGroupSchema ? [structuredData, breadcrumb, productGroupSchema] : [structuredData, breadcrumb]} />
 
       {/* Breadcrumb */}
       <section className="bg-muted/50 py-4 border-b border-border">
@@ -344,6 +383,20 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   </div>
                 </dl>
               </div>
+
+              {/* CHOOSE YOUR SIZE — only on a product family's parent page.
+                  Real <Link>s in the server HTML, so every standard size is crawlable
+                  without JavaScript and the URL alone decides which size is selected. */}
+              {family && (
+                <ProductSizeSelector
+                  family={family}
+                  /* This page IS the family's parent-rendered size, so that size shows as the
+                     selected one — a visitor on /products/container-office is looking at the
+                     25 ft x 14 ft build, not at "no size chosen". */
+                  selectedSizeSlug={parentRenderedVariant?.sizeSlug}
+                  className="mb-6"
+                />
+              )}
 
               {/* PRICE.
                   Purchasable → the ONE fixed, GST-inclusive figure the customer actually pays
