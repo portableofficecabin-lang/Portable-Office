@@ -218,7 +218,7 @@ const ZONE_POSTAL_RANGES: Map<string, PostalRange[]> = (() => {
  *
  * Installation is NOT folded in — it is a separate optional line item at checkout, not freight.
  */
-function shippingDetailsForAllZones() {
+export function shippingDetailsForAllZones() {
   return SHIPPING_ZONES.map((zone) => {
     const postalRanges = ZONE_POSTAL_RANGES.get(zone.id) ?? [];
     if (postalRanges.length === 0) return null;
@@ -270,7 +270,7 @@ function shippingDetailsForAllZones() {
  * MerchantReturnNotPermitted. Claiming a 30-day return here would look better in Shopping and
  * would itself be a misrepresentation — the site does not honour it.
  */
-const RETURN_POLICY = {
+export const RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
   applicableCountry: "IN",
   returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
@@ -316,6 +316,28 @@ export function generateProductStructuredData(product: {
    *  aggregateRating (so the count/average match the on-page trust strip exactly,
    *  even when more reviews exist than are embedded in `reviews` below). */
   ratingSummary?: { count: number; average: number };
+  /**
+   * OPTIONAL — set when this product is also ONE STANDARD SIZE of a product family whose
+   * other sizes have their own pages (src/data/productFamilies.ts).
+   *
+   * A family's size may already own a long-standing product page: the Container Office
+   * Cabin's 25 ft x 14 ft build has been live and priced at /products/container-office for
+   * a long time. It is a genuine size, so its Product node must say so — `size` plus an
+   * `isVariantOf` pointing at the SAME ProductGroup `@id` every sibling size page emits, so
+   * Google resolves the whole ladder to one group rather than to a group plus an orphan.
+   *
+   * Purely additive: omit it and this function behaves exactly as it always has, and the
+   * page keeps its own offers, aggregateRating and reviews either way.
+   */
+  sizeVariantOf?: {
+    /** The size, worded exactly as <g:size> submits it, e.g. "25 ft x 14 ft". */
+    size: string;
+    /** The ProductGroup node's stable @id — identical on every page of the group. */
+    groupNodeId: string;
+    productGroupID: string;
+    groupName: string;
+    groupUrl: string;
+  };
 }) {
   const productUrl = product.slug
     ? `${SITE_URL}/products/${product.slug}`
@@ -468,6 +490,20 @@ export function generateProductStructuredData(product: {
       name: BRAND,
       url: SITE_URL,
     },
+    /* This product is also one standard size of a family — state the size and bind the node
+     * to the family's ProductGroup by its stable @id. See `sizeVariantOf` above. */
+    ...(product.sizeVariantOf
+      ? {
+          size: product.sizeVariantOf.size,
+          isVariantOf: {
+            "@type": "ProductGroup",
+            "@id": product.sizeVariantOf.groupNodeId,
+            productGroupID: product.sizeVariantOf.productGroupID,
+            name: product.sizeVariantOf.groupName,
+            url: product.sizeVariantOf.groupUrl,
+          },
+        }
+      : {}),
     ...offerBlock,
     ...reviewBlock,
   };

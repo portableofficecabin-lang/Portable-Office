@@ -9,6 +9,9 @@ import labourColonyNew1 from "@/assets/products/labour-colony-new-1.webp";
 import labourColonyNew2 from "@/assets/products/labour-colony-new-2.webp";
 import labourColonyNew3 from "@/assets/products/labour-colony-new-3.webp";
 import labourColonyNew4 from "@/assets/products/labour-colony-new-4.webp";
+// Standard size variants. productFamilies.ts imports only TYPES from here, so there is no
+// runtime cycle — see the COMMERCE BRIDGE note in that file.
+import { getVariantById, variantAsProduct } from "@/data/productFamilies";
 
 export interface Product {
   id: string;
@@ -1929,9 +1932,39 @@ export const getFeaturedProducts = (): Product[] => {
   return products.filter((p) => p.featured);
 };
 
-export const getProductById = (id: string): Product | undefined => {
-  return products.find((p) => p.id === id);
+/**
+ * A STANDARD SIZE VARIANT, shaped as a `Product`.
+ *
+ * Size variants (src/data/productFamilies.ts) are not rows in the `products` array — that
+ * would put every size into the marketplace grid, the category counts and the related-
+ * product rails as if it were a separate product, which is precisely the duplication the
+ * family system exists to prevent. They are instead SYNTHESISED from their family's parent
+ * product, so a variant always inherits the family's real gallery, features and spec rows.
+ *
+ * Returns undefined for anything that is not a published variant of a published family.
+ */
+const buildVariantProduct = (id: string): Product | undefined => {
+  const hit = getVariantById(id);
+  if (!hit) return undefined;
+  const parent = products.find((p) => p.id === hit.family.parentProductId);
+  if (!parent) return undefined;
+  return variantAsProduct(hit, parent);
 };
+
+/**
+ * Resolve a product id.
+ *
+ * Falls back to the size-variant synthesiser so that a variant id coming out of the cart,
+ * the guest-cart localStorage line or the Razorpay order route resolves to a real product
+ * with the right name, SKU, image and nested canonical URL. Purely additive: an id that
+ * already matched a catalogue row behaves exactly as before.
+ */
+export const getProductById = (id: string): Product | undefined => {
+  return products.find((p) => p.id === id) ?? buildVariantProduct(id);
+};
+
+/** The `Product` view of a published size variant, or undefined. Used by the variant route. */
+export const getVariantProduct = (variantId: string): Product | undefined => buildVariantProduct(variantId);
 
 export const getProductSlug = (product: Product): string => {
   // An explicit `slug` override always wins — it is the product's single canonical URL.

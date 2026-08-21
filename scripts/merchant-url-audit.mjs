@@ -131,7 +131,24 @@ const smRes = await get(rebase("https://portableofficecabin.com/sitemap.xml"));
  * that stops matching would leave productUrls empty and the script would exit green having
  * checked only the feed. Assert the sweep's own preconditions. */
 ok(smRes.status === 200, `sitemap.xml status ${smRes.status} (want 200)`);
-const productUrls = [...smRes.body.matchAll(/<loc>([^<]*\/products\/[a-z0-9-]+)<\/loc>/g)]
+/* NESTED product URLs count too — the second segment is optional in this pattern.
+ *
+ * A product's canonical URL is not always one segment deep. TWO kinds of nested page live
+ * under /products/<parent>/<child> and both are real, indexable, feed-linkable pages:
+ *   • a PRODUCT CHILD  (e.g. /products/marketing-office/prefab-marketing-office)
+ *   • a SIZE VARIANT   (e.g. /products/container-office/20x10-ft)
+ * plus a third kind that is NOT a product — the price-free registry GUIDE pages
+ * (e.g. /products/portable-cabin/price-and-cost-guide).
+ *
+ * The old single-segment pattern matched only `/products/<parent>` out of a nested URL, so
+ * a nested canonical could never be found in `productUrls`. That produced a FALSE "feed URL
+ * missing from the sitemap" for every nested product — it was already failing for the
+ * marketing-office product child before any size variant existed. The sitemap is correct;
+ * the matcher was not.
+ *
+ * Guide pages are separated below by what they actually render, not by a slug pattern — see
+ * the sweep. */
+const productUrls = [...smRes.body.matchAll(/<loc>([^<]*\/products\/[a-z0-9-]+(?:\/[a-z0-9-]+)?)<\/loc>/g)]
   .map((m) => m[1])
   .filter((u) => !u.includes("/category/"));
 ok(productUrls.length > 0, "sitemap contains product URLs (regex/sitemap format drifted?)");
@@ -151,10 +168,23 @@ for (const url of nonFeed) {
    * pages carry the node WITHOUT offers). Their absence marks a soft-error shell, which byte
    * count alone might not catch. */
   ok(!!a.h1, `${tag}: missing h1 (soft-error shell?)`);
-  ok(a.hasProductSchema, `${tag}: missing Product JSON-LD (soft-error shell?)`);
-  ok(hasOffer === a.addToCart,
-    `${tag}: INCONSISTENT — offer schema ${hasOffer ? "present" : "absent"} but Add to Cart ${a.addToCart ? "present" : "absent"}`);
-  if (hasOffer) console.log(`  info ${tag}: purchasable but feed-excluded (price=${a.price}) — expected when merchantFeedPolicy.ts holds the SKU back`);
+
+  /* PRODUCT page vs registry GUIDE page — told apart by what the page renders, not by its
+   * slug, so no list has to be kept in sync here.
+   *
+   * A guide page (src/data/productChildPages.ts) is informational and PRICE-FREE BY RULE: no
+   * Product node, no offer, no Add to Cart. Asserting hasProductSchema on one would be a
+   * false failure — and asserting the opposite is the more useful check anyway, because a
+   * price or a cart button appearing on a guide page is a real defect (it would put a buyable
+   * surface on a URL the feed does not point at). */
+  if (a.hasProductSchema) {
+    ok(hasOffer === a.addToCart,
+      `${tag}: INCONSISTENT — offer schema ${hasOffer ? "present" : "absent"} but Add to Cart ${a.addToCart ? "present" : "absent"}`);
+    if (hasOffer) console.log(`  info ${tag}: purchasable but feed-excluded (price=${a.price}) — expected when merchantFeedPolicy.ts holds the SKU back`);
+  } else {
+    ok(!hasOffer, `${tag}: price-free guide page carries no offer`);
+    ok(!a.addToCart, `${tag}: price-free guide page carries no Add to Cart`);
+  }
 }
 
 console.log(`\n=== merchant-url-audit: ${pass} passed, ${fail} failed ===`);

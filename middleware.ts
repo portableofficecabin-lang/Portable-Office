@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { getFamilyBySlug, publishedVariants, variantPath } from "@/data/productFamilies";
 
 // Optional HTTP Basic Auth gate for the admin area. It is activated ONLY when
 // the ADMIN_BASIC_AUTH env var ("username:password") is set, so an unset value
@@ -64,10 +65,60 @@ function categoryQueryRedirect(request: NextRequest): NextResponse | null {
   return NextResponse.redirect(url, 301);
 }
 
+/**
+ * 301 the legacy query-size URL (/products/<slug>?size=20x10) to the canonical size PATH
+ * (/products/<slug>/20x10-ft), dropping the `size` parameter so the destination is the one
+ * clean URL form. Any OTHER query parameter is preserved — ad and analytics trackers
+ * (gclid, srsltid, utm_*) must survive the hop, and they do not affect canonicalisation
+ * because the destination page emits a parameter-free rel=canonical.
+ *
+ * Done in middleware, not in next.config redirects, for the same reason the ?category=
+ * rule is: a config redirect always forwards the original query string, so it would land
+ * on /products/<slug>/20x10-ft?size=20x10 — a brand-new non-canonical URL.
+ *
+ * Only fires for a size that actually exists. An unknown ?size= value falls through to the
+ * parent product page (a 200 with a size selector) rather than 301ing into a 404.
+ */
+function sizeQueryRedirect(request: NextRequest): NextResponse | null {
+  const { pathname, searchParams } = request.nextUrl;
+  const match = /^\/products\/([a-z0-9-]+)\/?$/.exec(pathname);
+  if (!match) return null;
+
+  const raw = searchParams.get("size");
+  if (!raw) return null;
+
+  const family = getFamilyBySlug(match[1]);
+  if (!family) return null;
+
+  /* Accept the shapes a legacy URL might use — "20x10", "20X10", "20x10-ft", "20 x 10" —
+   * and resolve them against the family's REAL published sizes. Nothing is constructed
+   * from the parameter itself, so a crafted ?size= can never mint a URL. */
+  const wanted = raw.trim().toLowerCase().replace(/\s+/g, "").replace(/[×*]/g, "x");
+  const variant = publishedVariants(family).find(
+    (v) => v.sizeSlug === wanted || v.sizeSlug === `${wanted}-ft` || `${v.lengthFt}x${v.widthFt}` === wanted,
+  );
+  if (!variant) return null;
+
+  const url = request.nextUrl.clone();
+  url.pathname = variantPath(family, variant);
+  url.searchParams.delete("size"); // tracking params stay; the size param is consumed
+  return NextResponse.redirect(url, 301);
+}
+
 export async function middleware(request: NextRequest) {
   // SEO: consolidate legacy ?category= URLs onto the canonical category path.
   const categoryRedirect = categoryQueryRedirect(request);
   if (categoryRedirect) return categoryRedirect;
+
+  // SEO: consolidate legacy ?size= URLs onto the canonical size path.
+  const sizeRedirect = sizeQueryRedirect(request);
+  if (sizeRedirect) return sizeRedirect;
+
+  /* A /products/<slug> request only reaches middleware when it carries ?size= (see the
+   * matcher below). If the size did not resolve, fall through WITHOUT instantiating the
+   * Supabase auth client — a product page must stay off the origin auth path so the CDN
+   * can serve cached HTML, exactly as plain /products does. */
+  if (request.nextUrl.pathname.startsWith("/products/")) return NextResponse.next();
 
   // Plain /products (no category query) must NOT instantiate the Supabase auth
   // client — keep public/SEO pages off the origin auth path so the CDN can serve
@@ -81,10 +132,18 @@ export async function middleware(request: NextRequest) {
 }
 
 // Middleware runs only for the admin area (Supabase getUser + role check + optional
-// basic-auth gate) and the exact `/products` path (for the ?category= 301 above).
-// Every other public/SEO page bypasses middleware entirely so static/ISR HTML can be
-// served from the edge without a Node origin round-trip; client auth still refreshes
-// via the browser Supabase client.
+// basic-auth gate), the exact `/products` path (for the ?category= 301 above), and a
+// product page that CARRIES ?size= (for the ?size= 301 above).
+//
+// The third entry is a matcher OBJECT with a `has` constraint on purpose: a bare
+// "/products/:slug" would put EVERY product-detail request through a Node middleware hop
+// and cost every one of them the edge cache, which is exactly what this matcher list was
+// trimmed down to avoid. With the constraint, a normal product page still bypasses
+// middleware entirely and only the legacy query form pays for the redirect.
 export const config = {
-  matcher: ["/admin/:path*", "/products"],
+  matcher: [
+    "/admin/:path*",
+    "/products",
+    { source: "/products/:slug", has: [{ type: "query", key: "size" }] },
+  ],
 };

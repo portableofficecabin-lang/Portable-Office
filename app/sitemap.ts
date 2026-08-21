@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { allChildParams } from "@/data/productChildPages";
+import { publishedFamilies, publishedVariants, variantPath } from "@/data/productFamilies";
 import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
@@ -35,6 +36,22 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   entry("/products/portable-toilet-cabin", 0.8, "weekly"),
   // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
   ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
+  /* STANDARD SIZE VARIANT pages — one per published size of every published product family
+   * (src/data/productFamilies.ts). Each is a distinct, self-canonical, indexable landing
+   * page, so every one must be listed here: a variant URL that is crawlable and canonical
+   * but absent from the sitemap is a variant Google discovers late or not at all. Priority
+   * sits just under the parent product (0.8) because the parent is the group overview.
+   * Unpublished sizes are excluded by publishedVariants() — the same gate that keeps them
+   * out of generateStaticParams, so a URL is never in the sitemap and 404ing at once.
+   *
+   * A size served at its family's PARENT url is deliberately SKIPPED here: its canonical is the
+   * parent product URL, which the product loop below already emits. Listing it again would put
+   * the same <loc> in the sitemap twice. */
+  ...publishedFamilies().flatMap((family) =>
+    publishedVariants(family)
+      .filter((variant) => !variant.rendersAtParent)
+      .map((variant) => entry(variantPath(family, variant), 0.75, "weekly")),
+  ),
   entry("/marketplace", 0.85, "weekly"),
   entry("/promotions", 0.85, "weekly"),
   entry("/rental-service", 0.8, "monthly"),

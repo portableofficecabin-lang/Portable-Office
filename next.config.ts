@@ -146,6 +146,27 @@ const nextConfig: NextConfig = {
       // Short, keyword-rich slugs are now the SINGLE canonical URL for these
       // products (set via the `slug` override in src/data/products.ts). 301 the
       // older name-derived slugs onto them so existing/indexed links consolidate.
+      // ── Size variants served at their family's PARENT page ────────────────
+      // A product family's size ladder normally gives each size its own URL
+      // (/products/<family>/<size>). One size per family may instead be served
+      // BY the family's parent page, because it was a product there long before
+      // the ladder existed — the Container Office Cabin's 25 ft x 14 ft build
+      // (POC-CO-GEN) is exactly that, and it carries `rendersAtParent` in
+      // src/data/productFamilies.ts.
+      //
+      // Its ladder-shaped URL is guessable, so it 301s to the page that really
+      // serves it: one canonical URL per size, no 404 on a reasonable guess, and
+      // no second copy of the parent page at a second address.
+      //
+      // WHY HERE AND NOT IN THE PAGE: a `permanentRedirect()` inside the
+      // [slug]/[child] route is swallowed during static prerendering — with
+      // dynamicParams:false Next prerenders the path and serves the not-found
+      // body at HTTP 200 (verified). A config redirect runs before routing, so
+      // it is a real 301 whether or not the path is prerendered.
+      //
+      // Kept in step with the family data by scripts/product-variants.test.ts,
+      // which fails if a `rendersAtParent` size has no rule here.
+      { source: "/products/container-office/25x14-ft", destination: "/products/container-office", statusCode: 301 },
       { source: "/products/ms-portable-cabins", destination: "/products/ms-portable-cabin", statusCode: 301 },
       { source: "/products/new-used-shipping-container-for-sale-in-india", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-container-buy-rent-or-convert", destination: "/products/cargo-container-for-sale", statusCode: 301 },
