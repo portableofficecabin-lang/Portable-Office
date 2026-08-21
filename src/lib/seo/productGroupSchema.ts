@@ -175,6 +175,13 @@ export function generateSizeVariantProductSchema(
 ) {
   const gallery = Array.from(new Set(images.filter(Boolean).map(absolute)));
   const offer = variantOffer(family, variant);
+  /* A size with no confirmed price yields no offer, and a Product node carrying neither an
+   * offer nor a rating is rejected outright by Google ("Either 'offers', 'review' or
+   * 'aggregateRating' should be specified"). Emit nothing rather than an invalid item: the
+   * page still carries its ProductGroup and BreadcrumbList, and this node returns the moment
+   * a commerce record exists for the variantId. Inventing a price to satisfy the validator is
+   * not an option. */
+  if (!offer) return null;
 
   return {
     "@context": "https://schema.org",

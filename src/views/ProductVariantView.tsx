@@ -143,7 +143,7 @@ export function ProductVariantView({
 
   return (
     <Layout>
-      <JsonLd data={[groupSchema, variantSchema, breadcrumb]} />
+      <JsonLd data={[groupSchema, variantSchema, breadcrumb].filter(Boolean)} />
 
       {/* Breadcrumb — Home › Products › Container Offices › Container Office › 20 ft x 10 ft */}
       <section className="bg-muted/50 py-4 border-b border-border">
