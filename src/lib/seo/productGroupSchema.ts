@@ -34,15 +34,15 @@ import {
   publishedVariants,
   variantDescription,
   variantHeightFt,
-  variantIsPurchasable,
+  variantIsSearchEligible,
   variantName,
   variantPath,
+  variantSchemaAvailability,
   type ProductFamily,
   type SizeVariant,
 } from "@/data/productFamilies";
 import { priceForFeed, sellPrice } from "@/lib/pricing/gst";
 import { RETURN_POLICY, shippingDetailsForAllZones, SITE_URL } from "@/lib/seo/structured-data";
-import { variantIsContentComplete } from "@/data/productFamilies";
 
 /** Absolute https URL. A crawler cannot resolve a root-relative image or link. */
 function absolute(url: string): string {
@@ -89,7 +89,11 @@ function oneYearFromNow(): string {
  * the schema, the cart and the feed cannot disagree either.
  */
 function variantOffer(family: ProductFamily, variant: SizeVariant) {
-  if (!variantIsPurchasable(family, variant)) return undefined;
+  /* Gated on SEARCH eligibility, not purchasability. Those are different questions: an
+   * out-of-stock size still has a real, confirmed price and a real page, and its Offer says
+   * so with availability OutOfStock. Requiring in_stock here would delete the Offer — and
+   * with it the whole Product node — over a condition that reverses next week. */
+  if (!variantIsSearchEligible(family, variant)) return undefined;
   const commerce = getCommerce(variant.variantId);
   if (!commerce || !isOutrightSale(variant.variantId)) return undefined;
 
@@ -103,10 +107,9 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
     // at Razorpay and in <g:price>.
     price: priceForFeed(sellPrice(commerce.basePrice)),
     priceCurrency: "INR",
-    availability:
-      variant.availability === "in_stock"
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
+    // One mapping table, shared with the Merchant feed, so the Offer and <g:availability>
+    // state the same thing. In / out of stock / pre-order all map explicitly.
+    availability: variantSchemaAvailability(variant),
     itemCondition: "https://schema.org/NewCondition",
     validFrom: todayISO(),
     priceValidUntil: oneYearFromNow(),
@@ -119,50 +122,21 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
 }
 
 /**
- * A sibling reference: the minimum Google needs to follow the group to another size page.
- * Deliberately carries NO offer — the price of a sibling belongs on the sibling's own page,
- * and duplicating it here is how two pages end up quoting different numbers for one size.
- */
-/**
  * One entry in ProductGroup.hasVariant.
  *
  * Carries the variant's own offer, because each of these is a full Product node to a
  * validator, not a pointer — and a Product with no offer, review or aggregateRating is
- * rejected ("Either 'offers', 'review' or 'aggregateRating' should be specified"). Five
- * unpriced container-office sizes were shipping exactly that, nested inside the group.
+ * rejected ("Either 'offers', 'review' or 'aggregateRating' should be specified").
  *
- * Returns null for a size with no confirmed price, so it drops out of hasVariant instead of
- * being published as an invalid item. It reappears the moment a commerce record exists.
+ * Returns null for a size that is not search-eligible, so it drops out of hasVariant rather
+ * than being published as an invalid item. Membership is decided by ONE predicate, shared with
+ * the page's robots directive, the sitemap, the Product node and the feed — never re-derived
+ * here, so the group can never disagree with the pages it points at.
  */
-/**
- * Does this size have a price we can publish?
- *
- * The SINGLE source of truth for that question. It is literally `variantOffer() !== undefined`,
- * so the Offer, the Product node and the page's robots directive can never disagree: a size
- * with no confirmed price emits no offer, emits no Product node, and is withheld from search.
- */
-/**
- * May this size appear in SEARCH at all?
- *
- * TWO independent conditions, deliberately:
- *   1. a valid commerce record with a confirmed price  (variantHasPublishablePrice)
- *   2. an editor has approved the page as finished      (variantIsContentComplete)
- *
- * Price availability and SEO readiness are separate concerns. A priced size whose page is
- * still boilerplate is sellable — its price box works — but it is withheld from search until
- * the copy is real. This single predicate drives all five search surfaces so they cannot
- * drift: noindex, sitemap inclusion, ProductGroup.hasVariant, the Product/Offer node, and
- * (via variantIsFeedEligible) Merchant Center.
- */
-export function variantIsSearchEligible(family: ProductFamily, variant: SizeVariant): boolean {
-  return variantHasPublishablePrice(family, variant) && variantIsContentComplete(variant);
-}
-export function variantHasPublishablePrice(family: ProductFamily, variant: SizeVariant): boolean {
-  return variantOffer(family, variant) !== undefined;
-}
 function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
+  if (!variantIsSearchEligible(family, variant)) return null;
   const offer = variantOffer(family, variant);
-  if (!offer || !variantIsContentComplete(variant)) return null;
+  if (!offer) return null;
 
   return {
     "@type": "Product",
@@ -226,14 +200,20 @@ export function generateSizeVariantProductSchema(
   images: string[] = [],
 ) {
   const gallery = Array.from(new Set(images.filter(Boolean).map(absolute)));
+
+  /* WITHHELD unless the size is search-eligible — a confirmed price AND an editorially
+   * approved page. A Product node carrying neither an offer nor a rating is rejected outright
+   * by Google ("Either 'offers', 'review' or 'aggregateRating' should be specified"), so we
+   * emit nothing rather than an invalid item; the page keeps its ProductGroup and
+   * BreadcrumbList either way.
+   *
+   * A commerce record alone is NOT enough to bring this node back — contentComplete must also
+   * be true. Inventing a price to satisfy the validator is not an option, and neither is
+   * flipping the editorial flag to silence it. */
+  if (!variantIsSearchEligible(family, variant)) return null;
+
   const offer = variantOffer(family, variant);
-  /* A size that is unpriced OR whose page is not editorially approved yields no offer, and a Product node carrying neither an
-   * offer nor a rating is rejected outright by Google ("Either 'offers', 'review' or
-   * 'aggregateRating' should be specified"). Emit nothing rather than an invalid item: the
-   * page still carries its ProductGroup and BreadcrumbList, and this node returns the moment
-   * a commerce record exists for the variantId. Inventing a price to satisfy the validator is
-   * not an option. */
-  if (!offer || !variantIsContentComplete(variant)) return null;
+  if (!offer) return null;
 
   return {
     "@context": "https://schema.org",

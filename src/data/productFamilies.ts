@@ -62,6 +62,42 @@ export const PAISE_PER_RUPEE = 100;
  * derived from them rather than typed in twice. `heightFt` is the family's standard
  * external height (see ProductFamily.standardHeightFt) unless a size overrides it.
  */
+/**
+ * The availability states a standard size may be in.
+ *
+ * `pre_order` is accepted here and mapped everywhere, but no size uses it today — it exists so
+ * that a made-to-order size with a confirmed price and an open order book can be stated
+ * honestly rather than squeezed into in/out of stock.
+ */
+export type VariantAvailability = "in_stock" | "out_of_stock" | "pre_order";
+
+/** Every availability value, and the two vocabularies each one maps to. Exhaustive by type. */
+const AVAILABILITY_MAP: Record<
+  VariantAvailability,
+  { schema: string; feed: "in_stock" | "out_of_stock" | "preorder" }
+> = {
+  in_stock: { schema: "https://schema.org/InStock", feed: "in_stock" },
+  out_of_stock: { schema: "https://schema.org/OutOfStock", feed: "out_of_stock" },
+  pre_order: { schema: "https://schema.org/PreOrder", feed: "preorder" },
+};
+
+/** Is this a supported availability value? Guards against data widened without mappings. */
+export function isValidAvailability(value: string): value is VariantAvailability {
+  return Object.prototype.hasOwnProperty.call(AVAILABILITY_MAP, value);
+}
+
+/** The schema.org availability URL for this size — used by the Offer node. */
+export function variantSchemaAvailability(variant: SizeVariant): string {
+  return AVAILABILITY_MAP[variant.availability].schema;
+}
+
+/** The Merchant Center `<g:availability>` value for this size. */
+export function variantFeedAvailability(
+  variant: SizeVariant,
+): "in_stock" | "out_of_stock" | "preorder" {
+  return AVAILABILITY_MAP[variant.availability].feed;
+}
+
 export interface SizeVariant {
   /** Stable variant ID. Also the commerce-catalog join key and the cart's product_id. */
   variantId: string;
@@ -70,9 +106,23 @@ export interface SizeVariant {
   /**
    * Manufacturer part number — ONLY when a genuine one exists. These are made-to-order
    * steel structures with no MPN and no GTIN, so this is deliberately undefined for every
-   * variant today and the feed declares <g:identifier_exists>no</g:identifier_exists>.
-   * Do NOT set it to the SKU: an internal code submitted as an MPN contradicts that
-   * declaration and weakens product matching.
+   * variant today.
+   *
+   * ── THE RULE IS ABOUT THE FEED, NOT THE PAGE ────────────────────────────────────────
+   * An earlier version of this comment read "Do NOT set it to the SKU", full stop, which
+   * contradicted productGroupSchema.ts — that file emits `mpn: variant.mpn ?? variant.sku`.
+   * Both are right, because they are talking about different places:
+   *
+   *   • MERCHANT FEED — emits NO <g:mpn> and declares <g:identifier_exists>no</g:identifier_exists>.
+   *     Submitting an internal SKU as an MPN there would contradict that declaration and
+   *     weaken product matching. Never add one unless a real MPN exists, in which case
+   *     identifier_exists must go.
+   *   • PAGE JSON-LD — falls back to the SKU, which is the convention every other product
+   *     page already follows (see `mpn: sku` in lib/seo/structured-data.ts). schema.org
+   *     makes no identifier-existence declaration to contradict.
+   *
+   * Set this field only when a genuine manufacturer part number exists; it is never
+   * fabricated in either place.
    */
   mpn?: string;
 
@@ -130,8 +180,19 @@ export interface SizeVariant {
   /** Owner has verified basePricePaise is a real, fixed, payable price. Gate #2. */
   priceConfirmed: boolean;
 
-  /** Are we accepting orders for this size right now? */
-  availability: "in_stock" | "out_of_stock";
+  /**
+   * Are we accepting orders for this size right now?
+   *
+   * This answers a COMMERCE question, not an SEO one. A temporarily out-of-stock size is
+   * still a real product with a real page: it stays indexed and stays in the sitemap, and
+   * its Offer and its feed row simply carry the matching status. Only `variantIsPurchasable`
+   * — Add to Cart, the cart and Razorpay — requires `in_stock`.
+   *
+   * Every value here maps to exactly one schema.org status and one Merchant Center value,
+   * via variantSchemaAvailability() and variantFeedAvailability(). Adding a value to this
+   * union without adding both mappings is a compile error, which is the point.
+   */
+  availability: VariantAvailability;
   /** Manufacturing / dispatch window shown beside the CTAs. */
   leadTime: string;
 
@@ -298,6 +359,11 @@ function unpricedContainerOfficeSize(
     includedConfiguration: CONTAINER_OFFICE_INCLUDED,
     cartEligible: true,
     merchantEligible: false,
+    /* Explicitly false, not merely absent. Every one of these sizes is still the family
+     * boilerplate with the dimensions substituted — no size-specific layout, capacity,
+     * specification, application, image or FAQ content yet. Flip to true only when that copy
+     * is genuinely written for the size, and never to clear a validator warning. */
+    contentComplete: false,
     published: opts.published ?? true,
     note:
       opts.note ??
@@ -634,11 +700,6 @@ export function variantIsPurchasable(family: ProductFamily, variant: SizeVariant
 }
 
 /**
- * May this size be submitted to Merchant Center?
- * Everything variantIsPurchasable() requires, PLUS both merchantEligible flags AND a real
- * variant photograph — Google compares the feed image against the landing page.
- */
-/**
  * Has an editor approved this size's page as finished? Defaults to FALSE when unset.
  *
  * Read this rather than variant.contentComplete directly, so the default lives in exactly one
@@ -647,12 +708,55 @@ export function variantIsPurchasable(family: ProductFamily, variant: SizeVariant
 export function variantIsContentComplete(variant: SizeVariant): boolean {
   return variant.contentComplete === true;
 }
+
+/**
+ * ── THE SECOND OF THREE PREDICATES: may this size appear in SEARCH? ────────────────────
+ *
+ * Deliberately NOT the same question as variantIsPurchasable(). The three are separate
+ * concerns and must never be collapsed into one another:
+ *
+ *   variantIsPurchasable   — cart / payment eligibility. Requires in_stock.
+ *   variantIsSearchEligible — content / indexing / schema eligibility. THIS ONE.
+ *   variantIsFeedEligible  — search eligibility PLUS Merchant-specific rules.
+ *
+ * Requires a VALID availability value, not `in_stock`: a temporarily out-of-stock size is
+ * still a genuine product with a genuine page, and de-indexing it would throw away earned
+ * ranking for a condition that reverses next week. Its Offer and feed row state the real
+ * status instead.
+ *
+ * `cartEligible` is likewise NOT required — whether a size can be bought online has no
+ * bearing on whether its page deserves to be indexed.
+ *
+ * What IS required is a confirmed price and an approved page, because this single predicate
+ * drives every search surface: robots, sitemap, ProductGroup.hasVariant, the Product/Offer
+ * node and (through variantIsFeedEligible) Merchant Center. One source of truth, so they
+ * cannot disagree.
+ */
+export function variantIsSearchEligible(family: ProductFamily, variant: SizeVariant): boolean {
+  return (
+    family.published &&
+    variant.published &&
+    isValidAvailability(variant.availability) &&
+    variant.priceConfirmed &&
+    variantBaseRupees(variant) !== undefined &&
+    variantIsContentComplete(variant)
+  );
+}
+
+/**
+ * ── THE THIRD PREDICATE: may this size be submitted to Merchant Center? ────────────────
+ *
+ * Search eligibility PLUS the Merchant-specific requirements: both merchantEligible flags
+ * and a real variant photograph, because Google compares the feed image against the landing
+ * page it links to.
+ *
+ * Built on variantIsSearchEligible, not variantIsPurchasable — an out-of-stock size with a
+ * confirmed price and a finished page belongs in the feed carrying `out_of_stock`, which is
+ * how Merchant Center expects availability to be reported.
+ */
 export function variantIsFeedEligible(family: ProductFamily, variant: SizeVariant): boolean {
   return (
-    variantIsPurchasable(family, variant) &&
-    // Editorial gate: a priced size with an unfinished page is not submitted to Merchant
-    // Center. Google compares the feed row against the landing page it points at.
-    variantIsContentComplete(variant) &&
+    variantIsSearchEligible(family, variant) &&
     family.merchantEligible &&
     variant.merchantEligible &&
     variantHasFeedImage(variant)
@@ -675,14 +779,30 @@ function variantHasFeedImage(variant: SizeVariant): boolean {
 
 /** Why this size is not in the feed — one short, reviewable reason. "" when it IS eligible. */
 export function variantFeedHoldReason(family: ProductFamily, variant: SizeVariant): string {
+  /* Each branch names ONE specific, reviewable cause, in the same order the predicates above
+   * evaluate them — a diagnostic, not a second rulebook. The gates themselves stay in
+   * variantIsSearchEligible / variantIsFeedEligible; this function only explains them.
+   *
+   * NOTE what is deliberately NOT a hold reason any more: being out of stock, and not being
+   * cartEligible. Neither withholds a feed row now — an out-of-stock size is submitted with
+   * `out_of_stock`, which is how Merchant Center expects it to be reported. */
   if (!family.published || !variant.published) return "not published";
+  if (!isValidAvailability(variant.availability))
+    return `unsupported availability value "${variant.availability}"`;
   if (!variant.priceConfirmed || variantBaseRupees(variant) === undefined)
     return "no owner-confirmed fixed price";
-  if (variant.availability !== "in_stock") return "not accepting orders";
-  if (!variant.cartEligible) return "not purchasable online";
+  if (!variantIsContentComplete(variant))
+    return "page not editorially approved — contentComplete is false";
   if (!family.merchantEligible) return "family held out of the feed";
   if (!variant.merchantEligible) return "variant held out of the feed";
   if (!variantHasFeedImage(variant)) return "no variant-accurate photograph";
+
+  /* Backstop: the branches above must account for EVERY way variantIsFeedEligible() can fail.
+   * If a gate is ever added there without a reason here, the feed route would silently treat
+   * a held-back size as eligible. Fail loudly instead of quietly. */
+  if (!variantIsFeedEligible(family, variant))
+    return "held by a feed gate with no specific reason — variantFeedHoldReason is out of step with variantIsFeedEligible";
+
   return "";
 }
 
@@ -788,7 +908,12 @@ export function variantCommerceRows(): ProductCommerce[] {
         basePrice: baseRupees ?? 0,
         priceConfirmed: variant.priceConfirmed && baseRupees !== undefined,
         kind: "product",
+        // Cart/checkout truth: only an in_stock size is buyable right now. A pre-order size
+        // is deliberately false here — it is not yet payable, whatever the feed reports.
         inStock: variant.availability === "in_stock",
+        // Feed truth: the full three-state value, so a pre-order size is not misreported as
+        // out of stock. Hand-written rows omit this and keep their existing derivation.
+        feedAvailability: variantFeedAvailability(variant),
         h1Title: variantName(family, variant),
         feedTitle: variantFeedTitle(family, variant),
         size: variantDimensionsPlain(family, variant),

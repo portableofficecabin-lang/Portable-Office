@@ -388,7 +388,10 @@ for (const { family, variant } of ALL) {
     check(!isPurchasable(variant.variantId), `${variant.sku}: unpriced ⇒ NOT purchasable`);
     check(!isOutrightSale(variant.variantId), `${variant.sku}: unpriced ⇒ not an outright sale`);
     check(commerce.priceConfirmed === false, `${variant.sku}: unpriced ⇒ priceConfirmed is false`);
-    check(schema === null, `${variant.sku}: unpriced ⇒ NO Product node at all in the JSON-LD`);
+    check(
+      schema === null,
+      `${variant.sku}: not search-eligible ⇒ NO Product node at all in the JSON-LD`,
+    );
     check(!variantIsFeedEligible(family, variant), `${variant.sku}: unpriced ⇒ not feed-eligible`);
     check(
       !feedEligible().some((c) => c.id === variant.variantId),
@@ -1133,6 +1136,109 @@ section("12. Existing catalogue untouched");
     check(!!commerce && isPurchasable(commerce.id), `${sku} is still purchasable`);
   }
   check(feedEligible().length > 0, "the feed still has eligible SKUs");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════════════
+ * 13. THE EDITORIAL GATE — contentComplete
+ *
+ * Price availability and SEO readiness are SEPARATE approvals. A commerce record makes a size
+ * sellable; contentComplete says the page is finished. Five search surfaces require BOTH.
+ * These assertions pin the exact membership so a future edit cannot quietly widen it.
+ * ══════════════════════════════════════════════════════════════════════════════════════ */
+section("13. Editorial gate (contentComplete)");
+
+{
+  const family = publishedFamilies().find((f) => f.slug === "container-office");
+  check(!!family, "container-office family is published");
+
+  if (family) {
+    const group = generateProductGroupSchema(family, ["/images/products/x.webp"]) as
+      | { hasVariant?: Array<{ sku?: string; offers?: unknown }> }
+      | null;
+
+    // ── 1. POC-CO-GEN is the one approved variant ─────────────────────────────────────
+    const gen = family.variants.find((v) => v.sku === "POC-CO-GEN");
+    check(!!gen, "POC-CO-GEN exists in the family");
+    check(gen?.contentComplete === true, "POC-CO-GEN: contentComplete is true (its parent page is written)");
+    check(!!gen && variantIsPurchasable(family, gen), "POC-CO-GEN: still purchasable");
+    check(!!gen && variantIsContentComplete(gen), "POC-CO-GEN: passes the editorial gate");
+    check(!!group, "container-office still emits a ProductGroup (it has an eligible size)");
+    check(
+      (group?.hasVariant ?? []).some((v) => v.sku === "POC-CO-GEN"),
+      "POC-CO-GEN: appears in ProductGroup.hasVariant",
+    );
+    check(
+      (group?.hasVariant ?? []).every((v) => !!v.offers),
+      "every hasVariant entry carries its own Offer",
+    );
+
+    // ── 2. the five incomplete sizes are excluded ─────────────────────────────────────
+    const INCOMPLETE = ["POC-CO-10X10", "POC-CO-20X8", "POC-CO-20X10", "POC-CO-30X10", "POC-CO-40X10"];
+    for (const sku of INCOMPLETE) {
+      const v = family.variants.find((x) => x.sku === sku);
+      check(!!v, `${sku}: exists in the family`);
+      check(!v || !variantIsContentComplete(v), `${sku}: NOT content-complete`);
+      check(
+        !(group?.hasVariant ?? []).some((h) => h.sku === sku),
+        `${sku}: absent from ProductGroup.hasVariant`,
+      );
+      check(
+        !v || generateSizeVariantProductSchema(family, v, ["/images/products/x.webp"]) === null,
+        `${sku}: emits no Product node`,
+      );
+      check(!v || !variantIsFeedEligible(family, v), `${sku}: not feed-eligible`);
+    }
+    check(
+      (group?.hasVariant ?? []).length === 1,
+      `hasVariant holds exactly the one approved size (got ${(group?.hasVariant ?? []).length})`,
+    );
+  }
+}
+
+/* ── 3. hasVariant: [] is NEVER emitted, for any family, in any state ──────────────────── */
+{
+  for (const family of publishedFamilies()) {
+    const group = generateProductGroupSchema(family, ["/images/products/x.webp"]) as
+      | { hasVariant?: unknown[] }
+      | null;
+    check(
+      group === null || ((group.hasVariant as unknown[] | undefined)?.length ?? 0) > 0,
+      `${family.slug}: ProductGroup is either suppressed or has at least one variant — never an empty hasVariant`,
+    );
+  }
+
+  /* Synthetic proof, independent of current data: a family whose every size fails the gate must
+   * produce NO ProductGroup at all rather than an empty one. */
+  const base = publishedFamilies()[0];
+  const noneEligible = {
+    ...base,
+    variants: base.variants.map((v) => ({ ...v, contentComplete: false, priceConfirmed: false })),
+  } as ProductFamily;
+  check(
+    generateProductGroupSchema(noneEligible, ["/a.webp"]) === null,
+    "a family with zero eligible sizes emits NO ProductGroup (not an empty hasVariant)",
+  );
+}
+
+/* ── 4. the existing Product/Offer output is unchanged ─────────────────────────────────── */
+{
+  /* POC-CO-GEN is served at the PARENT url, and its Product/Offer comes from the long-standing
+   * commerce row (id 10) — not from the variant builder. The editorial gate must not have moved
+   * a single figure on it. */
+  const commerce = PRODUCT_COMMERCE.find((c) => c.sku === "POC-CO-GEN");
+  check(!!commerce, "POC-CO-GEN: commerce row still present");
+  if (commerce) {
+    check(commerce.id === "10", "POC-CO-GEN: still bound to product id 10");
+    check(isPurchasable(commerce.id), "POC-CO-GEN: still purchasable");
+    check(isOutrightSale(commerce.id), "POC-CO-GEN: still an outright sale");
+    check(commerce.basePrice === 1200000, "POC-CO-GEN: base price unchanged at Rs 12,00,000 ex-GST");
+    check(sellPrice(commerce.basePrice) === 1416000, "POC-CO-GEN: customer price unchanged at Rs 14,16,000");
+    check(priceForFeed(sellPrice(commerce.basePrice)) === "1416000.00", "POC-CO-GEN: feed serialisation unchanged");
+
+    const totals = computeTotals({ items: [{ productId: commerce.id, quantity: 1 }], pincode: "560001" });
+    check(totals.skipped.length === 0, "POC-CO-GEN: checkout still accepts it");
+    check(totals.lines[0]?.unitPrice === 1416000, "POC-CO-GEN: checkout unit price unchanged");
+  }
 }
 
 /* ─────────────────────────────────────────────── report ─────────────────────────────── */

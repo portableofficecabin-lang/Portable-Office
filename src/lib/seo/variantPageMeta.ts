@@ -14,7 +14,7 @@ import type { Product } from "@/data/products";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { primaryImageFor } from "@/lib/seo/productPageMeta";
-import { variantIsSearchEligible } from "@/lib/seo/productGroupSchema";
+import { variantIsSearchEligible } from "@/data/productFamilies";
 
 /**
  * SERVER-SIDE METADATA for one standard size — /products/<family>/<size>.
@@ -25,7 +25,8 @@ import { variantIsSearchEligible } from "@/lib/seo/productGroupSchema";
  *     size back to the overview page would tell Google these are duplicates and it would
  *     stop treating them as distinct variant landing pages, which is the entire point of
  *     the multi-page pattern.
- *   • index,follow (from buildPageMetadata) — never noindex.
+ *   • index,follow for a SEARCH-ELIGIBLE size; noindex,follow for one still withheld.
+ *     `follow` is kept either way, so a withheld page still passes equity to its family.
  *   • A description that mentions a price ONLY when the size genuinely has one, and then
  *     the GST-INCLUSIVE figure, matching the page, the Offer, the cart and the feed.
  *
@@ -108,10 +109,18 @@ export function buildVariantPageMetadata(
     image: primaryImageFor(variantProduct),
     imageAlt: `${family.groupTitle} — ${family.categoryName} by ${family.brand}`,
     ogType: "website",
-    /* A standard size with no confirmed selling price is withheld from search until the
-     * price exists. Indexing it would publish a size page whose offer we cannot state —
-     * the page would rank on the size keyword and then show no price. Same predicate that
-     * gates the Offer and the Product node, so the three can never disagree. */
+    /* A standard size is withheld from search until it is search-eligible: a confirmed price
+     * AND an editorially approved page. Indexing it earlier would publish a page that ranks on
+     * the size keyword and then shows either no price or family boilerplate with the numbers
+     * swapped.
+     *
+     * The SAME predicate gates the sitemap entry, the Offer, the Product node,
+     * ProductGroup.hasVariant and Merchant Center, so none of them can disagree with the
+     * robots directive. Note it does NOT depend on stock: an out-of-stock size stays indexed
+     * and states OutOfStock, rather than losing its ranking over a temporary condition.
+     *
+     * The self-referencing canonical above stays in place while withheld — noindex means
+     * "do not index this page", not "this page is a duplicate of another one". */
     noindex: !variantIsSearchEligible(family, variant),
   });
 }

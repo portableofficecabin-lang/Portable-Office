@@ -5,7 +5,7 @@ import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
-import { variantIsSearchEligible } from "@/lib/seo/productGroupSchema";
+import { variantIsSearchEligible } from "@/data/productFamilies";
 
 const SITE_URL = "https://portableofficecabin.com";
 const LAST_MOD = new Date("2026-06-15");
@@ -51,10 +51,13 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   ...publishedFamilies().flatMap((family) =>
     publishedVariants(family)
       .filter((variant) => !variant.rendersAtParent)
-      /* A size with no confirmed price is served noindex (see buildVariantPageMetadata), and
-       * a noindex URL must never appear here — submitting a page we are asking Google not to
-       * index is a direct contradiction. It returns to the sitemap automatically once its
-       * commerce record exists. */
+      /* A size that is not search-eligible is served noindex (see buildVariantPageMetadata),
+       * and a noindex URL must never appear here — submitting a page we are asking Google not
+       * to index is a direct contradiction that Search Console reports.
+       *
+       * It returns to the sitemap when it becomes search-eligible: a confirmed price AND
+       * contentComplete. A commerce record on its own is not enough. Being out of stock does
+       * NOT remove it — availability is a commerce state, not an indexing one. */
       .filter((variant) => variantIsSearchEligible(family, variant))
       .map((variant) => entry(variantPath(family, variant), 0.75, "weekly")),
   ),

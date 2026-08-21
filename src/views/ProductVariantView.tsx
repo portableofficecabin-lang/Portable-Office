@@ -143,7 +143,12 @@ export function ProductVariantView({
 
   return (
     <Layout>
-      <JsonLd data={[groupSchema, variantSchema, breadcrumb].filter(Boolean)} />
+      {/* `variantSchema` is null for a size that is not search-eligible, so the array is
+          filtered before rendering — otherwise a literal `null` would be emitted as its own
+          <script type="application/ld+json"> block. The predicate is written out rather than
+          `filter(Boolean)` because only this form NARROWS the type: filter(Boolean) leaves
+          `(T | null)[]`, which is how a null reached an `in` check elsewhere and threw. */}
+      <JsonLd data={[groupSchema, variantSchema, breadcrumb].filter((node) => node !== null)} />
 
       {/* Breadcrumb — Home › Products › Container Offices › Container Office › 20 ft x 10 ft */}
       <section className="bg-muted/50 py-4 border-b border-border">
