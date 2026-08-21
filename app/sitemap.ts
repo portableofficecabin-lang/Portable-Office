@@ -5,7 +5,7 @@ import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
-import { variantHasPublishablePrice } from "@/lib/seo/productGroupSchema";
+import { variantIsSearchEligible } from "@/lib/seo/productGroupSchema";
 
 const SITE_URL = "https://portableofficecabin.com";
 const LAST_MOD = new Date("2026-06-15");
@@ -55,7 +55,7 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
        * a noindex URL must never appear here — submitting a page we are asking Google not to
        * index is a direct contradiction. It returns to the sitemap automatically once its
        * commerce record exists. */
-      .filter((variant) => variantHasPublishablePrice(family, variant))
+      .filter((variant) => variantIsSearchEligible(family, variant))
       .map((variant) => entry(variantPath(family, variant), 0.75, "weekly")),
   ),
   entry("/marketplace", 0.85, "weekly"),

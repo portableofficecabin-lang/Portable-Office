@@ -50,6 +50,7 @@ import {
   variantFeedTitle,
   variantHeightFt,
   variantIsFeedEligible,
+  variantIsContentComplete,
   variantIsPurchasable,
   variantPath,
   type ProductFamily,
@@ -347,6 +348,10 @@ for (const { family, variant } of ALL) {
 
   const baseRupees = variantBaseRupees(variant);
   const priced = variantIsPurchasable(family, variant);
+  /* SEARCH-ELIGIBLE = priced AND editorially approved. The schema builder returns null for
+   * anything else, because a Product node with no offer is rejected by Google outright. Price
+   * availability and SEO readiness are separate gates: see SizeVariant.contentComplete. */
+  const searchEligible = priced && variantIsContentComplete(variant);
   const schema = generateSizeVariantProductSchema(family, variant, ["/images/products/x.webp"]);
   const totals = computeTotals({ items: [{ productId: variant.variantId, quantity: 1 }], pincode: "560001" });
 
@@ -356,10 +361,14 @@ for (const { family, variant } of ALL) {
     check(isPurchasable(variant.variantId), `${variant.sku}: priced ⇒ purchasable`);
     check(isOutrightSale(variant.variantId), `${variant.sku}: priced ⇒ an outright sale, not rent`);
     check(commerce.basePrice === baseRupees, `${variant.sku}: commerce base price == stored paise / 100`);
-    check(
-      (schema as { offers?: { price?: string } }).offers?.price === priceForFeed(expected),
-      `${variant.sku}: JSON-LD offer price == sellPrice(base)`,
-    );
+    if (searchEligible) {
+      check(
+        (schema as { offers?: { price?: string } } | null)?.offers?.price === priceForFeed(expected),
+        `${variant.sku}: JSON-LD offer price == sellPrice(base)`,
+      );
+    } else {
+      check(schema === null, `${variant.sku}: priced but not content-complete ⇒ NO Product node`);
+    }
     check(totals.skipped.length === 0, `${variant.sku}: checkout accepts it`);
     check(
       totals.lines[0]?.unitPrice === expected,
@@ -379,7 +388,7 @@ for (const { family, variant } of ALL) {
     check(!isPurchasable(variant.variantId), `${variant.sku}: unpriced ⇒ NOT purchasable`);
     check(!isOutrightSale(variant.variantId), `${variant.sku}: unpriced ⇒ not an outright sale`);
     check(commerce.priceConfirmed === false, `${variant.sku}: unpriced ⇒ priceConfirmed is false`);
-    check(!("offers" in schema), `${variant.sku}: unpriced ⇒ NO offers block in the JSON-LD`);
+    check(schema === null, `${variant.sku}: unpriced ⇒ NO Product node at all in the JSON-LD`);
     check(!variantIsFeedEligible(family, variant), `${variant.sku}: unpriced ⇒ not feed-eligible`);
     check(
       !feedEligible().some((c) => c.id === variant.variantId),
@@ -418,8 +427,19 @@ for (const { family, variant } of ALL) {
     "flip: priced but no variant photograph ⇒ still NOT fed",
   );
 
-  const fedReady: SizeVariant = { ...pricedNoPhoto, mainImage: "/images/products/real.webp" };
-  check(variantIsFeedEligible(fam, fedReady), "flip: priced + photographed ⇒ feed-eligible");
+  const photographed: SizeVariant = { ...pricedNoPhoto, mainImage: "/images/products/real.webp" };
+  /* THE SECOND GATE. Price and photograph are necessary but NOT sufficient: contentComplete is
+   * an independent editorial approval, defaulting to false, so a fully priced and photographed
+   * size is still withheld until someone confirms the page copy is genuinely size-specific. */
+  check(
+    !variantIsFeedEligible(fam, photographed),
+    "flip: priced + photographed but NOT content-complete ⇒ still NOT fed",
+  );
+  check(!variantIsContentComplete(photographed), "flip: contentComplete defaults to false when unset");
+
+  const fedReady: SizeVariant = { ...photographed, contentComplete: true };
+  check(variantIsFeedEligible(fam, fedReady), "flip: priced + photographed + approved ⇒ feed-eligible");
+  check(variantIsContentComplete(fedReady), "flip: contentComplete true once set explicitly");
 
   // Fractional rupees are refused rather than rounded.
   check(
@@ -451,15 +471,34 @@ for (const family of publishedFamilies()) {
     Array.isArray(group.variesBy) && (group.variesBy as string[]).includes("https://schema.org/size"),
     `${family.productGroupId}: variesBy declares size`,
   );
+  /* hasVariant lists SEARCH-ELIGIBLE sizes only — priced AND editorially approved. Each entry
+   * is a full Product node to a validator, so an unpriced or unfinished size listed here would
+   * be published as an invalid item inside the group. */
+  const eligibleSizes = publishedVariants(family).filter(
+    (v) => variantIsPurchasable(family, v) && variantIsContentComplete(v),
+  );
   check(
-    Array.isArray(group.hasVariant) && (group.hasVariant as unknown[]).length === publishedVariants(family).length,
-    `${family.productGroupId}: hasVariant lists every published size`,
+    Array.isArray(group.hasVariant) && (group.hasVariant as unknown[]).length === eligibleSizes.length,
+    `${family.productGroupId}: hasVariant lists exactly the search-eligible sizes (${eligibleSizes.length})`,
+  );
+  check(
+    (group.hasVariant as { offers?: unknown }[] | undefined)?.every((v) => !!v.offers) ?? true,
+    `${family.productGroupId}: every hasVariant entry carries its own Offer`,
   );
   check(!("offers" in group), `${family.productGroupId}: the ProductGroup itself carries no Offer`);
   check(!("aggregateRating" in group), `${family.productGroupId}: no fabricated aggregateRating`);
 
   for (const variant of publishedVariants(family)) {
-    const node = generateSizeVariantProductSchema(family, variant, ["/images/products/x.webp"]) as Record<string, unknown>;
+    const raw = generateSizeVariantProductSchema(family, variant, ["/images/products/x.webp"]);
+
+    /* A size that is unpriced or not editorially approved emits NO Product node. That is the
+     * whole point of the gate — assert the absence, then move on. */
+    if (!(variantIsPurchasable(family, variant) && variantIsContentComplete(variant))) {
+      check(raw === null, `${variant.sku}: withheld from search ⇒ no Product node emitted`);
+      continue;
+    }
+
+    const node = raw as Record<string, unknown>;
     const isVariantOf = node.isVariantOf as Record<string, unknown> | undefined;
 
     check(node["@type"] === "Product", `${variant.sku}: @type is Product`);
@@ -552,7 +591,15 @@ section("7. Metadata");
       `${variant.sku}: canonical is SELF-referencing (not the parent)`,
     );
     check(canonical !== `${SITE}/products/${family.slug}`, `${variant.sku}: canonical is NOT the parent page`);
-    check(robots?.index === true, `${variant.sku}: indexable (never noindex)`);
+    /* Indexability follows the search gate: a size is indexable once it has a confirmed price
+     * AND its page has been editorially approved. Until then it is noindex,follow — crawlable
+     * and passing link equity, but withheld from the index. */
+    const searchEligible = variantIsPurchasable(family, variant) && variantIsContentComplete(variant);
+    check(
+      robots?.index === searchEligible,
+      `${variant.sku}: ${searchEligible ? "indexable once priced and approved" : "noindex while withheld from search"}`,
+    );
+    check(robots?.follow === true, `${variant.sku}: always follow — link equity still flows`);
     check(robots?.follow === true, `${variant.sku}: followable`);
 
     const title = variantPageTitle(family, variant);
@@ -867,6 +914,19 @@ for (const { family, variant } of ALL) {
   /* A parent-rendered size's Product node is produced by generateProductStructuredData with
    * `sizeVariantOf`; every other size uses the variant builder. Both must satisfy the SAME
    * checklist, so the two shapes are normalised here rather than tested separately. */
+  /* A size served at the PARENT keeps its Product node there (generateProductStructuredData
+   * with `sizeVariantOf`), so the checklist still applies to it. A size on its own URL only
+   * has a node when it is search-eligible — priced AND editorially approved. When it is not,
+   * the correct assertion is that nothing was emitted. */
+  const searchEligible = variantIsPurchasable(family, variant) && variantIsContentComplete(variant);
+  if (!variant.rendersAtParent && !searchEligible) {
+    check(
+      generateSizeVariantProductSchema(family, variant, ["/images/products/x.webp"]) === null,
+      `${label}: withheld from search ⇒ emits no Product node to check`,
+    );
+    continue;
+  }
+
   const node = (
     variant.rendersAtParent
       ? {
@@ -903,11 +963,16 @@ for (const { family, variant } of ALL) {
   check(node.size === variant.sizeLabelPlain, `${label}: states its own size`);
   // f. crawlable references to the OTHER variant URLs
   const hasVariant = (group.hasVariant ?? []) as Array<{ url?: string; sku?: string }>;
-  check(
-    hasVariant.length === publishedVariants(family).length,
-    `${label}: hasVariant references every published size of the family`,
+  /* Only SEARCH-ELIGIBLE siblings are referenced. An unpriced or unapproved size listed here
+   * would be a Product node with no offer nested inside the group — invalid to Google. */
+  const eligibleSiblings = publishedVariants(family).filter(
+    (v) => variantIsPurchasable(family, v) && variantIsContentComplete(v),
   );
-  for (const sibling of publishedVariants(family)) {
+  check(
+    hasVariant.length === eligibleSiblings.length,
+    `${label}: hasVariant references every search-eligible size (${eligibleSiblings.length})`,
+  );
+  for (const sibling of eligibleSiblings) {
     check(
       hasVariant.some((v) => v.url === `${SITE}${variantPath(family, sibling)}`),
       `${label}: hasVariant references ${sibling.sizeSlug} at its canonical URL`,
@@ -942,9 +1007,13 @@ for (const { family, variant } of ALL) {
     check(dims === variant.sizeLabelPlain, `${variant.sku}: dimensions are L x W only while height is unconfirmed`);
     check(!/\bx\s*\d+(\.\d+)?\s*ft\s*$/.test(dims.replace(variant.sizeLabelPlain, "")), `${variant.sku}: no height appended`);
 
-    const schema = generateSizeVariantProductSchema(family, variant, []) as Record<string, unknown>;
+    const schema = generateSizeVariantProductSchema(family, variant, []) as Record<string, unknown> | null;
     if (!variant.rendersAtParent) {
-      check(!("height" in schema), `${variant.sku}: no height property in the structured data`);
+      /* Withheld sizes emit no node at all, which trivially carries no invented height. */
+      check(
+        schema === null || !("height" in schema),
+        `${variant.sku}: no height property in the structured data`,
+      );
     }
     const commerce = getCommerce(variant.variantId);
     check(
@@ -1010,9 +1079,24 @@ await (async () => {
   const counts = new Map<string, number>();
   for (const url of urls) counts.set(url, (counts.get(url) ?? 0) + 1);
 
+  /* A size appears in the sitemap only when it is SEARCH-ELIGIBLE — priced AND editorially
+   * approved. A withheld size is served noindex, and submitting a URL we are asking Google not
+   * to index is a direct contradiction, so its absence here is the assertion. */
   for (const { family, variant } of ALL) {
     const url = `${SITE}${variantPath(family, variant)}`;
-    check(counts.get(url) === 1, `sitemap lists ${variantPath(family, variant)} exactly once`);
+    /* A parent-rendered size has NO url of its own — variantPath() returns the parent's, which
+     * is always listed. Only sizes with their own URL can be withheld. */
+    const eligible =
+      variant.rendersAtParent ||
+      (variantIsPurchasable(family, variant) && variantIsContentComplete(variant));
+    if (eligible) {
+      check(counts.get(url) === 1, `sitemap lists ${variantPath(family, variant)} exactly once`);
+    } else {
+      check(
+        counts.get(url) === undefined,
+        `sitemap omits ${variantPath(family, variant)} while it is withheld from search`,
+      );
+    }
   }
 
   for (const family of publishedFamilies()) {

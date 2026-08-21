@@ -149,6 +149,23 @@ export interface SizeVariant {
   /** What ships as standard in this size. Family-level unless a size genuinely differs. */
   includedConfiguration: string[];
 
+  /**
+   * EDITORIAL-QUALITY APPROVAL GATE — not a second price source.
+   *
+   * A commerce record makes a size sellable and populates the visible price. This flag is a
+   * separate question: is the page itself finished — genuinely unique, size-specific content
+   * rather than the family boilerplate with the dimensions swapped?
+   *
+   * Price availability and SEO readiness are deliberately independent. A size can be priced and
+   * buyable while its page is still thin, and that page must not be indexed, listed in the
+   * sitemap, published as a Product/Offer, carried in ProductGroup.hasVariant, or submitted to
+   * Merchant Center. All five require a valid commerce record AND this flag.
+   *
+   * OPTIONAL and DEFAULTS TO FALSE: every read goes through variantIsContentComplete(), which
+   * treats undefined as false, so a new size is withheld until someone explicitly approves it.
+   * Never set this true to clear a validator warning — set it only when the copy is real.
+   */
+  contentComplete?: boolean;
   /** May this size be added to the cart? Still ANDed with priceConfirmed + availability. */
   cartEligible: boolean;
   /** May this size be submitted to Merchant Center? Still ANDed with every gate above. */
@@ -381,6 +398,19 @@ export const PRODUCT_FAMILIES: ProductFamily[] = [
         cartEligible: true,
         merchantEligible: true,
         published: true,
+        /* EDITORIAL GATE — approved, and the only size in this family that is.
+         *
+         * This is not a new size page awaiting copy: it is the family's long-standing PARENT
+         * page (rendersAtParent), carrying the full owner-written Container Office content that
+         * predates the size ladder entirely. Its price has been owner-confirmed since before
+         * these variants existed. So the question the flag asks — is the page finished, with
+         * genuinely size-specific content? — is already answered yes by a page that has been
+         * live for months.
+         *
+         * The five new sizes stay false: they have neither confirmed prices nor their own copy.
+         * Feed inclusion is unaffected either way — merchantFeedPolicy.ts still holds POC-CO-GEN
+         * back pending a product-accurate photograph, which is a separate gate again. */
+        contentComplete: true,
         note:
           "Owner-verified 25 ft x 14 ft build at a fixed ₹12,00,000 ex-GST. Served at the family's " +
           "parent URL. Feed inclusion remains governed by merchantFeedPolicy.ts, which currently " +
@@ -608,9 +638,21 @@ export function variantIsPurchasable(family: ProductFamily, variant: SizeVariant
  * Everything variantIsPurchasable() requires, PLUS both merchantEligible flags AND a real
  * variant photograph — Google compares the feed image against the landing page.
  */
+/**
+ * Has an editor approved this size's page as finished? Defaults to FALSE when unset.
+ *
+ * Read this rather than variant.contentComplete directly, so the default lives in exactly one
+ * place and an unset flag can never be mistaken for approval.
+ */
+export function variantIsContentComplete(variant: SizeVariant): boolean {
+  return variant.contentComplete === true;
+}
 export function variantIsFeedEligible(family: ProductFamily, variant: SizeVariant): boolean {
   return (
     variantIsPurchasable(family, variant) &&
+    // Editorial gate: a priced size with an unfinished page is not submitted to Merchant
+    // Center. Google compares the feed row against the landing page it points at.
+    variantIsContentComplete(variant) &&
     family.merchantEligible &&
     variant.merchantEligible &&
     variantHasFeedImage(variant)

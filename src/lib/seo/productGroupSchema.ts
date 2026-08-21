@@ -42,6 +42,7 @@ import {
 } from "@/data/productFamilies";
 import { priceForFeed, sellPrice } from "@/lib/pricing/gst";
 import { RETURN_POLICY, shippingDetailsForAllZones, SITE_URL } from "@/lib/seo/structured-data";
+import { variantIsContentComplete } from "@/data/productFamilies";
 
 /** Absolute https URL. A crawler cannot resolve a root-relative image or link. */
 function absolute(url: string): string {
@@ -140,12 +141,28 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
  * so the Offer, the Product node and the page's robots directive can never disagree: a size
  * with no confirmed price emits no offer, emits no Product node, and is withheld from search.
  */
+/**
+ * May this size appear in SEARCH at all?
+ *
+ * TWO independent conditions, deliberately:
+ *   1. a valid commerce record with a confirmed price  (variantHasPublishablePrice)
+ *   2. an editor has approved the page as finished      (variantIsContentComplete)
+ *
+ * Price availability and SEO readiness are separate concerns. A priced size whose page is
+ * still boilerplate is sellable — its price box works — but it is withheld from search until
+ * the copy is real. This single predicate drives all five search surfaces so they cannot
+ * drift: noindex, sitemap inclusion, ProductGroup.hasVariant, the Product/Offer node, and
+ * (via variantIsFeedEligible) Merchant Center.
+ */
+export function variantIsSearchEligible(family: ProductFamily, variant: SizeVariant): boolean {
+  return variantHasPublishablePrice(family, variant) && variantIsContentComplete(variant);
+}
 export function variantHasPublishablePrice(family: ProductFamily, variant: SizeVariant): boolean {
   return variantOffer(family, variant) !== undefined;
 }
 function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
   const offer = variantOffer(family, variant);
-  if (!offer) return null;
+  if (!offer || !variantIsContentComplete(variant)) return null;
 
   return {
     "@type": "Product",
@@ -162,11 +179,21 @@ function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
  * The ProductGroup node. IDENTICAL on the parent page and on every size page.
  *
  * `images` is the family gallery, already absolute-ready (root-relative is fine, it is
- * absolutised here). `hasVariant` lists every PUBLISHED size, so the group is discoverable
- * from any page in it.
+ * absolutised here). `hasVariant` lists the SEARCH-ELIGIBLE sizes — priced AND editorially
+ * approved — so the group is discoverable from any page in it.
+ *
+ * RETURNS NULL when no size qualifies. A ProductGroup whose hasVariant is an empty array
+ * describes a family with nothing in it: it claims a group exists, lists no members, and gives
+ * Google a node it can only read as thin. Emitting nothing is honest and costs no valid markup —
+ * the page keeps its BreadcrumbList, and the group returns the moment one size is approved.
  */
 export function generateProductGroupSchema(family: ProductFamily, images: string[] = []) {
   const gallery = Array.from(new Set(images.filter(Boolean).map(absolute)));
+  const variants = publishedVariants(family)
+    .map((v) => siblingVariantRef(family, v))
+    .filter(Boolean);
+
+  if (variants.length === 0) return null;
 
   return {
     "@context": "https://schema.org",
@@ -183,9 +210,7 @@ export function generateProductGroupSchema(family: ProductFamily, images: string
     category: family.categoryName,
     // Google reads this to know the group is a size ladder rather than, say, a colour one.
     variesBy: family.variesBy,
-    hasVariant: publishedVariants(family)
-      .map((v) => siblingVariantRef(family, v))
-      .filter(Boolean),
+    hasVariant: variants,
   };
 }
 
@@ -202,13 +227,13 @@ export function generateSizeVariantProductSchema(
 ) {
   const gallery = Array.from(new Set(images.filter(Boolean).map(absolute)));
   const offer = variantOffer(family, variant);
-  /* A size with no confirmed price yields no offer, and a Product node carrying neither an
+  /* A size that is unpriced OR whose page is not editorially approved yields no offer, and a Product node carrying neither an
    * offer nor a rating is rejected outright by Google ("Either 'offers', 'review' or
    * 'aggregateRating' should be specified"). Emit nothing rather than an invalid item: the
    * page still carries its ProductGroup and BreadcrumbList, and this node returns the moment
    * a commerce record exists for the variantId. Inventing a price to satisfy the validator is
    * not an option. */
-  if (!offer) return null;
+  if (!offer || !variantIsContentComplete(variant)) return null;
 
   return {
     "@context": "https://schema.org",
