@@ -101,6 +101,18 @@ export interface ProductCommerce {
   kind: ProductKind;
   inStock: boolean;
   /**
+   * Merchant Center `<g:availability>` OVERRIDE. Omit for every hand-written row — the feed
+   * then derives the value from `inStock` exactly as it always has, so existing output is
+   * untouched.
+   *
+   * It exists because `inStock` is a boolean and Merchant Center accepts a third state:
+   * a size variant declaring `pre_order` must submit "preorder", which a boolean cannot
+   * express and which "out_of_stock" would misreport. Populated only by
+   * variantCommerceRows() in src/data/productFamilies.ts, from the one availability mapping
+   * shared with the schema.org Offer.
+   */
+  feedAvailability?: "in_stock" | "out_of_stock" | "preorder";
+  /**
    * What basePrice MEANS. Omit for a normal outright sale (the default).
    * Set "monthly-rental" and the SKU is excluded from feedEligible(), from every sale-price
    * table and from the JSON-LD Offer block, while staying bookable on-site.

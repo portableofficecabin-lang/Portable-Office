@@ -575,7 +575,7 @@ function buildItem(
       <g:description>${xmlEscape(feedDescription(commerce, product))}</g:description>
       <g:link>${xmlEscape(link)}</g:link>
       <g:image_link>${xmlEscape(primaryImage)}</g:image_link>
-${additional ? `${additional}\n` : ""}      <g:availability>${commerce.inStock ? "in_stock" : "out_of_stock"}</g:availability>
+${additional ? `${additional}\n` : ""}      <g:availability>${commerce.feedAvailability ?? (commerce.inStock ? "in_stock" : "out_of_stock")}</g:availability>
       <g:price>${listPrice}</g:price>
 ${salePrice ? `      <g:sale_price>${salePrice}</g:sale_price>\n` : ""}      <g:brand>${xmlEscape(BRAND)}</g:brand>
       <g:identifier_exists>no</g:identifier_exists>
