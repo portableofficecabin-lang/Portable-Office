@@ -45,6 +45,7 @@ export function buildPageMetadata({
   image,
   ogImage,
   imageAlt,
+  noindex = false,
   ogType = "website",
   geo,
 }: {
@@ -64,6 +65,12 @@ export function buildPageMetadata({
   ogImage?: string;
   /** Alt text for the social image. Optional. */
   imageAlt?: string;
+  /**
+   * Withhold the page from search. Use ONLY for a page that is genuinely not ready to
+   * rank — e.g. a standard size whose selling price is not confirmed yet, where
+   * indexing it would publish an incomplete offer. Defaults to indexable.
+   */
+  noindex?: boolean;
   ogType?: "website" | "article" | "product";
   geo?: GeoMeta;
 }) {
@@ -88,7 +95,9 @@ export function buildPageMetadata({
     // to the not-found boundary or private routes. That prevents the layout's
     // index,follow from colliding with Next's auto noindex on 404 renders (which
     // produced the contradictory "index, follow" + "noindex" Ahrefs flagged).
-    robots: { index: true, follow: true },
+    // `follow` stays true even when noindex: the page still passes link equity to the
+    // parent and siblings it links to, which is what we want for a temporarily withheld size.
+    robots: noindex ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: {
       title: resolvedTitle,
       description,

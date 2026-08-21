@@ -133,6 +133,16 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
  * Returns null for a size with no confirmed price, so it drops out of hasVariant instead of
  * being published as an invalid item. It reappears the moment a commerce record exists.
  */
+/**
+ * Does this size have a price we can publish?
+ *
+ * The SINGLE source of truth for that question. It is literally `variantOffer() !== undefined`,
+ * so the Offer, the Product node and the page's robots directive can never disagree: a size
+ * with no confirmed price emits no offer, emits no Product node, and is withheld from search.
+ */
+export function variantHasPublishablePrice(family: ProductFamily, variant: SizeVariant): boolean {
+  return variantOffer(family, variant) !== undefined;
+}
 function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
   const offer = variantOffer(family, variant);
   if (!offer) return null;

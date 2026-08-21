@@ -14,6 +14,7 @@ import type { Product } from "@/data/products";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { primaryImageFor } from "@/lib/seo/productPageMeta";
+import { variantHasPublishablePrice } from "@/lib/seo/productGroupSchema";
 
 /**
  * SERVER-SIDE METADATA for one standard size — /products/<family>/<size>.
@@ -107,5 +108,10 @@ export function buildVariantPageMetadata(
     image: primaryImageFor(variantProduct),
     imageAlt: `${family.groupTitle} — ${family.categoryName} by ${family.brand}`,
     ogType: "website",
+    /* A standard size with no confirmed selling price is withheld from search until the
+     * price exists. Indexing it would publish a size page whose offer we cannot state —
+     * the page would rank on the size keyword and then show no price. Same predicate that
+     * gates the Offer and the Product node, so the three can never disagree. */
+    noindex: !variantHasPublishablePrice(family, variant),
   });
 }
