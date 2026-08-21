@@ -122,7 +122,21 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
  * Deliberately carries NO offer — the price of a sibling belongs on the sibling's own page,
  * and duplicating it here is how two pages end up quoting different numbers for one size.
  */
+/**
+ * One entry in ProductGroup.hasVariant.
+ *
+ * Carries the variant's own offer, because each of these is a full Product node to a
+ * validator, not a pointer — and a Product with no offer, review or aggregateRating is
+ * rejected ("Either 'offers', 'review' or 'aggregateRating' should be specified"). Five
+ * unpriced container-office sizes were shipping exactly that, nested inside the group.
+ *
+ * Returns null for a size with no confirmed price, so it drops out of hasVariant instead of
+ * being published as an invalid item. It reappears the moment a commerce record exists.
+ */
 function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
+  const offer = variantOffer(family, variant);
+  if (!offer) return null;
+
   return {
     "@type": "Product",
     "@id": `${variantUrl(family, variant)}#product`,
@@ -130,6 +144,7 @@ function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
     url: variantUrl(family, variant),
     sku: variant.sku,
     size: variant.sizeLabelPlain,
+    offers: offer,
   };
 }
 
@@ -158,7 +173,9 @@ export function generateProductGroupSchema(family: ProductFamily, images: string
     category: family.categoryName,
     // Google reads this to know the group is a size ladder rather than, say, a colour one.
     variesBy: family.variesBy,
-    hasVariant: publishedVariants(family).map((v) => siblingVariantRef(family, v)),
+    hasVariant: publishedVariants(family)
+      .map((v) => siblingVariantRef(family, v))
+      .filter(Boolean),
   };
 }
 
