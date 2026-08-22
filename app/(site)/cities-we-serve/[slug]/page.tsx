@@ -12,6 +12,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CITY_PAGES, cityPageBySlug } from "@/data/cityPages";
+import { Layout } from "@/components/layout/Layout";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
@@ -48,7 +49,17 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
   if (!page) notFound();
 
   return (
-    <>
+    /* WRAPPED IN <Layout> — header, nav, footer, WhatsApp button and skip link.
+     *
+     * These pages shipped without it and rendered as bare documents: no navigation in, no
+     * footer links out, no contact CTA, no skip link. /cities-we-serve (the index) has always
+     * wrapped Layout; this route, its own children, never did — so every city landing page was
+     * a dead end for both visitors and crawlers.
+     *
+     * The inner wrapper below is a <div>, NOT a <main>: Layout already renders the page's one
+     * <main id="main-content">, which is the target of the skip link, and nesting a second
+     * <main> inside it is invalid HTML and breaks that landmark for screen readers. */
+    <Layout>
       <JsonLd
         data={generateBreadcrumbSchema([
           { name: "Home", url: "https://portableofficecabin.com" },
@@ -58,7 +69,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       />
       <JsonLd data={generateFAQSchema(page.faqs)} />
 
-      <main className="container mx-auto max-w-4xl px-4 py-12">
+      <div className="container mx-auto max-w-4xl px-4 py-12">
         {/* breadcrumb (visible) */}
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted-foreground">
           <Link href="/" className="hover:underline">Home</Link>
@@ -264,7 +275,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {page.disclaimer && (
           <p className="mt-8 text-xs leading-relaxed text-muted-foreground/80">{page.disclaimer}</p>
         )}
-      </main>
-    </>
+      </div>
+    </Layout>
   );
 }

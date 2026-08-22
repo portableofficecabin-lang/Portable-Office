@@ -1648,13 +1648,13 @@ export const CITY_PAGES: CityPage[] = [
      * here. Keep it that way if you swap them. */
     heroImage: {
       src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-front-elevation.webp",
-      alt: "Villa construction company Bangalore — front elevation of a G+1 RCC villa with car porch, stone-clad base and timber louvre screen",
+      alt: "Villa construction in Bangalore — front elevation of a G+1 villa with car porch, stone-clad plinth and timber louvre screen",
       width: 1024,
       height: 1024,
     },
     featureImage: {
       src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-aerial-terrace.webp",
-      alt: "Aerial view of a G+1 villa in Bangalore showing the terrace garden, solar panels, roof layout and compound setbacks",
+      alt: "Aerial view of a G+1 villa in Bangalore showing the terrace garden, solar panels and the setbacks around the compound",
       width: 1024,
       height: 1024,
       caption:
@@ -1662,20 +1662,20 @@ export const CITY_PAGES: CityPage[] = [
     },
     interiorImage: {
       src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-living-room.webp",
-      alt: "Villa living room in Bangalore with double-height ceiling, stone feature wall, cove lighting and full-height sliding glazing to the garden",
+      alt: "Double-height villa living room with stone feature wall, cove lighting and sliding glazing onto the garden",
       width: 1024,
       height: 1024,
     },
     gallery: [
       {
         src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-street-view.webp",
-        alt: "Villa construction in Bangalore — three-quarter street view of a G+1 house showing the porch, entrance steps and first-floor glazing",
+        alt: "Three-quarter street view of a G+1 villa in Bangalore showing the porch, entrance steps and first-floor glazing",
         width: 1024,
         height: 1024,
       },
       {
         src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-study-room.webp",
-        alt: "Ground-floor study in a Bangalore villa with full-height glazing onto the side garden and a built-in timber storage wall",
+        alt: "Ground-floor study in a Bangalore villa with full-height glazing to the side garden and built-in timber storage",
         width: 1024,
         height: 1024,
       },
