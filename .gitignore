@@ -30,3 +30,7 @@ image-backups/
 # Supabase CLI temporary files
 supabase/.temp/
 merchant-feed.xml
+
+# Scratch copy of the repo that tooling drops here (~38MB, carries its own .git and .env).
+# Untracked and unignored it was one `git add .` away from committing a second env file.
+.mainbase/
