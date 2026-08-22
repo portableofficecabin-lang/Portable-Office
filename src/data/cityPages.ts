@@ -1581,6 +1581,300 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Size, what it's for, and where it's going to stand. A photo of the spot helps more than anything. You'll have a clear price inside a day, with no obligation attached.",
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * VILLA CONSTRUCTION COMPANY BANGALORE
+   *
+   * The first SERVICE page in this file — every sibling above sells a container or cabin at a
+   * location. This one sells RCC villa construction, the same work the Construction Individual
+   * Building product page describes (POC-CIB-RCC, id "45"), aimed at the Bangalore query.
+   *
+   * ── WHAT THIS COPY DELIBERATELY DOES NOT SAY, AND WHY ────────────────────────────────
+   * The supplied SEO pack carried four things this page does not repeat, each omitted on the
+   * owner's instruction (2026-08-22) because src/components/products/ConstructionIndividual-
+   * BuildingContent.tsx records that they have never been supplied:
+   *
+   *   • RATE PER SQ FT. The pack quoted ₹350–₹850 (labour) and ₹2,200–₹7,000+ (material
+   *     inclusive). POC-CIB-RCC is priceConfirmed:false, basePrice 0, kind "service" — the
+   *     owner prices per sq ft after a site visit. Publishing a band here would contradict
+   *     the product page AND the quotation the customer actually receives.
+   *   • WARRANTY TERM. The pack promised 10 years structural and 1 year MEP. No warranty
+   *     period has been supplied for this service.
+   *   • FOUNDING YEAR. The pack said "since 2023". Four other pages on this site say 2010,
+   *     2014, 2020 and 2022, and COMPANY records no founding year, so this page states none.
+   *   • FIXED COMPLETION TIMELINE. The pack promised 10–12 months for a G+1. Programme
+   *     depends on plot, approvals and scope, and is agreed after the site visit.
+   *
+   * Also dropped: the pack's named material brands (they arrived as a bracketed placeholder,
+   * and naming third-party brands would require the trademark disclaimer this interface
+   * documents), and its numeric service promises — a 48-hour estimate, a 40 km free-visit
+   * radius and daily engineer visits — none of which is recorded anywhere in this codebase.
+   *
+   * Everything that remains is either a checkable fact about how an RCC villa is built and
+   * approved in Bangalore, or a statement about this company already verified in
+   * src/lib/company.ts. Add the rates, the warranty and the timeline here the day the owner
+   * supplies them — and update the product page in the same commit so the two agree.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "villa-construction-company-bangalore",
+    city: "Bangalore",
+    metaTitle: "Villa Construction Company in Bangalore",
+    metaDescription:
+      "Portable Office Cabin builds RCC villas, duplex homes and independent houses on your own plot across Bangalore. BBMP and BDA approvals handled. Free site visit.",
+    keywords:
+      "villa construction company Bangalore, villa construction company in Bangalore, villa builders in Bangalore, turnkey villa construction Bangalore, luxury villa construction Bangalore, independent house construction Bangalore, duplex villa construction Bangalore, RCC house construction Bangalore",
+    geo: {
+      region: "IN-KA",
+      placename: "Bengaluru, Karnataka, India",
+      position: "12.9716;77.5946",
+      icbm: "12.9716, 77.5946",
+    },
+
+    /* PLACEHOLDER — the owner is supplying real villa site photography (2026-08-22). This page
+     * must NOT be deployed until the file below exists: the pack's own advice is that stock or
+     * borrowed imagery hurts a builder's page more than it helps, and the only house renders in
+     * the repo belong to the Construction Individual Building product page. */
+    heroImage: {
+      src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-site.webp",
+      alt: "Villa construction company Bangalore — Portable Office Cabin villa site in progress",
+      width: 1200,
+      height: 800,
+    },
+
+    h1: "Villa Construction Company in Bangalore — Built to Your Plan, on Your Own Plot",
+    tagline:
+      "RCC villas, duplex homes and independent houses, built on your site from plan sanction to handover.",
+    intro: [
+      "Portable Office Cabin is a villa construction company in Bangalore that builds independent villas, duplex homes and larger residences on plots owners already hold. The work is conventional reinforced cement concrete construction — footings, columns, beams and slabs cast on site, with block masonry walls between them — not a prefabricated unit dropped onto a plinth.",
+      "If you own a site anywhere in Bengaluru and you are weighing up builders, this page sets out how a villa actually gets built here: what has to be approved before the first column goes up, what the sequence on site looks like, what is yours to decide, and the questions worth asking every contractor you speak to, including us.",
+      "We price each villa per square foot after visiting the plot, because the honest figure depends on your soil, your setbacks, how many floors you want and how you intend to finish it. You receive a written, line-by-line estimate — not a single number on a page — and it is free.",
+    ],
+
+    whyHeading: "Why Build on Your Own Plot Rather Than Buy a Developer Villa",
+    whyIntro:
+      "Owners who already hold a site in Bangalore are usually choosing between building and buying into a gated project. The two produce very different homes for similar money.",
+    whyBullets: [
+      {
+        title: "You keep the whole plot",
+        text: "A developer villa carries an undivided share of common land and a loading factor on the built-up area you pay for. On your own site, every square foot you buy is yours.",
+      },
+      {
+        title: "The specification is yours to set",
+        text: "Room sizes, ceiling heights, where the staircase lands, how many bathrooms, which way the kitchen faces. A developer fixes all of this before you arrive; on your plot none of it is fixed until you sign the drawings.",
+      },
+      {
+        title: "You can build the structure well and finish it later",
+        text: "The structure of a modest villa and an expensive one is close to identical — the same steel grade, the same concrete mix, the same block work. The difference is finishes. Building well and upgrading tiles and fittings later is straightforward; upgrading a structure afterwards is not.",
+      },
+      {
+        title: "The trade-off is your time",
+        text: "Buying is faster and needs nothing from you. Building means approvals, decisions and a programme you manage with your builder. That is the real cost difference, and it is worth being honest about before you start.",
+      },
+    ],
+
+    solutionsHeading: "What We Build in Bangalore",
+    solutionsIntro:
+      "We take up residential construction on owner-held plots, in the sizes Bangalore layouts are actually cut into.",
+    solutions: [
+      {
+        title: "Independent villas and duplex houses",
+        text: "On 30×40, 30×50, 40×60 and larger sites, ground floor through G+3 depending on what your zoning and setbacks allow.",
+      },
+      {
+        title: "Architect-led villas with premium finishes",
+        text: "Where you want the elevation, the interiors and the landscaping designed together rather than decided slab by slab.",
+      },
+      {
+        title: "Turnkey construction including approvals",
+        text: "Plan sanction through to handover under one contract, so one party is answerable for both the paperwork and the pour.",
+      },
+      {
+        title: "Farmhouses and weekend homes",
+        text: "On the outskirts — the Kanakapura, Devanahalli, Hoskote and Nandi Hills belts — where BMRDA or panchayat approval applies instead of BBMP.",
+      },
+      {
+        title: "Labour-only contracts",
+        text: "For owners who prefer to buy their own material and want a disciplined crew working to a written specification and sequence.",
+      },
+    ],
+
+    featuresHeading: "How an RCC Villa Is Actually Built",
+    featuresIntro:
+      "Worth understanding before you compare quotations, because two builders can quote the same rate for very different structures.",
+    features: [
+      "Excavation and footings sized to the soil the plot actually has, not to a standard drawing — parts of east and north Bangalore sit on black cotton soil that needs deeper footings.",
+      "A reinforced concrete frame: columns from the footings up, tie beams at plinth, and beam-and-slab floors cast in place at each level.",
+      "Concrete mixed to a designed grade rather than by eye, with cube samples taken so each pour can be checked against it.",
+      "Reinforcement to a stated steel grade and bar schedule, tied and inspected before any slab is closed.",
+      "Solid or hollow block masonry walls built between the frame — the walls carry no building load, which is why openings can be generous.",
+      "Waterproofing where water actually collects: sunken slabs in bathrooms, the terrace, and the plinth against rising damp.",
+      "Conduits, plumbing lines and drainage set into the structure before plastering, so nothing is chased into a finished wall later.",
+      "Plastering, flooring, joinery, painting and fittings in sequence, with the wet trades finished before the finishes go in.",
+    ],
+    sizesNote:
+      "Most Bangalore villas we take up sit on 30×40, 30×50 or 40×60 sites at ground to G+2. Setbacks, road width and the sanctioned plan decide how much of the plot becomes built-up area — we work that out at the site visit, before quoting.",
+
+    industriesHeading: "Who We Build For",
+    industriesIntro:
+      "The brief changes a lot depending on who is building and why, so it is worth saying which of these you are at the first conversation.",
+    industries: [
+      {
+        title: "Families building the home they will live in",
+        text: "The most common brief. Decisions get made around how the household actually uses rooms — where parents sleep, whether the kitchen opens to the dining area, how much parking is needed in five years.",
+      },
+      {
+        title: "Owners abroad or working long hours",
+        text: "Where nobody can be at the site regularly, the work has to be documented rather than described — photographs at each stage and a written record of what was agreed.",
+      },
+      {
+        title: "Plot holders building to let",
+        text: "Rental returns come from unit count and durable finishes, not from expensive ones. The plan usually matters more than the specification.",
+      },
+      {
+        title: "Owners replacing an old house",
+        text: "Demolition, debris clearance and a fresh sanction on an existing Khata property, which is a different approval path from a vacant site.",
+      },
+    ],
+
+    customHeading: "What You Decide, and When",
+    customIntro:
+      "Almost every expensive change on a villa site comes from a decision made late. These are the ones worth settling early.",
+    customBullets: [
+      {
+        title: "The plan, before the footings",
+        text: "Room sizes, stacking of bathrooms, staircase position and parking. Every offset in the plan adds formwork, steel and plumbing runs, so a simple rectangle costs less to build than a complicated outline of the same area.",
+      },
+      {
+        title: "Floor count and future floors, before the columns",
+        text: "Columns and footings are sized for the final height. Building a G+1 now with a G+2 later in mind is cheap; adding a floor to a structure that was never designed for it is not.",
+      },
+      {
+        title: "Finish grade, before plastering",
+        text: "Tile size and type, whether windows are aluminium or UPVC, the extent of false ceiling and woodwork. These set the cost band far more than the structure does.",
+      },
+      {
+        title: "Kitchen and bathroom layouts, before conduiting",
+        text: "Every point — water, drainage, power, exhaust — is set into the wall before plaster. Moving one afterwards means breaking a finished surface.",
+      },
+      {
+        title: "Elevation and external finish, before scaffolding comes down",
+        text: "Texture, cladding, railings and exterior lighting are far easier while access is still up.",
+      },
+    ],
+    customOutro:
+      "We put each of these in front of you at the point in the programme where the decision is still free to make, rather than asking after the fact.",
+
+    whyUsHeading: "Why Owners Choose Us for Villa Construction in Bangalore",
+    whyUsIntro:
+      "We would rather you chose us for reasons you can verify than for adjectives on a web page.",
+    whyUsBullets: [
+      {
+        title: "One written contract with the scope in it",
+        text: "Rate, specification, payment stages tied to completed work, and what happens if the programme slips — agreed in writing before we start, not settled by conversation later.",
+      },
+      {
+        title: "A site engineer assigned to your project",
+        text: "One named person responsible for your build, so you are not explaining your plot afresh to whoever answers the phone.",
+      },
+      {
+        title: "Approvals handled end to end",
+        text: "Plan sanction, the commencement certificate, utility connections and the occupancy certificate are part of the turnkey scope. Most delays on Bangalore house builds happen in paperwork, not brickwork.",
+      },
+      {
+        title: "A written estimate before you commit",
+        text: "Line by line, against your own plot and your own drawing — free, and yours to take to another builder for comparison.",
+      },
+      {
+        title: "An ISO 9001:2015 certified company",
+        text: "Certificate QT-99968/0726, alongside GST registration and Udyam registration — all verifiable, all stated in full on our contact page.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve Across Bangalore",
+    areasText:
+      "We take up villa construction across Bengaluru Urban and the surrounding taluks — Whitefield, Sarjapur Road, Varthur, Electronic City, Bommasandra, Jigani, Anekal, Bannerghatta Road, JP Nagar, Jayanagar, Kanakapura Road, Yelahanka, Hebbal, Devanahalli, Hennur, Horamavu, Kengeri, Rajarajeshwari Nagar, Mysore Road, Hoskote and Doddaballapura. Our Bangalore office is at Electronic City Phase 1, and site visits across the city are free.",
+
+    howHeading: "How the Build Runs, Step by Step",
+    howSteps: [
+      {
+        title: "Site visit and measurement",
+        text: "We measure the plot, check road width and the setbacks your sanction will require, look at soil and water table, and tell you plainly what is buildable under current zoning before anyone talks money.",
+      },
+      {
+        title: "Drawings and a written estimate",
+        text: "Floor plans and elevations worked around how your household lives, with a bill of quantities behind the figure rather than a single lump sum.",
+      },
+      {
+        title: "Plan sanction",
+        text: "Drawings prepared and filed with the authority your plot falls under — BBMP inside city limits, BDA in its layouts, BMRDA across the metropolitan region, or the village panchayat beyond. We follow the file so you are not standing in the queue.",
+      },
+      {
+        title: "Agreement and programme",
+        text: "A written contract fixing scope, specification, payment stages and the programme, signed before mobilisation.",
+      },
+      {
+        title: "Foundation and structure",
+        text: "Excavation, footings, plinth, columns and slabs, with concrete cube samples taken at each pour and reinforcement checked before closing.",
+      },
+      {
+        title: "Masonry, plumbing and electrical",
+        text: "Block work, conduiting, plumbing and drainage lines, and waterproofing to sunken slabs and terrace.",
+      },
+      {
+        title: "Finishes",
+        text: "Plastering, flooring, doors and windows, painting, fittings and fixtures — in that order, so nothing finished gets damaged by a trade that follows it.",
+      },
+      {
+        title: "Handover",
+        text: "Snag list closed, final clean, completion drawings, and help with the occupancy certificate and the electricity and water connections.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does it cost to build a villa in Bangalore?",
+        answer:
+          "We price villa construction per square foot of built-up area, and we quote it after visiting your plot. The figure moves with soil and foundation depth, floor count, how much of the plot your setbacks leave buildable, and the finish grade you choose — which is why a number quoted before anyone has seen the site is not worth much. You get a free site visit and a written, line-by-line estimate against your own drawing.",
+      },
+      {
+        question: "How long does villa construction take in Bangalore?",
+        answer:
+          "It depends on the size of the villa, the number of floors, the ground conditions and how quickly plan sanction comes through. We agree a programme in writing after the site visit, once we know what we are building and which authority is approving it, rather than quoting a standard duration up front.",
+      },
+      {
+        question: "Do you handle BBMP or BDA plan approval?",
+        answer:
+          "Yes. Our turnkey scope covers preparing the drawings and filing for sanction with BBMP, BDA, BMRDA or the relevant village panchayat depending on where your plot falls, along with the commencement certificate before work starts and the occupancy certificate at the end. Approval timelines are set by the authority, not by us, so we tell you what to expect and keep the file moving.",
+      },
+      {
+        question: "What is the difference between a villa and an independent house?",
+        answer:
+          "In Bangalore the words are used interchangeably. \"Villa\" usually implies an architect-designed home with setback or garden space and a higher finish specification, while \"independent house\" describes any self-owned home on its own plot. Structurally they are the same thing, and we build both.",
+      },
+      {
+        question: "Is it cheaper to build a villa than to buy one from a developer?",
+        answer:
+          "If you already own the plot, building generally gives you more house for the money, because a developer villa carries the builder's margin, a loading factor on the area you pay for and an undivided share of common land rather than the whole site. The trade-off is time: buying is immediate, while building means approvals, decisions and a programme you run with your contractor.",
+      },
+      {
+        question: "Do you offer turnkey villa construction with interiors?",
+        answer:
+          "Yes. We can hand the villa over ready to occupy, with modular kitchen, wardrobes, false ceilings and lighting included in the same contract, so responsibility for the civil work and the interiors does not sit with two different parties.",
+      },
+      {
+        question: "What payment schedule do you follow?",
+        answer:
+          "Stage-wise, against work that is already completed — mobilisation, then instalments tied to plinth, each slab, masonry, plastering, flooring and finishing, with a retention released at handover. The exact stages and amounts are written into your contract before work begins, and you should never be paying substantially ahead of what is standing on site.",
+      },
+    ],
+
+    ctaHeading: "Send Us Your Plot Details",
+    ctaText:
+      "Tell us the site size, the locality and roughly how many floors you have in mind. We will visit the plot, check what your setbacks and soil allow, and send a written line-by-line estimate for your own site — free, and with no obligation to proceed.",
+
+    disclaimer:
+      "BBMP, BDA, BMRDA and the village panchayats are independent statutory authorities. Portable Office Cabin is not affiliated with any of them and does not control their approval timelines; we prepare and file the drawings and follow the application on your behalf.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
