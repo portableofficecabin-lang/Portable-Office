@@ -122,7 +122,31 @@ function variantOffer(family: ProductFamily, variant: SizeVariant) {
  * Deliberately carries NO offer — the price of a sibling belongs on the sibling's own page,
  * and duplicating it here is how two pages end up quoting different numbers for one size.
  */
+/**
+ * One entry in ProductGroup.hasVariant.
+ *
+ * Carries the variant's own offer, because each of these is a full Product node to a
+ * validator, not a pointer — and a Product with no offer, review or aggregateRating is
+ * rejected ("Either 'offers', 'review' or 'aggregateRating' should be specified"). Five
+ * unpriced container-office sizes were shipping exactly that, nested inside the group.
+ *
+ * Returns null for a size with no confirmed price, so it drops out of hasVariant instead of
+ * being published as an invalid item. It reappears the moment a commerce record exists.
+ */
+/**
+ * Does this size have a price we can publish?
+ *
+ * The SINGLE source of truth for that question. It is literally `variantOffer() !== undefined`,
+ * so the Offer, the Product node and the page's robots directive can never disagree: a size
+ * with no confirmed price emits no offer, emits no Product node, and is withheld from search.
+ */
+export function variantHasPublishablePrice(family: ProductFamily, variant: SizeVariant): boolean {
+  return variantOffer(family, variant) !== undefined;
+}
 function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
+  const offer = variantOffer(family, variant);
+  if (!offer) return null;
+
   return {
     "@type": "Product",
     "@id": `${variantUrl(family, variant)}#product`,
@@ -130,6 +154,7 @@ function siblingVariantRef(family: ProductFamily, variant: SizeVariant) {
     url: variantUrl(family, variant),
     sku: variant.sku,
     size: variant.sizeLabelPlain,
+    offers: offer,
   };
 }
 
@@ -158,7 +183,9 @@ export function generateProductGroupSchema(family: ProductFamily, images: string
     category: family.categoryName,
     // Google reads this to know the group is a size ladder rather than, say, a colour one.
     variesBy: family.variesBy,
-    hasVariant: publishedVariants(family).map((v) => siblingVariantRef(family, v)),
+    hasVariant: publishedVariants(family)
+      .map((v) => siblingVariantRef(family, v))
+      .filter(Boolean),
   };
 }
 
@@ -175,6 +202,13 @@ export function generateSizeVariantProductSchema(
 ) {
   const gallery = Array.from(new Set(images.filter(Boolean).map(absolute)));
   const offer = variantOffer(family, variant);
+  /* A size with no confirmed price yields no offer, and a Product node carrying neither an
+   * offer nor a rating is rejected outright by Google ("Either 'offers', 'review' or
+   * 'aggregateRating' should be specified"). Emit nothing rather than an invalid item: the
+   * page still carries its ProductGroup and BreadcrumbList, and this node returns the moment
+   * a commerce record exists for the variantId. Inventing a price to satisfy the validator is
+   * not an option. */
+  if (!offer) return null;
 
   return {
     "@context": "https://schema.org",

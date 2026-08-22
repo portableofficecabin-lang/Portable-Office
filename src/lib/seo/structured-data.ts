@@ -470,6 +470,42 @@ export function generateProductStructuredData(product: {
   // never fed, so there is nothing to match.
   const name = purchasable && commerce ? commerce.feedTitle : product.name;
 
+  /* GOOGLE'S HARD REQUIREMENT: a Product node must carry at least one of offers, review or
+   * aggregateRating, or the whole item is reported invalid and drops out of rich results
+   * ("Either 'offers', 'review' or 'aggregateRating' should be specified").
+   *
+   * Three of our pages cannot satisfy it honestly:
+   *   · Construction Individual Building (POC-CIB-RCC) — a per-sq-ft RCC job priced only after
+   *     a site visit. basePrice is deliberately 0 and priceConfirmed false.
+   *   · Shipping Container Rental (POC-SC-RENT) — payable online, but the figure is monthly
+   *     rent, so it is not a purchase offer (see isOutrightSale).
+   *   · The Bangalore promotions landing page — passes no commerce id at all.
+   * None has reviews. Inventing a price or a rating to silence the error is exactly the
+   * fabrication the rest of this file exists to prevent.
+   *
+   * So when the node would carry neither, we emit schema.org Service instead. That is the
+   * accurate type for an unpriced, quote-only offering — Service does not require offers, and
+   * it keeps the description, image, category, brand and provider. sku/mpn/isVariantOf are
+   * dropped because they are Product-only and meaningless without a sellable unit. */
+  const isRichResultEligible =
+    Object.keys(offerBlock).length > 0 || Object.keys(reviewBlock).length > 0;
+
+  if (!isRichResultEligible) {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name,
+      description: product.description,
+      ...(product.keywords ? { keywords: product.keywords } : {}),
+      ...(product.category ? { serviceType: product.category, category: product.category } : {}),
+      url: productUrl,
+      ...(images.length > 0 ? { image: images } : {}),
+      brand: { "@type": "Brand", name: BRAND },
+      provider: { "@type": "Organization", name: BRAND, url: SITE_URL },
+      areaServed: generateAreaServedForSchema(),
+    };
+  }
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",

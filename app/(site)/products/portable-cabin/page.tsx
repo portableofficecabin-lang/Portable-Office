@@ -40,13 +40,19 @@ export default function PortableCabinPage() {
             { name: "Products", url: `${SITE}/products` },
             { name: "Portable Cabin", url: `${SITE}${PATH}` },
           ]),
+          /* Service, not Product. This is a RANGE hub, not a sellable unit: it carries no
+               offer, and Google rejects a Product node that has none ("Either 'offers',
+               'review' or 'aggregateRating' should be specified"). The individual cabins are
+               marked up as Products with real offers on their own pages. */
           {
             "@context": "https://schema.org",
-            "@type": "Product",
+            "@type": "Service",
             name: H1,
             description: DESCRIPTION,
             image: IMAGE,
             brand: { "@type": "Brand", name: "Portable Office Cabin" },
+            provider: { "@type": "Organization", name: "Portable Office Cabin", url: SITE },
+            serviceType: "Portable Cabins",
             category: "Portable Cabins",
             url: `${SITE}${PATH}`,
           },
