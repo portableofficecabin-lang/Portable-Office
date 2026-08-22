@@ -1630,16 +1630,56 @@ export const CITY_PAGES: CityPage[] = [
       icbm: "12.9716, 77.5946",
     },
 
-    /* PLACEHOLDER — the owner is supplying real villa site photography (2026-08-22). This page
-     * must NOT be deployed until the file below exists: the pack's own advice is that stock or
-     * borrowed imagery hurts a builder's page more than it helps, and the only house renders in
-     * the repo belong to the Construction Individual Building product page. */
+    /* OWNER-SUPPLIED SET, 2026-08-22 — five views of one villa, so the page reads as a single
+     * coherent project rather than five unrelated houses. Each is placed in the slot the
+     * template renders it best in, not dropped into a gallery wall:
+     *
+     *   hero          front elevation, straight on — the strongest single "this is a villa"
+     *                 frame, and the one that survives the square crop at the top of the page
+     *   featureImage  the aerial, cropped 3:2 as an editorial band breaking the longest text
+     *                 run, with a caption about what a roof actually has to carry
+     *   gallery       street view + study, side by side (the template gives a 2-image gallery
+     *                 a half-width column each rather than stranding them at a third)
+     *   interiorImage the living room, sitting directly above "What You Decide, and When" —
+     *                 the section about finishes, so the picture argues the point
+     *
+     * ALT TEXT describes what is actually in the frame and does not claim any of these is a
+     * specific completed project at a named Bangalore address, because that is not established
+     * here. Keep it that way if you swap them. */
     heroImage: {
-      src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-site.webp",
-      alt: "Villa construction company Bangalore — Portable Office Cabin villa site in progress",
-      width: 1200,
-      height: 800,
+      src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-front-elevation.webp",
+      alt: "Villa construction company Bangalore — front elevation of a G+1 RCC villa with car porch, stone-clad base and timber louvre screen",
+      width: 1024,
+      height: 1024,
     },
+    featureImage: {
+      src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-aerial-terrace.webp",
+      alt: "Aerial view of a G+1 villa in Bangalore showing the terrace garden, solar panels, roof layout and compound setbacks",
+      width: 1024,
+      height: 1024,
+      caption:
+        "The roof is not left over at the end — terrace garden, solar panels, tank positions and the fall for drainage are all set while the slab is still being designed.",
+    },
+    interiorImage: {
+      src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-living-room.webp",
+      alt: "Villa living room in Bangalore with double-height ceiling, stone feature wall, cove lighting and full-height sliding glazing to the garden",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-street-view.webp",
+        alt: "Villa construction in Bangalore — three-quarter street view of a G+1 house showing the porch, entrance steps and first-floor glazing",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/villa-construction-company-bangalore/villa-construction-company-bangalore-study-room.webp",
+        alt: "Ground-floor study in a Bangalore villa with full-height glazing onto the side garden and a built-in timber storage wall",
+        width: 1024,
+        height: 1024,
+      },
+    ],
 
     h1: "Villa Construction Company in Bangalore — Built to Your Plan, on Your Own Plot",
     tagline:
