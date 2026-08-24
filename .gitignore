@@ -34,3 +34,9 @@ merchant-feed.xml
 # Scratch copy of the repo that tooling drops here (~38MB, carries its own .git and .env).
 # Untracked and unignored it was one `git add .` away from committing a second env file.
 .mainbase/
+
+# Layout-verification screenshots. Generated artefacts, not source: `scripts/screenshot.mjs`
+# recreates the whole set in one command, and a full-page capture of a long landing page is
+# ~1 MB each — several MB of PNG in git history for something reproducible is a bad trade.
+#   node scripts/screenshot.mjs <url> --label=<name>
+docs/screenshots/

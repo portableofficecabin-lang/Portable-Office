@@ -15,6 +15,7 @@ import { getCommerce, isPurchasable, priceUnitSuffix } from "@/data/productComme
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { CATEGORY_H1, PortableCabinsCategoryContent } from "@/components/products/PortableCabinsCategoryContent";
 import { PrefabBuildingCategoryContent } from "@/components/products/PrefabBuildingCategoryContent";
+import { HomeConstructionCategoryContent } from "@/components/products/HomeConstructionCategoryContent";
 import { cn } from "@/lib/utils";
 
 // Enquiry form is click-only — defer its chunk out of the listing first-load JS.
@@ -374,6 +375,9 @@ export function ProductsPageContent({
               {activeCategory === "prefab-building" && (
                 <PrefabBuildingCategoryContent products={products} />
               )}
+              {/* Quote-only category — this block carries no price table and no FAQ; see the
+                  file header for why. It exists so the category links its service pages. */}
+              {activeCategory === "home-construction" && <HomeConstructionCategoryContent />}
             </div>
           </div>
         </div>

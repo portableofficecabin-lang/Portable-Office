@@ -157,6 +157,14 @@ export const megaMenuFeatured: NavLinkItem[] = [
   { name: "Cabins on Rent", href: "/rental-service", description: "Monthly rental with delivery and installation" },
   { name: "Marketplace", href: "/marketplace", description: "Ready stock available for immediate dispatch" },
   { name: "Shop Portable Cabins", href: "/products/category/portable-cabins", description: "Fixed-price cabins, ready to order online" },
+  // The civil-construction service page under Home Construction. A SERVICE, not a category — it
+  // belongs in this rail rather than in the category columns above, which are derived from
+  // src/data/products.ts and must stay a list of real category slugs.
+  {
+    name: "Building Construction Contractor",
+    href: "/products/home-construction/building-construction-contractor",
+    description: "Houses and villas built on your plot in Bangalore — quote after a site visit",
+  },
   { name: "Offers & Promotions", href: "/promotions", description: "Current deals on ready-stock units" },
 ];
 

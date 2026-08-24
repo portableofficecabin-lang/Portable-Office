@@ -383,6 +383,34 @@ export function ConstructionIndividualBuildingContent() {
         </div>
       </section>
 
+      {/* ────────────────────────────────────────────── contractor + concept tool ─────── */}
+      <section>
+        <SectionHeading id="contractor" icon={HardHat}>
+          Appointing the contractor
+        </SectionHeading>
+        <div className="prose prose-lg max-w-none text-muted-foreground">
+          <p>
+            This page describes the building. The decision that sits alongside it is the contract —
+            labour only or material and labour, construction only or design and approvals included —
+            and how the quotation is put together against a written specification.
+          </p>
+        </div>
+        <Link
+          href="/products/home-construction/building-construction-contractor"
+          className="mt-6 flex items-start gap-3 rounded-xl border border-amber/30 bg-amber/5 p-5 transition-colors hover:border-amber/60"
+        >
+          <ChevronRight className="mt-0.5 h-5 w-5 shrink-0 text-amber" aria-hidden="true" />
+          <span>
+            <span className="font-display font-bold">Building Construction Contractor in Bangalore</span>
+            <span className="mt-1 block text-sm text-muted-foreground">
+              Contract models compared, the quality checks at each stage, what drives cost and time,
+              and the areas we cover — plus a tool that turns an exterior and an interior photograph
+              into a 30-second concept walkthrough of your design.
+            </span>
+          </span>
+        </Link>
+      </section>
+
       {/* ─────────────────────────────────────────────────────── related ──────────────── */}
       <section>
         <SectionHeading id="related" icon={ShieldCheck}>

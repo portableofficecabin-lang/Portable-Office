@@ -35,6 +35,11 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   // emitted by the product loop below — do not list it here (avoids a duplicate).
   entry("/products/portable-cabin", 0.8, "weekly"),
   entry("/products/portable-toilet-cabin", 0.8, "weekly"),
+  /* Building Construction Contractor in Bangalore — a dedicated service landing page under the
+   * Home Construction category (app/(site)/products/home-construction/...). It is a STATIC route
+   * segment, so it is not emitted by the productChildPages loop above and must be listed here.
+   * Quote-only service: no Product/Offer schema, no ₹ figure, and no Merchant feed exposure. */
+  entry("/products/home-construction/building-construction-contractor", 0.8, "weekly"),
   // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
   ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
   /* STANDARD SIZE VARIANT pages — one per published size of every published product family
