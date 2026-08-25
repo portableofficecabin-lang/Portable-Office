@@ -66,6 +66,13 @@ export function ProductsPageContent({
 
   const activeCategoryObj = categories.find((c) => c.slug === activeCategory);
 
+  /* Does this category actually sell anything at a fixed price? Read from isPurchasable() —
+   * the SAME predicate that gates Add to Cart, the product JSON-LD offer and Merchant feed
+   * eligibility — so the blurb below can never claim a price the catalogue does not have. */
+  const categoryHasFixedPrices = activeCategoryObj
+    ? products.some((p) => p.categorySlug === activeCategoryObj.slug && isPurchasable(p.id))
+    : true;
+
   const filteredProducts = useMemo(() => {
     let filtered = products;
     if (activeCategory) {
@@ -248,7 +255,16 @@ export function ProductsPageContent({
                     /* Price wording MUST match the cards below, which render sellPrice() figures
                      * labelled "incl. GST" — the previous "excluding GST" text contradicted them
                      * on the same screen (the exact mismatch class behind the Merchant suspension). */
-                    ? `${activeCategoryObj.description}. Browse every ${activeCategoryObj.name.toLowerCase()} model below — each unit is engineered for Indian site conditions, delivered factory-finished, and backed by our standard warranty. Prices shown are fixed GST-inclusive prices in INR; transport and installation are quoted separately for your site.`
+                    ? categoryHasFixedPrices
+                      ? `${activeCategoryObj.description}. Browse every ${activeCategoryObj.name.toLowerCase()} model below — each unit is engineered for Indian site conditions, delivered factory-finished, and backed by our standard warranty. Prices shown are fixed GST-inclusive prices in INR; transport and installation are quoted separately for your site.`
+                      /* A QUOTE-ONLY CATEGORY GETS DIFFERENT WORDING, because the sentence above is
+                         false for one. Home Construction is cast on the customer's own plot: nothing is
+                         "delivered factory-finished", no warranty term has ever been supplied for it, and
+                         its only product renders "Contact us for pricing" — so "Prices shown are fixed
+                         GST-inclusive prices" contradicted the card directly beneath it on the same screen.
+                         That is the landing-page price-mismatch class the Merchant rules exist to prevent,
+                         so the claim is derived from the catalogue rather than asserted for every category. */
+                      : `${activeCategoryObj.description}. Every project in this category is priced individually after a site visit and quoted against a written specification — there is no catalogue price, because there is no catalogue building.`
                     : "Explore our complete catalogue of portable cabins, container offices, prefab homes, security cabins, portable toilets and shipping containers. Every product is manufactured in-house at our Tamil Nadu factory near Hosur — just 40 km from Bangalore — and delivered installation-ready across India. Filter by category on the left or browse the paginated list — each card links to a full product page with specifications, dimensions and pricing."}
                 </p>
               </div>
@@ -334,6 +350,26 @@ export function ProductsPageContent({
                 </div>
               )}
 
+              {/* ORDER MATTERS. The per-category content sits ABOVE the "Full Catalogue — All Products
+                  A–Z" index below, never after it.
+
+                  It used to come last. That was survivable on a category with ten products and actively
+                  broken on one with a single product: the A–Z index lists EVERY product on the site, so on
+                  /products/category/home-construction — one product — roughly forty unrelated rows sat
+                  between the grid and the category's own writing, pushing that writing far below the fold
+                  and making it look absent. The category's own copy is the point of a category page; the
+                  A–Z list is a crawl aid that belongs under it. */}
+              {/* Per-category SEO content — buying guide, live price table, FAQ (schema-matched). */}
+              {activeCategory === "portable-cabins" && (
+                <PortableCabinsCategoryContent products={products} />
+              )}
+              {activeCategory === "prefab-building" && (
+                <PrefabBuildingCategoryContent products={products} />
+              )}
+              {/* Quote-only category — this block carries no price table and no FAQ; see the
+                  file header for why. It exists so the category links its service pages. */}
+              {activeCategory === "home-construction" && <HomeConstructionCategoryContent />}
+
               {/* Full Catalogue Index — crawlable list of every product */}
               {products.length > 0 && (
                 <section className="mt-16 pt-10 border-t border-border/50" aria-label="Full product catalogue index">
@@ -368,16 +404,6 @@ export function ProductsPageContent({
                 </section>
               )}
 
-              {/* Per-category SEO content — buying guide, live price table, FAQ (schema-matched). */}
-              {activeCategory === "portable-cabins" && (
-                <PortableCabinsCategoryContent products={products} />
-              )}
-              {activeCategory === "prefab-building" && (
-                <PrefabBuildingCategoryContent products={products} />
-              )}
-              {/* Quote-only category — this block carries no price table and no FAQ; see the
-                  file header for why. It exists so the category links its service pages. */}
-              {activeCategory === "home-construction" && <HomeConstructionCategoryContent />}
             </div>
           </div>
         </div>
