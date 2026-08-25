@@ -105,7 +105,109 @@ function sizeQueryRedirect(request: NextRequest): NextResponse | null {
   return NextResponse.redirect(url, 301);
 }
 
+/* ────────────────────────────────────────────────────────────────────────────────────────────
+ * CONCEPT-ANIMATION SHARE LINKS — a genuine 404 for an invalid or revoked slug.
+ *
+ * ── WHY THIS IS IN MIDDLEWARE AND NOT JUST notFound() IN THE PAGE ───────────────────────────
+ * The page DOES call notFound(). It cannot set the status by itself, and neither can any other
+ * page in this app: app/providers.tsx wraps every route's children in <Suspense fallback={null}>,
+ * so the HTML shell is flushed — with its 200 — before the page body has finished awaiting.
+ * A notFound() thrown after that point renders the 404 BODY inside a 200 RESPONSE. Verified on a
+ * clean production build: a minimal route whose only statement is notFound() also answers 200.
+ *
+ * That is a pre-existing, app-wide behaviour affecting /products/<unknown>,
+ * /cities-we-serve/<unknown> and every other dynamic route. Fixing it centrally means changing
+ * how every page in the app streams, so it is deliberately NOT done here.
+ *
+ * Middleware runs BEFORE any rendering, so its status is authoritative. This gate therefore does
+ * for one route what the page cannot do for itself — and the page keeps its notFound() as the
+ * second line of defence.
+ *
+ * ── WHY IT MATTERS MORE HERE THAN ELSEWHERE ─────────────────────────────────────────────────
+ * A revoked share link must genuinely stop existing. A crawler, a link checker, a messaging app's
+ * preview fetcher and a browser cache all read the STATUS, not the words on the page. "200 OK"
+ * on a revoked private preview is the wrong answer to give any of them.
+ *
+ * ── COST ────────────────────────────────────────────────────────────────────────────────────
+ * One PostgREST HEAD-style lookup, only for /concept-animation/<slug> requests. Cheap, and this
+ * route is force-dynamic and no-store anyway, so no edge cache is being given up. Malformed slugs
+ * are rejected on shape alone and never reach the database.
+ * ──────────────────────────────────────────────────────────────────────────────────────────── */
+
+/** Share slugs are 24 lowercase hex characters (crypto.randomBytes(12).toString("hex")). */
+const SHARE_SLUG_PATTERN = /^[0-9a-f]{24}$/;
+
+function shareNotFound(): NextResponse {
+  return new NextResponse(
+    "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">" +
+      "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">" +
+      "<meta name=\"robots\" content=\"noindex,nofollow\"><title>Preview link not found</title></head>" +
+      "<body style=\"font-family:system-ui,sans-serif;max-width:34rem;margin:12vh auto;padding:0 1.5rem;line-height:1.6\">" +
+      "<h1 style=\"font-size:1.5rem;margin:0 0 .75rem\">This preview link is no longer available</h1>" +
+      "<p style=\"color:#555;margin:0 0 1.5rem\">The link may have expired, been revoked by its owner, or been mistyped. " +
+      "Ask whoever shared it for a current link.</p>" +
+      "<a href=\"/products/home-construction/building-construction-contractor\" style=\"color:#b45309;font-weight:600\">" +
+      "Create your own concept animation</a></body></html>",
+    {
+      status: 404,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "private, no-store, no-cache, must-revalidate, max-age=0",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    },
+  );
+}
+
+/**
+ * Returns a 404 response when the share slug is malformed, unknown, revoked or deleted.
+ * Returns null to let the request through to the page.
+ *
+ * FAILS OPEN on an infrastructure problem: if Supabase cannot be reached, the request continues
+ * to the page, which does its own lookup and renders the not-found body. A database hiccup must
+ * not 404 a link that is genuinely live.
+ */
+async function conceptAnimationGate(request: NextRequest): Promise<NextResponse | null> {
+  const slug = request.nextUrl.pathname.split("/")[2] ?? "";
+
+  // Shape check first — a malformed slug never touches the database.
+  if (!SHARE_SLUG_PATTERN.test(slug)) return shareNotFound();
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // Not configured: the page will render its own "not configured" path. Do not guess.
+  if (!supabaseUrl || !serviceKey) return null;
+
+  try {
+    /* Ask ONLY whether a live share exists. `select=share_slug` returns no project content, so
+     * this lookup cannot leak a title or an id even if the response were somehow observed. */
+    const url =
+      `${supabaseUrl.replace(/\/+$/, "")}/rest/v1/animation_projects` +
+      `?select=share_slug&share_slug=eq.${encodeURIComponent(slug)}` +
+      `&share_enabled=is.true&deleted_at=is.null&limit=1`;
+
+    const res = await fetch(url, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+      cache: "no-store",
+    });
+
+    // A missing table (migration unapplied) or any server error: fail open.
+    if (!res.ok) return null;
+
+    const rows = (await res.json()) as unknown;
+    if (Array.isArray(rows) && rows.length === 0) return shareNotFound();
+    return null;
+  } catch {
+    return null; // network problem — fail open, never 404 a live link
+  }
+}
+
 export async function middleware(request: NextRequest) {
+  // Share previews: decide 200 vs a genuine 404 before anything renders.
+  if (request.nextUrl.pathname.startsWith("/concept-animation/")) {
+    return (await conceptAnimationGate(request)) ?? NextResponse.next();
+  }
+
   // SEO: consolidate legacy ?category= URLs onto the canonical category path.
   const categoryRedirect = categoryQueryRedirect(request);
   if (categoryRedirect) return categoryRedirect;
@@ -145,5 +247,9 @@ export const config = {
     "/admin/:path*",
     "/products",
     { source: "/products/:slug", has: [{ type: "query", key: "size" }] },
+    /* Concept-animation share previews. Adding a middleware hop here costs nothing that was
+     * being saved: the route is force-dynamic and no-store, so it was never edge-cacheable.
+     * It buys a genuine 404 for a revoked or invalid link — see conceptAnimationGate above. */
+    "/concept-animation/:slug",
   ],
 };

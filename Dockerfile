@@ -21,6 +21,27 @@ FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# ── ffmpeg + ffprobe ────────────────────────────────────────────────────────────────────
+# REQUIRED by the Construction Animation Studio, and by nothing else in this image.
+#   ffmpeg  — joins the per-scene clips a video provider returns into ONE file, trimming each
+#             to its storyboard duration so the export is exactly 30 seconds
+#             (src/lib/animation/assemble.ts).
+#   ffprobe — measures the finished file so that "exactly 30 seconds" is a MEASUREMENT and not
+#             an assumption (src/lib/animation/probe.ts). Without it the code falls back to its
+#             own MP4 `mvhd` reader, which is correct but cannot see stream-level detail.
+#
+# The alpine package ships both binaries and adds roughly 80 MB to the image. That is the whole
+# cost of the feature; without it /api/animation-studio/config reports assemblyAvailable:false
+# and the export button stays disabled with that reason shown, which is a working but crippled
+# product. Installed in the RUNNER stage only — the builder does not encode anything.
+#
+# `--no-cache` leaves no apk index behind. The version is deliberately NOT pinned: alpine:20
+# carries one ffmpeg per branch and pinning it would break the build on the next patch release.
+RUN apk add --no-cache ffmpeg \
+ && ffmpeg -version > /dev/null \
+ && ffprobe -version > /dev/null
+
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
