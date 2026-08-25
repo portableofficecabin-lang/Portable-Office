@@ -29,7 +29,7 @@ const SERVICE_LINKS: { href: string; name: string; blurb: string; icon: React.Co
     href: "/products/home-construction/building-construction-contractor",
     name: "Building Construction Contractor in Bangalore",
     blurb:
-      "Individual houses, villas, turnkey projects, labour contracts, renovation and extension — how each contract model works, what drives cost and time, and how the quotation is put together. Includes a tool that turns an exterior and an interior photograph into a 30-second concept walkthrough.",
+      "Individual houses, villas, turnkey projects, labour contracts, renovation and extension — how each contract model works, the quality checks at each stage, what drives cost and time, and how the quotation is put together.",
     icon: HardHat,
   },
   {

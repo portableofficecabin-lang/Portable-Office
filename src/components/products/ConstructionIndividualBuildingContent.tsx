@@ -404,8 +404,7 @@ export function ConstructionIndividualBuildingContent() {
             <span className="font-display font-bold">Building Construction Contractor in Bangalore</span>
             <span className="mt-1 block text-sm text-muted-foreground">
               Contract models compared, the quality checks at each stage, what drives cost and time,
-              and the areas we cover — plus a tool that turns an exterior and an interior photograph
-              into a 30-second concept walkthrough of your design.
+              the areas we cover, and how the site visit and quotation actually work.
             </span>
           </span>
         </Link>

@@ -16,16 +16,20 @@
  *
  * ── WHY A DEDICATED ROUTE RATHER THAN A REGISTRY ENTRY ──────────────────────────────────────
  * The productChildPages registry renders one fixed template (heading → paragraphs → bullets →
- * FAQ). This page carries a hero, a full service body AND an interactive animation workspace, so
- * it takes the same shape as the other bespoke landing pages under /products — portable-cabin and
+ * FAQ). This page carries a hero and a full service body with its own section rhythm, so it takes
+ * the same shape as the other bespoke landing pages under /products — portable-cabin and
  * portable-toilet-cabin are dedicated static routes for exactly this reason. Static segments win
  * over /products/[slug]/[child], so nothing in the registry or the size-variant ladder is shadowed.
  *
  * ── SEO SHAPE ───────────────────────────────────────────────────────────────────────────────
- * Everything that ranks is a Server Component and is in the initial HTML: H1, the whole service
- * body, the FAQ text, the breadcrumb, the internal links. ONLY the animation workspace is
- * client-side, loaded with next/dynamic and ssr:false, so a crawler reads a complete service page
- * and the editor never competes with it for LCP.
+ * Fully server-rendered. Every word that ranks — H1, the whole service body, the FAQ text, the
+ * breadcrumb, the internal links — is in the initial HTML, and the page now ships NO client
+ * JavaScript of its own beyond the shared site chrome.
+ *
+ * ── THE CONCEPT-ANIMATION WORKSPACE IS NOT ON THIS PAGE ─────────────────────────────────────
+ * Withheld on the owner's instruction, 2026-08-24. The studio itself is untouched and still in
+ * the repository; see the marker comment where its section used to sit, further down this file,
+ * for exactly what to restore and which four places have to change together.
  *
  * NO Product or Offer schema. This is a quote-only service with no fixed price — the same reason
  * POC-CIB-RCC carries kind:"service" + priceConfirmed:false and stays out of the Merchant feed.
@@ -35,15 +39,11 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, Film, Phone, Sparkles } from "lucide-react";
+import { ChevronRight, Phone } from "lucide-react";
 
 import { JsonLd } from "@/components/JsonLd";
 import { Layout } from "@/components/layout/Layout";
 import { OptimizedImage } from "@/components/OptimizedImage";
-/* The workspace is lazy-loaded behind a client boundary (StudioMount) — `ssr: false` is only
-   valid inside a Client Component, and this page is deliberately a Server Component so the
-   service copy, the FAQ and the schema are all in the initial HTML. */
-import { StudioMount } from "@/components/animation-studio/StudioMount";
 import {
   BUILDING_CONSTRUCTION_CONTRACTOR_FAQS,
   BuildingConstructionContractorContent,
@@ -57,10 +57,15 @@ export const revalidate = 1800; // 30 minutes, matching the other product landin
 const SITE = "https://portableofficecabin.com";
 const PATH = "/products/home-construction/building-construction-contractor";
 const H1 = "Building Construction Contractor in Bangalore";
+/* The brief's suggested description ended "...Upload interior and exterior references to create a
+ * 30-second concept animation." That sentence is GONE along with the tool it advertised: a meta
+ * description is a promise made in the search result, and a visitor who clicks it must find the
+ * thing it offered. The replacement sells what the page actually contains. Restore the original
+ * sentence in the same commit that restores the animation section. */
 const DESCRIPTION =
   "Building construction contractor in Bangalore for individual houses, villas, turnkey projects, " +
-  "labour contracts, renovation and complete material-and-labour construction. Upload interior and " +
-  "exterior references to create a 30-second concept animation.";
+  "labour contracts, renovation and complete material-and-labour construction. Site visit, written " +
+  "specification and a detailed quotation before any work starts.";
 const HERO_IMAGE = `${SITE}/images/products/building-construction-contractor/building-construction-contractor-bangalore-front-elevation.webp`;
 
 export const metadata: Metadata = buildPageMetadata({
@@ -202,20 +207,23 @@ export default function Page() {
                 before anything is cast.
               </p>
 
+              {/* The primary CTA was "Upload interior & exterior images" → #concept-animation.
+                  With the animation section withheld, that anchor no longer exists, so the
+                  quotation request is promoted to primary rather than left pointing at nothing —
+                  a CTA that scrolls nowhere is worse than one fewer button. */}
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
-                  href="#concept-animation"
-                  className="inline-flex items-center gap-2 rounded-xl bg-amber px-5 py-3 font-semibold text-white transition-opacity hover:opacity-90"
-                >
-                  <Sparkles className="h-5 w-5" aria-hidden="true" />
-                  Upload interior &amp; exterior images
-                </a>
-                <a
                   href="#quote"
-                  className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-5 py-3 font-semibold transition-colors hover:bg-muted"
+                  className="inline-flex items-center gap-2 rounded-xl bg-amber px-5 py-3 font-semibold text-white transition-opacity hover:opacity-90"
                 >
                   Request a detailed quotation
                 </a>
+                <Link
+                  href="/book-appointment"
+                  className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-5 py-3 font-semibold transition-colors hover:bg-muted"
+                >
+                  Schedule a site visit
+                </Link>
                 <a
                   href={`tel:${COMPANY.phones[0].e164}`}
                   className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-5 py-3 font-semibold transition-colors hover:bg-muted"
@@ -246,39 +254,27 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ── AI Construction Animation Builder ──────────────────────────────────────── */}
-      <section id="concept-animation" className="scroll-mt-24 border-b border-border bg-muted/20">
-        <div className="container-custom py-12 sm:py-16">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full bg-amber/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber">
-              <Film className="h-3.5 w-3.5" aria-hidden="true" />
-              Concept animation tool
-            </span>
-            <h2 className="mt-3 font-display text-2xl font-bold text-foreground sm:text-3xl">
-              Turn two photographs into a 30-second walkthrough of your building
-            </h2>
-            <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-              Upload one exterior image and one interior image of the design you have in mind. The
-              builder reads them, shows you exactly what it detected so you can correct it, and
-              prepares an editable six-scene storyboard that always totals exactly thirty seconds —
-              establishing view, orbit, entrance approach, the move inside, the interior walkthrough
-              and a closing hero shot.
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Every scene prompt carries a locked list of your building&rsquo;s features — floor
-              count, roof, openings, balconies, façade, colours, flooring, ceiling and finishes — so
-              the animation reproduces the building you uploaded instead of designing a different
-              one. Where your two images do not establish a physically reliable route from the front
-              door into the room, the tool uses a cinematic transition rather than inventing a
-              hallway that does not exist.
-            </p>
-          </div>
-
-          <div className="mt-8">
-            <StudioMount />
-          </div>
-        </div>
-      </section>
+      {/* ── AI Construction Animation Builder — WITHHELD FROM THIS PAGE ─────────────────
+       *
+       * The concept-animation workspace was removed from the page on the owner's instruction
+       * (2026-08-24), so this ships as a pure service page.
+       *
+       * NOTHING WAS DELETED. The studio is intact and unreferenced:
+       *   src/lib/animation/**            the engine (storyboard, exact-30s maths, providers)
+       *   src/components/animation-studio/**  the workspace UI (StudioMount is the entry point)
+       *   app/api/animation-studio/**     the API
+       *   app/(site)/concept-animation/   the read-only share preview
+       *   supabase/migrations/20260824120000_construction_animation_studio.sql
+       *
+       * TO RE-ENABLE: restore the <section id="concept-animation"> that lived here, re-import
+       * StudioMount, point the hero's first CTA back at "#concept-animation", and put the
+       * animation sentence back on the meta description and the "before you commit" FAQ answer —
+       * all four were changed in the same commit, because a page must not advertise a tool it
+       * does not show. `git show` that commit for the exact markup.
+       *
+       * The prerequisites are unchanged and still gate it: apply the migration, ship the ffmpeg
+       * Dockerfile, set GEMINI_API_KEY, then `npm run animation:live -- --confirm`.
+       * ───────────────────────────────────────────────────────────────────────────────── */}
 
       {/* ── Service content ────────────────────────────────────────────────────────── */}
       <section className="section-padding">

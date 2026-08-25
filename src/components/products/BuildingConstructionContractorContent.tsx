@@ -105,7 +105,7 @@ export const BUILDING_CONSTRUCTION_CONTRACTOR_FAQS: { question: string; answer: 
   {
     question: "Can I see what my house will look like before I commit?",
     answer:
-      "Yes — that is what the concept animation tool on this page is for. Upload an exterior image and an interior image of the design you have in mind, and it builds a 30-second cinematic walkthrough from them. It is a concept visualisation, not a structural drawing or an approved design: it is there to help you and your family agree on how the building should look and feel before drawings are finalised. The binding description of your house is always the signed drawings and the written specification.",
+      "Yes. Floor plans and an elevation are prepared and agreed before anything is cast, and they are the drawings the build is actually set out from — so what you approve on paper is what gets built. If you want to see it more vividly than a plan allows, say so at design stage and we will discuss what visualisation is worth preparing for your project. Whatever is produced, the binding description of your house is always the signed drawings and the written specification, not a picture.",
   },
 ];
 
