@@ -129,23 +129,92 @@ export const megaMenuGroups: MegaMenuGroup[] = [
   },
 ];
 
-export interface MegaMenuColumn {
-  title: string;
-  items: Array<{ name: string; href: string; description: string; icon: string }>;
+/* ------------------------------------------------------------------ *
+ * Service pages that live UNDER a category
+ * ------------------------------------------------------------------ */
+
+export interface CategoryServiceLink {
+  /** The category slug this page belongs beneath. Must exist in src/data/products.ts. */
+  parentSlug: string;
+  name: string;
+  href: string;
+  /** One line, used where the surface has room for it (mega menu, mobile drawer). */
+  description: string;
 }
 
-/** Mega menu columns with every slug resolved to its real name/description/icon. */
+/**
+ * SERVICE PAGES NESTED UNDER A CATEGORY.
+ *
+ * Every category list on this site is derived from the product catalogue — the sidebar on
+ * /products, the mega-menu columns, the mobile drawer. That means a page which is NOT a product
+ * has no way of appearing in any of them, however relevant it is. Building Construction
+ * Contractor was in exactly that position: a real page, in the sitemap, linked from the body of
+ * its category page, and invisible in every navigation list on the site.
+ *
+ * This is the one registry those surfaces read to render such a page directly beneath its
+ * parent. `parentSlug` is matched against the live catalogue, so an entry whose category is
+ * renamed or emptied simply stops rendering rather than pointing somewhere confusing.
+ *
+ * KEEP IT SMALL. This is for pages that genuinely belong under a category and would otherwise be
+ * unreachable from navigation — not a general link dump.
+ */
+export const categoryServiceLinks: CategoryServiceLink[] = [
+  {
+    parentSlug: "home-construction",
+    name: "Building Construction Contractor",
+    href: "/products/home-construction/building-construction-contractor",
+    description: "Houses and villas built on your plot in Bangalore — quote after a site visit",
+  },
+];
+
+/** The service pages that belong under one category, in registry order. */
+export function serviceLinksForCategory(slug: string): CategoryServiceLink[] {
+  return categoryServiceLinks.filter((link) => link.parentSlug === slug);
+}
+
+export interface MegaMenuColumn {
+  title: string;
+  items: Array<{
+    name: string;
+    href: string;
+    description: string;
+    icon: string;
+    /** True for a service page rendered beneath its parent category, not a category itself. */
+    nested?: boolean;
+  }>;
+}
+
+/**
+ * Mega menu columns with every slug resolved to its real name/description/icon.
+ *
+ * A category's service pages (categoryServiceLinks, defined below) are spliced in DIRECTLY AFTER
+ * their parent and marked `nested`, so the menu shows the same parent → child relationship the
+ * sidebar does. Without this a service page cannot appear in the menu at all: these columns are
+ * built from category slugs, and a page that is not a product is not a category.
+ */
 export const megaMenuColumns: MegaMenuColumn[] = megaMenuGroups.map((group) => ({
   title: group.title,
   items: group.slugs
     .map((slug) => category(slug))
     .filter((c): c is Category => c !== null)
-    .map((c) => ({
-      name: c.name,
-      href: `/products/category/${c.slug}`,
-      description: c.description,
-      icon: c.icon,
-    })),
+    .flatMap((c) => [
+      {
+        name: c.name,
+        href: `/products/category/${c.slug}`,
+        description: c.description,
+        icon: c.icon,
+      },
+      ...categoryServiceLinks
+        .filter((link) => link.parentSlug === c.slug)
+        .map((link) => ({
+          name: link.name,
+          href: link.href,
+          description: link.description,
+          // Inherits the parent's icon so the child reads as part of the same family.
+          icon: c.icon,
+          nested: true,
+        })),
+    ]),
 }));
 
 /**
@@ -157,14 +226,6 @@ export const megaMenuFeatured: NavLinkItem[] = [
   { name: "Cabins on Rent", href: "/rental-service", description: "Monthly rental with delivery and installation" },
   { name: "Marketplace", href: "/marketplace", description: "Ready stock available for immediate dispatch" },
   { name: "Shop Portable Cabins", href: "/products/category/portable-cabins", description: "Fixed-price cabins, ready to order online" },
-  // The civil-construction service page under Home Construction. A SERVICE, not a category — it
-  // belongs in this rail rather than in the category columns above, which are derived from
-  // src/data/products.ts and must stay a list of real category slugs.
-  {
-    name: "Building Construction Contractor",
-    href: "/products/home-construction/building-construction-contractor",
-    description: "Houses and villas built on your plot in Bangalore — quote after a site visit",
-  },
   { name: "Offers & Promotions", href: "/promotions", description: "Current deals on ready-stock units" },
 ];
 

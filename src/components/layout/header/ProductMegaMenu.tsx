@@ -228,14 +228,26 @@ export function ProductMegaMenu({ isActive }: { isActive: boolean }) {
                             className={cn(
                               "group/item flex gap-2.5 rounded-lg p-2 transition-colors duration-200 motion-reduce:transition-none",
                               "hover:bg-navy-deep/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+                              /* A service page nested under its category: indented behind a rule,
+                                 so the menu shows the same parent → child relationship the
+                                 sidebar on /products does. */
+                              item.nested && "ml-3 border-l border-navy-deep/10 pl-3",
                             )}
                           >
                             <Icon
-                              className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                              className={cn(
+                                "mt-0.5 h-4 w-4 shrink-0 text-accent",
+                                item.nested && "h-3.5 w-3.5 opacity-70",
+                              )}
                               aria-hidden="true"
                             />
                             <span className="min-w-0">
-                              <span className="block text-sm font-semibold leading-snug text-navy-deep group-hover/item:text-accent">
+                              <span
+                                className={cn(
+                                  "block leading-snug text-navy-deep group-hover/item:text-accent",
+                                  item.nested ? "text-[13px] font-medium" : "text-sm font-semibold",
+                                )}
+                              >
                                 {item.name}
                               </span>
                               <span className="mt-0.5 block text-xs leading-snug text-navy-deep/60">

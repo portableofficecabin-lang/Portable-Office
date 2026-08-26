@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useState, useMemo, useEffect } from "react";
+import { Fragment, Suspense, useCallback, useState, useMemo, useEffect } from "react";
 import { BadgeCheck, Factory, Filter, Search, Grid, List, Truck, X, ArrowRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero, PageHeroChip } from "@/components/layout/PageHero";
@@ -13,6 +13,7 @@ import dynamic from "next/dynamic";
 import { Product, Category, getProductDetailPath } from "@/data/products";
 import { getCommerce, isPurchasable, priceUnitSuffix } from "@/data/productCommerce";
 import { formatINR, sellPrice } from "@/lib/pricing/gst";
+import { categoryServiceLinks as CATEGORY_SERVICE_LINKS } from "@/lib/site-navigation";
 import { CATEGORY_H1, PortableCabinsCategoryContent } from "@/components/products/PortableCabinsCategoryContent";
 import { PrefabBuildingCategoryContent } from "@/components/products/PrefabBuildingCategoryContent";
 import { HomeConstructionCategoryContent } from "@/components/products/HomeConstructionCategoryContent";
@@ -223,21 +224,43 @@ export function ProductsPageContent({
                     .filter((category) => products.some((p) => p.categorySlug === category.slug))
                     .map((category) => {
                       const isActive = activeCategory === category.slug;
+                      /* Service pages that belong to THIS category, rendered directly beneath it.
+                       * The list is built from the product catalogue, so it can only ever show
+                       * categories — a service page that is not a product had no way into it, and
+                       * Building Construction Contractor was reachable only from the body of the
+                       * category page. Keyed off the parent slug rather than appended at the end,
+                       * so a child always sits under its own parent even if categories reorder. */
+                      const serviceLinks = CATEGORY_SERVICE_LINKS.filter(
+                        (link) => link.parentSlug === category.slug,
+                      );
                       return (
-                        <Link
-                          key={category.id}
-                          href={categoryHref(category.slug)}
-                          className={cn(
-                            "group/cat w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
-                            isActive
-                              ? "bg-gradient-to-r from-accent to-amber-light text-accent-foreground font-semibold shadow-md shadow-accent/20"
-                              : "hover:bg-muted/60 text-foreground/80 hover:text-foreground",
-                          )}
-                        >
-                          <span className={cn("w-1.5 h-1.5 rounded-full transition-all", isActive ? "bg-accent-foreground scale-150" : "bg-border group-hover/cat:bg-accent")} />
-                          <span className="flex-1 text-left line-clamp-1">{category.name}</span>
-                          <ArrowRight className={cn("h-3.5 w-3.5 transition-all shrink-0", isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 group-hover/cat:opacity-60 group-hover/cat:translate-x-0")} />
-                        </Link>
+                        <Fragment key={category.id}>
+                          <Link
+                            href={categoryHref(category.slug)}
+                            className={cn(
+                              "group/cat w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
+                              isActive
+                                ? "bg-gradient-to-r from-accent to-amber-light text-accent-foreground font-semibold shadow-md shadow-accent/20"
+                                : "hover:bg-muted/60 text-foreground/80 hover:text-foreground",
+                            )}
+                          >
+                            <span className={cn("w-1.5 h-1.5 rounded-full transition-all", isActive ? "bg-accent-foreground scale-150" : "bg-border group-hover/cat:bg-accent")} />
+                            <span className="flex-1 text-left line-clamp-1">{category.name}</span>
+                            <ArrowRight className={cn("h-3.5 w-3.5 transition-all shrink-0", isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 group-hover/cat:opacity-60 group-hover/cat:translate-x-0")} />
+                          </Link>
+
+                          {serviceLinks.map((link) => (
+                            <Link
+                              key={link.href}
+                              href={link.href}
+                              className="group/svc w-full flex items-center gap-2.5 py-2 pl-7 pr-3 rounded-xl text-[13px] text-foreground/70 transition-all duration-200 hover:bg-muted/60 hover:text-foreground"
+                            >
+                              <span className="w-1 h-1 rounded-full bg-border transition-all shrink-0 group-hover/svc:bg-accent" />
+                              <span className="flex-1 text-left leading-snug">{link.name}</span>
+                              <ArrowRight className="h-3 w-3 shrink-0 opacity-0 -translate-x-2 transition-all group-hover/svc:opacity-60 group-hover/svc:translate-x-0" />
+                            </Link>
+                          ))}
+                        </Fragment>
                       );
                     })}
                 </div>
