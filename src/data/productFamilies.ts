@@ -359,17 +359,26 @@ function unpricedContainerOfficeSize(
     includedConfiguration: CONTAINER_OFFICE_INCLUDED,
     cartEligible: true,
     merchantEligible: false,
-    /* Explicitly false, not merely absent. Every one of these sizes is still the family
-     * boilerplate with the dimensions substituted — no size-specific layout, capacity,
-     * specification, application, image or FAQ content yet. Flip to true only when that copy
-     * is genuinely written for the size, and never to clear a validator warning. */
-    contentComplete: false,
+    /* EDITORIAL GATE — approved 2026-08-26. Each of these sizes now carries genuinely
+     * size-specific content from src/data/containerOfficeSizes.ts: a unique introduction,
+     * realistic layouts for the footprint, an honestly-stated limitation, the family material
+     * break-up and size-specific FAQs (scripts/product-variants.test.ts §14 asserts the
+     * registry covers every one of them and that the writing is pairwise distinct).
+     *
+     * NOTE what this flip does NOT do: search eligibility, sitemap membership, the Product
+     * node, ProductGroup.hasVariant and the Merchant feed ALL also require priceConfirmed
+     * (variantIsSearchEligible), which stays false — so these pages remain noindexed and
+     * unfed until the owner supplies prices. The flip simply means that the moment a price
+     * IS confirmed, the page that goes live is a finished one.
+     *
+     * An unpublished size (published:false) never reaches the content registry at all. */
+    contentComplete: opts.published === false ? false : true,
     published: opts.published ?? true,
     note:
       opts.note ??
       "AWAITING OWNER-CONFIRMED PRICE and a photograph of the actual MS steel unit in this size. " +
-        "Published as an indexable landing page; excluded from the cart, the JSON-LD Offer and the " +
-        "Merchant feed until both are supplied.",
+        "Page content is complete (containerOfficeSizes.ts); excluded from the cart, the JSON-LD " +
+        "Offer and the Merchant feed until price and photo are supplied.",
   };
 }
 

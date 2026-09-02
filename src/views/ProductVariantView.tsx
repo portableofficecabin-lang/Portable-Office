@@ -8,6 +8,7 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
 import { ProductKeySpecs } from "@/components/products/ProductKeySpecs";
 import { ProductSizeSelector } from "@/components/products/ProductSizeSelector";
+import { ContainerOfficeSizeContent } from "@/components/products/ContainerOfficeSizeContent";
 import { RelatedProductFamilies } from "@/components/products/RelatedProductFamilies";
 import { getProductApplication } from "@/data/productApplications";
 import { getBestProductImage } from "@/data/productImages";
@@ -380,6 +381,14 @@ export function ProductVariantView({
               as a custom build.
             </p>
           </div>
+
+          {/* PER-SIZE LONG-FORM CONTENT — registry-driven (src/data/containerOfficeSizes.ts),
+              renders nothing for a size with no entry, so this mount is generic and costs
+              other families nothing. This is what makes a size page a standalone product
+              page rather than the family template with the dimensions swapped: unique
+              introduction, realistic layouts, the honest limitation, the material break-up,
+              scope lists and size-specific FAQs. */}
+          <ContainerOfficeSizeContent hit={hit} />
 
           {/* Cross-links back up the hierarchy — parent and category — so the group is
               crawlable in both directions, not just downward. */}

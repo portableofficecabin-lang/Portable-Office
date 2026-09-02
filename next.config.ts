@@ -202,6 +202,25 @@ const nextConfig: NextConfig = {
       // Kept in step with the family data by scripts/product-variants.test.ts,
       // which fails if a `rendersAtParent` size has no rule here.
       { source: "/products/container-office/25x14-ft", destination: "/products/container-office", statusCode: 301 },
+      // ── Bare size URLs → the canonical `-ft` form ─────────────────────────
+      // /products/container-office/20x10 is the natural way to type or link a
+      // size, but the canonical slug shape is `<L>x<W>-ft` — a namespace contract
+      // (size slugs must never collide with guide-page slugs) enforced by
+      // scripts/product-variants.test.ts. So each bare form 301s onto its
+      // canonical rather than becoming a second URL for the same page.
+      //
+      // Listed EXPLICITLY, not as a :size(\d+x\d+) pattern, so the set is exactly
+      // the published ladder: 25x14 goes STRAIGHT to the parent (its canonical —
+      // via 25x14-ft would be a redirect chain), and 20x12 is deliberately ABSENT
+      // because that size is unpublished and its -ft URL is a genuine 404 —
+      // redirecting into a 404 helps nobody. product-variants.test.ts §14 keeps
+      // this list in step with the family data.
+      { source: "/products/container-office/10x10", destination: "/products/container-office/10x10-ft", statusCode: 301 },
+      { source: "/products/container-office/20x8", destination: "/products/container-office/20x8-ft", statusCode: 301 },
+      { source: "/products/container-office/20x10", destination: "/products/container-office/20x10-ft", statusCode: 301 },
+      { source: "/products/container-office/30x10", destination: "/products/container-office/30x10-ft", statusCode: 301 },
+      { source: "/products/container-office/40x10", destination: "/products/container-office/40x10-ft", statusCode: 301 },
+      { source: "/products/container-office/25x14", destination: "/products/container-office", statusCode: 301 },
       { source: "/products/ms-portable-cabins", destination: "/products/ms-portable-cabin", statusCode: 301 },
       { source: "/products/new-used-shipping-container-for-sale-in-india", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-container-buy-rent-or-convert", destination: "/products/cargo-container-for-sale", statusCode: 301 },

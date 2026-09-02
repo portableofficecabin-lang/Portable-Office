@@ -35,6 +35,7 @@ import { SiteOfficeContainerManufacturersContent } from "@/components/products/S
 import { ContainerOfficeContent } from "@/components/products/ContainerOfficeContent";
 import { MSContainerOfficeCabinContent } from "@/components/products/MSContainerOfficeCabinContent";
 import { ContainerOfficeGenericContent } from "@/components/products/ContainerOfficeGenericContent";
+import { ContainerOfficeFamilySections } from "@/components/products/ContainerOfficeFamilySections";
 import { FreshInsightSection } from "@/components/products/FreshInsightSection";
 import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 import { PortaCabinContent } from "@/components/products/PortaCabinContent";
@@ -586,6 +587,12 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}
           {isStaticProduct && cs === "site-office-containers" && !["construction-site-portable-office","site-office-container-manufacturers","steel-portable-office-container"].includes(slug) && <div className="mt-16"><SiteOfficeContainerContent offer={contentOffer} /></div>}
+          {/* FAMILY SECTIONS — size cards, comparison table, service area and family FAQ for a
+              product-family parent page. Self-guarding (renders only when the slug IS a family;
+              today only container-office), mounted BEFORE the long-form generic content so the
+              size architecture is what a reader meets first. Registry pattern, like
+              FreshInsightSection below. */}
+          <ContainerOfficeFamilySections slug={slug || ""} />
           {cs === "container-offices" && slug === "container-office" && <div className="mt-16"><ContainerOfficeGenericContent /></div>}
           {cs === "container-offices" && slug === "ms-container-office-cabin" && <div className="mt-16"><MSContainerOfficeCabinContent /></div>}
           {cs === "container-offices" && slug === "cabins-in-office" && <div className="mt-16"><CabinsInOfficeContent /></div>}

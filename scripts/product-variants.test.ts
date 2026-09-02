@@ -52,10 +52,16 @@ import {
   variantIsFeedEligible,
   variantIsContentComplete,
   variantIsPurchasable,
+  variantIsSearchEligible,
   variantPath,
   type ProductFamily,
   type SizeVariant,
 } from "../src/data/productFamilies";
+import {
+  CONTAINER_OFFICE_SPEC_GROUPS,
+  containerOfficeContentSlugs,
+  getContainerOfficeSizeContent,
+} from "../src/data/containerOfficeSizes";
 import {
   products,
   getProductById,
@@ -1172,12 +1178,25 @@ section("13. Editorial gate (contentComplete)");
       "every hasVariant entry carries its own Offer",
     );
 
-    // ── 2. the five incomplete sizes are excluded ─────────────────────────────────────
-    const INCOMPLETE = ["POC-CO-10X10", "POC-CO-20X8", "POC-CO-20X10", "POC-CO-30X10", "POC-CO-40X10"];
-    for (const sku of INCOMPLETE) {
+    /* ── 2. the five written-but-unpriced sizes stay excluded by the PRICE gate ────────
+     *
+     * 2026-08-26: these five sizes gained genuinely size-specific content
+     * (src/data/containerOfficeSizes.ts — §14 below audits it), so contentComplete is now
+     * TRUE for each. What has NOT changed is everything money-gated: no owner-confirmed
+     * price means not search-eligible, so still noindexed, still absent from hasVariant,
+     * still no Product node, still not fed. This pin proves the price gate alone keeps
+     * every one of those doors shut — the exact property that makes flipping the editorial
+     * flag safe. */
+    const WRITTEN_UNPRICED = ["POC-CO-10X10", "POC-CO-20X8", "POC-CO-20X10", "POC-CO-30X10", "POC-CO-40X10"];
+    for (const sku of WRITTEN_UNPRICED) {
       const v = family.variants.find((x) => x.sku === sku);
       check(!!v, `${sku}: exists in the family`);
-      check(!v || !variantIsContentComplete(v), `${sku}: NOT content-complete`);
+      check(!v || variantIsContentComplete(v), `${sku}: content-complete (real size copy exists)`);
+      check(!v || !v.priceConfirmed, `${sku}: still has NO owner-confirmed price`);
+      check(
+        !v || !variantIsSearchEligible(family, v),
+        `${sku}: NOT search-eligible — the price gate holds regardless of content`,
+      );
       check(
         !(group?.hasVariant ?? []).some((h) => h.sku === sku),
         `${sku}: absent from ProductGroup.hasVariant`,
@@ -1238,6 +1257,162 @@ section("13. Editorial gate (contentComplete)");
     const totals = computeTotals({ items: [{ productId: commerce.id, quantity: 1 }], pincode: "560001" });
     check(totals.skipped.length === 0, "POC-CO-GEN: checkout still accepts it");
     check(totals.lines[0]?.unitPrice === 1416000, "POC-CO-GEN: checkout unit price unchanged");
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════════════
+ * §14 — CONTAINER-OFFICE SIZE CONTENT REGISTRY + BARE-URL REDIRECTS
+ *
+ * The five size pages carry genuinely size-specific writing from
+ * src/data/containerOfficeSizes.ts. This section keeps that claim honest: the registry must
+ * cover exactly the published child-page sizes, the writing must be genuinely distinct (not
+ * one template with the dimensions swapped — the doorway-page failure mode), and it must obey
+ * the same no-invented-figures rules the rest of the size system lives by.
+ * ══════════════════════════════════════════════════════════════════════════════════════ */
+console.log("\n§14 container-office size content registry + bare-url redirects");
+{
+  const family = publishedFamilies().find((f) => f.slug === "container-office");
+  check(!!family, "§14: container-office family present");
+
+  if (family) {
+    // ── Coverage: registry slugs === published child-page sizes, exactly ────────────────
+    const childSizes = publishedVariants(family).filter((v) => !v.rendersAtParent);
+    const registrySlugs = [...containerOfficeContentSlugs()].sort();
+    const ladderSlugs = childSizes.map((v) => v.sizeSlug).sort();
+    check(
+      JSON.stringify(registrySlugs) === JSON.stringify(ladderSlugs),
+      `registry covers exactly the published child sizes (${registrySlugs.join(", ")})`,
+    );
+    check(
+      getContainerOfficeSizeContent(family.slug, "25x14-ft") === undefined,
+      "the parent-rendered 25x14 size has NO registry entry (its page is the parent's own copy)",
+    );
+    check(
+      getContainerOfficeSizeContent("portable-cabin", "20x10-ft") === undefined,
+      "the registry answers ONLY for the container-office family",
+    );
+
+    // ── Every entry: complete, distinct, and free of invented figures ────────────────────
+    const NO_GO_PATTERNS: Array<[RegExp, string]> = [
+      [/₹|\bRs\.?\s*\d/i, "a rupee figure"],
+      [/\b(?:seats?|accommodates?|capacity(?:\s+of)?)\s+(?:up\s+to\s+)?\d/i, "a seating/capacity count"],
+      [/\b\d+\s*(?:people|persons?|staff|workstations?|employees?)\b/i, "a headcount"],
+      [/\b\d+(?:\.\d+)?\s*ft\s*(?:external\s+)?height\b/i, "a height claim"],
+      [/\bwarrant(?:y|ies)\b/i, "a warranty term"],
+      [/\bwithin\s+\d+\s*(?:working\s+)?days\b/i, "a lead-time promise"],
+    ];
+
+    const intros: string[] = [];
+    for (const variant of childSizes) {
+      const content = getContainerOfficeSizeContent(family.slug, variant.sizeSlug);
+      check(!!content, `${variant.sku}: has a content entry`);
+      if (!content) continue;
+
+      check(content.intro.length >= 2, `${variant.sku}: intro has at least two paragraphs`);
+      check(
+        content.intro.join(" ").length >= 400,
+        `${variant.sku}: intro is substantial (${content.intro.join(" ").length} chars)`,
+      );
+      check(content.bestUses.length >= 3, `${variant.sku}: lists at least three uses`);
+      check(content.layouts.length >= 2, `${variant.sku}: lists at least two layouts`);
+      check(content.limitations.length >= 80, `${variant.sku}: states an honest limitation`);
+      check(content.faqs.length >= 3, `${variant.sku}: has at least three size FAQs`);
+      check(
+        content.faqs.every((f) => f.answer.length >= 100),
+        `${variant.sku}: every FAQ answer is a real answer, not a stub`,
+      );
+
+      // The step-up cross-link must point at a real published sibling, never at itself.
+      if (content.stepUpSlug) {
+        check(
+          content.stepUpSlug !== variant.sizeSlug &&
+            publishedVariants(family).some((v) => v.sizeSlug === content.stepUpSlug),
+          `${variant.sku}: stepUpSlug points at a real published sibling`,
+        );
+      }
+
+      const everything = [
+        content.positioning,
+        ...content.intro,
+        content.limitations,
+        ...content.bestUses,
+        ...content.layouts.flatMap((l) => [l.title, l.description]),
+        ...content.faqs.flatMap((f) => [f.question, f.answer]),
+      ].join(" ");
+      for (const [pattern, label] of NO_GO_PATTERNS) {
+        check(!pattern.test(everything), `${variant.sku}: content carries no ${label} (${pattern})`);
+      }
+
+      intros.push(content.intro.join(" "));
+    }
+
+    /* Doorway-page guard: the intros must be DIFFERENT WRITING, not one template with the
+     * numbers swapped. Compared on 6-word shingles after stripping digits, so shared factual
+     * phrases are tolerated but a copied paragraph is not. */
+    const shingles = (text: string): Set<string> => {
+      const words = text.toLowerCase().replace(/\d+/g, "#").split(/[^a-z#]+/).filter(Boolean);
+      const out = new Set<string>();
+      for (let i = 0; i + 6 <= words.length; i++) out.add(words.slice(i, i + 6).join(" "));
+      return out;
+    };
+    for (let a = 0; a < intros.length; a++) {
+      for (let b = a + 1; b < intros.length; b++) {
+        const sa = shingles(intros[a]);
+        const sb = shingles(intros[b]);
+        let shared = 0;
+        for (const s of sa) if (sb.has(s)) shared++;
+        const overlap = sa.size === 0 ? 0 : shared / Math.min(sa.size, sb.size);
+        check(
+          overlap < 0.2,
+          `intros ${a + 1} and ${b + 1} are genuinely distinct (${Math.round(overlap * 100)}% shared 6-grams)`,
+        );
+      }
+    }
+
+    // ── Specification break-up: public-safe by construction ─────────────────────────────
+    check(CONTAINER_OFFICE_SPEC_GROUPS.length >= 5, "spec break-up covers at least five groups");
+    const allRows = CONTAINER_OFFICE_SPEC_GROUPS.flatMap((g) => g.rows);
+    check(allRows.length >= 20, `spec break-up has substance (${allRows.length} rows)`);
+    const rowText = JSON.stringify(CONTAINER_OFFICE_SPEC_GROUPS);
+    /* No price FIGURES. The words alone are fine ("priced as an add-on" is honest scope
+     * wording); a ₹, an Rs-number, or a price/cost/rate followed by digits is not. The
+     * original bare `rate\b` matched inside "sepaRATE" — boundaries on both sides now. */
+    check(
+      !/₹|\bRs\.?\s*\d|\b(?:price|cost|rate)s?\b\s*[:=]?\s*(?:₹|\d)/i.test(rowText),
+      "spec break-up carries NO price/cost figure",
+    );
+    check(!/\bhsn\b|\bsupplier\b|\bmargin\b/i.test(rowText), "spec break-up carries no HSN/supplier/margin fields");
+    check(
+      allRows.every((r) => ["included", "optional", "customer-scope"].includes(r.status)),
+      "every spec row has a valid scope status",
+    );
+    check(
+      allRows.every((r) => r.description.length >= 20),
+      "every spec row carries a real description",
+    );
+
+    // ── Bare-URL redirects: next.config.ts must 301 each bare form correctly ─────────────
+    // Same CWD-proof read §10e uses — the test must pass from any working directory.
+    const configSource = await readFile(new URL("../next.config.ts", import.meta.url), "utf8");
+    for (const variant of childSizes) {
+      const bare = variant.sizeSlug.replace(/-ft$/, "");
+      const rule = new RegExp(
+        `source:\\s*"/products/${family.slug}/${bare}"[\\s\\S]{0,120}?destination:\\s*"/products/${family.slug}/${variant.sizeSlug}"[\\s\\S]{0,60}?statusCode:\\s*301`,
+      );
+      check(rule.test(configSource), `${variant.sku}: /products/${family.slug}/${bare} 301s to the -ft canonical`);
+    }
+    // The parent-rendered size's bare form goes STRAIGHT to the parent (no redirect chain).
+    check(
+      /source:\s*"\/products\/container-office\/25x14"[\s\S]{0,120}?destination:\s*"\/products\/container-office"[\s\S]{0,60}?statusCode:\s*301/.test(
+        configSource,
+      ),
+      "POC-CO-GEN: /products/container-office/25x14 301s straight to the parent (no chain)",
+    );
+    // The unpublished 20x12 must NOT be redirected — its URL is a deliberate 404.
+    check(
+      !/source:\s*"\/products\/container-office\/20x12"/.test(configSource),
+      "the unpublished 20x12 bare form has NO redirect (its -ft URL is a genuine 404)",
+    );
   }
 }
 
