@@ -235,6 +235,48 @@ if (refBracing) {
 }
 ok(model.parts.some((p) => p.kind === "handrail"), "the model carries hand railing");
 ok(model.parts.some((p) => p.kind === "stair-tread"), "the model carries a staircase");
+
+/* ---- staircase handrail: BOTH sides, WITH raking rails, REACHING the side elevations -------- */
+/* The priced take-off has always billed "2 side(s)" of posts plus a raking-rail line
+ * (staircase:rail:<id>); the model used to build one side of posts and no rails, so the side
+ * elevations showed a bare stair (left side: nothing at all). These pins keep drawing and BOQ
+ * describing the same railing system. */
+{
+  const stairRails = model.parts.filter((p) => p.kind === "handrail" && p.id.startsWith("stair:"));
+  const stairPosts = model.parts.filter((p) => p.kind === "handrail-post" && p.id.startsWith("stair:"));
+  ok(stairRails.length > 0, `staircase raking rails exist in the model (${stairRails.length})`);
+  ok(
+    stairRails.some((p) => /:rail:0:/.test(p.id)) && stairRails.some((p) => /:rail:1:/.test(p.id)),
+    "raking rails are built on BOTH sides of the flight",
+  );
+  ok(
+    stairPosts.some((p) => /:rail-post:0:/.test(p.id)) && stairPosts.some((p) => /:rail-post:1:/.test(p.id)),
+    "handrail posts are built on BOTH sides of the flight",
+  );
+  // Elevation visibility: with staircasePosition "both", stair railing must reach the model's
+  // outer x faces within the elevation's railing band (OBJECT_BAND_M × 0.6 = 0.72 m) — the
+  // exact filter ReferenceElevationView applies. This is what was silently false before.
+  const xr = (p: (typeof model.parts)[number]): [number, number] | null => {
+    const s = p.solid as { kind: string; min?: { x: number }; max?: { x: number }; pts?: { x: number }[] };
+    if (s.kind === "box" && s.min && s.max) return [s.min.x, s.max.x];
+    if (s.kind === "quad" && s.pts) { const xs = s.pts.map((q) => q.x); return [Math.min(...xs), Math.max(...xs)]; }
+    return null;
+  };
+  const gapTo = (plane: number) => (p: (typeof model.parts)[number]) => {
+    const r = xr(p);
+    if (!r) return Infinity;
+    return plane >= r[0] && plane <= r[1] ? 0 : Math.min(Math.abs(r[0] - plane), Math.abs(r[1] - plane));
+  };
+  const railParts = [...stairRails, ...stairPosts];
+  ok(
+    railParts.some((p) => gapTo(model.bounds.min.x)(p) <= 0.72),
+    "stair railing reaches the LEFT side-elevation band",
+  );
+  ok(
+    railParts.some((p) => gapTo(model.bounds.max.x)(p) <= 0.72),
+    "stair railing reaches the RIGHT side-elevation band",
+  );
+}
 /* Every brace is face-tagged, which is how the elevation selects them — an untagged brace would
  * silently vanish from the drawing exactly as it did before. */
 const taggedBraces = model.parts.filter((p) => p.kind === "brace");
