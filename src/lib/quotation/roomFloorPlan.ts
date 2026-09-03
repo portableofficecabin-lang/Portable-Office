@@ -582,10 +582,22 @@ export function buildRoomFloorPlan(
     const blockAlong = vertical ? blockDM : blockWM;
     const offsetToCornerM = Math.max(0, Math.min(Math.abs(nearStart - 0), Math.abs(blockAlong - farEnd)));
 
+    /* DEFAULT ENTRY IS SIDE-AWARE. `entry` decides which end the ground flight departs from,
+     * and therefore which way the whole dog-leg reads on that wall's own elevation. With one
+     * global "left" default, the RIGHT-side staircase drew MIRRORED on the right elevation:
+     * the first flight rose to the drawing's LEFT landing — the reverse of how the drawing is
+     * read (ground flight rising to the right-side first-floor landing, then alternating).
+     * A stair on the right/bottom wall therefore defaults to entering from its OTHER end, so
+     * BOTH side elevations read identically: up-to-the-right first. An explicit sc.entry from
+     * the editor still wins, and the 3D model + elevation consume this same resolved value,
+     * so plan, model and drawing stay one geometry. */
+    const entry: FPStair["entry"] =
+      sc.entry ?? (posSide === "right" || posSide === "bottom" ? "right" : "left");
+
     stairs.push({
       id: sc.id ?? `stair-${i}`, label: sc.label ?? `Staircase ${i + 1}`,
       x, y, w, d, orientation: vertical ? "vertical" : "horizontal", side: posSide,
-      entry: sr.entry, direction: sr.direction,
+      entry, direction: sr.direction,
       runM: sr.runM, widthM: sr.widthM, landingM: sr.landingM,
       steps: sr.steps, treads: sr.treads, treadM: sr.treadM, goingM: sr.goingM, riserMm: sr.riserMm, gapM: sr.gapM,
       floorRiseM: round(sr.floorRiseM), totalRiseM: round(sr.totalRiseM),
