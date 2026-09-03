@@ -37,7 +37,7 @@
  */
 
 import type { LabourColonyResult, RoomFloorPlanConfig, ElevationStructureConfig, MemberSections } from "./labourColony";
-import { buildRoomFloorPlan, effectiveStaircases, type RoomFloorPlanGeom, type FPBand } from "./roomFloorPlan";
+import { buildRoomFloorPlan, dogLegLayout, effectiveStaircases, type RoomFloorPlanGeom, type FPBand } from "./roomFloorPlan";
 
 export type ElevationFace = "front" | "rear" | "left" | "right";
 
@@ -414,12 +414,13 @@ export function buildElevation(
    */
   const stepsA0 = 0, halfIdxB = 1; // readability constants for halfOfStorey
   for (const s of elevStairs) {
-    const stepsA = Math.max(1, Math.ceil(s.steps / 2));
-    const stepsB = Math.max(1, s.steps - stepsA);
+    /* The split comes from the SAME dogLegLayout() the floor plan's well and the 3D model are
+     * built from — one arithmetic, three agreeing drawings. */
+    const lay = dogLegLayout({ steps: s.steps, goingM: s.goingM, landingM: s.landingM, widthM: s.widthM });
+    const { stepsA, stepsB, runAM: runA, runBM: runB } = lay;
     const stepRise = s.totalRiseM / Math.max(1, s.steps);
     const riseA = stepRise * stepsA, riseB = stepRise * stepsB;
-    const treadsA = Math.max(1, stepsA - 1), treadsB = Math.max(1, stepsB - 1);
-    const runA = treadsA * s.goingM, runB = treadsB * s.goingM;
+    const treadsA = lay.treadsA, treadsB = lay.treadsB;
 
     /** Emit both halves of storey f into `stairs`, anchored so the floor landings all sit at
      *  [viewHi − landingM, viewHi] — the drawing's right — regardless of storey. */
@@ -434,19 +435,21 @@ export function buildElevation(
       };
       // half 0 — from the floor landing (right) up-left to the half landing. lowAtStart=false:
       // its LOW end is at x0+wM (the right), the half landing draws at its arrival (left) end.
-      const wA = runA + s.landingM;
-      const x0A = Math.max(viewLo, viewHi - s.landingM - wA);
+      // With the well sized by dogLegLayout, runA + both landings fill the extent EXACTLY.
+      const wA = runA + lay.landingM;
+      const x0A = Math.max(viewLo, viewHi - lay.landingM - wA);
       stairs.push({
         ...common, x0: x0A, wM: wA, lowAtStart: false,
         baseM: base, riseM: round(riseA), topM: halfLevel,
-        steps: stepsA, treads: treadsA, runM: round(runA), landingM: s.landingM,
+        steps: stepsA, treads: treadsA, runM: round(runA), landingM: lay.landingM,
         slopeDeg: round((Math.atan2(riseA, runA) * 180) / Math.PI, 1),
         flightIdx: 2 * f, halfOfStorey: stepsA0,
       });
-      // half 1 — reverses off the half landing, up-right to the NEXT floor landing. Its landing
-      // is widened to reach viewHi exactly, so every floor landing spans the same [.., viewHi].
-      const x0B = x0A; // foot on the half landing's inner edge (directly above half 0's head)
-      const landB = Math.max(s.landingM, viewHi - (x0B + runB));
+      // half 1 — reverses off the half landing's INNER edge (you step off the turn platform
+      // onto the first riser), up-right to the NEXT floor landing. Its landing is widened to
+      // reach viewHi exactly, so every floor landing spans the same [.., viewHi].
+      const x0B = x0A + lay.landingM;
+      const landB = Math.max(lay.landingM, viewHi - (x0B + runB));
       stairs.push({
         ...common, x0: x0B, wM: runB + landB, lowAtStart: true,
         baseM: halfLevel, riseM: round(riseB), topM: ffl,

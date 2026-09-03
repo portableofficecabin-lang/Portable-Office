@@ -352,8 +352,11 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
     // landing the previous storey's upper half arrived at.
     for (let k = 0; k < 3; k++) {
       const lo = halves[2 * k], up = halves[2 * k + 1];
+      // The upper half's foot sits at the half landing's INNER edge — you step off the turn
+      // platform onto its first riser — i.e. exactly one landing width in from the lower
+      // half's arrival (outer) edge.
       ok(
-        Math.abs(lo.x0 - up.x0) < 0.005,
+        Math.abs(up.x0 - (lo.x0 + lo.landingM)) < 0.005,
         `storey ${k}: the upper half departs from the half landing the lower half arrives at`,
       );
       if (k > 0) {
@@ -513,12 +516,23 @@ runChecks("No civil result", buildColonyModel({ result, civil: null, columnGrid 
     const zs = treads.map((t) => Math.max(...verts(t).map((v) => v.z))).sort((a, b) => a - b);
     const ffl = model.meta.plinthM;
     ok(zs[0] > ffl + 0.05, `R4: lowest tread rises clear of the departure floor (${zs[0].toFixed(3)} > ${ffl.toFixed(3)})`);
+    /* On the half-landing dog-leg, the riser onto and off the TURN landing carries no tread
+     * (the landing is the walking surface), so the z-sequence legitimately skips exactly
+     * TWO riser heights there. Filter those landing gaps (≈ 2 × the median gap) before
+     * asserting uniformity — a genuinely uneven flight still fails. */
     const gaps: number[] = [];
     for (let i = 1; i < zs.length; i++) if (zs[i] - zs[i - 1] > 1e-6) gaps.push(zs[i] - zs[i - 1]);
     if (gaps.length > 2) {
-      const avg = gaps.reduce((a, b) => a + b, 0) / gaps.length;
-      const spread = Math.max(...gaps) - Math.min(...gaps);
+      const sorted = [...gaps].sort((a, b) => a - b);
+      const median = sorted[Math.floor(sorted.length / 2)];
+      const stepGaps = gaps.filter((g) => g < median * 1.5);
+      const avg = stepGaps.reduce((a, b) => a + b, 0) / Math.max(1, stepGaps.length);
+      const spread = stepGaps.length ? Math.max(...stepGaps) - Math.min(...stepGaps) : 0;
       ok(spread < avg * 0.6, `R4b: tread rises are uniform (avg ${(avg * 1000).toFixed(0)} mm, spread ${(spread * 1000).toFixed(0)} mm)`);
+      ok(
+        gaps.every((g) => g < median * 1.5 || Math.abs(g - 2 * median) < median * 0.55),
+        "R4b2: the only non-uniform rises are the two-riser skips at the turn landings",
+      );
     }
   }
 
