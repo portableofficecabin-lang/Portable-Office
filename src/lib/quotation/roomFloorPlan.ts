@@ -525,6 +525,12 @@ export function buildRoomFloorPlan(
   const stairs: FPStair[] = [];
   const stairRects: FPRect[] = []; // for same-side auto-separation
   stairCfgs.forEach((sc, i) => {
+    // Per-floor visibility: a staircase listing specific floors is drawn ONLY on those plans.
+    // No list (or an empty one, which the editor prevents) = every floor — the reading every
+    // pre-existing saved project gets. Checked before resolveStair so a filtered-out stair
+    // costs nothing and, crucially, is excluded from the same-side auto-separation below —
+    // stairs on DIFFERENT floors are not really side by side and must not push each other.
+    if (Array.isArray(sc.onFloors) && sc.onFloors.length > 0 && !sc.onFloors.includes(floor)) return;
     const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth, cfg.roomHeight);
     if (!sr.enabled) return;
     const posSide: Side = sr.position === "both" ? (i % 2 === 0 ? "right" : "left") : sr.position;

@@ -153,6 +153,19 @@ export interface StaircaseDrawConfig {
   label?: string;
   /** Draw the staircase(s). Default: true when floors > 1. */
   enabled?: boolean;
+  /**
+   * Which FLOOR PLANS this staircase is drawn on — 0-based floor indices (0 = Ground,
+   * 1 = First, 2 = Second, 3 = Third). Undefined = every floor, which is both the
+   * back-compatible reading of every saved project from before this field existed and the
+   * sensible default for a stair tower that runs the full height.
+   *
+   * Why it exists: on a G+2/G+3 colony the plans are not identical — a flight serving only
+   * ground→first should not appear on the second-floor plan, and the top floor typically
+   * shows no UP flight at all. Drawing-only, like everything in RoomFloorPlanConfig: it
+   * never changes the staircase quantities the BOQ prices (those come from the engine's
+   * flights = floors − 1 arithmetic).
+   */
+  onFloors?: number[];
   /** Side(s) the staircase sits on. "both" = one at each opposite end (reference layout). Default "both". */
   position?: "left" | "right" | "top" | "bottom" | "both";
   /** Slide the staircase block along its wall from the default position, metres (+/-). */
