@@ -730,7 +730,12 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt, layer }: {
 }) {
   const sx0 = X(Math.min(s.x0, s.x0 + s.wM));
   const wPx = Math.abs(s.wM) * S;
-  const caption = `${s.label} · ${s.steps}R @ ${fmt(s.riserM)} · ${s.treads}T @ ${fmt(s.goingM)}`;
+  /* On a half-landing dog-leg the caption states the STOREY (both halves), because the shape
+   * that carries it (flightIdx 0) is only the lower half-flight. */
+  const caption =
+    s.halfOfStorey != null && s.storeySteps != null
+      ? `${s.label} · ${s.storeySteps}R @ ${fmt(s.riserM)} per floor · dog-leg ${s.steps}R+${s.storeySteps - s.steps}R with half landing`
+      : `${s.label} · ${s.steps}R @ ${fmt(s.riserM)} · ${s.treads}T @ ${fmt(s.goingM)}`;
   const base = s.baseM, top = s.topM;
   /* One glyph is rendered PER FLIGHT (elevation.ts emits floors − 1 stacked shapes). The
    * ground flight (flightIdx 0) carries the run dimension, the schedule caption and the
@@ -1001,6 +1006,10 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
   // The far edge of the arrival landing, in metres — topX plus the landing, in the climb direction.
   const landXm = topX + (topX >= lowX ? 1 : -1) * s.landingM;
   const landMidPx = (X(topX) + X(landXm)) / 2;
+  /* Which floor this shape ARRIVES on. Half-landing dog-leg: two shapes per storey, so the
+   * upper half of storey k (flightIdx 2k+1) arrives on floor k+1; a plain flight arrives on
+   * flightIdx+1. */
+  const arrivalFloor = s.halfOfStorey != null ? (s.flightIdx + 1) / 2 : s.flightIdx + 1;
 
   return (
     <g>
@@ -1036,17 +1045,26 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
           END ●
         </text>
       )}
-      {/* the ARRIVAL landing, named after its floor and tied to the walkway it serves — the
-          landing itself is the connection to that storey's corridor (the walkway runs along
-          the face directly behind the stair, one step through the railing gate) */}
-      <text x={landMidPx} y={yt - 5} textAnchor="middle" fontSize={5.6} fontWeight={800} fill={COL.stair}>
-        {FLOOR_NAMES[Math.min(s.flightIdx + 1, FLOOR_NAMES.length - 1)]} FLOOR LANDING
-      </text>
-      {/* dropped a line lower than the level labels (yb+8 of the NEXT flight lands at this same
-          junction) so the two never overprint at a shared dog-leg landing */}
-      <text x={landMidPx} y={yt + 15} textAnchor="middle" fontSize={4.8} fill={COL.note}>
-        → connects to the {FLOOR_NAMES[Math.min(s.flightIdx + 1, FLOOR_NAMES.length - 1)].toLowerCase()}-floor walkway
-      </text>
+      {/* the ARRIVAL landing. A dog-leg storey has TWO arrivals: the lower half-flight tops
+          out on the mid-height HALF LANDING (the turn platform), the upper one on the FLOOR
+          landing — named after its floor and tied to the walkway it serves (the walkway runs
+          along the face directly behind the stair, one step through the railing gate). */}
+      {s.halfOfStorey === 0 ? (
+        <text x={landMidPx} y={yt - 5} textAnchor="middle" fontSize={5.2} fontWeight={700} fill={COL.stair}>
+          HALF LANDING · turn
+        </text>
+      ) : (
+        <>
+          <text x={landMidPx} y={yt - 5} textAnchor="middle" fontSize={5.6} fontWeight={800} fill={COL.stair}>
+            {FLOOR_NAMES[Math.min(arrivalFloor, FLOOR_NAMES.length - 1)]} FLOOR LANDING
+          </text>
+          {/* dropped a line lower than the level labels (yb+8 of the NEXT flight lands at this
+              same junction) so the two never overprint at a shared landing */}
+          <text x={landMidPx} y={yt + 15} textAnchor="middle" fontSize={4.8} fill={COL.note}>
+            → connects to the {FLOOR_NAMES[Math.min(arrivalFloor, FLOOR_NAMES.length - 1)].toLowerCase()}-floor walkway
+          </text>
+        </>
+      )}
       {!s.reachesFloor && (
         <text x={(runA + runB) / 2} y={yt - 12} textAnchor="middle" fontSize={6} fontWeight={700} fill={COL.door}>
           ⚠ does not reach the floor level
@@ -1068,7 +1086,9 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
             run {fmt(s.runM)}
           </text>
           <text x={sx0 + wPx / 2} y={groundY + 27} textAnchor="middle" fontSize={6.2} fontWeight={700} fill={COL.steelDark}>
-            {caption} × {s.flightCount} flight{s.flightCount > 1 ? "s" : ""}
+            {caption}{s.halfOfStorey != null
+              ? ` × ${s.flightCount / 2} floor${s.flightCount > 2 ? "s" : ""}`
+              : ` × ${s.flightCount} flight${s.flightCount > 1 ? "s" : ""}`}
           </text>
           <text x={sx0 + wPx / 2} y={groundY + 35} textAnchor="middle" fontSize={5.7} fill={COL.note}>
             width {fmt(s.widthM)} · landing {fmt(s.landingM)} · railing {fmt(hrH)} · slope {s.slopeDeg}°
