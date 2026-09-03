@@ -70,6 +70,15 @@ export interface ElevStairShape {
   topM: number;
   lowAtStart: boolean;        // flight's LOW end is at x0 (profile faces only)
   profile: boolean;           // true = true stepped profile (side faces); false = end silhouette
+  /**
+   * Which storey this flight serves: 0 = ground→FFL 1, 1 = FFL 1→FFL 2, … One shape is emitted
+   * PER FLIGHT (floors − 1 of them), stacked over the same plan extent exactly as the 3D model
+   * builds them — the drawing used to emit only flight 0, so a G+2/G+3 elevation showed a
+   * single ground flight with nothing serving the upper floors. `flightCount` lets the glyph
+   * annotate the schedule once (on flight 0) instead of once per storey.
+   */
+  flightIdx: number;
+  flightCount: number;
   /** Full schedule — every value the drawing annotates, straight from the plan's staircase config. */
   steps: number;              // risers
   treads: number;             // risers − 1 (the top riser lands on the floor slab)
@@ -321,38 +330,52 @@ export function buildElevation(
    * height, top = plinth + floorH === FFL 1 exactly. The riser count is derived from that same
    * floor height in resolveStair(), so the flight can never fall short of the floor it serves. */
   const stairs: ElevStairShape[] = [];
-  const baseM = plinthM;
-  const common = (s: RoomFloorPlanGeom["stairs"][number]) => ({
-    baseM,
-    riseM: s.totalRiseM,
-    topM: round(baseM + s.totalRiseM),
-    steps: s.steps, treads: s.treads, goingM: s.goingM, riserM: s.riserMm / 1000,
-    runM: s.runM, widthM: s.widthM, landingM: s.landingM,
-    slopeDeg: s.slopeDeg, reachesFloor: s.reachesFloor,
-    handrail: s.handrail, label: s.label,
-  });
+  /**
+   * ONE SHAPE PER FLIGHT. A G+n colony has n flights per staircase — flight f climbs from
+   * FFL f to FFL f+1 over the SAME plan extent, exactly as buildStairs() stacks them in the
+   * 3D model — so the elevation shows a continuous stair serving every floor, not just the
+   * ground flight it used to draw. Each flight's base sits one full storey above the last;
+   * riseM comes from the resolved stair (with auto-rise on it EQUALS the floor height, which
+   * is why the stack lands exactly on every FFL).
+   */
+  const flightCount = Math.max(1, floors - 1);
+  const perFlight = (s: RoomFloorPlanGeom["stairs"][number], f: number) => {
+    const baseM = round(plinthM + f * floorH);
+    return {
+      baseM,
+      riseM: s.totalRiseM,
+      topM: round(baseM + s.totalRiseM),
+      steps: s.steps, treads: s.treads, goingM: s.goingM, riserM: s.riserMm / 1000,
+      runM: s.runM, widthM: s.widthM, landingM: s.landingM,
+      slopeDeg: s.slopeDeg, reachesFloor: s.reachesFloor,
+      handrail: s.handrail, label: s.label,
+      flightIdx: f, flightCount,
+    };
+  };
   for (const s of g0.stairs) {
-    if ((face === "left" || face === "right") && s.side === face) {
-      // true stepped profile: the flight runs along plan y (vertical stair) → along this face's axis
-      const a0 = s.y, len = s.d;
-      const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;              // entry end = low end
-      const e0 = T(a0, len);
-      const lowAtStart = mirrored ? !(lowPlanEnd === a0) : lowPlanEnd === a0;
-      stairs.push({ ...common(s), x0: e0, wM: len, lowAtStart, profile: true });
-    } else if (alongX && (s.side === "left" || s.side === "right")) {
-      // end silhouette on the long faces — true position + width from the plan
-      const a0 = s.x, len = s.w;
-      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
-    } else if (!alongX && (s.side === "top" || s.side === "bottom")) {
-      const a0 = s.y, len = s.d;
-      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
-    } else if (alongX && (s.side === "top" || s.side === "bottom") && s.side === sideOfFace) {
-      // A top/bottom staircase is HORIZONTAL — its flight runs along plan x, which is this face's
-      // own axis, so it lies IN the view plane and must show its true stepped profile.
-      const a0 = s.x, len = s.w;
-      const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;      // entry end = low end
-      const lowAtStart = mirrored ? lowPlanEnd !== a0 : lowPlanEnd === a0;
-      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart, profile: true });
+    for (let f = 0; f < flightCount; f++) {
+      if ((face === "left" || face === "right") && s.side === face) {
+        // true stepped profile: the flight runs along plan y (vertical stair) → along this face's axis
+        const a0 = s.y, len = s.d;
+        const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;              // entry end = low end
+        const e0 = T(a0, len);
+        const lowAtStart = mirrored ? !(lowPlanEnd === a0) : lowPlanEnd === a0;
+        stairs.push({ ...perFlight(s, f), x0: e0, wM: len, lowAtStart, profile: true });
+      } else if (alongX && (s.side === "left" || s.side === "right")) {
+        // end silhouette on the long faces — true position + width from the plan
+        const a0 = s.x, len = s.w;
+        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
+      } else if (!alongX && (s.side === "top" || s.side === "bottom")) {
+        const a0 = s.y, len = s.d;
+        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
+      } else if (alongX && (s.side === "top" || s.side === "bottom") && s.side === sideOfFace) {
+        // A top/bottom staircase is HORIZONTAL — its flight runs along plan x, which is this face's
+        // own axis, so it lies IN the view plane and must show its true stepped profile.
+        const a0 = s.x, len = s.w;
+        const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;      // entry end = low end
+        const lowAtStart = mirrored ? lowPlanEnd !== a0 : lowPlanEnd === a0;
+        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart, profile: true });
+      }
     }
   }
 
