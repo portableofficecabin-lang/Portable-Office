@@ -29,7 +29,30 @@ import type { PufLockConfig } from "@/features/labour-colony-studio/model/pufLoc
 import type { RafterSupportConfig } from "@/features/labour-colony-studio/model/rafterSupport";
 
 export type PanelType = "PUF" | "EPS" | "GI";
-export type FloorCount = 1 | 2 | 3; // 1 = Ground, 2 = G+1, 3 = G+2
+/**
+ * 1 = Ground, 2 = G+1, 3 = G+2, 4 = G+3 (added 2026-08-27 on owner request).
+ *
+ * Everything downstream scales arithmetically from this count — rooms per floor, corridor and
+ * walkway areas, staircase flights (floors − 1), railing runs, flooring share, live loads
+ * (× floors), drawing elevations and the 3D model — so widening the union IS the feature.
+ * The two places that do NOT scale by formula are handled explicitly: the floor label (see
+ * floorCountLabel below, the single label definition every surface shares) and the civil
+ * engine's default footing sizes (see labourColonyCivil.ts — defaults were established for up
+ * to G+2, so G+3 keeps the largest default and adds an engineer-review warning; the SBC
+ * bearing check still validates footings against the real four-floor load either way).
+ */
+export type FloorCount = 1 | 2 | 3 | 4;
+
+/**
+ * THE floor label — "Ground floor", "G+1", "G+2", "G+3".
+ *
+ * One definition, exported, because the previous hand-written ternaries capped at "G+2" in
+ * three separate files and every one of them silently mislabelled a wider count. Generic by
+ * construction: a future G+4 needs a type change, not a label hunt.
+ */
+export const floorCountLabel = (f: FloorCount): string =>
+  f === 1 ? "Ground floor" : `G+${f - 1}`;
+
 export type BoltSize = "M10" | "M12" | "M16";
 export type SectionShape = "SHS" | "RHS" | "ANGLE" | "PIPE" | "C" | "ISMC";
 
@@ -880,7 +903,7 @@ export function calculateLabourColony(input: LabourColonyConfig): LabourColonyRe
 
   const assumptions = [
     "Quotation/production-grade estimate; not a stamped structural design. Validate with a qualified engineer before fabrication.",
-    `Layout: identical ${L} m x ${W} m modules in two rows along a ${corridorWidth} m corridor; ${floors === 1 ? "Ground floor" : floors === 2 ? "G+1" : "G+2"}.`,
+    `Layout: identical ${L} m x ${W} m modules in two rows along a ${corridorWidth} m corridor; ${floorCountLabel(floors)}.`,
     `MS weights computed from section profile + wall thickness (kg/m = steel area mm^2 x ${norms.steelDensityFactor}); ISMC/C from standard tables. Sharp-corner area (slightly conservative).`,
     `Panel: ${input.panelThicknessMm} mm ${input.panelType} @ ${round(pKgSqm, 2)} kg/sqm (2 x ${skinMm} mm skins + foam); ${input.wastagePercent}% wastage.`,
     `Internal partition: ${partitionMaterial === "ppgi" ? `${ppgiThk} mm PPGI sheet, ${ppgiFaces} face(s)` : "panel (same as wall)"}.`,

@@ -39,6 +39,7 @@ import {
   type LabourColonyResult,
   type PanelType,
   type FloorCount,
+  floorCountLabel,
 } from "@/lib/quotation/labourColony";
 import {
   LENGTH_UNITS, formatLen, unitSuffix, unitStep, toUnit, fromUnit, toFeetInches, fromFeetInches,
@@ -138,7 +139,9 @@ const DEFAULT_CONFIG: LabourColonyConfig = {
 type SizeMode = "capacity" | "rooms";
 
 const n = (x: number) => (Number.isFinite(x) ? x.toLocaleString("en-IN") : "—");
-const floorsLabel = (f: FloorCount) => (f === 1 ? "Ground floor" : f === 2 ? "G+1" : "G+2");
+/* The ONE label definition, shared with the engine and the structural report — the local
+ * ternary this replaced capped at "G+2" and would have mislabelled G+3 as G+2. */
+const floorsLabel = floorCountLabel;
 
 function buildCivilCtx(result: LabourColonyResult): CivilContext {
   // ONE GRID. We hand the civil engine the SAME architectural column grid the construction drawing
@@ -508,6 +511,7 @@ export default function LabourColonyQuotation() {
                         <SelectItem value="1">Ground floor</SelectItem>
                         <SelectItem value="2">G+1</SelectItem>
                         <SelectItem value="3">G+2</SelectItem>
+                        <SelectItem value="4">G+3</SelectItem>
                       </SelectContent>
                     </Select>
                   </Field>
@@ -551,6 +555,7 @@ export default function LabourColonyQuotation() {
                         <SelectItem value="1">Ground floor</SelectItem>
                         <SelectItem value="2">G+1</SelectItem>
                         <SelectItem value="3">G+2</SelectItem>
+                        <SelectItem value="4">G+3</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

@@ -9,7 +9,7 @@
  * same convention as scripts/boq-*.ts and the cabin assembly harness.
  */
 
-import { calculateLabourColony, type LabourColonyConfig, type LabourColonyResult } from "../src/lib/quotation/labourColony";
+import { calculateLabourColony, floorCountLabel, type LabourColonyConfig, type LabourColonyResult } from "../src/lib/quotation/labourColony";
 import { buildConstructionPlan } from "../src/lib/quotation/labourColonyPlan";
 import { calculateCivilWork, DEFAULT_CIVIL_CONFIG, type CivilContext, type CivilWorkResult } from "../src/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
@@ -227,6 +227,66 @@ ok(studsOv !== studsBase || studsBase === 0, `stud qty override changes the mode
 const single = calculateLabourColony({ ...BASE_CONFIG, floors: 1, capacity: 40 });
 const civilS = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(single));
 runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS, columnGrid }));
+
+/* ── G+3 (floors = 4) — added 2026-08-27 on owner request ──────────────────────────────────
+ * The engine was always floor-generic; widening FloorCount to 4 IS the feature. These checks
+ * prove the arithmetic genuinely scales to a fourth floor rather than silently reusing G+2
+ * behaviour, and that the two deliberately non-scaling pieces behave as designed: the label
+ * says G+3, and the civil engine warns that footing DEFAULTS were established for up to G+2. */
+{
+  ok(floorCountLabel(1) === "Ground floor", "floorCountLabel(1) = Ground floor");
+  ok(floorCountLabel(2) === "G+1", "floorCountLabel(2) = G+1");
+  ok(floorCountLabel(3) === "G+2", "floorCountLabel(3) = G+2");
+  ok(floorCountLabel(4) === "G+3", "floorCountLabel(4) = G+3");
+
+  const g3 = calculateLabourColony({ ...BASE_CONFIG, floors: 4 });
+  ok(g3.config.floors === 4, "G+3: config carries floors = 4");
+  ok(
+    g3.assumptions.some((a) => a.includes("G+3")),
+    "G+3: the layout assumption line labels the colony G+3 (not the old G+2 cap)",
+  );
+
+  // Staircase flights = floors − 1: a G+3 colony fabricates exactly three flights.
+  const stair = g3.structural.items.find((i) => i.item.startsWith("Staircase"));
+  ok(stair?.qty === 3, `G+3: staircase item is 3 flights (got ${stair?.qty})`);
+  const g1stair = calculateLabourColony({ ...BASE_CONFIG, floors: 2 }).structural.items.find(
+    (i) => i.item.startsWith("Staircase"),
+  );
+  ok(g1stair?.qty === 1, `G+1 control: 1 flight (got ${g1stair?.qty})`);
+
+  /* Walkway plate = footprintLength x walkwayWidth x (floors - 1). A naive "G+3 is 3x G+1"
+   * comparison is WRONG because the footprint itself shrinks as the same capacity stacks over
+   * more floors (fewer rooms per floor => a shorter building). The real invariant is the
+   * per-upper-level, per-metre-of-footprint area — the implied walkwayWidth — which must be
+   * identical across floor counts. That is exactly what a floors bug would break and a norm
+   * change would move IN LOCKSTEP on both sides. */
+  const g1r = calculateLabourColony({ ...BASE_CONFIG, floors: 2 });
+  const g3walk = g3.structural.items.find((i) => i.item.startsWith("Walkway"));
+  const g1walk = g1r.structural.items.find((i) => i.item.startsWith("Walkway"));
+  const impliedWidth = (r: LabourColonyResult, area: number | undefined, floors: number) =>
+    (area ?? 0) / ((floors - 1) * r.area.footprintLengthM);
+  const w3 = impliedWidth(g3, g3walk?.areaSqm, 4);
+  const w1 = impliedWidth(g1r, g1walk?.areaSqm, 2);
+  ok(
+    w3 > 0 && Math.abs(w3 - w1) < 0.05,
+    `G+3: walkway scales per upper level x footprint (implied width ${w3.toFixed(2)} m vs G+1 ${w1.toFixed(2)} m)`,
+  );
+
+  // The civil engine accepts floors=4, keeps its universal engineer-approval warning, and adds
+  // the G+3-specific one about footing defaults being carried over from the G+2 ladder.
+  const civil3 = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(g3));
+  ok(
+    civil3.warnings.some((w) => /NOT FOR CONSTRUCTION until approved/i.test(w)),
+    "G+3: universal structural-approval warning still present",
+  );
+  ok(
+    civil3.warnings.some((w) => /G\+3 SELECTED/.test(w) && /up to G\+2/.test(w)),
+    "G+3: footing-defaults review warning is pushed",
+  );
+
+  // And the full drawing/3D model must build validly with four storeys.
+  runChecks("G+3 (floors = 4)", buildColonyModel({ result: g3, civil: civil3, columnGrid }));
+}
 
 // civil-absent variant must still build a full foundation from defaults
 runChecks("No civil result", buildColonyModel({ result, civil: null, columnGrid }));

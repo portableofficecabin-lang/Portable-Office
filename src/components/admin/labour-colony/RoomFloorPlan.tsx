@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Download } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { exportSheetToPdf, formatBytes } from "@/lib/pdf/sheetPdf";
 import type { LabourColonyResult, RoomFloorPlanConfig, RoomOpeningOverride, RoomDoor, RoomWall, StaircaseDrawConfig, VerandaDrawConfig } from "@/lib/quotation/labourColony";
 import {
   buildRoomFloorPlan, resolveStair, effectiveStaircases, effectiveVerandas,
@@ -101,6 +104,41 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
 
   const floorLabel = (f: number) => (f === 0 ? "Ground Floor" : f === 1 ? "First Floor" : `Floor ${f + 1}`);
 
+  /* ---------- PDF download — same shared exporter every calculator sheet uses ---------- */
+  // The ref wraps the whole drawing card (title + plan + legend) so the PDF is a complete,
+  // self-describing sheet, not a bare SVG. exportSheetToPdf routes through the sanitised
+  // capture path (oklch-safe) — never raw html2canvas.
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const [exporting, setExporting] = useState(false);
+  const downloadPdf = async () => {
+    if (!sheetRef.current) return;
+    setExporting(true);
+    try {
+      // Landscape: the colony plan is far wider than tall (two rows of rooms along the block
+      // length). PNG at print DPI, like the civil drawing sheet — dimension text and hatch
+      // fills are exactly what JPEG ringing destroys first.
+      const r = await exportSheetToPdf(sheetRef.current, {
+        filename: `room-floor-plan-${floorLabel(floorIdx).toLowerCase().replace(/\s+/g, "-")}-${(result.config.projectName || "labour-colony").toLowerCase().replace(/\s+/g, "-")}`,
+        orientation: "landscape",
+        format: "png",
+        dpi: 300,
+        minDpi: 220,
+        targetBytes: 10_000_000,
+      });
+      toast({
+        title: r.truncated ? "Floor plan PDF downloaded — INCOMPLETE" : "Floor plan PDF downloaded",
+        description: `${floorLabel(floorIdx)} · ${r.pages} page${r.pages > 1 ? "s" : ""} · ${formatBytes(r.bytes)} · ${r.dpi} DPI${r.truncated ? " — the sheet exceeded the page cap and was cut short." : ""}`,
+        variant: r.truncated ? "destructive" : undefined,
+      });
+    } catch (err: unknown) {
+      console.error("Room floor plan PDF failed:", err);
+      const msg = err instanceof Error ? err.message : "";
+      toast({ title: "Could not generate floor plan PDF", description: msg ? msg.slice(0, 140) : "Please try again.", variant: "destructive" });
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div className="space-y-4 text-slate-900">
       {/* ============ TOP CONTROL BAR ============ */}
@@ -197,7 +235,7 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
       )}
 
       {/* ============ DRAWING ============ */}
-      <div className="rounded-2xl border bg-white p-4">
+      <div ref={sheetRef} className="rounded-2xl border bg-white p-4">
         <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <div>
             <div className="font-display font-bold text-sm text-slate-800">Room-wise Floor Plan — {floorLabel(floorIdx)}</div>
@@ -205,7 +243,15 @@ export function RoomFloorPlan({ result, floorPlan, onChange, unit, onUnitChange 
               {geom.loNo != null ? `Rooms ${geom.loNo}–${geom.hiNo}` : "No rooms"} · total colony {fmt(geom.totalLengthM)} × {fmt(geom.totalWidthM)} · doors swing into rooms
             </div>
           </div>
-          <div className="text-[10px] text-slate-400">{LENGTH_UNITS.find((u) => u.id === unit)?.label} · schematic construction reference</div>
+          <div className="flex items-center gap-3">
+            <div className="text-[10px] text-slate-400">{LENGTH_UNITS.find((u) => u.id === unit)?.label} · schematic construction reference</div>
+            {/* data-html2canvas-ignore: the button must not appear ON the exported sheet. */}
+            <button type="button" onClick={downloadPdf} disabled={exporting} data-html2canvas-ignore="true"
+              className="inline-flex h-8 items-center gap-1.5 rounded-md bg-amber-600 px-3 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-60">
+              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              {exporting ? "Exporting…" : "Download PDF"}
+            </button>
+          </div>
         </div>
 
         <div className="overflow-x-auto">
