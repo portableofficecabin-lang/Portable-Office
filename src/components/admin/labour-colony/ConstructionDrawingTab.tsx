@@ -45,7 +45,12 @@ import { buildConstructionPlan, buildBeamSchedule, constructionNotes } from "@/l
 import { type LabourColonyConfig, type FloorCount } from "@/lib/quotation/labourColony";
 import { type CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 
-const FLOOR_LABELS = ["GROUND FLOOR PLAN", "FIRST FLOOR PLAN", "SECOND FLOOR PLAN"];
+/* Indexed by 0-based floor. The FUNCTION is the accessor everywhere — the old direct array
+ * access clamped the index to 2, so when G+3 arrived (FloorCount 4) the third and fourth
+ * storeys would BOTH have read "SECOND FLOOR PLAN" — two different drawings under one title,
+ * on a sheet a contractor builds from. */
+const FLOOR_LABELS = ["GROUND FLOOR PLAN", "FIRST FLOOR PLAN", "SECOND FLOOR PLAN", "THIRD FLOOR PLAN"];
+const floorPlanLabel = (i: number): string => FLOOR_LABELS[i] ?? `FLOOR ${i} PLAN`;
 
 /**
  * Construction-drawing sheet for the Labour Colony Calculator (spec §6/§7):
@@ -215,7 +220,7 @@ export function ConstructionDrawingTab({
       buildConstructionPlan(config, {
         roomsPerFloor: rpf,
         startRoomNo: floor * rpf + 1,
-        floorLabel: FLOOR_LABELS[Math.min(floor, 2)],
+        floorLabel: floorPlanLabel(floor),
       }),
     [config, rpf, floor],
   );
@@ -281,7 +286,7 @@ export function ConstructionDrawingTab({
               <SelectTrigger className="w-44 h-9"><SelectValue /></SelectTrigger>
               <SelectContent>
                 {Array.from({ length: floors }, (_, i) => (
-                  <SelectItem key={i} value={String(i)}>{FLOOR_LABELS[Math.min(i, 2)]}</SelectItem>
+                  <SelectItem key={i} value={String(i)}>{floorPlanLabel(i)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
