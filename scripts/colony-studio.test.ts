@@ -317,6 +317,22 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
       profileFlights.every((sh, i) => i === 0 || sh.lowAtStart !== profileFlights[i - 1].lowAtStart),
       "G+3 side elevation: flight directions ALTERNATE (dog-leg), never repeat",
     );
+    /* Reading direction (owner spec 2026-09-03): the GROUND flight rises to the drawing's
+     * RIGHT-side first-floor landing, then the dog-leg alternates. With the old global
+     * entry="left" default the right-wall staircase drew mirrored — first flight to the LEFT.
+     * The side-aware entry default in buildRoomFloorPlan makes both side faces read the same. */
+    ok(
+      profileFlights.length > 0 && profileFlights[0].lowAtStart === true,
+      "G+3 RIGHT elevation: the ground flight rises toward the RIGHT (lands at the right FFL-1 landing)",
+    );
+    {
+      const leftFace = buildElevation(g3, undefined, "left");
+      const leftFlights = leftFace.stairs.filter((sh) => sh.profile).sort((a, b) => a.flightIdx - b.flightIdx);
+      ok(
+        leftFlights.length > 0 && leftFlights[0].lowAtStart === true,
+        "G+3 LEFT elevation: its own ground flight also rises toward the RIGHT (both faces read alike)",
+      );
+    }
     const footX = (sh: (typeof profileFlights)[number]) => (sh.lowAtStart ? sh.x0 : sh.x0 + sh.wM);
     const arrivalEdgeX = (sh: (typeof profileFlights)[number]) => (sh.lowAtStart ? sh.x0 + sh.wM : sh.x0);
     for (let i = 0; i + 1 < profileFlights.length; i++) {

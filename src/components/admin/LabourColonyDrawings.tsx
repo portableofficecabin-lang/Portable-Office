@@ -691,6 +691,9 @@ function SvgWatermark({ w, h }: { w: number; h: number }) {
   return <g pointerEvents="none" aria-hidden="true">{cells}</g>;
 }
 
+/** Storey names for the staircase route labels — index = floor number (0 = ground). */
+const FLOOR_NAMES = ["GROUND", "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
+
 /* ============================================================ staircase glyph */
 
 /**
@@ -855,6 +858,21 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
 
   return (
     <g>
+      {/* --- CLEARANCE BAND: a near-opaque paper strip under the whole flight + landing, so
+              the stair route is never visually tangled with the cross-bracing behind it. The
+              brief for this drawing is explicit: no staircase portion may read as hidden
+              behind walls, columns or bracing — the band guarantees it without touching the
+              structure itself (the bracing is still there, drawn beneath). --- */}
+      <polygon
+        points={[
+          `${X(lowX)},${Y(base + hrH + 0.15)}`,
+          `${X(topX)},${Y(top + hrH + 0.15)}`,
+          `${X(landX)},${Y(top + hrH + 0.15)}`,
+          `${X(landX)},${Y(top - 0.32)}`,
+          `${X(topX)},${Y(top - stringerD - 0.1)}`,
+          `${X(lowX)},${Y(base - stringerD - 0.1)}`,
+        ].join(" ")}
+        fill="#ffffff" fillOpacity={0.9} stroke="none" />
       {/* --- inclined stringer beam (the flight's spine) --- */}
       <polygon points={stringer} fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.8} />
 
@@ -958,6 +976,9 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
   const rx = goingUp ? X(lowX) - 13 : X(lowX) + 13;
   const yb = Y(base), yt = Y(top);
   const runA = Math.min(X(lowX), X(topX)), runB = Math.max(X(lowX), X(topX));
+  // The far edge of the arrival landing, in metres — topX plus the landing, in the climb direction.
+  const landXm = topX + (topX >= lowX ? 1 : -1) * s.landingM;
+  const landMidPx = (X(topX) + X(landXm)) / 2;
 
   return (
     <g>
@@ -979,15 +1000,31 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
       {/* the walking path's two termini — START at the ground flight's foot, END where the
           last flight arrives — so the continuous dog-leg route reads at a glance */}
       {s.flightIdx === 0 && (
-        <text x={X(lowX)} y={yb + 16} textAnchor="middle" fontSize={6.4} fontWeight={800} fill={COL.overall}>
-          ▲ START
-        </text>
+        <>
+          <text x={X(lowX)} y={yb + 16} textAnchor="middle" fontSize={6.4} fontWeight={800} fill={COL.overall}>
+            ▲ START
+          </text>
+          <text x={X(lowX)} y={yb + 24} textAnchor="middle" fontSize={5.4} fontWeight={700} fill={COL.dim}>
+            GROUND FLOOR
+          </text>
+        </>
       )}
       {s.flightIdx === s.flightCount - 1 && (
         <text x={X(topX)} y={yt - 12} textAnchor="middle" fontSize={6.4} fontWeight={800} fill={COL.overall}>
           END ●
         </text>
       )}
+      {/* the ARRIVAL landing, named after its floor and tied to the walkway it serves — the
+          landing itself is the connection to that storey's corridor (the walkway runs along
+          the face directly behind the stair, one step through the railing gate) */}
+      <text x={landMidPx} y={yt - 5} textAnchor="middle" fontSize={5.6} fontWeight={800} fill={COL.stair}>
+        {FLOOR_NAMES[Math.min(s.flightIdx + 1, FLOOR_NAMES.length - 1)]} FLOOR LANDING
+      </text>
+      {/* dropped a line lower than the level labels (yb+8 of the NEXT flight lands at this same
+          junction) so the two never overprint at a shared dog-leg landing */}
+      <text x={landMidPx} y={yt + 15} textAnchor="middle" fontSize={4.8} fill={COL.note}>
+        → connects to the {FLOOR_NAMES[Math.min(s.flightIdx + 1, FLOOR_NAMES.length - 1)].toLowerCase()}-floor walkway
+      </text>
       {!s.reachesFloor && (
         <text x={(runA + runB) / 2} y={yt - 12} textAnchor="middle" fontSize={6} fontWeight={700} fill={COL.door}>
           ⚠ does not reach the floor level
