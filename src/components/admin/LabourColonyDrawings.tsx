@@ -858,13 +858,25 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
       {/* --- inclined stringer beam (the flight's spine) --- */}
       <polygon points={stringer} fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.8} />
 
-      {/* --- support posts from the stringer underside to the ground --- */}
-      {posts.map((px, k) => (
+      {/* --- support posts from the stringer underside to the GROUND — ground flight only.
+              An upper dog-leg flight is carried at both ends: on the landing column of the
+              flight below at its foot, and on its own landing column at its head. Mid-flight
+              posts dropped from a storey up would stripe straight through the flights below. --- */}
+      {firstFlight && posts.map((px, k) => (
         <rect key={`p${k}`} x={X(px) - Math.max(1.6, colW * S * 0.55) / 2}
           y={Y(Math.max(0, nose(px) - stringerD))} width={Math.max(1.6, colW * S * 0.55)}
           height={groundY - Y(Math.max(0, nose(px) - stringerD))}
           fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.5} />
       ))}
+      {/* --- foot support for an UPPER flight: a short post from the stringer's underside down
+              onto the landing slab it departs from, closing the load path the eye follows. --- */}
+      {!firstFlight && (
+        <rect x={X(lowX + dir * footRun * 0.5) - Math.max(1.6, colW * S * 0.55) / 2}
+          y={Y(Math.max(0, nose(lowX + dir * footRun * 0.5) - stringerD))}
+          width={Math.max(1.6, colW * S * 0.55)}
+          height={Math.max(2, Y(base) - Y(Math.max(0, nose(lowX + dir * footRun * 0.5) - stringerD)))}
+          fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.5} />
+      )}
 
       {/* --- open treads: a tread plate at each step, risers left open --- */}
       {Array.from({ length: steps }, (_, k) => {
@@ -964,6 +976,18 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
         <text x={rx + (goingUp ? -3 : 3)} y={yb + 8} textAnchor={goingUp ? "end" : "start"}>start +{fmt(base)}</text>
         <text x={rx + (goingUp ? -3 : 3)} y={yt - 5} textAnchor={goingUp ? "end" : "start"}>end +{fmt(top)}</text>
       </g>
+      {/* the walking path's two termini — START at the ground flight's foot, END where the
+          last flight arrives — so the continuous dog-leg route reads at a glance */}
+      {s.flightIdx === 0 && (
+        <text x={X(lowX)} y={yb + 16} textAnchor="middle" fontSize={6.4} fontWeight={800} fill={COL.overall}>
+          ▲ START
+        </text>
+      )}
+      {s.flightIdx === s.flightCount - 1 && (
+        <text x={X(topX)} y={yt - 12} textAnchor="middle" fontSize={6.4} fontWeight={800} fill={COL.overall}>
+          END ●
+        </text>
+      )}
       {!s.reachesFloor && (
         <text x={(runA + runB) / 2} y={yt - 12} textAnchor="middle" fontSize={6} fontWeight={700} fill={COL.door}>
           ⚠ does not reach the floor level

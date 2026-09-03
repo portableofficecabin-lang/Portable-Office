@@ -352,6 +352,20 @@ export function buildElevation(
       flightIdx: f, flightCount,
     };
   };
+  /**
+   * DOG-LEG ALTERNATION — flight f + 1 climbs in the OPPOSITE direction to flight f.
+   *
+   * Identical stacked flights (the first multi-flight version) were not a walkable stair:
+   * every flight rose left→right, so after landing at the right end of one storey the next
+   * flight departed from the LEFT end with no connecting passage. Alternating the low end
+   * per flight makes the geometry itself continuous — flight f arrives at exactly the point
+   * (same face position, same level) where flight f + 1 departs, through the landing drawn
+   * at that end. The walking path reads ground → landing → turn → up → landing → … → top,
+   * as a dog-legged external stair actually works. Riser/tread counts per flight and every
+   * dimension are untouched — only the direction alternates.
+   */
+  const flightLowAtStart = (groundLowAtStart: boolean, f: number): boolean =>
+    f % 2 === 0 ? groundLowAtStart : !groundLowAtStart;
   for (const s of g0.stairs) {
     for (let f = 0; f < flightCount; f++) {
       if ((face === "left" || face === "right") && s.side === face) {
@@ -360,7 +374,7 @@ export function buildElevation(
         const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;              // entry end = low end
         const e0 = T(a0, len);
         const lowAtStart = mirrored ? !(lowPlanEnd === a0) : lowPlanEnd === a0;
-        stairs.push({ ...perFlight(s, f), x0: e0, wM: len, lowAtStart, profile: true });
+        stairs.push({ ...perFlight(s, f), x0: e0, wM: len, lowAtStart: flightLowAtStart(lowAtStart, f), profile: true });
       } else if (alongX && (s.side === "left" || s.side === "right")) {
         // end silhouette on the long faces — true position + width from the plan
         const a0 = s.x, len = s.w;
@@ -374,7 +388,7 @@ export function buildElevation(
         const a0 = s.x, len = s.w;
         const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;      // entry end = low end
         const lowAtStart = mirrored ? lowPlanEnd !== a0 : lowPlanEnd === a0;
-        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart, profile: true });
+        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: flightLowAtStart(lowAtStart, f), profile: true });
       }
     }
   }

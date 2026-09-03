@@ -309,6 +309,22 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
         `G+3 side elevation: flight ${i} lands exactly where flight ${i + 1} starts (${profileFlights[i].topM} vs ${profileFlights[i + 1].baseM})`,
       );
     }
+    /* Dog-leg continuity — the WALKING PATH, not just the levels. Directions must alternate
+     * (identical stacked flights are not walkable: you land at one end and the next flight
+     * departs from the other), and each flight's departure POINT must be the previous
+     * flight's arrival edge — the landing both of them share. */
+    ok(
+      profileFlights.every((sh, i) => i === 0 || sh.lowAtStart !== profileFlights[i - 1].lowAtStart),
+      "G+3 side elevation: flight directions ALTERNATE (dog-leg), never repeat",
+    );
+    const footX = (sh: (typeof profileFlights)[number]) => (sh.lowAtStart ? sh.x0 : sh.x0 + sh.wM);
+    const arrivalEdgeX = (sh: (typeof profileFlights)[number]) => (sh.lowAtStart ? sh.x0 + sh.wM : sh.x0);
+    for (let i = 0; i + 1 < profileFlights.length; i++) {
+      ok(
+        Math.abs(arrivalEdgeX(profileFlights[i]) - footX(profileFlights[i + 1])) < 0.005,
+        `G+3 side elevation: flight ${i + 1} departs from the SAME landing edge flight ${i} arrives at`,
+      );
+    }
     if (profileFlights.length === 3) {
       const expectTop = side.plinthM + 3 * side.floorHM;
       ok(
