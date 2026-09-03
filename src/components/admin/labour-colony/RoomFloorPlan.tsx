@@ -6,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { exportSheetToPdf, formatBytes } from "@/lib/pdf/sheetPdf";
 import type { LabourColonyResult, RoomFloorPlanConfig, RoomOpeningOverride, RoomDoor, RoomWall, StaircaseDrawConfig, VerandaDrawConfig } from "@/lib/quotation/labourColony";
 import {
-  buildRoomFloorPlan, resolveStair, effectiveStaircases, effectiveVerandas,
+  buildRoomFloorPlan, dogLegLayout, resolveStair, effectiveStaircases, effectiveVerandas,
   type FPRoom, type FPDoor, type FPStair, type FPVeranda, type FPBand,
 } from "@/lib/quotation/roomFloorPlan";
 import {
@@ -521,80 +521,145 @@ function VDim({ y0, y1, x, label, color }: { y0: number; y1: number; x: number; 
 }
 
 /** Full staircase glyph: block + treads + landing + UP arrow + dimension caption. */
+/**
+ * PLAN glyph of the HALF-LANDING DOG-LEG staircase — the same U the wall elevations draw,
+ * from the same dogLegLayout() arithmetic, so the two views can never disagree:
+ *
+ *   half (turn) landing — full well width, far end
+ *   lane A ↑ (departs the floor landing) │ lane B ↑ (returns to the next floor landing)
+ *   floor landing — full well width, entry end
+ *
+ * The well rectangle IS the FPStair footprint (buildRoomFloorPlan sizes it from the same
+ * helper), the turn is drawn as an arc across the half landing, and each lane carries its own
+ * tread lines, riser count and UP arrow.
+ */
 function StairGlyph({ s, X, Y, L, S, fmt }: {
   s: FPStair; X: (m: number) => number; Y: (m: number) => number; L: (m: number) => number; S: number; fmt: (m: number) => string;
 }) {
   const sx = X(s.x), sy = Y(s.y), sw = L(s.w), sh = L(s.d);
   const vertical = s.orientation === "vertical";
   const entryLow = s.entry === "left";
+  const lay = dogLegLayout({ steps: s.steps, goingM: s.goingM, landingM: s.landingM, widthM: s.widthM });
+  const stroke = s.overlap ? "#dc2626" : COL.stairStroke;
 
-  // map a run offset t (metres, from the ENTRY end) to an absolute screen coord along the run axis
-  const runToScreen = (t: number) =>
-    vertical
-      ? (entryLow ? Y(s.y + t) : Y(s.y + s.d - t))
-      : (entryLow ? X(s.x + t) : X(s.x + s.w - t));
+  /* Everything below works in a LOCAL frame — `along` (0 = ENTRY end, at the floor landing)
+   * and `across` (0 = lane A's side) — mapped to the screen at the end. Lane A sits nearer
+   * the building (the walkway you arrive from), lane B outboard. */
+  const alongLen = vertical ? s.d : s.w;
+  const toScreenAlong = (t: number) =>
+    vertical ? (entryLow ? Y(s.y + t) : Y(s.y + s.d - t)) : entryLow ? X(s.x + t) : X(s.x + s.w - t);
+  const laneAInner = s.side === "right" || s.side === "top"; // building on the low-coord side?
+  const toScreenAcross = (u: number) => {
+    const m = laneAInner ? u : 2 * s.widthM - u; // flip so lane A hugs the building
+    return vertical ? X(s.x + m) : Y(s.y + m);
+  };
 
-  // landing rectangle (at the far/ascent end)
-  let landing: { x: number; y: number; w: number; h: number } | null = null;
-  if (s.landingM > 0) {
-    if (vertical) {
-      const ly = entryLow ? Y(s.y + s.runM) : Y(s.y);
-      landing = { x: sx, y: ly, w: sw, h: L(s.landingM) };
-    } else {
-      const lx = entryLow ? X(s.x + s.runM) : X(s.x);
-      landing = { x: lx, y: sy, w: L(s.landingM), h: sh };
-    }
-  }
+  const floorLandA0 = 0, floorLandA1 = lay.landingM;                    // entry end
+  const halfLandA0 = alongLen - lay.landingM, halfLandA1 = alongLen;    // far end
+  const laneA0 = 0, laneA1 = s.widthM, laneB1 = 2 * s.widthM;           // across
 
-  const treadLines: number[] = [];
-  const seen = new Set<number>();
-  for (const e of s.stepEdges) {
-    for (const t of [e.a, e.b]) {
-      const c = runToScreen(t);
-      const key = Math.round(c * 2);
-      if (!seen.has(key)) { seen.add(key); treadLines.push(c); }
-    }
-  }
+  /** axis-aligned rect from local (along, across) spans */
+  const rect = (a0: number, a1: number, u0: number, u1: number) => {
+    const p1 = toScreenAlong(a0), p2 = toScreenAlong(a1);
+    const q1 = toScreenAcross(u0), q2 = toScreenAcross(u1);
+    return vertical
+      ? { x: Math.min(q1, q2), y: Math.min(p1, p2), w: Math.abs(q2 - q1), h: Math.abs(p2 - p1) }
+      : { x: Math.min(p1, p2), y: Math.min(q1, q2), w: Math.abs(p2 - p1), h: Math.abs(q2 - q1) };
+  };
+  const line = (a: number, u0: number, u1: number, key: string, color: string, width: number) => {
+    const p = toScreenAlong(a);
+    const q1 = toScreenAcross(u0), q2 = toScreenAcross(u1);
+    return vertical
+      ? <line key={key} x1={q1} y1={p} x2={q2} y2={p} stroke={color} strokeWidth={width} />
+      : <line key={key} x1={p} y1={q1} x2={p} y2={q2} stroke={color} strokeWidth={width} />;
+  };
+  const pt = (a: number, u: number): [number, number] => {
+    const p = toScreenAlong(a), q = toScreenAcross(u);
+    return vertical ? [q, p] : [p, q];
+  };
 
-  // UP arrow: entry (t=0) → far (t=run) for "up"; reversed for "down"
-  const aFrom = s.direction === "up" ? runToScreen(0) : runToScreen(s.runM);
-  const aTo = s.direction === "up" ? runToScreen(s.runM) : runToScreen(0);
-  const crossMid = vertical ? sx + sw / 2 : sy + sh / 2;
-  const dirSign = aTo >= aFrom ? 1 : -1;
+  const fl = rect(floorLandA0, floorLandA1, laneA0, laneB1);
+  const hl = rect(halfLandA0, halfLandA1, laneA0, laneB1);
+
+  // tread lines per lane: A climbs entry→far, B far→entry
+  const treads: React.ReactNode[] = [];
+  for (let k = 0; k <= lay.treadsA; k++)
+    treads.push(line(floorLandA1 + k * s.goingM, laneA0, laneA1, `ta${k}`, COL.stairTread, 0.8));
+  for (let k = 0; k <= lay.treadsB; k++)
+    treads.push(line(halfLandA0 - k * s.goingM, laneA1, laneB1, `tb${k}`, COL.stairTread, 0.8));
+
+  // UP arrows: lane A entry→far; lane B far→entry; a turn arc across the half landing
+  const arrow = (a0: number, a1: number, u: number, key: string) => {
+    const [x1, y1] = pt(a0, u), [x2, y2] = pt(a1, u);
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const h = 5.5;
+    return (
+      <g key={key} stroke={COL.stairStroke} fill={COL.stairStroke}>
+        <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={1.3} />
+        <polygon points={`${x2},${y2} ${x2 - h * Math.cos(ang - 0.42)},${y2 - h * Math.sin(ang - 0.42)} ${x2 - h * Math.cos(ang + 0.42)},${y2 - h * Math.sin(ang + 0.42)}`} />
+      </g>
+    );
+  };
+  const midA = (laneA0 + laneA1) / 2, midB = (laneA1 + laneB1) / 2;
+  const [tx1, ty1] = pt(halfLandA0 + lay.landingM * 0.45, midA);
+  const [tx2, ty2] = pt(halfLandA0 + lay.landingM * 0.45, midB);
+  const turnArc = (
+    <path
+      d={`M ${tx1} ${ty1} Q ${(tx1 + tx2) / 2 + (vertical ? 0 : 0)} ${(ty1 + ty2) / 2 + (vertical ? 0 : 0)} ${tx2} ${ty2}`}
+      fill="none" stroke={COL.stairStroke} strokeWidth={1.3} strokeDasharray="3 2" />
+  );
 
   const cx = sx + sw / 2, cy = sy + sh / 2;
   const capLines = [
-    `W ${fmt(s.widthM)} · run ${fmt(s.runM)}`,
-    `${s.steps}T@${fmt(s.goingM)} · R${s.riserMm}mm${s.landingM > 0 ? ` · land ${fmt(s.landingM)}` : ""}`,
+    `well ${fmt(lay.wellWidthM)} × ${fmt(lay.wellLengthM)} · lane ${fmt(s.widthM)}`,
+    `${s.steps}R@${s.riserMm}mm = ${lay.stepsA}+${lay.stepsB} · going ${fmt(s.goingM)} · land ${fmt(lay.landingM)}`,
   ];
-  const stroke = s.overlap ? "#dc2626" : COL.stairStroke;
+
+  const labelFs = Math.max(6, Math.min(8.5, S * 0.28));
+  const [flx, fly] = pt((floorLandA0 + floorLandA1) / 2, s.widthM);
+  const [hlx, hly] = pt((halfLandA0 + halfLandA1) / 2, s.widthM);
 
   return (
     <g>
+      {/* the well */}
       <rect x={sx} y={sy} width={sw} height={sh} fill={COL.stair} stroke={stroke} strokeWidth={s.overlap ? 2.4 : 1.4} />
-      {/* landing */}
-      {landing && <rect x={landing.x} y={landing.y} width={landing.w} height={landing.h} fill={COL.landing} stroke={COL.stairStroke} strokeWidth={1} />}
-      {/* treads */}
-      {treadLines.map((c, i) => vertical
-        ? <line key={i} x1={sx} y1={c} x2={sx + sw} y2={c} stroke={COL.stairTread} strokeWidth={0.8} />
-        : <line key={i} x1={c} y1={sy} x2={c} y2={sy + sh} stroke={COL.stairTread} strokeWidth={0.8} />)}
-      {/* HAND RAILING along both sides of the flight */}
+      {/* the two landings — floor (entry) + half (turn) — full well width */}
+      <rect x={fl.x} y={fl.y} width={fl.w} height={fl.h} fill={COL.landing} stroke={COL.stairStroke} strokeWidth={1} />
+      <rect x={hl.x} y={hl.y} width={hl.w} height={hl.h} fill={COL.landing} stroke={COL.stairStroke} strokeWidth={1} />
+      {/* lane divider between the two half-flights (stops at the landings) */}
+      {(() => {
+        const [dx1, dy1] = pt(floorLandA1, s.widthM);
+        const [dx2, dy2] = pt(halfLandA0, s.widthM);
+        return <line x1={dx1} y1={dy1} x2={dx2} y2={dy2} stroke={stroke} strokeWidth={1.2} />;
+      })()}
+      {treads}
       {s.handrail && <StairHandrail sx={sx} sy={sy} sw={sw} sh={sh} vertical={vertical} />}
-      {/* UP arrow */}
-      {vertical ? (
-        <g>
-          <line x1={crossMid} y1={aFrom} x2={crossMid} y2={aTo} stroke={COL.stairStroke} strokeWidth={1.4} />
-          <polygon points={`${crossMid},${aTo} ${crossMid - 3.2},${aTo - dirSign * 6} ${crossMid + 3.2},${aTo - dirSign * 6}`} fill={COL.stairStroke} />
-        </g>
-      ) : (
-        <g>
-          <line x1={aFrom} y1={crossMid} x2={aTo} y2={crossMid} stroke={COL.stairStroke} strokeWidth={1.4} />
-          <polygon points={`${aTo},${crossMid} ${aTo - dirSign * 6},${crossMid - 3.2} ${aTo - dirSign * 6},${crossMid + 3.2}`} fill={COL.stairStroke} />
-        </g>
-      )}
+      {/* the continuous route: up lane A, turn on the half landing, up lane B */}
+      {arrow(floorLandA1 + s.goingM * 0.5, halfLandA0 - s.goingM * 0.5, midA, "upA")}
+      {turnArc}
+      {arrow(halfLandA0 - s.goingM * 0.5, floorLandA1 + s.goingM * 0.5, midB, "upB")}
+      {/* landing names — the same words the elevation uses */}
+      <text x={flx} y={fly} textAnchor="middle" dominantBaseline="middle" fontSize={labelFs * 0.82} fontWeight={800}
+        fill={COL.stairStroke} transform={vertical ? `rotate(-90 ${flx} ${fly})` : undefined}>
+        FLOOR LANDING
+      </text>
+      <text x={hlx} y={hly} textAnchor="middle" dominantBaseline="middle" fontSize={labelFs * 0.82} fontWeight={800}
+        fill={COL.stairStroke} transform={vertical ? `rotate(-90 ${hlx} ${hly})` : undefined}>
+        HALF LANDING · TURN
+      </text>
+      {/* per-lane riser counts beside the arrows */}
+      <text {...(() => { const [ax, ay] = pt((floorLandA1 + halfLandA0) / 2, midA); return { x: ax, y: ay }; })()}
+        textAnchor="middle" dominantBaseline="middle" fontSize={labelFs * 0.8} fontWeight={700} fill={COL.stairStroke}
+        transform={vertical ? undefined : undefined}>
+        {`UP ${lay.stepsA}R`}
+      </text>
+      <text {...(() => { const [bx, by] = pt((floorLandA1 + halfLandA0) / 2, midB); return { x: bx, y: by }; })()}
+        textAnchor="middle" dominantBaseline="middle" fontSize={labelFs * 0.8} fontWeight={700} fill={COL.stairStroke}>
+        {`UP ${lay.stepsB}R`}
+      </text>
       {/* label */}
       <text x={cx} y={cy} textAnchor="middle" dominantBaseline="middle" fontSize={Math.max(7.5, S * 0.3)} fontWeight={700}
-        letterSpacing={1} fill={stroke} transform={vertical ? `rotate(-90 ${cx} ${cy})` : undefined}>
+        letterSpacing={1} fill={stroke} opacity={0.55} transform={vertical ? `rotate(-90 ${cx} ${cy})` : undefined}>
         {s.label.toUpperCase()}
       </text>
       {/* compact 2-line caption — rotated alongside vertical stairs (outer side) so it never

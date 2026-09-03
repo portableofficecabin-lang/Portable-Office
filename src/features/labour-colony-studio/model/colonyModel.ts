@@ -33,7 +33,7 @@ import type { BoqNorms, TakeoffItem } from "@/lib/boq/types";
 import type { LabourColonyResult, MemberSections, MsSection } from "@/lib/quotation/labourColony";
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import { buildColumnMarks, type ColumnMark } from "@/lib/quotation/labourColonyRebar";
-import { buildRoomFloorPlan, type FPRoom, type FPStair, type FPVeranda, type RoomFloorPlanGeom } from "@/lib/quotation/roomFloorPlan";
+import { dogLegLayout, buildRoomFloorPlan, type FPRoom, type FPStair, type FPVeranda, type RoomFloorPlanGeom } from "@/lib/quotation/roomFloorPlan";
 import { buildElevation, sillFor, type ElevationFace, type ElevationGeom } from "@/lib/quotation/elevation";
 import {
   ASSEMBLY_SEQUENCE, COLOR_OF_KIND, EXPLODE_OF_KIND, LAYER_OF_KIND, STEP_OF_KIND, viewMaskOf,
@@ -2977,113 +2977,134 @@ function buildPartitions(
 function buildStairs(
   s: ModelSink, g: RoomFloorPlanGeom, floors: number, plinthM: number, floorHM: number, r: Resolvers,
 ): void {
+  /**
+   * HALF-LANDING DOG-LEG WELL — the same U dogLegLayout() gives the floor plan and the wall
+   * elevations, so all three drawings describe one physical staircase. Per storey: half-flight
+   * A departs the FLOOR landing (entry end, full well width), climbs its own lane to the HALF
+   * (turn) landing at the far end, and half-flight B reverses up the second lane to the next
+   * floor landing. The old builder stacked identical full-storey straight flights, which the
+   * elevations no longer draw and the plan's well no longer contains.
+   */
   if (floors < 2) return;
   const stringerLine = r.firstLineByPrefix("staircase:stringer");
   const sd = r.sectionForLine(stringerLine, "baseFrame");
   const st = Math.max(MIN_VIS, Math.max(sd.widthMm, sd.depthMm) / 1000);
+  const treadLine = r.firstLineByPrefix("staircase:tread-frame");
+  const landingLine = r.firstLineByPrefix("staircase:landing-cross");
+  const postLine = r.firstLineByPrefix("staircase:rail-post");
+  const railLine = r.firstLineByPrefix("staircase:rail:"); // trailing colon so it cannot hit rail-post
+
   (g.stairs ?? []).forEach((stair: FPStair) => {
-    const flights = floors - 1;
-    for (let fl = 0; fl < flights; fl++) {
+    const lay = dogLegLayout({
+      steps: stair.steps, goingM: stair.goingM, landingM: stair.landingM, widthM: stair.widthM,
+    });
+    const along = stair.orientation === "horizontal"; // run axis = x when horizontal, else y
+    const alongLen = along ? stair.w : stair.d;
+    const a0 = along ? stair.x : stair.y;              // well start on the run axis
+    const c0 = along ? stair.y : stair.x;              // well start on the cross axis
+    // entry "left" = the low-coordinate end holds the FLOOR landing
+    const entryLow = stair.entry === "left";
+    const A = (t: number) => (entryLow ? a0 + t : a0 + alongLen - t); // 0 = entry end
+    // lane A hugs the building: right/top wall means the building sits on the low cross side
+    const laneALow = stair.side === "right" || stair.side === "top";
+    const laneU = (lane: 0 | 1, u: number) =>
+      laneALow ? c0 + lane * lay.laneWM + u : c0 + (1 - lane) * lay.laneWM + (lay.laneWM - u);
+    /** axis-mapped box from run-span [t0,t1], lane-local cross-span [u0,u1], z-span */
+    const wellBox = (lane: 0 | 1, t0: number, t1: number, u0: number, u1: number, z0: number, z1: number) => {
+      const p0 = A(t0), p1 = A(t1);
+      const q0 = laneU(lane, u0), q1 = laneU(lane, u1);
+      return along
+        ? box(Math.min(p0, p1), Math.min(q0, q1), z0, Math.max(p0, p1), Math.max(q0, q1), z1)
+        : box(Math.min(q0, q1), Math.min(p0, p1), z0, Math.max(q0, q1), Math.max(p0, p1), z1);
+    };
+    const fullBox = (t0: number, t1: number, z0: number, z1: number) => {
+      const p0 = A(t0), p1 = A(t1);
+      const qLo = c0, qHi = c0 + lay.wellWidthM;
+      return along
+        ? box(Math.min(p0, p1), qLo, z0, Math.max(p0, p1), qHi, z1)
+        : box(qLo, Math.min(p0, p1), z0, qHi, Math.max(p0, p1), z1);
+    };
+    /** sloped quad in a lane's vertical side plane at lane-local cross offset u */
+    const slopeQuad = (lane: 0 | 1, tFoot: number, tHead: number, u: number, zFoot: number, zHead: number) => {
+      const pF = A(tFoot), pH = A(tHead);
+      const q = laneU(lane, u);
+      const pts: [Vec3, Vec3, Vec3, Vec3] = along
+        ? [
+            { x: pF, y: q, z: zFoot }, { x: pH, y: q, z: zHead },
+            { x: pH, y: q + st, z: zHead }, { x: pF, y: q + st, z: zFoot },
+          ]
+        : [
+            { x: q, y: pF, z: zFoot }, { x: q, y: pH, z: zHead },
+            { x: q + st, y: pH, z: zHead }, { x: q + st, y: pF, z: zFoot },
+          ];
+      return { kind: "quad" as const, pts, thicknessM: st };
+    };
+
+    const stepRise = floorHM / Math.max(1, stair.steps);
+    const riseA = stepRise * lay.stepsA;
+    const halves = [
+      { h: "a" as const, lane: 0 as const, steps: lay.stepsA, treads: lay.treadsA, run: lay.runAM,
+        tFoot: lay.landingM, tHead: lay.landingM + lay.runAM, z0: 0, z1: riseA },
+      { h: "b" as const, lane: 1 as const, steps: lay.stepsB, treads: lay.treadsB, run: lay.runBM,
+        tFoot: alongLen - lay.landingM, tHead: alongLen - lay.landingM - lay.runBM, z0: riseA, z1: floorHM },
+    ];
+
+    for (let fl = 0; fl < floors - 1; fl++) {
       const baseZ = plinthM + fl * floorHM;
       const topZ = baseZ + floorHM;
-      const along = stair.orientation === "horizontal";
-      const x0 = stair.x, y0 = stair.y, wById = stair.widthM;
-      const runM = stair.runM;
-      /**
-       * `FPStair.stepEdges` are measured "along the run from the ENTRY end". When the entry is on the
-       * RIGHT the flight climbs right-to-left, which `buildElevation` honours by flipping its drawn
-       * profile. Measuring unconditionally from the low coordinate (as this builder used to) mirrored
-       * the 3D flight and its landing relative to the 2D elevation and the fabrication sheet, so the
-       * flight arrived on the wrong side of the stair well. `ascendsPositive` restores that agreement.
-       */
-      const ascendsPositive = stair.entry === "left";
-      const lo = along ? x0 : y0;
-      const s0 = ascendsPositive ? lo : lo + runM;   // the ENTRY (low) end
-      const s1 = ascendsPositive ? lo + runM : lo;   // the ARRIVAL (high) end
-      const dir = ascendsPositive ? 1 : -1;
-      for (const [sideIdx, off] of [[0, 0], [1, wById]] as const) {
-        const perp = along ? y0 + off : x0 + off;
-        const pts: [Vec3, Vec3, Vec3, Vec3] = along
-          ? [
-              { x: s0, y: perp, z: baseZ }, { x: s1, y: perp, z: topZ },
-              { x: s1, y: perp + st, z: topZ }, { x: s0, y: perp + st, z: baseZ },
-            ]
-          : [
-              { x: perp, y: s0, z: baseZ }, { x: perp, y: s1, z: topZ },
-              { x: perp + st, y: s1, z: topZ }, { x: perp + st, y: s0, z: baseZ },
-            ];
-        s.add(`stair:${stair.id}:f${fl}:stringer:${sideIdx}`, "stair-stringer", `Stair stringer — ${stair.label}`,
-          { kind: "quad", pts, thicknessM: st }, { boqLineId: stringerLine, partMark: "ST", fabrication: "shop", assemblyId: `stair:${stair.id}` });
-      }
-      /* Treads. `resolveStair` guarantees treads = steps − 1 because the TOP riser lands on the floor
-       * slab itself, so tread i must sit one FULL riser above the departure level:
-       *     tread_i top = baseZ + (i + 1) × (floorHM / steps)
-       * Distributing over `treads − 1` gaps (the old form) put tread 0 flat on the departure slab and
-       * the last tread flat on the arrival slab, and produced a riser of floorHM/(steps−2) — visibly
-       * contradicting the riser height the stair schedule and the 2D elevation both report. */
-      const steps = Math.max(1, stair.steps);
-      const riserM = floorHM / steps;
-      stair.stepEdges.forEach((edge, si) => {
-        const tz = baseZ + (si + 1) * riserM;
-        const ta = s0 + dir * edge.a, tb = s0 + dir * edge.b;
-        const solid = along
-          ? box(Math.min(ta, tb), y0, tz - 0.03, Math.max(ta, tb), y0 + wById, tz)
-          : box(x0, Math.min(ta, tb), tz - 0.03, x0 + wById, Math.max(ta, tb), tz);
-        s.add(`stair:${stair.id}:f${fl}:tread:${si}`, "stair-tread", `Tread ${si + 1} — ${stair.label}`, solid,
-          { boqLineId: r.firstLineByPrefix("staircase:tread-frame"), partMark: "TR", fabrication: "shop", assemblyId: `stair:${stair.id}` });
-      });
-      // landing — at the ARRIVAL end, beyond the top of the flight
-      const lz0 = s1, lz1 = s1 + dir * stair.landingM;
-      s.add(`stair:${stair.id}:f${fl}:landing`, "landing", `Landing — ${stair.label}`,
-        along ? box(Math.min(lz0, lz1), y0, topZ - 0.05, Math.max(lz0, lz1), y0 + wById, topZ)
-              : box(x0, Math.min(lz0, lz1), topZ - 0.05, x0 + wById, Math.max(lz0, lz1), topZ),
-        { boqLineId: r.firstLineByPrefix("staircase:landing-cross"), partMark: "LND", fabrication: "shop", assemblyId: `stair:${stair.id}` });
-      /* HANDRAIL — posts and RAKING RAILS on BOTH sides of the flight.
-       *
-       * This must match the priced take-off, which has always billed the full system:
-       * `staircase:rail-post` is "2 side(s) × N post(s) × flights" and `staircase:rail:<id>`
-       * is "2 side(s) × rails × flights" of raking rail (colonyTakeoff.ts). The model used to
-       * build 5 posts on ONE side and NO rails at all — so the elevations showed a bare stair
-       * (and on a left-side stair nothing at all: the single post line sat on the inner edge,
-       * a full flight-width inside the face plane, outside the elevation's railing band) while
-       * the BOQ priced a two-side, two-rail railing. The geometry now shows what is billed.
-       * Post COUNT here stays the drawing-representative 5 per side (the take-off owns the
-       * priced quantity from its spacing norm, as it always has). */
-      if (stair.handrail) {
-        const railLine = r.firstLineByPrefix("staircase:rail:"); // trailing ':' — NOT rail-post
-        const postLine = r.firstLineByPrefix("staircase:rail-post");
-        const rt = 0.04; // raking-rail visual thickness (m)
-        for (const [railSide, off] of [[0, 0], [1, wById]] as const) {
-          for (let hp = 0; hp <= 4; hp++) {
-            const t = hp / 4;
-            const hz = baseZ + t * floorHM;
-            const ha = s0 + dir * t * runM;
-            const hx = along ? ha : x0 + off;
-            const hy = along ? y0 + off : ha;
-            s.add(`stair:${stair.id}:f${fl}:rail-post:${railSide}:${hp}`, "handrail-post", `Handrail post — ${stair.label}`,
-              box(hx - 0.025, hy - 0.025, hz, hx + 0.025, hy + 0.025, hz + RAIL_H),
-              { boqLineId: postLine, fabrication: "shop", assemblyId: `stair:${stair.id}` });
-          }
-          // Top + mid raking rail, parallel to the flight slope — the same two-rail grid the
-          // veranda railing draws, so plan, elevation and BOQ all describe one railing system.
-          for (const [railIdx, h] of [[0, RAIL_H], [1, RAIL_H * 0.5]] as const) {
-            const perp = along ? y0 + off : x0 + off;
-            const pts: [Vec3, Vec3, Vec3, Vec3] = along
-              ? [
-                  { x: s0, y: perp, z: baseZ + h - rt }, { x: s1, y: perp, z: topZ + h - rt },
-                  { x: s1, y: perp + rt, z: topZ + h }, { x: s0, y: perp + rt, z: baseZ + h },
-                ]
-              : [
-                  { x: perp, y: s0, z: baseZ + h - rt }, { x: perp, y: s1, z: topZ + h - rt },
-                  { x: perp + rt, y: s1, z: topZ + h }, { x: perp + rt, y: s0, z: baseZ + h },
-                ];
-            s.add(`stair:${stair.id}:f${fl}:rail:${railSide}:${railIdx}`, "handrail",
-              `${railIdx === 0 ? "Handrail (raking)" : "Handrail mid rail (raking)"} — ${stair.label}`,
-              { kind: "quad", pts, thicknessM: rt },
-              { boqLineId: railLine, fabrication: "shop", assemblyId: `stair:${stair.id}` });
+
+      for (const half of halves) {
+        const zFoot = baseZ + half.z0, zHead = baseZ + half.z1;
+        // two stringers on the lane's edges
+        for (const [sideIdx, off] of [[0, 0], [1, lay.laneWM - st]] as const) {
+          s.add(`stair:${stair.id}:f${fl}${half.h}:stringer:${sideIdx}`, "stair-stringer",
+            `Stair stringer — ${stair.label}`,
+            slopeQuad(half.lane, half.tFoot, half.tHead, off, zFoot, zHead),
+            { boqLineId: stringerLine, partMark: "ST", fabrication: "shop", assemblyId: `stair:${stair.id}` });
+        }
+        // open treads — each one full riser above the departure level
+        const dirT = half.tHead >= half.tFoot ? 1 : -1;
+        for (let si = 0; si < half.treads; si++) {
+          const ta = half.tFoot + dirT * si * stair.goingM;
+          const tb = ta + dirT * stair.goingM;
+          const tz = zFoot + (si + 1) * stepRise;
+          s.add(`stair:${stair.id}:f${fl}${half.h}:tread:${si}`, "stair-tread",
+            `Tread ${si + 1} — ${stair.label}`,
+            wellBox(half.lane, Math.min(ta, tb), Math.max(ta, tb), 0, lay.laneWM, tz - 0.03, tz),
+            { boqLineId: treadLine, partMark: "TR", fabrication: "shop", assemblyId: `stair:${stair.id}` });
+        }
+        // handrail: posts + top raking rail + mid rail on BOTH edges of the lane
+        if (stair.handrail) {
+          for (const [railSide, off] of [[0, 0], [1, lay.laneWM]] as const) {
+            for (let hp = 0; hp <= 4; hp++) {
+              const t = hp / 4;
+              const tp = half.tFoot + (half.tHead - half.tFoot) * t;
+              const hz = zFoot + (zHead - zFoot) * t;
+              const px = along ? A(tp) : laneU(half.lane, off);
+              const py = along ? laneU(half.lane, off) : A(tp);
+              s.add(`stair:${stair.id}:f${fl}${half.h}:rail-post:${railSide}:${hp}`, "handrail-post",
+                `Handrail post — ${stair.label}`,
+                box(px - 0.025, py - 0.025, hz, px + 0.025, py + 0.025, hz + RAIL_H),
+                { boqLineId: postLine, fabrication: "shop", assemblyId: `stair:${stair.id}` });
+            }
+            for (const [railIdx, hgt] of [[0, RAIL_H], [1, RAIL_H * 0.5]] as const) {
+              s.add(`stair:${stair.id}:f${fl}${half.h}:rail:${railSide}:${railIdx}`, "handrail",
+                `${railIdx === 0 ? "Handrail (raking)" : "Handrail mid rail (raking)"} — ${stair.label}`,
+                slopeQuad(half.lane, half.tFoot, half.tHead, Math.max(0, off - 0.04), zFoot + hgt - 0.04, zHead + hgt - 0.04),
+                { boqLineId: railLine, fabrication: "shop", assemblyId: `stair:${stair.id}` });
+            }
           }
         }
       }
+
+      // HALF (turn) landing — full well width, far end, mid-height
+      s.add(`stair:${stair.id}:f${fl}:half-landing`, "landing", `Half landing (turn) — ${stair.label}`,
+        fullBox(alongLen - lay.landingM, alongLen, baseZ + riseA - 0.05, baseZ + riseA),
+        { boqLineId: landingLine, partMark: "LND", fabrication: "shop", assemblyId: `stair:${stair.id}` });
+      // FLOOR landing — full well width, entry end, at the ARRIVAL level (connects the walkway)
+      s.add(`stair:${stair.id}:f${fl}:landing`, "landing", `Floor landing — ${stair.label}`,
+        fullBox(0, lay.landingM, topZ - 0.05, topZ),
+        { boqLineId: landingLine, partMark: "LND", fabrication: "shop", assemblyId: `stair:${stair.id}` });
     }
   });
 }
