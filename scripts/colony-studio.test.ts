@@ -355,6 +355,33 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
       silhouettes.length === 6,
       `G+3 front elevation: both staircases show all 3 flights end-on (got ${silhouettes.length})`,
     );
+    /* ── the per-floor chips (onFloors) drive the ELEVATION too ──────────────────────────
+     * Unticking a floor in the staircase editor must remove that floor's flight from the
+     * wall elevation (flight f departs floor f). Two former traps: a stair unticked on the
+     * GROUND floor vanished from the elevation entirely (it was read from the floor-0 plan
+     * geometry), and one unticked on an UPPER floor still drew every flight. */
+    {
+      const chip = (onFloors: number[] | undefined) => ({
+        staircases: [
+          { id: "sA", label: "A", position: "right" as const, enabled: true, onFloors },
+          { id: "sB", label: "B", position: "left" as const, enabled: true },
+        ],
+      });
+      const flightsFor = (onFloors: number[] | undefined) =>
+        buildElevation(g3, chip(onFloors), "right")
+          .stairs.filter((sh) => sh.profile)
+          .map((sh) => sh.flightIdx)
+          .sort();
+      ok(JSON.stringify(flightsFor(undefined)) === JSON.stringify([0, 1, 2]),
+        "chips: no list → every flight drawn on the elevation");
+      ok(JSON.stringify(flightsFor([0])) === JSON.stringify([0]),
+        "chips: ground only → ONLY the ground flight on the elevation");
+      ok(JSON.stringify(flightsFor([1, 2])) === JSON.stringify([1, 2]),
+        "chips: upper floors only → upper flights drawn even though the stair is absent from the floor-0 plan");
+      ok(JSON.stringify(flightsFor([2])) === JSON.stringify([2]),
+        "chips: one upper floor → exactly that flight");
+    }
+
     // A ground-floor-only colony still draws nothing new: no flights exist to stack.
     const g0 = calculateLabourColony({ ...BASE_CONFIG, floors: 1, capacity: 40 });
     ok(
