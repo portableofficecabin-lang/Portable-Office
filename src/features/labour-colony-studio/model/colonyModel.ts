@@ -3038,17 +3038,50 @@ function buildStairs(
         along ? box(Math.min(lz0, lz1), y0, topZ - 0.05, Math.max(lz0, lz1), y0 + wById, topZ)
               : box(x0, Math.min(lz0, lz1), topZ - 0.05, x0 + wById, Math.max(lz0, lz1), topZ),
         { boqLineId: r.firstLineByPrefix("staircase:landing-cross"), partMark: "LND", fabrication: "shop", assemblyId: `stair:${stair.id}` });
-      // handrail posts + rail along one side
+      /* HANDRAIL — posts and RAKING RAILS on BOTH sides of the flight.
+       *
+       * This must match the priced take-off, which has always billed the full system:
+       * `staircase:rail-post` is "2 side(s) × N post(s) × flights" and `staircase:rail:<id>`
+       * is "2 side(s) × rails × flights" of raking rail (colonyTakeoff.ts). The model used to
+       * build 5 posts on ONE side and NO rails at all — so the elevations showed a bare stair
+       * (and on a left-side stair nothing at all: the single post line sat on the inner edge,
+       * a full flight-width inside the face plane, outside the elevation's railing band) while
+       * the BOQ priced a two-side, two-rail railing. The geometry now shows what is billed.
+       * Post COUNT here stays the drawing-representative 5 per side (the take-off owns the
+       * priced quantity from its spacing norm, as it always has). */
       if (stair.handrail) {
-        for (let hp = 0; hp <= 4; hp++) {
-          const t = hp / 4;
-          const hz = baseZ + t * floorHM;
-          const ha = s0 + dir * t * runM;
-          const hx = along ? ha : x0 + wById;
-          const hy = along ? y0 + wById : ha;
-          s.add(`stair:${stair.id}:f${fl}:rail-post:${hp}`, "handrail-post", `Handrail post — ${stair.label}`,
-            box(hx - 0.025, hy - 0.025, hz, hx + 0.025, hy + 0.025, hz + RAIL_H),
-            { boqLineId: r.firstLineByPrefix("staircase:rail-post"), fabrication: "shop", assemblyId: `stair:${stair.id}` });
+        const railLine = r.firstLineByPrefix("staircase:rail:"); // trailing ':' — NOT rail-post
+        const postLine = r.firstLineByPrefix("staircase:rail-post");
+        const rt = 0.04; // raking-rail visual thickness (m)
+        for (const [railSide, off] of [[0, 0], [1, wById]] as const) {
+          for (let hp = 0; hp <= 4; hp++) {
+            const t = hp / 4;
+            const hz = baseZ + t * floorHM;
+            const ha = s0 + dir * t * runM;
+            const hx = along ? ha : x0 + off;
+            const hy = along ? y0 + off : ha;
+            s.add(`stair:${stair.id}:f${fl}:rail-post:${railSide}:${hp}`, "handrail-post", `Handrail post — ${stair.label}`,
+              box(hx - 0.025, hy - 0.025, hz, hx + 0.025, hy + 0.025, hz + RAIL_H),
+              { boqLineId: postLine, fabrication: "shop", assemblyId: `stair:${stair.id}` });
+          }
+          // Top + mid raking rail, parallel to the flight slope — the same two-rail grid the
+          // veranda railing draws, so plan, elevation and BOQ all describe one railing system.
+          for (const [railIdx, h] of [[0, RAIL_H], [1, RAIL_H * 0.5]] as const) {
+            const perp = along ? y0 + off : x0 + off;
+            const pts: [Vec3, Vec3, Vec3, Vec3] = along
+              ? [
+                  { x: s0, y: perp, z: baseZ + h - rt }, { x: s1, y: perp, z: topZ + h - rt },
+                  { x: s1, y: perp + rt, z: topZ + h }, { x: s0, y: perp + rt, z: baseZ + h },
+                ]
+              : [
+                  { x: perp, y: s0, z: baseZ + h - rt }, { x: perp, y: s1, z: topZ + h - rt },
+                  { x: perp + rt, y: s1, z: topZ + h }, { x: perp + rt, y: s0, z: baseZ + h },
+                ];
+            s.add(`stair:${stair.id}:f${fl}:rail:${railSide}:${railIdx}`, "handrail",
+              `${railIdx === 0 ? "Handrail (raking)" : "Handrail mid rail (raking)"} — ${stair.label}`,
+              { kind: "quad", pts, thicknessM: rt },
+              { boqLineId: railLine, fabrication: "shop", assemblyId: `stair:${stair.id}` });
+          }
         }
       }
     }
