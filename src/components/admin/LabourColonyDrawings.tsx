@@ -715,6 +715,11 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
   const wPx = Math.abs(s.wM) * S;
   const caption = `${s.label} · ${s.steps}R @ ${fmt(s.riserM)} · ${s.treads}T @ ${fmt(s.goingM)}`;
   const base = s.baseM, top = s.topM;
+  /* One glyph is rendered PER FLIGHT (elevation.ts emits floors − 1 stacked shapes). The
+   * ground flight (flightIdx 0) carries the run dimension, the schedule caption and the
+   * plinth; upper flights draw only their own geometry + rise so a G+3 stair reads as one
+   * continuous stack instead of the same caption printed four times over itself. */
+  const firstFlight = s.flightIdx === 0;
 
   /* ---------- seen END-ON (the flight recedes from the viewer) ----------
    * You see the WIDTH of the flight, not its slope: an open steel frame — two posts, the
@@ -733,11 +738,12 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
           const ty = Y(base + (k + 1) * stepRise);
           return <line key={k} x1={sx0 + 1} y1={ty} x2={sx0 + wPx - 1} y2={ty} stroke={COL.stairTread} strokeWidth={0.9} />;
         })}
-        {/* the two stringer posts at the flight edges, carried down to the ground */}
+        {/* the two stringer posts at the flight edges — the stair tower's columns, carried to
+            the ground on every flight (upper flights' posts overlay the ones below: one column) */}
         <rect x={sx0 - postW / 2} y={topY} width={postW} height={groundY - topY} fill={COL.steel} />
         <rect x={sx0 + wPx - postW / 2} y={topY} width={postW} height={groundY - topY} fill={COL.steel} />
-        {/* the plinth the flight starts from */}
-        {base > 0.01 && (
+        {/* the plinth the GROUND flight starts from — never repeated under upper flights */}
+        {firstFlight && base > 0.01 && (
           <rect x={sx0} y={Y(base)} width={wPx} height={groundY - Y(base)} fill={COL.plinth} stroke={COL.wall} strokeWidth={0.8} />
         )}
         {/* handrail across the top of the flight */}
@@ -748,14 +754,18 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
             <line x1={sx0 + wPx} y1={Y(top + hrH)} x2={sx0 + wPx} y2={topY} strokeWidth={1.4} />
           </g>
         )}
-        {/* flight WIDTH is the dimension you actually see in this view */}
-        <g stroke={COL.dim} strokeWidth={0.8}>
-          <line x1={sx0} y1={groundY + 15} x2={sx0 + wPx} y2={groundY + 15} />
-          <line x1={sx0} y1={groundY + 11} x2={sx0} y2={groundY + 19} />
-          <line x1={sx0 + wPx} y1={groundY + 11} x2={sx0 + wPx} y2={groundY + 19} />
-        </g>
-        <text x={sx0 + wPx / 2} y={groundY + 10} textAnchor="middle" fontSize={6} fill={COL.dim}>{fmt(s.widthM)}</text>
-        <text x={sx0 + wPx / 2} y={groundY + 26} textAnchor="middle" fontSize={6} fill={COL.steelDark}>{s.label}</text>
+        {/* flight WIDTH + label — once, under the ground flight */}
+        {firstFlight && (
+          <>
+            <g stroke={COL.dim} strokeWidth={0.8}>
+              <line x1={sx0} y1={groundY + 15} x2={sx0 + wPx} y2={groundY + 15} />
+              <line x1={sx0} y1={groundY + 11} x2={sx0} y2={groundY + 19} />
+              <line x1={sx0 + wPx} y1={groundY + 11} x2={sx0 + wPx} y2={groundY + 19} />
+            </g>
+            <text x={sx0 + wPx / 2} y={groundY + 10} textAnchor="middle" fontSize={6} fill={COL.dim}>{fmt(s.widthM)}</text>
+            <text x={sx0 + wPx / 2} y={groundY + 26} textAnchor="middle" fontSize={6} fill={COL.steelDark}>{s.label}</text>
+          </>
+        )}
       </g>
     );
   }
@@ -774,6 +784,23 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
   /** height of the nosing line at any x along the flight, measured ABOVE GROUND (base + climb) */
   const nose = (x: number) => base + Math.abs(x - lowX) * slope;
 
+  /** UP arrow along the flight — foot to head, parallel to the nosing line, with the label at
+   *  the foot. Drawn on EVERY flight so the ascent path reads continuously up the storeys. */
+  const upArrow = (() => {
+    const ax0 = lowX + dir * flightM * 0.15, ax1 = lowX + dir * flightM * 0.85;
+    const ay0 = nose(ax0) + hrH * 0.28, ay1 = nose(ax1) + hrH * 0.28;
+    const ang = Math.atan2(Y(ay1) - Y(ay0), X(ax1) - X(ax0));
+    const head = 5;
+    return (
+      <g stroke={COL.overall} fill={COL.overall}>
+        <line x1={X(ax0)} y1={Y(ay0)} x2={X(ax1)} y2={Y(ay1)} strokeWidth={1.1} />
+        <polygon points={`${X(ax1)},${Y(ay1)} ${X(ax1) - head * Math.cos(ang - 0.42)},${Y(ay1) - head * Math.sin(ang - 0.42)} ${X(ax1) - head * Math.cos(ang + 0.42)},${Y(ay1) - head * Math.sin(ang + 0.42)}`} />
+        <text x={X(ax0) - dir * 3} y={Y(ay0) + 2} textAnchor={dir > 0 ? "end" : "start"}
+          fontSize={5.6} fontWeight={700} stroke="none">UP</text>
+      </g>
+    );
+  })();
+
   // ---- RCC fallback: the solid cast waist slab -------------------------------------------
   if (style === "rcc") {
     const pts: string[] = [];
@@ -784,13 +811,18 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
       cx += dir * going; pts.push(`${X(cx)},${Y(cy)}`);
     }
     pts.push(`${X(landX)},${Y(cy)}`);
+    /* The solid fill closes down to the GROUND only for the ground flight. An upper flight
+     * closing to Y(0) would paint a storey-height concrete wedge over the floors below it —
+     * it closes to its own departure level instead (a waist-slab band, as cast). */
+    const closeY = firstFlight ? 0 : base;
     return (
       <g>
-        <polygon points={`${pts.join(" ")} ${X(landX)},${Y(0)} ${X(lowX)},${Y(0)}`}
+        <polygon points={`${pts.join(" ")} ${X(landX)},${Y(closeY)} ${X(lowX)},${Y(closeY)}`}
           fill={COL.stairFill} stroke={COL.stair} strokeWidth={1.2} />
         {s.handrail && (
           <line x1={X(lowX)} y1={Y(base + hrH)} x2={X(landX)} y2={Y(top + hrH)} stroke={COL.rail} strokeWidth={1.8} />
         )}
+        {upArrow}
         <StairSchedule s={s} X={X} Y={Y} groundY={groundY} sx0={sx0} wPx={wPx} caption={caption} fmt={fmt}
           hrH={hrH} lowX={lowX} topX={topX} base={base} top={top} />
       </g>
@@ -847,8 +879,8 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
         );
       })}
 
-      {/* --- the plinth the flight starts from (its bottom step sits on the FFL, not on grade) --- */}
-      {base > 0.01 && (
+      {/* --- the plinth the GROUND flight starts from — never repeated under upper flights --- */}
+      {firstFlight && base > 0.01 && (
         <rect x={Math.min(X(lowX), X(footX))} y={Y(base)} width={Math.max(3, Math.abs(X(footX) - X(lowX)))}
           height={groundY - Y(base)} fill={COL.plinth} stroke={COL.wall} strokeWidth={0.8} />
       )}
@@ -891,6 +923,7 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
         </g>
       )}
 
+      {upArrow}
       <StairSchedule s={s} X={X} Y={Y} groundY={groundY} sx0={sx0} wPx={wPx} caption={caption} fmt={fmt}
         hrH={hrH} lowX={lowX} topX={topX} base={base} top={top} />
     </g>
@@ -937,23 +970,28 @@ function StairSchedule({ s, X, Y, groundY, sx0, wPx, caption, fmt, hrH, lowX, to
         </text>
       )}
 
-      {/* ---- horizontal RUN of the flight ---- */}
-      <g stroke={COL.dim} strokeWidth={0.8}>
-        <line x1={runA} y1={groundY + 15} x2={runB} y2={groundY + 15} />
-        <line x1={runA} y1={groundY + 11} x2={runA} y2={groundY + 19} />
-        <line x1={runB} y1={groundY + 11} x2={runB} y2={groundY + 19} />
-      </g>
-      <text x={(runA + runB) / 2} y={groundY + 10} textAnchor="middle" fontSize={6} fill={COL.dim}>
-        run {fmt(s.runM)}
-      </text>
-
-      {/* ---- full schedule ---- */}
-      <text x={sx0 + wPx / 2} y={groundY + 27} textAnchor="middle" fontSize={6.2} fontWeight={700} fill={COL.steelDark}>
-        {caption}
-      </text>
-      <text x={sx0 + wPx / 2} y={groundY + 35} textAnchor="middle" fontSize={5.7} fill={COL.note}>
-        width {fmt(s.widthM)} · landing {fmt(s.landingM)} · railing {fmt(hrH)} · slope {s.slopeDeg}°
-      </text>
+      {/* ---- run dim + schedule caption: printed ONCE, under the GROUND flight. The stacked
+              upper flights are the identical flight repeated (elevation.ts), so repeating the
+              caption per storey would print the same schedule over itself. Each flight still
+              carries its own RISE dimension and start/end levels above. ---- */}
+      {s.flightIdx === 0 && (
+        <>
+          <g stroke={COL.dim} strokeWidth={0.8}>
+            <line x1={runA} y1={groundY + 15} x2={runB} y2={groundY + 15} />
+            <line x1={runA} y1={groundY + 11} x2={runA} y2={groundY + 19} />
+            <line x1={runB} y1={groundY + 11} x2={runB} y2={groundY + 19} />
+          </g>
+          <text x={(runA + runB) / 2} y={groundY + 10} textAnchor="middle" fontSize={6} fill={COL.dim}>
+            run {fmt(s.runM)}
+          </text>
+          <text x={sx0 + wPx / 2} y={groundY + 27} textAnchor="middle" fontSize={6.2} fontWeight={700} fill={COL.steelDark}>
+            {caption} × {s.flightCount} flight{s.flightCount > 1 ? "s" : ""}
+          </text>
+          <text x={sx0 + wPx / 2} y={groundY + 35} textAnchor="middle" fontSize={5.7} fill={COL.note}>
+            width {fmt(s.widthM)} · landing {fmt(s.landingM)} · railing {fmt(hrH)} · slope {s.slopeDeg}°
+          </text>
+        </>
+      )}
     </g>
   );
 }

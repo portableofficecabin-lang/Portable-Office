@@ -10,6 +10,7 @@
  */
 
 import { calculateLabourColony, floorCountLabel, type LabourColonyConfig, type LabourColonyResult } from "../src/lib/quotation/labourColony";
+import { buildElevation } from "../src/lib/quotation/elevation";
 import { buildConstructionPlan } from "../src/lib/quotation/labourColonyPlan";
 import { calculateCivilWork, DEFAULT_CIVIL_CONFIG, type CivilContext, type CivilWorkResult } from "../src/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
@@ -286,6 +287,50 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
 
   // And the full drawing/3D model must build validly with four storeys.
   runChecks("G+3 (floors = 4)", buildColonyModel({ result: g3, civil: civil3, columnGrid }));
+
+  /* ── elevations: ONE STAIR FLIGHT PER STOREY, chained floor to floor ─────────────────────
+   * buildElevation used to emit a single ground flight regardless of storey count, so a G+3
+   * side elevation showed a stair serving only the first floor and nothing above it. Now it
+   * emits floors − 1 stacked flights whose levels CHAIN: each flight tops out exactly where
+   * the next one starts, and the last lands on the top FFL. */
+  {
+    const side = buildElevation(g3, undefined, "right");
+    const profileFlights = side.stairs
+      .filter((sh) => sh.profile)
+      .sort((a, b) => a.flightIdx - b.flightIdx);
+    ok(profileFlights.length === 3, `G+3 side elevation: 3 profile flights (got ${profileFlights.length})`);
+    ok(
+      profileFlights.every((sh, i) => sh.flightIdx === i && sh.flightCount === 3),
+      "G+3 side elevation: flights are indexed 0..2 of 3",
+    );
+    for (let i = 0; i + 1 < profileFlights.length; i++) {
+      ok(
+        Math.abs(profileFlights[i].topM - profileFlights[i + 1].baseM) < 0.005,
+        `G+3 side elevation: flight ${i} lands exactly where flight ${i + 1} starts (${profileFlights[i].topM} vs ${profileFlights[i + 1].baseM})`,
+      );
+    }
+    if (profileFlights.length === 3) {
+      const expectTop = side.plinthM + 3 * side.floorHM;
+      ok(
+        Math.abs(profileFlights[2].topM - expectTop) < 0.005,
+        `G+3 side elevation: the last flight lands on FFL 3 (${profileFlights[2].topM} vs ${expectTop})`,
+      );
+    }
+    // The long (front) face sees the same stairs end-on — every storey's flight, none skipped.
+    const front = buildElevation(g3, undefined, "front");
+    const silhouettes = front.stairs.filter((sh) => !sh.profile);
+    ok(
+      silhouettes.length === 6,
+      `G+3 front elevation: both staircases show all 3 flights end-on (got ${silhouettes.length})`,
+    );
+    // A ground-floor-only colony still draws nothing new: no flights exist to stack.
+    const g0 = calculateLabourColony({ ...BASE_CONFIG, floors: 1, capacity: 40 });
+    ok(
+      buildElevation(g0, undefined, "right").stairs.length === 0 ||
+        buildElevation(g0, undefined, "right").stairs.every((sh) => sh.flightCount >= 1),
+      "single-storey elevation emits no phantom upper flights",
+    );
+  }
 }
 
 // civil-absent variant must still build a full foundation from defaults
