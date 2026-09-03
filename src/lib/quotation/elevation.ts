@@ -79,6 +79,20 @@ export interface ElevStairShape {
    */
   flightIdx: number;
   flightCount: number;
+  /**
+   * HALF-LANDING DOG-LEG (profile faces): each storey climbs in TWO half-flights.
+   *   half 0 — departs the FLOOR landing (all floor landings identically placed, at the
+   *            drawing's right), climbs to the mid-height HALF (turn) landing at the left;
+   *   half 1 — reverses off the half landing and climbs to the NEXT floor landing, back at
+   *            the same right-hand position.
+   * This is what makes every floor landing sit at the SAME horizontal position with the same
+   * size and projection (the owner's requirement) while the flights still reverse direction —
+   * geometrically impossible with one full-height flight per storey, whose landings must
+   * alternate ends. Undefined on end-on silhouettes.
+   */
+  halfOfStorey?: 0 | 1;
+  /** Risers per FULL storey (both halves together) — for the schedule caption. */
+  storeySteps?: number;
   /** Full schedule — every value the drawing annotates, straight from the plan's staircase config. */
   steps: number;              // risers
   treads: number;             // risers − 1 (the top riser lands on the floor slab)
@@ -378,29 +392,77 @@ export function buildElevation(
     };
   };
   /**
-   * DOG-LEG ALTERNATION — flight f + 1 climbs in the OPPOSITE direction to flight f.
+   * HALF-LANDING DOG-LEG — each storey climbs as TWO reversing half-flights (profile faces).
    *
-   * Identical stacked flights (the first multi-flight version) were not a walkable stair:
-   * every flight rose left→right, so after landing at the right end of one storey the next
-   * flight departed from the LEFT end with no connecting passage. Alternating the low end
-   * per flight makes the geometry itself continuous — flight f arrives at exactly the point
-   * (same face position, same level) where flight f + 1 departs, through the landing drawn
-   * at that end. The walking path reads ground → landing → turn → up → landing → … → top,
-   * as a dog-legged external stair actually works. Riser/tread counts per flight and every
-   * dimension are untouched — only the direction alternates.
+   * The evolution that got here: one flight per storey with ALTERNATING direction was a
+   * walkable dog-leg, but its junction landings necessarily alternate ends — first floor
+   * right, second floor LEFT, third right — and the owner requires every FLOOR landing at
+   * the SAME horizontal position with identical size and projection. With straight
+   * full-storey flights that is geometrically impossible. The standard external-stair answer
+   * is the half-landing dog-leg drawn here:
+   *
+   *   FLOOR landing (right, identical at every FFL)          ← what the owner aligns
+   *     ↑ half-flight 1 (reverses, climbs right)
+   *   HALF landing (left, mid-height turn platform)
+   *     ↑ half-flight 0 (departs the floor landing, climbs left)
+   *   FLOOR landing (right) …
+   *
+   * Risers per storey are preserved exactly (stepsA + stepsB = steps, same riser height, so
+   * the stack still lands on every FFL to the millimetre); the going is preserved per tread.
+   * A dog-leg has one fewer tread per storey than a straight flight — that is arithmetic,
+   * not a drawing choice, and the schedule caption prints the true split.
    */
-  const flightLowAtStart = (groundLowAtStart: boolean, f: number): boolean =>
-    f % 2 === 0 ? groundLowAtStart : !groundLowAtStart;
+  const stepsA0 = 0, halfIdxB = 1; // readability constants for halfOfStorey
   for (const s of elevStairs) {
+    const stepsA = Math.max(1, Math.ceil(s.steps / 2));
+    const stepsB = Math.max(1, s.steps - stepsA);
+    const stepRise = s.totalRiseM / Math.max(1, s.steps);
+    const riseA = stepRise * stepsA, riseB = stepRise * stepsB;
+    const treadsA = Math.max(1, stepsA - 1), treadsB = Math.max(1, stepsB - 1);
+    const runA = treadsA * s.goingM, runB = treadsB * s.goingM;
+
+    /** Emit both halves of storey f into `stairs`, anchored so the floor landings all sit at
+     *  [viewHi − landingM, viewHi] — the drawing's right — regardless of storey. */
+    const pushStorey = (f: number, viewLo: number, viewHi: number) => {
+      const base = round(plinthM + f * floorH);
+      const halfLevel = round(base + riseA);
+      const ffl = round(plinthM + (f + 1) * floorH);
+      const common = {
+        goingM: s.goingM, riserM: s.riserMm / 1000, widthM: s.widthM,
+        reachesFloor: s.reachesFloor, handrail: s.handrail, label: s.label,
+        flightCount: 2 * flightCount, storeySteps: s.steps, profile: true as const,
+      };
+      // half 0 — from the floor landing (right) up-left to the half landing. lowAtStart=false:
+      // its LOW end is at x0+wM (the right), the half landing draws at its arrival (left) end.
+      const wA = runA + s.landingM;
+      const x0A = Math.max(viewLo, viewHi - s.landingM - wA);
+      stairs.push({
+        ...common, x0: x0A, wM: wA, lowAtStart: false,
+        baseM: base, riseM: round(riseA), topM: halfLevel,
+        steps: stepsA, treads: treadsA, runM: round(runA), landingM: s.landingM,
+        slopeDeg: round((Math.atan2(riseA, runA) * 180) / Math.PI, 1),
+        flightIdx: 2 * f, halfOfStorey: stepsA0,
+      });
+      // half 1 — reverses off the half landing, up-right to the NEXT floor landing. Its landing
+      // is widened to reach viewHi exactly, so every floor landing spans the same [.., viewHi].
+      const x0B = x0A; // foot on the half landing's inner edge (directly above half 0's head)
+      const landB = Math.max(s.landingM, viewHi - (x0B + runB));
+      stairs.push({
+        ...common, x0: x0B, wM: runB + landB, lowAtStart: true,
+        baseM: halfLevel, riseM: round(riseB), topM: ffl,
+        steps: stepsB, treads: treadsB, runM: round(runB), landingM: landB,
+        slopeDeg: round((Math.atan2(riseB, runB) * 180) / Math.PI, 1),
+        flightIdx: 2 * f + 1, halfOfStorey: halfIdxB,
+      });
+    };
+
     for (let f = 0; f < flightCount; f++) {
       if (!flightVisible(s.id, f)) continue;
       if ((face === "left" || face === "right") && s.side === face) {
-        // true stepped profile: the flight runs along plan y (vertical stair) → along this face's axis
+        // true stepped profile: the stair runs along plan y (vertical stair) → along this face's axis
         const a0 = s.y, len = s.d;
-        const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;              // entry end = low end
-        const e0 = T(a0, len);
-        const lowAtStart = mirrored ? !(lowPlanEnd === a0) : lowPlanEnd === a0;
-        stairs.push({ ...perFlight(s, f), x0: e0, wM: len, lowAtStart: flightLowAtStart(lowAtStart, f), profile: true });
+        const viewLo = T(a0, len);
+        pushStorey(f, viewLo, viewLo + len);
       } else if (alongX && (s.side === "left" || s.side === "right")) {
         // end silhouette on the long faces — true position + width from the plan
         const a0 = s.x, len = s.w;
@@ -409,12 +471,11 @@ export function buildElevation(
         const a0 = s.y, len = s.d;
         stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
       } else if (alongX && (s.side === "top" || s.side === "bottom") && s.side === sideOfFace) {
-        // A top/bottom staircase is HORIZONTAL — its flight runs along plan x, which is this face's
-        // own axis, so it lies IN the view plane and must show its true stepped profile.
+        // A top/bottom staircase is HORIZONTAL — its run lies along plan x, which is this face's
+        // own axis, so it lies IN the view plane and shows the same half-landing profile.
         const a0 = s.x, len = s.w;
-        const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;      // entry end = low end
-        const lowAtStart = mirrored ? lowPlanEnd !== a0 : lowPlanEnd === a0;
-        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: flightLowAtStart(lowAtStart, f), profile: true });
+        const viewLo = T(a0, len);
+        pushStorey(f, viewLo, viewLo + len);
       }
     }
   }

@@ -288,64 +288,92 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
   // And the full drawing/3D model must build validly with four storeys.
   runChecks("G+3 (floors = 4)", buildColonyModel({ result: g3, civil: civil3, columnGrid }));
 
-  /* ── elevations: ONE STAIR FLIGHT PER STOREY, chained floor to floor ─────────────────────
-   * buildElevation used to emit a single ground flight regardless of storey count, so a G+3
-   * side elevation showed a stair serving only the first floor and nothing above it. Now it
-   * emits floors − 1 stacked flights whose levels CHAIN: each flight tops out exactly where
-   * the next one starts, and the last lands on the top FFL. */
+  /* ── elevations: HALF-LANDING DOG-LEG — two reversing half-flights per storey ────────────
+   * Owner spec (2026-09-03): every FLOOR landing must sit at the SAME horizontal position
+   * with identical size and projection, and the flights must still reverse. That is the
+   * half-landing dog-leg: floor landings all at the drawing's right, the turn on a
+   * mid-height half landing at the left. These pins prove the geometry, storey by storey. */
   {
     const side = buildElevation(g3, undefined, "right");
-    const profileFlights = side.stairs
+    const halves = side.stairs
       .filter((sh) => sh.profile)
       .sort((a, b) => a.flightIdx - b.flightIdx);
-    ok(profileFlights.length === 3, `G+3 side elevation: 3 profile flights (got ${profileFlights.length})`);
+    ok(halves.length === 6, `G+3 side elevation: 3 storeys × 2 half-flights (got ${halves.length})`);
     ok(
-      profileFlights.every((sh, i) => sh.flightIdx === i && sh.flightCount === 3),
-      "G+3 side elevation: flights are indexed 0..2 of 3",
+      halves.every((sh, i) => sh.flightIdx === i && sh.flightCount === 6),
+      "G+3 side elevation: half-flights are indexed 0..5 of 6",
     );
-    for (let i = 0; i + 1 < profileFlights.length; i++) {
+    ok(
+      halves.every((sh, i) => sh.halfOfStorey === (i % 2 as 0 | 1)),
+      "G+3 side elevation: halves alternate lower/upper within each storey",
+    );
+    // Levels chain through every half landing and every floor landing, to the top FFL.
+    for (let i = 0; i + 1 < halves.length; i++) {
       ok(
-        Math.abs(profileFlights[i].topM - profileFlights[i + 1].baseM) < 0.005,
-        `G+3 side elevation: flight ${i} lands exactly where flight ${i + 1} starts (${profileFlights[i].topM} vs ${profileFlights[i + 1].baseM})`,
+        Math.abs(halves[i].topM - halves[i + 1].baseM) < 0.005,
+        `G+3 side elevation: half ${i} tops out exactly where half ${i + 1} starts`,
       );
     }
-    /* Dog-leg continuity — the WALKING PATH, not just the levels. Directions must alternate
-     * (identical stacked flights are not walkable: you land at one end and the next flight
-     * departs from the other), and each flight's departure POINT must be the previous
-     * flight's arrival edge — the landing both of them share. */
     ok(
-      profileFlights.every((sh, i) => i === 0 || sh.lowAtStart !== profileFlights[i - 1].lowAtStart),
-      "G+3 side elevation: flight directions ALTERNATE (dog-leg), never repeat",
+      Math.abs(halves[halves.length - 1].topM - (side.plinthM + 3 * side.floorHM)) < 0.005,
+      "G+3 side elevation: the last half-flight lands on FFL 3",
     );
-    /* Reading direction (owner spec 2026-09-03): the GROUND flight rises to the drawing's
-     * RIGHT-side first-floor landing, then the dog-leg alternates. With the old global
-     * entry="left" default the right-wall staircase drew mirrored — first flight to the LEFT.
-     * The side-aware entry default in buildRoomFloorPlan makes both side faces read the same. */
+    // Risers per storey are preserved: the two halves sum to the configured storey count.
     ok(
-      profileFlights.length > 0 && profileFlights[0].lowAtStart === true,
-      "G+3 RIGHT elevation: the ground flight rises toward the RIGHT (lands at the right FFL-1 landing)",
+      [0, 1, 2].every((k) => halves[2 * k].steps + halves[2 * k + 1].steps === (halves[0].storeySteps ?? -1)),
+      "G+3 side elevation: each storey's two halves sum to the full riser count",
     );
+    // Directions REVERSE at the half landing: lower half climbs one way, upper the other.
+    ok(
+      halves.every((sh, i) => i === 0 || sh.lowAtStart !== halves[i - 1].lowAtStart),
+      "G+3 side elevation: every consecutive half-flight reverses direction (dog-leg)",
+    );
+    /* THE ALIGNMENT REQUIREMENT — every floor landing at the same horizontal position with
+     * the same size: all upper halves arrive at one identical right edge, with equal landing
+     * widths; all half landings share one identical left edge too. */
+    const upper = halves.filter((sh) => sh.halfOfStorey === 1);
+    const lower = halves.filter((sh) => sh.halfOfStorey === 0);
+    const rightEdges = upper.map((sh) => sh.x0 + sh.wM);
+    ok(
+      rightEdges.every((x) => Math.abs(x - rightEdges[0]) < 0.005),
+      `floor landings ALL end at one right edge (${rightEdges.map((x) => x.toFixed(2)).join(", ")})`,
+    );
+    ok(
+      upper.every((sh) => Math.abs(sh.landingM - upper[0].landingM) < 0.005),
+      "floor landings are all the SAME width",
+    );
+    const leftEdges = lower.map((sh) => sh.x0);
+    ok(
+      leftEdges.every((x) => Math.abs(x - leftEdges[0]) < 0.005),
+      "half (turn) landings are identically placed at the left",
+    );
+    // Walking-path continuity in position: the upper half departs exactly where the lower
+    // half arrives (the half landing), and each storey's lower half departs ON the floor
+    // landing the previous storey's upper half arrived at.
+    for (let k = 0; k < 3; k++) {
+      const lo = halves[2 * k], up = halves[2 * k + 1];
+      ok(
+        Math.abs(lo.x0 - up.x0) < 0.005,
+        `storey ${k}: the upper half departs from the half landing the lower half arrives at`,
+      );
+      if (k > 0) {
+        const prevUp = halves[2 * k - 1];
+        const foot = lo.x0 + lo.wM; // lower half is lowAtStart=false — its foot is the right end
+        const landLo = prevUp.x0 + prevUp.wM - prevUp.landingM;
+        const landHi = prevUp.x0 + prevUp.wM;
+        ok(
+          foot >= landLo - 0.005 && foot <= landHi + 0.005,
+          `storey ${k}: departs ON the floor landing storey ${k - 1} arrived at`,
+        );
+      }
+    }
     {
       const leftFace = buildElevation(g3, undefined, "left");
-      const leftFlights = leftFace.stairs.filter((sh) => sh.profile).sort((a, b) => a.flightIdx - b.flightIdx);
+      const leftUpper = leftFace.stairs.filter((sh) => sh.profile && sh.halfOfStorey === 1);
+      const le = leftUpper.map((sh) => sh.x0 + sh.wM);
       ok(
-        leftFlights.length > 0 && leftFlights[0].lowAtStart === true,
-        "G+3 LEFT elevation: its own ground flight also rises toward the RIGHT (both faces read alike)",
-      );
-    }
-    const footX = (sh: (typeof profileFlights)[number]) => (sh.lowAtStart ? sh.x0 : sh.x0 + sh.wM);
-    const arrivalEdgeX = (sh: (typeof profileFlights)[number]) => (sh.lowAtStart ? sh.x0 + sh.wM : sh.x0);
-    for (let i = 0; i + 1 < profileFlights.length; i++) {
-      ok(
-        Math.abs(arrivalEdgeX(profileFlights[i]) - footX(profileFlights[i + 1])) < 0.005,
-        `G+3 side elevation: flight ${i + 1} departs from the SAME landing edge flight ${i} arrives at`,
-      );
-    }
-    if (profileFlights.length === 3) {
-      const expectTop = side.plinthM + 3 * side.floorHM;
-      ok(
-        Math.abs(profileFlights[2].topM - expectTop) < 0.005,
-        `G+3 side elevation: the last flight lands on FFL 3 (${profileFlights[2].topM} vs ${expectTop})`,
+        leftUpper.length === 3 && le.every((x) => Math.abs(x - le[0]) < 0.005),
+        "G+3 LEFT elevation: its floor landings are identically aligned too",
       );
     }
     // The long (front) face sees the same stairs end-on — every storey's flight, none skipped.
@@ -367,19 +395,20 @@ runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS,
           { id: "sB", label: "B", position: "left" as const, enabled: true },
         ],
       });
+      // Each ticked storey contributes its PAIR of half-flights (2f and 2f+1).
       const flightsFor = (onFloors: number[] | undefined) =>
         buildElevation(g3, chip(onFloors), "right")
           .stairs.filter((sh) => sh.profile)
           .map((sh) => sh.flightIdx)
-          .sort();
-      ok(JSON.stringify(flightsFor(undefined)) === JSON.stringify([0, 1, 2]),
-        "chips: no list → every flight drawn on the elevation");
-      ok(JSON.stringify(flightsFor([0])) === JSON.stringify([0]),
-        "chips: ground only → ONLY the ground flight on the elevation");
-      ok(JSON.stringify(flightsFor([1, 2])) === JSON.stringify([1, 2]),
-        "chips: upper floors only → upper flights drawn even though the stair is absent from the floor-0 plan");
-      ok(JSON.stringify(flightsFor([2])) === JSON.stringify([2]),
-        "chips: one upper floor → exactly that flight");
+          .sort((a, b) => a - b);
+      ok(JSON.stringify(flightsFor(undefined)) === JSON.stringify([0, 1, 2, 3, 4, 5]),
+        "chips: no list → every storey's half-flights drawn on the elevation");
+      ok(JSON.stringify(flightsFor([0])) === JSON.stringify([0, 1]),
+        "chips: ground only → ONLY the ground storey's two half-flights");
+      ok(JSON.stringify(flightsFor([1, 2])) === JSON.stringify([2, 3, 4, 5]),
+        "chips: upper floors only → upper storeys drawn even though the stair is absent from the floor-0 plan");
+      ok(JSON.stringify(flightsFor([2])) === JSON.stringify([4, 5]),
+        "chips: one upper floor → exactly that storey's pair");
     }
 
     // A ground-floor-only colony still draws nothing new: no flights exist to stack.
