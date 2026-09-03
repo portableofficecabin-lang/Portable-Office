@@ -50,6 +50,10 @@ const COL = {
 const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi);
 const r1 = (n: number) => Math.round(n * 10) / 10;
 
+/** Floor name for the staircase per-floor chips (0-based, Indian convention). */
+const stairFloorName = (f: number): string =>
+  f === 0 ? "Ground" : f === 1 ? "First" : f === 2 ? "Second" : f === 3 ? "Third" : `Floor ${f}`;
+
 /** Font size (px) that makes `text` fit within `maxW` px (≈0.56 em per char). Returns null when
  *  that would be below `min` — so callers can HIDE illegible labels instead of overlapping them
  *  (long millimetre strings are the usual culprit). */
@@ -1042,6 +1046,22 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
   const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth, cfg.roomHeight);
   const posVal = sr.position === "both" ? "right" : sr.position;
   const nudge = 0.3048; // 1 ft
+
+  /* ---------- per-floor visibility (drawing-only; never touches the BOQ) ---------- */
+  // No onFloors list = shown on every floor — the reading every saved project from before
+  // this option gets. All-floors is stored as undefined (the canonical form), and the last
+  // active floor cannot be untoggled: an everywhere-hidden stair is what "Show" is for.
+  const allFloors = Array.from({ length: floors }, (_, f) => f);
+  const activeFloors =
+    Array.isArray(sc.onFloors) && sc.onFloors.length > 0
+      ? sc.onFloors.filter((f) => f >= 0 && f < floors)
+      : allFloors;
+  const toggleFloor = (f: number) => {
+    const on = activeFloors.includes(f);
+    if (on && activeFloors.length === 1) return;
+    const next = on ? activeFloors.filter((x) => x !== f) : [...activeFloors, f].sort((a, b) => a - b);
+    onChange({ onFloors: next.length >= floors ? undefined : next });
+  };
   return (
     <div className={`mb-2 rounded-lg border p-2.5 ${placed?.overlap ? "border-red-300 bg-red-50" : "border-slate-200"}`}>
       <div className="mb-2 flex items-center gap-2">
@@ -1055,6 +1075,34 @@ function StairCard({ sc, unit, floors, verandaM, cfg, fmt, placed, onChange, onD
       </div>
       {sr.enabled && (
         <>
+          {/* Which floor plans carry this staircase — e.g. a ground→first flight is not on the
+              second-floor plan. Chips rather than a select so "ground + first, not second" is
+              one glance and two clicks. */}
+          {floors > 1 && (
+            <div className="mb-2 flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] font-medium text-slate-500">Show on floors:</span>
+              {allFloors.map((f) => {
+                const on = activeFloors.includes(f);
+                return (
+                  <button key={f} type="button" onClick={() => toggleFloor(f)}
+                    aria-pressed={on}
+                    title={on && activeFloors.length === 1
+                      ? `${stairFloorName(f)} floor — the last floor cannot be removed; untick Show to hide the staircase entirely`
+                      : `${on ? "Hide on" : "Show on"} the ${stairFloorName(f).toLowerCase()} floor plan`}
+                    className={`rounded-md border px-2 py-0.5 text-[11px] font-medium transition-colors ${
+                      on
+                        ? "border-amber-500 bg-amber-100 font-semibold text-amber-900"
+                        : "border-slate-300 bg-white text-slate-400 hover:text-slate-600"
+                    }`}>
+                    {stairFloorName(f)}
+                  </button>
+                );
+              })}
+              <span className="text-[10px] text-slate-400">
+                {activeFloors.length >= floors ? "· every floor" : `· ${activeFloors.length} of ${floors} floors`}
+              </span>
+            </div>
+          )}
           <div className="flex flex-wrap gap-3">
             <SelField label="Position (side)" value={posVal} onChange={(v) => onChange({ position: v as StaircaseDrawConfig["position"] })}
               options={[["left", "Left side"], ["right", "Right side"], ["top", "Top side"], ["bottom", "Bottom side"]]} />
