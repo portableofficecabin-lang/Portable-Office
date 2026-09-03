@@ -37,7 +37,7 @@
  */
 
 import type { LabourColonyResult, RoomFloorPlanConfig, ElevationStructureConfig, MemberSections } from "./labourColony";
-import { buildRoomFloorPlan, type RoomFloorPlanGeom, type FPBand } from "./roomFloorPlan";
+import { buildRoomFloorPlan, effectiveStaircases, type RoomFloorPlanGeom, type FPBand } from "./roomFloorPlan";
 
 export type ElevationFace = "front" | "rear" | "left" | "right";
 
@@ -339,6 +339,31 @@ export function buildElevation(
    * is why the stack lands exactly on every FFL).
    */
   const flightCount = Math.max(1, floors - 1);
+  /**
+   * PER-FLOOR VISIBILITY (StaircaseDrawConfig.onFloors) — the elevation must follow the
+   * floor-plan chips, per flight. Two traps in reading stairs straight from g0:
+   *   • g0 is the FLOOR-0 geometry, so a staircase unticked on the ground floor was filtered
+   *     out of it and vanished from the elevation entirely — including its upper flights;
+   *   • conversely a stair unticked on an upper floor still drew every flight, because
+   *     FPStair carries no onFloors.
+   * So the stair GEOMETRY (position, size, schedule — floor-independent) comes from an
+   * UNFILTERED pass, and each flight f is then drawn only when the stair is enabled on the
+   * floor it DEPARTS from (flight f climbs floor f → f + 1). One config drives the plan, the
+   * 3D model and this drawing.
+   */
+  const stairConfigs = effectiveStaircases(fp ?? {}, floors, cfg.staircasePosition);
+  const elevStairs = buildRoomFloorPlan(
+    result,
+    { ...(fp ?? {}), staircases: stairConfigs.map((sc) => ({ ...sc, onFloors: undefined })), staircase: undefined },
+    0,
+  ).stairs;
+  const allowedFloors = new Map<string, number[] | undefined>(
+    stairConfigs.map((sc, i) => [sc.id ?? `stair-${i}`, sc.onFloors]),
+  );
+  const flightVisible = (stairId: string, f: number): boolean => {
+    const allow = allowedFloors.get(stairId);
+    return !Array.isArray(allow) || allow.length === 0 || allow.includes(f);
+  };
   const perFlight = (s: RoomFloorPlanGeom["stairs"][number], f: number) => {
     const baseM = round(plinthM + f * floorH);
     return {
@@ -366,8 +391,9 @@ export function buildElevation(
    */
   const flightLowAtStart = (groundLowAtStart: boolean, f: number): boolean =>
     f % 2 === 0 ? groundLowAtStart : !groundLowAtStart;
-  for (const s of g0.stairs) {
+  for (const s of elevStairs) {
     for (let f = 0; f < flightCount; f++) {
+      if (!flightVisible(s.id, f)) continue;
       if ((face === "left" || face === "right") && s.side === face) {
         // true stepped profile: the flight runs along plan y (vertical stair) → along this face's axis
         const a0 = s.y, len = s.d;

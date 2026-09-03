@@ -531,9 +531,17 @@ const ElevationSvg = forwardRef<SVGSVGElement, { g: ElevationGeom; fmt: (m: numb
           );
         })}
 
-        {/* ---- staircases ---- */}
+        {/* ---- staircases: TWO passes. Every flight's white clearance band paints first, then
+                every flight's artwork — so no flight's band can erase another flight's landing
+                slab or railing at the shared dog-leg junctions (the "second-floor landing
+                missing" defect: it was drawn, then whited out by the next flight's band). ---- */}
         {g.stairs.map((s, i) => (
-          <StairGlyph key={`s${i}`} s={s} X={X} Y={Y} S={S} groundY={groundY} fmt={fmt}
+          <StairGlyph key={`sb${i}`} layer="band" s={s} X={X} Y={Y} S={S} groundY={groundY} fmt={fmt}
+            style={g.structure.stairStyle} hrH={g.structure.handrailHeightM}
+            colW={g.structure.columnWidthM} />
+        ))}
+        {g.stairs.map((s, i) => (
+          <StairGlyph key={`s${i}`} layer="art" s={s} X={X} Y={Y} S={S} groundY={groundY} fmt={fmt}
             style={g.structure.stairStyle} hrH={g.structure.handrailHeightM}
             colW={g.structure.columnWidthM} />
         ))}
@@ -709,10 +717,16 @@ const FLOOR_NAMES = ["GROUND", "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
  *
  * `style: "rcc"` falls back to the solid cast waist slab for anyone who actually wants concrete.
  */
-function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
+function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt, layer }: {
   s: ElevationGeom["stairs"][number];
   X: (m: number) => number; Y: (m: number) => number; S: number; groundY: number;
   style: "steel" | "rcc"; hrH: number; colW: number; fmt: (m: number) => string;
+  /** TWO-PASS RENDER. "band" draws only the white clearance strip; "art" draws the stair
+   *  itself. The parent paints EVERY flight's band before ANY flight's artwork — with one
+   *  combined pass, flight f+1's band (drawn later) erased flight f's landing slab and
+   *  railing at the shared dog-leg junction, which is exactly the "second-floor landing
+   *  missing" defect: the landing was drawn, then whited out. */
+  layer: "band" | "art";
 }) {
   const sx0 = X(Math.min(s.x0, s.x0 + s.wM));
   const wPx = Math.abs(s.wM) * S;
@@ -728,6 +742,7 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
    * You see the WIDTH of the flight, not its slope: an open steel frame — two posts, the
    * treads edge-on as horizontal lines, and the handrail rising with the flight. */
   if (!s.profile) {
+    if (layer === "band") return null;
     const topY = Y(top);
     const postW = Math.max(2, colW * S * 0.8);
     const stepRise = s.riseM / Math.max(1, s.steps);
@@ -787,6 +802,29 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
   /** height of the nosing line at any x along the flight, measured ABOVE GROUND (base + climb) */
   const nose = (x: number) => base + Math.abs(x - lowX) * slope;
 
+  /* Stringer depth is needed by both the clearance band and the steel artwork, so it is
+   * computed before the band pass returns. Capped at 80% of the rise so a short flight can
+   * never push the beam's top-inner corner below its departure level. */
+  const stringerDepth = Math.min(Math.max(0.16, Math.min(0.3, going * 0.7)), s.riseM * 0.8);
+
+  /* ---------- BAND PASS: only the white clearance strip under flight + landing ---------- */
+  if (layer === "band") {
+    if (style === "rcc") return null; // the solid waist slab is its own clearance
+    const landXb = lowX + dir * s.wM;
+    return (
+      <polygon
+        points={[
+          `${X(lowX)},${Y(base + hrH + 0.15)}`,
+          `${X(topX)},${Y(top + hrH + 0.15)}`,
+          `${X(landXb)},${Y(top + hrH + 0.15)}`,
+          `${X(landXb)},${Y(top - 0.32)}`,
+          `${X(topX)},${Y(top - stringerDepth - 0.1)}`,
+          `${X(lowX)},${Y(base - stringerDepth - 0.1)}`,
+        ].join(" ")}
+        fill="#ffffff" fillOpacity={0.9} stroke="none" />
+    );
+  }
+
   /** UP arrow along the flight — foot to head, parallel to the nosing line, with the label at
    *  the foot. Drawn on EVERY flight so the ascent path reads continuously up the storeys. */
   const upArrow = (() => {
@@ -833,9 +871,7 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
   }
 
   // ---- STEEL stair ------------------------------------------------------------------------
-  // Stringer beam depth. Capped at 80% of the total rise so a very short flight can never push the
-  // beam's top-inner corner (riseM - stringerD) below ground level.
-  const stringerD = Math.min(Math.max(0.16, Math.min(0.3, going * 0.7)), s.riseM * 0.8);
+  const stringerD = stringerDepth; // computed above, shared with the band pass
   // Where the stringer's UNDERSIDE meets its bearing level (it lands on a footing, not below it).
   const footRun = Math.min(flightM * 0.5, stringerD / Math.max(slope, 0.15));
   const footX = lowX + dir * footRun;
@@ -858,21 +894,7 @@ function StairGlyph({ s, X, Y, S, groundY, style, hrH, colW, fmt }: {
 
   return (
     <g>
-      {/* --- CLEARANCE BAND: a near-opaque paper strip under the whole flight + landing, so
-              the stair route is never visually tangled with the cross-bracing behind it. The
-              brief for this drawing is explicit: no staircase portion may read as hidden
-              behind walls, columns or bracing — the band guarantees it without touching the
-              structure itself (the bracing is still there, drawn beneath). --- */}
-      <polygon
-        points={[
-          `${X(lowX)},${Y(base + hrH + 0.15)}`,
-          `${X(topX)},${Y(top + hrH + 0.15)}`,
-          `${X(landX)},${Y(top + hrH + 0.15)}`,
-          `${X(landX)},${Y(top - 0.32)}`,
-          `${X(topX)},${Y(top - stringerD - 0.1)}`,
-          `${X(lowX)},${Y(base - stringerD - 0.1)}`,
-        ].join(" ")}
-        fill="#ffffff" fillOpacity={0.9} stroke="none" />
+      {/* clearance band drawn in the parent's separate "band" pass — see the layer prop */}
       {/* --- inclined stringer beam (the flight's spine) --- */}
       <polygon points={stringer} fill={COL.steel} stroke={COL.steelDark} strokeWidth={0.8} />
 
