@@ -218,7 +218,7 @@ const ZONE_POSTAL_RANGES: Map<string, PostalRange[]> = (() => {
  *
  * Installation is NOT folded in — it is a separate optional line item at checkout, not freight.
  */
-function shippingDetailsForAllZones() {
+export function shippingDetailsForAllZones() {
   return SHIPPING_ZONES.map((zone) => {
     const postalRanges = ZONE_POSTAL_RANGES.get(zone.id) ?? [];
     if (postalRanges.length === 0) return null;
@@ -270,7 +270,7 @@ function shippingDetailsForAllZones() {
  * MerchantReturnNotPermitted. Claiming a 30-day return here would look better in Shopping and
  * would itself be a misrepresentation — the site does not honour it.
  */
-const RETURN_POLICY = {
+export const RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
   applicableCountry: "IN",
   returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
@@ -316,6 +316,28 @@ export function generateProductStructuredData(product: {
    *  aggregateRating (so the count/average match the on-page trust strip exactly,
    *  even when more reviews exist than are embedded in `reviews` below). */
   ratingSummary?: { count: number; average: number };
+  /**
+   * OPTIONAL — set when this product is also ONE STANDARD SIZE of a product family whose
+   * other sizes have their own pages (src/data/productFamilies.ts).
+   *
+   * A family's size may already own a long-standing product page: the Container Office
+   * Cabin's 25 ft x 14 ft build has been live and priced at /products/container-office for
+   * a long time. It is a genuine size, so its Product node must say so — `size` plus an
+   * `isVariantOf` pointing at the SAME ProductGroup `@id` every sibling size page emits, so
+   * Google resolves the whole ladder to one group rather than to a group plus an orphan.
+   *
+   * Purely additive: omit it and this function behaves exactly as it always has, and the
+   * page keeps its own offers, aggregateRating and reviews either way.
+   */
+  sizeVariantOf?: {
+    /** The size, worded exactly as <g:size> submits it, e.g. "25 ft x 14 ft". */
+    size: string;
+    /** The ProductGroup node's stable @id — identical on every page of the group. */
+    groupNodeId: string;
+    productGroupID: string;
+    groupName: string;
+    groupUrl: string;
+  };
 }) {
   const productUrl = product.slug
     ? `${SITE_URL}/products/${product.slug}`
@@ -448,6 +470,42 @@ export function generateProductStructuredData(product: {
   // never fed, so there is nothing to match.
   const name = purchasable && commerce ? commerce.feedTitle : product.name;
 
+  /* GOOGLE'S HARD REQUIREMENT: a Product node must carry at least one of offers, review or
+   * aggregateRating, or the whole item is reported invalid and drops out of rich results
+   * ("Either 'offers', 'review' or 'aggregateRating' should be specified").
+   *
+   * Three of our pages cannot satisfy it honestly:
+   *   · Construction Individual Building (POC-CIB-RCC) — a per-sq-ft RCC job priced only after
+   *     a site visit. basePrice is deliberately 0 and priceConfirmed false.
+   *   · Shipping Container Rental (POC-SC-RENT) — payable online, but the figure is monthly
+   *     rent, so it is not a purchase offer (see isOutrightSale).
+   *   · The Bangalore promotions landing page — passes no commerce id at all.
+   * None has reviews. Inventing a price or a rating to silence the error is exactly the
+   * fabrication the rest of this file exists to prevent.
+   *
+   * So when the node would carry neither, we emit schema.org Service instead. That is the
+   * accurate type for an unpriced, quote-only offering — Service does not require offers, and
+   * it keeps the description, image, category, brand and provider. sku/mpn/isVariantOf are
+   * dropped because they are Product-only and meaningless without a sellable unit. */
+  const isRichResultEligible =
+    Object.keys(offerBlock).length > 0 || Object.keys(reviewBlock).length > 0;
+
+  if (!isRichResultEligible) {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name,
+      description: product.description,
+      ...(product.keywords ? { keywords: product.keywords } : {}),
+      ...(product.category ? { serviceType: product.category, category: product.category } : {}),
+      url: productUrl,
+      ...(images.length > 0 ? { image: images } : {}),
+      brand: { "@type": "Brand", name: BRAND },
+      provider: { "@type": "Organization", name: BRAND, url: SITE_URL },
+      areaServed: generateAreaServedForSchema(),
+    };
+  }
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -468,6 +526,20 @@ export function generateProductStructuredData(product: {
       name: BRAND,
       url: SITE_URL,
     },
+    /* This product is also one standard size of a family — state the size and bind the node
+     * to the family's ProductGroup by its stable @id. See `sizeVariantOf` above. */
+    ...(product.sizeVariantOf
+      ? {
+          size: product.sizeVariantOf.size,
+          isVariantOf: {
+            "@type": "ProductGroup",
+            "@id": product.sizeVariantOf.groupNodeId,
+            productGroupID: product.sizeVariantOf.productGroupID,
+            name: product.sizeVariantOf.groupName,
+            url: product.sizeVariantOf.groupUrl,
+          },
+        }
+      : {}),
     ...offerBlock,
     ...reviewBlock,
   };

@@ -1,4 +1,9 @@
-import { products, getProductDetailPath, type Product } from "@/data/products";
+import { products, getProductById, getProductDetailPath, type Product } from "@/data/products";
+import {
+  getVariantById,
+  variantFeedHoldReason,
+  type VariantHit,
+} from "@/data/productFamilies";
 import { feedEligible, hasGenuineSalePrice, isPurchasable, BRAND, type ProductCommerce } from "@/data/productCommerce";
 import { sellPrice, priceForFeed } from "@/lib/pricing/gst";
 import { SHIPPING_ZONES, DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
@@ -398,8 +403,41 @@ function shippingElements(): string {
  *                             which Merchant Center disapproves in this field.
  * A product whose specifications table is empty simply gets neither block.
  */
-function specAttributes(product: Product): string {
-  const all = (product.specifications || []).filter((s) => s.label?.trim() && s.value?.trim());
+/**
+ * Spec labels that RESTATE a size, an area or a dimension.
+ *
+ * On a SIZE VARIANT these must never be submitted from the family's catalogue row, because
+ * that row describes the family, not the size. Left in, a single item contradicts itself:
+ * POC-CO-GEN submits <g:size>25 ft x 14 ft</g:size> while its catalogue spec table would add
+ * "Sizes Available: 20ft x 8ft / 40ft x 8ft / Custom" and "Floor Area: 160-320+ sq ft" as
+ * product_highlights — a size range and an area range beside one fixed size and one fixed
+ * price. That self-contradiction is exactly the class of mismatch documented in
+ * merchantFeedPolicy.ts as this SKU's original feed blocker.
+ *
+ * It also catches the unconfirmed height: "Dimensions: L 25 ft x W 14 ft x H 9 ft" would
+ * publish a 9 ft height that nobody has verified (the family standard is 8 ft 6 in and is not
+ * confirmed per size), as structured, machine-readable product data.
+ *
+ * The authoritative size for a variant is already submitted, in <g:size>, <g:variant_option>
+ * and the title. Dropping these rows loses nothing and is FEED-ONLY: the landing page, the
+ * gallery and the JSON-LD are untouched, exactly like the promotional and price-claim drops
+ * above.
+ */
+const VARIANT_SIZE_SPEC_LABELS =
+  /^(dimensions?|sizes?(\s+available)?|floor\s+area|total\s+area|built[-\s]?up\s+area|overall\s+size|carpet\s+area|capacity\s+range)\b/i;
+
+function specAttributes(product: Product, variantHit?: VariantHit): string {
+  const all = (product.specifications || [])
+    .filter((s) => s.label?.trim() && s.value?.trim())
+    .filter((s) => {
+      if (!variantHit) return true;
+      if (!VARIANT_SIZE_SPEC_LABELS.test(s.label.trim())) return true;
+      console.warn(
+        `[merchant-feed] ${variantHit.variant.sku}: dropped size-restating spec row "${s.label.trim()}: ${s.value.trim()}" — ` +
+          `<g:size>${variantHit.variant.sizeLabelPlain}</g:size> is this item's authoritative size`,
+      );
+      return false;
+    });
 
   /**
    * ── SPEC ROWS GET THE SAME GUARD AS THE DESCRIPTION ────────────────────────────────────────
@@ -460,7 +498,30 @@ function specAttributes(product: Product): string {
  * "incorrect identifier" disapproval. One statement about identifiers, not two. Do not re-add an
  * identifier element unless a genuine GTIN/MPN exists, in which case identifier_exists must go.
  */
-function buildItem(commerce: ProductCommerce, product: Product, images: string[]): string {
+function buildItem(
+  commerce: ProductCommerce,
+  product: Product,
+  images: string[],
+  /**
+   * Present when this SKU is one STANDARD SIZE of a product family (src/data/productFamilies.ts).
+   *
+   * ── WHY A VARIANT NEEDS ITS OWN GROUPING ATTRIBUTES ────────────────────────────────────────
+   * Without them Google treats six sizes of one cabin as six unrelated products: it cannot show
+   * a size picker, it can rank them against each other, and duplicate-content checks fire on six
+   * near-identical titles. With `item_group_id` shared and `size` distinct, they become ONE
+   * product offered in several sizes, which is what they are.
+   *
+   *   • <g:item_group_id>    — the family's stable productGroupId. IDENTICAL for every size.
+   *   • <g:item_group_title> — the family's name, identical for every size.
+   *   • <g:size> + <g:size_type>/<g:size_system> — the varying attribute itself.
+   *   • <g:variant_option>   — the same dimension restated in Google's generic variant slot,
+   *                            for feed formats that read it. Consistent with <g:size>.
+   *
+   * `<g:link>` is the variant's OWN canonical URL, never the parent's: a feed item whose landing
+   * page shows a different size is a landing-page mismatch, which is a disapproval.
+   */
+  variantHit?: VariantHit,
+): string {
   const [primaryImage, ...additionalImages] = images;
 
   /**
@@ -484,7 +545,11 @@ function buildItem(commerce: ProductCommerce, product: Product, images: string[]
   const listPrice = `${priceForFeed(sellPrice(listBase))} INR`;
   const salePrice = onSale ? `${priceForFeed(sellPrice(commerce.basePrice))} INR` : null;
 
-  // Must equal the page's rel=canonical exactly — clean URL, no `.html`.
+  /* Must equal the page's rel=canonical exactly — clean URL, no `.html`. For a size variant
+   * getProductDetailPath() already returns the NESTED canonical (/products/<family>/<size>),
+   * because variantAsProduct() gives the synthesised product a `parentSlug` + `slug`. One
+   * function, one URL form, so the feed link, the canonical tag, the JSON-LD offers.url and
+   * the internal links cannot drift apart. */
   const link = `${SITE_URL}${getProductDetailPath(product)}`;
 
   const additional = additionalImages
@@ -492,24 +557,57 @@ function buildItem(commerce: ProductCommerce, product: Product, images: string[]
     .map((url) => `      <g:additional_image_link>${xmlEscape(url)}</g:additional_image_link>`)
     .join("\n");
 
+  /* Variant grouping. Emitted ONLY for a size variant — a standalone product must never
+   * carry an item_group_id, or Google groups it with nothing and shows a size picker of one. */
+  const grouping = variantHit
+    ? `      <g:item_group_id>${xmlEscape(variantHit.family.productGroupId)}</g:item_group_id>
+      <g:item_group_title>${xmlEscape(variantHit.family.groupTitle)}</g:item_group_title>
+      <g:size>${xmlEscape(variantHit.variant.sizeLabelPlain)}</g:size>
+      <g:size_type>regular</g:size_type>
+      <g:size_system>IN</g:size_system>
+      <g:variant_option>Dimensions: ${xmlEscape(variantHit.variant.sizeLabelPlain)}</g:variant_option>
+`
+    : "";
+
   return `    <item>
       <g:id>${xmlEscape(commerce.sku)}</g:id>
       <g:title>${xmlEscape(feedTitle(commerce))}</g:title>
       <g:description>${xmlEscape(feedDescription(commerce, product))}</g:description>
       <g:link>${xmlEscape(link)}</g:link>
       <g:image_link>${xmlEscape(primaryImage)}</g:image_link>
-${additional ? `${additional}\n` : ""}      <g:availability>${commerce.inStock ? "in_stock" : "out_of_stock"}</g:availability>
+${additional ? `${additional}\n` : ""}      <g:availability>${commerce.feedAvailability ?? (commerce.inStock ? "in_stock" : "out_of_stock")}</g:availability>
       <g:price>${listPrice}</g:price>
 ${salePrice ? `      <g:sale_price>${salePrice}</g:sale_price>\n` : ""}      <g:brand>${xmlEscape(BRAND)}</g:brand>
       <g:identifier_exists>no</g:identifier_exists>
       <g:condition>new</g:condition>
-      <g:product_type>${xmlEscape(commerce.productType)}</g:product_type>
+${grouping}      <g:product_type>${xmlEscape(commerce.productType)}</g:product_type>
       <g:google_product_category>${xmlEscape(commerce.googleProductCategory)}</g:google_product_category>
-${specAttributes(product)}      <g:min_handling_time>${DISPATCH_WORKING_DAYS.min}</g:min_handling_time>
+${specAttributes(product, variantHit)}      <g:min_handling_time>${DISPATCH_WORKING_DAYS.min}</g:min_handling_time>
       <g:max_handling_time>${DISPATCH_WORKING_DAYS.max}</g:max_handling_time>
 ${shippingElements()}
     </item>`;
 }
+
+/**
+ * ── A FAMILY'S PARENT PAGE MAY ITSELF BE A PRICED SIZE ──────────────────────────────────────────
+ * There is deliberately NO rule here that drops a family's parent SKU once its other sizes become
+ * eligible.
+ *
+ * An earlier revision suppressed it, on the reasoning that a parent page is a ProductGroup overview
+ * rather than an extra unit. That is true only when the parent page sells nothing of its own. It is
+ * NOT true here: /products/container-office IS the 25 ft x 14 ft build (POC-CO-GEN), an
+ * owner-verified configuration at a fixed ₹12,00,000 ex-GST that has been on sale for a long time.
+ * Suppressing it would have deleted a real, approved, purchasable offer from the feed the moment an
+ * unrelated size was priced — losing a live product, not preventing a duplicate.
+ *
+ * The duplicate that rule was guarding against cannot arise anyway, because a size is identified by
+ * its `size` attribute and its own `link`: the parent carries <g:size>25 ft x 14 ft</g:size> and
+ * links to its own self-canonical URL, exactly like every sibling. It is one size among several
+ * under one item_group_id, which is precisely what Google's variant model expects.
+ *
+ * Whether the parent SKU is actually fed stays governed where it always has been — by
+ * src/data/merchantFeedPolicy.ts.
+ */
 
 function generateFeed(): { xml: string; count: number } {
   const byId = new Map(products.map((p) => [p.id, p]));
@@ -521,10 +619,24 @@ function generateFeed(): { xml: string; count: number } {
   const items: string[] = [];
 
   for (const commerce of feedEligible()) {
-    const product = byId.get(commerce.id);
+    /* A size variant is not a row in `products` — it is synthesised from its family's parent
+     * (see variantAsProduct). getProductById() resolves both, so one lookup covers both kinds,
+     * and `variantHit` tells buildItem() whether to emit the grouping attributes. */
+    const variantHit = getVariantById(commerce.id);
+    const product = byId.get(commerce.id) ?? (variantHit ? getProductById(commerce.id) : undefined);
     if (!product) {
       console.error(`[merchant-feed] SKIP ${commerce.sku}: no product with id "${commerce.id}" in products.ts`);
       continue;
+    }
+
+    // A size the family data holds back (no confirmed price, no variant-accurate photo, or an
+    // explicit merchantEligible:false) never reaches the feed, whatever its commerce row says.
+    if (variantHit) {
+      const hold = variantFeedHoldReason(variantHit.family, variantHit.variant);
+      if (hold) {
+        console.warn(`[merchant-feed] EXCLUDE ${commerce.sku} [size-variant]: ${hold}`);
+        continue;
+      }
     }
     if (seenIds.has(commerce.sku)) {
       console.error(`[merchant-feed] SKIP ${commerce.sku}: duplicate g:id — a duplicate id rejects the entire feed`);
@@ -604,7 +716,7 @@ function generateFeed(): { xml: string; count: number } {
     }
 
     seenIds.add(commerce.sku);
-    items.push(buildItem(commerce, product, images));
+    items.push(buildItem(commerce, product, images, variantHit));
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

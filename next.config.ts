@@ -62,6 +62,17 @@ const PRIVATE_PATHS = [
   "/forgot-password",
   "/reset-password",
   "/auth/:path*",
+  /* Shared concept-animation previews. PRIVATE CONTENT reachable by URL: each one shows a
+   * customer's own building render behind an unguessable slug.
+   *
+   * It belongs here, not in the public bucket, for two separate reasons:
+   *   • CACHING — the public rule is `s-maxage=3600`, so a CDN would keep serving a preview for
+   *     an hour AFTER the owner revoked the link. `no-store` makes revocation immediate.
+   *   • INDEXING — X-Robots-Tag: noindex,nofollow, matching the page's own metadata. The page is
+   *     deliberately NOT robots.txt-disallowed: blocking the crawl would stop Google reading the
+   *     noindex it is meant to obey.
+   * The page is also absent from the sitemap. */
+  "/concept-animation/:path*",
 ];
 const NO_STORE = "private, no-store, no-cache, must-revalidate, max-age=0";
 
@@ -85,7 +96,7 @@ const PRODUCT_HTML_CACHE = "public, max-age=0, s-maxage=300, stale-while-revalid
 // Errs on the safe side: anything starting with a private prefix is excluded, so a
 // session/cart/admin response can never receive the cacheable public header.
 const PUBLIC_HTML_MATCHER =
-  "/((?!admin|cart|checkout|login|register|my-account|forgot-password|reset-password|auth|api|_next).*)";
+  "/((?!admin|cart|checkout|login|register|my-account|forgot-password|reset-password|auth|concept-animation|api|_next).*)";
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -134,6 +145,30 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/about-us", statusCode: 301 },
       { source: "/projects", destination: "/gallery", statusCode: 301 },
       { source: "/terms", destination: "/terms-and-conditions", statusCode: 301 },
+      // ── Home Construction service pages ───────────────────────────────────
+      // Home Construction is a CATEGORY (/products/category/home-construction),
+      // so its child pages live under /products/<parent>/<child> like every
+      // other child in this codebase — see src/data/productChildPages.ts for
+      // that URL contract. The shorter top-level form is a reasonable guess and
+      // was the originally requested address, so it 301s to the canonical URL
+      // rather than 404ing. One canonical page, no duplicate content.
+      {
+        source: "/home-construction/building-construction-contractor",
+        destination: "/products/home-construction/building-construction-contractor",
+        statusCode: 301,
+      },
+      {
+        source: "/home-construction",
+        destination: "/products/category/home-construction",
+        statusCode: 301,
+      },
+      // The bare parent of the new page is not a page of its own; send it to the
+      // category, which is what someone trimming the URL is looking for.
+      {
+        source: "/products/home-construction",
+        destination: "/products/category/home-construction",
+        statusCode: 301,
+      },
       // ── Legacy .html → clean extensionless URLs ───────────────────────────
       // Product `.html` URLs 301 to the clean form (the page's rel=canonical,
       // sitemap, internal links and JSON-LD all use the clean form).
@@ -146,6 +181,27 @@ const nextConfig: NextConfig = {
       // Short, keyword-rich slugs are now the SINGLE canonical URL for these
       // products (set via the `slug` override in src/data/products.ts). 301 the
       // older name-derived slugs onto them so existing/indexed links consolidate.
+      // ── Size variants served at their family's PARENT page ────────────────
+      // A product family's size ladder normally gives each size its own URL
+      // (/products/<family>/<size>). One size per family may instead be served
+      // BY the family's parent page, because it was a product there long before
+      // the ladder existed — the Container Office Cabin's 25 ft x 14 ft build
+      // (POC-CO-GEN) is exactly that, and it carries `rendersAtParent` in
+      // src/data/productFamilies.ts.
+      //
+      // Its ladder-shaped URL is guessable, so it 301s to the page that really
+      // serves it: one canonical URL per size, no 404 on a reasonable guess, and
+      // no second copy of the parent page at a second address.
+      //
+      // WHY HERE AND NOT IN THE PAGE: a `permanentRedirect()` inside the
+      // [slug]/[child] route is swallowed during static prerendering — with
+      // dynamicParams:false Next prerenders the path and serves the not-found
+      // body at HTTP 200 (verified). A config redirect runs before routing, so
+      // it is a real 301 whether or not the path is prerendered.
+      //
+      // Kept in step with the family data by scripts/product-variants.test.ts,
+      // which fails if a `rendersAtParent` size has no rule here.
+      { source: "/products/container-office/25x14-ft", destination: "/products/container-office", statusCode: 301 },
       { source: "/products/ms-portable-cabins", destination: "/products/ms-portable-cabin", statusCode: 301 },
       { source: "/products/new-used-shipping-container-for-sale-in-india", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-container-buy-rent-or-convert", destination: "/products/cargo-container-for-sale", statusCode: 301 },

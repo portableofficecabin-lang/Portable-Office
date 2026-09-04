@@ -151,9 +151,21 @@ export function MobileNavigation() {
                           <Link
                             href={item.href}
                             onClick={close}
-                            className="flex min-h-11 items-center gap-2.5 rounded-lg px-4 text-sm font-medium text-navy-deep/85 transition-colors duration-200 hover:bg-navy-deep/[0.06] hover:text-accent motion-reduce:transition-none"
+                            className={cn(
+                              "flex min-h-11 items-center gap-2.5 rounded-lg px-4 text-sm font-medium text-navy-deep/85 transition-colors duration-200 hover:bg-navy-deep/[0.06] hover:text-accent motion-reduce:transition-none",
+                              /* Service page nested under its category — indented behind a rule so
+                                 the drawer shows the same parent → child relationship the desktop
+                                 menu and the /products sidebar do. The 44px tap target is kept. */
+                              item.nested && "ml-7 border-l border-navy-deep/10 pl-3 text-[13px] font-normal",
+                            )}
                           >
-                            <Icon className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                            <Icon
+                              className={cn(
+                                "h-4 w-4 shrink-0 text-accent",
+                                item.nested && "h-3.5 w-3.5 opacity-70",
+                              )}
+                              aria-hidden="true"
+                            />
                             {item.name}
                           </Link>
                         </li>

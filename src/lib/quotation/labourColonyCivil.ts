@@ -333,7 +333,9 @@ export interface CivilContext {
   footprintLengthM: number;
   footprintWidthM: number;
   builtUpSqm: number;
-  floors: 1 | 2 | 3;
+  /** Mirrors FloorCount in labourColony.ts (1 = Ground … 4 = G+3). Kept as an inline union so
+   *  this engine stays import-free of the main calculator, as it always has been. */
+  floors: 1 | 2 | 3 | 4;
   /**
    * THE ARCHITECTURAL COLUMN GRID, straight from buildConstructionPlan() — the SINGLE source of
    * truth for how many footings, pedestals and columns exist. When supplied it fully replaces the
@@ -648,6 +650,14 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   const footingCount = grid.columnCount;
   const gridFromPlan = !!(ctx.columnGrid && ctx.columnGrid.xsM.length >= 2 && ctx.columnGrid.ysM.length >= 2);
 
+  /* DEFAULT footing sizes step with the storey count — 1.0/1.2/1.5 m, 0.3/0.4/0.5 m deep —
+   * and those steps were established for up to G+2. A G+3 colony deliberately gets the SAME
+   * largest default rather than an invented next step: no owner-verified G+3 footing size
+   * exists, and fabricating one here would be this file designing a foundation. The honest
+   * chain instead is: the SBC bearing check below validates every footing TYPE against its
+   * real tributary load (all four floors included) and flags OVERSTRESSED with the required
+   * size, a G+3-specific warning is pushed further down, and the admin can override every
+   * dimension (f.footingLengthM etc.). The default is a starting point, never the answer. */
   const footL = f.footingLengthM ?? (floors === 1 ? 1.0 : floors === 2 ? 1.2 : 1.5);
   const footW = f.footingWidthM ?? footL;
   const footD = f.footingDepthM ?? (floors === 1 ? 0.3 : floors === 2 ? 0.4 : 0.5);
@@ -978,6 +988,18 @@ export function calculateCivilWork(input: CivilWorkConfig, ctx: CivilContext): C
   if (floors === 1) {
     warnings.push(
       "For a single-storey temporary labour colony, RCC/PCC pedestals below the main columns with a raised plinth and peripheral drainage are recommended.",
+    );
+  }
+  if (floors >= 4) {
+    /* G+3 was added to the calculator without a G+3-specific footing default — the largest
+     * (G+2) default is used as the starting point and the bearing check reports against the
+     * real four-floor load. Say so explicitly: at this height the engineer's verification is
+     * not a formality, and a quotation built on unreviewed defaults should say it out loud. */
+    warnings.push(
+      "G+3 SELECTED: the default footing sizes in this estimate were established for colonies up to G+2 " +
+      "and are carried over unchanged as a starting point only. Check the footing bearing results above " +
+      "against the four-floor loads, and have the foundation, columns and bracing designed and stamped " +
+      "for G+3 by the structural engineer before quoting firm.",
     );
   }
 

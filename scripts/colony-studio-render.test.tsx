@@ -235,6 +235,48 @@ if (refBracing) {
 }
 ok(model.parts.some((p) => p.kind === "handrail"), "the model carries hand railing");
 ok(model.parts.some((p) => p.kind === "stair-tread"), "the model carries a staircase");
+
+/* ---- staircase handrail: BOTH sides, WITH raking rails, REACHING the side elevations -------- */
+/* The priced take-off has always billed "2 side(s)" of posts plus a raking-rail line
+ * (staircase:rail:<id>); the model used to build one side of posts and no rails, so the side
+ * elevations showed a bare stair (left side: nothing at all). These pins keep drawing and BOQ
+ * describing the same railing system. */
+{
+  const stairRails = model.parts.filter((p) => p.kind === "handrail" && p.id.startsWith("stair:"));
+  const stairPosts = model.parts.filter((p) => p.kind === "handrail-post" && p.id.startsWith("stair:"));
+  ok(stairRails.length > 0, `staircase raking rails exist in the model (${stairRails.length})`);
+  ok(
+    stairRails.some((p) => /:rail:0:/.test(p.id)) && stairRails.some((p) => /:rail:1:/.test(p.id)),
+    "raking rails are built on BOTH sides of the flight",
+  );
+  ok(
+    stairPosts.some((p) => /:rail-post:0:/.test(p.id)) && stairPosts.some((p) => /:rail-post:1:/.test(p.id)),
+    "handrail posts are built on BOTH sides of the flight",
+  );
+  // Elevation visibility: with staircasePosition "both", stair railing must reach the model's
+  // outer x faces within the elevation's railing band (OBJECT_BAND_M × 0.6 = 0.72 m) — the
+  // exact filter ReferenceElevationView applies. This is what was silently false before.
+  const xr = (p: (typeof model.parts)[number]): [number, number] | null => {
+    const s = p.solid as { kind: string; min?: { x: number }; max?: { x: number }; pts?: { x: number }[] };
+    if (s.kind === "box" && s.min && s.max) return [s.min.x, s.max.x];
+    if (s.kind === "quad" && s.pts) { const xs = s.pts.map((q) => q.x); return [Math.min(...xs), Math.max(...xs)]; }
+    return null;
+  };
+  const gapTo = (plane: number) => (p: (typeof model.parts)[number]) => {
+    const r = xr(p);
+    if (!r) return Infinity;
+    return plane >= r[0] && plane <= r[1] ? 0 : Math.min(Math.abs(r[0] - plane), Math.abs(r[1] - plane));
+  };
+  const railParts = [...stairRails, ...stairPosts];
+  ok(
+    railParts.some((p) => gapTo(model.bounds.min.x)(p) <= 0.72),
+    "stair railing reaches the LEFT side-elevation band",
+  );
+  ok(
+    railParts.some((p) => gapTo(model.bounds.max.x)(p) <= 0.72),
+    "stair railing reaches the RIGHT side-elevation band",
+  );
+}
 /* Every brace is face-tagged, which is how the elevation selects them — an untagged brace would
  * silently vanish from the drawing exactly as it did before. */
 const taggedBraces = model.parts.filter((p) => p.kind === "brace");
@@ -314,6 +356,41 @@ const refSingle = render(
   }),
 );
 ok(!!refSingle && refSingle.length > 1000, "reference sheet renders for a ground-floor-only colony with no civil work");
+
+/* ---- per-floor staircase visibility (StaircaseDrawConfig.onFloors) --------------------------- */
+/* Drawing-only per-floor filter on a G+3 colony: no list = every floor (the back-compatible
+ * reading of every pre-existing saved project); a list = exactly those floor plans and no other.
+ * The BOQ side is untouched by construction — onFloors lives in the drawing config the engine
+ * never reads — and colony-studio.test.ts §G+3 pins the flights = floors − 1 arithmetic. */
+{
+  const g3 = calculateLabourColony({ ...CONFIG, floors: 4 });
+  const stairsOn = (fp: Parameters<typeof buildRoomFloorPlan>[1], f: number) =>
+    buildRoomFloorPlan(g3, fp, f).stairs.length;
+
+  const everywhere = { staircases: [{ id: "s1", label: "Tower", position: "right" as const, enabled: true }] };
+  const groundOnly = { staircases: [{ ...everywhere.staircases[0], onFloors: [0] }] };
+  const midFloors = { staircases: [{ ...everywhere.staircases[0], onFloors: [1, 2] }] };
+
+  ok(
+    [0, 1, 2, 3].every((f) => stairsOn(everywhere, f) === 1),
+    "no onFloors list → the staircase draws on every floor plan (legacy projects unchanged)",
+  );
+  ok(
+    stairsOn(groundOnly, 0) === 1 && [1, 2, 3].every((f) => stairsOn(groundOnly, f) === 0),
+    "onFloors [0] → drawn on the ground-floor plan only",
+  );
+  ok(
+    stairsOn(midFloors, 1) === 1 && stairsOn(midFloors, 2) === 1 &&
+      stairsOn(midFloors, 0) === 0 && stairsOn(midFloors, 3) === 0,
+    "onFloors [1, 2] → drawn on the first- and second-floor plans only",
+  );
+  // Out-of-range indices are inert, not an error — a stair pinned to a floor that no longer
+  // exists (the owner reduced the storey count) simply stops drawing rather than crashing.
+  ok(
+    [0, 1, 2, 3].every((f) => stairsOn({ staircases: [{ ...everywhere.staircases[0], onFloors: [9] }] }, f) === 0),
+    "onFloors pointing at a removed floor draws nowhere and throws nothing",
+  );
+}
 
 console.log(`\ncolony-studio-render.test.tsx — ${passed} passed, ${failed} failed\n`);
 if (failed) {

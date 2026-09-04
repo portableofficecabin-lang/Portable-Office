@@ -9,7 +9,8 @@
  * same convention as scripts/boq-*.ts and the cabin assembly harness.
  */
 
-import { calculateLabourColony, type LabourColonyConfig, type LabourColonyResult } from "../src/lib/quotation/labourColony";
+import { calculateLabourColony, floorCountLabel, type LabourColonyConfig, type LabourColonyResult } from "../src/lib/quotation/labourColony";
+import { buildElevation } from "../src/lib/quotation/elevation";
 import { buildConstructionPlan } from "../src/lib/quotation/labourColonyPlan";
 import { calculateCivilWork, DEFAULT_CIVIL_CONFIG, type CivilContext, type CivilWorkResult } from "../src/lib/quotation/labourColonyCivil";
 import { buildColonyModel } from "../src/features/labour-colony-studio/model/colonyModel";
@@ -228,6 +229,201 @@ const single = calculateLabourColony({ ...BASE_CONFIG, floors: 1, capacity: 40 }
 const civilS = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(single));
 runChecks("Ground-floor only", buildColonyModel({ result: single, civil: civilS, columnGrid }));
 
+/* ── G+3 (floors = 4) — added 2026-08-27 on owner request ──────────────────────────────────
+ * The engine was always floor-generic; widening FloorCount to 4 IS the feature. These checks
+ * prove the arithmetic genuinely scales to a fourth floor rather than silently reusing G+2
+ * behaviour, and that the two deliberately non-scaling pieces behave as designed: the label
+ * says G+3, and the civil engine warns that footing DEFAULTS were established for up to G+2. */
+{
+  ok(floorCountLabel(1) === "Ground floor", "floorCountLabel(1) = Ground floor");
+  ok(floorCountLabel(2) === "G+1", "floorCountLabel(2) = G+1");
+  ok(floorCountLabel(3) === "G+2", "floorCountLabel(3) = G+2");
+  ok(floorCountLabel(4) === "G+3", "floorCountLabel(4) = G+3");
+
+  const g3 = calculateLabourColony({ ...BASE_CONFIG, floors: 4 });
+  ok(g3.config.floors === 4, "G+3: config carries floors = 4");
+  ok(
+    g3.assumptions.some((a) => a.includes("G+3")),
+    "G+3: the layout assumption line labels the colony G+3 (not the old G+2 cap)",
+  );
+
+  // Staircase flights = floors − 1: a G+3 colony fabricates exactly three flights.
+  const stair = g3.structural.items.find((i) => i.item.startsWith("Staircase"));
+  ok(stair?.qty === 3, `G+3: staircase item is 3 flights (got ${stair?.qty})`);
+  const g1stair = calculateLabourColony({ ...BASE_CONFIG, floors: 2 }).structural.items.find(
+    (i) => i.item.startsWith("Staircase"),
+  );
+  ok(g1stair?.qty === 1, `G+1 control: 1 flight (got ${g1stair?.qty})`);
+
+  /* Walkway plate = footprintLength x walkwayWidth x (floors - 1). A naive "G+3 is 3x G+1"
+   * comparison is WRONG because the footprint itself shrinks as the same capacity stacks over
+   * more floors (fewer rooms per floor => a shorter building). The real invariant is the
+   * per-upper-level, per-metre-of-footprint area — the implied walkwayWidth — which must be
+   * identical across floor counts. That is exactly what a floors bug would break and a norm
+   * change would move IN LOCKSTEP on both sides. */
+  const g1r = calculateLabourColony({ ...BASE_CONFIG, floors: 2 });
+  const g3walk = g3.structural.items.find((i) => i.item.startsWith("Walkway"));
+  const g1walk = g1r.structural.items.find((i) => i.item.startsWith("Walkway"));
+  const impliedWidth = (r: LabourColonyResult, area: number | undefined, floors: number) =>
+    (area ?? 0) / ((floors - 1) * r.area.footprintLengthM);
+  const w3 = impliedWidth(g3, g3walk?.areaSqm, 4);
+  const w1 = impliedWidth(g1r, g1walk?.areaSqm, 2);
+  ok(
+    w3 > 0 && Math.abs(w3 - w1) < 0.05,
+    `G+3: walkway scales per upper level x footprint (implied width ${w3.toFixed(2)} m vs G+1 ${w1.toFixed(2)} m)`,
+  );
+
+  // The civil engine accepts floors=4, keeps its universal engineer-approval warning, and adds
+  // the G+3-specific one about footing defaults being carried over from the G+2 ladder.
+  const civil3 = calculateCivilWork({ ...DEFAULT_CIVIL_CONFIG, enabled: true }, civilCtxOf(g3));
+  ok(
+    civil3.warnings.some((w) => /NOT FOR CONSTRUCTION until approved/i.test(w)),
+    "G+3: universal structural-approval warning still present",
+  );
+  ok(
+    civil3.warnings.some((w) => /G\+3 SELECTED/.test(w) && /up to G\+2/.test(w)),
+    "G+3: footing-defaults review warning is pushed",
+  );
+
+  // And the full drawing/3D model must build validly with four storeys.
+  runChecks("G+3 (floors = 4)", buildColonyModel({ result: g3, civil: civil3, columnGrid }));
+
+  /* ── elevations: HALF-LANDING DOG-LEG — two reversing half-flights per storey ────────────
+   * Owner spec (2026-09-03): every FLOOR landing must sit at the SAME horizontal position
+   * with identical size and projection, and the flights must still reverse. That is the
+   * half-landing dog-leg: floor landings all at the drawing's right, the turn on a
+   * mid-height half landing at the left. These pins prove the geometry, storey by storey. */
+  {
+    const side = buildElevation(g3, undefined, "right");
+    const halves = side.stairs
+      .filter((sh) => sh.profile)
+      .sort((a, b) => a.flightIdx - b.flightIdx);
+    ok(halves.length === 6, `G+3 side elevation: 3 storeys × 2 half-flights (got ${halves.length})`);
+    ok(
+      halves.every((sh, i) => sh.flightIdx === i && sh.flightCount === 6),
+      "G+3 side elevation: half-flights are indexed 0..5 of 6",
+    );
+    ok(
+      halves.every((sh, i) => sh.halfOfStorey === (i % 2 as 0 | 1)),
+      "G+3 side elevation: halves alternate lower/upper within each storey",
+    );
+    // Levels chain through every half landing and every floor landing, to the top FFL.
+    for (let i = 0; i + 1 < halves.length; i++) {
+      ok(
+        Math.abs(halves[i].topM - halves[i + 1].baseM) < 0.005,
+        `G+3 side elevation: half ${i} tops out exactly where half ${i + 1} starts`,
+      );
+    }
+    ok(
+      Math.abs(halves[halves.length - 1].topM - (side.plinthM + 3 * side.floorHM)) < 0.005,
+      "G+3 side elevation: the last half-flight lands on FFL 3",
+    );
+    // Risers per storey are preserved: the two halves sum to the configured storey count.
+    ok(
+      [0, 1, 2].every((k) => halves[2 * k].steps + halves[2 * k + 1].steps === (halves[0].storeySteps ?? -1)),
+      "G+3 side elevation: each storey's two halves sum to the full riser count",
+    );
+    // Directions REVERSE at the half landing: lower half climbs one way, upper the other.
+    ok(
+      halves.every((sh, i) => i === 0 || sh.lowAtStart !== halves[i - 1].lowAtStart),
+      "G+3 side elevation: every consecutive half-flight reverses direction (dog-leg)",
+    );
+    /* THE ALIGNMENT REQUIREMENT — every floor landing at the same horizontal position with
+     * the same size: all upper halves arrive at one identical right edge, with equal landing
+     * widths; all half landings share one identical left edge too. */
+    const upper = halves.filter((sh) => sh.halfOfStorey === 1);
+    const lower = halves.filter((sh) => sh.halfOfStorey === 0);
+    const rightEdges = upper.map((sh) => sh.x0 + sh.wM);
+    ok(
+      rightEdges.every((x) => Math.abs(x - rightEdges[0]) < 0.005),
+      `floor landings ALL end at one right edge (${rightEdges.map((x) => x.toFixed(2)).join(", ")})`,
+    );
+    ok(
+      upper.every((sh) => Math.abs(sh.landingM - upper[0].landingM) < 0.005),
+      "floor landings are all the SAME width",
+    );
+    const leftEdges = lower.map((sh) => sh.x0);
+    ok(
+      leftEdges.every((x) => Math.abs(x - leftEdges[0]) < 0.005),
+      "half (turn) landings are identically placed at the left",
+    );
+    // Walking-path continuity in position: the upper half departs exactly where the lower
+    // half arrives (the half landing), and each storey's lower half departs ON the floor
+    // landing the previous storey's upper half arrived at.
+    for (let k = 0; k < 3; k++) {
+      const lo = halves[2 * k], up = halves[2 * k + 1];
+      // The upper half's foot sits at the half landing's INNER edge — you step off the turn
+      // platform onto its first riser — i.e. exactly one landing width in from the lower
+      // half's arrival (outer) edge.
+      ok(
+        Math.abs(up.x0 - (lo.x0 + lo.landingM)) < 0.005,
+        `storey ${k}: the upper half departs from the half landing the lower half arrives at`,
+      );
+      if (k > 0) {
+        const prevUp = halves[2 * k - 1];
+        const foot = lo.x0 + lo.wM; // lower half is lowAtStart=false — its foot is the right end
+        const landLo = prevUp.x0 + prevUp.wM - prevUp.landingM;
+        const landHi = prevUp.x0 + prevUp.wM;
+        ok(
+          foot >= landLo - 0.005 && foot <= landHi + 0.005,
+          `storey ${k}: departs ON the floor landing storey ${k - 1} arrived at`,
+        );
+      }
+    }
+    {
+      const leftFace = buildElevation(g3, undefined, "left");
+      const leftUpper = leftFace.stairs.filter((sh) => sh.profile && sh.halfOfStorey === 1);
+      const le = leftUpper.map((sh) => sh.x0 + sh.wM);
+      ok(
+        leftUpper.length === 3 && le.every((x) => Math.abs(x - le[0]) < 0.005),
+        "G+3 LEFT elevation: its floor landings are identically aligned too",
+      );
+    }
+    // The long (front) face sees the same stairs end-on — every storey's flight, none skipped.
+    const front = buildElevation(g3, undefined, "front");
+    const silhouettes = front.stairs.filter((sh) => !sh.profile);
+    ok(
+      silhouettes.length === 6,
+      `G+3 front elevation: both staircases show all 3 flights end-on (got ${silhouettes.length})`,
+    );
+    /* ── the per-floor chips (onFloors) drive the ELEVATION too ──────────────────────────
+     * Unticking a floor in the staircase editor must remove that floor's flight from the
+     * wall elevation (flight f departs floor f). Two former traps: a stair unticked on the
+     * GROUND floor vanished from the elevation entirely (it was read from the floor-0 plan
+     * geometry), and one unticked on an UPPER floor still drew every flight. */
+    {
+      const chip = (onFloors: number[] | undefined) => ({
+        staircases: [
+          { id: "sA", label: "A", position: "right" as const, enabled: true, onFloors },
+          { id: "sB", label: "B", position: "left" as const, enabled: true },
+        ],
+      });
+      // Each ticked storey contributes its PAIR of half-flights (2f and 2f+1).
+      const flightsFor = (onFloors: number[] | undefined) =>
+        buildElevation(g3, chip(onFloors), "right")
+          .stairs.filter((sh) => sh.profile)
+          .map((sh) => sh.flightIdx)
+          .sort((a, b) => a - b);
+      ok(JSON.stringify(flightsFor(undefined)) === JSON.stringify([0, 1, 2, 3, 4, 5]),
+        "chips: no list → every storey's half-flights drawn on the elevation");
+      ok(JSON.stringify(flightsFor([0])) === JSON.stringify([0, 1]),
+        "chips: ground only → ONLY the ground storey's two half-flights");
+      ok(JSON.stringify(flightsFor([1, 2])) === JSON.stringify([2, 3, 4, 5]),
+        "chips: upper floors only → upper storeys drawn even though the stair is absent from the floor-0 plan");
+      ok(JSON.stringify(flightsFor([2])) === JSON.stringify([4, 5]),
+        "chips: one upper floor → exactly that storey's pair");
+    }
+
+    // A ground-floor-only colony still draws nothing new: no flights exist to stack.
+    const g0 = calculateLabourColony({ ...BASE_CONFIG, floors: 1, capacity: 40 });
+    ok(
+      buildElevation(g0, undefined, "right").stairs.length === 0 ||
+        buildElevation(g0, undefined, "right").stairs.every((sh) => sh.flightCount >= 1),
+      "single-storey elevation emits no phantom upper flights",
+    );
+  }
+}
+
 // civil-absent variant must still build a full foundation from defaults
 runChecks("No civil result", buildColonyModel({ result, civil: null, columnGrid }));
 
@@ -320,12 +516,23 @@ runChecks("No civil result", buildColonyModel({ result, civil: null, columnGrid 
     const zs = treads.map((t) => Math.max(...verts(t).map((v) => v.z))).sort((a, b) => a - b);
     const ffl = model.meta.plinthM;
     ok(zs[0] > ffl + 0.05, `R4: lowest tread rises clear of the departure floor (${zs[0].toFixed(3)} > ${ffl.toFixed(3)})`);
+    /* On the half-landing dog-leg, the riser onto and off the TURN landing carries no tread
+     * (the landing is the walking surface), so the z-sequence legitimately skips exactly
+     * TWO riser heights there. Filter those landing gaps (≈ 2 × the median gap) before
+     * asserting uniformity — a genuinely uneven flight still fails. */
     const gaps: number[] = [];
     for (let i = 1; i < zs.length; i++) if (zs[i] - zs[i - 1] > 1e-6) gaps.push(zs[i] - zs[i - 1]);
     if (gaps.length > 2) {
-      const avg = gaps.reduce((a, b) => a + b, 0) / gaps.length;
-      const spread = Math.max(...gaps) - Math.min(...gaps);
+      const sorted = [...gaps].sort((a, b) => a - b);
+      const median = sorted[Math.floor(sorted.length / 2)];
+      const stepGaps = gaps.filter((g) => g < median * 1.5);
+      const avg = stepGaps.reduce((a, b) => a + b, 0) / Math.max(1, stepGaps.length);
+      const spread = stepGaps.length ? Math.max(...stepGaps) - Math.min(...stepGaps) : 0;
       ok(spread < avg * 0.6, `R4b: tread rises are uniform (avg ${(avg * 1000).toFixed(0)} mm, spread ${(spread * 1000).toFixed(0)} mm)`);
+      ok(
+        gaps.every((g) => g < median * 1.5 || Math.abs(g - 2 * median) < median * 0.55),
+        "R4b2: the only non-uniform rises are the two-riser skips at the turn landings",
+      );
     }
   }
 

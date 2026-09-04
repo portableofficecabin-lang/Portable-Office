@@ -16,7 +16,7 @@
 
 import { useMemo, useRef, useState } from "react";
 
-import type { LabourColonyConfig, LabourColonyResult } from "@/lib/quotation/labourColony";
+import { floorCountLabel, type LabourColonyConfig, type LabourColonyResult } from "@/lib/quotation/labourColony";
 import type { CivilWorkResult } from "@/lib/quotation/labourColonyCivil";
 import {
   buildStructuralBasis,
@@ -200,7 +200,7 @@ export default function StructuralBasisTab({ config, result, civilResult, onConf
                 <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: "0.02em" }}>STRUCTURAL DESIGN BASIS & STABILITY REPORT</div>
                 <div style={{ fontSize: 11, color: "#475569" }}>
                   {config.projectName || "Labour colony"} · {input.lengthM.toFixed(1)} × {input.widthM.toFixed(1)} m ·{" "}
-                  {config.floors === 1 ? "Ground floor" : config.floors === 2 ? "G+1" : "G+2"} · IS 875 (Parts 1–3)
+                  {floorCountLabel(config.floors)} · IS 875 (Parts 1–3)
                 </div>
               </div>
               <div style={{ textAlign: "right", fontSize: 10, fontWeight: 700, color: "#dc2626", border: "1.5px solid #dc2626", borderRadius: 6, padding: "4px 8px" }}>

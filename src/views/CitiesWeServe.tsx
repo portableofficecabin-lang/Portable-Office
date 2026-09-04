@@ -239,15 +239,18 @@ export default function CitiesWeServe() {
           </div>
         </section>
 
-        {/* Local area guides — one landing page per industrial hub (data-driven, src/data/cityPages.ts) */}
+        {/* Local area guides — one landing page per location or local service (data-driven,
+            src/data/cityPages.ts). Originally all industrial hubs; the list now also carries
+            city-wide service pages such as villa construction in Bangalore, which is why the
+            copy below says "locations and services" rather than "industrial hubs". */}
         {CITY_PAGES.length > 0 && (
           <section aria-label="Local area guides" className="mb-16">
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3 text-center">
               Local Area Guides
             </h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto text-center">
-              Detailed guides for the industrial hubs we serve most — what we deliver, sizes, options
-              and answers for your location.
+              Detailed guides for the locations and services we cover most — what we deliver, sizes,
+              options and answers for your area.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {CITY_PAGES.map((c) => (

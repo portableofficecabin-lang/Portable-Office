@@ -202,6 +202,49 @@ export function resolveStair(
  * calculator's own staircasePosition — could never take effect.
  * An explicit array (even empty, after deleting them all) is always honored.
  */
+/**
+ * HALF-LANDING DOG-LEG LAYOUT — the ONE place the U-staircase arithmetic lives.
+ *
+ * Every storey climbs in two reversing half-flights in a two-lane well:
+ *
+ *      ┌───────────────┬─────────────┐  ← half (turn) landing, full well width
+ *      │  lane A ↑↑↑   │   ↓↓↓ lane B │
+ *      └───────────────┴─────────────┘  ← floor landing, full well width (entry end)
+ *
+ * The floor plan, the 3D model and the wall elevations ALL read this helper, so the three
+ * drawings can never disagree about the split. Risers per storey are preserved exactly
+ * (stepsA + stepsB = steps, same riser height); a dog-leg has one fewer tread per storey
+ * than a straight flight — arithmetic, not a choice.
+ */
+export interface DogLegLayout {
+  stepsA: number; stepsB: number;      // risers per half (A departs the floor landing)
+  treadsA: number; treadsB: number;    // treads per half (risers − 1)
+  runAM: number; runBM: number;        // horizontal run of each half-flight
+  laneWM: number;                      // one lane = the configured flight width
+  wellWidthM: number;                  // 2 lanes side by side
+  wellLengthM: number;                 // runA + landing at BOTH ends (turn + floor)
+  landingM: number;
+}
+export function dogLegLayout(s: {
+  steps: number; goingM: number; landingM: number; widthM: number;
+}): DogLegLayout {
+  const stepsA = Math.max(1, Math.ceil(s.steps / 2));
+  const stepsB = Math.max(1, s.steps - stepsA);
+  const treadsA = Math.max(1, stepsA - 1);
+  const treadsB = Math.max(1, stepsB - 1);
+  const runAM = treadsA * s.goingM;
+  const runBM = treadsB * s.goingM;
+  const landingM = Math.max(0.6, s.landingM);
+  return {
+    stepsA, stepsB, treadsA, treadsB,
+    runAM: round(runAM), runBM: round(runBM),
+    laneWM: s.widthM,
+    wellWidthM: round(2 * s.widthM),
+    wellLengthM: round(runAM + 2 * landingM),
+    landingM: round(landingM),
+  };
+}
+
 export function effectiveStaircases(
   conf: RoomFloorPlanConfig,
   floors: number,
@@ -525,13 +568,27 @@ export function buildRoomFloorPlan(
   const stairs: FPStair[] = [];
   const stairRects: FPRect[] = []; // for same-side auto-separation
   stairCfgs.forEach((sc, i) => {
+    // Per-floor visibility: a staircase listing specific floors is drawn ONLY on those plans.
+    // No list (or an empty one, which the editor prevents) = every floor — the reading every
+    // pre-existing saved project gets. Checked before resolveStair so a filtered-out stair
+    // costs nothing and, crucially, is excluded from the same-side auto-separation below —
+    // stairs on DIFFERENT floors are not really side by side and must not push each other.
+    if (Array.isArray(sc.onFloors) && sc.onFloors.length > 0 && !sc.onFloors.includes(floor)) return;
     const sr = resolveStair(sc, floors, verandaM, cfg.staircasePosition, cfg.staircaseWidth, cfg.roomHeight);
     if (!sr.enabled) return;
     const posSide: Side = sr.position === "both" ? (i % 2 === 0 ? "right" : "left") : sr.position;
     const vertical = posSide === "left" || posSide === "right";
-    const longM = sr.runM + sr.landingM;
-    const w = vertical ? sr.widthM : longM;
-    const d = vertical ? longM : sr.widthM;
+    /* The stair FOOTPRINT is the half-landing dog-leg WELL (dogLegLayout): two lanes side by
+     * side, the turn landing at the far end and the floor landing at the entry end — the same
+     * U the elevations draw, so plan and elevation describe one physical staircase. (It was a
+     * single-lane straight run, width × (run + landing), which no longer matched the built
+     * arrangement.) The billing fields (runM, steps, landingM, widthM) are untouched — the
+     * take-off prices from those, not from this rectangle. */
+    const layout = dogLegLayout(sr);
+    const longM = layout.wellLengthM;
+    const acrossM = layout.wellWidthM;
+    const w = vertical ? acrossM : longM;
+    const d = vertical ? longM : acrossM;
     // The plan shows the TREADS (risers − 1); the top riser lands on the floor slab itself.
     const edges = stepEdges(sr.treads, sr.runM, sr.treadM, sr.gapM, sr.overridden);
 
@@ -576,10 +633,22 @@ export function buildRoomFloorPlan(
     const blockAlong = vertical ? blockDM : blockWM;
     const offsetToCornerM = Math.max(0, Math.min(Math.abs(nearStart - 0), Math.abs(blockAlong - farEnd)));
 
+    /* DEFAULT ENTRY IS SIDE-AWARE. `entry` decides which end the ground flight departs from,
+     * and therefore which way the whole dog-leg reads on that wall's own elevation. With one
+     * global "left" default, the RIGHT-side staircase drew MIRRORED on the right elevation:
+     * the first flight rose to the drawing's LEFT landing — the reverse of how the drawing is
+     * read (ground flight rising to the right-side first-floor landing, then alternating).
+     * A stair on the right/bottom wall therefore defaults to entering from its OTHER end, so
+     * BOTH side elevations read identically: up-to-the-right first. An explicit sc.entry from
+     * the editor still wins, and the 3D model + elevation consume this same resolved value,
+     * so plan, model and drawing stay one geometry. */
+    const entry: FPStair["entry"] =
+      sc.entry ?? (posSide === "right" || posSide === "bottom" ? "right" : "left");
+
     stairs.push({
       id: sc.id ?? `stair-${i}`, label: sc.label ?? `Staircase ${i + 1}`,
       x, y, w, d, orientation: vertical ? "vertical" : "horizontal", side: posSide,
-      entry: sr.entry, direction: sr.direction,
+      entry, direction: sr.direction,
       runM: sr.runM, widthM: sr.widthM, landingM: sr.landingM,
       steps: sr.steps, treads: sr.treads, treadM: sr.treadM, goingM: sr.goingM, riserMm: sr.riserMm, gapM: sr.gapM,
       floorRiseM: round(sr.floorRiseM), totalRiseM: round(sr.totalRiseM),

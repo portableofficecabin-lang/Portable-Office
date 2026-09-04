@@ -37,7 +37,7 @@
  */
 
 import type { LabourColonyResult, RoomFloorPlanConfig, ElevationStructureConfig, MemberSections } from "./labourColony";
-import { buildRoomFloorPlan, type RoomFloorPlanGeom, type FPBand } from "./roomFloorPlan";
+import { buildRoomFloorPlan, dogLegLayout, effectiveStaircases, type RoomFloorPlanGeom, type FPBand } from "./roomFloorPlan";
 
 export type ElevationFace = "front" | "rear" | "left" | "right";
 
@@ -70,6 +70,29 @@ export interface ElevStairShape {
   topM: number;
   lowAtStart: boolean;        // flight's LOW end is at x0 (profile faces only)
   profile: boolean;           // true = true stepped profile (side faces); false = end silhouette
+  /**
+   * Which storey this flight serves: 0 = ground→FFL 1, 1 = FFL 1→FFL 2, … One shape is emitted
+   * PER FLIGHT (floors − 1 of them), stacked over the same plan extent exactly as the 3D model
+   * builds them — the drawing used to emit only flight 0, so a G+2/G+3 elevation showed a
+   * single ground flight with nothing serving the upper floors. `flightCount` lets the glyph
+   * annotate the schedule once (on flight 0) instead of once per storey.
+   */
+  flightIdx: number;
+  flightCount: number;
+  /**
+   * HALF-LANDING DOG-LEG (profile faces): each storey climbs in TWO half-flights.
+   *   half 0 — departs the FLOOR landing (all floor landings identically placed, at the
+   *            drawing's right), climbs to the mid-height HALF (turn) landing at the left;
+   *   half 1 — reverses off the half landing and climbs to the NEXT floor landing, back at
+   *            the same right-hand position.
+   * This is what makes every floor landing sit at the SAME horizontal position with the same
+   * size and projection (the owner's requirement) while the flights still reverse direction —
+   * geometrically impossible with one full-height flight per storey, whose landings must
+   * alternate ends. Undefined on end-on silhouettes.
+   */
+  halfOfStorey?: 0 | 1;
+  /** Risers per FULL storey (both halves together) — for the schedule caption. */
+  storeySteps?: number;
   /** Full schedule — every value the drawing annotates, straight from the plan's staircase config. */
   steps: number;              // risers
   treads: number;             // risers − 1 (the top riser lands on the floor slab)
@@ -321,38 +344,142 @@ export function buildElevation(
    * height, top = plinth + floorH === FFL 1 exactly. The riser count is derived from that same
    * floor height in resolveStair(), so the flight can never fall short of the floor it serves. */
   const stairs: ElevStairShape[] = [];
-  const baseM = plinthM;
-  const common = (s: RoomFloorPlanGeom["stairs"][number]) => ({
-    baseM,
-    riseM: s.totalRiseM,
-    topM: round(baseM + s.totalRiseM),
-    steps: s.steps, treads: s.treads, goingM: s.goingM, riserM: s.riserMm / 1000,
-    runM: s.runM, widthM: s.widthM, landingM: s.landingM,
-    slopeDeg: s.slopeDeg, reachesFloor: s.reachesFloor,
-    handrail: s.handrail, label: s.label,
-  });
-  for (const s of g0.stairs) {
-    if ((face === "left" || face === "right") && s.side === face) {
-      // true stepped profile: the flight runs along plan y (vertical stair) → along this face's axis
-      const a0 = s.y, len = s.d;
-      const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;              // entry end = low end
-      const e0 = T(a0, len);
-      const lowAtStart = mirrored ? !(lowPlanEnd === a0) : lowPlanEnd === a0;
-      stairs.push({ ...common(s), x0: e0, wM: len, lowAtStart, profile: true });
-    } else if (alongX && (s.side === "left" || s.side === "right")) {
-      // end silhouette on the long faces — true position + width from the plan
-      const a0 = s.x, len = s.w;
-      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
-    } else if (!alongX && (s.side === "top" || s.side === "bottom")) {
-      const a0 = s.y, len = s.d;
-      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
-    } else if (alongX && (s.side === "top" || s.side === "bottom") && s.side === sideOfFace) {
-      // A top/bottom staircase is HORIZONTAL — its flight runs along plan x, which is this face's
-      // own axis, so it lies IN the view plane and must show its true stepped profile.
-      const a0 = s.x, len = s.w;
-      const lowPlanEnd = s.entry === "left" ? a0 : a0 + len;      // entry end = low end
-      const lowAtStart = mirrored ? lowPlanEnd !== a0 : lowPlanEnd === a0;
-      stairs.push({ ...common(s), x0: T(a0, len), wM: len, lowAtStart, profile: true });
+  /**
+   * ONE SHAPE PER FLIGHT. A G+n colony has n flights per staircase — flight f climbs from
+   * FFL f to FFL f+1 over the SAME plan extent, exactly as buildStairs() stacks them in the
+   * 3D model — so the elevation shows a continuous stair serving every floor, not just the
+   * ground flight it used to draw. Each flight's base sits one full storey above the last;
+   * riseM comes from the resolved stair (with auto-rise on it EQUALS the floor height, which
+   * is why the stack lands exactly on every FFL).
+   */
+  const flightCount = Math.max(1, floors - 1);
+  /**
+   * PER-FLOOR VISIBILITY (StaircaseDrawConfig.onFloors) — the elevation must follow the
+   * floor-plan chips, per flight. Two traps in reading stairs straight from g0:
+   *   • g0 is the FLOOR-0 geometry, so a staircase unticked on the ground floor was filtered
+   *     out of it and vanished from the elevation entirely — including its upper flights;
+   *   • conversely a stair unticked on an upper floor still drew every flight, because
+   *     FPStair carries no onFloors.
+   * So the stair GEOMETRY (position, size, schedule — floor-independent) comes from an
+   * UNFILTERED pass, and each flight f is then drawn only when the stair is enabled on the
+   * floor it DEPARTS from (flight f climbs floor f → f + 1). One config drives the plan, the
+   * 3D model and this drawing.
+   */
+  const stairConfigs = effectiveStaircases(fp ?? {}, floors, cfg.staircasePosition);
+  const elevStairs = buildRoomFloorPlan(
+    result,
+    { ...(fp ?? {}), staircases: stairConfigs.map((sc) => ({ ...sc, onFloors: undefined })), staircase: undefined },
+    0,
+  ).stairs;
+  const allowedFloors = new Map<string, number[] | undefined>(
+    stairConfigs.map((sc, i) => [sc.id ?? `stair-${i}`, sc.onFloors]),
+  );
+  const flightVisible = (stairId: string, f: number): boolean => {
+    const allow = allowedFloors.get(stairId);
+    return !Array.isArray(allow) || allow.length === 0 || allow.includes(f);
+  };
+  const perFlight = (s: RoomFloorPlanGeom["stairs"][number], f: number) => {
+    const baseM = round(plinthM + f * floorH);
+    return {
+      baseM,
+      riseM: s.totalRiseM,
+      topM: round(baseM + s.totalRiseM),
+      steps: s.steps, treads: s.treads, goingM: s.goingM, riserM: s.riserMm / 1000,
+      runM: s.runM, widthM: s.widthM, landingM: s.landingM,
+      slopeDeg: s.slopeDeg, reachesFloor: s.reachesFloor,
+      handrail: s.handrail, label: s.label,
+      flightIdx: f, flightCount,
+    };
+  };
+  /**
+   * HALF-LANDING DOG-LEG — each storey climbs as TWO reversing half-flights (profile faces).
+   *
+   * The evolution that got here: one flight per storey with ALTERNATING direction was a
+   * walkable dog-leg, but its junction landings necessarily alternate ends — first floor
+   * right, second floor LEFT, third right — and the owner requires every FLOOR landing at
+   * the SAME horizontal position with identical size and projection. With straight
+   * full-storey flights that is geometrically impossible. The standard external-stair answer
+   * is the half-landing dog-leg drawn here:
+   *
+   *   FLOOR landing (right, identical at every FFL)          ← what the owner aligns
+   *     ↑ half-flight 1 (reverses, climbs right)
+   *   HALF landing (left, mid-height turn platform)
+   *     ↑ half-flight 0 (departs the floor landing, climbs left)
+   *   FLOOR landing (right) …
+   *
+   * Risers per storey are preserved exactly (stepsA + stepsB = steps, same riser height, so
+   * the stack still lands on every FFL to the millimetre); the going is preserved per tread.
+   * A dog-leg has one fewer tread per storey than a straight flight — that is arithmetic,
+   * not a drawing choice, and the schedule caption prints the true split.
+   */
+  const stepsA0 = 0, halfIdxB = 1; // readability constants for halfOfStorey
+  for (const s of elevStairs) {
+    /* The split comes from the SAME dogLegLayout() the floor plan's well and the 3D model are
+     * built from — one arithmetic, three agreeing drawings. */
+    const lay = dogLegLayout({ steps: s.steps, goingM: s.goingM, landingM: s.landingM, widthM: s.widthM });
+    const { stepsA, stepsB, runAM: runA, runBM: runB } = lay;
+    const stepRise = s.totalRiseM / Math.max(1, s.steps);
+    const riseA = stepRise * stepsA, riseB = stepRise * stepsB;
+    const treadsA = lay.treadsA, treadsB = lay.treadsB;
+
+    /** Emit both halves of storey f into `stairs`, anchored so the floor landings all sit at
+     *  [viewHi − landingM, viewHi] — the drawing's right — regardless of storey. */
+    const pushStorey = (f: number, viewLo: number, viewHi: number) => {
+      const base = round(plinthM + f * floorH);
+      const halfLevel = round(base + riseA);
+      const ffl = round(plinthM + (f + 1) * floorH);
+      const common = {
+        goingM: s.goingM, riserM: s.riserMm / 1000, widthM: s.widthM,
+        reachesFloor: s.reachesFloor, handrail: s.handrail, label: s.label,
+        flightCount: 2 * flightCount, storeySteps: s.steps, profile: true as const,
+      };
+      // half 0 — from the floor landing (right) up-left to the half landing. lowAtStart=false:
+      // its LOW end is at x0+wM (the right), the half landing draws at its arrival (left) end.
+      // With the well sized by dogLegLayout, runA + both landings fill the extent EXACTLY.
+      const wA = runA + lay.landingM;
+      const x0A = Math.max(viewLo, viewHi - lay.landingM - wA);
+      stairs.push({
+        ...common, x0: x0A, wM: wA, lowAtStart: false,
+        baseM: base, riseM: round(riseA), topM: halfLevel,
+        steps: stepsA, treads: treadsA, runM: round(runA), landingM: lay.landingM,
+        slopeDeg: round((Math.atan2(riseA, runA) * 180) / Math.PI, 1),
+        flightIdx: 2 * f, halfOfStorey: stepsA0,
+      });
+      // half 1 — reverses off the half landing's INNER edge (you step off the turn platform
+      // onto the first riser), up-right to the NEXT floor landing. Its landing is widened to
+      // reach viewHi exactly, so every floor landing spans the same [.., viewHi].
+      const x0B = x0A + lay.landingM;
+      const landB = Math.max(lay.landingM, viewHi - (x0B + runB));
+      stairs.push({
+        ...common, x0: x0B, wM: runB + landB, lowAtStart: true,
+        baseM: halfLevel, riseM: round(riseB), topM: ffl,
+        steps: stepsB, treads: treadsB, runM: round(runB), landingM: landB,
+        slopeDeg: round((Math.atan2(riseB, runB) * 180) / Math.PI, 1),
+        flightIdx: 2 * f + 1, halfOfStorey: halfIdxB,
+      });
+    };
+
+    for (let f = 0; f < flightCount; f++) {
+      if (!flightVisible(s.id, f)) continue;
+      if ((face === "left" || face === "right") && s.side === face) {
+        // true stepped profile: the stair runs along plan y (vertical stair) → along this face's axis
+        const a0 = s.y, len = s.d;
+        const viewLo = T(a0, len);
+        pushStorey(f, viewLo, viewLo + len);
+      } else if (alongX && (s.side === "left" || s.side === "right")) {
+        // end silhouette on the long faces — true position + width from the plan
+        const a0 = s.x, len = s.w;
+        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
+      } else if (!alongX && (s.side === "top" || s.side === "bottom")) {
+        const a0 = s.y, len = s.d;
+        stairs.push({ ...perFlight(s, f), x0: T(a0, len), wM: len, lowAtStart: true, profile: false });
+      } else if (alongX && (s.side === "top" || s.side === "bottom") && s.side === sideOfFace) {
+        // A top/bottom staircase is HORIZONTAL — its run lies along plan x, which is this face's
+        // own axis, so it lies IN the view plane and shows the same half-landing profile.
+        const a0 = s.x, len = s.w;
+        const viewLo = T(a0, len);
+        pushStorey(f, viewLo, viewLo + len);
+      }
     }
   }
 

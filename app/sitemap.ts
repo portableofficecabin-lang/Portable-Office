@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
 import { allChildParams } from "@/data/productChildPages";
+import { publishedFamilies, publishedVariants, variantPath } from "@/data/productFamilies";
 import { seoPromotions } from "@/data/seoPromotions";
 import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
+import { variantIsSearchEligible } from "@/data/productFamilies";
 
 const SITE_URL = "https://portableofficecabin.com";
 const LAST_MOD = new Date("2026-06-15");
@@ -33,8 +35,37 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   // emitted by the product loop below — do not list it here (avoids a duplicate).
   entry("/products/portable-cabin", 0.8, "weekly"),
   entry("/products/portable-toilet-cabin", 0.8, "weekly"),
+  /* Building Construction Contractor in Bangalore — a dedicated service landing page under the
+   * Home Construction category (app/(site)/products/home-construction/...). It is a STATIC route
+   * segment, so it is not emitted by the productChildPages loop above and must be listed here.
+   * Quote-only service: no Product/Offer schema, no ₹ figure, and no Merchant feed exposure. */
+  entry("/products/home-construction/building-construction-contractor", 0.8, "weekly"),
   // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
   ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
+  /* STANDARD SIZE VARIANT pages — one per published size of every published product family
+   * (src/data/productFamilies.ts). Each is a distinct, self-canonical, indexable landing
+   * page, so every one must be listed here: a variant URL that is crawlable and canonical
+   * but absent from the sitemap is a variant Google discovers late or not at all. Priority
+   * sits just under the parent product (0.8) because the parent is the group overview.
+   * Unpublished sizes are excluded by publishedVariants() — the same gate that keeps them
+   * out of generateStaticParams, so a URL is never in the sitemap and 404ing at once.
+   *
+   * A size served at its family's PARENT url is deliberately SKIPPED here: its canonical is the
+   * parent product URL, which the product loop below already emits. Listing it again would put
+   * the same <loc> in the sitemap twice. */
+  ...publishedFamilies().flatMap((family) =>
+    publishedVariants(family)
+      .filter((variant) => !variant.rendersAtParent)
+      /* A size that is not search-eligible is served noindex (see buildVariantPageMetadata),
+       * and a noindex URL must never appear here — submitting a page we are asking Google not
+       * to index is a direct contradiction that Search Console reports.
+       *
+       * It returns to the sitemap when it becomes search-eligible: a confirmed price AND
+       * contentComplete. A commerce record on its own is not enough. Being out of stock does
+       * NOT remove it — availability is a commerce state, not an indexing one. */
+      .filter((variant) => variantIsSearchEligible(family, variant))
+      .map((variant) => entry(variantPath(family, variant), 0.75, "weekly")),
+  ),
   entry("/marketplace", 0.85, "weekly"),
   entry("/promotions", 0.85, "weekly"),
   entry("/rental-service", 0.8, "monthly"),
