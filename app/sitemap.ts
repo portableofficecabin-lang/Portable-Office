@@ -8,17 +8,32 @@ import { createStaticClient } from "@/lib/supabase/static";
 import { variantIsSearchEligible } from "@/data/productFamilies";
 
 const SITE_URL = "https://portableofficecabin.com";
-const LAST_MOD = new Date("2026-06-15");
 
+/**
+ * ── WHY MOST ENTRIES CARRY NO <lastmod> ─────────────────────────────────────────────────────
+ *
+ * This file used to stamp EVERY url with one hardcoded date (`new Date("2026-06-15")`). That is
+ * worse than emitting nothing: it told crawlers that ~200 unrelated pages all changed on the
+ * same day, and it went stale the moment it was written — a page published in September shipped
+ * announced as three months old, which is exactly the signal that makes Google stop trusting a
+ * sitemap's lastmod wholesale.
+ *
+ * lastmod means "when the content last MEANINGFULLY changed". Where this codebase actually knows
+ * that — blog posts and products both carry `updated_at` in Supabase — it is emitted. Where it
+ * does not (static pages, category and promotion landing pages built from source files), the
+ * field is OMITTED. Omitting is explicitly fine and is what Google recommends over guessing;
+ * build time would be a lie of a different kind, marking every page as changed on every deploy.
+ */
 function entry(
   path: string,
   priority: number,
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "weekly",
-  lastModified: Date = LAST_MOD,
+  lastModified?: Date,
 ): MetadataRoute.Sitemap[number] {
   return {
     url: `${SITE_URL}${path}`,
-    lastModified,
+    // Spread so the key is absent (not `undefined`) when there is no real signal.
+    ...(lastModified ? { lastModified } : {}),
     changeFrequency,
     priority,
   };
@@ -98,6 +113,35 @@ const FALLBACK_BLOG_SLUGS = [
   "portable-cabin-manufacturers-in-bangalore",
 ];
 
+/**
+ * Real per-product modification times, keyed by product slug.
+ *
+ * The `products` table carries `slug` and `updated_at`, so a product edited in the admin panel
+ * has a genuine lastmod — the one case where this sitemap can honestly claim one for a product
+ * URL. A slug with no DB row (static-catalogue-only products) is simply absent from the map and
+ * its entry ships without lastmod, which is the correct answer rather than a guess.
+ *
+ * A DB outage returns an empty map, so the sitemap degrades to no product lastmods rather than
+ * failing — same resilience contract as getBlogEntries() below.
+ */
+async function getProductLastMods(): Promise<Map<string, Date>> {
+  try {
+    const supabase = createStaticClient();
+    const { data, error } = await supabase.from("products").select("slug, updated_at");
+    if (error) throw error;
+    const map = new Map<string, Date>();
+    for (const row of data || []) {
+      if (!row.slug || !row.updated_at) continue;
+      const d = new Date(row.updated_at);
+      if (!Number.isNaN(d.getTime())) map.set(row.slug, d);
+    }
+    return map;
+  } catch (err) {
+    console.error("sitemap: product lastmod fetch failed, omitting product lastmod:", err);
+    return new Map();
+  }
+}
+
 /** Published blog posts from Supabase (clean /blog/<slug> URLs). Falls back to the
  *  known core posts if the query fails, so a DB outage never empties the sitemap. */
 async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
@@ -110,14 +154,12 @@ async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
     if (error) throw error;
     const rows = (data || []).filter((r) => r.slug);
     if (rows.length === 0) throw new Error("no published posts");
-    return rows.map((r) =>
-      entry(
-        `/blog/${r.slug}`,
-        0.8,
-        "monthly",
-        new Date(r.updated_at || r.published_at || LAST_MOD),
-      ),
-    );
+    return rows.map((r) => {
+      // A published post always has one of these; if it somehow has neither, ship no
+      // lastmod rather than inventing one. Hoisted so the null is narrowed away.
+      const stamp = r.updated_at || r.published_at;
+      return entry(`/blog/${r.slug}`, 0.8, "monthly", stamp ? new Date(stamp) : undefined);
+    });
   } catch (err) {
     console.error("sitemap: blog fetch failed, using fallback slugs:", err);
     return FALLBACK_BLOG_SLUGS.map((slug) => entry(`/blog/${slug}`, 0.8, "monthly"));
@@ -130,25 +172,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(`/products/category/${category.slug}`, 0.8, "weekly"),
   );
 
+  // Built from source files — no per-page modification signal exists, so no lastmod.
   const promotionPages: MetadataRoute.Sitemap = seoPromotions.map((promo) => ({
     url: promo.canonicalUrl,
-    lastModified: LAST_MOD,
     changeFrequency: "monthly",
     priority: 0.75,
   }));
+
+  // Both DB round-trips at once; each degrades independently if Supabase is unreachable.
+  const [productLastMods, blogPages] = await Promise.all([getProductLastMods(), getBlogEntries()]);
 
   // Clean canonical product URL via getProductDetailPath → honours the `slug` override
   // (flipped products emit ONLY their short slug, never the legacy long slug that now
   // redirects) AND the `parentSlug` nesting (product children emit ONLY the nested
   // /products/<parent>/<child> canonical, never the flat slug that 308-redirects there).
-  const productPages: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${SITE_URL}${getProductDetailPath(product)}`,
-    lastModified: LAST_MOD,
-    changeFrequency: "weekly",
-    priority: 0.8,
-  }));
-
-  const blogPages = await getBlogEntries();
+  const productPages: MetadataRoute.Sitemap = products.map((product) => {
+    const lastModified = productLastMods.get(getProductSlug(product));
+    return {
+      url: `${SITE_URL}${getProductDetailPath(product)}`,
+      ...(lastModified ? { lastModified } : {}),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    };
+  });
 
   return [...STATIC_PAGES, ...blogPages, ...categoryPages, ...promotionPages, ...productPages];
 }

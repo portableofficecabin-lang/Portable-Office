@@ -23,6 +23,31 @@ import {
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { JsonLd } from "@/components/JsonLd";
+import { generateFAQSchema } from "@/lib/seo/structured-data";
+import { OptimizedImage } from "@/components/OptimizedImage";
+
+/* ── ALSO THE CANONICAL PAGE FOR "STEEL PORTABLE CABIN" (2026-09-04) ─────────────────────────
+ * /products/steel-portable-cabin 301s here (next.config.ts). MS steel and "steel" are the same
+ * material, so a separate page was the same product at the same price competing with this one
+ * for the same queries. This page absorbed the phrase as a secondary keyword — in the section
+ * below, in the FAQs, and in productSEO.ts / productCommerce.ts feedTitle — plus the six
+ * owner-supplied renders, used here as editorial figures.
+ *
+ * The figures deliberately do NOT go into products.ts `images[]`: that array drives the gallery,
+ * the OG image and the Merchant feed's <g:image_link> for a LIVE offer (POC-PC-MSPC). Changing
+ * the primary image of a fed SKU is a separate decision from adding illustrations to the copy. */
+
+function Figure({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+  return (
+    <figure className="my-8">
+      <div className="overflow-hidden rounded-2xl border border-border/60">
+        <OptimizedImage src={src} alt={alt} aspectRatio="4/3" className="w-full" />
+      </div>
+      <figcaption className="mt-2.5 text-sm text-muted-foreground italic">{caption}</figcaption>
+    </figure>
+  );
+}
 
 const advantages = [
   "Speed: Ready-to-use cabins arrive at your site, eliminating months of construction time",
@@ -177,11 +202,35 @@ const faqs = [
     q: "What information is needed for an accurate quote?",
     a: "You should share required size, quantity, usage type, occupancy, site location, timeline, duration of use, and any special needs like attached toilets, premium finishes, or extra insulation.",
   },
+  /* Carried over from the former standalone steel portable cabin page, which now 301s here.
+   * These are the questions that page answered and this one did not. */
+  {
+    q: "Is a steel portable cabin the same as an MS portable cabin?",
+    a: "Yes. MS stands for mild steel, so a steel portable cabin and an MS portable cabin are the same product — a welded mild steel frame with insulated steel wall and roof panels. Suppliers use the two names interchangeably, and everything on this page applies to both.",
+  },
+  {
+    q: "Does a steel cabin get hot inside?",
+    a: "A bare steel box would. Ours carry 30–50 mm of glass wool or rock wool insulation in the walls and roof, which keeps the inside noticeably cooler and makes air conditioning effective. For a room that will be air-conditioned all day, the PUF panel version holds temperature better still.",
+  },
+  {
+    q: "What about rain and rust?",
+    a: "The roof slopes and is waterproofed, and every steel surface gets an epoxy zinc phosphate primer before the PU topcoat. Rust is a sign of a cheap cabin built with no primer — not something you should see on a properly finished one.",
+  },
+  {
+    q: "What do I need ready on site before delivery?",
+    a: "Very little. A level base — compacted ground, a PCC bed or concrete blocks at the corners — truck access for a 20 or 40 ft trailer, and a clear spot for the crane or hydra to set the cabin down. Then connect a single power line. Water and drainage apply only if you have chosen an attached toilet or pantry.",
+  },
 ];
+
+/* The FAQ block above is rendered verbatim into FAQPage structured data below, so the two can
+ * never drift. Added with the steel-page consolidation: that page carried FAQ schema and this
+ * one did not, so without it the merge would have lost the markup. */
+const faqSchema = generateFAQSchema(faqs.map((f) => ({ question: f.q, answer: f.a })));
 
 export function MSPortableCabinContent() {
   return (
     <div className="space-y-14">
+      <JsonLd data={faqSchema} />
       <section className="space-y-6">
         <div className="flex items-center gap-3">
           <div className="h-1 w-12 rounded-full bg-accent" />
@@ -206,6 +255,33 @@ export function MSPortableCabinContent() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Absorbed from the former /products/steel-portable-cabin page, which 301s here. Answers
+          the first question a visitor arriving on "steel portable cabin" actually has. */}
+      <section className="space-y-6 rounded-3xl border border-border bg-secondary p-6 md:p-8">
+        <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
+          Steel Portable Cabin and MS Portable Cabin — the Same Cabin
+        </h2>
+        <p className="leading-relaxed text-muted-foreground">
+          If you searched for a <strong className="font-semibold text-foreground">steel portable
+          cabin</strong>, you are in the right place. MS stands for mild steel, so a steel portable
+          cabin and an MS portable cabin are the same product: a welded mild steel frame carrying
+          insulated steel wall and roof panels, built complete in the factory and delivered ready
+          to use. The industry uses both names interchangeably, and everything on this page —
+          specifications, sizes, applications and price — applies to either.
+        </p>
+        <p className="leading-relaxed text-muted-foreground">
+          The distinction worth making is not steel versus MS, but which wall system sits on that
+          steel frame: plain insulated MS sheet, galvanised sheet for coastal humidity, or PUF
+          sandwich panel for rooms that will be air-conditioned all day. Those are compared further
+          down the page.
+        </p>
+        <Figure
+          src="/images/products/steel-portable-cabin/steel-portable-cabin-front.webp"
+          alt="Steel portable cabin front elevation — welded MS frame, insulated walls, grilled sliding windows and a flush entrance door"
+          caption="A steel (MS) portable cabin as delivered — welded mild steel frame, insulated profiled walls, grilled sliding windows and a lockable flush door."
+        />
       </section>
 
       <section className="space-y-6">
@@ -293,6 +369,11 @@ export function MSPortableCabinContent() {
 
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Types of MS Portable Cabins Offered</h2>
+        <Figure
+          src="/images/products/steel-portable-cabin/steel-portable-cabin-ventilated-unit.webp"
+          alt="MS steel portable cabin in a two-tone site finish with louvred ventilation windows and a steel flush door"
+          caption="The same shell in a plainer site finish — louvred ventilation instead of glazing, for stores, plant rooms and worker accommodation."
+        />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cabinTypes.map((item) => (
             <div key={item.title} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
@@ -330,6 +411,11 @@ export function MSPortableCabinContent() {
 
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Design, Customisation and Interior Options</h2>
+        <Figure
+          src="/images/products/steel-portable-cabin/steel-portable-cabin-interior-office.webp"
+          alt="Interior of an MS steel portable cabin fitted out as a site office with desks, storage and LED lighting"
+          caption="The same shell fitted out inside — insulated lined walls, vinyl flooring, concealed wiring and LED lighting, handed over ready to occupy."
+        />
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-2xl border border-border bg-card p-5">
             <Layers3 className="mb-3 h-5 w-5 text-accent" />
@@ -379,6 +465,11 @@ export function MSPortableCabinContent() {
 
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Installation, Transport and Site Requirements</h2>
+        <Figure
+          src="/images/products/steel-portable-cabin/steel-portable-cabin-angled-exterior.webp"
+          alt="MS steel portable cabin angled exterior showing the full 20ft length, entrance door and external utility cabinet"
+          caption="Craned into place as one rigid unit — the corner lifting points are what let the same cabin move between sites for years."
+        />
         <div className="grid gap-4 md:grid-cols-2">
           {[
             "Level, compacted ground or simple concrete block supports",

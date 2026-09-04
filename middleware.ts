@@ -66,6 +66,38 @@ function categoryQueryRedirect(request: NextRequest): NextResponse | null {
 }
 
 /**
+ * 301 a mixed-case product URL to its lowercase canonical (/products/Steel-Portable-Cabin →
+ * /products/steel-portable-cabin).
+ *
+ * Path matching is case-SENSITIVE in Next, so an uppercase variant did not 404 — it fell through
+ * to the dynamic route and, because `getProductSlug` comparisons are lowercase, rendered the full
+ * page at HTTP 200. Verified: /products/Steel-Portable-Cabin returned a byte-identical 372 KB page
+ * that self-canonicalised to the lowercase form. A canonical tag is only a hint, so every
+ * mis-cased inbound link (email signatures, print collateral, partner sites) was a crawlable
+ * duplicate of a real page. The trailing-slash variant already 308s; case did not.
+ *
+ * ── WHY THIS IS SAFE FOR TTFB ───────────────────────────────────────────────────────────────
+ * The matcher below fires ONLY for a /products path containing an uppercase letter. A normal
+ * lowercase product URL never enters middleware, so it keeps bypassing the Node hop and stays
+ * edge-cacheable — which is precisely why the matcher list was trimmed in the first place (see
+ * the note on `config` at the bottom of this file).
+ *
+ * Query strings are preserved: a mis-cased ad landing URL must keep its gclid/utm parameters
+ * across the hop.
+ */
+function lowercasePathRedirect(request: NextRequest): NextResponse | null {
+  const { pathname } = request.nextUrl;
+  if (!pathname.startsWith("/products/")) return null;
+
+  const lower = pathname.toLowerCase();
+  if (lower === pathname) return null;
+
+  const url = request.nextUrl.clone();
+  url.pathname = lower;
+  return NextResponse.redirect(url, 301);
+}
+
+/**
  * 301 the legacy query-size URL (/products/<slug>?size=20x10) to the canonical size PATH
  * (/products/<slug>/20x10-ft), dropping the `size` parameter so the destination is the one
  * clean URL form. Any OTHER query parameter is preserved — ad and analytics trackers
@@ -208,6 +240,11 @@ export async function middleware(request: NextRequest) {
     return (await conceptAnimationGate(request)) ?? NextResponse.next();
   }
 
+  // SEO: fold a mis-cased product URL onto its lowercase canonical. FIRST, so every rule below
+  // (and the page itself) only ever sees the canonical lowercase path.
+  const caseRedirect = lowercasePathRedirect(request);
+  if (caseRedirect) return caseRedirect;
+
   // SEO: consolidate legacy ?category= URLs onto the canonical category path.
   const categoryRedirect = categoryQueryRedirect(request);
   if (categoryRedirect) return categoryRedirect;
@@ -247,6 +284,13 @@ export const config = {
     "/admin/:path*",
     "/products",
     { source: "/products/:slug", has: [{ type: "query", key: "size" }] },
+    /* Mis-cased product URLs only. The inline regex means a path must contain at least one
+     * A-Z to match, so every normal lowercase product URL still bypasses middleware entirely
+     * and keeps its edge cache — the whole point of the trimming described below. Two entries
+     * because the uppercase may be in either segment of a nested /products/<parent>/<child>. */
+    "/products/:slug([^/]*[A-Z][^/]*)",
+    "/products/:parent/:child([^/]*[A-Z][^/]*)",
+    "/products/:parent([^/]*[A-Z][^/]*)/:child",
     /* Concept-animation share previews. Adding a middleware hop here costs nothing that was
      * being saved: the route is force-dynamic and no-store, so it was never edge-cacheable.
      * It buys a genuine 404 for a revoked or invalid link — see conceptAnimationGate above. */

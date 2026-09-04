@@ -147,6 +147,7 @@ export const FEED_EXCLUSIONS: Readonly<Record<string, FeedExclusion>> = {
       + "before feeding a fixed price.",
   },
 
+
   /* ── Submitted to Merchant Center manually by the owner ──────────────────────────────────── */
   "POC-CSO-4010": {
     category: "manual-submission",

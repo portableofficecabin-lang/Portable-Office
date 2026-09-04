@@ -172,9 +172,14 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
   {
+    /* feedTitle carries "Steel Portable Cabin" since 2026-09-04: /products/steel-portable-cabin
+     * 301s to this page, so this is now the canonical page for that phrase too, and <title> IS
+     * <g:title> (productPageMeta.ts) — the two must stay identical. The OFFER is untouched:
+     * same <g:id> POC-PC-MSPC, same basePrice, same availability, so the feed history carries
+     * over. It is also 5 chars shorter than the title it replaces. */
     id: "11", sku: "POC-PC-MSPC", basePrice: 440000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "MS Portable Cabin",
-    feedTitle: "MS Portable Cabin 1.5-2mm Mild Steel Insulated for Site Offices | Portable Office Cabin",
+    feedTitle: "MS Portable Cabin — Insulated Steel Site Office Cabin | Portable Office Cabin",
     size: "Custom sizes", material: "1.5–2 mm MS Sheet, 30–50 mm Insulation", bestFor: "Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
