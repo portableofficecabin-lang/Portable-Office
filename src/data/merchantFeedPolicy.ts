@@ -140,6 +140,21 @@ export const FEED_EXCLUSIONS: Readonly<Record<string, FeedExclusion>> = {
       + "before feeding a fixed price.",
   },
 
+  /* Steel Portable Cabin (added 2026-09-04). Its six renders are clean — no baked-in text, logo
+   * or watermark — and its landing copy carries no ₹ figure, so it fails neither of those tests.
+   * It is held back for a different reason: at basePrice 440000 it is the SAME fixed offer as
+   * POC-PC-MSPC (the identical cabin sold under its material name), and submitting both would
+   * put two identical offers at ₹5,19,200 into Shopping from two URLs. Decide which of the two
+   * is the Shopping offer — or differentiate the configurations — then delete this entry.
+   * The page stays live, indexable and fully purchasable throughout. */
+  "POC-PC-STEEL": {
+    category: "pending-review",
+    reason:
+      "duplicate of POC-PC-MSPC: same basePrice 440000 (₹5,19,200 incl. GST) and same cabin, fed "
+      + "from a second URL. Images and copy are feed-clean — pick ONE of the two SKUs for Shopping "
+      + "(or give them distinct priced configurations) and remove this entry.",
+  },
+
   /* ── Submitted to Merchant Center manually by the owner ──────────────────────────────────── */
   "POC-CSO-4010": {
     category: "manual-submission",
