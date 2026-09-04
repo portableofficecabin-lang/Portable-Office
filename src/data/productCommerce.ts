@@ -172,25 +172,15 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
   {
+    /* feedTitle carries "Steel Portable Cabin" since 2026-09-04: /products/steel-portable-cabin
+     * 301s to this page, so this is now the canonical page for that phrase too, and <title> IS
+     * <g:title> (productPageMeta.ts) — the two must stay identical. The OFFER is untouched:
+     * same <g:id> POC-PC-MSPC, same basePrice, same availability, so the feed history carries
+     * over. It is also 5 chars shorter than the title it replaces. */
     id: "11", sku: "POC-PC-MSPC", basePrice: 440000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "MS Portable Cabin",
-    feedTitle: "MS Portable Cabin 1.5-2mm Mild Steel Insulated for Site Offices | Portable Office Cabin",
+    feedTitle: "MS Portable Cabin — Insulated Steel Site Office Cabin | Portable Office Cabin",
     size: "Custom sizes", material: "1.5–2 mm MS Sheet, 30–50 mm Insulation", bestFor: "Site Offices",
-    deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
-  },
-  {
-    /* Steel Portable Cabin (id 46) — the owner's "steel portable cabin" hub page, priced on
-     * the 20 × 10 ft insulated build. The content supplied 2026-09-04 states ₹5,19,200
-     * incl. 18% GST, and sellPrice(440000) = 519200 exactly, so no price is invented here.
-     *
-     * Same base as POC-PC-MSPC by design — it is the same cabin sold under its material
-     * name. Because two identical fixed-price offers would read as duplicates in Shopping,
-     * this SKU is held out of the automated feed in merchantFeedPolicy.ts until the owner
-     * decides which of the two is submitted. Purchasable on-site throughout. */
-    id: "46", sku: "POC-PC-STEEL", basePrice: 440000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Steel Portable Cabin",
-    feedTitle: "Steel Portable Cabin 20ft x 10ft Insulated MS Frame for Site Offices | Portable Office Cabin",
-    size: "20 ft × 10 ft × 8.5 ft (200 sq ft)", material: "Welded MS Frame, 1.5–2 mm MS Sheet, 30–50 mm Insulation", bestFor: "Site Offices, Staff Rooms & Security Posts",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
   {

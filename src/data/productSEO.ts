@@ -81,22 +81,16 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Porta cabin with MS steel frame, PUF insulated panels & quick on-site installation. 30–40% cheaper than traditional construction. Call or WhatsApp us!",
     keywords: "porta cabin, porta cabin price, porta cabin manufacturer India, portable cabin, prefab porta cabin, MS steel porta cabin, porta cabin for site office",
   },
-  // MS Portable Cabin
+  /* MS Portable Cabin — ALSO the canonical home of "steel portable cabin" (2026-09-04).
+   * /products/steel-portable-cabin 301s here (next.config.ts): MS steel and "steel" are the same
+   * material, so two self-canonical pages at one price only split the signal. This page keeps the
+   * traffic and the POC-PC-MSPC offer, and carries "steel portable cabin" as a secondary keyword
+   * here and in the on-page copy (MSPortableCabinContent.tsx). */
   "11": {
-    title: "MS Portable Cabin Manufacturer in India | Portable Office Cabin",
+    title: "MS & Steel Portable Cabin Manufacturer in India | Portable Office Cabin",
     h1: "MS Portable Cabin",
-    description: "MS portable cabin manufacturer in India — mild steel site offices, security & accommodation cabins with PUF insulation, custom sizes and fast pan-India delivery.",
-    keywords: "MS portable cabin, MS portable cabin manufacturer India, mild steel portable cabin, MS portable cabin price India, MS cabin sizes, portable office cabin India, site office cabin, security cabin, labour accommodation cabin",
-  },
-  // Steel Portable Cabin — the broad "steel portable cabin" hub. Title is the owner's
-  // supplied 58-char meta title; description is the supplied 155-char one with the
-  // founding-year and Hoskote-factory claims removed (see the note in
-  // SteelPortableCabinContent.tsx) and no ₹ figure, so it cannot contradict the price box.
-  "46": {
-    title: "Steel Portable Cabin Manufacturer in India | Portable Office Cabin",
-    h1: "Steel Portable Cabin",
-    description: "Factory-built steel portable cabin — welded MS frame, insulated walls, ready electricals. Priced as the 20 × 10 ft build. ISO 9001 maker, pan-India delivery.",
-    keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
+    description: "MS steel portable cabin manufacturer in India — mild steel site offices, security and accommodation cabins, insulated walls, custom sizes, pan-India delivery.",
+    keywords: "MS portable cabin, steel portable cabin, steel portable cabin manufacturer India, MS portable cabin manufacturer India, mild steel portable cabin, insulated steel cabin, steel site office cabin, MS portable cabin price India, steel cabin price, MS cabin sizes, portable office cabin India, site office cabin, security cabin, labour accommodation cabin",
   },
   // 20ft & 40ft Storage Container – Corten Steel
   "12": {

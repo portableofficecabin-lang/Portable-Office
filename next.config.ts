@@ -203,6 +203,19 @@ const nextConfig: NextConfig = {
       // which fails if a `rendersAtParent` size has no rule here.
       { source: "/products/container-office/25x14-ft", destination: "/products/container-office", statusCode: 301 },
       { source: "/products/ms-portable-cabins", destination: "/products/ms-portable-cabin", statusCode: 301 },
+      /* Steel Portable Cabin -> MS Portable Cabin (owner decision, 2026-09-04).
+       *
+       * MS steel and "steel" are the same material, so the two pages were the same product at
+       * the same price. Two self-canonical URLs for one item split the ranking signal and let
+       * Google pick the winner; the MS page is the established one, so it keeps the traffic,
+       * the Merchant offer (POC-PC-MSPC) and its feed history, and absorbs "steel portable
+       * cabin" as a secondary keyword.
+       *
+       * A 301 here rather than a cross-canonical: a canonical is a HINT Google may ignore,
+       * a redirect is binding, and it also consolidates any inbound links. The steel SKU is
+       * removed from the catalogue entirely, so this path is no longer prerendered and the
+       * config redirect (which runs before routing) is what answers it. */
+      { source: "/products/steel-portable-cabin", destination: "/products/ms-portable-cabin", statusCode: 301 },
       { source: "/products/new-used-shipping-container-for-sale-in-india", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-container-buy-rent-or-convert", destination: "/products/cargo-container-for-sale", statusCode: 301 },
       // Other legacy aliases that point at the canonical short slugs / products.

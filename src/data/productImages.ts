@@ -65,11 +65,6 @@ export const productImages: Record<string, string> = {
   "11": "/images/products/ms-portable-cabin-front.webp",
   "POC-PC-MSPC": "/images/products/ms-portable-cabin-front.webp",
   "ms-portable-cabin": "/images/products/ms-portable-cabin-front.webp",
-  // Steel Portable Cabin — front elevation. Must stay identical to products.ts images[0]
-  // so the card, the product page, the OG image and the feed all show the same primary shot.
-  "46": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
-  "POC-PC-STEEL": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
-  "steel-portable-cabin": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
   "12": cargoStorageContainer40ft,
   "POC-CSC-2040": cargoStorageContainer40ft,
   "cargo-storage-container-shipping-container": cargoStorageContainer40ft,
