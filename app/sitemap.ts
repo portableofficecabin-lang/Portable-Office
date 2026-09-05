@@ -50,6 +50,12 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
   // emitted by the product loop below — do not list it here (avoids a duplicate).
   entry("/products/portable-cabin", 0.8, "weekly"),
   entry("/products/portable-toilet-cabin", 0.8, "weekly"),
+  /* Metal Portable Cabin — the "choose your metal" hub. A STATIC route segment with no catalogue
+   * entry by design (no SKU, no offer), so the product loop below cannot emit it and it must be
+   * listed here. It carries a real lastmod because its publication date is genuinely known —
+   * the one honest exception to the omit-by-default rule above. Do NOT bump it on deploy; change
+   * it only when the copy actually changes. */
+  entry("/products/metal-portable-cabin", 0.8, "weekly", new Date("2026-09-05")),
   /* Building Construction Contractor in Bangalore — a dedicated service landing page under the
    * Home Construction category (app/(site)/products/home-construction/...). It is a STATIC route
    * segment, so it is not emitted by the productChildPages loop above and must be listed here.
