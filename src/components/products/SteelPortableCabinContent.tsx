@@ -130,6 +130,13 @@ const RELATED = [
     note: "Our standard mild steel build, ready to order online",
   },
   {
+    /* The material-selection hub (added 2026-09-05). It sells nothing — it explains MS vs GI vs
+       PPGI vs container-grade and routes back here and to the MS page. */
+    href: "/products/metal-portable-cabin",
+    label: "Metal Portable Cabin",
+    note: "Compare MS, galvanised and colour-coated skins before you choose",
+  },
+  {
     href: "/products/steel-portable-office-container",
     label: "Steel Portable Office Container",
     note: "Container-grade structure, stackable and spreader-liftable",

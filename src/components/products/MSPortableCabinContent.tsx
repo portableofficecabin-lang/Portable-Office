@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Bath,
   BedDouble,
@@ -391,7 +392,11 @@ export function MSPortableCabinContent() {
           <div className="rounded-2xl bg-card p-5">
             <h3 className="mb-2 font-semibold text-foreground">MS vs GI</h3>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              MS cabins are usually 15–20% more economical than GI versions for similar layouts. GI performs better in coastal and high-humidity conditions, while MS remains the practical value choice for most inland projects.
+              MS cabins are usually 15–20% more economical than GI versions for similar layouts. GI performs better in coastal and high-humidity conditions, while MS remains the practical value choice for most inland projects. Our{" "}
+              <Link href="/products/metal-portable-cabin" className="font-medium text-accent underline-offset-4 hover:underline">
+                guide to choosing the metal
+              </Link>{" "}
+              compares MS, galvanised and colour-coated skins side by side.
             </p>
           </div>
           <div className="rounded-2xl bg-card p-5">
