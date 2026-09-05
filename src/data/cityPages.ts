@@ -10,6 +10,8 @@
  *  · No manufacturing-location claims beyond what the site already states elsewhere.
  */
 
+import { COMPANY } from "@/lib/company";
+
 export interface CityPageFaq {
   question: string;
   answer: string;
@@ -21,10 +23,22 @@ export interface CityPageListItem {
   text: string;
 }
 
+/** A plain internal link — used for CTA buttons and the optional related-pages block. */
+export interface CityPageLink {
+  label: string;
+  href: string;
+}
+
 export interface CityPage {
   /** URL slug under /cities-we-serve/, e.g. "container-office-in-jigani". */
   slug: string;
   city: string;
+  /**
+   * Optional SHORT label for the /cities-we-serve index pill. Falls back to metaTitle, which
+   * reads fine for "Container Office in X" pages but not when the meta title carries a
+   * "| ..." search qualifier.
+   */
+  listTitle?: string;
   /** EXACT meta title (rendered absolute — no site-name suffix appended). */
   metaTitle: string;
   metaDescription: string;
@@ -53,6 +67,8 @@ export interface CityPage {
   whyHeading: string;
   whyIntro: string;
   whyBullets: CityPageListItem[];
+  /** Optional closing line rendered after the "why" bullets. */
+  whyOutro?: string;
 
   solutionsHeading: string;
   solutionsIntro: string;
@@ -86,6 +102,16 @@ export interface CityPage {
 
   ctaHeading: string;
   ctaText: string;
+  /** Optional label for the primary CTA button (→ /contact). Defaults to "Get a Free Quotation". */
+  ctaButtonLabel?: string;
+  /**
+   * Optional replacement for the two default secondary CTA buttons ("Explore Container
+   * Offices" → /products, "Container Office on Rent" → /rental-service), for pages that are
+   * not about container offices. Unset = the defaults, so every existing page is unchanged.
+   */
+  ctaSecondaryLinks?: CityPageLink[];
+  /** Optional "Related pages" link block rendered after the CTA, before the disclaimer. */
+  relatedLinks?: CityPageLink[];
 
   /**
    * Optional legal note rendered muted below the CTA. REQUIRED whenever the page names a
@@ -1914,6 +1940,380 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "BBMP, BDA, BMRDA and the village panchayats are independent statutory authorities. Portable Office Cabin is not affiliated with any of them and does not control their approval timelines; we prepare and file the drawings and follow the application on your behalf.",
+  },
+  {
+    /* LABOUR CAMP SETUP IN BANGALORE — a service page, not a container-office page.
+     *
+     * KEYWORD MAP (owner-supplied, 2026-09-05): two pages already compete for "labour colony
+     * in Bangalore" — /promotions/labour-colony-in-bangalore (product / price intent) and
+     * /blog/prefabricated-labor-colony-bengaluru (broad guide). THIS page owns "labour camp
+     * setup Bangalore", "workers' accommodation Bangalore construction site" and "workmen
+     * housing Bangalore" — turnkey setup, capacity planning, compliance, site prep — and
+     * deliberately does NOT use "labour colony in Bangalore" as its H1, title or a repeated
+     * phrase. It links OUT to those two pages instead (relatedLinks). Keep it that way.
+     *
+     * LOCATION COPY: the draft was written around a Hoskote factory. That address was retired
+     * from public display on 2026-08-09 (see src/lib/company.ts — manufacturing is the Tamil
+     * Nadu factory at Kamandoddi near Hosur; Bangalore is an OFFICE in Electronic City). Every
+     * factory reference below follows that rule; Hoskote survives only as black-cotton-soil
+     * terrain we deliver to. The draft's "since 2014" was dropped too — four pages have
+     * historically claimed four different founding years, and the recent product pages
+     * settled on stating none.
+     *
+     * IMAGES (owner-supplied set, dropped 2026-09-05 as "Labour Camp & Workers' Accommodation
+     * Setup (1–5).webp", copied to clean names in /images/cities/labour-camp-setup-bangalore/):
+     *
+     *   hero          (5) the whole camp in one frame — G+2 dormitory block, catering / mess
+     *                 hall, covered recreation area, administration & welfare office, workshop
+     *                 store, bus parking, fenced gate. It is literally the H1's promise.
+     *   featureImage  (1) wide site view, G+2 block with site office and stores in the yard —
+     *                 cropped 3:2 as the editorial band with a caption about the block plan.
+     *   interiorImage (3) inside a dormitory: bunks, lockers, desk, attached shower / toilet —
+     *                 sits above "Built for a Bangalore Site" (insulation, noise between bunks).
+     *   gallery       (2) G+2 block with walkways, (4) exterior + labelled roof-structure view
+     *                 (note: this composite carries baked-in labels and a small arrow artefact
+     *                 near the top walkway — owner-supplied as is), the REAL G+1 block photo
+     *                 already used as the prefab-colony blog hero, then three existing product
+     *                 images referenced in place (single-storey row, stacked G+1 units, 4-seater
+     *                 toilet block) so the gallery pairs with the product pages it links to.
+     *
+     * Alt text describes what is actually in each frame and does not claim any of them is a
+     * specific Bangalore project. */
+    slug: "labour-camp-setup-bangalore",
+    city: "Bangalore",
+    listTitle: "Labour Camp Setup in Bangalore",
+    metaTitle: "Labour Camp Setup in Bangalore | Turnkey Workers' Housing",
+    metaDescription:
+      "Turnkey labour camp and workers' accommodation setup for Bangalore construction sites — dormitory blocks, toilets, kitchen, compliance help. Factory near Hosur.",
+    keywords:
+      "labour camp setup Bangalore, workers' accommodation Bangalore construction site, workmen housing Bangalore, labour camp Bangalore, construction worker accommodation Bangalore, dormitory blocks for workers Bangalore, labour camp compliance Karnataka, BOCW welfare facilities Bangalore, turnkey labour camp Bangalore",
+    geo: {
+      region: "IN-KA",
+      placename: "Bengaluru, Karnataka, India",
+      position: "12.9716;77.5946",
+      icbm: "12.9716, 77.5946",
+    },
+
+    heroImage: {
+      src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-camp-overview.webp",
+      alt: "Labour camp setup in Bangalore — overview of a complete workers' camp: G+2 dormitory block with external stairs, catering and mess hall, covered recreation area, administration and welfare office, workshop and maintenance store, bus parking and a fenced gate",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-site-view.webp",
+      alt: "Labour camp setup in Bangalore — G+2 dormitory block with a blue steel frame and external staircase on a construction site, with a site office cabin, a mini excavator and coils of pipe in the yard and more blocks behind",
+      width: 1024,
+      height: 1024,
+      caption:
+        "Dormitory blocks, site office and stores laid out on one plan: block spacing, stair positions and the service runs are fixed on the drawing before the first unit is fabricated.",
+    },
+    interiorImage: {
+      src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-dormitory-interior.webp",
+      alt: "Labour camp setup in Bangalore — inside a dormitory block: double-tier bunk beds, steel lockers, a wall-mounted desk, mesh-screened windows and an attached shower and toilet, with lighting and cable tray already fitted",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-g2-block-walkways.webp",
+        alt: "Labour camp setup in Bangalore — G+2 dormitory block with external steel stairs and covered walkways on each floor, workers on the balconies and site vehicles in the yard",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-roof-structure.webp",
+        alt: "Labour camp setup in Bangalore — G+2 dormitory block exterior above a labelled view of the roof structure: lightweight steel rafters, steel purlins and insulated roof panels",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/labour-camp-setup-bangalore/labour-camp-setup-bangalore-g1-dormitory-block.webp",
+        alt: "Labour camp setup in Bangalore — G+1 workers' dormitory block with a blue steel frame, external staircase, first-floor walkway, mesh-screened windows and brick entrance steps, signed Block-1",
+        width: 1080,
+        height: 1080,
+      },
+      {
+        src: "/images/products/labor-hutments-aerial.webp",
+        alt: "Labour camp setup in Bangalore — single-storey row of white insulated-panel dormitory units on a raised concrete plinth, each with its own door and window",
+        width: 800,
+        height: 800,
+      },
+      {
+        src: "/images/products/workmen-accommodation-g1-main.webp",
+        alt: "Labour camp setup in Bangalore — G+1 stacked accommodation units with first-floor walkways, external steps and yard lighting masts",
+        width: 800,
+        height: 800,
+      },
+      {
+        src: "/images/products/portable-toilet-block-4unit-front.webp",
+        alt: "Labour camp setup in Bangalore — four-seater portable toilet block with individually numbered rest-room doors",
+        width: 800,
+        height: 800,
+      },
+    ],
+
+    h1: "Labour Camp & Workers' Accommodation Setup in Bangalore",
+    tagline:
+      "Dormitory blocks, toilets, kitchen and site office — planned, built at our factory near Hosur and installed on your Bangalore site as one project.",
+    intro: [
+      "Bangalore builds faster than almost any city in India, and every one of those projects — metro viaducts, airport-side warehouses, tech parks in Whitefield, apartment towers off Sarjapur Road — needs somewhere for a few hundred workers to sleep, wash and eat. Getting that right is not a side task. It affects how quickly you can mobilise, whether the labour inspector signs off, how many workers stay through the season, and what your client sees when they visit.",
+      "This page is for the contractor, project manager or developer who has been told “arrange the labour camp” and wants to know what that actually involves in Bangalore: how much space per worker, what the Karnataka rules expect, what the site needs before delivery, and how quickly a complete camp can be up. Portable Office Cabin builds workers' accommodation at its own factory at Kamandoddi near Hosur, about 40 km down Hosur Road from the city, and runs its Bangalore office from Electronic City — so a camp for a Bangalore site is a local delivery, not a long-haul one.",
+    ],
+
+    whyHeading: "Start with the Numbers: How Big Does the Camp Need to Be?",
+    whyIntro:
+      "Most camps are sized wrong at the start — too small, so workers double up and leave, or too large, so money sits in empty rooms. A simple way to plan it:",
+    whyBullets: [
+      {
+        title: "Beds",
+        text: "Count peak-month workforce, not average. Bangalore projects typically peak during the dry months (November to May) when structural work runs fastest.",
+      },
+      {
+        title: "Space per worker",
+        text: "Plan on roughly 35–45 sq ft of sleeping area per worker in a dormitory layout with bunk beds. A 40 × 10 ft block gives you 400 sq ft and sleeps 8–12 comfortably; a G+1 block doubles that on the same footprint.",
+      },
+      {
+        title: "Toilets and baths",
+        text: "Work on one WC for every 20–25 workers and one bathing point for every 15–20, with separate blocks for women workers, however few. Under-providing here is the single most common reason a camp fails inspection and the most common reason workers walk off.",
+      },
+      {
+        title: "Kitchen and dining",
+        text: "A canteen is expected once you cross a couple of hundred workers; below that, a covered cooking shed and a washing point are the minimum. Either way, keep it downwind of the dormitories and away from the toilet block.",
+      },
+      {
+        title: "Everything else",
+        text: "A supervisor's room, a first-aid room, a store for materials and gas cylinders, drinking-water points, and — if women with young children are on site — a creche.",
+      },
+    ],
+    whyOutro:
+      "Send us the peak headcount and a site sketch and we will return a block plan with all of this laid out.",
+
+    solutionsHeading: "What a Complete Camp from Us Includes",
+    solutionsIntro:
+      "Everything is built at our factory at Kamandoddi, near Hosur, under our ISO 9001:2015 system, delivered on trailers and placed by hydra. A 100-worker camp is typically on the ground within three to four weeks of drawing approval; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
+    solutions: [
+      {
+        title: "Dormitory blocks",
+        text: "20 × 10 ft (sleeps 4–6) and 40 × 10 ft (sleeps 8–12) units, single or G+1/G+2; insulated MS or PUF walls, sloping roof, cement-board floor with vinyl, windows with mesh, fans, lights, sockets, lockable doors.",
+      },
+      {
+        title: "Toilet and bath blocks",
+        text: "4-, 6-, 8- and 10-seater units, tiled, plumbed, with septic or sewer connection points, exhaust and a water-tank stand.",
+      },
+      {
+        title: "Kitchen and dining",
+        text: "Cooking shed with wash points and a gas-cylinder store; an enclosed canteen block for larger camps.",
+      },
+      {
+        title: "Site office and supervisor room",
+        text: "20 × 10 ft office, meeting room and first-aid room.",
+      },
+      {
+        title: "Store",
+        text: "Secure container or MS store for materials and tools.",
+      },
+      {
+        title: "Services",
+        text: "Internal wiring with MCBs, water-tank stands, drainage layout and drinking-water points; solar lighting on request.",
+      },
+      {
+        title: "Drawings",
+        text: "Block plan, unit drawings and specifications for your submissions.",
+      },
+    ],
+
+    featuresHeading: "What Bangalore Projects Have to Comply With",
+    featuresIntro:
+      "Worker housing is not unregulated, and Bangalore's labour department does inspect. The main rules that shape a camp in Karnataka are the Building and Other Construction Workers (BOCW) Act and its rules, the Contract Labour (Regulation and Abolition) Act, and — for larger or longer-term sites — local municipal and fire requirements for temporary structures. Between them they expect, broadly:",
+    features: [
+      "Free temporary living accommodation near the work site",
+      "Clean drinking water within easy reach",
+      "Latrines and urinals in adequate numbers, separately for men and women",
+      "Washing and bathing facilities",
+      "A canteen above a certain headcount",
+      "A creche where enough women workers are employed",
+      "First-aid provision",
+      "Basic ventilation, lighting and fire safety in the sleeping blocks",
+    ],
+    sizesNote:
+      "Exact thresholds change from time to time, so treat the figures on this page as planning guidance and confirm current requirements with your labour consultant.",
+
+    industriesHeading: "Who Sets Up Camps With Us",
+    industriesIntro:
+      "The brief is always the same — somewhere for the workforce to sleep, wash and eat — but the scale and the site are not. These are the projects we plan camps for around Bangalore:",
+    industries: [
+      {
+        title: "Metro, suburban-rail and highway packages",
+        text: "camps that move along the alignment as the package progresses, with every block relocatable to the next site.",
+      },
+      {
+        title: "Tower and tech-park contractors",
+        text: "Whitefield, KR Puram and the ORR IT corridor, where land is tight and G+1 or G+2 blocks put more workers on a small footprint.",
+      },
+      {
+        title: "Industrial construction and plant expansions",
+        text: "Electronic City, Bommasandra, Jigani and Attibele on Hosur Road, and the logistics parks and aerospace units coming up in the airport and Devanahalli belt.",
+      },
+      {
+        title: "Residential township developers",
+        text: "Sarjapur Road, Varthur and Gunjur, where the client walks the site and the camp is part of what they see.",
+      },
+      {
+        title: "Warehousing and industrial-estate builders",
+        text: "Yelahanka, Doddaballapura and Tumakuru Road, and Peenya, Nelamangala and Bidadi on the western side.",
+      },
+      {
+        title: "Small builders",
+        text: "we have supplied a single 40 ft dormitory block to a small builder as readily as 500-bed camps to infrastructure contractors. There is no minimum order.",
+      },
+    ],
+
+    customHeading: "Built for a Bangalore Site, Not a Generic One",
+    customIntro:
+      "Bangalore is kind to workers in one way — the weather rarely goes to extremes — and unkind in others. Here is what we design for.",
+    customBullets: [
+      {
+        title: "Rain that arrives sideways",
+        text: "The city gets its heaviest rain in September and October, often in short, violent evening bursts. Sloping roofs with proper gutters, sealed panel joints and a raised floor stop that water from ending up in the dormitory.",
+      },
+      {
+        title: "Ground that moves",
+        text: "Large parts of the city's periphery — Devanahalli, Hoskote, parts of Whitefield and the Sarjapur belt — sit on black cotton soil that swells when wet and shrinks when dry. We specify a simple pier or plinth base to our drawing so the blocks stay level through the monsoon.",
+      },
+      {
+        title: "Cool nights, hot roofs",
+        text: "Insulated walls and roofs are worth having even in Bangalore's mild climate: they keep the blocks comfortable at 3 pm in April and cut down on noise between bunks.",
+      },
+      {
+        title: "Tight, sloping sites",
+        text: "Many city-centre and ORR-belt projects have almost no spare land. G+1 and G+2 dormitory blocks put 20–30 workers on a 40 × 10 ft footprint, with external stairs and a covered walkway.",
+      },
+      {
+        title: "Moving with the project",
+        text: "A metro package or a highway stretch moves along its alignment. Every block has lifting lugs and can be relocated to the next camp site in a day.",
+      },
+    ],
+    customOutro:
+      "Tell us where the site is when you send the headcount, and the base, the roof and the block heights are specified for that ground rather than for a generic plot.",
+
+    whyUsHeading: "Why Contractors Set Up Their Camps With Us",
+    whyUsIntro: "What a factory-built camp gives you in Bangalore is predictability.",
+    whyUsBullets: [
+      {
+        title: "Blocks arrive finished",
+        text: "Every dormitory block arrives with ventilation openings, lighting and wiring already in place; toilet blocks come plumbed and tiled.",
+      },
+      {
+        title: "Drawings for your submissions",
+        text: "We provide layout drawings and material specifications you can attach to your welfare-facility submissions. Several of our clients use the same drawing set for every project, which makes the paperwork a formality rather than a scramble.",
+      },
+      {
+        title: "A local delivery",
+        text: "Our factory at Kamandoddi near Hosur is about 40 km from the city, and our Bangalore office is in Electronic City. Standard blocks leave the factory and are on most Bangalore sites the same day.",
+      },
+      {
+        title: "Phased for large camps",
+        text: "A 100-worker camp is typically installed three to four weeks from drawing approval; a 500-worker camp is phased so the first blocks are occupied while the rest are being built.",
+      },
+      {
+        title: "Relocation or buy-back at the end",
+        text: "Every block has lifting lugs and goes to your next site on a trailer. If you would rather not keep it, ask us about buy-back.",
+      },
+      {
+        title: "An ISO 9001:2015 certified company",
+        text: `Certificate ${COMPANY.isoCertificate}, alongside GST registration and Udyam (MSME) registration — all verifiable, all stated in full in the footer of every page, including our contact page.`,
+      },
+    ],
+
+    areasHeading: "Where We Are Setting Up Camps Around Bangalore",
+    areasText:
+      "From our factory near Hosur we reach every part of the metro area within a few hours, which is why so many of our recent camps are along the growth corridors: the airport and Devanahalli belt, where logistics parks and aerospace units are coming up; Whitefield, KR Puram and the ORR IT corridor, with its tower and tech-park projects; Electronic City, Bommasandra, Jigani and Attibele on Hosur Road, for industrial construction and plant expansions; Sarjapur Road, Varthur and Gunjur, for large residential townships; Yelahanka, Doddaballapura and Tumakuru Road, for industrial estates and warehousing; Peenya, Nelamangala and Bidadi, for manufacturing and the western highway works; and the metro and suburban-rail packages that cut across all of these. If your site is in Hosur, Krishnagiri, Tumakuru, Kolar, Ramanagara or Mysuru, we cover those too — see our other Cities We Serve pages.",
+
+    howHeading: "How a Camp Comes Together",
+    howSteps: [
+      {
+        title: "Headcount and site visit",
+        text: "You share the peak workforce and the plot; we visit if the site is within the metro area.",
+      },
+      {
+        title: "Block plan and quote",
+        text: "Within two working days you get a layout showing every block, the services runs and a fixed price.",
+      },
+      {
+        title: "Base preparation",
+        text: "You prepare the base to our drawing while we fabricate — usually two to three weeks in parallel.",
+      },
+      {
+        title: "Delivery and installation",
+        text: "Blocks arrive on trailers, are placed by hydra, connected up and handed over with drawings and a snag-free checklist.",
+      },
+      {
+        title: "Relocation or buy-back",
+        text: "When the project ends, we relocate the camp to your next site or discuss taking units back.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much land do I need for a 200-worker camp?",
+        answer:
+          "Around 20,000–25,000 sq ft with single-storey blocks, or roughly half that with G+1 blocks, including toilets, kitchen, dining and circulation. We will confirm with a block plan for your exact plot.",
+      },
+      {
+        question: "How fast can you deliver inside Bangalore?",
+        answer:
+          "Standard blocks leave our factory near Hosur and are on most Bangalore sites the same day. A complete 100-worker camp is usually installed three to four weeks from drawing approval.",
+      },
+      {
+        question: "Do the blocks need a foundation?",
+        answer:
+          "No foundation — a level pier, plinth or compacted base is enough. On black cotton soil we specify piers to keep the blocks level year-round.",
+      },
+      {
+        question: "Can you provide the drawings for our labour-welfare submissions?",
+        answer: "Yes. Block plans, unit drawings and material specifications are part of every camp order.",
+      },
+      {
+        question: "Can we rent instead of buying?",
+        answer:
+          "For some project durations and sizes, yes. Tell us the project length and headcount and we will offer both options.",
+      },
+      {
+        question: "What happens to the camp when the project ends?",
+        answer:
+          "It moves. Every block has lifting lugs and goes to your next site on a trailer. If you would rather not keep it, ask us about buy-back.",
+      },
+      {
+        question: "Do you handle water, drainage and electrical connections?",
+        answer:
+          "We supply the internal services, tank stands and connection points and lay out the drainage. Mains water, power and sewer or septic connections are done by your site team or a local contractor to our drawing.",
+      },
+      {
+        question: "Is there a minimum order?",
+        answer:
+          "No. We have supplied a single 40 ft dormitory block to a small builder and 500-bed camps to infrastructure contractors.",
+      },
+    ],
+
+    ctaHeading: "Plan Your Camp",
+    ctaText: `Send us the peak headcount, the site location and the project duration. We will visit if you are in the metro area and return a block plan and fixed quote within two working days. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display} (${COMPANY.businessHours.weekdays.display}; ${COMPANY.businessHours.sunday.display}).`,
+    ctaButtonLabel: "Get a Camp Layout & Quote",
+    ctaSecondaryLinks: [
+      { label: "Labour Colony — Specs & Pricing", href: "/products/labour-colony" },
+      { label: "Workmen Accommodation (G+1)", href: "/products/workmen-accommodation" },
+    ],
+
+    relatedLinks: [
+      { label: "Labour Colony — unit specs and pricing", href: "/products/labour-colony" },
+      { label: "Workmen Accommodation (G+1)", href: "/products/workmen-accommodation" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Colony in Bangalore — product page", href: "/promotions/labour-colony-in-bangalore" },
+      { label: "Prefabricated Labour Colony in Bengaluru — full guide", href: "/blog/prefabricated-labor-colony-bengaluru" },
+      { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
+    ],
+
+    disclaimer: `Portable Office Cabin — ISO 9001:2015 certified (${COMPANY.isoCertificate}), Udyam (MSME) registered. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The compliance notes on this page summarise the Building and Other Construction Workers Act, the Contract Labour (Regulation and Abolition) Act and related rules as planning guidance only; they are not legal advice. The Karnataka labour department and local authorities are independent statutory bodies with which Portable Office Cabin is not affiliated.`,
   },
 ];
 
