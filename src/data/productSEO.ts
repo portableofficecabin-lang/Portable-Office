@@ -78,7 +78,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Porta Cabin
   "9": {
     title: "Porta Cabin Manufacturer India | Portable Office Cabin",
-    description: "Porta cabin with MS steel frame, PUF insulated panels & quick on-site installation. 30–40% cheaper than traditional construction. Call or WhatsApp us!",
+    description: "Porta cabin with MS steel frame, PUF insulated panels & quick on-site installation. Factory-built and delivered in 7–21 days. Call or WhatsApp us!",
     keywords: "porta cabin, porta cabin price, porta cabin manufacturer India, portable cabin, prefab porta cabin, MS steel porta cabin, porta cabin for site office",
   },
   /* MS Portable Cabin — ALSO the canonical home of "steel portable cabin" (2026-09-04).
@@ -116,7 +116,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * carry a second figure. */
   "13": {
     title: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
-    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 days. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.",
+    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 working days. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.",
     keywords: "prefabricated portable cabin, how prefabricated cabins are made, prefab cabin manufacturing process, factory built portable cabin, prefabricated cabin India, modular cabin fabrication, prefab site office cabin, prefabricated cabin delivery time",
   },
   // New & Used Shipping Container for Sale in India
@@ -172,25 +172,25 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Prefabricated Labour Hutments & Staff Accommodation
   "22": {
     title: "Prefab Labour Hutments & Staff Housing",
-    description: "Prefabricated labour hutments & staff accommodation in India. Modular G+1/G+2 colonies for 50–500 workers. 20–30% cheaper than RCC. Call us today!",
+    description: "Prefabricated labour hutments & staff accommodation in India. Modular G+1/G+2 colonies for 50–500 workers. Relocatable and reusable. Call us today!",
     keywords: "prefabricated labour hutments, staff accommodation, labour colony, worker housing India, prefab labour camp, modular staff quarters, construction worker accommodation, BOCW compliant housing",
   },
   // Prefab Porta Cabin
   "23": {
     title: "Prefab Porta Cabin – Types, Pricing & Guide",
-    description: "Prefab porta cabin for India 2026 — MS frame, PUF sandwich panels, bolted assembly, relocatable. 40–60% cheaper than RCC. Price incl. GST, buy online.",
+    description: "Prefab porta cabin for India 2026 — MS frame, PUF sandwich panels, bolted assembly, relocatable. Delivered in 7–21 days. Price incl. GST, buy online.",
     keywords: "prefab porta cabin, porta cabin price India, portable cabin types, prefab cabin manufacturer, modular porta cabin, site office porta cabin, prefab porta cabin 2026, porta cabin sizes India",
   },
   // Labor Hutments
   "24": {
     title: "Labor Hutments – Prefab Worker Accommodation",
-    description: "Prefabricated labor hutments in India for construction sites & industrial projects. Move-in ready with insulated panels. 20–35% lifecycle savings. Call us!",
+    description: "Prefabricated labor hutments in India for construction sites & industrial projects. Move-in ready with insulated panels, relocatable. Call us!",
     keywords: "labor hutments, prefab labor hutments, worker accommodation India, labour hutment manufacturer, construction worker housing, prefabricated labour huts, labor camp India",
   },
   // Cabin Portable
   "25": {
     title: "Cabin Portable – Offices, Sites & Solutions",
-    description: "Guide to portable cabin solutions in India — site offices, worker accommodation, security cabins, toilets & containers. 40–60% cheaper than RCC. Call us today!",
+    description: "Guide to portable cabin solutions in India — site offices, worker accommodation, security cabins, toilets & containers. Delivered in 7–21 days. Call us today!",
     keywords: "cabin portable, portable cabin India, portable office cabin, site office cabin, container office, security cabin, portable toilet, labour accommodation cabin, prefab cabin",
   },
   // Security Cabin
@@ -264,7 +264,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "39": {
     title: "Workmen Accommodation – Prefab Labour Colonies",
-    description: "Prefab workmen accommodation for 50–500 workers — G+1 modular colonies with dormitories, kitchens & sanitary blocks. 20–40% cheaper than RCC. Get a free quote!",
+    description: "Prefab workmen accommodation for 50–500 workers — G+1 modular colonies with dormitories, kitchens & sanitary blocks. Relocatable and reusable. Get a free quote!",
     keywords: "workmen accommodation, prefab labour colony, worker housing India, labour camp, prefab dormitory, G+1 worker accommodation, construction site housing, labour hutments, portable camp India",
   },
   "40": {

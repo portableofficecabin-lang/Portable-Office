@@ -142,7 +142,7 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Office in Jigani",
     tagline: "Ready-to-Use Container Offices in Jigani by Portable Office Cabin",
     intro: [
-      "If you are searching for a reliable container office in Jigani, Portable Office Cabin is your trusted partner. We design, manufacture, and deliver high-quality container offices that are ready to use from day one. Whether you need a site office for a construction project, an admin cabin for your factory, or a comfortable workspace inside an industrial unit, our container offices give you a professional, secure, and fully functional office — without the time and cost of civil construction.",
+      "If you are searching for a reliable container office in Jigani, Portable Office Cabin is your trusted partner. We design, manufacture, and deliver high-quality container offices that are ready to use from day one. Whether you need a site office for a construction project, an admin cabin for your factory, or a comfortable workspace inside an industrial unit, our container offices give you a professional, secure, and fully functional office — without the site work, the masons and the curing time that civil construction needs.",
       "Jigani is one of the fastest-growing industrial hubs on the southern edge of Bengaluru. With the Jigani Industrial Area, Jigani-Bommasandra Link Road, and hundreds of manufacturing units, warehouses, pharma companies, and granite processing facilities operating in the region, the demand for quick, flexible, and movable office space is higher than ever. That is exactly what our container offices deliver: a durable steel workspace that can be transported, installed, and occupied within days — not months.",
     ],
 
@@ -151,7 +151,7 @@ export const CITY_PAGES: CityPage[] = [
       "Traditional brick-and-mortar office construction takes months, requires approvals, blocks capital, and cannot be moved once built. A container office solves all of these problems at once. Here is why factories, contractors, and businesses across Jigani are switching to container offices:",
     whyBullets: [
       { title: "Fast installation", text: "Your office is manufactured at our facility and delivered to your site ready to use. In most cases, you can start working inside your new container office within a few days of placing the order." },
-      { title: "Cost-effective", text: "A container office costs a fraction of conventional construction. There is no foundation work, no long labour engagement, and no material wastage on site." },
+      { title: "No site work", text: "The cabin is built and inspected at our factory, then set down on a level base. There is no foundation work, no long labour engagement, and no material wastage on site." },
       { title: "Completely movable", text: "When your project in Jigani ends or your site shifts, your office moves with you. Simply load it onto a truck and relocate it to your next site — your investment is never wasted." },
       { title: "Durable and secure", text: "Built with heavy-duty steel structures, our container offices withstand harsh sun, heavy monsoon rain, and dust-heavy industrial environments. Lockable doors and strong walls keep your documents, computers, and equipment safe." },
       { title: "Professional appearance", text: "A neat, well-finished container office creates the right impression for clients, auditors, and visitors at your site." },
@@ -296,7 +296,7 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Office in Bommasandra",
     tagline: "Durable, Ready-to-Use Container Offices in Bommasandra by Portable Office Cabin",
     intro: [
-      "Setting up an office in an industrial area should not take months of construction. If your business needs a container office in Bommasandra, Portable Office Cabin can deliver a fully finished, secure, and comfortable workspace directly to your site — ready to occupy within days. As a direct manufacturer of container offices, portable cabins, and prefab structures, we help companies across Bommasandra get professional office space at a fraction of the cost of conventional buildings.",
+      "Setting up an office in an industrial area should not take months of construction. If your business needs a container office in Bommasandra, Portable Office Cabin can deliver a fully finished, secure, and comfortable workspace directly to your site — ready to occupy within days. As a direct manufacturer of container offices, portable cabins, and prefab structures, we help companies across Bommasandra get professional office space that can be lifted and moved to your next site when the project ends.",
       "Bommasandra is one of Bengaluru's most important industrial zones. Located on Hosur Road with excellent connectivity to Electronic City, Hebbagodi, Chandapura, Attibele, and the Jigani-Bommasandra Link Road, the area is home to the Bommasandra Industrial Area (KIADB), large pharma and biotech campuses, engineering units, automotive component manufacturers, warehouses, and countless growing businesses. With the metro now reaching Bommasandra, the region is expanding faster than ever — and with that growth comes an urgent need for quick, flexible office space. That is exactly the need our container offices are built to solve.",
     ],
 
@@ -305,7 +305,7 @@ export const CITY_PAGES: CityPage[] = [
       "A container office is a steel-structured, factory-built office cabin that arrives at your site complete with insulated walls, flooring, windows, doors, and electrical fittings. Unlike civil construction, there is no digging, no curing time, no scaffolding, and no months of waiting. The cabin is simply transported to your location, placed on a level surface, connected to power — and your team starts working. For businesses in Bommasandra, this approach has clear advantages:",
     whyBullets: [
       { title: "Speed", text: "Factories expanding their capacity, contractors starting new projects, and companies waiting for permanent buildings cannot afford delays. A container office gives you usable workspace in days." },
-      { title: "Lower cost", text: "You avoid the heavy expenses of foundations, masonry, labour contracts, and finishing work. The total cost is far below traditional construction — and rental options bring the entry cost down even further." },
+      { title: "No site work", text: "There are no foundations, no masonry, no labour contracts, and no finishing work at your plot — the cabin is built and inspected at our factory and delivered finished. Rental options are available when the office is only needed for the length of a project." },
       { title: "Relocatable asset", text: "Industrial plots change, projects finish, and companies shift. Your container office is not tied to the ground. Lift it, load it, and take it to your next site anywhere in or around Bengaluru." },
       { title: "Built for industrial conditions", text: "Dust, heat, and monsoon rain are part of daily life on Hosur Road. Our cabins are engineered with anti-corrosive steel frames, insulated panels, and leak-proof roofing to handle it all." },
       { title: "Secure workspace", text: "With strong steel walls and lockable doors, your computers, files, and site documents stay protected round the clock." },
@@ -444,7 +444,7 @@ export const CITY_PAGES: CityPage[] = [
       "A container office is a factory-built steel cabin that works as a complete office the moment it lands at your site. For businesses in and around Doddaballapura, the benefits are hard to ignore:",
     whyBullets: [
       { title: "Ready in days, not months", text: "Because the cabin is manufactured off-site, there is no construction activity at your location. Delivery, placement, and power connection are all it takes to make your office operational." },
-      { title: "Major cost savings", text: "No foundation, no brickwork, no plastering, no long labour engagement. You get a finished office at a fraction of the cost of a permanent structure — and rental plans reduce the upfront cost even further." },
+      { title: "Nothing built on site", text: "No foundation, no brickwork, no plastering, no long labour engagement. You get a finished office built and inspected at our factory — and rental plans are available when you only need it for the length of the project." },
       { title: "Move it anytime", text: "Projects end, plots change, and businesses grow. A container office is a movable asset — lift it onto a truck and shift it to your next site in Doddaballapura, Devanahalli, or anywhere across Karnataka." },
       { title: "Weather-ready construction", text: "Our cabins are built with anti-corrosive steel frames, insulated sandwich panels, and leak-proof roofing that stand up to hot summers, heavy rain, and dusty industrial surroundings." },
       { title: "Safe and lockable", text: "Strong steel walls and secure doors protect your computers, documents, and valuables day and night — important for sites that remain unattended after working hours." },
@@ -537,7 +537,7 @@ export const CITY_PAGES: CityPage[] = [
 
     ctaHeading: "Order Your Container Office in Doddaballapura Today",
     ctaText:
-      "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
+      "Set up a professional, secure, and comfortable office at your site — without the wait, the masons and the curing time of site construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
   },
 
   {
@@ -1894,7 +1894,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Is it cheaper to build a villa than to buy one from a developer?",
         answer:
-          "If you already own the plot, building generally gives you more house for the money, because a developer villa carries the builder's margin, a loading factor on the area you pay for and an undivided share of common land rather than the whole site. The trade-off is time: buying is immediate, while building means approvals, decisions and a programme you run with your contractor.",
+          "The two are priced in completely different ways, so which suits you depends on your plot and the finish you want. A developer villa is sold as one price that carries the builder's margin, a loading factor on the area you pay for and an undivided share of common land rather than the whole site. Building on a plot you already own is priced per square foot of what you actually build, and we quote that only after visiting the site. The trade-off is time: buying is immediate, while building means approvals, decisions and a programme you run with your contractor.",
       },
       {
         question: "Do you offer turnkey villa construction with interiors?",

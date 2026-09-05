@@ -19,7 +19,7 @@ const peenyaPrice = formatINR(sellPrice(getCommerce(PEENYA_PRODUCT_ID)!.basePric
 const highlights = [
   { icon: Clock, title: "2–5 Day Setup", description: "Quick deployment versus weeks for traditional construction on Peenya's leased plots" },
   { icon: Truck, title: "Full Relocatability", description: "Move containers to Dobbaspet, Bidadi, or Jigani when factory operations shift" },
-  { icon: IndianRupee, title: "Lower Upfront Cost", description: "Significantly cheaper than permanent RCC structures for 3–5 year industrial leases" },
+  { icon: IndianRupee, title: "Fixed Online Price", description: "One GST-inclusive price shown in the buy box, cart and checkout, with transport from your PIN code" },
   { icon: Shield, title: "ISO-Grade Build", description: "Corten steel body with marine-grade plywood flooring — weather-resistant for Bengaluru monsoons" },
   { icon: Factory, title: "3,500+ MSME Hub", description: "Serving Asia's largest industrial estate across four phases along Tumkur Road corridor" },
   { icon: Wrench, title: "Full Customization", description: "Internal racks, mezzanine shelves, ventilation grills, insulation, AC, and electrical fit-out" },
@@ -48,7 +48,7 @@ const industries = [
 const buyingChecklist = [
   "Define use case: storage vs office vs accommodation vs support facility",
   "Select size: 20 ft, 40 ft, or high cube based on internal volume needs",
-  "Choose grade: used (cost-effective for storage) vs new (client-facing offices)",
+  "Choose grade: used (inspected for storage duty) vs new (client-facing offices)",
   "Inspect doors, locks, rubber gaskets, panels, flooring, and roof for leaks",
   "Verify transport feasibility into narrow Peenya internal roads and shift timings",
   "Consider future relocation to Bidadi, Jigani, Dobbaspet, or Hoskote",
@@ -75,7 +75,7 @@ const faqs = [
   },
   {
     q: "Are used containers suitable for storage in Peenya's industrial conditions?",
-    a: "Yes, used cargo-grade containers are ideal for raw material and finished goods storage. They are 40–60% cheaper than new units while maintaining structural integrity. We inspect every used container for flooring, doors, rust, and water tightness before delivery."
+    a: "Yes, used cargo-grade containers are ideal for raw material and finished goods storage. They are supplied wind- and water-tight, with double doors, locking bars, and corner castings intact for crane or forklift handling. We inspect every used container for flooring, doors, rust, and water tightness before delivery."
   },
   {
     q: "What site preparation is needed for container placement in Peenya?",
@@ -151,7 +151,7 @@ export function ShippingContainerPeenyaContent() {
           <ul className="space-y-2">
             <li>Quick plug-in storage or office capacity for leased industrial sheds</li>
             <li>Popular in Tumkur Road auto ancillaries, Peenya 2nd Stage FMCG warehousing, and electrical machine shops</li>
-            <li>Lower upfront cost and 2–5 day setup versus building new permanent sheds</li>
+            <li>2–5 day setup with no masons, wet trades, or curing time on the plot</li>
             <li>Weather-resistant ISO containers protect materials during Bengaluru's monsoon and dust-heavy conditions</li>
             <li>Full relocatability if operations shift to Nelamangala, Jigani, or Hoskote</li>
           </ul>
@@ -164,7 +164,7 @@ export function ShippingContainerPeenyaContent() {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
             <p>
-              Shipping containers have become indispensable assets in the world of logistics, transport, and modular construction. Originally designed for the secure movement of goods across long distances, these robust steel units are now widely used for storage, industrial applications, and even as modular offices or homes. In India, and particularly in Bengaluru, Karnataka, the demand for shipping containers continues to grow due to their unmatched durability, security, and cost-effectiveness.
+              Shipping containers have become indispensable assets in the world of logistics, transport, and modular construction. Originally designed for the secure movement of goods across long distances, these robust steel units are now widely used for storage, industrial applications, and even as modular offices or homes. In India, and particularly in Bengaluru, Karnataka, the demand for shipping containers continues to grow due to their unmatched durability, security, and reusability.
             </p>
             <p>
               Manufacturers in Bengaluru offer a diverse range of shipping containers, from standard 20 ft and 40 ft models to custom-built solutions tailored to unique industrial requirements. These containers are ideal for storage of raw materials, finished products, and equipment, as well as for creating flexible office spaces or temporary accommodations.
@@ -242,7 +242,7 @@ export function ShippingContainerPeenyaContent() {
           <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
             <p>Selection depends on budget, appearance requirements, and project duration.</p>
             <ul className="space-y-3">
-              <li><strong>Used cargo-grade containers</strong> suit pure storage — typically 40–60% cheaper while maintaining structural integrity</li>
+              <li><strong>Used cargo-grade containers</strong> suit pure storage — supplied wind- and water-tight with locking bars and corner castings intact</li>
               <li><strong>New or one-trip containers</strong> preferred for client-facing site offices, QA labs, or brand-visible structures facing Tumkur Road</li>
               <li>Portable Office Cabin inspects used units for flooring, doors, rust, and water tightness before offering to customers</li>
               <li>6–18 month projects often choose used; long-term offices (5+ years) lean toward new/one-trip</li>
@@ -476,7 +476,7 @@ export function ShippingContainerPeenyaContent() {
             Shipping containers have become a cornerstone of industrial growth and infrastructure development in Bengaluru, Karnataka, and throughout India. Their versatility in storage, transport, and modular construction makes them an invaluable resource for businesses of all sizes. Manufacturers and suppliers in Bengaluru, especially those located in the Peenya Industrial Area, are at the forefront of offering high-quality products tailored to diverse industrial needs.
           </p>
           <p>
-            By carefully considering product specifications, price, and customer reviews, clients can confidently select the right supplier for their requirements. For anyone seeking reliable storage, competitive price options, and expert service in the Peenya Industrial Area or beyond, reaching out to established manufacturers in Bengaluru is the key to accessing the best products and solutions available in the market.
+            By carefully considering product specifications, price, and customer reviews, clients can confidently select the right supplier for their requirements. For anyone seeking reliable storage, clear pricing, and expert service in the Peenya Industrial Area or beyond, reaching out to established manufacturers in Bengaluru is the key to accessing the best products and solutions available in the market.
           </p>
         </div>
       </section>

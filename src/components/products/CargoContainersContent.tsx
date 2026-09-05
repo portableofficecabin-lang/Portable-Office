@@ -67,11 +67,11 @@ const faqs = [
   },
   {
     q: "How do I choose between new and used cargo containers?",
-    a: "New containers offer pristine condition and 30+ year life at a higher cost, while used wind-water-tight units suit static storage on a tighter budget. For offices, refurbished or one-trip containers are recommended.",
+    a: "New containers offer pristine condition and 30+ year life, while used wind-water-tight units are structurally sound and suit static storage. For offices, refurbished or one-trip containers are recommended.",
   },
   {
     q: "What materials are cargo containers made from?",
-    a: "Most containers use Corten (weathering) steel with 355 MPa yield strength and self-passivating corrosion resistance. Mild steel (IS 2062 Grade B) is 20–30% cheaper for inland use. Stainless steel (AISI 304/316L) serves food and pharma applications.",
+    a: "Most containers use Corten (weathering) steel with 355 MPa yield strength and self-passivating corrosion resistance. Mild steel (IS 2062 Grade B) is used for inland units, protected with epoxy primer and polyurethane topcoats. Stainless steel (AISI 304/316L) serves food and pharma applications.",
   },
   {
     q: "Does Portable Office Cabin deliver cargo containers across India?",
@@ -488,7 +488,7 @@ export function CargoContainersContent() {
                 <li>• Factory-controlled quality and consistent finishes</li>
                 <li>• High structural strength from original container frame</li>
                 <li>• Relocatability for project-based applications</li>
-                <li>• Better value versus conventional RCC for short to medium-term projects</li>
+                <li>• No curing time, no masons on site, and no foundation beyond a level base</li>
               </ul>
             </div>
           </div>

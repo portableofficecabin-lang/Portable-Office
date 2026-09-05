@@ -77,7 +77,7 @@ const faqs = [
   },
   {
     q: "Can I buy a used container and get it painted pink?",
-    a: "Yes. Portable Office Cabin offers converted used containers at 20–30% lower cost than new fabrications. We inspect structural integrity, repair as needed, and apply the pink finish with full interior fit-out options.",
+    a: "Yes. Portable Office Cabin offers converted used containers as an alternative to new fabrications. We inspect structural integrity, repair as needed, and apply the pink finish with full interior fit-out options.",
   },
 ];
 
@@ -200,7 +200,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               ))}
             </ul>
             <p className="text-muted-foreground text-sm">
-              You can buy converted used containers (20–30% lower cost) or new fabrications from MS sections. Interiors can remain neutral while exteriors shine pink. Units come foundation-ready or fully portable with forklift pockets and corner castings.
+              You can buy converted used containers or new fabrications from MS sections. Interiors can remain neutral while exteriors shine pink. Units come foundation-ready or fully portable with forklift pockets and corner castings.
             </p>
           </div>
           <OptimizedImage

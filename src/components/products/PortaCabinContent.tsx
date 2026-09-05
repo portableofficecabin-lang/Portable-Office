@@ -25,7 +25,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           Porta Cabin: Portable Cabins, Container Offices & Modular Buildings
         </h2>
         <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-          If you're looking for a fast, cost-effective way to set up offices, accommodation, or utility spaces at your project site, a porta cabin might be exactly what you need. A modular cabin is a prefabricated, customizable, and easy-to-assemble structure made with steel frameworks and insulated panels, offering versatility for site offices, accommodations, and infrastructure with features like quick installation, durability, and compliance with safety standards.
+          If you're looking for a fast, factory-built way to set up offices, accommodation, or utility spaces at your project site, a porta cabin might be exactly what you need. A modular cabin is a prefabricated, customizable, and easy-to-assemble structure made with steel frameworks and insulated panels, offering versatility for site offices, accommodations, and infrastructure with features like quick installation, durability, and compliance with safety standards.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-8">
           This guide covers everything from pricing and specifications to installation timelines and industry applications across India.
@@ -35,7 +35,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { icon: Truck, title: "Quick Installation", desc: "1–7 days depending on size" },
-            { icon: IndianRupee, title: "Cost-Effective", desc: "30–40% cheaper than traditional" },
+            { icon: IndianRupee, title: "Priced Upfront", desc: "Quoted in full before fabrication" },
             { icon: Building2, title: "Reusable & Relocatable", desc: "Move across multiple project sites" },
             { icon: Leaf, title: "Eco-Friendly", desc: "70–80% less construction waste" },
           ].map((benefit) => (
@@ -164,7 +164,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           Advantages of Porta Cabins Over Traditional Construction
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          When compared to conventional brick-and-mortar construction, porta cabins deliver significant advantages in cost, speed, and flexibility. Industry data suggests porta cabins are typically 30–40% cheaper and 60–70% faster to deploy than traditional buildings for comparable use cases in 2025 India.
+          Porta cabins are built and inspected in the factory instead of being assembled on site, so a project gets a finished building without masons, curing time or weather delays. Standard models are delivered in 7–21 working days and placed on a level base, and the cabin can later be lifted, moved and reused rather than demolished.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -176,12 +176,12 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               icon: IndianRupee,
-              title: "Cost Savings",
-              // Purchasable page: same argument without the per-sq-ft figures that would contradict
-              // the fixed offer price shown above.
+              title: "Known Price Upfront",
+              // Purchasable page: points at the one fixed offer price shown above; the
+              // quotation page describes how the same figure is fixed before fabrication.
               desc: offer
-                ? "Factory fabrication avoids shuttering, curing time, debris and on-site labour overruns — and the cabin is a reusable asset you can relocate across projects instead of writing off."
-                : "Per sq.ft. cost of ₹1,050–₹2,500 compares favourably against civil construction costs in metros where traditional builds often exceed ₹3,000–₹4,000 per sq.ft.",
+                ? "The GST-inclusive price shown above is the price you pay at checkout, with transport calculated from your delivery pincode before payment — and the cabin is a reusable asset you can relocate across projects instead of writing off."
+                : "You get one fixed price for the cabin as specified, quoted before fabrication starts — and the cabin is a reusable asset you can relocate across projects instead of writing off.",
             },
             {
               icon: Truck,
@@ -300,7 +300,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           Applications Across Industries & Use Cases
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          Indian sectors including construction, infrastructure, education, healthcare, manufacturing, oil & gas, mining, retail, and hospitality are widely adopting porta cabins in 2025 for their speed, cost efficiency, and functionality advantages.
+          Indian sectors including construction, infrastructure, education, healthcare, manufacturing, oil & gas, mining, retail, and hospitality are widely adopting porta cabins in 2025 for their speed, factory-controlled quality, and functionality advantages.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -539,7 +539,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
               Infrastructure Project Deployment
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              A leading construction company deployed customized site offices and guard cabins on a major infrastructure project. The cabins were installed quickly, providing durable and comfortable spaces for staff and security personnel. Easy relocation allowed the company to adapt as the project progressed, saving both time and costs compared to traditional construction.
+              A leading construction company deployed customized site offices and guard cabins on a major infrastructure project. The cabins were installed quickly, providing durable and comfortable spaces for staff and security personnel. Easy relocation allowed the company to adapt as the project progressed — the same cabins were lifted and moved to the next work front instead of being demolished and rebuilt.
             </p>
           </div>
           <div className="bg-card border border-border rounded-xl p-6">
@@ -548,7 +548,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
               School Classroom Expansion
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              A growing school facing urgent classroom shortages opted for modular porta cabins. New classrooms were added within weeks with proper insulation, electrical fittings, and modern interiors, creating a safe and inviting learning environment. A durable, long-lasting solution that supported expansion without delays or expenses of permanent construction.
+              A growing school facing urgent classroom shortages opted for modular porta cabins. New classrooms were added within weeks with proper insulation, electrical fittings, and modern interiors, creating a safe and inviting learning environment. A durable, long-lasting solution that supported expansion without site delays, masons or curing time, and the rooms can be relocated if the campus layout changes.
             </p>
           </div>
         </div>
@@ -565,7 +565,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             The future of porta cabins in India is bright, with manufacturers embracing new trends and technologies. Sustainable materials are becoming increasingly popular, reducing environmental impact while maintaining strength and durability. Advanced insulation technologies are being integrated to enhance energy efficiency and comfort.
           </p>
           <p>
-            Smart features—such as automated lighting, climate control, and integrated security systems—are transforming portable offices, guard cabins, and luxury accommodations into high-tech, user-friendly spaces. The continued rise of modular construction is driving faster assembly, greater scalability, and more cost-effective solutions.
+            Smart features—such as automated lighting, climate control, and integrated security systems—are transforming portable offices, guard cabins, and luxury accommodations into high-tech, user-friendly spaces. The continued rise of modular construction is driving faster assembly, greater scalability, and more repeatable factory quality control.
           </p>
           <p>
             As these trends take hold, porta cabins are set to become even more versatile, efficient, and high-quality—remaining at the forefront of India's construction and infrastructure landscape.

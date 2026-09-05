@@ -18,7 +18,7 @@ export function CabinPortableContent() {
           Finding the right cabin portable solution can mean the difference between a project that runs smoothly and one plagued by delays and budget overruns. Whether you need a site office for your construction team, accommodation for workers, or utility units like portable toilets and security cabins, understanding your options is essential for making smart decisions in 2026.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          Ideal for dynamic project environments where traditional construction is too slow or costly, portable cabins are designed with the ability to withstand extreme weather conditions, offering exceptional strength, durability, and adaptability to various environmental challenges.
+          Ideal for dynamic project environments where a permanent building cannot be raised inside the project timeline, portable cabins are designed with the ability to withstand extreme weather conditions, offering exceptional strength, durability, and adaptability to various environmental challenges.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This guide covers everything you need to know about portable cabins in India—from types and materials to specifications, processes, and real-world applications across industries.
@@ -42,10 +42,10 @@ export function CabinPortableContent() {
         </p>
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {[
-            { icon: IndianRupee, title: "60% Cheaper", desc: "Up to 60% cheaper than reinforced cement concrete (RCC) structures for temporary or semi-permanent needs" },
+            { icon: IndianRupee, title: "One Fixed Price", desc: "The cabin listed on this page carries one fixed GST-inclusive price, with transport calculated at checkout from your delivery pincode" },
             { icon: Clock, title: "1-2 Day Install", desc: "Installation achievable in 1-2 days after delivery" },
             { icon: Shield, title: "10-20+ Year Lifespan", desc: "Lifespan extending 10-20+ years with basic maintenance like periodic repainting and sealant checks" },
-            { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where traditional construction is too slow or costly" },
+            { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where the workspace has to move when the project moves" },
           ].map((item, idx) => (
             <div key={idx} className="bg-card border border-border/40 rounded-xl p-5">
               <div className="flex items-center gap-3 mb-2">
@@ -209,7 +209,7 @@ export function CabinPortableContent() {
         </div>
 
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Container-based units typically cost 10-20% more than standard MS cabins but offer longer service life in remote or harsh environments. Bulk orders often receive project pricing from suppliers.
+          Container-based units offer longer service life in remote or harsh environments, while MS cabins allow more freedom in size and internal layout. Bulk orders often receive project pricing from suppliers.
         </p>
 
         <h3 className="text-xl font-semibold text-foreground mb-3">Delivery timelines:</h3>
@@ -256,7 +256,7 @@ export function CabinPortableContent() {
           </div>
         </div>
         <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-          A 2025 real estate sales office in Pune used a 30 ft ACP-clad conference cabin for client presentations at their greenfield site. These cabins can be relocated by crane or trailer and refitted internally when business requirements change, making them highly economical over multiple projects.
+          A 2025 real estate sales office in Pune used a 30 ft ACP-clad conference cabin for client presentations at their greenfield site. These cabins can be relocated by crane or trailer and refitted internally when business requirements change, so the same unit can serve several projects instead of being demolished.
         </p>
       </section>
 
@@ -394,10 +394,10 @@ export function CabinPortableContent() {
           Comfort is never compromised. Each cabin features robust insulation, weatherproofing, and efficient HVAC systems to maintain optimal temperature and humidity—crucial for both employee well-being and equipment longevity. Our modular designs are built to withstand India's diverse climate, from heavy rain to extreme heat, ensuring durability and low maintenance over years of use.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          We are committed to providing cost effective, easy-to-install, and reliable portable cabin solutions that meet the evolving needs of our clients. With a strong team of experienced professionals and a proven track record across a variety of applications, we deliver products that are not only quick to transport and install but also built to last. Our focus on quality, customization, and after-sales support has established us as a trusted partner for businesses across India.
+          We are committed to providing durable, easy-to-install, and reliable portable cabin solutions that meet the evolving needs of our clients. With a strong team of experienced professionals and a proven track record across a variety of applications, we deliver products that are not only quick to transport and install but also built to last. Our focus on quality, customization, and after-sales support has established us as a trusted partner for businesses across India.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          No matter your requirements—be it a temporary site office, a permanent modular workspace, or specialized utility cabins—our range of products is designed to provide flexible, scalable, and economical solutions. Let our experts help you find the right fit for your project. Send your enquiry today for a customized quote, and please wait while we process your request. Your ideal portable cabin solution is just a step away.
+          No matter your requirements—be it a temporary site office, a permanent modular workspace, or specialized utility cabins—our range of products is designed to provide flexible, scalable, and factory-built solutions. Let our experts help you find the right fit for your project. Send your enquiry today for a customized quote, and please wait while we process your request. Your ideal portable cabin solution is just a step away.
         </p>
       </section>
 
@@ -413,18 +413,18 @@ export function CabinPortableContent() {
 
       {/* Cost, Speed & Sustainability */}
       <section>
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Cost, Speed & Sustainability Benefits</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Pricing, Speed & Sustainability Benefits</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          The rapid growth of cabins portable from 2020 to 2026 in India stems from three interconnected advantages: cost savings, speed of deployment, and environmental benefits.
+          The rapid growth of cabins portable from 2020 to 2026 in India stems from three interconnected advantages: factory-controlled build quality, speed of deployment, and environmental benefits.
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
           <div className="bg-card border border-border/40 rounded-xl p-5">
             <IndianRupee className="w-8 h-8 text-primary mb-3" />
-            <h3 className="font-semibold text-foreground mb-2 text-sm">Cost Advantages</h3>
+            <h3 className="font-semibold text-foreground mb-2 text-sm">Price Clarity</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
-              <li>• 40-60% savings vs brick-and-mortar</li>
-              <li>• 80% reduction in site labour</li>
-              <li>• ROI through 3-5 project reuse</li>
+              <li>• One fixed GST-inclusive price</li>
+              <li>• Transport from your pincode</li>
+              <li>• Quoted before fabrication</li>
             </ul>
           </div>
           <div className="bg-card border border-border/40 rounded-xl p-5">
@@ -441,7 +441,7 @@ export function CabinPortableContent() {
             <h3 className="font-semibold text-foreground mb-2 text-sm">Reusability</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
               <li>• Shifted via trailer & crane</li>
-              <li>• Costs spread over years</li>
+              <li>• Reused, not demolished</li>
               <li>• Internal refitting possible</li>
             </ul>
           </div>
@@ -451,7 +451,7 @@ export function CabinPortableContent() {
             <ul className="space-y-1.5 text-xs text-muted-foreground">
               <li>• 90% recyclable steel</li>
               <li>• Solar rooftop compatible</li>
-              <li>• 30-40% energy savings</li>
+              <li>• Insulated to reduce AC loads</li>
             </ul>
           </div>
         </div>
@@ -623,7 +623,7 @@ export function CabinPortableContent() {
             { q: "Can cabins be air-conditioned?", a: "Yes, portable cabins come with pre-provisioned AC points and electrical capacity for split AC units." },
             { q: "What about fire safety?", a: "Fire-retardant panels and compliant electrical systems are available on request to meet safety norms." },
             { q: "How do delivery timelines vary?", a: "Metro cities typically see 2-week delivery; remote or hilly terrain may require 4+ weeks due to logistics challenges. Please wait for confirmation of lead times based on your specific location." },
-            { q: "Why buy a portable cabin outright?", a: "Outright purchase makes the cabin a company asset: it pays for itself through reuse across 3-5 projects, can be refitted internally between deployments, and gives you full control over customization and relocation." },
+            { q: "Why buy a portable cabin outright?", a: "Outright purchase makes the cabin a company asset: it can be lifted and moved to the next site rather than demolished, refitted internally between deployments, and it gives you full control over customization and relocation." },
           ].map((faq, idx) => (
             <AccordionItem key={idx} value={`faq-${idx}`} className="border border-border/40 rounded-xl px-4 bg-card">
               <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">{faq.q}</AccordionTrigger>
@@ -637,7 +637,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Get Your Cabin Portable Solution in Place Now</h2>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Portable cabins deliver the speed, savings, and flexibility that traditional construction simply cannot match in 2026. With the prefab and portable cabin industry in India projected to reach $23-35 billion by 2030, these solutions have proven their reliability across construction sites, renewable energy projects, and countless other applications.
+          Portable cabins deliver the speed, factory-controlled quality, and flexibility that traditional construction simply cannot match in 2026. With the prefab and portable cabin industry in India projected to reach $23-35 billion by 2030, these solutions have proven their reliability across construction sites, renewable energy projects, and countless other applications.
         </p>
         <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-6">
           <h3 className="font-semibold text-foreground mb-3">Take action for your upcoming project:</h3>

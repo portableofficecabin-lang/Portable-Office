@@ -10,7 +10,7 @@
  *
  * Facts policy: every claim below is verifiable elsewhere on this site — ISO 9001:2015 certificate
  * QT-99968/0726 (IsoCertificationBadge), MSME/Udyam registration and our Tamil Nadu factory address
- * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart), client
+ * (Footer), 15+ years / 500+ projects (HeroSection, WhatSetsUsApart), client
  * names (TrustedClientsSection), 7–21 working days dispatch (productCommerce DELIVERY). Claims from
  * draft copy that could NOT be verified against site data (10×8 ft standard size, business hours,
  * "2–3 week" lead time) were corrected or omitted rather than published.
@@ -111,9 +111,9 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
       "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is quoted based on distance to your site, and our team manages the crane and placement at delivery.",
   },
   {
-    question: "Are portable cabins cheaper than brick-and-mortar construction?",
+    question: "What does the price of a portable cabin include?",
     answer:
-      "Yes — up to 60% cheaper than conventional construction, and dramatically faster. You also avoid demolition losses: when the project ends, the cabin moves to your next site or can be resold, so it retains value as an asset.",
+      "Each model has one fixed, GST-inclusive price for the cabin as specified — the same price on the product page, in the cart and at checkout. Transport is calculated from your delivery pincode and shown before payment. When the project ends, the cabin moves to your next site or can be resold, so it retains value as an asset.",
   },
 ];
 
@@ -133,7 +133,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           site in days instead of months. Whether you need a site office for a construction project,
           secure staff accommodation, a sales office or a{" "}
           <Link href="/products/category/security-cabins" className="text-accent hover:underline">security cabin</Link>,
-          our portable cabins cost up to 60% less than conventional construction and can be
+          our portable cabins arrive factory-finished at a fixed, GST-inclusive price and can be
           relocated whenever your project moves.
         </p>
         <p>
@@ -231,7 +231,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
             <h3 className="font-display text-lg font-bold mb-1">PUF Panel Cabins</h3>
             <p className="text-muted-foreground leading-relaxed">
               Polyurethane foam sandwich panels give the best thermal insulation — interiors stay
-              significantly cooler in summer, cutting air-conditioning costs. Ideal for offices,
+              significantly cooler in summer, reducing the load on air-conditioning. Ideal for offices,
               accommodation, clinics and any space where people work full days.
             </p>
           </div>
@@ -266,7 +266,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           <li><strong className="text-foreground">In-house manufacturing, no middlemen.</strong> Our own factory at Kamandoddi, Hosur in Tamil Nadu means factory-direct prices and full quality control — we are the manufacturer, not a reseller.</li>
           <li><strong className="text-foreground">ISO 9001:2015 certified.</strong> Documented quality processes on every build (Certificate No. QT-99968/0726); GST-registered and Udyam/MSME registered (UDYAM-TN-11-0068545).</li>
           <li><strong className="text-foreground">15+ years, 500+ projects delivered.</strong> Trusted by Tata Projects, Ashok Leyland, Asian Paints and Brigade Group.</li>
-          <li><strong className="text-foreground">Up to 60% cheaper than civil construction</strong> — and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
+          <li><strong className="text-foreground">Fixed, GST-inclusive prices.</strong> The price on the product page is the price you pay at checkout — and the cabin is an asset you can relocate or resell, not a structure you demolish.</li>
           <li><strong className="text-foreground">Pan-India delivery.</strong> Cabins delivered and installed across the country, factory-finished and usable when they arrive.</li>
         </ul>
       </div>

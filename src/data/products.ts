@@ -470,7 +470,7 @@ export const products: Product[] = [
     ],
     features: [
       "Everything included — turnkey",
-      "Lower electricity bills than brick homes",
+      "Insulated metal roof over a light gauge steel frame",
       "Installation in 5-7 days",
       "10-year structural warranty",
       "Pick your own interiors",
@@ -613,7 +613,7 @@ export const products: Product[] = [
     ],
     features: [
       "Quick installation in 1–7 days",
-      "30–40% cheaper than traditional construction",
+      "Factory-built and inspected before dispatch — not assembled on site",
       "Easy relocation between project sites",
       "Thermal insulation for Indian climate",
       "70–80% less construction waste",
@@ -637,7 +637,7 @@ export const products: Product[] = [
     name: "Container Office",
     category: "Container Offices",
     categorySlug: "container-offices",
-    description: "The way businesses approach workspace infrastructure has shifted dramatically. Our container offices deliver functional, professional workspaces in a fraction of the time and cost of conventional buildings. From metro construction sites in Mumbai to logistics parks in Gujarat, these modular workspaces are the preferred choice for organizations that need to move fast without compromising on quality.",
+    description: "The way businesses approach workspace infrastructure has shifted dramatically. Our container offices are built and inspected in the factory, then delivered ready to use — deployable in 7–10 days from order confirmation. From metro construction sites in Mumbai to logistics parks in Gujarat, these modular workspaces are the preferred choice for organizations that need to move fast without compromising on quality.",
     shortDescription: "Modern workspace solution — rapid deployment, fully customizable, relocatable",
     specifications: [
       { label: "Dimensions", value: "L 25 ft x W 14 ft x H 9 ft" },
@@ -652,7 +652,7 @@ export const products: Product[] = [
     ],
     features: [
       "Deployable in 7–10 days from order confirmation",
-      "20–30% more economical than traditional construction",
+      "Built and quality-checked in the factory, not assembled on site",
       "Fully relocatable across project sites",
       "Reusable across multiple project cycles",
       "Integrates solar panels, LED & energy-efficient systems",
@@ -751,7 +751,7 @@ export const products: Product[] = [
       "Relocatable structure for repeated use across project sites",
       "15–20+ year service life with periodic repainting",
       "Custom layouts, finishes, windows, branding, and utilities",
-      "Cost-efficient alternative to permanent construction",
+      "An alternative to permanent construction where the building may need to move",
       "Suitable for offices, security cabins, bunk houses, toilets, and classrooms",
     ],
     images: [
@@ -1069,7 +1069,7 @@ export const products: Product[] = [
       "Multiple layout options — partitioned, open, or multi-room",
       "Double-wall construction with vapor barrier protection",
       "Stackable for multi-story configurations",
-      "Up to 60% cheaper than traditional construction",
+      "Delivered pan-India in 7–21 working days from order confirmation",
     ],
     /* FIRST real image for this SKU (2026-09-05). It was ["/placeholder.svg"], so the
      * Merchant feed had been borrowing the SIBLING product's photo
@@ -1106,7 +1106,7 @@ export const products: Product[] = [
       "Custom layouts for offices, meeting rooms, pantries, and attached toilets",
       "Pan-India transport and hydra crane installation support",
       "Suitable for construction sites, schools, petrol bunks, and industrial projects",
-      "Reusable asset with strong long-term value versus temporary site buildings",
+      "Reusable asset — lifted and relocated between sites rather than demolished",
     ],
     images: [msContainerOfficeCabinMain],
     price: 240000,
@@ -1133,7 +1133,7 @@ export const products: Product[] = [
       { label: "Installation", value: "Typically 8–24 hours for single cabin placement" },
     ],
     features: [
-      "40–60% lower project cost than conventional site-built office space",
+      "Built and inspected in our factory, not assembled on your site",
       "Ready for occupancy with electrical fittings and insulation",
       "Relocatable across multiple projects with crane handling points",
       "Suitable for site offices, school admin blocks, factory cabins, and public-sector field offices",
@@ -1165,7 +1165,7 @@ export const products: Product[] = [
       { label: "Compliance", value: "BOCW Act, NBC 2016, IS 456/800/875" },
     ],
     features: [
-      "20–30% cheaper than traditional RCC/brick construction with 80% material recovery on relocation",
+      "Bolted modular assembly with 80% material recovery on relocation",
       "G+1 colony for 100–300 workers installs in 3–6 weeks versus months for traditional construction",
       "Fire-retardant panels (BS 476 Class 1) with concealed FRLS wiring",
       "Cross-ventilation with MS grill windows, mosquito nets, and AC provisions",
@@ -1187,7 +1187,7 @@ export const products: Product[] = [
     name: "Prefab Porta Cabin",
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
-    description: "Complete prefab porta cabin solutions for India — factory-fabricated modular buildings with MS steel frameworks and insulated sandwich panels. 40–60% cheaper than RCC construction with 15–25+ year service life. Available in sizes from 80 sq ft security cabins to 800 sq ft offices and G+1 labour colonies.",
+    description: "Complete prefab porta cabin solutions for India — factory-fabricated modular buildings with MS steel frameworks and insulated sandwich panels. Built and inspected in the factory, with a 15–25+ year service life. Available in sizes from 80 sq ft security cabins to 800 sq ft offices and G+1 labour colonies.",
     shortDescription: "Factory-built porta cabin with MS frame and insulated panels for site offices, accommodation & storage",
     specifications: [
       { label: "Frame", value: "MS structural sections (ISMC/ISMB), 4mm thickness with epoxy/anti-rust coating" },
@@ -1200,7 +1200,7 @@ export const products: Product[] = [
       { label: "Relocations", value: "5–10 times without structural degradation" },
     ],
     features: [
-      "40–60% lower cost than conventional RCC construction with minimal waste",
+      "Factory-fabricated to size with minimal on-site waste",
       "Installation in hours to 2 days versus months for traditional buildings",
       "Relocatable 5–10 times over lifespan with bolted joint assembly",
       "PUF insulation reduces AC loads by up to 30% in extreme heat",
@@ -1233,7 +1233,7 @@ export const products: Product[] = [
     ],
     features: [
       "10–20 day installation for 100-person camp versus 60–90 days for masonry",
-      "20–35% lifecycle savings through reusability across 3–10 projects",
+      "Dismantled and re-erected across 3–10 project cycles instead of demolished",
       "30–60mm PUF/EPS insulation reduces indoor temperatures by 10–15°C",
       "Pre-planned toilets, bathing areas, water tanks, and septic systems",
       "Cross-ventilation, LED lighting, ceiling fans, and AC provisions",
@@ -1251,7 +1251,7 @@ export const products: Product[] = [
     name: "Cabin Portable",
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
-    description: "Complete cabin portable solutions including site offices, worker accommodation, security cabins, portable toilets, and container conversions. MS, GI, FRP, and sandwich panel construction with 10-25 year lifespan. 40-60% cheaper than RCC construction with 1-2 day installation across India.",
+    description: "Complete cabin portable solutions including site offices, worker accommodation, security cabins, portable toilets, and container conversions. MS, GI, FRP, and sandwich panel construction with 10-25 year lifespan. Factory-built and delivered across India.",
     shortDescription: "Complete guide to portable cabins, offices & site solutions – MS, GI, container-based units for construction, industrial & commercial projects across India.",
     specifications: [
       { label: "Structure Types", value: "MS Framed, GI Modular, Container Conversion, Sandwich Panel" },
@@ -1268,7 +1268,7 @@ export const products: Product[] = [
       { label: "Warranty", value: "1 year standard; extended options available" },
     ],
     features: [
-      "40-60% cheaper than RCC construction",
+      "Factory-built and inspected before dispatch",
       "Installation in 1-2 days after delivery",
       "10-25 year lifespan with basic maintenance",
       "PUF/EPS/Rockwool insulated panels for climate control",
@@ -1384,7 +1384,7 @@ export const products: Product[] = [
       "1.5-ton split AC provision maintaining 24–28°C indoors",
       "Stackable G+1 and G+2 configurations with staircase",
       "Modular partitions for cabins, meeting rooms, and open-plan layouts",
-      "30–50% cost savings over brick-and-mortar site offices",
+      "Built and inspected in the factory, not assembled on site",
       "Reusable for 8–10 project cycles — 40–60% less embodied carbon",
       "Pre-dispatch quality: ultrasonic weld testing, rain leakage testing",
       "ACP facade and branding customization available",
@@ -1405,7 +1405,7 @@ export const products: Product[] = [
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     shortDescription: "Buy 20 ft & 40 ft shipping containers in Koramangala, Bangalore — offices, cafés, homes, storage & labour camps with same-week local delivery.",
-    description: "Portable Office Cabin supplies and converts new and used 20 ft and 40 ft shipping containers in Koramangala (560034), Bangalore. From container offices near Forum Mall to rooftop cafés on 5th Block, we deliver modular solutions with 50–70% cost savings over traditional construction. Our Bangalore office and our Tamil Nadu factory near Hosur ensure quicker site visits, same-week delivery for standard units, and comprehensive after-sales support across Koramangala, HSR Layout, Ejipura, and Domlur.",
+    description: "Portable Office Cabin supplies and converts new and used 20 ft and 40 ft shipping containers in Koramangala (560034), Bangalore. From container offices near Forum Mall to rooftop cafés on 5th Block, we deliver modular solutions built and finished in our factory before dispatch. Our Bangalore office and our Tamil Nadu factory near Hosur ensure quicker site visits, same-week delivery for standard units, and comprehensive after-sales support across Koramangala, HSR Layout, Ejipura, and Domlur.",
     specifications: [
       { label: "Sizes Available", value: "20 ft, 40 ft standard & high cube" },
       { label: "Grades", value: "Cargo-worthy, WWT, refurbished, one-trip" },
@@ -1442,7 +1442,7 @@ export const products: Product[] = [
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     shortDescription: "Buy 20 ft & 40 ft shipping containers in Krishnagiri — storage, site offices, container homes, cafés & labour camps with delivery across Hosur, Rayakottai & Dharmapuri.",
-    description: "Portable Office Cabin manufactures and supplies new and used 20 ft and 40 ft shipping containers in Krishnagiri, Tamil Nadu. From SIPCOT industrial storage to fully fitted container offices and modular homes, we deliver cost-effective solutions with 20–35% savings over conventional construction. Our Tamil Nadu factory near Hosur, backed by our Bangalore office, ensures fast site visits, 3–5 day delivery for stock units, and comprehensive after-sales support across Krishnagiri, Hosur, Rayakottai, Vellore, and Dharmapuri.",
+    description: "Portable Office Cabin manufactures and supplies new and used 20 ft and 40 ft shipping containers in Krishnagiri, Tamil Nadu. From SIPCOT industrial storage to fully fitted container offices and modular homes, we deliver factory-finished solutions inspected before they leave our yard. Our Tamil Nadu factory near Hosur, backed by our Bangalore office, ensures fast site visits, 3–5 day delivery for stock units, and comprehensive after-sales support across Krishnagiri, Hosur, Rayakottai, Vellore, and Dharmapuri.",
     specifications: [
       { label: "Sizes Available", value: "10 ft, 20 ft, 40 ft standard & high cube" },
       { label: "Grades", value: "Cargo-worthy, WWT, refurbished, one-trip" },
@@ -1516,7 +1516,7 @@ export const products: Product[] = [
     category: "Cargo, Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
     shortDescription: "Buy 20 ft & 40 ft shipping containers in Chennai — storage, offices, homes, cafés & labour camps with 24–72 hour dispatch from Chennai Port yards.",
-    description: "Portable Office Cabin supplies new and used shipping containers across Chennai — from Chennai Port and Ennore to OMR, ECR, Sriperumbudur, and Oragadam. We offer sales, rentals, and turnkey modular conversions for container offices, homes, cafés, laboratories, and labour accommodation. With Corten steel construction, marine-grade anti-corrosion coatings, and PUF/Rockwool insulation suited to Chennai's coastal climate, our containers deliver fast deployment, cost savings, and eco-friendly construction.",
+    description: "Portable Office Cabin supplies new and used shipping containers across Chennai — from Chennai Port and Ennore to OMR, ECR, Sriperumbudur, and Oragadam. We offer sales, rentals, and turnkey modular conversions for container offices, homes, cafés, laboratories, and labour accommodation. With Corten steel construction, marine-grade anti-corrosion coatings, and PUF/Rockwool insulation suited to Chennai's coastal climate, our containers are specified for coastal conditions and delivered ready for conversion.",
     specifications: [
       { label: "Sizes Available", value: "10 ft, 20 ft, 40 ft GP & 40 ft HC" },
       { label: "Grades", value: "Cargo-worthy, WWT, one-trip" },
@@ -1710,7 +1710,7 @@ export const products: Product[] = [
       "Same ISO-grade structural strength as regular shipping containers",
       "Available as shops, cafés, offices, homes, security cabins, and washroom blocks",
       "Customisable in RAL 3015, Pantone hot pink, or brand-matched shades",
-      "Used container conversions available at 20–30% lower cost",
+      "Used container conversions available with rust treatment and repainting",
       "Rental option available for events and campaigns — quoted monthly",
       "PAN-India delivery with hydra crane setup and installation support",
     ],
@@ -1746,7 +1746,7 @@ export const products: Product[] = [
       "CSC-certified with safety plate showing max gross weight, stacking limits, and racking strength",
       "Available as dry storage, high cube, reefer, open top, flat rack, and tank configurations",
       "Converts into offices, homes, labour colonies, cafés, security cabins, and rooftop sheds",
-      "50–70% faster deployment and 40–60% cost savings versus traditional masonry construction",
+      "50–70% faster deployment than traditional masonry construction",
       "One-trip, cargo-worthy, WWT, and as-is condition grades available",
       "Pan-India delivery with crane installation from Portable Office Cabin",
     ],
@@ -1771,7 +1771,7 @@ export const products: Product[] = [
     name: "Workmen Accommodation",
     category: "G+1 Workmen Accommodation",
     categorySlug: "g1-workmen-accommodation",
-    description: "Prefabricated workmen accommodation — labour colonies, portable camps, and modular dormitory blocks for 50–500 workers. G+1 double-storey designs with PUF insulation, sanitary blocks, kitchens, and dining halls. 20–40% cheaper than RCC with 2–4 week installation across India.",
+    description: "Prefabricated workmen accommodation — labour colonies, portable camps, and modular dormitory blocks for 50–500 workers. G+1 double-storey designs with PUF insulation, sanitary blocks, kitchens, and dining halls. Factory-built and installed in 2–4 weeks across India.",
     shortDescription: "Prefab labour colonies & portable camps for 50–500 workers — G+1 modular blocks with turnkey delivery in 2–4 weeks.",
     specifications: [
       { label: "Capacity Range", value: "50–500+ workers per colony" },
@@ -1781,14 +1781,14 @@ export const products: Product[] = [
       { label: "Insulation", value: "40–60 mm PUF for hot and coastal climates" },
       { label: "Wind Resistance", value: "Up to 44 m/s" },
       { label: "Installation Time", value: "2–4 weeks for 100–300 worker camps" },
-      { label: "Cost Savings", value: "20–40% lower than conventional RCC construction" },
+      { label: "Relocation", value: "Bolted modules — lifted, moved and reused at the next project site" },
       { label: "Compliance", value: "BIS, NBC 2016, BOCW Act, EHS/ESG guidelines" },
     ],
     features: [
       "G+1 double-storey modular colonies for land-constrained urban sites and metro rail projects",
       "Complete ecosystem — dormitories, kitchens, dining halls, toilets, recreation rooms, security cabins",
       "40–60 mm PUF insulation for thermal comfort in hot Rajasthan or coastal Chennai/Mumbai climates",
-      "20–40% cost savings with ability to relocate entire colonies to new project sites",
+      "Entire colonies can be dismantled, relocated, and reused at new project sites",
       "Turnkey delivery including bunk beds, mattresses, sanitary fittings, and utility connections",
       "Compliance with BIS standards, NBC 2016, BOCW Act, and client EHS/ESG audit requirements",
       "Scalable from 50-bed single-storey to 500+ bed double-storey configurations",
@@ -1806,7 +1806,7 @@ export const products: Product[] = [
     name: "Labour Colony",
     category: "G+1 Workmen Accommodation",
     categorySlug: "g1-workmen-accommodation",
-    description: "Prefabricated labour colony — structured worker accommodation for construction sites, metro rail projects, refineries, and industrial plants. Single-storey, G+1, and G+2 modular configurations with dormitories, kitchens, toilets, and dining halls. 20–40% cheaper than RCC with 2–4 week installation across India.",
+    description: "Prefabricated labour colony — structured worker accommodation for construction sites, metro rail projects, refineries, and industrial plants. Single-storey, G+1, and G+2 modular configurations with dormitories, kitchens, toilets, and dining halls. Factory-built and installed in 2–4 weeks across India.",
     shortDescription: "Prefab labour colonies for 50–500+ workers — G+1/G+2 modular blocks with turnkey delivery across India.",
     specifications: [
       // First row on purpose: this is the configuration the indicative price on the page
@@ -1824,13 +1824,13 @@ export const products: Product[] = [
       // the spec table would contradict it. Panel/build tiers live on as material options.
       { label: "Build Tiers", value: "Economy (EPS, 10–15 yr) · Standard (PUF, 15–25 yr) · Premium (PEB, 25–40+ yr)" },
       { label: "Installation Time", value: "2–4 weeks for 100–300 worker camps" },
-      { label: "Cost Savings", value: "20–40% lower than conventional RCC construction" },
+      { label: "Relocation", value: "Bolted modules — lifted, moved and reused at the next project site" },
     ],
     features: [
       "Single-storey, G+1, and G+2 configurations for projects of all scales — 50 to 500+ workers",
       "Complete integrated facilities — dormitories, canteens, kitchens, toilets, recreation rooms, security cabins",
       "PUF/EPS sandwich panels with 50–100 mm insulation for thermal comfort in extreme Indian climates",
-      "20–40% cost savings versus RCC with recyclable steel and relocatable modular structures",
+      "Recyclable steel structures that are dismantled and relocated rather than demolished",
       "Turnkey delivery including bunk beds, sanitary fittings, electrical systems, and plumbing connections",
       "Container-based dormitory units for ultra-fast deployment at remote highway and solar project sites",
       "Compliance with BIS, NBC 2016, BOCW Act, and client EHS/ESG audit standards",

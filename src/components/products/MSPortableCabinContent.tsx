@@ -55,7 +55,7 @@ const advantages = [
   "Portability: Relocate the same cabin multiple times across project sites",
   "Durability: 15–20+ year lifespan with basic maintenance",
   "Customisation: Interior layouts, finishes and services tailored to your requirements",
-  "Cost efficiency: Lower capital expenditure compared to permanent structures",
+  "One quoted scope, agreed in writing before fabrication begins",
 ];
 
 const materialComparison = [
@@ -392,7 +392,7 @@ export function MSPortableCabinContent() {
           <div className="rounded-2xl bg-card p-5">
             <h3 className="mb-2 font-semibold text-foreground">MS vs GI</h3>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              MS cabins are usually 15–20% more economical than GI versions for similar layouts. GI performs better in coastal and high-humidity conditions, while MS remains the practical value choice for most inland projects. Our{" "}
+              MS is the standard skin and GI carries a zinc coating that keeps protecting the sheet where paint is scratched, so GI suits coastal and high-humidity sites while MS suits most inland projects. We quote both against your size and layout so you can compare the two directly. Our{" "}
               <Link href="/products/metal-portable-cabin" className="font-medium text-accent underline-offset-4 hover:underline">
                 guide to choosing the metal
               </Link>{" "}

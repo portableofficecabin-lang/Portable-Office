@@ -18,7 +18,7 @@ const onlinePrice = formatINR(sellPrice(getCommerce("30")!.basePrice));
 const highlights = [
   { icon: Shield, title: "Corten Steel Durability", description: "Corrosion-resistant steel withstands hot summers and monsoon rains in Krishnagiri" },
   { icon: Clock, title: "Deploy in 3–7 Days", description: "Standard units delivered within a week versus 30–60 days for conventional structures" },
-  { icon: IndianRupee, title: "20–35% Cost Savings", description: "Lower than RCC buildings with predictable budgeting and minimal civil work" },
+  { icon: IndianRupee, title: "One Fixed GST-Inclusive Price", description: "Quoted before fabrication starts, with transport calculated for your delivery PIN code" },
   { icon: Truck, title: "Relocatable Units", description: "Move containers between Krishnagiri, Hosur, and Dharmapuri as projects shift" },
   { icon: Recycle, title: "Sustainable Choice", description: "Repurposing containers reduces construction waste and embodied carbon" },
   { icon: Wrench, title: "Full Customization", description: "Interior panels, insulation, electrical provisions, and security enhancements" },
@@ -119,7 +119,7 @@ export function ShippingContainerKrishnagiriContent() {
           As India's industrial growth accelerates through 2025–2026, demand for shipping container solutions in Krishnagiri continues rising. Portable Office Cabin serves as a trusted manufacturer and supplier of portable and prefabricated container structures for customers across Krishnagiri, Hosur, Rayakottai, and throughout India. Whether you need storage, site offices, or modular buildings, our products are designed for both B2B construction firms and B2C small businesses.
         </p>
         <p className="text-muted-foreground mb-4">
-          There are several manufacturers and suppliers of used shipping containers in Krishnagiri. Portable Office Cabin is a provider of used shipping containers for storage in Krishnagiri, offering 20 ft and 40 ft units. Prefabricated and portable building solutions offer substantial cost savings compared to traditional construction methods, reducing construction time, labour costs, and material waste through streamlined manufacturing processes.
+          There are several manufacturers and suppliers of used shipping containers in Krishnagiri. Portable Office Cabin is a provider of used shipping containers for storage in Krishnagiri, offering 20 ft and 40 ft units. Prefabricated and portable building solutions are fabricated and quality-checked in the factory rather than assembled on site, which removes curing time, wet trades, and weather delays from the project schedule.
         </p>
       </section>
 
@@ -172,7 +172,7 @@ export function ShippingContainerKrishnagiriContent() {
           Used Shipping Containers for Storage in Krishnagiri
         </h2>
         <p className="text-muted-foreground mb-4">
-          Many customers prefer used shipping containers for cost-effective storage. We procure decommissioned ISO containers, then process refurbishment including rust treatment, repainting, and floor repairs. Standard sizes include 20 ft and 40 ft lengths with heavy-duty Corten steel construction, placed on simple PCC blocks.
+          Many customers prefer used shipping containers for secure, weatherproof storage. We procure decommissioned ISO containers, then process refurbishment including rust treatment, repainting, and floor repairs. Standard sizes include 20 ft and 40 ft lengths with heavy-duty Corten steel construction, placed on simple PCC blocks.
         </p>
         <p className="text-muted-foreground">
           Used containers are available in cargo-worthy, wind & water tight (WWT), and fully refurbished grades — each suited for different applications from basic warehousing to long-term office conversions.

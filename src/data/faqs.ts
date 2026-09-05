@@ -46,7 +46,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Are your cabins suitable for permanent use?",
-        a: "Yes, many of our structures — especially prefab homes and luxury villas — are built to last for decades. With proper maintenance, they perform just as well as conventional buildings, often at a fraction of the cost and construction time.",
+        a: "Yes, many of our structures — especially prefab homes and luxury villas — are built for long-term use, and the expected service life is stated on each product page rather than as one figure for the whole range. Because a unit is bolted rather than cast in place, it can be lifted, relocated and reused rather than demolished.",
       },
     ],
   },

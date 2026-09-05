@@ -18,8 +18,8 @@ const reasons = [
   },
   {
     icon: IndianRupee,
-    title: "Up to 60% Cheaper",
-    description: "Our buildings cost significantly less than building from the ground up — that's a big chunk of change saved.",
+    title: "One Fixed Price",
+    description: "You get one fixed GST-inclusive price quoted before fabrication starts, with transport calculated from your delivery pincode and shown to you before payment.",
   },
   {
     icon: Leaf,

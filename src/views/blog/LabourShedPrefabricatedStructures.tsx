@@ -161,14 +161,14 @@ export default function LabourShedPrefabricatedStructures() {
                 Labour shed prefabricated structures have transformed how construction companies approach worker accommodation on large-scale projects. These modular, factory-built dormitory and amenity blocks arrive at project sites ready for quick installation, eliminating weeks of on-site masonry work and enabling contractors to house their workforce faster than ever before.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                The demand for prefabricated labour sheds has grown significantly across India since the early 2010s. Heavy infrastructure projects—highways connecting major cities, metro rail networks in urban centers, sprawling industrial parks, and massive residential townships—all require thousands of workers who need safe, temporary accommodation close to the building site. Traditional construction methods simply cannot keep pace with the rapid mobilization timelines these projects demand. Prefabricated buildings are often more cost-effective than traditional construction due to reduced labor and material waste.
+                The demand for prefabricated labour sheds has grown significantly across India since the early 2010s. Heavy infrastructure projects—highways connecting major cities, metro rail networks in urban centers, sprawling industrial parks, and massive residential townships—all require thousands of workers who need safe, temporary accommodation close to the building site. Traditional construction methods simply cannot keep pace with the rapid mobilization timelines these projects demand. Prefabricated buildings are manufactured and inspected in the factory while site teams prepare the base, so there is no masonry work, no curing time and no wait for skilled bricklayers.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Portable Office Cabin operates as an India-based manufacturer and supplier specializing in prefab labour colonies, container offices, and portable toilets. The company serves both private developers undertaking commercial buildings and retail spaces, as well as government EPC contractors executing public infrastructure works. This practical, project-focused approach has made prefabricated solutions the go-to choice for construction industry professionals seeking reliable worker housing.
               </p>
               <div className="bg-accent/10 p-6 rounded-xl border border-accent/30 my-6">
                 <p className="text-muted-foreground leading-relaxed">
-                  <Link href="/" className="text-accent font-bold hover:underline">Portable Office Cabin</Link> is a trusted manufacturer and supplier of high-quality portable cabins, container offices, and prefab modular structures in India. The company delivers modern, durable, and cost-effective workspace solutions designed to meet the evolving needs of construction sites, industrial projects, commercial developments, and institutional facilities. With a strong focus on quality materials, smart design, and timely delivery, Portable Office Cabin helps businesses create functional spaces quickly and efficiently.
+                  <Link href="/" className="text-accent font-bold hover:underline">Portable Office Cabin</Link> is a trusted manufacturer and supplier of high-quality portable cabins, container offices, and prefab modular structures in India. The company delivers modern, durable, factory-built workspace solutions designed to meet the evolving needs of construction sites, industrial projects, commercial developments, and institutional facilities. With a strong focus on quality materials, smart design, and timely delivery, Portable Office Cabin helps businesses create functional spaces quickly and efficiently.
                 </p>
               </div>
               <p className="text-muted-foreground leading-relaxed italic bg-secondary/50 p-4 rounded-lg border-l-4 border-accent">
@@ -249,7 +249,7 @@ export default function LabourShedPrefabricatedStructures() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 {[
                   { icon: Clock, title: "40–60% Faster Deployment", desc: "Parallel work streams cut installation from 45–60 days to 10–15 days for a 100-worker camp." },
-                  { icon: IndianRupee, title: "Predictable Pricing", desc: "Per-square-foot rates enable accurate budgeting. 20–30% less material wastage than traditional methods." },
+                  { icon: IndianRupee, title: "Predictable Pricing", desc: "Per-square-foot rates enable accurate budgeting, with the quotation confirmed before fabrication starts." },
                   { icon: Shield, title: "Quality Assurance", desc: "Factory-controlled manufacturing ensures consistent quality impossible to achieve on outdoor sites." },
                   { icon: Wrench, title: "Flexible & Reusable", desc: "Modular design supports expansion, reconfiguration, and relocation across multiple project sites." }
                 ].map((item, i) => (
@@ -269,12 +269,12 @@ export default function LabourShedPrefabricatedStructures() {
                 Consider a practical example: installing a 100-worker camp using prefab methods typically requires 10–15 days from foundation completion to move-in readiness. The same capacity using traditional brick construction demands 45–60 days minimum, often extending longer due to weather delays or material shortages.
               </p>
 
-              <h3 className="text-xl font-semibold text-foreground mb-3">Cost Effectiveness and Budget Predictability</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Factory Fabrication and Budget Predictability</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Labour costs on construction sites represent one of the largest variable expenses. Prefabricated structures slash these costs by shifting most work to the factory, where skilled professionals work with proper tools and equipment. Fewer workers are needed on site, and those present focus on assembly rather than complex construction tasks.
+                Most of the work on a prefabricated labour shed happens in the factory, where skilled professionals build and inspect the frames and panels with proper tools and equipment. Fewer workers are needed on site, and those present focus on bolted assembly rather than masonry, plastering and curing.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Material wastage drops significantly when components are manufactured in controlled environments. Factory production allows precise cutting and efficient use of raw materials, reducing the scrap that accumulates with traditional field construction. Many contractors report 20–30% reductions in material wastage compared to brick-built alternatives.
+                Material wastage drops significantly when components are manufactured in controlled environments. Factory production allows precise cutting and efficient use of raw materials, reducing the scrap that accumulates with traditional field construction. Every panel is cut to the approved drawing before dispatch, so what reaches the site is what the layout and the quotation call for.
               </p>
 
               <h3 className="text-xl font-semibold text-foreground mb-3">Quality Assurance and Worker Comfort</h3>
@@ -438,7 +438,7 @@ export default function LabourShedPrefabricatedStructures() {
 
               <h3 className="text-xl font-semibold text-foreground mb-3">Relocation Capability</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Relocation represents a key advantage. When project phases complete or work fronts advance, structures can be dismantled rather than demolished. Bolted connections reverse easily. Panels stack for transport. At new sites, the same components re-erect with only local foundation preparation and minor replacements—delivering significant cost savings across multi-site contractors.
+                Relocation represents a key advantage. When project phases complete or work fronts advance, structures can be dismantled rather than demolished. Bolted connections reverse easily. Panels stack for transport. At new sites, the same components re-erect with only local foundation preparation and minor replacements—so one colony can be lifted, moved and reused across several project sites.
               </p>
             </section>
 
@@ -516,10 +516,10 @@ export default function LabourShedPrefabricatedStructures() {
             <section className="mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Conclusion and Future Outlook</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Prefabricated labour sheds have emerged as a cost-effective, durable, and highly adaptable solution for accommodating workers across a wide range of industrial projects. Their quick installation, robust construction, and extensive customization options make them a preferred alternative to traditional construction methods. As the construction industry continues to evolve, the demand for these innovative solutions is set to rise.
+                Prefabricated labour sheds have emerged as a quickly installed, durable, and highly adaptable solution for accommodating workers across a wide range of industrial projects. Their quick installation, robust construction, and extensive customization options make them a preferred alternative to traditional construction methods. As the construction industry continues to evolve, the demand for these innovative solutions is set to rise.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Looking ahead, advancements in technology and design are expected to further elevate the functionality, durability, and visual appeal of prefabricated labour sheds. With increasing emphasis on compliance, sustainability, and cost effectiveness, these structures are poised to become the go-to choice for construction companies seeking reliable, long-lasting solutions.
+                Looking ahead, advancements in technology and design are expected to further elevate the functionality, durability, and visual appeal of prefabricated labour sheds. With increasing emphasis on compliance, sustainability, and predictable project timelines, these structures are poised to become the go-to choice for construction companies seeking reliable, long-lasting solutions.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 For any project requiring rapid deployment, superior durability, and flexible expansion, prefabricated labour sheds from trusted manufacturers like Portable Office Cabin remain the benchmark for quality and performance in the modern construction landscape.

@@ -42,7 +42,7 @@ const faqs = [
   { q: "What is the price of a cargo storage container from Portable Office Cabin?", a: `Our cargo storage container is available to buy online at a fixed, GST-inclusive price of ${cargoContainerPrice} — the same price shown on the product page, in the cart, and at checkout. Custom configurations, specialized units, and full conversions are available on request.` },
   { q: "What is the difference between cargo-worthy and wind & water-tight containers?", a: "Cargo-worthy (CW) containers have valid CSC approval for continued sea transport with minor wear acceptable. Wind & water-tight (WWT) units may have minor dents but are suitable for static storage — they keep weather out but aren't certified for shipping." },
   { q: "Can cargo containers be converted into offices or homes?", a: "Yes. Portable Office Cabin converts GP and HC containers into fully equipped offices, homes, cafés, and labour colonies using frame-preserving cuts, welding reinforcements per IS 800, PUF insulation panels, and comprehensive electrical and plumbing fit-outs." },
-  { q: "What steel types are used in cargo storage containers?", a: "Three main types: Corten (weathering) steel (ASTM A588, 355 MPa yield, self-passivating) is the industry standard. Mild steel (IS 2062 Grade B, 250 MPa) costs 20–30% less but needs protective coatings. Stainless steel (AISI 304/316L) is used for food and pharmaceutical applications." },
+  { q: "What steel types are used in cargo storage containers?", a: "Three main types: Corten (weathering) steel (ASTM A588, 355 MPa yield, self-passivating) is the industry standard. Mild steel (IS 2062 Grade B, 250 MPa) is common for inland units but needs protective coatings. Stainless steel (AISI 304/316L) is used for food and pharmaceutical applications." },
   { q: "What sizes of cargo containers are available in India?", a: "The most common are 20 ft GP (33 m³ internal volume) and 40 ft GP (67 m³). High cube variants add 30.5 cm height. Specialized sizes include 10 ft (for urban sites), 45 ft pallet-wide, and half-height units for dense bulk cargo." },
   { q: "How do I inspect a used container before buying?", a: "Check corner posts for bending, wall thickness with ultrasonic gauging, roof for pinholes, door alignment and seal compression, lock rod operation, and marine plywood floor for delamination or rot. Verify CSC plate details and manufacture date (post-2010 preferred)." },
   { q: "What maintenance does a cargo container need?", a: "Annual repainting with epoxy coating (80 μm minimum), rust treatment at first signs, lubricate hinges with lithium EP2 grease, roof inspection after monsoon, pest treatment for timber floors, and clear drainage around the base." },
@@ -60,7 +60,7 @@ export function CargoStorageContainersContent() {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Cargo storage containers are standardized steel boxes originally designed for intermodal freight transport—moving seamlessly between ships, rail, and trucks without unloading cargo. Today, these robust units serve dual purposes across India: as workhorses of global logistics and as cost-effective foundations for on-site storage, modular offices, labour colonies, and prefab buildings.
+              Cargo storage containers are standardized steel boxes originally designed for intermodal freight transport—moving seamlessly between ships, rail, and trucks without unloading cargo. Today, these robust units serve dual purposes across India: as workhorses of global logistics and as durable, relocatable foundations for on-site storage, modular offices, labour colonies, and prefab buildings.
             </p>
             <p>
               The modern shipping container evolved from post-World War II innovations, eventually standardized under ISO frameworks in the 1960s. These containers adhere to strict ISO specifications, including uniform widths of 2.438 metres (8 feet), standard heights of 2.591 metres (8 feet 6 inches), and high cube variants reaching 2.896 metres (9 feet 6 inches). The most common types—20-foot and 40-foot units—dominate both container transport networks and the secondary market for storage applications.
@@ -83,13 +83,13 @@ export function CargoStorageContainersContent() {
             <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Constructed from corten steel (weathering steel), mild steel with protective coatings, or stainless steel for specialized applications</li>
             <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Each unit carries a CSC plate with unique ISO 6346 BIC code, maximum gross weight, tare weight, and validity period</li>
             <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Designed for stacking via twist-lock fittings at corner castings, enabling efficient space utilization</li>
-            <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Standard sizes fit vessel bays, rail wagons, and truck chassis—reducing handling costs by up to 90%</li>
+            <li className="flex gap-2"><CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" /> Standard sizes fit vessel bays, rail wagons, and truck chassis—so the same unit moves by ship, rail, and road without unloading</li>
           </ul>
           <div className="bg-accent/10 p-6 rounded-xl border border-accent/20">
             <h4 className="font-semibold text-foreground mb-3">Why This Matters for Indian Buyers</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>• Major ports like JNPT, Mundra, and Chennai serve as primary sources for new and used containers</li>
-              <li>• Domestic market emphasizes used units for cost-effective on-site applications amid infrastructure boom</li>
+              <li>• Domestic market emphasizes used units for on-site storage and conversion work amid infrastructure boom</li>
               <li>• Portable Office Cabin repurposes containers into storage, offices, labour accommodation, and prefab buildings</li>
             </ul>
           </div>
@@ -179,7 +179,7 @@ export function CargoStorageContainersContent() {
             </div>
           ))}
         </div>
-        <p className="text-sm text-muted-foreground mt-4">Used containers—specifically second hand shipping container units—comprise 80–90% of India's secondary market. These offer significant cost savings but require careful inspection for frame twist, floor rot, and corrosion.</p>
+        <p className="text-sm text-muted-foreground mt-4">Used containers—specifically second hand shipping container units—comprise 80–90% of India's secondary market. These are widely available but require careful inspection for frame twist, floor rot, and corrosion.</p>
       </section>
 
       {/* Types of Containers by Use */}
@@ -222,7 +222,7 @@ export function CargoStorageContainersContent() {
             <div className="bg-card border border-border rounded-xl p-5">
               <h4 className="font-bold text-foreground mb-2">Mild Steel (IS 2062 Grade B)</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• 250 MPa yield strength, 20–30% cost savings over corten</li>
+                <li>• 250 MPa yield strength, readily weldable for site repairs</li>
                 <li>• Requires epoxy primers + polyurethane topcoats (150–200 μm DFT)</li>
                 <li>• 15–20 year lifespan with proper maintenance</li>
                 <li>• Common for inland storage and prefab applications</li>
@@ -232,7 +232,7 @@ export function CargoStorageContainersContent() {
               <h4 className="font-bold text-foreground mb-2">Stainless Steel (AISI 304/316L)</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• 500+ MPa yield, PREN &gt;24 for 316 grade</li>
-                <li>• 2–3x cost of corten steel</li>
+                <li>• Retains corrosion resistance without a protective coating</li>
                 <li>• Used for food processing, pharmaceuticals, chemicals</li>
               </ul>
             </div>

@@ -29,7 +29,7 @@ export function LaborHutmentsContent() {
           Labor hutments serve as temporary and semi-permanent housing for workers at construction sites, infrastructure development projects, and industrial locations across India. From metros like Mumbai, Delhi NCR, Bengaluru, Hyderabad, and Ahmedabad to remote project sites in the Middle East and Africa, these prefabricated structures provide affordable housing for the workforce powering large-scale developments.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach ensures rapid installation — typically 5–15 days for small colonies — along with significant cost savings versus brick-and-mortar construction, reusability between projects, and improved living standards for labourers.
+          Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach ensures rapid installation — typically 5–15 days for small colonies — along with units built and inspected in the factory rather than assembled on site, reusability between projects, and improved living standards for labourers.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This article covers: types of hutments and building configurations, design features including insulation, safety, and sanitary fixtures, customization options for specific requirements, specification factors, installation timelines and typical applications.
@@ -107,12 +107,12 @@ export function LaborHutmentsContent() {
           Advantages Over Conventional Brick-and-Mortar Accommodation
         </h2>
         <p className="text-muted-foreground mb-6">
-          Traditional RCC and brick structures constructed off site locations require extensive civil work, longer timelines, and permanent foundations. Prefabricated labor huts offer a cost effective alternative with superior flexibility for projects where workforce scales fluctuate.
+          Traditional RCC and brick structures constructed off site locations require extensive civil work, longer timelines, and permanent foundations. Prefabricated labor huts are built and inspected in the factory and bolted onto a level base, with superior flexibility for projects where workforce scales fluctuate.
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
             { title: "Fast Installation", desc: "A 100-person camp takes 10–20 days versus 60–90 days for masonry — critical for reducing project mobilization time" },
-            { title: "Cost Efficiency", desc: "Lower foundation needs, controlled fabrication, and reuse across 3–10 projects deliver 20–35% lifecycle savings as a cost effective solution" },
+            { title: "Fixed Quoted Price", desc: "One fixed GST-inclusive price for the listed unit, quoted before fabrication starts, with transport calculated at checkout from your delivery pincode" },
             { title: "Reusability", desc: "Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition" },
             { title: "Scalability", desc: "Add or remove blocks as workforce size changes during phased EPC contracts for highways, metro rail, or refineries" },
             { title: "Reduced Disruption", desc: "Most fabrication happens off site, minimizing dust, noise, and congestion at the project location" },
@@ -241,7 +241,7 @@ export function LaborHutmentsContent() {
             <tbody>
               {[
                 ["Specification Drivers", "Panel thickness (30mm vs 60mm), floors, interior furnishings, sanitary provisions, foundation"],
-                ["Lifecycle Value", "Amortizes to 20–35% savings over 5–10 years through reusability across 3–10 projects"],
+                ["Lifecycle Value", "Relocatable rather than demolished — the same units can be lifted, moved and reused across 3–10 projects"],
                 ["Ownership Value", "Buying prefab hutments makes them a company asset — full control over layout, and reuse across 3–10 projects"],
               ].map((row, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-muted/30" : ""}>

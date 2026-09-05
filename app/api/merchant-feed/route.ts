@@ -151,9 +151,14 @@ function toPlainText(html: string): string {
  *
  * Two deliberate judgement calls:
  *
- *  • ANY "%" claim kills its sentence. The only percentages in the catalog today are
+ *  • ANY "%" claim kills its sentence. When this was written the catalog carried
  *    "40–60% cheaper than RCC construction" (POC-PC-PPCB, POC-PC-CABPORT) — an unsubstantiated
  *    comparative price claim, i.e. precisely the class of statement that must never reach Google.
+ *    Those claims were removed at source on 2026-09-05, in a sitewide sweep of unsupported
+ *    savings language across the catalog, page copy and metadata. THIS FILTER STAYS: it is the
+ *    backstop that stopped them reaching Google in the first place, and nothing prevents a new
+ *    percentage claim being typed into a product description tomorrow. Do not remove it on the
+ *    grounds that the catalog is currently clean.
  *
  *  • "for sale" is KEPT. It is a factual statement of availability and is literally the wording of
  *    the landing-page H1 ("Shipping Container for Sale"), not a promotion. Only genuinely

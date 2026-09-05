@@ -20,7 +20,7 @@ export function ContainerOfficeGenericContent() {
         </h2>
         <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
           <p>
-            The way businesses approach workspace infrastructure has shifted dramatically. Traditional brick-and-mortar construction no longer fits the timeline or budget requirements of fast-moving projects. Enter the container office—a solution that delivers functional, professional workspaces in a fraction of the time and cost of conventional buildings.
+            The way businesses approach workspace infrastructure has shifted dramatically. Traditional brick-and-mortar construction no longer fits the timeline or budget requirements of fast-moving projects. Enter the container office — a finished, professional workspace built and inspected in the factory, then placed on a level base rather than constructed on site.
           </p>
           <p>
             Across India, from metro construction sites in Mumbai to logistics parks in Gujarat, container offices have become the preferred choice for organizations that need to move fast without compromising on quality. At Portable Office Cabin, we've designed, manufactured, and installed hundreds of these modular workspaces for clients who understand that time is money.
@@ -48,7 +48,7 @@ export function ContainerOfficeGenericContent() {
         <div className="grid sm:grid-cols-2 gap-4 mt-8">
           {[
             "Speed of setup: Deployable in days rather than months",
-            "Cost-efficiency: Significantly lower capital expenditure",
+            "One written quotation covering fabrication, transport and placement",
             "Portability: Relocate to new sites when projects move",
             "Reduced material wastage: Factory-controlled fabrication minimizes on-site waste",
           ].map((item) => (
@@ -79,8 +79,8 @@ export function ContainerOfficeGenericContent() {
           {[
             {
               icon: DollarSign,
-              title: "Cost Savings vs Traditional Construction",
-              desc: "Container offices typically prove 20–30% more economical while delivering comparable functionality. Savings come from reduced material costs, minimal foundation requirements, and significantly lower labour expenses due to factory-based fabrication.",
+              title: "Fixed, Quoted Scope",
+              desc: "A container office is quoted as one written scope covering fabrication, transport and placement, so the figure you approve is the figure you pay. It needs no foundation beyond a level base, and significantly lower labour expenses due to factory-based fabrication.",
             },
             {
               icon: Clock,
@@ -90,7 +90,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: Truck,
               title: "Mobility and Reusability",
-              desc: "The same container office that serves a highway project in Rajasthan can be relocated to a power plant site in Madhya Pradesh. This reusability reduces long-term CAPEX dramatically, turning sunk costs into redeployable assets.",
+              desc: "The same container office that serves a highway project in Rajasthan can be relocated to a power plant site in Madhya Pradesh. The unit is an asset you can redeploy rather than demolish, so it moves with the work instead of being written off. Redeployable assets.",
             },
             {
               icon: Leaf,

@@ -346,7 +346,7 @@ export function CargoShippingContainerContent() {
               <tbody>
                 {[
                   ["Deployment time", "4–6 weeks", "3–6 months"],
-                  ["Cost savings", "40–60% lower", "Baseline"],
+                  ["Where it is built", "Factory-built and inspected", "Built on site by masons"],
                   ["Relocation", "Crane and flatbed", "Demolition required"],
                   ["End-of-project waste", "Near zero", "Significant debris"],
                 ].map((row, i) => (
@@ -426,7 +426,7 @@ export function CargoShippingContainerContent() {
         <div className="grid sm:grid-cols-2 gap-3">
           {[
             "50–70% faster deployment than conventional construction",
-            "Fixed factory pricing eliminates site-based cost overruns",
+            "One fixed GST-inclusive price, quoted before fabrication starts",
             "10–20 workers versus 50+ for equivalent masonry",
             "5–10 deployment cycles for quality units",
             "300 MPa steel withstands extreme conditions",

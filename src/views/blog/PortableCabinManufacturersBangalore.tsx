@@ -166,7 +166,7 @@ export default function PortableCabinManufacturersBangalore() {
               <h3 className="font-semibold text-foreground">Speed Advantage</h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Portable cabins deploy in 1–2 weeks versus 3–6 months for brick buildings, with 70–80% cost savings on initial setup
+              Portable cabins deploy in 1–2 weeks versus 3–6 months for brick buildings, with no masons, no curing time, and no foundation beyond a level base
             </p>
           </div>
           <div className="bg-card border border-border/40 rounded-xl p-6">
@@ -273,9 +273,9 @@ export default function PortableCabinManufacturersBangalore() {
             <tbody>
               {[
                 ["Size & Layout", "4x4 ft FRP guard booths: ₹80,000–1.2 lakh; 20x10 ft fitted office containers: ₹5–7 lakh; 40ft container offices: ₹12–18 lakh"],
-                ["Material Choice", "Basic MS shells: ₹1,200–1,800/sq.ft.; fully finished with insulation: ₹2,500–3,500/sq.ft.; FRP adds 20% premium for lightness"],
+                ["Material Choice", "Basic MS shells: ₹1,200–1,800/sq.ft.; fully finished with insulation: ₹2,500–3,500/sq.ft.; FRP is quoted separately and is lighter to lift and relocate"],
                 ["Specification Level", "Shell-only at ₹1,000/sq.ft. vs turnkey at ₹3,000+/sq.ft. with false ceilings (₹200/sq.ft.), UPVC windows (₹400/sq.ft.), attached toilets (+₹1–2 lakh)"],
-                ["Bulk Orders", "Ordering 10+ units for large projects brings 15–25% volume discounts from business manufacturer suppliers"],
+                ["Bulk Orders", "Ordering 10+ units for large projects is usually quoted as one project package, with the rate confirmed in writing before fabrication starts"],
                 ["Transport & Installation", "Distance from the manufacturer's fabrication unit adds ₹10,000–25,000 (50–100km radius) plus ₹20,000–40,000 crane setup"],
               ].map(([factor, details], idx) => (
                 <tr key={idx} className={idx % 2 === 0 ? "bg-card" : "bg-muted/20"}>

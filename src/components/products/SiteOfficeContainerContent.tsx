@@ -35,7 +35,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
             { icon: Zap, title: "Ready to Use", desc: "Complete electrical and interior fit-out upon delivery" },
             { icon: Truck, title: "Movable", desc: "Relocate between project locations using standard transport" },
             { icon: Settings, title: "Fully Customizable", desc: "Layouts, finishes, and branding tailored to you" },
-            { icon: IndianRupee, title: "Cost-Effective", desc: "60-70% lower setup time vs. brick-and-mortar" },
+            { icon: IndianRupee, title: "Transparent Pricing", desc: "Itemized quotation confirmed before fabrication starts" },
           ].map((item) => (
             <div key={item.title} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center hover:border-accent/30 transition-colors">
               <item.icon className="h-8 w-8 text-accent mx-auto mb-3" />
@@ -56,7 +56,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
           Why Choose an Office in a Container?
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          The decision to use a portable office container comes down to practical advantages that directly impact project timelines and budgets. Speed of deployment, mobility between sites, lower capital expenditure, reusability across multiple projects, and compliance with temporary structure requirements make container offices the preferred choice for project-based operations.
+          The decision to use a portable office container comes down to practical advantages that directly impact project timelines and budgets. Speed of deployment, mobility between sites, no foundation work beyond a level base, reusability across multiple projects, and compliance with temporary structure requirements make container offices the preferred choice for project-based operations.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -598,7 +598,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
             ))}
           </div>
           <p className="text-muted-foreground text-sm mt-4">
-            With proper handling, containers withstand multiple relocations with minimal wear—making them a deal that delivers value across years of use.
+            With proper handling, containers withstand multiple relocations with minimal wear—so one unit can serve several sites rather than being written off after the first.
           </p>
         </div>
       </section>
@@ -770,7 +770,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
             },
             {
               q: "Are second hand containers as reliable as new ones?",
-              a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability. The cost savings (20-30% lower) make them attractive for budget-conscious projects without compromising quality.",
+              a: "Cargo-worthy used containers perform reliably when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability. Whichever shell you choose, the specification is confirmed in writing and the unit is built and inspected in our factory before dispatch.",
             },
             {
               q: "Can furniture be included in the container office package?",

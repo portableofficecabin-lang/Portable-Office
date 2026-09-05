@@ -70,7 +70,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             "Ready to use upon delivery with complete electrical and interior fit-out",
             "Movable between project locations using standard transport",
             "Fully customizable layouts, finishes, and branding",
-            "Cost-effective compared to brick-and-mortar offices with 60-70% lower setup time",
+            "Built and inspected in a controlled factory environment, not assembled on site",
           ].map((item) => (
             <div key={item} className="flex items-start gap-3 bg-muted/50 rounded-xl p-4">
               <CheckCircle className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -114,17 +114,17 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
         <h3 className="font-display text-xl font-semibold text-foreground mb-3">Against Traditional Brick Construction</h3>
         <div className="space-y-4 text-muted-foreground mb-8">
           <p>
-            Traditional offices require 6–12 months of construction time, involving RCC foundations, masonry work, plastering, multiple contractor coordination, and regulatory approvals. A container office achieves the same functional outcome in 4–8 weeks. The capital expenditure for traditional offices runs significantly higher, and once built, the structure cannot be relocated.
+            Traditional offices require 6–12 months of construction time, involving RCC foundations, masonry work, plastering, multiple contractor coordination, and regulatory approvals. A container office achieves the same functional outcome in 4–8 weeks. Once built, a masonry structure also cannot be relocated, while a container office can be lifted onto a trailer and moved to the next site.
           </p>
           <p>
-            Container offices skip the need for full RCC structures. Simple block foundations or levelled pads suffice, reducing site preparation costs and timelines. When the project ends or the lease expires, the office moves to the next location.
+            Container offices skip the need for full RCC structures. Simple block foundations or levelled pads suffice, so there is no raft to cast, no curing time, and no masons on site. When the project ends or the lease expires, the office moves to the next location.
           </p>
         </div>
 
         <h3 className="font-display text-xl font-semibold text-foreground mb-3">Against Porta Cabins</h3>
         <div className="space-y-4 text-muted-foreground mb-8">
           <p>
-            Many portable office cabins on the market are built as temporary sheds with lighter frames, lower insulation values, and finishes designed for short-term use. While they cost less upfront, their limited structural integrity, poor thermal performance, and rapid depreciation make them expensive over time.
+            Many portable office cabins on the market are built as temporary sheds with lighter frames, lower insulation values, and finishes designed for short-term use. Their limited structural integrity, poor thermal performance, and rapid depreciation shorten the number of deployments they survive.
           </p>
           <p>
             Modern container offices, by contrast, function as capital assets. They retain 50–70% of their value over a 5–10 year lifecycle with basic maintenance, can be repurposed or sold in secondary markets, and provide consistent comfort regardless of external conditions.
@@ -136,14 +136,14 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
           /* Purchasable SKU: the same argument, minus the per-sq-ft figures that would sit on the
              page contradicting the fixed offer price. */
           <p className="text-muted-foreground">
-            A container office is a manufactured capital asset, not a site-built structure: zero lease
-            costs for 10–15 years, reuse across multiple projects, and strong resale value keep its Total Cost of
-            Ownership well below a traditional office of the same size. This unit sells at the fixed,
+            A container office is a manufactured capital asset, not a site-built structure: it is built
+            and inspected in the factory, lifted and reused across multiple projects rather than
+            demolished, and it holds resale value at the end of a deployment. This unit sells at the fixed,
             all-inclusive price shown above.
           </p>
         ) : (
           <p className="text-muted-foreground">
-            Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification—significantly less than the ₹3,500–₹5,000+ per sq. ft required for traditional offices. When you factor in zero lease costs for 10–15 years, reuse across multiple projects, and strong resale value, the Total Cost of Ownership makes container offices a cost effective choice for most project-based businesses.
+            Quality Indian container offices typically fall in the range of ₹1,400–₹2,500 per sq. ft depending on specification. The unit is a manufactured asset rather than a site-built structure: it can be lifted and reused across multiple projects instead of being demolished, it holds resale value at the end of a deployment, and the full specification is priced and agreed before fabrication starts.
           </p>
         )}
       </section>
@@ -216,8 +216,8 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             },
             {
               icon: CheckCircle,
-              title: "Cost-Effectiveness",
-              desc: "Reduced material wastage, shorter project overheads, and lower financing costs. A well-specified container office can pay for itself within 3–5 years of avoided office leasing costs.",
+              title: "Factory-Built Quality",
+              desc: "Built and inspected in a controlled factory environment instead of assembled on site, which keeps on-site wastage, rework, and weather-stopped work out of the programme.",
             },
             {
               icon: Truck,
@@ -539,9 +539,9 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-muted/50 rounded-xl p-5">
-            <h4 className="font-display font-semibold text-foreground mb-2">Operating Savings</h4>
+            <h4 className="font-display font-semibold text-foreground mb-2">Ownership and Reuse</h4>
             <p className="text-muted-foreground text-sm">
-              Proper insulation reduces AC loads. Buying outright eliminates 10–15 years of leasing costs for an equivalent space. Reusing the same container across multiple projects avoids repeated construction costs.
+              Proper insulation reduces AC loads. Buying outright makes the workspace an owned asset rather than a leased space, and the same container can be lifted, moved, and reused on the next project instead of being rebuilt.
             </p>
           </div>
           <div className="bg-muted/50 rounded-xl p-5">
@@ -660,7 +660,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             },
             {
               title: "Container Office Innovation",
-              desc: "Modular construction methods and 3D printing reduce construction time and costs. Advancements in energy-efficient materials, rooftop solar panels, and green roofs enhance sustainability. Smart building systems, integrated air conditioning, and advanced electrical wiring create future-ready offices. Modular layouts can be reconfigured to accommodate changing team sizes and technologies.",
+              desc: "Modular construction methods and 3D printing reduce construction time and on-site work. Advancements in energy-efficient materials, rooftop solar panels, and green roofs enhance sustainability. Smart building systems, integrated air conditioning, and advanced electrical wiring create future-ready offices. Modular layouts can be reconfigured to accommodate changing team sizes and technologies.",
             },
           ].map((section) => (
             <div key={section.title} className="bg-card rounded-xl p-6 shadow-card">
@@ -751,7 +751,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             },
             {
               q: "Are second-hand containers reliable for office use?",
-              a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability, with 20–30% cost savings for budget-conscious projects.",
+              a: "Cargo-worthy used containers work well for office use once properly refurbished. We inspect, repair, and treat each shell in the factory to match new-unit durability, and the finished unit is quoted at one fixed price before fabrication starts.",
             },
             {
               q: "What warranty is provided on container offices?",

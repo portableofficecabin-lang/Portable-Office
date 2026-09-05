@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 
 const switchReasons = [
-  "40–60% cheaper than conventional RCC structures when civil work and approvals are included",
+  "One fixed GST-inclusive price, quoted before fabrication starts",
   "Installation completed in 1–3 days for most standard configurations",
   "Fully relocatable across project phases and new sites",
   "Compliant electrical planning with insulation and AC-ready provisions",
@@ -151,7 +151,7 @@ export function OfficePortableCabinContent() {
             Office Portable Cabin – Fast, Flexible Workspaces by Portable Office Cabin
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            An office portable cabin is a prefabricated, self-contained workspace that arrives ready for immediate occupancy. In 2025, Indian businesses, contractors, and institutions are increasingly choosing these modular structures because they work faster, cost less, and move when the project moves.
+            An office portable cabin is a prefabricated, self-contained workspace that arrives ready for immediate occupancy. In 2025, Indian businesses, contractors, and institutions are increasingly choosing these modular structures because they work faster, arrive finished from the factory, and move when the project moves.
           </p>
           <p className="text-muted-foreground">
             Portable Office Cabin delivers office cabins across Maharashtra, Gujarat, Karnataka, Tamil Nadu, and Delhi NCR for site offices, factory admin blocks, school offices, training rooms, and project command centres.
@@ -189,7 +189,7 @@ export function OfficePortableCabinContent() {
           {[
             "Typical delivery in 10–20 days from design approval for standard configurations",
             "Installation in 8–24 hours for units such as 20x10 ft office cabins",
-            "Up to 60% lower total project cost compared to conventional construction",
+            "Transport calculated from your delivery pincode and shown before payment",
             "Little to no complex foundation work for temporary deployment",
             "Built for Indian conditions across heat, rain, industrial dust, and site movement",
             "Same cabin can shift to the next project after current work concludes",

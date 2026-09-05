@@ -24,7 +24,7 @@ const highlights = [
   },
   {
     icon: BadgeIndianRupee,
-    title: "Budget-friendly grades",
+    title: "Multiple condition grades",
     description: "Choose used, one-trip, or fully converted containers based on project life and finish expectations.",
   },
 ];
@@ -56,8 +56,8 @@ const usedVsNew = [
   {
     title: "Used containers",
     points: [
-      "Excellent value for storage and budget-led conversions",
-      "Often 20–40% cheaper than new units of similar size",
+      "Practical for storage yards, site utility rooms, and conversions",
+      "Supplied in cargo-grade and wind-and-water-tight condition",
       "Inspected for structural integrity, floor condition, and door operation",
     ],
   },
@@ -173,7 +173,7 @@ export function ShippingContainerForSaleContent({ offer }: { offer?: FixedOffer 
 
       <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div className="rounded-3xl border border-border bg-card p-8">
-          <h3 className="mb-4 font-display text-2xl font-bold text-foreground">Affordable shipping containers for sale across India</h3>
+          <h3 className="mb-4 font-display text-2xl font-bold text-foreground">ISO-grade shipping containers for sale across India</h3>
           <p className="mb-5 leading-relaxed text-muted-foreground">
             Portable Office Cabin is a supplier and manufacturer of ISO-grade containers designed for both storage and prefabricated building
             applications. We support construction firms, industrial plants, educational institutions, and businesses with immediate availability,
@@ -209,8 +209,8 @@ export function ShippingContainerForSaleContent({ offer }: { offer?: FixedOffer 
               <h4 className="font-semibold text-foreground">Pan-India coverage</h4>
             </div>
             <p className="text-sm leading-6 text-muted-foreground">
-              Our depot network and transport partners support deliveries to major metros and tier-2 cities, helping keep freight costs competitive
-              while maintaining reliable scheduling for industrial and construction projects.
+              Our depot network and transport partners support deliveries to major metros and tier-2 cities, with transport calculated from the
+              delivery pincode and reliable scheduling for industrial and construction projects.
             </p>
           </div>
         </div>

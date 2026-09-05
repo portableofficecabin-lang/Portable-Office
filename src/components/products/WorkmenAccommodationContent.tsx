@@ -21,7 +21,7 @@ export const WorkmenAccommodationContent = () => {
 
   const benefits = [
     { label: "Time Savings", value: "10,000 sq ft camp installed in 20–30 days vs 3–4 months for RCC" },
-    { label: "Cost Optimisation", value: "20–40% savings through lower cost per bed and relocatable structures" },
+    { label: "Predictable Pricing", value: "One fixed GST-inclusive price for the listed unit, with transport calculated from your delivery pincode" },
     { label: "Worker Wellbeing", value: "Better ventilation, lighting, and sanitation reduce absenteeism by 15–20%" },
     { label: "Compliance", value: "Meets client EHS audits, ESG requirements, and third-party inspections" },
     { label: "Sustainability", value: "Recyclable steel, reduced material wastage, solar rooftop integration" },
@@ -74,7 +74,7 @@ export const WorkmenAccommodationContent = () => {
     { q: "What compliance standards do your labour camps meet?", a: "Our designs comply with BIS standards, NBC 2016 building codes, BOCW Act requirements, and client-specified EHS/ESG guidelines. Proper documentation supports tender submissions and third-party audits on large EPC contracts." },
     { q: "What materials are used for insulation in hot Indian climates?", a: "We use 40–60 mm PUF (Polyurethane Foam) or EPS sandwich panels for thermal insulation, suitable for both hot dry climates like Rajasthan and humid coastal conditions in Mumbai, Chennai, and Mangaluru." },
     { q: "Do you provide complete turnkey solutions including furniture?", a: "Yes. Our turnkey delivery includes bunk beds, mattresses, dining tables, kitchen equipment, sanitary fittings, and all utility connections. We deliver a move-in ready camp with as-built documentation and maintenance guidelines." },
-    { q: "What is the typical cost saving compared to traditional construction?", a: "Clients achieve 20–40% savings through lower upfront cost per bed, reduced rework, minimal on-site labour requirements, and the ability to relocate structures to the next project instead of abandoning sunk civil works." },
+    { q: "How is workmen accommodation priced?", a: "The G+1 workmen accommodation listed on this page is sold at one fixed GST-inclusive price, with transport calculated from your delivery pincode and shown before payment. Larger colonies are sized to the brief — bed count, number of floors, insulation, and fit-out all change the build — so those are quoted separately." },
     { q: "Which regions across India do you serve?", a: "Portable Office Cabin delivers workmen accommodation across 20+ Indian states, including Delhi NCR, Mumbai-Pune, Chennai, Bengaluru, Hyderabad, Ahmedabad, Kolkata, Jaipur, and remote project locations in Odisha, Jharkhand, Rajasthan, and Gujarat." },
   ];
 

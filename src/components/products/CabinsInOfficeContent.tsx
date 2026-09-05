@@ -42,7 +42,7 @@ const faqs = [
   },
   {
     q: "Can office cabins be relocated?",
-    a: "Yes, modular office cabins are designed for disassembly and relocation. This makes them ideal for leased spaces where structures may need to be moved. Reconfiguration costs are significantly lower than demolishing brick walls."
+    a: "Yes, modular office cabins are designed for disassembly and relocation. This makes them ideal for leased spaces where structures may need to be moved. Reconfiguring a modular layout is a matter of unbolting and repositioning panels rather than demolition and rebuilding."
   },
   {
     q: "What is the right cabin mix for my office?",
@@ -54,7 +54,7 @@ const faqs = [
   },
   {
     q: "Can small businesses benefit from modular offices?",
-    a: "Absolutely. Modular offices offer small businesses a cost-effective way to create professional workspaces quickly. They can be customized for any requirement and easily expanded or relocated as the business grows."
+    a: "Absolutely. Modular offices give small businesses a way to create professional workspaces quickly. They can be customized for any requirement and easily expanded or relocated as the business grows."
   },
 ];
 
@@ -244,7 +244,7 @@ export function CabinsInOfficeContent() {
             { title: "Hybrid Work Support", desc: "Dedicated video conferencing space with stable acoustics and lighting for remote collaboration" },
             { title: "Employee Well-being", desc: "Reduced noise fatigue; ability to step away for focused work without leaving the office" },
             { title: "Fast Installation", desc: "Office cabins set up and adapted quickly — minimal disruption to business operations" },
-            { title: "Cost-Effective Flexibility", desc: "Easier to reconfigure than permanent brick walls; avoid demolition costs 2–3x higher" },
+            { title: "Reconfigurable Layout", desc: "Panels unbolt and reposition, so a layout change does not mean demolition and rebuilding" },
           ].map((benefit, i) => (
             <div key={i} className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />

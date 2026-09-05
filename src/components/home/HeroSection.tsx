@@ -8,7 +8,7 @@ import { startingFromEstimate, formatINR } from "@/components/home/cabin-calcula
 
 const highlights = [
   { icon: Zap, text: "Up & Running in Days" },
-  { icon: IndianRupee, text: "60% Cheaper Than Traditional" },
+  { icon: IndianRupee, text: "One Fixed GST-Inclusive Price" },
   { icon: Leaf, text: "Eco-Friendly Materials" },
 ];
 
@@ -94,7 +94,7 @@ export function HeroSection() {
               className="text-base text-white/60 mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              Up to 60% cheaper than traditional construction. Kinder to the planet. 
+              Built and inspected in our factory, not assembled on site. Kinder to the planet.
               Ready in days, not months.
             </p>
 

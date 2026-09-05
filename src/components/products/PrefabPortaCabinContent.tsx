@@ -67,7 +67,7 @@ export function PrefabPortaCabinContent() {
           setting the finished cabin down on site.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          In 2026, the demand for portable cabins continues to surge. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins deliver 40–60% cost savings compared to conventional RCC construction.
+          In 2026, the demand for portable cabins continues to surge. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins are built and inspected in the factory, then set down on a simple levelled base without masons or curing time.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This guide covers everything procurement teams and project managers need: features, types (from compact security cabins to G+1 labour colonies), specifications, and how to choose the right prefab porta cabin for your specific requirements.
@@ -130,7 +130,7 @@ export function PrefabPortaCabinContent() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { icon: Zap, title: "Rapid Deployment", desc: "Installation in hours to 2 days versus months for RCC buildings" },
-            { icon: Shield, title: "Cost Effectiveness", desc: "40–60% lower than conventional construction with less waste" },
+            { icon: Shield, title: "One Fixed Price", desc: "The listed build carries one GST-inclusive price, quoted before fabrication starts" },
             { icon: RotateCcw, title: "Relocatable Design", desc: "Units can be shifted 5–10 times over their lifespan without structural degradation" },
             { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation reduces AC loads by up to 30% in extreme heat" },
             { icon: Settings, title: "Weather Resistance", desc: "Anti-corrosion coatings and proper drainage handle monsoons" },
@@ -144,7 +144,7 @@ export function PrefabPortaCabinContent() {
           ))}
         </div>
         <p className="text-muted-foreground mt-6">
-          Durability is a key strength. Well-maintained porta cabins achieve 15–25+ years of service life, making them cost effective for both short-term construction sites and longer-term applications.
+          Durability is a key strength. Well-maintained porta cabins achieve 15–25+ years of service life, making them suitable for both short-term construction sites and longer-term applications.
         </p>
       </section>
 
@@ -460,7 +460,7 @@ export function PrefabPortaCabinContent() {
           ))}
         </div>
         <p className="text-muted-foreground mt-4">
-          Proper siting (avoiding waterlogging) and basic upkeep significantly extend service life. Older cabins can be refurbished with new paint, panel replacement, and interior upgrades rather than scrapping — delivering ongoing cost savings.
+          Proper siting (avoiding waterlogging) and basic upkeep significantly extend service life. Older cabins can be refurbished with new paint, panel replacement, and interior upgrades rather than scrapping — keeping the same unit in service for further deployments.
         </p>
       </section>
 
@@ -513,7 +513,7 @@ export function PrefabPortaCabinContent() {
           Get Your Prefab Porta Cabin Project Started
         </h2>
         <p className="text-muted-foreground mb-4 max-w-3xl mx-auto">
-          Prefab porta cabins deliver what modern architecture and construction projects demand: rapid deployment, relocatable flexibility, significant cost effectiveness, and professional quality. From compact guard cabins to sophisticated G+1 office complexes, these modular structures solve space challenges across industries.
+          Prefab porta cabins deliver what modern architecture and construction projects demand: rapid deployment, relocatable flexibility, one fixed price agreed before fabrication, and professional quality. From compact guard cabins to sophisticated G+1 office complexes, these modular structures solve space challenges across industries.
         </p>
         <p className="text-muted-foreground mb-6 max-w-3xl mx-auto">
           Ready to order? Buy the standard build online with secure payment. For a custom size or made-to-order specification, call us with your purpose, approximate size, location access, and timeline, and our team will help you configure the right cabin.

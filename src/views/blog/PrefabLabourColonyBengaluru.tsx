@@ -103,7 +103,7 @@ export default function PrefabLabourColonyBengaluru() {
             <div className="grid sm:grid-cols-2 gap-4">
               {[
                 { icon: Zap, title: "Speed of Installation", desc: "Complete colony ready in weeks rather than months" },
-                { icon: Shield, title: "Cost Savings", desc: "Lower capital outlay, predictable per-bed costing, minimal wastage" },
+                { icon: Shield, title: "Predictable Costing", desc: "Quoted per bed in writing before fabrication, with minimal on-site wastage" },
                 { icon: Users, title: "Better Worker Welfare", desc: "Insulated, ventilated living spaces with organised sanitation" },
                 { icon: Truck, title: "Relocatable Asset", desc: "Dismantle and shift to your next project anywhere in India" },
                 { icon: CheckCircle, title: "Compliance-Ready", desc: "Ventilation, fire safety, and sanitation norms for audits" },

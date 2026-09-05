@@ -120,7 +120,7 @@ export function ShippingContainerKormangalaContent() {
             Shipping Container in Koramangala — Office, Café, Home & Storage
           </h2>
           <p className="mb-4 text-lg leading-relaxed text-muted-foreground">
-            Koramangala (560034) has become one of Bengaluru's most dynamic neighbourhoods for startups, IT firms, and retail ventures. With high commercial lease costs and ongoing redevelopment along 80 Feet Road, Inner Ring Road, and nearby Ejipura, HSR Layout, and Domlur, businesses are searching for cost-effective alternatives.
+            Koramangala (560034) has become one of Bengaluru's most dynamic neighbourhoods for startups, IT firms, and retail ventures. With high commercial lease costs and ongoing redevelopment along 80 Feet Road, Inner Ring Road, and nearby Ejipura, HSR Layout, and Domlur, businesses are searching for workspace that can be installed quickly and relocated when a lease ends.
           </p>
           <p className="leading-relaxed text-muted-foreground">
             Portable Office Cabin manufactures at its Tamil Nadu factory near Hosur, just ~40 km from Bengaluru, and supplies prefabricated and modular building solutions from its Bangalore office. We serve both B2B and B2C customers with new and used containers — from compact storage units to fully fitted container offices, cafés, homes, and rooftop structures.
@@ -182,7 +182,7 @@ export function ShippingContainerKormangalaContent() {
       <section className="rounded-3xl border border-border bg-card p-8">
         <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Container offices in Koramangala</h3>
         <p className="mb-5 text-muted-foreground">
-          Container offices address the stress of high commercial lease costs while providing rapid deployment. Startups near Forum Mall, project sites across Koramangala 1st–8th Block, and sales offices along Sarjapur Road are choosing this route — 50–70% cost savings over traditional construction.
+          Container offices address the stress of high commercial lease costs while providing rapid deployment. Startups near Forum Mall, project sites across Koramangala 1st–8th Block, and sales offices along Sarjapur Road are choosing this route — each unit is built and inspected in the factory, then delivered ready to place on a level base.
         </p>
         <div className="space-y-3">
           {officeSpecs.map((item) => (
@@ -260,7 +260,7 @@ export function ShippingContainerKormangalaContent() {
           </table>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          A purchased container pays for itself within 18–24 months compared with recurring commercial space costs. Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
+          A purchased container is yours to modify, relocate, or resell, at one fixed GST-inclusive price — the same amount you pay at checkout. Prefer renting instead? See our <Link href="/rental-service" className="text-accent hover:underline">rental service</Link>.
         </p>
       </section>
 

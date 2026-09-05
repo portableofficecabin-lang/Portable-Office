@@ -18,7 +18,7 @@ const highlights = [
   { icon: Shield, title: "Corten Steel Build", desc: "350 MPa yield strength with anti-corrosive epoxy paint for Kolar's climate" },
   { icon: Thermometer, title: "Climate Resistant", desc: "Handles 37°C summer peaks and heavy monsoon rains better than temporary alternatives" },
   { icon: Recycle, title: "70% Lower Carbon", desc: "Container reuse cuts embodied carbon versus new RCC builds; solar-ready rooftops" },
-  { icon: Building, title: "30–50% Cost Savings", desc: "Lower investment compared to permanent RCC structures for industrial operations" },
+  { icon: Building, title: "Factory-Built Units", desc: "Built and inspected at our Tamil Nadu factory near Hosur, not assembled on your plot" },
   { icon: MapPin, title: "Narsapura & Beyond", desc: "Coverage across Vemgal, Malur, Hoskote, and the NH-75 industrial corridor" },
   { icon: Wrench, title: "End-to-End Service", desc: "Design, fabrication, delivery, installation, and post-installation support" },
 ];

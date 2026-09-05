@@ -47,8 +47,8 @@ export function LabourHutmentsStaffAccommodationContent() {
 
   const faqs = [
     { q: "How quickly can a 100-bed labour colony be installed?", a: "A 100-bed G+1 modular labour hutment colony takes 2–3 weeks factory prep + 10–14 days site installation post civil readiness. Work progresses parallel to main site mobilisation, saving valuable project time." },
-    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way it is 20–30% cheaper than traditional RCC/brick construction, with the added benefit of reusability across 3–5 project sites." },
-    { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling with 80% material recovery for transport and reinstallation at subsequent sites, making them highly cost-effective over multiple project cycles." },
+    { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way the unit is built and inspected in the factory before dispatch, and can be dismantled and reused across 3–5 project sites." },
+    { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling with 80% material recovery for transport and reinstallation at subsequent sites, so the same structure serves several projects instead of being demolished." },
     { q: "What compliance standards do your labour hutments meet?", a: "Our structures comply with BOCW Act requirements, NBC 2016 fire safety and egress norms, IS 456/800/875 structural standards, and client-specific HSE requirements. Complete documentation including drawings, test certificates, and O&M manuals is provided." },
     { q: "Do you offer multi-storey labour accommodation?", a: "Yes, we offer G+1 and G+2 configurations that maximise space on land-scarce urban sites. Multi-storey units use heavy-duty steel framing designed for Zone V earthquake compliance." },
     { q: "What is the design life of prefab labour hutments?", a: "Design life is 10–15+ years with proper maintenance. Steel salvage value of 40–50% at end of life, panels can be individually replaced without full disassembly, and repainting is recommended every 3–5 years." },
@@ -118,7 +118,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         <div className="grid sm:grid-cols-2 gap-4">
           {[
             { title: "Rapid Deployment", desc: "A G+1 labour colony for 100–300 workers installs in 3–6 weeks versus months for RCC structures" },
-            { title: "Cost Effective Solution", desc: "20–30% savings from minimal foundations, no curing time, and reusability across multiple sites" },
+            { title: "Minimal Site Work", desc: "Minimal foundations, no masons and no curing time, with modules that can be lifted and reused across multiple sites" },
             { title: "Easy Relocation", desc: "Dismantling via bolted joints achieves 80% material recovery for subsequent project sites" },
             { title: "Compliance Ready", desc: "Easier adherence to NBC 2016 guidelines for 3.5–4.5 sqm/person floor space and BOCW Act requirements" },
             { title: "Reduced Dependency", desc: "Minimal reliance on local material supply and skilled masons — crucial for remote work sites" },
@@ -500,7 +500,7 @@ export function LabourHutmentsStaffAccommodationContent() {
           ))}
         </ul>
         <p className="text-sm text-muted-foreground italic">
-          Early engagement with our engineering team optimises layouts and reduces costs by 10–15%. Include future expansion or relocation needs in initial discussions to maximise asset utilisation.
+          Early engagement with our engineering team optimises layouts before fabrication starts. Include future expansion or relocation needs in initial discussions to maximise asset utilisation.
         </p>
       </section>
 
