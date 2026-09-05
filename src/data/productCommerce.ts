@@ -207,9 +207,18 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONTAINERS, productType: "Cargo Storage & Shipping Containers",
   },
   {
+    /* PRICE IS UNCHANGED at basePrice 275000 (Rs 3,24,500 incl. GST). The copy supplied on
+     * 2026-09-05 said "starts at Rs 5,19,200" — that is the MS/Steel cabin figure, carried over
+     * from those pages. Owner confirmed 3,24,500 is correct, so the page states NO figure in
+     * prose and the price box is the only source. This SKU is LIVE in the Merchant feed; do not
+     * change basePrice without an explicit instruction.
+     *
+     * feedTitle updated to the owner's supplied meta title. <title> IS <g:title>
+     * (productPageMeta.ts), so the two must move together; the OFFER is untouched — same
+     * <g:id>, price and availability. */
     id: "13", sku: "POC-PC-PREFAB", basePrice: 275000, priceConfirmed: true, kind: "product", inStock: true,
     h1Title: "Prefabricated Portable Cabin",
-    feedTitle: "Prefabricated Portable Cabin Galvanized MS Frame for Site Offices | Portable Office Cabin",
+    feedTitle: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
     size: "Custom sizes", material: "Hot-Dip Galvanized MS Framework", bestFor: "Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },

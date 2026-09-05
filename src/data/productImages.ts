@@ -96,7 +96,11 @@ export const productImages: Record<string, string> = {
   "POC-LH-STAFF": labourHutmentsMain,
   "prefabricated-labour-hutments-&-staff-accommodation": labourHutmentsMain,
   "23": prefabPortaCabinCrane,
-  "POC-PC-PREFAB": prefabPortaCabinCrane,
+  /* Was prefabPortaCabinCrane — the SIBLING product's photo, borrowed because this SKU had
+     no image of its own. It is what the live Merchant feed was sending as g:image_link. Now
+     points at the product's own factory-yard photo. getProductImageById() wins over
+     products.ts images[0], so this line is the one that actually decides the feed image. */
+  "POC-PC-PREFAB": "/images/products/prefabricated-portable-cabin/prefabricated-portable-cabin-factory-yard.webp",
   "prefab-porta-cabin": prefabPortaCabinCrane,
   "24": laborHutmentsAerial,
   "POC-LH-WORKER": laborHutmentsAerial,
