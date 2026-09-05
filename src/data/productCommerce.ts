@@ -172,6 +172,22 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
   {
+    /* Steel Portable Cabin (id 46) — RESTORED 2026-09-05 on owner request so the Products mega
+     * menu can link to a real Steel Portable Cabin page. Priced on the 20 × 10 ft insulated
+     * build: sellPrice(440000) = 519200, matching the owner-supplied ₹5,19,200 incl. 18% GST.
+     *
+     * SAME BASE PRICE AS POC-PC-MSPC, deliberately — it is the same cabin under its material
+     * name. Two identical fixed-price offers would read as duplicates in Google Shopping, so
+     * this SKU stays held out of the automated feed via merchantFeedPolicy.ts. It is fully
+     * purchasable on-site. Note the MS page still carries "Steel" in its feedTitle and copy
+     * from the (now reversed) consolidation — see the handover note before deploying. */
+    id: "46", sku: "POC-PC-STEEL", basePrice: 440000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Steel Portable Cabin",
+    feedTitle: "Steel Portable Cabin 20ft x 10ft Insulated MS Frame for Site Offices | Portable Office Cabin",
+    size: "20 ft × 10 ft × 8.5 ft (200 sq ft)", material: "Welded MS Frame, 1.5–2 mm MS Sheet, 30–50 mm Insulation", bestFor: "Site Offices, Staff Rooms & Security Posts",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
+  },
+  {
     /* feedTitle carries "Steel Portable Cabin" since 2026-09-04: /products/steel-portable-cabin
      * 301s to this page, so this is now the canonical page for that phrase too, and <title> IS
      * <g:title> (productPageMeta.ts) — the two must stay identical. The OFFER is untouched:

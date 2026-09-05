@@ -39,6 +39,7 @@ import { FreshInsightSection } from "@/components/products/FreshInsightSection";
 import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 import { PortaCabinContent } from "@/components/products/PortaCabinContent";
 import { MSPortableCabinContent } from "@/components/products/MSPortableCabinContent";
+import { SteelPortableCabinContent } from "@/components/products/SteelPortableCabinContent";
 import { OfficePortableCabinContent } from "@/components/products/OfficePortableCabinContent";
 import { PrefabricatedPortableCabinContent } from "@/components/products/PrefabricatedPortableCabinContent";
 import { ShippingContainerForSaleContent } from "@/components/products/ShippingContainerForSaleContent";
@@ -575,13 +576,14 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {isStaticProduct && cs === "portable-toilet-cabins" && <div className="mt-16"><PortableToiletContent offer={contentOffer} /></div>}
           {cs === "portable-cabins" && slug === "porta-cabin" && <div className="mt-16"><PortaCabinContent offer={contentOffer} /></div>}
           {cs === "portable-cabins" && slug === "ms-portable-cabin" && <div className="mt-16"><MSPortableCabinContent /></div>}
+          {cs === "portable-cabins" && slug === "steel-portable-cabin" && <div className="mt-16"><SteelPortableCabinContent /></div>}
           {cs === "portable-cabins" && slug === "office-portable-cabin" && <div className="mt-16"><OfficePortableCabinContent /></div>}
           {cs === "portable-cabins" && slug === "prefabricated-portable-cabin" && <div className="mt-16"><PrefabricatedPortableCabinContent /></div>}
           {cs === "portable-cabins" && slug === "prefabricated-labour-hutments-staff-accommodation" && <div className="mt-16"><LabourHutmentsStaffAccommodationContent /></div>}
           {cs === "portable-cabins" && slug === "prefab-porta-cabin" && <div className="mt-16"><PrefabPortaCabinContent /></div>}
           {cs === "portable-cabins" && slug === "labor-hutments" && <div className="mt-16"><LaborHutmentsContent /></div>}
           {cs === "portable-cabins" && slug === "cabin-portable" && <div className="mt-16"><CabinPortableContent /></div>}
-          {isStaticProduct && cs === "portable-cabins" && !["porta-cabin","ms-portable-cabin","office-portable-cabin","prefabricated-portable-cabin","prefabricated-labour-hutments-staff-accommodation","prefab-porta-cabin","labor-hutments","cabin-portable"].includes(slug) && <div className="mt-16"><PortableCabinContent offer={contentOffer} /></div>}
+          {isStaticProduct && cs === "portable-cabins" && !["porta-cabin","ms-portable-cabin","steel-portable-cabin","office-portable-cabin","prefabricated-portable-cabin","prefabricated-labour-hutments-staff-accommodation","prefab-porta-cabin","labor-hutments","cabin-portable"].includes(slug) && <div className="mt-16"><PortableCabinContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}

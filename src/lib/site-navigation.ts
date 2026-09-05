@@ -159,6 +159,22 @@ export interface CategoryServiceLink {
  * unreachable from navigation — not a general link dump.
  */
 export const categoryServiceLinks: CategoryServiceLink[] = [
+  /* Steel Portable Cabin sits directly beneath Portable Cabins in the "Cabins & Offices"
+   * column (owner request, 2026-09-05). It is a PRODUCT, not a service page, so strictly it
+   * is the first entry here that stretches this registry's original purpose — but the reason
+   * is the same one the registry exists for: the mega-menu columns are built from CATEGORY
+   * slugs, so an individual product cannot appear in them however much traffic it deserves.
+   * Splicing it here is what puts it in BOTH menus (desktop ProductMegaMenu and the mobile
+   * drawer both render megaMenuColumns) with the nested styling already defined for them.
+   *
+   * The href is the product's own canonical path — getProductDetailPath(id 46) resolves to
+   * exactly this, and next.config.ts no longer redirects it. */
+  {
+    parentSlug: "portable-cabins",
+    name: "Steel Portable Cabin",
+    href: "/products/steel-portable-cabin",
+    description: "Steel cabins for offices, accommodation and site facilities.",
+  },
   {
     parentSlug: "home-construction",
     name: "Building Construction Contractor",

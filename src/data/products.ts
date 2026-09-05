@@ -767,6 +767,75 @@ export const products: Product[] = [
     inStock: true,
   },
   {
+    /* STEEL PORTABLE CABIN (owner content + six renders supplied 2026-09-04).
+     *
+     * Sits immediately after MS Portable Cabin (id 11) because the two are deliberately
+     * paired: this page is the broad "steel portable cabin" hub and links out to id 11 as
+     * the standard MS build and to Steel Portable Office Container (id 28) as the
+     * container-grade option, so the three support each other instead of competing.
+     *
+     * PRICE: the owner's content states ₹5,19,200 incl. 18% GST for the 20 × 10 ft build.
+     * sellPrice(440000) = 519200 exactly, so basePrice is 440000 — the same base as id 11,
+     * which is the same cabin sold under its material name. Because the two offers are
+     * identical in price and specification, this SKU is held OUT of the automated Merchant
+     * feed (see merchantFeedPolicy.ts) until the owner confirms how the two should be
+     * distinguished for Shopping. It stays fully purchasable on-site.
+     */
+    id: "46",
+    sku: "POC-PC-STEEL",
+    name: "Steel Portable Cabin",
+    slug: "steel-portable-cabin",
+    category: "Portable Cabins",
+    categorySlug: "portable-cabins",
+    description:
+      "Factory-built steel cabins for site offices, staff rooms, security posts and worker housing — delivered ready to use anywhere in India. The whole cabin is built in our factory — welded MS frame, insulated walls, sloping roof, flooring, wiring, doors and windows — then loaded onto a truck and placed on your site, so most customers are working inside it the same day it arrives. A steel cabin takes monsoon rain, dust, forklifts brushing past and repeated crane lifts in its stride; with a proper primer and topcoat the frame and walls last 15 to 20 years or more on basic maintenance. When one site finishes, the same cabin goes on a truck to the next one.",
+    shortDescription:
+      "Factory-built insulated steel cabin, priced here as the 20 × 10 ft build — site offices, staff rooms, security posts and worker housing, delivered ready to use.",
+    specifications: [
+      { label: "Priced Configuration", value: "20 ft × 10 ft × 8.5 ft — 200 sq ft" },
+      { label: "Structural Frame", value: "Welded MS C-channel 75 × 40 mm or RHS 50 × 50 × 3 mm, galvanised C and Z purlins" },
+      { label: "Wall Panels", value: "1.5–2 mm MS sheet outside, 30–50 mm glass wool or rock wool insulation, interior finish sheet" },
+      { label: "Roof", value: "Sloping insulated MS roof with EPDM waterproofing" },
+      { label: "Flooring", value: "18 mm cement board base with 2 mm vinyl finish" },
+      { label: "Windows", value: "Aluminium sliding 3 × 4 ft, tinted glass, mosquito mesh on request" },
+      { label: "Doors", value: "MS flush door 3 × 7 ft with lock, handle and stopper" },
+      { label: "Electricals", value: "6–10 points per 200 sq ft, concealed wiring, MCB board, LED lights, modular switches" },
+      { label: "Paint System", value: "Epoxy zinc phosphate primer + PU topcoat, in the colour of your choice" },
+      { label: "Standard Sizes Built", value: "10 × 8, 20 × 8, 20 × 10, 30 × 10 and 40 × 10 ft" },
+      { label: "Expected Life", value: "15–20+ years with basic maintenance" },
+      // Labelled door-to-door on purpose: the template renders a "Dispatch: Within 7–15 working
+      // days" chip from DISPATCH_WORKING_DAYS, and JSON-LD handlingTime carries the same 7–15. An
+      // unqualified "Lead Time: 7–21" beside it read as a contradiction; 7–21 is dispatch + transit.
+      { label: "Door-to-Door Lead Time", value: "7–21 working days — 7–15 dispatch, plus transit to your pincode" },
+    ],
+    features: [
+      "Built complete in the factory — frame, walls, roof, floor, wiring, doors and windows",
+      "Takes site conditions: monsoon rain, dust, knocks and repeated crane lifts",
+      "Relocatable — the same cabin moves from site to site across a decade of projects",
+      "30–50 mm wall and roof insulation, so air conditioning actually works inside it",
+      "Fixed price and a fixed delivery window — no site delays, no surprises in the bill",
+      "Customisable: partitions, attached toilet or pantry, extra doors, windows and G+1 stacking",
+      "Checked for square, weld quality, wiring and water-tightness before it leaves the factory",
+    ],
+    /* Gallery order: front elevation (hero, also the card / OG / feed image) → angled
+       exterior showing full length → fitted-out interior → blank side and rear with
+       ventilation louvres → the ventilated site-unit finish → roof plan. */
+    images: [
+      "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
+      "/images/products/steel-portable-cabin/steel-portable-cabin-angled-exterior.webp",
+      "/images/products/steel-portable-cabin/steel-portable-cabin-interior-office.webp",
+      "/images/products/steel-portable-cabin/steel-portable-cabin-side-rear.webp",
+      "/images/products/steel-portable-cabin/steel-portable-cabin-ventilated-unit.webp",
+      "/images/products/steel-portable-cabin/steel-portable-cabin-roof.webp",
+    ],
+    // Legacy mirror of the commerce base — every customer surface renders from
+    // productCommerce.ts via sellPrice(), never from here. sellPrice(440000) = ₹5,19,200.
+    price: 440000,
+    priceLabel: "+ 18% GST — Total ₹5,19,200",
+    featured: true,
+    inStock: true,
+  },
+  {
     id: "12",
     sku: "POC-CSC-2040",
     // Renamed from "20ft & 40ft Storage Container" (owner, Aug 2026): the fixed price buys the
