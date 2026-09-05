@@ -577,16 +577,16 @@ export const organizationStructuredData = {
   "@type": "Organization",
   name: "Portable Office Cabin",
   description:
-    "ISO 9001:2015 certified manufacturer of portable cabins, container offices and prefab solutions in India",
+    "Manufacturer of portable cabins and prefabricated structures in India",
   url: "https://portableofficecabin.com",
   logo: "https://portableofficecabin.com/logo.jpeg",
   taxID: "33FVKPK6238Q1ZT",
-  hasCertification: {
-    "@type": "Certification",
-    name: "ISO 9001:2015",
-    about: "Quality Management System",
-    certificationIdentification: "QT-99968/0726",
-  },
+  /* hasCertification REMOVED 2026-09-05. It asserted ISO 9001:2015 with identifier
+     QT-99968/0726, but no certificate exists in this repository — company.ts records a number
+     and nothing else: no issuing body, no scope, no validity dates, no scan. Structured data is
+     judged more strictly than page copy, so an unverifiable certification node is the wrong
+     place to carry an unconfirmed claim. Restore this block verbatim the day the certificate is
+     produced and its scope and validity are confirmed. */
   identifier: {
     "@type": "PropertyValue",
     propertyID: "Udyam Registration Number",
@@ -637,12 +637,6 @@ export const localBusinessStructuredData = {
   priceRange: "₹₹₹",
   image: "https://portableofficecabin.com/logo.jpeg",
   taxID: "33FVKPK6238Q1ZT",
-  hasCertification: {
-    "@type": "Certification",
-    name: "ISO 9001:2015",
-    about: "Quality Management System",
-    certificationIdentification: "QT-99968/0726",
-  },
   identifier: {
     "@type": "PropertyValue",
     propertyID: "Udyam Registration Number",

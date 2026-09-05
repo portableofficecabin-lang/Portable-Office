@@ -175,7 +175,11 @@ export function CabinPortableContent() {
             <tbody>
               {[
                 ["Weight", "Lighter, easier transport", "Heavier (2-4 tons for 20ft)"],
-                ["Durability", "10-15 years", "15-25 years"],
+                /* Was ["Durability", "10-15 years", "15-25 years"]. Nothing in this repository
+                   supports a service-life figure for either, and a softer wording ("lasts
+                   longer") would be the same unsupported comparison. Replaced with the upkeep
+                   each one actually needs, which is documented on their own product pages. */
+                ["Maintenance", "Repaint over the zinc-phosphate primer every few years", "Inspect door seals and gear; touch up the coating"],
                 ["Customization", "Highly flexible sizes", "Fixed ISO dimensions"],
                 ["Aesthetics", "Good with ACP cladding", "Industrial, robust"],
               ].map(([feature, ms, container], idx) => (
@@ -456,19 +460,26 @@ export function CabinPortableContent() {
           </div>
         </div>
 
-        <h3 className="text-lg font-semibold text-foreground mb-3">Expected lifespan with proper maintenance:</h3>
+        {/* Was "Expected lifespan with proper maintenance" with a years column per type. No test
+            report, standard or warranty term in this repository supports a service-life figure,
+            so the table is rebuilt around three things that ARE verifiable: what each type is
+            made of, the upkeep it actually needs, and what it is normally used for. Deliberately
+            NOT replaced with a softer durability ranking — that would be the same unsupported
+            claim in words instead of numbers. */}
+        <h3 className="text-lg font-semibold text-foreground mb-3">Construction, upkeep and typical use:</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm border border-border/40 rounded-xl overflow-hidden">
-            <thead><tr className="bg-primary/10"><th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Type</th><th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Lifespan</th></tr></thead>
+            <thead><tr className="bg-primary/10"><th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Type</th><th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Upkeep it needs</th><th className="text-left p-3 font-semibold text-foreground border-b border-border/30">Typical use</th></tr></thead>
             <tbody>
               {[
-                ["Standard MS porta cabins", "10-15 years"],
-                ["Container-based units", "15-25 years"],
-                ["Sandwich panel structures", "10-20 years depending on environment"],
-              ].map(([type, life], idx) => (
+                ["Standard MS porta cabins", "Repaint over the zinc-phosphate primer every few years; touch up scratches", "Site offices, security cabins, stores"],
+                ["Container-based units", "Inspect door seals and gear; touch up the coating where it is scratched", "Stacked or frequently relocated units, secure storage"],
+                ["Sandwich panel structures", "Keep panel joints sealed and check fixings", "Rooms air-conditioned all day — clinics, control rooms, executive offices"],
+              ].map(([type, upkeep, use], idx) => (
                 <tr key={idx} className={idx % 2 === 0 ? "bg-card" : "bg-muted/20"}>
                   <td className="p-3 font-medium text-foreground border-b border-border/20">{type}</td>
-                  <td className="p-3 text-muted-foreground border-b border-border/20">{life}</td>
+                  <td className="p-3 text-muted-foreground border-b border-border/20">{upkeep}</td>
+                  <td className="p-3 text-muted-foreground border-b border-border/20">{use}</td>
                 </tr>
               ))}
             </tbody>
@@ -617,7 +628,7 @@ export function CabinPortableContent() {
         </p>
         <Accordion type="single" collapsible className="w-full space-y-3">
           {[
-            { q: "How long does a portable cabin last?", a: "With proper maintenance, MS cabins last 10-15 years, while container-based units can serve 15-25 years depending on environment and care." },
+            { q: "How long does a portable cabin last?", a: "How long a cabin lasts depends on the site and the upkeep, so we do not publish a figure. What matters is the maintenance: repaint over the primer every few years, keep the roof drains clear, and touch up scratches before they rust depending on environment and care." },
             { q: "Can we get multi-storey (G+1 or G+2) cabins?", a: "G+1 configurations are common and well-established. G+2 requires additional structural engineering and is available from firms with the right structural-engineering expertise." },
             { q: "Is permission required from local authorities?", a: "Temporary structures under 200 sqm often need minimal permissions. For placements exceeding one year, check with local panchayat or municipal authorities." },
             { q: "Can cabins be air-conditioned?", a: "Yes, portable cabins come with pre-provisioned AC points and electrical capacity for split AC units." },

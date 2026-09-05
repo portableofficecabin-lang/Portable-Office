@@ -24,11 +24,11 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL("https://portableofficecabin.com"),
   title: {
-    default: "Portable Office Cabin | ISO 9001:2015 Certified Manufacturer",
+    default: "Portable Office Cabin | Manufacturer of Portable Cabins and Prefabricated Structures",
     template: "%s | Portable Office Cabin",
   },
   description:
-    "ISO 9001:2015 certified manufacturer of portable office cabins, site offices, container offices, prefab homes and labour colonies — PUF insulated, turnkey delivery.",
+    "Manufacturer of portable cabins and prefabricated structures — site offices, container offices, prefab homes and labour colonies. Turnkey delivery pan-India.",
   // NOTE: index/follow is intentionally NOT set here. The root layout applies to
   // EVERY route including the not-found boundary, so a global index,follow collided
   // with Next's auto noindex on 404 renders ("index, follow" + "noindex" conflict).

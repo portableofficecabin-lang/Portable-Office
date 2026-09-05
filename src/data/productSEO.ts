@@ -116,7 +116,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * carry a second figure. */
   "13": {
     title: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
-    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 working days. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.",
+    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 working days. Sizes from 8x8 to 40x10 ft, built in our own factory, delivered pan-India.",
     keywords: "prefabricated portable cabin, how prefabricated cabins are made, prefab cabin manufacturing process, factory built portable cabin, prefabricated cabin India, modular cabin fabrication, prefab site office cabin, prefabricated cabin delivery time",
   },
   // New & Used Shipping Container for Sale in India

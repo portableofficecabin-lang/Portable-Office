@@ -95,8 +95,8 @@ const SPEC: [string, string][] = [
   ["Windows", "Aluminium sliding 3 × 4 ft, tinted glass"],
   ["Electricals", "6–10 points per 200 sq ft, MCB, LED, concealed wiring"],
   ["Finish", "Zinc phosphate primer + PU topcoat"],
-  ["Life", "15–20+ years with basic upkeep"],
-  ["Certification", "Built under an ISO 9001:2015 quality system"],
+  ["Upkeep", "Repaint every few years, keep roof drains clear, inspect sealant"],
+  ["Quality control", "Checked for square, weld quality, wiring and water-tightness before dispatch"],
 ];
 
 const SIZES: { size: string; area: string; use: string }[] = [
@@ -109,7 +109,7 @@ const SIZES: { size: string; area: string; use: string }[] = [
 
 /** Prefabricated vs built on site, on the five axes buyers actually weigh. */
 const COMPARISON: { axis: string; prefab: string; onSite: string }[] = [
-  { axis: "Time", prefab: "7–21 days in the factory, one day on site", onSite: "Two to four months, weather permitting" },
+  { axis: "Time", prefab: "7–21 working days in the factory, placed in one lift on site", onSite: "A construction programme on your site, paced by weather and trades" },
   { axis: "Quality", prefab: "Jig-welded frame, factory-tested wiring, leak-checked before dispatch", onSite: "Depends on the crew, the weather and who is watching" },
   { axis: "Disruption", prefab: "No material dumps, no masons, no curing time on your land", onSite: "All of the above, on your site" },
   { axis: "Reuse", prefab: "Lift it, move it, use it again", onSite: "Demolish it" },
@@ -489,7 +489,7 @@ export function PrefabricatedPortableCabinContent() {
           </a>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Monday to Saturday, 7 AM to 10 PM. ISO 9001:2015 certified and MSME registered, with
+          Monday to Saturday, 7 AM to 10 PM. MSME registered, with
           manufacturing at our Tamil Nadu factory in Kamandoddi, near Hosur, and a Bangalore office
           in Electronic City.
         </p>
