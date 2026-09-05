@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Check, Zap, Shield, Settings, Thermometer, RotateCcw, Building2, HardHat, Users, Leaf, ClipboardCheck, Phone, Home, Box, Wrench } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
@@ -53,6 +54,17 @@ export function PrefabPortaCabinContent() {
         </h2>
         <p className="text-muted-foreground text-lg leading-relaxed mb-4">
           Prefab porta cabins have become essential infrastructure across India's booming construction, education, and industrial sectors. These factory-fabricated modular buildings combine steel frameworks with insulated sandwich panels, enabling rapid deployment that traditional construction simply cannot match.
+        </p>
+        {/* Reciprocal link to the process page. This page owns the BUYER'S GUIDE intent; the
+            other owns HOW IT IS MADE, step by step. Keeping them pointed at each other is what
+            stops the two ranking against each other for the same queries. */}
+        <p className="text-muted-foreground leading-relaxed mb-4">
+          Already decided on a prefab cabin and want to know how one is actually built? Our{" "}
+          <Link href="/products/prefabricated-portable-cabin" className="font-medium text-accent underline-offset-4 hover:underline">
+            prefabricated portable cabin process page
+          </Link>{" "}
+          walks through the factory sequence day by day, from your approved drawing to the crane
+          setting the finished cabin down on site.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
           In 2026, the demand for portable cabins continues to surge. Metro expansions in Delhi and Mumbai, highway projects under Bharatmala, and rural development initiatives all require fast, flexible structures. Whether you need site offices for a 6-month project or semi-permanent labour accommodation for a decade, prefab porta cabins deliver 40–60% cost savings compared to conventional RCC construction.
