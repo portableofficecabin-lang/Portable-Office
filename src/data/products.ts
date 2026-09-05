@@ -1059,14 +1059,24 @@ export const products: Product[] = [
       { label: "Lifespan", value: "20+ years with low maintenance" },
     ],
     features: [
-      "2-4 hour on-site assembly — no foundation needed",
+      /* Was "2-4 hour on-site assembly — no foundation needed". That contradicted the page
+         rewritten on 2026-09-05, whose whole point is that the cabin arrives FINISHED and is
+         placed in a single lift — "some suppliers mean a kit of panels a crew bolts together
+         on your land; we don't". Features render on the page AND in the Product JSON-LD, so
+         the two cannot disagree. The no-foundation half was true and is kept. */
+      "Arrives finished and placed in one crane lift — no on-site assembly, no foundation",
       "Hot-dip galvanized steel for superior corrosion resistance",
       "Multiple layout options — partitioned, open, or multi-room",
       "Double-wall construction with vapor barrier protection",
       "Stackable for multi-story configurations",
       "Up to 60% cheaper than traditional construction",
     ],
-    images: ["/placeholder.svg"],
+    /* FIRST real image for this SKU (2026-09-05). It was ["/placeholder.svg"], so the
+     * Merchant feed had been borrowing the SIBLING product's photo
+     * (prefab-porta-cabin-exterior.webp) as its g:image_link. Five of the six supplied
+     * renders showed a furnished prefab HOUSE, not this site-office cabin, and were held
+     * back — see scripts/convert-prefabricated-portable-cabin-images.mjs. */
+    images: ["/images/products/prefabricated-portable-cabin/prefabricated-portable-cabin-factory-yard.webp"],
     price: 275000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,

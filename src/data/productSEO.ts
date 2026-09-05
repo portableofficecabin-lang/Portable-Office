@@ -107,10 +107,17 @@ const productSEOMap: Record<string, ProductSEOData> = {
     keywords: "20ft storage container, 40ft storage container, Corten steel container, cargo storage container India, heavy duty storage container, site storage container price",
   },
   // Prefabricated Portable Cabin
+  /* Prefabricated Portable Cabin (id 13) — the "HOW IT IS MADE" page. The buyer's GUIDE
+   * intent belongs to /products/prefab-porta-cabin (id 23); this URL owns the factory process.
+   * DROPPED from the previous description: "60% cheaper than construction", an unverified
+   * savings claim nothing in this codebase supports, and it fed the Product JSON-LD. Also
+   * dropped "2-4 hour assembly", which contradicts the page: the cabin arrives finished and is
+   * placed in one lift. NO price here — this SKU is fed at Rs 3,24,500 and prose must not
+   * carry a second figure. */
   "13": {
-    title: "Prefabricated Portable Cabin | Portable Office Cabin",
-    description: "Prefabricated portable cabins with quick 2-4 hour assembly, weather-resistant steel frame & PUF insulation. 60% cheaper than construction. Call us today!",
-    keywords: "prefabricated portable cabin, prefab cabin India, portable cabin manufacturer, modular portable cabin, prefab site office, prefabricated cabin price, quick install cabin",
+    title: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
+    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 days. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.",
+    keywords: "prefabricated portable cabin, how prefabricated cabins are made, prefab cabin manufacturing process, factory built portable cabin, prefabricated cabin India, modular cabin fabrication, prefab site office cabin, prefabricated cabin delivery time",
   },
   // New & Used Shipping Container for Sale in India
   "14": {
