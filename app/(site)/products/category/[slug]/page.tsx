@@ -37,7 +37,7 @@ const CATEGORY_META: Record<string, { title: string; description: string; keywor
   "portable-cabins": {
     title: "Portable Cabins in India — Prices, Sizes & Manufacturer",
     description:
-      "Factory-built portable cabins from ₹2.36 lakh (incl. GST). ISO 9001 manufacturer with 15+ years' experience. 20ft, 40ft & custom sizes, MS & PUF builds, pan-India delivery.",
+      "Factory-built portable cabins from ₹2.36 lakh (incl. GST). manufacturer with 15+ years' experience. 20ft, 40ft & custom sizes, MS & PUF builds, pan-India delivery.",
     keywords:
       "portable cabins, portable cabin manufacturer in India, porta cabin, portable cabin price, "
       + "portable office cabin, prefabricated portable cabin, MS portable cabin, "
@@ -49,7 +49,7 @@ const CATEGORY_META: Record<string, { title: string; description: string; keywor
   "home-construction": {
     title: "Home Construction — Prefab Houses & Villas Built to Your Plan",
     description:
-      "Homes built to your own plan by an ISO 9001 manufacturer — steel structure, insulated walls, "
+      "Homes built to your own plan — steel structure, insulated walls, "
       + "roofing, interiors and finishing. Manufactured in Tamil Nadu and built on site across India.",
     keywords:
       "home construction, prefab house construction, villa construction, "

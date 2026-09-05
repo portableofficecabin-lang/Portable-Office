@@ -97,7 +97,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "46": {
     title: "Steel Portable Cabin Manufacturer in India | Portable Office Cabin",
     h1: "Steel Portable Cabin",
-    description: "Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in 7–21 days.",
+    description: "Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. Built in our own factory, pan-India delivery in 7–21 days.",
     keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
   },
   // 20ft & 40ft Storage Container – Corten Steel

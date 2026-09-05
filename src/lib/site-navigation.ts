@@ -407,13 +407,9 @@ export const topBarVerifications = [
   // identically everywhere. By far the longest label, so it is the first to drop when
   // space is tight: `showFrom: "lg"` keeps it hidden below lg (see VerifiedBadges) the
   // same way the third trust statement on the left drops below lg.
-  {
-    id: "iso",
-    label: "ISO 9001:2015 Certified Company",
-    srLabel: "ISO 9001:2015",
-    value: `QMS · Cert. No. ${COMPANY.isoCertificate}`,
-    showFrom: "lg",
-  },
+  /* ISO entry WITHDRAWN 2026-09-05 — no certificate in this repository (company.ts holds
+     the number QT-99968/0726 and nothing else: no issuing body, scope or validity). Restore
+     this entry verbatim once the certificate is produced and its scope is confirmed. */
 ] as const;
 
 /**
@@ -433,7 +429,6 @@ export const locationStripText =
   "Portable Cabin Manufacturer Serving Bangalore • Karnataka & Tamil Nadu";
 
 export const footerTrustItems = [
-  { label: "ISO 9001:2015 Certified", icon: "badge" },
   { label: "GST Invoice", icon: "receipt" },
   { label: "PAN India Delivery", icon: "truck" },
   { label: "In-house Manufacturing", icon: "factory" },
@@ -442,7 +437,6 @@ export const footerTrustItems = [
 /** Wording preserved from the previous footer, including the "Company" and "QMS"
  *  qualifiers, so the certification is stated exactly as it was. */
 export const registrationBadges = [
-  { label: "ISO 9001:2015 Certified Company", value: `QMS · Cert. No. ${COMPANY.isoCertificate}` },
   { label: "GSTIN", value: COMPANY.gstin },
   { label: "MSME / Udyam", value: COMPANY.udyam },
 ] as const;

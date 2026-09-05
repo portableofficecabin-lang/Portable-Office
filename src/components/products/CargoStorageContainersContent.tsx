@@ -307,7 +307,7 @@ export function CargoStorageContainersContent() {
             </div>
             <div>
               <p className="font-medium text-foreground mb-1">Quality & Compliance</p>
-              <p>500+ projects, ISO 9001 quality management, NBC fire safety</p>
+              <p>Documented quality checks before dispatch, NBC fire safety</p>
             </div>
           </div>
         </div>

@@ -1825,7 +1825,7 @@ export const CITY_PAGES: CityPage[] = [
         text: "Line by line, against your own plot and your own drawing — free, and yours to take to another builder for comparison.",
       },
       {
-        title: "An ISO 9001:2015 certified company",
+        title: "A GST- and MSME-registered manufacturer",
         text: "Certificate QT-99968/0726, alongside GST registration and Udyam registration — all verifiable, all stated in full on our contact page.",
       },
     ],

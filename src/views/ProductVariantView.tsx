@@ -3,7 +3,6 @@ import { Check, ChevronRight, Ruler, Truck } from "lucide-react";
 
 import { Layout } from "@/components/layout/Layout";
 import { JsonLd } from "@/components/JsonLd";
-import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductActions } from "@/components/products/ProductActions";
 import { ProductKeySpecs } from "@/components/products/ProductKeySpecs";
@@ -220,7 +219,11 @@ export function ProductVariantView({
                 </span>
               </div>
 
-              <IsoCertificationBadge className="mb-5" />
+              /* IsoCertificationBadge WITHDRAWN from public rendering 2026-09-05: no certificate
+                 exists in this repository — company.ts records the number QT-99968/0726 and nothing else,
+                 with no issuing body, scope or validity. The component is PRESERVED at
+                 src/components/IsoCertificationBadge.tsx; re-import and restore this block once the
+                 certificate is produced and its scope and validity are confirmed. */
 
               <p className="text-lg text-muted-foreground mb-6">
                 {variantDescription(family, variant)}

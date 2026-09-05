@@ -86,7 +86,7 @@ export function WhatSetsUsApart() {
                   {[
                     { value: "500+", label: "Projects Completed" },
                     { value: "15+", label: "Years Experience" },
-                    { value: "ISO 9001", label: "2015 Certified" },
+                    { value: "In-house", label: "Manufacturing" },
                     { value: "7 Days", label: "Support, Mon-Sun" },
                   ].map((stat) => (
                     <div key={stat.label} className="text-center p-5 bg-white/[0.08] rounded-xl border border-white/10 hover:border-accent/40 transition-all duration-300 hover:scale-[1.03]">

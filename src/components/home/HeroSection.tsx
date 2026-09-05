@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Zap, IndianRupee, Leaf, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IsoCertificationBadge } from "@/components/IsoCertificationBadge";
 import heroCabin from "@/assets/hero-cabin-900.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { startingFromEstimate, formatINR } from "@/components/home/cabin-calculator/pricing";
@@ -155,10 +154,11 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* ISO 9001:2015 certification — premium trust badge */}
-            <div className="mb-10 animate-fade-up" style={{ animationDelay: "0.37s" }}>
-              <IsoCertificationBadge variant="onDark" />
-            </div>
+            /* IsoCertificationBadge WITHDRAWN from public rendering 2026-09-05: no certificate
+               exists in this repository — company.ts records the number QT-99968/0726 and nothing else,
+               with no issuing body, scope or validity. The component is PRESERVED at
+               src/components/IsoCertificationBadge.tsx; re-import and restore this block once the
+               certificate is produced and its scope and validity are confirmed. */
 
             {/* CTAs */}
             <div 

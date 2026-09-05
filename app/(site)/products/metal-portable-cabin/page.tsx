@@ -40,7 +40,7 @@ const H1 = "Metal Portable Cabin";
    claim and a founding year, so they ship as written. */
 const DESCRIPTION =
   "Metal portable cabins built to order in MS, galvanised or colour-coated sheet. Choose your " +
-  "metal, size and layout. ISO 9001 factory, delivered pan-India.";
+  "metal, size and layout. Built in our own factory, delivered pan-India.";
 const IMAGE = `${SITE}/images/products/metal-portable-cabin/metal-portable-cabin-front.webp`;
 
 export const metadata: Metadata = buildPageMetadata({

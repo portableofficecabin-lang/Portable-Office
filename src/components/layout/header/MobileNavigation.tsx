@@ -102,7 +102,7 @@ export function MobileNavigation() {
 
           <p className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 text-[11px] font-semibold text-accent">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            ISO 9001:2015 Certified
+            MSME Registered
           </p>
         </div>
 

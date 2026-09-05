@@ -113,7 +113,7 @@ export function PrefabBuildingCategoryContent({ products }: { products: Product[
         </p>
         <p>
           Everything here is built at our own factory at Kamandoddi, near Hosur in Tamil Nadu, by an
-          ISO 9001:2015 certified manufacturer (Certificate No. QT-99968/0726), and delivered across
+          GST-registered and Udyam/MSME-registered manufacturer, and delivered across
           India. If a{" "}
           <Link href="/products/category/container-offices" className="text-accent hover:underline">
             container office
