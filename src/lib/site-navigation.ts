@@ -175,6 +175,18 @@ export const categoryServiceLinks: CategoryServiceLink[] = [
     href: "/products/steel-portable-cabin",
     description: "Steel cabins for offices, accommodation and site facilities.",
   },
+  /* Metal Portable Cabin — the "choose your metal" hub (owner request, 2026-09-05). Added AFTER
+   * the Steel entry so that entry keeps the position it already had. Unlike everything else in
+   * this registry it sells nothing: it is a guide comparing MS, galvanised, colour-coated and
+   * container-grade skins, and it routes on to the pages that do sell them. That is exactly the
+   * case this registry exists for — it is not a category, so no category-derived list can reach
+   * it, and without an entry here it would be invisible in both menus. */
+  {
+    parentSlug: "portable-cabins",
+    name: "Metal Portable Cabin",
+    href: "/products/metal-portable-cabin",
+    description: "Compare MS, galvanised and colour-coated skins before you choose",
+  },
   {
     parentSlug: "home-construction",
     name: "Building Construction Contractor",
