@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { CITY_PAGES, cityPageBySlug } from "@/data/cityPages";
+import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
 import { Layout } from "@/components/layout/Layout";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
@@ -42,6 +42,13 @@ const h2 = "mt-10 mb-3 text-2xl font-bold tracking-tight";
 const h3 = "mt-6 mb-1.5 text-lg font-semibold";
 const p = "mb-4 leading-relaxed text-muted-foreground";
 const li = "mb-2 leading-relaxed text-muted-foreground";
+
+/* Secondary CTA buttons every page carried before `ctaSecondaryLinks` existed. Pages that
+   leave that field unset render exactly these two, so nothing shifts on the container pages. */
+const DEFAULT_CTA_SECONDARY_LINKS: CityPageLink[] = [
+  { label: "Explore Container Offices", href: "/products" },
+  { label: "Container Office on Rent", href: "/rental-service" },
+];
 
 export default async function CityLandingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -108,6 +115,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             </li>
           ))}
         </ul>
+        {page.whyOutro && <p className={`${p} mt-4`}>{page.whyOutro}</p>}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
             Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
@@ -252,22 +260,40 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               href="/contact"
               className="rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
             >
-              Get a Free Quotation
+              {page.ctaButtonLabel ?? "Get a Free Quotation"}
             </Link>
-            <Link
-              href="/products"
-              className="rounded-md border px-5 py-2.5 text-sm font-semibold hover:bg-muted"
-            >
-              Explore Container Offices
-            </Link>
-            <Link
-              href="/rental-service"
-              className="rounded-md border px-5 py-2.5 text-sm font-semibold hover:bg-muted"
-            >
-              Container Office on Rent
-            </Link>
+            {(page.ctaSecondaryLinks ?? DEFAULT_CTA_SECONDARY_LINKS).map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="rounded-md border px-5 py-2.5 text-sm font-semibold hover:bg-muted"
+              >
+                {l.label}
+              </Link>
+            ))}
           </div>
         </section>
+
+        {/* Optional related-pages block — the page's own internal links (product pages, the
+            promotion / blog pages that own neighbouring keywords, sibling city pages). Rendered
+            as a <nav> so crawlers and screen readers read it as navigation, not body copy. */}
+        {page.relatedLinks && page.relatedLinks.length > 0 && (
+          <nav aria-label="Related pages" className="mt-10">
+            <h2 className="mb-3 text-xl font-bold tracking-tight">Related pages</h2>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {page.relatedLinks.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="block rounded-lg border px-4 py-3 text-sm font-medium hover:bg-muted"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         {/* Optional legal/affiliation disclaimer — REQUIRED on any page that names a real
             company or landmark (e.g. the Tata Electronics belt page): renders muted, below
