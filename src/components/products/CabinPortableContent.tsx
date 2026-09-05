@@ -44,7 +44,7 @@ export function CabinPortableContent() {
           {[
             { icon: IndianRupee, title: "One Fixed Price", desc: "The cabin listed on this page carries one fixed GST-inclusive price, with transport calculated at checkout from your delivery pincode" },
             { icon: Clock, title: "1-2 Day Install", desc: "Installation achievable in 1-2 days after delivery" },
-            { icon: Shield, title: "10-20+ Year Lifespan", desc: "Lifespan extending 10-20+ years with basic maintenance like periodic repainting and sealant checks" },
+            { icon: Shield, title: "Maintainable Structure", desc: "Kept in service with basic maintenance — periodic repainting and sealant checks" },
             { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where the workspace has to move when the project moves" },
           ].map((item, idx) => (
             <div key={idx} className="bg-card border border-border/40 rounded-xl p-5">
@@ -618,7 +618,7 @@ export function CabinPortableContent() {
         <Accordion type="single" collapsible className="w-full space-y-3">
           {[
             { q: "How long does a portable cabin last?", a: "With proper maintenance, MS cabins last 10-15 years, while container-based units can serve 15-25 years depending on environment and care." },
-            { q: "Can we get multi-storey (G+1 or G+2) cabins?", a: "G+1 configurations are common and well-established. G+2 requires additional structural engineering and is available from leading manufacturer firms with the right expertise." },
+            { q: "Can we get multi-storey (G+1 or G+2) cabins?", a: "G+1 configurations are common and well-established. G+2 requires additional structural engineering and is available from firms with the right structural-engineering expertise." },
             { q: "Is permission required from local authorities?", a: "Temporary structures under 200 sqm often need minimal permissions. For placements exceeding one year, check with local panchayat or municipal authorities." },
             { q: "Can cabins be air-conditioned?", a: "Yes, portable cabins come with pre-provisioned AC points and electrical capacity for split AC units." },
             { q: "What about fire safety?", a: "Fire-retardant panels and compliant electrical systems are available on request to meet safety norms." },

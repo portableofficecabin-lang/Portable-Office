@@ -208,7 +208,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Steel Portable Office Container — INTENT: Portability + ISMC/RHS structural steel + stackable G+1
   "28": {
     title: "Steel Office Container 10–40ft | Portable Office Cabin",
-    description: "Portable steel office container with ISMC/RHS frame, stackable G+1 & G+2 setups, PUF insulation & 10–25 year design life. Price incl. GST, buy online.",
+    description: "Portable steel office container with ISMC/RHS frame, stackable G+1 & G+2 setups and PUF insulation. Price incl. GST, buy online.",
     keywords: "portable steel office container, stackable container office, ISMC steel container office, G+1 container office, 10ft portable office container, RHS steel office container India",
   },
   "29": {

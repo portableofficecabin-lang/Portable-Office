@@ -1,0 +1,78 @@
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# DOCKER BUILD CONTEXT
+#
+# Without this file the context was the whole working directory — roughly 3.9 GB, because
+# `Dockerfile` line 16 is `COPY . .` and .dockerignore did not exist. That dragged in .mainbase
+# (644 MB), .next (1.5 GB), node_modules (746 MB) and .git, and it put .mainbase/.env into the
+# BUILDER layer. The shipped image was unaffected (the runner stage copies only
+# /app/.next/standalone, /app/public and /app/.next/static) but every build paid for it.
+#
+# WHAT THE BUILD ACTUALLY NEEDS — checked against the Dockerfile before writing this:
+#   deps stage    : package.json, package-lock.json, .npmrc   (.npmrc carries
+#                   legacy-peer-deps=true; npm ci fails without it — see the note in the
+#                   Dockerfile). All three are KEPT.
+#   builder stage : `COPY . .` then `npm run build`, so every source input is kept —
+#                   app/, src/, public/, middleware.ts, next.config.ts, tsconfig.json,
+#                   tailwind.config.ts, postcss.config.js, components.json.
+# Nothing below is a build input.
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+
+# Dependencies — the builder takes node_modules from the deps stage, never from the context.
+node_modules
+**/node_modules
+
+# Local build output — `npm run build` regenerates .next inside the image. Shipping the host's
+# copy in is both wasteful and a source of stale-artifact bugs.
+.next
+out
+dist
+build
+
+# Version control and CI metadata. Not read by next build.
+.git
+.gitignore
+.gitattributes
+.github
+
+# The scratch clone of this repo that tooling drops in the working directory (644 MB, carries
+# its own .git AND its own .env). Never a build input. See eslint.config.js, which ignores it
+# for the same reason.
+.mainbase
+
+# ── SECRETS ──────────────────────────────────────────────────────────────────────────────────
+# .env.local holds SUPABASE_SERVICE_ROLE_KEY. It is read at RUNTIME by server code, never at
+# build time, so it has no business in the build context or in any image layer.
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# NOTE ON `.env` — deliberately NOT excluded.
+# It contains only NEXT_PUBLIC_* / VITE_* publishable keys (the Supabase anon key is designed to
+# ship to the browser). Next.js INLINES NEXT_PUBLIC_* at BUILD time, so removing this file from
+# the context would silently produce a client bundle with an undefined Supabase URL and key
+# unless the platform injects those same vars into the build environment.
+# If the deployment platform is confirmed to supply NEXT_PUBLIC_SUPABASE_URL,
+# NEXT_PUBLIC_SUPABASE_ANON_KEY and NEXT_PUBLIC_SITE_URL at build time, add `.env` here and
+# re-verify the built client bundle still has them.
+
+# Original artwork kept for restore — gitignored, and not referenced by any page.
+image-backups
+
+# Generated screenshots (scripts/screenshot.mjs recreates them).
+docs/screenshots
+
+# Supabase CLI scratch.
+supabase/.temp
+
+# Editor / OS noise.
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.log
+
+# Local-only helpers that are not build inputs.
+merchant-feed.xml
+PASTE_FULL_FILE_PATH_HERE.txt
+tsconfig.tsbuildinfo

@@ -386,7 +386,7 @@ export function PrefabPortaCabinContent() {
               ))}
             </ul>
             <p className="text-sm text-muted-foreground mt-3 italic">
-              Once drawings receive approval, manufacturing slots and delivery timelines are confirmed. Leading manufacturers complete this phase within days.
+              Once drawings receive approval, manufacturing slots and delivery timelines are confirmed. Manufacturers complete this phase within days.
             </p>
           </div>
 
@@ -470,7 +470,7 @@ export function PrefabPortaCabinContent() {
           How to Choose the Right Prefab Porta Cabin Supplier
         </h2>
         <p className="text-muted-foreground mb-6">
-          Evaluating leading manufacturers requires attention to several factors:
+          Evaluating manufacturers requires attention to several factors:
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
@@ -488,7 +488,7 @@ export function PrefabPortaCabinContent() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground mt-4 italic">
-          India trust in leading provider credentials comes from verifiable track records and customer satisfaction references.
+          India trust in a supplier comes from verifiable track records and customer satisfaction references.
         </p>
       </section>
 

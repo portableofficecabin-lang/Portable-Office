@@ -93,7 +93,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Intro paragraph */}
           <section className="prose prose-lg max-w-none">
             <p className="text-foreground/85 leading-relaxed">
-              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
+              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited also manufactures prefabricated labour huts in Bengaluru.
             </p>
           </section>
 
@@ -422,7 +422,7 @@ export default function PrefabLabourColonyBengaluru() {
               The world of prefabricated solutions extends far beyond labor colonies, offering a diverse range of options to meet the evolving needs of industries and businesses in Karnataka. Prefabricated houses provide affordable and comfortable living spaces for individuals and families, while prefabricated offices and warehouses deliver flexible, efficient environments for business operations. These solutions are available in various categories, including fire resistant and weather-resistant models, as well as structures with enhanced MS thickness for added durability.
             </p>
             <p className="text-foreground/85 leading-relaxed">
-              Whether you require a temporary office, a secure storage facility, or specialized accommodation for your workforce, there is a prefabricated solution to match every requirement. Leading manufacturers in Karnataka offer a comprehensive range of products, allowing clients to explore more categories and request tailored quotes based on their specific needs.
+              Whether you require a temporary office, a secure storage facility, or specialized accommodation for your workforce, there is a prefabricated solution to match every requirement. Manufacturers in Karnataka offer a comprehensive range of products, allowing clients to explore more categories and request tailored quotes based on their specific needs.
             </p>
             <Link href="/products" className="inline-flex items-center gap-2 text-accent font-semibold hover:underline text-sm">
               Explore our full product range →
@@ -653,7 +653,7 @@ export default function PrefabLabourColonyBengaluru() {
               In summary, Karnataka's emergence as a powerhouse for industrial projects and tourism is underpinned by its rich history, diverse culture, and forward-thinking approach to development. Prefabricated labor colonies have become a cornerstone of modern construction and industrial projects, providing essential temporary housing needs for workers while prioritizing safety, comfort, and sustainability.
             </p>
             <p className="text-foreground/85 leading-relaxed">
-              With a growing range of prefabricated solutions available from leading manufacturers, the industry is poised for significant expansion in the coming years. Karnataka's robust infrastructure, skilled workforce, and supportive business environment position it as a key player in the future of the prefabricated industry in India. As demand for temporary housing and modular solutions continues to rise, the state's tourism sector is also set to benefit, drawing more tourists to its renowned beaches, monuments, and wildlife reserves.
+              With a growing range of prefabricated solutions available from manufacturers, the industry is poised for significant expansion in the coming years. Karnataka's robust infrastructure, skilled workforce, and supportive business environment position it as a key player in the future of the prefabricated industry in India. As demand for temporary housing and modular solutions continues to rise, the state's tourism sector is also set to benefit, drawing more tourists to its renowned beaches, monuments, and wildlife reserves.
             </p>
             <p className="text-foreground/85 leading-relaxed">
               Looking ahead, Karnataka's commitment to innovation and development ensures a bright future for both the prefabricated industry and the many diverse communities it serves.
