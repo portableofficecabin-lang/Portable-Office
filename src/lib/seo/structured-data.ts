@@ -577,7 +577,7 @@ export const organizationStructuredData = {
   "@type": "Organization",
   name: "Portable Office Cabin",
   description:
-    "Leading manufacturer of portable cabins, container offices, and prefab solutions in India",
+    "ISO 9001:2015 certified manufacturer of portable cabins, container offices and prefab solutions in India",
   url: "https://portableofficecabin.com",
   logo: "https://portableofficecabin.com/logo.jpeg",
   taxID: "33FVKPK6238Q1ZT",

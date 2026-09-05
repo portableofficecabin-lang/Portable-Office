@@ -300,7 +300,7 @@ export function ShippingContainerSIPCOTContent() {
             "Optional roof insulation and reflective coatings for thermal comfort",
             "Solar-ready roofs for energy savings in SIPCOT estates",
             "Ideal for customers following ESG mandates and sustainability targets",
-            "90% container reuse — minimal debris compared to conventional building",
+            "Containers are reused rather than scrapped, with minimal on-site debris",
           ].map((item) => (
             <li key={item} className="flex items-start gap-2">
               <Leaf className="h-5 w-5 text-accent shrink-0 mt-0.5" />

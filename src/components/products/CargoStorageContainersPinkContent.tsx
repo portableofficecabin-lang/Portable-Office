@@ -455,7 +455,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               "In-house design, fabrication, and NDT-tested quality control",
               "Pan-India project execution from single units to 100-container complexes",
               "Coordination with architects and branding agencies for brand-aligned designs",
-              "80% recycled steel and sustainable manufacturing practices",
+              "Recyclable steel and sustainable manufacturing practices",
               offer
                 ? "After-sales support: modifications, relocation assistance, and repaint every 5 years"
                 : "After-sales support: modifications, relocation (₹1 lakh/unit), and repaint every 5 years",

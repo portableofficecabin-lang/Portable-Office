@@ -382,7 +382,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Utility Integration: Power, Water & Comfort Systems</h2>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          When it comes to portable cabins, seamless utility integration is essential for creating office spaces and site offices that are not only functional but also comfortable and efficient. As a leading manufacturer in India, we understand that every project—whether it's a construction site, a modular meeting room, or a temporary accommodation unit—demands reliable access to power, water, and climate control.
+          When it comes to portable cabins, seamless utility integration is essential for creating office spaces and site offices that are not only functional but also comfortable and efficient. As a manufacturer working across India, we understand that every project—whether it's a construction site, a modular meeting room, or a temporary accommodation unit—demands reliable access to power, water, and climate control.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
           Our portable office cabins and site offices are engineered with advanced electrical systems, ensuring a stable and safe power supply for all your operational needs. From customized wiring layouts to strategically placed outlets and lighting, each cabin is designed to suit the specific requirements of your business. Whether you need dedicated workstations, meeting rooms, or specialized equipment, our experts ensure your portable office is fitted for productivity from day one.
@@ -449,7 +449,7 @@ export function CabinPortableContent() {
             <Leaf className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-semibold text-foreground mb-2 text-sm">Sustainability</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
-              <li>• 90% recyclable steel</li>
+              <li>• Recyclable steel</li>
               <li>• Solar rooftop compatible</li>
               <li>• Insulated to reduce AC loads</li>
             </ul>

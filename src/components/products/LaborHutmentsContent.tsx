@@ -10,7 +10,7 @@ export function LaborHutmentsContent() {
   const faqs = [
     { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp takes 10–20 days versus 60–90 days for masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
     { q: "What does the labor hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Larger colonies are sized to the brief — panel thickness, interior furnishings, sanitary provisions, and number of floors all change the build — so those are quoted separately." },
-    { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition. Units are designed for 3–10 project reuses." },
+    { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated for reuse, unlike fixed buildings that have to be demolished. Units are designed for 3–10 project reuses." },
     { q: "What is the service life of prefab labor hutments?", a: "Can be temporary (1–3 years) or semi-permanent (up to 15–20 years) depending on specifications, foundation type, and maintenance practices. Anti-corrosive coatings and galvanized steel ensure long-term durability." },
     { q: "Do you offer G+1 and G+2 configurations?", a: "Yes. Single-story, G+1, and G+2 options are available with staircases, corridors, and balcony walkways to address land availability constraints on urban and remote sites." },
     { q: "What compliance standards do your hutments meet?", a: "Designs adapt for PSU tenders requiring minimum 2.5–3.5 sqm per worker and specified sanitation ratios. Electrical layouts include MCBs, earthing, and optional fire-retardant linings meeting safety regulations." },
@@ -113,7 +113,7 @@ export function LaborHutmentsContent() {
           {[
             { title: "Fast Installation", desc: "A 100-person camp takes 10–20 days versus 60–90 days for masonry — critical for reducing project mobilization time" },
             { title: "Fixed Quoted Price", desc: "One fixed GST-inclusive price for the listed unit, quoted before fabrication starts, with transport calculated at checkout from your delivery pincode" },
-            { title: "Reusability", desc: "Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition" },
+            { title: "Reusability", desc: "Hutments can be dismantled and relocated for reuse, unlike fixed buildings that have to be demolished" },
             { title: "Scalability", desc: "Add or remove blocks as workforce size changes during phased EPC contracts for highways, metro rail, or refineries" },
             { title: "Reduced Disruption", desc: "Most fabrication happens off site, minimizing dust, noise, and congestion at the project location" },
           ].map((item) => (
@@ -293,7 +293,7 @@ export function LaborHutmentsContent() {
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { icon: Leaf, title: "Reduced Waste", desc: "Controlled factory production generates under 5% material waste versus 15–20% in conventional builds" },
+            { icon: Leaf, title: "Reduced Waste", desc: "Controlled factory production keeps offcuts and material waste inside the works, not on your site" },
             { icon: Zap, title: "Energy Efficient", desc: "Insulated panels and LED lighting reduce power consumption 25–40%; solar integration possible for lighting and fans" },
             { icon: Building2, title: "Less Site Disturbance", desc: "Smaller on-site footprint, reduced dust and noise, shorter heavy-vehicle movements" },
             { icon: RotateCcw, title: "Reusability", desc: "Multiple project deployments cut repetitive raw material usage and lower embodied carbon over time" },

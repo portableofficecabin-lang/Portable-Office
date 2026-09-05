@@ -413,7 +413,7 @@ export default function PortableCabinManufacturersBangalore() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="bg-accent/10 border border-accent/30 rounded-xl p-6">
           <p className="text-muted-foreground leading-relaxed mb-4">
-            <strong className="text-foreground">Portable Office Cabin</strong> is a leading manufacturer of portable cabins, container offices, prefab homes, and modular structures serving Bangalore and customers across India from our own Tamil Nadu factory at Kamandoddi, Hosur — barely 40 km from the city — backed by our Bangalore office in Electronic City. With over a decade of experience, we deliver customized, high-quality portable solutions for construction, industrial, commercial, and residential applications.
+            <strong className="text-foreground">Portable Office Cabin</strong> manufactures portable cabins, container offices, prefab homes, and modular structures serving Bangalore and customers across India from our own Tamil Nadu factory at Kamandoddi, Hosur — barely 40 km from the city — backed by our Bangalore office in Electronic City. With over a decade of experience, we deliver customized, high-quality portable solutions for construction, industrial, commercial, and residential applications.
           </p>
           <Link href="/" className="text-primary font-semibold hover:underline">
             Visit Portable Office Cabin →

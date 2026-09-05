@@ -129,12 +129,12 @@ export function PrefabPortaCabinContent() {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { icon: Zap, title: "Rapid Deployment", desc: "Installation in hours to 2 days versus months for RCC buildings" },
+            { icon: Zap, title: "Rapid Deployment", desc: "On-site installation takes hours to 2 days once the unit is delivered" },
             { icon: Shield, title: "One Fixed Price", desc: "The listed build carries one GST-inclusive price, quoted before fabrication starts" },
             { icon: RotateCcw, title: "Relocatable Design", desc: "Units can be shifted 5–10 times over their lifespan without structural degradation" },
-            { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation reduces AC loads by up to 30% in extreme heat" },
+            { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation keeps the interior cooler and reduces the load on air conditioning" },
             { icon: Settings, title: "Weather Resistance", desc: "Anti-corrosion coatings and proper drainage handle monsoons" },
-            { icon: Leaf, title: "Eco Friendly Construction", desc: "90% recyclable materials, zero construction debris, solar panel compatibility" },
+            { icon: Leaf, title: "Eco Friendly Construction", desc: "Recyclable materials, minimal on-site debris, solar panel compatibility" },
           ].map((feature) => (
             <div key={feature.title} className="bg-card rounded-xl p-6 shadow-card border border-border">
               <feature.icon className="h-8 w-8 text-accent mb-4" />

@@ -251,7 +251,7 @@ export default function MSPortableCabinBlog() {
           {/* Internal Linking Callout */}
           <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-14">
             <p className="text-foreground/90 leading-relaxed">
-              <strong>Portable Office Cabin</strong> is India's leading manufacturer and supplier of portable cabins, container offices, and prefabricated structures. Explore our full range of products and services at{" "}
+              <strong>Portable Office Cabin</strong> manufactures and supplies portable cabins, container offices, and prefabricated structures. Explore our full range of products and services at{" "}
               <Link href="/" className="text-accent font-semibold hover:underline">portableofficecabin.com</Link>.
             </p>
           </div>

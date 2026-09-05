@@ -257,7 +257,7 @@ export function ShippingContainerKrishnagiriContent() {
             "Full customization strength — from basic storage to premium fitted offices",
             "Local understanding of Krishnagiri's terrain, climate, and logistics",
             "Tamil Nadu factory near Hosur with a Bangalore office — quicker site visits and delivery",
-            "Sustainability: 90% container reuse, minimal debris versus brick-and-mortar",
+            "Sustainability: containers are reused rather than scrapped, with minimal on-site debris",
           ].map((point) => (
             <li key={point} className="flex items-start gap-3">
               <Shield className="h-5 w-5 text-accent shrink-0 mt-0.5" />

@@ -93,7 +93,7 @@ export default function PrefabLabourColonyBengaluru() {
           {/* Intro paragraph */}
           <section className="prose prose-lg max-w-none">
             <p className="text-foreground/85 leading-relaxed">
-              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a leading manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
+              At <strong>Portable Office Cabin</strong>, we manufacture turnkey prefab labour colonies in-house at our Tamil Nadu factory near Hosur — barely 40 km from the city — and design, deliver and install them across Bengaluru Urban, Bengaluru Rural, Devanahalli, Nelamangala, Bidadi, Doddaballapura and surrounding industrial belts. As a manufacturer of modular building solutions in South India, we understand the unique challenges Bengaluru projects face: tight timelines, constrained plots, monsoon weather, and strict compliance requirements from principal employers and EPC contractors. Industrial Foams Private Limited is also a leading manufacturer of prefabricated labour huts in Bengaluru.
             </p>
           </section>
 

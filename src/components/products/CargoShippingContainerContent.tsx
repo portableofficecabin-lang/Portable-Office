@@ -430,8 +430,8 @@ export function CargoShippingContainerContent() {
             "10–20 workers versus 50+ for equivalent masonry",
             "5–10 deployment cycles for quality units",
             "300 MPa steel withstands extreme conditions",
-            "95% recycled steel content in many containers",
-            "80% reduction in construction waste vs traditional building",
+            "Steel construction, recyclable at end of life",
+            "Off-site fabrication keeps construction waste off your site",
             "Fits standard flatbed trucks, rail wagons, and vessels",
           ].map((benefit, i) => (
             <div key={i} className="flex items-start gap-2 bg-accent/5 rounded-lg p-3">

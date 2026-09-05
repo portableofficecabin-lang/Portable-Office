@@ -63,7 +63,7 @@ const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "Article",
   headline: "Porta Cabins on Rent – Flexible Portable Space by Portable Office Cabin",
-  description: "Complete guide to renting porta cabins in India. Learn about rental types, pricing, delivery timelines, customization options, and how to enquire with India's leading manufacturer.",
+  description: "Complete guide to renting porta cabins in India. Learn about rental types, pricing, delivery timelines, customization options, and how to enquire.",
   image: "https://portableofficecabin.com/blog/porta-cabins-on-rent.png",
   author: {
     "@type": "Organization",
@@ -617,7 +617,7 @@ export default function PortaCabinsOnRent() {
               <div className="bg-accent/10 border border-accent/30 rounded-xl p-6">
                 <h3 className="font-bold text-foreground mb-2">About Portable Office Cabin</h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Whether you need a single security cabin for 3 months or a complete labour colony for a multi-year infrastructure project, Portable Office Cabin delivers rental solutions built on manufacturing expertise, regional presence, and a commitment to meeting your timeline. As one of the leading manufacturers in India's modular construction industry, we understand that every day matters on your project site.
+                  Whether you need a single security cabin for 3 months or a complete labour colony for a multi-year infrastructure project, Portable Office Cabin delivers rental solutions built on manufacturing expertise, regional presence, and a commitment to meeting your timeline. As a manufacturer in the modular construction industry, we understand that every day matters on your project site.
                 </p>
                 <Link href="/" className="text-accent font-semibold text-sm hover:underline">
                   Visit portableofficecabin.com →

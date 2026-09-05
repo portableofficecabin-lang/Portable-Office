@@ -86,7 +86,7 @@ const strengths = [
   "Marine-grade steel and PIR insulation for 20-year durability",
   "Experience across site offices, labour colonies, container homes, cafés, guard cabins, and portable toilets",
   "Bangalore office plus a Tamil Nadu factory ~40 km away — quicker site visits and after-sales support",
-  "Sustainability: 90% container reuse, minimal debris versus brick-and-mortar",
+  "Sustainability: containers are reused rather than scrapped, with minimal on-site debris",
   "Flexibility for homeowners, corporate offices, construction firms, and government bodies",
 ];
 

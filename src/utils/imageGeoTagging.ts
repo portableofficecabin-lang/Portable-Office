@@ -74,7 +74,7 @@ const INDUSTRIAL_LOCATION_SUMMARY =
 // Page-level geo metadata with targeted keywords
 const pageGeoMeta: Record<string, Partial<ImageGeoMeta>> = {
   home: {
-    title: "Portable Office Cabin – Leading Manufacturer in South India",
+    title: "Portable Office Cabin – Prefab & Modular Manufacturer in South India",
     keywords: `portable cabin India, portable office cabin manufacturer, container office Bangalore, ${INDUSTRIAL_LOCATION_KEYWORDS}`,
   },
   products: {
