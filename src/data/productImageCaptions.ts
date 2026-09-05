@@ -14,6 +14,19 @@ export const productImageCaptions: Record<string, string> = {
     "40ft length x 10ft width exterior dimensions",
   "portable-cabin-40ft-bunkhouse-rear-utilities.webp":
     "rear view with electrical and plumbing utility connections installed",
+  // Steel Portable Cabin (id 46)
+  "steel-portable-cabin-front.webp":
+    "front elevation with timber-finish entrance door, two grilled sliding windows and exterior downlights",
+  "steel-portable-cabin-angled-exterior.webp":
+    "angled exterior showing the full 20ft length, entrance door and external utility cabinet",
+  "steel-portable-cabin-interior-office.webp":
+    "fitted-out interior with desks, storage unit, track lighting and vinyl flooring",
+  "steel-portable-cabin-side-rear.webp":
+    "blank side and rear elevation with ventilation louvres and rear window",
+  "steel-portable-cabin-ventilated-unit.webp":
+    "louvred site cabin finish in two-tone paint with steel flush door",
+  "steel-portable-cabin-roof.webp":
+    "overhead view of the sloping profiled steel roof and corner lifting points",
 };
 
 /** Resolve a caption from an image URL/path by its file basename. */
