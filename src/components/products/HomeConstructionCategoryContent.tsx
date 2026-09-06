@@ -6,9 +6,11 @@
  * src/views/Products.tsx.
  *
  * TWO JOBS:
- *  1. Link the category's service pages, so the Building Construction Contractor page is reachable
- *     from its parent rather than only from the sitemap. A child page that nothing links to is a
- *     child page Google discovers late and users never find.
+ *  1. Link the category's service pages, so every child page is reachable from its parent rather
+ *     than only from the sitemap. A child page that nothing links to is a child page Google
+ *     discovers late and users never find. Both contractor pages are listed here — the
+ *     residential one added 2026-09-06 on the owner's instruction that it appear under this
+ *     category.
  *  2. Give a category that currently holds ONE product something to say. It was added in August
  *     2026 as a placeholder and the listing has been thin ever since.
  *
@@ -22,14 +24,26 @@
  */
 
 import Link from "next/link";
-import { ArrowRight, Building2, Film, HardHat } from "lucide-react";
+import { ArrowRight, Building2, Film, HardHat, Home } from "lucide-react";
 
 const SERVICE_LINKS: { href: string; name: string; blurb: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  /* TWO contractor pages are listed, deliberately — see the header comment on
+     app/(site)/products/home-construction/residential-building-construction-contractor/page.tsx.
+     Their blurbs must stay distinct: the residential page covers scope and process, the Bangalore
+     page covers the technical depth. If you ever make these two descriptions interchangeable, the
+     pages read as duplicates to both users and search engines. */
+  {
+    href: "/products/home-construction/residential-building-construction-contractor",
+    name: "Residential Building Construction Contractor",
+    blurb:
+      "Houses, villas, apartments, shops and factory sheds across Hosur and Bangalore — the two ways to contract the work, the six stages a project runs through, where we build, and what you should ask any contractor before you sign.",
+    icon: Home,
+  },
   {
     href: "/products/home-construction/building-construction-contractor",
     name: "Building Construction Contractor in Bangalore",
     blurb:
-      "Individual houses, villas, turnkey projects, labour contracts, renovation and extension — how each contract model works, the quality checks at each stage, what drives cost and time, and how the quotation is put together.",
+      "The technical side of contracting in Bangalore — the quality checks made at each stage before work is covered up, everything a written specification has to list, and what actually drives cost and time.",
     icon: HardHat,
   },
   {
@@ -73,7 +87,9 @@ export function HomeConstructionCategoryContent() {
         </p>
       </div>
 
-      <ul className="mt-8 grid gap-4 md:grid-cols-3">
+      {/* 4 cards: 1 / 2 / 4 across. A 3-column grid would strand the fourth card alone on a
+          second row. */}
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {SERVICE_LINKS.map((item) => {
           const Icon = item.icon;
           return (
