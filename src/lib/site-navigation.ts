@@ -187,6 +187,19 @@ export const categoryServiceLinks: CategoryServiceLink[] = [
     href: "/products/metal-portable-cabin",
     description: "Compare MS, galvanised and colour-coated skins before you choose",
   },
+  /* TWO contractor service pages sit under Home Construction, listed here in the same order the
+   * cards use on the category page itself (HomeConstructionCategoryContent) so the sidebar, the
+   * mega menu and the page body all agree. Their descriptions are deliberately different — the
+   * residential page owns scope and process, the Bangalore page owns the technical detail. See
+   * the header comment on
+   * app/(site)/products/home-construction/residential-building-construction-contractor/page.tsx
+   * before editing either. */
+  {
+    parentSlug: "home-construction",
+    name: "Residential Building Construction Contractor",
+    href: "/products/home-construction/residential-building-construction-contractor",
+    description: "Houses, villas and sheds across Hosur and Bangalore — written estimate, stage-wise payment",
+  },
   {
     parentSlug: "home-construction",
     name: "Building Construction Contractor",
