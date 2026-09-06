@@ -2373,41 +2373,52 @@ export const CITY_PAGES: CityPage[] = [
       icbm: "12.8452, 77.6602",
     },
 
-    /* The RCC individual-house set already published on /products/construction-individual-building.
-       Reused deliberately: they show the exact product this page describes, and reusing them keeps
-       the page honest — no stock photography, and no claim that any of them stands in Electronic
-       City. Replace them the day the owner supplies photographs of a local completed house, and
-       only then may the alt text name the locality. */
+    /* OWNER-SUPPLIED SET, dropped 2026-09-06 as "House Construction Services (1-5).webp" and copied
+       to clean names in /images/cities/house-construction-contractor-services-in-electronic-city-bangalore/.
+       They replace the borrowed /products/construction-individual-building photographs this entry
+       first shipped with.
+
+       THEY ARE ARCHITECTURAL RENDERS, NOT PHOTOGRAPHS. All five visualise one modern flat-roofed
+       G+1 house — the same building from five angles — in a hilly landscape with olive trees and
+       palms that is plainly not Electronic City. So the alt text describes the FRAME and never says
+       "completed", "built" or "our project"; the disclaimer states they are design visualisations;
+       and the locality is named in none of them. Do not reword these to imply a finished local
+       build. Swap in photographs of a real handover first, and only then may the alt text say so.
+
+       Placement follows the villa and labour-camp pages: the straight-on elevation is the hero
+       because it survives the square crop, the aerial becomes the editorial band where a caption
+       about plot and setbacks earns its place, the interior sits beside the customisation section,
+       and the remaining two exteriors fill the gallery. */
     heroImage: {
-      src: "/images/products/construction-individual-building-front-elevation.webp",
-      alt: "Front elevation of a completed G+2 individual house built in RCC, with white render, timber-clad panels, balconies and covered car parking",
+      src: "/images/cities/house-construction-contractor-services-in-electronic-city-bangalore/house-construction-electronic-city-front-elevation.webp",
+      alt: "Design visualisation of a G+1 house seen straight on: white rendered walls with dark stone-clad panels between full-height windows, a first-floor balcony behind a glass balustrade, a recessed dark entrance door and a paved driveway between clipped hedges",
       width: 1024,
       height: 1024,
     },
     featureImage: {
-      src: "/images/products/construction-individual-building-street-view.webp",
-      alt: "Corner street view of a completed G+2 individual house showing the full front and side elevations and covered parking bays",
+      src: "/images/cities/house-construction-contractor-services-in-electronic-city-bangalore/house-construction-electronic-city-aerial-plot-view.webp",
+      alt: "Aerial view of the same G+1 house on its plot, showing the flat roof and parapet, the compound wall running around the boundary, the lawn either side and the paved driveway curving in to the covered entrance",
       width: 1024,
       height: 1024,
       caption:
-        "Setbacks, parking and the position of the staircase are settled on the plan long before the first column is cast — which is why the site visit comes before any number.",
+        "What the plot leaves you once the setbacks are taken off — the driveway, the boundary wall, where the house can actually sit — is settled on the plan long before the first column is cast. It is also why the site visit comes before any number.",
     },
     interiorImage: {
-      src: "/images/products/construction-individual-building-living-room.webp",
-      alt: "Finished living room in an individual house with timber feature wall, linear fireplace and full-height glazing to the car porch",
+      src: "/images/cities/house-construction-contractor-services-in-electronic-city-bangalore/house-construction-electronic-city-bedroom-terrace.webp",
+      alt: "Interior visualisation of a first-floor bedroom looking through a full-height sliding glass door onto a covered terrace with two armchairs, with recessed ceiling downlights, a built-in desk at a side window and a fitted wardrobe",
       width: 1024,
       height: 1024,
     },
     gallery: [
       {
-        src: "/images/products/construction-individual-building-side-elevation.webp",
-        alt: "Three-quarter view of a completed individual house showing balconies, timber cladding and the covered parking bay at ground level",
+        src: "/images/cities/house-construction-contractor-services-in-electronic-city-bangalore/house-construction-electronic-city-rear-elevation-pool.webp",
+        alt: "Garden elevation of the same house with the upper floor cantilevered over an outdoor kitchen and seating area, full-height sliding glazing to the living room, and a swimming pool with sun loungers alongside",
         width: 1024,
         height: 1024,
       },
       {
-        src: "/images/products/construction-individual-building-entrance-hall.webp",
-        alt: "Entrance hall of a finished individual house with a timber staircase and open-plan living and dining beyond",
+        src: "/images/cities/house-construction-contractor-services-in-electronic-city-bangalore/house-construction-electronic-city-corner-elevation.webp",
+        alt: "Three-quarter corner view of the same G+1 house showing the front and side elevations together, the cantilevered upper floor over a recessed entrance porch and the curved paved driveway",
         width: 1024,
         height: 1024,
       },
@@ -2654,7 +2665,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Prefab Homes — factory-built alternative", href: "/products/category/prefab-homes" },
     ],
 
-    disclaimer: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam (MSME) ${COMPANY.udyam}. Works: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The BBMP, the BDA, the BMRDA, ELCITA and the local panchayats are independent statutory and administrative bodies; Portable Office Cabin is not affiliated with any of them and does not control their approval timelines. The approvals notes on this page are planning guidance, not legal advice, and which authority applies is confirmed for your plot before drawings are filed. Photographs on this page show completed RCC individual houses and are not represented as projects at any named Electronic City address.`,
+    disclaimer: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam (MSME) ${COMPANY.udyam}. Works: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The BBMP, the BDA, the BMRDA, ELCITA and the local panchayats are independent statutory and administrative bodies; Portable Office Cabin is not affiliated with any of them and does not control their approval timelines. The approvals notes on this page are planning guidance, not legal advice, and which authority applies is confirmed for your plot before drawings are filed. The images on this page are architectural design visualisations supplied by Portable Office Cabin, not photographs of completed buildings, and are not represented as projects at any named Electronic City address.`,
   },
 ];
 
