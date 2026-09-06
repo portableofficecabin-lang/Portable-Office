@@ -74,7 +74,12 @@ const DESCRIPTION =
 const HERO_IMAGE = `${SITE}/images/products/building-construction-contractor/building-construction-contractor-villa-front-elevation-pool.webp`;
 
 export const metadata: Metadata = buildPageMetadata({
-  title: H1,
+  /* absoluteTitle, NOT title. The root layout applies `template: "%s | Portable Office Cabin"`,
+   * which would render this as a 68-character title tag that Google truncates. The owner asked
+   * on 2026-09-06 for the title to be exactly the page name and nothing else, so this bypasses
+   * the template and ships 44 characters that display in full. If you switch this back to
+   * `title:`, the brand suffix returns. */
+  absoluteTitle: H1,
   description: DESCRIPTION,
   keywords:
     "residential building construction contractor, residential construction contractor, " +
