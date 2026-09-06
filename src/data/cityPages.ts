@@ -2315,6 +2315,347 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer: `Portable Office Cabin — ISO 9001:2015 certified (${COMPANY.isoCertificate}), Udyam (MSME) registered. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The compliance notes on this page summarise the Building and Other Construction Workers Act, the Contract Labour (Regulation and Abolition) Act and related rules as planning guidance only; they are not legal advice. The Karnataka labour department and local authorities are independent statutory bodies with which Portable Office Cabin is not affiliated.`,
   },
+  /* ────────────────────────────────────────────────────────────────────────────────────────
+   * HOUSE CONSTRUCTION SERVICES AND CONTRACTOR IN ELECTRONIC CITY, BANGALORE
+   * Added 2026-09-06 on owner request, from a supplied copy deck.
+   *
+   * ── WHY THIS PAGE DOES NOT SELL ANYTHING ──────────────────────────────────────────────
+   * The supplied deck proposed selling a fixed-fee "site assessment and estimate" package here,
+   * with a price, an availability flag and a Merchant Center feed entry. That is NOT buildable at
+   * a /cities-we-serve/ URL: CityPage carries no price, no cart and no feed hook, and Merchant
+   * Center requires a working purchase button on the landing page. The owner chose (2026-09-06)
+   * to ship this as a normal, quote-driven city page. If the paid assessment is ever sold online
+   * it needs its own /products/<slug> SKU, a decided fee, a booking flow and a refund policy that
+   * matches — see the completion notes for that commit.
+   *
+   * ── WHAT THIS PAGE DELIBERATELY DOES NOT SAY ─────────────────────────────────────────────
+   *   • NO ₹ figure of any kind — the file rule at the top of this module, and the reason this
+   *     page routes every pricing question to a written quotation.
+   *   • NO booking fee, no "adjusted against your first stage payment", no refund window, no
+   *     free-rescheduling promise. Nothing is payable here, so none of those terms apply, and
+   *     the site-wide return policy is MerchantReturnNotPermitted.
+   *   • NO ISO 9001 claim. That claim is mid-withdrawal from public surfaces (see commits
+   *     53d483d and e84cecd); a NEW page must not extend it. GSTIN and Udyam are stated instead,
+   *     both from COMPANY.
+   *   • NO report turnaround in days and no completion date — the deck left both as placeholders.
+   *   • NO office hours other than COMPANY.businessHours. The deck said "9 am to 7 pm Mon-Sat",
+   *     which contradicts the real hours and omits Sunday.
+   *   • NO claim that any photograph is a completed Electronic City project. The images are the
+   *     RCC individual-house set already used on /products/construction-individual-building, and
+   *     the alt text describes only what is in the frame.
+   *
+   * ── HOW THIS AVOIDS CANNIBALISING THE FOUR SIBLING PAGES ─────────────────────────────────
+   * Five pages now touch house construction:
+   *   /products/home-construction/building-construction-contractor      contractor intent
+   *   /products/home-construction/residential-building-construction-contractor  residential deck
+   *   /products/construction-individual-building                        package, specs, cost basis
+   *   /cities-we-serve/villa-construction-company-bangalore             villas, city-wide
+   *   THIS PAGE                                                        the Electronic City locality
+   * So this page owns ONLY what is local: that the Bangalore office is in Electronic City Phase 1,
+   * which authority sanctions a plan on which side of the boundary, the localities covered, and
+   * what a nearby owner should expect. Contract models, the stage-by-stage build, specification
+   * grades and cost basis are SUMMARISED in a line or two and linked out — never restated at
+   * length. Keep it that way when editing.
+   * ──────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "house-construction-contractor-services-in-electronic-city-bangalore",
+    city: "Bangalore",
+    listTitle: "House Construction in Electronic City",
+    metaTitle: "House Construction Services & Contractor in Electronic City, Bangalore",
+    metaDescription:
+      "House construction contractor in Electronic City, Bangalore — individual houses, duplexes and G+1 and G+2 homes on your plot, quoted after a site visit.",
+    keywords:
+      "house construction services Electronic City, house construction contractor Electronic City Bangalore, building contractor Electronic City, residential construction Electronic City Bangalore, G+1 house construction Electronic City, duplex house construction Bangalore, individual house construction Anekal, house construction contractor Bommasandra Chandapura, civil contractor Electronic City",
+    geo: {
+      region: "IN-KA",
+      placename: "Electronic City, Bengaluru, Karnataka, India",
+      position: "12.8452;77.6602",
+      icbm: "12.8452, 77.6602",
+    },
+
+    /* The RCC individual-house set already published on /products/construction-individual-building.
+       Reused deliberately: they show the exact product this page describes, and reusing them keeps
+       the page honest — no stock photography, and no claim that any of them stands in Electronic
+       City. Replace them the day the owner supplies photographs of a local completed house, and
+       only then may the alt text name the locality. */
+    heroImage: {
+      src: "/images/products/construction-individual-building-front-elevation.webp",
+      alt: "Front elevation of a completed G+2 individual house built in RCC, with white render, timber-clad panels, balconies and covered car parking",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/products/construction-individual-building-street-view.webp",
+      alt: "Corner street view of a completed G+2 individual house showing the full front and side elevations and covered parking bays",
+      width: 1024,
+      height: 1024,
+      caption:
+        "Setbacks, parking and the position of the staircase are settled on the plan long before the first column is cast — which is why the site visit comes before any number.",
+    },
+    interiorImage: {
+      src: "/images/products/construction-individual-building-living-room.webp",
+      alt: "Finished living room in an individual house with timber feature wall, linear fireplace and full-height glazing to the car porch",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/products/construction-individual-building-side-elevation.webp",
+        alt: "Three-quarter view of a completed individual house showing balconies, timber cladding and the covered parking bay at ground level",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/products/construction-individual-building-entrance-hall.webp",
+        alt: "Entrance hall of a finished individual house with a timber staircase and open-plan living and dining beyond",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "House Construction Services and Contractor in Electronic City, Bangalore",
+    tagline:
+      "Individual houses, duplexes and G+1 and G+2 homes built on your own plot — planned from a site visit, quoted in writing.",
+    intro: [
+      "If you own a plot in or around Electronic City and you are ready to build, the first useful thing is not a rate over the phone. It is somebody standing on your site. Portable Office Cabin builds individual houses, duplexes and G+1 and G+2 homes in reinforced cement concrete on land the owner already holds, and our Bangalore office is in Electronic City Phase 1 — so a site visit here is a short drive, not a scheduling problem.",
+      "That proximity is the whole point of this page. Civil work has to be supervised on site, repeatedly, by somebody who can be there the same morning. A contractor two hours away can quote your job; whether they can staff it properly week after week is a different question. Plots in Electronic City, Neeladri Nagar, Doddathoguru, Konappana Agrahara, Hebbagodi, Chandapura, Bommasandra, Anekal and Attibele all sit inside the belt our site engineers cover daily.",
+      "We do not publish a rate per square foot, and you should be wary of anyone who does without seeing your plot. The rate depends on the soil, the setbacks your plot has to leave, how many floors you are allowed and how you want the house finished. What you get instead is a site visit and a written estimate against a written specification, which is a figure you can actually hold someone to.",
+    ],
+
+    whyHeading: "Why It Matters That Your Contractor Is Based Here",
+    whyIntro:
+      "Choosing a builder for a plot in Electronic City is mostly a question of who can be on your site often enough to catch things while they are still cheap to fix.",
+    whyBullets: [
+      {
+        title: "The office is in Electronic City Phase 1",
+        text: "Not a marketing address. Our Karnataka office genuinely sits here, which is why a supervisor can reach your plot without a half-day round trip, and why a visit can usually be arranged for a day that suits you rather than a day that suits the travel.",
+      },
+      {
+        title: "Site visits before quotation, not after",
+        text: "Road level, plot access, the neighbouring walls, where water and power come in and what the soil looks like all change the number. They are recorded before the estimate is written, not discovered during excavation.",
+      },
+      {
+        title: "Which authority applies is settled first",
+        text: "Plots a few hundred metres apart can fall under different sanctioning bodies here. Establishing yours at the start decides your setbacks, your floor area ratio and how many floors you can build.",
+      },
+      {
+        title: "Material logistics on this corridor are routine",
+        text: "Our works are at Kamandoddi near Hosur, about 40 km down Hosur Road. Deliveries into the Electronic City and Bommasandra belt are a run we make constantly, not an exception.",
+      },
+    ],
+
+    solutionsHeading: "What We Build in and around Electronic City",
+    solutionsIntro:
+      "Residential construction on plots the owner already holds, in the sizes this part of Bengaluru is actually laid out in.",
+    solutions: [
+      {
+        title: "Individual houses and duplexes",
+        text: "On 20×30, 30×40, 30×50 and 40×60 sites, ground floor upward depending on what your zoning and setbacks allow.",
+      },
+      {
+        title: "G+1 and G+2 homes",
+        text: "The common brief here: parking and a let-out floor below, the family floor above. The frame is designed for the final floor count from the start, so a later floor does not mean a new structure.",
+      },
+      {
+        title: "Houses built to let",
+        text: "Plot owners near the IT corridor often build for rental yield. Unit count, separate meters and durable finishes matter more than expensive ones, and the plan reflects that.",
+      },
+      {
+        title: "Renovation, extension and an added floor",
+        text: "Reworking a layout, extending at the rear, or adding a floor to an existing house — the last of which depends entirely on what the existing frame was designed to carry, checked before anything is promised.",
+      },
+      {
+        title: "Replacing an older house on the same plot",
+        text: "Demolition, debris clearance and a fresh sanction on an existing Khata property, which is a different approval path from a vacant site.",
+      },
+    ],
+
+    featuresHeading: "The Site Visit and the Written Estimate",
+    featuresIntro:
+      "Before any construction agreement, an engineer visits your plot and you receive a written assessment you can act on — and take to another builder for comparison if you want to. It covers:",
+    features: [
+      "A site visit by a civil engineer, at a date and time you choose",
+      "Assessment of soil condition, access, water, power and the neighbouring structures, with the site measured",
+      "A room-wise plan concept based on your requirement and your actual plot dimensions",
+      "A stage-by-stage construction cost estimate for your specific site",
+      "A materials specification list naming the brand quoted for cement, steel, wiring, plumbing and sanitaryware",
+      "An approvals checklist for the authority your plot falls under",
+      "A construction programme with a target for each stage",
+      "A follow-up discussion, in person or by phone, to go through the report with you",
+    ],
+    sizesNote:
+      "What the assessment does not cover: sanctioned architectural and structural drawings, which are prepared after you appoint us; government fees, approval charges and departmental payments; soil testing by an external laboratory, where your site needs it; and land survey, title verification and legal due diligence, which are your advocate's work rather than your builder's.",
+
+    industriesHeading: "Who Books a Site Visit",
+    industriesIntro:
+      "The brief changes a good deal depending on who is building and why.",
+    industries: [
+      {
+        title: "Families building the house they will live in",
+        text: "The most common one. Decisions get made around how the household actually uses rooms rather than around a plan drawn for nobody in particular.",
+      },
+      {
+        title: "People working in the Electronic City IT corridor",
+        text: "Often building on a plot bought years earlier, with little free time on weekdays. Visits and reviews are scheduled around that, and the written record does the work a daily site presence otherwise would.",
+      },
+      {
+        title: "Owners living abroad or in another city",
+        text: "Where nobody can be at the site regularly, progress has to be documented rather than described — photographs at each stage and a written record of what was agreed.",
+      },
+      {
+        title: "Plot holders building for rental return",
+        text: "Unit count, separate services and finishes that survive tenants matter more than premium materials. The plan matters more than the specification.",
+      },
+      {
+        title: "Buyers still deciding on a plot",
+        text: "An assessment before purchase tells you what a site will actually cost to build on, which is not obvious from the asking price. We only need access to the plot.",
+      },
+    ],
+
+    customHeading: "How You Contract the Work",
+    customIntro:
+      "Once the estimate is agreed, you choose how the job is contracted. Both are normal, and the quotation always states which one it describes — a labour rate and a turnkey rate are not comparable numbers.",
+    customBullets: [
+      {
+        title: "Turnkey — material and labour together",
+        text: "We supply material, labour, supervision and finishing against an agreed written specification, so you have one rate and one party answerable for the whole build.",
+      },
+      {
+        title: "Labour contract — you buy the material",
+        text: "You control brand and grade at every stage and see every bill; we bring the masons, bar benders, carpenters, plumbers, electricians and the site supervision. Some owners take this route for the first floor and move to turnkey later.",
+      },
+      {
+        title: "Specification grades, written down item by item",
+        text: "Rates are quoted at standard, premium and luxury specifications, and the difference between them is listed line by line — which cement, steel, flooring, wiring, sanitaryware and paint each one buys — so you can see what you are actually comparing.",
+      },
+      {
+        title: "Stage-wise payments, against completed work",
+        text: "Payments are released as stages are finished, never in advance of them, and the schedule is written into the agreement signed before material reaches your site.",
+      },
+    ],
+    customOutro:
+      "The full comparison of contract models, the stage-by-stage build process and the quality checks at each stage are set out on our building construction contractor page; the trade-by-trade specification and how the per-square-foot rate is built up are on the Construction Individual Building page. Both are linked at the foot of this page.",
+
+    whyUsHeading: "What You Should Expect from Any Builder Here",
+    whyUsIntro:
+      "Worth asking of us and of everyone else you speak to. If a builder cannot answer these in writing, that is the answer.",
+    whyUsBullets: [
+      {
+        title: "A written agreement with the scope inside it",
+        text: "Rate, specification, payment stages tied to completed work, and what happens if the programme slips — agreed before mobilisation rather than settled by conversation later.",
+      },
+      {
+        title: "The rate and the specification together",
+        text: "A rate quoted without the specification attached tells you nothing. A bare-shell figure and a fully finished figure are different numbers for the same floor plan.",
+      },
+      {
+        title: "A named site engineer for your build",
+        text: "One person responsible for your plot, so you are not explaining your project afresh to whoever picks up the phone.",
+      },
+      {
+        title: "Checks at the moment they are still possible",
+        text: "Reinforcement is checked against the bar bending schedule before the pour, wet areas are tested before they are tiled, and services are recorded before plastering closes the walls. None of it can be inspected afterwards.",
+      },
+      {
+        title: "Registrations you can verify",
+        text: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam ${COMPANY.udyam}. Those are the registrations we hold, and we do not claim others.`,
+      },
+    ],
+
+    areasHeading: "Areas We Cover around Electronic City",
+    areasText:
+      "Electronic City Phase 1 and Phase 2, Neeladri Nagar, Doddathoguru, Konappana Agrahara, Hebbagodi, Huskur, Basapura, Singasandra, Begur, Hosa Road, Chandapura, Bommasandra, Jigani, Anekal, Attibele, Sarjapur Road, Bannerghatta Road and the wider Hosur Road corridor down to Attibele. Our Bangalore office is in Electronic City Phase 1 and our works are at Kamandoddi near Hosur, so this whole belt is local to us and a site visit here is a short trip rather than a day out. If your plot is elsewhere in Bengaluru, we still build there — tell us where it is and we will say plainly whether we can supervise it properly.",
+
+    howHeading: "How It Runs, Step by Step",
+    howSteps: [
+      {
+        title: "Tell us about the plot",
+        text: "Location, plot size, how many floors you have in mind and the finish level you are considering. That is enough to arrange a visit — call, WhatsApp or use the enquiry form.",
+      },
+      {
+        title: "Site visit",
+        text: "An engineer meets you at the plot at a time you choose and takes about ninety minutes: measuring the site and checking soil, access, water, power, the road level and the neighbouring structures, and talking through what you want built.",
+      },
+      {
+        title: "Written assessment and estimate",
+        text: "You receive the room-wise plan concept, the stage-wise cost estimate, the materials specification with named brands, the approvals checklist and the programme, followed by a call to walk you through it. The report is yours to keep.",
+      },
+      {
+        title: "Drawings and sanction",
+        text: "If you appoint us, the architectural and structural drawings are prepared and filed with the authority your plot falls under, and the commencement certificate is obtained before work starts on site.",
+      },
+      {
+        title: "Construction, stage by stage",
+        text: "Foundation and RCC frame, then masonry, plaster and waterproofing, then electrical and plumbing, then the finishing trades — each stage checked before the next one covers it, and each payment released against work already standing.",
+      },
+      {
+        title: "Snagging and handover",
+        text: "A snag list agreed and cleared, services tested, and the house handed over with the drawings that describe what was actually built.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does house construction cost in Electronic City?",
+        answer:
+          "It is quoted per square foot of built-up area against a written specification, and we quote it after visiting the plot. The rate moves with the soil and how deep the foundation has to go, the number of floors, how much of the plot your setbacks leave buildable, and the finish level you choose — which is why a number quoted over the phone is not worth much. You get a site visit and a written, line-by-line estimate against your own plot, so the figure describes your site rather than an average.",
+      },
+      {
+        question: "Am I committed to anything once I have the estimate?",
+        answer:
+          "No. The written assessment commits you to nothing — the report is yours to keep, and you are free to use it to plan, to budget, or to compare quotations from other contractors. There is no obligation of any kind to appoint us. Ask us what the site visit itself involves when you get in touch, and we will confirm the arrangement before anyone travels.",
+      },
+      {
+        question: "Which authority sanctions the plan for a plot in Electronic City?",
+        answer:
+          "It depends on exactly where the plot sits, and plots a short distance apart can differ. Around Electronic City that generally means the BBMP within its limits, the BDA in its own layouts, the BMRDA across the wider metropolitan region, or the local panchayat beyond them; the Electronics City industrial township itself is administered separately by ELCITA. Establishing which one applies to your plot is the first thing we do, because its setback, floor area ratio and height rules decide what can be built there.",
+      },
+      {
+        question: "How long does an individual house take to build?",
+        answer:
+          "That depends on the plot, the approvals, the floor count, the specification and the weather, so a programme is written for your project rather than quoted as a general figure. What drives it is approvals before work can start, foundation depth once the soil is known, the curing time each floor needs before the next one loads it — which is fixed by the concrete, not by effort — and how much joinery, tiling and painting your specification contains.",
+      },
+      {
+        question: "Can I buy the material myself?",
+        answer:
+          "Yes — that is the labour contract option. You buy the cement, steel, sand and fittings and control brand and grade at every stage, and we provide the masons, bar benders, carpenters, plumbers, electricians and the site supervision. The alternative is a turnkey contract where material and labour are quoted together against an agreed specification.",
+      },
+      {
+        question: "Can I get an assessment for a plot I have not bought yet?",
+        answer:
+          "Yes, provided you can arrange access to the plot. Buyers often do this before purchase, because what a site costs to build on is not obvious from the asking price — access, soil and setbacks can all move the number.",
+      },
+      {
+        question: "Will you take a small renovation or an extension?",
+        answer:
+          "Yes. Extensions, roof work, bathroom rebuilds and old-house renovations are all fine, and not everything has to be a new building. Where an additional floor is involved, what the existing frame was designed to carry is checked before anything is promised.",
+      },
+      {
+        question: "How is this different from your prefab and portable buildings?",
+        answer:
+          "Completely different construction. A prefab home or portable cabin is built at our factory from steel framing and insulated panels, then delivered and installed — fast, relocatable and priced per unit. A house on your plot is cast in concrete, is permanent, and is priced per square foot of built-up area. If speed or relocation matters more than permanence, the factory-built range is the better fit.",
+      },
+    ],
+
+    ctaHeading: "Book a Site Visit for Your Plot",
+    ctaText: `Tell us where the plot is, roughly how big it is and how many floors you have in mind. An engineer will visit, and you will get a written estimate against a written specification for your own site, with no obligation to proceed. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display} (${COMPANY.businessHours.weekdays.display}; ${COMPANY.businessHours.sunday.display}), or write to ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Site Visit & Written Estimate",
+    ctaSecondaryLinks: [
+      { label: "Building Construction Contractor", href: "/products/home-construction/building-construction-contractor" },
+      { label: "Construction Individual Building", href: "/products/construction-individual-building" },
+    ],
+
+    relatedLinks: [
+      { label: "Building Construction Contractor in Bangalore", href: "/products/home-construction/building-construction-contractor" },
+      { label: "Residential Building Construction Contractor", href: "/products/home-construction/residential-building-construction-contractor" },
+      { label: "Construction Individual Building — specification and cost basis", href: "/products/construction-individual-building" },
+      { label: "Villa Construction Company in Bangalore", href: "/cities-we-serve/villa-construction-company-bangalore" },
+      { label: "Home Construction — all services", href: "/products/category/home-construction" },
+      { label: "Prefab Homes — factory-built alternative", href: "/products/category/prefab-homes" },
+    ],
+
+    disclaimer: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam (MSME) ${COMPANY.udyam}. Works: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The BBMP, the BDA, the BMRDA, ELCITA and the local panchayats are independent statutory and administrative bodies; Portable Office Cabin is not affiliated with any of them and does not control their approval timelines. The approvals notes on this page are planning guidance, not legal advice, and which authority applies is confirmed for your plot before drawings are filed. Photographs on this page show completed RCC individual houses and are not represented as projects at any named Electronic City address.`,
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
