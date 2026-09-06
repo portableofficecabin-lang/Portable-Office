@@ -2345,12 +2345,22 @@ export const CITY_PAGES: CityPage[] = [
    *     the alt text describes only what is in the frame.
    *
    * ── HOW THIS AVOIDS CANNIBALISING THE FOUR SIBLING PAGES ─────────────────────────────────
-   * Five pages now touch house construction:
+   * Six pages now touch house construction:
    *   /products/home-construction/building-construction-contractor      contractor intent
    *   /products/home-construction/residential-building-construction-contractor  residential deck
    *   /products/construction-individual-building                        package, specs, cost basis
    *   /cities-we-serve/villa-construction-company-bangalore             villas, city-wide
-   *   THIS PAGE                                                        the Electronic City locality
+   *   THIS PAGE                                                        the Electronic City AREA
+   *   /cities-we-serve/building-contractor-neeladri-road-neeladri-nagar the STREET inside it
+   *
+   * The last two are the pair to watch. This page owns the AREA and the approvals boundary; the
+   * Neeladri Road page owns the STREET — the approach width, the khata mix around Neeladri Nagar
+   * and Doddathoguru, the borewell yields. Neither may take the other's keywords: this page keeps
+   * "building contractor / civil contractor Electronic City", that one keeps the street names.
+   * The hub at HomeConstructionCategoryContent.tsx links the first, third and fourth of these;
+   * residential-building-construction-contractor is reached only from city-page relatedLinks and
+   * the sitemap. Blog posts are Supabase-backed and cannot be enumerated from the repo, so treat
+   * this map as complete across the file-based site only.
    * So this page owns ONLY what is local: that the Bangalore office is in Electronic City Phase 1,
    * which authority sanctions a plan on which side of the boundary, the localities covered, and
    * what a nearby owner should expect. Contract models, the stage-by-stage build, specification
@@ -2666,6 +2676,325 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam (MSME) ${COMPANY.udyam}. Works: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. The BBMP, the BDA, the BMRDA, ELCITA and the local panchayats are independent statutory and administrative bodies; Portable Office Cabin is not affiliated with any of them and does not control their approval timelines. The approvals notes on this page are planning guidance, not legal advice, and which authority applies is confirmed for your plot before drawings are filed. The images on this page are architectural design visualisations supplied by Portable Office Cabin, not photographs of completed buildings, and are not represented as projects at any named Electronic City address.`,
+  },
+  /* ────────────────────────────────────────────────────────────────────────────────────────
+   * BUILDING CONTRACTOR IN NEELADRI ROAD, NEELADRI NAGAR — a STREET-level locality page.
+   *
+   * DIFFERENTIATION (read before editing). Its immediate sibling,
+   * "house-construction-contractor-services-in-electronic-city-bangalore", already owns the
+   * AREA ("house construction Electronic City", "building contractor Electronic City") and
+   * already lists Neeladri Nagar in its own areasText. This page must therefore earn its place
+   * on the STREET, not the area: it owns "building contractor Neeladri Road" / "Neeladri Nagar"
+   * and the things that are only true of these crosses — the narrow approach that decides how
+   * a slab is poured, the mixed khata status around Neeladri Nagar and Doddathoguru, the
+   * unreliable borewell yield, and the fact that houses here sit close enough that scaffolding
+   * is a neighbour problem. That is the section the owner flagged as the one that makes a
+   * locality page rank instead of reading as a swapped-name duplicate; keep it specific, and
+   * never let a later edit generalise it back into area-level copy.
+   *
+   * Contract models, specification grades and the cost basis are deliberately NOT restated here
+   * — they are one line and a link to the sibling page and the contractor product pages, the
+   * same discipline that entry's own header note asks for.
+   *
+   * IMAGES: owner-supplied set, dropped 2026-09-06 as "BUILDING CONTRACTOR (1-5).webp". They are
+   * architectural design VISUALISATIONS of a rendered, flat-roofed house with a terracotta eaves
+   * course — not photographs of completed work, and nothing in frame is in Bangalore. Alt text
+   * therefore describes the drawing and never claims a Neeladri Road address; the disclaimer
+   * below says so in as many words, matching the sibling page. The owner's brief asked for
+   * photographs of real work near Electronic City with captions naming the locality — when those
+   * exist they should replace these, and only then may the captions name the street.
+   * ──────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "building-contractor-neeladri-road-neeladri-nagar",
+    city: "Bangalore",
+    listTitle: "Building Contractor in Neeladri Road",
+    metaTitle: "Building Contractor in Neeladri Road, Neeladri Nagar, Bangalore",
+    metaDescription:
+      "Building contractor for Neeladri Road and Neeladri Nagar, Electronic City Phase 1. Houses, added floors, rental blocks and renovation. Call 97318 97976.",
+    keywords:
+      "building contractor Neeladri Road, building contractor Neeladri Nagar, civil contractor Neeladri Nagar, house construction Neeladri Road Electronic City Phase 1, added floor contractor Neeladri Nagar, rental block construction Doddathoguru, house renovation Karuna Nagar, compound wall contractor Neeladri Road",
+    geo: {
+      region: "IN-KA",
+      placename: "Neeladri Nagar, Electronic City, Bengaluru, Karnataka, India",
+      position: "12.8496;77.6640",
+      icbm: "12.8496, 77.6640",
+    },
+
+    heroImage: {
+      src: "/images/cities/building-contractor-neeladri-road-neeladri-nagar/building-contractor-neeladri-road-front-elevation.webp",
+      alt: "Building contractor in Neeladri Road, Neeladri Nagar — design visualisation of a two-storey house with a rendered white facade, terracotta eaves course, first-floor balconies and a paved driveway",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/cities/building-contractor-neeladri-road-neeladri-nagar/building-contractor-neeladri-road-aerial-plot.webp",
+      alt: "Building contractor in Neeladri Road, Neeladri Nagar — overhead design visualisation of a house on its plot, showing the terrace, the setbacks to the compound wall and the driveway approach",
+      width: 1024,
+      height: 1024,
+      caption:
+        "How much of a plot you can actually build on is decided by setbacks and the width of the approach, not by the site area on the sale deed. That is the first thing we measure.",
+    },
+    interiorImage: {
+      src: "/images/cities/building-contractor-neeladri-road-neeladri-nagar/building-contractor-neeladri-road-living-dining.webp",
+      alt: "Building contractor in Neeladri Road, Neeladri Nagar — interior design visualisation of an open living and dining space with full-height sliding glazing, a straight-flight staircase and a polished floor",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/building-contractor-neeladri-road-neeladri-nagar/building-contractor-neeladri-road-corner-elevation.webp",
+        alt: "Building contractor in Neeladri Road, Neeladri Nagar — corner design visualisation of a two-storey house showing the covered car porch and the boundary landscaping",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/building-contractor-neeladri-road-neeladri-nagar/building-contractor-neeladri-road-upper-corridor.webp",
+        alt: "Building contractor in Neeladri Road, Neeladri Nagar — interior design visualisation of a first-floor corridor lit by a glazed wall, with the stair void behind a slim metal balustrade",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Building Contractor in Neeladri Road, Neeladri Nagar",
+    tagline:
+      "Houses, added floors, rental blocks and small commercial work on the crosses off Neeladri Road — written estimate first, payments released stage by stage.",
+    intro: [
+      "Neeladri Road is one of those pockets of Bangalore that changed completely in twenty years. What was a quiet grid of 30 × 40 sites behind Electronic City Phase 1 is now a street where almost every second house has a floor going up, a compound being rebuilt, or a portion being converted for tenants who walk to work at the campuses next door.",
+      "Portable Office Cabin works as a building contractor through Neeladri Nagar, Karuna Nagar, Doddathoguru and the surrounding crosses off Neeladri Road. Houses, added floors, rental blocks and small commercial buildings, with a written estimate and payments released stage by stage as work is finished. Our Bangalore office is in Electronic City Phase 1, minutes from this road, so a site visit here is a short trip rather than a day out.",
+    ],
+
+    whyHeading: "What Building on This Street Is Actually Like",
+    whyIntro:
+      "Any contractor can promise quality. What matters more here is whether they have worked on roads like this one before. Four things decide how smoothly a job on Neeladri Road runs.",
+    whyBullets: [
+      {
+        title: "Access",
+        text: "The crosses off the main road are narrow, and a full concrete mixer or a long trailer cannot always turn in. We check the approach before quoting and plan the slab accordingly, with a pump placed on the main road or a smaller mixer that can reach your gate. Material comes in early morning, before the campus traffic builds.",
+      },
+      {
+        title: "Khata and approvals",
+        text: "Plots around Neeladri Nagar and Doddathoguru vary in their khata status, and that affects both plan sanction and your home loan. We look at your documents at the first visit and tell you where you stand before you spend money on drawings.",
+      },
+      {
+        title: "Water",
+        text: "Borewell yields here are unpredictable and construction needs a steady supply for curing. We check what your plot can actually deliver at the first visit, so the water a job needs is accounted for in the estimate rather than raised later as a surprise.",
+      },
+      {
+        title: "Neighbours",
+        text: "Houses sit close together, so scaffolding, dust and noise affect the family next door. We put up screens, keep the road clear, work civil hours and speak to the neighbours ourselves before the noisy stages begin. It costs us a little time and saves everyone a complaint.",
+      },
+    ],
+    whyOutro:
+      "None of this shows up in a rate per square foot. It is the difference between a job that finishes on the date we gave you and one that stalls because a mixer could not turn into your cross.",
+
+    solutionsHeading: "What We Build around Here",
+    solutionsIntro:
+      "The mix on this road is particular: small plots, a lot of vertical extension, and owners building for tenants as much as for themselves.",
+    solutions: [
+      {
+        title: "New houses on 30 × 40 and 30 × 50 sites",
+        text: "G+1 and G+2 homes designed to use a narrow plot properly, with parking, setbacks and light reaching the middle rooms.",
+      },
+      {
+        title: "Extra floors on an existing house",
+        text: "The most common job on this road. We check whether your existing columns and footings can carry the load before quoting, not after.",
+      },
+      {
+        title: "Rental blocks and 1BHK units",
+        text: "Layouts built around what tenants near Electronic City actually look for: independent entry, ventilation, a working kitchen and a reliable water supply.",
+      },
+      {
+        title: "Full renovation of older houses",
+        text: "Roof replacement, new plumbing and wiring, flooring, bathrooms and a fresh elevation for houses built in the nineties and early two-thousands.",
+      },
+      {
+        title: "Shops, offices and PG conversions",
+        text: "Small commercial work on the main road frontage, done to a date you can plan around.",
+      },
+      {
+        title: "Compound walls, gates and site development",
+        text: "Including levelling, drains and paving for vacant plots.",
+      },
+    ],
+
+    featuresHeading: "What You Get in Writing Before Anyone Starts",
+    featuresIntro:
+      "The estimate is the contract. Everything below is on it before you pay anything, so there is nothing left to settle by conversation later.",
+    features: [
+      "An itemised cost, not a single lump sum",
+      "A named material specification — the brand and grade of steel, cement, blocks, wiring and fittings",
+      "A timeline with the stages set out in order",
+      "A stage-wise payment schedule tied to completed work",
+      "Plan, elevation and structural drawings, and guidance through the approval process for your property",
+      "The water the job needs for curing, assessed at the site visit and accounted for",
+      "A GST bill for every payment",
+    ],
+    sizesNote:
+      "Payments are released stage by stage as each stage is finished, and the schedule is written into the agreement before work starts. Rates depend on the plot, the floors and the finish grade, so they are quoted after the site visit rather than published here.",
+
+    industriesHeading: "Who We Build For on This Road",
+    industriesIntro:
+      "Four kinds of owner account for most of the work between Neeladri Nagar and Doddathoguru, and each wants something different from the same contractor.",
+    industries: [
+      {
+        title: "Families building on a site they already own",
+        text: "usually a 30 × 40 held for years, now being built as a G+1 with the ground floor let out.",
+      },
+      {
+        title: "Owners adding a floor",
+        text: "where the whole question is whether the existing structure can take it, and the honest answer sometimes is no.",
+      },
+      {
+        title: "Landlords building rental blocks",
+        text: "counting units and durable finishes rather than expensive ones, because the return comes from occupancy.",
+      },
+      {
+        title: "Owners of older houses",
+        text: "renovating before a tenant moves in, or replacing a roof and services that have reached the end of their life.",
+      },
+      {
+        title: "Small commercial owners",
+        text: "shops, offices and PG conversions on the main road frontage, where the completion date matters more than anything else.",
+      },
+    ],
+
+    customHeading: "Adding a Floor: What We Check First",
+    customIntro:
+      "This is the job we are asked about most on Neeladri Road, and it is the one where a cheap quotation costs the most later. Before we price an added floor we check the following, at the first visit.",
+    customBullets: [
+      {
+        title: "What the foundation was built for",
+        text: "Footings sized for a ground floor will not always carry a second. We look at the age of the house, the column sizes and, where the drawings are lost, what the construction of the period tells us.",
+      },
+      {
+        title: "The columns and the slab",
+        text: "Column dimensions, visible cracking, the slab thickness and whether starter bars were left at the roof. Starter bars usually mean the original builder intended another floor.",
+      },
+      {
+        title: "The staircase",
+        text: "Where a new flight can land without eating the room below, and whether an external stair makes more sense for a floor you intend to let separately.",
+      },
+      {
+        title: "Services",
+        text: "Whether the existing sump, tank, riser and electrical load can serve another floor, or need upsizing as part of the job.",
+      },
+      {
+        title: "Whether strengthening is worth it",
+        text: "Jacketing columns and adding footings is possible, and sometimes it costs enough that rebuilding is the better answer. We tell you which case you are in before you commit.",
+      },
+    ],
+    customOutro:
+      "If the structure cannot take another floor safely, we say so and explain why. That is a shorter conversation than the one that follows a slab going up on footings that were never sized for it.",
+
+    whyUsHeading: "Why It Matters That We Are Based Here",
+    whyUsIntro:
+      "Being local is not a slogan on a street where the approach road decides how the concrete arrives.",
+    whyUsBullets: [
+      {
+        title: "Our office is in Electronic City Phase 1",
+        text: "Minutes from Neeladri Road, so a site visit, a supervisor callout or a snag after handover is a short trip rather than a day out.",
+      },
+      {
+        title: "We know the approach before we quote",
+        text: "The pour method, the mixer size and the delivery timing are decided at the site visit, not improvised on slab day.",
+      },
+      {
+        title: "A supervisor you can reach",
+        text: "One named person on your job, and photographs at each stage if you are working out of town or abroad.",
+      },
+      {
+        title: "The paperwork is real",
+        text: `A written agreement before mobilisation, a GST bill for every payment, and a company registered under GSTIN ${COMPANY.gstin} and Udyam ${COMPANY.udyam}.`,
+      },
+      {
+        title: "We stay reachable after handover",
+        text: "Snags closed, the site cleaned, and someone to call for the small things that surface in the first few months.",
+      },
+    ],
+
+    areasHeading: "Nearby Areas We Also Serve",
+    areasText:
+      "Beyond Neeladri Road and Neeladri Nagar we work across Electronic City Phase 1 and Phase 2, Konappana Agrahara, Doddathoguru, Karuna Nagar, Veerasandra, Hebbagodi, Neotown, Huskur, Bommanahalli, Chandapura, Attibele, Anekal, Jigani, Bommasandra, Hosa Road and Sarjapur Road. If your plot is elsewhere in Bengaluru we still build there — tell us where it is and we will say plainly whether we can supervise it properly, because a site we cannot reach quickly is a site we will not run well.",
+
+    howHeading: "How a Job Here Usually Runs",
+    howSteps: [
+      {
+        title: "Site visit",
+        text: "We meet you at the plot and check access, soil, water, the existing structure if there is one, and your documents. Nothing is quoted before someone has stood on the site.",
+      },
+      {
+        title: "Written estimate",
+        text: "An itemised cost with a named material specification, a timeline and a stage-wise payment schedule. Nothing vague, nothing left to be settled later.",
+      },
+      {
+        title: "Drawings and sanction",
+        text: "Plan, elevation and structural drawings, and guidance through the approval process for your property.",
+      },
+      {
+        title: "Construction",
+        text: "Foundation to painting in a fixed sequence, with a supervisor you can reach and photographs at each stage if you are working out of town.",
+      },
+      {
+        title: "Handover",
+        text: "Snags closed, site cleaned, and we stay reachable for the small things that surface in the first few months.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can you add a floor to my existing house?",
+        answer:
+          "Usually yes. It depends on how the original foundation and columns were built, so we inspect first and tell you honestly if strengthening is needed or if the answer is no. Where starter bars were left at the roof, the original builder generally intended another floor and the job is straightforward.",
+      },
+      {
+        question: "My site is only 30 × 40. Is that worth building on?",
+        answer:
+          "It is the most common plot size here and it works well when the plan is right. Getting the staircase and the setbacks correct is what decides whether the rooms feel cramped or comfortable, which is why we measure the plot and the approach before drawing anything.",
+      },
+      {
+        question: "Do you take small jobs, or only full houses?",
+        answer:
+          "Small jobs are fine. Bathroom rebuilds, roof leaks, a compound wall, rewiring, or painting an old house before a tenant moves in.",
+      },
+      {
+        question: "How do you handle payments?",
+        answer:
+          "Stage by stage, as each stage is completed. The schedule is written into the agreement before work starts, and there is no advance for work not yet done.",
+      },
+      {
+        question: "Will I get a proper bill?",
+        answer: `Yes, with GST, for every payment. We are registered under GSTIN ${COMPANY.gstin}.`,
+      },
+      {
+        question: "What happens at the first visit?",
+        answer:
+          "We walk the plot with you, measure the approach, look at the existing structure if there is one, and go through your documents. A written estimate follows against a named specification, and there is no obligation to proceed — you are welcome to take it to another builder and compare it.",
+      },
+      {
+        question: "How is this different from your Electronic City page?",
+        answer:
+          "It is the same team and the same contract. This page is about the crosses off Neeladri Road specifically — the narrow approach, the khata mix around Neeladri Nagar and Doddathoguru, and the borewell yields. For contract models, specification grades and how a house is built stage by stage, see our House Construction in Electronic City page, linked below.",
+      },
+    ],
+
+    ctaHeading: "Book a Site Visit on Neeladri Road",
+    ctaText: `Send us your site location and what you are planning, and we will come and look at it. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. A written estimate follows the visit, and enquiries are answered ${COMPANY.responseTime.toLowerCase()}. Business hours are ${COMPANY.businessHours.weekdays.display} and ${COMPANY.businessHours.sunday.display}.`,
+    ctaButtonLabel: "Book a Site Visit",
+    ctaSecondaryLinks: [
+      { label: "House Construction in Electronic City", href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore" },
+      { label: "Building Construction Contractor", href: "/products/home-construction/building-construction-contractor" },
+    ],
+
+    relatedLinks: [
+      { label: "House Construction in Electronic City — the wider area", href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore" },
+      { label: "Building Construction Contractor in Bangalore", href: "/products/home-construction/building-construction-contractor" },
+      { label: "Residential Building Construction Contractor", href: "/products/home-construction/residential-building-construction-contractor" },
+      { label: "Construction Individual Building — specification and cost basis", href: "/products/construction-individual-building" },
+      { label: "Villa Construction Company in Bangalore", href: "/cities-we-serve/villa-construction-company-bangalore" },
+      { label: "Home Construction — all services", href: "/products/category/home-construction" },
+    ],
+
+    disclaimer: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam (MSME) ${COMPANY.udyam}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. Works: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. The BBMP, the BDA, the BMRDA, ELCITA and the local panchayats are independent statutory and administrative bodies; Portable Office Cabin is not affiliated with any of them and does not control their approval timelines. Khata and approval notes on this page are planning guidance, not legal advice, and the position for your own plot is confirmed from your documents before drawings are filed. The images on this page are architectural design visualisations supplied by Portable Office Cabin, not photographs of completed buildings, and are not represented as projects at any named Neeladri Road or Neeladri Nagar address.`,
   },
 ];
 
