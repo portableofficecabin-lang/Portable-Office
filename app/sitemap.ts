@@ -61,6 +61,18 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
    * segment, so it is not emitted by the productChildPages loop above and must be listed here.
    * Quote-only service: no Product/Offer schema, no ₹ figure, and no Merchant feed exposure. */
   entry("/products/home-construction/building-construction-contractor", 0.8, "weekly"),
+  /* Residential Building Construction Contractor — the SECOND contractor page, published
+   * 2026-09-06 and a SIBLING of the one listed directly above. Both are indexable by the owner's
+   * instruction; "residential" plus the scope split is what keeps them from competing (see the
+   * header comment on the route file). Static route segment, so the productChildPages loop below
+   * cannot emit it. Quote-only service: no Product/Offer schema, no ₹ figure, no Merchant feed
+   * exposure. Real lastmod because the publication date is known — do NOT bump it on deploy. */
+  entry(
+    "/products/home-construction/residential-building-construction-contractor",
+    0.8,
+    "weekly",
+    new Date("2026-09-06"),
+  ),
   // SEO child pages under each main product (registry-driven — src/data/productChildPages.ts)
   ...allChildParams().map(({ slug, child }) => entry(`/products/${slug}/${child}`, 0.7, "monthly")),
   /* STANDARD SIZE VARIANT pages — one per published size of every published product family
