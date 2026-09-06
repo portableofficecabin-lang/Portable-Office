@@ -49,7 +49,10 @@ export default function WarrantyPage() {
             Warranty & Support
           </span>
         }
-        title={<>Built to Last. <span className="text-accent">Backed by Us.</span></>}
+        // The H1 previously read "Built to Last. Backed by Us." — good voice, but it never said
+        // "warranty", so the page's own topic was missing from its only H1 while both the title
+        // tag and the /warranty slug carry it. Voice kept, keyword added.
+        title={<>Product Warranty — Built to Last, <span className="text-accent">Backed by Us.</span></>}
         description="Every cabin we build comes with a solid warranty and dedicated after-sales support — because your peace of mind matters."
       />
 

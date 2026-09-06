@@ -83,7 +83,9 @@ export default function ShippingDeliveryPage() {
             Shipping & Delivery
           </span>
         }
-        title={<>Hassle-Free Delivery, <span className="text-accent">Every Time</span></>}
+        // Same reason as the warranty page: the H1 said "Delivery" but never "Shipping", which is
+        // both the slug (/shipping) and the lead word of the title tag. Voice preserved.
+        title={<>Shipping &amp; Delivery — <span className="text-accent">Hassle-Free, Every Time</span></>}
         description="From our factory floor to your site — we handle everything. Here's exactly what to expect when you order from us."
       />
 
