@@ -24,7 +24,7 @@
  */
 
 import Link from "next/link";
-import { ArrowRight, Building2, Film, HardHat, Home } from "lucide-react";
+import { ArrowRight, Building2, Film, HardHat, Home, MapPin } from "lucide-react";
 
 const SERVICE_LINKS: { href: string; name: string; blurb: string; icon: React.ComponentType<{ className?: string }> }[] = [
   /* TWO contractor pages are listed, deliberately — see the header comment on
@@ -59,6 +59,13 @@ const SERVICE_LINKS: { href: string; name: string; blurb: string; icon: React.Co
     blurb:
       "Villa-specific guidance — what we build, how an RCC villa actually goes up, what you decide and when, and the areas we serve.",
     icon: Film,
+  },
+  {
+    href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore",
+    name: "House Construction in Electronic City",
+    blurb:
+      "The same RCC house work narrowed to one part of Bangalore: the localities around Electronic City Phases 1 to 3, what a G+1 or G+2 on a typical plot there involves, and the approvals that apply on that corridor.",
+    icon: MapPin,
   },
 ];
 

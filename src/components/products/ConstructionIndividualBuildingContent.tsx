@@ -371,6 +371,17 @@ export function ConstructionIndividualBuildingContent() {
             properly. A straight answer is more useful to you than a yes that turns into an absent
             site engineer.
           </p>
+          <p>
+            For plots in and around the office, our{" "}
+            <Link
+              href="/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore"
+              className="font-medium text-accent underline-offset-4 hover:underline"
+            >
+              house construction services in Electronic City, Bangalore
+            </Link>{" "}
+            cover the same RCC work described on this page, written around the localities, plot
+            sizes and approvals that actually apply on that side of the city.
+          </p>
         </div>
         <div className="mt-8 overflow-hidden rounded-2xl border border-border">
           <OptimizedImage

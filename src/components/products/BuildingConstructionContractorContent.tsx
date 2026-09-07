@@ -613,6 +613,18 @@ export function BuildingConstructionContractorContent() {
             means south and south-east Bengaluru and the corridor toward Hosur, and other areas on
             enquiry.
           </p>
+          <p>
+            Electronic City is the area we cover most closely, because the office is in it. If your
+            plot is there, the{" "}
+            <Link
+              href="/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore"
+              className="font-medium text-accent underline-offset-4 hover:underline"
+            >
+              house construction contractor page for Electronic City
+            </Link>{" "}
+            goes through the localities we work in, what a G+1 or G+2 on a standard site there
+            involves, and the approvals that apply on that side of the city.
+          </p>
         </div>
         <ul className="mt-6 flex flex-wrap gap-2">
           {AREAS.map((area) => (
