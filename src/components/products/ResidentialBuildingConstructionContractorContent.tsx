@@ -252,13 +252,24 @@ const TAMIL_NADU_AREAS = [
   "Krishnagiri",
 ];
 
+/* Shikaripalya leads because it is what the H1 claims, and a service area named in the heading
+   but missing from the coverage list is exactly the mismatch that gets structured data ignored
+   (the Service.areaServed nodes on the page file must stay in step with this list). The
+   localities immediately after it are the ones genuinely within same-morning supervision of the
+   Electronic City Phase 1 office; the wider Bengaluru list then follows unchanged. */
 const KARNATAKA_AREAS = [
+  "Shikaripalya",
+  "Electronic City Phase 1",
+  "Electronic City Phase 2",
+  "Neeladri Nagar",
+  "Doddathoguru",
+  "Konappana Agrahara",
+  "Hebbagodi",
   "Attibele",
   "Anekal",
   "Jigani",
   "Bommasandra",
   "Chandapura",
-  "Electronic City",
   "Sarjapur Road",
   "Hosa Road",
   "Whitefield",
@@ -394,10 +405,14 @@ export function ResidentialBuildingConstructionContractorContent() {
                 where the money went.
               </p>
               <p>
-                We work differently. Portable Office Cabin takes on building construction across
-                Hosur and Bangalore, from individual houses to factory sheds, with a written
+                We work differently. Portable Office Cabin takes on building construction on plots
+                in Shikaripalya and the rest of Electronic City — and, from the same works, across
+                the border around Hosur — from individual houses to factory sheds, with a written
                 estimate, a fixed scope and a payment schedule tied to work actually completed. You
-                will know what is being built, what it costs, and when it will be finished.
+                will know what is being built, what it costs, and when it will be finished. Our
+                Karnataka office is in Electronic City Phase 1, minutes from Shikaripalya, which is
+                the practical reason a supervisor can be on your plot the same morning rather than
+                at the end of the week.
               </p>
             </div>
           </div>
@@ -560,26 +575,15 @@ export function ResidentialBuildingConstructionContractorContent() {
           Where we work
         </SectionHeading>
 
+        {/* KARNATAKA FIRST since 2026-09-07: the H1 claims Shikaripalya, so the list that
+            contains it has to lead. Tamil Nadu stays below because the works genuinely are near
+            Hosur and the company genuinely builds there — it is honest supporting coverage, not
+            the page's target. Do not re-order these without changing the H1 to match. */}
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-10">
           <div className="space-y-6">
             <div>
               <h3 className="font-display font-bold text-foreground">
-                Hosur and Krishnagiri district, Tamil Nadu
-              </h3>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {TAMIL_NADU_AREAS.map((area) => (
-                  <li
-                    key={area}
-                    className="rounded-full border border-border bg-card px-3 py-1 text-sm text-muted-foreground"
-                  >
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-display font-bold text-foreground">
-                Bengaluru and the southern belt, Karnataka
+                Shikaripalya, Electronic City and south Bengaluru, Karnataka
               </h3>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {KARNATAKA_AREAS.map((area) => (
@@ -595,11 +599,28 @@ export function ResidentialBuildingConstructionContractorContent() {
                 …and the rest of Bengaluru.
               </p>
             </div>
+            <div>
+              <h3 className="font-display font-bold text-foreground">
+                Hosur and Krishnagiri district, Tamil Nadu
+              </h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {TAMIL_NADU_AREAS.map((area) => (
+                  <li
+                    key={area}
+                    className="rounded-full border border-border bg-card px-3 py-1 text-sm text-muted-foreground"
+                  >
+                    {area}
+                  </li>
+                ))}
+              </ul>
+            </div>
             <p className="text-sm leading-relaxed text-muted-foreground">
               Civil construction has to be supervised on site, which makes distance a real
-              constraint. Our Karnataka office is in Electronic City, Bengaluru, and our
-              manufacturing works are in Tamil Nadu near Hosur. Tell us where your plot is and we
-              will say plainly whether we can supervise it properly.
+              constraint — and it is the whole reason Shikaripalya is a straightforward place for
+              us to build. Our Karnataka office is in Electronic City Phase 1, minutes away, and
+              our manufacturing works are in Tamil Nadu near Hosur, about 40 km down Hosur Road.
+              Tell us where your plot is and we will say plainly whether we can supervise it
+              properly.
             </p>
           </div>
 

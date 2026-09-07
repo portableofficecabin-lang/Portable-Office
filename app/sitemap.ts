@@ -61,12 +61,15 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
    * segment, so it is not emitted by the productChildPages loop above and must be listed here.
    * Quote-only service: no Product/Offer schema, no ₹ figure, and no Merchant feed exposure. */
   entry("/products/home-construction/building-construction-contractor", 0.8, "weekly"),
-  /* Residential Building Construction Contractor — the SECOND contractor page, published
-   * 2026-09-06 and a SIBLING of the one listed directly above. Both are indexable by the owner's
-   * instruction; "residential" plus the scope split is what keeps them from competing (see the
-   * header comment on the route file). Static route segment, so the productChildPages loop below
-   * cannot emit it. Quote-only service: no Product/Offer schema, no ₹ figure, no Merchant feed
-   * exposure. Real lastmod because the publication date is known — do NOT bump it on deploy. */
+  /* Construction Contractor in Shikaripalya — the SECOND contractor page, published 2026-09-06
+   * and a SIBLING of the one listed directly above. The URL still carries its original
+   * "residential-building-construction-contractor" slug; renaming the page did not move it, so
+   * there is no redirect to add here. Both are indexable by the owner's instruction, and since
+   * 2026-09-07 what keeps them from competing is PLACE, not wording: this one owns Shikaripalya
+   * inside Electronic City, the one above owns Bengaluru as a whole. See the header comment on
+   * the route file. Static route segment, so the productChildPages loop below cannot emit it.
+   * Quote-only service: no Product/Offer schema, no ₹ figure, no Merchant feed exposure. Real
+   * lastmod because the publication date is known — do NOT bump it on deploy. */
   entry(
     "/products/home-construction/residential-building-construction-contractor",
     0.8,

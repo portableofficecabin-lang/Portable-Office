@@ -40,13 +40,14 @@ const SERVICE_LINKS: { href: string; name: string; blurb: string; icon: React.Co
     icon: HardHat,
   },
   {
-    /* Refocused on HOSUR 2026-09-07. The two contractor pages are now split by geography rather
-       than by one adjective — see the header comment on that page. Keep "Hosur" in this name and
-       keep "Bengaluru" out of this blurb, or the two entries collapse back into duplicates. */
+    /* Targeted on SHIKARIPALYA 2026-09-07 (owner's instruction). The two contractor pages are
+       split by place, not by wording — see the header comment on that page. Keep "Shikaripalya"
+       in this name and keep the word "Bangalore" out of this blurb, or this entry and the one
+       above collapse back into duplicates. */
     href: "/products/home-construction/residential-building-construction-contractor",
-    name: "Construction Contractor in Hosur",
+    name: "Construction Contractor in Shikaripalya",
     blurb:
-      "Houses, villas, added floors and factory sheds across Hosur and Krishnagiri district — the two ways to contract the work, the six stages a project runs through, and what to ask any contractor before you sign.",
+      "Building on a plot in Shikaripalya or the streets around it — the two ways to contract the work, the six stages a project runs through, and what to ask any contractor before you sign.",
     icon: Home,
   },
   {

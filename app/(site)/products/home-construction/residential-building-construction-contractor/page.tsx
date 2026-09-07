@@ -24,9 +24,9 @@
  *
  * ── THE TWO PAGES MUST STAY DISTINGUISHABLE ─────────────────────────────────────────────────
  * They address neighbouring queries, so the split below is what keeps them from competing:
- *   THIS page → RESIDENTIAL intent, Hosur AND Bangalore. H1 "Residential Building Construction
- *               Contractor". The two contract models, the six-stage process, the "what to ask any
- *               contractor" checklist. Its own five photographs.
+ *   THIS page → the CONTRACTING DECISION, anchored at Shikaripalya in Electronic City. H1
+ *               "Construction Contractor in Shikaripalya". The two contract models, the six-stage
+ *               process, the "what to ask any contractor" checklist. Its own five photographs.
  *   SIBLING   → the general contractor query, Bangalore only. H1 "Building Construction
  *               Contractor in Bangalore". Technical depth this page does not carry: quality
  *               gates, the written-specification breakdown, cost and time drivers. Its own five
@@ -64,40 +64,57 @@ export const revalidate = 1800; // 30 minutes, matching the other service landin
 
 const SITE = "https://portableofficecabin.com";
 const PATH = "/products/home-construction/residential-building-construction-contractor";
-/* REFOCUSED ON HOSUR, 2026-09-07. "in Hosur" is load-bearing, and so is "Residential".
+/* TARGETED ON SHIKARIPALYA, 2026-09-07 (owner's instruction, replacing a same-day Hosur retarget).
  *
  * This page and its sibling /products/home-construction/building-construction-contractor were
- * being held apart by one adjective, and Google was not buying it: the two titles shared
- * "building", "construction" and "contractor", and neither page was indexed. The owner's standing
- * instruction (2026-09-06) is that BOTH pages stay, so they are now split by GEOGRAPHY — a
+ * being held apart by one adjective ("Residential"), and Google was not buying it: the two titles
+ * shared "building", "construction" and "contractor", and neither page was indexed. The owner's
+ * standing instruction (2026-09-06) is that BOTH pages stay, so they are split by PLACE — a
  * difference a search engine can actually see:
  *
- *     this page → "construction contractor in Hosur"              (Hosur, Krishnagiri district)
- *     sibling   → "building construction contractor in Bangalore" (Bengaluru)
+ *     this page → "construction contractor in Shikaripalya"       (a locality inside Electronic City)
+ *     sibling   → "building construction contractor in Bangalore" (the city as a whole)
  *
- * Do NOT re-add "Bangalore" to this H1, title or meta description, and do not shorten the H1 to
- * "Building Construction Contractor" — that is the sibling's heading. Bangalore work belongs to
- * the sibling and to the /cities-we-serve locality pages. The body still describes Bangalore
- * coverage further down, which is honest; it simply no longer competes for it in the head tags. */
-const H1 = "Residential Construction Contractor in Hosur";
+ * ── THE OVERLAP THIS CREATES, STATED PLAINLY ────────────────────────────────────────────────
+ * Shikaripalya sits INSIDE Electronic City, so this page now shares a neighbourhood with two
+ * city pages: house-construction-…-electronic-city-bangalore (owns the AREA) and
+ * building-contractor-neeladri-road-neeladri-nagar (owns Neeladri Road, one street away). Three
+ * pages in one pocket of Bengaluru only works if each owns something the others do not:
+ *
+ *     Electronic City page → the AREA: which authority sanctions a plan where, the locality list
+ *     Neeladri Road page   → that STREET: narrow approach, mixed khata, borewell yield
+ *     THIS page            → the CONTRACTING DECISION for a Shikaripalya plot: labour vs turnkey,
+ *                            the six stages, and what to ask any contractor before signing
+ *
+ * So this page stays a SERVICE page that happens to be anchored at Shikaripalya — it must not
+ * grow an areas-of-Electronic-City list or an approvals explainer, because those belong to the
+ * city pages and restating them is exactly the duplication that de-indexed all of them.
+ *
+ * Do NOT re-add "Bangalore" or "Hosur" to this H1 or title. Hosur remains in the BODY, honestly,
+ * because the works genuinely are near Hosur and the company genuinely builds on both sides of
+ * the border — it simply no longer competes for either term in the head tags. */
+const H1 = "Construction Contractor in Shikaripalya";
 const DESCRIPTION =
-  "Residential construction contractor in Hosur — houses, villas, added floors and factory sheds " +
-  "across Krishnagiri district. Written estimate before work starts, stage-wise payments.";
+  "Construction contractor in Shikaripalya, Electronic City — houses, added floors and rental " +
+  "blocks on your own plot. Written estimate, stage-wise payments.";
 const HERO_IMAGE = `${SITE}/images/products/building-construction-contractor/building-construction-contractor-villa-front-elevation-pool.webp`;
 
 export const metadata: Metadata = buildPageMetadata({
   /* absoluteTitle, NOT title. The root layout applies `template: "%s | Portable Office Cabin"`,
    * which would render this as a 68-character title tag that Google truncates. The owner asked
    * on 2026-09-06 for the title to be exactly the page name and nothing else, so this bypasses
-   * the template and ships 44 characters that display in full. If you switch this back to
+   * the template and ships 39 characters that display in full. If you switch this back to
    * `title:`, the brand suffix returns. */
   absoluteTitle: H1,
   description: DESCRIPTION,
+  /* Not published any more (buildPageMetadata stopped emitting meta keywords on 2026-09-07) —
+     kept as the working record of what this page is meant to rank for. Shikaripalya leads; the
+     generic contractor terms that used to sit here belonged to the sibling page and repeating
+     them is what put the two in one auction. */
   keywords:
-    "residential building construction contractor, residential construction contractor, " +
-    "house construction contractor, turnkey construction contractor, " +
-    "labour contract house construction, residential building contractor Hosur, " +
-    "villa construction contractor, apartment construction contractor, home renovation contractor",
+    "construction contractor in Shikaripalya, building contractor Shikaripalya, " +
+    "house construction Shikaripalya Electronic City, civil contractor Shikaripalya, " +
+    "labour contract house construction Shikaripalya, turnkey house construction Electronic City",
   path: PATH,
   image: HERO_IMAGE,
   /* Describes the photograph and nothing else. The old value led with the page's own keyword
@@ -146,19 +163,32 @@ export default function Page() {
                 addressCountry: COMPANY.addresses.bangaloreOffice.country,
               },
             },
-            /* Two cities, because the page says two cities. Keep these in step with the #coverage
-               section — a service area claimed here and not listed there is the kind of mismatch
-               that gets structured data ignored. */
+            /* Shikaripalya leads because it is what the H1 claims, and it is typed as a
+               neighbourhood inside Bengaluru rather than as a City — it is a locality in
+               Electronic City, not a town, and saying otherwise is a claim a validator can
+               catch. Hosur stays because the #coverage section genuinely lists it and the works
+               are there; a service area claimed here and not listed there (or the reverse) is
+               the kind of mismatch that gets structured data ignored. Keep these three in step
+               with that section. */
             areaServed: [
               {
-                "@type": "City",
-                name: "Hosur",
-                containedInPlace: { "@type": "State", name: "Tamil Nadu" },
+                "@type": "Place",
+                name: "Shikaripalya",
+                containedInPlace: {
+                  "@type": "City",
+                  name: "Bengaluru",
+                  containedInPlace: { "@type": "State", name: "Karnataka" },
+                },
               },
               {
                 "@type": "City",
                 name: "Bengaluru",
                 containedInPlace: { "@type": "State", name: "Karnataka" },
+              },
+              {
+                "@type": "City",
+                name: "Hosur",
+                containedInPlace: { "@type": "State", name: "Tamil Nadu" },
               },
             ],
             hasOfferCatalog: {
@@ -217,8 +247,10 @@ export default function Page() {
                 </Link>
               </li>
               <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+              {/* Matches the H1. A breadcrumb leaf that disagrees with the heading is a
+                  mismatch users and crawlers both notice. */}
               <li aria-current="page" className="font-medium text-foreground">
-                Residential Building Construction Contractor
+                {H1}
               </li>
             </ol>
           </nav>
@@ -238,14 +270,14 @@ export default function Page() {
                 <span aria-hidden="true" className="text-muted-foreground">
                   ·
                 </span>
-                <span>HOSUR &amp; BANGALORE</span>
+                <span>SHIKARIPALYA, ELECTRONIC CITY</span>
               </p>
               <h1 className="mt-3 font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
                 {H1}
               </h1>
               <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                Houses, villas, shops and factory sheds built across Hosur and Bangalore — with a
-                written estimate, a fixed scope and a payment schedule tied to work actually
+                Houses, added floors and rental blocks built on plots in and around Shikaripalya —
+                with a written estimate, a fixed scope and a payment schedule tied to work actually
                 completed.
               </p>
 

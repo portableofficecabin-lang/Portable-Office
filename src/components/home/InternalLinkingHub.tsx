@@ -55,7 +55,7 @@ const linkClusters = [
     description: "RCC houses built on your own plot in Bangalore and Hosur — contractor services, costs and the areas we build in.",
     links: [
       { label: "Building Construction Contractor in Bangalore", href: "/products/home-construction/building-construction-contractor" },
-      { label: "Construction Contractor in Hosur", href: "/products/home-construction/residential-building-construction-contractor" },
+      { label: "Construction Contractor in Shikaripalya", href: "/products/home-construction/residential-building-construction-contractor" },
       { label: "House Construction Cost & Specification", href: "/products/construction-individual-building" },
       { label: "House Construction in Electronic City", href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore" },
       { label: "Villa Construction in Bangalore", href: "/cities-we-serve/villa-construction-company-bangalore" },
