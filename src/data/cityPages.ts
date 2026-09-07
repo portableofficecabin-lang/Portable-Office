@@ -1938,6 +1938,21 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Tell us the site size, the locality and roughly how many floors you have in mind. We will visit the plot, check what your setbacks and soil allow, and send a written line-by-line estimate for your own site — free, and with no obligation to proceed.",
 
+    /* This page owns "villa construction Bangalore" city-wide. The Electronic City page narrows
+       the same RCC house work to one corridor, so it takes the locality-qualified queries rather
+       than competing here — added 2026-09-07 to give that page a second inbound link from the
+       oldest, best-established page in this section. */
+    relatedLinks: [
+      {
+        label: "House construction contractor in Electronic City, Bangalore",
+        href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore",
+      },
+      {
+        label: "Building Construction Contractor in Bangalore",
+        href: "/products/home-construction/building-construction-contractor",
+      },
+    ],
+
     disclaimer:
       "BBMP, BDA, BMRDA and the village panchayats are independent statutory authorities. Portable Office Cabin is not affiliated with any of them and does not control their approval timelines; we prepare and file the drawings and follow the application on your behalf.",
   },
