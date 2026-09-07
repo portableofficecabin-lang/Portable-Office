@@ -88,7 +88,18 @@ export function buildPageMetadata({
   return {
     title: titleField,
     description,
-    keywords,
+    /* `keywords` is DELIBERATELY NOT EMITTED (2026-09-07).
+     *
+     * Google has ignored <meta name="keywords"> since 2009 and Bing treats it as a spam signal.
+     * It bought this site nothing and actively hurt: seven pages in the Home Construction cluster
+     * each shipped 6-13 comma-separated terms drawn from the SAME head phrase ("building
+     * construction contractor", "house construction Bangalore", …), so the one place the overlap
+     * was machine-readable was a tag that only ever reads as over-optimisation.
+     *
+     * The PARAMETER is kept on purpose. Every caller still passes its keyword list, and those
+     * lists are genuinely useful documentation of what each page is meant to rank for — they are
+     * the working notes behind the title, H1 and body copy. They simply stop being published.
+     * Delete the param only if you also want to lose that record. */
     alternates: { canonical },
     // Public SEO pages are explicitly indexable. This lives here (not on the root
     // layout) so it applies ONLY to real content pages built via this helper — NOT

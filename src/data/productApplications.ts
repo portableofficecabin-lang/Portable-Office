@@ -11,6 +11,12 @@ export const productApplications: Record<string, string> = {
     "Corporate workspaces, startup & co-working offices, project offices & branded retail outlets",
   "prefab-homes":
     "Farmhouses, resorts, weekend homes, staff quarters, guest houses & holiday cottages",
+  /* Added 2026-09-07. Without this entry the category fell through to the generic fallback
+     ("Site offices, accommodation, storage & modular building solutions across India"), which
+     described the factory-built range rather than the civil work actually sold here — a visible
+     contradiction on /products/construction-individual-building. */
+  "home-construction":
+    "Individual houses, duplexes, G+1 to G+5 homes, villas, added floors, renovations & extensions on the owner's own plot",
   "portable-toilet-cabins":
     "Construction sites, public events, exhibitions, parks, highways & industrial facilities",
   "security-cabins":

@@ -715,10 +715,23 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
      * removes the JSON-LD Offer price and keeps the SKU out of feedEligible() structurally rather
      * than by a merchantFeedPolicy entry. That is correct and must stay: the job is priced PER SQ FT
      * after a site visit, and a per-sq-ft rate is a price signal Google Shopping rejects outright.
-     * basePrice is 0 because there is no unit price to state — do not put a placeholder figure here. */
+     * basePrice is 0 because there is no unit price to state — do not put a placeholder figure here.
+     *
+     * ── RETARGETED 2026-09-07: THIS URL OWNS COST AND SPECIFICATION ─────────────────────────
+     * "Construction Individual Building" is an awkward phrase almost nobody searches, and while
+     * it was the H1 this page competed with three contractor pages for the same contractor
+     * intent and none of them was indexed. In the cluster split this URL is now the SPEC AND
+     * COST detail page — what is included trade by trade, what drives the per-sq-ft rate — and
+     * the contractor intent belongs to the two /home-construction/ pages.
+     *
+     * The URL is unchanged: products.ts "45" carries an explicit `slug` override, so renaming
+     * `name` cannot move it. h1Title is the visible H1, feedTitle is the page <title> (this SKU
+     * is never fed, so feedTitle reaches no feed) and must stay byte-identical to
+     * productSEO "45".title. NOTE this supersedes the earlier request to make title, H1 and slug
+     * one identical phrase — that is impossible while the slug stays and the keyword changes. */
     id: "45", sku: "POC-CIB-RCC", basePrice: 0, priceConfirmed: false, kind: "service", inStock: true,
-    h1Title: "Construction Individual Building",
-    feedTitle: "Construction Individual Building — RCC Individual House Construction | Portable Office Cabin",
+    h1Title: "Individual House Construction — Cost & Specification",
+    feedTitle: "Individual House Construction Cost & Specification | Portable Office Cabin",
     size: "Built to your plot — G+1 to G+5",
     material: "RCC frame with block masonry walls",
     bestFor: "Owners building a permanent individual house on their own plot",

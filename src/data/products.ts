@@ -1952,9 +1952,13 @@ export const products: Product[] = [
     // isPurchasable(), so no Add to Cart, no JSON-LD Offer price and no Merchant feed entry.
     // Priced per sq ft after a site visit; the rate band is NOT published until the owner
     // supplies it.
+    // `name` is the breadcrumb leaf, the product-card title and the A-Z index label. Renamed
+    // 2026-09-07 with the cluster retarget (see productCommerce.ts id "45"): "Construction
+    // Individual Building" is a phrase almost nobody searches. The explicit `slug` below pins
+    // the URL, so renaming this CANNOT move the page — leave that slug alone.
     id: "45",
     sku: "POC-CIB-RCC",
-    name: "Construction Individual Building",
+    name: "Individual House Construction",
     category: "Home Construction",
     categorySlug: "home-construction",
     slug: "construction-individual-building",

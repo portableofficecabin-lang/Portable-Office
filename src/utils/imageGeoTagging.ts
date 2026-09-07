@@ -143,30 +143,37 @@ export function getProductImageMeta(
 }
 
 /**
- * Generate a descriptive, SEO-optimized alt text from product name
- * Appends geo-location for image SEO
+ * Return the alt text exactly as written.
+ *
+ * NO-OP SINCE 2026-09-07. This used to append
+ * " – available in Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR & pan-India"
+ * to any alt that did not already name a place. That is keyword stuffing inside an
+ * accessibility attribute: alt text exists to describe the IMAGE to someone who cannot see it,
+ * and a screen-reader user was made to sit through a nine-city sales list on every photograph.
+ * It also made alts near-identical across the catalogue, which is the opposite of what image
+ * search rewards.
+ *
+ * The suffix was live sitewide — 9 of 13 alts on /products/construction-individual-building and
+ * 5 of 7 on the residential contractor page carried it. Removing it here fixes every page at
+ * once; nothing else appends location to alt text.
+ *
+ * The signature is unchanged so the existing call sites keep compiling; `appendLocation` is now
+ * inert. If real per-image geo data is ever wanted, express it as structured data
+ * (ImageObject.contentLocation), never as prose glued onto alt text.
  */
 export function generateGeoAlt(baseAlt: string, appendLocation = true): string {
-  if (!appendLocation) return baseAlt;
-  // Only append if not already containing location info
-  const locationTerms = [
-    "india", "bangalore", "karnataka", "tamil nadu", "kerala", "chennai", "hyderabad",
-    "telangana", "andhra pradesh", "maharashtra", "west bengal", "peenya", "bommasandra",
-    "ambattur", "sriperumbudur", "oragadam", "hosur", "mumbai", "pune", "delhi", "ahmedabad",
-    "kolkata", "vizag", "kochi", "coimbatore", " in ",
-  ];
-  const hasLocation = locationTerms.some((term) =>
-    baseAlt.toLowerCase().includes(term)
-  );
-  return hasLocation ? baseAlt : `${baseAlt} – available in Bangalore, Chennai, Hyderabad, Mumbai, Pune, Delhi NCR & pan-India`;
+  void appendLocation;
+  return baseAlt;
 }
 
 /**
- * Generate image title attribute from alt text
+ * Generate the image `title` (hover tooltip) attribute.
+ *
+ * City lists removed 2026-09-07, same reasoning as generateGeoAlt above. These rendered as
+ * `title="… – Portable Office Cabin | Bangalore, Chennai, Mumbai & across India"` on every
+ * image on the site — up to 265 characters, roughly half of it a repeated city list. A title
+ * attribute should name the thing, not re-sell it.
  */
 export function generateImageTitle(alt: string, productName?: string): string {
-  if (productName) {
-    return `${productName} | Portable Office Cabin – Bangalore, Chennai, Hyderabad, Mumbai & pan-India`;
-  }
-  return `${alt} – Portable Office Cabin | Bangalore, Chennai, Mumbai & across India`;
+  return productName ? `${productName} | Portable Office Cabin` : alt;
 }

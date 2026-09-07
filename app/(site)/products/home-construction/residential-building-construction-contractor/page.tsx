@@ -64,13 +64,25 @@ export const revalidate = 1800; // 30 minutes, matching the other service landin
 
 const SITE = "https://portableofficecabin.com";
 const PATH = "/products/home-construction/residential-building-construction-contractor";
-/* "Residential" is load-bearing, not decoration: it is the whole reason this page and its sibling
- * /products/home-construction/building-construction-contractor do not compete for one query. Do
- * not shorten this H1 to "Building Construction Contractor" — that is the sibling's heading. */
-const H1 = "Residential Building Construction Contractor";
+/* REFOCUSED ON HOSUR, 2026-09-07. "in Hosur" is load-bearing, and so is "Residential".
+ *
+ * This page and its sibling /products/home-construction/building-construction-contractor were
+ * being held apart by one adjective, and Google was not buying it: the two titles shared
+ * "building", "construction" and "contractor", and neither page was indexed. The owner's standing
+ * instruction (2026-09-06) is that BOTH pages stay, so they are now split by GEOGRAPHY — a
+ * difference a search engine can actually see:
+ *
+ *     this page → "construction contractor in Hosur"              (Hosur, Krishnagiri district)
+ *     sibling   → "building construction contractor in Bangalore" (Bengaluru)
+ *
+ * Do NOT re-add "Bangalore" to this H1, title or meta description, and do not shorten the H1 to
+ * "Building Construction Contractor" — that is the sibling's heading. Bangalore work belongs to
+ * the sibling and to the /cities-we-serve locality pages. The body still describes Bangalore
+ * coverage further down, which is honest; it simply no longer competes for it in the head tags. */
+const H1 = "Residential Construction Contractor in Hosur";
 const DESCRIPTION =
-  "Residential building construction contractor in Hosur & Bangalore for houses, villas and " +
-  "factory sheds. Written estimates, stage-wise payments. Call 97318 97976.";
+  "Residential construction contractor in Hosur — houses, villas, added floors and factory sheds " +
+  "across Krishnagiri district. Written estimate before work starts, stage-wise payments.";
 const HERO_IMAGE = `${SITE}/images/products/building-construction-contractor/building-construction-contractor-villa-front-elevation-pool.webp`;
 
 export const metadata: Metadata = buildPageMetadata({
@@ -88,8 +100,11 @@ export const metadata: Metadata = buildPageMetadata({
     "villa construction contractor, apartment construction contractor, home renovation contractor",
   path: PATH,
   image: HERO_IMAGE,
+  /* Describes the photograph and nothing else. The old value led with the page's own keyword
+     ("Residential building construction contractor project — …"), which is not what alt text is
+     for; see the note in src/utils/imageGeoTagging.ts. */
   imageAlt:
-    "Residential building construction contractor project — front elevation of a completed G+1 villa with a tiled pitched roof, first-floor balcony and a pool deck",
+    "Front elevation of a completed G+1 villa with a tiled pitched roof, first-floor balcony, full-height glazing and a pool deck",
   ogType: "website",
 });
 

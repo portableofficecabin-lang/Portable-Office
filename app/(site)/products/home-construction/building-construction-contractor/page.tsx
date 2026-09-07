@@ -62,10 +62,14 @@ const H1 = "Building Construction Contractor in Bangalore";
  * description is a promise made in the search result, and a visitor who clicks it must find the
  * thing it offered. The replacement sells what the page actually contains. Restore the original
  * sentence in the same commit that restores the animation section. */
+/* Shortened 2026-09-07: the previous version ran to 253 characters, so Google truncated roughly
+ * the last hundred and the sentence that actually converts ("site visit, written specification")
+ * never showed. 152 characters displays in full. This page owns "building construction contractor
+ * in Bangalore" — the city stays in the first four words, and Hosur is deliberately absent
+ * because the sibling residential page owns Hosur. */
 const DESCRIPTION =
-  "Building construction contractor in Bangalore for individual houses, villas, turnkey projects, " +
-  "labour contracts, renovation and complete material-and-labour construction. Site visit, written " +
-  "specification and a detailed quotation before any work starts.";
+  "Building construction contractor in Bangalore for houses, villas and turnkey projects. " +
+  "Site visit and written specification before any quotation.";
 const HERO_IMAGE = `${SITE}/images/products/building-construction-contractor/building-construction-contractor-bangalore-front-elevation.webp`;
 
 export const metadata: Metadata = buildPageMetadata({
