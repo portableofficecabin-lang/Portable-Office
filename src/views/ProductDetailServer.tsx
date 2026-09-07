@@ -120,6 +120,23 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
   const sellingPrice = commerce ? sellPrice(commerce.basePrice) : undefined;
 
   /**
+   * TRUE for a SKU that is civil work performed on the customer's site, not a unit we fabricate
+   * and ship (today: POC-CIB-RCC, the RCC house build). The shared product template below is
+   * written for manufactured cabins and states three things that are simply false of a house
+   * cast in place, which is why they are gated on this flag:
+   *   · "Pan-India Delivery · Dispatch 7-15 days + 1-5 days transit" — nothing is dispatched;
+   *     the programme is agreed after a site visit and is stated lower down.
+   *   · "Steel Grade: MS CR Sheet / CRCA Sheet — IS 513 & IS 2062 · Corten" — those are sheet
+   *     steel grades for cabin bodies. An RCC frame is reinforcement bar to IS 1786 and concrete
+   *     to IS 456; quoting sheet grades on a house page is a specification error.
+   *   · the "Application" row, which fell through to the generic "Site offices, accommodation,
+   *     storage & modular building solutions across India" (now given a real home-construction
+   *     entry in productApplications.ts as well).
+   * Brand and the MSME registration stay: both are true of every SKU.
+   */
+  const isOnSiteService = commerce?.kind === "service";
+
+  /**
    * Handed to the long-form category content (ContainerOfficeContent, PortableToiletContent,
    * PortaCabinContent). When set, those components suppress every generic ₹ range / per-sq-ft
    * claim and show THIS figure instead — so the content section can never publish a number that
@@ -221,19 +238,38 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
 
   const cs = product.categorySlug;
 
-  // SEO image attributes derived from the page title (H1), primary keyword and
-  // category, so each product page's images carry unique, relevant alt/title text.
-  const imageAlt = `${pageH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${product.category} manufacturer in India`;
+  /* FALLBACK image alt/title, used only for gallery images that have no caption of their own
+   * in productImageCaptions.
+   *
+   * Rewritten 2026-09-07. The old value was
+   *     `${pageH1} — ${productPrimaryKeyword} by Portable Office Cabin, ${category} manufacturer in India`
+   * which repeated the product name twice and then asserted "manufacturer in India". On
+   * /products/construction-individual-building that produced five identical 142-character alts
+   * reading "Construction Individual Building — construction individual building by Portable
+   * Office Cabin, Home Construction manufacturer in India – view 1…5" — keyword stuffing, and
+   * factually wrong as well: that SKU is civil work cast on the customer's plot, so nothing about
+   * it is manufactured. Alt text now names the product and, where it is a real manufactured unit,
+   * says so once. The per-image "– view N" suffix added downstream keeps them distinct. */
+  const imageAlt = isOnSiteService
+    ? `${pageH1} — ${product.category} project by Portable Office Cabin`
+    : `${pageH1} — ${product.category} by Portable Office Cabin`;
   const imageTitle = `${pageH1} | ${product.category} — Portable Office Cabin`;
 
-  // Per-image descriptive alt/title (aligned with galleryImages). When an image
-  // has a caption (see productImageCaptions), build a unique, keyword-rich string;
-  // otherwise fall back to the generic alt/title with a "view N" suffix.
+  /* Per-image alt/title, aligned with galleryImages.
+   *
+   * A hand-written caption (productImageCaptions) is the best description we have of what is
+   * actually IN the frame, so it leads. Since 2026-09-07 it is no longer followed by
+   * `| ${productPrimaryKeyword}, ${category} by Portable Office Cabin` — that tail repeated the
+   * page's keyword on every single image and pushed captioned alts past 200 characters, which is
+   * the pattern this cluster was penalised for. The product name still prefixes it so the alt
+   * stands on its own out of context; nothing else is appended.
+   *
+   * Uncaptioned images fall back to the generic alt with a "view N" suffix to keep them unique. */
   const imageMeta = galleryImages.map((img, i) => {
     const caption = getImageCaption(img);
     if (caption) {
       return {
-        alt: `${pageH1} — ${caption} | ${productPrimaryKeyword}, ${product.category} by Portable Office Cabin`,
+        alt: `${pageH1} — ${caption}`,
         title: `${pageH1} — ${caption} | Portable Office Cabin`,
       };
     }
@@ -340,12 +376,15 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   </div>
                 )}
 
-                {/* Pan-India delivery + timeline */}
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Truck className="h-4 w-4 text-accent" />
-                  <span className="font-medium text-foreground">Pan-India Delivery</span>
-                  <span>· Dispatch 7–15 days + 1–5 days transit</span>
-                </div>
+                {/* Pan-India delivery + timeline. Hidden for on-site civil work: nothing is
+                    dispatched or transported, and the real programme is stated further down. */}
+                {!isOnSiteService && (
+                  <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <Truck className="h-4 w-4 text-accent" />
+                    <span className="font-medium text-foreground">Pan-India Delivery</span>
+                    <span>· Dispatch 7–15 days + 1–5 days transit</span>
+                  </div>
+                )}
               </div>
 
               {/* ISO 9001:2015 certification — premium trust badge (all product pages) */}
@@ -372,12 +411,25 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                     <dt className="font-semibold text-foreground sm:w-32 shrink-0">Application</dt>
                     <dd className="text-muted-foreground">{getProductApplication(product.categorySlug)}</dd>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
-                    <dt className="font-semibold text-foreground sm:w-32 shrink-0">Steel Grade</dt>
-                    <dd className="text-muted-foreground">
-                      MS CR Sheet / CRCA Sheet — IS 513 &amp; IS 2062 · Corten · ISO-Grade
-                    </dd>
-                  </div>
+                  {/* Sheet-steel grades for a fabricated cabin body. Meaningless — and wrong —
+                      on a cast-in-place RCC house, so it is replaced there by the structural
+                      standards that actually govern the work. */}
+                  {isOnSiteService ? (
+                    <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
+                      <dt className="font-semibold text-foreground sm:w-32 shrink-0">Structure</dt>
+                      <dd className="text-muted-foreground">
+                        RCC frame — concrete to IS 456, reinforcement to IS 1786, block masonry to
+                        IS 2185. Grades are fixed in your written specification.
+                      </dd>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
+                      <dt className="font-semibold text-foreground sm:w-32 shrink-0">Steel Grade</dt>
+                      <dd className="text-muted-foreground">
+                        MS CR Sheet / CRCA Sheet — IS 513 &amp; IS 2062 · Corten · ISO-Grade
+                      </dd>
+                    </div>
+                  )}
                   <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
                     <dt className="font-semibold text-foreground sm:w-32 shrink-0">MSME Certified</dt>
                     <dd className="text-muted-foreground font-mono">UDYAM-TN-11-0068545</dd>

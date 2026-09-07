@@ -189,16 +189,17 @@ export const categoryServiceLinks: CategoryServiceLink[] = [
   },
   /* TWO contractor service pages sit under Home Construction, listed here in the same order the
    * cards use on the category page itself (HomeConstructionCategoryContent) so the sidebar, the
-   * mega menu and the page body all agree. Their descriptions are deliberately different — the
-   * residential page owns scope and process, the Bangalore page owns the technical detail. See
-   * the header comment on
+   * mega menu and the page body all agree. They are split by PLACE, not by wording: one owns the
+   * city, the other owns a locality inside Electronic City. Keep these two names distinct — if a
+   * later edit makes them read alike, the two pages go back into one auction and both drop out.
+   * See the header comment on
    * app/(site)/products/home-construction/residential-building-construction-contractor/page.tsx
    * before editing either. */
   {
     parentSlug: "home-construction",
-    name: "Residential Building Construction Contractor",
+    name: "Construction Contractor in Shikaripalya",
     href: "/products/home-construction/residential-building-construction-contractor",
-    description: "Houses, villas and sheds across Hosur and Bangalore — written estimate, stage-wise payment",
+    description: "Houses, added floors and rental blocks on plots in Shikaripalya, Electronic City",
   },
   {
     parentSlug: "home-construction",

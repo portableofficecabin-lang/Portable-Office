@@ -43,17 +43,27 @@ const CATEGORY_META: Record<string, { title: string; description: string; keywor
       + "portable office cabin, prefabricated portable cabin, MS portable cabin, "
       + "20ft portable cabin, 40ft portable cabin bunkhouse",
   },
-  /* Home Construction. Deliberately makes NO claim about price, timeline or scope beyond what the
-   * company demonstrably does elsewhere in the catalogue — the category has no products yet, so
-   * there is nothing to cite. Revisit this copy once SKUs are assigned. */
+  /* HOME CONSTRUCTION — a HUB, not a competitor. Rewritten 2026-09-07.
+   *
+   * The old copy was wrong twice over. It sold "steel structure, insulated walls, roofing" —
+   * that is the PREFAB range, not the RCC civil work this category actually holds — and it
+   * claimed an "ISO 9001 manufacturer", a claim being withdrawn from public surfaces (commits
+   * 53d483d, e84cecd) and one that describes manufacturing rather than construction anyway.
+   *
+   * Its job now is to ROUTE, so the title and description deliberately avoid the head terms its
+   * own children are competing for ("building construction contractor in Bangalore",
+   * "construction contractor in Hosur", "house construction cost per sq ft"). A hub that
+   * out-ranks its own children for their keyword is the cannibalisation, not the cure. */
   "home-construction": {
-    title: "Home Construction — Prefab Houses & Villas Built to Your Plan",
+    // 41 chars, so the rendered tag (+ the 24-char brand suffix the layout template appends)
+    // lands at 65 and displays in full. An earlier draft ran to 92 and was truncated.
+    title: "Home Construction Services in Bangalore",
     description:
-      "Homes built to your own plan by an ISO 9001 manufacturer — steel structure, insulated walls, "
-      + "roofing, interiors and finishing. Manufactured in Tamil Nadu and built on site across India.",
+      "RCC houses built on your own plot in Bangalore and Hosur. Find the right page: contractor "
+      + "services, what a build includes and what it costs, or the area you are building in.",
     keywords:
-      "home construction, prefab house construction, villa construction, "
-      + "prefabricated home builder India, modular home construction, house building contractor",
+      "home construction services, house construction company, RCC house construction, "
+      + "home construction Bangalore Hosur, house building services",
   },
   "prefab-building": {
     title: "Prefab Buildings — Panel-Built Structures, Made to Your Plan",

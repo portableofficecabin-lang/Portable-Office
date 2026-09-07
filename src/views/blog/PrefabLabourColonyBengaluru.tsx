@@ -467,6 +467,23 @@ export default function PrefabLabourColonyBengaluru() {
                 </div>
               ))}
             </div>
+
+            {/* Added 2026-09-07. This post is indexed and ranks; the conventional-construction
+                cluster was not, and had no inbound link from any indexed page. Two links, two
+                distinct anchors, each pointing at the page that owns that intent — do not add a
+                third here or reword these to match each other. */}
+            <p className="text-foreground/85 leading-relaxed">
+              Conventional construction still wins whenever the building is meant to be permanent.
+              If that is your brief rather than site accommodation, we also work as a{" "}
+              <Link href="/products/home-construction/building-construction-contractor" className="text-accent font-medium hover:underline">
+                building construction contractor in Bangalore
+              </Link>{" "}
+              and, on the Tamil Nadu side of the border, as a{" "}
+              <Link href="/products/home-construction/residential-building-construction-contractor" className="text-accent font-medium hover:underline">
+                construction contractor in Hosur
+              </Link>
+              .
+            </p>
           </section>
 
           {/* Project Execution Process */}

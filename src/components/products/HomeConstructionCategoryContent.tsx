@@ -33,25 +33,43 @@ const SERVICE_LINKS: { href: string; name: string; blurb: string; icon: React.Co
      page covers the technical depth. If you ever make these two descriptions interchangeable, the
      pages read as duplicates to both users and search engines. */
   {
-    href: "/products/home-construction/residential-building-construction-contractor",
-    name: "Residential Building Construction Contractor",
-    blurb:
-      "Houses, villas, apartments, shops and factory sheds across Hosur and Bangalore — the two ways to contract the work, the six stages a project runs through, where we build, and what you should ask any contractor before you sign.",
-    icon: Home,
-  },
-  {
     href: "/products/home-construction/building-construction-contractor",
     name: "Building Construction Contractor in Bangalore",
     blurb:
-      "The technical side of contracting in Bangalore — the quality checks made at each stage before work is covered up, everything a written specification has to list, and what actually drives cost and time.",
+      "Contracting in Bengaluru — the quality checks made at each stage before work is covered up, everything a written specification has to list, and what actually drives cost and time.",
     icon: HardHat,
   },
   {
-    href: "/products/construction-individual-building",
-    name: "Construction Individual Building",
+    /* Targeted on SHIKARIPALYA 2026-09-07 (owner's instruction). The two contractor pages are
+       split by place, not by wording — see the header comment on that page. Keep "Shikaripalya"
+       in this name and keep the word "Bangalore" out of this blurb, or this entry and the one
+       above collapse back into duplicates. */
+    href: "/products/home-construction/residential-building-construction-contractor",
+    name: "Construction Contractor in Shikaripalya",
     blurb:
-      "The product page for RCC individual house construction: G+1 to G+5 frames, plot sizes and setbacks, what goes into the specification, and how the build runs stage by stage.",
+      "Building on a plot in Shikaripalya or the streets around it — the two ways to contract the work, the six stages a project runs through, and what to ask any contractor before you sign.",
+    icon: Home,
+  },
+  {
+    href: "/products/construction-individual-building",
+    name: "House Construction Cost & Specification",
+    blurb:
+      "What an RCC house build actually includes, trade by trade, and what moves the rate per square foot: G+1 to G+5 frames, plot sizes and setbacks, and the specification your quotation is written against.",
     icon: Building2,
+  },
+  {
+    href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore",
+    name: "House Construction in Electronic City",
+    blurb:
+      "Building on a plot in Electronic City, Bommasandra, Chandapura or Anekal — which authority sanctions your plan, the localities we cover, and how a site visit is arranged.",
+    icon: MapPin,
+  },
+  {
+    href: "/cities-we-serve/building-contractor-neeladri-road-neeladri-nagar",
+    name: "Building Contractor on Neeladri Road",
+    blurb:
+      "Street-level detail for Neeladri Road and Neeladri Nagar in Electronic City Phase 1 — houses, added floors and rental blocks on the plots along it.",
+    icon: MapPin,
   },
   {
     href: "/cities-we-serve/villa-construction-company-bangalore",

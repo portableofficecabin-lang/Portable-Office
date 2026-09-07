@@ -2683,8 +2683,8 @@ export const CITY_PAGES: CityPage[] = [
 
     relatedLinks: [
       { label: "Building Construction Contractor in Bangalore", href: "/products/home-construction/building-construction-contractor" },
-      { label: "Residential Building Construction Contractor", href: "/products/home-construction/residential-building-construction-contractor" },
-      { label: "Construction Individual Building — specification and cost basis", href: "/products/construction-individual-building" },
+      { label: "Construction Contractor in Shikaripalya", href: "/products/home-construction/residential-building-construction-contractor" },
+      { label: "House Construction Cost & Specification", href: "/products/construction-individual-building" },
       { label: "Villa Construction Company in Bangalore", href: "/cities-we-serve/villa-construction-company-bangalore" },
       { label: "Home Construction — all services", href: "/products/category/home-construction" },
       { label: "Prefab Homes — factory-built alternative", href: "/products/category/prefab-homes" },
@@ -3003,8 +3003,8 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "House Construction in Electronic City — the wider area", href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore" },
       { label: "Building Construction Contractor in Bangalore", href: "/products/home-construction/building-construction-contractor" },
-      { label: "Residential Building Construction Contractor", href: "/products/home-construction/residential-building-construction-contractor" },
-      { label: "Construction Individual Building — specification and cost basis", href: "/products/construction-individual-building" },
+      { label: "Construction Contractor in Shikaripalya", href: "/products/home-construction/residential-building-construction-contractor" },
+      { label: "House Construction Cost & Specification", href: "/products/construction-individual-building" },
       { label: "Villa Construction Company in Bangalore", href: "/cities-we-serve/villa-construction-company-bangalore" },
       { label: "Home Construction — all services", href: "/products/category/home-construction" },
     ],

@@ -12,14 +12,23 @@ interface ProductSEOData {
 }
 
 const productSEOMap: Record<string, ProductSEOData> = {
-  /* Construction Individual Building (id 45) — a civil-construction SERVICE. The generic fallback
+  /* Individual House Construction (id 45) — a civil-construction SERVICE. The generic fallback
    * described it as a "quality portable structure", which is wrong in kind: nothing is delivered,
    * it is cast on the customer's plot. No rate is stated because the owner prices per sq ft after
-   * a site visit and has not supplied the band. */
+   * a site visit and has not supplied the band.
+   *
+   * RETARGETED 2026-09-07 to COST AND SPECIFICATION intent — see the note on id "45" in
+   * productCommerce.ts. `title` must stay byte-identical to that record's feedTitle, which is
+   * what actually renders (buildProductPageMetadata prefers feedTitle); this entry is the
+   * fallback and the documentation. The contractor keywords that used to sit in `keywords` below
+   * were pulled out: they belong to the two /home-construction/ contractor pages, and repeating
+   * them here is what put four pages in one auction. Nothing in `keywords` is published any more
+   * (buildPageMetadata stopped emitting meta keywords on 2026-09-07) — it is kept as the working
+   * record of what this page is meant to rank for. */
   "45": {
-    title: "Construction Individual Building — RCC Individual House Construction | Portable Office Cabin",
-    description: "Individual house construction on your own plot — RCC frame, block masonry and full finishing. G+1 to G+5 designed to your plot, setbacks and soil. Priced per sq ft after a site visit.",
-    keywords: "construction individual building, individual house construction, civil construction contractor, modern house construction, G+1 house construction, G+2 house construction, G+3 house construction, G+4 house construction, G+5 house construction, 40x30 house construction, residential building construction, turnkey house construction, house construction cost",
+    title: "Individual House Construction Cost & Specification | Portable Office Cabin",
+    description: "What individual house construction includes and what sets the cost per sq ft — RCC frame, masonry, finishes, G+1 to G+5, and the specification your rate is quoted against.",
+    keywords: "individual house construction cost, house construction cost per sq ft, house construction specification, what is included in house construction, G+1 house construction cost, G+2 house construction cost, 40x30 house construction cost, RCC house construction specification, house construction materials list",
   },
   // Executive Portable Cabin 20ft
   "1": {

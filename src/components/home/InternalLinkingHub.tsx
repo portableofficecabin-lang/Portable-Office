@@ -42,6 +42,25 @@ const linkClusters = [
       { label: "Labour Shed Prefabricated Structures", href: "/blog/labour-shed-prefabricated-structures" },
     ],
   },
+  /* HOUSE CONSTRUCTION — added 2026-09-07. The seven pages in this cluster were all indexable and
+     all un-indexed, and one reason was that NOTHING on the already-indexed part of the site linked
+     into them: the home page had no link at all, so the only internal paths in were the category
+     page and the footer. Each label below is a DISTINCT anchor matching that page's one assigned
+     keyword — do not reword two of them to the same phrase, which is what put these pages in one
+     auction to begin with. This is civil work on the customer's own plot, deliberately separate
+     from the "Prefab Homes & Villas" cluster above (factory-built units). */
+  {
+    pillar: "House Construction",
+    pillarHref: "/products/category/home-construction",
+    description: "RCC houses built on your own plot in Bangalore and Hosur — contractor services, costs and the areas we build in.",
+    links: [
+      { label: "Building Construction Contractor in Bangalore", href: "/products/home-construction/building-construction-contractor" },
+      { label: "Construction Contractor in Shikaripalya", href: "/products/home-construction/residential-building-construction-contractor" },
+      { label: "House Construction Cost & Specification", href: "/products/construction-individual-building" },
+      { label: "House Construction in Electronic City", href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore" },
+      { label: "Villa Construction in Bangalore", href: "/cities-we-serve/villa-construction-company-bangalore" },
+    ],
+  },
   {
     pillar: "Security & Toilet Cabins",
     pillarHref: "/products/category/security-cabins",
