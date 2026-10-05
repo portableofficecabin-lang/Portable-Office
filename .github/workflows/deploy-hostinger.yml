@@ -1,0 +1,36 @@
+name: Deploy Portable Office
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: portable-office-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Hostinger VPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Configure SSH
+        shell: bash
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 187.126.117.26 >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy production
+        shell: bash
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -o BatchMode=yes \
+            deploy@187.126.117.26 \
+            'sudo -n /usr/local/bin/deploy-portable-office'
