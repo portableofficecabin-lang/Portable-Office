@@ -17,6 +17,13 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      # The page list for the post-deploy check comes from the commit that was just deployed,
+      # so a city page that is in the code but not on the site is reported, not assumed.
+      - name: Check out the deployed commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Configure SSH
         shell: bash
         run: |
@@ -34,3 +41,45 @@ jobs:
             -o BatchMode=yes \
             deploy@187.126.117.26 \
             'sudo -n /usr/local/bin/deploy-portable-office'
+
+      # ── Post-deploy verification ─────────────────────────────────────────────────────────
+      # The server-side script builds IN PLACE while the previous process keeps serving, then
+      # reloads PM2. Two things can go wrong silently: the reload serves the old build, or a
+      # request that lands between the build's prerender and the reload makes the old process
+      # write a cached 404 for a just-added page over the new build's 200 (seen on 2026-10-10 —
+      # see app/(site)/cities-we-serve/[slug]/page.tsx and deploy/README.md). Both show up here
+      # as a non-200, and the run goes RED instead of the page being discovered by hand.
+      # Remedy for a red run: re-run the workflow (Actions → Deploy Portable Office → Run
+      # workflow); the rebuild replaces every cached entry.
+      - name: Verify the deployed pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://portableofficecabin.com"
+
+          # Every city page of the deployed commit, plus the pages that list them.
+          mapfile -t slugs < <(grep -oE '^[[:space:]]+slug: "[a-z0-9-]+"' src/data/cityPages.ts | sed -E 's/.*"([a-z0-9-]+)"/\1/')
+          if [ "${#slugs[@]}" -eq 0 ]; then echo "::error::No city slugs found in src/data/cityPages.ts"; exit 1; fi
+          paths=("/" "/sitemap.xml" "/cities-we-serve")
+          for s in "${slugs[@]}"; do paths+=("/cities-we-serve/$s"); done
+          echo "Checking ${#paths[@]} URLs on $base"
+
+          failed=()
+          for p in "${paths[@]}"; do
+            code=""
+            # Up to 12 × 5 s per URL: the reloaded process needs a few seconds to accept
+            # connections and to serve its first requests.
+            for attempt in $(seq 1 12); do
+              code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$base$p" || echo "000")
+              [ "$code" = "200" ] && break
+              sleep 5
+            done
+            if [ "$code" = "200" ]; then echo "  200  $p"; else echo "  $code  $p   <-- NOT OK"; failed+=("$p ($code)"); fi
+          done
+
+          if [ "${#failed[@]}" -gt 0 ]; then
+            printf '::error::%s\n' "${#failed[@]} deployed page(s) did not answer 200: ${failed[*]}"
+            echo "Re-run this workflow (Run workflow) to rebuild; see deploy/README.md for the root cause."
+            exit 1
+          fi
+          echo "All ${#paths[@]} URLs answered 200."

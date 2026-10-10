@@ -27,6 +27,26 @@ import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structure
 
 export const revalidate = 3600; // 1 hour, same as the cities index
 
+/**
+ * Only the slugs returned by generateStaticParams() exist. Any other slug is a 404 decided by
+ * the router BEFORE rendering, so nothing is written to the ISR cache for it.
+ *
+ * WHY (production, 2026-10-10 — freshly merged city pages answering 404 after a green deploy):
+ * with the default (dynamicParams = true) an unknown slug is rendered on demand and the
+ * notFound() result is CACHED ON DISK for the revalidate window —
+ * .next/server/app/cities-we-serve/<slug>.{html,meta,rsc}, served with x-nextjs-cache: HIT
+ * (reproduced on a local production build). The VPS deploy script runs `next build` IN PLACE
+ * while the previous Node process keeps serving from the same .next directory, and only then
+ * reloads PM2. A request for a just-merged city page that lands between the build's prerender
+ * and the reload is answered by the OLD process, which does not know the slug yet: it writes a
+ * 404 entry over the freshly prerendered 200, and the NEW process then serves that cached 404
+ * for up to an hour. With dynamicParams = false the old process never creates that entry.
+ *
+ * Behaviour for visitors is unchanged: /cities-we-serve/<unknown> was a 404 before and is a 404
+ * now; the known pages are prerendered and revalidated exactly as before.
+ */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return CITY_PAGES.map((c) => ({ slug: c.slug }));
 }
