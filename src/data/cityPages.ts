@@ -567,6 +567,279 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   {
+    slug: "container-office-in-triveni",
+    city: "Triveni, Yeshwanthpur",
+    listTitle: "Container Office in Triveni",
+    metaTitle: "Container Office in Triveni, Yeshwanthpur – Portable Office Manufacturer",
+    metaDescription:
+      "Container office in Triveni, Yeshwanthpur — insulated, customizable portable offices in 10 to 40 ft for construction sites, factories and apartments. Buy or rent.",
+    keywords:
+      "Container Office in Triveni, container office Yeshwanthpur, portable office container Triveni Road, site office container Yeshwanthpur, container office manufacturer Triveni, container office on rent Yeshwanthpur, portable office cabin Mathikere, prefab office container Gokula",
+    geo: { region: "IN-KA", placename: "Triveni Road, Yeshwanthpur, Bengaluru, Karnataka, India", position: "13.0296;77.5545", icbm: "13.0296, 77.5545" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-triveni/container-office-in-triveni-exterior.webp",
+      alt: "Container office in Triveni — white corrugated steel portable office with a charcoal lower band and three hooded sliding windows along its side, standing in a concrete yard outside industrial sheds",
+      width: 1280,
+      height: 800,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-triveni/container-office-in-triveni-aerial-view.webp",
+      alt: "Container office in Triveni — elevated view of the white portable office showing its profiled-sheet roof, charcoal lower band and three hooded sliding windows, placed on a concrete yard",
+      width: 1280,
+      height: 800,
+      caption:
+        "Fabricated at the factory and delivered as one unit: roof, insulated walls, windows and door arrive fitted, so a compact Triveni plot needs only placement, levelling and connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-triveni/container-office-in-triveni-interior.webp",
+      alt: "Container office in Triveni — inside the portable office: white corrugated steel wall lining with a dark lower band, workstations with monitors and office chairs, grey filing cabinets, sliding windows and LED panel lights over a smooth light-grey floor",
+      width: 1280,
+      height: 800,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-triveni/container-office-in-triveni-front-view.webp",
+        alt: "Container office in Triveni — front elevation of the white portable office: central glazed door with a step, three hooded sliding windows and a charcoal skirt band along the base",
+        width: 1280,
+        height: 800,
+      },
+    ],
+
+    h1: "Container Office in Triveni, Yeshwanthpur – Portable Office Manufacturer",
+    tagline: "Buy or rent portable container offices according to your project requirements.",
+    intro: [
+      "Portable Office Cabin manufactures and supplies customized container offices for construction sites, factories, commercial premises, residential developments and industrial projects around Triveni Road, Yeshwanthpur, Mathikere and north-west Bengaluru.",
+      "Our portable office containers are available in standard and customized dimensions, including 10 ft, 20 ft, 30 ft and 40 ft configurations. Each cabin can be manufactured with suitable insulation, electrical fittings, windows, doors, flooring and optional furniture.",
+    ],
+
+    whyHeading: "Why Choose a Portable Container Office in Triveni?",
+    whyIntro:
+      "Triveni Road and the surrounding Yeshwanthpur, Gokula and Mathikere neighbourhoods include established residential layouts, commercial properties, workshops and ongoing construction projects. Construction contractors, apartment associations, warehouse operators and industrial businesses often require temporary spaces for site supervision, security, administration and document storage. A portable container office offers a relocatable alternative to constructing a conventional temporary office. Our cabins can be configured for compact plots, industrial premises and larger commercial sites, subject to site access and installation requirements. Key advantages:",
+    whyBullets: [
+      {
+        title: "Space-efficient construction",
+        text: "Portable offices are suitable for locations where available ground space is limited. Compact configurations such as 10 × 8 ft and 20 × 8 ft can accommodate basic office activities without occupying excessive site area.",
+      },
+      {
+        title: "Faster project setup",
+        text: "Factory fabrication reduces the construction activities required at the final installation location. The completed unit can be transported and positioned after the site is prepared.",
+      },
+      {
+        title: "Relocatable office structure",
+        text: "A container office can be relocated when a construction or commercial project is completed, subject to its condition and suitable lifting and transportation arrangements.",
+      },
+      {
+        title: "Insulated working environment",
+        text: "Optional glass-wool or PUF insulation helps improve thermal comfort. Proper ventilation, windows and air-conditioning provisions can be incorporated based on the project requirements.",
+      },
+      {
+        title: "Customized interior layout",
+        text: "Customers can select workstations, enclosed partitions, drawing tables, document racks, security counters, pantry arrangements and attached toilets.",
+      },
+      {
+        title: "Durable steel construction",
+        text: "Mild Steel structural framing with suitable exterior sheet materials and protective coatings provides a robust solution for outdoor installation.",
+      },
+    ],
+
+    solutionsHeading: "Site Office Container Layouts for Triveni and Nearby Areas",
+    solutionsIntro:
+      "Common layouts supplied around Triveni Road, Yeshwanthpur and the neighbouring areas, with the suitable cabin size for each.",
+    solutions: [
+      {
+        title: "Compact Construction Site Office – 10 × 8 ft or 20 × 8 ft",
+        text: "Suitable for construction contractors working on residential and commercial building projects around Triveni Road and Gokula Extension. Typical interior arrangements can accommodate a working desk, drawing table, electrical sockets, lighting and document storage.",
+      },
+      {
+        title: "Apartment Security-Cum-Office Cabin – 10 × 8 ft",
+        text: "Designed for apartment entry gates, residential associations and security checkpoints around HMT Layout, Mathikere Extension and MS Ramaiah Nagar. Optional features include sliding observation windows, a security workstation, storage cabinets and internal partitions.",
+      },
+      {
+        title: "Project Sales Office – 20 × 10 ft",
+        text: "Suitable for residential redevelopment projects, commercial sites and real estate marketing activities. Configurations can include a reception counter, glazed frontage, enclosed consultation room, display wall and air-conditioning provision.",
+      },
+      {
+        title: "Factory Administration Cabin – 30 × 10 ft",
+        text: "Designed for factories, workshops, industrial sheds and warehouses around Peenya, Goraguntepalya and Tumkur Road. The interior can accommodate administrative workstations, supervisor cabins, document storage and electrical fittings.",
+      },
+      {
+        title: "Temporary Commercial Office – 20 × 10 ft",
+        text: "A customizable office configuration for businesses requiring temporary premises during renovation or redevelopment. Glass elevations, counters, partitions and interior finishes can be designed according to the intended use and applicable permissions.",
+      },
+      {
+        title: "Office and Storage Combination – 20 × 10 ft",
+        text: "A divided cabin incorporating an office area and lockable storage space. Suitable for construction contractors, maintenance teams and industrial operations requiring secure storage alongside administrative work.",
+      },
+    ],
+
+    featuresHeading: "Container Office Sizes and Specifications",
+    featuresIntro:
+      "Portable Office Cabin supplies multiple cabin sizes to accommodate different working requirements. A 10 × 8 ft cabin (80 sq ft) suits a site engineer cabin or security office; 20 × 8 ft (160 sq ft) a construction site office; 20 × 10 ft (200 sq ft) a project office or temporary commercial office; 30 × 10 ft (300 sq ft) a factory administrative cabin; and 40 × 10 ft (400 sq ft) a large project office or site headquarters. Standard construction materials:",
+    features: [
+      "Main structural frame — fabricated Mild Steel structural members with suitable reinforcement according to the approved cabin design",
+      "External wall construction — MS corrugated sheet or GI sheet, depending on the selected product specification; common exterior options include 1.2 mm MS CR sheet and 1.6 mm GI sheet",
+      "Wall and roof insulation — glass-wool insulation in 25–50 mm options or PUF insulation in 40–50 mm options, as specified in the quotation",
+      "Roofing system — weather-resistant steel roofing with appropriate sealing and rainwater drainage arrangements",
+      "Flooring — 18 mm cement board with vinyl or SPC floor finish options, supported on the fabricated steel base structure",
+      "Doors and windows — aluminium or UPVC sliding windows with appropriate locking arrangements and suitable MS or aluminium doors",
+      "Electrical installation — FR/FRLS wiring, LED lighting, switches, sockets, fans, distribution board and optional air-conditioning provisions",
+      "Additional customization — internal partitions, workstations, attached toilets, pantry counters, glass-front elevations, furniture and other required fittings",
+    ],
+    sizesNote:
+      "Customized lengths, widths, internal partitions and multi-unit arrangements are available subject to technical feasibility.",
+
+    industriesHeading: "Container Office Price in Triveni and Yeshwanthpur",
+    industriesIntro:
+      "The price of a portable container office depends on its dimensions, construction materials, insulation and internal requirements. GST, transportation, unloading and optional fittings are additional unless specifically included in the final quotation. For accurate pricing, customers can share their preferred cabin dimensions, internal layout and project location. Important factors influencing the final quotation include:",
+    industries: [
+      { title: "Overall size", text: "Overall cabin size and height." },
+      { title: "Structure and walls", text: "Structural steel sections and external wall material." },
+      { title: "Insulation", text: "Insulated or non-insulated construction." },
+      { title: "Interior", text: "Interior partitions and finishing materials." },
+      { title: "Flooring", text: "Flooring type and thickness." },
+      { title: "Services", text: "Electrical fittings and air-conditioning provisions." },
+      { title: "Wet areas", text: "Attached toilet or pantry arrangements." },
+      { title: "Furniture", text: "Furniture and workstation requirements." },
+      { title: "Logistics", text: "Transportation distance and crane accessibility." },
+      { title: "Site works", text: "Site preparation and unloading arrangements." },
+    ],
+
+    customHeading: "Container Office on Rent in Yeshwanthpur and Triveni",
+    customIntro:
+      "Portable Office Cabin also handles enquiries for rental container offices, subject to cabin availability and rental requirements.",
+    customBullets: [
+      {
+        title: "Suitable for",
+        text: "Construction sites, temporary project offices, industrial administration and short-duration commercial activities.",
+      },
+      {
+        title: "Rental conditions",
+        text: "Depend on the container model, required rental period, refundable security deposit, transport requirements and applicable taxes.",
+      },
+    ],
+    customOutro: "Contact our team to confirm availability and commercial terms.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures customized prefabricated structures and container-based solutions supplied across Karnataka and Tamil Nadu. Our product range includes portable office cabins, container site offices, security cabins, portable toilet cabins, storage containers, labour accommodation cabins, marketing and sales offices, prefabricated PUF panel cabins and container-based commercial units. Our manufacturing scope includes:",
+    whyUsBullets: [
+      { title: "Steel fabrication", text: "Container structure and fabricated steel base." },
+      { title: "Insulation", text: "Glass-wool or PUF wall and roof insulation." },
+      { title: "Interior finishing", text: "Wall linings, flooring and finishes." },
+      { title: "Electrical installation", text: "Wiring, lighting, switches, sockets and distribution board." },
+      { title: "Customized partitions", text: "Internal partitions and room layouts." },
+      { title: "Furniture integration", text: "Optional workstations, counters and storage." },
+      {
+        title: "Warranty",
+        text: "Standard structural warranty of 5 years and leakage warranty of 1 year, subject to the applicable quotation terms and product specifications.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve Around Triveni and Yeshwanthpur",
+    areasText:
+      "Portable Office Cabin supplies customized office containers to Triveni Road and surrounding locations in north-west Bengaluru. Service areas include Triveni Road and Triveni Main Road, Yeshwanthpur, BK Nagar, Gokula Extension, Gokula 1st Stage, Mathikere, Mathikere Extension, MS Ramaiah Nagar, HMT Layout, Goraguntepalya, Peenya Industrial Area, Jalahalli, Rajajinagar, Malleswaram, Hebbal, Tumkur Road and Nelamangala. Delivery and installation feasibility depend on access roads, cabin dimensions, overhead clearance, crane availability and the final site conditions. Some roads around Triveni, Gokula and Mathikere have limited turning space, parked vehicles and restricted access for heavy transportation equipment, so before finalizing transportation our team can review the proposed installation area and assess the available approach road. Important considerations include road width and turning radius, overhead electrical cables and obstructions, gate width and compound-wall clearance, suitable truck and crane access, available ground space for placing the cabin, and structural support and levelling arrangements. Where a single large cabin cannot be transported or installed safely, an alternative modular or sectional arrangement may be considered. Final lifting and placement methods are determined after a site-specific feasibility assessment.",
+
+    howHeading: "How to Order a Container Office in Triveni",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Provide the preferred dimensions, delivery location and purpose of the cabin. Mention any required partitions, furniture, toilets, air conditioning or other special fittings.",
+      },
+      {
+        title: "Receive a technical quotation",
+        text: "We prepare a quotation covering material specifications, structural framing, insulation, flooring, electrical fittings and optional features.",
+      },
+      {
+        title: "Finalize the approved layout",
+        text: "Review the selected dimensions, entry positions, window locations and internal arrangements before manufacturing begins.",
+      },
+      {
+        title: "Fabrication and quality inspection",
+        text: "The cabin structure and interior fittings are manufactured according to the approved specifications.",
+      },
+      {
+        title: "Transportation and installation",
+        text: "The completed cabin is transported to the designated site. Unloading, positioning, levelling and site connections are carried out according to the agreed scope. Standard manufacturing lead times are typically 10–15 days, depending on the cabin design, order confirmation, material availability and production schedule.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a container office cost in Triveni or Yeshwanthpur?",
+        answer:
+          "The price depends on the size, structural materials, insulation, flooring, electrical fittings and additional facilities. Customers can request a detailed quotation based on their preferred specifications and delivery location.",
+      },
+      {
+        question: "Can you deliver container offices into narrow lanes around Gokula and Mathikere?",
+        answer:
+          "Delivery may be possible depending on road width, turning space, overhead obstructions and lifting equipment access. We recommend sharing site photographs and measurements so transportation feasibility can be checked.",
+      },
+      {
+        question: "Do I need BBMP permission to place a container office on my plot?",
+        answer:
+          "Approval requirements depend on the location, intended use, duration of installation and applicable local rules. Customers should confirm the requirements with the relevant municipal or planning authority before installing the cabin.",
+      },
+      {
+        question: "How long does delivery take?",
+        answer:
+          "Standard manufacturing typically takes around 10–15 days, subject to project specifications, order confirmation and production conditions. Transportation and installation are scheduled separately according to site accessibility.",
+      },
+      {
+        question: "Can I rent a container office for my construction project?",
+        answer:
+          "Rental arrangements may be available depending on cabin inventory, project duration and required configuration. Rental charges, deposits and transportation terms are confirmed through a separate quotation.",
+      },
+      {
+        question: "Will the container office become hot during summer?",
+        answer:
+          "Insulation helps reduce heat transfer. Options such as glass wool, PUF insulation, ventilation and air conditioning can improve indoor working conditions.",
+      },
+      {
+        question: "Can you add a toilet and pantry?",
+        answer:
+          "Yes. Container office layouts can include an attached western toilet, wash basin, exhaust fan, water inlet and outlet provisions, pantry counter and sink, subject to space and technical requirements.",
+      },
+      {
+        question: "Can the office be placed on a slab or first-floor level?",
+        answer:
+          "Elevated installation requires structural verification by a qualified engineer and a site-specific lifting plan. The supporting structure must be assessed for cabin weight and imposed loads before approval.",
+      },
+      {
+        question: "What sizes of container offices are available?",
+        answer:
+          "Common sizes include 10 × 8 ft, 20 × 8 ft, 20 × 10 ft, 30 × 10 ft and 40 × 10 ft. Custom sizes may also be manufactured.",
+      },
+      {
+        question: "Do you supply portable container offices to Peenya, Jalahalli and Tumkur Road?",
+        answer:
+          "Yes. We accept enquiries from industrial and commercial locations across these areas, subject to transport and installation feasibility.",
+      },
+      {
+        question: "How long does a container office last?",
+        answer:
+          "Service life depends on material specifications, environmental conditions, maintenance and usage. Routine inspection, rust protection, repainting and proper roof drainage can help extend service life.",
+      },
+      {
+        question: "Can I inspect a cabin before placing an order?",
+        answer:
+          "Inspection arrangements can be discussed with our sales team, subject to availability and appointment confirmation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Triveni, Yeshwanthpur",
+    ctaText: `Looking for a portable container office for your construction project, factory, warehouse, commercial premises or apartment development? Contact Portable Office Cabin for a customized technical and commercial quotation. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+
+    disclaimer:
+      "The BBMP (Bruhat Bengaluru Mahanagara Palike) is an independent statutory body; Portable Office Cabin is not affiliated with it and does not control its approval requirements. Permission notes on this page are general guidance, not legal advice, and the position for your own plot should be confirmed with the relevant authority before a cabin is installed.",
+  },
+
+  {
     slug: "container-office-in-sipcot-hosur",
     city: "SIPCOT Hosur",
     metaTitle: "Container Office in SIPCOT Hosur",
