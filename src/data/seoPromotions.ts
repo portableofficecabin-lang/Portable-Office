@@ -245,10 +245,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Container Office|Tamil Nadu": [
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
   "Site Office Container|Tamil Nadu": [
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
   "Container Office|Chennai": [
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
