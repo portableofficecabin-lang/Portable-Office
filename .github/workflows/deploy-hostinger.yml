@@ -5,6 +5,14 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      action:
+        description: "deploy = build and release main; rollback = re-activate the previous release (release-based server script only)"
+        type: choice
+        options:
+          - deploy
+          - rollback
+        default: deploy
 
 concurrency:
   group: portable-office-production
@@ -33,14 +41,25 @@ jobs:
           ssh-keyscan -H 187.126.117.26 >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
+      # A push to main runs exactly the command it always ran (no arguments). Only a manual
+      # "rollback" run appends an argument; the sudoers entry on the VPS names the command
+      # without an argument list, so arguments are already permitted.
       - name: Deploy production
         shell: bash
+        env:
+          ACTION: ${{ github.event.inputs.action || 'deploy' }}
         run: |
+          args=""
+          case "$ACTION" in
+            deploy) ;;
+            rollback) args=" rollback" ;;
+            *) echo "::error::unknown action '$ACTION'"; exit 1 ;;
+          esac
           ssh \
             -i ~/.ssh/id_ed25519 \
             -o BatchMode=yes \
             deploy@187.126.117.26 \
-            'sudo -n /usr/local/bin/deploy-portable-office'
+            "sudo -n /usr/local/bin/deploy-portable-office$args"
 
       # ── Post-deploy verification ─────────────────────────────────────────────────────────
       # The server-side script builds IN PLACE while the previous process keeps serving, then
@@ -51,7 +70,9 @@ jobs:
       # as a non-200, and the run goes RED instead of the page being discovered by hand.
       # Remedy for a red run: re-run the workflow (Actions → Deploy Portable Office → Run
       # workflow); the rebuild replaces every cached entry.
+      # Skipped on a rollback: the previous release may legitimately lack the newest pages.
       - name: Verify the deployed pages
+        if: ${{ github.event.inputs.action != 'rollback' }}
         shell: bash
         run: |
           set -euo pipefail
