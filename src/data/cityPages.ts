@@ -2384,7 +2384,7 @@ export const CITY_PAGES: CityPage[] = [
     whyOutro:
       "For locations outside controlled boundaries, ordinary site access and transport requirements apply.",
 
-    solutionsHeading: "Container Offices Designed for Kalpakkam's Coastal Environment",
+    solutionsHeading: "Container Offices Designed for the ECR Coast at Kalpakkam",
     solutionsIntro:
       "Kalpakkam's coastal location makes suitable material selection, corrosion protection, roof detailing, and foundation design important considerations.",
     solutions: [
@@ -2406,7 +2406,7 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    featuresHeading: "Container Office Manufacturing Specifications",
+    featuresHeading: "Container Office Specifications for ECR Sites",
     featuresIntro:
       "Our portable container offices are available with welded mild-steel frameworks, insulated wall systems, protective exterior coatings, durable flooring, and electrical provisions. Portable Office Cabin supplies standard and customised portable office dimensions: 10 ft × 8 ft (80 sq ft external floor area, indicative seating for 1 person) as a farmhouse gate cabin or resort security office; 20 ft × 8 ft (160 sq ft, 2–3 persons) as a contractor office or engineer's cabin; 20 ft × 10 ft (200 sq ft, 3–4 persons) as a site office with documentation area; 30 ft × 10 ft (300 sq ft, 4–6 persons) as an office with store or attached toilet; and 40 ft × 10 ft (400 sq ft, 6–8 persons) as a project office or sales office with pantry or toilet. These represent external footprints; actual usable floor space depends on wall construction, insulation, and interior partitions. For larger requirements, multiple units can be connected to form extended office facilities, and double-storey modular arrangements may also be considered where suitable foundations, structural design, stairs, and safety provisions are included. Transportation of oversized cabins may require special planning, permits, or on-site assembly. Available specifications, with the optional customisation for each:",
     features: [
@@ -2471,7 +2471,7 @@ export const CITY_PAGES: CityPage[] = [
     customOutro:
       "Buying may be suitable for contractors handling repeated projects, resort developers requiring customised offices, and companies planning long-term use. Renting may be suitable for temporary civil works, maintenance contracts, site administration, and construction projects with defined completion schedules. Rental quotations specify the security deposit, minimum rental period, transportation, placement, collection, and other applicable charges.",
 
-    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsHeading: "Why Choose Portable Office Cabin for ECR Projects?",
     whyUsIntro:
       "Portable Office Cabin manufactures portable cabins and container offices at its factory near Hosur, Tamil Nadu, and supplies them across Karnataka and Tamil Nadu, with an office in Electronic City, Bengaluru.",
     whyUsBullets: [
@@ -2979,7 +2979,7 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    solutionsHeading: "Container Offices Designed for Coastal and Industrial Conditions",
+    solutionsHeading: "Container Offices Designed for Ennore's Port and Industrial Conditions",
     solutionsIntro:
       "Athipattu is located near the Ennore coastal-industrial region. Container offices installed in this environment may face salt-laden air, humidity, seasonal rainfall, high temperatures, and strong winds.",
     solutions: [
@@ -3001,7 +3001,7 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    featuresHeading: "Container Office Manufacturing Specifications",
+    featuresHeading: "Container Office Specifications for the Ennore Industrial Belt",
     featuresIntro:
       "Our portable container offices are available with structural steel frameworks, insulated wall systems, weather-resistant roofing, and durable interior finishes. We manufacture site offices in different dimensions for contractor offices, security cabins, logistics yards, and project administration facilities: 10 ft × 8 ft (80 sq ft, indicative seating for 1 person) for a gate office, weighbridge or supervisor cabin; 20 ft × 8 ft (160 sq ft, 2–3 persons) as a standard construction site office; 20 ft × 10 ft (200 sq ft, 3–4 persons) for a contractor office and documentation space; 30 ft × 10 ft (300 sq ft, 4–6 persons) for an office with store or toilet; and 40 ft × 10 ft (400 sq ft, 6–8 persons) for a project office with pantry or attached toilet. These dimensions refer to the external footprint; actual usable interior dimensions depend on wall construction and insulation thickness. We also offer customised units, joined modular cabins, and multi-storey configurations, subject to structural engineering, foundation suitability, access, and transportation requirements. Standard and optional specifications:",
     features: [
@@ -3065,7 +3065,7 @@ export const CITY_PAGES: CityPage[] = [
     customOutro:
       "A purchase may be preferable for contractors expecting repeated use across multiple projects. Rental may suit shorter project durations where ownership is not required. Rental quotations specify the monthly charges, minimum rental period, refundable security deposit, transport, unloading, and collection responsibilities.",
 
-    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsHeading: "Why Choose Portable Office Cabin for Ennore-Belt Projects?",
     whyUsIntro:
       "Portable Office Cabin manufactures portable cabins and container offices at its factory near Hosur, Tamil Nadu, and supplies them across Karnataka and Tamil Nadu, with an office in Electronic City, Bengaluru.",
     whyUsBullets: [
