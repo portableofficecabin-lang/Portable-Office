@@ -1,177 +1,23 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { generateGeoAlt, generateImageTitle } from "@/utils/imageGeoTagging";
-
-const DEFAULT_TITLE = "Portable Office Cabin image";
-const DEFAULT_CANONICAL_BASE = "https://portableofficecabin.com";
-const DEFAULT_SITE_NAME = "Portable Office Cabin";
-const DEFAULT_OG_IMAGE = "https://portableofficecabin.com/og-image.jpg";
-
-const setMetaTag = (name: string, content: string, isProperty = false) => {
-  const attr = isProperty ? "property" : "name";
-  let element = document.head.querySelector(`meta[${attr}="${name}"]`);
-
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
-
-  element.setAttribute("content", content);
-};
-
-const setCanonicalLink = (href: string) => {
-  let canonical = document.head.querySelector('link[rel="canonical"]');
-
-  if (!canonical) {
-    canonical = document.createElement("link");
-    canonical.setAttribute("rel", "canonical");
-    document.head.appendChild(canonical);
-  }
-
-  canonical.setAttribute("href", href);
-};
-
-const formatImageName = (src: string) => {
-  const filename = src.split("/").pop()?.split("?")[0]?.split("#")[0] || "";
-  const withoutExtension = filename.replace(/\.[a-z0-9]+$/i, "");
-  const normalized = withoutExtension.replace(/[-_]+/g, " ").trim();
-
-  if (!normalized) return DEFAULT_TITLE;
-
-  return normalized
-    .split(" ")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-};
-
-const formatRouteLabel = (pathname: string) => {
-  if (pathname === "/") return "Home";
-
-  const cleanedPath = pathname
-    .split("/")
-    .filter(Boolean)
-    .map((segment) => segment.replace(/[-_]+/g, " ").trim())
-    .filter(Boolean);
-
-  const rawLabel = cleanedPath[cleanedPath.length - 1] || "Home";
-
-  return rawLabel
-    .split(" ")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-};
-
-const buildFallbackMetadata = (pathname: string) => {
-  const pageLabel = formatRouteLabel(pathname);
-  const title =
-    pathname === "/"
-      ? "Portable Office Cabin – India's Leading Portable Cabin & Container Office Manufacturer"
-      : `${pageLabel} | ${DEFAULT_SITE_NAME}`;
-
-  const description =
-    pathname === "/"
-      ? "Explore portable cabins, container offices, prefab structures, shipping containers, and modular building solutions from Portable Office Cabin across India."
-      : `Explore ${pageLabel.toLowerCase()} solutions, specifications, and project-ready modular building support from ${DEFAULT_SITE_NAME}.`;
-
-  return { title, description };
-};
-
-const enhanceImages = (root: ParentNode = document) => {
-  const images = root.querySelectorAll("img");
-
-  images.forEach((img) => {
-    const existingAlt = img.getAttribute("alt")?.trim();
-    const baseAlt = existingAlt || formatImageName(img.getAttribute("src") || "");
-
-    img.setAttribute("alt", generateGeoAlt(baseAlt));
-
-    const existingTitle = img.getAttribute("title")?.trim();
-    img.setAttribute("title", existingTitle || generateImageTitle(baseAlt));
-  });
-};
-
+/**
+ * RETIRED 2026-10-10 — intentionally renders nothing and runs no effects.
+ *
+ * This component dates from the Vite / react-helmet era, when the <head> was assembled in the
+ * browser. After hydration, on every page, it rewrote <link rel="canonical">, og:url, og:image,
+ * twitter:image, twitter:card and the geo.* meta tags, set document.title / description fallbacks,
+ * and re-wrote every <img> alt and title (the geo suffix itself has been a no-op since 2026-09-07,
+ * see src/utils/imageGeoTagging.ts).
+ *
+ * Every one of those values is now emitted by the server through buildPageMetadata()
+ * (src/lib/seo/metadata.ts) or the route's own generateMetadata, so the client rewrite was at best
+ * redundant and at worst a regression: it replaced each product page's own og:image with the
+ * generic site image, and it re-stamped the canonical from window.location — a JavaScript-set
+ * canonical is exactly what Google's documentation says to avoid. Removing it also drops a client
+ * island from every public page and the layout-thrashing full-document <img> scan.
+ *
+ * Kept as an inert export rather than deleted so any historical import still compiles; it is no
+ * longer mounted from src/components/layout/Layout.tsx. If a page ever lacks a canonical or a
+ * social image, fix it in that page's metadata — never here.
+ */
 export function GlobalGeoSignals() {
-  const pathname = usePathname();
-  const skipPageOverrides =
-    pathname.startsWith("/promotions") || pathname === "/marketplace";
-
-  useEffect(() => {
-    if (!skipPageOverrides) {
-      setMetaTag("geo.region", "IN-KA");
-      setMetaTag("geo.placename", "Bangalore, Karnataka, India");
-      setMetaTag("geo.position", "12.9716;77.5946");
-      setMetaTag("ICBM", "12.9716, 77.5946");
-    }
-
-    const canonicalUrl = `${DEFAULT_CANONICAL_BASE}${pathname}`;
-    if (!skipPageOverrides) {
-      setCanonicalLink(canonicalUrl);
-    }
-    setMetaTag("og:url", canonicalUrl, true);
-
-    const syncMetadata = () => {
-      const fallback = buildFallbackMetadata(pathname);
-      const currentTitle = document.title?.trim();
-      const resolvedTitle = currentTitle && currentTitle !== "Lovable" ? currentTitle : fallback.title;
-
-      if (!currentTitle || currentTitle === "Lovable") {
-        document.title = resolvedTitle;
-      }
-
-      const existingDescription = document.head
-        .querySelector('meta[name="description"]')
-        ?.getAttribute("content")
-        ?.trim();
-      const resolvedDescription = existingDescription || fallback.description;
-
-      if (!existingDescription) {
-        setMetaTag("description", resolvedDescription);
-      }
-
-      setMetaTag("og:title", resolvedTitle, true);
-      setMetaTag("og:description", resolvedDescription, true);
-      setMetaTag("og:type", "website", true);
-      if (!skipPageOverrides) {
-        setMetaTag("og:image", DEFAULT_OG_IMAGE, true);
-        setMetaTag("twitter:image", DEFAULT_OG_IMAGE);
-      }
-      setMetaTag("twitter:card", "summary_large_image");
-      setMetaTag("twitter:title", resolvedTitle);
-      setMetaTag("twitter:description", resolvedDescription);
-    };
-
-    const timer = window.setTimeout(syncMetadata, 0);
-
-    if (skipPageOverrides) {
-      return () => window.clearTimeout(timer);
-    }
-
-    // Geo-tagging image alt/title is non-critical SEO text and visually invisible,
-    // so run it once after the browser is idle. This keeps the previous full-document
-    // scan + setAttribute writes (which forced style/layout recalc over a large DOM
-    // during hydration) off the LCP critical path. A persistent document-wide
-    // MutationObserver is intentionally avoided for the same reason.
-    const ric = (window as any).requestIdleCallback as
-      | ((cb: () => void, opts?: { timeout: number }) => number)
-      | undefined;
-    let idleId: number | undefined;
-    let timeoutId: number | undefined;
-    const run = () => enhanceImages(document);
-    if (ric) idleId = ric(run, { timeout: 3000 });
-    else timeoutId = window.setTimeout(run, 1200);
-
-    return () => {
-      window.clearTimeout(timer);
-      if (idleId !== undefined) (window as any).cancelIdleCallback?.(idleId);
-      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
-    };
-  }, [pathname, skipPageOverrides]);
-
   return null;
 }
-

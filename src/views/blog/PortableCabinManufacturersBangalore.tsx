@@ -196,20 +196,40 @@ export default function PortableCabinManufacturersBangalore() {
         <p className="text-muted-foreground mb-6 leading-relaxed">
           Bangalore manufacturers offer MS, GI, FRP, UPVC, and container-based solutions to suit different applications, budgets, and specific requirements.
         </p>
+        {/* Contextual links into the range this article is about (added 2026-10-10): the article
+            previously linked no product page at all. One link per distinct page, worded for
+            what the reader will find there. */}
+        <p className="text-muted-foreground mb-6 leading-relaxed">
+          For our own range, start with the{" "}
+          <Link href="/products/portable-cabin" className="text-primary font-medium hover:underline">portable cabin sizes, specifications and prices</Link>{" "}
+          overview, or go straight to the{" "}
+          <Link href="/products/office-portable-cabin" className="text-primary font-medium hover:underline">office portable cabin</Link>,{" "}
+          <Link href="/products/porta-cabin" className="text-primary font-medium hover:underline">porta cabin</Link>{" "}
+          and{" "}
+          <Link href="/products/security-cabin" className="text-primary font-medium hover:underline">security cabin</Link>{" "}
+          pages.
+        </p>
         <div className="space-y-4">
-          {[
-            { icon: Hammer, title: "MS/GI Portable Cabins", desc: "Dominant at 60–70% market share, built from 1–1.6mm mild steel with PUF/rockwool insulation; ideal for site offices, bunk houses, and storage at construction sites" },
+          {/* `href` only where we sell exactly that type; the other cards stay plain text. */}
+          {([
+            { icon: Hammer, title: "MS/GI Portable Cabins", href: "/products/ms-portable-cabin", desc: "Dominant at 60–70% market share, built from 1–1.6mm mild steel with PUF/rockwool insulation; ideal for site offices, bunk houses, and storage at construction sites" },
             { icon: Shield, title: "FRP Cabins", desc: "Fiberglass-reinforced units providing corrosion resistance and 30–40% lighter weight; popular for portable security cabin applications, toilets, and tanks where hygiene matters" },
-            { icon: Layers, title: "Mobile Container Offices", desc: "20ft (160 sq.ft.) and 40ft (320 sq.ft.) shipping containers converted into office containers, container home units, and stores; established choice near logistics hubs" },
+            { icon: Layers, title: "Mobile Container Offices", href: "/products/container-office", desc: "20ft (160 sq.ft.) and 40ft (320 sq.ft.) shipping containers converted into office containers, container home units, and stores; established choice near logistics hubs" },
             { icon: Home, title: "UPVC Prefab Cabins", desc: "Featuring UPVC doors/windows with insulated panels; suited for small housing, farm houses, and rooftop rooms with superior durability" },
-            { icon: Wrench, title: "Specialized Units", desc: "Portable toilets, sanitary blocks, portable kitchens, coffee kiosks, dog kennels, and multi-tier bunk-bed accommodation for labour colonies" },
-          ].map((type, idx) => (
+            { icon: Wrench, title: "Specialized Units", href: "/products/category/portable-toilet-cabins", desc: "Portable toilets, sanitary blocks, portable kitchens, coffee kiosks, dog kennels, and multi-tier bunk-bed accommodation for labour colonies" },
+          ] as Array<{ icon: typeof Hammer; title: string; desc: string; href?: string }>).map((type, idx) => (
             <div key={idx} className="flex gap-4 bg-card border border-border/40 rounded-xl p-5">
               <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                 <type.icon className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-1">{type.title}</h3>
+                <h3 className="font-semibold text-foreground mb-1">
+                  {type.href ? (
+                    <Link href={type.href} className="hover:text-primary hover:underline">{type.title}</Link>
+                  ) : (
+                    type.title
+                  )}
+                </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{type.desc}</p>
               </div>
             </div>

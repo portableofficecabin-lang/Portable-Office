@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Check, ChevronRight, Truck, Ruler } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,7 @@ import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 import { GST_PERCENT_LABEL, formatINR, gstAmount, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
-import { getProductH1, getProductPrimaryKeyword, getProductSEO } from "@/data/productSEO";
+import { getProductH1, getProductSEO } from "@/data/productSEO";
 import { PortableToiletContent } from "@/components/products/PortableToiletContent";
 import { ConstructionSitePortableOfficeContent } from "@/components/products/ConstructionSitePortableOfficeContent";
 import { SiteOfficeContainerManufacturersContent } from "@/components/products/SiteOfficeContainerManufacturersContent";
@@ -37,6 +38,7 @@ import { MSContainerOfficeCabinContent } from "@/components/products/MSContainer
 import { ContainerOfficeGenericContent } from "@/components/products/ContainerOfficeGenericContent";
 import { FreshInsightSection } from "@/components/products/FreshInsightSection";
 import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
+import { PortableCabinGuideLinks } from "@/components/products/PortableCabinGuideLinks";
 import { PortaCabinContent } from "@/components/products/PortaCabinContent";
 import { MSPortableCabinContent } from "@/components/products/MSPortableCabinContent";
 import { SteelPortableCabinContent } from "@/components/products/SteelPortableCabinContent";
@@ -66,7 +68,6 @@ import { CargoShippingContainerContent } from "@/components/products/CargoShippi
 import { WorkmenAccommodationContent } from "@/components/products/WorkmenAccommodationContent";
 import { LabourColonyContent } from "@/components/products/LabourColonyContent";
 import { SiteOfficeContainerContent } from "@/components/products/SiteOfficeContainerContent";
-import { PortableCabinContent } from "@/components/products/PortableCabinContent";
 import { VipContainerOfficeContent } from "@/components/products/VipContainerOfficeContent";
 import { MarketingOfficeContent } from "@/components/products/MarketingOfficeContent";
 import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarketingOfficeContent";
@@ -101,12 +102,27 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     return Array.from(new Set(list));
   })();
 
-  const relatedProducts = allProducts
-    .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
-    .slice(0, 3);
+  /* RELATED PRODUCTS — the three products that FOLLOW this one in its category, wrapping round.
+   * The old rule was "the first three products of the category", so every page in a category
+   * showed the same trio, and the products at the top of the list were never linked from the ones
+   * below them. Rotating from the current product's own position gives each product a different,
+   * deterministic set of neighbours and links every product in the category at least once. The
+   * order is the merged catalogue order, so an admin re-sort is honoured. */
+  const relatedProducts = (() => {
+    const siblings = allProducts.filter((p) => p.categorySlug === product.categorySlug);
+    const index = siblings.findIndex((p) => p.id === product.id);
+    const rotated = index >= 0 ? [...siblings.slice(index + 1), ...siblings.slice(0, index)] : siblings;
+    return rotated.filter((p) => p.id !== product.id).slice(0, 3);
+  })();
+  /** Thumbnail for a related card — same order as the gallery: the product's first real image,
+   *  else the catalogue's best image for it. The old rail drew a placeholder icon on every card. */
+  const relatedImageFor = (p: Product): string =>
+    (p.images || [])
+      .map((i) => resolveImageUrl(i))
+      .find((url) => url && !url.includes("placeholder")) ??
+    getBestProductImage(p.id, p.categorySlug, resolveImageUrl(p.images?.[0]) || undefined, p.sku);
 
   const productSEO = getProductSEO(product.id, product.name);
-  const productPrimaryKeyword = getProductPrimaryKeyword(product.id, product.name);
   const productH1 = getProductH1(product.id, product.name);
   const productSlug = getProductSlug(product);
   const productCanonicalUrl = `${SITE}${getProductDetailPath(product)}`;
@@ -322,7 +338,10 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               {product.category}
             </Link>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground font-medium truncate">{product.name}</span>
+            {/* Same text as the page <h1> and as the last crumb of the BreadcrumbList JSON-LD. The two
+                used to differ (catalogue name vs commerce H1, e.g. "MS Portable Cabins" vs
+                "MS Portable Cabin"), so the visible trail and the markup disagreed. */}
+            <span className="text-foreground font-medium truncate">{pageH1}</span>
           </nav>
         </div>
       </section>
@@ -635,7 +654,6 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "portable-cabins" && slug === "prefab-porta-cabin" && <div className="mt-16"><PrefabPortaCabinContent /></div>}
           {cs === "portable-cabins" && slug === "labor-hutments" && <div className="mt-16"><LaborHutmentsContent /></div>}
           {cs === "portable-cabins" && slug === "cabin-portable" && <div className="mt-16"><CabinPortableContent /></div>}
-          {isStaticProduct && cs === "portable-cabins" && !["porta-cabin","ms-portable-cabin","steel-portable-cabin","office-portable-cabin","prefabricated-portable-cabin","prefabricated-labour-hutments-staff-accommodation","prefab-porta-cabin","labor-hutments","cabin-portable"].includes(slug) && <div className="mt-16"><PortableCabinContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}
@@ -674,6 +692,14 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "g1-workmen-accommodation" && slug === "labour-colony" && <div className="mt-16"><LabourColonyContent /></div>}
           {cs === "security-cabins" && slug === "security-cabin" && <div className="mt-16"><SecurityCabinContent /></div>}
 
+          {/* PORTABLE CABINS — hub + guide cross-links, server-rendered on every product in the
+              category. This REPLACES the former fallback that rendered the hub's entire long-form
+              guide (PortableCabinContent) on any portable-cabins product without copy of its own:
+              the identical ten-section text was live on /products/portable-cabin, the Executive
+              20ft and the 40ft Bunkhouse at once. The hub now owns that text; product pages link
+              up to it (and to three relevant guides) instead. Removed 2026-10-10 with approval. */}
+          {cs === "portable-cabins" && <PortableCabinGuideLinks productSlug={slug} />}
+
           {/* Fresh, in-depth, original sections for SEO pages */}
           <FreshInsightSection slug={slug || ""} />
 
@@ -695,8 +721,11 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {relatedProducts.length > 0 && (
             <div className="mt-16">
               <div className="flex items-center justify-between mb-6">
+                {/* ONE template literal → ONE contiguous text node, so the raw server HTML carries
+                    "Related Portable Cabins" without React's <!-- --> separator (the site-wide
+                    SSR-diff convention, see the "Showing …" note in src/views/Products.tsx). */}
                 <h2 className="font-display text-2xl font-bold text-foreground">
-                  Related {productPrimaryKeyword} Options
+                  {`Related ${product.category}`}
                 </h2>
                 <Button variant="outline" asChild>
                   <Link href={categoryPath}>
@@ -712,16 +741,22 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                     href={getProductDetailPath(related)}
                     className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all"
                   >
-                    <div className="aspect-video bg-muted flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-xl bg-accent/10 flex items-center justify-center">
-                        <svg className="w-8 h-8 text-accent/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                      </div>
+                    <div className="relative aspect-video bg-muted">
+                      <Image
+                        src={relatedImageFor(related)}
+                        alt={`${getCommerce(related.id)?.h1Title || related.name} — ${related.category} by Portable Office Cabin`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1">
-                        {related.name}
+                      <span className="block text-[11px] font-medium uppercase tracking-wider text-accent">
+                        {related.category}
+                      </span>
+                      {/* The commerce H1 where one exists, so the anchor matches the destination page's <h1>. */}
+                      <h3 className="mt-1 font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1">
+                        {getCommerce(related.id)?.h1Title || related.name}
                       </h3>
                       <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
                         {related.shortDescription}

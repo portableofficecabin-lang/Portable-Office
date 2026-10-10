@@ -67,10 +67,25 @@ function truncateOnWordBoundary(text: string, max: number): string {
 function buildCommerceDescription(commerce: ProductCommerce): string {
   const tail = `${formatINR(sellPrice(commerce.basePrice))}${priceUnitSuffix(commerce.id)} (incl. GST). Delivery ${commerce.deliveryDays}. Buy online with UPI, cards or net banking.`;
 
+  // Lead with what the unit is FOR (commerce.bestFor), so the purchasable SKUs no longer share one
+  // description shape ("Name. Size. Price…") — e.g. "Porta Cabin for Offices & Accommodation.
+  // 40ft x 12ft x 9ft. ₹16,52,000 (incl. GST). …". When the line overruns 160 chars we shed, in
+  // order: material, size, then the use-phrase itself. Price, delivery and the CTA are never dropped.
+  // Skip the use-phrase when it only restates the name ("Labour Colony for Labour Colonies"):
+  // compare the two with punctuation and plural endings stripped.
+  const stem = (s: string) =>
+    s.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/ies\b/g, "y").replace(/s\b/g, "").replace(/\s+/g, " ").trim();
+  const useful =
+    !!commerce.bestFor &&
+    !stem(commerce.h1Title).includes(stem(commerce.bestFor)) &&
+    !stem(commerce.bestFor).includes(stem(commerce.h1Title));
+  const lead = useful ? `${commerce.h1Title} for ${commerce.bestFor}` : commerce.h1Title;
   const variants = [
-    [commerce.h1Title, commerce.size, commerce.material, tail], // richest
-    [commerce.h1Title, commerce.size, tail], // drop material
-    [commerce.h1Title, tail], // drop size too
+    [lead, commerce.size, commerce.material, tail], // richest
+    [lead, commerce.size, tail], // drop material
+    [lead, tail], // drop size too
+    [commerce.h1Title, commerce.size, tail], // drop the use-phrase, keep size
+    [commerce.h1Title, tail], // bare
   ].map((parts) =>
     parts
       .filter((part) => part && part.trim().length > 0)

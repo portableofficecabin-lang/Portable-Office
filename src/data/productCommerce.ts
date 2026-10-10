@@ -287,9 +287,16 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     size: "Custom sizes", material: "Galvanized Steel Frame", bestFor: "Worker Accommodation",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
+  /* h1Title changed 2026-10-10 from "Portable Cabin". That bare phrase made this product page the
+   * third URL carrying the head term as its H1 (with the home page and the /products/portable-cabin
+   * hub). The new name is read off the product's own visible data — specification row "Wall
+   * Panels: PUF/EPS/Rockwool Sandwich Panels (50-75mm)", the `material` field below and the
+   * feedTitle "… PUF Sandwich Panel 50-75mm …" — so H1, specs and feed title describe one thing.
+   * PRESENTATION ONLY: sku, basePrice, feedTitle (the Merchant <g:title> and JSON-LD name),
+   * availability and purchasability are untouched. */
   {
     id: "25", sku: "POC-PC-CABPORT", basePrice: 280000, priceConfirmed: true, kind: "product", inStock: true,
-    h1Title: "Portable Cabin",
+    h1Title: "Sandwich Panel Portable Cabin (50–75 mm)",
     feedTitle: "Portable Cabin PUF Sandwich Panel 50-75mm for Site Offices | Portable Office Cabin",
     size: "Custom sizes", material: "PUF / EPS / Rockwool Panels (50–75mm)", bestFor: "Site Offices",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
