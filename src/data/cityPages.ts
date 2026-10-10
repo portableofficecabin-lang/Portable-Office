@@ -583,7 +583,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, built in 10–15 days and delivered across the district.",
     keywords:
-      "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, container office Thoothukudi, Nellai container office",
+      "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
 
     heroImage: {
@@ -3181,6 +3181,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Chennai", href: "/promotions/container-office-in-chennai" },
+      { label: "Site Office Container in Chennai", href: "/promotions/site-office-container-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
       { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     ],
