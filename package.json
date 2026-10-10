@@ -26,6 +26,7 @@
     "colony:puflock": "npx tsx scripts/colony-puf-lock.test.ts",
     "colony:verify": "npm run colony:model && npm run colony:reports && npm run colony:animation && npm run colony:render && npm run colony:puflock",
     "robots:test": "tsx scripts/robots-policy.test.ts",
+    "cities:audit": "tsx scripts/city-page-ssr-audit.ts",
     "animation:test": "tsx scripts/animation-studio.test.ts",
     "variants:test": "node --import tsx --import ./scripts/asset-stub-register.mjs scripts/product-variants.test.ts",
     "variants:http": "node scripts/product-variants-http.test.mjs",
