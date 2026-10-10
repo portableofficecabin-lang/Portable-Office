@@ -244,9 +244,11 @@ const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
 const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> = {
   "Container Office|Tamil Nadu": [
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
   "Site Office Container|Tamil Nadu": [
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
 };
 

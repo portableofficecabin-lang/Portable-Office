@@ -45,6 +45,15 @@ export interface CityPage {
   keywords: string;
   /** geo meta for the local page (position "lat;lng", icbm "lat, lng"). */
   geo: { region: string; placename: string; position: string; icbm: string };
+  /**
+   * Optional CSS-only motion pass for this page (hero fades up on load, sections reveal as
+   * they scroll into view, list items cascade, images lift on hover, CTA carries a sheen).
+   * Implemented entirely with the utilities in src/index.css ("PRO-MAX MOTION SYSTEM") and
+   * the Tailwind fade-up keyframe — no client JS, nothing hidden in the raw HTML (reveals only
+   * run inside @supports (animation-timeline: view()) and everything respects
+   * prefers-reduced-motion). Unset = the static page every earlier entry renders, byte for byte.
+   */
+  motion?: boolean;
 
   /** Hero image (also the page's og:image). Root-relative path under /public. */
   heroImage: { src: string; alt: string; width: number; height: number };
@@ -2239,6 +2248,303 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Explore Container Office Models", href: "/products/category/container-offices" },
       { label: "Container Office on Rent", href: "/rental-service" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN ATHIPATTU, TIRUVALLUR — the Ennore coastal-industrial belt (port
+   * yards, thermal power station contractors, CFS and logistics operators).
+   *
+   * Owner copy of 2026-10-10, mapped onto the fixed template slots: the draft's coastal-
+   * conditions section (no slot of its own) fills the solutions slot; its specification
+   * table → features[] as "Component — standard; optional upgrade"; its sizes table →
+   * featuresIntro prose (Hoskote precedent); buy-vs-rent → custom; the six delivery steps →
+   * how. The draft's own publishing checks are honoured: coastal protection is "where
+   * specified", no free-delivery / rent-to-own / break-even rental claims, no delivery
+   * history inside any named port or plant, no lead time, no ₹ (file-header rule).
+   *
+   * First entry to opt into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-athipattu",
+    city: "Athipattu",
+    listTitle: "Container Office in Athipattu",
+    metaTitle: "Container Office in Athipattu, Tiruvallur | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Athipattu, Tiruvallur for port yards, plant contractors and construction sites. Custom sizes, purchase or rental options and delivery.",
+    keywords:
+      "container office in Athipattu, portable office container Athipattu, container office Tiruvallur, prefab site office near Ennore, container office on rent Athipattu",
+    geo: { region: "IN-TN", placename: "Athipattu, Tiruvallur, Tamil Nadu, India", position: "13.2292;80.3014", icbm: "13.2292, 80.3014" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-athipattu/container-office-in-athipattu-exterior.webp",
+      alt: "Container office for Athipattu — front elevation of a white corrugated-steel portable office with a blue lower band, a central steel entrance door and two sliding windows with grills, standing on a paved yard",
+      width: 1152,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-athipattu/container-office-in-athipattu-aerial-view.webp",
+      alt: "Container office for Athipattu — top-down view of the white profiled-sheet roof of the portable office, with its four corner fittings visible, placed on a paved yard beside a grass verge",
+      width: 1152,
+      height: 864,
+      caption:
+        "Seen from above: the profiled-sheet roof, corner fittings and lifting points arrive fitted from the factory, so on site the unit needs only a level plinth, placement and connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-athipattu/container-office-in-athipattu-interior.webp",
+      alt: "Inside a container office for Athipattu — two desks with office chairs, a desktop computer and a laptop, a storage cabinet, two sliding windows with grills, a steel door, LED panel lights, white panel walls with a blue lower band and a grey vinyl floor",
+      width: 1448,
+      height: 1086,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-athipattu/container-office-in-athipattu-side-view.webp",
+        alt: "Container office for Athipattu — blank side elevation of the white corrugated-steel portable office with its blue lower band and corner fittings, a continuous wall panel with no openings",
+        width: 1152,
+        height: 864,
+      },
+    ],
+
+    h1: "Container Office in Athipattu, Tiruvallur",
+    tagline: "An Office That Arrives Finished and Moves With Your Project",
+    intro: [
+      "Industrial projects in Athipattu often operate on temporary or leased land where permanent office construction may not be practical. Port yards, power plant contractor sites, logistics terminals, warehouses, and construction projects require functional workspaces that can be installed quickly and relocated when the project ends.",
+      "A container office in Athipattu provides a practical solution. These prefabricated offices are manufactured off-site, transported to the project location, and installed on prepared foundations.",
+      "Portable Office Cabin manufactures container offices and supplies them across Athipattu, Athipattu Pudunagar, Vallur, Minjur, Puzhuthivakkam, North Ennore, Ponneri, and surrounding areas of Tiruvallur district.",
+      "Our portable offices can be customised with workstations, storage space, electrical installations, air-conditioning provisions, toilets, and other facilities based on project requirements.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Athipattu?",
+    whyIntro:
+      "For projects on port land, contractor work zones and leased industrial plots around Athipattu, a prefabricated container office offers the following advantages over conventional construction:",
+    whyBullets: [
+      {
+        title: "Faster Installation Than Conventional Construction",
+        text: "Conventional office construction involves masonry, curing, electrical installations, and several on-site activities. A prefabricated office is manufactured at our facility while site preparation takes place. Once the cabin and foundation are ready, it can be transported and positioned using appropriate lifting equipment.",
+      },
+      {
+        title: "Suitable for Temporary Industrial Land",
+        text: "Many projects in port and industrial areas occupy leased plots or designated contractor work zones. A container office can be installed on a suitable plinth or foundation, subject to site and structural requirements, without constructing a complete masonry building.",
+      },
+      {
+        title: "Easy Relocation and Reuse",
+        text: "When a contract ends, the container office can be disconnected, lifted, transported, and installed at another location. This makes it suitable for construction contractors, logistics companies, plant maintenance teams, and businesses handling multiple projects.",
+      },
+      {
+        title: "Long-Term Asset Value",
+        text: "A properly maintained container office can be reused across several project locations or resold, providing value beyond a single contract period.",
+      },
+      {
+        title: "Customisable Interior Layout",
+        text: "Depending on size, container offices can incorporate individual desks, supervisor cabins, documentation rooms, meeting areas, attached toilets, and small pantry facilities.",
+      },
+    ],
+
+    solutionsHeading: "Container Offices Designed for Coastal and Industrial Conditions",
+    solutionsIntro:
+      "Athipattu is located near the Ennore coastal-industrial region. Container offices installed in this environment may face salt-laden air, humidity, seasonal rainfall, high temperatures, and strong winds.",
+    solutions: [
+      {
+        title: "Corrosion Protection",
+        text: "Steel components can be protected using appropriate surface preparation, anti-corrosion primers, protective coatings, and corrosion-resistant fasteners where specified. For sites exposed to stronger coastal conditions, additional coating protection may be recommended.",
+      },
+      {
+        title: "Heat Insulation",
+        text: "PUF sandwich panels provide thermal resistance and can help reduce heat transfer into the office compared with uninsulated sheet construction. Cooling performance depends on panel thickness, roof design, ventilation, solar exposure, and air-conditioning arrangements.",
+      },
+      {
+        title: "Rainwater Protection",
+        text: "Properly sealed roofing joints, drainage arrangements, and suitable site elevation help reduce the risk of rainwater ingress. The supporting plinth height should be established according to local ground conditions and potential waterlogging.",
+      },
+      {
+        title: "Wind and Structural Stability",
+        text: "For sites exposed to significant wind loads, the foundation, cabin structure, lifting points, and anchorage arrangements should be reviewed by a competent engineer. Final anchoring requirements depend on cabin dimensions, exposure, applicable design standards, and site conditions.",
+      },
+    ],
+
+    featuresHeading: "Container Office Manufacturing Specifications",
+    featuresIntro:
+      "Our portable container offices are available with structural steel frameworks, insulated wall systems, weather-resistant roofing, and durable interior finishes. We manufacture site offices in different dimensions for contractor offices, security cabins, logistics yards, and project administration facilities: 10 ft × 8 ft (80 sq ft, indicative seating for 1 person) for a gate office, weighbridge or supervisor cabin; 20 ft × 8 ft (160 sq ft, 2–3 persons) as a standard construction site office; 20 ft × 10 ft (200 sq ft, 3–4 persons) for a contractor office and documentation space; 30 ft × 10 ft (300 sq ft, 4–6 persons) for an office with store or toilet; and 40 ft × 10 ft (400 sq ft, 6–8 persons) for a project office with pantry or attached toilet. These dimensions refer to the external footprint; actual usable interior dimensions depend on wall construction and insulation thickness. We also offer customised units, joined modular cabins, and multi-storey configurations, subject to structural engineering, foundation suitability, access, and transportation requirements. Standard and optional specifications:",
+    features: [
+      "Structural frame — welded MS structural framework with anti-rust primer and protective top coat; optional converted shipping container structure",
+      "Wall panels — 50 mm PUF sandwich panels with pre-coated GI sheet facings; optional 75 mm insulated panels",
+      "Roof — insulated, weather-resistant roof construction; optional enhanced waterproofing and rainwater drainage",
+      "Flooring — MS base structure, cement board and vinyl flooring; optional MS chequered plate flooring",
+      "Door — steel door with mortice locking arrangement; optional additional entrance or glass door",
+      "Windows — aluminium sliding windows with optional grills and mesh; optional UPVC windows and fixed glazing",
+      "Electrical — LED lights, fan points, 6A/16A sockets and MCB distribution board; optional AC connection, data cabling and external lighting",
+      "Toilet — not included in the basic office configuration; optional attached WC, washbasin and exhaust fan",
+      "Lifting — suitable engineered lifting arrangements; optional custom handling and skid provisions",
+      "AC and furniture — air-conditioning units and furniture are not automatically included; dedicated electrical points, AC installation provisions and workstation layouts can be incorporated according to the approved quotation",
+    ],
+    sizesNote:
+      "Final panel thicknesses, materials, quantities, and supplied fittings are specified in the approved technical drawing and quotation.",
+
+    industriesHeading: "Applications of Container Offices Around Athipattu",
+    industriesIntro:
+      "Athipattu's proximity to port facilities, thermal power stations, logistics routes, and industrial operations creates demand for different types of temporary office accommodation.",
+    industries: [
+      {
+        title: "Container Yards and CFS Operators",
+        text: "Compact offices for gate-entry documentation, surveyors, logistics personnel, and container movement records.",
+      },
+      {
+        title: "Power Plant Contractors",
+        text: "Temporary offices for maintenance, erection, shutdown, fabrication, and civil construction teams working on industrial projects.",
+      },
+      {
+        title: "Transporters and Customs House Agents",
+        text: "Practical workspace for documentation, dispatch coordination, and operational administration close to logistics facilities.",
+      },
+      {
+        title: "Warehouse and Industrial Shed Construction",
+        text: "Relocatable site offices for project engineers, supervisors, contractors, and warehouse development teams.",
+      },
+      {
+        title: "Plot Sales and Marketing Offices",
+        text: "Portable customer-facing offices with seating, display areas, glazing, and customised interior finishes.",
+      },
+      {
+        title: "Other Applications",
+        text: "Plant subcontractor offices, security cabins, material management offices, and temporary project administration buildings.",
+      },
+    ],
+
+    customHeading: "Buy or Rent a Container Office in Athipattu",
+    customIntro:
+      "Portable Office Cabin offers both manufacturing and rental options, subject to the required design and unit availability.",
+    customBullets: [
+      {
+        title: "Purchase",
+        text: "Suitable for long-term and repeated use. Custom dimensions and layouts; ownership remains with the customer; the cabin can be relocated between sites. Initial capital purchase.",
+      },
+      {
+        title: "Rental",
+        text: "Suitable for temporary projects. Existing unit configurations, subject to availability; the unit is returned after the agreed rental period; transportation and return terms apply. Periodic rental payments and applicable deposit.",
+      },
+    ],
+    customOutro:
+      "A purchase may be preferable for contractors expecting repeated use across multiple projects. Rental may suit shorter project durations where ownership is not required. Rental quotations specify the monthly charges, minimum rental period, refundable security deposit, transport, unloading, and collection responsibilities.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable cabins and container offices at its factory near Hosur, Tamil Nadu, and supplies them across Karnataka and Tamil Nadu, with an office in Electronic City, Bengaluru.",
+    whyUsBullets: [
+      {
+        title: "Direct Manufacturing",
+        text: "We manufacture portable cabins and customised container office structures, allowing project requirements to be addressed during the design and fabrication stages.",
+      },
+      {
+        title: "Customised Configurations",
+        text: "Our product range includes site offices, security cabins, accommodation units, toilet cabins, portable meeting spaces, and prefabricated structures.",
+      },
+      {
+        title: "Detailed Specifications",
+        text: "Quotations can clearly identify the steel framework, wall materials, insulation, flooring, electrical fittings, doors, windows, and selected accessories.",
+      },
+      {
+        title: "Transport Coordination",
+        text: "Cabin delivery is planned according to size, location, available access, and applicable lifting requirements.",
+      },
+      {
+        title: "Warranty Support",
+        text: "Our standard stated warranty terms include five years for the structure and one year for leakage, subject to the conditions in the applicable quotation or purchase agreement.",
+      },
+    ],
+
+    areasHeading: "Container Office Supply Areas Around Athipattu",
+    areasText:
+      "We supply portable container office solutions across Athipattu, Athipattu Pudunagar, Vallur, Minjur, Puzhuthivakkam, North Ennore, Ponneri, and surrounding areas of Tiruvallur district. Transport, unloading and installation arrangements are determined according to the delivery location, cabin dimensions and site accessibility.",
+
+    howHeading: "Container Office Delivery and Installation in Athipattu",
+    howSteps: [
+      {
+        title: "Site and Access Assessment",
+        text: "Our delivery process is planned around site access, approved dimensions, transportation arrangements, and cabin installation requirements. Confirm the project location, trailer entry, lifting space, ground conditions, and available electrical connection. Additional entry permissions may be required for port or industrial premises.",
+      },
+      {
+        title: "Technical Drawing and Quotation",
+        text: "Prepare the cabin layout showing doors, windows, electrical points, workstations, partitions, and other selected fittings. Submit the corresponding quotation for approval.",
+      },
+      {
+        title: "Manufacturing and Inspection",
+        text: "Fabricate the structural frame, walls, roof, flooring, and internal fittings according to the approved specifications. Carry out applicable inspections before dispatch.",
+      },
+      {
+        title: "Foundation Preparation",
+        text: "Prepare a suitable level foundation or supporting plinth based on the cabin dimensions, loading conditions, and approved installation requirements.",
+      },
+      {
+        title: "Transportation and Placement",
+        text: "Transport the container office to Athipattu and arrange placement using suitable handling equipment, as defined in the agreed scope of supply.",
+      },
+      {
+        title: "Connections and Handover",
+        text: "Complete applicable installation checks and coordinate electrical or plumbing connections according to the agreed responsibilities. Manufacturing and delivery schedules depend on unit size, customisation, material availability, site readiness, and transport conditions; any special gate-pass or safety-document requirements should be communicated before dispatch.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a container office cost in Athipattu?",
+        answer:
+          "The cost depends on size, structural specifications, insulation, interior layout, and optional facilities such as toilets and air-conditioning. Transportation, GST, lifting, and installation charges are quoted according to the project requirements.",
+      },
+      {
+        question: "Can you deliver a container office inside Kamarajar Port or a thermal power station?",
+        answer:
+          "Delivery to controlled industrial premises may be arranged subject to access permissions, safety requirements, documentation, and site acceptance. The customer's authorised site coordinator should confirm the necessary gate-pass and entry procedures before dispatch.",
+      },
+      {
+        question: "Do I need building approval for a container office?",
+        answer:
+          "Requirements depend on the specific site, land use, installation type, duration, and local authority or facility regulations. A relocatable structure should not automatically be assumed exempt from permissions. Confirm with the relevant authority or site management.",
+      },
+      {
+        question: "How long does a container office last near the sea?",
+        answer:
+          "Service life depends on steel protection, maintenance, exposure to coastal conditions, installation quality, and usage. Regular inspections, cleaning, and timely coating repairs can help maintain the structure.",
+      },
+      {
+        question: "Can I relocate the container office after project completion?",
+        answer:
+          "Yes, provided the cabin has been designed for relocation and remains structurally suitable for lifting and transport. Appropriate lifting arrangements, access, and transport clearance must be confirmed.",
+      },
+      {
+        question: "Can I get a container office with an attached toilet?",
+        answer:
+          "Yes. Depending on the dimensions, we can provide an attached toilet with an EWC, washbasin, exhaust fan, and plumbing provisions. External water supply and sewage connections are confirmed in the scope of supply.",
+      },
+      {
+        question: "Are container offices available on rent in Athipattu?",
+        answer:
+          "Rental options may be available depending on cabin size and current inventory. The quotation will specify the rental period, security deposit, transportation charges, and applicable conditions.",
+      },
+      {
+        question: "Can you provide a customised 40 ft container office?",
+        answer:
+          "Yes. A 40 ft container office can be planned with workstations, partitions, a meeting area, storage, pantry, or toilet facilities based on the approved internal layout.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Athipattu",
+    ctaText: `Looking for a container office for a construction site, warehouse, power plant project, logistics facility, or industrial yard? Share your required cabin dimensions, preferred office layout, project location, and whether you need a new unit or rental cabin. Portable Office Cabin is a portable cabin manufacturer serving Bangalore, Karnataka and Tamil Nadu. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Container Office Manufacturer", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Site Office", href: "/products/category/site-office-containers" },
+      { label: "Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tiruvallur district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's standard container office designs and are not photographs of installations in Athipattu. Kamarajar Port Limited and the thermal power stations and industrial facilities around Ennore and Athipattu are independent organisations with which Portable Office Cabin is not affiliated; their names are used only to describe delivery locations, and entry to any such premises is subject to that facility's own permissions. Notes on coastal corrosion protection, wind exposure and anchoring are general guidance; the coatings, base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

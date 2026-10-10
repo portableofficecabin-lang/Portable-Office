@@ -5,6 +5,14 @@
  * (absolute — no site-name suffix), meta description, keywords, local geo tags, breadcrumb +
  * FAQPage JSON-LD, and the approved SEO copy as crawlable HTML. No client JS is needed for the
  * content, keeping the rendered text byte-exact with the server HTML (site-wide SEO rule).
+ *
+ * MOTION (opt-in per entry via `motion: true`): the page can carry the site's CSS-only motion
+ * system — the `.reveal` / `.reveal-scale` / `.reveal-stagger` scroll reveals, `.hover-lift`,
+ * `.card-glow`, `.btn-sheen` and `.press` utilities from src/index.css plus the Tailwind
+ * `fade-up` keyframe for the hero stack. Still zero client JS: reveals only hide content inside
+ * `@supports (animation-timeline: view())` and the load animation is `motion-safe:` gated, so
+ * crawlers, no-JS visitors, older browsers and reduced-motion users get the fully visible static
+ * page. Entries that leave `motion` unset render byte-identical HTML to before this pass.
  */
 
 import Image from "next/image";
@@ -55,6 +63,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
   const page = cityPageBySlug(slug);
   if (!page) notFound();
 
+  /* Opt-in motion pass (see the file header). `mc()` returns the extra class(es) with a leading
+     space, or "" when the page is static, so a static page's class strings are unchanged.
+     `fadeDelay()` staggers the hero stack on load: fill-mode `both` keeps a delayed element in
+     its start state during the delay instead of flashing visible first; undefined ⇒ no style
+     attribute at all on static pages. */
+  const mc = (cls: string) => (page.motion ? ` ${cls}` : "");
+  const fadeDelay = (ms: number) =>
+    page.motion ? { animationDelay: `${ms}ms`, animationFillMode: "both" as const } : undefined;
+
   return (
     /* WRAPPED IN <Layout> — header, nav, footer, WhatsApp button and skip link.
      *
@@ -86,11 +103,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <span className="text-foreground">{page.h1}</span>
         </nav>
 
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{page.h1}</h1>
-        <p className="mt-2 text-lg font-medium">{page.tagline}</p>
+        <h1 className={`text-3xl font-extrabold tracking-tight sm:text-4xl${mc("motion-safe:animate-fade-up")}`}>{page.h1}</h1>
+        <p className={`mt-2 text-lg font-medium${mc("motion-safe:animate-fade-up")}`} style={fadeDelay(120)}>{page.tagline}</p>
 
         {/* hero — the page's own image (also its og:image), LCP-prioritised */}
-        <figure className="mt-6 overflow-hidden rounded-2xl border bg-muted/30">
+        <figure
+          className={`mt-6 overflow-hidden rounded-2xl border bg-muted/30${mc("motion-safe:animate-fade-up group")}`}
+          style={fadeDelay(240)}
+        >
           <Image
             src={page.heroImage.src}
             alt={page.heroImage.alt}
@@ -98,24 +118,24 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             height={page.heroImage.height}
             priority
             sizes="(max-width: 896px) 100vw, 896px"
-            className="mx-auto h-auto w-full max-w-2xl"
+            className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
           />
         </figure>
 
         {page.intro.map((text) => (
-          <p key={text.slice(0, 40)} className={`${p} mt-4`}>{text}</p>
+          <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
         ))}
 
-        <h2 className={h2}>{page.whyHeading}</h2>
-        <p className={p}>{page.whyIntro}</p>
-        <ul className="list-disc pl-6">
+        <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
+        <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.whyBullets.map((b) => (
             <li key={b.title} className={li}>
               <strong className="text-foreground">{b.title}:</strong> {b.text}
             </li>
           ))}
         </ul>
-        {page.whyOutro && <p className={`${p} mt-4`}>{page.whyOutro}</p>}
+        {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
             Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
@@ -123,14 +143,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             bottom scrim rather than below the frame, so the image reads as one composed unit.
             The scrim is dark-on-image in both themes, which is why its text colour is fixed. */}
         {page.featureImage && (
-          <figure className="relative mt-10 overflow-hidden rounded-2xl border shadow-sm">
+          <figure className={`relative mt-10 overflow-hidden rounded-2xl border shadow-sm${mc("reveal-scale group")}`}>
             <div className="relative aspect-[3/2] w-full">
               <Image
                 src={page.featureImage.src}
                 alt={page.featureImage.alt}
                 fill
                 sizes="(max-width: 896px) 100vw, 896px"
-                className="object-cover object-center"
+                className={`object-cover object-center${mc("transition-transform duration-1000 ease-out group-hover:scale-105")}`}
                 loading="lazy"
               />
               <div
@@ -146,23 +166,23 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </figure>
         )}
 
-        <h2 className={h2}>{page.solutionsHeading}</h2>
-        <p className={p}>{page.solutionsIntro}</p>
+        <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
+        <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>
         {page.solutions.map((s0, i) => (
-          <section key={s0.title}>
+          <section key={s0.title} className={page.motion ? "reveal" : undefined}>
             <h3 className={h3}>{i + 1}. {s0.title}</h3>
             <p className={p}>{s0.text}</p>
           </section>
         ))}
 
-        <h2 className={h2}>{page.featuresHeading}</h2>
-        <p className={p}>{page.featuresIntro}</p>
-        <ul className="list-disc pl-6">
+        <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
+        <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.features.map((f) => (
             <li key={f} className={li}>{f}</li>
           ))}
         </ul>
-        <p className={`${p} mt-4`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+        <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
 
         {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
             1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
@@ -170,10 +190,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <div
             className={`mt-6 grid gap-4 ${
               page.gallery.length === 1 ? "" : page.gallery.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"
-            }`}
+            }${mc("reveal-stagger")}`}
           >
             {page.gallery.map((g) => (
-              <figure key={g.src} className="overflow-hidden rounded-xl border bg-muted/30">
+              <figure key={g.src} className={`overflow-hidden rounded-xl border bg-muted/30${mc("hover-lift card-glow")}`}>
                 <Image
                   src={g.src}
                   alt={g.alt}
@@ -188,9 +208,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </div>
         )}
 
-        <h2 className={h2}>{page.industriesHeading}</h2>
-        <p className={p}>{page.industriesIntro}</p>
-        <ul className="list-disc pl-6">
+        <h2 className={`${h2}${mc("reveal")}`}>{page.industriesHeading}</h2>
+        <p className={`${p}${mc("reveal")}`}>{page.industriesIntro}</p>
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.industries.map((b) => (
             <li key={b.title} className={li}>
               <strong className="text-foreground">{b.title}</strong> — {b.text}
@@ -198,33 +218,33 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
 
-        <h2 className={h2}>{page.customHeading}</h2>
+        <h2 className={`${h2}${mc("reveal")}`}>{page.customHeading}</h2>
         {page.interiorImage && (
-          <figure className="mb-4 mt-2 overflow-hidden rounded-2xl border bg-muted/30">
+          <figure className={`mb-4 mt-2 overflow-hidden rounded-2xl border bg-muted/30${mc("reveal-scale group")}`}>
             <Image
               src={page.interiorImage.src}
               alt={page.interiorImage.alt}
               width={page.interiorImage.width}
               height={page.interiorImage.height}
               sizes="(max-width: 896px) 100vw, 896px"
-              className="mx-auto h-auto w-full max-w-2xl"
+              className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
               loading="lazy"
             />
           </figure>
         )}
-        <p className={p}>{page.customIntro}</p>
-        <ul className="list-disc pl-6">
+        <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.customBullets.map((b) => (
             <li key={b.title} className={li}>
               <strong className="text-foreground">{b.title}</strong> — {b.text}
             </li>
           ))}
         </ul>
-        <p className={p}>{page.customOutro}</p>
+        <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
 
-        <h2 className={h2}>{page.whyUsHeading}</h2>
-        <p className={p}>{page.whyUsIntro}</p>
-        <ul className="list-disc pl-6">
+        <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
+        <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.whyUsBullets.map((b) => (
             <li key={b.title} className={li}>
               <strong className="text-foreground">{b.title}</strong> — {b.text}
@@ -232,11 +252,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
 
-        <h2 className={h2}>{page.areasHeading}</h2>
-        <p className={p}>{page.areasText}</p>
+        <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
+        <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
 
-        <h2 className={h2}>{page.howHeading}</h2>
-        <ol className="list-decimal pl-6">
+        <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
+        <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>
           {page.howSteps.map((s0) => (
             <li key={s0.title} className={li}>
               <strong className="text-foreground">{s0.title}</strong> — {s0.text}
@@ -244,21 +264,21 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ol>
 
-        <h2 className={h2}>Frequently Asked Questions (FAQs)</h2>
+        <h2 className={`${h2}${mc("reveal")}`}>Frequently Asked Questions (FAQs)</h2>
         {page.faqs.map((f, i) => (
-          <section key={f.question} className="mb-4">
+          <section key={f.question} className={`mb-4${mc("reveal")}`}>
             <h3 className={h3}>{i + 1}. {f.question}</h3>
             <p className={p}>{f.answer}</p>
           </section>
         ))}
 
-        <section className="mt-12 rounded-2xl border bg-muted/40 p-6 text-center">
+        <section className={`mt-12 rounded-2xl border bg-muted/40 p-6 text-center${mc("reveal-scale")}`}>
           <h2 className="text-2xl font-bold tracking-tight">{page.ctaHeading}</h2>
           <p className={`${p} mx-auto mt-2 max-w-2xl`}>{page.ctaText}</p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <Link
               href="/contact"
-              className="rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
+              className={`rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90${mc("btn-sheen press")}`}
             >
               {page.ctaButtonLabel ?? "Get a Free Quotation"}
             </Link>
@@ -266,7 +286,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               <Link
                 key={l.href}
                 href={l.href}
-                className="rounded-md border px-5 py-2.5 text-sm font-semibold hover:bg-muted"
+                className={`rounded-md border px-5 py-2.5 text-sm font-semibold hover:bg-muted${mc("press")}`}
               >
                 {l.label}
               </Link>
@@ -278,14 +298,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             promotion / blog pages that own neighbouring keywords, sibling city pages). Rendered
             as a <nav> so crawlers and screen readers read it as navigation, not body copy. */}
         {page.relatedLinks && page.relatedLinks.length > 0 && (
-          <nav aria-label="Related pages" className="mt-10">
+          <nav aria-label="Related pages" className={`mt-10${mc("reveal")}`}>
             <h2 className="mb-3 text-xl font-bold tracking-tight">Related pages</h2>
-            <ul className="grid gap-2 sm:grid-cols-2">
+            <ul className={`grid gap-2 sm:grid-cols-2${mc("reveal-stagger")}`}>
               {page.relatedLinks.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="block rounded-lg border px-4 py-3 text-sm font-medium hover:bg-muted"
+                    className={`block rounded-lg border px-4 py-3 text-sm font-medium hover:bg-muted${mc("hover-lift")}`}
                   >
                     {l.label}
                   </Link>
@@ -299,7 +319,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             company or landmark (e.g. the Tata Electronics belt page): renders muted, below
             the CTA, exactly where such notices belong. Pages without one are unaffected. */}
         {page.disclaimer && (
-          <p className="mt-8 text-xs leading-relaxed text-muted-foreground/80">{page.disclaimer}</p>
+          <p className={`mt-8 text-xs leading-relaxed text-muted-foreground/80${mc("reveal")}`}>{page.disclaimer}</p>
         )}
       </div>
     </Layout>
