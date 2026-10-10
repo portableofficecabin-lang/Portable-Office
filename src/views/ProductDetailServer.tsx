@@ -721,8 +721,11 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {relatedProducts.length > 0 && (
             <div className="mt-16">
               <div className="flex items-center justify-between mb-6">
+                {/* ONE template literal → ONE contiguous text node, so the raw server HTML carries
+                    "Related Portable Cabins" without React's <!-- --> separator (the site-wide
+                    SSR-diff convention, see the "Showing …" note in src/views/Products.tsx). */}
                 <h2 className="font-display text-2xl font-bold text-foreground">
-                  Related {product.category}
+                  {`Related ${product.category}`}
                 </h2>
                 <Button variant="outline" asChild>
                   <Link href={categoryPath}>
