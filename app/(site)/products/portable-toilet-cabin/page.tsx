@@ -38,6 +38,9 @@ export default function PortableToiletCabinPage() {
           generateBreadcrumbSchema([
             { name: "Home", url: SITE },
             { name: "Products", url: `${SITE}/products` },
+            /* Through the category, as on every product page and the metal hub — the trail used to
+               skip it (2026-10-10). The visible breadcrumb below mirrors this. */
+            { name: "Portable Toilet Cabins", url: `${SITE}/products/category/portable-toilet-cabins` },
             { name: "Portable Toilet Cabin", url: `${SITE}${PATH}` },
           ]),
           /* Service, not Product. This is a RANGE hub, not a sellable unit: it carries no
@@ -66,6 +69,8 @@ export default function PortableToiletCabinPage() {
             <Link href="/" className="text-muted-foreground hover:text-accent">Home</Link>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
             <Link href="/products" className="text-muted-foreground hover:text-accent">Products</Link>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <Link href="/products/category/portable-toilet-cabins" className="text-muted-foreground hover:text-accent">Portable Toilet Cabins</Link>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
             <span className="text-foreground font-medium">Portable Toilet Cabin</span>
           </nav>

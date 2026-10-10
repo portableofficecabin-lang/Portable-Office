@@ -50,6 +50,13 @@ export function portableCabinModels(products: Product[]) {
         slug: getProductSlug(p),
         price: sellPrice(c.basePrice),
         bestFor: c.bestFor,
+        // Added 2026-10-10 for the hub page's models table (PortableCabinModelsTable): the commerce
+        // H1 (so an anchor matches the destination page's <h1>), the size and the build. The
+        // category table above keeps using `name`.
+        id: p.id,
+        h1: c.h1Title,
+        size: c.size,
+        material: c.material,
       };
     })
     .sort((a, b) => a.price - b.price);
@@ -142,6 +149,18 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           just ~40 km from Bangalore — and 500+ projects delivered across India for clients including Tata Projects,
           Ashok Leyland, Asian Paints and Brigade Group.
           {minPrice !== null && <> Prices start at <strong className="text-foreground">{inr(minPrice)} (incl. GST)</strong>.</>}
+        </p>
+        {/* Links UP to the range hub and DOWN to its guides (added 2026-10-10). The hub is a static
+            route outside the catalogue, so this category page — its natural parent — had no link to
+            it at all. Each anchor names what the destination covers. */}
+        <p>
+          New to portable cabins? Start with the{" "}
+          <Link href="/products/portable-cabin" className="text-accent hover:underline">portable cabin sizes, specifications and prices overview</Link>, then read the{" "}
+          <Link href="/products/portable-cabin/price-and-cost-guide" className="text-accent hover:underline">price and cost guide</Link>, the{" "}
+          <Link href="/products/portable-cabin/sizes-and-dimensions" className="text-accent hover:underline">sizes and dimensions guide</Link> or the{" "}
+          <Link href="/products/portable-cabin/materials-ms-vs-puf" className="text-accent hover:underline">MS sheet vs PUF panel comparison</Link>. Choosing between
+          mild steel, galvanised and colour-coated skins? See the{" "}
+          <Link href="/products/metal-portable-cabin" className="text-accent hover:underline">metal portable cabin guide</Link>.
         </p>
       </div>
 

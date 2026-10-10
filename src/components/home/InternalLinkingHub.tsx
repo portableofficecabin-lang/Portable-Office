@@ -12,9 +12,19 @@ const linkClusters = [
     description: "Our flagship portable cabin range covers site offices, worker accommodation, and custom structures for every budget.",
     links: [
       { label: "All Portable Cabins", href: "/products/category/portable-cabins" },
+      /* The range hub. It is a static route OUTSIDE the catalogue, so no card, index row or related
+         rail can ever link to it — and until 2026-10-10 nothing on this page or the category page
+         did (Search Console recorded zero internal links). Anchor mirrors its H1. */
+      { label: "Portable Cabin: Sizes, Specifications & Prices", href: "/products/portable-cabin" },
       { label: "Executive Portable Cabin 20ft", href: "/products/executive-portable-cabin-20ft" },
       { label: "Porta Cabin (All Types)", href: "/products/porta-cabin" },
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      /* Added 2026-10-10: the three remaining fixed-price Portable Cabins products that had no link
+         from the home page. Each is a distinct product with its own intent, not a synonym; the
+         steel label names the one thing that separates it from the MS page (its standard size). */
+      { label: "Steel Portable Cabin (Standard 20 × 10 ft)", href: "/products/steel-portable-cabin" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Prefabricated Portable Cabin", href: "/products/prefabricated-portable-cabin" },
       { label: "Portable Cabin 40ft Bunkhouse", href: "/products/portable-cabin-40ft-bunkhouse" },
     ],
   },
@@ -68,6 +78,8 @@ const linkClusters = [
     links: [
       { label: "All Security Cabins", href: "/products/category/security-cabins" },
       { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
+      /* The second security product (POC-SC-SECAB) had no home-page link; worded by its use. */
+      { label: "Security Cabin for Gate & Watchman Posts", href: "/products/security-cabin" },
       { label: "Portable Toilet Block - 4 Unit", href: "/products/portable-toilet-block-4-unit" },
       { label: "Portable Toilet Cabins (All)", href: "/products/category/portable-toilet-cabins" },
     ],

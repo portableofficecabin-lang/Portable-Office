@@ -28,12 +28,15 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateFAQSchema } from "@/lib/seo/structured-data";
 import { OptimizedImage } from "@/components/OptimizedImage";
 
-/* ── ALSO THE CANONICAL PAGE FOR "STEEL PORTABLE CABIN" (2026-09-04) ─────────────────────────
- * /products/steel-portable-cabin 301s here (next.config.ts). MS steel and "steel" are the same
- * material, so a separate page was the same product at the same price competing with this one
- * for the same queries. This page absorbed the phrase as a secondary keyword — in the section
- * below, in the FAQs, and in productSEO.ts / productCommerce.ts feedTitle — plus the six
- * owner-supplied renders, used here as editorial figures.
+/* ── "STEEL PORTABLE CABIN": HISTORY AND THE CURRENT SPLIT ───────────────────────────────────
+ * On 2026-09-04 /products/steel-portable-cabin was 301'd here (same material, same price) and this
+ * page absorbed the phrase as a secondary keyword. On 2026-09-05 the owner RESTORED the steel page
+ * as its own live product (id 46, POC-PC-STEEL); that redirect no longer exists. Since 2026-10-10
+ * the two pages are differentiated by WHAT THEY SELL rather than by material: the steel page is the
+ * standard 20 ft × 10 ft build sold as listed, this page is the same construction made to the
+ * buyer's own size. The section and FAQ below say exactly that — the old "the same cabin" wording
+ * told Google two indexable URLs were one product. The six owner-supplied renders stay here as
+ * editorial figures.
  *
  * The figures deliberately do NOT go into products.ts `images[]`: that array drives the gallery,
  * the OG image and the Merchant feed's <g:image_link> for a LIVE offer (POC-PC-MSPC). Changing
@@ -203,11 +206,13 @@ const faqs = [
     q: "What information is needed for an accurate quote?",
     a: "You should share required size, quantity, usage type, occupancy, site location, timeline, duration of use, and any special needs like attached toilets, premium finishes, or extra insulation.",
   },
-  /* Carried over from the former standalone steel portable cabin page, which now 301s here.
-   * These are the questions that page answered and this one did not. */
+  /* Kept from the period when the steel page redirected here. That page is live again
+   * (2026-09-05), so the answer now sends the buyer to the right listing instead of claiming two
+   * indexable URLs are one product. This array is rendered on the page AND emitted as the FAQPage
+   * schema, so the two always agree. */
   {
     q: "Is a steel portable cabin the same as an MS portable cabin?",
-    a: "Yes. MS stands for mild steel, so a steel portable cabin and an MS portable cabin are the same product — a welded mild steel frame with insulated steel wall and roof panels. Suppliers use the two names interchangeably, and everything on this page applies to both.",
+    a: "MS stands for mild steel, so the two share the same welded frame and insulated panel system. On this site they are two different listings: the Steel Portable Cabin is our standard 20 ft × 10 ft build, sold as listed, while the MS Portable Cabin is the same construction built to your own size and layout.",
   },
   {
     q: "Does a steel cabin get hot inside?",
@@ -258,25 +263,31 @@ export function MSPortableCabinContent() {
         </div>
       </section>
 
-      {/* Absorbed from the former /products/steel-portable-cabin page, which 301s here. Answers
-          the first question a visitor arriving on "steel portable cabin" actually has. */}
+      {/* Answers the first question a visitor arriving on "steel portable cabin" has — and, since
+          the steel page is a live product again (2026-09-05), tells them which of the two listings
+          they want. The sizes quoted are the two commerce records' own `size` fields. */}
       <section className="space-y-6 rounded-3xl border border-border bg-secondary p-6 md:p-8">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-          Steel Portable Cabin and MS Portable Cabin — the Same Cabin
+          Steel Portable Cabin or MS Portable Cabin — Which Page Do You Need?
         </h2>
         <p className="leading-relaxed text-muted-foreground">
           If you searched for a <strong className="font-semibold text-foreground">steel portable
-          cabin</strong>, you are in the right place. MS stands for mild steel, so a steel portable
-          cabin and an MS portable cabin are the same product: a welded mild steel frame carrying
-          insulated steel wall and roof panels, built complete in the factory and delivered ready
-          to use. The industry uses both names interchangeably, and everything on this page —
-          specifications, sizes, applications and price — applies to either.
+          cabin</strong>, both pages describe the same construction: MS stands for mild steel, so
+          each is a welded mild steel frame carrying insulated steel wall and roof panels, built
+          complete in the factory and delivered ready to use. What differs is what each page sells.
+          The{" "}
+          <Link href="/products/steel-portable-cabin" className="font-medium text-accent underline-offset-4 hover:underline">
+            Steel Portable Cabin
+          </Link>{" "}
+          is our standard 20 ft × 10 ft build, priced and ready to order as listed. This MS
+          Portable Cabin page is the same construction made to your own size and layout.
         </p>
         <p className="leading-relaxed text-muted-foreground">
-          The distinction worth making is not steel versus MS, but which wall system sits on that
-          steel frame: plain insulated MS sheet, galvanised sheet for coastal humidity, or PUF
-          sandwich panel for rooms that will be air-conditioned all day. Those are compared further
-          down the page.
+          If the ready-made 20 × 10 ft unit suits your site, order it from the Steel Portable Cabin
+          page. If you need a different footprint, a partition layout or an attached toilet, stay
+          here and tell us the size. The wall-system choice — plain insulated MS sheet, galvanised
+          sheet for coastal humidity, or PUF sandwich panel for rooms that are air-conditioned all
+          day — applies to both and is compared further down the page.
         </p>
         <Figure
           src="/images/products/steel-portable-cabin/steel-portable-cabin-front.webp"

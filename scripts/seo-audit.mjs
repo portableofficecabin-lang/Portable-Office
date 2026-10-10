@@ -55,6 +55,9 @@ function read(path) {
 }
 
 const codeFiles = SRC_DIRS.flatMap((d) => walk(join(ROOT, d)));
+/** True for a line that is entirely a comment (// …, /* …, * …, or a JSX {/* …). A JSDoc that
+ *  MENTIONS a legacy URL form is documentation, not an internal link. */
+const isCommentLine = (line) => /^\s*(\/\/|\/\*|\*|\{\/\*)/.test(line);
 const rel = (p) => p.replace(ROOT + "\\", "").replace(ROOT + "/", "").replace(/\\/g, "/");
 
 // ── STATIC 1: internal .html links ───────────────────────────────────────────
@@ -66,6 +69,7 @@ header("Internal links ending in .html");
     lines.forEach((line, i) => {
       // A link/href whose value carries a `.html` path (ignore slug-normalisation
       // like `.replace(/\.html$/i, "")` which never appears in an href context).
+      if (isCommentLine(line)) return;
       if (/\b(href|to)\b/.test(line) && /["'`][^"'`]*\.html\b/.test(line)) {
         err(`${rel(f)}:${i + 1}  ${line.trim()}`);
         found++;
@@ -82,6 +86,7 @@ header("Internal links using ?category=");
   for (const f of codeFiles) {
     const lines = read(f).split(/\r?\n/);
     lines.forEach((line, i) => {
+      if (isCommentLine(line)) return;
       if (/\b(href|to)\b/.test(line) && /[?&]category=/.test(line)) {
         err(`${rel(f)}:${i + 1}  ${line.trim()}`);
         found++;
