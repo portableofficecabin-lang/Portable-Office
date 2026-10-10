@@ -236,6 +236,20 @@ const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
   ],
 };
 
+/**
+ * Contextual city links appended to specific promotion pages (keyed `<keyword>|<location>`), so a
+ * state-level hub such as "Container Office in Tamil Nadu" points at the city page that owns the
+ * local intent. The shared category arrays above are copied, never mutated.
+ */
+const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> = {
+  "Container Office|Tamil Nadu": [
+    { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+  ],
+  "Site Office Container|Tamil Nadu": [
+    { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+  ],
+};
+
 function getPromotionImage(keyword: string, variation: number): string {
   const pool = keywordImagePools[keyword];
   if (!pool?.length) return productImages[keyword];
@@ -407,6 +421,8 @@ function generateContent(
     { name: "Site Office Containers", href: "/products/category/site-office-containers" },
     { name: "View All Products", href: "/products" },
   ];
+  const cityLinks = CITY_LINKS_BY_PROMOTION[`${keyword}|${location}`];
+  const relatedProductLinksForPage = cityLinks ? [...relatedProductLinks, ...cityLinks] : relatedProductLinks;
 
   return {
     keyword,
@@ -421,7 +437,7 @@ function generateContent(
     keyFeatures,
     faqs,
     canonicalUrl,
-    relatedProductLinks,
+    relatedProductLinks: relatedProductLinksForPage,
     geoRegion: locationData.region,
     geoPlacename: locationData.placename,
     geoPosition: locationData.position,
