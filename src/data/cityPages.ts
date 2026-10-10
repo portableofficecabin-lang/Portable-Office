@@ -907,6 +907,322 @@ export const CITY_PAGES: CityPage[] = [
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tirunelveli district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's standard container office designs and are not photographs of installations in Tirunelveli. Notes on wind exposure and anchoring are general guidance; the base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) is an independent Government of Tamil Nadu undertaking with which Portable Office Cabin is not affiliated; place names are used only to describe service locations. Permission notes on this page are general guidance, not legal advice.",
   },
 
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CONTAINER OFFICE IN THOOTHUKUDI — the V.O. Chidambaranar port city (port and
+   * CFS yards, SIPCOT Meelavittan, thermal power contractors, salt pans, seafood export units).
+   *
+   * Owner copy of 2026-10-10, mapped onto the fixed template slots (Athipattu precedent): the
+   * draft's section-2 heading is the tagline and its paragraphs the intro; the coastal-
+   * conditions section fills the solutions slot; the specification table → features[] as
+   * "Component — specification, purpose"; the sizes table and custom-configuration note →
+   * featuresIntro prose; buy-vs-rent → custom; the six delivery steps → how, with the
+   * schedule note folded into step 6; the Madurai / Tirunelveli highway corridors → areasText.
+   * The draft's own publishing checks (its section 14) are honoured: coatings and anchoring
+   * are "as specified" / site-specific; no transport-permit, rent-to-own, lead-time,
+   * installation-duration, free-storage, approval-exemption or service-life promises; no ₹
+   * (file-header rule). The slug follows the URL the draft asked for, which carries the
+   * primary keyword ("portable container office in Thoothukudi").
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-container-office-in-thoothukudi",
+    city: "Thoothukudi",
+    listTitle: "Portable Container Office in Thoothukudi",
+    metaTitle: "Portable Container Office in Thoothukudi | Portable Office Cabin",
+    metaDescription:
+      "Portable container offices in Thoothukudi for port yards, SIPCOT factories, salt pans and construction sites. Custom sizes, purchase, rental and delivery options.",
+    keywords:
+      "portable container office in Thoothukudi, portable office container Tuticorin, container site office Thoothukudi, portable cabin Thoothukudi port, container office on rent Thoothukudi",
+    geo: { region: "IN-TN", placename: "Thoothukudi, Tamil Nadu, India", position: "8.7642;78.1348", icbm: "8.7642, 78.1348" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/portable-container-office-in-thoothukudi/portable-container-office-in-thoothukudi-exterior.webp",
+      alt: "Portable container office for Thoothukudi — front elevation of a charcoal-grey corrugated-steel portable office with a steel entrance door under a small canopy and bulkhead light, two sliding windows with security grills, a steel step and corner posts on foot plates, standing on a concrete yard in front of a grey industrial shed",
+      width: 1152,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/portable-container-office-in-thoothukudi/portable-container-office-in-thoothukudi-aerial-view.webp",
+      alt: "Portable container office for Thoothukudi — top-down view of the charcoal-grey profiled-sheet roof of the portable office, with the fittings along its long edges visible, placed on a light concrete yard",
+      width: 1152,
+      height: 864,
+      caption:
+        "Seen from above: the profiled-sheet roof, corner posts and base frame arrive fitted from the factory, so a yard in Thoothukudi needs only a prepared base, placement, anchoring where specified and connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-container-office-in-thoothukudi/portable-container-office-in-thoothukudi-interior.webp",
+      alt: "Inside a portable container office for Thoothukudi, shown with an optional executive fit-out — dark panel walls with timber trims and a slatted timber feature wall, two sliding windows with security grills and roller blinds, a steel door, a timber-topped desk with a laptop, three leather chairs, low cabinets, planters, recessed ceiling lights and a timber-effect floor",
+      width: 1448,
+      height: 1086,
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-container-office-in-thoothukudi/portable-container-office-in-thoothukudi-side-view.webp",
+        alt: "Portable container office for Thoothukudi — three-quarter view of the charcoal-grey corrugated-steel portable office showing its blank long side and end wall, corner posts on foot plates and the profiled roof, on a concrete yard beside an industrial shed",
+        width: 1152,
+        height: 864,
+      },
+      {
+        src: "/images/cities/portable-container-office-in-thoothukudi/portable-container-office-in-thoothukudi-end-view.webp",
+        alt: "Portable container office for Thoothukudi — blank end elevation of the charcoal-grey corrugated-steel portable office with its corner posts, foot plates and slightly raised roof profile, in front of a grey industrial shed",
+        width: 1152,
+        height: 864,
+      },
+    ],
+
+    h1: "Portable Container Office in Thoothukudi",
+    tagline: "Portable Container Offices for Thoothukudi's Industrial and Port Projects",
+    intro: [
+      "Thoothukudi (Tuticorin) is an important industrial and port city, with businesses operating across logistics yards, salt-processing areas, manufacturing facilities, power projects, warehouses, and industrial construction sites.",
+      "Many of these operations require temporary or relocatable offices rather than permanent buildings. A portable container office in Thoothukudi provides a practical workspace that can be transported, installed on a suitable foundation, and relocated when project requirements change.",
+      "Portable Office Cabin manufactures and supplies customised container offices for industrial contractors, logistics operators, project engineers, construction companies, and manufacturing facilities. We serve Thoothukudi city and surrounding industrial locations, including Harbour Estate, SIPCOT Meelavittan, Muthiahpuram, Millerpuram, Thermal Nagar, Mullakkadu, and areas along the Madurai and Tirunelveli highways.",
+      "Our offices are available with electrical fittings, insulated wall systems, windows, secure doors, workstations, storage space, and optional toilet facilities.",
+    ],
+
+    whyHeading: "Why Choose a Portable Container Office?",
+    whyIntro:
+      "For port yards, industrial-estate plots, salt-pan operations and contractor work zones around Thoothukudi, a portable container office offers the following advantages over conventional construction:",
+    whyBullets: [
+      {
+        title: "Quick Installation",
+        text: "Portable offices are fabricated off-site before transportation to the project location. This reduces the amount of construction work required at the site. Installation schedules depend on cabin size, ground preparation, crane access, and electrical connections.",
+      },
+      {
+        title: "Relocatable and Reusable",
+        text: "Unlike a conventional masonry office, a properly designed portable container office can be disconnected, lifted, and moved to another project location. This is particularly useful for contractors who operate at multiple industrial or infrastructure sites.",
+      },
+      {
+        title: "Suitable for Temporary and Leased Land",
+        text: "Container offices can be installed on engineered supports or suitable foundations, reducing the need for extensive permanent construction. The installation must still comply with applicable site, structural, and local-authority requirements.",
+      },
+      {
+        title: "Multiple Uses Across Projects",
+        text: "A container office initially used by a construction team may later serve as a gate office, administration cabin, supervisor room, or documentation facility.",
+      },
+      {
+        title: "Customisable Workspace",
+        text: "Cabins can be configured for individual workstations, project engineers, meeting areas, site documentation, storage, pantry facilities, or attached toilets.",
+      },
+    ],
+
+    solutionsHeading: "Container Offices Designed for Thoothukudi's Coastal Conditions",
+    solutionsIntro:
+      "Thoothukudi's proximity to the Gulf of Mannar and its coastal-industrial environment makes appropriate construction materials and installation planning especially important.",
+    solutions: [
+      {
+        title: "Protection Against Coastal Corrosion",
+        text: "Salt-laden air and humidity can accelerate corrosion of exposed steel surfaces. Our container offices can be specified with suitable surface preparation, anti-corrosion primer, protective PU coating, and corrosion-resistant fasteners according to project requirements. Periodic cleaning, inspection, and maintenance of protective coatings are recommended for coastal installations.",
+      },
+      {
+        title: "Wind-Resistant Installation",
+        text: "Industrial plots near ports, open yards, and coastal areas may experience significant wind exposure. Cabin anchoring, structural stability, and foundation design should be determined according to the installation location, applicable wind loads, and the cabin's dimensions. Engineered anchoring systems can be incorporated where required.",
+      },
+      {
+        title: "Thermal Insulation for Hot Weather",
+        text: "PUF insulated wall and roof panels help reduce heat transfer compared with uninsulated sheet construction. For offices operating throughout the day, suitable insulation, ventilation, and air-conditioning can improve interior comfort.",
+      },
+      {
+        title: "Rainwater Protection",
+        text: "Roof slopes, properly sealed joints, weatherproof openings, and suitable drainage arrangements help protect the interior from rainwater ingress. Sites with potential flooding or waterlogging should use foundation levels established according to local ground conditions.",
+      },
+    ],
+
+    featuresHeading: "Portable Container Office Technical Specifications",
+    featuresIntro:
+      "Our portable container offices are available with heavy-duty steel structures, insulated panels, protective exterior finishes, and functional interior arrangements. Portable Office Cabin offers standard and customised container office dimensions: 10 ft × 8 ft (80 sq ft external area, indicative seating for 1 person) as a gate cabin, weighbridge office or salt-pan supervisor cabin; 20 ft × 8 ft (160 sq ft, 2–3 persons) as a CFS gate office or site engineer office; 20 ft × 10 ft (200 sq ft, 3–4 persons) as a site office with drawing table; 30 ft × 10 ft (300 sq ft, 4–6 persons) as an office with storage or attached toilet; and 40 ft × 10 ft (400 sq ft, 6–8 persons) as a project office with toilet or pantry. These figures represent external floor areas; usable space depends on wall thickness, insulation, furniture, and internal partitions. For larger project facilities, we can consider joined modular offices, extended office layouts, and multi-storey arrangements, which require suitable structural engineering, foundations, lifting provisions, transport planning, and applicable approvals. Available specifications and their purpose:",
+    features: [
+      "Structural frame — welded MS structural framework with protective primer and finish, for structural support and durability",
+      "Walls — 50 mm PUF sandwich panels with pre-coated GI sheet facings, for thermal insulation",
+      "Roof — insulated weather-resistant roofing, with drainage arrangements as specified, for protection from heat and rainfall",
+      "Flooring — MS base, cement board and vinyl flooring, giving a durable, easy-to-clean surface",
+      "Main door — steel door with mortice lock and suitable locking hardware, for secure access",
+      "Windows — aluminium sliding windows with optional grills, mesh and gaskets, for daylight and ventilation",
+      "Electrical system — LED lights, fan points, 6A/16A sockets and MCB distribution board, for office electrical requirements",
+      "Anchorage — engineered anchoring arrangement where required, for stability under applicable loads",
+      "Attached toilet — optional EWC, washbasin and exhaust fan, as a sanitation facility",
+      "Air conditioning — electrical and installation provision, for optional cooling",
+      "Furniture — workstations, chairs and cabinets as specified, as optional office furnishing",
+    ],
+    sizesNote:
+      "All specifications are subject to the approved quotation and technical drawing. Air-conditioning equipment and loose furniture are not included unless specifically listed.",
+
+    industriesHeading: "Industries and Applications in Thoothukudi",
+    industriesIntro:
+      "Portable container offices serve the following operations in and around Thoothukudi:",
+    industries: [
+      {
+        title: "VOC Port and Container Logistics Yards",
+        text: "Portable container offices are suitable for gate-entry operations, freight documentation, logistics administration, customs house agents, surveyors, and container yard supervisors. Compact configurations can be positioned near approved entry points, subject to site access and safety requirements.",
+      },
+      {
+        title: "Thermal Power Plant Contractors",
+        text: "Contractors working on erection, maintenance, civil works, and shutdown activities may require temporary administration offices for their project teams. A relocatable cabin allows office accommodation to be moved or removed after the contract.",
+      },
+      {
+        title: "SIPCOT Manufacturing and Industrial Projects",
+        text: "New factory developments in industrial estates such as Meelavittan may require temporary offices before permanent administration buildings are ready. These cabins can accommodate engineers, project managers, supervisors, and documentation staff.",
+      },
+      {
+        title: "Shipyard and Port Infrastructure Work",
+        text: "Portable offices can support marine construction contractors, fabrication teams, infrastructure contractors, and project administration personnel. The cabin design and installation must account for the site's operational and safety requirements.",
+      },
+      {
+        title: "Salt Pan Operations",
+        text: "Compact portable offices may be used for supervision, records, site administration, and monitoring operations around salt-production areas. Where cabins are exposed to salt and moisture, suitable material protection and maintenance are particularly important.",
+      },
+      {
+        title: "Seafood Processing and Export Facilities",
+        text: "Container offices can be configured for administration, quality-control documentation, dispatch coordination, and export-related office activities. Any installation inside regulated food-processing premises must satisfy the facility's applicable hygiene and safety requirements.",
+      },
+      {
+        title: "Highway and Wind Energy Projects",
+        text: "Portable office units provide relocatable accommodation for project engineers and contractors working across road developments and renewable-energy sites.",
+      },
+    ],
+
+    customHeading: "Buy or Rent a Container Office in Thoothukudi",
+    customIntro:
+      "We offer new container office manufacturing and rental options, depending on project requirements and unit availability.",
+    customBullets: [
+      {
+        title: "Purchase",
+        text: "Suitable for long-term use. Customised layouts available; the customer owns the unit; suitable for repeated relocation. One-time purchase investment.",
+      },
+      {
+        title: "Rental",
+        text: "Suitable for short-term projects and defined rental periods. Available configurations depend on inventory; ownership remains with the rental provider. Monthly rental and applicable deposit.",
+      },
+    ],
+    customOutro:
+      "Purchase is generally suitable for manufacturing facilities, industrial yards, and contractors planning to reuse the office. Rental may be suitable for shutdown projects, temporary construction sites, or operations with a defined project duration. Transport, lifting, anchoring, security deposit, rental period, and return charges are confirmed in the relevant quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable cabins and container offices at its factory near Hosur, Tamil Nadu, and supplies them across Karnataka and Tamil Nadu, with an office in Electronic City, Bengaluru.",
+    whyUsBullets: [
+      {
+        title: "Direct Manufacturer",
+        text: "We manufacture portable cabins and container office structures with options for customised dimensions and layouts.",
+      },
+      {
+        title: "Industrial Applications",
+        text: "Our product range supports construction offices, security cabins, labour accommodation, toilet cabins, and other portable building requirements.",
+      },
+      {
+        title: "Transparent Technical Specifications",
+        text: "Quotations can identify structural materials, insulation thickness, flooring, electrical fittings, windows, doors, and optional accessories.",
+      },
+      {
+        title: "Customisation",
+        text: "Cabin interiors can be designed around workstation capacity, partitions, equipment, storage, sanitation, and operational needs.",
+      },
+      {
+        title: "Warranty Terms",
+        text: "Our stated standard warranty includes five years for the structure and one year for leakage, subject to the terms and exclusions in the approved quotation.",
+      },
+      {
+        title: "Regional Supply",
+        text: "Portable Office Cabin serves customers across Karnataka and Tamil Nadu, including industrial and construction project locations.",
+      },
+    ],
+
+    areasHeading: "Container Office Supply Areas Around Thoothukudi",
+    areasText:
+      "We serve Thoothukudi city, Harbour Estate, SIPCOT Meelavittan, Muthiahpuram, Millerpuram, Thermal Nagar, Mullakkadu, Ottapidaram, Tiruchendur, industrial locations along the Madurai and Tirunelveli highways, and surrounding areas of Thoothukudi district. Transport, unloading and installation arrangements are determined according to the delivery location, cabin dimensions and site accessibility.",
+
+    howHeading: "Container Office Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Site Assessment",
+        text: "Review trailer accessibility, ground conditions, lifting space, electrical connection points, and any industrial-site entry restrictions.",
+      },
+      {
+        title: "Drawing and Quotation",
+        text: "Prepare the proposed cabin layout showing dimensions, entrance, windows, electrical fittings, and optional features. Submit the quotation for approval.",
+      },
+      {
+        title: "Manufacturing",
+        text: "Complete structural fabrication, wall and roof installation, flooring, electrical fittings, interior finishing, and applicable inspections.",
+      },
+      {
+        title: "Foundation Preparation",
+        text: "Prepare a suitable supporting foundation or plinth according to the cabin's structural and installation requirements.",
+      },
+      {
+        title: "Transportation and Placement",
+        text: "Deliver the office using appropriate transportation and lifting equipment. Coordinate placement and any required anchoring as agreed.",
+      },
+      {
+        title: "Connections and Handover",
+        text: "Coordinate electrical connections, applicable testing, inspection, and final handover according to the agreed scope of work. Manufacturing and delivery timelines depend on the approved specifications, customisation, site readiness, and transportation requirements.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the cost of a portable container office in Thoothukudi?",
+        answer:
+          "The price depends on cabin dimensions, wall and roof materials, insulation, interior fittings, attached toilets, and delivery requirements. Share your required size and project location to obtain a detailed quotation.",
+      },
+      {
+        question: "Can a container office withstand Thoothukudi's coastal winds?",
+        answer:
+          "Container offices can be designed and anchored for site-specific wind conditions. Actual safety depends on structural design, foundation capacity, fastening details, and applicable wind loads. Cabin weight alone is not sufficient to establish wind resistance.",
+      },
+      {
+        question: "Can you deliver a portable office inside VOC Port or SIPCOT?",
+        answer:
+          "Delivery may be arranged subject to the facility's entry permissions, documentation, lifting procedures, and safety requirements. Customers should coordinate the necessary authorisations with their site management.",
+      },
+      {
+        question: "Do I need building approval for a portable container office?",
+        answer:
+          "Approval requirements depend on the plot, location, intended use, installation duration, and applicable local regulations. Being movable does not automatically exempt a structure from required approvals.",
+      },
+      {
+        question: "How long will a container office last in Thoothukudi's coastal environment?",
+        answer:
+          "Service life depends on construction quality, protective coatings, exposure conditions, maintenance, and usage. Regular cleaning, inspection, and coating repairs can help protect steel components.",
+      },
+      {
+        question: "Can the container office be relocated later?",
+        answer:
+          "Yes, provided the cabin is designed for relocation and remains structurally suitable. Electrical connections and anchoring must be properly disconnected, and suitable lifting and transport equipment must be used.",
+      },
+      {
+        question: "Can I add an attached toilet?",
+        answer:
+          "Yes. An attached toilet with EWC, washbasin, exhaust fan, and plumbing provisions can be incorporated subject to the selected cabin dimensions and approved design.",
+      },
+      {
+        question: "Is a container office available on rent in Thoothukudi?",
+        answer:
+          "Rental availability depends on size, stock, and project requirements. Rental quotations specify the applicable monthly amount, duration, deposit, transport, and return conditions.",
+      },
+    ],
+
+    ctaHeading: "Get a Portable Container Office Quotation in Thoothukudi",
+    ctaText: `Need a portable container office for a port yard, SIPCOT factory site, power project, salt pan, warehouse, or construction site? Share your preferred cabin dimensions, number of workstations, internal layout, required facilities, and project location. Portable Office Cabin is a portable cabin manufacturer serving Bangalore, Karnataka and Tamil Nadu. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Container Office Quotation",
+    ctaSecondaryLinks: [
+      { label: "Container Office Manufacturer", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Site Office", href: "/products/category/site-office-containers" },
+      { label: "Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Thoothukudi district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Thoothukudi. V.O. Chidambaranar Port (VOC Port), SIPCOT (State Industries Promotion Corporation of Tamil Nadu) and the thermal power stations, shipyards, salt-pan and seafood-processing facilities around Thoothukudi are independent organisations with which Portable Office Cabin is not affiliated; their names are used only to describe delivery locations, and entry to any such premises is subject to that facility's own permissions. Notes on coastal corrosion protection, wind exposure and anchoring are general guidance; the coatings, base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
+  },
+
   {
     slug: "container-office-in-sipcot-hosur",
     city: "SIPCOT Hosur",
