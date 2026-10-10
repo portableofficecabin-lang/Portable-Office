@@ -248,6 +248,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Site Office Container|Tamil Nadu": [
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
   ],
+  "Container Office|Chennai": [
+    { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+  ],
+  "Site Office Container|Chennai": [
+    { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+  ],
 };
 
 function getPromotionImage(keyword: string, variation: number): string {

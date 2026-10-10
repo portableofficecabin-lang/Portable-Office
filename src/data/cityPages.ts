@@ -45,6 +45,15 @@ export interface CityPage {
   keywords: string;
   /** geo meta for the local page (position "lat;lng", icbm "lat, lng"). */
   geo: { region: string; placename: string; position: string; icbm: string };
+  /**
+   * Optional CSS-only motion pass for this page (hero fades up on load, sections reveal as
+   * they scroll into view, list items cascade, images lift on hover, CTA carries a sheen).
+   * Implemented entirely with the utilities in src/index.css ("PRO-MAX MOTION SYSTEM") and
+   * the Tailwind fade-up keyframe — no client JS, nothing hidden in the raw HTML (reveals only
+   * run inside @supports (animation-timeline: view()) and everything respects
+   * prefers-reduced-motion). Unset = the static page every earlier entry renders, byte for byte.
+   */
+  motion?: boolean;
 
   /** Hero image (also the page's og:image). Root-relative path under /public. */
   heroImage: { src: string; alt: string; width: number; height: number };
@@ -1946,6 +1955,320 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN KALPAKKAM, CHENGALPATTU — the East Coast Road belt south of Chennai
+   * (contractors to the controlled-access industrial and research establishments at Kalpakkam,
+   * ECR resort and villa builders, road / utility / coastal-protection works, farmhouse gates
+   * and aquaculture units).
+   *
+   * Owner copy of 2026-10-10, mapped onto the fixed template slots (Athipattu / Thoothukudi
+   * precedent): the draft's section-2 heading is the tagline and its paragraphs the intro;
+   * "Delivery Near Controlled Industrial Establishments" fills the why slot (its document
+   * checklist folded into the first bullet as prose, its closing line → whyOutro); the
+   * coastal-environment section fills the solutions slot; the specification table →
+   * features[] as "Component — standard; optional upgrade"; the sizes table and the
+   * modular-configuration note → featuresIntro prose; "Who Uses Container Offices" →
+   * industries; buy-vs-rent → custom; the six delivery steps → how, with the timeline note
+   * folded into step 6; the supply-area sentence → areasText. The draft's own publishing
+   * checks (its section 14) are honoured: no prior-gate-pass-experience claim, anchoring is
+   * engineering-based, no cyclone guarantee, no free-storage / rent-to-own / fixed-hours /
+   * permit-free / approval-exemption / service-life promises; no ₹ (file-header rule).
+   * "Portable Cabin Manufacturer in Bangalore" → "manufacturer serving Bangalore …" (site
+   * location rule); the draft's "Website:" line is dropped as redundant on-site. One FAQ
+   * names the Department of Atomic Energy ⇒ nominative-use disclaimer below the CTA.
+   *
+   * Images: four owner-dropped 1152×864 webp renders of a navy-blue unit, copied byte-for-
+   * byte, plus a 1448×1086 PNG interior converted to webp (q82), all from
+   * "public/images/Kalpakkam, Tirunelveli city page/" — the folder name says Tirunelveli,
+   * but the draft and the map both place Kalpakkam in Chengalpattu district, which is what
+   * the page states. Alt text and the caption describe the ACTUAL renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-kalpakkam",
+    city: "Kalpakkam",
+    listTitle: "Container Office in Kalpakkam",
+    metaTitle: "Container Office in Kalpakkam, Chengalpattu | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Kalpakkam for industrial contractors, ECR construction sites and coastal projects. Custom sizes, purchase and rental options, and delivery.",
+    keywords:
+      "container office in Kalpakkam, portable office container Kalpakkam, site office cabin Kalpakkam, container office ECR Chengalpattu, container office on rent Kalpakkam",
+    geo: { region: "IN-TN", placename: "Kalpakkam, Chengalpattu, Tamil Nadu, India", position: "12.5500;80.1700", icbm: "12.5500, 80.1700" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-kalpakkam/container-office-in-kalpakkam-exterior.webp",
+      alt: "Container office for Kalpakkam — front elevation of a navy-blue corrugated-steel portable office with a cream-trimmed steel entrance door under a small canopy and bulkhead light, two sliding windows with security grills, a steel step and corner posts on foot plates, standing on a concrete yard in front of a grey industrial shed",
+      width: 1152,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-kalpakkam/container-office-in-kalpakkam-aerial-view.webp",
+      alt: "Container office for Kalpakkam — top-down view of the navy-blue profiled-sheet roof of the portable office with its shallow central ridge line and the fittings along its edges, placed on a light concrete yard",
+      width: 1152,
+      height: 864,
+      caption:
+        "Seen from above: the shallow-pitched profiled-sheet roof, door canopy, corner posts and base frame arrive fitted from the factory, so a site along the ECR needs only a prepared base, placement, anchoring where specified and connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-kalpakkam/container-office-in-kalpakkam-interior.webp",
+      alt: "Inside a container office for Kalpakkam, shown with an optional furnished layout — cream panel walls, two sliding windows with security grills and cream trims, a navy-blue steel door, two timber-finish desks with mesh office chairs, two visitor chairs with a side table, low cabinets with files, planters, a ceiling fan, LED panel lights and a timber-effect floor",
+      width: 1448,
+      height: 1086,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-kalpakkam/container-office-in-kalpakkam-side-view.webp",
+        alt: "Container office for Kalpakkam — three-quarter view of the navy-blue corrugated-steel portable office showing its blank long side and end wall, corner posts on foot plates and the shallow-pitched roof, on a concrete yard beside a grey industrial shed",
+        width: 1152,
+        height: 864,
+      },
+      {
+        src: "/images/cities/container-office-in-kalpakkam/container-office-in-kalpakkam-end-view.webp",
+        alt: "Container office for Kalpakkam — blank end elevation of the navy-blue corrugated-steel portable office with its corner posts, foot plates and shallow-pitched roof line, in front of a grey industrial shed",
+        width: 1152,
+        height: 864,
+      },
+    ],
+
+    h1: "Container Office in Kalpakkam, Chengalpattu",
+    tagline: "Portable Container Offices for Kalpakkam's Industrial and Coastal Projects",
+    intro: [
+      "Kalpakkam, located along the East Coast Road (ECR) in Chengalpattu district, is an important location for industrial, research-related, infrastructure, and coastal development activities. Contractors working on temporary industrial projects, residential developments, resort construction, roadworks, and utility installations often require functional site offices without investing in permanent buildings.",
+      "A container office in Kalpakkam provides a practical solution. These prefabricated offices can be manufactured off-site, transported to the project location, installed on suitable foundations, and relocated when project requirements change.",
+      "Portable Office Cabin manufactures and supplies customised container offices for construction contractors, project engineers, infrastructure companies, industrial service providers, and commercial developments. We serve Kalpakkam, Pudupattinam, Sadras, Anupuram, Tirukalukundram, Mamallapuram, Cheyyur, and surrounding locations along the ECR.",
+      "Our portable offices are available with insulated wall panels, electrical installations, secure doors, sliding windows, workstations, and optional attached toilet facilities.",
+    ],
+
+    whyHeading: "Container Office Delivery Near Controlled Industrial Establishments",
+    whyIntro:
+      "Some project locations around Kalpakkam are associated with controlled-access facilities. Delivery and installation within such premises can involve additional documentation and security procedures:",
+    whyBullets: [
+      {
+        title: "Site Entry and Permissions",
+        text: "The customer's authorised engineer or contract coordinator should confirm the applicable entry requirements for delivery vehicles, lifting equipment, and personnel. Depending on facility rules, the required documents may include driver and operator identification; vehicle registration and insurance documents; lifting equipment certificates and operator qualifications; cabin dimensions and approximate weight; the approved delivery schedule and material-entry documentation; and applicable safety and contractor authorisations. The final document requirements must be confirmed by the relevant establishment.",
+      },
+      {
+        title: "Delivery Scheduling",
+        text: "Where security clearance or gate-pass approval is required, delivery should be scheduled only after the necessary permissions are obtained. Additional coordination time may be required for controlled-access sites.",
+      },
+      {
+        title: "Security Compliance",
+        text: "Our delivery planning can be aligned with the customer's approved material-entry, inspection, safety, and access procedures.",
+      },
+    ],
+    whyOutro:
+      "For locations outside controlled boundaries, ordinary site access and transport requirements apply.",
+
+    solutionsHeading: "Container Offices Designed for Kalpakkam's Coastal Environment",
+    solutionsIntro:
+      "Kalpakkam's coastal location makes suitable material selection, corrosion protection, roof detailing, and foundation design important considerations.",
+    solutions: [
+      {
+        title: "Coastal Corrosion Protection",
+        text: "Salt-laden air and humidity can accelerate corrosion of unprotected steel surfaces. Container offices can be specified with suitable surface preparation, corrosion-resistant coatings, protective paint finishes, and appropriate fasteners. For highly exposed coastal locations, enhanced protection may be recommended according to the project requirements.",
+      },
+      {
+        title: "Wind and Cyclone Considerations",
+        text: "Sites along the Bay of Bengal coast may experience strong winds and severe weather. Cabin stability should be assessed using the applicable wind loads, structural configuration, foundation conditions, and anchoring requirements. No portable cabin should be described as cyclone-proof solely because it is heavy or fitted with four anchor bolts; a suitable engineered design is necessary.",
+      },
+      {
+        title: "Thermal Insulation",
+        text: "PUF sandwich panels help reduce heat transfer through the walls and roof. Cooling performance depends on insulation thickness, glazing, ventilation, weather conditions, and air-conditioning arrangements.",
+      },
+      {
+        title: "Rainwater and Flood Protection",
+        text: "Properly designed roof slopes, weatherproof joints, drainage details, and raised installation levels can reduce the risk of rainwater entering the cabin. Foundation heights should be determined according to the site's flood risk, drainage conditions, and ground levels.",
+      },
+    ],
+
+    featuresHeading: "Container Office Manufacturing Specifications",
+    featuresIntro:
+      "Our portable container offices are available with welded mild-steel frameworks, insulated wall systems, protective exterior coatings, durable flooring, and electrical provisions. Portable Office Cabin supplies standard and customised portable office dimensions: 10 ft × 8 ft (80 sq ft external floor area, indicative seating for 1 person) as a farmhouse gate cabin or resort security office; 20 ft × 8 ft (160 sq ft, 2–3 persons) as a contractor office or engineer's cabin; 20 ft × 10 ft (200 sq ft, 3–4 persons) as a site office with documentation area; 30 ft × 10 ft (300 sq ft, 4–6 persons) as an office with store or attached toilet; and 40 ft × 10 ft (400 sq ft, 6–8 persons) as a project office or sales office with pantry or toilet. These represent external footprints; actual usable floor space depends on wall construction, insulation, and interior partitions. For larger requirements, multiple units can be connected to form extended office facilities, and double-storey modular arrangements may also be considered where suitable foundations, structural design, stairs, and safety provisions are included. Transportation of oversized cabins may require special planning, permits, or on-site assembly. Available specifications, with the optional customisation for each:",
+    features: [
+      "Structural frame — welded MS structural frame with protective primer and top coat; optional enhanced coastal corrosion protection",
+      "Walls — 50 mm PUF sandwich panels with pre-coated GI sheet facings; optional 75 mm insulated panels",
+      "Roof — weather-resistant insulated roofing with suitable drainage; optional additional sealing or enhanced roof protection",
+      "Flooring — MS base structure, cement board and vinyl flooring; optional MS chequered plate",
+      "Main door — steel door with mortice locking arrangement; optional glazed entrance door",
+      "Windows — aluminium sliding windows with optional grills, mosquito mesh and seals; optional UPVC windows and storm protection",
+      "Electrical — LED lights, fan points, 6A/16A sockets and MCB distribution board; optional dedicated AC points, inverter connection and outdoor lighting",
+      "Anchoring — engineered anchoring where required; additional restraints according to the structural design",
+      "Attached toilet — optional EWC, washbasin and exhaust fan; custom toilet and plumbing configuration",
+      "Air conditioning — electrical and installation provisions; AC supply and installation when quoted",
+      "Furniture — layout provisions for workstations; desks, chairs and cabinets when quoted",
+    ],
+    sizesNote:
+      "Final specifications, including material grades, insulation thicknesses, finishes, and fittings, are confirmed in the approved quotation. Air-conditioning equipment, furniture, external electrical connections, and civil foundation works are not included unless specifically listed.",
+
+    industriesHeading: "Who Uses Container Offices Around Kalpakkam?",
+    industriesIntro:
+      "Container offices serve the following users and project types in and around Kalpakkam:",
+    industries: [
+      {
+        title: "Industrial and Research Facility Contractors",
+        text: "Civil, mechanical, electrical, maintenance, and infrastructure contractors working on projects associated with industrial and research establishments may require temporary site administration offices. A relocatable cabin provides workspace for engineers, supervisors, documentation teams, and project coordinators. Installations within controlled premises are subject to the relevant facility's permission and safety requirements.",
+      },
+      {
+        title: "Resort and Villa Construction Along ECR",
+        text: "Resort developers, villa builders, and residential construction contractors along the ECR may require temporary site offices during construction. Customised portable cabins can also serve as visitor reception areas, site meeting rooms, or project marketing offices.",
+      },
+      {
+        title: "Road and Utility Construction",
+        text: "Portable offices are suitable for road improvement projects, pipeline installations, electrical infrastructure works, and other activities involving changing project locations. These cabins can be moved between sites when designed and handled appropriately.",
+      },
+      {
+        title: "Coastal Infrastructure Projects",
+        text: "Contractors working on seawalls, coastal protection works, fishing harbour infrastructure, and marine-related construction may require offices for project documentation, supervision, and equipment records. Suitable corrosion protection and structural design are especially important for these environments.",
+      },
+      {
+        title: "Farmhouses and Gated Layouts",
+        text: "Compact portable security cabins can be installed at farmhouse entrances, gated plots, property development sites, and private layouts.",
+      },
+      {
+        title: "Hatcheries and Aquaculture Facilities",
+        text: "Portable cabins may be used for administration, feed records, supervision, and temporary office accommodation at aquaculture sites. Where required, an attached toilet or storage area can be incorporated.",
+      },
+    ],
+
+    customHeading: "Buy or Rent a Container Office in Kalpakkam",
+    customIntro:
+      "Portable Office Cabin offers both new manufacturing and rental options, subject to the selected cabin requirements and availability.",
+    customBullets: [
+      {
+        title: "Purchase",
+        text: "Suitable for long-term use. Custom dimensions and layouts; the customer owns the cabin and can reuse it across sites. Initial purchase investment.",
+      },
+      {
+        title: "Rental",
+        text: "Suitable for temporary projects and defined project durations. Available unit configurations; the cabin is returned after the rental period. Monthly rental and applicable deposit.",
+      },
+    ],
+    customOutro:
+      "Buying may be suitable for contractors handling repeated projects, resort developers requiring customised offices, and companies planning long-term use. Renting may be suitable for temporary civil works, maintenance contracts, site administration, and construction projects with defined completion schedules. Rental quotations specify the security deposit, minimum rental period, transportation, placement, collection, and other applicable charges.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable cabins and container offices at its factory near Hosur, Tamil Nadu, and supplies them across Karnataka and Tamil Nadu, with an office in Electronic City, Bengaluru.",
+    whyUsBullets: [
+      {
+        title: "Direct Manufacturing",
+        text: "We manufacture portable offices, security cabins, toilet cabins, accommodation units, and other prefabricated container structures.",
+      },
+      {
+        title: "Customisable Designs",
+        text: "Container offices can be configured with multiple workstations, partitions, reception spaces, storage facilities, toilets, and additional electrical fittings.",
+      },
+      {
+        title: "Detailed Specifications",
+        text: "Our quotations can identify the structural materials, wall thickness, insulation, flooring, doors, windows, and selected fittings.",
+      },
+      {
+        title: "Project-Based Supply",
+        text: "Cabin sizes, delivery arrangements, and installation requirements can be coordinated according to the project location and specifications.",
+      },
+      {
+        title: "Warranty Support",
+        text: "Our standard stated warranty terms include five years for the structure and one year for leakage, subject to the conditions of the approved quotation or purchase agreement.",
+      },
+    ],
+
+    areasHeading: "Container Office Supply Areas Around Kalpakkam",
+    areasText:
+      "We supply container offices to Kalpakkam, Pudupattinam, Sadras, Anupuram, Tirukalukundram, Mamallapuram, Cheyyur, and surrounding areas of Chengalpattu district, including project sites along the East Coast Road. Transport, unloading and installation arrangements are determined according to the delivery location, cabin dimensions, site accessibility and, for controlled-access premises, the entry permissions described above.",
+
+    howHeading: "Container Office Delivery and Installation Along ECR",
+    howSteps: [
+      {
+        title: "Site Assessment",
+        text: "Confirm the project location, trailer access, crane movement, ground conditions, foundation requirements, and electrical connection availability.",
+      },
+      {
+        title: "Drawing and Quotation",
+        text: "Prepare the proposed cabin layout showing doors, windows, partitions, electrical points, lighting, and optional facilities. Confirm the scope and price before manufacturing.",
+      },
+      {
+        title: "Fabrication",
+        text: "Manufacture the steel framework, install wall and roof systems, flooring, electrical fittings, doors, windows, and other approved components.",
+      },
+      {
+        title: "Foundation Preparation",
+        text: "Prepare suitable supporting foundations or plinths based on the cabin's dimensions, structural loading, ground conditions, and installation requirements.",
+      },
+      {
+        title: "Transport and Placement",
+        text: "Coordinate transportation along the approved route and arrange lifting and installation according to the agreed scope. Controlled sites may require additional entry permissions.",
+      },
+      {
+        title: "Connections and Handover",
+        text: "Complete applicable installation checks and coordinate electrical or plumbing connections before handover. Delivery timelines depend on cabin size, customisation, site preparation, transportation, and any access approvals.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a container office cost in Kalpakkam?",
+        answer:
+          "Pricing depends on the cabin dimensions, structural materials, insulation, selected interior fittings, and additional facilities. Transportation, lifting, GST, and foundation works are quoted according to project requirements.",
+      },
+      {
+        question: "Can you deliver a container office inside a DAE-controlled facility?",
+        answer:
+          "Delivery may be possible subject to the facility's authorisation, security clearance, contractor requirements, and approved material-entry procedures. The customer's authorised coordinator must arrange the necessary permissions.",
+      },
+      {
+        question: "Can a container office withstand cyclonic winds?",
+        answer:
+          "A container office can be designed and anchored for specified wind conditions. Its actual performance depends on engineering, foundation capacity, anchoring arrangements, and the severity of the weather. Cyclone resistance must not be assumed without appropriate structural assessment.",
+      },
+      {
+        question: "Do I need building approval for a portable container office?",
+        answer:
+          "Approval requirements depend on the land use, location, installation duration, project type, and local authority regulations. Movable structures are not automatically exempt from approvals.",
+      },
+      {
+        question: "How long will a container office last near the sea?",
+        answer:
+          "The service life depends on coating protection, steel quality, maintenance, exposure, and usage. Regular inspection, cleaning, and timely repairs to protective coatings are recommended.",
+      },
+      {
+        question: "Can the container office be moved to another site?",
+        answer:
+          "Yes, if it has been designed for relocation and remains structurally suitable. Proper disconnection, lifting, transportation, and new-site installation arrangements are necessary.",
+      },
+      {
+        question: "Can I have an attached toilet?",
+        answer:
+          "Yes. An attached toilet can be incorporated with an EWC, washbasin, exhaust fan, and required plumbing provisions according to the approved design.",
+      },
+      {
+        question: "Are rental container offices available in Kalpakkam?",
+        answer:
+          "Rental options depend on available stock, required size, and project duration. Applicable rental terms, security deposits, transport, and return charges are confirmed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Kalpakkam",
+    ctaText: `Need a portable site office for an industrial contract, resort construction project, infrastructure site, or commercial development along the ECR? Share the required cabin dimensions, number of workstations, preferred layout, attached toilet requirements, and project location. Portable Office Cabin is a portable cabin manufacturer serving Bangalore, Karnataka and Tamil Nadu. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Portable Container Office", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Site Office", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Container Office in Chennai", href: "/promotions/container-office-in-chennai" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Chengalpattu district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Kalpakkam. The Department of Atomic Energy (DAE) and the research, industrial and infrastructure establishments at and around Kalpakkam are independent Government of India and other organisations with which Portable Office Cabin is not affiliated; their names are used only to describe delivery locations, and entry to any such premises is subject to that facility's own permissions and procedures. Notes on coastal corrosion protection, wind and cyclone exposure, flood levels and anchoring are general guidance; the coatings, base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. Approval and permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
