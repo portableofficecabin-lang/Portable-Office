@@ -1949,6 +1949,299 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN HOSKOTE
+   *
+   * Owner-supplied copy (2026-10-10) mapped onto the fixed template slots: the sizes table
+   * became the featuresIntro prose, the specification table became the features list, the
+   * price section sits in the industries slot and the rental section in the custom slot.
+   * Two things in the draft are deliberately NOT reproduced:
+   *   • The "Indicative Pricing" table and the ₹ figures in the first FAQ. The draft itself
+   *     labelled them "reference prices and not confirmed current Hoskote quotations", and
+   *     this file's header rule is NO ₹ figures on city pages. The cost-factor list and the
+   *     "GST, transport, unloading and optional fittings are additional" note are kept, and
+   *     the price question routes to a quotation.
+   *   • The inline "Get a Quote on WhatsApp | Call Our Sales Team" button row under the
+   *     intro — the template has no slot for it, so it is folded into the last intro
+   *     paragraph and the CTA text (the Layout already carries the floating WhatsApp button).
+   * Hoskote appears here only as a place we DELIVER TO: the former Hoskote works was retired
+   * from public display in Aug 2026 (see the @deprecated note in src/lib/company.ts).
+   *
+   * Images: five owner-dropped webp files (1216×832, "public/images/City page hoskote/"),
+   * copied byte-for-byte to clean slug names. Alt text and the caption describe the ACTUAL
+   * photos — a charcoal-grey corrugated-steel cabin with a white lower band and a pitched roof.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-hoskote",
+    city: "Hoskote",
+    listTitle: "Container Office in Hoskote",
+    metaTitle: "Container Office in Hoskote – Portable Site Office Manufacturer",
+    metaDescription:
+      "Container office in Hoskote — insulated, wired, customizable portable site offices in 10 to 40 ft sizes for construction sites, factories and warehouses. Buy or rent.",
+    keywords:
+      "Container Office in Hoskote, portable site office Hoskote, site office container Hoskote, container office manufacturer Hoskote, container office on rent Hoskote, portable office cabin Hoskote, prefab office container Hoskote",
+    geo: { region: "IN-KA", placename: "Hoskote, Bengaluru Rural, Karnataka, India", position: "13.0707;77.7980", icbm: "13.0707, 77.7980" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-hoskote/container-office-in-hoskote-exterior.webp",
+      alt: "Container office in Hoskote — charcoal-grey corrugated steel portable site office with a white lower band, pitched roof, central lockable door and hooded sliding windows, standing in a concrete yard outside an industrial shed",
+      width: 1216,
+      height: 832,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-hoskote/container-office-in-hoskote-aerial-view.webp",
+      alt: "Container office in Hoskote — elevated view of the charcoal-grey site office showing its pitched profiled-sheet roof, door canopy and two hooded sliding windows, placed on a concrete yard",
+      width: 1216,
+      height: 832,
+      caption:
+        "Factory-built and delivered as one unit: roof, insulated walls, door and windows arrive fitted, leaving only placement, levelling and connections on site.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-hoskote/container-office-in-hoskote-interior.webp",
+      alt: "Container office in Hoskote — inside the site office: dark corrugated steel wall lining with a white lower band, a desk and office chair, an open shelving unit, two sliding windows and an LED tube light over a smooth grey floor",
+      width: 1216,
+      height: 832,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-hoskote/container-office-in-hoskote-front-view.webp",
+        alt: "Container office in Hoskote — front elevation of the charcoal-grey portable office: central door with a light above it, a hooded sliding window on each side and a white skirt band along the base",
+        width: 1216,
+        height: 832,
+      },
+      {
+        src: "/images/cities/container-office-in-hoskote/container-office-in-hoskote-end-view.webp",
+        alt: "Container office in Hoskote — gable end of the portable office showing the pitched roof profile, corrugated steel cladding and white lower band",
+        width: 1216,
+        height: 832,
+      },
+    ],
+
+    h1: "Container Office in Hoskote – Portable Site Office Manufacturer",
+    tagline: "Buy or rent a container office based on your project requirements.",
+    intro: [
+      "Portable Office Cabin manufactures and supplies insulated, wired and customizable container offices for construction sites, factories, warehouses and commercial developments across Hoskote, Karnataka.",
+      "Our portable container offices are available in standard and custom sizes, including 10 ft, 20 ft, 30 ft and 40 ft configurations. Choose from fully furnished site offices, supervisor cabins, warehouse administration offices and larger project offices.",
+      `Get a quote on WhatsApp or call our sales team on ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}.`,
+    ],
+
+    whyHeading: "Why Choose a Container Office in Hoskote?",
+    whyIntro:
+      "A container office provides a practical alternative to conventional temporary construction. It can be fabricated, transported, installed and relocated according to your project's requirements. Hoskote is an important industrial and logistics corridor in eastern Bengaluru, with construction and warehousing activity around Old Madras Road, Chokkahalli, Sulibele Road and nearby industrial areas. Our portable office cabins are suitable for companies that require temporary or relocatable working spaces without constructing permanent site office buildings. Key advantages:",
+    whyBullets: [
+      {
+        title: "Faster installation",
+        text: "Factory-built units reduce the amount of construction work required on site.",
+      },
+      {
+        title: "Relocatable structure",
+        text: "Move the office to another project location when required, subject to transport and site conditions.",
+      },
+      {
+        title: "Insulated construction",
+        text: "Glass-wool or PUF insulation options help improve indoor thermal comfort.",
+      },
+      {
+        title: "Customizable layout",
+        text: "Add workstations, partition cabins, toilets, pantry counters and meeting areas.",
+      },
+      {
+        title: "Durable materials",
+        text: "Steel structures with protective finishes are designed for outdoor use.",
+      },
+      {
+        title: "Flexible ownership",
+        text: "Purchase and rental options are available depending on cabin type and requirements.",
+      },
+    ],
+
+    solutionsHeading: "Site Office Container Layouts Available in Hoskote",
+    solutionsIntro:
+      "Common layouts supplied around Hoskote, with the recommended cabin size for each.",
+    solutions: [
+      {
+        title: "20 ft Site Engineer Office",
+        text: "A compact office suitable for engineers, site supervisors and project coordinators. Available configurations include a working desk, drawing table, document storage, lighting, power sockets and air-conditioner provision. Recommended sizes: 20 × 8 ft or 20 × 10 ft.",
+      },
+      {
+        title: "30 ft Warehouse Administration Office",
+        text: "Suitable for warehousing, manufacturing, industrial and logistics operations. Layouts can include a supervisor's cabin, administrative workstations, document storage and electrical provisions. Recommended size: 30 × 10 ft.",
+      },
+      {
+        title: "40 ft Marketing and Project Office",
+        text: "Designed for larger project teams, real estate sales operations and commercial developments. Optional features include glass-front elevations, reception areas, internal partitions, conference spaces, attached toilets and air conditioning. Recommended size: 40 × 10 ft.",
+      },
+      {
+        title: "10 ft Security-Cum-Office Cabin",
+        text: "A compact office solution for industrial entry gates, warehouses, residential developments and construction sites. Optional arrangements include a security workstation, sliding windows, electrical points and a lockable entry door. Recommended size: 10 × 8 ft.",
+      },
+      {
+        title: "Office and Storage Combination",
+        text: "A combined office and storage solution for construction contractors and industrial facilities. The interior can be separated into an office area and a secure storage section for tools, documents or materials. Recommended size: 20 × 10 ft or custom.",
+      },
+    ],
+
+    featuresHeading: "Container Office Sizes and Specifications",
+    featuresIntro:
+      "We manufacture portable container offices in several sizes to meet different site requirements. A 10 × 8 ft cabin (80 sq ft) suits a security or gate office; 20 × 8 ft (160 sq ft) a site engineer office; 20 × 10 ft (200 sq ft) a site or project office; 30 × 10 ft (300 sq ft) a warehouse administration office; and 40 × 10 ft (400 sq ft) a large project or marketing office. Custom sizes and internal configurations are available subject to structural design, transportation requirements and site access. Standard construction specifications:",
+    features: [
+      "Main structure — Mild Steel structural frame, IS 2062 steel as applicable",
+      "External wall — MS corrugated sheet or GI sheet",
+      "Exterior thickness — typically 1.2 mm MS CR or 1.6 mm GI, depending on model",
+      "Insulation — 25–50 mm glass wool or 40–50 mm PUF",
+      "Interior wall finish — suitable interior panel finish as selected",
+      "Roofing — weather-resistant MS/GI roof construction",
+      "Flooring — 18 mm cement board with vinyl/SPC floor finish options",
+      "Windows — aluminium or UPVC sliding windows",
+      "Main door — MS or aluminium door with locking arrangement",
+      "Electrical — FR/FRLS wiring, switches, sockets, LED lights and distribution board",
+      "Air conditioning — provision for split AC as required",
+      "Optional fittings — partitions, workstations, pantry, washroom and furniture",
+    ],
+    sizesNote:
+      "The final material thicknesses, insulation, fittings and quantities will be specified in the approved quotation and drawing.",
+
+    industriesHeading: "Container Office Price in Hoskote",
+    industriesIntro:
+      "The price of a portable container office depends on its size, construction materials, insulation, internal fittings and delivery requirements. GST, transport, unloading and optional fittings are additional unless specifically included in the final quotation, so for an accurate quotation, share your preferred size, layout and delivery location. The main factors affecting cost are:",
+    industries: [
+      { title: "Overall size", text: "Overall length, width and height of the cabin." },
+      { title: "Exterior sheet", text: "MS or GI exterior sheet specification." },
+      { title: "Insulation", text: "Insulated or non-insulated construction." },
+      { title: "Flooring", text: "Flooring material and thickness." },
+      { title: "Internal layout", text: "Number of partitions and workstations." },
+      { title: "Services", text: "Air conditioning and electrical fittings." },
+      { title: "Wet areas", text: "Attached toilet or pantry." },
+      { title: "Logistics", text: "Transportation, loading and unloading requirements." },
+    ],
+
+    customHeading: "Container Office on Rent in Hoskote",
+    customIntro:
+      "Portable Office Cabin also offers container office rental solutions, subject to available inventory and rental conditions.",
+    customBullets: [
+      {
+        title: "Suitable for",
+        text: "Temporary construction sites, short-duration industrial projects, site administration and temporary commercial operations.",
+      },
+      {
+        title: "Rental terms",
+        text: "May include a minimum rental period, refundable security deposit, transportation, pickup and applicable taxes.",
+      },
+    ],
+    customOutro: "Customers can enquire about both new and used container office availability.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "We manufacture portable cabins and container-based structures for industrial, construction and commercial applications, supplied across Karnataka and Tamil Nadu. Our range includes site offices, security cabins, toilet cabins, labour accommodation units, marketing offices, container cafés and customized prefabricated structures. Our manufacturing capabilities include:",
+    whyUsBullets: [
+      { title: "Structures", text: "MS fabricated container structures." },
+      { title: "Office cabins", text: "Insulated and non-insulated office cabins." },
+      { title: "Layouts", text: "Customized room layouts and partitions." },
+      { title: "Electrical", text: "Electrical and lighting installations." },
+      { title: "Windows", text: "UPVC and aluminium window options." },
+      { title: "Fit-out", text: "Toilet, pantry and furniture integration." },
+      { title: "Configurations", text: "Single-storey and multi-level prefabricated solutions." },
+      {
+        title: "Warranty",
+        text: "Standard terms include a 5-year structural warranty and 1-year leakage warranty, subject to the product specifications and quotation conditions.",
+      },
+    ],
+
+    areasHeading: "Container Office Delivery Areas Around Hoskote",
+    areasText:
+      "Portable Office Cabin supplies customized container offices to Hoskote and surrounding industrial, residential and commercial locations. Our service coverage includes Hoskote Town, Old Madras Road, Chokkahalli KIADB Industrial Area, Pillagumpe Industrial Area, Sulibele Road, Doddahullur, Jadigenahalli, Nandagudi, Anugondanahalli, Malur, Narsapura Industrial Area, Budigere Cross, Whitefield, Devanahalli and KR Puram. Transport, unloading and installation arrangements are determined according to the delivery location, cabin dimensions and site accessibility.",
+
+    howHeading: "How to Order a Portable Container Office",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Contact our sales team with your required cabin dimensions, location, purpose and preferred internal layout.",
+      },
+      {
+        title: "Receive a technical quotation",
+        text: "We prepare a quotation covering the selected structure, insulation, flooring, electrical fittings, doors, windows and optional accessories.",
+      },
+      {
+        title: "Confirm the design",
+        text: "Review the specifications and layout before fabrication begins. Custom projects can include approval drawings where agreed.",
+      },
+      {
+        title: "Manufacturing and inspection",
+        text: "The structure is fabricated and fitted out according to the approved specifications.",
+      },
+      {
+        title: "Transportation and installation",
+        text: "The completed cabin is transported to the project site. Crane unloading, placement, site preparation and utility connections are handled according to the agreed scope. Standard lead times are typically 10–15 days, depending on specifications, order confirmation, manufacturing capacity and weather conditions. Larger custom projects may require more time.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a container office cost in Hoskote?",
+        answer:
+          "The price varies with size, materials, insulation and fittings. A non-insulated cabin costs less than an insulated cabin of the same size, and custom cabins above 200 sq ft are generally priced per square foot. Confirm current pricing and additional charges through a quotation.",
+      },
+      {
+        question: "How long does delivery take?",
+        answer:
+          "Standard portable office cabins generally require around 10–15 days, depending on the approved design, manufacturing schedule and project requirements. Customized larger cabins may take longer.",
+      },
+      {
+        question: "Can I rent a container office in Hoskote?",
+        answer:
+          "Yes, rental enquiries can be considered depending on available cabins, rental duration, transportation requirements and the applicable security deposit.",
+      },
+      {
+        question: "Do I need a foundation for a portable container office?",
+        answer:
+          "Portable cabins generally require a stable and level support surface. The need for concrete pedestals, a foundation or other supporting works depends on the cabin design, ground condition and loading requirements. Local approval requirements should be checked separately.",
+      },
+      {
+        question: "Will the cabin become hot during summer?",
+        answer:
+          "Insulation helps reduce heat transfer through the walls and roof. PUF and glass-wool insulation, ventilation and appropriately sized air conditioning can improve indoor comfort.",
+      },
+      {
+        question: "Can you install a toilet and pantry?",
+        answer:
+          "Yes. Optional fittings include western toilets, wash basins, exhaust fans, water inlet and outlet provisions, pantry counters and sinks. External water and drainage connections must be coordinated according to the project scope.",
+      },
+      {
+        question: "What container office sizes are available?",
+        answer:
+          "Common configurations include 10 × 8 ft, 20 × 8 ft, 20 × 10 ft, 30 × 10 ft and 40 × 10 ft. Custom dimensions are also available.",
+      },
+      {
+        question: "Can the container office be relocated later?",
+        answer:
+          "Yes. Portable container offices can generally be relocated using suitable lifting and transportation equipment, subject to structural condition, dimensions and site accessibility.",
+      },
+      {
+        question: "Do you deliver outside Hoskote?",
+        answer:
+          "Yes. Portable Office Cabin serves Bengaluru, Hosur and other locations across Karnataka and Tamil Nadu, subject to transport feasibility.",
+      },
+      {
+        question: "How long does a container office last?",
+        answer:
+          "Service life depends on materials, environmental exposure, usage and ongoing maintenance. Protective repainting, periodic inspection and proper roof drainage can help extend its usable life.",
+      },
+      {
+        question: "Can I inspect the cabin before purchasing?",
+        answer:
+          "Manufacturing or completed-unit inspections can be discussed with our team, subject to production status and appointment availability.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Hoskote",
+    ctaText: `Looking for a ready-to-use portable container office for your construction site, warehouse, factory or commercial project? Contact Portable Office Cabin for a customized quotation covering cabin dimensions, materials, internal layout, insulation, electrical specifications and delivery requirements. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * VILLA CONSTRUCTION COMPANY BANGALORE
    *
    * The first SERVICE page in this file — every sibling above sells a container or cabin at a
