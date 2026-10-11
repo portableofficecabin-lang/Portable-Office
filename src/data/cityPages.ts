@@ -436,6 +436,370 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Give your team a professional, secure, and comfortable workspace — without waiting for construction. Contact Portable Office Cabin today for a free consultation and quotation on your container office in Bommasandra. Buy or rent, standard or fully customized — we will build it your way and deliver it to your site.",
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN MYSORE (MYSURU) — the Hootagalli / Koorgalli / Metagalli / Hebbal
+   * industrial estates, the Nanjangud–Thandya–Adakanahalli belt, the Kadakola–Kochanahalli
+   * electronics and logistics cluster, and the Outer Ring Road / Hunsur Road layouts.
+   *
+   * Owner copy of 2026-10-11, mapped onto the fixed template slots: the draft's locations
+   * table → whyBullets; its sizes table → solutionsIntro prose, with the 20 / 30 / 40 ft and
+   * marketing-office subsections as the numbered solutions; its specification table →
+   * features[] as "Component — spec", followed by the five weather subsections (roof,
+   * corrosion, insulation, ventilation, flooring) as trailing items; applications →
+   * industries; the marketing-office section → custom (beside the interior render); the
+   * supply-areas table → areasText prose; the six process steps + manufacturing timeline →
+   * how; the price-factors section (no slot of its own) is folded intact into the cost FAQ.
+   * No ₹ anywhere (file-header rule); no installed-cabin counts, response times, transport
+   * prices or delivery guarantees (the draft's own publishing notes). "Container Office in
+   * Tumkur" from the draft's link list is NOT linked — that page is not live yet.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-mysore",
+    city: "Mysore",
+    listTitle: "Container Office in Mysore",
+    metaTitle: "Container Office in Mysore | Portable Office Cabin",
+    metaDescription:
+      "Container office in Mysore for factories, construction sites and commercial projects. Custom insulated portable cabins from 10 ft to 40 ft. Get a quote.",
+    keywords:
+      "Container Office in Mysore, container office Mysore, container office in Mysuru, portable cabin Mysore, portable office cabin Mysore, site office cabin Mysore, prefabricated office cabin Mysore, container office manufacturer in Mysore, portable marketing office Mysore",
+    geo: { region: "IN-KA", placename: "Mysuru (Mysore), Karnataka, India", position: "12.2958;76.6394", icbm: "12.2958, 76.6394" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-mysore/container-office-in-mysore-exterior.webp",
+      alt: "Container office for Mysore — three-quarter view of a teal-green corrugated-steel portable office with a navy lower band, a cream entrance door, two hooded sliding windows with black grilles and corner lifting lugs, standing on a concrete yard outside an industrial shed",
+      width: 1152,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-mysore/container-office-in-mysore-front-view.webp",
+      alt: "Container office for Mysore — front elevation of the teal-green portable office: a central cream steel door under a small canopy, a hooded sliding window with black grilles on each side and a navy skirt band along the base, on a paved yard",
+      width: 1152,
+      height: 864,
+      caption:
+        "Delivered as one finished unit: the door, windows, window hoods, cladding and lifting points are fitted in the factory, so the site needs only a level base, placement and connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-mysore/container-office-in-mysore-interior.webp",
+      alt: "Inside a container office for Mysore — cream profiled-panel wall lining with a navy skirting, light oak-finish flooring, an L-shaped workstation with two laptops and mesh office chairs, a manager's desk with visitor chairs, a storage cupboard, two sliding windows with black grilles, a steel door, a ceiling fan and LED tube lights",
+      width: 1448,
+      height: 1086,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-mysore/container-office-in-mysore-end-view.webp",
+        alt: "Container office for Mysore — blank end and side of the teal-green corrugated-steel portable office with its navy lower band, pitched roof line and corner lifting lugs, a continuous wall with no openings",
+        width: 1152,
+        height: 864,
+      },
+    ],
+
+    h1: "Container Office in Mysore",
+    tagline: "Portable Container Office Manufacturer & Supplier in Mysore (Mysuru), Karnataka",
+    intro: [
+      "Looking for a reliable container office in Mysore for a construction site, factory, warehouse, industrial project or temporary commercial workspace?",
+      "Portable Office Cabin manufactures and supplies prefabricated container offices, portable site offices, security cabins and customized workspace solutions for industrial, construction and commercial applications.",
+      "Whether your project is in Hootagalli, Hebbal, Koorgalli, Metagalli, Nanjangud, Kadakola, Kochanahalli or along Mysore's Outer Ring Road, we can help you select an office cabin based on your space requirements, workforce and project duration.",
+      "Our portable cabins can be customized with thermal insulation, electrical fittings, workstations, air-conditioning provisions, toilets, pantry facilities and internal partitions.",
+      `Request a quotation: share your preferred cabin dimensions, site location and required specifications, or call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}.`,
+    ],
+
+    whyHeading: "Why Container Offices Are Suitable for Mysore's Growing Industrial Areas",
+    whyIntro:
+      "Mysore, officially Mysuru, is an established industrial, educational and commercial centre in Karnataka. Its manufacturing zones, industrial estates, infrastructure projects and expanding residential developments create demand for flexible on-site office spaces. Container offices can provide workspaces for project engineers, administrative teams, industrial contractors, supervisors, security personnel and marketing staff without requiring a conventional masonry office for every temporary project. Industrial and commercial locations in Mysore, and the cabin application that suits each:",
+    whyBullets: [
+      {
+        title: "Hootagalli, Belavadi and Koorgalli",
+        text: "Manufacturing plants, industrial sheds and expansion projects; suited to contractor offices and inspection cabins.",
+      },
+      {
+        title: "Hebbal, Metagalli and Belagola",
+        text: "Engineering, manufacturing and commercial developments; suited to site offices and security cabins.",
+      },
+      {
+        title: "Nanjangud, Thandya and Adakanahalli",
+        text: "Industrial facilities and factory construction; suited to multi-room project offices.",
+      },
+      {
+        title: "Kalahalli and Immavu",
+        text: "Industrial and manufacturing projects; suited to contractor and administrative offices.",
+      },
+      {
+        title: "Kadakola and Kochanahalli",
+        text: "Logistics, electronics and industrial developments; suited to prefabricated site offices.",
+      },
+      {
+        title: "Outer Ring Road and Hunsur Road",
+        text: "Residential layouts, villas and commercial developments; suited to marketing and sales offices.",
+      },
+      {
+        title: "Bannur Road and T. Narasipura Road",
+        text: "Residential and infrastructure projects; suited to construction site offices.",
+      },
+      {
+        title: "Mysore City and institutional areas",
+        text: "Hospital, educational and infrastructure expansion; suited to temporary administration cabins.",
+      },
+    ],
+    whyOutro:
+      "Industrial projects often require functional office accommodation during construction, commissioning and expansion. Prefabricated container offices offer a relocatable alternative that can be manufactured away from the site and delivered when required.",
+
+    solutionsHeading: "Container Office Sizes Available in Mysore",
+    solutionsIntro:
+      "Portable Office Cabin offers a range of standard and customized container office sizes suitable for different applications. A 10 ft × 8 ft cabin (80 sq ft, 1–2 people) serves as a gate office or security cabin; 20 ft × 8 ft (160 sq ft, 3–4 people) as a site engineer office; 20 ft × 10 ft (200 sq ft, 4–5 people) as a site office with pantry provision; 30 ft × 10 ft (300 sq ft, 6–8 people) as a manager cabin with workstations; 40 ft × 8 ft (320 sq ft, 8–10 people) as a project office or meeting room; and 40 ft × 10 ft (400 sq ft, 10–12 people) as a complete project office. Occupancy depends on furniture, room partitions, equipment and available circulation space, and transportation arrangements depend on the cabin's actual dimensions and route restrictions.",
+    solutions: [
+      {
+        title: "20 ft Container Office in Mysore",
+        text: "A 20 ft container office is suitable for small construction sites, factory supervision offices, security administration and engineering workspaces. Possible features include work desks, storage cabinets, lighting, ventilation and optional air-conditioning.",
+      },
+      {
+        title: "30 ft Container Office in Mysore",
+        text: "A 30 ft office cabin offers additional space for internal partitions, a manager's cabin, employee workstations or a meeting area.",
+      },
+      {
+        title: "40 ft Container Office in Mysore",
+        text: "A 40 ft container office is suitable for larger industrial projects, EPC contractors and construction management teams. Depending on the design, it may include separate workspaces, a meeting area, attached toilets and pantry facilities.",
+      },
+      {
+        title: "Customized Marketing and Sales Offices",
+        text: "For residential layouts, villas, resorts and commercial projects, we offer customized portable marketing offices with options such as a glass-fronted entrance, reception counter, decorative exterior cladding, interior false ceiling, office furniture, meeting and customer seating, air-conditioning provisions and pantry and washroom arrangements. Special layouts, combined cabins and custom dimensions can be manufactured according to approved drawings.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications for Mysore Weather",
+    featuresIntro:
+      "Mysore experiences warm periods, seasonal rainfall and varying levels of humidity. Container offices intended for outdoor installation should be designed with suitable roofing, protective coatings, sealed joints, insulation and ventilation. Structural and material specifications, with the typical specification or available option for each component:",
+    features: [
+      "Main structure — welded mild steel structural frame",
+      "Structural steel grade — IS 2062 or specified equivalent",
+      "External wall cladding — MS CR sheet or GI sheet",
+      "MS sheet thickness — typically 1.2 mm, as per selected model",
+      "GI sheet thickness — typically 1.6 mm, as per selected model",
+      "Insulation — glass wool or PUF panels",
+      "PUF panel thickness — typically 40–50 mm, customizable",
+      "Roof — weather-resistant roofing with suitable drainage",
+      "Floor base — MS structural framework",
+      "Flooring board — 18 mm cement board, or as specified",
+      "Floor finish — vinyl or SPC flooring",
+      "Interior finishing — approved internal wall panels or lining",
+      "Main door — MS steel door or selected door system",
+      "Windows — aluminium or UPVC sliding windows",
+      "Electrical wiring — FR/FRLS copper wiring",
+      "Distribution board — MCB protection and suitable electrical accessories",
+      "Lighting — LED lights",
+      "Ventilation — windows, exhaust fans or ventilation louvers",
+      "Air-conditioning — optional AC provisions according to cabin requirements",
+      "Toilet — optional EWC, wash basin and plumbing connections",
+      "Exterior painting — primer and protective paint finish",
+      "Lifting arrangement — as per cabin structural design",
+      "Roof and rainwater protection — weather-resistant roofing is an important consideration for Mysore installations; roof slopes, rainwater drainage arrangements, roof joints and protective sealing are selected according to the cabin design and exposure conditions",
+      "Corrosion protection — external steel surfaces can be treated with suitable primers and protective coating systems to reduce corrosion caused by weather exposure",
+      "Thermal insulation and indoor comfort — glass wool or PUF insulation may be incorporated into cabin walls and roofing to improve indoor comfort; cooling requirements depend on the cabin dimensions, insulation performance, occupancy, equipment loads and external temperatures",
+      "Windows and ventilation — aluminium or UPVC windows can be supplied with suitable locking arrangements and optional grills or mosquito mesh; additional ventilation can be provided for cabins intended for extended daily use",
+      "Flooring and interior finishing — cabins may include cement-board flooring with vinyl or SPC finishing; special flooring systems, decorative panels and interior partitions can be considered for marketing offices and customized commercial applications",
+    ],
+    sizesNote:
+      "The exact material grades, sheet thicknesses, fixture quantities and finish specifications will be detailed in the final approved quotation.",
+
+    industriesHeading: "Container Office Applications Across Mysore",
+    industriesIntro:
+      "Container offices serve a wide range of industrial, commercial and institutional requirements across Mysore and the surrounding district:",
+    industries: [
+      {
+        title: "Industrial and manufacturing projects",
+        text: "Industrial projects in Hootagalli, Koorgalli, Metagalli, Nanjangud and surrounding manufacturing areas may require temporary administrative facilities. Common applications include EPC contractor offices, project management cabins, quality inspection offices, safety officer cabins, engineering and documentation offices, and security and gate offices.",
+      },
+      {
+        title: "Logistics and warehousing facilities",
+        text: "Warehouses and transport yards along Nanjangud Road, the Outer Ring Road and other commercial corridors may require office cabins for logistics coordination. These can be configured for dispatch teams, security personnel, supervisors and administrative employees.",
+      },
+      {
+        title: "Residential and commercial developments",
+        text: "Builders and property developers may use customized portable office cabins for project management, customer enquiries and property marketing. Glass-fronted sales cabins can be fitted with reception counters, meeting areas, display facilities and air-conditioning.",
+      },
+      {
+        title: "Resort and hospitality projects",
+        text: "Resort developments and hospitality construction projects near Hunsur, Srirangapatna and adjoining locations may require temporary site offices, booking counters and staff facilities.",
+      },
+      {
+        title: "Institutional and healthcare projects",
+        text: "Schools, colleges, hospitals and other institutions may require temporary administration offices and project-support cabins during construction, renovation or expansion.",
+      },
+      {
+        title: "Events and seasonal applications",
+        text: "Portable cabins may also be configured for temporary ticketing facilities, event administration, security posts, media rooms and exhibition offices, subject to applicable approvals and site requirements.",
+      },
+      {
+        title: "Agricultural and processing facilities",
+        text: "Portable office cabins can be used for supervision, documentation, administration and security at agricultural processing facilities in Mysore district.",
+      },
+    ],
+
+    customHeading: "Portable Marketing Office Cabins in Mysore",
+    customIntro:
+      "For real estate developments and commercial projects, appearance and customer accessibility are important considerations. Portable Office Cabin can provide customized marketing offices with modern interior and exterior finishes. Available marketing office features:",
+    customBullets: [
+      { title: "Structure and cladding", text: "Structural steel framework with decorative external cladding." },
+      { title: "Glazing", text: "Glass entrance doors and windows." },
+      { title: "Front of house", text: "Reception and waiting areas." },
+      { title: "Private cabin", text: "Internal manager's cabin." },
+      { title: "Meeting space", text: "Customer discussion and meeting areas." },
+      { title: "Ceiling and lighting", text: "False ceiling and decorative lighting." },
+      { title: "Services", text: "AC provisions and electrical fittings." },
+      { title: "Display and storage", text: "Display areas and storage cabinets." },
+      { title: "Amenities", text: "Optional pantry and washroom facilities." },
+    ],
+    customOutro:
+      "The layout, materials and finishing can be selected according to the project design and quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Mysore Projects?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable cabins and container-based structures for industrial, construction and commercial applications at its factory near Hosur, supplied across Karnataka and Tamil Nadu. For Mysore projects this means:",
+    whyUsBullets: [
+      {
+        title: "Custom manufacturing",
+        text: "Our cabin manufacturing solutions can be tailored to the required dimensions, layout and intended application.",
+      },
+      {
+        title: "Suitable for industrial and commercial use",
+        text: "We supply cabins for construction, manufacturing, security, commercial administration and project support.",
+      },
+      {
+        title: "Technical specifications",
+        text: "Customers can select applicable insulation materials, cladding thicknesses, flooring systems, doors, windows and electrical fittings.",
+      },
+      {
+        title: "Relocatable designs",
+        text: "Portable cabins can be designed for relocation between sites, subject to structural condition, transport arrangements and lifting requirements.",
+      },
+      {
+        title: "Transportation coordination",
+        text: "Transportation, unloading and placement requirements can be considered during quotation preparation. Site access should be checked before confirming delivery arrangements, especially for large cabins or restricted roads.",
+      },
+      {
+        title: "Commercial transparency",
+        text: "The quotation can separately identify cabin manufacturing, optional fittings, freight, unloading, installation and applicable GST.",
+      },
+    ],
+
+    areasHeading: "Container Office Supply Areas in Mysore District",
+    areasText:
+      "Portable Office Cabin caters to container office enquiries across Mysore and surrounding industrial areas, with the typical application for each location: Mysore City (commercial and site offices); Hootagalli (industrial site offices); Hebbal (construction and factory offices); Metagalli (manufacturing facilities); Koorgalli (industrial and engineering offices); Belavadi (site offices); Bogadi (marketing and project offices); Kadakola (warehouse and logistics cabins); Kochanahalli (industrial project offices); Nanjangud (factory and EPC contractor offices); Thandya (industrial construction cabins); Hunsur (resort and construction offices); Periyapatna (commercial and project cabins); K.R. Nagar (site and security cabins); T. Narasipura (construction offices); H.D. Kote (project and administrative offices); Srirangapatna (site and commercial cabins); Mandya (industrial and construction offices); and Chamarajanagar (industrial and project offices). Transportation charges and delivery feasibility depend on the exact destination.",
+
+    howHeading: "Container Office Manufacturing and Delivery Process",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Our process is designed to help customers select a suitable cabin before manufacturing begins. Provide the project location, required cabin dimensions, intended use and preferred interior layout.",
+      },
+      {
+        title: "Review the proposed layout",
+        text: "The cabin configuration is reviewed according to available space, user requirements and selected technical specifications.",
+      },
+      {
+        title: "Receive the quotation",
+        text: "A quotation is prepared showing the agreed manufacturing scope, materials, fittings, prices and applicable commercial terms.",
+      },
+      {
+        title: "Confirm the order",
+        text: "Manufacturing proceeds following approval of the specifications, drawings and order terms.",
+      },
+      {
+        title: "Fabrication and inspection",
+        text: "The structural frame, cladding, interior finishing, electrical fittings and selected accessories are completed according to the approved scope.",
+      },
+      {
+        title: "Dispatch and delivery",
+        text: "Transportation and placement are coordinated according to the agreed responsibilities and the site's access conditions. Standard portable cabins typically require approximately 10–15 days of manufacturing, depending on dimensions, customization and production requirements; specialized or larger cabins may require additional fabrication time, and final delivery dates are confirmed when the order is accepted.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the cost of a container office in Mysore?",
+        answer:
+          "The cost depends on cabin dimensions, structural specifications, insulation, finishing, electrical fittings and transportation. The main pricing factors are cabin size (material and fabrication quantity), structural design (steel requirements), external cladding (material and thickness), insulation (type and thickness), flooring (board and finish), doors and windows (quantity, size and material), electrical fittings (selected lights, fans and power points), AC provision (electrical and cooling requirements), toilet and pantry (additional plumbing, fixtures and partitions), transportation (dimensions, weight and route) and unloading (site access and equipment requirements). GST, freight, unloading, civil work and optional items are identified separately unless expressly included in the approved quotation. For accurate project pricing, request a quotation based on your selected cabin size and specifications.",
+      },
+      {
+        question: "What sizes of portable container offices are available?",
+        answer:
+          "Common dimensions include 10 ft × 8 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, 40 ft × 8 ft and 40 ft × 10 ft. Customized sizes are also available.",
+      },
+      {
+        question: "How long does container office manufacturing take?",
+        answer:
+          "Typical standard-cabin manufacturing requires approximately 10–15 days. Custom cabins may require more time depending on the design.",
+      },
+      {
+        question: "Are container offices suitable for Mysore's monsoon?",
+        answer:
+          "Yes, when manufactured and installed with suitable weather-resistant roofing, sealed joints, protective coatings and drainage provisions.",
+      },
+      {
+        question: "Can a container office be installed during the rainy season?",
+        answer:
+          "Installation may be possible depending on road access, ground stability, weather conditions and lifting-equipment availability. The site must be prepared for safe unloading and placement.",
+      },
+      {
+        question: "Do I need permission to install a container office in Mysore?",
+        answer:
+          "Permission requirements depend on the site, proposed use, installation duration and applicable local development or municipal regulations. The relevant authority should be consulted before installation.",
+      },
+      {
+        question: "Can I customize the cabin for a marketing or sales office?",
+        answer:
+          "Yes. Portable marketing offices can include glass-fronted entrances, reception areas, partitions, decorative finishes, lighting and air-conditioning provisions.",
+      },
+      {
+        question: "Can I include a toilet and pantry inside the container office?",
+        answer:
+          "Yes. Toilet modules, wash basins, plumbing arrangements, pantry counters and other fittings can be included according to the approved layout.",
+      },
+      {
+        question: "Can a container office be used without a permanent power connection?",
+        answer:
+          "A suitable generator or temporary electrical supply may be used when the cabin's electrical installation is designed for it. Generator capacity must be selected according to the connected electrical load.",
+      },
+      {
+        question: "Can the container office be relocated after project completion?",
+        answer:
+          "Yes. Cabins designed for relocation can be transported to another location after suitable inspection and safe lifting arrangements.",
+      },
+      {
+        question: "Do you provide portable office cabins for Nanjangud industrial projects?",
+        answer:
+          "Portable Office Cabin caters to enquiries for Nanjangud and nearby industrial areas, subject to the project specifications, transport requirements and delivery arrangements.",
+      },
+      {
+        question: "Do you offer container offices for rental in Mysore?",
+        answer:
+          "Rental requirements can be discussed with our team. Availability, duration, deposit and transportation terms require confirmation before quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Container Office Quotation in Mysore",
+    ctaText: `Portable Office Cabin – manufacturer and supplier of portable container offices. Whether your requirement is a construction site office, industrial cabin, marketing office, security cabin or customized project workspace, our team can help you review the appropriate cabin configuration. Share your location, cabin dimensions, project requirements and interior specifications to receive a customized quotation: call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Service areas: Mysore, Nanjangud, Hootagalli, Hebbal, Koorgalli, Hunsur, Mandya, Chamarajanagar and surrounding locations, subject to delivery feasibility.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Prefabricated Office Cabins", href: "/products/prefabricated-portable-cabin" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Labour Accommodation Cabins", href: "/products/labour-colony" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+    ],
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, with its Bangalore office at Electronic City Phase 1, and does not operate a factory, office or service partner in Mysuru district; transport, unloading and installation are arranged for each project and delivery dates are confirmed at order acceptance. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Mysore. Industrial areas, roads and institutions are named only to describe delivery locations. Permission and approval notes on this page are general guidance, not legal advice; the relevant local authority should be consulted before installation.",
+  },
   {
     slug: "container-office-in-doddaballapura",
     city: "Doddaballapura",

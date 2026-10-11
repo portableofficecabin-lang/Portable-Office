@@ -283,6 +283,26 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
+  // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
+  // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
+  // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
+  // Bengaluru-belt pages predate this map — add them here when their link graph is reviewed.
+  "Container Office|Karnataka": [
+    { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+    { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+  ],
+  "Site Office Container|Karnataka": [
+    { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+    { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+  ],
+  "Portable Cabin|Karnataka": [
+    { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+    { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+  ],
+  "Porta Cabin|Karnataka": [
+    { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+    { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+  ],
 };
 
 function getPromotionImage(keyword: string, variation: number): string {
