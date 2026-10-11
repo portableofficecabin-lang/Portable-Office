@@ -573,6 +573,12 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Order Your Container Office in Doddaballapura Today",
     ctaText:
       "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
+    /* Reciprocal links for the Tumkur page (2026-10-11): both pages serve the Dabaspet–NH 48
+       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent). */
+    relatedLinks: [
+      { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+    ],
   },
 
   {
@@ -2887,6 +2893,343 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Explore Container Office Models", href: "/products/category/container-offices" },
       { label: "Container Office on Rent", href: "/rental-service" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN TUMKUR (TUMAKURU) — the NH 48 industrial corridor north-west of
+   * Bengaluru (Vasanthanarasapura, Kyathsandra, Antharasanahalli, Hirehalli, the Dabaspet
+   * belt) plus the district's taluk towns (Kunigal, Gubbi, Sira, Tiptur, Madhugiri, Koratagere,
+   * Pavagada, Chikkanayakanahalli, Turuvekere).
+   *
+   * Owner copy of 2026-10-11 mapped onto the fixed template slots: the "suitable for" list and
+   * the "unlike brick-and-mortar" line fold into whyIntro and the five titled benefits are the
+   * why bullets; the eight numbered applications fill the solutions slot; the sizes table with
+   * its 20 ft / 40 ft / custom notes becomes features[] and the occupancy caveat is sizesNote;
+   * the specification table becomes the industries list ("Component — spec") with its five
+   * explanatory subsections folded into industriesIntro; the price section sits in the custom
+   * slot (cost factors as titled bullets, the GST / transport note as customOutro — Hoskote
+   * precedent); the five "why choose us" subsections are the whyUs bullets; the service-area
+   * table becomes areasText prose; the six delivery steps are the how list, with the process
+   * intro folded into step 1 and the lead time into step 6. The draft carried no ₹ figures.
+   * The draft's "Manufacturer & Supplier ... in Tumkur" strapline is reworded to "serving
+   * Tumkur": the factory is near Hosur, Tamil Nadu (COMPANY), and Tumkur is a delivery area.
+   * Its "Website:" line is dropped as redundant on-site; its suggested internal links map to
+   * the existing category hubs, the Karnataka / Bangalore promotion pages and the
+   * Doddaballapura sibling page (same Dabaspet–NH 48 belt), which links back.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Tumkur city page container
+   * office/tumkur/", 1536×1024 and 1248×832), copied byte-for-byte to clean slug names. Alt
+   * text and the caption describe the ACTUAL renders — a cream corrugated-steel cabin with a
+   * navy-blue lower band, corner posts and door — and the disclaimer states they are standard
+   * designs, not Tumkur installations. Opts into the CSS-only motion pass (`motion: true`).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-tumkur",
+    city: "Tumkur",
+    listTitle: "Container Office in Tumkur",
+    metaTitle: "Container Office in Tumkur | Portable Office Cabin",
+    metaDescription:
+      "Container office in Tumkur for construction, factory and industrial sites. Custom portable office cabins from 10 ft to 40 ft. Request a quotation.",
+    keywords:
+      "Container Office in Tumkur, Container Office Tumkur, Portable Office Cabin Tumkur, Portable Site Office Tumkur, Prefabricated Office Cabin Tumkur, Container Office Manufacturer Tumkur, container office Tumakuru",
+    geo: { region: "IN-KA", placename: "Tumakuru (Tumkur), Karnataka, India", position: "13.3392;77.1139", icbm: "13.3392, 77.1139" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-tumkur/container-office-in-tumkur-exterior.webp",
+      alt: "Container office in Tumkur — cream corrugated-steel portable site office with a navy-blue lower band and corner posts, a navy lockable entrance door under a small canopy and two hooded sliding windows, standing in a concrete yard beside an industrial shed",
+      width: 1536,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-tumkur/container-office-in-tumkur-front-view.webp",
+      alt: "Container office in Tumkur — straight-on front elevation of the cream-and-navy portable office: a central navy door with a canopy, a hooded sliding window on each side and a navy skirt band along the base",
+      width: 1248,
+      height: 832,
+      caption:
+        "Delivered as one factory-built unit: frame, insulated walls, roof, door, windows and wiring arrive fitted, so work on site is limited to a level base, placement and connections.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-tumkur/container-office-in-tumkur-interior.webp",
+      alt: "Container office in Tumkur — optionally furnished interior of the portable office: cream panelled walls, a row of workstations with monitors and mesh chairs, a manager's desk, a navy sideboard and armchair, sliding windows, ceiling fans and LED lights over wood-finish vinyl flooring",
+      width: 1536,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-tumkur/container-office-in-tumkur-end-view.webp",
+        alt: "Container office in Tumkur — blank gable end of the cream-and-navy portable office showing the pitched roof profile, navy corner posts with lifting lugs and the hooded sliding windows along the side wall",
+        width: 1248,
+        height: 832,
+      },
+    ],
+
+    h1: "Container Office in Tumkur",
+    tagline: "Manufacturer and supplier of portable container offices, serving Tumkur, Karnataka.",
+    intro: [
+      "Looking for a reliable container office in Tumkur for your construction site, factory, warehouse or industrial project? Portable Office Cabin manufactures and supplies prefabricated container offices, portable site offices and customized office cabins designed for practical workspace requirements.",
+      "Whether your project is located in Vasanthanarasapura Industrial Area, Kyathsandra, Antharasanahalli, Hirehalli, Kunigal, Sira or Tiptur, we can help you select a portable office cabin suited to your site, workforce and operational needs.",
+      "Our cabins can be customized with insulation, electrical fittings, lighting, windows, air-conditioning provisions, office furniture, toilets and pantry facilities.",
+      `Request a quotation: share your site location, required cabin size and interior requirements with our team on ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}.`,
+    ],
+
+    whyHeading: "Why Choose a Container Office for Your Tumkur Project?",
+    whyIntro:
+      "Tumkur, also known as Tumakuru, is an important industrial and construction region in Karnataka. Industrial development, manufacturing facilities, logistics operations and infrastructure projects create demand for temporary and relocatable workspaces. Container offices are suitable for industrial construction projects in Vasanthanarasapura; manufacturing facilities and factory expansions; warehouses and logistics operations along NH 48; residential layout and commercial construction sites; solar energy and infrastructure projects; engineering, supervision and project management offices; and security offices, dispatch cabins and site administration. Unlike conventional brick-and-mortar site offices, prefabricated container cabins can be manufactured off-site, transported to the project location and relocated when required. Benefits of portable container offices:",
+    whyBullets: [
+      {
+        title: "Faster installation",
+        text: "Factory-prefabricated cabins reduce the amount of construction work required at the project site.",
+      },
+      {
+        title: "Relocatable structure",
+        text: "Cabins can be moved between project locations, subject to transport and lifting requirements.",
+      },
+      {
+        title: "Customizable interiors",
+        text: "Workstations, manager cabins, meeting rooms, toilets and pantry areas can be incorporated into the layout.",
+      },
+      {
+        title: "Durable construction",
+        text: "MS structural frames, suitable cladding, weather-resistant roofing and protective coatings support industrial use.",
+      },
+      {
+        title: "Space-efficient design",
+        text: "Multiple cabins can be combined to create larger offices or project facilities.",
+      },
+    ],
+
+    solutionsHeading: "Container Office Applications in Tumkur",
+    solutionsIntro:
+      "Typical uses for portable container offices across Tumkur district, from the industrial areas on the NH 48 corridor to the taluk towns.",
+    solutions: [
+      {
+        title: "Industrial Project Offices in Vasanthanarasapura",
+        text: "Portable office cabins can serve project engineers, contractors, safety officers and administrative personnel working at industrial construction and manufacturing sites.",
+      },
+      {
+        title: "Warehouse and Logistics Offices Along NH 48",
+        text: "Container offices can be used for dispatch coordination, documentation, security, site supervision and logistics administration.",
+      },
+      {
+        title: "Construction Site Offices in Tumkur City",
+        text: "Construction companies can use prefabricated site offices for drawings, documentation, meetings, site supervision and project management.",
+      },
+      {
+        title: "Marketing and Sales Offices in Kunigal and Gubbi",
+        text: "Customized portable marketing offices can include reception counters, glass-fronted entrances, seating arrangements and air-conditioning provisions.",
+      },
+      {
+        title: "Solar Project Offices in Pavagada",
+        text: "Solar and electrical infrastructure projects may require movable offices, maintenance facilities and secure storage cabins.",
+      },
+      {
+        title: "Quarry and Crusher Site Offices",
+        text: "Portable cabins are suitable for supervisor offices, weighing stations, equipment administration and operational staff facilities.",
+      },
+      {
+        title: "Agricultural and Processing Facilities in Tiptur",
+        text: "Container cabins can be configured as administrative offices, cashier cabins, security stations and documentation rooms.",
+      },
+      {
+        title: "Educational and Healthcare Facilities",
+        text: "Temporary administration offices, reception facilities and other project-support spaces can be provided for institutional expansion or renovation projects.",
+      },
+    ],
+
+    featuresHeading: "Container Office Sizes Available in Tumkur",
+    featuresIntro:
+      "Portable Office Cabin offers standard and customized cabin sizes based on space availability, workforce requirements and intended use. Container size (length × width), floor area, suggested occupancy and suitable application:",
+    features: [
+      "10 ft × 8 ft — 80 sq ft — 1–2 people — security cabin or small office",
+      "20 ft × 8 ft — 160 sq ft — 3–4 people — site engineer office",
+      "20 ft × 10 ft — 200 sq ft — 4–5 people — project office",
+      "30 ft × 10 ft — 300 sq ft — 6–8 people — manager cabin and workstations",
+      "40 ft × 8 ft — 320 sq ft — 8–10 people — site office or meeting room",
+      "40 ft × 10 ft — 400 sq ft — 10–12 people — complete project office",
+      "20 ft × 10 ft container office — a practical option for small and medium-sized construction projects; depending on the layout, it can accommodate office desks, storage cabinets, electrical fittings and visitor seating",
+      "40 ft × 10 ft container office — additional floor space for project managers, engineering teams, administrative personnel and meeting areas; possible configurations include a manager's cabin, staff workstations, a meeting space, a pantry or an attached toilet",
+      "Customized container office sizes — customized cabin sizes, partition layouts, joined-cabin configurations and other arrangements according to approved drawings and project requirements",
+    ],
+    sizesNote:
+      "Occupancy figures are approximate and depend on furniture, circulation space and the final layout.",
+
+    industriesHeading: "Container Office Technical Specifications",
+    industriesIntro:
+      "Our container office specifications can be customized to suit Tumkur's industrial, commercial and construction environments. The steel frame provides structural support for the portable office cabin, and the external cladding and protective coatings are selected according to the intended installation environment. PUF panels or glass wool insulation can be provided to reduce heat transfer and improve indoor comfort; the appropriate insulation and AC capacity depend on cabin dimensions, occupancy and site conditions. The electrical installation can include LED lights, ceiling fans, power sockets, MCB distribution boards, earthing arrangements and air-conditioning provisions. Flooring options include cement-board flooring with a vinyl or SPC finish, and heavy-duty flooring arrangements can be considered for special applications. Attached toilet modules can be designed with Western or Indian commodes, wash basins, exhaust fans and plumbing connections, and pantry counters, sinks and storage cabinets can also be included where required. Typical materials and specifications by component:",
+    industries: [
+      { title: "Main structure", text: "Fabricated mild steel structural frame." },
+      { title: "Structural steel", text: "IS 2062 or approved equivalent, as specified." },
+      { title: "External cladding", text: "MS CR sheet or GI sheet, thickness as per the selected model." },
+      { title: "Wall insulation", text: "Glass wool or PUF insulation, typically 25–50 mm." },
+      { title: "PUF panel option", text: "40–50 mm or customized thickness." },
+      { title: "Roofing", text: "Weather-resistant MS/GI roofing with suitable drainage." },
+      { title: "Interior wall finish", text: "Approved interior panels or laminated board." },
+      { title: "Flooring", text: "Cement board with vinyl or SPC flooring." },
+      { title: "Main door", text: "MS steel or approved door assembly with locking." },
+      { title: "Windows", text: "Aluminium or UPVC sliding windows." },
+      { title: "Electrical wiring", text: "FR/FRLS copper wiring." },
+      { title: "Lighting", text: "LED fixtures." },
+      { title: "Ventilation", text: "Windows, exhaust fans or mechanical ventilation." },
+      { title: "AC provision", text: "As per electrical load and cooling requirements." },
+      { title: "Toilet facility", text: "Optional EWC, wash basin and plumbing fittings." },
+      { title: "Painting", text: "Primer and protective finishing system." },
+      { title: "Lifting / transport", text: "Lifting arrangements based on structural design." },
+      {
+        title: "Final specifications",
+        text: "Final thicknesses, material grades, insulation, fixtures and equipment will be specified in the approved quotation and drawings.",
+      },
+    ],
+
+    customHeading: "Container Office Price in Tumkur",
+    customIntro:
+      "The cost of a container office depends on cabin dimensions, structural design, material thickness, insulation, interior finishing and included facilities. Important pricing factors include:",
+    customBullets: [
+      { title: "Dimensions", text: "Cabin length, width and height." },
+      { title: "Structural materials", text: "Type and thickness of structural materials." },
+      { title: "Insulation and cladding", text: "Insulation and wall cladding." },
+      { title: "Flooring and partitions", text: "Flooring and interior partitions." },
+      { title: "Electrical and AC", text: "Electrical fittings and air-conditioning provisions." },
+      { title: "Toilet and pantry", text: "Attached toilets or pantry arrangements." },
+      { title: "Furniture and interiors", text: "Office furniture and customized interiors." },
+      { title: "Delivery", text: "Delivery location, transportation and unloading." },
+    ],
+    customOutro:
+      "For accurate pricing, request a detailed quotation based on your required size and technical specifications. GST, transport, unloading and site-related works will be specified separately unless included in the approved quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable cabins and container-based structures at its factory near Hosur, Tamil Nadu, and supplies them to projects across Karnataka and Tamil Nadu, including Tumkur district.",
+    whyUsBullets: [
+      {
+        title: "Manufacturing-based solutions",
+        text: "Portable Office Cabin supplies prefabricated cabins designed around specific project requirements, including cabin size, structural specifications, electrical fittings and interior configuration.",
+      },
+      {
+        title: "Customized manufacturing",
+        text: "We can manufacture cabins according to approved layouts and drawings, including room partitions, workstation arrangements, plumbing, insulation and external appearance.",
+      },
+      {
+        title: "Transport and installation coordination",
+        text: "Transport, unloading, lifting and placement requirements can be discussed at the quotation stage. Site access, unloading arrangements and installation responsibilities should be finalized before dispatch.",
+      },
+      {
+        title: "Transparent quotation",
+        text: "Our quotations can separately identify cabin manufacturing, optional interior fittings, transportation, unloading and applicable GST.",
+      },
+      {
+        title: "After-sales support",
+        text: "Warranty and service provisions will be confirmed in the quotation and applicable terms and conditions.",
+      },
+    ],
+
+    areasHeading: "Container Office Service Areas in Tumkur District",
+    areasText:
+      "We cater to portable office cabin enquiries and project requirements across Tumkur district, including Tumkur City (site offices and commercial cabins), Vasanthanarasapura (industrial and factory offices), Kyathsandra (logistics and warehouse cabins), Antharasanahalli (industrial site offices), Hirehalli (factory and project offices), Gubbi (construction offices), Kunigal (marketing and project offices), Sira (industrial and infrastructure offices), Tiptur (administrative and processing-unit offices), Madhugiri (construction and site cabins), Koratagere (supervisor and industrial cabins), Pavagada (solar project offices), Chikkanayakanahalli (industrial and administrative cabins), Turuvekere (site and security cabins) and the Dabaspet–NH 48 belt (warehouse and industrial project cabins). Delivery feasibility, freight and unloading requirements depend on the exact project location and site access.",
+
+    howHeading: "Container Office Delivery in Tumkur",
+    howSteps: [
+      {
+        title: "Requirement discussion",
+        text: "Share the required cabin dimensions, site address, headcount and purpose of the cabin. Portable container offices are generally manufactured at the fabrication facility and transported to the customer's site after inspection and dispatch approval.",
+      },
+      {
+        title: "Layout and specifications",
+        text: "Our team reviews the requirement and prepares a proposed cabin configuration, including applicable materials and fittings.",
+      },
+      {
+        title: "Quotation approval",
+        text: "The quotation includes the agreed manufacturing scope, optional items, commercial terms and estimated delivery schedule.",
+      },
+      {
+        title: "Fabrication",
+        text: "Manufacturing proceeds according to the approved drawings, specifications and order confirmation.",
+      },
+      {
+        title: "Quality inspection",
+        text: "The cabin undergoes relevant checks before dispatch, including workmanship, fittings, electrical installations and finishing.",
+      },
+      {
+        title: "Transportation and placement",
+        text: "The cabin is transported to the project location, with unloading and placement arranged as agreed. Typical manufacturing lead time is approximately 10–15 days for standard cabins, subject to size, customization, material availability and order confirmation; larger or more complex cabins may require additional time.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a container office in Tumkur?",
+        answer:
+          "Pricing depends on size, insulation, material specifications, interior fittings and delivery requirements. Contact Portable Office Cabin for a project-specific quotation.",
+      },
+      {
+        question: "What sizes of container offices are available?",
+        answer:
+          "Common sizes include 10 ft × 8 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, 40 ft × 8 ft and 40 ft × 10 ft. Customized sizes can also be considered.",
+      },
+      {
+        question: "How long does manufacturing take?",
+        answer:
+          "Standard cabin manufacturing typically takes approximately 10–15 days. The confirmed delivery schedule depends on order specifications, production capacity and logistics.",
+      },
+      {
+        question: "Are insulated container offices suitable for Tumkur weather?",
+        answer:
+          "Yes. Properly specified insulation, roofing, ventilation and cooling provisions can make container offices suitable for Tumkur's seasonal conditions.",
+      },
+      {
+        question: "Can a toilet be attached to a container office?",
+        answer:
+          "Yes. A toilet can be incorporated into the cabin layout, with the required plumbing, sanitary fixtures, water supply and drainage connections.",
+      },
+      {
+        question: "Can a portable office cabin be relocated?",
+        answer:
+          "Yes. Cabins designed for relocation can be transported to another project site using suitable handling and lifting arrangements.",
+      },
+      {
+        question: "Does a container office need a foundation?",
+        answer:
+          "A suitable stable and level base is required. PCC pads, engineered supports or other approved arrangements may be used depending on the cabin design and ground conditions.",
+      },
+      {
+        question: "Is government approval required for a container office?",
+        answer:
+          "Approval requirements depend on the location, intended use, installation duration and applicable local authority or industrial-estate regulations. The site owner should confirm requirements with the relevant authority.",
+      },
+      {
+        question: "Can the office be customized with workstations and AC?",
+        answer:
+          "Yes. Office desks, partitions, meeting spaces, storage, lighting, electrical sockets and AC provisions can be incorporated according to the approved layout.",
+      },
+      {
+        question: "Do you supply container offices to industrial areas near Tumkur?",
+        answer:
+          "Portable Office Cabin caters to enquiries for industrial projects in Tumkur and surrounding areas. Transport, access and installation conditions are reviewed before order confirmation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Tumkur",
+    ctaText: `Planning an industrial project, construction site, warehouse facility or temporary workspace in Tumkur? Contact Portable Office Cabin for a customized prefabricated container office based on your project size, layout and technical specifications. Share your cabin dimensions, site location, preferred fittings and required delivery schedule to receive a quotation: call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Service region: Tumkur, Bengaluru, Hosur and other locations across Karnataka and Tamil Nadu, subject to delivery feasibility.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+      { label: "Container Office in Doddaballapura", href: "/cities-we-serve/container-office-in-doddaballapura" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tumkur district; delivery, unloading and placement are arranged for each project, and the lead times on this page are indicative, not guaranteed. The images on this page show Portable Office Cabin's standard container office designs, including an optionally furnished interior, and are not photographs of installations in Tumkur. Industrial areas, highways, towns and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial estate, developer or facility operator in the district, and entry to any such premises is subject to that facility's own permissions. Notes on approvals and foundations are general guidance, not legal or engineering advice; the base, anchoring and any approvals for a specific site are confirmed in the approved quotation and drawing.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
