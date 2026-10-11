@@ -72,9 +72,12 @@ const p = "mb-4 leading-relaxed text-muted-foreground";
 const li = "mb-2 leading-relaxed text-muted-foreground";
 
 /* Secondary CTA buttons every page carried before `ctaSecondaryLinks` existed. Pages that
-   leave that field unset render exactly these two, so nothing shifts on the container pages. */
+   leave that field unset render these two.
+   2026-10-11: "Explore Container Offices" now points at the container-office category instead of
+   the whole /products catalogue — the label already promised that destination, and it gives each
+   container city page a contextual link up to the category that owns the head term. */
 const DEFAULT_CTA_SECONDARY_LINKS: CityPageLink[] = [
-  { label: "Explore Container Offices", href: "/products" },
+  { label: "Explore Container Offices", href: "/products/category/container-offices" },
   { label: "Container Office on Rent", href: "/rental-service" },
 ];
 

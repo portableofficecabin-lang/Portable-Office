@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Fragment, Suspense, useCallback, useState, useMemo, useEffect } from "react";
+import { Fragment, Suspense, useCallback, useState, useMemo, useEffect, type ReactNode } from "react";
 import { BadgeCheck, Factory, Filter, Search, Grid, List, Truck, X, ArrowRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero, PageHeroChip } from "@/components/layout/PageHero";
@@ -42,6 +42,12 @@ type ProductsPageProps = {
    * needing a search backend the site does not have.
    */
   initialSearch?: string;
+  /**
+   * Optional per-category landing content rendered by the SERVER route and handed in as markup
+   * (e.g. ContainerOfficesCategoryContent). It renders in the same slot as the client-side
+   * category sections below, but its data never enters this client bundle. Unset = no change.
+   */
+  categoryContent?: ReactNode;
 };
 
 export function ProductsPageContent({
@@ -51,6 +57,7 @@ export function ProductsPageContent({
   currentPage = 1,
   basePath = "/products",
   initialSearch = "",
+  categoryContent,
 }: ProductsPageProps) {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
 
@@ -392,6 +399,8 @@ export function ProductsPageContent({
               {/* Quote-only category — this block carries no price table and no FAQ; see the
                   file header for why. It exists so the category links its service pages. */}
               {activeCategory === "home-construction" && <HomeConstructionCategoryContent />}
+              {/* Server-rendered category content passed in by the route (see ProductsPageProps). */}
+              {categoryContent}
 
               {/* Full Catalogue Index — crawlable list of every product */}
               {products.length > 0 && (
@@ -689,11 +698,14 @@ export function CategoryListingWithParams({
   categories,
   activeCategory,
   basePath,
+  categoryContent,
 }: {
   products: Product[];
   categories: Category[];
   activeCategory: string;
   basePath: string;
+  /** Server-rendered landing content for this category, if it has one. */
+  categoryContent?: ReactNode;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -712,6 +724,7 @@ export function CategoryListingWithParams({
         activeCategory={activeCategory}
         currentPage={currentPage}
         basePath={basePath}
+        categoryContent={categoryContent}
       />
     </>
   );

@@ -31,6 +31,7 @@ import { sellPrice } from "@/lib/pricing/gst";
 export const CATEGORY_H1: Record<string, string> = {
   "portable-cabins": "Portable Cabins — Factory-Built, Delivered Anywhere in India",
   "prefab-building": "Prefab Buildings — Panel-Built, Assembled On Your Site",
+  "container-offices": "Container Office Manufacturer in India",
 };
 
 /** ₹ formatter, Indian grouping. */
