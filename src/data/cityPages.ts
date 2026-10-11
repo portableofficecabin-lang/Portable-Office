@@ -283,6 +283,12 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Get Your Container Office in Jigani Today",
     ctaText:
       "Ready to set up a smart, secure, and professional workspace at your site? Portable Office Cabin is just a call away. Get a free consultation and quotation for your container office in Jigani — buy or rent, standard or fully customized.",
+    /* Reciprocal link for the Sarjapur Road page (2026-10-11): Jigani and the Sarjapur Road corridor share the south Bengaluru / Anekal taluk belt,
+       and city↔city links are kept reciprocal (Tamil Nadu cluster / Tumkur precedent). */
+    relatedLinks: [
+      { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+      { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+    ],
   },
 
   {
@@ -435,6 +441,12 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Book Your Container Office in Bommasandra Today",
     ctaText:
       "Give your team a professional, secure, and comfortable workspace — without waiting for construction. Contact Portable Office Cabin today for a free consultation and quotation on your container office in Bommasandra. Buy or rent, standard or fully customized — we will build it your way and deliver it to your site.",
+    /* Reciprocal link for the Sarjapur Road page (2026-10-11): Sarjapur's service list covers the Bommasandra–Attibele belt,
+       and city↔city links are kept reciprocal (Tamil Nadu cluster / Tumkur precedent). */
+    relatedLinks: [
+      { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+      { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+    ],
   },
   {
     slug: "container-office-in-doddaballapura",
@@ -3230,6 +3242,329 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tumkur district; delivery, unloading and placement are arranged for each project, and the lead times on this page are indicative, not guaranteed. The images on this page show Portable Office Cabin's standard container office designs, including an optionally furnished interior, and are not photographs of installations in Tumkur. Industrial areas, highways, towns and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial estate, developer or facility operator in the district, and entry to any such premises is subject to that facility's own permissions. Notes on approvals and foundations are general guidance, not legal or engineering advice; the base, anchoring and any approvals for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN SARJAPUR — the Sarjapur Road corridor of south-east Bengaluru
+   * (Bellandur → Kasavanahalli → Carmelaram → Dommasandra → Sarjapur Town, with Attibele and
+   * Bommasandra to the south).
+   *
+   * Owner copy of 2026-10-11, mapped onto the fixed template slots. The draft has more H2
+   * sections than the template has slots, so the extras are FOLDED, never dropped:
+   *   • "Why … Suitable" + its corridor-areas table + advantages → why (table → whyOutro prose).
+   *   • "Sizes Available" (table → solutionsIntro prose) + its four sub-sections → solutions;
+   *     the draft's "Other Applications" section rides along as solution 5.
+   *   • "Technical Specifications" table → features[] as "Component — spec"; its note → sizesNote.
+   *   • "Restricted Site Access" (the page's own theme) → industries slot: the site-condition
+   *     table rows plus the three sub-sections as "Condition — consideration" items.
+   *   • "Marketing and Sales Offices" → custom slot (12 features grouped into 6 titled items);
+   *     "How Portable Cabins Support Different Construction Stages" → customOutro.
+   *   • "Why Choose Portable Office Cabin" → whyUs; "Service Areas" table → areasText prose;
+   *     "Ordering Process" + its manufacturing-timeline note → how (folded into step 4).
+   *   • "Price in Sarjapur Road" carries no ₹ figure (file-header rule anyway); its cost-factor
+   *     table and the GST / transport note are folded into the price FAQ.
+   *   • The "Website:" line is dropped (redundant on-site); "Service Region" → ctaText.
+   * The draft's own publishing checks are honoured: no project counts, installation guarantees,
+   * response times or fixed transport prices; its suggested "Container Office in Mysore / Tumkur"
+   * links are NOT added because those pages are not on main yet.
+   * "Manufacturer & Supplier in Sarjapur Road" → "… Serving Sarjapur Road": the factory is near
+   * Hosur (see the load-bearing note on locationStripText in src/lib/site-navigation.ts).
+   *
+   * Images: three owner-dropped webp files ("public/images/Container Office in Sarjapur city
+   * page/sarjapur/", 1536×672 ×2 and 1897×829), copied byte-for-byte to clean slug names. Alt
+   * text and the caption describe the ACTUAL renders — a charcoal-grey corrugated-steel cabin
+   * with a low-pitched roof and grilled windows on a concrete plinth — and the disclaimer says
+   * they are design renders, not Sarjapur installations.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-sarjapur",
+    city: "Sarjapur",
+    listTitle: "Container Office in Sarjapur",
+    metaTitle: "Container Office in Sarjapur | Portable Office Cabin",
+    metaDescription:
+      "Container office in Sarjapur Road for construction sites, sales offices and industrial projects. Custom portable cabins from 10 ft to 40 ft. Get a quote.",
+    keywords:
+      "Container Office in Sarjapur, Container Office Sarjapur Road, Portable Cabin Sarjapur, Portable Office Cabin Sarjapur, Site Office Sarjapur Road, Container Office Manufacturer Sarjapur, Prefabricated Office Cabin Sarjapur, Portable Marketing Office Sarjapur, Construction Site Office Sarjapur",
+    geo: { region: "IN-KA", placename: "Sarjapur, Bengaluru, Karnataka, India", position: "12.8606;77.7865", icbm: "12.8606, 77.7865" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-sarjapur/container-office-in-sarjapur-exterior.webp",
+      alt: "Container office in Sarjapur — charcoal-grey corrugated-steel portable office cabin with a low-pitched roof, a lockable steel door, grilled sliding windows and a wall-mounted light, standing on a concrete plinth in a gravel yard",
+      width: 1536,
+      height: 672,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sarjapur/container-office-in-sarjapur-end-view.webp",
+      alt: "Container office in Sarjapur — gable end of the charcoal-grey portable cabin showing its roof overhang, a single grilled window and the concrete plinth it stands on, with a compound wall behind",
+      width: 1536,
+      height: 672,
+      caption:
+        "The end face is what has to pass the gate: cabin width, roof height and the plinth it will stand on are checked against your entrance and approach road before dispatch.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sarjapur/container-office-in-sarjapur-interior.webp",
+      alt: "Container office in Sarjapur — optionally furnished interior: cream wall panels, wood-grain laminate flooring, two desks with mesh chairs and a laptop, a storage unit, a ceiling fan, LED tube lights and grilled windows",
+      width: 1897,
+      height: 829,
+    },
+
+    h1: "Container Office in Sarjapur",
+    tagline: "Portable Container Office Manufacturer & Supplier Serving Sarjapur Road, Bangalore",
+    intro: [
+      "Looking for a reliable container office in Sarjapur for a construction site, residential development, industrial project, commercial facility or temporary workspace? Portable Office Cabin manufactures and supplies prefabricated office cabins, container site offices, security cabins and customized portable marketing offices for projects along Sarjapur Road and the surrounding areas.",
+      "Whether your project is located in Bellandur, Kasavanahalli, Harlur, Carmelaram, Doddakanalli, Kodathi, Dommasandra, Sompura or Sarjapur Town, we can help you select a portable office cabin based on the available space, site access, workforce requirements and intended application.",
+      "Our container offices can be customized with insulation, electrical fittings, workstations, partitions, air-conditioning provisions, toilets, pantry facilities and modern exterior finishes. For sites with narrow access roads or limited unloading space, we can discuss smaller cabin sizes, sectional arrangements and suitable transportation methods.",
+      `Request a quotation: share your site location, available gate width, cabin dimensions and preferred specifications — call or WhatsApp ${COMPANY.phones[0].display}, or email ${COMPANY.email.sales}.`,
+    ],
+
+    whyHeading: "Why Container Offices Are Suitable for Sarjapur Road Projects",
+    whyIntro:
+      "Sarjapur Road is an important residential, commercial and technology-related development corridor in south-eastern Bangalore. It connects established urban areas such as Bellandur and Kasavanahalli with developing locations including Carmelaram, Dommasandra, Sompura and Sarjapur Town, and construction activity across the region creates demand for temporary and relocatable workspaces. Unlike conventional masonry site offices, prefabricated container cabins are manufactured away from the construction site and transported to the project location after completion. The advantages of portable office cabins:",
+    whyBullets: [
+      { title: "Reduced on-site construction", text: "Factory-manufactured cabins require less site fabrication." },
+      { title: "Relocatable design", text: "Suitable cabins can be shifted as the project progresses." },
+      { title: "Flexible layouts", text: "Internal partitions, office furniture and washrooms can be added." },
+      { title: "Compact configurations", text: "Smaller cabins can be considered where space is restricted." },
+      { title: "Custom exterior finishes", text: "Suitable for customer-facing marketing offices." },
+      { title: "Multiple applications", text: "Can be used for construction management, security, sales and administration." },
+    ],
+    whyOutro:
+      "Construction and commercial areas along Sarjapur Road, and the cabins typically suited to them: Bellandur — commercial developments and residential construction (site offices and project cabins); Kasavanahalli — apartment and redevelopment projects (compact site offices); Kaikondrahalli — residential and commercial construction (engineer and supervisor cabins); Harlur — apartment and villa projects (portable project offices); Carmelaram — residential developments and institutional projects (site and administration cabins); Doddakanalli — commercial and residential construction (portable office cabins); Kodathi — layouts, villas and school projects (site and marketing offices); Dommasandra — townships and commercial development (project and sales offices); Sompura — residential and commercial projects (prefabricated site offices); Muthanallur — construction and industrial projects (contractor offices); Sarjapur Town — layouts and development projects (marketing and site offices); Attibele — industrial and logistics facilities (industrial office cabins).",
+
+    solutionsHeading: "Container Office Sizes Available in Sarjapur",
+    solutionsIntro:
+      "Container office selection along Sarjapur Road should consider not only workforce requirements but also the site entrance, approach road, turning space and available unloading area. Portable Office Cabin offers standard and customized sizes for different project applications: a 10 ft × 8 ft cabin (80 sq ft, 1–2 people) for a security or gate office; 20 ft × 8 ft (160 sq ft, 3–4 people) for a site engineer office; 20 ft × 10 ft (200 sq ft, 4–5 people) for a project office with pantry provision; two 20 ft × 8 ft cabins (320 sq ft combined, 8–10 people) as a modular office arrangement; 30 ft × 10 ft (300 sq ft, 6–8 people) for a manager and marketing office; and 40 ft × 10 ft (400 sq ft, 10–12 people) for a large project or sales office. Occupancy is indicative — actual capacity depends on furniture, partitions and circulation requirements — and transportation and unloading equipment must be selected according to the finished cabin dimensions and weight.",
+    solutions: [
+      {
+        title: "10 ft and 20 ft Portable Office Cabins",
+        text: "Compact container offices can be considered for sites with limited available ground space. These cabins may be used as security offices, engineering cabins, documentation rooms and project supervision offices.",
+      },
+      {
+        title: "30 ft and 40 ft Container Offices",
+        text: "Larger office cabins are suitable for projects that require separate administrative rooms, employee workstations, meeting facilities or customer reception areas. Transportation feasibility should be assessed before finalizing the dimensions.",
+      },
+      {
+        title: "Joined Container Office Configuration",
+        text: "Where a single large cabin cannot be transported through the available access route, multiple smaller cabins may be considered. For example, two 20 ft cabins can form a combined modular office arrangement, subject to approved joining details, structural design, weatherproofing and on-site assembly requirements.",
+      },
+      {
+        title: "G+1 and Multi-Level Portable Cabins",
+        text: "For projects where ground space is limited, specially engineered stacked cabins may be considered. A G+1 arrangement can provide separate floors for site administration, supervision or storage. Structural stability, foundations, staircase access, safe loading and relevant approvals must be addressed in the design.",
+      },
+      {
+        title: "Other Applications of Container Offices in Sarjapur",
+        text: "Construction site offices for residential buildings, apartment complexes, townships and commercial developments; security and gate cabins for gated communities, factories, construction entrances and warehouse facilities; institutional and campus offices for school, college and other institutional construction or renovation projects; warehouse and dispatch offices for logistics operations and industrial facilities near Sarjapur, Attibele and the surrounding areas; temporary commercial offices for commercial projects, showrooms and temporary administrative requirements; and event and exhibition cabins for temporary event management, property exhibitions, administration and visitor-support applications.",
+      },
+    ],
+
+    featuresHeading: "Container Office Technical Specifications",
+    featuresIntro:
+      "Our container office specifications can be customized according to the project requirements, application and approved drawings. Typical materials and available specifications:",
+    features: [
+      "Main structure — welded mild steel structural framework",
+      "Structural steel grade — IS 2062 or specified equivalent",
+      "External cladding — MS CR sheet or GI sheet",
+      "MS cladding thickness — typically 1.2 mm, as per the selected model",
+      "GI cladding thickness — typically 1.6 mm, as per the selected model",
+      "Insulation — glass wool or PUF panels",
+      "PUF panel thickness — typically 40–50 mm",
+      "Roofing — weather-resistant roof with drainage arrangement",
+      "Flooring structure — MS structural floor frame",
+      "Flooring board — typically 18 mm cement board",
+      "Flooring finish — vinyl or SPC flooring",
+      "Interior partitions — selected board or prefabricated partition system",
+      "Main door — MS steel door or selected door assembly",
+      "Windows — aluminium or UPVC windows",
+      "Electrical wiring — FR/FRLS copper wiring",
+      "Electrical protection — distribution board with appropriate MCB protection",
+      "Lighting — LED lighting fixtures",
+      "Ventilation — windows, fans and optional exhaust fans",
+      "Air-conditioning — optional AC provision",
+      "Toilet facilities — optional EWC, wash basin and plumbing",
+      "Painting — suitable primer and protective finishing system",
+      "Lifting arrangements — engineered lifting provisions as required",
+    ],
+    sizesNote:
+      "Final specifications, material thicknesses and included accessories are subject to the approved quotation.",
+
+    industriesHeading: "Container Offices Designed for Restricted Sarjapur Site Access",
+    industriesIntro:
+      "One of the important considerations for container office delivery along Sarjapur Road is physical access to the project site. Some construction plots have narrow internal roads, restricted gates, overhead cables, compound walls or limited areas for crane placement, so the cabin size and unloading method should be reviewed before confirming the order. Site conditions and the recommended consideration for each:",
+    industries: [
+      { title: "Narrow entrance gate", text: "Review compact cabin dimensions and the delivery vehicle width." },
+      { title: "Restricted turning space", text: "Evaluate smaller cabins or modular arrangements." },
+      { title: "Compound wall obstruction", text: "Assess engineered crane lifting feasibility." },
+      { title: "Limited ground space", text: "Consider partition-efficient layouts or engineered multi-level cabins." },
+      { title: "Water accumulation", text: "Provide suitable drainage and approved elevated support arrangements." },
+      { title: "Dusty construction environment", text: "Consider sealed joints, suitable windows and protective finishing." },
+      { title: "Security requirements", text: "Provide lockable doors, window grills and optional CCTV provisions." },
+      { title: "Customer-facing location", text: "Use customized exterior cladding and architectural finishes." },
+      { title: "Repeated relocation", text: "Specify suitable structural lifting and handling arrangements." },
+      { title: "Placement on a podium or slab", text: "Obtain structural engineer approval for the cabin's loads and support points." },
+      {
+        title: "Gate width and delivery vehicle access",
+        text: "The site entrance should accommodate the delivery vehicle and the intended unloading operation. Gate width alone is not sufficient to establish feasibility: the approach road, turning radius, overhead clearance and available crane operating space must also be assessed.",
+      },
+      {
+        title: "Crane and hydra requirements",
+        text: "Depending on cabin dimensions, weight and site access, unloading may require a crane, hydra or other suitable handling arrangement. Any lifting over a compound wall or near overhead electrical lines requires a properly planned and authorized operation.",
+      },
+      {
+        title: "Installation on basement or podium slabs",
+        text: "A portable office may be placed on a suitable engineered slab only after verification of the structure's load-bearing capacity. The slab designer or structural engineer should approve the proposed loading arrangement, including concentrated support loads.",
+      },
+    ],
+
+    customHeading: "Portable Marketing and Sales Offices on Sarjapur Road",
+    customIntro:
+      "Sarjapur Road has numerous residential, villa, plotted development and commercial projects where developers require professional customer-facing facilities. Portable marketing offices offer an alternative to constructing a permanent sales office at the initial stage of development. Available marketing office features:",
+    customBullets: [
+      { title: "Frontage and exterior", text: "Glass-fronted entrance and display areas with modern architectural exterior finishing." },
+      { title: "Reception", text: "Reception counter and waiting area." },
+      { title: "Rooms", text: "Customer discussion rooms, a manager's cabin and interior partitions." },
+      { title: "Ceiling and flooring", text: "False ceiling with decorative lighting; vinyl, SPC or selected premium flooring." },
+      { title: "Services", text: "Air-conditioning provisions with electrical and data points." },
+      { title: "Display and amenities", text: "Brochure and model-display areas, a pantry and an optional attached washroom." },
+    ],
+    customOutro:
+      "Customized portable marketing offices can be used for residential project launches, villa developments, plotted layouts, commercial projects and temporary sales facilities, and depending on the cabin design and condition the same structure may be relocated or reconfigured for another approved use after the project is completed. A relocatable office cabin may also perform different functions as a construction project develops: at project launch and marketing, a customized marketing cabin provides reception, customer seating and a professional presentation area before permanent commercial facilities are available; during excavation and structural construction, compact site offices provide workspace for project engineers, safety teams, supervisors and contractor personnel; during building construction and finishing, larger cabins or combined modular offices accommodate project management, documentation, meetings and coordination between contractors and consultants; and at handover and customer support, depending on design and project needs, the portable office may be reused for customer relations, site administration or temporary facility management.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable office and container cabins at its factory near Hosur and supplies them to projects across Bangalore, Karnataka and Tamil Nadu. What we offer:",
+    whyUsBullets: [
+      { title: "Customized cabin manufacturing", text: "Our cabins can be manufactured according to the required size, structural design, interior layout and application." },
+      { title: "Industrial and commercial solutions", text: "We supply portable cabin solutions for construction, manufacturing, administration, marketing and security applications." },
+      { title: "Technical specification options", text: "Customers can select insulation, cladding materials, flooring, electrical fittings, doors, windows and other accessories as required." },
+      { title: "Access-based design planning", text: "Where site access is restricted, cabin dimensions, transport requirements and unloading arrangements can be reviewed before manufacturing." },
+      { title: "Relocatable cabin options", text: "Cabins intended for relocation can incorporate suitable structural handling arrangements." },
+      { title: "Transparent quotation", text: "Our quotations can separately identify manufacturing, optional fittings, transportation, unloading, installation and applicable GST." },
+    ],
+
+    areasHeading: "Container Office Service Areas Along Sarjapur Road",
+    areasText:
+      "Portable Office Cabin caters to container office enquiries across Sarjapur and nearby Bangalore locations: Sarjapur Town (site and marketing offices), Dommasandra (project offices), Sompura (construction cabins), Muthanallur (industrial and site offices), Kodathi (marketing and project cabins), Carmelaram (institutional and construction offices), Doddakanalli (commercial project offices), Kasavanahalli (compact site offices), Kaikondrahalli (residential construction cabins), Harlur (site and marketing offices), Bellandur (commercial and project offices), Attibele (industrial and security cabins), Chandapura (site offices), Bommasandra (industrial project offices), Varthur (construction and marketing offices), Gunjur (project and sales offices) and HSR Layout (commercial and construction offices). Delivery feasibility and freight depend on the exact project location, access conditions and cabin dimensions.",
+
+    howHeading: "Container Office Ordering Process in Sarjapur",
+    howSteps: [
+      {
+        title: "Share the project requirements",
+        text: "Provide your project location, desired cabin size, required interior fittings and intended application. For restricted sites, share photographs of the access road and entrance gate.",
+      },
+      {
+        title: "Review site access",
+        text: "The proposed cabin dimensions and transportation requirements are assessed against the information available about the project location. Where necessary, additional measurements or a site inspection may be required.",
+      },
+      {
+        title: "Prepare the quotation",
+        text: "A quotation is prepared based on the approved cabin configuration and material specifications. Transportation, unloading and other site-related charges are identified according to the agreed scope.",
+      },
+      {
+        title: "Order confirmation and manufacturing",
+        text: "Fabrication begins after acceptance of the quotation, drawings and applicable commercial terms. Standard portable office cabins typically require approximately 10–15 days for manufacturing, subject to dimensions, customization, material availability and production scheduling; larger customized cabins and modular arrangements may require additional time.",
+      },
+      {
+        title: "Inspection and dispatch",
+        text: "The cabin is inspected according to the approved specifications before dispatch.",
+      },
+      {
+        title: "Delivery and placement",
+        text: "The cabin is delivered and positioned according to the agreed site arrangements and unloading responsibilities.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a container office in Sarjapur?",
+        answer:
+          "Pricing depends on the cabin size (length, width, height and total floor area), the structural steel frame, cladding (MS or GI and the selected thickness), insulation (glass wool, PUF or other specified insulation), flooring (cement board with vinyl, SPC or an upgraded finish), doors and windows, interior partitions, electrical fittings, air-conditioning, plumbing, transport, unloading and any on-site assembly. GST, transportation, unloading, assembly and external civil work are identified according to the agreed quotation scope. Share the cabin dimensions, site location and technical requirements, and contact Portable Office Cabin for a detailed quotation.",
+      },
+      {
+        question: "Can a container office be delivered through a narrow gate?",
+        answer:
+          "It may be possible depending on the gate dimensions, approach road, turning clearance and delivery equipment. Smaller cabin sizes or combined modular configurations may be considered.",
+      },
+      {
+        question: "Can two 20 ft cabins be joined to create a larger office?",
+        answer:
+          "Yes. Two smaller cabins may be connected using an approved modular arrangement, subject to structural requirements, joining details and weatherproofing.",
+      },
+      {
+        question: "Can a container cabin be lifted over a compound wall?",
+        answer:
+          "A crane lift may be possible after assessing cabin weight, lifting points, operating radius, crane setup conditions and overhead obstacles. A qualified lifting team must approve the operation.",
+      },
+      {
+        question: "Can a portable office be installed on a basement or podium slab?",
+        answer:
+          "Only after a structural engineer verifies that the slab can safely accommodate the cabin and its support loads.",
+      },
+      {
+        question: "Can I use a container office as a sales or marketing office?",
+        answer:
+          "Yes. Customized marketing office cabins can include glass entrances, reception areas, meeting rooms, AC provisions and decorative interior finishes.",
+      },
+      {
+        question: "What is the typical manufacturing time?",
+        answer:
+          "Standard portable office cabins generally require approximately 10–15 days, depending on specifications and production availability. Transport and unloading are assessed separately for each site.",
+      },
+      {
+        question: "Can a G+1 portable cabin be installed on a small site?",
+        answer:
+          "A properly engineered multi-level cabin arrangement may be possible, subject to structural design, foundation requirements, access, fire safety and applicable approvals.",
+      },
+      {
+        question: "What foundation is required for a container office?",
+        answer:
+          "The required base depends on the cabin size, ground conditions and structural design. Levelled compacted ground, PCC supports or other engineered foundation arrangements may be specified.",
+      },
+      {
+        question: "Is municipal approval required for a portable office in Sarjapur?",
+        answer:
+          "Approval requirements depend on the location, proposed use and applicable planning regulations. Confirm the requirements with the relevant municipal, development or industrial authority before installation.",
+      },
+      {
+        question: "Can the cabin be relocated after construction?",
+        answer:
+          "Yes. Cabins designed for relocation can be transported to another project location after inspection and appropriate lifting arrangements.",
+      },
+      {
+        question: "Can I rent a portable office cabin in Sarjapur?",
+        answer:
+          "Rental requirements can be discussed with our team. Availability, rental period, security deposit, transportation and return terms must be confirmed.",
+      },
+      {
+        question: "Can a toilet and pantry be included?",
+        answer:
+          "Yes. Toilets, wash basins, pantry counters, internal plumbing and related fittings can be incorporated according to the approved design.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Sarjapur",
+    ctaText: `Planning a construction project, residential development, industrial facility or portable marketing office along Sarjapur Road? Contact Portable Office Cabin to discuss a suitable cabin size, interior layout, site access and required technical specifications. For faster quotation preparation, share the required cabin dimensions, the project location and PIN code, site entrance and approach-road photographs, the intended use and approximate occupancy, required electrical and interior fittings, any toilet, pantry or air-conditioning requirements and your preferred delivery schedule. Service region: Sarjapur Road, Sarjapur Town, Dommasandra, Bellandur, Harlur, Carmelaram, Attibele and the surrounding Bangalore areas. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Labour Colony and Workmen Accommodation", href: "/products/labour-colony" },
+      { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+      { label: "Site Office Container in Bangalore", href: "/promotions/site-office-container-in-bangalore" },
+      { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
+      { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory or service partner in Sarjapur; delivery, unloading and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Sarjapur. Notes on site access, crane lifting, slab loading, foundations and approvals are general guidance: the lifting method, base and any structural checks for a specific site are defined in the approved quotation and drawing, and approval notes are not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

@@ -247,6 +247,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // list Tumkur there, so each key is declared exactly once.
   "Container Office|Bangalore": [
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    { name: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+  ],
+  // The Sarjapur Road page (south-east Bengaluru) is also the only city page on the Bangalore
+  // site-office hub so far; it links back to both hubs.
+  "Site Office Container|Bangalore": [
+    { name: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
