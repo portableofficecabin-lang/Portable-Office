@@ -242,6 +242,12 @@ const categoryRelatedLinks: Record<string, { name: string; href: string }[]> = {
  * local intent. The shared category arrays above are copied, never mutated.
  */
 const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> = {
+  // Bangalore hub — the Tumkur page (NH 48 corridor, ~70 km north-west of the city); the page links
+  // back to this hub. The Karnataka hub keys are defined with the Mysore page (feat/city-mysore) and
+  // list Tumkur there, so each key is declared exactly once.
+  "Container Office|Bangalore": [
+    { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+  ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
