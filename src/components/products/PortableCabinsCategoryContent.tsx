@@ -29,6 +29,7 @@ import { sellPrice } from "@/lib/pricing/gst";
  * lives here for historical reasons, but any category with a rich landing page adds its H1 here.
  */
 export const CATEGORY_H1: Record<string, string> = {
+  "container-offices": "Container Office Manufacturer in India",
   "portable-cabins": "Portable Cabins — Factory-Built, Delivered Anywhere in India",
   "prefab-building": "Prefab Buildings — Panel-Built, Assembled On Your Site",
 };
