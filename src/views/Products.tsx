@@ -16,6 +16,7 @@ import { formatINR, sellPrice } from "@/lib/pricing/gst";
 import { categoryServiceLinks as CATEGORY_SERVICE_LINKS } from "@/lib/site-navigation";
 import { CATEGORY_H1, PortableCabinsCategoryContent } from "@/components/products/PortableCabinsCategoryContent";
 import { PrefabBuildingCategoryContent } from "@/components/products/PrefabBuildingCategoryContent";
+import { ContainerOfficeCategoryContent } from "@/components/products/ContainerOfficeCategoryContent";
 import { HomeConstructionCategoryContent } from "@/components/products/HomeConstructionCategoryContent";
 import { cn } from "@/lib/utils";
 
@@ -386,7 +387,10 @@ export function ProductsPageContent({
               {activeCategory === "portable-cabins" && (
                 <PortableCabinsCategoryContent products={products} />
               )}
-              {activeCategory === "prefab-building" && (
+              {activeCategory === "container-offices" && (
+            <ContainerOfficeCategoryContent />
+          )}
+          {activeCategory === "prefab-building" && (
                 <PrefabBuildingCategoryContent products={products} />
               )}
               {/* Quote-only category — this block carries no price table and no FAQ; see the

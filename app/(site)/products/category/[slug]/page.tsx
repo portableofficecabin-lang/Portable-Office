@@ -34,6 +34,14 @@ export async function generateStaticParams() {
  * (₹2.36 lakh = the labour hutment's GST-inclusive sellPrice) — never a copywriter's number.
  */
 const CATEGORY_META: Record<string, { title: string; description: string; keywords?: string }> = {
+  "container-offices": {
+    title: "Container Office Manufacturer in India — Prices & Sizes",
+    description:
+      "Explore container office cabins in custom sizes with MS steel construction, insulation, electrical fittings and flexible layouts. Request a factory-direct quote.",
+    keywords:
+      "container office, container office manufacturer, container office price, " +
+      "container office cabin, portable container office, container office India",
+  },
   "portable-cabins": {
     title: "Portable Cabins in India — Prices, Sizes & Manufacturer",
     description:
