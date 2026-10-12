@@ -4648,7 +4648,7 @@ export const CITY_PAGES: CityPage[] = [
       width: 1024,
       height: 1024,
       caption:
-        "Seen from above: the corrugated roof sheet sits inside the steel perimeter frame, with a corner fitting at each corner. For Chennai's coastal and monsoon conditions, roof joints, drainage and the protective coating system should be specified before fabrication.",
+        "Roof and perimeter frame from above. On coastal and monsoon sites, joints, drainage and coatings should be specified before fabrication.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-chennai/container-office-in-chennai-interior.webp",
