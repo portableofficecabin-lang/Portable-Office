@@ -119,6 +119,12 @@ export interface CityPage {
    * not about container offices. Unset = the defaults, so every existing page is unchanged.
    */
   ctaSecondaryLinks?: CityPageLink[];
+  /**
+   * Optional click-to-call and WhatsApp buttons in the quotation box, beside the primary CTA.
+   * Numbers come from COMPANY (via primaryPhone / whatsappUrl in src/lib/site-navigation.ts),
+   * never from the entry. Unset = no extra buttons, so every other page's HTML is unchanged.
+   */
+  ctaContactButtons?: boolean;
   /** Optional "Related pages" link block rendered after the CTA, before the disclaimer. */
   relatedLinks?: CityPageLink[];
 
@@ -957,6 +963,31 @@ export const CITY_PAGES: CityPage[] = [
     ],
   },
 
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN TIRUNELVELI — SIPCOT Gangaikondan (solar cell and module plants),
+   * the Nanguneri industrial belt, the Radhapuram / Thisayanvilai / Aralvaimozhi wind belt,
+   * Palayamkottai institutions and the NH 44 corridor, out to Tenkasi and Thoothukudi.
+   *
+   * Owner's page document of 2026-10-12 (the "real" Tirunelveli copy that revisions 1–3 were
+   * written without), mapped onto the fixed template slots: the draft's bold sub-heading is the
+   * tagline; its four location subsections → whyBullets; the wind / heat / dust / monsoon /
+   * corrosion section → solutions, each condition's table row folded into its subsection (the
+   * Athipattu / Thoothukudi / Kalpakkam coastal-section precedent); the sizes table → features[]
+   * strings with the four sizing subsections after them, the seating caveat in featuresIntro and
+   * the bold transport-charges line as sizesNote (Tumkur precedent); the specification table →
+   * industries (title — spec), "final specs" as its last item; the applications table → custom,
+   * its "illustrative, not completed projects" note as customOutro; the why-choose table + five
+   * subsections → whyUsBullets; "Areas We Serve" + the sign-off line → areasText; the CTA's
+   * requirement list, e-mail and slogan → ctaText (the "Website:" line is dropped as redundant
+   * on-site). "Manufacturing operations in Bengaluru and Hosur" is reworded to the factory near
+   * Hosur + office in Bengaluru (manufacturing is Tamil Nadu only). No ₹ (file-header rule) and
+   * no warranty figures (the draft gives none). Internal links and CTA buttons are unchanged.
+   * Owner corrections (PR #84): the sub-heading says "Site Office Solutions for Wind-Exposed
+   * Locations" — wind resistance is not advertised without project-specific engineering — and
+   * the quotation box carries click-to-call + WhatsApp buttons (`ctaContactButtons`).
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
   {
     slug: "container-office-in-tirunelveli",
     city: "Tirunelveli",
@@ -967,309 +998,341 @@ export const CITY_PAGES: CityPage[] = [
     keywords:
       "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
+    motion: true,
 
     heroImage: {
-      src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-exterior.webp",
-      alt: "Container office in Tirunelveli: Portable Office Cabin's standard white corrugated steel site office with a charcoal lower band and three hooded sliding windows, shown in a yard; product image, not a Tirunelveli site",
-      width: 1280,
-      height: 800,
+      src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-three-quarter-view.webp",
+      alt: "Container office in Tirunelveli: an olive-green corrugated steel container office with a timber-finish entry door, a full-height fixed glass panel, a side window and a slatted canopy, on a paved forecourt; product image, not a Tirunelveli site",
+      width: 1264,
+      height: 848,
     },
     featureImage: {
-      src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-aerial-view.webp",
-      alt: "Elevated view of a Portable Office Cabin container office — profiled-sheet roof, charcoal lower band and three hooded sliding windows, placed on a concrete yard",
-      width: 1280,
-      height: 800,
+      src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-roof-aerial-view.webp",
+      alt: "Top-down view of the olive-green container office's corrugated steel roof, set on a paved and planted forecourt between a building and a car park",
+      width: 1024,
+      height: 1024,
       caption:
-        "Fabricated at our factory and delivered as one unit: roof, insulated walls, windows and door arrive fitted, so a site in the district needs only a prepared base, placement, levelling and connections.",
+        "Seen from above: roof, insulated walls, glazing and door are fitted at the factory, so the cabin reaches site as one unit and site work is limited to a prepared base, placement, anchoring where specified and service connections.",
     },
     interiorImage: {
-      src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-interior.webp",
-      alt: "Inside a Portable Office Cabin container office — white corrugated steel wall lining with a dark lower band, workstations with monitors and office chairs, grey filing cabinets, sliding windows and LED panel lights over a smooth light-grey floor",
-      width: 1280,
-      height: 800,
+      src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-office-interior.webp",
+      alt: "Inside the container office: light corrugated wall and ceiling lining with LED panel lights, a desk with two monitors and an office chair, a pantry counter with a sink and stools, a full-height glass panel and a timber-finish door",
+      width: 1200,
+      height: 896,
     },
     gallery: [
       {
-        src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-front-view.webp",
-        alt: "Front elevation of a Portable Office Cabin container office — central glazed door with a step, three hooded sliding windows and a charcoal skirt band along the base",
-        width: 1280,
-        height: 800,
+        src: "/images/cities/container-office-in-tirunelveli/container-office-in-tirunelveli-front-elevation.webp",
+        alt: "Front elevation of the olive-green container office: a two-pane window, a large fixed glass panel and a timber-finish door with a vision strip under a slatted canopy",
+        width: 1200,
+        height: 896,
       },
     ],
 
-    h1: "Container Office in Tirunelveli – Ready-to-Use Portable Site Offices",
-    tagline: `Insulated, wired portable cabins from 10 ft to 40 ft for SIPCOT units, solar and wind project sites, quarries and building projects across Tirunelveli district. Built to order in a typical 10–15 days, with transport to your site assessed separately. Buy outright or rent. திருநெல்வேலியில் கன்டெய்னர் ஆபீஸ் – ${COMPANY.whatsapp.display}`,
+    h1: "Container Office in Tirunelveli",
+    tagline:
+      "Portable Container Offices, Site Office Solutions for Wind-Exposed Locations, Solar Project Cabins and Industrial Office Camps in Tirunelveli",
     intro: [
-      "If you need a container office in Tirunelveli, you are most likely setting up at one of three kinds of site: a plant or contractor yard at SIPCOT Gangaikondan, a solar or wind project somewhere between Radhapuram and Kayathar, or a building project in Palayamkottai or along the bypass. All three have the same problem. The work starts next week, the site is bare, and a brick office would take a month you do not have and would be rubble when you leave.",
-      "A container office from Portable Office Cabin arrives finished. We build it at our own factory near Hosur, Tamil Nadu, fit it with insulated walls and roof, wiring, sliding windows, lights and fans, load it on a trailer and place it on your site with a crane. The standard manufacturing lead time is typically 10–15 days from order confirmation; transit time to Tirunelveli district is assessed separately for each order.",
-      "Nellai is no longer a quiet district town. SIPCOT Gangaikondan now hosts solar cell and module manufacturing, new SIPCOT industrial parks are proposed near Nanguneri, and the district carries one of the largest concentrations of wind capacity in Tamil Nadu. Every one of those projects needs a site office, a security cabin and a lockable store before the first slab is cast. That is the work this page is for.",
+      "Looking for a reliable container office in Tirunelveli for a solar plant, wind farm, industrial project, construction site or temporary office requirement?",
+      "Portable Office Cabin manufactures customised container offices, insulated site cabins, project management offices, security cabins and multi-cabin office setups for projects across Tirunelveli and southern Tamil Nadu.",
+      "Tirunelveli presents a different challenge from many other industrial cities. Project locations are often widely separated, and sites around Radhapuram, Thisayanvilai and the Aralvaimozhi wind corridor can experience strong seasonal winds. Industrial facilities around Gangaikondan and Nanguneri also require practical office accommodation during construction and commissioning.",
+      "A prefabricated container office offers a functional solution. The cabin is manufactured at the factory with the required electrical fittings, insulation and interior layout, then transported to the project site for positioning and installation.",
+      "From our factory near Hosur, Tamil Nadu, and our office in Bengaluru, Portable Office Cabin supplies container offices across Tirunelveli, Tenkasi, Thoothukudi, Kanyakumari and neighbouring districts.",
+      "Our cabins can be customised with thermal insulation, structural anchoring provisions, dust-resistant fittings, electrical installations, air-conditioning provisions, office furniture, washrooms and pantry facilities.",
+      `Request a quotation: send your site location, required size, number of occupants and specifications to ${COMPANY.email.sales}.`,
     ],
 
-    whyHeading: "Why project teams in Tirunelveli choose a container office",
+    whyHeading: "Why Container Offices Make Sense in Tirunelveli",
     whyIntro:
-      "Anyone who has run a site in Tirunelveli in May knows the two enemies: the heat and the wind. A tin shed is unbearable by eleven in the morning, and a flimsy one does not survive a season in the wind belt. A proper container office handles both, and it moves when the project does.",
+      "Tirunelveli has a combination of renewable energy projects, manufacturing facilities, industrial estates, educational campuses, residential construction and infrastructure development. Many projects operate away from established urban centres. Constructing a conventional temporary office at each site can require additional labour, materials and time. A prefabricated container office provides an enclosed workspace that can be delivered to the site and potentially relocated as the project progresses.",
     whyBullets: [
       {
-        title: "Ready in days",
-        text: "The unit arrives fitted out to the agreed specification. Connect power, and the site engineer is at a desk the same day. Factory fabrication keeps the work on your site to a prepared base, placement, levelling and connections, which suits wind, solar, quarry and highway sites away from town.",
+        title: "Industrial Development Around Gangaikondan",
+        text: "Gangaikondan has become an important manufacturing location with solar cell and module production facilities, industrial investments and associated supply-chain activity. The SIPCOT industrial estate and surrounding industrial development generate potential requirements for EPC contractor project offices, client and PMC office cabins, engineering and supervision offices, industrial security and gate cabins, documentation and meeting rooms, and temporary storage and utility cabins. For projects with multiple engineering teams, a combination of office, meeting, storage and sanitation cabins can be arranged as a temporary project-office camp.",
       },
       {
-        title: "Built for 40-degree afternoons",
-        text: "Glass-wool or PUF insulation in the walls and roof, sliding windows with grills and insect mesh on request, an air-conditioner point and a light roof colour where specified help keep the cabin workable through the afternoon. Sealed sliding windows also help limit wind-blown dust at quarry and open-country sites.",
+        title: "Development Within Approximately 20 km of Tirunelveli",
+        text: "The immediate Tirunelveli region includes Gangaikondan, Sankar Nagar, Palayamkottai, Maharaja Nagar, Perumalpuram and commercial locations along NH 44. These areas support industrial activity, warehouses, cement-related operations, educational institutions, healthcare facilities and residential construction. Suitable portable cabin applications include site engineer offices, weighbridge cabins, admissions counters, security rooms and construction management offices.",
       },
       {
-        title: "Anchored for the wind belt",
-        text: "Units going to Radhapuram, Tisaiyanvilai, Kayathar, Valliyoor or any ridge or coastal site are placed on concrete pedestals or a plinth and can be tied down with holding-down arrangements specified for the site. The method is confirmed after reviewing ground conditions and exposure, and no wind-load performance is guaranteed beyond what the approved quotation and drawing state.",
+        title: "Industrial and Renewable Energy Locations Within the Wider 50 km Region",
+        text: "The Nanguneri industrial belt, Ambasamudram, Cheranmahadevi, Valliyoor, Radhapuram and Thisayanvilai have varied industrial and project requirements. Renewable energy contractors may require site offices, O&M cabins, electrical control-room accommodation, secure storage cabins and temporary workspaces near substations. For exposed installations, wind loads, anchoring and roof connections must be considered as part of the cabin's structural design.",
       },
       {
-        title: "Moves with the work",
-        text: "Gangaikondan this year, a substation near Valliyoor the next. The same office goes back on a trailer with everything inside it, subject to its condition and suitable lifting and transport arrangements.",
-      },
-      {
-        title: "A written quotation, with transport shown separately",
-        text: "The quotation lists the shell, fit-out, optional fittings and transport to your site as separate lines, so you can see what each costs before you confirm.",
-      },
-      {
-        title: "Holds its value",
-        text: "A steel office resells or goes to your next project; a brick room costs you a demolition bill.",
-      },
-      {
-        title: "Security posts and project camps",
-        text: "A 10 × 8 ft cabin serves as a gate or weighbridge cabin, and several cabins can be combined as an office, a store, a rest room and a security post to form a compact project camp, subject to the site layout and transport feasibility.",
-      },
-      {
-        title: "Customized layout on a durable steel frame",
-        text: "Workstations, enclosed partitions, drawing tables, document racks, security counters, pantry arrangements and attached toilets can be selected, on Mild Steel structural framing with exterior sheet and protective coatings made for outdoor installation.",
+        title: "Projects Across the Wider Southern Tamil Nadu Region",
+        text: "The broader region includes the Aralvaimozhi and Muppandal wind corridor, Tenkasi industrial locations, Thoothukudi port-related facilities and infrastructure projects such as Kulasekarapattinam's spaceport development. These locations may require relocatable project offices, security cabins, control rooms, storage units and temporary accommodation. For remote locations, transportation planning, lifting access, foundation preparation and power arrangements become particularly important.",
       },
     ],
 
-    solutionsHeading: "Site office containers and the other layouts we place most around Tirunelveli",
+    solutionsHeading: "Container Offices Designed for Tirunelveli's Wind, Heat and Monsoon Conditions",
     solutionsIntro:
-      "Nine layouts cover most sites in the district; project camps usually combine two or three of them placed side by side.",
+      "Tirunelveli requires particular attention to wind exposure, summer heat, dust, monsoon rainfall and, in coastal locations, corrosion. The appropriate specification depends on the installation location rather than simply the cabin dimensions.",
     solutions: [
       {
-        title: "Solar or Wind Project Office – 30 × 10 ft plus a 20 × 10 ft store",
-        text: "The project manager's closed cabin, a drawing table, four desks and a lockable store for meters, cable drums and tools next door, with an attached toilet for sites away from town facilities. Placed on pedestals and tied down where the site needs it. Goes to the sites around Radhapuram, Tisaiyanvilai, Kayathar and Valliyoor.",
+        title: "Structural Anchoring for Wind-Exposed Locations",
+        text: "Strong seasonal winds at Radhapuram, Thisayanvilai, Valliyoor and wind-farm sites call for engineered anchoring points, roof connections, structural bracing and suitable fasteners. Strong winds are an important design consideration for portable offices installed at wind farms, solar parks and open industrial yards. Depending on the project requirements, cabins can be designed with anchoring provisions integrated into the base frame. Potential solutions include suitable steel base connections, engineered foundation anchors and additional fixing arrangements for roof and wall components. For joined or stacked cabins, connection details and the supporting structure require separate structural verification. Wind resistance must be established through project-specific engineering calculations, including applicable IS 875 wind loads, rather than assumed from the presence of anchoring lugs alone.",
       },
       {
-        title: "SIPCOT Contractor Yard Office – 20 × 10 ft",
-        text: "Project office for the civil, electrical and piping contractors building or expanding plants at Gangaikondan, and administrative cabins for the units themselves. Often ordered as a set of two or three with a toilet block.",
+        title: "Thermal Insulation and Summer Heat Protection",
+        text: "For high summer temperatures at Gangaikondan, Nanguneri and along NH 44, the design considerations are a 50 mm PUF insulation option, a suitable roof finish, ventilation and AC provision. High summer temperatures make insulated wall and roof construction useful for occupied container offices. PUF sandwich panels, suitable roof finishes, ventilation and properly sized air-conditioning systems can improve indoor comfort. Air-conditioning capacity should be calculated according to the cabin dimensions, insulation, occupancy, glazing and equipment load.",
       },
       {
-        title: "Construction Site Office – 20 × 8 ft or 20 × 10 ft",
-        text: "For contractors on residential, commercial and infrastructure projects around Tirunelveli, Palayamkottai and the bypass: a working desk, drawing table, electrical sockets, lighting and document storage.",
+        title: "Dust Protection for Industrial and Remote Sites",
+        text: "Dusty environments at Thisayanvilai, quarries and open industrial sites call for sealed panel joints, suitable window gaskets, door closers and threshold seals. Projects near quarries, crushers, unpaved roads and open industrial locations may require additional protection against airborne dust. Available features include sealed wall joints, window gaskets, properly fitted doors and suitable ventilation arrangements.",
       },
       {
-        title: "Gate Security Cabin – 10 × 8 ft",
-        text: "Guard's sliding window facing the gate, a register desk, a fan and a light. For factory gates at Gangaikondan and Sankarnagar, substations, material yards and gated layouts in Palayamkottai.",
+        title: "Rainwater Protection and Elevated Installation",
+        text: "For north-east monsoon rainfall at Ambasamudram, Cheranmahadevi and low-lying sites, the design considerations are weather-resistant roofing, drainage, elevated support arrangements and protected electrical fittings. For low-lying sites, the cabin may require an elevated foundation or steel support arrangement. The finished floor height should be determined by local drainage conditions and potential flood exposure. Proper roof drainage, water-resistant materials and suitably protected electrical equipment should be incorporated into the approved design.",
       },
       {
-        title: "Quarry and Crusher Cabin – 10 × 8 ft or 20 × 8 ft",
-        text: "Weighbridge operator's cabin with a wide window and a sealed door, or a supervisor's office and record room, with PUF insulation to help limit heat and dust. For the blue-metal units around Manur, Cheranmahadevi and Nanguneri, placed on a level pad away from blasting and haul-road traffic as the site layout requires.",
-      },
-      {
-        title: "Layout Sales Office – 20 × 10 ft, glass front",
-        text: "Reception, one closed cabin, a floor-plan wall and air-conditioning provision, placed road-facing at a plotted layout in Maharaja Nagar, KTC Nagar, Reddiarpatti or along the Tirunelveli bypass.",
-      },
-      {
-        title: "Institution Cabin – 20 × 10 ft",
-        text: "Admission counter, exam cell or temporary classroom for the colleges and schools in Palayamkottai, with a ramp and two windows a side.",
-      },
-      {
-        title: "Project Camp Units – 20 × 10 ft modules",
-        text: "For longer-duration projects that need an office, a store, a rest room and a security post together, arranged as a compact camp with internal partitions, attached toilets and pantry counters where required.",
-      },
-      {
-        title: "Office and Storage Combination – 20 × 10 ft",
-        text: "A divided cabin with an office area and a lockable storage section for tools, instruments and documents, for contractors, maintenance teams and project operations that need secure storage beside the desk.",
+        title: "Corrosion Protection Near Thoothukudi",
+        text: "Coastal corrosion exposure at Thoothukudi and coastal project locations calls for a protective primer, a suitable paint system, corrosion-resistant hardware and galvanised components where specified. For sites closer to the coast, protective coatings and corrosion-resistant hardware may be required. Options include zinc-rich protective primers, sealed sheet-metal edges, suitable exterior painting systems, stainless-steel hardware and galvanised structural components. The appropriate specification should be selected based on site exposure and expected service conditions.",
       },
     ],
 
-    featuresHeading: "Container office sizes and specifications",
+    featuresHeading: "Container Office Sizes Available in Tirunelveli",
     featuresIntro:
-      "Five standard footprints cover most sites in Tirunelveli district; custom lengths and double-storey units with an external staircase are available on request, subject to technical feasibility. A 10 × 8 ft cabin (80 sq ft, 1–2 seats) suits a gate security cabin or a weighbridge cabin at a quarry or crusher; 20 × 8 ft (160 sq ft, 2–3 seats) a site engineer's office at a building project or substation; 20 × 10 ft (200 sq ft, 3–4 seats) a contractor's project office at SIPCOT or a sales office for a layout; 30 × 10 ft (300 sq ft, 4–6 seats) a project office with one closed cabin at a solar or wind site; and 40 × 10 ft (400 sq ft, 6–8 seats) a site headquarters with two cabins and an attached toilet. Standard build on every unit:",
+      "Portable Office Cabin manufactures standard and customised container office sizes depending on application, workforce requirements, project duration and installation conditions. Seating capacity depends on the final workstation layout, partitions, circulation areas and additional facilities. Size, floor area, approximate seating and suitable application:",
     features: [
-      "Main structural frame — fabricated Mild Steel structural members with suitable reinforcement according to the approved cabin design",
-      "External wall construction — MS corrugated sheet or GI sheet, depending on the selected product specification; common exterior options include 1.2 mm MS CR sheet and 1.6 mm GI sheet, with protective primer and paint in the colour specified; a light roof colour can be specified for the heat",
-      "Wall and roof insulation — glass-wool insulation in 25–50 mm options or PUF insulation in 40–50 mm options, as specified in the quotation",
-      "Roofing system — weather-resistant steel roofing with appropriate sealing and rainwater drainage arrangements",
-      "Flooring — 18 mm cement board with vinyl or SPC floor finish options, supported on the fabricated steel base structure",
-      "Doors and windows — aluminium or UPVC sliding windows with locking arrangements, grills and insect mesh on request, and suitable MS or aluminium doors",
-      "Electrical installation — FR/FRLS wiring, LED lighting, switches, sockets, fans, distribution board and optional air-conditioning provisions; runs from site supply or a generator sized for the fit-out",
-      "Base and anchoring — fabricated steel base for placement on a prepared level pad or concrete pedestals, with lifting points and holding-down arrangements for wind-belt sites specified in the quotation",
-      "Add-ons — western toilet, pantry counter with sink, glass front, partition cabins, split AC, workstation furniture, exterior signage, a lockable store section and other required fittings",
+      "10 ft × 8 ft — 80 sq ft — 1–2 people — security office, plant gate cabin, weighbridge office",
+      "20 ft × 8 ft — 160 sq ft — 3–4 people — site engineer office, wind or solar project cabin",
+      "20 ft × 10 ft — 200 sq ft — 4–5 people — supervisor or project office with optional pantry",
+      "30 ft × 10 ft — 300 sq ft — 6–8 people — sales office, reception or engineering workspace",
+      "40 ft × 8 ft — 320 sq ft — 8–10 people — open-plan EPC and industrial project office",
+      "40 ft × 10 ft — 400 sq ft — 10–12 people — project management office with optional washroom and pantry",
+      "10 ft and 20 ft container office cabins — compact cabins are suitable for smaller site teams, security personnel, construction supervisors and engineering staff. These units can be configured with windows, lighting, fans, electrical sockets, insulation, furniture and air-conditioning provisions.",
+      "30 ft and 40 ft project office cabins — larger container offices are suitable for EPC contractors, project management consultants, industrial construction teams and client representatives. Available layout options include separate manager cabins, workstations, meeting areas, document storage, washrooms and pantry spaces.",
+      "Multi-cabin project office camps — large renewable energy and industrial projects may require multiple cabins arranged as one integrated project-office facility. A typical camp can include four to eight cabins for administrative offices, meeting rooms, control-room accommodation, storage, toilets and pantry facilities. The cabins may be arranged around a central passage or covered verandah, depending on available space. Shared electrical distribution, water connections, pathways and structural anchoring should be designed according to the approved site layout.",
+      "Transportation planning for Tirunelveli — long-distance transportation is an important part of container office procurement for southern Tamil Nadu. Combining compatible cabin sizes into an appropriate transport load may help reduce logistics costs; for example, a project requiring a 20 ft office and a separate 20 ft storage or toilet cabin can ask for a combined transportation quotation. The number of cabins that can travel on one vehicle depends on their actual dimensions, weight, trailer configuration, route restrictions and applicable transport permissions.",
     ],
-    sizesNote:
-      "Final material thicknesses, insulation, fittings and quantities are specified in the approved quotation and drawing.",
+    sizesNote: "Our quotation can identify cabin manufacturing, transportation and unloading charges separately.",
 
-    industriesHeading: "Container office price in Tirunelveli: what moves the number",
+    industriesHeading: "Standard Container Office Manufacturing Specifications",
     industriesIntro:
-      "Six things decide the final figure: size; bare shell versus furnished; glass-wool versus PUF insulation; a toilet or pantry to plumb; glass front versus standard windows; and transport, which is quoted as a separate line for your site in Tirunelveli district. GST, unloading and optional fittings are additional unless specifically included in the final quotation. Send us your site location and the size you need and we will send a written quotation, not a range. In detail, the quotation reflects:",
+      "Portable Office Cabin offers customised manufacturing specifications for industrial and construction applications.",
     industries: [
-      { title: "Overall size", text: "Overall cabin size and height." },
-      { title: "Shell or furnished", text: "Bare shell, or fitted with partitions, workstations and furniture." },
-      { title: "Structure and walls", text: "Structural steel sections and external wall material." },
-      { title: "Insulation", text: "Glass-wool or PUF, or non-insulated construction." },
-      { title: "Interior", text: "Interior partitions and finishing materials." },
-      { title: "Flooring", text: "Flooring type and thickness." },
-      { title: "Services", text: "Electrical fittings and air-conditioning provisions." },
-      { title: "Wet areas", text: "Attached toilet or pantry arrangements." },
-      { title: "Anchoring", text: "Base and holding-down arrangements for exposed wind-corridor or quarry sites." },
-      { title: "Logistics", text: "Transport distance from our factory to the site, permits where required and crane access, shown as a separate line." },
-      { title: "Site works", text: "Site preparation and unloading arrangements." },
+      { title: "Main structure", text: "Mild-steel fabricated frame." },
+      { title: "External walls", text: "MS or GI sheet cladding." },
+      { title: "Wall insulation", text: "Glass wool or PUF insulation." },
+      { title: "PUF panel option", text: "40–50 mm, with alternatives subject to requirement." },
+      { title: "Roofing", text: "Weather-resistant steel roofing." },
+      { title: "Internal finish", text: "Approved board or panel finish." },
+      { title: "Flooring", text: "Cement board with vinyl or SPC flooring." },
+      { title: "Entry door", text: "Steel or other specified door arrangement." },
+      { title: "Windows", text: "Aluminium or UPVC windows." },
+      { title: "Electrical wiring", text: "Concealed wiring with suitable protective devices." },
+      { title: "Lighting", text: "LED ceiling lights." },
+      { title: "Ventilation", text: "Fans, windows and optional exhaust arrangements." },
+      { title: "Air-conditioning", text: "Provision for split AC units." },
+      { title: "Office furniture", text: "Workstations, tables, chairs and storage." },
+      { title: "Additional facilities", text: "Toilet, wash basin, pantry and partitions." },
+      { title: "Structural accessories", text: "Lifting and anchoring provisions as designed." },
+      {
+        title: "Final specification",
+        text: "Final materials, thicknesses, fixtures and finishes are determined by the approved quotation and technical specifications.",
+      },
     ],
 
-    customHeading: "Buy or Rent a Container Office in Tirunelveli?",
-    customIntro:
-      "Buy if the office will be in use for more than about a year or will move between projects; for solar and wind teams working the district for several years, buying is usually the better value. Rent for a single build-out of a few months. Rental in the district is subject to cabin availability, the rental period and transport feasibility to the site.",
+    customHeading: "Container Office Applications Across Tirunelveli and Nearby Districts",
+    customIntro: "Different project locations require different cabin designs, internal layouts and accessories.",
     customBullets: [
       {
-        title: "Purchase enquiries",
-        text: "Share the cabin size, layout, insulation, fittings and delivery location; the quotation lists the cabin, optional fittings and transport to the site as separate lines.",
+        title: "Gangaikondan solar manufacturing projects",
+        text: "Typical requirement: EPC office camps, client offices, meeting rooms. Recommended features: insulation, workstations, meeting areas.",
       },
       {
-        title: "Rental conditions",
-        text: "Depend on the container model, required rental period, refundable security deposit, transport to and from Tirunelveli district and applicable taxes; rental charges and terms are confirmed through a separate quotation.",
+        title: "Radhapuram, Thisayanvilai and Valliyoor",
+        text: "Typical requirement: wind and solar O&M offices, control cabins, secure stores. Recommended features: engineered wind anchoring, dust protection.",
       },
       {
-        title: "Suitable rentals",
-        text: "Construction sites, temporary project offices, wind and solar project phases, quarry operations, industrial administration and short-duration commercial activities.",
+        title: "Nanguneri industrial belt",
+        text: "Typical requirement: temporary factory offices, project administration, security. Recommended features: DG power provisions, storage, secure doors.",
+      },
+      {
+        title: "Sankar Nagar and industrial facilities",
+        text: "Typical requirement: weighbridge offices, gate cabins, laboratory rooms. Recommended features: durable flooring and suitable openings.",
+      },
+      {
+        title: "Quarries and crushers near Tenkasi",
+        text: "Typical requirement: supervisor cabins, weighbridge offices. Recommended features: dust-resistant fittings, suitable structural design.",
+      },
+      {
+        title: "Palayamkottai colleges and hospitals",
+        text: "Typical requirement: temporary admissions, billing and administrative rooms. Recommended features: clean interior finish, ventilation, optional AC.",
+      },
+      {
+        title: "Maharaja Nagar and Perumalpuram",
+        text: "Typical requirement: construction site offices, property sales cabins. Recommended features: workstations, reception and glazed entrances.",
+      },
+      {
+        title: "NH 44 and infrastructure works",
+        text: "Typical requirement: engineering offices, documentation cabins, site facilities. Recommended features: relocatable construction and suitable lifting arrangements.",
+      },
+      {
+        title: "Thoothukudi coastal industrial projects",
+        text: "Typical requirement: project offices, logistics documentation cabins. Recommended features: site-specific corrosion protection.",
       },
     ],
-    customOutro: "Contact our team to confirm availability and commercial terms.",
+    customOutro:
+      "These are illustrative applications for the named areas, not representations of completed projects at every location.",
 
-    whyUsHeading: "Why order from Portable Office Cabin and not a marketplace listing",
+    whyUsHeading: "Why Choose Portable Office Cabin for Tirunelveli Projects?",
     whyUsIntro:
-      "We manufacture every unit ourselves: no trader in between adding margin and losing the details of your layout. Our range covers portable office cabins, container site offices, security cabins, portable toilet cabins, storage containers, labour accommodation and bunk-house cabins, marketing and sales offices and prefabricated PUF panel cabins, supplied across Tamil Nadu and Karnataka. What you get:",
+      "Portable Office Cabin manufactures customised portable cabins for industrial, construction and commercial applications. When sourcing a cabin from outside Tirunelveli, customers must consider not only the cabin price but also manufacturing quality, transportation, installation and support. Each customer concern, and our approach to it:",
     whyUsBullets: [
-      { title: "Own manufacturing", text: "Steel fabrication, insulation, interior finishing, electrical installation, partitions and furniture integration under one roof." },
-      { title: "GST-registered manufacturer", text: "A GST invoice with every order; our registration details are printed in the footer of every page." },
       {
-        title: "Warranty",
-        text: "Standard structural warranty of 5 years and leakage warranty of 1 year, subject to the applicable quotation terms and product specifications.",
+        title: "Long-distance transportation",
+        text: "Plan cabin dimensions, quantity, load configuration and delivery location before dispatch.",
       },
       {
-        title: "After-sales support",
-        text: "Warranty and service visits are arranged by our own team for each project. We do not operate a service partner in Tirunelveli, so response times are agreed per project rather than promised.",
+        title: "High logistics expenses",
+        text: "Assess compatible cabin combinations and quote transportation based on actual vehicle requirements.",
       },
-      { title: "Built to drawing", text: "Approval drawings for custom units where agreed, so the cabin that arrives matches the layout you signed off." },
-      { title: "Long service life", text: "With routine inspection, rust protection and a repaint every few years, the steel structure gives a long service life, which matters at coastal and dusty sites." },
+      {
+        title: "Strong wind exposure",
+        text: "Offer anchoring and structural design provisions according to project requirements.",
+      },
+      {
+        title: "Remote locations without permanent power",
+        text: "Provide suitable electrical and generator connection options where specified.",
+      },
+      {
+        title: "Industrial dust and high temperatures",
+        text: "Discuss appropriate insulation, sealing, ventilation and finishes.",
+      },
+      {
+        title: "Maintenance and spare parts",
+        text: "Clarify service responsibilities, warranty and replacement-part arrangements before order confirmation.",
+      },
+      {
+        title: "Multiple office cabins",
+        text: "Prepare coordinated drawings and dispatch plans for larger projects.",
+      },
+      {
+        title: "Commercial clarity",
+        text: "Identify manufacturing, transportation, unloading and installation charges in the quotation.",
+      },
+      {
+        title: "Customised Manufacturing",
+        text: "Our product range includes insulated and non-insulated site offices, project management cabins, security cabins, portable toilets, labour accommodation and multi-cabin office complexes.",
+      },
+      {
+        title: "Factory Near Hosur, Office in Bengaluru",
+        text: "Customers can order custom-designed cabins from our factory near Hosur, Tamil Nadu, which serves Karnataka and Tamil Nadu, with our office in Bengaluru. Manufacturing and dispatch arrangements are finalised according to cabin specifications, available capacity and project location.",
+      },
+      {
+        title: "Wind and Weather Considerations",
+        text: "Tirunelveli installations can be specified for the relevant project environment, including wind-exposed areas, dusty industrial sites and coastal conditions.",
+      },
+      {
+        title: "Project-Specific Layout Planning",
+        text: "Cabins can be manufactured with different room divisions, workstations, openings, plumbing arrangements and electrical installations according to approved drawings.",
+      },
+      {
+        title: "Purchase and Rental Options",
+        text: "Cabin purchase and rental requirements can be discussed based on location, duration, availability and project specifications.",
+      },
     ],
 
-    areasHeading: "Where we deliver across Tirunelveli district",
+    areasHeading: "Areas We Serve",
     areasText:
-      "Tirunelveli Town, Palayamkottai, Melapalayam, Pettai, Thachanallur, Vannarpettai and the Junction area; Gangaikondan SIPCOT and Sankarnagar on the Madurai side; Nanguneri, Valliyoor, Radhapuram and Tisaiyanvilai on the Kanyakumari side; Manur, Cheranmahadevi, Ambasamudram and Kallidaikurichi towards the hills; and on to Thoothukudi, Tenkasi and Nagercoil. Transport to any site in the district is quoted upfront as a separate line in the quotation. Cabins travel by road from our factory near Hosur, roughly 550–600 km along NH 44 through Salem and Madurai, so transit time is assessed separately from the 10–15 day manufacturing lead time and depends on the route, cabin dimensions, transport permits where required and the crane arrangement at the site. Wind-farm, solar and quarry sites often involve unpaved approach tracks and open ground, so before dispatch our team reviews the approach road, gate width, overhead lines, turning space, crane access and the base, levelling and anchoring arrangements. Where a single large cabin cannot be transported or placed safely, a modular or sectional arrangement may be considered; final lifting and placement methods are determined after a site-specific feasibility assessment.",
+      "Tirunelveli, Palayamkottai, Gangaikondan, Sankar Nagar, Manur, Nanguneri, Moolaikaraipatti, Valliyoor, Radhapuram, Thisayanvilai, Ambasamudram, Cheranmahadevi, Kalakkad, Tenkasi, Sankarankovil, Thoothukudi, Kovilpatti, Nagercoil and the Aralvaimozhi wind corridor. Portable Office Cabin is a container office manufacturer supplying Tirunelveli and southern Tamil Nadu.",
 
-    howHeading: "How ordering works",
+    howHeading: "How to Order a Container Office in Tirunelveli",
     howSteps: [
       {
-        title: "Call or WhatsApp",
-        text: "with the size you have in mind and what the site is. We will ask how many people will sit in it, whether you want AC, a toilet or a store, and whether the site is on a ridge or near the coast.",
+        title: "Share the Project Location",
+        text: "Provide the site location, access details, required dimensions and number of occupants. A site photograph or map pin can help evaluate delivery and installation requirements.",
       },
       {
-        title: "Quotation and approved layout",
-        text: "A written quotation, with a layout drawing for custom units and the transport to your site shown as a separate line. Confirm the dimensions, entry positions, window locations and internal arrangements before fabrication begins.",
+        title: "Finalise the Cabin Layout and Specification",
+        text: "Choose the cabin size, insulation, internal room arrangement, electrical fittings, toilet, pantry, furniture and air-conditioning requirements. For open wind-farm and solar-park sites, structural anchoring and environmental exposure should be reviewed.",
       },
       {
-        title: "Fabrication and inspection",
-        text: "Fabrication starts on order confirmation; the cabin and its fittings are built and inspected to the approved specification. The standard manufacturing lead time is typically 10–15 days, depending on the design, material availability and production schedule; custom and furnished units may take longer.",
+        title: "Plan Transportation and Installation",
+        text: "The transportation plan depends on cabin dimensions, quantity, vehicle access and lifting requirements. Crane or hydra requirements, foundations and unloading responsibilities should be agreed upon before dispatch.",
       },
       {
-        title: "Get the ground ready",
-        text: "Concrete pedestals or a level, compacted patch; we send the positions and sizes with the quotation. On wind-belt sites the pedestals carry the holding-down arrangement agreed for the site, prepared before the cabin arrives unless site works are included in our scope.",
+        title: "Receive and Approve the Quotation",
+        text: "A quotation can include cabin manufacturing specifications, transportation charges, applicable GST, delivery conditions, payment terms and agreed installation scope.",
       },
       {
-        title: "Delivery and placement",
-        text: "Transit time to Tirunelveli district is assessed separately once fabrication is complete. The unit travels by trailer and is lifted with a crane according to the agreed scope; our team levels it, anchors it where specified, connects the distribution board to your supply and hands over.",
+        title: "Fabrication and Pre-Dispatch Inspection",
+        text: "Manufacturing proceeds according to the accepted order and approved drawing. Pre-dispatch inspection photos or videos may be arranged as agreed.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "The cabin is transported to the destination and positioned according to the confirmed unloading and installation scope. Anchoring, service connections and commissioning must be completed by the responsible parties before use.",
       },
     ],
 
     faqs: [
       {
-        question: "How much does a container office cost in Tirunelveli?",
+        question: "What is the price of a container office in Tirunelveli?",
         answer:
-          "It depends on size and finish: a bare 10 × 8 ft cabin costs the least, a furnished 20 × 10 ft office more, and a 40 × 10 ft office with a toilet the most. Transport to your site in Tirunelveli district is quoted as a separate line. Send the site location and the size you need and we will send a written quotation.",
+          "The price depends on cabin size, material thickness, insulation, interior finish, electrical fittings, plumbing, air-conditioning provisions and transportation. For an accurate delivered price, share your required size, site location and specifications. Transportation and unloading can be quoted separately.",
       },
       {
-        question: "How long does delivery to Tirunelveli take?",
+        question: "What container office sizes are available?",
         answer:
-          "Standard manufacturing typically takes 10–15 days from order confirmation; custom layouts with a toilet or a glass front may take longer. Transit from the factory near Hosur is assessed separately and depends on the route, cabin size and permits where required.",
+          "Common sizes include 10 ft × 8 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, 40 ft × 8 ft and 40 ft × 10 ft. Custom dimensions can also be considered based on manufacturing and transportation feasibility.",
       },
       {
-        question: "Do you deliver to SIPCOT Gangaikondan, Nanguneri and the wind-farm sites?",
+        question: "How long does manufacturing and delivery take?",
         answer:
-          "Yes. Gangaikondan, Sankarnagar, Nanguneri, Valliyoor, Radhapuram, Tisaiyanvilai and Kayathar are all within our delivery area, as are Thoothukudi, Tenkasi and Nagercoil, subject to transport and installation feasibility. Send the site pin and we will quote the transport as a separate line.",
+          "Manufacturing typically depends on cabin size, design, quantity and material availability. Standard cabins may require approximately 10–15 days, while larger or customised projects can require additional time. The confirmed manufacturing and delivery schedule will be stated in the quotation.",
       },
       {
-        question: "Will the cabin stand up to the wind belt and the summer heat?",
+        question: "Are container offices suitable for wind-farm sites around Radhapuram?",
         answer:
-          "It is built to, when anchored and insulated. On ridge and coastal sites the cabin is placed on concrete pedestals or a plinth and tied down with holding-down arrangements specified for the site; we recommend a site-specific check by a qualified engineer for highly exposed locations, and no wind-load performance is guaranteed beyond what the approved quotation and drawing state. Insulated walls and roof reduce heat gain, and an air-conditioner point is provided where specified.",
+          "Yes, provided the cabin structure, foundations, roof connections and anchoring are engineered for the actual site wind loads. A portable office should not be considered wind-safe simply because it is made of steel or fitted with anchoring points.",
       },
       {
-        question: "Can you supply a full project camp: office, store, toilet and rest room together?",
+        question: "Can a container office be used as a solar project control room?",
         answer:
-          "Yes. Several cabins can be delivered in one lot and placed side by side: an office, a store, a toilet block and rest-room or bunk-house cabins for site staff, subject to transport feasibility.",
+          "Yes. Cabins can be configured for project administration, equipment monitoring and SCADA-related workspaces. Actual electrical, cooling, equipment mounting and safety requirements must be established according to the control-room equipment specification.",
       },
       {
-        question: "Do I need any approval to place a container office on my site?",
+        question: "Can a container office operate using a diesel generator?",
         answer:
-          "Requirements depend on the location, intended use and duration. For a temporary site office on your own land or an active project site, a separate building sanction is not usually asked for; for a permanent commercial cabin inside Tirunelveli Corporation limits, or anything on a road margin, check with the Corporation zonal office or the village panchayat. Drawings and dimensions can be provided for the application. This is general guidance, not legal advice.",
+          "Yes. Electrical arrangements can be designed for generator supply. Generator capacity must be calculated using the connected lighting, fans, air-conditioning, computers, equipment loads and starting currents.",
       },
       {
-        question: "Can I rent instead of buying?",
+        question: "Are insulated container offices suitable for Tirunelveli's summer temperatures?",
         answer:
-          "Rental may be available depending on cabin inventory, project duration, configuration and transport feasibility. Rental charges, the minimum period, the deposit and transport each way are confirmed through a separate quotation.",
+          "Insulated wall and roof construction can reduce heat transfer. Combined with suitable ventilation and correctly sized air-conditioning, it can help maintain comfortable working conditions.",
       },
       {
-        question: "Can the cabin run without grid power?",
+        question: "Do I need permission to install a portable container office?",
         answer:
-          "The standard electrical fit-out of LED lights, fans and sockets draws little and can run from site supply or a generator sized by your electrician; air-conditioning adds to the load.",
+          "Permission requirements depend on the location, use, installation duration, land classification and applicable planning or industrial estate regulations. Before installation, check with the relevant local authority, SIPCOT administration or other competent authority where required.",
       },
       {
-        question: "Can you add a toilet and pantry?",
+        question: "Can a 40 ft container office include a toilet and pantry?",
         answer:
-          "Yes. A western toilet with a wash basin, an exhaust fan and water inlet and outlet points, and a pantry counter with a sink and a socket, subject to space and technical requirements. You need a water line and a drain or soak pit at the site.",
+          "Yes. A 40 ft office can be customised with an internal toilet, wash basin, pantry counter, workstations and separate rooms, subject to the available usable floor area.",
       },
       {
-        question: "What sizes do you make?",
+        question: "Can a container office be relocated to Tenkasi or Thoothukudi later?",
         answer:
-          "10 × 8, 20 × 8, 20 × 10, 30 × 10 and 40 × 10 ft as standard. Custom lengths and double-storey units with an external staircase are available on request, subject to technical feasibility.",
+          "Yes. Relocation is possible when the structure remains suitable for lifting and transport. The lifting method, route, dimensions and installation requirements should be assessed before shifting.",
       },
       {
-        question: "Can a container office be used at a quarry or crusher unit?",
+        question: "Can I purchase multiple cabins for a solar or wind project?",
         answer:
-          "Yes. Quarry and crusher operators use the cabins as weighbridge cabins, supervisor offices and record rooms. PUF insulation and sealed sliding windows help limit heat and dust, and the cabin should be placed on a prepared level pad away from blasting and haul-road traffic as the site layout requires.",
+          "Yes. Multiple office, storage, toilet and pantry cabins can be planned as an integrated site camp with a coordinated layout.",
       },
       {
-        question: "Can a container office be used as a security cabin at a factory gate or substation?",
+        question: "Do you provide container offices on rent in Tirunelveli?",
         answer:
-          "Yes. A 10 × 8 ft cabin with a sliding window facing the gate, a register desk, a lockable door, lighting and power points is the usual security post. Larger layouts can combine a security counter with a small office.",
-      },
-      {
-        question: "Do you have a factory or office in Tirunelveli?",
-        answer:
-          "No. Cabins are fabricated at our factory near Hosur, Tamil Nadu, and transported by road to Tirunelveli district. Site visits, delivery and installation are arranged for each project.",
-      },
-      {
-        question: "Who services the cabin after delivery in Tirunelveli?",
-        answer:
-          "Our own team. We do not have a service partner in Tirunelveli, so warranty and service visits are arranged for each project from the factory. Structural and leakage issues are covered by the 5-year structural and 1-year leakage warranty, subject to the quotation terms.",
-      },
-      {
-        question: "How long does a container office last?",
-        answer:
-          "Service life depends on material specifications, environmental conditions, maintenance and usage. Routine inspection, rust protection, a repaint every few years and proper roof drainage help extend it, particularly at coastal and dusty sites.",
-      },
-      {
-        question: "Can I see a unit before I order?",
-        answer:
-          "Inspection of cabins under production or completed units at the factory can be arranged with our sales team, subject to availability and appointment confirmation.",
+          "Rental requirements can be reviewed according to cabin availability, project duration, location and commercial terms. Transportation, security deposit, minimum rental period and return arrangements are determined in the rental agreement.",
       },
     ],
 
-    ctaHeading: "Get a Container Office Quotation in Tirunelveli",
-    ctaText: `Need a container office in Tirunelveli? Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display} with your site location and the size you need, or email ${COMPANY.email.sales}. You will get a written quotation with transport shown separately, and a cabin built to order in a typical 10–15 days.`,
+    ctaHeading: "Get a Container Office Quotation for Your Tirunelveli Project",
+    ctaText: `Need a container office for a solar plant at Gangaikondan, a wind project near Radhapuram, an industrial site at Nanguneri or a construction project in Palayamkottai? Portable Office Cabin supplies customised container offices, site cabins, security cabins, portable toilets and project office setups for industrial and commercial requirements. Share your requirements: site location or postal PIN code; required cabin size and quantity; number of occupants and workstations; insulated or non-insulated construction; toilet, pantry, air-conditioning and furniture requirements; expected delivery schedule; and site access and unloading arrangements. Email: ${COMPANY.email.sales}. Designed for your project. Manufactured to specification. Delivered to your site.`,
     ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
     ctaSecondaryLinks: [
       { label: "See All Container Office Models", href: "/products/category/container-offices" },
       { label: "Container Office on Rent", href: "/rental-service" },
@@ -1289,7 +1352,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tirunelveli district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's standard container office designs and are not photographs of installations in Tirunelveli. Notes on wind exposure and anchoring are general guidance; the base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) is an independent Government of Tamil Nadu undertaking with which Portable Office Cabin is not affiliated; place names are used only to describe service locations. Permission notes on this page are general guidance, not legal advice.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tirunelveli district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show a Portable Office Cabin container office design and are not photographs of an installation in Tirunelveli. Notes on wind exposure, anchoring, insulation, drainage and corrosion protection are general guidance: wind resistance, the base, anchoring and any structural checks for a specific site are established by project-specific engineering and defined in the approved quotation and drawing. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) is an independent Government of Tamil Nadu undertaking with which Portable Office Cabin is not affiliated; place names, industrial estates and projects such as the Kulasekarapattinam spaceport are mentioned only to describe the region and service locations, not as clients or completed projects. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -1779,6 +1842,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     ],
   },
 
@@ -2657,7 +2721,363 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN METTUR, SALEM — two industrial markets on one page: Mettur (thermal
+   * power station at P.N. Patti, chemical units around Raman Nagar, Mettur Dam and the
+   * Cauvery) and Salem (steel, engineering, magnesite, textiles, sago, NH 44 / NH 544 logistics).
+   *
+   * Owner copy of 2026-10-12, mapped onto the fixed template slots (Chennai precedent — same
+   * draft template). Every draft H2 is kept verbatim as a section heading; content with no slot
+   * of its own is FOLDED, never dropped:
+   *   • "Why Container Offices Make Sense…": the Mettur and Salem sub-sections → whyBullets with
+   *     their lists folded in as prose; "Key Industrial and Commercial Locations" → whyOutro.
+   *   • "Container Office Sizes Available…": intro, plant-site note, sizes table and seating
+   *     caveat → solutionsIntro prose; the four sub-sections (incl. plant-entry planning) →
+   *     solutions.
+   *   • "Standard Container Office Manufacturing Specifications" table → features[] as
+   *     "Component — spec"; its "confirmed through the approved drawing" line → sizesNote.
+   *   • "Container Offices Designed for Mettur's Industrial Environment" (five numbered
+   *     sub-sections, the safety-component table folded into the fifth) → industries.
+   *   • "Container Office Applications Across Mettur and Salem": the five in-plant uses →
+   *     customBullets; the outside-plant table + the draft's own "do not imply completed
+   *     installations" line → customOutro.
+   *   • "Why Choose" → whyUs; "Areas We Serve" → areasText; the six ordering steps → how; the
+   *     CTA checklist + sign-off → ctaText ("Website:" line dropped as redundant on-site).
+   * "With manufacturing operations in Bengaluru and Hosur" is rewritten to the factory near
+   * Hosur plus the Bengaluru office: manufacturing happens in Tamil Nadu only and Bengaluru is
+   * an office (src/lib/company.ts). The draft carries no ₹ figure (file-header rule). It names
+   * the Mettur Thermal Power Station and Mettur Dam ⇒ nominative-use disclaimer below the CTA.
+   *
+   * Images: four owner-dropped webp files ("public/images/Container office in mettur, salem
+   * city page/"), copied byte-for-byte to clean slug names. Alt text describes the ACTUAL
+   * renders — a charcoal-grey corrugated unit with a navy-blue lower band, glass door,
+   * black-framed casement windows and a flat roof canopy with downlights — and every alt leads
+   * with the full page name. No featureImage: the only top-down roof shot supplied showed a
+   * different, green-framed unit, so the owner had it removed (2026-10-12) rather than mix units.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-mettur-salem",
+    city: "Mettur, Salem",
+    listTitle: "Container Office in Mettur, Salem",
+    metaTitle: "Container Office in Mettur, Salem | Portable Office Cabin",
+    metaDescription:
+      "Container office in Mettur and Salem for shutdown contractors, power and chemical plants and site offices. Custom 10 ft to 40 ft cabins. Get a quote.",
+    keywords:
+      "Container Office in Mettur, Container Office in Salem, Container Office Mettur Salem, Portable Site Office Salem, Shutdown Contractor Office Mettur, Industrial Container Cabin Salem, Portable Office Cabin Salem, Security Cabin Mettur, Container Office on Rent Salem",
+    geo: { region: "IN-TN", placename: "Mettur, Salem, Tamil Nadu, India", position: "11.7863;77.8008", icbm: "11.7863, 77.8008" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-mettur-salem/container-office-in-mettur-salem-exterior.webp",
+      alt: "Container office in Mettur, Salem — charcoal-grey corrugated-steel portable office with a navy-blue lower band, a full-height glass entrance door, black-framed casement windows and a flat overhanging roof with LED downlights, on a paved pad beside an industrial building",
+      width: 1264,
+      height: 848,
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-mettur-salem/container-office-in-mettur-salem-interior.webp",
+      alt: "Container office in Mettur, Salem — optionally furnished interior: charcoal corrugated walls with a navy-blue lower band, black-framed windows and a glass door, an executive desk with a monitor and task chair, a wooden storage unit, and a lounge corner with two armchairs and a round coffee table",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-mettur-salem/container-office-in-mettur-salem-front-view.webp",
+        alt: "Container office in Mettur, Salem — long front elevation of the charcoal-grey portable office: three black-framed casement windows and a glass entrance door above a navy-blue lower band, under a flat roof canopy with LED downlights",
+        width: 2496,
+        height: 1664,
+      },
+      {
+        src: "/images/cities/container-office-in-mettur-salem/container-office-in-mettur-salem-end-view.webp",
+        alt: "Container office in Mettur, Salem — end elevation of the charcoal-grey portable office with two large black-framed casement windows, a navy-blue lower band and the flat roof overhang with two LED downlights",
+        width: 2496,
+        height: 1664,
+      },
+    ],
+
+    h1: "Container Office in Mettur, Salem",
+    tagline: "Portable Site Offices, Industrial Container Cabins, Shutdown Contractor Offices and Prefabricated Office Solutions",
+    intro: [
+      "Looking for a durable, customised container office in Mettur or Salem for a thermal power station, chemical plant, industrial facility, construction project or temporary site office?",
+      "Portable Office Cabin manufactures insulated and non-insulated container offices, portable site cabins, project management offices, security cabins and multi-cabin office setups for industrial and commercial applications.",
+      "Mettur and Salem have different industrial requirements. Mettur is known for its thermal power operations, chemical manufacturing facilities, hydroelectric infrastructure and dam-related activities. Salem supports steel manufacturing, engineering industries, textile operations, logistics, warehousing and construction projects.",
+      "These locations often require portable offices that can be installed within industrial premises, positioned in designated contractor areas and relocated after project completion.",
+      "From our factory near Hosur, Tamil Nadu, with an office in Bengaluru, Portable Office Cabin supplies customised container offices across Mettur, Salem, Omalur, Sankagiri, Edappadi, Mecheri, Attur and surrounding Tamil Nadu locations.",
+      "Our cabins can be customised with thermal insulation, corrosion-resistant finishing options, electrical fittings, internal partitions, office furniture, air-conditioning provisions, washrooms and project-specific safety accessories.",
+      `Request a quotation: share your site location, cabin size, number of occupants and technical requirements to receive a customised proposal — call or WhatsApp ${COMPANY.phones[0].display}, or email ${COMPANY.email.sales}.`,
+    ],
+
+    whyHeading: "Why Container Offices Make Sense in Mettur and Salem",
+    whyIntro:
+      "Mettur and Salem support a wide range of industries where temporary and relocatable office accommodation can be more practical than constructing permanent structures. A prefabricated container office provides an enclosed working space that can be manufactured off-site and transported to the designated location.",
+    whyBullets: [
+      {
+        title: "Mettur: Thermal Power, Chemical and Industrial Operations",
+        text: "Mettur is an important industrial town associated with power generation, chemical manufacturing and water infrastructure. Major industrial activities in the region include the Mettur Thermal Power Station at P.N. Patti, chemical manufacturing facilities around Raman Nagar, hydroelectric operations and water infrastructure associated with Mettur Dam and the Cauvery. Contractors working on plant maintenance, equipment installation, shutdown operations and industrial expansion projects may need temporary offices inside existing facilities. Typical requirements include shutdown contractor office cabins, plant maintenance and engineering offices, EPC and project management cabins, industrial stores and tool rooms, electrical and instrumentation offices, security and gate cabins, temporary meeting rooms, and contractor welfare and toilet facilities. For installation inside operational industrial facilities, cabin dimensions, transportation access, lifting arrangements and plant safety requirements must be reviewed before dispatch.",
+      },
+      {
+        title: "Salem: Steel, Engineering, Logistics and Commercial Development",
+        text: "Salem is a major commercial and industrial centre connected by important transport routes, including NH 44 and NH 544. Its industrial activity includes steel manufacturing, engineering workshops, magnesite-related operations, textiles, sago processing, transportation and warehousing. Portable container offices are suitable for industrial construction projects, manufacturing plant expansions, warehousing and logistics yards, transport and truck-body fabrication facilities, residential and commercial construction, college and hospital development, and highway and infrastructure projects. Unlike restricted industrial installations, many open construction plots and logistics yards can accommodate larger office cabins, subject to vehicle access and available space.",
+      },
+    ],
+    whyOutro:
+      "Key industrial and commercial locations in our container office supply coverage: the Mettur industrial region — Mettur Dam, P.N. Patti, Raman Nagar, Mecheri and Kolathur; the Salem industrial and logistics region — Salem city, Salem Bypass, Omalur, Sankagiri and the NH 44 corridor; the textile and manufacturing region — Edappadi, Jalakandapuram, Elampillai and Attur; and the commercial and construction region — Yercaud Road, Omalur, Salem city and surrounding residential development areas.",
+
+    solutionsHeading: "Container Office Sizes Available in Mettur and Salem",
+    solutionsIntro:
+      "Portable Office Cabin manufactures standard and customised container office sizes depending on the project application, workforce requirements and available installation space. For Mettur industrial sites, cabin selection should consider the plant's designated contractor area, internal road dimensions, overhead restrictions, turning space and lifting permissions. Standard sizes: 10 ft × 8 ft (80 sq ft, 1–2 people) for a security cabin, gate office or tool store; 20 ft × 8 ft (160 sq ft, 3–4 people) for a shutdown contractor office or supervisor cabin; 20 ft × 10 ft (200 sq ft, 4–5 people) for a project office with optional pantry; 30 ft × 10 ft (300 sq ft, 6–8 people) for a construction or sales office; 40 ft × 8 ft (320 sq ft, 8–10 people) for an EPC and industrial project office; and 40 ft × 10 ft (400 sq ft, 10–12 people) for a large project office with optional toilet and pantry. Seating is indicative and depends on the approved interior layout, partitions, furniture and other facilities.",
+    solutions: [
+      {
+        title: "10 ft and 20 ft Industrial Office Cabins",
+        text: "Smaller offices are suitable for plant security teams, maintenance supervisors, engineers and contractors working in restricted areas. These cabins can include lighting, fans, electrical sockets, windows, workstations, insulation and air-conditioning provisions.",
+      },
+      {
+        title: "30 ft and 40 ft Project Office Cabins",
+        text: "Larger cabins provide additional working space for industrial project administration, EPC contractors, construction management teams and site engineers. Customised layouts may include a manager's room, workstation area, meeting room, storage space, pantry and attached washroom.",
+      },
+      {
+        title: "Multi-Cabin Contractor Office Camps",
+        text: "Industrial expansion and construction projects may require multiple units arranged as an integrated temporary office complex. A project camp can include engineering and administrative office cabins, meeting and conference rooms, material and tool storage cabins, pantry and staff rest facilities, portable toilet and washroom units, and covered walkways between cabins. For industrial premises, the overall layout should follow the available contractor-area space, plant access restrictions and approved safety arrangements.",
+      },
+      {
+        title: "Container Office Planning for Plant Entry",
+        text: "Before selecting a cabin for an operational plant, important measurements include the internal access-road width, entry-gate dimensions, overhead pipe-rack clearance, available turning radius and designated unloading area. The overall transported height and width must include the cabin, vehicle and securing arrangements. A 40 ft office may require different transportation and lifting arrangements from a smaller 20 ft unit. Final access feasibility should be checked using the actual cabin dimensions and transport vehicle details.",
+      },
+    ],
+
+    featuresHeading: "Standard Container Office Manufacturing Specifications",
+    featuresIntro:
+      "Portable Office Cabin manufactures customised MS and prefabricated container cabins with the following available specifications:",
+    features: [
+      "Structural frame — fabricated mild-steel structural framework",
+      "External cladding — MS or GI steel sheet",
+      "External protective finish — approved primer and paint system",
+      "Wall insulation — glass wool or PUF insulation",
+      "PUF panel option — typically 40–50 mm",
+      "Roofing — weather-resistant steel roof",
+      "Interior wall finish — approved panel or board finish",
+      "Flooring — cement board with vinyl or SPC flooring",
+      "Heavy-duty store flooring — chequered plate where specified",
+      "Entry door — steel door with suitable locking arrangement",
+      "Windows — aluminium or UPVC windows",
+      "Electrical wiring — concealed electrical installation",
+      "Electrical protection — distribution board with protective devices",
+      "Lighting — LED ceiling lights",
+      "Ventilation — windows, fans and optional exhaust fans",
+      "Air-conditioning — split AC provision",
+      "Office furniture — workstations, tables, chairs and storage",
+      "Plumbing — optional wash basin, toilet and pantry",
+      "Handling accessories — designed lifting provisions where required",
+    ],
+    sizesNote:
+      "Final dimensions, material thicknesses, accessories and finishes are confirmed through the approved drawing and quotation.",
+
+    industriesHeading: "Container Offices Designed for Mettur's Industrial Environment",
+    industriesIntro:
+      "Mettur's industrial environment can expose portable cabins to chemical atmospheres, ash, airborne dust, moisture and high summer temperatures. The required cabin specification depends on the intended installation location and the customer's safety requirements:",
+    industries: [
+      {
+        title: "Corrosion Protection for Chemical and Industrial Locations",
+        text: "Container offices installed near chemical processing facilities may require additional corrosion protection. Depending on the operating environment, available specifications can include epoxy zinc-phosphate primer, a two-component polyurethane exterior coating, protective treatment of steel joints and exposed edges, corrosion-resistant hinges, fasteners and hardware, sealed wall and roof connections, and protective finishes suitable for the specified exposure. The coating system, thickness and maintenance requirements should be finalised against the actual chemical exposure conditions and the plant's technical specification.",
+      },
+      {
+        title: "Ash and Dust Protection Near Thermal Power Facilities",
+        text: "Offices near ash-handling systems, open industrial yards and dusty work areas may require additional sealing. Available features include sealed insulated-panel joints, properly fitted sliding windows, door closers, threshold seals and suitable filtration or ventilation provisions. For stores and operational areas, flooring and finishes can be selected to make cleaning easier.",
+      },
+      {
+        title: "Moisture Protection Near Mettur Dam and the Cauvery",
+        text: "Installations near reservoirs, canals and low-lying areas require attention to drainage and potential moisture exposure. Depending on the location, options include suitable raised foundations or steel supports, moisture-resistant flooring materials, weather-resistant roof and wall joints, roof gutters and drainage provisions, appropriately protected electrical distribution equipment, and ventilation to reduce internal condensation. Any elevation or foundation arrangement should be based on actual site conditions and engineering requirements.",
+      },
+      {
+        title: "Thermal Insulation for Salem and Mettur Summers",
+        text: "During hot weather, metal-roofed cabins can experience significant heat gain. Insulated wall and roof systems, including PUF sandwich panels, can reduce heat transfer. Air-conditioning provisions can be incorporated according to cabin size, occupancy, insulation, windows and electrical load.",
+      },
+      {
+        title: "Industrial Safety Accessories",
+        text: "Container offices installed inside power plants and chemical facilities may require additional safety equipment specified by the customer's EHS team. Available provisions: fire protection — a fire extinguisher and mounting bracket, where specified; emergency lighting — an emergency light near the exit; exit identification — illuminated or photoluminescent exit signage; smoke detection — a smoke detector where required; electrical protection — suitable MCB/RCCB protection as designed; earthing — an approved earthing connection and testing provisions; electrical safety — an insulating mat near the distribution board, where required; emergency access — a door and exit arrangement based on site requirements; documentation — applicable inspection records and agreed technical documents. Safety equipment is included according to the approved scope of supply. Final requirements must comply with the customer's plant rules and applicable safety standards.",
+      },
+    ],
+
+    customHeading: "Container Office Applications Across Mettur and Salem",
+    customIntro:
+      "Industrial and commercial sites in the region have different operational requirements. Container office applications inside industrial plants:",
+    customBullets: [
+      {
+        title: "Thermal Power Station Contractors",
+        text: "Shutdown, maintenance and retrofit contractors may require temporary engineering offices, material stores and welfare facilities. These cabins can be configured for the designated contractor area and the plant's access and safety requirements.",
+      },
+      {
+        title: "Chemical Manufacturing Facilities",
+        text: "Chemical and industrial processing facilities may require temporary project offices, instrumentation cabins, maintenance offices and secure storage units. Suitable coating systems and sealing should be selected according to the installation environment.",
+      },
+      {
+        title: "Ash Yard and Material Handling Operations",
+        text: "Supervisor cabins, documentation offices and maintenance rooms can be used near material-handling facilities, subject to the necessary dust protection and operating restrictions.",
+      },
+      {
+        title: "Hydroelectric and Water Infrastructure Projects",
+        text: "Engineering and administrative cabins can support dam maintenance, canal works, water-treatment operations and other infrastructure projects.",
+      },
+      {
+        title: "Industrial Security and Entry Gates",
+        text: "Compact security cabins can provide enclosed workspaces for access control, visitor documentation and plant security personnel.",
+      },
+    ],
+    customOutro:
+      "Container office applications outside industrial plants: Salem Bypass and NH 44 — transport yards, logistics and warehouses (gate cabin, dispatch office, driver rest cabin); Sankagiri — engineering and truck-body fabrication (supervisor office, drawing office, cashier cabin); Edappadi and Elampillai — textile and power-loom facilities (office cabin, staff room, weighbridge office); Attur — sago processing and agro-industrial units (administration office, security cabin, grading-room accommodation); Omalur — residential and commercial construction (engineer's office, marketing office); Yercaud Road — resorts, hospitality and development projects (reception cabin, site office, staff room); Salem colleges and hospitals — institutional construction and expansion (temporary office, billing room, reception cabin); highway and civil infrastructure sites — road contractors and engineering teams (relocatable project office and storage cabin). The applications above describe possible uses of portable offices across the region and do not imply completed installations at every listed location.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Mettur and Salem Projects?",
+    whyUsIntro: "What Portable Office Cabin offers projects in Mettur, Salem and across Tamil Nadu:",
+    whyUsBullets: [
+      {
+        title: "Customised Industrial Cabin Manufacturing",
+        text: "Our cabins are manufactured according to project requirements rather than limited to one standard interior configuration. Customers can specify dimensions, insulation, partitions, workstations, electrical fittings, washrooms and other facilities.",
+      },
+      {
+        title: "Manufacturing Support From Our Factory Near Hosur",
+        text: "Our factory near Hosur, Tamil Nadu, supported by our office in Bengaluru, supplies portable cabins for projects across Karnataka and Tamil Nadu. Dispatch arrangements and transportation costs are finalised according to the order.",
+      },
+      {
+        title: "Plant Access and Installation Planning",
+        text: "For cabins going inside operational industrial facilities, transportation and installation planning can take into account gate access, designated placement areas, lifting requirements and customer-supplied EHS procedures. The customer's authorised team must approve the necessary plant permits and site-specific lifting arrangements.",
+      },
+      {
+        title: "Industrial Coating Options",
+        text: "Protective coating systems can be specified for industrial locations where the standard finish may not be suitable. Requirements should be identified before manufacturing and documented in the technical quotation.",
+      },
+      {
+        title: "Transparent Pricing",
+        text: "A project quotation can separately identify cabin manufacturing, transportation, unloading, installation, safety accessories and applicable GST.",
+      },
+      {
+        title: "Single Cabins and Multi-Cabin Projects",
+        text: "We can manufacture single site offices, contractor office-and-store combinations and larger project office arrangements according to the approved layout.",
+      },
+      {
+        title: "Purchase and Rental Requirements",
+        text: "Portable cabins are available for purchase. Rental options can be discussed based on the required cabin configuration, inventory availability, location and rental duration.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve Around Mettur and Salem",
+    areasText:
+      "Portable Office Cabin supplies container offices to Mettur Dam, P.N. Patti, Raman Nagar, Mecheri, Kolathur, Omalur, Salem city, Salem Bypass, Sankagiri, Edappadi, Jalakandapuram, Elampillai, Attur, Yercaud, Dharmapuri, Bhavani, Erode and Namakkal. Transportation, unloading and installation arrangements are confirmed for each site according to the cabin dimensions and site access.",
+
+    howHeading: "How to Order a Container Office in Mettur or Salem",
+    howSteps: [
+      {
+        title: "Share Your Site Requirement",
+        text: "Provide the site location, required size, number of occupants and intended use. Mention whether the cabin will be installed inside an industrial plant, contractor area, factory premises or open construction site.",
+      },
+      {
+        title: "Confirm Plant Access Requirements",
+        text: "For industrial sites, provide available access drawings or dimensions showing the entry-gate width and height, internal road and turning space, pipe racks or overhead obstructions, the designated cabin installation area, lifting and unloading restrictions, and relevant plant safety requirements. These details help determine the appropriate cabin size and transportation arrangement.",
+      },
+      {
+        title: "Finalise the Cabin Specification",
+        text: "Select the required structure, insulation, coating system, electrical provisions, furniture and additional safety accessories. For multi-cabin projects, an overall layout can be prepared for approval.",
+      },
+      {
+        title: "Receive and Approve the Quotation",
+        text: "The quotation can include manufacturing specifications, transportation, unloading arrangements, applicable taxes, payment terms and estimated delivery schedule.",
+      },
+      {
+        title: "Manufacturing and Inspection",
+        text: "Manufacturing proceeds after acceptance of the technical and commercial terms. Pre-dispatch photos, videos or inspection arrangements can be provided according to the agreed requirements.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "The cabin is transported to the designated site and unloaded according to the confirmed responsibilities. Positioning, anchoring, electrical connection, testing and handover documentation are completed by the responsible parties under the agreed scope. For operational plants, site entry, lifting and work permits must be approved before the relevant activities begin.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a container office in Mettur or Salem?",
+        answer:
+          "Container office prices depend on cabin dimensions, steel specifications, insulation, protective coatings, flooring, electrical fittings, furniture, plumbing and air-conditioning provisions. Transportation, crane or hydra unloading and any installation requirements can be quoted separately. For accurate pricing, share your size, specifications and destination.",
+      },
+      {
+        question: "What container office sizes are available?",
+        answer:
+          "Common sizes include 10 ft × 8 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, 40 ft × 8 ft and 40 ft × 10 ft. Custom dimensions are also available, subject to fabrication feasibility and transportation restrictions.",
+      },
+      {
+        question: "How long does it take to manufacture a container office?",
+        answer:
+          "Manufacturing generally takes around 10–15 days for many standard configurations, depending on the current production schedule, quantity and materials. Custom cabins, large project office setups and special industrial specifications may require additional time. Transportation and site installation are scheduled separately.",
+      },
+      {
+        question: "Can a portable office cabin be installed inside Mettur Thermal Power Station or an industrial plant?",
+        answer:
+          "A container office may be installed inside an industrial facility when permitted by the plant administration and when the structure, equipment, transportation and installation arrangements satisfy the relevant site requirements. Plant entry permissions, EHS approvals, lifting arrangements and designated placement areas must be confirmed with the facility.",
+      },
+      {
+        question: "Do you provide chemical-resistant container office cabins?",
+        answer:
+          "Protective coating systems and corrosion-resistant components can be specified according to the project environment. The required coating system should be selected after reviewing the expected exposure conditions. A general industrial paint system should not be assumed suitable for every chemical atmosphere.",
+      },
+      {
+        question: "Can your cabin pass beneath pipe racks inside a plant?",
+        answer:
+          "This depends on the actual transport vehicle's overall loaded height and the available vertical clearance. The cabin height alone is not sufficient to determine access. The loaded transport height, road width, turning radius and unloading method must also be checked.",
+      },
+      {
+        question: "What safety fittings can be provided for industrial plant cabins?",
+        answer:
+          "Depending on the project, cabins can include fire extinguisher provisions, emergency lighting, exit signage, smoke detection, electrical protection, earthing arrangements and insulating mats. Final fittings depend on customer specifications and applicable plant safety requirements.",
+      },
+      {
+        question: "Can a container office run on a diesel generator?",
+        answer:
+          "Yes. Container office electrical systems can be designed for generator power. The required DG capacity must be determined through an electrical load calculation that considers lighting, fans, air-conditioning, computers and other equipment.",
+      },
+      {
+        question: "Can I relocate a container office from Mettur to Salem?",
+        answer:
+          "Yes. A relocatable cabin can be shifted to another site, subject to its structural condition, lifting suitability, transport permissions and new installation requirements.",
+      },
+      {
+        question: "Do container offices need local authority approval?",
+        answer:
+          "Requirements depend on the location, land use, duration and nature of the installation. Portable structures are not automatically exempt from planning or building regulations. Customers should check with the plant administration, local authority, industrial estate management or other relevant authority as applicable.",
+      },
+      {
+        question: "Do you manufacture cabins with attached toilets and pantry facilities?",
+        answer:
+          "Yes. We offer customised office layouts with toilets, wash basins, pantry counters, partitions and furniture. Water supply, drainage and external civil connections are agreed separately.",
+      },
+      {
+        question: "Can I rent a container office for a shutdown project?",
+        answer:
+          "Rental requirements can be reviewed based on the cabin size, quantity, project duration, destination and available rental inventory. Security deposit, transportation, minimum rental duration and collection responsibilities are stated in the rental quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation for Mettur and Salem",
+    ctaText: `Looking for a container office for a shutdown contractor at Mettur, an industrial expansion project, a Salem warehouse, a manufacturing facility or a construction site? Portable Office Cabin supplies customised portable offices, insulated site cabins, security cabins, project management cabins, toilet cabins and multi-unit office setups. Share your project requirements: the site location and PIN code, required cabin size and quantity, number of occupants or workstations, insulated or non-insulated construction, internal partitions, toilets and pantry requirements, electrical and air-conditioning specifications, plant safety or industrial coating requirements, site access and unloading arrangements, and the required delivery schedule. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Portable Office Cabin — container office manufacturer supplying Mettur, Salem and surrounding industrial regions. Customised for your site. Manufactured to specification. Delivered for your project.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Site Office", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Container Office in SIPCOT Coimbatore", href: "/cities-we-serve/container-office-in-sipcot-coimbatore" },
+      { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office or service partner in Mettur or Salem, delivery and installation are arranged for each project, and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Mettur or Salem. The Mettur Thermal Power Station, Mettur Dam and the power, chemical, industrial and water-infrastructure facilities named on this page are operated by independent organisations with which Portable Office Cabin is not affiliated; they are named only to describe delivery locations and typical uses — representative applications, not claims of completed installations — and entry to any such premises is subject to that facility's own permissions, EHS approvals and work permits. Notes on chemical exposure and coating systems, ash and dust sealing, moisture and foundations, transport clearances, lifting, safety fittings and electrical loads are general guidance; the specification, base, lifting method and any structural or electrical checks for a specific site are defined in the approved quotation and drawing. Approval notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
