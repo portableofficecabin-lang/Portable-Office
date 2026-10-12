@@ -34,9 +34,11 @@ export const productImageCaptions: Record<string, string> = {
 // captions above. Only the images listed here are affected.
 export const productImageAltText: Record<string, string> = {
   // 20ft Storage Container – Corten Steel (id 12, issue #100)
-  "20ft-storage-container-corten-steel-door-end.webp":
+  "20ft-storage-container-corten-steel-three-quarter.webp":
     "20ft Corten Steel Storage Container – Portable Office Cabin",
-  "20ft-storage-container-corten-steel-side.webp":
+  "20ft-storage-container-corten-steel-front.webp":
+    "20ft Corten Steel Storage Container front view with cargo doors – Portable Office Cabin",
+  "20ft-storage-container-corten-steel-side-elevation.webp":
     "20ft Corten Steel Storage Container side view – Portable Office Cabin",
 };
 

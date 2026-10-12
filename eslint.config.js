@@ -26,6 +26,18 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-unused-vars": "off",
+      /* Issue #100: these two photos show a leasing company's container number with a truck
+         plate, and a shipping line's livery. They are kept on disk for history only and must
+         not be shown again. */
+      "no-restricted-imports": ["error", {
+        patterns: [{
+          group: [
+            "**/assets/rental/cargo-storage-container-40ft.webp",
+            "**/assets/rental/cargo-storage-container-20ft.jpg",
+          ],
+          message: "Rejected photo (issue #100). Use /images/products/storage-container-corten-steel/ (20ft-storage-container-corten-steel-three-quarter.webp or 40ft-storage-container-three-quarter.webp).",
+        }],
+      }],
     },
   },
 );

@@ -31,11 +31,11 @@ import siteOfficeCabin100sqft from "@/assets/rental/site-office-cabin-100sqft.we
 import portableSiteOffice400sqft from "@/assets/rental/portable-site-office-400sqft.webp";
 import securityGuardCabin8x8 from "@/assets/rental/security-guard-cabin-8x8.webp";
 
-// Owner-supplied storage container renders (issue #100). They replace a photo showing a leasing
+// Owner-approved storage container renders (issue #100). They replace a photo showing a leasing
 // company's container number and a truck plate (40 ft card) and a photo carrying a shipping
-// line's livery (20 ft card). The 20 ft card shares the 20ft Storage Container product's image.
+// line's livery (20 ft card). The 20 ft card shares the 20ft Storage Container product's hero.
 const storageContainer40ftImage = "/images/products/storage-container-corten-steel/40ft-storage-container-three-quarter.webp";
-const storageContainer20ftImage = "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-door-end.webp";
+const storageContainer20ftImage = "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp";
 
 // Rental cabin data with detailed specifications
 const rentalCabins = [

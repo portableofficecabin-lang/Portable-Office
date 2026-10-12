@@ -35,7 +35,7 @@ export const categoryImages: Record<string, string> = {
   "security-cabins": securityCabin,
   // Was the TGHU-numbered truck photo (issue #100). No catalogue product falls back to this
   // today; it only fills in for a product in this category that has no photo of its own.
-  "cargo-storage-shipping-containers": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-door-end.webp",
+  "cargo-storage-shipping-containers": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp",
 };
 
 // Product-specific images by product ID or SKU
@@ -71,11 +71,11 @@ export const productImages: Record<string, string> = {
   "46": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
   "POC-PC-STEEL": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
   "steel-portable-cabin": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
-  // 20ft Storage Container: door-end render (issue #100). Must stay identical to products.ts
+  // 20ft Storage Container: three-quarter render (issue #100). Must stay identical to products.ts
   // images[0] so the card, page, OG, JSON-LD and feed all show the same primary image.
-  "12": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-door-end.webp",
-  "POC-CSC-2040": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-door-end.webp",
-  "cargo-storage-container-shipping-container": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-door-end.webp",
+  "12": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp",
+  "POC-CSC-2040": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp",
+  "cargo-storage-container-shipping-container": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp",
   "14": shippingContainerMain,
   "POC-SC-40HC": shippingContainerMain,
   "shipping-container": shippingContainerMain,
