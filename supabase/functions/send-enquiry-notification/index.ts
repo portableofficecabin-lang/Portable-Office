@@ -1,7 +1,35 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
+/**
+ * send-enquiry-notification — e-mails the sales inbox about a new enquiry and sends the customer a
+ * short acknowledgement.
+ *
+ * HARDENED 2026-10-12 (PR #86). The previous version:
+ *   • interpolated every field into the HTML unescaped (HTML injection into the sales inbox);
+ *   • had no field validation;
+ *   • would e-mail ANY address with ANY text on request, echoing the caller's message back in the
+ *     "acknowledgement" — an open relay for spam sent from the company's own mail account.
+ *
+ * Now:
+ *   • every interpolated value is HTML-escaped;
+ *   • fields are validated and length-capped, and enquiry_type is whitelisted;
+ *   • an e-mail is sent ONLY when a matching row (same e-mail address) was inserted into
+ *     `enquiries` within the last 15 minutes — i.e. only for real submissions, which the database
+ *     and the /api/enquiries route rate-limit. The lookup uses SUPABASE_URL +
+ *     SUPABASE_SERVICE_ROLE_KEY, which the Supabase Edge runtime provides automatically;
+ *   • the acknowledgement no longer repeats the customer's message, so it cannot carry a payload.
+ *
+ * Callers are unchanged: every existing form inserts its row first and then invokes this function.
+ * DEPLOY MANUALLY: `supabase functions deploy send-enquiry-notification` — merging to main does
+ * not deploy edge functions.
+ */
+
 const ADMIN_EMAIL = "info@portableofficecabin.com";
+const RECENT_ROW_WINDOW_MS = 15 * 60 * 1000;
+
+/** Every environment read goes through here (one Deno reference for the Node-side typecheck). */
+const env = (name: string): string | undefined => Deno.env.get(name);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -26,21 +54,82 @@ const typeLabels: Record<string, string> = {
   support: "Support Request",
 };
 
+const LIMITS = { name: 200, email: 254, phone: 40, company: 200, subject: 300, message: 6000, product_name: 300 };
+const EMAIL = /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/;
+
+/** Escape for HTML text and double-quoted attribute contexts. */
+function esc(value: unknown): string {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/** Single-line header-safe text (subjects, display names). */
+function oneLine(value: unknown, max: number): string {
+  return String(value ?? "").replace(/[\r\n\t]+/g, " ").trim().slice(0, max);
+}
+
+function json(status: number, body: Record<string, unknown>) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json", ...corsHeaders },
+  });
+}
+
+/** True when an enquiry from this address was stored in the last 15 minutes; null = cannot tell. */
+async function hasRecentEnquiry(email: string): Promise<boolean | null> {
+  const url = env("SUPABASE_URL");
+  const key = env("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !key) return null;
+  const since = new Date(Date.now() - RECENT_ROW_WINDOW_MS).toISOString();
+  const query =
+    `${url}/rest/v1/enquiries?select=id&email=ilike.${encodeURIComponent(email)}` +
+    `&created_at=gte.${encodeURIComponent(since)}&limit=1`;
+  const res = await fetch(query, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
+  if (!res.ok) return null;
+  const rows = await res.json();
+  return Array.isArray(rows) && rows.length > 0;
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
+  if (req.method !== "POST") return json(405, { error: "Method not allowed" });
 
   try {
-    const enquiry: EnquiryNotification = await req.json();
+    const raw = await req.text();
+    if (raw.length > 20_000) return json(413, { error: "Request too large" });
+    const enquiry = JSON.parse(raw) as EnquiryNotification;
 
-    if (!enquiry.name || !enquiry.email || !enquiry.message) {
-      throw new Error("Missing required fields");
+    const name = oneLine(enquiry.name, LIMITS.name);
+    const email = oneLine(enquiry.email, LIMITS.email).toLowerCase();
+    const message = String(enquiry.message ?? "").trim();
+    if (!name || !EMAIL.test(email) || !message) return json(400, { error: "Missing required fields" });
+    if (message.length > LIMITS.message) return json(400, { error: "Message too long" });
+    for (const k of ["phone", "company", "subject", "product_name"] as const) {
+      if (String(enquiry[k] ?? "").length > LIMITS[k]) return json(400, { error: `${k} too long` });
     }
+    const enquiryType = Object.prototype.hasOwnProperty.call(typeLabels, enquiry.enquiry_type)
+      ? enquiry.enquiry_type
+      : "general";
 
-    console.log("Sending enquiry notification for:", enquiry.email);
+    // Only real, stored submissions trigger e-mail.
+    const recent = await hasRecentEnquiry(email);
+    if (recent === false) {
+      console.warn("send-enquiry-notification: no matching recent enquiry row — not sending");
+      return json(403, { error: "No matching enquiry" });
+    }
+    if (recent === null) console.warn("send-enquiry-notification: could not verify the enquiry row — sending anyway");
 
-    // Admin notification email
+    const label = typeLabels[enquiryType];
+    const row = (title: string, value: unknown) =>
+      value ? `<p style="margin: 8px 0; color: #4b5563;"><strong>${title}:</strong> ${esc(value)}</p>` : "";
+
+    // Admin notification email — every value escaped.
     const adminEmailHtml = `
       <!DOCTYPE html>
       <html>
@@ -49,30 +138,30 @@ const handler = async (req: Request): Promise<Response> => {
           <div style="background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             <div style="margin-bottom: 30px;">
               <span style="background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;">
-                ${typeLabels[enquiry.enquiry_type] || "General Enquiry"}
+                ${esc(label)}
               </span>
               <h1 style="color: #1f2937; margin: 16px 0 0 0; font-size: 24px;">New Enquiry Received</h1>
             </div>
-            
+
             <div style="background: #f9fafb; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
               <h2 style="color: #1f2937; font-size: 16px; margin: 0 0 16px 0;">Contact Information</h2>
-              <p style="margin: 8px 0; color: #4b5563;"><strong>Name:</strong> ${enquiry.name}</p>
-              <p style="margin: 8px 0; color: #4b5563;"><strong>Email:</strong> <a href="mailto:${enquiry.email}" style="color: #2563eb;">${enquiry.email}</a></p>
-              ${enquiry.phone ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Phone:</strong> ${enquiry.phone}</p>` : ''}
-              ${enquiry.company ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Company:</strong> ${enquiry.company}</p>` : ''}
-              ${enquiry.product_name ? `<p style="margin: 8px 0; color: #4b5563;"><strong>Product:</strong> ${enquiry.product_name}</p>` : ''}
+              ${row("Name", name)}
+              <p style="margin: 8px 0; color: #4b5563;"><strong>Email:</strong> <a href="mailto:${esc(email)}" style="color: #2563eb;">${esc(email)}</a></p>
+              ${row("Phone", enquiry.phone)}
+              ${row("Company", enquiry.company)}
+              ${row("Product", enquiry.product_name)}
             </div>
-            
-            ${enquiry.subject ? `<h3 style="color: #1f2937; font-size: 16px; margin: 0 0 8px 0;">Subject: ${enquiry.subject}</h3>` : ''}
-            
+
+            ${enquiry.subject ? `<h3 style="color: #1f2937; font-size: 16px; margin: 0 0 8px 0;">Subject: ${esc(enquiry.subject)}</h3>` : ""}
+
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
               <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 8px 0;">Message</h3>
-              <p style="color: #4b5563; font-size: 14px; margin: 0; white-space: pre-wrap; line-height: 1.6;">${enquiry.message}</p>
+              <p style="color: #4b5563; font-size: 14px; margin: 0; white-space: pre-wrap; line-height: 1.6;">${esc(message)}</p>
             </div>
-            
+
             <div style="text-align: center;">
-              <a href="mailto:${enquiry.email}" style="display: inline-block; background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
-                Reply to ${enquiry.name}
+              <a href="mailto:${esc(email)}" style="display: inline-block; background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                Reply to ${esc(name)}
               </a>
             </div>
           </div>
@@ -81,7 +170,7 @@ const handler = async (req: Request): Promise<Response> => {
       </html>
     `;
 
-    // Customer acknowledgment email
+    // Customer acknowledgment — deliberately does NOT repeat the submitted message.
     const customerEmailHtml = `
       <!DOCTYPE html>
       <html>
@@ -92,20 +181,15 @@ const handler = async (req: Request): Promise<Response> => {
               <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 12px; margin: 0 auto 16px;"></div>
               <h1 style="color: #1f2937; margin: 0; font-size: 24px;">Thank You for Contacting Us</h1>
             </div>
-            
+
             <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
-              Dear ${enquiry.name},
+              Dear ${esc(name)},
             </p>
-            
+
             <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
-              Thank you for reaching out to Portable Office Cabin. We have received your enquiry and our team will get back to you within 24-48 hours.
+              Thank you for reaching out to Portable Office Cabin. We have received your enquiry and our team will get back to you within 24 hours.
             </p>
-            
-            <div style="background: #f9fafb; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
-              <h2 style="color: #1f2937; font-size: 16px; margin: 0 0 12px 0;">Your Message</h2>
-              <p style="color: #4b5563; font-size: 14px; margin: 0; white-space: pre-wrap; line-height: 1.6;">${enquiry.message}</p>
-            </div>
-            
+
             <div style="text-align: center; padding-top: 24px; border-top: 1px solid #e5e7eb;">
               <p style="color: #9ca3af; font-size: 12px; margin: 0;">
                 Portable Office Cabin | Premium Portable Solutions
@@ -118,16 +202,13 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     // Get SMTP configuration from environment
-    const smtpHost = Deno.env.get("SMTP_HOST") || "smtp.zoho.in";
-    const smtpPort = parseInt(Deno.env.get("SMTP_PORT") || "465");
-    const smtpUsername = Deno.env.get("SMTP_USERNAME") || "";
-    const smtpPassword = Deno.env.get("SMTP_PASSWORD") || "";
-    const smtpFrom = Deno.env.get("SMTP_FROM") || smtpUsername;
-    const smtpFromName = Deno.env.get("SMTP_FROM_NAME") || "Portable Office Cabin";
+    const smtpHost = env("SMTP_HOST") || "smtp.zoho.in";
+    const smtpPort = parseInt(env("SMTP_PORT") || "465");
+    const smtpUsername = env("SMTP_USERNAME") || "";
+    const smtpPassword = env("SMTP_PASSWORD") || "";
+    const smtpFrom = env("SMTP_FROM") || smtpUsername;
+    const smtpFromName = env("SMTP_FROM_NAME") || "Portable Office Cabin";
 
-    console.log("Connecting to SMTP server:", smtpHost);
-
-    // Create SMTP client with Zoho settings
     const client = new SMTPClient({
       connection: {
         hostname: smtpHost,
@@ -141,41 +222,29 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     try {
-      // Send admin notification
       await client.send({
         from: `${smtpFromName} <${smtpFrom}>`,
         to: ADMIN_EMAIL,
-        subject: `New ${typeLabels[enquiry.enquiry_type] || "Enquiry"} from ${enquiry.name}`,
-        content: `New enquiry from ${enquiry.name} (${enquiry.email}): ${enquiry.message}`,
+        subject: `New ${label} from ${oneLine(name, 80)}`,
+        content: `New enquiry from ${name} (${email}): ${message}`,
         html: adminEmailHtml,
       });
 
-      console.log("Admin email sent successfully");
-
-      // Send customer acknowledgment
       await client.send({
         from: `${smtpFromName} <${smtpFrom}>`,
-        to: enquiry.email,
+        to: email,
         subject: "We've Received Your Enquiry - Portable Office Cabin",
-        content: `Dear ${enquiry.name}, thank you for contacting us. We have received your enquiry and will respond within 24-48 hours.`,
+        content: `Dear ${name}, thank you for contacting us. We have received your enquiry and will respond within 24 hours.`,
         html: customerEmailHtml,
       });
-
-      console.log("Customer email sent successfully");
     } finally {
       await client.close();
     }
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
-    );
-  } catch (error: any) {
+    return json(200, { success: true });
+  } catch (error: unknown) {
     console.error("Error in send-enquiry-notification:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
-    );
+    return json(500, { error: "Notification failed" });
   }
 };
 
