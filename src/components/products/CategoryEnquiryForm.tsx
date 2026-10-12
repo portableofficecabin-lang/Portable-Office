@@ -11,21 +11,16 @@
  * as quote-only work.
  *
  * ── HOW IT SUBMITS ──────────────────────────────────────────────────────────────────────────────
- * Exactly the path the homepage Cabin Calculator uses: a typed insert into `public.enquiries` with
- * the anon client (RLS allows anonymous INSERT only — never chain .select()), then a
- * fire-and-forget call to the existing `send-enquiry-notification` edge function. The table has no
- * columns for size, quantity or PIN code, so — as every other form does — those go into `message`,
- * which is NOT NULL and is what the admin Enquiries, CRM and Sales screens display. `lead_source`
- * is distinct so these leads can be told apart in the CRM.
+ * POST /api/enquiries (app/api/enquiries/route.ts). The browser never talks to Supabase. The route
+ * re-runs the SAME rules as this form (src/lib/enquiries/categoryEnquiry.ts), rate-limits per IP,
+ * email, phone and site-wide, drops honeypot / too-fast submissions, resolves the product name
+ * from the catalogue, inserts under Row Level Security and sends the notification with
+ * markup-inert fields. The table has no columns for size, quantity or PIN code, so — as every other
+ * form does — those go into `message`, which is what the admin Enquiries, CRM and Sales screens
+ * show; `lead_source` is "Category Page Enquiry".
  *
- * The Supabase client is imported on submit, not at module load, so it adds nothing to the
- * category page's first-load JavaScript. Validation is a few lines of plain code rather than zod,
- * and labels are native <label>s: together those two libraries added ~17 kB of first-load JS to
- * every category page for ten fields.
- *
- * Spam: a hidden honeypot field and a minimum fill time. A submission that trips either is
- * acknowledged on screen and silently dropped — there is no server-side rate limit on this table
- * (pre-existing; reported separately).
+ * Plain validation (no zod) and native <label>s keep the island small: those two libraries added
+ * ~17 kB of first-load JS to every category page for ten fields.
  */
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
@@ -34,36 +29,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { COMPANY } from "@/lib/company";
-import type { TablesInsert } from "@/integrations/supabase/types";
-
-const CUSTOM = "custom";
-const MIN_FILL_MS = 2500;
-
-const FIELD_NAMES = ["name", "phone", "email", "model", "size", "quantity", "location", "pincode", "specs", "message"] as const;
-type FieldName = (typeof FIELD_NAMES)[number];
-/** Raw form state — every control holds a string; validate() checks and normalises it on submit. */
-type Fields = Record<FieldName, string>;
-type Errors = Partial<Record<FieldName, string>>;
-
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-/** Field rules, in form order. Returns the trimmed values and one message per invalid field. */
-function validate(raw: Fields): { data: Fields & { qty: number }; errors: Errors } {
-  const data = Object.fromEntries(FIELD_NAMES.map((k) => [k, raw[k].trim()])) as Fields;
-  const errors: Errors = {};
-  const digits = data.phone.replace(/\D/g, "");
-  const qty = Number(data.quantity);
-  if (data.name.length < 2) errors.name = "Please enter your name.";
-  if (digits.length < 10 || digits.length > 13) errors.phone = "Please enter a valid mobile number.";
-  if (!EMAIL.test(data.email)) errors.email = "Please enter a valid email address.";
-  if (data.size.length > 80) errors.size = "Please keep the size under 80 characters.";
-  if (!Number.isInteger(qty) || qty < 1 || qty > 500) errors.quantity = "Quantity must be a whole number from 1 to 500.";
-  if (data.location.length < 2) errors.location = "Please enter the delivery town or city.";
-  if (data.pincode !== "" && !/^\d{6}$/.test(data.pincode)) errors.pincode = "PIN code must be 6 digits.";
-  if (data.specs.length > 2000) errors.specs = "Please keep this under 2,000 characters.";
-  if (data.message.length > 2000) errors.message = "Please keep this under 2,000 characters.";
-  return { data: { ...data, qty }, errors };
-}
+import {
+  CUSTOM_MODEL as CUSTOM,
+  ENQUIRY_FIELDS as FIELD_NAMES,
+  validateCategoryEnquiry,
+  type EnquiryErrors as Errors,
+  type EnquiryField as FieldName,
+  type EnquiryFields as Fields,
+} from "@/lib/enquiries/categoryEnquiry";
 
 /** Native label with the same look as the design system's Label. */
 function FieldLabel({ htmlFor, children }: { htmlFor: string; children: string }) {
@@ -106,7 +79,8 @@ export function CategoryEnquiryForm({
   const fid = (name: string) => `${uid}-${name}`;
   const [values, setValues] = useState<Fields>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed" | "limited">("idle");
+  const [serverMessage, setServerMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const startedAt = useRef<number>(Date.now());
   const formRef = useRef<HTMLFormElement>(null);
@@ -139,62 +113,48 @@ export function CategoryEnquiryForm({
       </p>
     ) : null;
 
+  const focusFirst = (next: Errors) => {
+    const first = FIELD_NAMES.find((k) => next[k]);
+    if (first) formRef.current?.querySelector<HTMLElement>(`#${CSS.escape(fid(first))}`)?.focus();
+  };
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    const { data: d, errors: next } = validate(values);
+    // Instant feedback with the same rules the server enforces.
+    const { errors: next } = validateCategoryEnquiry(values);
     if (Object.keys(next).length > 0) {
       setErrors(next);
-      const first = FIELD_NAMES.find((k) => next[k]);
-      if (first) formRef.current?.querySelector<HTMLElement>(`#${CSS.escape(fid(first))}`)?.focus();
+      focusFirst(next);
       return;
     }
-
-    // Bot heuristics: acknowledge, never store.
-    if (honeypot || Date.now() - startedAt.current < MIN_FILL_MS) {
-      setStatus("sent");
-      return;
-    }
-
-    const model = models.find((m) => m.id === d.model);
-    const modelLabel = model ? model.name : `Custom ${noun} (size or layout not listed)`;
-    const page = typeof window !== "undefined" ? window.location.pathname : `/products/category/${categorySlug}`;
-    const message = [
-      `Category: ${categoryName}`,
-      `Model: ${modelLabel}`,
-      `Size required: ${d.size || "—"}`,
-      `Quantity: ${d.qty}`,
-      `Delivery location: ${d.location}`,
-      `PIN code: ${d.pincode || "—"}`,
-      "",
-      "Additional specifications:",
-      d.specs || "—",
-      "",
-      "Message:",
-      d.message || "—",
-      "",
-      `Submitted from: ${page}`,
-    ].join("\n");
-
-    const enquiry: TablesInsert<"enquiries"> = {
-      name: d.name,
-      email: d.email,
-      phone: d.phone,
-      company: null,
-      subject: `Category enquiry — ${categoryName}: ${modelLabel} × ${d.qty}`,
-      message,
-      enquiry_type: "quote",
-      product_id: model?.id ?? null,
-      product_name: model ? model.name : `${categoryName} — custom requirement`,
-      lead_source: "Category Page Enquiry",
-    };
 
     setStatus("sending");
+    setServerMessage("");
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { error } = await supabase.from("enquiries").insert(enquiry);
-      if (error) throw error;
-      supabase.functions.invoke("send-enquiry-notification", { body: enquiry }).catch(() => {});
-      setStatus("sent");
+      const res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          categorySlug,
+          fields: values,
+          website: honeypot,
+          elapsedMs: Date.now() - startedAt.current,
+        }),
+      });
+      const body = (await res.json().catch(() => ({}))) as { error?: string; errors?: Errors };
+      if (res.ok) {
+        setStatus("sent");
+      } else if (res.status === 400 && body.errors && Object.keys(body.errors).length > 0) {
+        setErrors(body.errors);
+        setStatus("idle");
+        focusFirst(body.errors);
+      } else if (res.status === 429) {
+        setServerMessage(body.error || "Too many enquiries. Please wait a few minutes.");
+        setStatus("limited");
+      } else {
+        setServerMessage(body.error || "");
+        setStatus("failed");
+      }
     } catch {
       setStatus("failed");
     }
@@ -317,6 +277,15 @@ export function CategoryEnquiryForm({
             <Textarea {...fieldProps("message")} rows={3} className="mt-1.5" />
             {errorText("message")}
           </div>
+
+          {status === "limited" && (
+            <p role="alert" className="sm:col-span-2 rounded-lg border border-border bg-card p-3 text-sm text-foreground">
+              {`${serverMessage} `}
+              <a href={`tel:${COMPANY.phones[0].e164}`} className="font-semibold text-accent underline">
+                {COMPANY.phones[0].display}
+              </a>
+            </p>
+          )}
 
           {status === "failed" && (
             <p role="alert" className="sm:col-span-2 rounded-lg border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
