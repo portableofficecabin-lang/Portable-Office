@@ -5132,10 +5132,405 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Container Office in Doddaballapura", href: "/cities-we-serve/container-office-in-doddaballapura" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
+      { label: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tumkur district; delivery, unloading and placement are arranged for each project, and the lead times on this page are indicative, not guaranteed. The images on this page show Portable Office Cabin's standard container office designs, including an optionally furnished interior, and are not photographs of installations in Tumkur. Industrial areas, highways, towns and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial estate, developer or facility operator in the district, and entry to any such premises is subject to that facility's own permissions. Notes on approvals and foundations are general guidance, not legal or engineering advice; the base, anchoring and any approvals for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINER IN TUMKUR — new and used shipping containers (the box itself: sale,
+   * rental, storage, modification) for the NH 48 industrial belt (Vasanthanarasapura, the
+   * Machine Tool Park, Gubbi, Kyathsandra–Dabaspet) and the agricultural taluks (Tiptur copra,
+   * Chikkanayakanahalli / Turuvekere areca, Sira / Pavagada groundnut). Sibling of the
+   * container-office page above: each owns its own keyword and they link to each other.
+   *
+   * Owner copy of 2026-10-12, mapped onto the fixed template slots the same way as the Mysore,
+   * Athipattu, Mettur and Jigani shipping-container pages. The draft has 14 H2s for 10 slots, so
+   * four are folded with their content intact:
+   *   • "Industrial and Agricultural Use" → why: its two buyer categories as the first two bullets,
+   *     then "Applications Across Tumkur District" (ten table rows as bullets, each row's matching
+   *     H3 appended) — and "Agricultural Container Storage: Ventilation, Heat and Moisture" (its
+   *     intro in the agricultural bullet, its copra / areca / groundnut H3s in the Tiptur,
+   *     Chikkanayakanahalli and Sira rows, "open agricultural land" as the last bullet).
+   *   • "Types and Sizes" → solutions: six numbered H3s, each carrying its row of the table.
+   *   • "New and Used" + "Choosing … Based on Storage Duration" → features; the cargo-transport
+   *     note → sizesNote.
+   *   • "What to Inspect" → industries; "Modification" → custom (eleven items under nine titles).
+   *   • "Transportation and Delivery" → how steps 4–5 (the access checklist and the cost table).
+   * The bag-capacity FAQs are corrected, not copied: the draft's "original planning estimate" of
+   * 600 × 50 kg bags in a 40 ft container is 30,000 kg — more than the payload of any standard
+   * 40 ft box — so the answer now says the load rating, not the floor, sets the limit. The
+   * "Website:" line is dropped as redundant on-site. No ₹ (file-header rule). Nothing claims we
+   * manufacture shipping containers or run a yard in Tumkur; the disclaimer says so.
+   *
+   * Images: four owner-dropped 1200×896 webp renders of a green dry container with a fitted side
+   * window, copied byte-for-byte to clean slug names; alt text describes the actual images.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-in-tumkur",
+    city: "Tumkur",
+    listTitle: "Shipping Container in Tumkur",
+    metaTitle: "Shipping Container in Tumkur – New & Used Containers",
+    metaDescription:
+      "New and used 20 ft and 40 ft shipping containers in Tumkur (Tumakuru) for industrial, agricultural and site storage, with rental and modification. Get a quote.",
+    keywords:
+      "shipping container in Tumkur, shipping container Tumakuru, used shipping container Tumkur, 20 ft container Tumkur, 40 ft container Tumkur, container for sale Tumkur, container rental Tumkur, container for copra storage Tiptur, storage container Vasanthanarasapura, shipping container Pavagada",
+    geo: { region: "IN-KA", placename: "Tumakuru (Tumkur), Karnataka, India", position: "13.3392;77.1139", icbm: "13.3392, 77.1139" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-in-tumkur/shipping-container-in-tumkur-exterior.webp",
+      alt: "Shipping container in Tumkur — green dry shipping container seen from one corner: corrugated steel side wall with a fitted window, corner castings and double cargo doors with four locking bars, in a container yard with stacked containers behind",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-in-tumkur/shipping-container-in-tumkur-side-view.webp",
+      alt: "Long side of the green dry shipping container: corrugated steel wall with a square window fitted into it, and forklift pockets in the base rail",
+      width: 1200,
+      height: 896,
+      caption: "Windows, vents, extra doors and shelving can be added to suit the use.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-in-tumkur/shipping-container-in-tumkur-interior.webp",
+      alt: "Green dry shipping container with both cargo doors open: corrugated steel walls and roof, a fitted side window, a ventilation grille on the end wall and a plywood floor",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-in-tumkur/shipping-container-in-tumkur-door-end.webp",
+        alt: "Door end of the green dry shipping container: two cargo doors with four vertical locking bars, cam handles and a central lock box",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Shipping Container in Tumkur – New & Used Containers",
+    tagline: "20 Ft & 40 Ft Shipping Containers for Sale, Rental and Industrial Storage in Tumkur",
+    intro: [
+      "Looking for a reliable shipping container in Tumkur for industrial storage, construction materials, agricultural produce, warehouse expansion or commercial applications?",
+      "Portable Office Cabin supplies new and used shipping containers for industrial contractors, manufacturing facilities, agricultural traders, warehouses, construction companies and businesses across Tumkur and surrounding locations.",
+      "Tumkur, officially known as Tumakuru, has a diverse industrial and agricultural economy. Manufacturing and engineering activities around Vasanthanarasapura, the Machine Tool Park, Gubbi and NH 48 generate demand for secure equipment storage. Agricultural markets in Tiptur, Chikkanayakanahalli, Sira and Pavagada have different requirements for storing produce, tools and equipment.",
+      "Our container options include 20 ft and 40 ft dry shipping containers, high-cube containers, used storage containers and specialised container configurations, subject to availability.",
+      "Whether you need one container for a construction site or several containers for industrial storage, our team can help you identify an appropriate size, condition and specification.",
+      "Request a shipping container quotation in Tumkur: contact Portable Office Cabin with your required container size, quantity, application and delivery location.",
+    ],
+
+    whyHeading: "Shipping Containers for Industrial and Agricultural Use in Tumkur",
+    whyIntro:
+      "Shipping containers offer enclosed, lockable and movable storage space for a variety of applications. Unlike permanent warehouse construction, a container can be delivered to a prepared location and relocated when requirements change, subject to suitable transport and lifting arrangements. Tumkur has two important categories of shipping container buyers, and different industrial and agricultural locations around the district have distinct container requirements:",
+    whyBullets: [
+      {
+        title: "Industrial Shipping Container Requirements Along NH 48",
+        text: "The industrial corridor around Tumkur includes manufacturing establishments, engineering workshops, industrial parks and logistics facilities. Areas such as Vasanthanarasapura, Antharasanahalli, Hirehalli, Gubbi and the NH 48 belt have industrial activities that may require additional storage for materials and equipment. Common requirements: construction contractors need secure storage for tools, cables, construction materials and mechanical fittings; manufacturing plants, additional stores for maintenance equipment, spares, dies and components; engineering workshops, lockable storage for machinery parts, steel components and fabrication materials; warehouse operators, supplementary storage for inventory and seasonal stock; and industrial projects, temporary equipment stores that can be relocated as site activities progress. 20 ft containers are often practical for contractor stores, while 40 ft containers may be suitable for larger inventory requirements.",
+      },
+      {
+        title: "Agricultural Shipping Container Requirements Across Tumkur",
+        text: "Agricultural businesses around Tiptur, Chikkanayakanahalli, Turuvekere, Sira and Pavagada may require additional storage for produce and farm equipment: copra storage around Tiptur, areca storage around Chikkanayakanahalli and Turuvekere, groundnut storage around Sira and Pavagada, storage for compatible agricultural supplies, pump and generator equipment housing, and farm tools and machinery storage. Agricultural produce has specific moisture, ventilation and hygiene requirements, and Tumkur's agricultural storage requirements differ from those of a typical industrial material store: containers installed on open agricultural land may be exposed to strong sunlight, dust, seasonal rainfall and changing humidity. A standard sealed steel shipping container is not automatically suitable for storing copra, areca or other sensitive produce. Appropriate ventilation, moisture control and temperature management must be considered before selecting the container.",
+      },
+      {
+        title: "Vasanthanarasapura Industrial Area",
+        text: "Typical application: contractor tools, maintenance materials and site equipment; suitable option: a 20 ft dry container. Manufacturing plants and contractors around Vasanthanarasapura may require secure storage for electrical materials, mechanical tools, equipment and spare parts. A 20 ft shipping container can provide enclosed storage, subject to the site's safety and access requirements.",
+      },
+      {
+        title: "Machine Tool Park and Industrial Units",
+        text: "Typical application: machinery spares, dies and components; suitable option: a 20 ft or 40 ft container.",
+      },
+      {
+        title: "Gubbi and Nearby Vendor Units",
+        text: "Typical application: lockable parts and equipment storage; suitable option: a 20 ft dry container.",
+      },
+      {
+        title: "Dabaspet to Kyathsandra",
+        text: "Typical application: warehouse overflow and logistics storage; suitable option: a 40 ft standard or high-cube container. Warehouses and logistics establishments along the NH 48 corridor may use shipping containers for overflow inventory or additional stock storage. 40 ft containers offer larger enclosed storage capacity where road access and handling equipment are available.",
+      },
+      {
+        title: "Tiptur",
+        text: "Typical application: copra and agricultural inventory storage; suitable option: a suitably ventilated and adapted 40 ft container. Tiptur's copra-related businesses may require supplementary storage for compatible packaged materials or equipment. Copra requires suitable moisture and temperature conditions to prevent deterioration, so a shipping container used for copra storage may require ventilation, insulation, shading or other appropriate environmental controls, and bag arrangement and clearances should allow inspection and suitable airflow. Where shipping containers are used for agricultural produce, the necessary ventilation and environmental controls should be assessed before installation.",
+      },
+      {
+        title: "Chikkanayakanahalli and Turuvekere",
+        text: "Typical application: areca-related storage; suitable option: a suitably adapted 20 ft or 40 ft container. Areca storage requires attention to moisture protection, cleanliness and ventilation. A properly adapted container may serve as supplementary storage, but conditions should be assessed for the specific product and storage duration.",
+      },
+      {
+        title: "Sira and Pavagada",
+        text: "Typical application: farm equipment, groundnut-related storage and solar-site materials; suitable option: a 20 ft or 40 ft container. Groundnut storage requires suitable control of moisture and temperature. A sealed shipping container exposed to direct sunlight can become excessively hot, so modifications or environmental controls may be required.",
+      },
+      {
+        title: "Koratagere and Madhugiri",
+        text: "Typical application: quarry and construction equipment storage; suitable option: a 20 ft used container. Engineering and fabrication businesses in Madhugiri and Koratagere may use shipping containers for storing equipment, machine components and construction materials. The selected container should suit the expected loading and working conditions.",
+      },
+      {
+        title: "Kunigal and Tumkur City",
+        text: "Typical application: construction sites, shops and commercial projects; suitable option: a 20 ft container or modified unit. Shipping containers may also be modified into kiosks, offices, cafés and other commercial spaces in Tumkur City. Suitable structural design, insulation, ventilation, electrical works and applicable local approvals must be considered.",
+      },
+      {
+        title: "Pavagada Solar Region",
+        text: "Typical application: electrical equipment, tools and maintenance spares; suitable option: a 20 ft industrial storage container. Solar power installations and contractors may need lockable storage for tools, spare parts, cables and maintenance equipment. Containers installed on exposed sites require appropriate foundations or supports, access arrangements and wind-restraint measures where applicable.",
+      },
+      {
+        title: "Storage on Open Agricultural Land",
+        text: "Containers installed in exposed areas need appropriate structural support and, where required, anchoring designed for the local wind conditions. The container should also be protected against standing water and poor site drainage.",
+      },
+    ],
+
+    solutionsHeading: "Types and Sizes of Shipping Containers Available in Tumkur",
+    solutionsIntro:
+      "Choosing the correct container depends on the required floor area, internal height, material weight, storage duration and available road access. The figures below (approximate internal floor area, volume and approximate empty weight) are indicative: actual measurements, weights and capacities depend on the manufacturer, container model and modifications.",
+    solutions: [
+      {
+        title: "20 Ft Shipping Container in Tumkur",
+        text: "The 20 ft shipping container is a practical option for industrial contractors, construction companies, agricultural properties and commercial establishments. It offers approximately 149 sq ft of internal floor area in a standard dry configuration, with about 33 m³ of volume and an approximate empty weight of 2,250 kg, and is commonly used for construction and industrial storage. Suitable applications include construction tools and materials, factory maintenance equipment, industrial electrical supplies, machinery spare parts, farm tools and pump equipment, and general commercial storage. A 20 ft container may also be easier to deliver to some restricted-access locations compared with a larger 40 ft container.",
+      },
+      {
+        title: "40 Ft Shipping Container in Tumkur",
+        text: "The 40 ft shipping container provides greater storage capacity for industrial and agricultural applications. It is suitable for businesses requiring additional enclosed storage for equipment, finished goods, warehouse inventory and other compatible materials. A standard 40 ft dry container provides approximately 305 sq ft of internal floor area, with about 67 m³ of volume and an approximate empty weight of 3,750 kg, and is commonly used for agricultural and warehouse storage. For agricultural traders, the actual capacity depends on bag size, stacking arrangement, permissible loading, ventilation and the space required for inspection and access.",
+      },
+      {
+        title: "40 Ft High-Cube Shipping Container",
+        text: "High-cube containers provide additional internal height compared with standard shipping containers: a 40 ft high cube offers approximately 305 sq ft of floor area and about 76 m³ of volume, with an approximate empty weight of 3,900 kg. They may be considered for manufacturing spare parts and equipment, warehouse storage racks, bulky inventory, commercial container conversions and applications requiring additional internal clearance.",
+      },
+      {
+        title: "10 Ft Modified Shipping Container",
+        text: "A compact 10 ft container (approximately 71 sq ft of floor area, about 16 m³ of volume and an approximate empty weight of 1,300 kg) may be suitable for pump housing, generator housing, small tools and equipment storage. Modified containers must be assessed for structural integrity, lifting provisions and the intended load.",
+      },
+      {
+        title: "20 Ft Refrigerated Shipping Container",
+        text: "Refrigerated containers, commonly called reefer containers, provide temperature-controlled storage when equipped with a suitable operational refrigeration system. A 20 ft reefer offers approximately 134 sq ft of floor area and about 28 m³ of volume, with an approximate empty weight of 3,050 kg. They may be considered for dairy products, flowers, vegetables and other temperature-sensitive goods. The electrical requirements, working condition, available temperature range and suitability for the intended products must be confirmed before purchase or rental.",
+      },
+      {
+        title: "Open-Top Shipping Container",
+        text: "Open-top containers are specialised configurations designed for cargo requiring top loading: a 20 ft open top offers approximately 149 sq ft of floor area and about 32 m³ of volume, with an approximate empty weight of 2,350 kg. They may be useful for certain engineering, machinery and industrial-material applications where standard cargo doors are insufficient.",
+      },
+    ],
+
+    featuresHeading: "New and Used Shipping Containers for Sale in Tumkur",
+    featuresIntro:
+      "Portable Office Cabin deals in new and used shipping and storage containers for different industrial, commercial and project requirements. Selecting the correct container condition helps balance purchase cost, appearance and intended use, and the expected period of use is an important factor when selecting the grade. The container grades, with their condition and suitable application, and then the choice by storage duration:",
+    features: [
+      "New / One-Trip — limited previous cargo use, generally better cosmetic condition — premium storage, offices and commercial conversions",
+      "Cargo-Worthy (CW) — used container assessed for cargo transport, subject to required certification — industrial storage and approved cargo movements",
+      "Wind and Watertight (WWT) — used container with a weather-resistant enclosure, not necessarily certified for shipping — stationary industrial and agricultural equipment storage",
+      "As-Is — existing condition, potentially requiring repairs — refurbishment and selected fabrication projects",
+      "New shipping containers — new or one-trip containers are often preferred when the external appearance and overall condition are important. They may be suitable for container offices, kiosks, retail outlets and other commercial conversion projects.",
+      "Used shipping containers — used shipping containers offer a lower-cost option for suitable storage applications. They may have visible dents, scratches, surface rust or previously repaired areas. The condition of the roof, flooring, cargo doors, rubber seals and structural frame should be checked before purchase.",
+      "Refurbished shipping containers — refurbished containers may undergo repainting, minor steel repairs, flooring work or door servicing according to the agreed scope. Refurbishment improves appearance or usability but does not automatically establish cargo-worthiness.",
+      "Temporary or seasonal storage — a WWT container or rental arrangement may be suitable for a construction project, temporary industrial store or seasonal business requirement. The decision depends on the rental period, total cost and required container condition.",
+      "Medium-term industrial storage — for storage lasting several years, a WWT or cargo-worthy container may be considered according to the required structural condition and application. Routine maintenance and appropriate site placement can help maintain its usability.",
+      "Long-term storage or commercial conversion — for long-term commercial conversions, one-trip containers may be preferred because of their generally better starting condition. However, suitability still depends on the container's actual structure and the proposed modifications.",
+    ],
+    sizesNote:
+      "Containers intended for cargo transportation must meet the requirements of the relevant operator: applicable certification, inspection and CSC compliance should be confirmed before purchase.",
+
+    industriesHeading: "What to Inspect Before Buying a Used Shipping Container in Tumkur",
+    industriesIntro:
+      "When purchasing a used container, particularly one located at a yard outside Tumkur, customers should assess the actual unit being offered:",
+    industries: [
+      { title: "Roof Condition", text: "Inspect for dents, perforation, damaged coatings and areas where water may accumulate." },
+      {
+        title: "Container Flooring",
+        text: "Check marine plywood or other installed flooring for soft spots, moisture damage, delamination and previous repairs.",
+      },
+      {
+        title: "Cargo Doors and Rubber Seals",
+        text: "Verify that the doors close correctly and that the hinges, locking bars and weather seals are functional.",
+      },
+      {
+        title: "Structural Frame and Corner Castings",
+        text: "Inspect the corner posts, lifting points and structural members for serious corrosion, cracking or damage.",
+      },
+      {
+        title: "Container Identification",
+        text: "Check the container identification number, available manufacturing details and certification information where relevant.",
+      },
+      {
+        title: "Previous Cargo and Interior Condition",
+        text: "Where a container will be used for agricultural produce, food-related goods or other sensitive materials, review any available cargo history and assess contamination risks. Request current photographs, or an inspection of the specific container, rather than relying solely on generic catalogue images.",
+      },
+    ],
+
+    customHeading: "Shipping Container Modification and Customisation Services",
+    customIntro:
+      "Portable Office Cabin supplies container-based structures and portable cabin solutions for industrial and commercial requirements. Depending on the project scope, modifications may include:",
+    customBullets: [
+      { title: "Doors and openings", text: "Personnel doors and additional access openings; fixed or sliding windows." },
+      { title: "Ventilation and security", text: "Ventilation openings; heavy-duty lockboxes." },
+      { title: "Storage fit-out", text: "Internal shelving and storage racks." },
+      { title: "Electrical", text: "Electrical wiring and LED lighting." },
+      { title: "Insulation and interiors", text: "Interior wall panels and insulation." },
+      { title: "Flooring", text: "Flooring repairs or replacements." },
+      { title: "Exterior", text: "Exterior repainting." },
+      { title: "Equipment housing", text: "Generator and pump housing modifications." },
+      { title: "Conversions", text: "Commercial and office interior modifications." },
+    ],
+    customOutro:
+      "For agricultural storage, ventilation and insulation requirements should be designed according to the stored product. For fully fitted office cabins, workstations and air conditioning, explore our separate Container Office and Portable Office Cabin categories.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Shipping Containers in Tumkur?",
+    whyUsIntro: "What an enquiry with Portable Office Cabin covers:",
+    whyUsBullets: [
+      {
+        title: "New and Used Container Options",
+        text: "Customers can enquire about different container sizes, grades and conditions according to stock availability.",
+      },
+      {
+        title: "Industrial and Commercial Experience",
+        text: "Our product range includes storage containers, portable office cabins and container-based structures for industrial, construction and commercial requirements.",
+      },
+      {
+        title: "Container Customisation",
+        text: "We can discuss modifications such as additional doors, windows, electrical fittings, shelving, insulation and ventilation.",
+      },
+      {
+        title: "Delivery Planning",
+        text: "Container delivery requires suitable transportation and unloading arrangements. We can review the delivery location and clarify transportation responsibilities before order confirmation.",
+      },
+      {
+        title: "Clear Commercial Quotations",
+        text: "Quotations can specify the container size, condition, modifications, GST, transport and unloading scope.",
+      },
+      {
+        title: "Site-Specific Requirements",
+        text: "For industrial plants, agricultural plots and solar sites, road access, ground conditions and any required permits should be confirmed before dispatch.",
+      },
+    ],
+
+    areasHeading: "Shipping Container Supply Areas in Tumkur District",
+    areasText:
+      "Portable Office Cabin accepts shipping container enquiries across Tumkur and surrounding areas. Industrial areas: Vasanthanarasapura, Antharasanahalli, Hirehalli, Gubbi, Kyathsandra and the NH 48 industrial corridor. Tumkur City and surroundings: Tumkur City, Kunigal Road, Gubbi Road, Madhugiri Road and surrounding commercial areas. Agricultural and taluk locations: Tiptur, Chikkanayakanahalli, Turuvekere, Sira, Madhugiri, Koratagere and Pavagada. Nearby industrial corridor: Dabaspet and adjoining areas, subject to transport availability and site access.",
+
+    howHeading: "How to Buy or Rent a Shipping Container in Tumkur",
+    howSteps: [
+      {
+        title: "Share Your Requirements",
+        text: "Provide the required container size, quantity, application and delivery location. Example enquiries: “20 ft used shipping container for industrial tool storage at Vasanthanarasapura, Tumkur.” “40 ft container for agricultural storage near Tiptur, subject to suitable ventilation requirements.” “20 ft container for equipment storage at Pavagada, with delivery and unloading details.”",
+      },
+      {
+        title: "Select the Container Type",
+        text: "Choose the most suitable new, used, standard, high-cube or specialised container configuration according to the intended use and available stock.",
+      },
+      {
+        title: "Confirm Container Specifications",
+        text: "Review the size, condition, flooring, roof, doors, identification details and required modifications.",
+      },
+      {
+        title: "Review Transportation Arrangements",
+        text: "Confirm road access, available unloading space, lifting equipment and site support requirements. Transportation is an important part of the total cost when purchasing a shipping container, and Tumkur's industrial areas along NH 48 may have different access requirements from agricultural plots in Tiptur, Sira, Pavagada or smaller villages. A 20 ft shipping container may be transported using a suitable container truck or other approved vehicle; the unloading arrangement depends on container weight, site clearance, ground conditions and equipment availability. 40 ft shipping containers generally require suitable trailers or specialised container transport vehicles; before delivery, confirm the approach-road width, vehicle turning space, height restrictions and overhead cables, ground stability, unloading area and availability of suitable lifting equipment. Where access is restricted, two 20 ft containers may be considered as an alternative to a single 40 ft container; the better option depends on the total container cost, transportation charges, available space, storage layout and unloading requirements.",
+      },
+      {
+        title: "Confirm the Quotation",
+        text: "Review the container price, applicable GST, modifications, transportation, unloading responsibilities and payment terms. The quotation separates the container price (new or used container cost), transportation (delivery from the dispatch location to your site), unloading (hydra, crane or suitable lifting equipment, where required), modifications (doors, windows, vents, flooring or other changes) and GST (applicable taxes); transportation and unloading responsibilities should be clearly identified.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "Once the order is confirmed, delivery can be arranged according to the agreed schedule and site requirements.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a 20 ft shipping container in Tumkur?",
+        answer:
+          "The price depends on the container's age, condition, grade, availability and required modifications. Transportation and unloading charges may be additional. Contact Portable Office Cabin for a current quotation.",
+      },
+      {
+        question: "What is the cost of a 40 ft shipping container in Tumkur?",
+        answer:
+          "The cost depends on whether the container is standard or high cube, new or used, and the required delivery arrangements.",
+      },
+      {
+        question: "Do you supply used shipping containers in Tumkur?",
+        answer:
+          "Portable Office Cabin deals in new and used storage containers. Available sizes and conditions can be discussed according to your requirements.",
+      },
+      {
+        question: "Can a shipping container be used for copra storage in Tiptur?",
+        answer:
+          "A shipping container may be adapted for copra storage, but appropriate ventilation, moisture control, temperature management and hygiene are essential. A standard unmodified container should not automatically be considered suitable for storing copra.",
+      },
+      {
+        question: "Can shipping containers be used for areca and groundnut storage?",
+        answer:
+          "They may be considered where the container and its environmental controls meet the crop's storage requirements. Humidity, condensation, temperature and ventilation need particular attention.",
+      },
+      {
+        question: "How many bags can fit inside a 20 ft shipping container?",
+        answer:
+          "A rough planning estimate is about 300 bags of 50 kg (about 15,000 kg), but actual capacity depends on bag dimensions, stacking method, usable floor area, ventilation, access clearances and the container's permissible load. This figure should not be used as a guaranteed capacity.",
+      },
+      {
+        question: "How many bags fit inside a 40 ft container?",
+        answer:
+          "The floor space of a 40 ft container could hold roughly 600 bags of 50 kg, but that is about 30,000 kg — more than the permissible payload of a standard 40 ft container — so for heavy produce the container's load rating, not its floor area, sets the limit. Actual capacity depends on cargo weight, packaging, safe stacking and the specific container; check the payload on its identification plate.",
+      },
+      {
+        question: "Can shipping containers be delivered to agricultural plots?",
+        answer:
+          "Delivery may be possible depending on the approach road, ground condition, container size, vehicle accessibility and unloading requirements.",
+      },
+      {
+        question: "Can a shipping container be installed at Pavagada Solar Park?",
+        answer:
+          "Containers may be suitable for approved equipment-storage applications, subject to the project's permission, safety procedures, wind-loading requirements and site conditions.",
+      },
+      {
+        question: "Do shipping containers need anchoring in windy locations?",
+        answer:
+          "Some installations require anchoring or engineered restraint, particularly in exposed areas. The appropriate design depends on local wind loads, container configuration and site conditions.",
+      },
+      {
+        question: "Can I rent a shipping container in Tumkur?",
+        answer:
+          "Rental availability depends on the container size, rental duration and current stock. Security deposit, transport and collection charges are subject to the agreed commercial terms.",
+      },
+      {
+        question: "What is the difference between cargo-worthy and wind-and-watertight containers?",
+        answer:
+          "Cargo-worthy containers are assessed for cargo transport according to applicable requirements. WWT containers are generally intended for stationary storage and are not automatically approved for shipping.",
+      },
+      {
+        question: "Does a shipping container require a concrete foundation?",
+        answer:
+          "A shipping container requires stable and appropriately supported placement. The foundation or support arrangement depends on ground conditions, expected loading and the intended use.",
+      },
+      {
+        question: "Can you modify a shipping container into an office or shop?",
+        answer:
+          "Shipping containers can be modified for certain office or commercial applications with suitable structural changes, windows, electrical fittings, insulation and interior finishes.",
+      },
+      {
+        question: "How long does container delivery take in Tumkur?",
+        answer:
+          "Delivery depends on container stock, modifications, transport arrangements and the delivery location. The schedule can be confirmed during order finalisation.",
+      },
+    ],
+
+    ctaHeading: "Get a Shipping Container Quotation in Tumkur",
+    ctaText: `Looking for new or used shipping containers for sale or rental in Tumkur? Contact Portable Office Cabin for 20 ft and 40 ft shipping containers, industrial storage applications, agricultural equipment storage, container modifications and available rental arrangements. To request a quotation, share the required container size, your new or used container preference, the quantity, the purpose or application, the delivery location, any required modifications, and site access and unloading details. Email: ${COMPANY.email.sales}. Request your shipping container quotation today: our team can review your requirements and provide a quotation based on available containers, specifications and transportation arrangements.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container Rental", href: "/products/shipping-container-rental" },
+    ],
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Tumkur district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The images show a representative dry shipping container, not a unit at a site in Tumkur. Dimensions, volumes, weights and bag counts on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. The Machine Tool Park, Pavagada Solar Park, Vasanthanarasapura and other places are named only to describe the service area: Portable Office Cabin is not affiliated with any industrial area, solar park, developer, operator or market. Notes on produce storage, anchoring, certification and local permissions are general guidance, not agronomic, engineering or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
