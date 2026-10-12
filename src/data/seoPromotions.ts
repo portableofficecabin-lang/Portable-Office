@@ -302,9 +302,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   // Shipping-container hubs (Tamil Nadu, Chennai) — the Athipattu shipping-container page (Tiruvallur
   // district, Ennore–Kattupalli port belt), the first Tamil Nadu city page for this keyword; the page
-  // links back to both hubs.
+  // links back to both hubs. The Tamil Nadu hub also lists the Mettur, Salem shipping-container page
+  // (inland Salem district), which links back to it; Mettur is not on the Chennai hub.
   "Shipping Container|Tamil Nadu": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+    { name: "Shipping Container in Mettur, Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
   ],
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
