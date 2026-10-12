@@ -847,15 +847,25 @@ export const products: Product[] = [
     categorySlug: "cargo-storage-shipping-containers",
     description: "Heavy-duty cargo storage container built to handle the toughest storage demands. Standard 20ft size with Corten steel construction for maximum weather resistance. Ideal for secure on-site material storage, warehousing, and logistics. These containers feature reinforced flooring, lockable cargo doors, and anti-corrosion treatment — ready to deploy at construction sites, factories, ports, and commercial facilities across India.",
     shortDescription: "20ft steel storage container — secure, weatherproof, relocatable",
+    /* 20 ft only (owner, Oct 2026): the fixed price buys the 20 ft unit, so the 40 ft figures
+       ("/ 40ft x 8ft x 8.5ft", "/ 320 sq ft", "Up to 30,000 kg (40ft)") were removed. These rows
+       also feed g:product_highlight / g:product_detail in the Merchant feed. The size and floor
+       area are the standard ISO 668 20 ft dry container and match what the site states elsewhere
+       for 20 ft: external 6.06 x 2.44 x 2.59 m, internal about 5.90 x 2.35 x 2.39 m (about
+       149 sq ft) (cityPages.ts).
+       Load Capacity is deliberately NOT a number. The owner requires the payload and max gross
+       weight to be confirmed against the supplied container's CSC plate or the manufacturer's
+       documentation, and neither was available. Replace the row with the rated figures once
+       they are confirmed. */
     specifications: [
-      { label: "Sizes Available", value: "20ft x 8ft x 8.5ft / 40ft x 8ft x 8.5ft" },
-      { label: "Floor Area", value: "160 sq ft / 320 sq ft" },
+      { label: "Sizes Available", value: "20ft x 8ft x 8.5ft" },
+      { label: "Floor Area", value: "160 sq ft external (about 149 sq ft inside)" },
       { label: "Frame", value: "Corten steel (weathering steel)" },
       { label: "Flooring", value: "28mm marine-grade plywood" },
       { label: "Doors", value: "Double-leaf lockable cargo doors" },
       { label: "Roof", value: "Corrugated steel, watertight sealed" },
       { label: "Coating", value: "Anti-corrosion primer + industrial enamel" },
-      { label: "Load Capacity", value: "Up to 30,000 kg (40ft)" },
+      { label: "Load Capacity", value: "Depends on the supplied container — please confirm the rated payload with us before ordering" },
     ],
     features: [
       "Corten steel construction for extreme durability",
