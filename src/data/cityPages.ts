@@ -2689,11 +2689,12 @@ export const CITY_PAGES: CityPage[] = [
    * an office (src/lib/company.ts). The draft carries no ₹ figure (file-header rule). It names
    * the Mettur Thermal Power Station and Mettur Dam ⇒ nominative-use disclaimer below the CTA.
    *
-   * Images: five owner-dropped webp files ("public/images/Container office in mettur, salem
-   * city page/"), copied byte-for-byte to clean slug names. Alt text and the caption describe
-   * the ACTUAL renders — a charcoal-grey corrugated unit with a navy-blue lower band, glass
-   * door, black-framed casement windows and a flat roof canopy with downlights; the top-down
-   * roof shot is a separate green-framed unit — and every alt leads with the full page name.
+   * Images: four owner-dropped webp files ("public/images/Container office in mettur, salem
+   * city page/"), copied byte-for-byte to clean slug names. Alt text describes the ACTUAL
+   * renders — a charcoal-grey corrugated unit with a navy-blue lower band, glass door,
+   * black-framed casement windows and a flat roof canopy with downlights — and every alt leads
+   * with the full page name. No featureImage: the only top-down roof shot supplied showed a
+   * different, green-framed unit, so the owner had it removed (2026-10-12) rather than mix units.
    *
    * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -2714,14 +2715,6 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Container office in Mettur, Salem — charcoal-grey corrugated-steel portable office with a navy-blue lower band, a full-height glass entrance door, black-framed casement windows and a flat overhanging roof with LED downlights, on a paved pad beside an industrial building",
       width: 1264,
       height: 848,
-    },
-    featureImage: {
-      src: "/images/cities/container-office-in-mettur-salem/container-office-in-mettur-salem-aerial-view.webp",
-      alt: "Container office in Mettur, Salem — top-down view of a portable office cabin: corrugated steel roof inside a green-painted steel perimeter frame with a corner fitting at each corner, placed on a concrete yard beside an industrial building",
-      width: 1024,
-      height: 1024,
-      caption:
-        "Seen from above: the corrugated roof sits inside the welded steel perimeter frame, with a corner fitting at each corner. Near ash yards, chemical units or the Cauvery, roof joints, sealing and the protective coating system are specified before fabrication.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-mettur-salem/container-office-in-mettur-salem-interior.webp",
