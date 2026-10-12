@@ -872,7 +872,17 @@ export const products: Product[] = [
       "Stackable up to 3 units high",
       "Customisable with shelving, lighting & ventilation",
     ],
-    images: ["/placeholder.svg"],
+    /* Owner-approved 20 ft renders (issue #100), copied from the Shipping Container in Athipattu
+       page (PR #93). They replace a photo of a 40 ft box on a trailer that showed a leasing
+       company's container number (TGHU 911633 9) and a truck plate. All three measure as a 20 ft
+       x 8 ft x 8 ft 6 in box. The side elevation has one background marking removed; the
+       container itself is untouched. images[0] is the card, page, og:image, JSON-LD and Merchant
+       feed image and must stay identical to productImages.ts. */
+    images: [
+      "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp",
+      "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-front.webp",
+      "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-side-elevation.webp",
+    ],
     price: 185000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,
