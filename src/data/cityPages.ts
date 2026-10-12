@@ -3422,10 +3422,389 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
       { label: "Container Office in SIPCOT Coimbatore", href: "/cities-we-serve/container-office-in-sipcot-coimbatore" },
       { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+      { label: "Shipping Container in Mettur, Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office or service partner in Mettur or Salem, delivery and installation are arranged for each project, and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Mettur or Salem. The Mettur Thermal Power Station, Mettur Dam and the power, chemical, industrial and water-infrastructure facilities named on this page are operated by independent organisations with which Portable Office Cabin is not affiliated; they are named only to describe delivery locations and typical uses — representative applications, not claims of completed installations — and entry to any such premises is subject to that facility's own permissions, EHS approvals and work permits. Notes on chemical exposure and coating systems, ash and dust sealing, moisture and foundations, transport clearances, lifting, safety fittings and electrical loads are general guidance; the specification, base, lifting method and any structural or electrical checks for a specific site are defined in the approved quotation and drawing. Approval notes on this page are general guidance, not legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINER IN METTUR, SALEM — new and used shipping containers (the box itself:
+   * sale, rental, storage, modification) for Mettur, Salem district and the Erode / Namakkal /
+   * Dharmapuri belt. Sibling of the container-office page above: each owns its own keyword and
+   * they link to each other.
+   *
+   * Owner copy of 2026-10-12, mapped onto the fixed template slots the same way as the Mysore
+   * and Athipattu shipping-container pages. The draft has 11 H2 sections for 8 slots, so three
+   * are FOLDED with their content intact:
+   *   • "Shipping Containers for Sale and Rental" → why: its "Who uses" table as prose in whyIntro,
+   *     and "Shipping Container Applications Across Mettur and Salem" (folded) — its eight local
+   *     H3s become the whyBullets and its by-location table becomes whyOutro prose.
+   *   • "Types and Sizes" → solutions: the six H3s stay numbered H3s, each carrying its row of
+   *     the size table; the table's "indicative figures" note closes solutionsIntro.
+   *   • "New and Used" → features: the four grades, then "Three Important Questions Before Buying
+   *     a Used Shipping Container" (folded) as four further items; the WWT caveat → sizesNote.
+   *   • "Maintenance in Mettur's Industrial Environment" → industries (five titled points).
+   *   • "Modification" → custom (twelve items grouped under eight titles; the template always
+   *     renders a bold title); "Why Choose" → whyUs; the six steps → how.
+   *   • "Supply Areas" → areasText, followed by "Transportation and Delivery" (folded) with its
+   *     cost-breakdown table as prose.
+   *   • The CTA checklist, e-mail and closing → ctaText; the "Website:" line is dropped as
+   *     redundant on-site.
+   * No ₹ anywhere (the draft had none). Nothing here claims we manufacture shipping containers
+   * or run a yard in Mettur or Salem: boxes are supplied subject to availability and the
+   * disclaimer says so.
+   *
+   * Images: five owner-dropped 1200×896 webp renders of one teal dry container fitted with a
+   * sliding window, wall light and lockable hatch (modifications — the disclaimer says so),
+   * copied byte-for-byte to clean slug names. Every alt leads with the page name and describes
+   * the actual image.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-in-mettur-salem",
+    city: "Mettur, Salem",
+    listTitle: "Shipping Container in Mettur, Salem",
+    metaTitle: "Shipping Container in Mettur, Salem – New & Used Containers",
+    metaDescription:
+      "New and used 20 ft and 40 ft shipping containers in Mettur and Salem for industrial storage, sale, rental and modification. Get a quote today.",
+    keywords:
+      "shipping container in Mettur, shipping container in Salem, shipping container Mettur Salem, used shipping container Salem, 20 ft container Mettur, 40 ft container Salem, container for sale Salem, container rental Salem, high cube container Salem, storage container Attur",
+    geo: { region: "IN-TN", placename: "Mettur, Salem, Tamil Nadu, India", position: "11.7863;77.8008", icbm: "11.7863, 77.8008" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-in-mettur-salem/shipping-container-in-mettur-salem-exterior.webp",
+      alt: "Shipping container in Mettur, Salem — teal dry shipping container seen from one corner: corrugated steel side wall fitted with a sliding window, wall light and lockable hatch, and double cargo doors with four locking bars, in a container yard",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-in-mettur-salem/shipping-container-in-mettur-salem-side-view.webp",
+      alt: "Shipping container in Mettur, Salem — long side of the teal dry container with an added sliding window, wall light and lockable hatch, above the forklift pockets in the base rail",
+      width: 1200,
+      height: 896,
+      caption:
+        "A dry container with a window, wall light and lockable hatch added. Each modification should be checked for structural suitability.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-in-mettur-salem/shipping-container-in-mettur-salem-interior.webp",
+      alt: "Shipping container in Mettur, Salem — teal container with both cargo doors open: corrugated steel walls and roof, a plywood floor with lashing points, and the added side window and light inside",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-in-mettur-salem/shipping-container-in-mettur-salem-door-end.webp",
+        alt: "Shipping container in Mettur, Salem — door end of the teal container: two cargo doors with four vertical locking bars, cam handles and a central lock box",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/shipping-container-in-mettur-salem/shipping-container-in-mettur-salem-end-view.webp",
+        alt: "Shipping container in Mettur, Salem — blank end wall of the teal container: a corrugated steel panel between the corner posts, with a corner casting at each corner",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Shipping Container in Mettur, Salem – New & Used Containers",
+    tagline: "20 Ft and 40 Ft Shipping Containers for Sale, Rental and Industrial Storage in Mettur and Salem",
+    intro: [
+      "Looking for a reliable shipping container in Mettur, Salem, for construction-site storage, industrial equipment, warehouse expansion, agricultural materials or commercial applications?",
+      "Portable Office Cabin supplies new and used shipping containers to businesses, industrial contractors, manufacturing units, warehouses and property owners across Mettur, Salem and surrounding locations.",
+      "Our container options include 20 ft and 40 ft dry shipping containers, high-cube containers, used storage containers and specialised container configurations, subject to availability.",
+      "Shipping containers provide lockable, durable and relocatable storage space. Their heavy-duty steel structure makes them a practical option for industrial and commercial locations where permanent storage construction may not be suitable.",
+      "For inland locations such as Mettur and Salem, choosing the correct container size is only part of the decision. Transportation costs, road access, unloading arrangements and container condition must also be considered.",
+      "Request a shipping container quotation in Mettur or Salem: share your required size, quantity, application and delivery location to receive a quotation based on your requirements.",
+    ],
+
+    whyHeading: "Shipping Containers for Sale and Rental in Mettur and Salem",
+    whyIntro:
+      "Shipping containers are widely used for stationary storage in industrial and commercial locations away from major seaports. In Mettur and Salem, containers may be suitable for power-sector contractors, chemical manufacturing facilities, engineering workshops, textile units, agricultural businesses and warehouse operators. Who uses shipping containers in Mettur and Salem? Power plant and industrial contractors use a 20 ft dry container for tools, spares and construction materials; chemical and manufacturing units, a 20 ft or 40 ft storage container for compatible equipment and maintenance-material storage; sago and starch industries, a 40 ft high-cube container for bagged product storage with suitable moisture control; power loom and textile units, a 20 ft or 40 ft container for yarn, fabric and finished-goods storage; fish hatcheries and agricultural businesses, a reefer or dry container for temperature-controlled products, pumps and equipment; engineering workshops, a used storage container for tools, steel components and machinery parts; warehouses and transport operators, a 40 ft standard or high-cube container for inventory overflow and spare parts; and resorts and commercial businesses, a new or modified container for kiosks, shops, offices and commercial conversions. The most suitable container depends on the materials being stored, the required condition, the site and whether the container will remain stationary or be relocated. Shipping container applications across Mettur and Salem — containers can be selected according to the area's industrial, commercial and agricultural activities:",
+    whyBullets: [
+      {
+        title: "Industrial Storage in Mettur",
+        text: "Industrial contractors working around Mettur may require secure and movable storage for mechanical parts, tools, electrical materials and project equipment. A 20 ft shipping container can provide enclosed storage, subject to the plant's site-entry and safety requirements.",
+      },
+      {
+        title: "Construction Site Storage in Salem",
+        text: "Construction projects across Salem may use shipping containers for storing tools, materials, equipment and other project supplies. The container can be relocated when the storage requirement changes, provided appropriate lifting and transportation arrangements are available.",
+      },
+      {
+        title: "Sago and Starch Industry Storage in Attur",
+        text: "Sago and starch processing businesses may require temporary or supplementary storage for finished products and packing materials. A 40 ft high-cube container may be considered where internal clearance and storage capacity are important. For food-related goods, ventilation, humidity, cleanliness, floor condition and product compatibility must be evaluated before use.",
+      },
+      {
+        title: "Textile Storage in Edappadi and Elampillai",
+        text: "Power loom and textile businesses may need additional enclosed space for yarn, fabric rolls and finished products. Shipping containers can provide lockable storage, although temperature, humidity and ventilation should be considered for sensitive textile products.",
+      },
+      {
+        title: "Agricultural Equipment Storage Around Kolathur and Mecheri",
+        text: "Shipping containers may be used to store pumps, tools, nets, equipment and compatible agricultural supplies. The location should have stable ground and suitable access for delivery and unloading.",
+      },
+      {
+        title: "Workshop Storage in Sankagiri",
+        text: "Engineering and truck-body workshops may require secure storage for steel components, welding equipment, mechanical spares and general tools. Used containers can be selected according to the required size, condition and loading requirements.",
+      },
+      {
+        title: "Warehouse Storage Around Salem Bypass",
+        text: "Commercial warehouses and transport businesses may use 40 ft containers for supplementary stock storage. The container type should be selected according to material dimensions, loading requirements and site access.",
+      },
+      {
+        title: "Container Shops and Commercial Conversions",
+        text: "New or used containers may also be converted into kiosks, offices, commercial shops and hospitality structures. Such projects require suitable structural modifications, electrical safety, ventilation, insulation and applicable local permissions. For fully fitted office requirements, explore our separate Container Office and Portable Office Cabin product categories.",
+      },
+    ],
+    whyOutro:
+      "Typical container requirements by location: Mettur Thermal Power Station area, P.N. Patti and Raman Nagar — contractor tools, spares and materials (20 ft dry container); Mettur Dam and Cauvery project areas — project materials and equipment storage (20 ft used container); Kolathur and Mecheri — fishing equipment, pumps and hatchery requirements (20 ft dry or suitable reefer container); Omalur and agricultural areas — farm tools, equipment and pumps (10 ft or 20 ft storage container); Attur and Salem sago industries — bagged sago and finished-product storage (40 ft high cube with suitable ventilation and moisture control); Edappadi, Elampillai and Jalakandapuram — textile yarn and finished-goods storage (20 ft or 40 ft dry container); Sankagiri — engineering materials and workshop storage (used 20 ft container); Salem Bypass and NH 44 — warehouse stock and transport-fleet spare parts (40 ft standard or high cube); Yercaud Road and Salem City — shops, kiosks and commercial conversions (new or modified shipping container).",
+
+    solutionsHeading: "Types and Sizes of Shipping Containers Available in Mettur and Salem",
+    solutionsIntro:
+      "Choosing a shipping container requires consideration of storage area, internal height, cargo dimensions, empty weight and access for the delivery vehicle. Each type below carries its approximate internal floor area, internal height and empty weight. Technical figures are indicative: actual internal dimensions, tare weights, load capacities and transport requirements must be confirmed against the selected unit.",
+    solutions: [
+      {
+        title: "10 Ft Modified Shipping Container",
+        text: "A compact 10 ft container can be considered for generator housing, pump rooms, equipment storage and locations where larger containers are impractical. It offers approximately 71 sq ft of internal floor area and 2.39 m internal height, with an empty weight of about 1,300 kg. Since 10 ft units may be manufactured by modifying larger shipping containers, their structural suitability and lifting arrangements should be checked.",
+      },
+      {
+        title: "20 Ft Shipping Container in Mettur",
+        text: "The 20 ft shipping container is a suitable option for construction projects, industrial premises, farms and workshops requiring secure storage. A 20 ft standard dry container offers approximately 149 sq ft of internal floor area and 2.39 m internal height, with an empty weight of about 2,250 kg. Common applications include construction tools and materials, electrical cables and mechanical equipment, factory maintenance spares, agricultural pumps and equipment, small warehouse inventory and contractor material stores. A 20 ft container may be easier to transport to locations with restricted access compared with a 40 ft unit, depending on the available vehicle and unloading arrangement.",
+      },
+      {
+        title: "40 Ft Shipping Container in Salem",
+        text: "A 40 ft shipping container provides greater capacity for industrial and commercial storage requirements: a 40 ft standard dry container offers approximately 305 sq ft of internal floor area and 2.39 m internal height, with an empty weight of about 3,750 kg. It can be considered for large quantities of equipment, finished goods, packing materials, textile stock and warehouse inventory. The delivery route must have sufficient clearance, turning space and access for the required transport vehicle.",
+      },
+      {
+        title: "40 Ft High-Cube Shipping Container",
+        text: "High-cube containers offer additional internal height compared with standard units: a 40 ft high cube offers approximately 305 sq ft of internal floor area with 2.70 m internal height and an empty weight of about 3,900 kg. They are useful for taller storage racks, bulky equipment and certain container modification projects. For textile, warehouse and industrial applications, the additional vertical clearance may improve storage flexibility.",
+      },
+      {
+        title: "Refrigerated Shipping Containers",
+        text: "Refrigerated containers, also known as reefer containers, are designed for temperature-controlled applications. A 20 ft reefer offers approximately 134 sq ft of internal floor area and 2.27 m internal height, with an empty weight of about 3,050 kg. They may be suitable for fish, agricultural produce and other temperature-sensitive materials where appropriate refrigerated equipment and reliable electricity are available. Reefer machinery, electrical requirements and temperature performance must be verified before confirming the unit.",
+      },
+      {
+        title: "Open-Top Shipping Containers",
+        text: "Open-top shipping containers are specialised options for machinery, steel components and cargo that requires loading from above. A 20 ft open top offers approximately 149 sq ft of internal floor area and 2.35 m internal height, with an empty weight of about 2,350 kg. Suitable lifting equipment and safe loading arrangements are required.",
+      },
+    ],
+
+    featuresHeading: "New and Used Shipping Containers in Mettur and Salem",
+    featuresIntro:
+      "Portable Office Cabin deals in new and used storage containers for different industrial and commercial requirements. The choice between new and used containers depends on the budget, appearance, intended use, structural condition and expected service requirements. Container grades, then three important questions to ask before buying a used one:",
+    features: [
+      "New / one-trip containers — new or one-trip shipping containers generally have limited previous shipping use and comparatively better cosmetic condition. They may be preferred for commercial conversions, premium storage, container offices and applications where the external appearance is important.",
+      "Cargo-worthy containers — used units assessed for cargo transportation according to applicable requirements. They may be suitable for industrial storage and certain shipping applications, subject to inspection and certification.",
+      "Wind and watertight containers — wind and watertight (WWT) containers are used units intended to provide protection against ordinary wind and rain ingress. They are commonly considered for stationary storage on construction sites, industrial plots, workshops and farms. WWT grading does not automatically establish suitability for cargo transportation.",
+      "As-is containers — supplied in their existing condition and may require repairs. They can be considered for selected fabrication, refurbishment or modification projects after assessing the condition and suitability.",
+      "Three important questions before buying a used shipping container — for inland buyers in Mettur and Salem, the container may be located at a distant yard before purchase. It is important to understand the condition of the specific container rather than relying only on general product photographs.",
+      "1. Where was the container previously stored? — Used containers may have been stored at coastal ports, freight yards or inland depots. The previous storage environment can affect surface corrosion, coating condition and overall wear. Ask about the available container history and inspect exposed steel panels, the roof and structural sections.",
+      "2. What was the container previously used for? — Previous cargo history matters, especially if the container will be used for agricultural products, food-related materials or sensitive goods. Inspect the flooring and internal surfaces for stains, damage, unusual odours or contamination concerns. A container's CSC plate does not, by itself, establish the complete previous cargo history.",
+      "3. Can the actual container be inspected? — Ask for photographs or an inspection of the specific container offered for sale. Important areas include roof condition and visible dents, flooring and moisture damage, cargo doors and locking systems, rubber weather seals, the structural frame and corner castings, surface corrosion and previous repairs, and container identification and relevant certification.",
+    ],
+    sizesNote: "Where video inspection or independent surveying is required, confirm its availability before placing an order.",
+
+    industriesHeading: "Shipping Container Maintenance in Mettur's Industrial Environment",
+    industriesIntro:
+      "Containers installed around industrial plants, chemical facilities and power-generation sites may be exposed to humidity, dust and airborne industrial deposits. These conditions can accelerate coating deterioration or corrosion when the steel surfaces are not properly maintained. Recommended maintenance considerations:",
+    industries: [
+      {
+        title: "Protect the Steel Surface",
+        text: "Inspect areas where exterior paint or protective coatings have been damaged. Repairing exposed areas can reduce the risk of corrosion.",
+      },
+      {
+        title: "Maintain Proper Ground Clearance",
+        text: "Use an appropriately designed support arrangement to keep the container above standing water and provide suitable drainage.",
+      },
+      {
+        title: "Inspect the Roof",
+        text: "Remove accumulated debris where safe and check for water-trapping dents, damaged coatings or leaks.",
+      },
+      {
+        title: "Check Doors and Rubber Seals",
+        text: "Regularly inspect door hinges, locking mechanisms and rubber seals to maintain functionality.",
+      },
+      {
+        title: "Plan Periodic Maintenance",
+        text: "The required inspection and repainting frequency depends on the installation environment, container condition and exposure. For chemical or industrial locations, confirm that the container and any modifications meet the site's operational and safety requirements.",
+      },
+    ],
+
+    customHeading: "Shipping Container Modification and Customisation",
+    customIntro:
+      "Portable Office Cabin supplies portable cabins and container-based structures for different commercial and industrial requirements. Depending on the container and project scope, modification options may include:",
+    customBullets: [
+      { title: "Doors and shutters", text: "Personnel access doors and roller shutters." },
+      { title: "Windows and ventilation", text: "Fixed and sliding windows; ventilation openings." },
+      { title: "Security", text: "Heavy-duty locking arrangements." },
+      { title: "Storage fit-out", text: "Storage racks and shelving." },
+      { title: "Electrical", text: "Electrical wiring and LED lighting." },
+      { title: "Insulation and interiors", text: "Interior insulation and wall panels." },
+      { title: "Flooring and exterior", text: "Flooring repair or replacement; external repainting." },
+      {
+        title: "Equipment housing and conversions",
+        text: "Generator and equipment housing provisions; office and commercial conversion fittings.",
+      },
+    ],
+    customOutro: "All modifications should be assessed for structural safety and suitability for the intended application.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Shipping Containers in Salem?",
+    whyUsIntro: "What an enquiry with Portable Office Cabin covers:",
+    whyUsBullets: [
+      {
+        title: "New and Used Container Options",
+        text: "Customers can enquire about different sizes and grades according to available stock and the intended use.",
+      },
+      {
+        title: "Industrial and Commercial Applications",
+        text: "Our product range includes storage containers, portable offices and container-based structures suitable for construction, industrial and commercial projects.",
+      },
+      {
+        title: "Container Customisation",
+        text: "Additional doors, windows, insulation, electrical fittings and other modifications can be discussed based on the required specifications.",
+      },
+      {
+        title: "Transportation Planning",
+        text: "We can review delivery locations and help clarify the transport and unloading scope in the quotation.",
+      },
+      {
+        title: "Clear Commercial Specifications",
+        text: "The quotation can identify the container type, size, condition, agreed modifications, GST and transportation responsibilities.",
+      },
+      {
+        title: "Site-Specific Requirements",
+        text: "For deliveries inside plants, industrial premises or restricted locations, access requirements and unloading arrangements should be confirmed before dispatch.",
+      },
+    ],
+
+    areasHeading: "Shipping Container Supply Areas in Mettur, Salem and Nearby Locations",
+    areasText:
+      "Portable Office Cabin accepts shipping container enquiries across Mettur, Salem district and surrounding locations. Mettur and nearby areas: Mettur Dam, P.N. Patti, Raman Nagar, Kolathur, Mecheri and surrounding industrial and residential areas. Salem district: Salem City, Omalur, Sankagiri, Edappadi, Jalakandapuram, Elampillai, Attur and Yercaud. Nearby districts and locations: Dharmapuri, Bhavani, Erode, Namakkal and surrounding commercial and industrial areas. Delivery availability and transportation charges depend on the actual destination and site access. Transportation and delivery: transportation is an important consideration when buying shipping containers for inland locations, and the total delivered cost may include the container price, transport charges, unloading equipment and any additional site-related requirements. A 20 ft container may be transported using a suitable truck or specialised container vehicle; actual vehicle selection depends on the container's dimensions, weight and site conditions. A 40 ft container normally requires a suitable trailer or container transport vehicle, so check road width, turning radius, overhead obstacles, ground conditions and unloading arrangements. Where a site has restricted road access, two 20 ft containers may be worth considering as an alternative to one 40 ft unit; however, the final decision should account for total purchase cost, transport, unloading, layout and storage requirements. A quotation can separate the container price (the selected container), transportation (delivery from the dispatch location to the customer's site), unloading (a crane, hydra or other suitable lifting arrangement, where applicable), modifications (doors, windows, lighting, painting or other agreed work) and applicable GST, so the total landed cost is clear before order confirmation.",
+
+    howHeading: "How to Buy or Rent a Shipping Container in Mettur and Salem",
+    howSteps: [
+      {
+        title: "Share Your Requirements",
+        text: "Provide the container size, quantity, intended application and delivery location. Example enquiry: “Required: 20 ft used shipping container for industrial tool storage at Mettur, Salem. Quantity: 1 No. Delivery inside industrial premises.”",
+      },
+      {
+        title: "Choose the Container Size and Condition",
+        text: "Select a suitable 20 ft, 40 ft, high-cube or specialised container based on storage requirements and stock availability.",
+      },
+      {
+        title: "Check Transportation and Site Access",
+        text: "Confirm road access, available unloading space, ground condition and any site-entry requirements.",
+      },
+      {
+        title: "Review the Quotation",
+        text: "Check the container specifications, condition, included modifications, GST, transport and unloading scope.",
+      },
+      {
+        title: "Prepare the Installation Site",
+        text: "Provide stable, level support appropriate for the container's weight, intended use and local ground conditions.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "Once the order is confirmed, transportation and handover can be arranged according to the agreed schedule and commercial scope.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a 20 ft shipping container in Mettur?",
+        answer:
+          "The price depends on the container's condition, grade, age, modifications and availability. Transportation and unloading charges may be additional. Contact Portable Office Cabin for a current quotation.",
+      },
+      {
+        question: "How much does a 40 ft shipping container cost in Salem?",
+        answer:
+          "The cost varies according to whether the container is standard or high cube, new or used, and the required delivery arrangements.",
+      },
+      {
+        question: "Do you supply used shipping containers in Salem?",
+        answer:
+          "Portable Office Cabin deals in new and used storage containers. Available sizes and grades can be discussed according to the customer's requirements.",
+      },
+      {
+        question: "Why are shipping container transportation charges important in Mettur?",
+        answer:
+          "Shipping containers may need to be transported from yards outside Salem district. Vehicle type, travel distance, access restrictions and unloading arrangements influence the final delivered cost.",
+      },
+      {
+        question: "Is a 20 ft container easier to transport than a 40 ft container?",
+        answer:
+          "A 20 ft container can be more practical for certain restricted-access sites. However, the suitability depends on the actual road, turning space and transport equipment.",
+      },
+      {
+        question: "Can I use a shipping container for factory storage?",
+        answer:
+          "Yes. Containers can be used for suitable industrial storage applications, provided the loading, ventilation, fire safety and site requirements are addressed.",
+      },
+      {
+        question: "Can a container be installed inside Mettur's industrial facilities?",
+        answer:
+          "Installation inside an industrial site depends on the relevant plant's entry permissions, safety procedures, placement requirements and operational restrictions.",
+      },
+      {
+        question: "Can a shipping container rust in Mettur?",
+        answer:
+          "Yes. Exposure to moisture and industrial deposits can cause corrosion, particularly when protective coatings are damaged. Periodic inspection and maintenance are recommended.",
+      },
+      {
+        question: "Does a shipping container require a foundation?",
+        answer:
+          "Shipping containers require stable and appropriately supported placement. The correct support or foundation depends on ground conditions, loading and intended use.",
+      },
+      {
+        question: "Can a refrigerated container be used for fish storage?",
+        answer:
+          "A suitable working reefer container may be considered for temperature-controlled fish storage. Refrigeration performance, hygiene, power supply and applicable food-safety requirements must be evaluated.",
+      },
+      {
+        question: "Can shipping containers be modified with doors and windows?",
+        answer:
+          "Yes. Container modification options may include doors, windows, ventilation, lighting, insulation and other fittings, depending on the agreed scope.",
+      },
+      {
+        question: "Can I rent a shipping container in Mettur or Salem?",
+        answer:
+          "Rental arrangements depend on availability, required size and duration. Minimum rental period, security deposit, transportation and collection charges are subject to the agreed terms.",
+      },
+      {
+        question: "Can I use a shipping container for a café or resort room?",
+        answer:
+          "Shipping containers can be converted into commercial or hospitality spaces. Such conversions require suitable design, structural checks, utilities and any necessary approvals.",
+      },
+      {
+        question: "How long does delivery take to Mettur or Salem?",
+        answer:
+          "Delivery depends on container availability, required modifications, vehicle arrangements, site access and the agreed schedule.",
+      },
+    ],
+
+    ctaHeading: "Get a Shipping Container Quotation in Mettur or Salem",
+    ctaText: `Looking for a new or used shipping container for sale or rental in Mettur, Salem? Contact Portable Office Cabin for 20 ft and 40 ft shipping containers, industrial storage solutions, used container enquiries and container modifications. Please share the required container size, your new or used preference, the quantity, the intended storage or commercial application, the delivery location, any required modifications, and site access and unloading details. Email: ${COMPANY.email.sales}. Request your shipping container quotation today: our team can review your requirements and provide a quotation based on container availability, specifications, transportation and agreed project scope.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container Rental", href: "/products/shipping-container-rental" },
+    ],
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+      { label: "Cargo Storage Container in Tamil Nadu", href: "/promotions/cargo-storage-container-in-tamil-nadu" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Mettur or Salem district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The images are representative renders of a dry shipping container fitted with optional modifications (a window, wall light and hatch), not photographs of a unit in Mettur or Salem. Dimensions and weights on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. Mettur Thermal Power Station, Mettur Dam, the Cauvery project areas and other places are named only to describe the service area: Portable Office Cabin is not affiliated with any power station, plant, dam authority or industrial facility, and entry to any such premises is subject to that facility's own permissions. Notes on food storage, certification, maintenance and local permissions are general guidance, not legal, food-safety or survey advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
