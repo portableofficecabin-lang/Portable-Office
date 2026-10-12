@@ -19,7 +19,7 @@ import {
   type Product,
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
-import { getImageCaption } from "@/data/productImageCaptions";
+import { getImageAltText, getImageCaption } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
 import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
@@ -280,8 +280,13 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
    * the pattern this cluster was penalised for. The product name still prefixes it so the alt
    * stands on its own out of context; nothing else is appended.
    *
-   * Uncaptioned images fall back to the generic alt with a "view N" suffix to keep them unique. */
+   * Uncaptioned images fall back to the generic alt with a "view N" suffix to keep them unique.
+   * An image with owner-specified alt text (productImageAltText) uses it verbatim instead. */
   const imageMeta = galleryImages.map((img, i) => {
+    const altText = getImageAltText(img);
+    if (altText) {
+      return { alt: altText, title: altText };
+    }
     const caption = getImageCaption(img);
     if (caption) {
       return {

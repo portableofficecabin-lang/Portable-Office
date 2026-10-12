@@ -30,8 +30,12 @@ import siteOfficeCabin20x10 from "@/assets/rental/site-office-cabin-20x10.webp";
 import siteOfficeCabin100sqft from "@/assets/rental/site-office-cabin-100sqft.webp";
 import portableSiteOffice400sqft from "@/assets/rental/portable-site-office-400sqft.webp";
 import securityGuardCabin8x8 from "@/assets/rental/security-guard-cabin-8x8.webp";
-import cargoStorageContainer40ft from "@/assets/rental/cargo-storage-container-40ft.webp";
-import cargoStorageContainer20ft from "@/assets/rental/cargo-storage-container-20ft.jpg";
+
+// Owner-approved storage container renders (issue #100). They replace a photo showing a leasing
+// company's container number and a truck plate (40 ft card) and a photo carrying a shipping
+// line's livery (20 ft card). The 20 ft card shares the 20ft Storage Container product's hero.
+const storageContainer40ftImage = "/images/products/storage-container-corten-steel/40ft-storage-container-three-quarter.webp";
+const storageContainer20ftImage = "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp";
 
 // Rental cabin data with detailed specifications
 const rentalCabins = [
@@ -267,7 +271,7 @@ const rentalCabins = [
     category: "Container Office",
     categorySlug: "container-office",
     description: "Large secure storage container for tools, materials, and equipment. Heavy-duty locking system.",
-    image: cargoStorageContainer40ft,
+    image: storageContainer40ftImage,
     size: {
       length: "40 ft",
       width: "8 ft",
@@ -304,7 +308,7 @@ const rentalCabins = [
     category: "Container Office",
     categorySlug: "container-office",
     description: "Secure storage container for tools, materials, and equipment. Heavy-duty locking system.",
-    image: cargoStorageContainer20ft,
+    image: storageContainer20ftImage,
     size: {
       length: "20 ft",
       width: "8 ft",
