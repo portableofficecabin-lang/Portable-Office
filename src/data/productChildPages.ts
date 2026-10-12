@@ -531,7 +531,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Should I rent instead?", a: "For needs under a year, usually yes — rental avoids capital cost and resale hassle. See our rental guide for how hiring works." },
         ],
         related: [
-          { label: "Used shipping containers for sale", href: "/products/used-shipping-container-for-sale" },
+          { label: "New and used shipping containers for sale", href: "/products/shipping-container-for-sale" },
           { label: "Porta cabins on rent", href: "/blog/porta-cabins-on-rent" },
         ],
       },
