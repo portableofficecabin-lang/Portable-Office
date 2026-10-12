@@ -336,6 +336,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Shipping Container|Karnataka": [
     { name: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
     { name: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
+    { name: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
   ],
 };
 
