@@ -25,13 +25,15 @@ import { join } from "node:path";
 import {
   CATEGORY_LANDING_SLUGS,
   CATEGORY_LINKS,
+  CHENNAI_CITY_PAGE_SLUG,
+  chennaiContainerLink,
   resolveCategoryLanding,
   type ResolvedCategoryLanding,
 } from "../src/data/categoryLandings";
 import { categories, getProductDetailPath, products } from "../src/data/products";
 import { getCommerce, isPurchasable, isRentalPrice } from "../src/data/productCommerce";
 import { allChildParams } from "../src/data/productChildPages";
-import { CITY_PAGES } from "../src/data/cityPages";
+import { CITY_PAGES, cityPageBySlug, type CityPage } from "../src/data/cityPages";
 import { seoPromotions } from "../src/data/seoPromotions";
 import { INSTALLATION } from "../src/data/shippingZones";
 import { formatINR, sellPrice } from "../src/lib/pricing/gst";
@@ -135,6 +137,43 @@ section("5. Empty-category indexing rule");
 for (const c of categories) {
   const count = products.filter((p) => p.categorySlug === c.slug).length;
   check(isCategoryIndexable(c.slug, products) === count > 0, `${c.slug}: indexable iff it holds a product (${count})`);
+}
+
+section("6. Chennai links follow the city page");
+{
+  const live = !!cityPageBySlug(CHENNAI_CITY_PAGE_SLUG);
+  const cityHref = `/cities-we-serve/${CHENNAI_CITY_PAGE_SLUG}`;
+  for (const slug of ["site-office-containers", "container-offices"]) {
+    const chennai = CATEGORY_LINKS[slug].locationLinks.find((l) => l.name === "Chennai");
+    check(
+      !!chennai && (live ? chennai.href === cityHref : chennai.href.startsWith("/promotions/")),
+      `${slug}: Chennai → ${live ? "city page" : "promotion page (city page not published yet)"} (${chennai?.href})`,
+    );
+  }
+  // Simulate the city page being published: the helper must switch to its canonical URL.
+  if (!live) CITY_PAGES.push({ slug: CHENNAI_CITY_PAGE_SLUG } as CityPage);
+  check(chennaiContainerLink("container-office").href === cityHref, "with the city page published, the link is its canonical URL");
+  if (!live) {
+    CITY_PAGES.pop();
+    check(
+      chennaiContainerLink("container-office").href === "/promotions/container-office-in-chennai",
+      "without it, the Chennai promotion page",
+    );
+  }
+}
+
+section("7. Adding a product to an empty category makes it indexable");
+{
+  const empty = categories.find((c) => !products.some((p) => p.categorySlug === c.slug));
+  check(!!empty, "there is an empty category to test with");
+  if (empty) {
+    check(!isCategoryIndexable(empty.slug, products), `${empty.slug}: noindex while empty`);
+    const withProduct = [...products, { ...products[0], id: "test-new-product", categorySlug: empty.slug }];
+    check(isCategoryIndexable(empty.slug, withProduct), `${empty.slug}: indexable once a product is filed under it`);
+    const populated = products[0].categorySlug;
+    const emptied = products.filter((p) => p.categorySlug !== populated);
+    check(!isCategoryIndexable(populated, emptied), `${populated}: noindex again if its last product is moved out`);
+  }
 }
 
 console.log(`\ncategory-landings.test.ts — ${passed} passed, ${failed} failed`);

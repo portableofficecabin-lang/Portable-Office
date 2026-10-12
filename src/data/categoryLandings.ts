@@ -31,6 +31,7 @@
 
 import { getProductDetailPath, type Category, type Product } from "@/data/products";
 import { getCommerce, isOutrightSale, isPurchasable, priceUnitSuffix, isRentalPrice } from "@/data/productCommerce";
+import { cityPageBySlug } from "@/data/cityPages";
 import { DISPATCH_WORKING_DAYS, INSTALLATION, SHIPPING_ZONES } from "@/data/shippingZones";
 import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 
@@ -185,13 +186,28 @@ const GUIDE = {
 
 /** Location links for one promotion keyword — Bangalore, Karnataka, Tamil Nadu and Chennai,
  *  the service area the brief and the shipping zones both centre on. */
-function promotionLocations(keywordSlug: string): LinkItem[] {
+function promotionLocations(keywordSlug: string, chennai?: LinkItem): LinkItem[] {
   return [
     { name: "Bangalore", href: `/promotions/${keywordSlug}-in-bangalore` },
     { name: "Karnataka", href: `/promotions/${keywordSlug}-in-karnataka` },
     { name: "Tamil Nadu", href: `/promotions/${keywordSlug}-in-tamil-nadu` },
-    { name: "Chennai", href: `/promotions/${keywordSlug}-in-chennai` },
+    chennai ?? { name: "Chennai", href: `/promotions/${keywordSlug}-in-chennai` },
   ];
+}
+
+/** Slug of the dedicated Chennai container-office city page (branch feat/city-chennai). */
+export const CHENNAI_CITY_PAGE_SLUG = "container-office-in-chennai";
+
+/**
+ * "Chennai" for the container-office and site-office link lists: the dedicated city page once its
+ * CITY_PAGES entry exists, otherwise the Chennai promotion page. Resolved from the data, so the
+ * links move to the city page's canonical URL in the same deploy that publishes it — and can never
+ * point at a page that does not exist yet.
+ */
+export function chennaiContainerLink(promotionKeywordSlug: string): LinkItem {
+  return cityPageBySlug(CHENNAI_CITY_PAGE_SLUG)
+    ? { name: "Chennai", href: `/cities-we-serve/${CHENNAI_CITY_PAGE_SLUG}` }
+    : { name: "Chennai", href: `/promotions/${promotionKeywordSlug}-in-chennai` };
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────────────────────
@@ -202,7 +218,7 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   "site-office-containers": {
     locationHeading: "Site office containers by location",
     locationLinks: [
-      ...promotionLocations("site-office-container"),
+      ...promotionLocations("site-office-container", chennaiContainerLink("site-office-container")),
       { name: "SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { name: "Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
       { name: "Jigani", href: "/cities-we-serve/container-office-in-jigani" },
@@ -301,7 +317,7 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   "container-offices": {
     locationHeading: "Container offices by location",
     locationLinks: [
-      ...promotionLocations("container-office"),
+      ...promotionLocations("container-office", chennaiContainerLink("container-office")),
       { name: "SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { name: "Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
       { name: "Jigani", href: "/cities-we-serve/container-office-in-jigani" },
