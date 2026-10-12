@@ -119,6 +119,12 @@ export interface CityPage {
    * not about container offices. Unset = the defaults, so every existing page is unchanged.
    */
   ctaSecondaryLinks?: CityPageLink[];
+  /**
+   * Optional click-to-call and WhatsApp buttons in the quotation box, beside the primary CTA.
+   * Numbers come from COMPANY (via primaryPhone / whatsappUrl in src/lib/site-navigation.ts),
+   * never from the entry. Unset = no extra buttons, so every other page's HTML is unchanged.
+   */
+  ctaContactButtons?: boolean;
   /** Optional "Related pages" link block rendered after the CTA, before the disclaimer. */
   relatedLinks?: CityPageLink[];
 
@@ -976,6 +982,9 @@ export const CITY_PAGES: CityPage[] = [
    * on-site). "Manufacturing operations in Bengaluru and Hosur" is reworded to the factory near
    * Hosur + office in Bengaluru (manufacturing is Tamil Nadu only). No ₹ (file-header rule) and
    * no warranty figures (the draft gives none). Internal links and CTA buttons are unchanged.
+   * Owner corrections (PR #84): the sub-heading says "Site Office Solutions for Wind-Exposed
+   * Locations" — wind resistance is not advertised without project-specific engineering — and
+   * the quotation box carries click-to-call + WhatsApp buttons (`ctaContactButtons`).
    *
    * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -1022,7 +1031,7 @@ export const CITY_PAGES: CityPage[] = [
 
     h1: "Container Office in Tirunelveli",
     tagline:
-      "Portable Container Offices, Wind-Resistant Site Office Solutions, Solar Project Cabins and Industrial Office Camps in Tirunelveli",
+      "Portable Container Offices, Site Office Solutions for Wind-Exposed Locations, Solar Project Cabins and Industrial Office Camps in Tirunelveli",
     intro: [
       "Looking for a reliable container office in Tirunelveli for a solar plant, wind farm, industrial project, construction site or temporary office requirement?",
       "Portable Office Cabin manufactures customised container offices, insulated site cabins, project management offices, security cabins and multi-cabin office setups for projects across Tirunelveli and southern Tamil Nadu.",
@@ -1323,6 +1332,7 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Get a Container Office Quotation for Your Tirunelveli Project",
     ctaText: `Need a container office for a solar plant at Gangaikondan, a wind project near Radhapuram, an industrial site at Nanguneri or a construction project in Palayamkottai? Portable Office Cabin supplies customised container offices, site cabins, security cabins, portable toilets and project office setups for industrial and commercial requirements. Share your requirements: site location or postal PIN code; required cabin size and quantity; number of occupants and workstations; insulated or non-insulated construction; toilet, pantry, air-conditioning and furniture requirements; expected delivery schedule; and site access and unloading arrangements. Email: ${COMPANY.email.sales}. Designed for your project. Manufactured to specification. Delivered to your site.`,
     ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
     ctaSecondaryLinks: [
       { label: "See All Container Office Models", href: "/products/category/container-offices" },
       { label: "Container Office on Rent", href: "/rental-service" },

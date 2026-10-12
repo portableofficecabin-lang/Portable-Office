@@ -18,10 +18,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Phone } from "lucide-react";
 
 import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
 import { Layout } from "@/components/layout/Layout";
+import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 
@@ -302,6 +305,29 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             >
               {page.ctaButtonLabel ?? "Get a Free Quotation"}
             </Link>
+            {/* Opt-in direct-contact buttons (`ctaContactButtons`). Numbers come from COMPANY via
+                site-navigation, the same source as the header and footer. The WhatsApp fill is the
+                header's contrast-checked #0B7A43 (white text 5.4:1), not the 2.0:1 brand green. */}
+            {page.ctaContactButtons && (
+              <>
+                <a
+                  href={`tel:${primaryPhone.e164}`}
+                  className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
+                >
+                  <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  Call {primaryPhone.display}
+                </a>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center justify-center gap-2 rounded-md bg-[#0B7A43] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#096436]${mc("press")}`}
+                >
+                  <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+                  WhatsApp Us
+                </a>
+              </>
+            )}
             {(page.ctaSecondaryLinks ?? DEFAULT_CTA_SECONDARY_LINKS).map((l) => (
               <Link
                 key={l.href}
