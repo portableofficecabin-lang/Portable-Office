@@ -294,7 +294,388 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+      // Sibling page (2026-10-12): the shipping-container box itself for Jigani; it links back here.
+      { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
     ],
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINER IN JIGANI — the box itself (new / used / rental, grades, inspection,
+   * granite-yard and industrial fit-outs, modifications), not the container OFFICE: that intent
+   * belongs to container-office-in-jigani just above, and the two pages link to each other.
+   * Jigani is not a location in the generated promotion grid, so no /promotions page competes
+   * for this keyword.
+   *
+   * Owner copy of 2026-10-12, mapped onto the fixed template slots the same way as the Mysore
+   * shipping-container page. The draft has more H2 sections than the template has slots, so
+   * three are FOLDED with their content intact:
+   *   • "Why Shipping Containers Are in Demand in Jigani" → why: the five local H3s are the
+   *     whyBullets (the KIADB storage list as prose in the first); "Where Shipping Containers Are
+   *     Used Around Jigani" (folded) — its by-location table and "representative" note → whyOutro.
+   *   • "Types and Sizes" → solutions: the five H3s stay numbered H3s, each carrying its row of
+   *     the size table; the 10 ft row (no H3 of its own) and the table note → solutionsIntro.
+   *   • "Grades Explained" → features: the four grades, then "Which Shipping Container Grade
+   *     Should You Choose?" (folded) — its eight table rows; the "indicative" note → sizesNote.
+   *   • "How We Recommend Inspecting a Used Shipping Container" → industries (six titled points).
+   *   • "Shipping Containers for Granite Yards and Industrial Storage in Jigani" → custom (five
+   *     titled points, interior image beside it); "Customised Shipping Container Modifications"
+   *     (folded) — its eleven bullets and two closing paragraphs as prose → customOutro.
+   *   • "Why Choose" → whyUs; "Transportation and Installation" → areas, led by the CTA block's
+   *     "Shipping Container Supply Areas Near Jigani" list; the four steps → how.
+   *   • The CTA checklist, e-mail and closing lines → ctaText; the "Website:" line is dropped as
+   *     redundant on-site.
+   * No ₹ anywhere (the draft had none). Nothing here claims a container depot or yard in Jigani:
+   * boxes are supplied subject to availability and the disclaimer says so. KIADB is named, so the
+   * disclaimer carries the nominative-use / non-affiliation note.
+   *
+   * Images: five owner-dropped 1200×896 webp views of one maroon 20 ft dry container in a
+   * warehouse yard, copied byte-for-byte to clean slug names; alt text describes the actual images.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-in-jigani",
+    city: "Jigani",
+    listTitle: "Shipping Container in Jigani",
+    metaTitle: "Shipping Container in Jigani, Bangalore – New & Used",
+    metaDescription:
+      "New and used shipping containers in Jigani, Bangalore: 20 ft, 40 ft and high-cube units for industrial, granite-yard and site storage. Buy or rent.",
+    keywords:
+      "shipping container in Jigani, shipping container Jigani, used shipping container Jigani, 20 ft container Jigani, 40 ft container Jigani, high cube container Jigani, storage container Jigani, cargo container Jigani, container for sale Jigani, container rental Jigani, KIADB Jigani",
+    geo: { region: "IN-KA", placename: "Jigani, Bengaluru, Karnataka, India", position: "12.7861;77.6386", icbm: "12.7861, 77.6386" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-exterior.webp",
+      alt: "Shipping container in Jigani — maroon 20 ft dry shipping container seen from one corner: corrugated steel side wall, corner castings and double cargo doors with four locking bars, on a concrete yard beside an industrial warehouse with stacked containers behind",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-side-view.webp",
+      alt: "Shipping container in Jigani — long side of the maroon 20 ft dry container: corrugated steel wall between the corner posts, with forklift pockets in the base rail",
+      width: 1200,
+      height: 896,
+      caption:
+        "A 20 ft dry container is about 6.06 m long and 2.44 m wide — confirm gate width, turning space and unloading clearance before dispatch.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-interior.webp",
+      alt: "Shipping container in Jigani — the maroon dry container with both cargo doors swung open: corrugated steel walls and roof inside, and a worn timber cargo floor on the steel base frame",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-door-end.webp",
+        alt: "Shipping container in Jigani — door end of the maroon dry container: two cargo doors with four vertical locking bars, cam handles and door seals, framed by the corner posts and castings",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-end-view.webp",
+        alt: "Shipping container in Jigani — blank end wall of the maroon dry container: a corrugated steel panel between the corner posts, with a corner casting at each corner",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Shipping Container in Jigani",
+    tagline:
+      "New and Used Shipping Containers, 20 ft and 40 ft Storage Containers, High Cube Containers and Industrial Cargo Containers in Jigani, Bangalore",
+    intro: [
+      "Looking for a shipping container in Jigani for industrial storage, construction materials, machinery, warehouse overflow or commercial use?",
+      "Portable Office Cabin supplies new and used shipping containers, storage containers and customised container solutions for industrial, construction, logistics and commercial requirements across Jigani and surrounding areas of Bengaluru.",
+      "Jigani is an important industrial location in Anekal Taluk, with engineering workshops, granite-processing facilities, pharmaceutical and chemical industries, warehousing operations and manufacturing units. These businesses often require secure and relocatable storage facilities without constructing permanent sheds.",
+      "A shipping container provides a practical solution. Built with a heavy-duty steel structure, lockable cargo doors and a weather-resistant enclosure, it can be used for storing tools, equipment, industrial spares, machinery and construction materials.",
+      "Our container options include standard 20 ft and 40 ft dry containers, high-cube containers and specialised container types, subject to stock availability.",
+      "With our manufacturing operations near Hosur, Tamil Nadu, and an office in Bengaluru, we serve customers across Jigani, Bommasandra, Electronic City, Attibele, Chandapura, Anekal and neighbouring industrial areas.",
+      "Request a quotation: share the container size, required condition, intended application and delivery location to receive an availability-based quotation.",
+    ],
+
+    whyHeading: "Why Shipping Containers Are in Demand in Jigani",
+    whyIntro:
+      "Jigani's industrial development has created demand for secure storage space, temporary site facilities and relocatable industrial infrastructure. Manufacturing facilities, contractors, warehouse operators and landowners often need additional storage without expanding an existing building. Shipping containers can provide enclosed storage that is transportable and adaptable to changing project requirements.",
+    whyBullets: [
+      {
+        title: "KIADB Jigani Industrial Area",
+        text: "The Jigani KIADB industrial area accommodates manufacturing, engineering, granite-processing, pharmaceutical and other industrial activities. Factories and project contractors may need temporary or permanent storage for industrial tools and machinery accessories; electrical and mechanical components; maintenance equipment and spare parts; construction materials and consumables; packaging materials and production supplies; and contractor tools and safety equipment. A 20 ft storage container is suitable for many smaller storage applications, while a 40 ft unit provides additional capacity for larger equipment and bulk inventory.",
+      },
+      {
+        title: "Bommasandra–Jigani Link Road",
+        text: "The Bommasandra–Jigani industrial corridor connects manufacturing facilities, logistics operations, construction projects and warehouse activities. Common requirements include warehouse overflow storage, contractor material stores, gate stores and temporary storage during factory expansion. Used cargo containers can be positioned within a suitable industrial yard, subject to transport access and local requirements.",
+      },
+      {
+        title: "Granite and Stone-Processing Facilities",
+        text: "Granite cutting, polishing and fabrication activities create demand for secure storage of tools, consumables, machinery accessories and finished materials. Container suitability depends on the items being stored. Light tools and general consumables may be stored in a standard dry container. Heavy stone slabs, A-frame racks and machinery require an assessment of floor capacity, load distribution and structural support. Steel chequered-plate flooring and additional reinforcement can be specified where engineering calculations show they are necessary.",
+      },
+      {
+        title: "Farms, Nurseries and Agricultural Plots",
+        text: "Around Jigani, Anekal, Haragadde, Hennagara and Bannerghatta Road, landowners may need enclosed storage for agricultural equipment, pumps, irrigation accessories and maintenance tools. Containers can be adapted with ventilation, shelving, locking systems and other fittings according to the intended use. Temperature-sensitive agricultural products may require refrigerated or appropriately insulated storage rather than a standard dry container.",
+      },
+      {
+        title: "Commercial and Real Estate Development",
+        text: "Residential projects, commercial buildings and small businesses also use shipping containers for material storage and temporary site facilities. Newer containers may be selected for commercial conversion projects such as kiosks, cafés, shops and display facilities. Any conversion intended for public occupation requires appropriate structural, ventilation, fire safety and regulatory review.",
+      },
+    ],
+    whyOutro:
+      "Where shipping containers are used around Jigani — our supply coverage includes Jigani and nearby industrial and commercial locations: Jigani KIADB Industrial Area (manufacturing, engineering, chemical and granite facilities) for tool stores, equipment storage and industrial spares; Jigani Main Road (factories, granite yards and construction projects) for 20 ft and 40 ft dry storage containers; the Bommasandra–Jigani Link Road (warehousing, logistics and construction) for warehouse overflow and material storage; Bommasandra and Hebbagodi (engineering, manufacturing and logistics) for industrial storage and contractor containers; Electronic City and Chandapura (commercial and residential development) for construction material stores and temporary storage; Attibele and Hosur Road (transport, logistics and industrial yards) for cargo containers and warehouse storage; Anekal and Haragadde (farms, plots and smaller industries) for equipment storage, tool rooms and pump enclosures; and Bannerghatta Road and Hennagara (nurseries, commercial projects and agricultural plots) for farm stores and suitable specialised containers. These applications are representative of possible container requirements, not claims of completed deliveries at every listed location.",
+
+    solutionsHeading: "Shipping Container Types and Sizes Available in Jigani",
+    solutionsIntro:
+      "Portable Office Cabin can assist customers in selecting container types according to storage requirements, material dimensions, delivery access and intended use. Each type below carries its approximate external dimensions (L × W × H) and internal floor area; a 10 ft modified container measures about 2.99 × 2.44 × 2.59 m, with about 71 sq ft of floor area, for a pump room, generator enclosure or small storage. Dimensions are approximate industry figures. Internal space, door openings, payload and lifting weight vary by manufacturer, model and condition. Modified 10 ft containers may not retain standard cargo certification.",
+    solutions: [
+      {
+        title: "20 ft Shipping Containers",
+        text: "A 20 ft dry shipping container is a practical option for industrial storage and construction applications. Typical uses include material stores, electrical equipment storage, contractor tool rooms, warehouse inventory and agricultural equipment storage. Common features include corrugated steel walls, a welded structural framework, marine-grade plywood flooring in standard cargo units, cargo doors and heavy-duty locking arrangements. Additional ventilation, security locks, shelving and protective coatings can be specified. A 20 ft standard dry container measures approximately 6.06 × 2.44 × 2.59 m, with about 149 sq ft of internal floor area — for a contractor store, tool storage or industrial materials.",
+      },
+      {
+        title: "40 ft Shipping Containers",
+        text: "A 40 ft container offers substantially greater storage capacity for industrial materials, manufacturing spares and warehouse overflow. It is commonly considered for factories, logistics yards, construction contractors and businesses that need larger enclosed storage space. The chosen site must have adequate road access, turning space, unloading clearance and a suitable foundation. A 40 ft standard dry container measures approximately 12.19 × 2.44 × 2.59 m, with about 305 sq ft of internal floor area — for warehouse overflow, equipment and spares.",
+      },
+      {
+        title: "40 ft High Cube Containers",
+        text: "High-cube containers provide additional internal height compared with standard containers. They are useful where taller equipment, vertical racking or conversion requirements make height important. High-cube containers can also be considered for customised storage facilities and commercial conversion projects. A 40 ft high-cube container measures approximately 12.19 × 2.44 × 2.90 m, with about 305 sq ft of internal floor area — for taller equipment, racked storage and conversion projects.",
+      },
+      {
+        title: "Open-Top Shipping Containers",
+        text: "Open-top containers are designed to accommodate cargo that requires overhead loading. They may be suitable for some machinery, industrial equipment and stone-handling applications, provided the load, lifting method and restraint arrangements are compatible with the particular container. A 20 ft open-top container measures approximately 6.06 × 2.44 × 2.59 m, with about 149 sq ft of internal floor area — for oversized machinery and top-loaded cargo.",
+      },
+      {
+        title: "Refrigerated Shipping Containers",
+        text: "Refrigerated containers, commonly known as reefer containers, have insulated bodies and mechanical refrigeration equipment. Depending on their operating condition and specifications, they may be used for temperature-controlled industrial, food, horticultural or other suitable products. A 20 ft refrigerated container measures approximately 6.06 × 2.44 × 2.59 m, with about 134 sq ft of internal floor area, for temperature-controlled storage. Before purchasing a used reefer, the refrigeration system, temperature performance, electrical requirements and maintenance history should be checked. For pharmaceutical or food applications, additional regulatory and temperature-validation requirements may apply.",
+      },
+    ],
+
+    featuresHeading: "New and Used Shipping Container Grades Explained",
+    featuresIntro:
+      "Shipping containers are available in different conditions and grades. Selecting the correct grade helps customers avoid paying for unnecessary features or purchasing a container that is unsuitable for the intended application. The four grades come first, followed by the answer to “Which shipping container grade should you choose?” — the intended application, the suggested grade and the important considerations:",
+    features: [
+      "One-trip shipping containers — a one-trip container is generally a recently manufactured container that has completed a limited initial cargo movement. These units typically have less visible wear than older used containers. One-trip containers may be preferred for high-visibility installations, commercial conversions and applications where exterior appearance is important",
+      "Cargo-worthy containers (CW) — assessed for suitability to carry cargo under applicable inspection criteria. They can be considered for customers intending to use a container for transport, subject to current certification, structural condition and carrier acceptance. A valid CSC approval plate is important for applicable international transport operations, but its presence alone does not guarantee that a particular carrier or terminal will accept the unit",
+      "Wind and watertight containers (WWT) — commonly used for stationary storage. They are intended to protect contents against normal weather exposure when the doors, seals, roof and walls remain sound. WWT status does not, by itself, certify a container for international cargo transport",
+      "As-is used shipping containers — sold in their existing condition, with known wear, damage or other limitations reflected in the quotation. They may be considered for conversion projects, material recovery or applications where repairs are planned. Structural condition should be assessed before purchase, especially if the container will support significant loads or undergo major modifications",
+      "Tool and material storage — suggested grade: WWT; important considerations: door seals, roof condition and lock security",
+      "Granite yard tools and consumables — suggested grade: WWT; important considerations: dust control, ventilation and moisture protection",
+      "Heavy stone slab storage — suggested grade: a structurally suitable CW or WWT unit; important considerations: floor capacity, A-frame loads and engineered reinforcement",
+      "Industrial consumables — suggested grade: a suitable clean container; important considerations: cargo history, contamination and product storage requirements",
+      "Temperature-controlled goods — suggested grade: a serviceable reefer; important considerations: refrigeration test, power supply and maintenance condition",
+      "Café or commercial conversion — suggested grade: a one-trip or suitable inspected container; important considerations: appearance, structural modifications and approvals",
+      "Domestic or international cargo movement — suggested grade: a cargo-worthy and transport-compliant unit; important considerations: valid applicable certification and carrier acceptance",
+      "Conversion or material recovery — suggested grade: a suitable as-is unit; important considerations: damage assessment and repair requirements",
+    ],
+    sizesNote:
+      "The recommended grade is indicative. Final suitability should be based on the actual container inspection, cargo requirements and intended service.",
+
+    industriesHeading: "How We Recommend Inspecting a Used Shipping Container",
+    industriesIntro:
+      "Before purchasing a used container, its physical condition and available documentation should be reviewed:",
+    industries: [
+      {
+        title: "Roof and External Body",
+        text: "Check for significant dents, punctures, corrosion, standing-water damage and previously repaired areas. Surface corrosion may be repairable, while structural deterioration or perforation requires closer assessment.",
+      },
+      {
+        title: "Container Flooring",
+        text: "Inspect the floor for soft areas, excessive wear, damage and visible repairs. For heavy industrial storage, confirm the intended floor loading rather than assuming the original cargo floor can safely support concentrated equipment loads.",
+      },
+      {
+        title: "Cargo Doors and Rubber Seals",
+        text: "Check that doors open and close correctly and that locking bars, hinges and rubber seals are in suitable condition. A poorly fitted door can affect security and weather protection.",
+      },
+      {
+        title: "Corner Posts and Structural Components",
+        text: "Inspect corner castings, posts, rails and other principal structural members for cracks, distortion and significant corrosion. These components are particularly important for lifting and cargo operations.",
+      },
+      {
+        title: "CSC Plate and Cargo History",
+        text: "For transport-related applications, check the container identification number, CSC plate and applicable inspection information. Where records are available, review the previous cargo history, particularly for storage involving sensitive goods.",
+      },
+      {
+        title: "Pre-Purchase Photos and Videos",
+        text: "Customers can request photographs and inspection videos of available used containers before making a purchase decision. The quotation should identify the selected unit and its disclosed condition so that the delivered container can be checked against the agreed details.",
+      },
+    ],
+
+    customHeading: "Shipping Containers for Granite Yards and Industrial Storage in Jigani",
+    customIntro:
+      "Granite-processing and engineering businesses in Jigani may need additional features beyond those of a standard used cargo container:",
+    customBullets: [
+      {
+        title: "Heavy-Duty Flooring",
+        text: "Where racks, machinery or stone slabs will be stored, additional floor reinforcement may be required. Options can include steel chequered-plate flooring, reinforced supports and suitable load-distribution arrangements. The structure and foundation must be assessed for the proposed loads.",
+      },
+      {
+        title: "Industrial Ventilation",
+        text: "Containers exposed to direct sunlight can develop high internal temperatures. Ventilation louvers, appropriately positioned openings and other thermal-control features may be considered depending on the stored materials. Paint, chemicals, resin and hazardous products must be stored according to their applicable safety data sheets and regulatory requirements.",
+      },
+      {
+        title: "Dust and Moisture Protection",
+        text: "Industrial dust can accumulate around doors, window openings and roof surfaces. Suitable seals, closers, regular cleaning and properly maintained drainage can improve the usability of a storage container.",
+      },
+      {
+        title: "Security Modifications",
+        text: "Lock boxes, reinforced locking arrangements, personnel access doors and other security features can be added where appropriate.",
+      },
+      {
+        title: "Shelving and Internal Storage Layouts",
+        text: "Shelving, partitions and storage racks can be designed according to the intended inventory. Heavy shelving and industrial equipment require appropriate fixing and load assessments.",
+      },
+    ],
+    customOutro:
+      "Customised shipping container modifications: Portable Office Cabin can discuss customised shipping container requirements depending on the base container, project scope and fabrication feasibility. Possible modifications include additional personnel entry doors; ventilation louvers and exhaust openings; steel chequered-plate flooring; internal storage shelves and racks; electrical lighting and power sockets; windows and security grills; roller shutter openings; external repainting and protective coatings; office and site-storage conversion; partitioned storage arrangements; and special-purpose equipment enclosures. Structural modifications must be reviewed before fabrication, particularly where walls, floors or other structural members are cut or altered. A modified container should not be advertised as cargo-worthy for international shipping unless its suitability and certification have been properly established.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Shipping Containers in Jigani?",
+    whyUsIntro: "What Portable Office Cabin offers shipping container buyers in Jigani:",
+    whyUsBullets: [
+      {
+        title: "New and Used Container Options",
+        text: "Customers can enquire about different container sizes, conditions and grades according to available inventory.",
+      },
+      {
+        title: "Container Selection Based on Actual Use",
+        text: "A construction material store, industrial tool room, commercial conversion and shipping application do not necessarily require the same grade of container. Selecting the appropriate container helps control costs while meeting operational requirements.",
+      },
+      {
+        title: "Manufacturing and Customisation Support",
+        text: "With our manufacturing operations near Hosur and our Bengaluru office, we support customised container requirements and related portable cabin applications.",
+      },
+      {
+        title: "Used Container Inspection",
+        text: "Condition photographs, unit identification and inspection arrangements can be discussed before purchase. The actual condition and any agreed repairs or repainting should be clearly stated in the quotation.",
+      },
+      {
+        title: "Transportation and Unloading Coordination",
+        text: "Transportation and unloading requirements can be evaluated according to the delivery location, container dimensions and access conditions.",
+      },
+      {
+        title: "Transparent Commercial Terms",
+        text: "A quotation can separately identify container purchase or rental charges; modifications and additional fittings; transportation charges; crane, hydra or side-loader unloading; and applicable GST.",
+      },
+      {
+        title: "Purchase and Rental Requirements",
+        text: "Customers can enquire about purchasing new or used containers and renting suitable storage containers, subject to inventory and agreed rental terms.",
+      },
+    ],
+
+    areasHeading: "Shipping Container Transportation and Installation in Jigani",
+    areasText:
+      "Shipping container supply areas near Jigani: Jigani Industrial Area, KIADB Jigani, Jigani Main Road, Bommasandra–Jigani Link Road, Bommasandra, Hebbagodi, Electronic City, Chandapura, Attibele, Anekal, Hennagara, Haragadde, Bannerghatta Road and Hosur. Transportation is an important factor when purchasing a shipping container. The required vehicle depends on the container's length, width, weight, condition and the available access at the destination. Transportation of 20 ft containers: a 20 ft container can be transported using an appropriate truck or trailer; the final vehicle arrangement depends on whether the container is empty or loaded, its weight and the route. Transportation of 40 ft containers: a 40 ft container generally requires a suitable long trailer and adequate road access; the customer should verify entry-gate dimensions, overhead obstructions, turning space and available unloading area before confirming dispatch. Crane, hydra or side-loader unloading: unloading may be arranged using an appropriately rated crane, hydra or side-loader, depending on equipment availability, container weight and site conditions. A side-loader may reduce the need for a separate crane at some suitable sites, but its operating clearance, ground-bearing capacity and placement limitations must be checked. Ground preparation: containers should be placed on suitable level supports or foundations that are capable of carrying the actual loads. The arrangement may include engineered concrete supports, foundation strips or other approved supports; support locations and requirements depend on container type, storage load and intended use. Industrial plant entry requirements: when delivering a container inside a factory or industrial estate, the customer may need to arrange vehicle entry permission, driver details, security documentation and lifting approvals. These responsibilities should be coordinated before dispatch.",
+
+    howHeading: "How to Buy or Rent a Shipping Container in Jigani",
+    howSteps: [
+      {
+        title: "Share Your Container Requirement",
+        text: "Tell us whether the container is needed for industrial materials, machinery, warehouse storage, agricultural equipment, commercial conversion or cargo transport. Mention the required container size, condition and delivery location.",
+      },
+      {
+        title: "Select the Container Type and Grade",
+        text: "Choose between available 20 ft, 40 ft, high-cube or specialised units. For used containers, request details of the available grade, condition, photographs and any relevant inspection records.",
+      },
+      {
+        title: "Finalise Modifications and Commercial Terms",
+        text: "If modifications are required, provide the necessary drawings or specifications. The quotation can identify the container price, modifications, transport, unloading, applicable GST, payment terms and anticipated delivery schedule.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "Before dispatch, confirm site access, ground preparation and lifting arrangements. At delivery, verify the container identification number, visible condition and agreed accessories against the quotation and delivery documents. For rental orders, the return conditions, deposit and collection responsibilities should also be documented.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a shipping container in Jigani?",
+        answer:
+          "The price depends on the container size, age, condition, grade, availability and modifications. A used 20 ft wind-and-watertight container, a cargo-worthy container and a one-trip container will have different prices. Transportation, unloading and GST may also affect the final delivered cost. Contact Portable Office Cabin for a quotation based on the available stock and your delivery location.",
+      },
+      {
+        question: "Do you supply 20 ft and 40 ft used shipping containers?",
+        answer:
+          "Yes, enquiries for new and used 20 ft and 40 ft shipping containers can be accommodated subject to stock availability. Standard dry containers and high-cube options can be discussed according to requirements.",
+      },
+      {
+        question: "What is the difference between cargo-worthy and wind-and-watertight containers?",
+        answer:
+          "A cargo-worthy container is assessed for cargo transportation suitability according to applicable criteria. A wind-and-watertight container is generally intended for stationary storage and does not automatically qualify for international shipping.",
+      },
+      {
+        question: "Can I use a shipping container for industrial tool storage?",
+        answer:
+          "Yes. Shipping containers can be suitable for storing tools, spare parts, equipment and general industrial materials. Ventilation, floor capacity, hazardous-material storage restrictions and internal security should be reviewed according to the items stored.",
+      },
+      {
+        question: "Are shipping containers suitable for granite storage in Jigani?",
+        answer:
+          "They may be suitable for granite-industry tools, consumables and certain materials. Heavy stone slabs and concentrated rack loads require an assessment of the container floor, structure and supporting foundation. Adding a steel plate alone does not guarantee sufficient load capacity.",
+      },
+      {
+        question: "Can you deliver a shipping container inside Jigani KIADB Industrial Area?",
+        answer:
+          "Delivery can be planned subject to vehicle access, site restrictions, entry permissions and unloading feasibility. The recipient should confirm the industrial facility's entry and lifting requirements before dispatch.",
+      },
+      {
+        question: "Can a shipping container be delivered without a crane?",
+        answer:
+          "Some deliveries may be possible with suitable side-loader equipment, depending on availability, site clearance and ground conditions. Other locations may require a separate crane or hydra.",
+      },
+      {
+        question: "Can I use a used shipping container for export?",
+        answer:
+          "A used container may be suitable for export when it meets the applicable cargo-worthiness, inspection and certification requirements and is accepted by the carrier. The CSC plate, condition and certification should be checked before purchase.",
+      },
+      {
+        question: "What electricity supply does a refrigerated container require?",
+        answer:
+          "The supply requirement depends on the reefer model and refrigeration system. Many units require suitable three-phase electrical power. The correct voltage, current and generator capacity must be confirmed from the manufacturer's specifications.",
+      },
+      {
+        question: "Can I convert a shipping container into an office or shop?",
+        answer:
+          "Yes, subject to the container's condition, structural design, insulation, ventilation, electrical and fire safety requirements. Approvals may also be required depending on the location and intended use.",
+      },
+      {
+        question: "Do I need permission to place a shipping container on my plot?",
+        answer:
+          "Requirements depend on local planning rules, land classification, installation duration and the use of the container. Being movable does not automatically exempt a container from local permissions. Customers should check with the competent local or industrial authority when required.",
+      },
+      {
+        question: "Can I rent a shipping container instead of purchasing one?",
+        answer:
+          "Rental requirements can be considered based on container availability, size, location and duration. The quotation should confirm the security deposit, minimum rental period, delivery, collection and return-condition requirements.",
+      },
+      {
+        question: "Do you provide custom modifications for shipping containers?",
+        answer:
+          "Customisation options may include security doors, ventilation, flooring, windows, lighting, shelves, internal partitions and protective painting. Availability and pricing depend on the approved modification scope.",
+      },
+      {
+        question: "Can I inspect a used shipping container before purchasing?",
+        answer:
+          "Inspection arrangements, condition photographs and videos can be discussed based on the location of the available unit. Customers should verify the condition, container number and quotation details before completing the purchase.",
+      },
+    ],
+
+    ctaHeading: "Get a Shipping Container Quotation in Jigani",
+    ctaText: `Looking for a new or used shipping container in Jigani, Bangalore? Portable Office Cabin supplies container solutions for industrial storage, manufacturing facilities, warehouses, construction contractors and commercial requirements. To receive a quotation, share the required container size (10 ft, 20 ft or 40 ft); your new, one-trip or used container preference; any cargo-worthy or wind-and-watertight requirement; the intended storage or transport application; the quantity required; modification requirements, if any; the delivery location and PIN code; and the unloading arrangements available at the site. Email: ${COMPANY.email.sales}. Portable Office Cabin — new and used shipping container supplier for Jigani and surrounding industrial areas. Choose the right size. Verify the container condition. Get a quotation for delivery to your site.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container Rental", href: "/products/shipping-container-rental" },
+    ],
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a container depot or yard in Jigani. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The images on this page are illustrative views of a representative 20 ft dry shipping container and are not photographs of stock held in Jigani. KIADB (Karnataka Industrial Areas Development Board), industrial areas and roads are named only to describe delivery locations; Portable Office Cabin is not affiliated with KIADB or with any industrial estate named here. Container dimensions, floor areas and grade descriptions are indicative trade figures, and notes on export suitability, certification, floor loading, foundations and permissions are general guidance, not engineering or legal advice — confirm export requirements with the carrier, structural loads with a qualified engineer and permissions with the competent local or industrial authority.",
   },
 
   {
