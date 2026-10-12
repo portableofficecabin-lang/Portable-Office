@@ -814,9 +814,357 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Labour Accommodation Cabins", href: "/products/labour-colony" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+      { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
     ],
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, with its Bangalore office at Electronic City Phase 1, and does not operate a factory, office or service partner in Mysuru district; transport, unloading and installation are arranged for each project and delivery dates are confirmed at order acceptance. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Mysore. Industrial areas, roads and institutions are named only to describe delivery locations. Permission and approval notes on this page are general guidance, not legal advice; the relevant local authority should be consulted before installation.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINER IN MYSORE — the box itself (new / used / rental, grades, inspection,
+   * modifications), not the container OFFICE: that intent belongs to container-office-in-mysore
+   * just above, and the two pages link to each other. Mysore is not a location in the generated
+   * promotion grid, so no /promotions page competes for this keyword.
+   *
+   * Owner copy of 2026-10-12 (second draft — the first, placeholder-filled draft was withdrawn),
+   * mapped onto the fixed template slots. Every draft H2 is kept verbatim except one fold:
+   *   • "Shipping Containers for Sale and Rental" → why: its six use types as one prose sentence
+   *     in whyIntro, and "Shipping Container Applications Across Mysore" (seven local H3s, same
+   *     subject) as the whyBullets — the only H2 folded, content intact.
+   *   • "Types and Sizes" → solutions: the five H3s stay numbered H3s, each carrying its rows of
+   *     the sizes table; the table's "indicative" note closes solutionsIntro.
+   *   • "New vs Used" → features: grade table rows + the new / used / refurbished sub-sections;
+   *     the "refurbishment does not make a box cargo-worthy" line → sizesNote.
+   *   • "What to Inspect" → industries (six titled points); "Modifications" → custom (nine
+   *     bullets as titled items); "Why Choose" → whyUs; "Delivery Areas" → areasText.
+   * The draft's "Website:" line is dropped as redundant on-site. No ₹ anywhere (file-header
+   * rule). Nothing here claims we manufacture shipping containers or run a Mysore yard: boxes are
+   * supplied subject to availability and the disclaimer says so.
+   *
+   * Images: five owner-dropped 1200×896 webp yard photographs of a blue 20 ft dry container,
+   * copied byte-for-byte to clean slug names; alt text describes the actual photographs.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-in-mysore",
+    city: "Mysore",
+    listTitle: "Shipping Container in Mysore",
+    metaTitle: "Shipping Container in Mysore | Portable Office Cabin",
+    metaDescription:
+      "New and used shipping containers in Mysore: 20 ft, 40 ft and high-cube boxes for storage, sites and conversions. Buy, rent or customise. Get a quote.",
+    keywords:
+      "shipping container in Mysore, shipping container Mysore, shipping container Mysuru, used shipping container Mysore, 20 ft container Mysore, 40 ft container Mysore, high cube container, reefer container, container for sale Mysore, container rental Mysore",
+    geo: { region: "IN-KA", placename: "Mysuru (Mysore), Karnataka, India", position: "12.2958;76.6394", icbm: "12.2958, 76.6394" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-exterior.webp",
+      alt: "Shipping container in Mysore — blue 20 ft dry shipping container with corrugated steel walls, corner castings and double cargo doors with four locking bars, standing in a container yard with stacked containers behind",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-side-view.webp",
+      alt: "Shipping container in Mysore — long side of the blue 20 ft dry container: corrugated steel wall between the corner posts, with forklift pockets in the base rail",
+      width: 1200,
+      height: 896,
+      caption:
+        "A 20 ft dry box is about 6.06 m long and 2.44 m wide: check that footprint against your gate, approach road and unloading space.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-interior.webp",
+      alt: "Shipping container in Mysore — inside an empty dry container with both cargo doors open: corrugated steel walls and roof, and a worn marine plywood floor on the steel base frame",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-door-end.webp",
+        alt: "Shipping container in Mysore — door end of the blue dry container: two cargo doors with four vertical locking bars, cam handles and rubber door seals",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-end-view.webp",
+        alt: "Shipping container in Mysore — front end wall of the blue dry container: a corrugated steel panel between the corner posts, with a corner casting at each corner",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Shipping Container in Mysore – New & Used Containers",
+    tagline: "Buy, Rent & Customise 20 Ft and 40 Ft Shipping Containers in Mysuru",
+    intro: [
+      "Looking for a reliable shipping container in Mysore for industrial storage, construction materials, warehouse expansion, agricultural equipment or commercial use?",
+      "Portable Office Cabin supplies new and used shipping containers for businesses, contractors, industries, warehouses and property owners across Mysore and surrounding areas.",
+      "Our container range includes 20 ft and 40 ft dry shipping containers, high-cube containers, storage containers and other specialised container types, subject to availability.",
+      "Shipping containers offer secure, durable and movable storage space. Their heavy-duty steel structure, lockable doors and weather-resistant construction make them suitable for a variety of commercial and industrial applications.",
+      "Whether you require a single used container for a construction site or multiple containers for warehouse storage, we can help identify a suitable size and specification.",
+      `Contact Portable Office Cabin for container availability, specifications and delivered quotations in Mysore — call or WhatsApp ${COMPANY.phones[0].display}, or email ${COMPANY.email.sales}.`,
+    ],
+
+    whyHeading: "Shipping Containers for Sale and Rental in Mysore",
+    whyIntro:
+      "Shipping containers are widely used beyond international cargo transportation. They provide practical storage and adaptable commercial space without requiring permanent warehouse construction. Customers commonly enquire about shipping containers for construction and industrial sites (storage of tools, cables, machinery spares, fittings and construction materials), factories and warehouses (additional storage for equipment, inventory and seasonal stock), agricultural properties (secure storage for pumps, tools, agricultural supplies and farm equipment), commercial conversions (cafés, kiosks, retail shops, studios and container-based commercial spaces), refrigerated storage (temperature-controlled storage using reefer containers where suitable equipment is available) and domestic and export cargo (cargo-worthy containers selected according to shipping and documentation requirements). Different commercial and industrial areas around Mysore have varying storage and container requirements:",
+    whyBullets: [
+      {
+        title: "Industrial Storage in Hootagalli and Koorgalli",
+        text: "Manufacturing facilities, contractors and industrial establishments may require lockable container storage for equipment, spare parts, tools and maintenance materials. A 20 ft or 40 ft dry shipping container is often suitable for these requirements.",
+      },
+      {
+        title: "Construction Site Storage in Nanjangud and Kochanahalli",
+        text: "Construction projects require temporary storage for electrical materials, tools, mechanical fittings and other supplies. Used shipping containers offer a movable storage solution that can be relocated when the project finishes.",
+      },
+      {
+        title: "Warehouse and Godown Storage",
+        text: "Businesses operating around Mysore Ring Road, Nanjangud Road and surrounding commercial areas may use shipping containers for additional inventory space. A 40 ft standard or high-cube container can be considered when larger quantities of materials need to be stored.",
+      },
+      {
+        title: "Agricultural Storage Around Hunsur and Bannur",
+        text: "Agricultural properties may require secure storage for pumps, equipment and farm supplies. Container selection should account for ventilation, moisture control and the suitability of the stored materials.",
+      },
+      {
+        title: "Cold Storage and Packhouse Applications",
+        text: "Refrigerated containers may be considered for agricultural and commercial temperature-controlled storage around Hunsur, Periyapatna and T. Narasipura. The refrigeration system, power supply, operational condition and temperature requirements must be evaluated before installation.",
+      },
+      {
+        title: "Container Cafés, Shops and Commercial Conversions",
+        text: "Shipping containers may also be converted into cafés, shops, studios and other commercial spaces. Suitable modifications may include personnel doors, glazing, insulation, flooring, lighting, ventilation and interior finishes. Commercial conversions require additional consideration for structural modifications, electrical safety, ventilation and local permissions.",
+      },
+      {
+        title: "Container Storage for Events and Seasonal Businesses",
+        text: "Temporary storage requirements may arise during exhibitions, commercial events, festival seasons and seasonal stock movements. Rental containers can be considered where purchasing a container is not economical for the intended duration.",
+      },
+    ],
+    whyOutro:
+      "We can assist buyers looking for shipping containers for stationary storage as well as customers who need container modifications for a specific application.",
+
+    solutionsHeading: "Types and Sizes of Shipping Containers Available in Mysore",
+    solutionsIntro:
+      "Container selection depends on the available site space, storage requirements, cargo weight, internal height and intended use. The common shipping container sizes below are given with their external dimensions (L × W × H), approximate internal floor area, volume and typical application. Dimensions and capacities are indicative: actual internal measurements, permissible payloads and availability depend on the container model, manufacturer and modification.",
+    solutions: [
+      {
+        title: "20 Ft Shipping Container in Mysore",
+        text: "The 20 ft shipping container is a practical choice for construction sites, factories, farms and businesses that require secure storage without occupying a large area. Common applications include tools and equipment storage, construction materials, electrical supplies, spare parts and general warehouse stock. A typical 20 ft standard dry shipping container measures approximately 6.06 × 2.44 × 2.59 m externally, with about 149 sq ft of internal floor area and 33 m³ of volume — suited to industrial storage, tool rooms and farm storage.",
+      },
+      {
+        title: "40 Ft Shipping Container in Mysore",
+        text: "The 40 ft shipping container offers additional storage capacity for larger industrial and commercial requirements. It is suitable for construction projects, warehouses, manufacturing facilities and businesses that require additional space for equipment or stock. A 40 ft standard dry container measures 12.19 × 2.44 × 2.59 m, with about 305 sq ft of floor area and 67 m³ of volume, for warehouse overflow and large material storage. For customers who need greater internal height, a 40 ft high-cube shipping container may be a suitable alternative.",
+      },
+      {
+        title: "High-Cube Shipping Containers",
+        text: "High-cube containers provide additional vertical clearance compared with standard shipping containers. They are useful for taller storage racks, bulky equipment and certain container modification projects requiring additional internal headroom. A 40 ft high cube measures 12.19 × 2.44 × 2.90 m, with about 305 sq ft of floor area and 76 m³ of volume, for high-volume storage and container conversions.",
+      },
+      {
+        title: "Refrigerated Shipping Containers",
+        text: "Refrigerated containers, also known as reefer containers, are designed for temperature-controlled applications. Potential applications include agricultural produce, flowers, fruits, dairy products and other temperature-sensitive products. A 20 ft reefer (6.06 × 2.44 × 2.59 m, about 134 sq ft, 28 m³) suits refrigerated storage, and a 40 ft high-cube reefer (12.19 × 2.44 × 2.90 m, about 285 sq ft, 67 m³) large-scale temperature-controlled storage. Electrical requirements, operating temperatures and machinery condition must be verified for the specific container before purchase or rental.",
+      },
+      {
+        title: "10 Ft and Specialised Containers",
+        text: "Compact or modified containers may be suitable for generator housing, pump rooms, kiosks and storage locations with limited available space; a 10 ft modified container measures approximately 2.99 × 2.44 × 2.59 m, with about 71 sq ft of floor area and 16 m³ of volume, for compact storage and equipment housing. Open-top containers and flat-rack containers are specialised options for equipment that cannot be accommodated in a standard closed shipping container: a 20 ft open top (6.06 × 2.44 × 2.59 m, about 149 sq ft, 32 m³) for tall machinery and crane-loaded cargo, and a 40 ft flat rack (12.19 × 2.44 × 2.59 m, approx. 305 sq ft, open) for oversized machinery and equipment.",
+      },
+    ],
+
+    featuresHeading: "New vs Used Shipping Containers in Mysore",
+    featuresIntro:
+      "Both new and used shipping containers can provide effective storage solutions. The best option depends on the required condition, budget, appearance and whether the container will be used for stationary storage or cargo movement. Container grades, their condition and recommended use:",
+    features: [
+      "One-Trip / New — minimal previous shipping use, generally good cosmetic condition; recommended for premium storage, commercial conversions, cafés and offices",
+      "Cargo-Worthy (CW) — surveyed for cargo use, subject to valid certification; recommended for cargo transportation, industrial storage and export applications",
+      "Wind and Watertight (WWT) — used container with a weather-resistant enclosure, but not necessarily certified for cargo transport; recommended for stationary storage, factories, construction sites and farms",
+      "As-Is — sold in its existing condition, potentially requiring repairs; recommended for refurbishment, fabrication and selected conversion projects",
+      "New shipping containers — new or one-trip containers are generally preferred where external appearance, reduced wear and longer-term use are important. They can be considered for retail conversions, office projects, commercial interiors and other applications requiring a container in better cosmetic condition",
+      "Used shipping containers — an economical option for businesses requiring storage space. These containers may show visible dents, scratches, repaired areas or surface rust from earlier use, and their actual condition should be assessed before purchase. A used container can be suitable for stationary storage when its roof, floor, doors and structural components meet the required condition",
+      "Refurbished shipping containers — refurbishment may include repainting, minor steel repairs, lockbox installation, door servicing and other modifications depending on the agreed scope",
+    ],
+    sizesNote:
+      "Refurbishment can improve appearance and usability, but it does not automatically make a container cargo-worthy or suitable for export.",
+
+    industriesHeading: "What to Inspect Before Buying a Used Shipping Container",
+    industriesIntro:
+      "Buying a used container requires more than checking its exterior appearance. The following inspection points are particularly important:",
+    industries: [
+      {
+        title: "Roof condition",
+        text: "Inspect the roof for severe dents, perforation, damaged welds and areas where rainwater could accumulate.",
+      },
+      {
+        title: "Container flooring",
+        text: "Check the marine plywood flooring or alternative installed floor for soft spots, delamination, moisture damage and structural deterioration.",
+      },
+      {
+        title: "Doors and rubber seals",
+        text: "Confirm that both cargo doors open and close correctly. Inspect locking bars, hinges, locking cams and rubber weather seals.",
+      },
+      {
+        title: "Corner posts and lifting points",
+        text: "Check the structural corner posts and corner castings for cracks, severe corrosion or other damage.",
+      },
+      {
+        title: "Container identification and certification",
+        text: "Review the container identification number, manufacturing details and CSC plate where applicable. For transportation or export applications, confirm the required inspection and certification status with the relevant operator.",
+      },
+      {
+        title: "Rust and previous repairs",
+        text: "Surface rust and cosmetic dents may be acceptable for certain storage applications. Structural corrosion, perforation and poorly repaired sections need closer inspection. Where the container will be used for food, agricultural produce or sensitive materials, its previous cargo history and suitability should also be assessed.",
+      },
+    ],
+
+    customHeading: "Shipping Container Modifications and Customisation",
+    customIntro:
+      "Portable Office Cabin also works with portable cabin and container-based products for different commercial requirements. Depending on the container and project scope, modifications may include:",
+    customBullets: [
+      { title: "Doors and access", text: "Additional personnel doors and access openings." },
+      { title: "Windows and ventilation", text: "Windows and ventilation provisions." },
+      { title: "Security", text: "Heavy-duty locking arrangements." },
+      { title: "Shelving and racks", text: "Internal shelving and storage racks." },
+      { title: "Electrical", text: "Electrical wiring and LED lighting." },
+      { title: "Insulation and interiors", text: "Interior insulation and panel finishing." },
+      { title: "Flooring", text: "Flooring repairs and replacements." },
+      { title: "Exterior", text: "Exterior repainting and refurbishment." },
+      { title: "Layouts", text: "Office and commercial layout modifications." },
+    ],
+    customOutro:
+      "For complete office interiors, workstations, air conditioning and other fully fitted requirements, explore our Container Office and Portable Office Cabin product ranges.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Shipping Containers in Mysore?",
+    whyUsIntro: "What Portable Office Cabin offers shipping container buyers in Mysore:",
+    whyUsBullets: [
+      {
+        title: "Multiple Container Options",
+        text: "Customers can enquire about new, used and modified containers based on their project requirements and availability.",
+      },
+      {
+        title: "Industrial and Commercial Experience",
+        text: "Our product range covers portable office cabins, storage containers, container-based structures and other prefabricated solutions.",
+      },
+      {
+        title: "Customisation Options",
+        text: "Container modifications can be discussed according to the required doors, windows, internal layout, flooring, electrical provisions and other project specifications.",
+      },
+      {
+        title: "Delivery Coordination",
+        text: "Shipping container transport must be planned according to container size, vehicle access, unloading equipment and ground conditions. We can review delivery requirements for the customer's location and provide the applicable transport scope in the quotation.",
+      },
+      {
+        title: "Clear Technical Requirements",
+        text: "Container quotations can identify the size, container condition, included modifications and transportation scope so that customers can compare options accurately.",
+      },
+    ],
+
+    areasHeading: "Shipping Container Delivery Areas in Mysore and Surrounding Locations",
+    areasText:
+      "Portable Office Cabin accepts shipping container enquiries for Mysore and the surrounding region, including Mysore industrial and commercial areas — Mysore City, Hootagalli, Hebbal, Metagalli, Koorgalli, Belavadi, Bogadi, Kadakola, Kochanahalli and Nanjangud; Mysore district locations — Hunsur, Periyapatna, K.R. Nagar, T. Narasipura, H.D. Kote, Bannur and Thandya; and nearby locations — Srirangapatna, Mandya, Chamarajanagar and locations along the Kodagu Road. Delivery availability and transportation charges are subject to the specific destination and required vehicle arrangements.",
+
+    howHeading: "How to Buy or Rent a Shipping Container in Mysore",
+    howSteps: [
+      {
+        title: "Share Your Requirements",
+        text: "Tell us the container size, quantity, application and delivery location. For example: “Required: 20 ft used shipping container for material storage at Hootagalli, Mysore. Quantity: 1 No.”",
+      },
+      {
+        title: "Select the Container Type",
+        text: "Choose between standard dry containers, high-cube containers, used containers or specialised container types according to your requirements and available stock.",
+      },
+      {
+        title: "Review the Quotation",
+        text: "The quotation should identify the container size, condition, included modifications, GST, transport, unloading responsibility and payment terms.",
+      },
+      {
+        title: "Prepare the Installation Location",
+        text: "The placement area should be level, stable and accessible to the proposed transport and unloading equipment. Where required, suitable supports or a prepared foundation should be provided.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "Once the order and delivery arrangements are confirmed, the container can be transported to the customer's site according to the agreed schedule and scope.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a 20 ft shipping container in Mysore?",
+        answer:
+          "The price depends on whether the container is new, used, cargo-worthy, wind and watertight or refurbished. Container condition, modifications, availability and transportation charges also affect the final price. Contact Portable Office Cabin for a current quotation.",
+      },
+      {
+        question: "What is the cost of a 40 ft shipping container in Mysore?",
+        answer:
+          "The cost varies according to container grade, age, availability and standard or high-cube configuration. Transportation and unloading may be quoted separately.",
+      },
+      {
+        question: "Do you supply used shipping containers in Mysore?",
+        answer:
+          "Portable Office Cabin deals in new and used storage containers. Customers can enquire about available sizes and conditions suitable for their requirements.",
+      },
+      {
+        question: "Can a shipping container be used for a warehouse?",
+        answer:
+          "Yes. Shipping containers are commonly used as supplementary storage space for equipment, construction materials and commercial inventory. Ventilation, moisture protection and load requirements should be considered.",
+      },
+      {
+        question: "What is the difference between a standard and high-cube container?",
+        answer:
+          "A standard container is typically around 2.59 metres high externally, while a high-cube container is around 2.90 metres high externally. The additional height is useful for storage requiring more vertical clearance.",
+      },
+      {
+        question: "Can a used shipping container be repainted?",
+        answer:
+          "Yes. Used shipping containers can be refurbished and repainted, subject to their existing condition and the agreed modification scope.",
+      },
+      {
+        question: "Can you install doors, windows and lights?",
+        answer:
+          "Container modifications can include access doors, windows, lighting and other fittings depending on the project's technical requirements.",
+      },
+      {
+        question: "Can I use a shipping container for export?",
+        answer:
+          "A container intended for international shipping must meet applicable carrier requirements, including appropriate certification and inspection status. A container sold for stationary storage should not automatically be assumed suitable for export.",
+      },
+      {
+        question: "Do shipping containers require a foundation?",
+        answer:
+          "Stationary containers require stable, level and adequately supported placement. The appropriate foundation or support arrangement depends on soil condition, loading, site drainage and intended use.",
+      },
+      {
+        question: "Do I need permission to install a shipping container?",
+        answer:
+          "Local permissions may be required depending on the land classification, intended use, installation method and whether the container is converted into an occupied commercial or residential space. Confirm the requirements with the relevant local authority.",
+      },
+      {
+        question: "Can I rent a shipping container instead of buying one?",
+        answer:
+          "Rental availability, the minimum rental period, refundable security deposit and delivery and collection charges depend on the container and agreed rental terms.",
+      },
+      {
+        question: "How long does shipping container delivery take in Mysore?",
+        answer:
+          "Delivery depends on container availability, required modifications, transport arrangements and site access. A delivery schedule can be confirmed when issuing the quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Shipping Container Quotation in Mysore",
+    ctaText: `Looking for a 20 ft or 40 ft shipping container for sale or rental in Mysore? Contact Portable Office Cabin with your required size, container type, quantity and delivery location. Our team can discuss suitable container options, specifications, modifications and commercial requirements. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Enquire today for new and used shipping containers in Mysore — share your requirements to receive a quotation based on your project's scope and delivery location.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container Rental", href: "/products/shipping-container-rental" },
+    ],
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, container depot, office or service partner in Mysore. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The photographs on this page show representative 20 ft dry shipping containers and are not photographs of stock held in Mysore. Container dimensions, volumes and grade descriptions are indicative trade figures, and notes on export suitability, certification, foundations and permissions are general guidance, not legal advice — confirm export requirements with the carrier or operator and permissions with the relevant local authority.",
   },
   {
     slug: "container-office-in-doddaballapura",
