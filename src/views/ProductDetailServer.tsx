@@ -39,6 +39,8 @@ import { ContainerOfficeGenericContent } from "@/components/products/ContainerOf
 import { FreshInsightSection } from "@/components/products/FreshInsightSection";
 import { ProductGuidesSection } from "@/components/products/ProductGuidesSection";
 import { PortableCabinGuideLinks } from "@/components/products/PortableCabinGuideLinks";
+import { ProductContextLinks } from "@/components/products/ProductContextLinks";
+import { CATEGORY_LINKS } from "@/data/categoryLandings";
 import { PortaCabinContent } from "@/components/products/PortaCabinContent";
 import { MSPortableCabinContent } from "@/components/products/MSPortableCabinContent";
 import { SteelPortableCabinContent } from "@/components/products/SteelPortableCabinContent";
@@ -114,6 +116,18 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
     const rotated = index >= 0 ? [...siblings.slice(index + 1), ...siblings.slice(0, index)] : siblings;
     return rotated.filter((p) => p.id !== product.id).slice(0, 3);
   })();
+  /* A category with fewer than three other products left the rail short — the toilet block, the
+   * only product in its category, had no related links at all. The gap is filled from the
+   * category's hand-picked crossSellProductIds (src/data/categoryLandings.ts): genuinely related
+   * products from OTHER categories, never synonyms. Same-category neighbours always come first. */
+  const crossSellProducts =
+    relatedProducts.length >= 3
+      ? []
+      : (CATEGORY_LINKS[product.categorySlug]?.crossSellProductIds ?? [])
+          .map((id) => allProducts.find((p) => p.id === id))
+          .filter((p): p is Product => !!p && p.id !== product.id && !relatedProducts.some((r) => r.id === p.id))
+          .slice(0, 3 - relatedProducts.length);
+  const relatedRail = [...relatedProducts, ...crossSellProducts];
   /** Thumbnail for a related card — same order as the gallery: the product's first real image,
    *  else the catalogue's best image for it. The old rail drew a placeholder icon on every card. */
   const relatedImageFor = (p: Product): string =>
@@ -329,19 +343,32 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
       {/* Breadcrumb */}
       <section className="bg-muted/50 py-4 border-b border-border">
         <div className="container-custom">
-          <nav className="flex items-center gap-2 text-sm">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm">
             <Link href="/" className="text-muted-foreground hover:text-accent">Home</Link>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <Link href="/products" className="text-muted-foreground hover:text-accent">Products</Link>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <Link href={categoryPath} className="text-muted-foreground hover:text-accent">
               {product.category}
             </Link>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+            {/* A product child sits under its parent product, as in the URL and the BreadcrumbList
+                JSON-LD above. The visible trail used to skip this crumb, so the two disagreed. */}
+            {parentProduct && (
+              <>
+                <Link
+                  href={getProductDetailPath(parentProduct)}
+                  className="text-muted-foreground hover:text-accent truncate"
+                >
+                  {getCommerce(parentProduct.id)?.h1Title || parentProduct.name}
+                </Link>
+                <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+              </>
+            )}
             {/* Same text as the page <h1> and as the last crumb of the BreadcrumbList JSON-LD. The two
                 used to differ (catalogue name vs commerce H1, e.g. "MS Portable Cabins" vs
                 "MS Portable Cabin"), so the visible trail and the markup disagreed. */}
-            <span className="text-foreground font-medium truncate">{pageH1}</span>
+            <span className="text-foreground font-medium truncate" aria-current="page">{pageH1}</span>
           </nav>
         </div>
       </section>
@@ -709,6 +736,11 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               is free today and lights up per product as child groups are authored. */}
           <ProductGuidesSection parentSlug={slug || ""} />
 
+          {/* Category-matched delivery-area and buying-guide links, plus a route back to the
+              category comparison. Same link lists as the category page; nothing for categories
+              without an entry in CATEGORY_LINKS. */}
+          <ProductContextLinks categorySlug={product.categorySlug} categoryName={product.category} />
+
           {/* Customer Reviews (server-rendered list + client submit) */}
           <ProductReviews
             initialReviews={reviews}
@@ -718,14 +750,14 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           />
 
           {/* Related Products */}
-          {relatedProducts.length > 0 && (
+          {relatedRail.length > 0 && (
             <div className="mt-16">
               <div className="flex items-center justify-between mb-6">
                 {/* ONE template literal → ONE contiguous text node, so the raw server HTML carries
                     "Related Portable Cabins" without React's <!-- --> separator (the site-wide
                     SSR-diff convention, see the "Showing …" note in src/views/Products.tsx). */}
                 <h2 className="font-display text-2xl font-bold text-foreground">
-                  {`Related ${product.category}`}
+                  {crossSellProducts.length > 0 ? "Related Products" : `Related ${product.category}`}
                 </h2>
                 <Button variant="outline" asChild>
                   <Link href={categoryPath}>
@@ -735,7 +767,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 </Button>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {relatedProducts.map((related) => (
+                {relatedRail.map((related) => (
                   <Link
                     key={related.id}
                     href={getProductDetailPath(related)}
