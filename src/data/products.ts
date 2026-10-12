@@ -865,7 +865,16 @@ export const products: Product[] = [
       "Stackable up to 3 units high",
       "Customisable with shelving, lighting & ventilation",
     ],
-    images: ["/placeholder.svg"],
+    /* Owner-supplied renders (issue #100). They replace a photo of a 40 ft box on a trailer that
+       showed a leasing company's container number (TGHU 911633 9) and a truck plate. images[0]
+       is the card, page, og:image, JSON-LD and Merchant feed image and must stay identical to
+       productImages.ts. The door-end view leads because it does not overstate the 20 ft length;
+       the owner's three-quarter render measures as a 40 ft box and is used on the 40 ft rental
+       card instead. */
+    images: [
+      "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-door-end.webp",
+      "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-side.webp",
+    ],
     price: 185000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,
