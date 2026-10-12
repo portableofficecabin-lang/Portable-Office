@@ -839,10 +839,19 @@ export const CITY_PAGES: CityPage[] = [
    *     bullets as titled items); "Why Choose" → whyUs; "Delivery Areas" → areasText.
    * The draft's "Website:" line is dropped as redundant on-site. No ₹ anywhere (file-header
    * rule). Nothing here claims we manufacture shipping containers or run a Mysore yard: boxes are
-   * supplied subject to availability and the disclaimer says so.
+   * supplied subject to availability and the disclaimer says so. Owner rule (2026-10-12): 20 ft and
+   * 40 ft sale and rental stay "subject to availability"; refrigerated, open-top and flat-rack
+   * containers say "Available on Request, Subject to Stock Confirmation" wherever they appear —
+   * never imply they are in stock.
    *
-   * Images: five owner-dropped 1200×896 webp yard photographs of a blue 20 ft dry container,
-   * copied byte-for-byte to clean slug names; alt text describes the actual photographs.
+   * Images: the owner's own green 20 ft container photographs, referenced IN PLACE from the
+   * Cargo Shipping Container product gallery (/images/products/cargo-shipping-container-*, live
+   * on that product page since 2026-07-28; the product files are not modified). The owner first
+   * dropped five blue yard photographs, but their rights could not be established and other
+   * lessors' container numbers were legible on the stacked boxes behind, so — on the owner's
+   * instruction (2026-10-12) — they were replaced. The product gallery's teal lead image is left
+   * out so the page shows one container; no featureImage, because none of the square shots
+   * survives the band's 3:2 crop without cutting the container. Alt text describes the photos.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -859,37 +868,29 @@ export const CITY_PAGES: CityPage[] = [
     motion: true,
 
     heroImage: {
-      src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-exterior.webp",
-      alt: "Shipping container in Mysore — blue 20 ft dry shipping container with corrugated steel walls, corner castings and double cargo doors with four locking bars, standing in a container yard with stacked containers behind",
-      width: 1200,
-      height: 896,
-    },
-    featureImage: {
-      src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-side-view.webp",
-      alt: "Shipping container in Mysore — long side of the blue 20 ft dry container: corrugated steel wall between the corner posts, with forklift pockets in the base rail",
-      width: 1200,
-      height: 896,
-      caption:
-        "A 20 ft dry box is about 6.06 m long and 2.44 m wide: check that footprint against your gate, approach road and unloading space.",
+      src: "/images/products/cargo-shipping-container-gallery-2.webp",
+      alt: "Shipping container in Mysore — green 20 ft dry shipping container seen from the door end: corrugated steel walls, corner castings, forklift pockets and double cargo doors with four locking bars",
+      width: 1024,
+      height: 1024,
     },
     interiorImage: {
-      src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-interior.webp",
-      alt: "Shipping container in Mysore — inside an empty dry container with both cargo doors open: corrugated steel walls and roof, and a worn marine plywood floor on the steel base frame",
-      width: 1200,
-      height: 896,
+      src: "/images/products/cargo-shipping-container-interior.webp",
+      alt: "Shipping container in Mysore — inside an empty used dry container with the doors open: corrugated steel walls and roof with surface rust spots, and a worn plywood floor",
+      width: 1024,
+      height: 1024,
     },
     gallery: [
       {
-        src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-door-end.webp",
-        alt: "Shipping container in Mysore — door end of the blue dry container: two cargo doors with four vertical locking bars, cam handles and rubber door seals",
-        width: 1200,
-        height: 896,
+        src: "/images/products/cargo-shipping-container-gallery-1.webp",
+        alt: "Shipping container in Mysore — the green 20 ft dry container from the opposite corner: corrugated side and end walls between the corner posts, with forklift pockets in the base rail",
+        width: 1024,
+        height: 1024,
       },
       {
-        src: "/images/cities/shipping-container-in-mysore/shipping-container-in-mysore-end-view.webp",
-        alt: "Shipping container in Mysore — front end wall of the blue dry container: a corrugated steel panel between the corner posts, with a corner casting at each corner",
-        width: 1200,
-        height: 896,
+        src: "/images/products/cargo-shipping-container-gallery-3.webp",
+        alt: "Shipping container in Mysore — door end of the green dry container: two cargo doors with four vertical locking bars, cam handles and door gaskets",
+        width: 1024,
+        height: 1024,
       },
     ],
 
@@ -898,7 +899,7 @@ export const CITY_PAGES: CityPage[] = [
     intro: [
       "Looking for a reliable shipping container in Mysore for industrial storage, construction materials, warehouse expansion, agricultural equipment or commercial use?",
       "Portable Office Cabin supplies new and used shipping containers for businesses, contractors, industries, warehouses and property owners across Mysore and surrounding areas.",
-      "Our container range includes 20 ft and 40 ft dry shipping containers, high-cube containers, storage containers and other specialised container types, subject to availability.",
+      "Our container range includes 20 ft and 40 ft dry shipping containers for sale and rental, high-cube containers, storage containers and other specialised container types, subject to availability. Refrigerated, open-top and flat-rack containers are available on request, subject to stock confirmation.",
       "Shipping containers offer secure, durable and movable storage space. Their heavy-duty steel structure, lockable doors and weather-resistant construction make them suitable for a variety of commercial and industrial applications.",
       "Whether you require a single used container for a construction site or multiple containers for warehouse storage, we can help identify a suitable size and specification.",
       `Contact Portable Office Cabin for container availability, specifications and delivered quotations in Mysore — call or WhatsApp ${COMPANY.phones[0].display}, or email ${COMPANY.email.sales}.`,
@@ -906,7 +907,7 @@ export const CITY_PAGES: CityPage[] = [
 
     whyHeading: "Shipping Containers for Sale and Rental in Mysore",
     whyIntro:
-      "Shipping containers are widely used beyond international cargo transportation. They provide practical storage and adaptable commercial space without requiring permanent warehouse construction. Customers commonly enquire about shipping containers for construction and industrial sites (storage of tools, cables, machinery spares, fittings and construction materials), factories and warehouses (additional storage for equipment, inventory and seasonal stock), agricultural properties (secure storage for pumps, tools, agricultural supplies and farm equipment), commercial conversions (cafés, kiosks, retail shops, studios and container-based commercial spaces), refrigerated storage (temperature-controlled storage using reefer containers where suitable equipment is available) and domestic and export cargo (cargo-worthy containers selected according to shipping and documentation requirements). Different commercial and industrial areas around Mysore have varying storage and container requirements:",
+      "Shipping containers are widely used beyond international cargo transportation. They provide practical storage and adaptable commercial space without requiring permanent warehouse construction. Customers commonly enquire about shipping containers for construction and industrial sites (storage of tools, cables, machinery spares, fittings and construction materials), factories and warehouses (additional storage for equipment, inventory and seasonal stock), agricultural properties (secure storage for pumps, tools, agricultural supplies and farm equipment), commercial conversions (cafés, kiosks, retail shops, studios and container-based commercial spaces), refrigerated storage (temperature-controlled storage using reefer containers, available on request, subject to stock confirmation) and domestic and export cargo (cargo-worthy containers selected according to shipping and documentation requirements). Different commercial and industrial areas around Mysore have varying storage and container requirements:",
     whyBullets: [
       {
         title: "Industrial Storage in Hootagalli and Koorgalli",
@@ -926,7 +927,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Cold Storage and Packhouse Applications",
-        text: "Refrigerated containers may be considered for agricultural and commercial temperature-controlled storage around Hunsur, Periyapatna and T. Narasipura. The refrigeration system, power supply, operational condition and temperature requirements must be evaluated before installation.",
+        text: "Refrigerated containers may be considered for agricultural and commercial temperature-controlled storage around Hunsur, Periyapatna and T. Narasipura. Reefer containers are available on request, subject to stock confirmation. The refrigeration system, power supply, operational condition and temperature requirements must be evaluated before installation.",
       },
       {
         title: "Container Cafés, Shops and Commercial Conversions",
@@ -942,7 +943,7 @@ export const CITY_PAGES: CityPage[] = [
 
     solutionsHeading: "Types and Sizes of Shipping Containers Available in Mysore",
     solutionsIntro:
-      "Container selection depends on the available site space, storage requirements, cargo weight, internal height and intended use. The common shipping container sizes below are given with their external dimensions (L × W × H), approximate internal floor area, volume and typical application. Dimensions and capacities are indicative: actual internal measurements, permissible payloads and availability depend on the container model, manufacturer and modification.",
+      "Container selection depends on the available site space, storage requirements, cargo weight, internal height and intended use. The common shipping container sizes below are given with their external dimensions (L × W × H), approximate internal floor area, volume and typical application. Dimensions and capacities are indicative: actual internal measurements, permissible payloads and availability depend on the container model, manufacturer and modification. 20 ft and 40 ft dry and high-cube containers are offered for sale and rental, subject to availability; refrigerated, open-top and flat-rack containers are Available on Request, Subject to Stock Confirmation.",
     solutions: [
       {
         title: "20 Ft Shipping Container in Mysore",
@@ -958,11 +959,11 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Refrigerated Shipping Containers",
-        text: "Refrigerated containers, also known as reefer containers, are designed for temperature-controlled applications. Potential applications include agricultural produce, flowers, fruits, dairy products and other temperature-sensitive products. A 20 ft reefer (6.06 × 2.44 × 2.59 m, about 134 sq ft, 28 m³) suits refrigerated storage, and a 40 ft high-cube reefer (12.19 × 2.44 × 2.90 m, about 285 sq ft, 67 m³) large-scale temperature-controlled storage. Electrical requirements, operating temperatures and machinery condition must be verified for the specific container before purchase or rental.",
+        text: "Available on Request, Subject to Stock Confirmation. Refrigerated containers, also known as reefer containers, are designed for temperature-controlled applications. Potential applications include agricultural produce, flowers, fruits, dairy products and other temperature-sensitive products. A 20 ft reefer (6.06 × 2.44 × 2.59 m, about 134 sq ft, 28 m³) suits refrigerated storage, and a 40 ft high-cube reefer (12.19 × 2.44 × 2.90 m, about 285 sq ft, 67 m³) large-scale temperature-controlled storage. Electrical requirements, operating temperatures and machinery condition must be verified for the specific container before purchase or rental.",
       },
       {
         title: "10 Ft and Specialised Containers",
-        text: "Compact or modified containers may be suitable for generator housing, pump rooms, kiosks and storage locations with limited available space; a 10 ft modified container measures approximately 2.99 × 2.44 × 2.59 m, with about 71 sq ft of floor area and 16 m³ of volume, for compact storage and equipment housing. Open-top containers and flat-rack containers are specialised options for equipment that cannot be accommodated in a standard closed shipping container: a 20 ft open top (6.06 × 2.44 × 2.59 m, about 149 sq ft, 32 m³) for tall machinery and crane-loaded cargo, and a 40 ft flat rack (12.19 × 2.44 × 2.59 m, approx. 305 sq ft, open) for oversized machinery and equipment.",
+        text: "Compact or modified containers may be suitable for generator housing, pump rooms, kiosks and storage locations with limited available space; a 10 ft modified container measures approximately 2.99 × 2.44 × 2.59 m, with about 71 sq ft of floor area and 16 m³ of volume, for compact storage and equipment housing. Open-top containers and flat-rack containers (Available on Request, Subject to Stock Confirmation) are specialised options for equipment that cannot be accommodated in a standard closed shipping container: a 20 ft open top (6.06 × 2.44 × 2.59 m, about 149 sq ft, 32 m³) for tall machinery and crane-loaded cargo, and a 40 ft flat rack (12.19 × 2.44 × 2.59 m, approx. 305 sq ft, open) for oversized machinery and equipment.",
       },
     ],
 
@@ -1154,6 +1155,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
     relatedLinks: [
       { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Shipping Container", href: "/products/cargo-shipping-container" },
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
@@ -1164,7 +1166,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, container depot, office or service partner in Mysore. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The photographs on this page show representative 20 ft dry shipping containers and are not photographs of stock held in Mysore. Container dimensions, volumes and grade descriptions are indicative trade figures, and notes on export suitability, certification, foundations and permissions are general guidance, not legal advice — confirm export requirements with the carrier or operator and permissions with the relevant local authority.",
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, container depot, office or service partner in Mysore. 20 ft and 40 ft shipping containers are supplied for sale and rental subject to availability; refrigerated, open-top and flat-rack containers are available on request, subject to stock confirmation, and nothing on this page states that they are currently in stock. The specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The photographs on this page are Portable Office Cabin's own product photographs of a representative 20 ft dry shipping container and are not photographs of stock held in Mysore. Container dimensions, volumes and grade descriptions are indicative trade figures, and notes on export suitability, certification, foundations and permissions are general guidance, not legal advice — confirm export requirements with the carrier or operator and permissions with the relevant local authority.",
   },
   {
     slug: "container-office-in-doddaballapura",
