@@ -119,21 +119,26 @@ async function main() {
   console.log("\n5. Failure handling");
   {
     setMode("insert-fail");
-    const r = await submit(goodFields({ email: "f1@example.com" }), { ip: "203.0.113.6" });
+    const r = await submit(goodFields({ email: "f1@example.com", phone: "9700000101" }), { ip: "203.0.113.6" });
     check(r.status === 502, "database error → 502 with a friendly message", String(r.status));
     setMode("db-rate-limited");
-    const r2 = await submit(goodFields({ email: "f2@example.com" }), { ip: "203.0.113.7" });
+    const r2 = await submit(goodFields({ email: "f2@example.com", phone: "9700000102" }), { ip: "203.0.113.7" });
     check(r2.status === 429, "database 'rate_limited' → 429", String(r2.status));
     setMode("notify-fail");
     fs.writeFileSync(LOG, "");
-    const r3 = await submit(goodFields({ email: "f3@example.com" }), { ip: "203.0.113.8" });
+    const r3 = await submit(goodFields({ email: "f3@example.com", phone: "9700000103" }), { ip: "203.0.113.8" });
     const b3 = await r3.json();
-    check(r3.status === 201 && b3.notification === "failed" && logLines()[0]?.kind === "insert", "e-mail failure → enquiry still stored, 201, notification failed");
+    check(
+      r3.status === 201 && b3.notification === "failed" && logLines()[0]?.kind === "insert",
+      "e-mail failure → enquiry still stored, 201, notification failed",
+      `${r3.status} ${JSON.stringify(b3)} first=${logLines()[0]?.kind}`,
+    );
     setMode("ok");
   }
 
   console.log("\n6. Rate limits");
   {
+    // (Each case above used its own phone number: the per-phone limit is 3 per 10 minutes.)
     // Same e-mail from different IPs: 3 accepted, 4th refused.
     const codes = [];
     for (let i = 0; i < 4; i++) codes.push((await submit(goodFields({ email: "repeat@example.com", phone: `98000000${i}1` }), { ip: `198.51.100.${i + 1}` })).status);
