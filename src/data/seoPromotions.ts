@@ -320,6 +320,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
   ],
+  // Shipping-container hub — the Mysore shipping-container page (the box itself, new / used / rental),
+  // the first city page for this keyword; the page links back to this hub.
+  "Shipping Container|Karnataka": [
+    { name: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+  ],
 };
 
 function getPromotionImage(keyword: string, variation: number): string {
