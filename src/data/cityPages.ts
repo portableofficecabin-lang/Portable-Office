@@ -3323,7 +3323,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabin", href: "/products/category/security-cabins" },
       { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
-      { label: "Container Office in Chennai", href: "/promotions/container-office-in-chennai" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
       { label: "Site Office Container in Chennai", href: "/promotions/site-office-container-in-chennai" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
@@ -4579,7 +4579,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
-      { label: "Container Office in Chennai", href: "/promotions/container-office-in-chennai" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
       { label: "Site Office Container in Chennai", href: "/promotions/site-office-container-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
       { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
@@ -4587,6 +4587,367 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tiruvallur district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's standard container office designs and are not photographs of installations in Athipattu. Kamarajar Port Limited and the thermal power stations and industrial facilities around Ennore and Athipattu are independent organisations with which Portable Office Cabin is not affiliated; their names are used only to describe delivery locations, and entry to any such premises is subject to that facility's own permissions. Notes on coastal corrosion protection, wind exposure and anchoring are general guidance; the coatings, base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN CHENNAI — the metropolitan page for the whole Chennai industrial belt
+   * (Sriperumbudur–Oragadam, OMR / GST Road, Ennore–Kattupalli–Manali, ECR).
+   *
+   * Owner copy of 2026-10-12, mapped onto the fixed template slots. Every draft H2 is kept
+   * verbatim as a section heading; content with no slot of its own is FOLDED, never dropped:
+   *   • "Container Office Sizes Available in Chennai": sizes table + seating caveat →
+   *     solutionsIntro prose; the four size sub-sections → solutions.
+   *   • "Standard Construction and Material Specifications" table → features[] as
+   *     "Component — spec"; its "finalised according to the approved quotation" note → sizesNote.
+   *   • "Container Office Specifications for Chennai Weather" (five numbered sub-sections) →
+   *     industries, each sub-list folded into its text.
+   *   • "Container Office Applications Across Chennai" table + the CTA's supply-coverage line →
+   *     areasText prose (Sarjapur precedent).
+   *   • "Customised Container Office Solutions" → custom; "Why Choose" → whyUs; the six
+   *     ordering steps → how; the CTA checklist + sign-off → ctaText ("Website:" line dropped as
+   *     redundant on-site).
+   * "With manufacturing operations in Bengaluru and Hosur" is rewritten to the factory near
+   * Hosur plus the Bengaluru office: manufacturing happens in Tamil Nadu only and Bengaluru is
+   * an office (src/lib/company.ts). The draft carries no ₹ figure (file-header rule).
+   *
+   * KEYWORD OWNERSHIP: /promotions/container-office-in-chennai is a generated promotion page
+   * with the same H1. This page carries the owner-written local copy, so the internal links
+   * that use the exact phrase (the Kalpakkam and Athipattu pages, the Chennai and Tamil Nadu
+   * promotion hubs) point here. The promotion page itself is left unchanged.
+   *
+   * Images: five owner-dropped webp files ("public/images/Container office chennai city page/"),
+   * copied byte-for-byte to clean slug names — except the end view, cropped 1264×848 → 1136×848
+   * (64 px of yard off each side) to the front view's 4:3 so the two-up gallery cards align.
+   * Alt text and the caption describe the ACTUAL images — a teal corrugated-steel cabin with a
+   * navy-blue frame, a cream steel door and grilled windows in a factory yard — and every alt
+   * leads with the full page name.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-chennai",
+    city: "Chennai",
+    listTitle: "Container Office in Chennai",
+    metaTitle: "Container Office in Chennai | Portable Office Cabin",
+    metaDescription:
+      "Container office in Chennai for site offices, project cabins and multi-cabin camps. Custom 10 ft to 40 ft cabins specified for Chennai weather. Get a quote.",
+    keywords:
+      "Container Office in Chennai, Container Office Chennai, Portable Office Cabin Chennai, Portable Site Office Chennai, Site Office Container Chennai, Project Office Cabin Chennai, Container Office Sriperumbudur, Container Office Oragadam, Multi-Cabin Office Chennai, Container Office on Rent Chennai",
+    geo: { region: "IN-TN", placename: "Chennai, Tamil Nadu, India", position: "13.0827;80.2707", icbm: "13.0827, 80.2707" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-chennai/container-office-in-chennai-exterior.webp",
+      alt: "Container office in Chennai — teal corrugated-steel portable office cabin with a navy-blue steel frame and corner fittings, a cream steel door under a wall lamp and two grilled windows with drip hoods, standing in a concrete factory yard",
+      width: 1376,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-chennai/container-office-in-chennai-aerial-view.webp",
+      alt: "Container office in Chennai — top-down view of the teal portable cabin: corrugated steel roof sheet inside the navy-blue perimeter frame, a corner fitting at each corner, and the door canopy and window hoods along the front",
+      width: 1024,
+      height: 1024,
+      caption:
+        "Seen from above: the corrugated roof sheet sits inside the steel perimeter frame, with a corner fitting at each corner. For Chennai's coastal and monsoon conditions, roof joints, drainage and the protective coating system should be specified before fabrication.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-chennai/container-office-in-chennai-interior.webp",
+      alt: "Container office in Chennai — optionally furnished interior: wood-finish wall panels, LED ceiling panels, a desk with a laptop and desk lamp, office chairs, a drawer unit, sliding windows and an open door to the yard",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-chennai/container-office-in-chennai-front-view.webp",
+        alt: "Container office in Chennai — front elevation of the teal portable office cabin: a central cream steel door with a latch and wall lamp between two grilled windows under steel drip hoods, on a navy-blue base frame",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/container-office-in-chennai/container-office-in-chennai-end-view.webp",
+        alt: "Container office in Chennai — blank end wall of the teal cabin: vertical corrugated cladding inside the navy-blue steel frame, with corner fittings at the top and bottom corners",
+        width: 1136,
+        height: 848,
+      },
+    ],
+
+    h1: "Container Office in Chennai",
+    tagline: "Portable Container Offices, Site Offices, Project Cabins and Multi-Cabin Camps in Chennai",
+    intro: [
+      "Looking for a durable, insulated and ready-to-use container office in Chennai? Portable Office Cabin manufactures customised portable office cabins, site offices, project management cabins, security cabins and multi-unit office setups for industrial, construction and commercial projects.",
+      "With our factory near Hosur, Tamil Nadu, and an office in Bengaluru, we supply container offices across Chennai, Sriperumbudur, Oragadam, Kanchipuram, Chengalpattu, Tiruvallur, Ennore, Manali and surrounding industrial locations.",
+      "Chennai projects demand more than a basic steel cabin. Coastal humidity, high temperatures, seasonal rainfall, site access and frequent relocation all influence how a container office should be designed.",
+      "Our cabins can be customised with thermal insulation, electrical wiring, workstations, air-conditioning provisions, washrooms, pantry facilities and protective external finishes based on site conditions.",
+      "Whether you need a compact 10 ft site office or a complete project office complex made from multiple 40 ft cabins, our team can help you choose a suitable layout and specification.",
+      `Request a Chennai quotation: share your project location, required cabin size, number of occupants and specifications to receive a customised proposal — call or WhatsApp ${COMPANY.phones[0].display}, or email ${COMPANY.email.sales}.`,
+    ],
+
+    whyHeading: "Why Container Offices Are Suitable for Chennai Projects",
+    whyIntro:
+      "Chennai is a major industrial, logistics, infrastructure and construction hub. Manufacturing facilities, residential developments, ports, warehouses and infrastructure contractors regularly require temporary or relocatable office accommodation. A container office provides a practical alternative to constructing a conventional temporary site office.",
+    whyBullets: [
+      {
+        title: "Industrial Development Along Sriperumbudur and Oragadam",
+        text: "Sriperumbudur, Oragadam, Vallam Vadagal and Irungattukottai are important manufacturing and industrial locations. Automotive manufacturers, electronics facilities, industrial parks, logistics operators and construction contractors require offices for project engineers, supervisors, safety teams and administration staff. Portable cabins can be installed at the beginning of construction activities and relocated when the project changes location or enters another phase.",
+      },
+      {
+        title: "Construction and Commercial Projects Along OMR and GST Road",
+        text: "OMR, Siruseri, Kelambakkam, Tambaram, Maraimalai Nagar and Chengalpattu support residential, commercial and industrial development. Typical requirements include site engineer and project management offices, temporary offices for construction contractors, marketing and customer reception offices, security and visitor management cabins, meeting rooms and documentation offices, and staff rest rooms and pantry units. Container offices can also be customised with glass-fronted entrances, internal partitions and reception counters for customer-facing applications.",
+      },
+      {
+        title: "Port, Logistics and Warehousing Operations",
+        text: "The Ennore, Kattupalli, Manali, Ponneri and Gummidipoondi corridors support port-related activities, storage facilities and industrial operations. These locations may require gate offices, tally cabins, dispatch offices, transport offices and documentation rooms. For coastal and exposed sites, suitable corrosion protection, structural anchoring and weather-resistant specifications should be considered before manufacturing.",
+      },
+      {
+        title: "Infrastructure and Civil Construction Projects",
+        text: "Metro construction, road development, industrial infrastructure and other civil works often require offices that can be relocated as work progresses. Prefabricated container offices provide enclosed workspaces with electrical provisions, lighting, ventilation and optional air-conditioning, without requiring a permanent building for every project stage.",
+      },
+    ],
+
+    solutionsHeading: "Container Office Sizes Available in Chennai",
+    solutionsIntro:
+      "Portable Office Cabin manufactures standard and customised container office sizes depending on the number of occupants, intended application and available installation space: 10 ft × 8 ft (80 sq ft, 1–2 people) for a security office, gate cabin or tally office; 20 ft × 8 ft (160 sq ft, 3–4 people) for an engineer's office or supervisor cabin; 20 ft × 10 ft (200 sq ft, 4–5 people) for a project office with optional pantry; 30 ft × 10 ft (300 sq ft, 6–8 people) for a site office, reception or sales office; 40 ft × 8 ft (320 sq ft, 8–10 people) for an open-plan industrial project office; and 40 ft × 10 ft (400 sq ft, 10–12 people) for a large project office with optional toilet and pantry. Seating capacities are approximate: actual occupancy depends on partitions, furniture, passages, toilets and applicable site requirements.",
+    solutions: [
+      {
+        title: "10 ft and 20 ft Container Offices",
+        text: "Compact cabins are suitable for security offices, supervisor rooms, site engineering teams and locations with limited installation space. Available options include office furniture, electrical fittings, windows, thermal insulation and split AC provisions.",
+      },
+      {
+        title: "30 ft and 40 ft Container Offices",
+        text: "Larger cabins are suitable for contractor offices, PMC teams, EPC projects and project administration departments. Internal layouts can include a manager's room and workstation area, meeting and conference space, a reception or document storage area, pantry and washroom facilities, and air-conditioning and electrical provisions.",
+      },
+      {
+        title: "Multi-Cabin Office Camps",
+        text: "For larger industrial and infrastructure projects, multiple cabins can be arranged to create a temporary office complex. A typical layout may include separate units for management, engineering, meetings, storage, pantry facilities and toilets, connected by a planned walkway or covered passage. The arrangement can be prepared as a layout drawing before fabrication.",
+      },
+      {
+        title: "G+1 and Stacked Office Cabins",
+        text: "Where ground space is limited, suitable cabins can be designed for G+1 installation with an external steel staircase. Stacked container office arrangements require structural verification, engineered connections, foundations and anchoring based on the intended loads and site conditions.",
+      },
+    ],
+
+    featuresHeading: "Standard Construction and Material Specifications",
+    featuresIntro: "The main components of a container office and the specification available for each:",
+    features: [
+      "Structural frame — fabricated mild-steel structural framework",
+      "External cladding — MS or GI sheet, according to approved design",
+      "Wall insulation — glass wool or PUF insulation",
+      "PUF panel option — typically 40–50 mm, subject to requirement",
+      "Roofing — weather-resistant steel roofing system",
+      "Internal wall finish — approved panel or board finish",
+      "Flooring — cement board with vinyl or SPC finish",
+      "Doors — MS or other approved door assemblies",
+      "Windows — aluminium or UPVC windows",
+      "Electrical wiring — concealed wiring with appropriate protective devices",
+      "Lighting — LED ceiling lights",
+      "Ventilation — windows, fans and optional exhaust fans",
+      "Air-conditioning — provision for split AC units",
+      "Office interiors — workstations, partitions, desks and storage",
+      "Optional facilities — attached toilet, wash basin and pantry",
+      "External finish — primer and protective paint system as specified",
+    ],
+    sizesNote:
+      "All materials, dimensions and fittings are finalised according to the approved quotation and technical drawing.",
+
+    industriesHeading: "Container Office Specifications for Chennai Weather",
+    industriesIntro:
+      "Chennai's hot climate, monsoon rainfall, humidity and coastal exposure require careful selection of materials and installation details. Portable Office Cabin offers specifications that can be customised for these conditions:",
+    industries: [
+      {
+        title: "Corrosion Protection for Coastal Areas",
+        text: "Locations near Ennore, Kattupalli, ECR and other coastal areas may experience greater corrosion exposure due to salt-laden air and moisture. Depending on the site environment, recommended upgrades may include suitable anti-corrosion primers and exterior coating systems, properly protected steel members and welded joints, sealing of exposed sheet-metal edges, corrosion-resistant fasteners and hardware, and galvanised components where specified. The required protective coating system should be selected according to the actual exposure conditions and maintenance requirements.",
+      },
+      {
+        title: "Wind Resistance and Structural Anchoring",
+        text: "Container cabins installed in exposed industrial sites, open yards and coastal locations require appropriate structural stability. Depending on the project, the design may include base-frame anchoring points, structural bracing, suitable roof fixing arrangements and connections between adjoining or stacked cabins. Wind loads and anchoring must be checked by a qualified structural engineer against applicable Indian Standards, including IS 875, and the actual site conditions.",
+      },
+      {
+        title: "Rainwater and Flood Protection",
+        text: "Low-lying locations can require elevated cabin foundations or support arrangements. Depending on the site, suitable measures may include raised steel supports or engineered plinths, proper drainage around the cabin, weatherproofed roof and wall joints, elevated electrical equipment where appropriate, and moisture-resistant flooring materials. The required floor elevation should be based on site drainage, expected flood levels and structural stability rather than a single standard height.",
+      },
+      {
+        title: "Humidity and Moisture Control",
+        text: "For enclosed offices operating in humid conditions, insulation, ventilation and moisture management are important. Options include PUF-insulated wall and roof panels, suitably sealed joints, ventilation openings, exhaust fans and protective internal finishes.",
+      },
+      {
+        title: "Heat Reduction and Air-Conditioning",
+        text: "Chennai's summer temperatures make thermal performance an important consideration for occupied site offices. Insulated roofs and walls help reduce heat transfer, while properly sized air-conditioning systems improve indoor comfort. Split AC capacity should be selected according to cabin dimensions, insulation, glazing, occupancy, internal electrical loads and exposure to sunlight.",
+      },
+    ],
+
+    customHeading: "Customised Container Office Solutions",
+    customIntro:
+      "Apart from standard cabins, Portable Office Cabin manufactures custom units for specific project requirements:",
+    customBullets: [
+      {
+        title: "Portable Site Offices",
+        text: "Functional site offices for construction engineers, supervisors, contractors and project management teams, with electrical fittings, windows and optional furniture.",
+      },
+      {
+        title: "Project Management Office Cabins",
+        text: "Larger cabins with enclosed management rooms, workstations, meeting areas and optional pantry and toilet facilities.",
+      },
+      {
+        title: "Container Sales and Marketing Offices",
+        text: "Customer-facing portable offices that can be customised with glass-fronted entrances, reception counters, flooring, internal partitions and air-conditioning.",
+      },
+      {
+        title: "Security and Gate Office Cabins",
+        text: "Compact offices for industrial gates, construction entrances, parking areas and visitor management.",
+      },
+      {
+        title: "Portable Toilet and Pantry Cabins",
+        text: "Standalone toilet blocks, washrooms, pantry units and supporting facilities for construction and industrial project sites.",
+      },
+      {
+        title: "Labour Accommodation and Bunkhouse Units",
+        text: "Customised worker accommodation and multi-unit labour colony arrangements, including G+1 configurations where structurally suitable.",
+      },
+    ],
+    customOutro:
+      "The furnished interior shown is an optional fit-out: furniture, lighting, windows and floor finishes are chosen for each order and confirmed in the approved quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Chennai?",
+    whyUsIntro: "What Portable Office Cabin offers projects in Chennai and across Tamil Nadu:",
+    whyUsBullets: [
+      {
+        title: "Manufacturing Support From Our Factory Near Hosur",
+        text: "Our factory near Hosur, Tamil Nadu, supported by our office in Bengaluru, supplies cabins for projects in Karnataka and Tamil Nadu. Cabins can be fabricated according to approved dimensions, drawings and customer specifications before dispatch.",
+      },
+      {
+        title: "Customised Manufacturing",
+        text: "We manufacture different cabin sizes and configurations rather than limiting customers to a fixed standard layout. Customers can specify the number of workstations, internal rooms, toilets, windows, doors and electrical provisions.",
+      },
+      {
+        title: "Chennai Climate Considerations",
+        text: "For installations in coastal, humid or flood-prone environments, suitable material and protective finishing options can be discussed during quotation preparation.",
+      },
+      {
+        title: "Supply for Single and Multiple Cabin Projects",
+        text: "Whether a project requires one compact office or a larger camp of multiple cabins, the configuration and dispatch sequence can be planned according to the requirement.",
+      },
+      {
+        title: "Transparent Quotation",
+        text: "Our quotation can separately identify cabin manufacturing and approved fittings, transportation to the project location, unloading or crane requirements, installation and other agreed services, and applicable GST.",
+      },
+      {
+        title: "Purchase and Rental Options",
+        text: "Portable cabins are available for purchase, while rental options depend on cabin availability, location, duration and agreed commercial terms.",
+      },
+    ],
+
+    areasHeading: "Container Office Applications Across Chennai",
+    areasText:
+      "Different industrial and commercial locations require different cabin layouts and specifications: Sriperumbudur, Oragadam and Vallam Vadagal — EPC contractors, industrial developers and PMC teams (multi-cabin project offices, meeting rooms and engineering offices); Mappedu and the NH 48 logistics belt — warehouse developers and logistics operators (gate cabins, dispatch offices and documentation rooms); Ennore, Kattupalli and Manali — port contractors, CFS operators and logistics companies (tally offices, documentation cabins and coastal-spec offices); Gummidipoondi and Ponneri — industrial manufacturers and construction contractors (supervisor cabins, storage offices and project cabins); OMR, Siruseri and Kelambakkam — IT contractors and real estate developers (site offices, marketing offices and glass-fronted sales cabins); GST Road, Tambaram and Chengalpattu — residential and commercial developers (site engineer cabins, administration offices and security cabins); Chennai infrastructure project locations — civil and infrastructure contractors (relocatable engineer offices and project management cabins); ECR and Mahabalipuram — hospitality, villa and resort developers (sales offices, project offices and reception cabins); hospitals, colleges and institutions — institutional project teams (temporary administration, billing and reception offices). These are representative applications, not claims of completed installations at every location. Our supply coverage includes Sriperumbudur, Oragadam, Irungattukottai, Vallam Vadagal, Kanchipuram, Poonamallee, Ambattur, Avadi, Manali, Ennore, Kattupalli, Gummidipoondi, Ponneri, OMR, Siruseri, Kelambakkam, Tambaram, Maraimalai Nagar, Chengalpattu, ECR, Mahabalipuram and Tiruvallur.",
+
+    howHeading: "How to Order a Container Office in Chennai",
+    howSteps: [
+      {
+        title: "Share Your Site Requirements",
+        text: "Provide the project location, preferred cabin dimensions, number of occupants, intended use and required facilities. Photos, a site layout or a Google Maps location can help clarify access and placement conditions.",
+      },
+      {
+        title: "Select the Cabin Specification",
+        text: "Our team can discuss the structural configuration, insulation, cladding, flooring, electrical fittings, windows and any coastal protection requirements.",
+      },
+      {
+        title: "Receive the Quotation and Drawing",
+        text: "A proposal can be prepared based on the selected specifications, quantity and destination. For customised cabins or multi-cabin projects, a layout or technical drawing may be required.",
+      },
+      {
+        title: "Confirm the Order",
+        text: "After finalising the technical and commercial terms, manufacturing can proceed according to the accepted order and payment conditions.",
+      },
+      {
+        title: "Fabrication and Inspection",
+        text: "The cabin is manufactured according to the approved specifications. Inspection photos or videos can be arranged as agreed before dispatch.",
+      },
+      {
+        title: "Transportation and Site Installation",
+        text: "Transportation, unloading, positioning, anchoring and installation responsibilities are coordinated according to the confirmed scope of supply. The site must have suitable vehicle access, ground preparation, lifting arrangements and service connections where required.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a container office in Chennai?",
+        answer:
+          "Container office prices depend on size, structural design, insulation, wall finishes, flooring, electrical fittings, air-conditioning, toilet arrangements and transportation. A basic site office and a fully furnished project management cabin will have different pricing. Contact Portable Office Cabin with your specifications for a Chennai-specific quotation.",
+      },
+      {
+        question: "What sizes of portable container offices are available?",
+        answer:
+          "Common sizes include 10 ft × 8 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, 40 ft × 8 ft and 40 ft × 10 ft. Custom dimensions are also available according to manufacturing feasibility and transport restrictions.",
+      },
+      {
+        question: "How long does it take to manufacture and deliver a container office to Chennai?",
+        answer:
+          "Standard cabin manufacturing typically takes around 10–15 days, depending on the design, quantity, materials and production schedule. Larger or highly customised projects may require additional time. Transportation and site installation schedules are confirmed separately.",
+      },
+      {
+        question: "Are container offices suitable for coastal locations such as Ennore and Kattupalli?",
+        answer:
+          "Yes, container offices can be designed for coastal applications when appropriate corrosion protection, materials, fasteners and installation arrangements are specified. Regular inspection and maintenance remain necessary, particularly in salt-laden environments.",
+      },
+      {
+        question: "Can a container office withstand cyclonic winds?",
+        answer:
+          "A container office's wind resistance depends on its engineered structure, roof connections, foundation and anchoring system. For cyclone-exposed locations, the required design loads and structural anchoring should be verified by a qualified engineer. A movable cabin should never be assumed to be cyclone-proof.",
+      },
+      {
+        question: "Can a container office be installed in a flood-prone area?",
+        answer:
+          "A container office can be installed on an appropriately designed elevated base or foundation. The height and supporting structure should be determined according to site-specific flood risks. Any cabin affected by flooding should be inspected, particularly its electrical systems, before reuse.",
+      },
+      {
+        question: "Do container offices require CMDA or local authority approval?",
+        answer:
+          "Approval requirements depend on the land use, project location, duration of installation and applicable local rules. Being movable does not automatically exempt a container office from planning or building regulations. Customers should confirm requirements with CMDA, the relevant local authority, SIPCOT estate administration or other competent authority as applicable.",
+      },
+      {
+        question: "Can multiple container offices be connected to one electrical supply?",
+        answer:
+          "Yes, subject to proper load calculations and electrical design. The distribution board, cable sizing, protective devices, earthing and generator requirements must be designed according to the actual connected load.",
+      },
+      {
+        question: "Can container offices be relocated after project completion?",
+        answer:
+          "Yes. Cabins designed for relocation can be transported to another project location, subject to their structural condition, lifting arrangement, route restrictions and transport requirements.",
+      },
+      {
+        question: "Can I rent a container office in Chennai instead of purchasing one?",
+        answer:
+          "Rental options may be available depending on the required cabin size, location, rental duration and inventory. Security deposit, minimum rental period, transportation, collection and other terms are confirmed in the rental quotation.",
+      },
+      {
+        question: "Do you provide portable cabins with attached toilets and pantry facilities?",
+        answer:
+          "Yes. Container offices can be customised with washrooms, wash basins, pantry counters, internal partitions and related plumbing provisions. Water supply, drainage connections and external civil work must be coordinated according to the agreed scope.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Chennai",
+    ctaText: `Looking for a container office manufacturer supplying Chennai and the surrounding industrial regions? Portable Office Cabin supplies customised site offices, insulated office cabins, project management cabins, marketing offices, security cabins and multi-unit office arrangements. Share the following details to receive a suitable recommendation and quotation: the project location or Chennai area, cabin dimensions and required quantity, number of workstations or occupants, insulated or non-insulated construction, air-conditioning, toilet, pantry and furniture requirements, and the expected delivery schedule. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Portable Office Cabin — customised container offices and portable cabin manufacturing for Chennai projects.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Site Office", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Labour Colony and Workmen Accommodation", href: "/products/labour-colony" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Site Office Container in Chennai", href: "/promotions/site-office-container-in-chennai" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
+      { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office or service partner in Chennai, delivery and installation are arranged for each project, and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Chennai. Localities, industrial corridors, ports and project types are named only to describe delivery locations and typical uses — they are representative applications, not claims of completed installations — and Portable Office Cabin is not affiliated with any port, industrial estate, developer or facility operator; entry to any such premises is subject to that facility's own permissions. The Chennai Metropolitan Development Authority (CMDA) and SIPCOT are independent government bodies with which Portable Office Cabin is not affiliated, and approval notes on this page are general guidance, not legal advice. Google Maps is a trademark of Google LLC, mentioned only as a way to share a site location. Notes on coastal corrosion protection, wind and cyclone exposure, flood levels, anchoring and electrical loads are general guidance; the coatings, base, anchoring and any structural or electrical checks for a specific site are defined in the approved quotation and drawing.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
