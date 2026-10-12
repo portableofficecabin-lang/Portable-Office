@@ -57,11 +57,14 @@ poll_start() {
   POLL_PID=$!
 }
 poll_stop() { # label
+  # A failed deploy can end in under a second: keep sampling until there are enough requests to
+  # prove the live site stayed up through and after it.
+  for _ in $(seq 1 50); do [ "$(wc -l < "$WORK/poll.log")" -ge 10 ] && break; sleep 0.2; done
   kill "$POLL_PID" 2>/dev/null || true; wait "$POLL_PID" 2>/dev/null || true
   local total bad
   total=$(wc -l < "$WORK/poll.log" | tr -d ' ')
   bad=$(grep -vc '^200$' "$WORK/poll.log" || true)
-  [ "$total" -gt 5 ] || fail "$1: the poller recorded only $total requests"
+  [ "$total" -ge 10 ] || fail "$1: the poller recorded only $total requests"
   [ "$bad" = 0 ] || fail "$1: $bad of $total live requests were not 200: $(grep -v '^200$' "$WORK/poll.log" | sort | uniq -c | tr '\n' ' ')"
   pass "$1: $total live requests during the deploy, all 200 (zero downtime)"
 }
@@ -167,10 +170,10 @@ server {
 EOF
 nginx -t >/dev/null 2>&1
 systemctl restart nginx
-for i in $(seq 1 40); do [ "$(live_code /)" = 200 ] && break; sleep 0.5; done
+for _ in $(seq 1 40); do [ "$(live_code /)" = 200 ] && break; sleep 0.5; done
 [ "$(live_code /)" = 200 ] || fail "legacy site does not answer through nginx"
 LEGACY_BUILD=$(live_build)
-for i in $(seq 1 20); do bot_body | grep -q BUILT-ON-TRUST-OK && break; sleep 0.5; done
+for _ in $(seq 1 20); do bot_body | grep -q BUILT-ON-TRUST-OK && break; sleep 0.5; done
 bot_body | grep -q BUILT-ON-TRUST-OK || fail "Built on Trust does not answer through nginx"
 BOT_PID=$(pm2_pid built-on-trust)
 BOT_CONF_SUM=$(md5sum < /etc/nginx/sites-enabled/$BOT_SITE)
@@ -212,7 +215,8 @@ grep -q "verify: PASSED" "$WORK/last.log" || fail "S1: the pre-switch route gate
 [ -L "$S1_REL/.env.local" ] && [ "$(readlink "$S1_REL/.env.local")" = "$APP_ROOT/shared/.env.local" ] || fail "S1: .env.local is not linked to shared"
 grep -q NEXT_PUBLIC_FROM_GIT "$S1_REL/.env" || fail "S1: the committed .env was replaced"
 [ -f "$S1_REL/public/bimi/logo.svg" ] || fail "S1: server-only public file not carried over"
-ls "$S1_REL/.next/cache/webpack/" | grep -q "build-$LEGACY_BUILD" || fail "S1: build cache was not seeded from the live app"
+[ -e "$S1_REL/.next/cache/webpack/build-$LEGACY_BUILD" ] || fail "S1: build cache was not seeded from the live app"
+[ ! -e "$APP_ROOT/previous" ] && [ ! -L "$APP_ROOT/previous" ] || fail "S1: a previous link exists although nothing was released before"
 [ "$(live_code "/_next/static/chunks/page-$LEGACY_BUILD.js")" = 200 ] || fail "S1: the legacy build's JS chunk is gone (open tabs would break)"
 pass "S1: v2 live on slot B, new page 200, gate ran, env/public/cache/static carried over"
 bot_untouched "S1"
@@ -272,7 +276,7 @@ bot_untouched "S5"
 step "S6 two deploys at the same time"
 ( "$SCRIPT" deploy > "$WORK/s6-first.log" 2>&1; echo $? > "$WORK/s6-first.rc" ) &
 FIRST=$!
-for i in $(seq 1 100); do grep -q "preflight OK" "$WORK/s6-first.log" 2>/dev/null && break; sleep 0.1; done
+for _ in $(seq 1 100); do grep -q "preflight OK" "$WORK/s6-first.log" 2>/dev/null && break; sleep 0.1; done
 set +e; "$SCRIPT" deploy > "$WORK/s6-second.log" 2>&1; SECOND_RC=$?; set -e
 wait "$FIRST"
 [ "$SECOND_RC" != 0 ] && grep -q "another deploy/rollback is running" "$WORK/s6-second.log" || fail "S6: the second deploy was not refused"

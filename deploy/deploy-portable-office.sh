@@ -150,7 +150,7 @@ set_link() { # link target  (atomic: rename over the old symlink)
 # only as a read-only SOURCE for cache and static-asset copies.
 live_source_dir() {
   local cur
-  cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
   if [ -n "$cur" ] && [ -d "$cur/.next" ]; then echo "$cur"; return 0; fi
   if [ -d "$LEGACY_DIR/.next" ]; then echo "$LEGACY_DIR"; return 0; fi
   return 1
@@ -374,8 +374,8 @@ retire_slot() { # name port
 
 prune_releases() {
   local cur prev running d n=0
-  cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
-  prev=$(readlink -f "$PREVIOUS" 2>/dev/null || true)
+  cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
+  prev=$(readlink -e "$PREVIOUS" 2>/dev/null || true)
   running=$(pm2_cwds)
   # newest first by name (ids start with a UTC timestamp)
   for d in $(ls -1d "$RELEASES"/*/ 2>/dev/null | sort -r); do
@@ -400,7 +400,7 @@ cmd_deploy() {
   local old_port new_port old_name new_name old_rel sha build_id
   old_port=$(active_port); new_port=$(other_port "$old_port")
   old_name=$(slot_name_for_port "$old_port"); new_name=$(slot_name_for_port "$new_port")
-  old_rel=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  old_rel=$(readlink -e "$CURRENT" 2>/dev/null || true)
   sha=$(fetch_source)
   log "deploy: $BRANCH @ $sha   live: $old_name:$old_port${old_rel:+ ($old_rel)}"
   if [ -n "$old_rel" ] && [ "$(cat "$old_rel/REVISION" 2>/dev/null)" = "$sha" ]; then
@@ -430,7 +430,7 @@ cmd_rollback() {
   preflight_checks
   local target=${1:-}
   if [ -z "$target" ]; then
-    target=$(readlink -f "$PREVIOUS" 2>/dev/null || true)
+    target=$(readlink -e "$PREVIOUS" 2>/dev/null || true)
     [ -n "$target" ] || die "no previous release recorded at $PREVIOUS — pass a release id from 'list'"
   else
     case "$target" in /*) ;; *) target="$RELEASES/$target" ;; esac
@@ -439,7 +439,7 @@ cmd_rollback() {
   local old_port new_port old_name new_name cur build_id
   old_port=$(active_port); new_port=$(other_port "$old_port")
   old_name=$(slot_name_for_port "$old_port"); new_name=$(slot_name_for_port "$new_port")
-  cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
   [ "$target" != "$cur" ] || die "$target is already the current release"
   log "rollback: re-activating $target on $new_name:$new_port   live: $old_name:$old_port"
   REL=$target; NEW_SLOT_NAME=$new_name
