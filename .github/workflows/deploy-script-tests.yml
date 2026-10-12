@@ -1,0 +1,63 @@
+name: deploy-script-tests
+
+# Tests for the production deploy pipeline. Runs only on a throwaway GitHub runner — it never
+# connects to the VPS and uses no secrets.
+on:
+  pull_request:
+    paths:
+      - "deploy/**"
+      - "scripts/deploy/**"
+      - ".github/workflows/deploy-hostinger.yml"
+      - ".github/workflows/deploy-script-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "deploy/**"
+      - "scripts/deploy/**"
+      - ".github/workflows/deploy-hostinger.yml"
+      - ".github/workflows/deploy-script-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: shellcheck + route-verifier unit tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: bash -n
+        run: |
+          bash -n deploy/deploy-portable-office.sh
+          bash -n deploy/test/integration.sh
+      - name: shellcheck
+        run: shellcheck --version && shellcheck -S warning deploy/deploy-portable-office.sh deploy/test/integration.sh
+      - name: verify-release unit + local-server tests
+        run: node --test scripts/deploy/verify-release.test.mjs
+
+  integration:
+    name: end-to-end deploy (real nginx + PM2, zero-downtime poller)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nginx and PM2 (as on the VPS)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq nginx >/dev/null
+          # The deploy script uses a fixed system PATH, as it does under sudo on the VPS.
+          for b in node npm npx; do
+            [ -x "/usr/local/bin/$b" ] || sudo ln -sf "$(command -v "$b")" "/usr/local/bin/$b"
+          done
+          sudo /usr/local/bin/npm install -g pm2@7 --no-audit --no-fund --loglevel=error
+          node -v; sudo pm2 -v; nginx -v
+      - name: Run deploy/test/integration.sh
+        run: sudo bash deploy/test/integration.sh
+      - name: Logs on failure
+        if: failure()
+        run: |
+          sudo bash -c 'for f in /var/log/deploy-portable-office/*.log; do echo "== $f"; tail -n 80 "$f"; done' || true
+          sudo tail -n 60 /var/log/nginx/error.log || true
+          sudo HOME=/root PM2_HOME=/root/.pm2 pm2 ls || true

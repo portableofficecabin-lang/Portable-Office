@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+// Fake `next start [-H host] [-p port]` for deploy/test/integration.sh. Serves the build in
+// ./.next the way the real server looks from the outside: the BUILD_ID in every HTML page, the
+// city pages the build knows (404 otherwise), a sitemap, and /_next/static files from disk.
+"use strict";
+const http = require("node:http");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const args = process.argv.slice(2);
+if (args[0] !== "start") {
+  console.error("fake next: only `next start` is supported");
+  process.exit(2);
+}
+const opt = (flag, def) => {
+  const i = args.indexOf(flag);
+  return i > 0 ? args[i + 1] : def;
+};
+const host = opt("-H", "0.0.0.0");
+const port = Number(opt("-p", process.env.PORT || "3000"));
+const dir = process.cwd();
+const buildId = fs.readFileSync(path.join(dir, ".next/BUILD_ID"), "utf8").trim();
+const { slugs } = JSON.parse(fs.readFileSync(path.join(dir, ".next/serve.json"), "utf8"));
+const siteHost = process.env.FAKE_SITE_HOST || "portableofficecabin.com";
+
+const page = (title) =>
+  `<!DOCTYPE html><!--${buildId}--><html><head><title>${title}</title>` +
+  `<script src="/_next/static/${buildId}/_buildManifest.js"></script>` +
+  `<script src="/_next/static/chunks/page-${buildId}.js"></script></head><body>${title}</body></html>`;
+
+const server = http.createServer((req, res) => {
+  const url = new URL(req.url, "http://x");
+  const p = url.pathname;
+  const send = (code, body, type = "text/html; charset=utf-8") => {
+    res.writeHead(code, { "content-type": type, "x-fake-build": buildId });
+    res.end(body);
+  };
+  if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, page(p));
+  if (p === "/robots.txt") return send(200, "User-agent: *\nAllow: /\n", "text/plain");
+  if (p === "/sitemap.xml") {
+    const paths = ["/", "/cities-we-serve", "/products", ...slugs.map((s) => `/cities-we-serve/${s}`)];
+    return send(200, `<?xml version="1.0"?><urlset>${paths.map((x) => `<url><loc>https://${siteHost}${x}</loc></url>`).join("")}</urlset>`, "application/xml");
+  }
+  const city = p.match(/^\/cities-we-serve\/([a-z0-9-]+)$/);
+  if (city) return slugs.includes(city[1]) ? send(200, page(city[1])) : send(404, page("not found"));
+  if (p.startsWith("/_next/static/")) {
+    const file = path.join(dir, ".next/static", p.slice("/_next/static/".length));
+    if (file.startsWith(path.join(dir, ".next/static")) && fs.existsSync(file) && fs.statSync(file).isFile()) {
+      return send(200, fs.readFileSync(file), "application/javascript");
+    }
+    return send(404, "missing static file", "text/plain");
+  }
+  return send(404, page("not found"));
+});
+
+// Like the real server: a short start-up before the port answers.
+setTimeout(() => {
+  server.listen(port, host, () => console.log(`fake next: ${buildId} listening on ${host}:${port} from ${dir}`));
+}, 800);
+for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => server.close(() => process.exit(0)));

@@ -1,0 +1,8 @@
+{
+  "name": "next",
+  "version": "0.0.0-fake",
+  "description": "Fake `next start` for deploy/test/integration.sh",
+  "bin": {
+    "next": "dist/bin/next"
+  }
+}
