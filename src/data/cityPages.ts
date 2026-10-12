@@ -328,8 +328,15 @@ export const CITY_PAGES: CityPage[] = [
    * boxes are supplied subject to availability and the disclaimer says so. KIADB is named, so the
    * disclaimer carries the nominative-use / non-affiliation note.
    *
-   * Images: five owner-dropped 1200×896 webp views of one maroon 20 ft dry container in a
-   * warehouse yard, copied byte-for-byte to clean slug names; alt text describes the actual images.
+   * Images (replaced 2026-10-12 on the owner's instruction — the first set, five owner-dropped renders
+   * of a maroon box, showed decorative hexagon panels that real containers do not have): five of
+   * Portable Office Cabin's own published product renders, copied byte-for-byte from src/assets/products
+   * (shipping-container-sipcot-yard, used-shipping-container-third, cargo-container-for-sale-inspection,
+   * shipping-container-chennai-yard, shipping-container-chennai-storage) to NEW slug names, so no cached
+   * copy of the old files is served. One blue palette (the Mysore page uses the green set), standard
+   * vertical corrugation, four locking bars per door pair and corner castings; no third-party logos or
+   * legible container numbers. The landscape trailer shot fills the 3:2 feature band without cutting the
+   * container. Alt text describes the actual images.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -346,37 +353,37 @@ export const CITY_PAGES: CityPage[] = [
     motion: true,
 
     heroImage: {
-      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-exterior.webp",
-      alt: "Shipping container in Jigani — maroon 20 ft dry shipping container seen from one corner: corrugated steel side wall, corner castings and double cargo doors with four locking bars, on a concrete yard beside an industrial warehouse with stacked containers behind",
-      width: 1200,
-      height: 896,
+      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-dry-container.webp",
+      alt: "Shipping container in Jigani — navy-blue dry shipping container seen from one corner: vertical corrugated steel side wall, corner posts and castings, and double cargo doors with four locking bars, standing on timber blocks on a paved yard",
+      width: 800,
+      height: 800,
     },
     featureImage: {
-      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-side-view.webp",
-      alt: "Shipping container in Jigani — long side of the maroon 20 ft dry container: corrugated steel wall between the corner posts, with forklift pockets in the base rail",
-      width: 1200,
-      height: 896,
+      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-40ft-trailer.webp",
+      alt: "Shipping container in Jigani — blue 40 ft dry shipping container carried on a long trailer behind a truck on a highway, seen from the door end",
+      width: 800,
+      height: 457,
       caption:
-        "A 20 ft dry container is about 6.06 m long and 2.44 m wide — confirm gate width, turning space and unloading clearance before dispatch.",
+        "A 40 ft container needs a long trailer — check gate and turning space.",
     },
     interiorImage: {
-      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-interior.webp",
-      alt: "Shipping container in Jigani — the maroon dry container with both cargo doors swung open: corrugated steel walls and roof inside, and a worn timber cargo floor on the steel base frame",
-      width: 1200,
-      height: 896,
+      src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-floor-inspection.webp",
+      alt: "Shipping container in Jigani — two inspectors in hard hats and high-visibility vests inside an empty dry container, one checking the timber floor with a torch and the other the corrugated side wall",
+      width: 800,
+      height: 457,
     },
     gallery: [
       {
-        src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-door-end.webp",
-        alt: "Shipping container in Jigani — door end of the maroon dry container: two cargo doors with four vertical locking bars, cam handles and door seals, framed by the corner posts and castings",
-        width: 1200,
-        height: 896,
+        src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-20ft-container.webp",
+        alt: "Shipping container in Jigani — blue 20 ft dry shipping container from one corner: vertical corrugated walls, corner castings and double cargo doors with four locking bars, in a yard with stacked containers behind",
+        width: 800,
+        height: 800,
       },
       {
-        src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-end-view.webp",
-        alt: "Shipping container in Jigani — blank end wall of the maroon dry container: a corrugated steel panel between the corner posts, with a corner casting at each corner",
-        width: 1200,
-        height: 896,
+        src: "/images/cities/shipping-container-in-jigani/shipping-container-in-jigani-long-container.webp",
+        alt: "Shipping container in Jigani — longer blue dry shipping container from the door end: corrugated steel side wall, corner castings and cargo doors with locking bars and cam handles, on a paved yard",
+        width: 800,
+        height: 800,
       },
     ],
 
@@ -675,7 +682,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a container depot or yard in Jigani. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The images on this page are illustrative views of a representative 20 ft dry shipping container and are not photographs of stock held in Jigani. KIADB (Karnataka Industrial Areas Development Board), industrial areas and roads are named only to describe delivery locations; Portable Office Cabin is not affiliated with KIADB or with any industrial estate named here. Container dimensions, floor areas and grade descriptions are indicative trade figures, and notes on export suitability, certification, floor loading, foundations and permissions are general guidance, not engineering or legal advice — confirm export requirements with the carrier, structural loads with a qualified engineer and permissions with the competent local or industrial authority.",
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a container depot or yard in Jigani. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The images on this page are illustrative renders of representative 20 ft and 40 ft dry shipping containers and are not photographs of stock held in Jigani. KIADB (Karnataka Industrial Areas Development Board), industrial areas and roads are named only to describe delivery locations; Portable Office Cabin is not affiliated with KIADB or with any industrial estate named here. Container dimensions, floor areas and grade descriptions are indicative trade figures, and notes on export suitability, certification, floor loading, foundations and permissions are general guidance, not engineering or legal advice — confirm export requirements with the carrier, structural loads with a qualified engineer and permissions with the competent local or industrial authority.",
   },
 
   {
