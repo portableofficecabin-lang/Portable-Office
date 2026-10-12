@@ -4646,10 +4646,394 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Office Container in Chennai", href: "/promotions/site-office-container-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
       { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
+      { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tiruvallur district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's standard container office designs and are not photographs of installations in Athipattu. Kamarajar Port Limited and the thermal power stations and industrial facilities around Ennore and Athipattu are independent organisations with which Portable Office Cabin is not affiliated; their names are used only to describe delivery locations, and entry to any such premises is subject to that facility's own permissions. Notes on coastal corrosion protection, wind exposure and anchoring are general guidance; the coatings, base, anchoring and any structural checks for a specific site are defined in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINER IN ATHIPATTU, TIRUVALLUR — new and used shipping containers (the box
+   * itself: sale, rental, storage, modification) for the Ennore–Kattupalli port and industrial
+   * corridor. Sibling of the container-office page above: each owns its own keyword and they
+   * link to each other.
+   *
+   * Owner copy of 2026-10-12, mapped onto the fixed template slots the same way as the Mysore
+   * shipping-container page:
+   *   • "Shipping Containers for Sale and Rental" → why: its "Who uses" table as prose in
+   *     whyIntro, its selection / export notes as whyOutro, and "Shipping Container Applications
+   *     in Athipattu, Ennore and Kattupalli" (eight local H3s) as the whyBullets — the only H2
+   *     folded, content intact.
+   *   • "Types and Sizes" → solutions: the six H3s stay numbered H3s, each carrying its rows of
+   *     the technical table; the table's "indicative figures" note closes solutionsIntro.
+   *   • "New and Used" → features: grade-table rows + the new / used / refurbished sub-sections;
+   *     the "refurbishment does not qualify a box for export" line → sizesNote.
+   *   • "Used Container Inspection" → industries (seven titled points, the maintenance list as
+   *     prose); "Modification" → custom (eleven items grouped under eight titles); "Why Choose"
+   *     → whyUs; "Supply Areas" → areasText; the CTA's list, e-mail and closing → ctaText.
+   * The draft's "Website:" line is dropped as redundant on-site. No ₹ anywhere (file-header
+   * rule). Nothing here claims we manufacture shipping containers or run a yard in Athipattu:
+   * boxes are supplied subject to availability and the disclaimer says so.
+   *
+   * Images: five owner-dropped 1200×896 webp yard photographs of a grey dry container, copied
+   * byte-for-byte to clean slug names; alt text describes the actual photographs.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-in-athipattu",
+    city: "Athipattu",
+    listTitle: "Shipping Container in Athipattu",
+    metaTitle: "Shipping Container in Athipattu, Tiruvallur – New & Used",
+    metaDescription:
+      "New and used 20 ft and 40 ft shipping containers in Athipattu, Tiruvallur, near Ennore and Kattupalli: storage, rental and modification. Get a quote.",
+    keywords:
+      "shipping container in Athipattu, shipping container Athipattu Tiruvallur, shipping container Ennore, used shipping container Ennore, shipping container Kattupalli, 20 ft container Athipattu, 40 ft container Ennore, container for sale Tiruvallur, container rental North Chennai, reefer container Ennore",
+    geo: { region: "IN-TN", placename: "Athipattu, Tiruvallur, Tamil Nadu, India", position: "13.2292;80.3014", icbm: "13.2292, 80.3014" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-in-athipattu/shipping-container-in-athipattu-exterior.webp",
+      alt: "Shipping container in Athipattu, Tiruvallur — grey dry shipping container seen from one corner: corrugated steel side wall, corner castings and double cargo doors with four locking bars, in a container yard with stacked containers behind",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-in-athipattu/shipping-container-in-athipattu-side-view.webp",
+      alt: "Long side of the grey dry shipping container: corrugated steel wall between the corner posts, with forklift pockets in the base rail",
+      width: 1200,
+      height: 896,
+      caption:
+        "Measure the gate, approach road and unloading space against the container's length and width before delivery is planned.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-in-athipattu/shipping-container-in-athipattu-interior.webp",
+      alt: "Grey dry shipping container with both cargo doors open: corrugated steel walls and roof inside and a marine plywood floor on the steel base frame",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-in-athipattu/shipping-container-in-athipattu-door-end.webp",
+        alt: "Door end of the grey dry shipping container: two cargo doors with four vertical locking bars, cam handles and a central lock box",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/shipping-container-in-athipattu/shipping-container-in-athipattu-end-view.webp",
+        alt: "Blank end wall of the grey dry shipping container: a corrugated steel panel between the corner posts, with a corner casting at each corner",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Shipping Container in Athipattu, Tiruvallur – New & Used Containers",
+    tagline: "20 Ft & 40 Ft Shipping Containers for Sale, Rental and Industrial Storage Near Ennore and Kattupalli",
+    intro: [
+      "Looking for a reliable shipping container in Athipattu, Tiruvallur, for industrial storage, port operations, construction projects, warehouse requirements or commercial applications?",
+      "Portable Office Cabin supplies new and used shipping containers for businesses, industrial contractors, warehouse operators, logistics companies and property owners across Athipattu, Ennore, Kattupalli, Minjur, Ponneri and surrounding locations.",
+      "Athipattu lies within the important Ennore–Kattupalli industrial and logistics corridor, where shipping containers are used for cargo handling, industrial storage, construction materials and other commercial requirements.",
+      "Our container options include 20 ft and 40 ft dry shipping containers, high-cube containers, used storage containers and specialised container types, subject to availability.",
+      "Whether you need a single container for construction-site storage or multiple containers for industrial operations, our team can help identify suitable dimensions, condition, specifications and delivery arrangements.",
+      "Request a shipping container quotation in Athipattu: share your required size, quantity, intended use and delivery location to receive a quotation based on your requirements.",
+    ],
+
+    whyHeading: "Shipping Containers for Sale and Rental in Athipattu",
+    whyIntro:
+      "Shipping containers are widely used throughout the Ennore and North Chennai industrial corridor because they provide secure, movable and weather-resistant storage space. The region includes port-related operations, freight handling facilities, power generation infrastructure, industrial establishments and contractors requiring secure storage. Who uses shipping containers around Athipattu? Container freight stations and logistics operators use 20 ft and 40 ft dry containers for cargo storage, container handling and logistics operations; port and industrial contractors, 20 ft and 40 ft storage containers for tools, materials, spares and construction equipment; exporters and freight forwarders, cargo-worthy containers for suitable shipper-owned cargo movements; seafood and aquaculture businesses, refrigerated or insulated containers for temperature-controlled storage; factories and warehouses, 20 ft, 40 ft and high-cube containers for industrial materials and additional inventory storage; agricultural and commercial properties, used shipping containers for equipment storage, workshops and general storage; and retail and commercial businesses, new or modified containers for shops, kiosks, cafés and commercial conversions. Different industrial and commercial locations across North Tiruvallur have distinct shipping container requirements:",
+    whyBullets: [
+      {
+        title: "Port and Logistics Storage in Ennore",
+        text: "Logistics operators, freight-handling businesses and contractors around the Ennore port corridor may require containers for industrial materials, equipment storage and project-related requirements. Cargo-worthy containers may also be required for certain shipper-owned shipping arrangements, subject to operator approval.",
+      },
+      {
+        title: "Industrial and Power Plant Storage in Athipattu and Vallur",
+        text: "Industrial and power-sector contractors may use 20 ft or 40 ft containers as secure stores for tools, mechanical components, electrical fittings and maintenance materials. For deliveries inside controlled industrial facilities, customers should confirm gate-entry requirements, site permits and unloading arrangements.",
+      },
+      {
+        title: "Construction Site Storage Around Kattupalli",
+        text: "Construction and infrastructure projects often require movable storage for equipment, materials and contractor supplies. Used shipping containers can be relocated when projects finish or storage requirements change.",
+      },
+      {
+        title: "Factory Storage in Manali and Minjur",
+        text: "Factories and industrial establishments may need additional storage for equipment, spare parts and suitable raw materials. 20 ft and 40 ft dry containers can provide supplementary storage where appropriate loading and ventilation arrangements are available.",
+      },
+      {
+        title: "Seafood and Aquaculture Storage Around Pulicat",
+        text: "Refrigerated containers may be considered for seafood and temperature-sensitive produce where appropriate units and reliable power supplies are available. The refrigeration system must be suitable for the product's temperature and storage requirements.",
+      },
+      {
+        title: "Warehouse and Transport Yard Storage",
+        text: "Logistics operators and warehouse businesses around Ennore–Minjur Road, Ponneri and nearby industrial areas may use shipping containers for inventory, spare parts and equipment storage.",
+      },
+      {
+        title: "Agricultural Storage in Ponneri and Gummidipoondi",
+        text: "Shipping containers can provide secure storage for agricultural equipment, pumps, tools and compatible materials on farms and commercial plots.",
+      },
+      {
+        title: "Container Shops, Kiosks and Commercial Units",
+        text: "Shipping containers can also be modified into retail shops, kiosks, small offices, cafés and other commercial spaces. Modifications may include windows, shutters, doors, electrical work, interior panelling and insulation. Commercial conversions require suitable structural design, ventilation, electrical safety and any applicable local approvals.",
+      },
+    ],
+    whyOutro:
+      "The appropriate container depends on whether it will remain stationary, be modified for another application or be used for cargo transportation. For export applications, shipping-line requirements and the required container certification must be checked before purchase.",
+
+    solutionsHeading: "Types and Sizes of Shipping Containers Available in Athipattu",
+    solutionsIntro:
+      "Portable Office Cabin accepts enquiries for different container sizes and configurations based on stock availability and the customer's requirements. Container selection should consider internal dimensions, cargo weight, door-opening clearance, available site space and transportation requirements. The technical figures below (approximate internal dimensions L × W × H, approximate tare weight and indicative maximum gross weight) are indicative figures from common container configurations: tare weight, maximum gross weight, door dimensions and permissible payload vary by manufacturer and unit. Confirm actual ratings from the specific container's identification plate and documentation. Modified containers may not retain standard shipping ratings.",
+    solutions: [
+      {
+        title: "20 Ft Shipping Container in Athipattu",
+        text: "The 20 ft shipping container is a practical option for industrial contractors, construction sites, logistics facilities and businesses requiring secure storage. A 20 ft standard dry container measures approximately 5.90 × 2.35 × 2.39 m inside, with a tare weight of about 2,250 kg and an indicative maximum gross weight of 30,480 kg. Common applications include construction material storage, electrical equipment and cable storage, industrial tools and spare parts, factory maintenance stores, equipment and machinery storage, and agricultural tools and pump equipment. Its compact dimensions make it suitable for many industrial plots and project sites where larger containers may not fit.",
+      },
+      {
+        title: "40 Ft Shipping Container in Ennore and Athipattu",
+        text: "A 40 ft shipping container provides greater storage capacity for warehouses, factories, industrial projects and logistics applications. A 40 ft standard dry container measures approximately 12.03 × 2.35 × 2.39 m inside, with a tare weight of about 3,750 kg and an indicative maximum gross weight of 30,480 kg. It can accommodate larger quantities of materials and may be suitable for businesses requiring supplementary warehouse space. Customers should confirm that the site has sufficient access for transportation, turning and unloading.",
+      },
+      {
+        title: "40 Ft High-Cube Containers",
+        text: "High-cube shipping containers provide additional internal height compared with standard containers: a 40 ft high cube measures approximately 12.03 × 2.35 × 2.70 m inside, with a tare weight of about 3,900 kg and an indicative maximum gross weight of 30,480 kg. They can be considered for racked storage, bulky materials and commercial conversion projects requiring more vertical clearance.",
+      },
+      {
+        title: "Refrigerated Shipping Containers",
+        text: "Refrigerated containers, also known as reefer containers, are designed for temperature-controlled storage and transport. A 20 ft reefer measures approximately 5.44 × 2.29 × 2.27 m inside (tare about 3,050 kg, indicative maximum gross weight 30,480 kg); a 40 ft high-cube reefer approximately 11.56 × 2.29 × 2.55 m (tare about 4,500 kg, indicative maximum gross weight 34,000 kg). Applications may include seafood, agricultural produce, dairy products and other temperature-sensitive materials. For customers around Pulicat, Ennore and Kattupalli, a refrigerated container may be an option where appropriate electrical facilities are available. Operating temperatures, power requirements, machinery condition and availability must be verified for the selected unit.",
+      },
+      {
+        title: "Open-Top and Flat-Rack Shipping Containers",
+        text: "Open-top and flat-rack containers are specialised configurations used for machinery and oversized cargo. A 20 ft open top measures approximately 5.89 × 2.35 × 2.35 m inside (tare about 2,350 kg, indicative maximum gross weight 30,480 kg); a 40 ft flat rack provides a platform of approximately 12.0 × 2.4 m (tare about 5,000 kg, indicative maximum gross weight 45,000 kg). They may be considered for transformers, heavy industrial equipment and project cargo where standard closed containers are unsuitable. Handling arrangements, load distribution and certified capacities require specific technical review.",
+      },
+      {
+        title: "10 Ft Modified Shipping Containers",
+        text: "Compact 10 ft containers may be suitable for small equipment stores, generator housing, pump rooms and locations with limited space. A 10 ft modified container measures approximately 2.83 × 2.35 × 2.39 m inside, with a tare weight of about 1,300 kg and an indicative maximum gross weight of 10,160 kg. Modified containers should be assessed according to the intended load and application rather than assuming they retain the ratings of an original ISO cargo container.",
+      },
+    ],
+
+    featuresHeading: "New and Used Shipping Containers in Athipattu",
+    featuresIntro:
+      "Portable Office Cabin deals in new and used storage containers suitable for different budgets and industrial requirements. The container's condition is especially important in coastal and port-side environments, where salt exposure, humidity and industrial dust can affect steel surfaces and fittings over time. Container grades, with their condition and suitable application:",
+    features: [
+      "New / One-Trip — limited previous use and generally better cosmetic condition — premium storage, shops, offices and commercial conversions",
+      "Cargo-Worthy (CW) — used container assessed for cargo use, subject to current certification — cargo movement and industrial storage",
+      "Wind and Watertight (WWT) — used container intended to prevent ordinary wind and rain ingress — stationary storage, construction sites and warehouses",
+      "As-Is — existing condition, potentially requiring repairs — refurbishment, fabrication and selected conversion work",
+      "New shipping containers — new or one-trip containers may be preferred for projects where visual appearance, overall condition and long-term use are important. They can be considered for container cafés, retail stores, offices and commercial conversion projects.",
+      "Used shipping containers — used shipping containers provide an economical solution for businesses requiring secure storage. Depending on previous handling and age, used units may have visible dents, scratches, surface rust or repaired areas. For stationary storage, the condition of the roof, flooring, doors, seals and structural frame should be assessed carefully.",
+      "Refurbished shipping containers — used containers may be refurbished through repainting, minor steel repairs, door servicing, flooring repairs and other agreed modifications.",
+    ],
+    sizesNote:
+      "Refurbishment can improve usability and appearance, but it does not automatically qualify a container for shipping or export.",
+
+    industriesHeading: "Used Container Inspection in Athipattu's Coastal Environment",
+    industriesIntro:
+      "Shipping containers located near coastal and industrial areas can experience different environmental conditions from containers stored inland. Salt-laden air, moisture and industrial deposits may accelerate corrosion when protective coatings are damaged. A thorough inspection is recommended before purchasing a used container:",
+    industries: [
+      { title: "Roof and Exterior Panels", text: "Inspect the roof for dents, standing-water areas, coating damage, rust and perforations." },
+      {
+        title: "Sea-Facing and Exposed Steel Surfaces",
+        text: "Check external wall panels, welded joints and exposed structural sections for corrosion and pitting.",
+      },
+      {
+        title: "Container Flooring",
+        text: "Examine the marine plywood floor or installed alternative for moisture damage, softness, delamination and previous repairs.",
+      },
+      {
+        title: "Cargo Doors and Rubber Seals",
+        text: "Verify that the hinges, locking bars, door seals and locking mechanisms operate correctly.",
+      },
+      {
+        title: "Corner Posts and Castings",
+        text: "Inspect corner posts and lifting points for cracks, severe corrosion and structural damage.",
+      },
+      {
+        title: "Container Identification and Certification",
+        text: "Review the container identification number and any applicable CSC plate, survey documentation and certification requirements. For food-related applications, consider the previous cargo history and any contamination risks.",
+      },
+      {
+        title: "Coastal Container Maintenance",
+        text: "For containers installed near Ennore, Athipattu and Kattupalli, maintenance may include keeping the container elevated above standing water, providing proper site drainage, cleaning salt and industrial deposits where practical, inspecting protective coatings and vulnerable steel areas, repairing paint damage before corrosion spreads, and checking roof joints, doors and seals periodically. These measures help maintain the condition of containers used for long-term storage.",
+      },
+    ],
+
+    customHeading: "Shipping Container Modification and Customisation",
+    customIntro:
+      "Portable Office Cabin provides container-based structures and portable cabin solutions for industrial and commercial requirements. Depending on the selected container and project scope, modifications may include:",
+    customBullets: [
+      {
+        title: "Doors and openings",
+        text: "Additional personnel doors; roller shutters and access openings; fixed or sliding windows.",
+      },
+      { title: "Ventilation and security", text: "Ventilation provisions; heavy-duty locking arrangements." },
+      { title: "Storage fit-out", text: "Internal shelving and storage racks." },
+      { title: "Electrical", text: "Electrical wiring and LED lighting." },
+      { title: "Insulation and interiors", text: "Insulation and interior wall panels." },
+      { title: "Flooring", text: "Flooring repairs or replacements." },
+      { title: "Exterior", text: "Exterior repainting and refurbishment." },
+      { title: "Conversions", text: "Container office and commercial conversion fittings." },
+    ],
+    customOutro:
+      "For complete office layouts, air conditioning, workstations and furnished interiors, customers can explore our separate Container Office and Portable Office Cabin product categories.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin for Shipping Containers in Athipattu?",
+    whyUsIntro: "What an enquiry with Portable Office Cabin covers:",
+    whyUsBullets: [
+      {
+        title: "New and Used Container Options",
+        text: "Customers can enquire about different container sizes, grades and conditions according to their requirements and available stock.",
+      },
+      {
+        title: "Industrial and Commercial Experience",
+        text: "Our product range includes portable office cabins, storage containers and container-based structures used in construction, commercial and industrial projects.",
+      },
+      {
+        title: "Container Customisation",
+        text: "We can discuss additional doors, windows, insulation, shelving, electrical work and other modifications based on the project specification.",
+      },
+      {
+        title: "Delivery and Unloading Coordination",
+        text: "Shipping container transport depends on container dimensions, road access, ground conditions and unloading equipment. Delivery arrangements may involve a trailer, suitable lifting equipment or specialised unloading vehicles according to site requirements and availability.",
+      },
+      {
+        title: "Clear Quotation Scope",
+        text: "Container quotations can identify the size, unit condition, modifications, GST, transport charges and unloading responsibility.",
+      },
+      {
+        title: "Container Condition Verification",
+        text: "Customers should request relevant photographs, identification details and condition information for the container being offered. Where video inspection or independent surveying is required, its availability and scope should be confirmed before order placement.",
+      },
+    ],
+
+    areasHeading: "Shipping Container Supply Areas Around Athipattu and North Chennai",
+    areasText:
+      "Portable Office Cabin accepts enquiries for shipping containers across the Athipattu–Ennore industrial corridor and surrounding parts of Tiruvallur and North Chennai. Port and industrial areas: Athipattu, Athipattu Pudunagar, Ennore, Vallur, Kattupalli, Manali and Minjur. Tiruvallur and nearby industrial locations: Ponneri, Gummidipoondi, Sholavaram and surrounding industrial areas. North Chennai locations: Puzhal, Madhavaram and nearby commercial and industrial areas. Coastal locations: Pulicat and locations along the Ennore coastal corridor, subject to transport feasibility. Delivery availability, vehicle arrangements and charges depend on the specific location.",
+
+    howHeading: "How to Buy or Rent a Shipping Container in Athipattu",
+    howSteps: [
+      {
+        title: "Share Your Requirements",
+        text: "Provide the required size, container type, quantity and delivery location. Example: “Required: 20 ft used shipping container for industrial material storage at Athipattu, Tiruvallur. Quantity: 1 No.”",
+      },
+      {
+        title: "Select the Container Type",
+        text: "Choose a standard dry, high-cube, refrigerated, cargo-worthy or used storage container according to the application and available options.",
+      },
+      {
+        title: "Review Container Condition and Specifications",
+        text: "Check the dimensions, grade, visible condition, identification details and any required certification. For specialised containers, review the applicable technical information.",
+      },
+      {
+        title: "Receive and Confirm the Quotation",
+        text: "Confirm the container price, GST, modifications, transportation, unloading arrangements and payment terms.",
+      },
+      {
+        title: "Prepare the Delivery Location",
+        text: "Ensure stable ground, adequate access and appropriate unloading arrangements. For deliveries within ports, factories or power plants, confirm applicable gate-entry requirements and safety procedures.",
+      },
+      {
+        title: "Delivery and Handover",
+        text: "After order confirmation, delivery can be arranged according to the agreed schedule and scope. Customers should inspect the container against the confirmed specifications and delivery documents at handover.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a 20 ft shipping container in Athipattu?",
+        answer:
+          "The price depends on whether the container is new, cargo-worthy, wind and watertight or refurbished. Container condition, availability, modifications and transport charges affect the final cost. Contact Portable Office Cabin for a current quotation.",
+      },
+      {
+        question: "What is the cost of a 40 ft shipping container near Ennore?",
+        answer:
+          "The cost depends on container age, condition, grade, standard or high-cube configuration and delivery requirements.",
+      },
+      {
+        question: "Do you supply used shipping containers in Athipattu?",
+        answer:
+          "Portable Office Cabin deals in new and used storage containers. Customers can enquire about available sizes and grades suitable for their intended applications.",
+      },
+      {
+        question: "Can a shipping container be used inside a power plant or industrial site?",
+        answer:
+          "Shipping containers can be used for appropriate industrial storage applications, subject to the site's approval, safety requirements, loading conditions and gate-entry procedures.",
+      },
+      {
+        question: "What is the difference between cargo-worthy and wind-and-watertight containers?",
+        answer:
+          "Cargo-worthy containers are assessed for cargo transportation according to applicable requirements. Wind-and-watertight containers are primarily selected for stationary storage and are not automatically approved for shipping.",
+      },
+      {
+        question: "Can a used shipping container be exported through Ennore or Kattupalli?",
+        answer:
+          "A used container may be suitable for export if it meets the shipping line's, terminal's and other applicable inspection and certification requirements. A valid CSC plate alone should not be treated as a guarantee of acceptance.",
+      },
+      {
+        question: "Will a shipping container rust faster near the sea?",
+        answer:
+          "Coastal environments may accelerate corrosion, particularly where protective coatings are damaged. Suitable painting, drainage, cleaning and periodic inspections can help manage deterioration.",
+      },
+      {
+        question: "Can I install a shipping container on a sandy plot?",
+        answer:
+          "The container must be supported on stable, suitably prepared ground. Sandy locations may require additional ground preparation or foundation support depending on loading and soil conditions.",
+      },
+      {
+        question: "Does a shipping container need a concrete foundation?",
+        answer:
+          "Not every storage container requires a full concrete slab. However, the ground and support system must be suitable for the container's weight, load distribution and intended use.",
+      },
+      {
+        question: "Is local permission required to install a shipping container?",
+        answer:
+          "Requirements vary according to land use, installation method and whether the container will be used for storage, commercial occupancy or another purpose. Confirm applicable approvals with the relevant local authority.",
+      },
+      {
+        question: "Can you modify shipping containers into shops or offices?",
+        answer:
+          "Shipping containers can be modified with doors, windows, partitions, insulation, electrical fittings and other features according to design and project requirements.",
+      },
+      {
+        question: "Are refrigerated shipping containers available?",
+        answer:
+          "Reefer container availability depends on current stock and the required specification. Operating temperature, machinery condition and power requirements should be confirmed before purchase or rental.",
+      },
+      {
+        question: "Can I rent instead of buying?",
+        answer:
+          "Rental availability, minimum period, refundable security deposit, transport and collection arrangements depend on the selected container and agreed terms.",
+      },
+      {
+        question: "Can I sell my used shipping container to Portable Office Cabin?",
+        answer:
+          "Customers can enquire about disposal or resale options. Any purchase or buy-back arrangement would require separate confirmation and a condition assessment.",
+      },
+      {
+        question: "How long does shipping container delivery take?",
+        answer:
+          "Delivery depends on stock availability, container modifications, vehicle arrangements, delivery location and access requirements.",
+      },
+    ],
+
+    ctaHeading: "Get a Shipping Container Quotation in Athipattu, Tiruvallur",
+    ctaText: `Looking for a new or used shipping container in Athipattu, Ennore or Kattupalli? Contact Portable Office Cabin for shipping container sales enquiries, storage applications, container modification requirements and available rental options. Please share the required size (20 ft, 40 ft or another configuration), your new or used container preference, the quantity required, the intended storage or commercial application, the delivery location, any required modifications, and site unloading and access information. Email: ${COMPANY.email.sales}. Request your shipping container quotation today: our team can review your requirements and provide a quotation based on the available container, required specifications and delivery scope.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Shipping Container Rental", href: "/products/shipping-container-rental" },
+    ],
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+      { label: "Shipping Container in Chennai", href: "/promotions/shipping-container-in-chennai" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Athipattu or Tiruvallur district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The photographs show a representative dry shipping container, not a unit at a site in Athipattu. Dimensions and weights on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. Ennore, Kattupalli, Vallur and other locations are named only to describe the service area: Portable Office Cabin is not affiliated with any port, terminal, shipping line, container freight station or power plant operator. Notes on certification, export and local permissions are general guidance, not legal or survey advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

@@ -300,6 +300,15 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
+  // Shipping-container hubs (Tamil Nadu, Chennai) — the Athipattu shipping-container page (Tiruvallur
+  // district, Ennore–Kattupalli port belt), the first Tamil Nadu city page for this keyword; the page
+  // links back to both hubs.
+  "Shipping Container|Tamil Nadu": [
+    { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+  ],
+  "Shipping Container|Chennai": [
+    { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+  ],
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
