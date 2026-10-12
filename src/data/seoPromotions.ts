@@ -261,6 +261,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+    { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
   "Site Office Container|Tamil Nadu": [
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
@@ -268,6 +269,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+    { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
   "Portable Cabin|Tamil Nadu": [
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
@@ -275,6 +277,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+    { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
@@ -282,14 +285,18 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+    { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
-  // Chennai hubs — the two city pages on the Chennai industrial belt (Kalpakkam, Chengalpattu
-  // district; Athipattu, Tiruvallur district / Ennore port).
+  // Chennai hubs — the Chennai city page first: it owns the "container office in Chennai" intent,
+  // so the generated promotion page hands that phrase on to it; then the two belt pages
+  // (Kalpakkam, Chengalpattu district; Athipattu, Tiruvallur district / Ennore port).
   "Container Office|Chennai": [
+    { name: "Container Office in Chennai — Sizes & Specifications", href: "/cities-we-serve/container-office-in-chennai" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
   "Site Office Container|Chennai": [
+    { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
   ],
