@@ -262,7 +262,9 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
       {/* Technical Specifications */}
       <section>
         <h2 className="text-3xl font-bold text-foreground mb-6">Technical Specifications & Customization</h2>
-        <div className="grid md:grid-cols-2 gap-8 items-start">
+        {/* grid-cols-1 below md: the implicit column grew to the spec table's minimum width (+18 px
+            at 320 px); with minmax(0, 1fr) the table scrolls inside its overflow-x-auto wrapper. */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           <div>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-border rounded-lg overflow-hidden">
