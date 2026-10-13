@@ -210,7 +210,10 @@ export default function CitiesWeServe() {
             Dedicated pages for the areas we serve most, each with a fixed-price container you can
             order online.
           </p>
-          <div className="grid sm:grid-cols-2 gap-3">
+          {/* grid-cols-1 (= minmax(0, 1fr)) below sm: without it the single implicit column grew to
+              the longest label ("SIPCOT Industrial Estates, Tamil Nadu") and pushed the page 83 px
+              wider than a 320 px phone. Names wrap on phones and truncate from sm up. */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {LOCAL_PAGES.map((p) => (
               <Link
                 key={p.href}
@@ -219,7 +222,7 @@ export default function CitiesWeServe() {
               >
                 <span className="flex items-center gap-3 min-w-0">
                   <MapPin className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
-                  <span className="font-medium text-foreground truncate">{p.name}</span>
+                  <span className="font-medium text-foreground sm:truncate">{p.name}</span>
                 </span>
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-accent shrink-0 transition-colors" aria-hidden="true" />
               </Link>

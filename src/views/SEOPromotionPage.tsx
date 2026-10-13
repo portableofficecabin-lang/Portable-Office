@@ -137,8 +137,12 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                     <span className="font-bold text-lg">+91 9731897976</span>
                   </a>
                   <a href="mailto:sales@portableofficecabin.com" className="flex items-center gap-3 bg-white/10 rounded-xl p-4 hover:bg-white/20 transition-all">
-                    <Mail className="w-6 h-6 text-accent" />
-                    <span className="font-bold">sales@portableofficecabin.com</span>
+                    <Mail className="w-6 h-6 text-accent shrink-0" />
+                    {/* An e-mail address is one unbreakable word, wider than this card on a 320 px
+                        phone: min-w-0 lets it shrink and break-words wraps it inside the card.
+                        text-sm where the card is narrow (phones, and the 1/3-width sidebar from lg) keeps
+                        it on one line beside the icon from 390 px and at 1280 px+; sm–lg keeps text-base. */}
+                    <span className="font-bold text-sm sm:text-base lg:text-sm min-w-0 break-words">sales@portableofficecabin.com</span>
                   </a>
                   <div className="flex items-start gap-3 bg-white/10 rounded-xl p-4">
                     <MapPin className="w-6 h-6 text-accent shrink-0 mt-1" />
