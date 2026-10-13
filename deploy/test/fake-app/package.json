@@ -1,0 +1,16 @@
+{
+  "name": "fake-portable-office",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Stand-in for the real app in deploy/test/integration.sh — builds in milliseconds, serves like `next start`.",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "file:./fake-next"
+  },
+  "devDependencies": {
+    "fake-build-tool": "file:./fake-build-tool"
+  }
+}

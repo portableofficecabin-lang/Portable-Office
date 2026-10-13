@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "deploy = build and release main; rollback = re-activate the previous release (release-based server script only)"
+        description: "deploy = build a FRESH release of main and switch to it (also when main is unchanged); rollback = re-activate the previous release (release-based server script only)"
         type: choice
         options:
           - deploy
@@ -32,18 +32,44 @@ jobs:
         with:
           fetch-depth: 1
 
+      # The pages this push adds (city slugs in the deployed commit that the previous main did
+      # not have). They are checked first and named in the log. Empty for manual runs.
+      - name: Find the routes this deploy introduces
+        id: routes
+        shell: bash
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          new=""
+          if [ -n "${BEFORE:-}" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ] \
+             && git fetch --quiet --depth=1 origin "$BEFORE" 2>/dev/null; then
+            slugs() { grep -oE '^[[:space:]]+slug: "[a-z0-9-]+"' | sed -E 's/.*"([a-z0-9-]+)"/\1/' | sort -u; }
+            new=$(comm -13 <(git show "$BEFORE:src/data/cityPages.ts" 2>/dev/null | slugs) \
+                           <(slugs < src/data/cityPages.ts) | sed 's#^#/cities-we-serve/#' | paste -sd, -)
+          fi
+          echo "new=$new" >> "$GITHUB_OUTPUT"
+          echo "Routes introduced by this deploy: ${new:-none}"
+
       - name: Configure SSH
         shell: bash
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 187.126.117.26 >> ~/.ssh/known_hosts
+          # ssh-keyscan occasionally gets no answer from a runner (seen 2026-10-12, run
+          # 38240690706); retry instead of failing the whole deploy before it starts.
+          for i in 1 2 3 4 5; do
+            if ssh-keyscan -T 15 -H 187.126.117.26 >> ~/.ssh/known_hosts 2>/dev/null && [ -s ~/.ssh/known_hosts ]; then break; fi
+            [ "$i" -lt 5 ] || { echo "::error::ssh-keyscan failed 5 times"; exit 1; }
+            echo "ssh-keyscan attempt $i failed; retrying"; sleep 10
+          done
           chmod 600 ~/.ssh/known_hosts
 
       # A push to main runs exactly the command it always ran (no arguments). Only a manual
       # "rollback" run appends an argument; the sudoers entry on the VPS names the command
       # without an argument list, so arguments are already permitted.
+      # The output is kept: the release-based server script ends with DEPLOYED_BUILD_ID=<id>,
+      # which the next step requires the live site to serve.
       - name: Deploy production
         shell: bash
         env:
@@ -59,48 +85,43 @@ jobs:
             -i ~/.ssh/id_ed25519 \
             -o BatchMode=yes \
             deploy@187.126.117.26 \
-            "sudo -n /usr/local/bin/deploy-portable-office$args"
+            "sudo -n /usr/local/bin/deploy-portable-office$args" | tee "$RUNNER_TEMP/deploy.log"
 
       # ── Post-deploy verification ─────────────────────────────────────────────────────────
-      # The server-side script builds IN PLACE while the previous process keeps serving, then
-      # reloads PM2. Two things can go wrong silently: the reload serves the old build, or a
-      # request that lands between the build's prerender and the reload makes the old process
-      # write a cached 404 for a just-added page over the new build's 200 (seen on 2026-10-10 —
-      # see app/(site)/cities-we-serve/[slug]/page.tsx and deploy/README.md). Both show up here
-      # as a non-200, and the run goes RED instead of the page being discovered by hand.
-      # Remedy for a red run: re-run the workflow (Actions → Deploy Portable Office → Run
-      # workflow); the rebuild replaces every cached entry.
+      # With the release-based server script (deploy/deploy-portable-office.sh) the new release
+      # has already passed the same checks on its own port before traffic moved; this repeats
+      # them on the public site: every city page of the deployed commit (new ones first) and
+      # every sitemap URL must answer 200, and — when the server reported it — every page must
+      # come from the deployed build (no cached 404, no stale page from an older build).
+      # Remedy for a red run: Actions → Deploy Portable Office → Run workflow (deploy). The
+      # release-based script builds a fresh release on every run, also for an unchanged commit.
+      # (The legacy in-place script answered "Already up to date" and rebuilt nothing.)
       # Skipped on a rollback: the previous release may legitimately lack the newest pages.
       - name: Verify the deployed pages
         if: ${{ github.event.inputs.action != 'rollback' }}
         shell: bash
+        env:
+          NEW_ROUTES: ${{ steps.routes.outputs.new }}
         run: |
           set -euo pipefail
           base="https://portableofficecabin.com"
-
-          # Every city page of the deployed commit, plus the pages that list them.
-          mapfile -t slugs < <(grep -oE '^[[:space:]]+slug: "[a-z0-9-]+"' src/data/cityPages.ts | sed -E 's/.*"([a-z0-9-]+)"/\1/')
-          if [ "${#slugs[@]}" -eq 0 ]; then echo "::error::No city slugs found in src/data/cityPages.ts"; exit 1; fi
-          paths=("/" "/sitemap.xml" "/cities-we-serve")
-          for s in "${slugs[@]}"; do paths+=("/cities-we-serve/$s"); done
-          echo "Checking ${#paths[@]} URLs on $base"
-
-          failed=()
-          for p in "${paths[@]}"; do
-            code=""
-            # Up to 12 × 5 s per URL: the reloaded process needs a few seconds to accept
-            # connections and to serve its first requests.
-            for attempt in $(seq 1 12); do
-              code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$base$p" || echo "000")
-              [ "$code" = "200" ] && break
-              sleep 5
-            done
-            if [ "$code" = "200" ]; then echo "  200  $p"; else echo "  $code  $p   <-- NOT OK"; failed+=("$p ($code)"); fi
-          done
-
-          if [ "${#failed[@]}" -gt 0 ]; then
-            printf '::error::%s\n' "${#failed[@]} deployed page(s) did not answer 200: ${failed[*]}"
-            echo "Re-run this workflow (Run workflow) to rebuild; see deploy/README.md for the root cause."
-            exit 1
+          build_id=$(sed -nE 's/^DEPLOYED_BUILD_ID=([A-Za-z0-9_-]+)$/\1/p' "$RUNNER_TEMP/deploy.log" | tail -1)
+          if [ -n "$build_id" ]; then
+            echo "The server reported BUILD_ID $build_id — every page must come from it."
+          else
+            echo "::notice::The server did not report a BUILD_ID (legacy in-place script) — checking status codes only."
           fi
-          echo "All ${#paths[@]} URLs answered 200."
+          # The legacy script reloads PM2 at the very end; give the site up to a minute.
+          for i in $(seq 1 12); do
+            [ "$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$base/" || echo 000)" = 200 ] && break
+            sleep 5
+          done
+          attempt=1
+          until node scripts/deploy/verify-release.mjs --base "$base" --source-dir . --github \
+                  ${build_id:+--build-id "$build_id"} ${NEW_ROUTES:+--new-routes "$NEW_ROUTES"}; do
+            if [ "$attempt" -ge 3 ]; then
+              echo "::error::The deployed site failed verification. Re-run this workflow (Run workflow → deploy) to build a fresh release; see deploy/README.md."
+              exit 1
+            fi
+            attempt=$((attempt + 1)); echo "Retrying verification in 20 s (attempt $attempt of 3)"; sleep 20
+          done

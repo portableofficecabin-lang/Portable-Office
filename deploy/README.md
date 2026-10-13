@@ -1,195 +1,222 @@
 # Production deploy — Hostinger VPS
 
 `.github/workflows/deploy-hostinger.yml` runs on every push to `main`: it SSHes to the VPS as
-`deploy` and runs `sudo /usr/local/bin/deploy-portable-office`. The script installed at that path
-today is **not** this repository's `deploy/deploy-portable-office.sh`; its output (visible in the
-Actions log) shows what it does:
+`deploy` and runs `sudo /usr/local/bin/deploy-portable-office`, then verifies the public site.
 
-```
-git fetch origin main → git reset --hard → npm ci → next build (in the live directory) → pm2 reload
-```
+**After the one-time installation below, merging a PR is all it takes**: the workflow builds the
+merged commit in its own release directory, proves every page of it works on a private port,
+switches nginx to it without dropping a request, re-checks the public site, and keeps the
+previous release ready for a one-command rollback. No VPS or terminal step is needed per merge.
 
-A deploy takes about 2–3 minutes from the merge. **Until the PM2 reload at the very end, the site is
-still served by the previous process** — a page that only exists in the merged commit answers 404
-during that window. That is expected; check a new page only once the Actions run is green.
+Until that installation is done, the server still runs the legacy in-place script described in
+the next section, with its known window of 404s.
 
-## The real defect: in-place build + ISR 404 caching (2026-10-10)
+## Root cause of the "new page answers 404" incidents (2026-10-10 and 2026-10-12)
 
-`next build` empties `.next` and rewrites it while the old process is still serving from it.
-Next.js persists the result of `notFound()` for an ISR route to disk for the revalidate window
-(`.next/server/app/cities-we-serve/<slug>.{html,meta,rsc}`, answered with `x-nextjs-cache: HIT`;
-reproduced locally). So a request for a just-merged city page that reaches the **old** process
-after the build has prerendered that page but before the reload is rendered with the old code,
-which does not know the slug, and its cached 404 overwrites the fresh 200. The **new** process then
-serves that 404 for up to an hour. The same race serves an **updated** page stale for an hour.
+The installed script (`/usr/local/bin/deploy-portable-office`, 827 bytes, root-only, dated Oct 2)
+does `git fetch` → `git reset --hard` → `npm ci` → `next build` **inside the live directory**
+`/srv/apps/portable-office` → `pm2 reload`. Two defects follow from that:
 
-Three layers of defence exist:
+1. **The old process poisons the new build.** `next build` rewrites `.next/` while the old
+   `next-server` keeps serving from the same directory. When a request for a page that exists only
+   in the new commit reaches the old process after the build has prerendered that page but before
+   the reload, the old code (which does not know the page) writes its 404 into the **new** build's
+   ISR cache. The new process then serves that cached 404 (`x-nextjs-cache: HIT`) for up to the
+   revalidate window of one hour. Evidence from the VPS:
+   - #92 Shipping Container in Mysore: `shipping-container-in-mysore.meta` = `"status":404` written
+     10:20:17Z, after static generation finished (10:19:59Z), 3.6 s before `Reloading PM2` (10:20:20Z).
+   - #94 Shipping Container in Mettur, Salem: `.html/.meta/.rsc` rewritten 10:46:21Z with
+     `"status":404`, 15 s after the build (10:46:06Z), 30 s before the new process started (10:46:51Z).
 
-1. **Code** — `app/(site)/cities-we-serve/[slug]/page.tsx` sets `dynamicParams = false`, so an
-   unknown slug is a 404 decided by the router before rendering and is never written to the cache.
-   The old process can no longer poison a new city page. (Other ISR routes — products, promotions,
-   blog — keep the default and remain exposed until layer 3 is in place.)
-2. **Workflow** — a *Verify the deployed pages* step after the SSH deploy requests every city page of
-   the deployed commit (plus `/`, `/sitemap.xml`, `/cities-we-serve`) with retries and fails the run
-   on any non-200. A red run means: re-run the workflow (*Run workflow*), which rebuilds and replaces
-   every cached entry. The workflow also offers a manual **rollback** run (*Run workflow* → action =
-   `rollback`), which only works once layer 3 is installed.
-3. **Server** — `deploy/deploy-portable-office.sh` is a drop-in replacement for the server-side script.
-   It builds every commit into its own release directory, starts it under PM2 in an idle slot on its
-   own port, health-checks it, and only then switches the nginx upstream to it. Nothing is built in
-   place, the live process is never stopped before its replacement is verified, and the previous
-   release stays on disk for a one-command rollback. It needs the one-time migration below, applied
-   on the VPS as root. The Actions workflow does not change for it.
+   `dynamicParams = false` on the city route (PR #75) did not prevent it. The same race can also
+   freeze a stale 200 of an **updated** page, and it applies to every ISR route (products,
+   promotions, blog), not only city pages.
+2. **A re-run cannot repair it.** The legacy script prints `Current: <sha> / Target: <sha> /
+   Already up to date.` and exits when `main` has not moved (proven by run 38240824471): no build,
+   no reload. Both incidents were only cleared by the *next* merge.
 
-## nginx micro-cache (`deploy/nginx.conf`)
+## The fix: release-based, blue/green deploys (`deploy/deploy-portable-office.sh`)
 
-The live server does not currently run this config (responses carry no `X-Cache-Status`). If it is
-enabled later, note that nginx honours the upstream `Cache-Control: s-maxage=3600` that
-`next.config.ts` sends on **every** public HTML response, including 404s — a 404 cached before a
-deploy would then outlive the deploy by an hour regardless of `proxy_cache_valid 404 10s`. Add
-`proxy_ignore_headers Cache-Control Expires;` to the `location /` block (the micro-cache then uses
-only the `proxy_cache_valid` windows) before switching it on.
+Every deploy builds the commit in a **new directory**, and the old process never shares a file
+with it. Traffic moves only after the new release has passed the full route gate, and nginx
+moves it atomically.
 
----
-
-# Release-based deployment runbook (layer 3)
-
-## What is on the server today (read-only audit of 2026-10-10, as the `deploy` user)
-
-| Item | Finding |
+| Requirement | How it is met |
 | --- | --- |
-| Host | `srv2025838`, 187.126.117.26, Ubuntu 24.04.5, 2 vCPU, 7.9 GB RAM (about 6.5 GB available), **no swap**, 96 GB disk with 89 GB free |
-| Node / PM2 | Node v22.23.3 and PM2 7.0.4 in `/usr/bin` (the repo's `.nvmrc` says 24; the build runs on 22 today). The PM2 daemon runs as **root** (`PM2_HOME=/root/.pm2`) and is restored at boot by `pm2-root.service` (`pm2 resurrect`). |
-| Live app | PM2 process `portable-office` (id 0), fork mode, started as `npm start` → `sh -c next start` → `next-server`, listening on `*:3000`, working directory `/srv/apps/portable-office` (a git checkout of `main`, 2.5 GB including `node_modules`; `output: "standalone"` is configured but `next start` is what runs). |
-| Other tenants | `built-on-trust` on ports **3001 and 3002** (two releases, both running) and a local PostgreSQL 16 on 5432. Port **3010 is free**. |
-| nginx | 1.24. `sites-enabled/portableofficecabin.com`: plain `proxy_pass http://127.0.0.1:3000;`, Certbot-managed TLS (ECDSA, `certbot.timer`, `installer = nginx`), custom `/error.html` for 5xx. No `upstream` block, no proxy cache. `conf.d/` is empty and is included at `http` level, so an upstream file can live there. |
-| Firewall | Only 22, 80 and 443 answer from the internet; 3000–3002 do not. |
-| Deploy script | `/usr/local/bin/deploy-portable-office`: root:root, mode 750, 827 bytes, not readable by `deploy`. Its log output shows the in-place sequence above plus a website check, `pm2 save` and an orphan-process cleanup (a side effect of the `npm` → `sh` → `next` wrapper chain). sudoers: `deploy ALL=(root) NOPASSWD: /usr/local/bin/deploy-portable-office` — no argument list, so arguments are permitted. |
-| Environment | `/srv/apps/portable-office/.env` (931 bytes, **mode 644**, readable by every local user). `next build` reads it, so `NEXT_PUBLIC_*` values are baked into each build. |
-| Server-only file | `/srv/apps/portable-office/public/bimi/logo.svg` is **not in git**. A deploy that starts from a clean export drops `/bimi/logo.svg` unless it is carried over. |
-| Caches | `.next/cache` = 1.1 GB webpack cache + 70 MB `next/image` output (1,327 entries) + fetch cache. Preserved across in-place builds today. |
-| Timing | Merge → deploy run start: 3 s. Build 71 s compile + ~25 s prerender. PM2 reload ≈ 15:29:37, "successful" 15:29:41 — a 2–3 minute window per merge, plus a sub-second to few-second 502 at the reload. |
+| Build without touching the live site | `git archive` of the commit into `releases/<utc-stamp>-<sha7>/`, `npm ci --include=dev`, `next build` there. The live directory and process are never written to. |
+| Caches cannot be corrupted by the old version | `.next/cache` of the new release is a **copy** seeded from the live release (webpack cache; `next/image` files older than 2 min), not a shared directory. Each release writes only its own `.next/server/app` ISR cache. |
+| Every existing and new route present before the switch | `scripts/deploy/verify-release.mjs` runs against the new release on its idle port: every city slug in the release's `src/data/cityPages.ts` must be in `.next/prerender-manifest.json`, answer 200 and carry **this** BUILD_ID; `/`, `/cities-we-serve`, `/products`, `/sitemap.xml`, `/robots.txt` must answer 200; every URL of the new sitemap must answer 200. Pages that disappear from the sitemap are listed as warnings. Any failure leaves production untouched. |
+| Atomic switch, automatic rollback | The nginx upstream include is rewritten, `nginx -t`, graceful `systemctl reload nginx` (in-flight requests finish). The site is then re-verified **through nginx over TLS** (BUILD_ID on `/` and every city page). If that fails, the script writes the old port back and reloads again while the old process is still running. Bad releases found later: `rollback`. |
+| Re-running a failed deploy really rebuilds | Every `deploy` builds a fresh release, also when the commit is already live (logged as "already live — building a FRESH release"). |
+| Automatic deploy after every merge | Unchanged trigger: push to `main` → same SSH user → same `sudo` command, no arguments, no sudoers change. |
+| Open browser tabs keep working | The live build's own `/_next/static` files are copied into the new release (no-clobber), so pages opened before a switch can still load their JS chunks afterwards. |
+| Built on Trust unaffected | The script only touches PM2 names `portable-office` / `portable-office-b`, ports 3000 / 3010, `/srv/apps/portableofficecabin.com`, `/etc/nginx/conf.d/portable-office-upstream.conf` and the `proxy_pass` line of `/etc/nginx/sites-available/portableofficecabin.com`. `nginx -t` gates every reload; reloads are graceful for every server block. The CI test asserts the other tenant's PID, nginx block and responses are unchanged after every scenario. |
 
-PM2 facts checked in the installed source (`/usr/lib/node_modules/pm2/lib`): `pm2 start` stores
-`pm_cwd = path.resolve(cwd)` and `pm_exec_path = path.resolve(cwd, script)` **lexically** (symlinks
-are not resolved), every restart spawns with that stored `pm_cwd`, and fork-mode `reload` is a
-restart (`KILL_TIMEOUT` 1600 ms). The design below never restarts a process in place: each release is
-a fresh `pm2 start --cwd <release dir>`, so stored paths are always the real release directory and
-no symlink has to be re-resolved by PM2.
+### What PR #77 already had, and what this change adds or fixes
 
-## Target layout
+PR #77 (merged, **never installed**) introduced the release directories, the two PM2 slots, health
+checks, the nginx switch with its TLS re-check and revert, `rollback`, `flock` and logs. Installed
+as merged, it would have failed every deploy:
+
+- **Bug 1: `.env` is tracked in git.** `git archive` already writes `.env`, so its
+  `ln -s shared/.env release/.env` fails ("File exists") and aborts the run. Now the committed
+  `.env` stays as git has it, and server-only secrets go in one optional `shared/.env.local`
+  (Next loads it with priority), linked into every release.
+- **Bug 2: global `NODE_ENV=production`.** With it set, `npm ci` skips devDependencies
+  (`tailwindcss`, `postcss`, `autoprefixer`, `typescript`), so `next build` fails. Now
+  `npm ci --include=dev` is used, and production mode is set only for `next start`.
+- **Gap: weak pre-switch gate.** It checked only 5 paths. Now the full route gate runs (see the
+  table), both before the switch and through nginx after it.
+- **Gap: shared runtime cache.** A shared `.next/cache` directory was written by the old process
+  while the new build used it. It is now a per-release copy.
+- **Gap: no skew protection.** The old build's static assets are now carried over.
+- **Gap: no build ID check from GitHub.** The script now prints `DEPLOYED_BUILD_ID=` /
+  `DEPLOYED_REVISION=`, and the workflow requires the public site to serve that exact build.
+- **Workflow:** `ssh-keyscan` retries (a runner flake made a manual run fail on 2026-10-12), the
+  routes a push introduces are checked first and named, and verification uses the same
+  `verify-release.mjs`.
+
+## Tests (`.github/workflows/deploy-script-tests.yml`, runs on every PR touching the pipeline)
+
+- `node --test scripts/deploy/verify-release.test.mjs`: 14 tests for the route gate. They cover
+  slug and sitemap parsing against the real `cityPages.ts`, and a local fake release that answers
+  a cached 404, a stale page from an older build, a page missing from the prerender manifest, `/`
+  served by another build, a broken sitemap URL, new routes, vanished pages (warning only) and an
+  unreachable server.
+- `shellcheck` + `bash -n` for both shell scripts.
+- `deploy/test/integration.sh` runs on a GitHub runner, never the VPS. It uses real nginx with TLS,
+  real PM2, git, npm, flock and symlinks. It recreates today's production layout: the legacy app
+  on `*:3000` behind `proxy_pass http://127.0.0.1:3000;`, plus a "Built on Trust" site on :3002
+  with its own server block. It applies the migration below, then runs the installed script
+  through these scenarios:
+
+  | Scenario | Expected result |
+  | --- | --- |
+  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over |
+  | Re-run of the same commit | A fresh release is built and goes live |
+  | Failing build | Production untouched |
+  | New page that 404s in the new build | The gate blocks the switch; production untouched |
+  | Good deploy, then `rollback` | The previous release is live again |
+  | Two concurrent deploys | The second is refused by the lock |
+  | Prune | Old releases removed, current/previous kept |
+
+  A poller requests the site every 0.2 s during each deploy, and a single non-200 fails the test.
+  After every scenario the other tenant's PID, nginx block and response are compared.
+
+## Layout after installation
 
 ```
 /srv/apps/portableofficecabin.com/
-├── releases/<utc-stamp>-<sha7>/   one directory per deploy: source export + node_modules + .next
+├── releases/<utc-stamp>-<sha7>/   one directory per deploy (source export + node_modules + .next)
 ├── current  -> releases/…         live release (bookkeeping; rollback source of truth)
 ├── previous -> releases/…         the release before it (default rollback target)
-├── shared/.env                    the one environment file (root, mode 600), symlinked into each release
-├── shared/next-cache/             shared .next/cache (webpack, next/image, fetch) across releases
+├── shared/.env.local              OPTIONAL server-only secrets (root, mode 600), linked into each release
 ├── shared/public/bimi/logo.svg    server-only public files, copied into each release's public/
 └── repo/                          cached clone used for `git fetch` + `git archive`
 ```
 
-Two PM2 slots, one live at a time, selected by `/etc/nginx/conf.d/portable-office-upstream.conf`
-(`deploy/nginx/portable-office-upstream.conf`):
+Two PM2 slots, one live at a time, selected by `/etc/nginx/conf.d/portable-office-upstream.conf`:
 
 | Slot | PM2 name | Port |
 | --- | --- | --- |
 | A | `portable-office` (the existing name, kept) | 127.0.0.1:3000 |
 | B | `portable-office-b` | 127.0.0.1:3010 |
 
-## Deploy sequence (`deploy-portable-office deploy`)
+Deploy sequence, failure handling and logs are in the header of `deploy-portable-office.sh`. Every
+run is logged to `/var/log/deploy-portable-office/`, and a `flock` prevents overlapping runs.
 
-1. `git fetch` main into `repo/`, `git archive` the commit into a new `releases/<id>/`.
-2. Symlink `shared/.env` and `shared/next-cache` into it, copy `shared/public/` over `public/`.
-3. `npm ci`, `next build` — in the release directory only. The live app is not touched.
-4. `pm2 start` the **idle** slot from the release directory (`next start -H 127.0.0.1 -p <port>`).
-5. Health checks against that port: wait for `/` = 200 (up to 120 s), then `/`,
-   `/cities-we-serve`, `/products`, `/sitemap.xml`, `/robots.txt` must all be 200, and the HTML
-   must reference the release's `BUILD_ID`.
-6. Rewrite the upstream include to the idle port, `nginx -t`, `systemctl reload nginx`
-   (graceful: in-flight requests finish on the old port). Verify **through nginx over TLS**
-   (`--resolve portableofficecabin.com:443:127.0.0.1`) that the new `BUILD_ID` is served.
-7. Drain 15 s, `pm2 delete` the old slot, `pm2 save`, move `current`/`previous`, keep the newest
-   three releases (never the current, previous or any directory a PM2 process runs from).
+## One-time installation (root on the VPS — needs the owner's approval)
 
-Failure handling: anything failing in steps 1–5 or `nginx -t` leaves production untouched (the
-failed slot is deleted, the release is kept as `<id>.failed`). A failed step-6 verification writes
-the old port back and reloads nginx, while the old process is still running. A `flock` prevents two
-runs overlapping; every run is logged to `/var/log/deploy-portable-office/`.
-
-## One-time migration (root on the VPS, after this is merged)
-
-Each step is reversible and the site stays up throughout.
+The site stays up throughout. Steps 0–3 are reversible, and step 4 switches traffic only after the
+gate passes. Each step prints what to expect; stop on any mismatch.
 
 ```bash
-# 0. Backups
+# 0. Backups + a record of the other tenant before anything changes
 cp -a /etc/nginx/sites-available/portableofficecabin.com /root/portableofficecabin.com.nginx.bak
 cp -a /usr/local/bin/deploy-portable-office /root/deploy-portable-office.legacy
+pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>JSON.parse(s).forEach(p=>console.log(p.name,p.pid)))' \
+  | tee /root/pm2-before-migration.txt          # expect portable-office + the built-on-trust process(es)
+md5sum /etc/nginx/sites-available/builtontrustconstruction.com | tee /root/bot-nginx-before.md5
 
 # 1. Layout + shared files (copies; the live checkout is not modified)
 install -d -m 755 /srv/apps/portableofficecabin.com /srv/apps/portableofficecabin.com/releases \
-  /srv/apps/portableofficecabin.com/shared /srv/apps/portableofficecabin.com/shared/public/bimi \
-  /srv/apps/portableofficecabin.com/shared/next-cache
-install -o root -g root -m 600 /srv/apps/portable-office/.env /srv/apps/portableofficecabin.com/shared/.env
+  /srv/apps/portableofficecabin.com/shared /srv/apps/portableofficecabin.com/shared/public/bimi
 cp -a /srv/apps/portable-office/public/bimi/logo.svg /srv/apps/portableofficecabin.com/shared/public/bimi/
-cp -a /srv/apps/portable-office/.next/cache/. /srv/apps/portableofficecabin.com/shared/next-cache/   # optional: warm cache (1.2 GB)
 git clone https://github.com/portableofficecabin-lang/Portable-Office.git /srv/apps/portableofficecabin.com/repo
+# Optional, only when server-only secrets exist (e.g. RAZORPAY_KEY_SECRET, SUPABASE_SERVICE_ROLE_KEY):
+#   install -o root -g root -m 600 /dev/null /srv/apps/portableofficecabin.com/shared/.env.local
+#   then add KEY=value lines to it with an editor. Never commit them.
 
-# 2. nginx: upstream block that points at the CURRENT app → no behaviour change
+# 2. nginx: an upstream block that points at the CURRENT app → no behaviour change
+grep -c 'proxy_pass http://127.0.0.1:3000;' /etc/nginx/sites-available/portableofficecabin.com   # expect 1
 install -m 644 /srv/apps/portableofficecabin.com/repo/deploy/nginx/portable-office-upstream.conf \
   /etc/nginx/conf.d/portable-office-upstream.conf
 sed -i 's#proxy_pass http://127.0.0.1:3000;#proxy_pass http://portable_office;#' \
   /etc/nginx/sites-available/portableofficecabin.com
-grep -n proxy_pass /etc/nginx/sites-available/portableofficecabin.com      # expect: proxy_pass http://portable_office;
+grep -n proxy_pass /etc/nginx/sites-available/portableofficecabin.com   # expect: proxy_pass http://portable_office;
 nginx -t && systemctl reload nginx
-curl -sI --resolve portableofficecabin.com:443:127.0.0.1 https://portableofficecabin.com/ | head -1   # expect HTTP/1.1 200
+curl -sI --resolve portableofficecabin.com:443:127.0.0.1 https://portableofficecabin.com/ | head -1          # expect HTTP/1.1 200
+curl -sI --resolve builtontrustconstruction.com:443:127.0.0.1 https://builtontrustconstruction.com/ | head -1  # unchanged
 
-# 3. Install the new script at the SAME path (sudoers and the GitHub workflow stay unchanged)
+# 3. Install the new script at the SAME path (sudoers and the GitHub trigger stay unchanged)
 install -o root -g root -m 750 /srv/apps/portableofficecabin.com/repo/deploy/deploy-portable-office.sh \
   /usr/local/bin/deploy-portable-office
-/usr/local/bin/deploy-portable-office preflight
+/usr/local/bin/deploy-portable-office preflight          # expect "preflight OK: live=portable-office:3000 idle=portable-office-b:3010 ..."
 
-# 4. First release, run by hand and watched
-/usr/local/bin/deploy-portable-office deploy
+# 4. First release — run by hand and watch it (or: Actions → Deploy Portable Office → Run workflow)
+/usr/local/bin/deploy-portable-office deploy             # expect "verify: PASSED", "Deployment successful", DEPLOYED_BUILD_ID=...
 /usr/local/bin/deploy-portable-office status
+pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>JSON.parse(s).forEach(p=>console.log(p.name,p.pid)))'
+#   expect portable-office-b (new) + the built-on-trust process(es) with the SAME pids as in step 0
+md5sum -c /root/bot-nginx-before.md5                     # expect OK
 ```
 
-After step 4 the live site runs from `releases/<id>` as `portable-office-b` on 3010; the legacy
-`portable-office` PM2 process has been deleted and its directory `/srv/apps/portable-office` is left
-on disk as a last-resort rollback. Every later merge to `main` deploys through the unchanged
-workflow, alternating between the two slots; the second deploy recreates the `portable-office` name
-from a release directory. Optional, later and only with approval: remove `/srv/apps/portable-office`
-(2.5 GB) once a few releases have gone through cleanly.
+After step 4 the site runs from `releases/<id>` as `portable-office-b` on 3010. The legacy
+`portable-office` PM2 process has been deleted, and `/srv/apps/portable-office` stays on disk as a
+last-resort rollback. Later deploys alternate between the two slots automatically. Optional, later,
+and only with approval: remove `/srv/apps/portable-office` (about 2.5 GB) after a few clean releases.
+
+**Permissions needed: root, once,** for these steps. The workflow's `deploy` user and sudoers line
+(`deploy ALL=(root) NOPASSWD: /usr/local/bin/deploy-portable-office`) stay exactly as they are.
+No DNS, certificate or Certbot change is involved: only the `proxy_pass` line of the site file
+changes.
 
 ## Rollback
 
 | Situation | Action |
 | --- | --- |
-| Deploy failed before the switch | Nothing to do: production was never touched. The failed slot is deleted and the release is kept as `<id>.failed` for inspection. |
-| Post-switch verification failed | The script has already switched nginx back to the old port; the new slot is left running for inspection. `deploy-portable-office status`. |
-| Bad release found later | `sudo /usr/local/bin/deploy-portable-office rollback` re-activates `previous` on the idle slot (health-checked, then the nginx switch; about 20 s). `rollback <release-id>` targets any release shown by `list`. From GitHub: *Run workflow* with action = `rollback`. |
-| Undo the migration (steps 2–3) | `install -m 750 /root/deploy-portable-office.legacy /usr/local/bin/deploy-portable-office`; `cp /root/portableofficecabin.com.nginx.bak /etc/nginx/sites-available/portableofficecabin.com && rm /etc/nginx/conf.d/portable-office-upstream.conf && nginx -t && systemctl reload nginx`. |
+| Deploy failed before the switch (build, gate) | Nothing to do: production was never touched. The failed slot is deleted, and the release is kept as `<id>.failed` for inspection. |
+| Post-switch verification failed | The script has already switched nginx back to the old port. The new slot is left running for inspection (`deploy-portable-office status`). |
+| Bad release noticed later | Actions → Deploy Portable Office → Run workflow → action `rollback` (or `sudo /usr/local/bin/deploy-portable-office rollback`). The previous release is health-checked and gated, then nginx switches (about 20 s). `rollback <release-id>` targets any release shown by `list`. |
+| Undo the installation (steps 2–3) | `install -m 750 /root/deploy-portable-office.legacy /usr/local/bin/deploy-portable-office`; `cp /root/portableofficecabin.com.nginx.bak /etc/nginx/sites-available/portableofficecabin.com && rm /etc/nginx/conf.d/portable-office-upstream.conf && nginx -t && systemctl reload nginx` |
 | Back to the legacy app after the first release | `pm2 start npm --name portable-office --cwd /srv/apps/portable-office -- start` → wait until `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/` prints 200 → `sed -i 's/:3010;/:3000;/' /etc/nginx/conf.d/portable-office-upstream.conf && nginx -t && systemctl reload nginx` → `pm2 delete portable-office-b && pm2 save`. |
 
-## What is preserved
+## Production facts (read-only audits 2026-10-10 and 2026-10-12, as the `deploy` user)
 
-- Environment variables: the same `.env` content, now `shared/.env` (mode 600), read by every build
-  and every process exactly as before.
-- SSL and DNS: untouched. Certbot keeps managing the TLS lines of the site file; the only edit there
-  is the `proxy_pass` target. DNS still points at the VPS.
-- The PM2 process name `portable-office` (slot A), the root PM2 daemon and `pm2-root.service`.
-- The GitHub trigger: a push to `main` runs the same workflow, the same SSH user and the same
-  `sudo` command with no arguments. The `workflow_dispatch` input only adds a manual rollback.
-- The running website: never stopped before its replacement has passed the health checks and has
-  been verified through nginx.
+| Item | Finding |
+| --- | --- |
+| Host | `srv2025838`, 187.126.117.26, Ubuntu 24.04.5, 2 vCPU, 7.9 GB RAM (about 6.2 GB available), no swap, 96 GB disk (87 GB free) |
+| Node / PM2 / nginx | Node v22.23.3, npm 10.9.9, PM2 7.0.4, nginx 1.24.0. The PM2 daemon runs as root (`PM2_HOME=/root/.pm2`). `pm2-root.service` is enabled (it resurrects the saved list at boot). |
+| Live app | PM2 `portable-office`, `npm start` → `next start` → `next-server` 15.5.19 on `*:3000`, from `/srv/apps/portable-office` (root-owned git checkout; `.next/cache` 1.3 GB, `node_modules` 938 MB) |
+| Server-only files | `.env` equals the committed file. Only `public/bimi/` is untracked. No `.env.local` exists. |
+| nginx | `sites-enabled/portableofficecabin.com` has one `proxy_pass http://127.0.0.1:3000;`, Certbot TLS, `error_page` → `/error.html`, no proxy cache. `conf.d/` is empty (included at `http` level). |
+| Other tenant | Built on Trust: next 16.3.4 on 0.0.0.0:3001 and 0.0.0.0:3002 from `/srv/apps/built-on-trust*`, own server block `builtontrustconstruction.com`. Port **3010 is free**. PostgreSQL on 127.0.0.1:5432. |
+| sudo | `deploy` may run only `/usr/local/bin/deploy-portable-office` (no argument list ⇒ arguments allowed, env reset, no SETENV). |
+
+## nginx micro-cache (`deploy/nginx.conf`)
+
+The live server does not run this config (responses carry no `X-Cache-Status`). If it is enabled
+later, note that nginx honours the upstream `Cache-Control: s-maxage=3600` that `next.config.ts`
+sends on every public HTML response, including 404s. Add `proxy_ignore_headers Cache-Control
+Expires;` to the `location /` block before switching it on.
 
 ## Operational notes
 
-- A release is about 2.5 GB (mostly `node_modules`); three are kept (about 7.5 GB of 89 GB free).
-- The new slots bind to `127.0.0.1` explicitly (the legacy process listens on `*:3000`).
-- `npm ci` runs for every release (about a minute). Reusing the previous release's `node_modules`
-  when `package-lock.json` is unchanged is a possible later optimisation.
-- Suggested follow-ups, not part of this change: a 2 GB swapfile as an OOM safety net during
-  builds; running the app as a non-root user; `proxy_http_version 1.1` + `keepalive` on the
-  upstream.
+- A release is about 2.5 GB plus a copied build cache (about 1.3 GB). Three are kept (about 11 GB
+  of 87 GB free). The preflight requires 8 GB free and 1.5 GB of available RAM.
+- `npm ci` runs for every release (about one minute). The deploy takes longer than today's in-place
+  build (about 4–6 minutes), but the site keeps serving the old release until the new one is
+  proven.
+- During a deploy the old and new `next-server` run side by side for a few seconds, plus the build
+  itself. Suggested follow-up, not part of this change: a 2 GB swapfile as an OOM safety net (the
+  host has no swap).

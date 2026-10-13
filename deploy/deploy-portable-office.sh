@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =====================================================================================
-# deploy-portable-office — release-based, near-zero-downtime deployment for
+# deploy-portable-office — release-based, zero-downtime deployment for
 # portableofficecabin.com on the Hostinger VPS (srv2025838).
 #
 # Install (root):   install -o root -g root -m 750 deploy-portable-office.sh \
@@ -13,43 +13,60 @@
 # Usage:            deploy-portable-office [deploy | rollback [release-id] | status |
 #                                           preflight | list | prune]
 #
+# WHY (the 2026-10-10/12 incidents): the legacy script ran `next build` INSIDE the live app
+# directory while the old process kept serving from it. A request for a just-merged page that
+# reached the old process after the new build had prerendered it made the OLD code write a 404
+# into the NEW build's ISR cache (.next/server/app/<route>.meta "status":404), which the new
+# process then served for up to an hour. And it exited "Already up to date" when main had not
+# moved, so re-running the workflow could not repair that.
+#
 # HOW A DEPLOY WORKS (blue/green on two local ports; nginx decides which one is live)
 #   1. git fetch main into a cached clone and export the commit into a NEW release dir
-#      /srv/apps/portableofficecabin.com/releases/<utc-stamp>-<sha7>/
-#   2. link the shared .env and the shared .next/cache into it, copy the server-only
-#      public files, `npm ci`, `next build`     -> the live app is untouched throughout
-#   3. start the build under PM2 in the IDLE slot (its own port), wait until it answers,
-#      run HTTP health checks against it and confirm it serves the new BUILD_ID
-#   4. point the nginx upstream at the idle slot's port, `nginx -t`, graceful reload,
-#      then verify THROUGH nginx (TLS, real server_name) that the new BUILD_ID is live
-#   5. drain, delete the old slot's PM2 process, `pm2 save`, move the current/previous
+#      /srv/apps/portableofficecabin.com/releases/<utc-stamp>-<sha7>/   — EVERY run builds a
+#      fresh release, also when the commit is already live (a re-run genuinely rebuilds)
+#   2. link the optional server-only secrets file shared/.env.local, copy the server-only
+#      public files, seed .next/cache from the live release (a COPY: the old process can never
+#      write into the new build), `npm ci --include=dev`, `next build`  -> live app untouched
+#   3. copy the live build's own /_next/static files into the release (browser tabs opened
+#      before the switch can still load their JS/CSS chunks afterwards)
+#   4. start the release under PM2 in the IDLE slot (its own port), wait until it answers,
+#      then run scripts/deploy/verify-release.mjs against it: every city page of the release's
+#      source must be prerendered, answer 200 and come from THIS build; every sitemap URL must
+#      answer 200. Nothing has touched production yet.
+#   5. point the nginx upstream at the idle slot's port, `nginx -t`, graceful reload, then
+#      verify THROUGH nginx (TLS, real server_name) that the new BUILD_ID serves / and every
+#      city page — on any failure nginx is switched straight back to the old port
+#   6. drain, delete the old slot's PM2 process, `pm2 save`, move the current/previous
 #      symlinks, prune old releases
-#   Any failure before step 4 leaves production exactly as it was. A failed step-4
-#   verification switches nginx straight back to the old port, which is still running.
+#   Any failure before step 5 leaves production exactly as it was.
 #
 #   Slot A keeps the historical PM2 name `portable-office` on port 3000; slot B is
-#   `portable-office-b` on port 3010. Exactly one slot serves traffic at any time.
-#   Each release runs from its own directory — no in-place builds, no symlink-flip
-#   restarts, so PM2's stored working directory never has to be re-resolved.
+#   `portable-office-b` on port 3010. Exactly one slot serves traffic at any time. Nothing else
+#   on the VPS is touched: no other PM2 name, port, nginx server block or directory.
+#
+# Paths can be overridden through the environment (the CI integration test does that). In
+# production the script runs through `sudo` with env_reset and no SETENV tag, so the caller
+# cannot set them and the defaults below always apply.
 # =====================================================================================
 set -Eeuo pipefail
 umask 022
 
-APP_ROOT=/srv/apps/portableofficecabin.com
+APP_ROOT=${APP_ROOT:-/srv/apps/portableofficecabin.com}
+LEGACY_DIR=${LEGACY_DIR:-/srv/apps/portable-office}   # pre-migration in-place checkout (cache/static seed only)
 RELEASES=$APP_ROOT/releases
 SHARED=$APP_ROOT/shared
 REPO=$APP_ROOT/repo
 CURRENT=$APP_ROOT/current
 PREVIOUS=$APP_ROOT/previous
-REMOTE_URL=https://github.com/portableofficecabin-lang/Portable-Office.git
+REMOTE_URL=${REMOTE_URL:-https://github.com/portableofficecabin-lang/Portable-Office.git}
 BRANCH=${DEPLOY_BRANCH:-main}
 KEEP_RELEASES=${KEEP_RELEASES:-3}
-HOST_NAME=portableofficecabin.com
-SITE_CONF=/etc/nginx/sites-enabled/$HOST_NAME
-UPSTREAM_CONF=/etc/nginx/conf.d/portable-office-upstream.conf
+HOST_NAME=${HOST_NAME:-portableofficecabin.com}
+SITE_CONF=${SITE_CONF:-/etc/nginx/sites-enabled/$HOST_NAME}
+UPSTREAM_CONF=${UPSTREAM_CONF:-/etc/nginx/conf.d/portable-office-upstream.conf}
 UPSTREAM_NAME=portable_office
-LOG_DIR=/var/log/deploy-portable-office
-LOCK_FILE=/run/lock/deploy-portable-office.lock
+LOG_DIR=${LOG_DIR:-/var/log/deploy-portable-office}
+LOCK_FILE=${LOCK_FILE:-/run/lock/deploy-portable-office.lock}
 
 SLOT_A_NAME=portable-office;   SLOT_A_PORT=3000
 SLOT_B_NAME=portable-office-b; SLOT_B_PORT=3010
@@ -57,12 +74,16 @@ SLOT_B_NAME=portable-office-b; SLOT_B_PORT=3010
 HEALTH_PATHS=(/ /cities-we-serve /products /sitemap.xml /robots.txt)
 START_TIMEOUT=${START_TIMEOUT:-120}   # seconds to wait for the new process to answer
 DRAIN_SECONDS=${DRAIN_SECONDS:-15}    # grace for in-flight requests after the switch
-MIN_FREE_DISK_GB=5
-MIN_AVAIL_MEM_MB=1500
+MIN_FREE_DISK_GB=${MIN_FREE_DISK_GB:-8}
+MIN_AVAIL_MEM_MB=${MIN_AVAIL_MEM_MB:-1500}
+VERIFY_SCRIPT=scripts/deploy/verify-release.mjs   # relative to a release dir
 
 # sudo resets the environment; PM2 must talk to the root daemon the site runs under.
-export HOME=/root PM2_HOME=/root/.pm2 NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
+export HOME=/root PM2_HOME=${PM2_HOME:-/root/.pm2} NEXT_TELEMETRY_DISABLED=1
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# NODE_ENV is deliberately NOT exported globally: with NODE_ENV=production `npm ci` would skip
+# devDependencies (tailwindcss, postcss, typescript) and `next build` would fail. `next build`
+# and `next start` set production mode themselves.
 
 REL=""            # release dir being deployed (used by the exit handler)
 NEW_SLOT_NAME=""  # slot started by this run (used by the exit handler)
@@ -125,16 +146,24 @@ set_link() { # link target  (atomic: rename over the old symlink)
   mv -Tf "$tmp" "$1"
 }
 
+# The release (or, before the migration, the legacy checkout) that serves traffic now. Used
+# only as a read-only SOURCE for cache and static-asset copies.
+live_source_dir() {
+  local cur
+  cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
+  if [ -n "$cur" ] && [ -d "$cur/.next" ]; then echo "$cur"; return 0; fi
+  if [ -d "$LEGACY_DIR/.next" ]; then echo "$LEGACY_DIR"; return 0; fi
+  return 1
+}
+
 # ── pre-flight ────────────────────────────────────────────────────────────────────────
 preflight_checks() {
   require_root
   local c
-  for c in git node npm pm2 nginx curl ss tar flock; do
+  for c in git node npm pm2 nginx curl ss tar flock find; do
     command -v "$c" >/dev/null || die "missing command: $c"
   done
   [ -d "$RELEASES" ] && [ -d "$SHARED" ] || die "$APP_ROOT is not set up (releases/ or shared/ missing) — run the one-time migration"
-  [ -f "$SHARED/.env" ] || die "$SHARED/.env is missing"
-  mkdir -p "$SHARED/next-cache"
   [ -f "$UPSTREAM_CONF" ] || die "$UPSTREAM_CONF is missing"
   grep -q "proxy_pass http://$UPSTREAM_NAME;" "$SITE_CONF" || die "$SITE_CONF does not proxy_pass to upstream $UPSTREAM_NAME"
   nginx -t >/dev/null 2>&1 || die "the CURRENT nginx configuration fails nginx -t — fix that first"
@@ -169,22 +198,59 @@ make_release() { # sha -> sets REL
   mkdir -p "$REL"
   git -C "$REPO" archive --format=tar "$sha" | tar -x -C "$REL"
   echo "$sha" > "$REL/REVISION"
-  ln -s "$SHARED/.env" "$REL/.env"                 # shared env (NEXT_PUBLIC_* are inlined at build time)
-  mkdir -p "$REL/.next"
-  ln -s "$SHARED/next-cache" "$REL/.next/cache"    # shared webpack + image + fetch cache
+  # The committed .env (public NEXT_PUBLIC_* values) stays as git has it. Server-only secrets
+  # live in ONE file, shared/.env.local (root, mode 600), which Next loads with priority over
+  # .env — linked, never copied, so every release reads the same values.
+  if [ -f "$SHARED/.env.local" ]; then
+    ln -sfn "$SHARED/.env.local" "$REL/.env.local"
+  fi
   if [ -d "$SHARED/public" ]; then
     cp -a "$SHARED/public/." "$REL/public/"        # server-only public files (e.g. /bimi/logo.svg)
   fi
   log "release: $REL ($sha)"
 }
 
+# Seed the new release's .next/cache with a COPY of the live one: the webpack cache keeps the
+# build fast and the next/image cache saves request-time CPU after the switch. Image files
+# younger than two minutes are skipped (the live process may still be writing them). The live
+# process keeps its own cache; nothing it does can reach this release.
+seed_build_cache() {
+  local src
+  src=$(live_source_dir) || { log "cache: no live build to seed from (cold build)"; return 0; }
+  mkdir -p "$REL/.next/cache"
+  if [ -d "$src/.next/cache/webpack" ]; then
+    cp -a "$src/.next/cache/webpack" "$REL/.next/cache/"
+  fi
+  if [ -d "$src/.next/cache/images" ]; then
+    ( cd "$src/.next/cache" && find images -type f -mmin +2 -print0 | tar --null -cf - -T - ) \
+      | ( cd "$REL/.next/cache" && tar -xf - )
+  fi
+  log "cache: seeded from $src ($(du -sh "$REL/.next/cache" 2>/dev/null | cut -f1))"
+}
+
 build_release() {
   log "npm ci in $REL (the live app is not affected)"
-  ( cd "$REL" && npm ci --no-audit --no-fund --loglevel=error )
+  ( cd "$REL" && npm ci --include=dev --no-audit --no-fund --loglevel=error )
   log "next build in $REL"
   ( cd "$REL" && npm run build )
   [ -s "$REL/.next/BUILD_ID" ] || die "the build produced no .next/BUILD_ID"
+  # Record this build's own static files, so the NEXT release copies exactly these (and the
+  # carried-over files never accumulate across releases).
+  ( cd "$REL/.next/static" && find . -type f ) > "$REL/.static-own.list"
   log "build OK: BUILD_ID $(cat "$REL/.next/BUILD_ID")"
+}
+
+# Keep the live build's hashed JS/CSS reachable from the new release (no-clobber copy), so a
+# page opened before the switch can still lazy-load its chunks after it.
+carry_static_assets() {
+  local src list
+  src=$(live_source_dir) || return 0
+  [ -d "$src/.next/static" ] || return 0
+  if [ -f "$src/.static-own.list" ]; then list="$src/.static-own.list"; else
+    list=$(mktemp); ( cd "$src/.next/static" && find . -type f ) > "$list"
+  fi
+  ( cd "$src/.next/static" && tar -cf - -T "$list" ) | ( cd "$REL/.next/static" && tar -x --skip-old-files -f - )
+  log "static: carried $(wc -l < "$list" | tr -d ' ') files of the live build into the release"
 }
 
 # ── process + traffic management ──────────────────────────────────────────────────────
@@ -198,7 +264,7 @@ start_slot() { # name port release
     die "port $port is still in use (pid $(port_listener_pid "$port")) — refusing to start $name"
   fi
   log "pm2: starting $name on 127.0.0.1:$port from $rel"
-  ( cd "$rel" && pm2 start "$rel/node_modules/next/dist/bin/next" \
+  ( cd "$rel" && NODE_ENV=production pm2 start "$rel/node_modules/next/dist/bin/next" \
       --name "$name" --cwd "$rel" --time --kill-timeout 10000 \
       --max-restarts 5 --restart-delay 2000 \
       -- start -H 127.0.0.1 -p "$port" >/dev/null )
@@ -221,6 +287,20 @@ health_check() { # port release
   log "health: OK on port $port — BUILD_ID $build_id, ${#HEALTH_PATHS[@]} paths returned 200"
 }
 
+# The full route gate (scripts/deploy/verify-release.mjs from the release itself). Releases built
+# from commits older than the verifier only get the health check above.
+verify_routes() { # port release [compare_port]
+  local port=$1 rel=$2 compare=${3:-}
+  if [ ! -f "$rel/$VERIFY_SCRIPT" ]; then
+    log "verify: $VERIFY_SCRIPT is not in this release — health check only"
+    return 0
+  fi
+  log "verify: every route of the release on port $port (pre-switch, production untouched)"
+  ( cd "$rel" && node "$VERIFY_SCRIPT" --base "http://127.0.0.1:$port" --host "$HOST_NAME" \
+      --release-dir "$rel" ${compare:+--compare-base "http://127.0.0.1:$compare"} ) \
+    || die "verify: the new release failed the route checks — NOT switching traffic"
+}
+
 write_upstream() { # port
   local tmp
   tmp=$(mktemp "$UPSTREAM_CONF.XXXXXX")
@@ -235,25 +315,31 @@ EOF
   mv -f "$tmp" "$UPSTREAM_CONF"
 }
 
-verify_via_nginx() { # expected build id
-  local i body
+verify_via_nginx() { # expected build id, release
+  local i body build_id=$1 rel=$2
   for i in 1 2 3 4 5 6; do
     body=$(curl -sS -m 20 --resolve "$HOST_NAME:443:127.0.0.1" "https://$HOST_NAME/" 2>/dev/null || true)
-    if printf '%s' "$body" | grep -q "/_next/static/$1/"; then return 0; fi
+    if printf '%s' "$body" | grep -q "/_next/static/$build_id/"; then break; fi
+    [ "$i" -lt 6 ] || return 1
     sleep 2
   done
-  return 1
+  # Every city page, through nginx + TLS, from the new build (already warm from the gate).
+  if [ -f "$rel/$VERIFY_SCRIPT" ]; then
+    ( cd "$rel" && node "$VERIFY_SCRIPT" --base "https://$HOST_NAME" --resolve 127.0.0.1 \
+        --host "$HOST_NAME" --release-dir "$rel" --quick ) || return 1
+  fi
+  return 0
 }
 
-switch_upstream() { # new_port old_port build_id
-  local new=$1 old=$2 build_id=$3
+switch_upstream() { # new_port old_port build_id release
+  local new=$1 old=$2 build_id=$3 rel=$4
   write_upstream "$new"
   if ! nginx -t >/dev/null 2>&1; then
     write_upstream "$old"
     die "nginx -t rejected the upstream with port $new — file reverted to $old, nginx NOT reloaded, production unchanged"
   fi
   systemctl reload nginx
-  if verify_via_nginx "$build_id"; then
+  if verify_via_nginx "$build_id" "$rel"; then
     log "nginx: live traffic now goes to 127.0.0.1:$new (BUILD_ID $build_id)"
     return 0
   fi
@@ -288,8 +374,8 @@ retire_slot() { # name port
 
 prune_releases() {
   local cur prev running d n=0
-  cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
-  prev=$(readlink -f "$PREVIOUS" 2>/dev/null || true)
+  cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
+  prev=$(readlink -e "$PREVIOUS" 2>/dev/null || true)
   running=$(pm2_cwds)
   # newest first by name (ids start with a UTC timestamp)
   for d in $(ls -1d "$RELEASES"/*/ 2>/dev/null | sort -r); do
@@ -302,28 +388,41 @@ prune_releases() {
   done
 }
 
+# Machine-readable result lines; the GitHub workflow reads them to verify the live build id.
+report() { # release
+  echo "DEPLOYED_REVISION=$(cat "$1/REVISION" 2>/dev/null || echo unknown)"
+  echo "DEPLOYED_BUILD_ID=$(cat "$1/.next/BUILD_ID" 2>/dev/null || echo unknown)"
+}
+
 # ── commands ──────────────────────────────────────────────────────────────────────────
 cmd_deploy() {
   preflight_checks
   local old_port new_port old_name new_name old_rel sha build_id
   old_port=$(active_port); new_port=$(other_port "$old_port")
   old_name=$(slot_name_for_port "$old_port"); new_name=$(slot_name_for_port "$new_port")
-  old_rel=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  old_rel=$(readlink -e "$CURRENT" 2>/dev/null || true)
   sha=$(fetch_source)
   log "deploy: $BRANCH @ $sha   live: $old_name:$old_port${old_rel:+ ($old_rel)}"
+  if [ -n "$old_rel" ] && [ "$(cat "$old_rel/REVISION" 2>/dev/null)" = "$sha" ]; then
+    log "deploy: $sha is already live — building a FRESH release of it anyway (re-run = full rebuild)"
+  fi
   make_release "$sha"
+  seed_build_cache
   build_release
+  carry_static_assets
   NEW_SLOT_NAME=$new_name
   start_slot "$new_name" "$new_port" "$REL"
   health_check "$new_port" "$REL"
+  verify_routes "$new_port" "$REL" "$old_port"
   build_id=$(cat "$REL/.next/BUILD_ID")
-  switch_upstream "$new_port" "$old_port" "$build_id"
+  switch_upstream "$new_port" "$old_port" "$build_id" "$REL"
   SWITCHED=1
   [ -n "$old_rel" ] && set_link "$PREVIOUS" "$old_rel"
   set_link "$CURRENT" "$REL"
   retire_slot "$old_name" "$old_port"
   prune_releases
   log "=== Deployment successful: $sha is live on $new_name:$new_port ($REL) ==="
+  report "$REL"
 }
 
 cmd_rollback() {
@@ -331,7 +430,7 @@ cmd_rollback() {
   preflight_checks
   local target=${1:-}
   if [ -z "$target" ]; then
-    target=$(readlink -f "$PREVIOUS" 2>/dev/null || true)
+    target=$(readlink -e "$PREVIOUS" 2>/dev/null || true)
     [ -n "$target" ] || die "no previous release recorded at $PREVIOUS — pass a release id from 'list'"
   else
     case "$target" in /*) ;; *) target="$RELEASES/$target" ;; esac
@@ -340,19 +439,21 @@ cmd_rollback() {
   local old_port new_port old_name new_name cur build_id
   old_port=$(active_port); new_port=$(other_port "$old_port")
   old_name=$(slot_name_for_port "$old_port"); new_name=$(slot_name_for_port "$new_port")
-  cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
   [ "$target" != "$cur" ] || die "$target is already the current release"
   log "rollback: re-activating $target on $new_name:$new_port   live: $old_name:$old_port"
   REL=$target; NEW_SLOT_NAME=$new_name
   start_slot "$new_name" "$new_port" "$target"
   health_check "$new_port" "$target"
+  verify_routes "$new_port" "$target"
   build_id=$(cat "$target/.next/BUILD_ID")
-  switch_upstream "$new_port" "$old_port" "$build_id"
+  switch_upstream "$new_port" "$old_port" "$build_id" "$target"
   SWITCHED=1
   [ -n "$cur" ] && set_link "$PREVIOUS" "$cur"
   set_link "$CURRENT" "$target"
   retire_slot "$old_name" "$old_port"
   log "=== Rollback successful: $(cat "$target/REVISION" 2>/dev/null || echo '?') is live on $new_name:$new_port ==="
+  report "$target"
 }
 
 cmd_status() {
@@ -360,7 +461,7 @@ cmd_status() {
   port=$(active_port 2>/dev/null || echo '?')
   name=$(slot_name_for_port "$port" 2>/dev/null || echo '?')
   echo "live      : $name on 127.0.0.1:$port"
-  echo "current   : $(readlink "$CURRENT" 2>/dev/null || echo '-')   rev $(cat "$CURRENT/REVISION" 2>/dev/null || echo '-')"
+  echo "current   : $(readlink "$CURRENT" 2>/dev/null || echo '-')   rev $(cat "$CURRENT/REVISION" 2>/dev/null || echo '-')   build $(cat "$CURRENT/.next/BUILD_ID" 2>/dev/null || echo '-')"
   echo "previous  : $(readlink "$PREVIOUS" 2>/dev/null || echo '-')"
   echo "pm2       :"
   pm2_json | node -e '
