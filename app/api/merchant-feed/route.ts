@@ -87,7 +87,11 @@ const STABLE_IMAGE_BASENAMES = new Set<string>([
   "cabin-portable-site.webp",                     // POC-PC-CABPORT
   "cabins-in-office-modern.webp",                 // POC-CO-CABIN
   "cargo-container-for-sale-main.webp",           // POC-CC-FS
-  "cargo-storage-container-40ft.webp",            // POC-CSC-2040
+  /* Formerly POC-CSC-2040. Nothing in the catalogue resolves to this bundled asset since issue
+   * #100: that SKU now uses public /images/products/storage-container-corten-steel/ renders,
+   * which need no entry here. NOTE: the public twin of this name is a DIFFERENT image (a corten
+   * render), not a re-encode of the bundled photo. */
+  "cargo-storage-container-40ft.webp",
   "cargo-storage-containers-pink-main.webp",      // POC-CSC-PINK
   "labor-hutments-aerial.webp",                   // POC-LH-WORKER
   "labour-hutments-staff-accommodation-1.webp",   // POC-LH-STAFF

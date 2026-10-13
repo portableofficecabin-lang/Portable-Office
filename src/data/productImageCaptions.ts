@@ -29,9 +29,31 @@ export const productImageCaptions: Record<string, string> = {
     "overhead view of the sloping profiled steel roof and corner lifting points",
 };
 
+// Owner-specified alt text, keyed by file basename. Used verbatim as the alt and title in
+// ProductDetailServer, in place of the "<product name> — <caption>" form built from the
+// captions above. Only the images listed here are affected.
+export const productImageAltText: Record<string, string> = {
+  // 20ft Storage Container – Corten Steel (id 12, issue #100)
+  "20ft-storage-container-corten-steel-three-quarter.webp":
+    "20ft Corten Steel Storage Container – Portable Office Cabin",
+  "20ft-storage-container-corten-steel-front.webp":
+    "20ft Corten Steel Storage Container front view with cargo doors – Portable Office Cabin",
+  "20ft-storage-container-corten-steel-side-elevation.webp":
+    "20ft Corten Steel Storage Container side view – Portable Office Cabin",
+};
+
+function imageBasename(imageUrl: string): string {
+  return imageUrl.split("/").pop()?.split("?")[0] ?? "";
+}
+
 /** Resolve a caption from an image URL/path by its file basename. */
 export function getImageCaption(imageUrl: string): string | undefined {
   if (!imageUrl) return undefined;
-  const base = imageUrl.split("/").pop()?.split("?")[0] ?? "";
-  return productImageCaptions[base];
+  return productImageCaptions[imageBasename(imageUrl)];
+}
+
+/** Resolve owner-specified alt text from an image URL/path by its file basename. */
+export function getImageAltText(imageUrl: string): string | undefined {
+  if (!imageUrl) return undefined;
+  return productImageAltText[imageBasename(imageUrl)];
 }

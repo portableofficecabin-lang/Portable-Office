@@ -1,0 +1,153 @@
+# PR CHECKS — lint, type check, tests and a production build for every pull request into main.
+#
+# The four job names below (lint, typecheck, test, build) are the status checks to require in
+# branch protection for main — see docs/ci/branch-protection.md.
+#
+# NO `paths:` FILTER, ON PURPOSE. A required check that is skipped by a path filter never
+# reports, and GitHub then blocks the PR forever ("Expected — waiting for status to be
+# reported"). It would also let a content-only PR skip the build that proves the site still
+# compiles. So every job runs on every PR. (robots-policy.yml keeps its own path filter; its test
+# also runs here in the `test` job, so it is covered on every PR and need not be required.)
+#
+# PRE-EXISTING ERRORS: main has TypeScript and ESLint errors that predate these checks (114 and
+# 391 when they were introduced). `lint` and `typecheck` therefore fail only on NEW errors, compared
+# per file and error code with scripts/ci/baseline/*.json — see scripts/ci/ratchet.mjs. Those
+# existing errors are NOT fixed by this workflow.
+#
+# DEPLOYMENT IS UNTOUCHED: production deploys from deploy-hostinger.yml on push to main, exactly
+# as before. This workflow only reads the repository (contents: read) and needs no secrets: the
+# build uses the public values in the committed .env, as the server build does.
+#
+# Node 22 = the version on the production VPS (the legacy Dockerfile still says 20).
+name: PR checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number || github.ref }}
+  # a newer push to the same PR supersedes the older run; runs on main always complete
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: ESLint — no new errors (baseline scripts/ci/baseline/eslint.json)
+        run: npm run lint:ratchet
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: TypeScript — no new errors (baseline scripts/ci/baseline/tsc.json)
+        run: npm run typecheck:ratchet
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      # Every step after the first runs even if an earlier one failed (`!cancelled()`), so one
+      # red test does not hide the others.
+      - name: Unit tests — cart, order totals, commerce identity (src/**/*.test.ts)
+        run: npm test
+      - name: Robots policy (Merchant Center crawl access)
+        if: ${{ !cancelled() }}
+        run: npm run robots:test
+      - name: Product families and size variants (data, JSON-LD, feed, checkout)
+        if: ${{ !cancelled() }}
+        run: npm run variants:test
+      - name: Container-office cluster integrity
+        if: ${{ !cancelled() }}
+        run: npx tsx scripts/container-office-cluster.test.ts
+      - name: Razorpay environment and signature verification
+        if: ${{ !cancelled() }}
+        run: |
+          npx tsx scripts/razorpay-env.test.ts
+          npx tsx scripts/razorpay-signature.test.ts
+      - name: SEO static audit (internal links, titles, redirects)
+        if: ${{ !cancelled() }}
+        run: npm run seo:audit
+      # boq-baseline.ts only prints the fingerprint; the diff against the committed golden file is
+      # what makes it a regression check (any moved number = intended delta or regression).
+      - name: BOQ golden baseline (output must equal scripts/boq-baseline.golden.txt)
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          npx tsx scripts/boq-baseline.ts | diff -u --strip-trailing-cr scripts/boq-baseline.golden.txt -
+      - name: Labour colony studio (model, reports, animation, render, PUF lock)
+        if: ${{ !cancelled() }}
+        run: |
+          npm run colony:verify
+          npx tsx scripts/colony-rafter-support.test.ts
+      - name: Animation studio and assembly timeline
+        if: ${{ !cancelled() }}
+        run: |
+          npm run animation:test
+          npx tsx scripts/assembly-timeline.test.ts
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Production build
+        run: npm run build
+      # The built site is started and crawled, so a PR that 404s or client-renders a page fails
+      # here, before it reaches the live server.
+      - name: Start the production server
+        run: |
+          nohup npx next start -p 3000 > next-start.log 2>&1 &
+          curl -sS -o /dev/null --retry 60 --retry-delay 1 --retry-connrefused --retry-all-errors http://localhost:3000/
+      - name: SEO live audit — every sitemap URL answers 200, canonicals, redirects
+        env:
+          SEO_AUDIT_BASE_URL: http://localhost:3000
+        run: npm run seo:audit
+      - name: City pages are fully server-rendered (SSR audit)
+        if: ${{ !cancelled() }}
+        run: npm run cities:audit -- http://localhost:3000
+      - name: Server log (on failure)
+        if: ${{ failure() }}
+        run: tail -n 200 next-start.log || true

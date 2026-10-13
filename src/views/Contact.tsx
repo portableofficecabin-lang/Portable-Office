@@ -307,7 +307,9 @@ export default function ContactPage() {
 
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-3 gap-12">
+          {/* grid-cols-1 below lg: an implicit column is as wide as its widest unbreakable content
+              (the e-mail addresses), which made both columns 307 px on a 320 px phone. */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Contact Info */}
             <div className="space-y-6">
               <h2 className="font-display text-2xl font-bold text-foreground">Get in Touch</h2>
@@ -324,11 +326,17 @@ export default function ContactPage() {
                     <div className="shrink-0 w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent transition-colors">
                       <item.icon className="w-5 h-5 text-accent group-hover:text-white transition-colors" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div className="font-semibold text-foreground">{item.title}</div>
-                      {item.details.map((detail) => (
-                        <div key={detail} className="text-sm text-muted-foreground">{detail}</div>
-                      ))}
+                      {item.details.map((detail) => {
+                        // <wbr /> after "@" makes it the preferred place for an e-mail address to wrap
+                        const at = detail.indexOf("@") + 1;
+                        return (
+                          <div key={detail} className="text-sm text-muted-foreground break-words">
+                            {at > 0 ? <>{detail.slice(0, at)}<wbr />{detail.slice(at)}</> : detail}
+                          </div>
+                        );
+                      })}
                     </div>
                   </a>
                 ))}

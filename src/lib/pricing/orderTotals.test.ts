@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { computeTotals } from "./orderTotals";
 import { sellPrice } from "./gst";
-import { getCommerce, feedEligible, isPurchasable } from "@/data/productCommerce";
+import { PRODUCT_COMMERCE, getCommerce, feedEligible, isPurchasable } from "@/data/productCommerce";
 import { INSTALLATION } from "@/data/shippingZones";
 
 /**
@@ -14,6 +14,11 @@ import { INSTALLATION } from "@/data/shippingZones";
 // A stable purchasable SKU to price against. Derives its expected price from the catalog so the
 // test survives an owner price edit — it asserts the RELATIONSHIP, not a frozen number.
 const SELLABLE = feedEligible()[0];
+
+// A catalog entry that is NOT purchasable (unconfirmed price, quote-only service, …). Derived the
+// same way, so the test survives the owner making a product purchasable: id "10" (Container
+// Office) was the fixture here until every catalogue product was made purchasable in Aug 2026.
+const QUOTE_ONLY = PRODUCT_COMMERCE.find((c) => !isPurchasable(c.id))!;
 
 describe("computeTotals — purchasable pricing is GST-inclusive and matches the catalog", () => {
   it("prices a purchasable line at sellPrice(basePrice) (base + 18% GST)", () => {
@@ -87,18 +92,18 @@ describe("computeTotals — installation is optional and a separate line", () =>
 
 describe("computeTotals — a quote-only product can never be charged", () => {
   it("skips a non-purchasable SKU instead of pricing it", () => {
-    const quoteOnly = getCommerce("10"); // Container Office (kind: custom) — quote-only by design
-    expect(quoteOnly).toBeDefined();
-    expect(isPurchasable("10")).toBe(false);
-    const totals = computeTotals({ items: [{ productId: "10", quantity: 1 }], pincode: "560001" });
+    expect(QUOTE_ONLY).toBeDefined();
+    expect(getCommerce(QUOTE_ONLY.id)).toBeDefined();
+    expect(isPurchasable(QUOTE_ONLY.id)).toBe(false);
+    const totals = computeTotals({ items: [{ productId: QUOTE_ONLY.id, quantity: 1 }], pincode: "560001" });
     expect(totals.lines).toHaveLength(0);
-    expect(totals.skipped.map((s) => s.productId)).toContain("10");
+    expect(totals.skipped.map((s) => s.productId)).toContain(QUOTE_ONLY.id);
     expect(totals.payable).toBe(false);
   });
 
   it("prices the purchasable line but skips the quote-only one in a mixed cart", () => {
     const totals = computeTotals({
-      items: [{ productId: SELLABLE.id, quantity: 1 }, { productId: "10", quantity: 1 }],
+      items: [{ productId: SELLABLE.id, quantity: 1 }, { productId: QUOTE_ONLY.id, quantity: 1 }],
       pincode: "560001",
     });
     expect(totals.lines).toHaveLength(1);

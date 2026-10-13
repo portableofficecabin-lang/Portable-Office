@@ -2,6 +2,13 @@
 
 import Link from "next/link";
 import { CITY_PAGES } from "@/data/cityPages";
+import {
+  CONTAINER_OFFICE_BANGALORE_PATH,
+  CONTAINER_OFFICE_DIRECTORY_ID,
+  CONTAINER_OFFICE_PILLAR_PATH,
+  containerOfficeLocation,
+} from "@/data/containerOfficeCluster";
+import { ContainerOfficeLocationCards } from "@/components/locations/ContainerOfficeLocations";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
@@ -60,6 +67,9 @@ const LOCAL_PAGES = [
   { name: "Chennai, Tamil Nadu", href: "/products/shipping-container-in-chennai" },
   { name: "Bangalore Offers & Stock", href: "/promotions/shipping-container-in-bangalore" },
 ];
+
+/** Every city page that is not a container-office location (those have their own section). */
+const otherLocalGuides = CITY_PAGES.filter((c) => !containerOfficeLocation(c.slug));
 
 export default function CitiesWeServe() {
   return (
@@ -200,7 +210,10 @@ export default function CitiesWeServe() {
             Dedicated pages for the areas we serve most, each with a fixed-price container you can
             order online.
           </p>
-          <div className="grid sm:grid-cols-2 gap-3">
+          {/* grid-cols-1 (= minmax(0, 1fr)) below sm: without it the single implicit column grew to
+              the longest label ("SIPCOT Industrial Estates, Tamil Nadu") and pushed the page 83 px
+              wider than a 320 px phone. Names wrap on phones and truncate from sm up. */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {LOCAL_PAGES.map((p) => (
               <Link
                 key={p.href}
@@ -209,12 +222,42 @@ export default function CitiesWeServe() {
               >
                 <span className="flex items-center gap-3 min-w-0">
                   <MapPin className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
-                  <span className="font-medium text-foreground truncate">{p.name}</span>
+                  <span className="font-medium text-foreground sm:truncate">{p.name}</span>
                 </span>
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-accent shrink-0 transition-colors" aria-hidden="true" />
               </Link>
             ))}
           </div>
+        </section>
+
+        {/* Container office locations — the cluster's location index (src/data/containerOfficeCluster.ts).
+            Every container-office location page, grouped by state; the other local guides stay in
+            "Local Area Guides" below. The id is the target of the "all locations" links. */}
+        <section
+          id={CONTAINER_OFFICE_DIRECTORY_ID}
+          aria-labelledby="container-office-locations-heading"
+          className="scroll-mt-24"
+        >
+          <h2
+            id="container-office-locations-heading"
+            className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3"
+          >
+            Container Office Locations We Serve
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-3xl">
+            Local guides for the industrial areas where we supply container offices in Karnataka and
+            Tamil Nadu: what each area typically needs, sizes, options and answers for that location.
+            To compare models and sizes, see the{" "}
+            <Link href={CONTAINER_OFFICE_PILLAR_PATH} className="text-accent underline underline-offset-4 font-medium">
+              full container office range
+            </Link>
+            ; for projects in and around the city, see{" "}
+            <Link href={CONTAINER_OFFICE_BANGALORE_PATH} className="text-accent underline underline-offset-4 font-medium">
+              container office options in Bangalore
+            </Link>
+            .
+          </p>
+          <ContainerOfficeLocationCards />
         </section>
 
         {/* What's included everywhere */}
@@ -242,8 +285,10 @@ export default function CitiesWeServe() {
         {/* Local area guides — one landing page per location or local service (data-driven,
             src/data/cityPages.ts). Originally all industrial hubs; the list now also carries
             city-wide service pages such as villa construction in Bangalore, which is why the
-            copy below says "locations and services" rather than "industrial hubs". */}
-        {CITY_PAGES.length > 0 && (
+            copy below says "locations and services" rather than "industrial hubs".
+            The container-office location pages are listed in their own grouped section above,
+            so they are left out here: each guide appears once on this page. */}
+        {otherLocalGuides.length > 0 && (
           <section aria-label="Local area guides" className="mb-16">
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3 text-center">
               Local Area Guides
@@ -253,7 +298,7 @@ export default function CitiesWeServe() {
               options and answers for your area.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              {CITY_PAGES.map((c) => (
+              {otherLocalGuides.map((c) => (
                 <Link
                   key={c.slug}
                   href={`/cities-we-serve/${c.slug}`}

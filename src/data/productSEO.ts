@@ -113,11 +113,12 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in 7–21 days.",
     keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
   },
-  // 20ft & 40ft Storage Container – Corten Steel
+  // 20ft Storage Container – Corten Steel. 20 ft only: the fixed price buys the 20 ft unit.
+  // `description` and `keywords` are the Product JSON-LD description and keywords.
   "12": {
-    title: "20ft & 40ft Storage Container | Portable Office Cabin",
-    description: "20ft & 40ft Corten steel storage containers with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Call us today!",
-    keywords: "20ft storage container, 40ft storage container, Corten steel container, cargo storage container India, heavy duty storage container, site storage container price",
+    title: "20ft Storage Container | Portable Office Cabin",
+    description: "20ft Corten steel storage container with lockable doors & weatherproof construction. Stackable, secure on-site storage across India. Call us today!",
+    keywords: "20ft storage container, Corten steel container, cargo storage container India, heavy duty storage container, site storage container price",
   },
   // Prefabricated Portable Cabin
   /* Prefabricated Portable Cabin (id 13) — the "HOW IT IS MADE" page. The buyer's GUIDE

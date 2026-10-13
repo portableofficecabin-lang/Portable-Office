@@ -204,11 +204,13 @@ export default function PaymentPolicyPage() {
             <ul className="text-muted-foreground leading-relaxed space-y-3 mb-6">
               <li className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-                <span>
+                {/* min-w-0 + break-words: the e-mail addresses are unbreakable words wider than a 320 px phone;
+                    <wbr /> after "@" makes that the preferred place to wrap them */}
+                <span className="min-w-0 break-words">
                   Email:{" "}
-                  <a href="mailto:sales@portableofficecabin.com" className="text-accent hover:underline">sales@portableofficecabin.com</a>{" "}
+                  <a href="mailto:sales@portableofficecabin.com" className="text-accent hover:underline">sales@<wbr />portableofficecabin.com</a>{" "}
                   (or{" "}
-                  <a href="mailto:portableofficecabin@gmail.com" className="text-accent hover:underline">portableofficecabin@gmail.com</a>)
+                  <a href="mailto:portableofficecabin@gmail.com" className="text-accent hover:underline">portableofficecabin@<wbr />gmail.com</a>)
                 </span>
               </li>
               <li className="flex items-start gap-3">

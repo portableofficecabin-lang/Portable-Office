@@ -21,6 +21,7 @@ import { notFound } from "next/navigation";
 import { Phone } from "lucide-react";
 
 import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
+import { ContainerOfficeNearbyBlock } from "@/components/locations/ContainerOfficeLocations";
 import { Layout } from "@/components/layout/Layout";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -75,9 +76,12 @@ const p = "mb-4 leading-relaxed text-muted-foreground";
 const li = "mb-2 leading-relaxed text-muted-foreground";
 
 /* Secondary CTA buttons every page carried before `ctaSecondaryLinks` existed. Pages that
-   leave that field unset render exactly these two, so nothing shifts on the container pages. */
+   leave that field unset render these two.
+   2026-10-11: "Explore Container Offices" now points at the container-office category instead of
+   the whole /products catalogue — the label already promised that destination, and it gives each
+   container city page a contextual link up to the category that owns the head term. */
 const DEFAULT_CTA_SECONDARY_LINKS: CityPageLink[] = [
-  { label: "Explore Container Offices", href: "/products" },
+  { label: "Explore Container Offices", href: "/products/category/container-offices" },
   { label: "Container Office on Rent", href: "/rental-service" },
 ];
 
@@ -360,6 +364,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             </ul>
           </nav>
         )}
+
+        {/* Container-office cluster block (src/data/containerOfficeCluster.ts): up to the category
+            pillar, across to genuinely nearby location pages, out to the directory. Renders only
+            for the container-office location pages; every other page is unchanged. */}
+        <ContainerOfficeNearbyBlock
+          slug={page.slug}
+          existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
+          motion={page.motion}
+        />
 
         {/* Optional legal/affiliation disclaimer — REQUIRED on any page that names a real
             company or landmark (e.g. the Tata Electronics belt page): renders muted, below

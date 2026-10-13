@@ -10,6 +10,13 @@ import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 import { portableCabinsFaqs } from "@/components/products/PortableCabinsCategoryContent";
 import { prefabBuildingFaqs } from "@/components/products/PrefabBuildingCategoryContent";
+import { ContainerOfficesCategoryContent } from "@/components/products/ContainerOfficesCategoryContent";
+import {
+  CONTAINER_OFFICES_SLUG,
+  containerOfficeFaqs,
+  containerOfficeModels,
+  containerOfficesMetaDescription,
+} from "@/components/products/containerOfficesCategoryData";
 import { CategoryLandingContent } from "@/components/products/CategoryLandingContent";
 import { categoryLandingMetaDescription, resolveCategoryLanding } from "@/data/categoryLandings";
 import { isCategoryIndexable } from "@/lib/seo/categoryIndexing";
@@ -18,6 +25,29 @@ import { isCategoryIndexable } from "@/lib/seo/categoryIndexing";
 const RICH_CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
   "portable-cabins": portableCabinsFaqs,
   "prefab-building": prefabBuildingFaqs,
+};
+
+/* CONTAINER OFFICES — the category's manufacturer landing page (2026-10-11).
+ *
+ * Kept OUT of RICH_CATEGORY_FAQS on purpose: that map also switches on the priced ItemList below,
+ * which nests Product + Offer nodes inside a category page. Google evaluates merchant listings on the
+ * individual product pages (each container office already carries its own Product + Offer JSON-LD),
+ * so this category publishes a SUMMARY ItemList instead — position, URL and name only, no offers —
+ * plus its own FAQPage built from the same array the page renders.
+ *
+ * Title: absolute, so the layout does not append the 24-character brand suffix and the 55-character
+ * title displays in full. Description: built from the live catalogue (model count + lowest
+ * GST-inclusive price), so it can never quote a figure the cards do not show. Image: the Modern
+ * Container Office front elevation — the same clean photo Merchant Center already accepts as that
+ * product's image_link — instead of the site default, which is not present in public/. */
+const CONTAINER_OFFICES_META = {
+  absoluteTitle: "Container Office Manufacturer in India | Prices & Sizes",
+  image: "/images/products/modern-container-office-40ft-front.webp",
+  imageAlt: "Modern Container Office, 40 ft x 8 ft, front elevation",
+  keywords:
+    "container office, container office manufacturer in India, container office price, "
+    + "container office sizes, MS container office, fabricated container office, "
+    + "converted shipping container office",
 };
 
 export const revalidate = 1800; // 30 minutes
@@ -92,6 +122,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const categories = await getMergedCategories();
   const cat = categories.find((c) => c.slug === slug);
   if (!cat) return { title: "Category" };
+  if (slug === CONTAINER_OFFICES_SLUG) {
+    return buildPageMetadata({
+      absoluteTitle: CONTAINER_OFFICES_META.absoluteTitle,
+      description: containerOfficesMetaDescription(await getAllProductsMerged()),
+      keywords: CONTAINER_OFFICES_META.keywords,
+      path: `/products/category/${slug}`,
+      image: CONTAINER_OFFICES_META.image,
+      imageAlt: CONTAINER_OFFICES_META.imageAlt,
+    });
+  }
   const override = CATEGORY_META[slug];
   /* Categories with a shared landing section (src/data/categoryLandings.ts) get a real meta
    * description in place of the one-line tagline (36–69 characters before). Computed from the
@@ -164,10 +204,28 @@ export default async function Page({ params }: PageProps) {
       }
     : null;
 
-  /* Shared landing section for categories without hand-built content. Resolved ONCE: the same
+  /* Container offices (PR #82): a summary list (no Product / Offer nodes — see CONTAINER_OFFICES_META)
+   * and the FAQ array the page renders, both from the same merged catalogue the cards use. */
+  const isContainerOffices = slug === CONTAINER_OFFICES_SLUG;
+  const containerSummaryList = isContainerOffices
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Container office models",
+        itemListElement: containerOfficeModels(products).map((m, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${SITE}${m.path}`,
+          name: m.name,
+        })),
+      }
+    : null;
+
+  /* Shared landing section for categories without hand-built content (PR #86). Resolved ONCE: the same
    * object feeds the rendered section, its FAQPage and its summary ItemList, so the visible FAQ and
    * the markup are one array. The ItemList carries position, URL and name only — no Product/Offer
-   * nodes on a category page; each product page carries its own offer. */
+   * nodes on a category page; each product page carries its own offer. container-offices is not one
+   * of the landing categories, so at most one of the two lists exists on any page. */
   const landing = resolveCategoryLanding(slug, products, categories);
   const landingItemList = landing
     ? {
@@ -182,6 +240,7 @@ export default async function Page({ params }: PageProps) {
         })),
       }
     : null;
+  const containerFaqs = isContainerOffices ? containerOfficeFaqs(products) : null;
 
   return (
     <>
@@ -195,6 +254,8 @@ export default async function Page({ params }: PageProps) {
       {itemListSchema && <JsonLd data={itemListSchema} />}
       {/* FAQPage schema — the SAME array the on-page FAQ renders, so copy and schema always match. */}
       {RICH_CATEGORY_FAQS[slug] && <JsonLd data={generateFAQSchema(RICH_CATEGORY_FAQS[slug])} />}
+      {containerSummaryList && <JsonLd data={containerSummaryList} />}
+      {containerFaqs && <JsonLd data={generateFAQSchema(containerFaqs)} />}
       {landingItemList && <JsonLd data={landingItemList} />}
       {landing && <JsonLd data={generateFAQSchema(landing.faqs)} />}
       {/* No searchParams in the page → static/ISR (revalidate=1800 now effective).
@@ -205,7 +266,13 @@ export default async function Page({ params }: PageProps) {
         categories={categories}
         activeCategory={slug}
         basePath={`/products/category/${slug}`}
-        categoryContent={landing ? <CategoryLandingContent landing={landing} /> : undefined}
+        categoryContent={
+          isContainerOffices ? (
+            <ContainerOfficesCategoryContent products={products} />
+          ) : landing ? (
+            <CategoryLandingContent landing={landing} />
+          ) : undefined
+        }
       />
     </>
   );
