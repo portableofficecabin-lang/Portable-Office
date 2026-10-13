@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { ContainerOfficeLocationLists } from "@/components/locations/ContainerOfficeLocations";
+import {
+  CONTAINER_OFFICE_BANGALORE_PATH,
+  CONTAINER_OFFICE_DIRECTORY_PATH,
+} from "@/data/containerOfficeCluster";
 
 export function ContainerOfficeCategoryContent() {
   return (
@@ -53,6 +58,23 @@ export function ContainerOfficeCategoryContent() {
           subject to project feasibility and transport arrangements.
           Container offices can be configured for site offices,
           meeting rooms, engineering workspaces and staff facilities.
+        </p>
+        {/* Container-office cluster: this category is the pillar; the Bangalore landing page owns
+            Bangalore-specific searches and each location page owns its own area
+            (src/data/containerOfficeCluster.ts). */}
+        <p className="text-muted-foreground leading-relaxed">
+          For projects within the city, see{" "}
+          <Link href={CONTAINER_OFFICE_BANGALORE_PATH} className="font-medium text-accent hover:underline underline-offset-4">
+            container offices for Bangalore projects
+          </Link>
+          . The local guides below cover the industrial areas we supply in both states, with what
+          each area typically needs and answers for that location.
+        </p>
+        <ContainerOfficeLocationLists />
+        <p className="text-muted-foreground leading-relaxed">
+          <Link href={CONTAINER_OFFICE_DIRECTORY_PATH} className="font-medium text-accent hover:underline underline-offset-4">
+            See every location we serve, grouped by state
+          </Link>
         </p>
       </div>
 

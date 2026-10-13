@@ -21,6 +21,7 @@ import { notFound } from "next/navigation";
 import { Phone } from "lucide-react";
 
 import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
+import { ContainerOfficeNearbyBlock } from "@/components/locations/ContainerOfficeLocations";
 import { Layout } from "@/components/layout/Layout";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -360,6 +361,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             </ul>
           </nav>
         )}
+
+        {/* Container-office cluster block (src/data/containerOfficeCluster.ts): up to the category
+            pillar, across to genuinely nearby location pages, out to the directory. Renders only
+            for the container-office location pages; every other page is unchanged. */}
+        <ContainerOfficeNearbyBlock
+          slug={page.slug}
+          existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
+          motion={page.motion}
+        />
 
         {/* Optional legal/affiliation disclaimer — REQUIRED on any page that names a real
             company or landmark (e.g. the Tata Electronics belt page): renders muted, below

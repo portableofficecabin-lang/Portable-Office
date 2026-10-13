@@ -1,3 +1,5 @@
+import { CONTAINER_OFFICE_DIRECTORY_PATH, hubLinksFor } from "@/data/containerOfficeCluster";
+
 export interface SEOContent {
   keyword: string;
   location: string;
@@ -248,6 +250,16 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Container Office|Bangalore": [
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     { name: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+    // Container-office cluster (src/data/containerOfficeCluster.ts): this page is the Bangalore
+    // landing page, so it also reaches the other Bengaluru-region location pages, each of which
+    // links back here, plus the directory of every location.
+    ...hubLinksFor([
+      "container-office-in-jigani",
+      "container-office-in-bommasandra",
+      "container-office-in-hoskote",
+      "container-office-in-doddaballapura",
+    ]),
+    { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
   // The Sarjapur Road page (south-east Bengaluru) is also the only city page on the Bangalore
   // site-office hub so far; it links back to both hubs.
@@ -262,6 +274,16 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+    // Container-office cluster: the Hosur–Krishnagiri belt and Coimbatore pages predate this map
+    // and were never listed; the state hub now reaches every Tamil Nadu location page.
+    ...hubLinksFor([
+      "container-office-in-sipcot-hosur",
+      "container-office-near-tata-electronics-hosur",
+      "container-office-in-sipcot-shoolagiri",
+      "container-office-in-sipcot-krishnagiri",
+      "container-office-in-sipcot-coimbatore",
+    ]),
+    { name: "All container office locations in Tamil Nadu and Karnataka", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
   "Site Office Container|Tamil Nadu": [
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
@@ -314,10 +336,21 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
-  // Bengaluru-belt pages predate this map — add them here when their link graph is reviewed.
+  // Bengaluru-belt pages predate this map; the container-office cluster review (Oct 2026) added them
+  // to the "Container Office" key below. The other three keyword keys still list Mysore and Tumkur only.
   "Container Office|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    // Container-office cluster: Hoskote and the Bengaluru-belt pages (see the note above), so the
+    // state hub reaches every Karnataka location page.
+    ...hubLinksFor([
+      "container-office-in-jigani",
+      "container-office-in-bommasandra",
+      "container-office-in-sarjapur",
+      "container-office-in-hoskote",
+      "container-office-in-doddaballapura",
+    ]),
+    { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
   "Site Office Container|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
