@@ -15,7 +15,7 @@ import {
   neutraliseMarkup,
   validateCategoryEnquiry,
 } from "../src/lib/enquiries/categoryEnquiry";
-import { SlidingWindowLimiter, SUBMIT_RULES, type RateRule } from "../src/lib/enquiries/rateLimit";
+import { NOTIFY_RULES, SlidingWindowLimiter, SUBMIT_RULES, type RateRule } from "../src/lib/enquiries/rateLimit";
 
 let passed = 0;
 let failed = 0;
@@ -124,7 +124,6 @@ section("5. Production rule set");
       { rule: SUBMIT_RULES.ipDay, key: ip },
       { rule: SUBMIT_RULES.email10m, key: email },
       { rule: SUBMIT_RULES.phone10m, key: phone },
-      { rule: SUBMIT_RULES.global10m, key: "all" },
     ]);
   const sameEmail = [1, 2, 3, 4].map((i) => submit(`10.0.0.${i}`, "same@example.com", `90000000${i}0`).allowed);
   check(sameEmail.join() === "true,true,true,false", "4th from the same email blocked even from new IPs");
@@ -132,6 +131,21 @@ section("5. Production rule set");
   check(sameIp.join() === "true,true,true,true,true,false", "6th from one IP in 10 minutes blocked");
   now += 11 * 60_000;
   check(submit("10.9.9.9", "later@example.com", "9222222220").allowed, "IP allowed again after 10 minutes");
+
+  // Denial-of-service review: a distributed flood (many IPs, e-mails, phones) must never lock real
+  // senders out — no submission rule is site-wide.
+  check(Object.values(SUBMIT_RULES).every((r) => !/global|site|all/.test(r.name)), "no site-wide SUBMISSION rule");
+  const flood = Array.from({ length: 200 }, (_, i) => submit(`172.16.${i >> 8}.${i & 255}`, `f${i}@example.com`, `93${String(i).padStart(8, "0")}`).allowed);
+  check(flood.every(Boolean), "200 distinct senders in 10 minutes are all accepted (nobody locked out)");
+  check(submit("10.1.2.3", "real.customer@example.com", "9876543210").allowed, "a real customer is still accepted during the flood");
+
+  // The site-wide limit only budgets e-mails: after `limit` notifications in the window, later
+  // enquiries are stored but not e-mailed.
+  const budget = new SlidingWindowLimiter(() => now);
+  const mails = Array.from({ length: NOTIFY_RULES.global10m.limit + 5 }, () => budget.take([{ rule: NOTIFY_RULES.global10m, key: "all" }]).allowed);
+  check(mails.filter(Boolean).length === NOTIFY_RULES.global10m.limit, `e-mail budget: ${NOTIFY_RULES.global10m.limit} notifications per 10 minutes, the rest suppressed`);
+  now += 11 * 60_000;
+  check(budget.take([{ rule: NOTIFY_RULES.global10m, key: "all" }]).allowed, "e-mail budget refills after 10 minutes");
 }
 
 console.log(`\nenquiry-api.test.ts — ${passed} passed, ${failed} failed`);

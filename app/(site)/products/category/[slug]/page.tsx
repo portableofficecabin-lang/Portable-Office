@@ -19,7 +19,6 @@ import {
 } from "@/components/products/containerOfficesCategoryData";
 import { CategoryLandingContent } from "@/components/products/CategoryLandingContent";
 import { categoryLandingMetaDescription, resolveCategoryLanding } from "@/data/categoryLandings";
-import { isCategoryIndexable } from "@/lib/seo/categoryIndexing";
 
 /** Categories that ship a rich landing page (copy + FAQ + ItemList schema), keyed by slug. */
 const RICH_CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
@@ -151,9 +150,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `Browse all ${cat.name} models, specifications and prices. Manufactured in-house and delivered installation-ready across India.`,
     keywords: override?.keywords,
     path: `/products/category/${slug}`,
-    // An empty category is a thin page: kept live (follow) but withheld from the index until a
-    // product is filed under it. Same predicate as the sitemap — see isCategoryIndexable.
-    noindex: !isCategoryIndexable(slug, mergedProducts),
+    // Empty categories keep their current index status and sitemap entry (owner decision
+    // 2026-10-13: no noindex until their Search Console performance has been reviewed).
+    // src/lib/seo/categoryIndexing.ts holds the proposed rule, deliberately not wired in.
   });
 }
 

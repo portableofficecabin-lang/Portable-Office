@@ -14,12 +14,13 @@
  *   • a link in CATEGORY_LINKS points anywhere other than a real route (a product, a populated
  *     category, a guide, a city page, a promotion page, a blog post or a static hub);
  *   • a cross-sell id is missing, or is in the same category it is meant to supplement;
- *   • the empty-category indexing rule stops matching the catalogue.
+ *   • the empty-category indexing rule stops matching the catalogue, or it gets wired into the
+ *     sitemap / category robots tag while the owner's hold is in place (section 8).
  * The HTTP half (200s, rendered HTML, FAQPage == visible FAQ, prices == product pages) is checked
  * against a running build; see the PR description for that run.
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import {
@@ -133,7 +134,7 @@ for (const [slug, links] of Object.entries(CATEGORY_LINKS)) {
   check(new Set(hrefs).size === hrefs.length, `${slug}: no duplicate link`);
 }
 
-section("5. Empty-category indexing rule");
+section("5. Empty-category indexing rule (helper only — not wired in, see section 8)");
 for (const c of categories) {
   const count = products.filter((p) => p.categorySlug === c.slug).length;
   check(isCategoryIndexable(c.slug, products) === count > 0, `${c.slug}: indexable iff it holds a product (${count})`);
@@ -174,6 +175,18 @@ section("7. Adding a product to an empty category makes it indexable");
     const emptied = products.filter((p) => p.categorySlug !== populated);
     check(!isCategoryIndexable(populated, emptied), `${populated}: noindex again if its last product is moved out`);
   }
+}
+
+section("8. Owner hold: empty categories keep their index status and sitemap entry");
+{
+  // Owner decision 2026-10-13: no noindex / sitemap removal for the empty categories until their
+  // Search Console performance has been reviewed. Lifting the hold means changing these checks.
+  const sitemapSrc = readFileSync(join("app", "sitemap.ts"), "utf8");
+  const pageSrc = readFileSync(join("app", "(site)", "products", "category", "[slug]", "page.tsx"), "utf8");
+  check(!sitemapSrc.includes("isCategoryIndexable"), "app/sitemap.ts does not filter categories by isCategoryIndexable");
+  check(/categories\.map\(\(category\) =>\s*entry\(`\/products\/category\/\$\{category\.slug\}`/.test(sitemapSrc), "app/sitemap.ts lists every category");
+  check(!pageSrc.includes("isCategoryIndexable"), "the category page does not derive robots from isCategoryIndexable");
+  check(!/noindex\s*:/.test(pageSrc), "the category page sets no noindex");
 }
 
 console.log(`\ncategory-landings.test.ts — ${passed} passed, ${failed} failed`);

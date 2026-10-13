@@ -88,12 +88,22 @@ const MIN = 60_000;
 /** Every request, valid or not, per client IP — stops a script hammering the validator. */
 export const ATTEMPT_RULES: RateRule[] = [{ name: "attempt-ip-10m", limit: 20, windowMs: 10 * MIN }];
 
-/** Accepted submissions. */
+/** Accepted submissions — every rule is scoped to ONE sender (IP, e-mail or phone). */
 export const SUBMIT_RULES = {
   ip10m: { name: "submit-ip-10m", limit: 5, windowMs: 10 * MIN },
   ipDay: { name: "submit-ip-24h", limit: 20, windowMs: 24 * 60 * MIN },
   email10m: { name: "submit-email-10m", limit: 3, windowMs: 10 * MIN },
   phone10m: { name: "submit-phone-10m", limit: 3, windowMs: 10 * MIN },
-  /** Whole-site circuit breaker against a distributed flood. */
-  global10m: { name: "submit-global-10m", limit: 60, windowMs: 10 * MIN },
+} satisfies Record<string, RateRule>;
+
+/**
+ * Whole-site e-mail budget — deliberately NOT a submission limit (denial-of-service review,
+ * 2026-10-13). A site-wide cap that REFUSES submissions lets anyone with a dozen IP addresses lock
+ * every real customer out. Instead, once more than `limit` enquiries have been notified within the
+ * window, further enquiries are still stored (the admin Enquiries screen shows them) but no
+ * notification or acknowledgement e-mail is sent for them. That caps an e-mail flood (inbox
+ * spam, acknowledgements to strangers' addresses) without ever losing a real lead.
+ */
+export const NOTIFY_RULES = {
+  global10m: { name: "notify-global-10m", limit: 60, windowMs: 10 * MIN },
 } satisfies Record<string, RateRule>;

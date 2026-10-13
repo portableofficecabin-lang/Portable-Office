@@ -13,13 +13,19 @@
 --
 --  WHAT THIS DOES:
 --    1. Caps field lengths on NEW rows (constraint added NOT VALID: old rows are not checked).
+--       Every public form validates the same limits before submitting
+--       (src/lib/enquiries/enquiryLimits.ts, kept equal to this constraint by its test).
 --    2. Tightens BOTH existing anonymous insert policies ("Anyone can create enquiries",
 --       "Public can create enquiries") so a non-admin insert must leave the workflow fields at
 --       their defaults. Every current form already does — none of them sets those columns.
 --       Admins (public.is_admin()) are unaffected.
 --    3. A BEFORE INSERT trigger that rate-limits non-admin, non-service inserts: at most 3 per
---       e-mail and 3 per phone number in 10 minutes, and 100 site-wide in 10 minutes. It raises
---       an error whose message starts with "rate_limited", which /api/enquiries maps to HTTP 429.
+--       e-mail and 3 per phone number in 10 minutes. It raises an error whose message starts with
+--       "rate_limited", which /api/enquiries maps to HTTP 429.
+--       There is deliberately NO site-wide cap (denial-of-service review, 2026-10-13): the anon key
+--       is public, so anyone could insert junk rows with made-up e-mails until a global cap is
+--       reached and lock every real customer out of every form. Volume floods are a monitoring
+--       matter (admin Enquiries screen), not a reason to refuse real enquiries.
 --    4. Two indexes that keep the trigger's look-ups cheap.
 --
 --  APPLY MANUALLY: Supabase dashboard → SQL editor → run this file (or `supabase db push`).
@@ -129,11 +135,7 @@ begin
     end if;
   end if;
 
-  select count(*) into recent from public.enquiries where created_at > now() - interval '10 minutes';
-  if recent >= 100 then
-    raise exception 'rate_limited: enquiry volume limit reached' using errcode = 'P0001';
-  end if;
-
+  -- No site-wide cap: see "WHAT THIS DOES" 3 (a global limit would let anyone lock real customers out).
   return new;
 end;
 $$;

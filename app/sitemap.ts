@@ -6,8 +6,6 @@ import { CITY_PAGES } from "@/data/cityPages";
 import { products, getProductSlug, getProductDetailPath, categories } from "@/data/products";
 import { createStaticClient } from "@/lib/supabase/static";
 import { variantIsSearchEligible } from "@/data/productFamilies";
-import { loadAllProductsMerged } from "@/lib/products/catalogue";
-import { isCategoryIndexable } from "@/lib/seo/categoryIndexing";
 
 const SITE_URL = "https://portableofficecabin.com";
 
@@ -190,13 +188,10 @@ async function getBlogEntries(): Promise<MetadataRoute.Sitemap> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Dedicated path-based category pages (SSR/ISR) — the canonical category URLs. Only
-  // categories that hold a product: an empty one is noindex (see isCategoryIndexable), and a
-  // sitemap must list indexable URLs only. Same merged catalogue the category page renders.
-  const mergedProducts = await loadAllProductsMerged();
-  const categoryPages: MetadataRoute.Sitemap = categories
-    .filter((category) => isCategoryIndexable(category.slug, mergedProducts))
-    .map((category) => entry(`/products/category/${category.slug}`, 0.8, "weekly"));
+  // Dedicated path-based category pages (SSR/ISR) — the canonical category URLs.
+  const categoryPages: MetadataRoute.Sitemap = categories.map((category) =>
+    entry(`/products/category/${category.slug}`, 0.8, "weekly"),
+  );
 
   // Built from source files — no per-page modification signal exists, so no lastmod.
   const promotionPages: MetadataRoute.Sitemap = seoPromotions.map((promo) => ({

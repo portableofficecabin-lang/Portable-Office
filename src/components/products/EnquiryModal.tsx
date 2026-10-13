@@ -11,6 +11,7 @@ import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { enquiryLengthError } from "@/lib/enquiries/enquiryLimits";
 
 interface EnquiryModalProps {
   product: Product | null;
@@ -32,21 +33,27 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const enquiryData = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || null,
+      company: formData.company.trim() || null,
+      // The message box is optional, but public.enquiries requires a non-empty message once the
+      // hardening migration is applied — a blank one is stored as a clear default instead.
+      message: formData.message.trim() || `Quote request for ${product.name} (no message entered).`,
+      enquiry_type: "quote" as const,
+      product_id: product.id,
+      product_name: product.name,
+      subject: `Quote Request for ${product.name}`,
+    };
+    const lengthError = enquiryLengthError(enquiryData);
+    if (lengthError) {
+      toast({ title: "Please shorten your enquiry", description: lengthError, variant: "destructive" });
+      return;
+    }
     setIsSubmitting(true);
-    
-    try {
-      const enquiryData = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim() || null,
-        company: formData.company.trim() || null,
-        message: formData.message.trim(),
-        enquiry_type: "quote" as const,
-        product_id: product.id,
-        product_name: product.name,
-        subject: `Quote Request for ${product.name}`,
-      };
 
+    try {
       const { error } = await supabase.from("enquiries").insert(enquiryData as any);
 
       if (error) {
@@ -119,6 +126,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
               <Input
                 id="name"
                 name="name"
+                maxLength={100}
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -130,6 +138,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
               <Input
                 id="email"
                 name="email"
+                maxLength={254}
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -145,6 +154,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
               <Input
                 id="phone"
                 name="phone"
+                maxLength={20}
                 type="tel"
                 value={formData.phone}
                 onChange={handleChange}
@@ -156,6 +166,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
               <Input
                 id="company"
                 name="company"
+                maxLength={150}
                 value={formData.company}
                 onChange={handleChange}
                 placeholder="Your Company"
@@ -168,6 +179,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
             <Textarea
               id="message"
               name="message"
+              maxLength={2000}
               value={formData.message}
               onChange={handleChange}
               placeholder="Tell us about your requirements, quantity needed, customization requests, etc."

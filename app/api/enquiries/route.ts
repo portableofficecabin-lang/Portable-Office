@@ -10,7 +10,8 @@
  *   2. body capped at ENQUIRY_MAX_BODY_BYTES;
  *   3. per-IP attempt limit, then the SAME validation the form runs, re-run here as the authority;
  *   4. honeypot + minimum fill time — bots are acknowledged and silently dropped;
- *   5. per-IP / per-email / per-phone / site-wide submission limits (src/lib/enquiries/rateLimit.ts);
+ *   5. per-IP / per-email / per-phone submission limits, plus a site-wide e-mail budget that never
+ *      refuses a submission (src/lib/enquiries/rateLimit.ts);
  *   6. the product name is resolved from the catalogue on the server — never taken from the client;
  *   7. insert with the anon key, so Row Level Security still applies (production has no
  *      service-role key, and this route needs none);
@@ -29,7 +30,7 @@ import {
   neutraliseMarkup,
   validateCategoryEnquiry,
 } from "@/lib/enquiries/categoryEnquiry";
-import { ATTEMPT_RULES, SUBMIT_RULES, SlidingWindowLimiter } from "@/lib/enquiries/rateLimit";
+import { ATTEMPT_RULES, NOTIFY_RULES, SUBMIT_RULES, SlidingWindowLimiter } from "@/lib/enquiries/rateLimit";
 import { CATEGORY_LANDING_SLUGS } from "@/data/categoryLandings";
 import { categories, products } from "@/data/products";
 import { getCommerce } from "@/data/productCommerce";
@@ -132,7 +133,6 @@ export async function POST(request: Request) {
     { rule: SUBMIT_RULES.ipDay, key: ip },
     { rule: SUBMIT_RULES.email10m, key: data.email },
     { rule: SUBMIT_RULES.phone10m, key: phoneDigits },
-    { rule: SUBMIT_RULES.global10m, key: "all" },
   ]);
   if (!submit.allowed) {
     console.warn(`[enquiries] 429 ${submit.blockedBy}`);
@@ -214,6 +214,13 @@ export async function POST(request: Request) {
     }
     console.error(`[enquiries] insert rejected: HTTP ${insertRes.status} ${detail.slice(0, 200)}`);
     return json(502, { error: "Your enquiry could not be sent. Please try again or call us." });
+  }
+
+  // Site-wide e-mail budget (NOTIFY_RULES): over it the enquiry stays stored — nobody is refused
+  // because of other people's traffic — but no e-mail is sent for it.
+  if (!limiter.take([{ rule: NOTIFY_RULES.global10m, key: "all" }]).allowed) {
+    console.warn("[enquiries] notification suppressed: site-wide e-mail budget used up (possible flood)");
+    return json(201, { ok: true, notification: "suppressed" });
   }
 
   // Notify. Every free-text field is made markup-inert first (see neutraliseMarkup).
