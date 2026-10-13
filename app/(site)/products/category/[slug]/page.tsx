@@ -10,11 +10,41 @@ import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 import { portableCabinsFaqs } from "@/components/products/PortableCabinsCategoryContent";
 import { prefabBuildingFaqs } from "@/components/products/PrefabBuildingCategoryContent";
+import { ContainerOfficesCategoryContent } from "@/components/products/ContainerOfficesCategoryContent";
+import {
+  CONTAINER_OFFICES_SLUG,
+  containerOfficeFaqs,
+  containerOfficeModels,
+  containerOfficesMetaDescription,
+} from "@/components/products/containerOfficesCategoryData";
 
 /** Categories that ship a rich landing page (copy + FAQ + ItemList schema), keyed by slug. */
 const RICH_CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
   "portable-cabins": portableCabinsFaqs,
   "prefab-building": prefabBuildingFaqs,
+};
+
+/* CONTAINER OFFICES — the category's manufacturer landing page (2026-10-11).
+ *
+ * Kept OUT of RICH_CATEGORY_FAQS on purpose: that map also switches on the priced ItemList below,
+ * which nests Product + Offer nodes inside a category page. Google evaluates merchant listings on the
+ * individual product pages (each container office already carries its own Product + Offer JSON-LD),
+ * so this category publishes a SUMMARY ItemList instead — position, URL and name only, no offers —
+ * plus its own FAQPage built from the same array the page renders.
+ *
+ * Title: absolute, so the layout does not append the 24-character brand suffix and the 55-character
+ * title displays in full. Description: built from the live catalogue (model count + lowest
+ * GST-inclusive price), so it can never quote a figure the cards do not show. Image: the Modern
+ * Container Office front elevation — the same clean photo Merchant Center already accepts as that
+ * product's image_link — instead of the site default, which is not present in public/. */
+const CONTAINER_OFFICES_META = {
+  absoluteTitle: "Container Office Manufacturer in India | Prices & Sizes",
+  image: "/images/products/modern-container-office-40ft-front.webp",
+  imageAlt: "Modern Container Office, 40 ft x 8 ft, front elevation",
+  keywords:
+    "container office, container office manufacturer in India, container office price, "
+    + "container office sizes, MS container office, fabricated container office, "
+    + "converted shipping container office",
 };
 
 export const revalidate = 1800; // 30 minutes
@@ -89,6 +119,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const categories = await getMergedCategories();
   const cat = categories.find((c) => c.slug === slug);
   if (!cat) return { title: "Category" };
+  if (slug === CONTAINER_OFFICES_SLUG) {
+    return buildPageMetadata({
+      absoluteTitle: CONTAINER_OFFICES_META.absoluteTitle,
+      description: containerOfficesMetaDescription(await getAllProductsMerged()),
+      keywords: CONTAINER_OFFICES_META.keywords,
+      path: `/products/category/${slug}`,
+      image: CONTAINER_OFFICES_META.image,
+      imageAlt: CONTAINER_OFFICES_META.imageAlt,
+    });
+  }
   const override = CATEGORY_META[slug];
   return buildPageMetadata({
     // No brand suffix here — the root layout title template appends
@@ -149,6 +189,24 @@ export default async function Page({ params }: PageProps) {
       }
     : null;
 
+  /* Container offices: a summary list (no Product / Offer nodes — see CONTAINER_OFFICES_META) and the
+   * FAQ array the page renders, both from the same merged catalogue the cards use. */
+  const isContainerOffices = slug === CONTAINER_OFFICES_SLUG;
+  const containerSummaryList = isContainerOffices
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Container office models",
+        itemListElement: containerOfficeModels(products).map((m, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${SITE}${m.path}`,
+          name: m.name,
+        })),
+      }
+    : null;
+  const containerFaqs = isContainerOffices ? containerOfficeFaqs(products) : null;
+
   return (
     <>
       <JsonLd
@@ -161,6 +219,8 @@ export default async function Page({ params }: PageProps) {
       {itemListSchema && <JsonLd data={itemListSchema} />}
       {/* FAQPage schema — the SAME array the on-page FAQ renders, so copy and schema always match. */}
       {RICH_CATEGORY_FAQS[slug] && <JsonLd data={generateFAQSchema(RICH_CATEGORY_FAQS[slug])} />}
+      {containerSummaryList && <JsonLd data={containerSummaryList} />}
+      {containerFaqs && <JsonLd data={generateFAQSchema(containerFaqs)} />}
       {/* No searchParams in the page → static/ISR (revalidate=1800 now effective).
           activeCategory comes from the path slug so content stays server-rendered
           and crawlable; ?page deep-links are resolved client-side after hydration. */}
@@ -169,6 +229,9 @@ export default async function Page({ params }: PageProps) {
         categories={categories}
         activeCategory={slug}
         basePath={`/products/category/${slug}`}
+        categoryContent={
+          isContainerOffices ? <ContainerOfficesCategoryContent products={products} /> : undefined
+        }
       />
     </>
   );

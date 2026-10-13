@@ -220,7 +220,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "Who picks up what at our office",
         paragraphs: [
-          "Site office and portable cabin enquiries are handled by our cabins desk between 9:30 am and 7:00 pm, Monday to Saturday. For shipping container sales — new, used or modified — ask for the container team; they have the live stock list for both our Krishnagiri and Hosur yards.",
+          "Site office and portable cabin enquiries are handled by our cabins desk between 9:30 am and 7:00 pm, Monday to Saturday. For shipping container sales — new, used or modified — ask for the container team; they have the live stock list for our factory yard near Hosur.",
           "Labour colony, G+1 worker accommodation and large camp tenders go to our projects desk, where a senior engineer reviews the brief before sending a costing. For prefab homes and 2BHK builds the conversation usually involves drawings, so we set up a callback with the design team rather than a quick phone quote.",
         ],
       },
@@ -240,7 +240,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "Visiting the factory",
         paragraphs: [
-          "Both our Tamil Nadu (Krishnagiri) and Karnataka (Hosur) units are open for customer walk-ins on weekdays between 10:00 am and 5:00 pm. Saturday visits are possible by prior appointment. We have showroom units of the most common builds — Executive 20ft, Container Office, 2BHK Prefab Home, Labour Colony dorm block — set up so you can see the finish and the build quality before placing an order.",
+          "Our factory at Kamandoddi, near Hosur in Tamil Nadu, is open for customer walk-ins on weekdays between 10:00 am and 5:00 pm. Saturday visits are possible by prior appointment. We have showroom units of the most common builds — Executive 20ft, Container Office, 2BHK Prefab Home, Labour Colony dorm block — set up so you can see the finish and the build quality before placing an order.",
           "If you are travelling from outside the state, send us a message a day in advance and we will keep a senior engineer available to walk you through the units.",
         ],
       },

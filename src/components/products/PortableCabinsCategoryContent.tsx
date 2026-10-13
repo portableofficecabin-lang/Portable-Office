@@ -32,6 +32,7 @@ export const CATEGORY_H1: Record<string, string> = {
   "container-offices": "Container Office Manufacturer in India",
   "portable-cabins": "Portable Cabins — Factory-Built, Delivered Anywhere in India",
   "prefab-building": "Prefab Buildings — Panel-Built, Assembled On Your Site",
+  "container-offices": "Container Office Manufacturer in India",
 };
 
 /** ₹ formatter, Indian grouping. */
