@@ -15,6 +15,8 @@
  *      Add to Cart appear together or not at all. A page here may legitimately be purchasable
  *      (feed-excluded by src/data/merchantFeedPolicy.ts) or quote-only (no offer, no ATC) — but a page
  *      showing an offer without a working Add to Cart (or vice versa) is a defect.
+ *      A RENTAL booking page (Service schema, Add to Cart, no Offer) is the one exception to
+ *      "together or not at all": its recurring rent must never be an Offer — see the sweep.
  *      The "quote-only must never be IN the feed" direction is enforced by checks 1-4:
  *      every feed URL must render price + availability + Add to Cart, which a quote-only
  *      product cannot.
@@ -67,17 +69,23 @@ function analyze(r) {
     .filter(Boolean)
     .flat()
     .flatMap((n) => (n && n["@graph"] ? n["@graph"] : [n]));
-  const isProduct = (t) => (Array.isArray(t) ? t.includes("Product") : t === "Product");
-  const prod = jsonlds.find((s) => s && isProduct(s["@type"]));
+  const isType = (t, want) => (Array.isArray(t) ? t.includes(want) : t === want);
+  const prod = jsonlds.find((s) => s && isType(s["@type"], "Product"));
+  const service = jsonlds.find((s) => s && isType(s["@type"], "Service"));
   const offer = prod?.offers && !Array.isArray(prod.offers) ? prod.offers : prod?.offers?.[0];
+  const visibleText = r.body.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/<[^>]+>/g, " ");
   return {
     status: r.status,
     bytes: r.bytes,
     h1: (r.body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1]?.replace(/<[^>]+>/g, "").trim() ?? null,
     hasProductSchema: !!prod,
+    hasServiceSchema: !!service,
+    serviceHasOffer: service?.offers != null,
     price: offer?.price != null ? Number(offer.price) : null,
     availability: offer?.availability ?? null,
     addToCart: /Add to Cart/i.test(r.body),
+    /** The rent is labelled as recurring somewhere on the page (priceUnitSuffix " / month", "first month of rental", …). */
+    rentQualified: /\/\s*month|per month|monthly|month of rental/i.test(visibleText),
   };
 }
 
@@ -181,6 +189,17 @@ for (const url of nonFeed) {
     ok(hasOffer === a.addToCart,
       `${tag}: INCONSISTENT — offer schema ${hasOffer ? "present" : "absent"} but Add to Cart ${a.addToCart ? "present" : "absent"}`);
     if (hasOffer) console.log(`  info ${tag}: purchasable but feed-excluded (price=${a.price}) — expected when merchantFeedPolicy.ts holds the SKU back`);
+  } else if (a.hasServiceSchema && a.addToCart) {
+    /* RENTAL BOOKING page (priceBasis "monthly-rental" in src/data/productCommerce.ts, e.g.
+     * /products/shipping-container-rental). By design it is bookable on-site, so Add to Cart is
+     * correct, but the rent is RECURRING: the page carries a Service node instead of a Product
+     * and never a schema.org Offer (Google would read an Offer into Shopping as the price of
+     * owning the unit), and the SKU is never in the feed. Without this branch it fell into the
+     * guide-page checks below and failed "carries no Add to Cart" although nothing was wrong.
+     * What would actually be a defect on a rental page is checked instead: */
+    ok(!a.serviceHasOffer, `${tag}: rental page emits a schema.org Offer on its Service node (a monthly rent must never be an Offer)`);
+    ok(a.rentQualified, `${tag}: rental page shows Add to Cart but never labels the price as monthly rent`);
+    if (!a.serviceHasOffer && a.rentQualified) console.log(`  info ${tag}: rental booking page — Service schema, Add to Cart, no Offer (feed-excluded by priceBasis)`);
   } else {
     ok(!hasOffer, `${tag}: price-free guide page carries no offer`);
     ok(!a.addToCart, `${tag}: price-free guide page carries no Add to Cart`);
@@ -188,4 +207,6 @@ for (const url of nonFeed) {
 }
 
 console.log(`\n=== merchant-url-audit: ${pass} passed, ${fail} failed ===`);
-process.exit(fail ? 1 : 0);
+// exitCode, not process.exit(): on Node 24 / Windows, exiting while fetch() sockets are still
+// closing aborts with a libuv assertion, and the abort replaced the result (exit 127 instead of 1).
+process.exitCode = fail ? 1 : 0;
