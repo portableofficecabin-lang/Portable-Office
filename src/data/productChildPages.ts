@@ -531,7 +531,9 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Should I rent instead?", a: "For needs under a year, usually yes — rental avoids capital cost and resale hassle. See our rental guide for how hiring works." },
         ],
         related: [
-          { label: "Used shipping containers for sale", href: "/products/used-shipping-container-for-sale" },
+          // /products/used-shipping-container-for-sale never resolved (404). The category page lists
+          // the used 20 ft containers for sale (As-Is, WWT, Cargo-Worthy) with their prices.
+          { label: "Used shipping containers for sale", href: "/products/category/cargo-storage-shipping-containers" },
           { label: "Porta cabins on rent", href: "/blog/porta-cabins-on-rent" },
         ],
       },
