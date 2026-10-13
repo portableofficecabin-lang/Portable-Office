@@ -139,18 +139,9 @@ export function useAnalyticsTracking() {
     };
   }, [trackClick]);
 
-  // Duration on page unload via sendBeacon (reliable, no client bundle).
-  useEffect(() => {
-    const handleUnload = () => {
-      const duration = (Date.now() - pageEntryTime.current) / 1000;
-      const data = JSON.stringify({
-        visitor_id: visitorId.current,
-        page_path: currentPath.current,
-        duration_seconds: Math.round(duration),
-      });
-      navigator.sendBeacon?.(`${SB_URL}/rest/v1/rpc/update_page_duration`, data);
-    };
-    window.addEventListener("beforeunload", handleUnload);
-    return () => window.removeEventListener("beforeunload", handleUnload);
-  }, []);
+  // No duration beacon on page unload. It used navigator.sendBeacon, which cannot send the
+  // `apikey` / `Authorization` headers Supabase requires, so every beacon was rejected with
+  // 401 (a console error on every page exit), and the `update_page_duration` RPC it called is
+  // not defined by any migration. Restoring time-on-page needs that function plus a keepalive
+  // fetch that carries the headers.
 }
