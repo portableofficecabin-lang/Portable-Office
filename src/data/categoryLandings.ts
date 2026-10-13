@@ -1035,7 +1035,7 @@ function facts(slug: string, categoryName: string, products: Product[]): Categor
     gst: GST_PERCENT_LABEL,
     localTransit: `${local.transitDaysMin}–${local.transitDaysMax} days`,
     farthestTransit: `${farthest.transitDaysMin}–${farthest.transitDaysMax} days`,
-    farthestZone: farthest.name.replace(/^Zones*d+s*[—-]s*/, "").replace(/^Rest/, "the rest"),
+    farthestZone: farthest.name.replace(/^Zone\s*\d+\s*[—-]\s*/, "").replace(/^Rest/, "the rest"),
   };
 }
 
