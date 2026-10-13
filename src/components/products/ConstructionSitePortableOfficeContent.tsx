@@ -95,7 +95,9 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.35fr_0.95fr]">
+      {/* grid-cols-1 (= minmax(0, 1fr)) below lg: an implicit column grew to the layout table's
+          minimum width and pushed the page up to 75 px wider than a 320 px phone. */}
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-[1.35fr_0.95fr]">
         <div className="rounded-3xl border border-border bg-card p-8">
           <h3 className="font-display text-2xl font-bold text-foreground mb-4">What is a construction site portable office?</h3>
           <p className="text-muted-foreground leading-relaxed mb-5">
@@ -118,7 +120,9 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
 
         <div className="rounded-3xl border border-border bg-muted/30 p-8">
           <h3 className="font-display text-2xl font-bold text-foreground mb-4">Typical 40 ft × 10 ft layout</h3>
-          <div className="overflow-hidden rounded-2xl border border-border bg-background">
+          {/* overflow-x-auto, not overflow-hidden: on a narrow phone the table scrolls sideways
+              inside its rounded box instead of having its last column cut off. */}
+          <div className="overflow-x-auto rounded-2xl border border-border bg-background">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-muted/40">
