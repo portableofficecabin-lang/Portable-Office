@@ -12,6 +12,7 @@ import {
   CheckCircle2,
   CalendarDays,
   AlertCircle,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,7 +30,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-function InfoItem({ icon: Icon, text }: { icon: React.ElementType; text: string }) {
+function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
     <li className="flex items-start gap-3">
       <Icon className="h-5 w-5 text-accent shrink-0 mt-0.5" />

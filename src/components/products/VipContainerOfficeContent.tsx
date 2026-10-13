@@ -3,6 +3,7 @@ import {
   Sparkles, ShieldCheck, HardHat, Building2, Megaphone, Factory, PartyPopper,
   CheckCircle2, Phone, MessageCircle, ChevronRight, Truck, IndianRupee,
   ClipboardList, CalendarCheck, PackageCheck, Headset,
+  type LucideIcon,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { JsonLd } from "@/components/JsonLd";
@@ -53,7 +54,7 @@ export const VIP_FAQS: { question: string; answer: string }[] = [
   },
 ];
 
-function SectionHeading({ id, icon: Icon, children }: { id: string; icon: React.ElementType; children: React.ReactNode }) {
+function SectionHeading({ id, icon: Icon, children }: { id: string; icon: LucideIcon; children: React.ReactNode }) {
   return (
     <h2 id={id} className="scroll-mt-24 font-display text-2xl sm:text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
       <Icon className="h-7 w-7 text-accent shrink-0" />

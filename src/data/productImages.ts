@@ -1,4 +1,5 @@
 // Product images by category and specific products
+import type { StaticImageData } from "next/image";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import portableCabin from "@/assets/products/portable-cabin.jpg";
 import containerOfficeWoodGlass from "@/assets/products/container-office-wood-glass.webp";
@@ -26,7 +27,7 @@ import cargoContainersMain from "@/assets/products/cargo-containers-main.webp";
 import cargoStorageContainersPinkMain from "@/assets/products/cargo-storage-containers-pink-main.webp";
 
 // Category-level images
-export const categoryImages: Record<string, string> = {
+export const categoryImages: Record<string, string | StaticImageData> = {
   "portable-cabins": portableCabin,
   "site-office-containers": siteOfficeContainer,
   "container-offices": containerOffice,
@@ -39,7 +40,7 @@ export const categoryImages: Record<string, string> = {
 };
 
 // Product-specific images by product ID or SKU
-export const productImages: Record<string, string> = {
+export const productImages: Record<string, string | StaticImageData> = {
   // Owner-supplied FRONT photo (Aug 2026) — must match products.ts images[0] so the
   // card, page, OG and feed all show the same primary image.
   "1": "/images/products/executive-portable-cabin-20ft-front-view.webp",
@@ -156,8 +157,7 @@ export const productImages: Record<string, string> = {
   "40": "/images/products/labour-colony-aerial-main.png",
   "POC-LC-PREFAB": "/images/products/labour-colony-aerial-main.png",
   "labour-colony": "/images/products/labour-colony-aerial-main.png",
-  // Public-path strings (not bundled imports) — the map is Record<string, string>, and this is the
-  // type-clean pattern products 7/9/10/11 already use.
+  // Public-path strings (not bundled imports) — the pattern products 7/9/10/11 already use.
   "42": "/images/products/container-site-office-main.webp",
   "POC-CSO-4010": "/images/products/container-site-office-main.webp",
   "container-site-office": "/images/products/container-site-office-main.webp",

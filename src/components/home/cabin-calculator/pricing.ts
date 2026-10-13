@@ -660,7 +660,8 @@ export interface SlidingDoorModel {
 /** Build the sliding-door geometry model from a cabin config. Uses the SAME opening clamps as
  *  the drawing (openingWidthOn / clampOpeningOffset), so the model and every renderer agree. */
 export const slidingDoorModel = (
-  cfg: Pick<CabinConfig, "width" | "partitionDoorOffset" | "partitionSlideSide" | "partitionSlideDirection">,
+  cfg: Pick<CabinConfig, "width" | "partitionDoorOffset"> &
+    Partial<Pick<CabinConfig, "partitionSlideSide" | "partitionSlideDirection">>, // unset → defaults below
 ): SlidingDoorModel => {
   const widthFt = Math.max(1, cfg.width || 1);
   const side = cfg.partitionSlideSide ?? "right";
