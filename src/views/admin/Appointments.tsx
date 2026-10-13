@@ -20,6 +20,7 @@ import {
   CalendarClock,
   Ban,
   RefreshCw,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -47,7 +48,7 @@ import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { AdminCard, AdminCardHeader, AdminCardContent } from "@/components/admin/AdminCard";
 
-const statusConfig: Record<Appointment["status"], { bg: string; text: string; gradient?: string; icon: React.ElementType }> = {
+const statusConfig: Record<Appointment["status"], { bg: string; text: string; gradient?: string; icon: LucideIcon }> = {
   pending: { bg: "bg-amber-100 dark:bg-amber-900/30", text: "text-amber-800 dark:text-amber-400", gradient: "from-amber-400 to-amber-500", icon: Clock },
   confirmed: { bg: "bg-emerald-100 dark:bg-emerald-900/30", text: "text-emerald-800 dark:text-emerald-400", gradient: "from-emerald-400 to-emerald-500", icon: CheckCircle },
   cancelled: { bg: "bg-red-100 dark:bg-red-900/30", text: "text-red-800 dark:text-red-400", gradient: "from-red-400 to-red-500", icon: XCircle },

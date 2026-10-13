@@ -2,7 +2,7 @@ import * as React from "react";
 import { Input } from "@/components/ui/input";
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "type"> & {
-  value: number | string;
+  value?: number | string | null;
   onChange: (e: { target: { value: string } }) => void;
 };
 

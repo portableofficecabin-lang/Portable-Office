@@ -15,6 +15,7 @@ import {
   Wrench,
   AlertCircle,
   ChevronRight,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "@/components/ui/static-motion";
@@ -37,7 +38,7 @@ function InfoCard({
   children,
   index = 0,
 }: {
-  icon: React.ElementType;
+  icon: LucideIcon;
   title: string;
   children: React.ReactNode;
   index?: number;
