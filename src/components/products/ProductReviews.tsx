@@ -113,8 +113,11 @@ export function ProductReviews({ productSlug, productName, initialReviews, initi
               <div className="flex items-center justify-between mb-2">
                 <Stars value={r.rating} />
                 <time className="text-xs text-muted-foreground" dateTime={r.created_at}>
+                  {/* A fixed time zone: without it the server renders the date in its own zone and
+                      the visitor's browser re-renders it in theirs, so a review posted near midnight
+                      shows a different day and hydration fails (React #418). */}
                   {new Date(r.created_at).toLocaleDateString("en-IN", {
-                    year: "numeric", month: "short", day: "numeric",
+                    year: "numeric", month: "short", day: "numeric", timeZone: "Asia/Kolkata",
                   })}
                 </time>
               </div>
