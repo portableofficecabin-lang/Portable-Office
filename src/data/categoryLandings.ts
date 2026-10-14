@@ -32,7 +32,7 @@
 import { getProductDetailPath, type Category, type Product } from "@/data/products";
 import { getCommerce, isOutrightSale, isPurchasable, priceUnitSuffix, isRentalPrice } from "@/data/productCommerce";
 import { cityPageBySlug } from "@/data/cityPages";
-import { DISPATCH_WORKING_DAYS, INSTALLATION, SHIPPING_ZONES } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, INSTALLATION, SHIPPING_ZONES, type ShippingZone } from "@/data/shippingZones";
 import { GST_PERCENT_LABEL, formatINR, sellPrice } from "@/lib/pricing/gst";
 
 /* ──────────────────────────────────────────────────────────────────────────────────────────────
@@ -80,8 +80,10 @@ export interface CategoryFacts {
   installation: string;
   gst: string;
   localTransit: string;
+  /** "560, 562, 563 or 635" — the local zone's PIN-code prefixes, as checkout routes them. */
+  localPins: string;
   farthestTransit: string;
-  /** "Rest of India" — the farthest zone name without its "Zone N — " prefix. */
+  /** "the rest of India" — the farthest zone name without its "Zone N — " prefix. */
   farthestZone: string;
 }
 
@@ -340,9 +342,9 @@ function deliveryFaq(f: CategoryFacts, noun: string): Faq {
     question: `How long does delivery of a ${noun} take?`,
     answer:
       `Listed models are dispatched within ${f.dispatch} of order confirmation and payment. Transit ` +
-      `is added on top and depends on the delivery zone: ${f.localTransit} within about 50 km of our ` +
-      `facility and ${f.farthestTransit} for ${f.farthestZone}. Custom builds follow the ` +
-      `programme agreed in their quotation.`,
+      `is added on top and depends on the delivery zone: ${f.localTransit} in the local zone ` +
+      `(delivery PIN codes beginning ${f.localPins}) and ${f.farthestTransit} for ${f.farthestZone}. ` +
+      `Custom builds follow the programme agreed in their quotation.`,
   };
 }
 
@@ -1011,10 +1013,33 @@ export function categoryModels(slug: string, products: Product[]): CategoryModel
   return rows.sort((a, b) => rank(a) - rank(b) || (a.priceInr ?? 0) - (b.priceInr ?? 0));
 }
 
+/** "560, 562, 563 or 635". */
+function listOr(items: readonly string[]): string {
+  return items.length <= 1 ? items.join("") : `${items.slice(0, -1).join(", ")} or ${items[items.length - 1]}`;
+}
+
+/* Zone wording, derived from the checkout's own routing (SHIPPING_ZONES), which stays untouched:
+ * its zone names also feed checkout and the Merchant feed's <g:service>.
+ *
+ * The local zone is decided by exact PIN-code prefixes, not by distance, so it is described by
+ * those prefixes. Its configured name and description add an approximate kilometre radius that
+ * does not decide eligibility, so neither is repeated here: the label drops the trailing
+ * parenthetical ("Zone 1 — Local (within ~50 km)" → "Zone 1 — Local") and the areas text lists
+ * the prefixes. Every other zone keeps its configured description. */
+const LOCAL_ZONE = SHIPPING_ZONES[0];
+
+const zoneLabel = (zone: ShippingZone): string => zone.name.replace(/\s*\([^)]*\)\s*$/, "");
+
+function zoneAreas(zone: ShippingZone): string {
+  return zone === LOCAL_ZONE && zone.pincodePrefixes.length > 0
+    ? `Delivery PIN codes beginning ${listOr(zone.pincodePrefixes)}.`
+    : zone.description;
+}
+
 function transportRows(): TransportRow[] {
   return SHIPPING_ZONES.map((zone) => ({
-    zone: zone.name,
-    areas: zone.description,
+    zone: zoneLabel(zone),
+    areas: zoneAreas(zone),
     charge: zone.rate === 0 ? "Free" : formatINR(zone.rate),
     transit: `${zone.transitDaysMin}–${zone.transitDaysMax} days`,
   }));
@@ -1022,7 +1047,7 @@ function transportRows(): TransportRow[] {
 
 function facts(slug: string, categoryName: string, products: Product[]): CategoryFacts {
   const models = categoryModels(slug, products);
-  const local = SHIPPING_ZONES[0];
+  const local = LOCAL_ZONE;
   const farthest = SHIPPING_ZONES[SHIPPING_ZONES.length - 1];
   return {
     categoryName,
@@ -1034,6 +1059,7 @@ function facts(slug: string, categoryName: string, products: Product[]): Categor
     installation: formatINR(INSTALLATION.rate),
     gst: GST_PERCENT_LABEL,
     localTransit: `${local.transitDaysMin}–${local.transitDaysMax} days`,
+    localPins: listOr(local.pincodePrefixes),
     farthestTransit: `${farthest.transitDaysMin}–${farthest.transitDaysMax} days`,
     farthestZone: farthest.name.replace(/^Zone\s*\d+\s*[—-]\s*/, "").replace(/^Rest/, "the rest"),
   };

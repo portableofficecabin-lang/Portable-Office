@@ -15,7 +15,9 @@
  *     category, a guide, a city page, a promotion page, a blog post or a static hub);
  *   • a cross-sell id is missing, or is in the same category it is meant to supplement;
  *   • the empty-category indexing rule stops matching the catalogue, or it gets wired into the
- *     sitemap / category robots tag while the owner's hold is in place (section 8).
+ *     sitemap / category robots tag while the owner's hold is in place (section 8);
+ *   • the delivery table or FAQ stops matching SHIPPING_ZONES, describes a zone by distance
+ *     ("km"), or names the farthest zone by its raw "Zone N — " label (section 9).
  * The HTTP half (200s, rendered HTML, FAQPage == visible FAQ, prices == product pages) is checked
  * against a running build; see the PR description for that run.
  */
@@ -36,7 +38,7 @@ import { getCommerce, isPurchasable, isRentalPrice } from "../src/data/productCo
 import { allChildParams } from "../src/data/productChildPages";
 import { CITY_PAGES, cityPageBySlug, type CityPage } from "../src/data/cityPages";
 import { seoPromotions } from "../src/data/seoPromotions";
-import { INSTALLATION } from "../src/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, INSTALLATION, SHIPPING_ZONES } from "../src/data/shippingZones";
 import { formatINR, sellPrice } from "../src/lib/pricing/gst";
 import { isCategoryIndexable } from "../src/lib/seo/categoryIndexing";
 
@@ -187,6 +189,45 @@ section("8. Owner hold: empty categories keep their index status and sitemap ent
   check(/categories\.map\(\(category\) =>\s*entry\(`\/products\/category\/\$\{category\.slug\}`/.test(sitemapSrc), "app/sitemap.ts lists every category");
   check(!pageSrc.includes("isCategoryIndexable"), "the category page does not derive robots from isCategoryIndexable");
   check(!/noindex\s*:/.test(pageSrc), "the category page sets no noindex");
+}
+
+section("9. Delivery wording comes from SHIPPING_ZONES and describes zones by PIN code, not distance");
+{
+  const local = SHIPPING_ZONES[0];
+  const farthest = SHIPPING_ZONES[SHIPPING_ZONES.length - 1];
+  check(local.pincodePrefixes.length > 0, "the local zone is routed by PIN-code prefixes");
+  for (const [slug, landing] of resolved) {
+    check(landing.transport.length === SHIPPING_ZONES.length, `${slug}: one delivery row per zone`);
+    SHIPPING_ZONES.forEach((zone, i) => {
+      const row = landing.transport[i];
+      check(row.charge === (zone.rate === 0 ? "Free" : formatINR(zone.rate)), `${slug}/${zone.id}: charge "${row.charge}" is the checkout rate`);
+      check(row.transit === `${zone.transitDaysMin}–${zone.transitDaysMax} days`, `${slug}/${zone.id}: transit "${row.transit}" is the checkout estimate`);
+      check(zone.name.startsWith(row.zone), `${slug}/${zone.id}: label "${row.zone}" is the configured zone name`);
+      check(!/\(/.test(row.zone), `${slug}/${zone.id}: label carries no parenthetical note`);
+    });
+    for (const p of local.pincodePrefixes) {
+      check(landing.transport[0].areas.includes(p), `${slug}: local zone row lists PIN prefix ${p}`);
+    }
+    const texts = [
+      ...landing.transport.flatMap((r) => [r.zone, r.areas]),
+      landing.heading,
+      ...landing.intro,
+      ...landing.applications.flatMap((a) => [a.title, a.text]),
+      ...landing.choosing.flatMap((c) => [c.title, c.text]),
+      ...landing.faqs.flatMap((f) => [f.question, f.answer]),
+    ];
+    for (const t of texts) {
+      check(!/\d\s*km\b|kilomet/i.test(t), `${slug}: no distance-based delivery wording in "${t.slice(0, 60)}…"`);
+    }
+    const delivery = landing.faqs.find((f) => /how long does delivery/i.test(f.question));
+    if (delivery) {
+      check(delivery.answer.includes(`${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`), `${slug}: delivery FAQ quotes the configured dispatch time`);
+      check(delivery.answer.includes(`${local.transitDaysMin}–${local.transitDaysMax} days in the local zone`), `${slug}: delivery FAQ quotes the local transit time`);
+      check(local.pincodePrefixes.every((p) => delivery.answer.includes(p)), `${slug}: delivery FAQ lists the local PIN prefixes`);
+      check(delivery.answer.includes(`${farthest.transitDaysMin}–${farthest.transitDaysMax} days for the rest of India`), `${slug}: delivery FAQ names the farthest zone naturally`);
+      check(!/Zone\s*\d/.test(delivery.answer), `${slug}: delivery FAQ has no raw "Zone N" label`);
+    }
+  }
 }
 
 console.log(`\ncategory-landings.test.ts — ${passed} passed, ${failed} failed`);
