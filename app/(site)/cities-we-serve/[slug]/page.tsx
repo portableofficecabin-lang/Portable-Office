@@ -9,7 +9,8 @@
  * MOTION (opt-in per entry via `motion: true`): the page can carry the site's CSS-only motion
  * system — the `.reveal` / `.reveal-scale` / `.reveal-stagger` scroll reveals, `.hover-lift`,
  * `.card-glow`, `.btn-sheen` and `.press` utilities from src/index.css plus the Tailwind
- * `fade-up` keyframe for the hero stack. Still zero client JS: reveals only hide content inside
+ * `fade-up` keyframe for the H1 and tagline (never the hero image: it is the LCP element). Still
+ * zero client JS: reveals only hide content inside
  * `@supports (animation-timeline: view())` and the load animation is `motion-safe:` gated, so
  * crawlers, no-JS visitors, older browsers and reduced-motion users get the fully visible static
  * page. Entries that leave `motion` unset render byte-identical HTML to before this pass.
@@ -133,11 +134,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <h1 className={`text-3xl font-extrabold tracking-tight sm:text-4xl${mc("motion-safe:animate-fade-up")}`}>{page.h1}</h1>
         <p className={`mt-2 text-lg font-medium${mc("motion-safe:animate-fade-up")}`} style={fadeDelay(120)}>{page.tagline}</p>
 
-        {/* hero — the page's own image (also its og:image), LCP-prioritised */}
-        <figure
-          className={`mt-6 overflow-hidden rounded-2xl border bg-muted/30${mc("motion-safe:animate-fade-up group")}`}
-          style={fadeDelay(240)}
-        >
+        {/* hero — the page's own image (also its og:image), LCP-prioritised. Deliberately NOT part
+            of the load fade: it is the page's LCP element, and an element painted at opacity 0 is
+            not an LCP candidate, so fading it in (240 ms delay + 0.6 s) pushed lab LCP back by
+            ~0.5 s on throttled mobile. It keeps the hover zoom, which never touches first paint. */}
+        <figure className={`mt-6 overflow-hidden rounded-2xl border bg-muted/30${mc("group")}`}>
           <Image
             src={page.heroImage.src}
             alt={page.heroImage.alt}
@@ -257,6 +258,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
               loading="lazy"
             />
+            {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
+            {page.interiorImage.caption && (
+              <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
+                {page.interiorImage.caption}
+              </figcaption>
+            )}
           </figure>
         )}
         <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>

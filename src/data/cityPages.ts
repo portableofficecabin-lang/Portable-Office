@@ -64,8 +64,11 @@ export interface CityPage {
    * plate rather than another product shot. Unset on the sibling city pages.
    */
   featureImage?: { src: string; alt: string; width: number; height: number; caption: string };
-  /** Optional second image shown beside the customization section. */
-  interiorImage?: { src: string; alt: string; width: number; height: number };
+  /**
+   * Optional second image shown beside the customization section. `caption` (optional) renders a
+   * visible line under it, e.g. to mark a render as illustrative; unset = no caption, as before.
+   */
+  interiorImage?: { src: string; alt: string; width: number; height: number; caption?: string };
   /** Optional gallery (rendered as a grid after the features section). */
   gallery?: { src: string; alt: string; width: number; height: number }[];
 
@@ -1555,6 +1558,291 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, container depot, office or service partner in Mysore. 20 ft and 40 ft shipping containers are supplied for sale and rental subject to availability; refrigerated, open-top and flat-rack containers are available on request, subject to stock confirmation, and nothing on this page states that they are currently in stock. The specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The photographs on this page are Portable Office Cabin's own product photographs of a representative 20 ft dry shipping container and are not photographs of stock held in Mysore. Container dimensions, volumes and grade descriptions are indicative trade figures, and notes on export suitability, certification, foundations and permissions are general guidance, not legal advice — confirm export requirements with the carrier or operator and permissions with the relevant local authority.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN BAGALKOT — Bagalkot district, North Karnataka: Bagalkot city and
+   * Navanagar, the sugar-mill belt around Mudhol and Jamkhandi, the Ilkal / Lokapur granite and
+   * cement areas, Badami, Hungund, Bilagi and the Almatti reservoir area. The nearest other
+   * container-office page (Tumkur) is ~350 km away, so the page has no "nearby" neighbour in the
+   * cluster (src/data/containerOfficeCluster.ts) — same as Mysore.
+   *
+   * Owner copy of 2026-10-14, mapped onto the fixed template slots with every draft section kept:
+   *   • The draft H1 "Container Offices in Bagalkot – Ready-to-Work Spaces for a District That's
+   *     Always Building" is split at the dash: the keyword part is the H1, the rest the tagline.
+   *   • "Why Choose…" → why: its two numbered H3s (climate, ground) are the two bullets, each
+   *     sub-list folded into its bullet as prose; whyIntro is a one-line lead naming the two.
+   *   • "Applications" → solutions (six H3s); the standard-features list → features, the 10–40 ft
+   *     line → sizesNote; "Optional Customisation" → industries (a short title added per item).
+   *   • "For Sale or Rent" → custom (Buy / Rent as the two items, their benefits as prose).
+   *   • "Built for Long-Term…" → whyUs (a title added per advantage, the closing line as the last
+   *     item). It now sits before the delivery section: the template orders whyUs before areas.
+   *   • "Delivery and Installation" → areasText (the town list) and how (the dispatch sequence;
+   *     the Navanagar / Almatti site-check note moved before placement, where it applies).
+   *   • "Get a Quotation" + the contact block → CTA; "[Phone Number]" → COMPANY phones; the
+   *     "Website:" line is dropped as redundant on-site; "manufacturer and supplier in Bagalkot"
+   *     → "…for Bagalkot" (no local-plant claim, see locationStripText in site-navigation.ts).
+   *   • The draft has NO FAQ section. The FAQs below only restate the draft's own statements (no
+   *     new claims) so the page keeps the FAQPage the template always renders.
+   * "Fabricated at our manufacturing facility" names the factory near Hosur, Tamil Nadu (COMPANY),
+   * so nothing implies a plant in Bagalkot. No ₹ anywhere (file-header rule); no lead-time,
+   * warranty or delivery-date claims (the draft makes none).
+   *
+   * Images: five owner-dropped webp renders of a grey corrugated container office ("public/images/
+   * Container Offices in Bagalkot city page/…", 1344×768, interior 1200×896), copied byte-for-byte
+   * to clean slug names; alt text and the caption describe the actual renders, and the disclaimer
+   * says they are illustrative renders, not Bagalkot installations. The interior render shows
+   * exposed corrugated walls / ceiling and a concrete-look floor, unlike the finished panels and
+   * vinyl / laminate floor in the specification list, so it carries a VISIBLE "illustrative render"
+   * caption (owner review, 2026-10-14), not only the footer disclaimer.
+   *
+   * Almatti: the dam and reservoir sit on the Bagalkot–Vijayapura district border, so the copy
+   * names "project sites around the Almatti reservoir" separately instead of listing Almatti as a
+   * Bagalkot-district town (owner review, 2026-10-14). FAQ questions are worded for Bagalkot so
+   * none repeats another city page's question.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-bagalkot",
+    city: "Bagalkot",
+    listTitle: "Container Office in Bagalkot",
+    metaTitle: "Container Office in Bagalkot | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Bagalkot for sugar mill, cement, irrigation and construction sites. Insulated 10 ft to 40 ft units for sale or rent. Get a quotation.",
+    keywords:
+      "Container Office in Bagalkot, Container Office Bagalkot, Container Office Bagalkote, Portable Office Cabin Bagalkot, Site Office Container Bagalkot, Container Office for Rent Bagalkot, Container Office Navanagar, Container Office Mudhol, Container Office Jamkhandi",
+    geo: { region: "IN-KA", placename: "Bagalkot (Bagalkote), Karnataka, India", position: "16.1850;75.6960", icbm: "16.1850, 75.6960" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-bagalkot/container-office-in-bagalkot-exterior.webp",
+      alt: "Container office in Bagalkot — grey corrugated-steel container office with a lockable side door, a large picture window and glazed double doors with curtains along its side and a tall window in the end wall, standing on a gravel yard among trees",
+      width: 1344,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-bagalkot/container-office-in-bagalkot-aerial-view.webp",
+      alt: "Container office in Bagalkot — top-down aerial view of the grey corrugated roof of the container office, with corner fittings at each end, on a gravel yard edged by trees",
+      width: 1344,
+      height: 768,
+      caption: "Weather-resistant roof, with insulation options for Bagalkot's summer heat.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-bagalkot/container-office-in-bagalkot-interior.webp",
+      alt: "Container office in Bagalkot — illustrative render of an optionally furnished interior with grey-painted corrugated walls and ceiling, LED batten lights, floor-to-ceiling windows, a wooden desk with a monitor and task chair, two lounge chairs, wall shelves and a sideboard on a pale grey floor",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-bagalkot/container-office-in-bagalkot-front-view.webp",
+        alt: "Container office in Bagalkot — straight-on side elevation of the grey container office: a lockable steel door, a large fixed window and glazed double doors with curtains, on a gravel base",
+        width: 1344,
+        height: 768,
+      },
+      {
+        src: "/images/cities/container-office-in-bagalkot/container-office-in-bagalkot-end-view.webp",
+        alt: "Container office in Bagalkot — plain end wall of the charcoal-grey corrugated container office, framed by corner posts with corner castings, on a gravel yard",
+        width: 1344,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Offices in Bagalkot",
+    tagline: "Ready-to-Work Spaces for a District That's Always Building",
+    intro: [
+      "Bagalkot is a district that never really sits still. Between the sugar mills around Mudhol and Jamkhandi, cement plants, the Almatti backwaters, and ongoing irrigation and road projects, there's always a site that needs a proper place for people to sit, plan, coordinate, and manage operations.",
+      "That's where a container office in Bagalkot makes more sense than a temporary tin shed or a rented room several kilometres away.",
+      "Portable Office Cabin supplies container offices across Bagalkot district, including Navanagar, Vidyagiri, Ilkal, Badami, Hungund, Bilagi, and surrounding industrial and construction areas.",
+      "Whether you need a single site office, a partitioned workspace, or a larger modular office setup, we can provide a container office designed around your project requirements.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Bagalkot?",
+    whyIntro:
+      "Two local conditions shape how a site office performs in Bagalkot district: the summer heat and the ground it stands on.",
+    whyBullets: [
+      {
+        title: "Designed for North Karnataka's Hot Climate",
+        text: "Anyone who has spent a summer on a North Karnataka construction site understands the challenge of extreme heat. Temperatures in Bagalkot can exceed 40°C during the peak summer months, and a plain steel cabin can become uncomfortable without proper insulation and ventilation. Our container offices can be equipped with PUF or rockwool insulation for walls and roofing; AC-ready electrical wiring and provisions; interior wall finishes and false ceilings; durable vinyl or laminate flooring; and proper ventilation and insulated roofing systems. These features help maintain a more comfortable working environment during the hot summer months.",
+      },
+      {
+        title: "Suitable for Challenging Ground Conditions",
+        text: "Parts of Bagalkot district have black cotton soil, which expands during the monsoon and contracts during dry weather. Such soil conditions can create challenges for conventional temporary structures. Container offices can be installed on suitable raised foundations, concrete supports, or engineered steel skids, depending on ground conditions. This approach helps provide a stable and level working platform; better protection from ground moisture; reduced dependency on permanent civil construction; and easier relocation when project requirements change.",
+      },
+    ],
+
+    solutionsHeading: "Applications of Container Offices in Bagalkot",
+    solutionsIntro:
+      "Our portable and prefabricated container offices are suitable for various commercial, industrial, and infrastructure applications.",
+    solutions: [
+      {
+        title: "Construction and Infrastructure Site Offices",
+        text: "Ideal for irrigation projects, road construction, building developments, and infrastructure works. Applications include engineers' cabins, contractor offices, project management offices, and meeting rooms.",
+      },
+      {
+        title: "Factory and Industrial Plant Offices",
+        text: "Suitable for industrial facilities, sugar mills, cement plants, and granite processing units around Mudhol, Lokapur, Ilkal, and nearby industrial areas.",
+      },
+      {
+        title: "Real Estate Sales and Marketing Offices",
+        text: "Portable sales offices for residential and commercial developments in Navanagar, along the Vijayapura highway, and across expanding development corridors.",
+      },
+      {
+        title: "Security Cabins and Gate Offices",
+        text: "Compact security cabins, weighbridge offices, toll collection cabins, and entry-control rooms for factories, industrial plants, and quarry sites.",
+      },
+      {
+        title: "Portable Clinics, Laboratories, and Testing Rooms",
+        text: "Enclosed, insulated, and air-conditioned modular spaces for temporary clinics, testing facilities, and project laboratories.",
+      },
+      {
+        title: "Temporary Offices During Renovation",
+        text: "A practical solution for businesses requiring temporary workspace while their existing office or industrial facility undergoes renovation.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Features",
+    featuresIntro:
+      "Our container offices are manufactured using structural steel frameworks and configurable interior and exterior finishes. Standard construction features:",
+    features: [
+      "Structure: Welded mild steel framework.",
+      "Exterior: MS or GI sheet cladding, depending on specification.",
+      "Insulation: PUF or rockwool insulation options.",
+      "Roofing: Weather-resistant insulated roofing system.",
+      "Doors: Lockable steel entry doors.",
+      "Windows: Aluminium sliding windows with optional mosquito mesh.",
+      "Flooring: Vinyl or laminate flooring.",
+      "Electrical: LED lighting, switches, power sockets, and distribution board.",
+      "Interior: Finished wall panels and ceiling system.",
+    ],
+    sizesNote:
+      "Container offices are available in configurations typically ranging from 10 ft to 40 ft, with customised layouts based on occupancy and application.",
+
+    industriesHeading: "Optional Customisation",
+    industriesIntro: "Depending on project requirements, additional features can include:",
+    industries: [
+      { title: "Layout", text: "Single-room or partitioned office layouts." },
+      { title: "Toilet", text: "Attached toilet and washroom facilities." },
+      { title: "Pantry", text: "Pantry counter and storage cabinets." },
+      { title: "Air conditioning", text: "Air-conditioning units." },
+      { title: "Furniture", text: "Office desks, chairs, and meeting furniture." },
+      { title: "Exterior colour", text: "Custom exterior colour combinations." },
+      { title: "Multiple units", text: "Multiple interconnected container units." },
+      { title: "Ground-plus-one", text: "Ground-plus-one modular office arrangements, subject to structural design." },
+    ],
+
+    customHeading: "Container Office for Sale or Rent in Bagalkot",
+    customIntro: "Portable Office Cabin offers both purchase and rental options for container offices in Bagalkot.",
+    customBullets: [
+      {
+        title: "Buy a Container Office",
+        text: "Purchasing is often more economical for long-term projects lasting two years or more. Benefits include one-time capital investment; ownership of a reusable portable asset; customisation based on operational requirements; and relocation and reuse at future project sites.",
+      },
+      {
+        title: "Rent a Container Office",
+        text: "Rental options are suitable for short-term requirements, including construction projects, temporary sales offices, plant expansions, and renovation work. Benefits include lower initial capital commitment; flexible project-based usage; reduced need to purchase temporary infrastructure; and practical solutions for time-bound operations.",
+      },
+    ],
+    customOutro:
+      "Our team can provide quotations for both options so you can compare the costs based on your project duration.",
+
+    whyUsHeading: "Built for Long-Term Industrial and Site Use",
+    whyUsIntro:
+      "Bagalkot's climate presents several environmental challenges, including strong sunlight, dust, monsoon humidity, and seasonal rainfall. Our container offices can be manufactured with protective surface treatments, appropriate exterior coatings, insulated roofing, and weather-resistant wall systems. Key advantages include:",
+    whyUsBullets: [
+      { title: "Structure", text: "Durable structural steel construction." },
+      { title: "Paint system", text: "Protective exterior paint systems." },
+      { title: "Insulation", text: "Insulated wall and roof options." },
+      { title: "Finish", text: "Weather-resistant finishing." },
+      { title: "Maintenance", text: "Low-maintenance modular construction." },
+      { title: "Reuse", text: "Relocation and reuse across multiple project sites." },
+      {
+        title: "Service life",
+        text: "With suitable maintenance and handling, a well-built container office can continue serving beyond the duration of its original project.",
+      },
+    ],
+
+    areasHeading: "Container Office Service Areas in Bagalkot District",
+    areasText:
+      "We serve locations across Bagalkot district, including Bagalkot City and Navanagar, Vidyagiri, Mudhol, Jamkhandi, Ilkal, Badami, Hungund, Bilagi and Lokapur. We also serve project sites around the Almatti reservoir, which lies on the Bagalkot–Vijayapura district border.",
+
+    howHeading: "Container Office Delivery and Installation in Bagalkot",
+    howSteps: [
+      {
+        title: "Fabrication and transport",
+        text: "Container offices are fabricated at our manufacturing facility near Hosur, Tamil Nadu, and transported to the customer's project location.",
+      },
+      {
+        title: "Coordination before dispatch",
+        text: "Before dispatch, we coordinate site-access requirements, transport arrangements, unloading provisions, and installation readiness.",
+      },
+      {
+        title: "Site-specific checks",
+        text: "For projects located within planned sectors of Navanagar or near the Almatti reservoir area, access and site-specific requirements should be checked before dispatch.",
+      },
+      {
+        title: "Placement and start-up",
+        text: "Standard container offices can often be made operational shortly after placement, provided the foundation, unloading equipment, and electrical connections are ready.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a container office stay comfortable in Bagalkot's summer heat?",
+        answer:
+          "Temperatures in Bagalkot can exceed 40°C during the peak summer months, so a plain steel cabin needs proper insulation and ventilation. Our container offices can be equipped with PUF or rockwool insulation for walls and roofing, AC-ready electrical wiring, false ceilings, insulated roofing and proper ventilation.",
+      },
+      {
+        question: "Can a container office be installed on black cotton soil in Bagalkot district?",
+        answer:
+          "Container offices can be installed on suitable raised foundations, concrete supports or engineered steel skids, depending on ground conditions. This provides a stable and level working platform and better protection from ground moisture, with less dependency on permanent civil construction.",
+      },
+      {
+        question: "Which container office sizes can be supplied to Bagalkot?",
+        answer:
+          "Container offices are available in configurations typically ranging from 10 ft to 40 ft, with customised layouts based on occupancy and application. Multiple interconnected units and ground-plus-one arrangements, subject to structural design, can also be provided.",
+      },
+      {
+        question: "Should I buy or rent a container office in Bagalkot?",
+        answer:
+          "Purchasing is often more economical for long-term projects lasting two years or more. Renting suits short-term requirements such as construction projects, temporary sales offices, plant expansions and renovation work. Our team can quote both options so you can compare the costs for your project duration.",
+      },
+      {
+        question: "Which places in Bagalkot district do you deliver to?",
+        answer:
+          "We serve Bagalkot City and Navanagar, Vidyagiri, Mudhol, Jamkhandi, Ilkal, Badami, Hungund, Bilagi and Lokapur, as well as project sites around the Almatti reservoir on the Bagalkot–Vijayapura district border. Site access, transport, unloading and installation readiness are coordinated before dispatch.",
+      },
+      {
+        question: "What details do you need to quote a container office for Bagalkot?",
+        answer:
+          "Share the project location in Bagalkot district, the required office size or number of occupants, your preferred internal layout and facilities, whether you want to buy or rent, and the expected delivery date.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Bagalkot",
+    ctaText: `Looking for a container office manufacturer and supplier for Bagalkot? Portable Office Cabin provides customised portable container offices for construction companies, industrial plants, infrastructure contractors, commercial developments, and other project requirements. Share your project location in Bagalkot district, required office size or number of occupants, preferred internal layout and facilities, purchase or rental requirement, and expected delivery date, and we can prepare a suitable configuration and quotation based on your specifications and project schedule. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Service coverage: Bagalkot, Karnataka, and surrounding industrial and infrastructure project locations. Request a quotation today for a customised container office in Bagalkot.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Bagalkot district; transport, unloading and installation are arranged for each project, and rental is subject to availability and the agreed rental terms. The images on this page are illustrative renders of Portable Office Cabin's standard container office design, including an optionally furnished interior, and are not photographs of installations in Bagalkot; the doors, windows, wall, ceiling and floor finishes supplied follow the approved specification and quotation. Towns, industries, roads and the Almatti reservoir area are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any sugar mill, cement plant, project authority or facility operator in the district, and entry to any such site is subject to its own permissions. Notes on foundations and ground conditions are general guidance, not engineering advice; the base for a specific site is confirmed in the approved quotation and drawing.",
   },
   {
     slug: "container-office-in-doddaballapura",
