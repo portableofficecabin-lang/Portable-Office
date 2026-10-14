@@ -227,7 +227,8 @@ function checkJsonLd(html: string, p: CityPage, pageUrl: string): { faq: boolean
     }
     if (node["@type"] === "BreadcrumbList" && Array.isArray(node.itemListElement)) {
       const last = node.itemListElement[node.itemListElement.length - 1];
-      breadcrumb = node.itemListElement.length === 3 && last?.item === pageUrl && squash(last?.name ?? "") === squash(p.metaTitle);
+      // The last crumb is named by the H1 — the text of the visible trail — not the meta title (2026-10-14).
+      breadcrumb = node.itemListElement.length === 3 && last?.item === pageUrl && squash(last?.name ?? "") === squash(p.h1);
       if (!breadcrumb) notes.push(`BreadcrumbList last item: ${last?.item} (${last?.name})`);
     }
   }

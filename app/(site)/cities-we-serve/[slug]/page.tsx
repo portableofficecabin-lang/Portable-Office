@@ -22,6 +22,7 @@ import { Phone } from "lucide-react";
 
 import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
 import { ContainerOfficeNearbyBlock } from "@/components/locations/ContainerOfficeLocations";
+import { ShippingContainerNearbyBlock } from "@/components/locations/CityDirectoryGroups";
 import { Layout } from "@/components/layout/Layout";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -115,7 +116,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         data={generateBreadcrumbSchema([
           { name: "Home", url: "https://portableofficecabin.com" },
           { name: "Cities We Serve", url: "https://portableofficecabin.com/cities-we-serve" },
-          { name: page.metaTitle, url: `https://portableofficecabin.com/cities-we-serve/${page.slug}` },
+          /* page.h1 — the same text as the visible last crumb below. This used page.metaTitle, so on 14
+             pages the markup named the page "… | Portable Office Cabin" or "… – Sizes, Price & Delivery"
+             while the trail a visitor sees said only the H1. */
+          { name: page.h1, url: `https://portableofficecabin.com/cities-we-serve/${page.slug}` },
         ])}
       />
       <JsonLd data={generateFAQSchema(page.faqs)} />
@@ -309,10 +313,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             >
               {page.ctaButtonLabel ?? "Get a Free Quotation"}
             </Link>
-            {/* Opt-in direct-contact buttons (`ctaContactButtons`). Numbers come from COMPANY via
-                site-navigation, the same source as the header and footer. The WhatsApp fill is the
-                header's contrast-checked #0B7A43 (white text 5.4:1), not the 2.0:1 brand green. */}
-            {page.ctaContactButtons && (
+            {/* Direct-contact buttons (`ctaContactButtons`). On by default since 2026-10-14 (they were
+                opt-in and only 6 of 27 pages had them); an entry can still set `false`. Numbers come
+                from COMPANY via site-navigation, the same source as the header and footer. The WhatsApp
+                fill is the header's contrast-checked #0B7A43 (white text 5.4:1), not the 2.0:1 brand green. */}
+            {(page.ctaContactButtons ?? true) && (
               <>
                 <a
                   href={`tel:${primaryPhone.e164}`}
@@ -369,6 +374,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             pillar, across to genuinely nearby location pages, out to the directory. Renders only
             for the container-office location pages; every other page is unchanged. */}
         <ContainerOfficeNearbyBlock
+          slug={page.slug}
+          existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
+          motion={page.motion}
+        />
+
+        {/* Shipping-container pages (src/data/cityDirectory.ts): the other shipping-container pages in
+            the same state and the directory section. These pages had the fewest inbound links of all
+            location pages (3–4 each). Renders nothing on every other page. */}
+        <ShippingContainerNearbyBlock
           slug={page.slug}
           existingHrefs={(page.relatedLinks ?? []).map((l) => l.href)}
           motion={page.motion}
