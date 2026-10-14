@@ -29,7 +29,7 @@ import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 import { JsonLd } from "@/components/JsonLd";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generatePromotionStructuredData } from "@/lib/seo/structured-data";
 
 export const revalidate = 3600; // 1 hour, same as the cities index
 
@@ -124,6 +124,23 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         ])}
       />
       <JsonLd data={generateFAQSchema(page.faqs)} />
+      {/* Opt-in Service JSON-LD (`serviceJsonLd`): the same generator the promotion pages use, so the
+          provider is pinned to the factory and the page's own city goes on areaServed. No offers —
+          these pages quote, they do not sell. Pages without the field emit nothing new. */}
+      {page.serviceJsonLd && (
+        <JsonLd
+          data={generatePromotionStructuredData({
+            h1: page.h1,
+            metaDescription: page.metaDescription,
+            canonicalUrl: `https://portableofficecabin.com/cities-we-serve/${page.slug}`,
+            imageUrl: page.heroImage.src,
+            location: page.city,
+            geoPlacename: page.geo.placename,
+            geoPosition: page.geo.position,
+            keyword: page.serviceJsonLd.serviceType,
+          })}
+        />
+      )}
 
       <div className="container mx-auto max-w-4xl px-4 py-12">
         {/* breadcrumb (visible) */}
@@ -152,6 +169,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             sizes="(max-width: 896px) 100vw, 896px"
             className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
           />
+          {/* Optional visible caption, e.g. marking a render as a design option. Unset = no element. */}
+          {page.heroImage.caption && (
+            <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
+              {page.heroImage.caption}
+            </figcaption>
+          )}
         </figure>
 
         {page.intro.map((text) => (

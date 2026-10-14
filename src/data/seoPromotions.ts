@@ -348,6 +348,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-jigani",
       "container-office-in-bommasandra",
       "container-office-in-sarjapur",
+      "container-office-in-davanagere",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
       "container-office-in-belagavi",
