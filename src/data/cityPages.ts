@@ -54,9 +54,18 @@ export interface CityPage {
    * prefers-reduced-motion). Unset = the static page every earlier entry renders, byte for byte.
    */
   motion?: boolean;
+  /**
+   * Optional Service JSON-LD for the page, built by the promotion pages' generator: provider = our
+   * factory (never the target city), areaServed = this page's city and geo, no offers. Unset = no
+   * Service block, as before.
+   */
+  serviceJsonLd?: { serviceType: string };
 
-  /** Hero image (also the page's og:image). Root-relative path under /public. */
-  heroImage: { src: string; alt: string; width: number; height: number };
+  /**
+   * Hero image (also the page's og:image). Root-relative path under /public. `caption` (optional)
+   * renders a visible line under it, e.g. to mark a render as a design option; unset = no caption.
+   */
+  heroImage: { src: string; alt: string; width: number; height: number; caption?: string };
   /**
    * Optional full-width FEATURE BAND rendered between the "why" bullets and the solutions
    * list — a deliberate visual break in the longest stretch of text on the page, not a second
@@ -5885,7 +5894,10 @@ export const CITY_PAGES: CityPage[] = [
    *     areasText; the five process steps → how.
    *   • "Why Choose Portable Office Cabin" → whyUs; "Get a Quotation" → ctaText.
    * The draft has no FAQ section, but the template always renders one (FAQPage JSON-LD), so the
-   * FAQs below are built from the draft's own sentences — no new claims, no lead time, no ₹.
+   * FAQs below are built from the draft's own sentences — no new claims, no lead time, no ₹. Each
+   * answer opens with the direct answer (answer-engine extraction); review of 2026-10-14 dropped
+   * "How long does delivery take?" (no figure to give) and folded its sentence into the delivery-
+   * areas answer.
    * "[Phone Number]" → COMPANY phones; the "Website:" line is dropped (redundant on-site);
    * "Manufacturing Base: Bangalore / Hosur" → factory near Hosur, office in Bengaluru, and
    * "manufactures and supplies … across Davanagere" → "manufactures … and supplies them across"
@@ -5893,11 +5905,14 @@ export const CITY_PAGES: CityPage[] = [
    *
    * Images: five owner-dropped webp files ("public/images/Container Offices in Davanagere city
    * page/…/cabin (1–4).webp" 1344×768 and "cabin.webp" 1200×896), copied byte-for-byte to clean
-   * slug names. Alt text and the caption describe the ACTUAL renders — a bright orange
-   * corrugated-steel container office with full-height glazing on a paved forecourt — and the
-   * disclaimer says they are design renders, not Davanagere installations.
+   * slug names. Alt text describes the ACTUAL renders — a bright orange corrugated-steel container
+   * office on a paved forecourt. The renders show full-height glazing and glazed doors, which are a
+   * DESIGN OPTION: the draft's standard specification is aluminium sliding windows and a lockable
+   * steel door. So the hero carries a visible caption saying so, the alt text says "design render"
+   * and "optional glazed front", and the disclaimer repeats it.
    *
-   * Opts into the CSS-only motion pass (`motion: true`) — see the interface.
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`)
+   * — see the interface.
    * ────────────────────────────────────────────────────────────────────────────────────── */
   {
     slug: "container-office-in-davanagere",
@@ -5905,41 +5920,44 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Container Office in Davanagere",
     metaTitle: "Container Office in Davanagere | Portable Office Cabin",
     metaDescription:
-      "Container offices in Davanagere for factories, colleges, hospitals, logistics and construction sites. Insulated, customisable units to buy or rent. Get a quote.",
+      "Container offices in Davanagere for factories, colleges, hospitals, logistics and construction sites. Insulated, custom units to buy or rent. Get a quote.",
     keywords:
       "Container Office in Davanagere, Container Office Davanagere, Container Offices in Davanagere, Portable Office Cabin Davanagere, Portable Cabin Davanagere, Site Office Davanagere, Container Office Harihar, Container Office for Sale Davanagere, Container Office on Rent Davanagere, Prefabricated Office Cabin Davanagere",
     geo: { region: "IN-KA", placename: "Davanagere, Karnataka, India", position: "14.4644;75.9218", icbm: "14.4644, 75.9218" },
     motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
 
     heroImage: {
       src: "/images/cities/container-office-in-davanagere/container-office-in-davanagere-exterior.webp",
-      alt: "Container office in Davanagere — bright orange corrugated-steel container office seen from the corner, with a narrow glazed side door, a wide picture window, a full-height glass panel, a steel entrance door and a glazed end wall, on a paved forecourt with trees behind",
+      alt: "Container office in Davanagere: design render of an orange corrugated-steel unit with an optional glazed front and a steel entrance door",
       width: 1344,
       height: 768,
+      caption:
+        "Design render. The full-height glazing and glazed doors shown are a design option; the standard specification is aluminium sliding windows and a lockable steel door.",
     },
     featureImage: {
       src: "/images/cities/container-office-in-davanagere/container-office-in-davanagere-aerial-view.webp",
-      alt: "Container office in Davanagere — high-angle view of the orange container office showing its ribbed steel roof, glazed side door, picture window and steel entrance door, standing on a paved forecourt beside trees and a hedge",
+      alt: "Design render from above: the orange container office's ribbed steel roof and optional glazed front on a paved forecourt",
       width: 1344,
       height: 768,
       caption: "Finished before dispatch — less work left for your site.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-davanagere/container-office-in-davanagere-interior.webp",
-      alt: "Container office in Davanagere — optionally furnished interior: wood-panelled walls with orange steel framing, a white ceiling with recessed lights, large glazed windows, an executive desk with a monitor and laptop, leather chairs, a storage wall with bookshelves and wood-finish flooring",
+      alt: "Design render of an optionally furnished interior: wood-panelled walls, an executive desk, a storage wall and wood-finish flooring",
       width: 1200,
       height: 896,
     },
     gallery: [
       {
         src: "/images/cities/container-office-in-davanagere/container-office-in-davanagere-front-view.webp",
-        alt: "Container office in Davanagere — straight-on front elevation of the orange container office: a narrow glazed door, a wide picture window, a full-height glass panel and a steel entrance door along the corrugated side wall",
+        alt: "Design render, front elevation: optional full-height glazing and a glazed side door beside the steel entrance door",
         width: 1344,
         height: 768,
       },
       {
         src: "/images/cities/container-office-in-davanagere/container-office-in-davanagere-end-view.webp",
-        alt: "Container office in Davanagere — blank end and long rear side of the orange container office, showing the corrugated steel walls, corner castings and the base rail it stands on",
+        alt: "Design render of the blank end wall and corrugated rear side, with corner castings and the base rail",
         width: 1344,
         height: 768,
       },
@@ -6145,57 +6163,52 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can I buy or rent a container office in Davanagere?",
         answer:
-          "Yes. Portable Office Cabin offers container office purchase and rental options based on project duration, specifications and unit availability. Purchasing suits long-term industrial operations, institutions and contractors who regularly require workspace at different project locations; renting suits temporary or seasonal requirements and can help reduce initial capital expenditure. Our team can provide purchase and rental quotations so you can compare the costs based on project duration and requirements.",
+          "Yes, both, subject to unit availability. Buying suits long-term industrial operations, institutions and contractors who regularly need workspace at different project locations; renting suits temporary or seasonal requirements and can help reduce initial capital expenditure. Our team can quote both so you can compare the costs for your project duration.",
       },
       {
         question: "Which areas around Davanagere do you deliver container offices to?",
         answer:
-          "We serve Davanagere city and surrounding areas, including Harihar, Honnali, Channagiri, Jagalur, Karur Industrial Area, Lokikere, Shamanur, Vidyanagar, the NH-48 industrial and logistics corridor, Shivamogga Road project locations, and surrounding industrial estates and infrastructure sites.",
+          "Davanagere city and district, including Harihar, Honnali, Channagiri, Jagalur, Karur Industrial Area, Lokikere, Shamanur, Vidyanagar, the NH-48 industrial and logistics corridor, Shivamogga Road project locations, and surrounding industrial estates and infrastructure sites. Delivery schedules depend on manufacturing requirements, unit availability, transportation distance, road conditions and site readiness.",
       },
       {
-        question: "What container office sizes are available?",
+        question: "What container office sizes are available in Davanagere?",
         answer:
-          "Standard sizes are 10 ft × 10 ft (small site office or supervisor cabin), 12 ft × 10 ft (compact administrative workspace), 16 ft × 10 ft (engineers' office or project cabin), 20 ft × 8 ft (standard site office or dispatch room), 20 ft × 10 ft (furnished office or meeting space), 30 ft × 10 ft (partitioned office or larger workspace) and 40 ft × 10 ft (multi-room project office or administrative unit). Custom dimensions and office layouts can also be manufactured based on occupancy requirements, transportation feasibility and approved project specifications.",
+          "Seven standard sizes from 10 ft × 10 ft to 40 ft × 10 ft: 10 ft × 10 ft (small site office or supervisor cabin), 12 ft × 10 ft (compact administrative workspace), 16 ft × 10 ft (engineers' office or project cabin), 20 ft × 8 ft (standard site office or dispatch room), 20 ft × 10 ft (furnished office or meeting space), 30 ft × 10 ft (partitioned office or larger workspace) and 40 ft × 10 ft (multi-room project office or administrative unit). Custom dimensions and layouts can also be manufactured, based on occupancy, transportation feasibility and the approved specification.",
       },
       {
         question: "Will a container office stay comfortable in Davanagere's summer heat and monsoon rain?",
         answer:
-          "Davanagere experiences warm weather, particularly during April and May, along with seasonal monsoon rainfall. Container offices can be manufactured with PUF or glass wool insulation for walls and roofing, weather-resistant exterior sheet cladding, properly sealed exterior joints, suitable roof drainage arrangements and air-conditioning provisions, which help create a more comfortable working environment for employees throughout the year.",
+          "It can when it is specified for the climate. Davanagere is warm, particularly in April and May, and has seasonal monsoon rainfall, so container offices can be manufactured with PUF or glass wool insulation for walls and roofing, weather-resistant exterior cladding, properly sealed joints, suitable roof drainage and air-conditioning provisions, which help create a more comfortable working environment throughout the year.",
       },
       {
         question: "What foundation does a container office need?",
         answer:
-          "Container offices can be positioned on appropriately designed concrete foundations or structural steel skids, depending on the site's ground conditions and installation requirements.",
+          "A suitably prepared base: container offices can be positioned on appropriately designed concrete foundations or structural steel skids, depending on the site's ground conditions and installation requirements.",
       },
       {
         question: "Can a container office be placed inside a factory yard, college campus or hospital compound?",
         answer:
-          "It can, subject to site access. A portable container office provides a completed workspace that can be delivered and positioned with suitable lifting equipment. For campuses, hospitals, crowded industrial premises or narrow approach roads, truck and trailer entry clearance, unloading and crane operating space, foundation readiness, overhead electrical cables, site electrical supply and local access restrictions should be verified before dispatch.",
+          "Yes, subject to site access. A container office arrives as a completed workspace and is positioned with suitable lifting equipment. For campuses, hospitals, crowded industrial premises or narrow approach roads, check truck and trailer entry clearance, unloading and crane operating space, foundation readiness, overhead electrical cables, site electrical supply and local access restrictions before dispatch.",
       },
       {
         question: "Can a container office be used for patient care or clinical services?",
         answer:
-          "Container offices can serve hospitals and diagnostic centres as administrative offices, patient registration cabins, medical records offices, staff coordination rooms, temporary consultation rooms and support facilities during expansion. Any use involving patient care, diagnostic testing or clinical services must be designed and approved according to applicable healthcare, hygiene, accessibility, ventilation and safety requirements.",
+          "Only where it is designed and approved for that use: any use involving patient care, diagnostic testing or clinical services must meet applicable healthcare, hygiene, accessibility, ventilation and safety requirements. Hospitals and diagnostic centres also use container offices for administrative offices, patient registration, medical records, staff coordination and support facilities during expansion.",
       },
       {
         question: "Can a container office include AC, a toilet, a pantry or furniture?",
         answer:
-          "Yes, depending on project requirements: split air-conditioning units, an attached toilet with wash basin, flush system and exhaust provisions, a pantry counter and storage cabinets, office desks, workstations and chairs, manager cabins and internal partitions, reception and waiting areas, and conference and meeting rooms can all be included.",
+          "Yes, as options chosen for the project: split air-conditioning units, an attached toilet with wash basin, flush system and exhaust provisions, a pantry counter and storage cabinets, office desks, workstations and chairs, manager cabins and internal partitions, reception and waiting areas, and conference and meeting rooms.",
       },
       {
         question: "Can a container office be reused at another project site?",
         answer:
-          "Yes. With appropriate installation, handling, inspection and maintenance, a well-manufactured container office can be reused across multiple projects, subject to its structural condition and relocation requirements. Regular cleaning, roof drainage inspection and timely repair of damaged protective coatings can help extend its service life.",
-      },
-      {
-        question: "How long does delivery to Davanagere take?",
-        answer:
-          "Delivery schedules depend on manufacturing requirements, unit availability, transportation distance, road conditions and site readiness. Share your project location and expected delivery schedule when you request a quotation.",
+          "Yes. With appropriate installation, handling, inspection and maintenance, a well-manufactured container office can be reused across multiple projects, subject to its structural condition and relocation requirements. Regular cleaning, roof drainage inspection and timely repair of damaged protective coatings help extend its service life.",
       },
       {
         question: "What details should I share to get a quotation?",
         answer:
-          "Share the project location in Davanagere district, the required container office dimensions, the number of occupants or workstations, your preferred internal layout, additional facilities such as AC, attached toilet, pantry or furniture, whether you want to purchase or rent, and the expected delivery schedule. Our team can then recommend a suitable container office configuration and prepare a quotation based on your project specifications.",
+          "Seven details: the project location in Davanagere district, the required dimensions, the number of occupants or workstations, the preferred internal layout, any additional facilities such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and the expected delivery schedule. Our team then recommends a suitable configuration and prepares a quotation.",
       },
     ],
 
@@ -6217,7 +6230,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, depot or service partner in Davanagere; delivery, unloading and installation are arranged for each project and delivery dates are not guaranteed. Rental units are subject to availability. The images on this page are design renders of a Portable Office Cabin container office, including an optionally furnished interior, and are not photographs of installations in Davanagere; glazing, doors, colours and finishes for a specific order are confirmed in the approved quotation and drawing. Notes on foundations, lifting, site access, healthcare use and approvals are general guidance, not legal or regulatory advice.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, depot or service partner in Davanagere; delivery, unloading and installation are arranged for each project and delivery dates are not guaranteed. Rental units are subject to availability. The images on this page are design renders of a Portable Office Cabin container office, not photographs of installations in Davanagere: the full-height glazing and glazed doors they show are a design option (the standard specification is aluminium sliding windows and a lockable steel door) and the interior is optionally furnished; glazing, doors, colours and finishes for a specific order are confirmed in the approved quotation and drawing. Notes on foundations, lifting, site access, healthcare use and approvals are general guidance, not legal or regulatory advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

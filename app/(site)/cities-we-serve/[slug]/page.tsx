@@ -9,7 +9,8 @@
  * MOTION (opt-in per entry via `motion: true`): the page can carry the site's CSS-only motion
  * system — the `.reveal` / `.reveal-scale` / `.reveal-stagger` scroll reveals, `.hover-lift`,
  * `.card-glow`, `.btn-sheen` and `.press` utilities from src/index.css plus the Tailwind
- * `fade-up` keyframe for the hero stack. Still zero client JS: reveals only hide content inside
+ * `fade-up` keyframe for the H1 and tagline (never the hero image: it is the LCP element). Still
+ * zero client JS: reveals only hide content inside
  * `@supports (animation-timeline: view())` and the load animation is `motion-safe:` gated, so
  * crawlers, no-JS visitors, older browsers and reduced-motion users get the fully visible static
  * page. Entries that leave `motion` unset render byte-identical HTML to before this pass.
@@ -27,7 +28,7 @@ import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 import { JsonLd } from "@/components/JsonLd";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generatePromotionStructuredData } from "@/lib/seo/structured-data";
 
 export const revalidate = 3600; // 1 hour, same as the cities index
 
@@ -119,6 +120,23 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         ])}
       />
       <JsonLd data={generateFAQSchema(page.faqs)} />
+      {/* Opt-in Service JSON-LD (`serviceJsonLd`): the same generator the promotion pages use, so the
+          provider is pinned to the factory and the page's own city goes on areaServed. No offers —
+          these pages quote, they do not sell. Pages without the field emit nothing new. */}
+      {page.serviceJsonLd && (
+        <JsonLd
+          data={generatePromotionStructuredData({
+            h1: page.h1,
+            metaDescription: page.metaDescription,
+            canonicalUrl: `https://portableofficecabin.com/cities-we-serve/${page.slug}`,
+            imageUrl: page.heroImage.src,
+            location: page.city,
+            geoPlacename: page.geo.placename,
+            geoPosition: page.geo.position,
+            keyword: page.serviceJsonLd.serviceType,
+          })}
+        />
+      )}
 
       <div className="container mx-auto max-w-4xl px-4 py-12">
         {/* breadcrumb (visible) */}
@@ -133,11 +151,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <h1 className={`text-3xl font-extrabold tracking-tight sm:text-4xl${mc("motion-safe:animate-fade-up")}`}>{page.h1}</h1>
         <p className={`mt-2 text-lg font-medium${mc("motion-safe:animate-fade-up")}`} style={fadeDelay(120)}>{page.tagline}</p>
 
-        {/* hero — the page's own image (also its og:image), LCP-prioritised */}
-        <figure
-          className={`mt-6 overflow-hidden rounded-2xl border bg-muted/30${mc("motion-safe:animate-fade-up group")}`}
-          style={fadeDelay(240)}
-        >
+        {/* hero — the page's own image (also its og:image), LCP-prioritised. Deliberately NOT part
+            of the load fade: it is the page's LCP element, and an element painted at opacity 0 is
+            not an LCP candidate, so fading it in (240 ms delay + 0.6 s) pushed lab LCP back by
+            ~0.5 s on throttled mobile. It keeps the hover zoom, which never touches first paint. */}
+        <figure className={`mt-6 overflow-hidden rounded-2xl border bg-muted/30${mc("group")}`}>
           <Image
             src={page.heroImage.src}
             alt={page.heroImage.alt}
@@ -147,6 +165,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             sizes="(max-width: 896px) 100vw, 896px"
             className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
           />
+          {/* Optional visible caption, e.g. marking a render as a design option. Unset = no element. */}
+          {page.heroImage.caption && (
+            <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
+              {page.heroImage.caption}
+            </figcaption>
+          )}
         </figure>
 
         {page.intro.map((text) => (

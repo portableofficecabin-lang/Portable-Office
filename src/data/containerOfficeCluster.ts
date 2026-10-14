@@ -282,8 +282,8 @@ export function hubLinksFor(slugs: string[]): { name: string; href: string }[] {
 }
 
 /**
- * Pillar-link wording for a location page's "nearby" block. Rotates through four phrasings by the
- * page's position in the cluster so eighteen pages do not repeat one exact-match anchor.
+ * Pillar-link wording for a location page's "nearby" block. Rotates through four phrasings so the
+ * pages do not repeat one exact-match anchor.
  */
 const PILLAR_ANCHORS = [
   "the full container office range, with sizes and specifications",
@@ -292,7 +292,33 @@ const PILLAR_ANCHORS = [
   "container office layouts, sizes and specifications",
 ];
 
+/* The eighteen original pages keep the phrasing their list position gave them when the rotation was
+   introduced (Oct 2026). The rotation used to follow the live array index, so every page inserted
+   mid-list silently re-worded the pillar link on every page after it. Pages added since take a
+   phrasing derived from their own slug, which no later insertion can move. */
+const PILLAR_ANCHOR_ORDER = [
+  "container-office-in-jigani",
+  "container-office-in-bommasandra",
+  "container-office-in-sarjapur",
+  "container-office-in-hoskote",
+  "container-office-in-doddaballapura",
+  "container-office-in-tumkur",
+  "container-office-in-mysore",
+  "container-office-in-sipcot-hosur",
+  "container-office-near-tata-electronics-hosur",
+  "container-office-in-sipcot-shoolagiri",
+  "container-office-in-sipcot-krishnagiri",
+  "container-office-in-mettur-salem",
+  "container-office-in-sipcot-coimbatore",
+  "container-office-in-chennai",
+  "container-office-in-athipattu",
+  "container-office-in-kalpakkam",
+  "portable-container-office-in-thoothukudi",
+  "container-office-in-tirunelveli",
+];
+
 export function pillarAnchorFor(slug: string): string {
-  const i = CONTAINER_OFFICE_LOCATIONS.findIndex((l) => l.slug === slug);
-  return PILLAR_ANCHORS[(i < 0 ? 0 : i) % PILLAR_ANCHORS.length];
+  const pinned = PILLAR_ANCHOR_ORDER.indexOf(slug);
+  const i = pinned >= 0 ? pinned : [...slug].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+  return PILLAR_ANCHORS[i % PILLAR_ANCHORS.length];
 }
