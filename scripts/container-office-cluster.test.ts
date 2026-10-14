@@ -9,7 +9,8 @@
  *   • a container-office page is added to (or removed from) cityPages.ts without a cluster entry, or
  *     a cluster entry points at a page that does not exist;
  *   • a neighbour link is unknown, self-referencing, or not genuinely nearby (> 130 km apart by the
- *     pages' own geo positions), or a page other than Mysore has no neighbour;
+ *     pages' own geo positions), or a page outside ISOLATED (no cluster page within 130 km) has
+ *     no neighbour;
  *   • a cluster href is not a clean root-relative path (query strings such as ?srsltid, trailing
  *     slashes, or fragments other than the directory anchor);
  *   • a state hub or the Bangalore landing page stops reaching its location pages, or loses the
@@ -45,7 +46,7 @@ const clusterSlugs = new Set(CONTAINER_OFFICE_LOCATIONS.map((l) => l.slug));
 const coPageSlugs = CITY_PAGES.filter((p) => /container-office/.test(p.slug)).map((p) => p.slug);
 
 /* ── membership ─────────────────────────────────────────────────────────────────────────── */
-check(CONTAINER_OFFICE_LOCATIONS.length === 18, `cluster has 18 locations (has ${CONTAINER_OFFICE_LOCATIONS.length})`);
+check(CONTAINER_OFFICE_LOCATIONS.length >= 18, `cluster has at least 18 locations (has ${CONTAINER_OFFICE_LOCATIONS.length})`);
 check(clusterSlugs.size === CONTAINER_OFFICE_LOCATIONS.length, "cluster slugs are unique");
 for (const slug of coPageSlugs) check(clusterSlugs.has(slug), `cityPages container-office page "${slug}" is in the cluster`);
 for (const loc of CONTAINER_OFFICE_LOCATIONS) {
@@ -65,8 +66,19 @@ const km = (a: [number, number], b: [number, number]) => {
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * rad) * Math.cos(b[0] * rad) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
 };
+/* Pages with no other cluster page within 130 km: no forced "nearby" link (Mysore, and the North and
+   Central Karnataka pages Belagavi, Bagalkot, Bidar, Davanagere and Haveri). Davanagere and Haveri are
+   ~67 km apart: they are linked to each other in a follow-up once both pages are live. */
+const ISOLATED = new Set([
+  "container-office-in-mysore",
+  "container-office-in-belagavi",
+  "container-office-in-bagalkot",
+  "container-office-in-bidar",
+  "container-office-in-davanagere",
+  "container-office-in-haveri",
+]);
 for (const loc of CONTAINER_OFFICE_LOCATIONS) {
-  if (loc.slug !== "container-office-in-mysore") check(loc.neighbours.length > 0, `"${loc.slug}" has at least one neighbour`);
+  if (!ISOLATED.has(loc.slug)) check(loc.neighbours.length > 0, `"${loc.slug}" has at least one neighbour`);
   check(new Set(loc.neighbours).size === loc.neighbours.length, `"${loc.slug}" lists each neighbour once`);
   for (const n of loc.neighbours) {
     check(n !== loc.slug, `"${loc.slug}" is not its own neighbour`);
@@ -78,7 +90,7 @@ for (const loc of CONTAINER_OFFICE_LOCATIONS) {
   }
 }
 for (const loc of CONTAINER_OFFICE_LOCATIONS) {
-  if (loc.slug === "container-office-in-mysore") continue;
+  if (ISOLATED.has(loc.slug)) continue;
   check(CONTAINER_OFFICE_LOCATIONS.some((o) => o.neighbours.includes(loc.slug)), `"${loc.slug}" is linked from at least one neighbour`);
 }
 

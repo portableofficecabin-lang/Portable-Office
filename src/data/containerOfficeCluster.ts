@@ -122,6 +122,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     bangaloreRegion: true,
   },
   {
+    slug: "container-office-in-belagavi",
+    state: "Karnataka",
+    name: "Belagavi",
+    placeName: "Belagavi",
+    area: "Belagavi city, Udyambag, Machhe, Gokak and Khanapur",
+    hubAnchor: "Udyambag and Belagavi container offices",
+    nearbyLabel: "Belagavi",
+    neighbours: [], // North Karnataka: no merged cluster page within reach
+  },
+  {
     slug: "container-office-in-mysore",
     state: "Karnataka",
     name: "Mysore",

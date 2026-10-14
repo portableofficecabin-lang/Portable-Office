@@ -5541,6 +5541,319 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN BELAGAVI — North Karnataka: the Udyambag / Machhe / Honaga / Kakati
+   * industrial areas, the NH 48 (Pune–Bengaluru) logistics corridor, the Gokak / Chikodi sugar
+   * belt and the high-rainfall Khanapur taluk below the Western Ghats.
+   *
+   * Owner copy of 2026-10-14, mapped onto the fixed template slots. The draft has eight H2s and
+   * no FAQ section; nothing is dropped:
+   *   • "Why Choose a Container Office in Belagavi?" → why: its two numbered H3s (monsoon, ground
+   *     conditions) as bullets 1–2 with their lists folded in as prose, plus the draft's
+   *     "Built for Long-Term Industrial and Site Use" H2 (the same weather / durability theme) as
+   *     bullet 3. whyIntro is a one-line lead-in to those three.
+   *   • "Applications" (seven H3s, their lists as prose) → solutions.
+   *   • "Specifications and Features": the standard-construction list → features[] as
+   *     "Component — spec", then the sizes-table rows; the custom-dimensions line → sizesNote.
+   *     Its "Optional Customisation" H3 → the custom slot, beside the furnished-interior render
+   *     (short titles added; customOutro says that interior is an optional fit-out).
+   *   • "Sale or Rent" → industries (Buy / Rent / compare both).
+   *   • "Why Choose Portable Office Cabin" → whyUs (titles added to the untitled capability list,
+   *     its closing line as the last item).
+   *   • "Delivery and Installation": intro + area list → areasText; the five-step process → how
+   *     (H2 "Our Delivery Process"), access and schedule notes folded into steps 3 and 5.
+   *   • "Get a Quotation" → CTA, its checklist as prose; "[Phone Number]" → COMPANY phones;
+   *     "Website:" dropped (redundant on-site); "Manufacturing Base: Bangalore / Hosur" → the
+   *     factory near Hosur, Tamil Nadu (Bangalore is an office only — see the note on
+   *     locationStripText in src/lib/site-navigation.ts); "manufacturer and supplier in Belagavi"
+   *     → "serving Belagavi".
+   *   • FAQs: the draft has none, but the template always renders the FAQ section and FAQPage
+   *     JSON-LD, so seven questions are answered ONLY with statements already on this page.
+   * No ₹, lead times, warranty terms or project counts (the draft states none; none added).
+   *
+   * Images: five owner-dropped webp renders ("public/images/Container Offices in Belagavi city
+   * page/…", 1344×768 ×4 and 1200×896), copied byte-for-byte to clean slug names. Alt text and
+   * the caption describe the ACTUAL renders — an orange corrugated-steel container office with a
+   * steel door and four glazed windows — and the disclaimer says they are standard designs, not
+   * Belagavi installations, with an optionally furnished (timber-lined) interior.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-belagavi",
+    city: "Belagavi",
+    listTitle: "Container Office in Belagavi",
+    metaTitle: "Container Office in Belagavi | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Belagavi for foundries, warehouses, sugar mills and construction sites. Insulated, weather-resistant units for sale or rent. Get a quote.",
+    keywords:
+      "Container Office in Belagavi, Container Office Belagavi, Container Office Belgaum, Portable Office Cabin Belagavi, Site Office Container Belagavi, Container Office for Rent Belagavi, Container Office for Sale Belagavi, Portable Cabin Udyambag, Container Office Supplier Belagavi",
+    geo: { region: "IN-KA", placename: "Belagavi (Belgaum), Karnataka, India", position: "15.8497;74.4977", icbm: "15.8497, 74.4977" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-belagavi/container-office-in-belagavi-exterior.webp",
+      alt: "Container office in Belagavi — orange corrugated-steel container office with a lockable steel entrance door, four orange-framed glazed windows and corner castings, standing on grass at an open site",
+      width: 1344,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-belagavi/container-office-in-belagavi-aerial-view.webp",
+      alt: "Container office in Belagavi — aerial view of the orange container office showing its corrugated steel roof, the entrance door and three windows along one side wall, on a grassy plot edged with boulders",
+      width: 1344,
+      height: 768,
+      caption: "Weather-resistant roof, finished at the factory.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-belagavi/container-office-in-belagavi-interior.webp",
+      alt: "Container office in Belagavi — optionally furnished interior with timber-lined walls and ceiling, linear LED lights, orange-framed windows, a long desk with task lamps and office chairs, a lounge chair, a sideboard with books and a polished concrete floor",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-belagavi/container-office-in-belagavi-front-view.webp",
+        alt: "Container office in Belagavi — straight-on side elevation of the orange container office: a steel entrance door with a lever handle, three glazed windows of different sizes and a full-length base rail",
+        width: 1344,
+        height: 768,
+      },
+      {
+        src: "/images/cities/container-office-in-belagavi/container-office-in-belagavi-end-view.webp",
+        alt: "Container office in Belagavi — blank end wall of the orange container office, a corrugated steel panel between the corner posts and corner castings",
+        width: 1344,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Offices in Belagavi",
+    tagline: "Ready-to-Work Spaces for a City on the Move",
+    intro: [
+      "Belagavi is one of North Karnataka's important industrial and commercial centres. From the foundries and manufacturing units in Udyambag to aerospace and precision-engineering facilities, logistics warehouses along the Pune–Bengaluru highway, and sugar factories across Gokak and Chikodi, the district continues to support industrial and infrastructure development.",
+      "Residential and commercial developments around Hindalga, Kanbargi, and surrounding areas also create demand for temporary and permanent project offices.",
+      "For businesses that need a functional workspace before a permanent building is ready, a container office in Belagavi offers a practical, flexible, and cost-effective solution.",
+      "Portable Office Cabin manufactures portable container offices and supplies them across Belagavi city and district, including Udyambag, Machhe, Honaga, Kakati, Sambra, Khanapur, Gokak, Bailhongal, and nearby industrial and construction locations.",
+      "Whether you require a compact site office, an air-conditioned supervisor's cabin, or a fully furnished modular office, our container offices can be customised to meet your project requirements.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Belagavi?",
+    whyIntro: "Three local considerations shape how a container office should be specified for Belagavi:",
+    whyBullets: [
+      {
+        title: "Designed for Belagavi's heavy monsoon conditions",
+        text: "Unlike many other parts of North Karnataka, Belagavi receives significant seasonal rainfall due to its proximity to the Western Ghats. Areas such as Khanapur experience particularly heavy monsoon conditions, making proper waterproofing, drainage, and material selection important for temporary office structures. Poorly constructed cabins may develop roof leakage, moisture penetration, and damage to interior finishes. Our container offices can be manufactured with weather-resistant roofing systems with suitable drainage provisions; properly sealed joints and exterior connections; PUF or glass wool insulation for walls and roofing; protective exterior coatings to reduce corrosion; moisture-resistant interior finishing options; and suitable ventilation and air-conditioning provisions. These features help maintain a more comfortable and protected office environment throughout the year.",
+      },
+      {
+        title: "Suitable for different ground and site conditions",
+        text: "Belagavi has varying ground conditions, including lateritic soils in several areas. Such soils may behave differently during wet and dry seasons. Container offices can be installed on appropriately designed concrete supports, raised foundations, or structural steel skids depending on site conditions. Advantages include stable and level placement; reduced contact with ground moisture; less need for permanent civil construction; easier removal and relocation when required; and flexible positioning within industrial and construction sites. A suitable foundation and drainage arrangement should be confirmed before installation.",
+      },
+      {
+        title: "Built for long-term industrial and site use",
+        text: "Belagavi's combination of monsoon rainfall, seasonal humidity, industrial dust, and changing temperatures makes durability an important consideration when choosing a portable office. Our container offices can incorporate protective anti-corrosion paint systems; weather-resistant exterior sheet cladding; insulated wall and roofing assemblies; properly sealed exterior joints; durable doors, hinges, and locking systems; aluminium window frames and suitable sealing arrangements; and low-maintenance interior finishes. With proper installation, routine inspection, and maintenance, a quality container office can remain useful across multiple projects. Regular cleaning, drainage maintenance, and timely repair of damaged coatings help extend its service life.",
+      },
+    ],
+
+    solutionsHeading: "Applications of Container Offices in Belagavi",
+    solutionsIntro:
+      "Our portable and prefabricated container offices are suitable for manufacturing, infrastructure, commercial, institutional, and industrial projects.",
+    solutions: [
+      {
+        title: "Foundry and Manufacturing Plant Offices",
+        text: "Industrial facilities and machine shops in Udyambag, Machhe, Honaga, and surrounding areas can use container offices for supervisors, engineers, administrative teams, and plant management. Insulated interiors and optional air-conditioning help provide an enclosed workspace away from direct shop-floor activities.",
+      },
+      {
+        title: "Logistics and Warehouse Offices",
+        text: "Suitable for logistics parks, transport operators, distribution facilities, and warehouses located along NH-48 and other industrial corridors. Common applications include dispatch offices, transport coordination rooms, warehouse administration offices, and gate entry and documentation cabins.",
+      },
+      {
+        title: "Construction Site and Real Estate Sales Offices",
+        text: "Builders and developers can use portable offices at residential, commercial, and infrastructure project sites. These units can serve as project engineers' offices, contractor and site management cabins, sales and marketing offices, client meeting rooms, and temporary administrative offices.",
+      },
+      {
+        title: "Aerospace and Precision Engineering Facilities",
+        text: "Aerospace suppliers and precision-engineering businesses may require enclosed workspaces for administration, documentation, inspection, and quality-control activities. Container offices can be configured with air-conditioning and suitable interior finishes. Specialised inspection environments or controlled-cleanliness requirements require additional design provisions.",
+      },
+      {
+        title: "Sugar Mills and Agro-Industrial Units",
+        text: "Sugar factories, processing units, and agro-industrial facilities across Gokak, Chikodi, and nearby locations can use portable cabins for seasonal and year-round operations. Applications include weighbridge offices, accounts and billing cabins, supervisor rooms, security and entry-control offices, and temporary administrative spaces.",
+      },
+      {
+        title: "Schools, Hospitals, and Institutions",
+        text: "Container offices can be adapted for temporary administration rooms, counselling spaces, staff cabins, and other institutional requirements during construction or expansion.",
+      },
+      {
+        title: "Government and PSU Project Offices",
+        text: "Infrastructure contractors working on government and public-sector projects can use prefabricated site offices designed to meet their project's specified materials, layout, safety, and electrical requirements.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Features",
+    featuresIntro:
+      "Portable Office Cabin provides custom-manufactured container offices with different structural configurations, interior finishes, and optional facilities. Standard construction features, followed by the available container office sizes and their typical applications:",
+    features: [
+      "Structure — welded mild steel structural framework.",
+      "Exterior walls — MS or GI sheet cladding according to project specifications.",
+      "Wall insulation — PUF or glass wool insulation options.",
+      "Roofing — weather-resistant roof construction with optional insulation.",
+      "Entry door — lockable steel door.",
+      "Windows — aluminium sliding windows with optional mosquito mesh.",
+      "Flooring — vinyl or laminate flooring over a suitable base.",
+      "Interior walls — finished interior panels.",
+      "Ceiling — insulated ceiling with optional false ceiling.",
+      "Lighting — LED interior lights.",
+      "Electrical system — switches, power sockets, and distribution board with appropriate earthing provisions.",
+      "10 ft × 10 ft container office — compact site office or supervisor cabin.",
+      "16 ft × 10 ft container office — small administrative office.",
+      "20 ft × 8 ft container office — standard site office or security administration room.",
+      "20 ft × 10 ft container office — engineers' office or furnished workspace.",
+      "30 ft × 10 ft container office — partitioned office or larger working area.",
+      "40 ft × 10 ft container office — project management office or multi-room configuration.",
+    ],
+    sizesNote:
+      "Custom dimensions and layouts are available based on occupancy, transportation feasibility, and project requirements.",
+
+    industriesHeading: "Container Office for Sale or Rent in Belagavi",
+    industriesIntro:
+      "Portable Office Cabin offers purchase and rental options, subject to unit availability and project requirements.",
+    industries: [
+      {
+        title: "Buy a container office in Belagavi",
+        text: "Purchasing can be an economical choice for long-term industrial operations, construction projects, and businesses that regularly require temporary workspaces. Benefits include ownership of a reusable commercial asset, customised office layouts and finishes, long-term use with suitable maintenance, relocation to future project locations, and reduced dependence on rented premises.",
+      },
+      {
+        title: "Rent a container office in Belagavi",
+        text: "Rental container offices are suitable for short-duration or seasonal requirements — for example temporary construction site offices, seasonal sugar mill operations, warehouse expansion projects, short-term sales and marketing offices, and temporary administrative offices during renovation. Renting can reduce the initial capital investment while providing a functional workspace for the required period.",
+      },
+      {
+        title: "Compare both options",
+        text: "Our team can provide quotations for both purchase and rental options so customers can compare the overall costs.",
+      },
+    ],
+
+    customHeading: "Optional Customisation",
+    customIntro: "Additional features can be incorporated based on project requirements:",
+    customBullets: [
+      { title: "Air-conditioning", text: "Split air-conditioning units." },
+      { title: "Attached toilet", text: "Attached toilets with wash basin, flush system, and exhaust provisions." },
+      { title: "Pantry", text: "Pantry counters and cabinets." },
+      { title: "Furniture", text: "Workstations, office desks, and chairs." },
+      { title: "Partitions", text: "Internal partitions and manager cabins." },
+      { title: "Reception", text: "Reception and waiting areas." },
+      { title: "Meeting space", text: "Conference and meeting rooms." },
+      { title: "Exterior finish", text: "Exterior painting in preferred colour combinations." },
+      { title: "Multi-unit offices", text: "Multiple interconnected container units." },
+      { title: "Ground-plus-one", text: "Ground-plus-one office arrangements with suitable structural engineering and staircase provisions." },
+    ],
+    customOutro:
+      "The interior shown is an optional furnished design; the finishes and fittings for each office are confirmed in its quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin in Belagavi?",
+    whyUsIntro:
+      "Portable Office Cabin provides customised portable office solutions for commercial, industrial, and infrastructure applications, manufactured at its factory near Hosur, Tamil Nadu. Our capabilities include:",
+    whyUsBullets: [
+      { title: "Manufacturing", text: "Manufacturing of portable and prefabricated container offices." },
+      { title: "Custom layouts", text: "Custom dimensions and layout configurations." },
+      { title: "Insulation", text: "Insulated office cabins suitable for different climates." },
+      { title: "Facilities", text: "Optional air-conditioning, toilets, pantry facilities, and furniture." },
+      { title: "Modular offices", text: "Single-unit and multi-unit modular office solutions." },
+      { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
+      { title: "Delivery coordination", text: "Delivery coordination across Belagavi and surrounding districts." },
+      { title: "Relocatable", text: "Relocatable office solutions for long-term project requirements." },
+      {
+        title: "Practical focus",
+        text: "We focus on providing practical office spaces that match the customer's application, site conditions, and budget.",
+      },
+    ],
+
+    areasHeading: "Container Office Delivery and Installation in Belagavi",
+    areasText:
+      "Our container offices are fabricated at our manufacturing facility and transported to the customer's site using suitable commercial vehicles. We serve Belagavi city and surrounding areas, including Udyambag, Machhe, Honaga, Kakati, Sambra, Hindalga, Kanbargi, Khanapur, Gokak, Chikodi, Bailhongal, Athani, and surrounding industrial estates and infrastructure project sites.",
+
+    howHeading: "Our Delivery Process",
+    howSteps: [
+      {
+        title: "Requirement Assessment",
+        text: "We collect the required dimensions, layout, occupancy, location, and optional facility requirements.",
+      },
+      {
+        title: "Manufacturing and Finishing",
+        text: "The container office is fabricated and finished according to the approved specifications.",
+      },
+      {
+        title: "Transportation Planning",
+        text: "We coordinate the delivery route, site accessibility, vehicle requirements, and unloading arrangements. Sites with narrow industrial roads, restricted access, or limited lifting space may require an access assessment before dispatch.",
+      },
+      {
+        title: "Placement and Installation",
+        text: "The unit is positioned on a prepared foundation using suitable lifting equipment arranged under the agreed scope.",
+      },
+      {
+        title: "Final Inspection and Handover",
+        text: "After placement, applicable finishing work and checks are completed before handover. Delivery schedules depend on manufacturing status, transport distance, road conditions, unloading arrangements, and site readiness.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I buy or rent a container office in Belagavi?",
+        answer:
+          "Yes. Portable Office Cabin offers purchase and rental options, subject to unit availability and project requirements, and can provide quotations for both so you can compare the overall costs.",
+      },
+      {
+        question: "Are your container offices suitable for Belagavi's monsoon?",
+        answer:
+          "Our container offices can be manufactured with weather-resistant roofing and suitable drainage provisions, properly sealed joints, PUF or glass wool insulation, protective exterior coatings, moisture-resistant interior finishes, and ventilation and air-conditioning provisions — important in high-rainfall areas such as Khanapur.",
+      },
+      {
+        question: "What foundation does a container office need in Belagavi?",
+        answer:
+          "Depending on site conditions, including the lateritic soils found in several areas, a container office can be installed on appropriately designed concrete supports, raised foundations, or structural steel skids. A suitable foundation and drainage arrangement should be confirmed before installation.",
+      },
+      {
+        question: "What container office sizes are available?",
+        answer:
+          "Typical sizes are 10 ft × 10 ft, 16 ft × 10 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, and 40 ft × 10 ft. Custom dimensions and layouts are available based on occupancy, transportation feasibility, and project requirements.",
+      },
+      {
+        question: "Which areas around Belagavi do you deliver to?",
+        answer:
+          "We serve Belagavi city and surrounding areas, including Udyambag, Machhe, Honaga, Kakati, Sambra, Hindalga, Kanbargi, Khanapur, Gokak, Chikodi, Bailhongal, and Athani, as well as industrial estates and infrastructure project sites. Sites with restricted access may require an access assessment before dispatch.",
+      },
+      {
+        question: "How long does delivery to Belagavi take?",
+        answer:
+          "Delivery schedules depend on manufacturing status, transport distance, road conditions, unloading arrangements, and site readiness. Share your expected delivery schedule when you request a quotation.",
+      },
+      {
+        question: "What details do you need for a quotation?",
+        answer:
+          "Share the project location in Belagavi district, the required container office dimensions, the number of occupants or workstations, the preferred internal layout, required facilities such as AC, toilet, pantry, or furniture, whether you want to buy or rent, and your expected delivery schedule.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Belagavi",
+    ctaText: `Looking for a container office manufacturer and supplier serving Belagavi, Karnataka? Portable Office Cabin offers customised portable office cabins for manufacturing units, logistics companies, construction contractors, real estate developers, industrial plants, institutions, and infrastructure projects. To receive a quotation, share your project location in Belagavi district, required container office dimensions, number of occupants or workstations, preferred internal layout, required facilities such as AC, toilet, pantry, or furniture, purchase or rental requirement, and expected delivery schedule. Our team can recommend a suitable office configuration and prepare a quotation based on the approved specifications. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. Service area: Belagavi, Karnataka, and surrounding industrial locations.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Belagavi district; delivery, unloading and placement are arranged for each project, and delivery schedules are not guaranteed. Purchase and rental options are subject to unit availability. The images on this page show Portable Office Cabin's standard container office design, including an optionally furnished interior, and are not photographs of installations in Belagavi. Industrial areas, highways, towns, industries and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial estate, developer, sugar factory, aerospace business, government department or public-sector undertaking in the district, and entry to any such premises is subject to that facility's own permissions. Notes on soils, foundations and drainage are general guidance, not engineering advice; the base, anchoring and any approvals for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN SARJAPUR — the Sarjapur Road corridor of south-east Bengaluru
    * (Bellandur → Kasavanahalli → Carmelaram → Dommasandra → Sarjapur Town, with Attibele and
    * Bommasandra to the south).
