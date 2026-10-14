@@ -7223,6 +7223,346 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICES IN BIDAR — northern Karnataka, near the Telangana and Maharashtra
+   * borders: the Kolhar and Humnabad pharmaceutical / chemical belt, the Hyderabad and Solapur
+   * highway corridors, the Bhalki–Humnabad sugar belt and remote solar / transmission sites
+   * around Aurad and Basavakalyan.
+   *
+   * Owner copy of 2026-10-14, mapped onto the fixed template slots. Every draft H2 is kept
+   * verbatim as a section heading; content with no slot of its own is FOLDED, never dropped:
+   *   • H1 "Container Offices in Bidar – Ready-to-Work Spaces for Industrial and Infrastructure
+   *     Projects" → h1 + tagline (the strapline after the dash).
+   *   • "Why Choose a Container Office in Bidar?" (two numbered H3s, each with a bullet list)
+   *     → why: one bullet per H3, its list folded as prose; whyIntro is a one-line lead-in.
+   *   • "Applications of Container Offices in Bidar" (seven H3s) → solutions, lists as prose.
+   *   • "Container Office Specifications and Features" (standard features, optional
+   *     customisation, sizes table) → features[] in that order, the custom-sizes line →
+   *     sizesNote.
+   *   • "Built for Long-Term Industrial and Construction Use" → industries, its three closing
+   *     lines as the last two items.
+   *   • "Container Office for Sale or Rent in Bidar" → custom (buy / rent as two bullets).
+   *   • "Why Choose Portable Office Cabin in Bidar?" → whyUs, the closing line as the last item.
+   *   • "Container Office Delivery and Installation in Bidar" → areasText (service areas,
+   *     remote-site and timeline notes); its five-step process → how.
+   *   • "Get a Container Office Quotation in Bidar" → CTA, the quotation checklist as prose.
+   * The draft has NO FAQ section, but the template always renders one (and its FAQPage
+   * JSON-LD): the FAQs below only restate facts already in the draft copy — owner to review.
+   * Rewritten, not copied: "manufactures and supplies … across Bidar" (reads as a Bidar
+   * factory) → "manufactures … and supplies them across Bidar"; "manufacturer and supplier in
+   * Bidar" → "serving Bidar"; "Manufacturing Base: Bangalore / Hosur" → the factory near Hosur
+   * plus the Bengaluru office (manufacturing is in Tamil Nadu only — src/lib/company.ts). The
+   * "[Phone Number]" placeholder → COMPANY phones; the "Website:" line is dropped as redundant
+   * on-site. The draft carries no ₹ figure (file-header rule).
+   *
+   * Images: five owner-dropped webp renders ("public/images/Container Offices in Bidar city
+   * page/"), copied byte-for-byte to clean slug names. Alt text and the caption describe the
+   * ACTUAL renders — a charcoal-grey corrugated-steel container office with corner castings,
+   * two steel doors with closers and black-framed windows on a paved forecourt — and the
+   * disclaimer states they are standard designs, not Bidar installations.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the call / WhatsApp CTA buttons.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-bidar",
+    city: "Bidar",
+    listTitle: "Container Offices in Bidar",
+    metaTitle: "Container Offices in Bidar | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Bidar for pharma, industrial, highway, sugar mill and construction sites. Insulated 10 ft to 40 ft cabins to buy or rent. Get a quote.",
+    keywords:
+      "Container Offices in Bidar, Container Office in Bidar, Container Office Bidar, Portable Office Cabin Bidar, Portable Site Office Bidar, Prefabricated Office Cabin Bidar, Container Office on Rent Bidar, Container Office Humnabad, Container Office Kolhar",
+    geo: { region: "IN-KA", placename: "Bidar, Karnataka, India", position: "17.9104;77.5199", icbm: "17.9104, 77.5199" },
+    motion: true,
+
+    heroImage: {
+      src: "/images/cities/container-office-in-bidar/container-office-in-bidar-exterior.webp",
+      alt: "Container offices in Bidar — charcoal-grey corrugated-steel container office with corner castings, two lockable steel doors with door closers and black-framed two-pane windows along the side and in the end wall, standing on a paved forecourt beside planters and trees",
+      width: 1344,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-bidar/container-office-in-bidar-aerial-view.webp",
+      alt: "Container offices in Bidar — aerial view of the charcoal-grey container office showing its ribbed steel roof, two doors and side windows, placed on a paved courtyard among trees and planters",
+      width: 1344,
+      height: 768,
+      caption: "Roofing and drainage are specified for Bidar's monsoon rains.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-bidar/container-office-in-bidar-interior.webp",
+      alt: "Container offices in Bidar — optionally furnished container office interior: dark-grey corrugated walls, a ribbed ceiling with LED track spotlights, windows with blinds, a long wood-top desk with a laptop and monitor, grey task chairs, a second desk at the far end, wood-and-black storage shelving with files and wood-look flooring",
+      width: 1200,
+      height: 896,
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-bidar/container-office-in-bidar-front-view.webp",
+        alt: "Container offices in Bidar — straight-on side elevation of the charcoal-grey container office: a lockable steel door at each end and two black-framed windows between them",
+        width: 1344,
+        height: 768,
+      },
+      {
+        src: "/images/cities/container-office-in-bidar/container-office-in-bidar-side-view.webp",
+        alt: "Container offices in Bidar — three-quarter view of the charcoal-grey container office from the other corner, showing a large window in the end wall, a central door and the side windows",
+        width: 1344,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Offices in Bidar",
+    tagline: "Ready-to-work spaces for industrial and infrastructure projects.",
+    intro: [
+      "Bidar is an important industrial and commercial district in northern Karnataka, strategically located near the Telangana and Maharashtra borders. Its connectivity with Hyderabad, Solapur, and surrounding industrial regions makes it a suitable location for manufacturing, warehousing, infrastructure development, and commercial activities.",
+      "From pharmaceutical and chemical manufacturing facilities in Humnabad and Kolhar to warehouses along major highways, sugar factories, construction projects, and government infrastructure works, businesses across Bidar require practical office spaces that can be installed without lengthy construction work.",
+      "A container office in Bidar provides a flexible, cost-effective, and relocatable workspace solution for these requirements.",
+      "Portable Office Cabin manufactures portable container offices and supplies them across Bidar city and district, including Naubad, Kolhar, Humnabad, Bhalki, Basavakalyan, Aurad, Chitguppa, and surrounding industrial and construction locations.",
+      "Whether you need a compact supervisor's office, a fully furnished site office, or a modular workspace for multiple employees, our container offices can be customised according to your project specifications.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Bidar?",
+    whyIntro:
+      "Two local conditions shape how a container office is specified for Bidar: the ground it stands on and the climate it works through.",
+    whyBullets: [
+      {
+        title: "Suitable for Bidar's ground and site conditions",
+        text: "Bidar is located on the Deccan Plateau and has areas with lateritic and other soil formations, and ground conditions can vary across industrial estates, construction sites, and rural project locations. Conventional temporary buildings may require extensive site preparation, depending on the location. Container offices offer a practical alternative because they can be positioned on suitable foundations, including engineered concrete supports or structural steel skids. Key advantages include stable and level placement on properly prepared foundations; a reduced need for extensive permanent civil construction; better separation from ground moisture when raised supports are used; easier relocation when project locations change; and flexible installation within industrial and construction premises. The foundation and placement method should be selected according to the site's actual soil conditions and structural requirements.",
+      },
+      {
+        title: "Designed for Bidar's summer heat and seasonal rainfall",
+        text: "Bidar experiences hot summers, with temperatures that can exceed 40°C during peak heat periods, followed by seasonal monsoon rainfall. An uninsulated steel cabin can become uncomfortable during summer, while inadequate roofing and sealing may cause water leakage during heavy rain. Our container offices can be manufactured with PUF or glass wool insulation for walls and roofing; weather-resistant exterior sheet cladding; suitable roofing and drainage arrangements; sealed exterior joints and connections; air-conditioning provisions and electrical wiring; finished interior wall panels and ceilings; and proper ventilation and moisture-resistant finishing options. These features help create a more comfortable working environment for employees throughout the year.",
+      },
+    ],
+
+    solutionsHeading: "Applications of Container Offices in Bidar",
+    solutionsIntro:
+      "Our portable and prefabricated container offices are suitable for pharmaceutical industries, manufacturing facilities, logistics businesses, infrastructure contractors, commercial developments, and institutional projects.",
+    solutions: [
+      {
+        title: "Pharmaceutical and Chemical Plant Offices",
+        text: "Pharmaceutical and chemical manufacturing facilities in Humnabad, Kolhar, and surrounding industrial areas may require additional office space for administrative and supervisory operations. Container offices can be configured as quality-control documentation offices, contractor supervision cabins, administrative workspaces, inspection and auditor meeting rooms, plant maintenance offices, and project management cabins. Insulated interiors and optional air-conditioning help provide an enclosed working environment. Applications requiring specialised contamination control, laboratory certification, or hazardous-area protection need separately engineered specifications.",
+      },
+      {
+        title: "Highway Construction and Warehouse Offices",
+        text: "Infrastructure contractors, warehouse operators, and logistics companies working along the Hyderabad and Solapur highway corridors can use container offices for daily operations, including highway construction site offices, transport and dispatch offices, warehouse administration cabins, security and gate-control offices, contractor meeting rooms, and weighbridge administration offices.",
+      },
+      {
+        title: "Real Estate and Construction Site Offices",
+        text: "Builders and developers operating in Naubad, Shivnagar, and developing residential and commercial areas around Bidar can use container offices during construction as site engineers' offices, project management cabins, sales and marketing offices, client meeting rooms, temporary reception areas, and contractor coordination offices. These offices can be relocated to another project after completion, subject to the unit's design and condition.",
+      },
+      {
+        title: "Sugar Mills and Agro-Industrial Units",
+        text: "Sugar factories, agricultural processing facilities, and agro-industrial businesses around Bhalki, Humnabad, and nearby locations can use portable offices for seasonal and permanent requirements, including weighbridge offices, cane-yard supervision cabins, accounts and billing rooms, security offices, and temporary administrative facilities.",
+      },
+      {
+        title: "Solar Power and Electrical Infrastructure Projects",
+        text: "Solar power contractors, electrical transmission companies, and infrastructure developers working in remote areas of Aurad, Basavakalyan, and other parts of Bidar district often require offices close to the project location. Container offices can be used as site management offices, electrical contractor cabins, engineering and documentation rooms, project coordination centres, and temporary administrative offices. For remote locations, suitable transportation access, foundations, and electrical supply arrangements must be planned before installation.",
+      },
+      {
+        title: "Schools, Hospitals, and Educational Institutions",
+        text: "Portable container offices can also be adapted for educational, healthcare, and institutional purposes. Applications include temporary administrative rooms, counselling cabins, staff offices, and other support facilities during building renovation or expansion.",
+      },
+      {
+        title: "Government and PSU Project Offices",
+        text: "Contractors working on government and public-sector infrastructure projects can use customised prefabricated site offices. Units can be designed according to specified requirements for structure, insulation, electrical systems, interiors, safety features, and workspace arrangements.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Features",
+    featuresIntro:
+      "Portable Office Cabin manufactures container offices using welded structural steel frameworks, protective exterior cladding, and configurable interior finishes. Standard construction features are listed first, followed by the optional customisation available depending on the application, and then the available container office sizes with their typical applications:",
+    features: [
+      "Structure — welded mild steel structural framework",
+      "Exterior walls — MS or GI sheet cladding according to project specifications",
+      "Wall insulation — PUF or glass wool insulation options",
+      "Roofing — weather-resistant roof construction with optional insulation",
+      "Entry door — lockable steel door with suitable hardware",
+      "Windows — aluminium sliding windows with optional mosquito mesh",
+      "Flooring — vinyl or laminate flooring over a suitable floor base",
+      "Interior walls — finished wall panels",
+      "Ceiling — insulated roof lining with optional false ceiling",
+      "Lighting — LED interior lights",
+      "Electrical system — switches, power sockets, and electrical distribution board with appropriate earthing provisions",
+      "Optional — split air-conditioning units",
+      "Optional — attached toilet with wash basin, flush system, and exhaust provisions",
+      "Optional — pantry counter and storage cabinets",
+      "Optional — office desks, workstations, and chairs",
+      "Optional — partitioned manager cabins",
+      "Optional — reception and waiting areas",
+      "Optional — meeting and conference rooms",
+      "Optional — exterior painting in preferred colour combinations",
+      "Optional — multiple interconnected container offices",
+      "Optional — ground-plus-one modular office arrangements with engineered structural support and staircase provisions",
+      "10 ft × 10 ft — supervisor cabin or compact site office",
+      "12 ft × 10 ft — small administrative or security office",
+      "16 ft × 10 ft — engineers' office or project cabin",
+      "20 ft × 8 ft — standard site office or dispatch room",
+      "20 ft × 10 ft — furnished site office or meeting space",
+      "30 ft × 10 ft — partitioned office or larger workspace",
+      "40 ft × 10 ft — multi-room project office or administrative unit",
+    ],
+    sizesNote:
+      "Custom dimensions and layouts can also be manufactured depending on workspace requirements, transport feasibility, and approved specifications.",
+
+    industriesHeading: "Built for Long-Term Industrial and Construction Use",
+    industriesIntro:
+      "Bidar's combination of summer heat, industrial dust, seasonal rainfall, and outdoor project conditions makes structural durability an important consideration. Our container offices can be manufactured with:",
+    industries: [
+      { title: "Exterior paint", text: "Protective anti-corrosion exterior paint systems." },
+      { title: "External cladding", text: "Durable MS or GI external sheet cladding." },
+      { title: "Roofing", text: "Weather-resistant roofing assemblies." },
+      { title: "Insulation", text: "Insulated walls and ceilings." },
+      { title: "Exterior joints", text: "Properly sealed exterior joints." },
+      { title: "Doors and locks", text: "Durable entry doors and locking arrangements." },
+      { title: "Windows", text: "Aluminium windows with suitable sealing provisions." },
+      { title: "Interior finishes", text: "Low-maintenance interior finishing materials." },
+      {
+        title: "Reliable use",
+        text: "These construction features help support reliable use in industrial and outdoor project environments. With suitable handling, installation, periodic inspection, and maintenance, a quality container office can serve multiple projects.",
+      },
+      {
+        title: "Maintenance",
+        text: "Regular cleaning, roof drainage inspection, and repair of damaged protective coatings can help extend the cabin's service life.",
+      },
+    ],
+
+    customHeading: "Container Office for Sale or Rent in Bidar",
+    customIntro:
+      "Portable Office Cabin offers both purchase and rental options, depending on project duration, specifications, and unit availability.",
+    customBullets: [
+      {
+        title: "Buy a container office in Bidar",
+        text: "Purchasing a container office is suitable for businesses with long-term requirements or contractors who regularly work at different project locations. Benefits include ownership of a reusable portable office, customised layouts according to operational requirements, long-term use with suitable maintenance, relocation to other project locations, and reduced dependence on permanently rented office premises. Purchased container offices can be particularly useful for manufacturing facilities, permanent gate offices, construction contractors, and industrial establishments.",
+      },
+      {
+        title: "Rent a container office in Bidar",
+        text: "Rental container offices are suitable for temporary or seasonal requirements. Common rental applications include seasonal sugar factory operations, short-term highway construction projects, temporary industrial expansion, construction site management offices, real estate sales and marketing offices, and temporary administrative facilities during renovation. Renting can help businesses reduce initial capital expenditure while providing a functional workspace for the required project duration.",
+      },
+    ],
+    customOutro:
+      "Our team can provide purchase and rental quotations so customers can compare costs before making a decision.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin in Bidar?",
+    whyUsIntro:
+      "Portable Office Cabin provides customised portable office solutions for industrial, commercial, infrastructure, and institutional applications. We manufacture at our factory near Hosur, Tamil Nadu, and coordinate delivery to Bidar from there. Our capabilities include:",
+    whyUsBullets: [
+      { title: "Manufacturing", text: "Manufacturing of portable and prefabricated container offices." },
+      { title: "Custom sizes", text: "Custom dimensions and workspace configurations." },
+      { title: "Insulated cabins", text: "Insulated office cabins for different climatic conditions." },
+      { title: "Optional facilities", text: "Optional AC, toilet, pantry, and furniture facilities." },
+      { title: "Layouts", text: "Single-room and multi-room office layouts." },
+      { title: "Modular units", text: "Multiple interconnected modular office units." },
+      { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
+      { title: "Delivery", text: "Delivery coordination across Bidar district." },
+      { title: "Relocatable offices", text: "Relocatable office solutions for temporary and long-term requirements." },
+      {
+        title: "Practical workspaces",
+        text: "We focus on providing practical workspaces that meet the customer's project specifications, site conditions, and budget.",
+      },
+    ],
+
+    areasHeading: "Container Office Delivery and Installation in Bidar",
+    areasText:
+      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported to the customer's project location using suitable commercial vehicles. We serve Bidar City and surrounding locations, including Naubad, Shivnagar, Kolhar Industrial Area, Humnabad, Bhalki, Basavakalyan, Aurad, Chitguppa, and surrounding industrial estates and infrastructure project sites. For remote industrial sites or project locations accessible through narrow village roads, transportation and unloading feasibility should be checked in advance. Delivery timelines depend on unit availability, manufacturing requirements, transport distance, site accessibility, and installation readiness.",
+
+    howHeading: "Our Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Project requirement assessment",
+        text: "We collect information about the required container size, internal layout, number of occupants, location, and additional facilities.",
+      },
+      {
+        title: "Manufacturing and interior finishing",
+        text: "The container office is fabricated and finished according to the approved dimensions and specifications.",
+      },
+      {
+        title: "Transportation planning",
+        text: "We coordinate transport requirements, delivery access, route restrictions, and unloading arrangements before dispatch.",
+      },
+      {
+        title: "Placement and installation",
+        text: "The unit is positioned on a properly prepared foundation using suitable lifting equipment arranged under the agreed scope.",
+      },
+      {
+        title: "Inspection and handover",
+        text: "After placement, applicable installation work and final checks are completed before handover.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Do you supply container offices across Bidar district?",
+        answer:
+          "Yes. Portable Office Cabin supplies container offices to Bidar City and surrounding locations, including Naubad, Shivnagar, Kolhar Industrial Area, Humnabad, Bhalki, Basavakalyan, Aurad and Chitguppa, as well as surrounding industrial estates and infrastructure project sites. For remote sites or locations reached through narrow village roads, transportation and unloading feasibility is checked in advance.",
+      },
+      {
+        question: "What container office sizes are available in Bidar?",
+        answer:
+          "Available sizes are 10 ft × 10 ft, 12 ft × 10 ft, 16 ft × 10 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft and 40 ft × 10 ft. Custom dimensions and layouts can also be manufactured depending on workspace requirements, transport feasibility and approved specifications.",
+      },
+      {
+        question: "Can I buy or rent a container office in Bidar?",
+        answer:
+          "Both options are offered, depending on project duration, specifications and unit availability. Buying suits long-term requirements and contractors who regularly work at different project locations; renting suits temporary or seasonal requirements such as sugar factory operations or short-term highway construction projects. We can provide purchase and rental quotations so you can compare costs.",
+      },
+      {
+        question: "Is a container office comfortable in Bidar's summer heat?",
+        answer:
+          "Bidar's summer temperatures can exceed 40°C during peak heat periods. Container offices can be manufactured with PUF or glass wool insulation for walls and roofing, air-conditioning provisions, proper ventilation and finished interior wall panels and ceilings, which help create a more comfortable working environment throughout the year.",
+      },
+      {
+        question: "What foundation does a container office need in Bidar?",
+        answer:
+          "Container offices can be positioned on suitable foundations, including engineered concrete supports or structural steel skids, and raised supports give better separation from ground moisture. Because Bidar has lateritic and other soil formations, the foundation and placement method should be selected according to the site's actual soil conditions and structural requirements.",
+      },
+      {
+        question: "Can a container office be used at a pharmaceutical or chemical plant?",
+        answer:
+          "Yes, for administrative and supervisory uses such as quality-control documentation offices, contractor supervision cabins, inspection and auditor meeting rooms and plant maintenance offices. Applications requiring specialised contamination control, laboratory certification or hazardous-area protection need separately engineered specifications.",
+      },
+      {
+        question: "Can AC, a toilet or a pantry be added to a container office?",
+        answer:
+          "Yes. Optional facilities include split air-conditioning units, an attached toilet with wash basin, flush system and exhaust provisions, a pantry counter and storage cabinets, office furniture, partitioned manager cabins, reception areas and meeting rooms.",
+      },
+      {
+        question: "Can a container office be relocated to another project?",
+        answer:
+          "Yes. A container office can be relocated to another project after completion, subject to the unit's design and condition. With suitable handling, installation, periodic inspection and maintenance, a quality container office can serve multiple projects.",
+      },
+      {
+        question: "How long does delivery to Bidar take?",
+        answer:
+          "Delivery timelines depend on unit availability, manufacturing requirements, transport distance, site accessibility and installation readiness, so the schedule is agreed for each project.",
+      },
+      {
+        question: "What details do you need to quote a container office in Bidar?",
+        answer:
+          "Share the project location in Bidar district, the required container office dimensions, the number of occupants or workstations, the preferred internal layout, any additional facilities such as AC, an attached toilet, a pantry or furniture, whether you want to purchase or rent, and the expected delivery schedule.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Bidar",
+    ctaText: `Looking for a container office manufacturer and supplier serving Bidar, Karnataka? Portable Office Cabin provides customised portable office cabins for pharmaceutical companies, manufacturing plants, warehouse operators, infrastructure contractors, construction businesses, educational institutions, and commercial projects. To receive a quotation, share your project location in Bidar district, the required container office dimensions, the number of occupants or workstations, your preferred internal layout, any additional facilities such as AC, an attached toilet, a pantry or furniture, whether you need to purchase or rent, and your expected delivery schedule. Our team can recommend a suitable container office configuration and prepare a quotation based on your requirements. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. We manufacture at our factory near Hosur, Tamil Nadu, and have an office in Bengaluru; service area: Bidar, Karnataka, and surrounding industrial and infrastructure project locations. Request a quotation today for your customised container office in Bidar.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaContactButtons: true,
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office, depot or service partner in Bidar district. Delivery, unloading and placement are arranged for each project, rental units are subject to availability, and delivery dates are not guaranteed. The images on this page show Portable Office Cabin's standard container office designs, including an optionally furnished interior, and are not photographs of installations in Bidar. Towns, industrial areas, highway corridors and project types are named only to describe delivery locations and typical uses — they are not claims of completed installations — and Portable Office Cabin is not affiliated with any industrial estate, developer, sugar factory or facility operator in the district; entry to any such premises is subject to that facility's own permissions. Notes on soil, foundations, climate, insulation, contamination control and hazardous-area use are general guidance, not engineering or legal advice; the base, specification and any approvals for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * VILLA CONSTRUCTION COMPANY BANGALORE
    *
    * The first SERVICE page in this file — every sibling above sells a container or cabin at a
