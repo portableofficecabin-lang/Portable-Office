@@ -111,6 +111,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     bangaloreRegion: true,
   },
   {
+    slug: "container-office-in-davanagere",
+    state: "Karnataka",
+    name: "Davanagere",
+    placeName: "Davanagere",
+    area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
+    hubAnchor: "Container offices for Davanagere and Harihar",
+    nearbyLabel: "Davanagere",
+    neighbours: [], // nearest cluster page on main is Tumkur, ~180 km away
+  },
+  {
     slug: "container-office-in-tumkur",
     state: "Karnataka",
     name: "Tumkur",
