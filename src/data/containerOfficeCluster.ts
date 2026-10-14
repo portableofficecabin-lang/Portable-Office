@@ -56,6 +56,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
   // ── Karnataka ── south and south-east Bengaluru first, then east, north, the NH 48 corridor and
   //    Mysore (the only Karnataka page outside the Bengaluru region).
   {
+    slug: "container-office-in-bidar",
+    state: "Karnataka",
+    name: "Bidar",
+    placeName: "Bidar",
+    area: "Bidar city, Naubad, Kolhar Industrial Area, Humnabad and Bhalki",
+    hubAnchor: "Container offices for Bidar's industrial and highway projects",
+    nearbyLabel: "Bidar district",
+    neighbours: [], // no other cluster page within 130 km (North Karnataka, near the Telangana border)
+  },
+  {
     slug: "container-office-in-jigani",
     state: "Karnataka",
     name: "Jigani",
@@ -130,6 +140,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     nearbyLabel: "Tumkur district",
     neighbours: ["container-office-in-doddaballapura"],
     bangaloreRegion: true,
+  },
+  {
+    slug: "container-office-in-belagavi",
+    state: "Karnataka",
+    name: "Belagavi",
+    placeName: "Belagavi",
+    area: "Belagavi city, Udyambag, Machhe, Gokak and Khanapur",
+    hubAnchor: "Udyambag and Belagavi container offices",
+    nearbyLabel: "Belagavi",
+    neighbours: [], // North Karnataka: no merged cluster page within reach
   },
   {
     slug: "container-office-in-mysore",
