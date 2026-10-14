@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Building, Briefcase, LayoutGrid, Home, Bath, Shield, ArrowRight, Container, Building2, Users, BedDouble, Warehouse, Archive, Hammer, DoorOpen, Armchair } from "lucide-react";
+import { Building, Briefcase, LayoutGrid, Home, Bath, Shield, ArrowRight, Container, Building2, Users, BedDouble, Warehouse, Archive, Hammer, DoorOpen, Armchair, type LucideIcon } from "lucide-react";
 import { categories } from "@/data/products";
 
-const iconMap: Record<string, React.ElementType> = {
+const iconMap: Record<string, LucideIcon> = {
   building: Building,
   briefcase: Briefcase,
   layout: LayoutGrid,

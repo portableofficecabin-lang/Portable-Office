@@ -8,6 +8,7 @@ import {
   ArrowLeft, ArrowRight, Check, Loader2, Send, Download, MessageCircle,
   RotateCcw, RotateCw, Ruler, Zap, Sofa, Truck, DoorOpen, PanelsTopLeft, CheckCircle2, Sparkles,
   ChevronLeft, ChevronRight, Plus, Minus, Plug,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -112,7 +113,7 @@ const WHATSAPP_NUMBER = "919731897976";
 const TABLE_SNAP_MM = 25;
 const STORAGE_KEY = "poc_cabin_config_v1";
 
-const ICONS: Record<string, React.ElementType> = {
+const ICONS: Record<string, LucideIcon> = {
   building: Building, briefcase: Briefcase, shield: Shield, bath: Bath,
   bedDouble: BedDouble, container: Container, layout: LayoutGrid, warehouse: Warehouse,
   panels: PanelsTopLeft,

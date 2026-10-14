@@ -757,7 +757,10 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {/* Related Products */}
           {relatedRail.length > 0 && (
             <div className="mt-16">
-              <div className="flex items-center justify-between mb-6">
+              {/* flex-wrap below sm: on a phone, a long category ("Related G+1 Workmen Accommodation")
+                  plus the nowrap View All button is wider than the screen, so the button drops below
+                  the heading. sm and up keep the single row. */}
+              <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-y-3 mb-6">
                 {/* ONE template literal → ONE contiguous text node, so the raw server HTML carries
                     "Related Portable Cabins" without React's <!-- --> separator (the site-wide
                     SSR-diff convention, see the "Showing …" note in src/views/Products.tsx). */}

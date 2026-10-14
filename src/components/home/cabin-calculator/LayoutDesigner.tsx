@@ -18,6 +18,7 @@ import { Fragment, useMemo, useRef, useState } from "react";
 import {
   DoorOpen, AppWindow, Lightbulb, Fan, Wind, Snowflake, Plug, Armchair,
   Move, RotateCcw, RotateCw, ChevronDown, Square, Circle,
+  type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -37,7 +38,7 @@ const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 
 // Per-kind icon, chip colour, and a sensible default "row" (y) so items don't all
 // stack on top of each other before the customer arranges them.
-const KIND_META: Record<Kind, { icon: React.ElementType; cls: string; row: number; group: string }> = {
+const KIND_META: Record<Kind, { icon: LucideIcon; cls: string; row: number; group: string }> = {
   window:    { icon: AppWindow, cls: "border-sky-500/50 bg-sky-500/15 text-sky-300",         row: 0.08, group: "Windows" },
   led:       { icon: Lightbulb, cls: "border-amber-400/50 bg-amber-400/15 text-amber-300",   row: 0.26, group: "Lights" },
   tube:      { icon: Lightbulb, cls: "border-amber-400/50 bg-amber-400/15 text-amber-300",   row: 0.26, group: "Lights" },
@@ -221,7 +222,7 @@ export function CompleteLayoutPreview({ config }: { config: CabinConfig }) {
 
   // Legend groups with how many of each are on the plan.
   const usedGroups = useMemo(() => {
-    const set = new Map<string, { icon: React.ElementType; cls: string; count: number }>();
+    const set = new Map<string, { icon: LucideIcon; cls: string; count: number }>();
     items.forEach((it) => {
       const m = KIND_META[it.kind];
       const e = set.get(m.group);
@@ -327,7 +328,7 @@ export function LayoutDesigner({
   };
 
   const usedGroups = useMemo(() => {
-    const set = new Map<string, { icon: React.ElementType; cls: string }>();
+    const set = new Map<string, { icon: LucideIcon; cls: string }>();
     items.forEach((it) => {
       const m = KIND_META[it.kind];
       if (!set.has(m.group)) set.set(m.group, { icon: m.icon, cls: m.cls });

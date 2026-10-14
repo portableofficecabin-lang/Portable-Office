@@ -1369,6 +1369,9 @@ export type Database = {
       orders: {
         Row: {
           created_at: string
+          customer_email: string | null
+          customer_name: string | null
+          customer_phone: string | null
           due_amount: number
           id: string
           invoice_generated_at: string | null
@@ -1386,10 +1389,13 @@ export type Database = {
           status: Database["public"]["Enums"]["order_status"]
           total_amount: number | null
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
           due_amount?: number
           id?: string
           invoice_generated_at?: string | null
@@ -1407,10 +1413,13 @@ export type Database = {
           status?: Database["public"]["Enums"]["order_status"]
           total_amount?: number | null
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
           due_amount?: number
           id?: string
           invoice_generated_at?: string | null
@@ -1428,7 +1437,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["order_status"]
           total_amount?: number | null
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
