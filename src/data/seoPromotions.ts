@@ -349,6 +349,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-sarjapur",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
+      "container-office-in-belagavi",
     ]),
     { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
