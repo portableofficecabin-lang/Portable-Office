@@ -30,6 +30,16 @@ describe("enquiry limits — browser and database agree", () => {
       assert.deepEqual({ ...ENQUIRY_DB_LIMITS[field] }, db[field], field);
     }
   });
+
+  it("lets the notification edge function accept everything the database stores", () => {
+    const src = readFileSync(join("supabase", "functions", "send-enquiry-notification", "index.ts"), "utf8");
+    const body = src.match(/const LIMITS = \{([^}]*)\}/)?.[1] ?? "";
+    const fn = Object.fromEntries([...body.matchAll(/(\w+):\s*(\d+)/g)].map((m) => [m[1], Number(m[2])]));
+    assert.ok(Object.keys(fn).length > 0, "LIMITS found in the edge function");
+    for (const [field, max] of Object.entries(fn)) {
+      assert.equal(max, ENQUIRY_DB_LIMITS[field as EnquiryLimitedField]?.max, `edge function ${field}`);
+    }
+  });
 });
 
 describe("enquiryLengthError", () => {

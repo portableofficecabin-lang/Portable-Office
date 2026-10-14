@@ -54,7 +54,9 @@ const typeLabels: Record<string, string> = {
   support: "Support Request",
 };
 
-const LIMITS = { name: 200, email: 254, phone: 40, company: 200, subject: 300, message: 6000, product_name: 300 };
+// Same maxima as the enquiries_field_lengths_check constraint and src/lib/enquiries/enquiryLimits.ts
+// (enquiryLimits.test.ts fails if they drift), so every stored enquiry can also be e-mailed.
+const LIMITS = { name: 200, email: 254, phone: 40, company: 200, subject: 300, message: 8000, product_name: 300 };
 const EMAIL = /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/;
 
 /** Escape for HTML text and double-quoted attribute contexts. */
