@@ -34,6 +34,8 @@
     "variants:test": "node --import tsx --import ./scripts/asset-stub-register.mjs scripts/product-variants.test.ts",
     "variants:http": "node scripts/product-variants-http.test.mjs",
     "seo:audit": "node scripts/seo-audit.mjs",
+    "seo:inventory": "node --import tsx --import ./scripts/asset-stub-register.mjs scripts/seo/site-inventory.ts",
+    "seo:gsc-report": "node --import tsx --import ./scripts/asset-stub-register.mjs scripts/seo/gsc-report.ts",
     "admin:reset-password": "node scripts/reset-admin-password.mjs",
     "animation:live": "tsx scripts/animation-live-check.ts"
   },
