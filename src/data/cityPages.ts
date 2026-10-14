@@ -120,9 +120,9 @@ export interface CityPage {
    */
   ctaSecondaryLinks?: CityPageLink[];
   /**
-   * Optional click-to-call and WhatsApp buttons in the quotation box, beside the primary CTA.
+   * Click-to-call and WhatsApp buttons in the quotation box, beside the primary CTA.
    * Numbers come from COMPANY (via primaryPhone / whatsappUrl in src/lib/site-navigation.ts),
-   * never from the entry. Unset = no extra buttons, so every other page's HTML is unchanged.
+   * never from the entry. Shown by default since 2026-10-14 (unset = shown); set `false` to hide.
    */
   ctaContactButtons?: boolean;
   /** Optional "Related pages" link block rendered after the CTA, before the disclaimer. */

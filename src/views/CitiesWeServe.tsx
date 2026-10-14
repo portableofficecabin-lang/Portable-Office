@@ -1,14 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { CITY_PAGES } from "@/data/cityPages";
 import {
   CONTAINER_OFFICE_BANGALORE_PATH,
   CONTAINER_OFFICE_DIRECTORY_ID,
   CONTAINER_OFFICE_PILLAR_PATH,
-  containerOfficeLocation,
 } from "@/data/containerOfficeCluster";
+import {
+  LOCAL_SERVICE_DIRECTORY_ID,
+  SHIPPING_CONTAINER_CATEGORY_PATH,
+  SHIPPING_CONTAINER_DIRECTORY_ID,
+  cityPagesByState,
+} from "@/data/cityDirectory";
+import { COMPANY, formatAddress } from "@/lib/company";
 import { ContainerOfficeLocationCards } from "@/components/locations/ContainerOfficeLocations";
+import { CityGuideCards } from "@/components/locations/CityDirectoryGroups";
 import { Layout } from "@/components/layout/Layout";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
@@ -68,13 +74,17 @@ const LOCAL_PAGES = [
   { name: "Bangalore Offers & Stock", href: "/promotions/shipping-container-in-bangalore" },
 ];
 
-/** Every city page that is not a container-office location (those have their own section). */
-const otherLocalGuides = CITY_PAGES.filter((c) => !containerOfficeLocation(c.slug));
+/* The location pages that are not container-office locations (those have their own section), by
+   family — src/data/cityDirectory.ts. Until 2026-10-14 they shared one unlabelled pill list. */
+const hasShippingGuides = cityPagesByState("shipping-container").length > 0;
+const hasServiceGuides = cityPagesByState("local-service").length > 0;
 
 export default function CitiesWeServe() {
   return (
     <Layout>
       <PageHero
+        /* Visible trail for the BreadcrumbList the route already emits (Home › Cities We Serve). */
+        breadcrumbs={[{ name: "Home", href: "/" }, { name: "Cities We Serve" }]}
         eyebrow="Pan-India Delivery"
         title="Cities We Serve"
         description="Portable cabins, container offices and prefab structures manufactured near Bengaluru and delivered across India — with transport calculated upfront by your delivery pincode, before you pay."
@@ -120,6 +130,15 @@ export default function CitiesWeServe() {
               </motion.div>
             ))}
           </div>
+          {/* Where we ARE vs where we DELIVER, stated once and from COMPANY (the footer's source): the
+              location pages below are delivery areas, and several of them are in places where we have
+              no premises at all. */}
+          <p className="mt-6 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+            <span className="font-medium text-foreground">Where we are:</span> factory —{" "}
+            {formatAddress(COMPANY.addresses.tamilNaduFactory)}; office —{" "}
+            {formatAddress(COMPANY.addresses.bangaloreOffice)}. Each location page below describes
+            deliveries to that area and its site conditions; it does not mean we have a branch there.
+          </p>
         </section>
 
         {/* Major cities grid */}
@@ -260,6 +279,32 @@ export default function CitiesWeServe() {
           <ContainerOfficeLocationCards />
         </section>
 
+        {/* Shipping container locations — the box itself (sale, rental, grades), grouped by state.
+            src/data/cityDirectory.ts; the id is the target of the links on those pages. */}
+        {hasShippingGuides && (
+          <section
+            id={SHIPPING_CONTAINER_DIRECTORY_ID}
+            aria-labelledby="shipping-container-locations-heading"
+            className="scroll-mt-24"
+          >
+            <h2
+              id="shipping-container-locations-heading"
+              className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3"
+            >
+              Shipping Container Locations We Serve
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl">
+              Local guides for buying or renting the container itself — sizes, grades, inspection and
+              delivery for each area. To compare containers for sale and rent, see the{" "}
+              <Link href={SHIPPING_CONTAINER_CATEGORY_PATH} className="text-accent underline underline-offset-4 font-medium">
+                shipping and storage container range
+              </Link>
+              ; for an office built into a container, see the container office locations above.
+            </p>
+            <CityGuideCards family="shipping-container" />
+          </section>
+        )}
+
         {/* What's included everywhere */}
         <section aria-labelledby="included-heading" className="card-premium p-6 sm:p-10">
           <h2 id="included-heading" className="font-display text-2xl font-bold text-foreground mb-6">
@@ -282,32 +327,33 @@ export default function CitiesWeServe() {
           </div>
         </section>
 
-        {/* Local area guides — one landing page per location or local service (data-driven,
-            src/data/cityPages.ts). Originally all industrial hubs; the list now also carries
-            city-wide service pages such as villa construction in Bangalore, which is why the
-            copy below says "locations and services" rather than "industrial hubs".
-            The container-office location pages are listed in their own grouped section above,
-            so they are left out here: each guide appears once on this page. */}
-        {otherLocalGuides.length > 0 && (
-          <section aria-label="Local area guides" className="mb-16">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3 text-center">
-              Local Area Guides
+        {/* Local service guides — every location page that is neither a container-office nor a
+            shipping-container location (today: construction and workforce-housing service pages),
+            grouped by state. Replaces the single "Local Area Guides" pill list, which mixed these with
+            the shipping-container pages under one unlabelled heading. Each guide still appears once on
+            this page, with the same link text it had before. */}
+        {hasServiceGuides && (
+          <section
+            id={LOCAL_SERVICE_DIRECTORY_ID}
+            aria-labelledby="local-service-guides-heading"
+            className="scroll-mt-24 mb-16"
+          >
+            <h2
+              id="local-service-guides-heading"
+              className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-3"
+            >
+              Construction &amp; Workforce Housing Services
             </h2>
-            <p className="text-muted-foreground mb-6 max-w-xl mx-auto text-center">
-              Detailed guides for the locations and services we cover most — what we deliver, sizes,
-              options and answers for your area.
+            <p className="text-muted-foreground mb-8 max-w-3xl">
+              Service pages for building and workforce-housing projects — what each service covers, how
+              the work runs and answers for that area. For house construction on your own plot, start
+              with the{" "}
+              <Link href="/products/category/home-construction" className="text-accent underline underline-offset-4 font-medium">
+                home construction services overview
+              </Link>
+              .
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {otherLocalGuides.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/cities-we-serve/${c.slug}`}
-                  className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition hover:border-primary/60 hover:bg-muted"
-                >
-                  {c.listTitle ?? c.metaTitle}
-                </Link>
-              ))}
-            </div>
+            <CityGuideCards family="local-service" />
           </section>
         )}
 
