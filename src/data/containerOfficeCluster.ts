@@ -56,6 +56,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
   // ── Karnataka ── south and south-east Bengaluru first, then east, north, the NH 48 corridor and
   //    Mysore (the only Karnataka page outside the Bengaluru region).
   {
+    slug: "container-office-in-bidar",
+    state: "Karnataka",
+    name: "Bidar",
+    placeName: "Bidar",
+    area: "Bidar city, Naubad, Kolhar Industrial Area, Humnabad and Bhalki",
+    hubAnchor: "Container offices for Bidar's industrial and highway projects",
+    nearbyLabel: "Bidar district",
+    neighbours: [], // no other cluster page within 130 km (North Karnataka, near the Telangana border)
+  },
+  {
     slug: "container-office-in-jigani",
     state: "Karnataka",
     name: "Jigani",
