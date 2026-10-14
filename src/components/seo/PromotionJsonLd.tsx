@@ -4,15 +4,12 @@ import {
   generateFAQSchema,
   generatePromotionStructuredData,
 } from "@/lib/seo/structured-data";
+import { promotionBreadcrumbs } from "@/lib/seo/promotionBreadcrumbs";
 
 export function PromotionJsonLd({ content }: { content: SEOContent }) {
   const structuredData = [
-    generateBreadcrumbSchema([
-      { name: "Home", url: "https://portableofficecabin.com/" },
-      { name: "Marketplace", url: "https://portableofficecabin.com/marketplace" },
-      { name: "Promotions", url: "https://portableofficecabin.com/promotions" },
-      { name: content.h1, url: content.canonicalUrl },
-    ]),
+    // Same list as the visible trail in SEOPromotionPage (one source, identical output to before).
+    generateBreadcrumbSchema(promotionBreadcrumbs(content).map(({ name, url }) => ({ name, url }))),
     generateFAQSchema(content.faqs),
     generatePromotionStructuredData(content),
   ];
