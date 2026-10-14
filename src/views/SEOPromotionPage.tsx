@@ -7,18 +7,46 @@ import { SEOContent } from "@/data/seoPromotions";
 import { ArrowRight, CheckCircle, Phone, Mail, MapPin, Star, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/company";
+import { promotionBreadcrumbs } from "@/lib/seo/promotionBreadcrumbs";
 
 interface SEOPromotionPageProps {
   content: SEOContent;
 }
 
 export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
+  const crumbs = promotionBreadcrumbs(content);
   return (
     <Layout>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-secondary text-white py-16 md:py-24">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
+            {/* Visible trail for the BreadcrumbList these pages already emit — the same list
+                (promotionBreadcrumbs), so markup and page always agree. */}
+            <nav aria-label="Breadcrumb" className="mb-6">
+              <ol className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/80">
+                {crumbs.map((crumb, index) => {
+                  const isLast = index === crumbs.length - 1;
+                  return (
+                    /* The separator trails each crumb rather than leading the next one, so when the
+                       long last crumb wraps onto its own line at 320 px it does not start with a
+                       dangling "/". */
+                    <li key={crumb.href} className="flex min-w-0 items-center gap-2">
+                      {isLast ? (
+                        <span className="font-medium text-white" aria-current="page">{crumb.name}</span>
+                      ) : (
+                        <>
+                          <Link href={crumb.href} className="underline-offset-4 hover:text-white hover:underline">
+                            {crumb.name}
+                          </Link>
+                          <span aria-hidden="true" className="text-white/50">/</span>
+                        </>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
             <h1 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">
               {content.h1}
             </h1>
