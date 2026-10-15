@@ -8221,6 +8221,344 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN KALABURAGI (Gulbarga) — Kalyana Karnataka: the Sedam / Wadi / Chincholi
+   * cement and limestone belt, Shahabad stone quarries, the tur-dal mills and agricultural
+   * processing units, the Nandur and Kapnoor industrial areas, and highway / railway / irrigation /
+   * solar projects across the district. Its cluster neighbour is Bidar (~97 km by
+   * the pages' own geo), linked both ways through containerOfficeCluster.ts.
+   *
+   * Owner copy of 2026-10-14, mapped onto the fixed template slots the same way as Belagavi. The
+   * draft has eight H2s and no FAQ section; nothing is dropped:
+   *   • "Why Choose a Container Office in Kalaburagi?" → why: its three numbered H3s (summer heat,
+   *     black-cotton soil, installation / relocation) as bullets 1–3 with their lists folded in as
+   *     prose, plus the "Built for Long-Term Industrial and Construction Use" H2 (same durability
+   *     theme) as bullet 4. whyIntro is a one-line lead-in.
+   *   • "Applications" (seven H3s, their lists as prose) → solutions.
+   *   • "Specifications and Features": the standard-construction list → features[] as
+   *     "Component — spec" plus the draft's final-specifications note, then the sizes-table rows;
+   *     the custom-dimensions line → sizesNote. "Optional Customisation" → the custom slot beside
+   *     the interior render (short titles added).
+   *   • "Sale or Rent" → industries (Buy / Rent / compare both).
+   *   • "Why Choose Portable Office Cabin" → whyUs (titles added; closing line as the last item).
+   *   • "Delivery and Installation": intro + area list → areasText; the five-step process → how,
+   *     with the "Site Access and Delivery Considerations" checklist folded into step 3 and the
+   *     delivery-timeline note into step 5.
+   *   • "Get a Quotation" → CTA, its checklist as prose; the phone and e-mail come from COMPANY;
+   *     "Website:" dropped (redundant on-site). The draft already says "manufacturing base near
+   *     Hosur, Tamil Nadu" and "office in Bengaluru", which matches COMPANY.
+   *   • FAQs: the draft has none, but the template always renders the FAQ section and FAQPage
+   *     JSON-LD, so seven questions are answered ONLY with statements already on this page. Owner
+   *     review (2026-10-16): the five questions that repeated a sibling page's question word for word
+   *     (summer heat, buy or rent, sizes, delivery areas, quotation details) were replaced with
+   *     Kalaburagi-specific ones; no question now matches another city page's.
+   * No ₹, lead times, warranty terms or project counts (the draft states none; none added).
+   *
+   * Images: five owner-dropped webp renders ("public/images/Container Offices in Kalaburagi city
+   * page/…", 1344×768 ×4 and 1200×896), copied byte-for-byte to clean slug names. Alt text and the
+   * caption describe the ACTUAL renders: a charcoal-black corrugated-steel container office with two
+   * steel doors and a five-pane ribbon window. Because the page is about Kalaburagi's summer heat, the
+   * feature caption points at the optional heat-reflective roof coating. The interior render shows exposed
+   * corrugated walls and ceiling, so the customOutro says standard units have finished panels and an insulated
+   * ceiling; its alt text says "illustrative render" and it carries the visible caption Bagalkot uses for the
+   * same case. Owner review (2026-10-16): the disclaimer says every image, exterior and interior, is an
+   * illustrative render, and that actual colours, materials and finishes depend on the approved specifications.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
+   * Davanagere); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-kalaburagi",
+    city: "Kalaburagi",
+    listTitle: "Container Office in Kalaburagi",
+    metaTitle: "Container Office in Kalaburagi | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Kalaburagi for cement plants, quarries, dal mills and project sites. Insulated for the summer heat, for sale or rent. Get a quote.",
+    keywords:
+      "Container Office in Kalaburagi, Container Office Kalaburagi, Container Office Gulbarga, Portable Office Cabin Kalaburagi, Site Office Container Kalaburagi, Container Office for Rent Kalaburagi, Container Office for Sale Kalaburagi, Portable Cabin Sedam, Site Office Wadi, Container Office Supplier Kalaburagi",
+    geo: { region: "IN-KA", placename: "Kalaburagi (Gulbarga), Karnataka, India", position: "17.3297;76.8343", icbm: "17.3297, 76.8343" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-kalaburagi/container-office-in-kalaburagi-exterior.webp",
+      alt: "Container office in Kalaburagi — charcoal-black corrugated-steel container office with two lockable steel doors, a five-pane ribbon window and an end-wall window, standing on a paved forecourt",
+      width: 1344,
+      height: 768,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-kalaburagi/container-office-in-kalaburagi-aerial-view.webp",
+      alt: "Container office in Kalaburagi — aerial view of the charcoal-black container office showing its corrugated steel roof, the two doors and the ribbon window along one side, on a paved forecourt beside a hedge",
+      width: 1344,
+      height: 768,
+      caption: "Heat-reflective roof coating is an option.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-kalaburagi/container-office-in-kalaburagi-interior.webp",
+      alt: "Container office in Kalaburagi — illustrative render of an optionally furnished interior with dark exposed corrugated walls and ceiling, a wall-mounted desk with laptops and office chairs along a large window, two lounge chairs, shelving, a pendant light and wood-look flooring",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-kalaburagi/container-office-in-kalaburagi-front-view.webp",
+        alt: "Container office in Kalaburagi — straight-on side elevation of the charcoal-black container office: a flush side panel, a five-pane ribbon window and a steel entrance door with a door closer",
+        width: 1344,
+        height: 768,
+      },
+      {
+        src: "/images/cities/container-office-in-kalaburagi/container-office-in-kalaburagi-end-view.webp",
+        alt: "Container office in Kalaburagi — blank end wall of the charcoal-black container office, a corrugated steel panel between the corner posts and corner castings",
+        width: 1344,
+        height: 768,
+      },
+    ],
+
+    h1: "Container Offices in Kalaburagi",
+    tagline: "Ready-to-Work Spaces for Industrial and Infrastructure Projects",
+    intro: [
+      "Kalaburagi is one of North Karnataka's important industrial, agricultural, and infrastructure development centres. Known for its cement manufacturing industries, dal mills, limestone deposits, stone-processing businesses, and expanding infrastructure projects, the district supports a wide range of commercial and industrial activities.",
+      "From cement plants in Sedam, Wadi, and Chincholi to agricultural processing units, Shahabad stone quarries, construction projects, and infrastructure development across Kalyana Karnataka, businesses require practical office spaces that can withstand demanding site conditions.",
+      "Kalaburagi also experiences intense summer heat, making proper insulation, ventilation, and air-conditioning important considerations when selecting temporary office accommodation.",
+      "For manufacturing companies, infrastructure contractors, industrial facilities, and commercial developments, a container office in Kalaburagi offers a flexible, durable, and relocatable workspace solution.",
+      "Portable Office Cabin manufactures portable container offices and supplies them across Kalaburagi city and district, including Nandur, Kapnoor, Sedam, Wadi, Shahabad, Chittapur, Jewargi, Aland, Afzalpur, Chincholi, and surrounding industrial and infrastructure project locations.",
+      "Whether you need a compact site office, an air-conditioned supervisor's cabin, a fully furnished administrative office, or a larger modular workspace, our container offices can be customised according to your project requirements.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Kalaburagi?",
+    whyIntro: "Four reasons a container office suits industrial and infrastructure projects in Kalaburagi:",
+    whyBullets: [
+      {
+        title: "Designed for Kalaburagi's extreme summer heat",
+        text: "Kalaburagi experiences some of Karnataka's hottest summer conditions, with temperatures sometimes exceeding 40°C during peak summer months. An ordinary uninsulated steel cabin can become extremely uncomfortable during daytime operations, particularly at open construction sites, cement plants, stone quarries, and industrial locations. Our container offices can be manufactured with PUF or glass wool insulation for walls and roofing; insulated roofing systems designed to reduce heat transfer; optional heat-reflective exterior roof coatings; electrical wiring and provisions for split air-conditioning; aluminium sliding windows with optional mosquito mesh; optional solar-control window films or blinds; finished interior wall panels and false ceilings; and suitable ventilation arrangements. These features help reduce heat gain and support a more comfortable indoor working environment when combined with appropriate cooling and ventilation. For projects requiring regular office operations during peak summer months, we recommend evaluating the insulation specification and air-conditioning capacity according to cabin size, occupancy, and expected heat exposure.",
+      },
+      {
+        title: "Suitable for Kalaburagi's soil and ground conditions",
+        text: "Several parts of Kalaburagi district have black cotton soil, which may expand during wet periods and shrink during dry weather. Such ground conditions can create challenges for conventional temporary structures when foundations are not properly designed. Portable container offices can be installed on appropriately engineered foundations, including concrete supports or structural steel skids, depending on actual ground conditions. Key advantages include stable and level placement on properly prepared foundations; reduced direct contact with ground moisture; less need for extensive permanent civil construction; easier removal and relocation when project requirements change; flexible positioning within industrial and construction premises; and reusability across multiple project locations. Foundation design, drainage arrangements, and load-bearing requirements should be assessed according to site conditions before installation.",
+      },
+      {
+        title: "Faster installation and flexible relocation",
+        text: "Industrial and infrastructure projects frequently require functional office space before permanent buildings are completed. Container offices are largely fabricated and finished at the manufacturing facility, reducing the amount of construction work required on-site. Advantages include reduced on-site construction activities; faster placement compared with conventional masonry offices; customisable office layouts; flexible installation within available site space; relocation between different project locations; and suitable configurations for temporary and long-term projects. This makes container offices especially useful for contractors managing projects across Kalaburagi and the wider Kalyana Karnataka region.",
+      },
+      {
+        title: "Built for long-term industrial and construction use",
+        text: "Kalaburagi's high summer temperatures, cement dust, quarry grit, seasonal rainfall, and outdoor industrial conditions make structural durability an important consideration when selecting a portable office. Our container offices can be manufactured with protective anti-corrosion paint systems; durable mild steel structural frameworks; weather-resistant MS or GI exterior cladding; insulated wall and roof assemblies; optional heat-reflective roofing finishes; properly sealed exterior joints; durable steel doors, hinges, and locking systems; aluminium windows with suitable sealing provisions; and low-maintenance interior finishing materials. These features help support long-term use across cement plants, mining operations, agricultural processing businesses, construction sites, and infrastructure projects. With proper installation, handling, periodic inspection, and maintenance, a well-manufactured container office can be reused across multiple project locations. Regular cleaning, roof drainage inspection, and timely repair of damaged exterior protective coatings can help extend its service life.",
+      },
+    ],
+
+    solutionsHeading: "Applications of Container Offices in Kalaburagi",
+    solutionsIntro:
+      "Our portable and prefabricated container offices are suitable for cement industries, stone quarries, agricultural processing businesses, infrastructure contractors, renewable energy projects, commercial developments, and institutional facilities.",
+    solutions: [
+      {
+        title: "Cement Plant and Limestone Mining Offices",
+        text: "Kalaburagi district has major cement manufacturing and limestone-related industrial activities, particularly around Sedam, Wadi, and Chincholi. Cement plants, mining contractors, equipment suppliers, and industrial maintenance teams may require enclosed office spaces close to operational areas. Container offices can be configured as cement plant supervisor cabins, contractor management offices, maintenance coordination rooms, engineering and project documentation offices, weighbridge administration cabins, industrial security offices, visitor and inspection rooms, and site meeting cabins. Insulated interiors and optional air-conditioning can provide an enclosed workspace away from direct industrial activities.",
+      },
+      {
+        title: "Dal Mills and Agricultural Processing Offices",
+        text: "Kalaburagi is widely recognised for its tur dal production and agricultural processing industry. Dal mills, agricultural traders, procurement companies, and food-processing businesses may require additional administrative facilities during seasonal operations or plant expansion. Common applications include dal mill administration offices, agricultural procurement cabins, seasonal accounts and billing offices, quality-control documentation rooms, warehouse supervisor cabins, dispatch and transport coordination offices, and security and gate-control rooms. Portable office cabins can be positioned near processing facilities, warehouses, and agricultural trading areas, subject to site access and installation requirements.",
+      },
+      {
+        title: "Shahabad Stone Quarry and Processing Offices",
+        text: "Shahabad and surrounding areas are known for limestone and stone-related industries. Stone quarries, cutting yards, transport operators, and material processing businesses may require office spaces that provide separation from outdoor dust and direct sunlight. Container offices can be used as quarry supervisor cabins, dispatch and billing offices, owner and manager offices, stone-processing administration rooms, weighbridge cabins, contractor coordination offices, and security and entry-control rooms. Appropriate sealing, ventilation, filtration, and maintenance provisions should be selected based on the site's dust conditions.",
+      },
+      {
+        title: "Highway, Railway and Irrigation Project Offices",
+        text: "Infrastructure contractors working on highway development, railway construction, irrigation systems, and public works projects often require temporary office facilities close to active construction zones. Container offices can serve as project management offices, site engineers' cabins, contractor meeting rooms, planning and documentation offices, survey team coordination cabins, material testing administration rooms, and temporary project control centres. Their relocatable design makes them useful for projects where work progresses through different locations.",
+      },
+      {
+        title: "Real Estate Sales and Construction Site Offices",
+        text: "Builders and developers operating around Kalaburagi Ring Road, Aland Road, airport-side developments, and other expanding residential and commercial areas can use container offices during construction. Typical applications include real estate sales and marketing offices, construction site offices, project engineers' cabins, client meeting rooms, contractor coordination offices, and reception and enquiry rooms. After project completion, suitable units can be relocated to another site.",
+      },
+      {
+        title: "Solar Power and Electrical Infrastructure Offices",
+        text: "Renewable energy developers, solar power contractors, electrical transmission companies, and infrastructure businesses working around Jewargi, Afzalpur, and other parts of Kalaburagi district may require office facilities in remote locations. Portable container offices can be used as solar project management offices, electrical contractor cabins, site engineering offices, project documentation rooms, temporary administrative facilities, and staff coordination centres. For remote installations, transportation access, electrical supply, foundation preparation, and environmental conditions should be assessed before delivery.",
+      },
+      {
+        title: "Government, Educational and Healthcare Institutions",
+        text: "Government departments, universities, hospitals, and other institutions may require temporary administrative space during construction, expansion, or renovation. Applications include administrative offices, examination coordination rooms, faculty and staff cabins, counselling rooms, records and documentation offices, temporary healthcare support facilities, and project monitoring offices. Specialised healthcare or laboratory applications must be designed according to applicable safety, hygiene, ventilation, and regulatory requirements.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Features",
+    featuresIntro:
+      "Portable Office Cabin manufactures container offices using welded structural steel frameworks, protective exterior cladding, insulated interiors, and configurable office layouts. Standard construction features, followed by the available container office sizes and their typical applications:",
+    features: [
+      "Structure — welded mild steel structural framework.",
+      "Exterior walls — MS or GI sheet cladding according to approved specifications.",
+      "Wall insulation — PUF or glass wool insulation options.",
+      "Roofing — weather-resistant roofing system with insulation options.",
+      "Entry door — lockable steel door with suitable hardware.",
+      "Windows — aluminium sliding windows with optional mosquito mesh.",
+      "Flooring — vinyl or laminate flooring over a suitable floor base.",
+      "Interior walls — finished interior wall panels.",
+      "Ceiling — insulated ceiling with optional false ceiling.",
+      "Lighting — LED interior lighting.",
+      "Electrical system — switches, power sockets, distribution board, and appropriate earthing provisions.",
+      "Exterior finish — protective paint system according to the approved specification.",
+      "Final specifications — final material thicknesses, insulation types, finishes, and electrical provisions depend on the approved quotation.",
+      "10 ft × 10 ft container office — small site office or supervisor cabin.",
+      "12 ft × 10 ft container office — compact administrative or security office.",
+      "16 ft × 10 ft container office — site engineers' office or contractor cabin.",
+      "20 ft × 8 ft container office — standard site office or weighbridge room.",
+      "20 ft × 10 ft container office — furnished office or project meeting room.",
+      "30 ft × 10 ft container office — partitioned office or larger workspace.",
+      "40 ft × 10 ft container office — multi-room project office or administrative unit.",
+    ],
+    sizesNote:
+      "Custom container office dimensions and layouts can also be manufactured based on workspace requirements, occupancy, transportation feasibility, and project specifications.",
+
+    industriesHeading: "Container Office for Sale or Rent in Kalaburagi",
+    industriesIntro:
+      "Portable Office Cabin offers container office purchase and rental options based on project duration, specifications, and unit availability.",
+    industries: [
+      {
+        title: "Buy a container office in Kalaburagi",
+        text: "Purchasing a container office can be an economical choice for long-term industrial operations and contractors who regularly require workspaces at different project locations. Benefits include ownership of a reusable portable office asset, customised dimensions and interior facilities, long-term use with suitable maintenance, relocation to future project locations, reduced dependence on permanently rented office premises, and flexibility for future operational requirements. Purchasing is particularly suitable for cement plant offices, stone quarry administration cabins, industrial gate offices, manufacturing facilities, and infrastructure contractors managing multiple projects.",
+      },
+      {
+        title: "Rent a container office in Kalaburagi",
+        text: "Rental container offices are suitable for temporary, seasonal, and project-based requirements — for example seasonal dal mill administration offices, short-term highway construction projects, temporary cement plant expansion works, real estate sales and marketing offices, railway and irrigation project management cabins, temporary contractor offices, and short-duration industrial maintenance projects. Renting can help businesses reduce initial capital expenditure while providing functional office accommodation for the required project period.",
+      },
+      {
+        title: "Compare both options",
+        text: "Our team can provide quotations for purchase and rental options so customers can compare costs based on their operational requirements.",
+      },
+    ],
+
+    customHeading: "Optional Customisation",
+    customIntro: "Depending on the project requirements, our container offices can include:",
+    customBullets: [
+      { title: "Air-conditioning", text: "Split air-conditioning units." },
+      { title: "Enhanced insulation", text: "Enhanced insulation for high-temperature locations." },
+      { title: "Reflective roof", text: "Heat-reflective exterior roof coatings." },
+      { title: "Attached toilet", text: "Attached toilet with wash basin, flush system, and exhaust provisions." },
+      { title: "Pantry", text: "Pantry counter and storage cabinets." },
+      { title: "Furniture", text: "Office desks, workstations, and chairs." },
+      { title: "Partitions", text: "Manager cabins and internal partitions." },
+      { title: "Reception", text: "Reception and waiting areas." },
+      { title: "Meeting space", text: "Conference and meeting rooms." },
+      { title: "Exterior finish", text: "Exterior painting in preferred colour combinations." },
+      { title: "Multi-unit offices", text: "Multiple interconnected container units." },
+      {
+        title: "Ground-plus-one",
+        text: "Ground-plus-one modular office arrangements with engineered structural support and external staircase provisions.",
+      },
+    ],
+    customOutro:
+      "The interior shown is an optional furnished design with an exposed corrugated finish; standard units have finished interior wall panels and an insulated ceiling, and the finishes and fittings for each office are confirmed in its quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin in Kalaburagi?",
+    whyUsIntro:
+      "Portable Office Cabin provides customised portable and prefabricated office solutions for industrial, agricultural, commercial, mining, and infrastructure applications, manufactured at its factory near Hosur, Tamil Nadu. Our capabilities include:",
+    whyUsBullets: [
+      { title: "Manufacturing", text: "Manufacturing of portable and prefabricated container offices." },
+      { title: "Custom layouts", text: "Custom dimensions and office configurations." },
+      { title: "Hot-weather insulation", text: "Insulated container offices suitable for hot-weather conditions." },
+      { title: "Facilities", text: "Optional air-conditioning, attached toilets, pantry, and furniture." },
+      { title: "Room layouts", text: "Single-room and multi-room office layouts." },
+      { title: "Modular offices", text: "Multiple interconnected modular office units." },
+      { title: "Ground-plus-one", text: "Ground-plus-one modular arrangements based on structural requirements." },
+      { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
+      { title: "Delivery coordination", text: "Delivery coordination across Kalaburagi district." },
+      { title: "Relocatable", text: "Relocatable office solutions for temporary and long-term industrial projects." },
+      {
+        title: "Practical focus",
+        text: "We focus on providing practical and durable office spaces according to the customer's site conditions, operational requirements, and budget.",
+      },
+    ],
+
+    areasHeading: "Container Office Delivery and Installation in Kalaburagi",
+    areasText:
+      "Our container offices are fabricated at our manufacturing facility near Hosur, Tamil Nadu, and transported to the customer's project location using suitable commercial vehicles. We serve Kalaburagi city and surrounding locations, including Kalaburagi City, Nandur, Kapnoor Industrial Area, Sedam, Wadi, Shahabad, Chittapur, Jewargi, Aland, Afzalpur, Chincholi, Solapur Road industrial locations, Hyderabad Road project locations, and surrounding industrial estates and infrastructure sites.",
+
+    howHeading: "Our Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Project Requirement Assessment",
+        text: "We collect details about the required dimensions, internal layout, number of occupants, project location, and additional facilities.",
+      },
+      {
+        title: "Manufacturing and Interior Finishing",
+        text: "The container office is fabricated and finished according to the approved design and specifications.",
+      },
+      {
+        title: "Transportation Planning",
+        text: "We coordinate transport requirements, delivery routes, site accessibility, and unloading arrangements before dispatch. For cement plants, limestone mines, stone quarries, remote project sites, and locations accessible through narrow industrial or village roads, transportation feasibility should be checked before dispatch, including truck and trailer entry clearance; road width and turning radius; available crane or Hydra unloading space; prepared foundation and support points; overhead electrical cables and other obstructions; site electrical supply availability; ground stability and drainage arrangements; and applicable site safety and access requirements.",
+      },
+      {
+        title: "Placement and Installation",
+        text: "The container office is positioned on a suitable prepared foundation using appropriate lifting equipment arranged under the agreed scope.",
+      },
+      {
+        title: "Final Inspection and Handover",
+        text: "After placement, applicable installation activities and final checks are completed before handing over the unit. Delivery timelines depend on manufacturing requirements, container dimensions, transport distance, road conditions, unloading arrangements, and site readiness.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How should a container office be specified for summer days above 40°C in Kalaburagi?",
+        answer:
+          "Plan insulation, solar control and cooling together. Walls and roof can be insulated with PUF or glass wool, the roof can take a heat-reflective coating, and windows can have solar-control film or blinds. The charcoal-black finish shown on this page is one colour option, and a lighter exterior colour can be chosen instead. Air-conditioning capacity is then sized for the cabin's dimensions, occupancy and heat exposure, and confirmed in the quotation.",
+      },
+      {
+        question: "What foundation does a container office need on black cotton soil?",
+        answer:
+          "Several parts of Kalaburagi district have black cotton soil, which may expand when wet and shrink when dry. Container offices can be installed on appropriately engineered foundations, including concrete supports or structural steel skids, depending on actual ground conditions; foundation design, drainage, and load-bearing requirements should be assessed before installation.",
+      },
+      {
+        question: "Are container offices suitable for cement plants and quarries?",
+        answer:
+          "Yes. Container offices can be configured as supervisor cabins, contractor and maintenance offices, weighbridge cabins, security offices, and meeting rooms near cement plants, limestone mines, and stone quarries such as those around Sedam, Wadi, Chincholi, and Shahabad. Appropriate sealing, ventilation, filtration, and maintenance provisions should be selected based on the site's dust conditions.",
+      },
+      {
+        question: "Should a Kalaburagi dal mill rent a container office for the season or buy one?",
+        answer:
+          "If the extra office is needed only for seasonal procurement, billing, quality-control or dispatch work, renting can reduce the initial capital outlay for the period you need it, subject to unit availability. If the mill will use the office every season, or move it between its own premises, buying gives you a reusable office. We can quote both options so you can compare the costs.",
+      },
+      {
+        question: "What size container office suits a weighbridge cabin at a Sedam cement plant or a Shahabad stone yard?",
+        answer:
+          "Our standard size for a site office or weighbridge room is 20 ft × 8 ft. For other roles at the same site, a 10 ft × 10 ft unit suits a small supervisor cabin, 12 ft × 10 ft a compact security or administrative office, and 16 ft × 10 ft a site engineers' office or contractor cabin. Custom dimensions are possible, provided the finished unit can still be transported to the site.",
+      },
+      {
+        question: "Can you deliver to remote project sites around Jewargi, Afzalpur or Chincholi?",
+        answer:
+          "Yes. Jewargi, Afzalpur and Chincholi are in our Kalaburagi service area, along with Aland, Chittapur, Sedam, Wadi and Shahabad. For solar, irrigation, quarry or mine sites reached by narrow village roads, we check before dispatch that a truck and trailer can get in and turn, that there is space for a crane or Hydra to unload, that no overhead cables are in the way, and that the foundation is ready on stable ground.",
+      },
+      {
+        question: "Do you have a factory or yard in Kalaburagi (Gulbarga)?",
+        answer:
+          "No. Our container offices are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Kalaburagi district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading and placement are arranged for each project, and the timeline depends on the specification, transport distance, road conditions and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Kalaburagi",
+    ctaText: `Looking for a container office manufacturer and supplier serving Kalaburagi, Karnataka? Portable Office Cabin provides customised portable container offices for cement plants, stone quarries, dal mills, agricultural processing businesses, manufacturing companies, infrastructure contractors, renewable energy projects, and commercial developments. To receive a quotation, share your project location in Kalaburagi district, required container office dimensions, number of occupants or workstations, preferred internal office layout, additional facilities such as AC, attached toilet, pantry, or furniture, purchase or rental requirement, and expected delivery schedule. Our team can recommend a suitable container office configuration and prepare a quotation based on your project specifications. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing base near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Service area: Kalaburagi, Karnataka, and surrounding industrial, mining, agricultural, and infrastructure project locations.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kalaburagi district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's standard container office design, shown in one colour option and with an optionally furnished interior in an exposed corrugated finish; they are not photographs of installations in Kalaburagi. Actual cabin colours, materials and finishes depend on the approved specifications for each order. Industrial areas, roads, towns, industries and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any cement plant, mine, quarry, dal mill, industrial estate, developer, utility, university, hospital, government department or public-sector undertaking in the district, and entry to any such premises is subject to that facility's own permissions. Notes on temperatures, soils, foundations, dust and drainage are general guidance, not engineering advice; the base, anchoring, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * VILLA CONSTRUCTION COMPANY BANGALORE
    *
    * The first SERVICE page in this file — every sibling above sells a container or cabin at a

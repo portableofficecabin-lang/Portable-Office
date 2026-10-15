@@ -63,7 +63,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Bidar city, Naubad, Kolhar Industrial Area, Humnabad and Bhalki",
     hubAnchor: "Container offices for Bidar's industrial and highway projects",
     nearbyLabel: "Bidar district",
-    neighbours: [], // no other cluster page within 130 km (North Karnataka, near the Telangana border)
+    neighbours: ["container-office-in-kalaburagi"], // Kalaburagi ~97 km (both Kalyana Karnataka)
+  },
+  {
+    slug: "container-office-in-kalaburagi",
+    state: "Karnataka",
+    name: "Kalaburagi",
+    placeName: "Kalaburagi",
+    area: "Kalaburagi city, Nandur, Kapnoor, Sedam and Wadi",
+    hubAnchor: "Container offices for Kalaburagi and the Sedam–Wadi cement belt",
+    nearbyLabel: "Kalaburagi district",
+    neighbours: ["container-office-in-bidar"], // ~97 km (both Kalyana Karnataka)
   },
   {
     slug: "container-office-in-jigani",
