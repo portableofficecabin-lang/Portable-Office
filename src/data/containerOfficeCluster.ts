@@ -161,6 +161,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     nearbyLabel: "Mysore",
     neighbours: [], // nearest cluster page is ~120 km away
   },
+  {
+    slug: "container-office-in-bagalkot",
+    state: "Karnataka",
+    name: "Bagalkot",
+    placeName: "Bagalkot",
+    area: "Bagalkot city, Navanagar, Mudhol and Jamkhandi",
+    hubAnchor: "Container offices across Bagalkot district",
+    nearbyLabel: "Bagalkot district",
+    neighbours: [], // North Karnataka: the nearest cluster page (Tumkur) is ~350 km away
+  },
 
   // ── Tamil Nadu ── the Hosur–Krishnagiri belt first (it borders South Bengaluru), then the west
   //    (Salem, Coimbatore), the Chennai belt and the far south.

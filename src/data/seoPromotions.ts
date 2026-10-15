@@ -345,6 +345,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Container-office cluster: Hoskote and the Bengaluru-belt pages (see the note above), so the
     // state hub reaches every Karnataka location page.
     ...hubLinksFor([
+      "container-office-in-bagalkot",
       "container-office-in-jigani",
       "container-office-in-bommasandra",
       "container-office-in-sarjapur",
@@ -358,6 +359,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Site Office Container|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    { name: "Container Office in Bagalkot", href: "/cities-we-serve/container-office-in-bagalkot" },
   ],
   "Portable Cabin|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
