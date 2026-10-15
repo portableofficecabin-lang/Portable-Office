@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesInsert } from "@/integrations/supabase/types";
+import { enquiryLengthError } from "@/lib/enquiries/enquiryLimits";
 import { cn } from "@/lib/utils";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import logo from "@/assets/logo.webp";
@@ -2133,7 +2134,6 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
       toast({ title: "Invalid mobile number", description: "Please enter a valid mobile number (7–15 digits).", variant: "destructive" });
       return;
     }
-    setSubmitting(true);
     const product = PRODUCTS.find((p) => p.id === config.productId)!;
     const message =
       `${summariseConfig(config, est)}\n\n— Contact —\nCity: ${lead.city || "—"}\nState: ${lead.state || "—"}` +
@@ -2150,6 +2150,14 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
       expected_value: Math.round(est.total),
       lead_source: "Homepage Cabin Calculator",
     };
+    // The row must fit public.enquiries' column limits (see enquiryLimits.ts) — checked before
+    // submitting so a long note is reported here instead of being refused by the database.
+    const lengthError = enquiryLengthError(enquiry);
+    if (lengthError) {
+      toast({ title: "Please shorten your details", description: lengthError, variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
     try {
       const { error } = await supabase.from("enquiries").insert(enquiry);
       if (error) throw error;
@@ -3517,16 +3525,16 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                 ) : (
                   <form onSubmit={submitQuotation} className="space-y-4">
                     <div className="grid gap-3 sm:grid-cols-2">
-                      <LeadField label="Full Name *" value={lead.name} onChange={(v) => setLead({ ...lead, name: v })} required placeholder="Your name" />
-                      <LeadField label="Company Name" value={lead.company} onChange={(v) => setLead({ ...lead, company: v })} placeholder="Company (optional)" />
-                      <LeadField label="Mobile Number *" value={lead.phone} onChange={(v) => setLead({ ...lead, phone: v })} required type="tel" inputMode="tel" placeholder="10-digit mobile" />
-                      <LeadField label="Email Address *" value={lead.email} onChange={(v) => setLead({ ...lead, email: v })} required type="email" placeholder="you@email.com" />
-                      <LeadField label="City" value={lead.city} onChange={(v) => setLead({ ...lead, city: v })} placeholder="City" />
-                      <LeadField label="State" value={lead.state} onChange={(v) => setLead({ ...lead, state: v })} placeholder="State" />
+                      <LeadField label="Full Name *" maxLength={100} value={lead.name} onChange={(v) => setLead({ ...lead, name: v })} required placeholder="Your name" />
+                      <LeadField label="Company Name" maxLength={150} value={lead.company} onChange={(v) => setLead({ ...lead, company: v })} placeholder="Company (optional)" />
+                      <LeadField label="Mobile Number *" maxLength={20} value={lead.phone} onChange={(v) => setLead({ ...lead, phone: v })} required type="tel" inputMode="tel" placeholder="10-digit mobile" />
+                      <LeadField label="Email Address *" maxLength={254} value={lead.email} onChange={(v) => setLead({ ...lead, email: v })} required type="email" placeholder="you@email.com" />
+                      <LeadField label="City" maxLength={100} value={lead.city} onChange={(v) => setLead({ ...lead, city: v })} placeholder="City" />
+                      <LeadField label="State" maxLength={100} value={lead.state} onChange={(v) => setLead({ ...lead, state: v })} placeholder="State" />
                     </div>
                     <div className="space-y-1.5">
                       <Label htmlFor={notesId} className="text-xs text-muted-foreground">Notes</Label>
-                      <Textarea id={notesId} rows={2} value={lead.notes} onChange={(e) => setLead({ ...lead, notes: e.target.value })} placeholder="Anything specific about your requirement…" />
+                      <Textarea id={notesId} rows={2} maxLength={2000} value={lead.notes} onChange={(e) => setLead({ ...lead, notes: e.target.value })} placeholder="Anything specific about your requirement…" />
                     </div>
                     {/* A furniture collision blocks the quotation (spec §14: "Prevent final submission
                         until the conflict is resolved"). The message names the objects and the overlap,
@@ -3921,15 +3929,15 @@ function SwitchRow({ label, sub, checked, onChange }: { label: string; sub: stri
   );
 }
 
-function LeadField({ label, value, onChange, required, type = "text", placeholder, inputMode }: {
+function LeadField({ label, value, onChange, required, type = "text", placeholder, inputMode, maxLength }: {
   label: string; value: string; onChange: (v: string) => void; required?: boolean; type?: string;
-  placeholder?: string; inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  placeholder?: string; inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"]; maxLength?: number;
 }) {
   const id = useId();
   return (
     <div className="space-y-1.5">
       <Label htmlFor={id} className="text-xs text-muted-foreground">{label}</Label>
-      <Input id={id} type={type} inputMode={inputMode} value={value} required={required} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
+      <Input id={id} type={type} inputMode={inputMode} maxLength={maxLength} value={value} required={required} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
     </div>
   );
 }

@@ -22,7 +22,7 @@
  */
 
 import Link from "next/link";
-import { products as catalogProducts, getProductSlug, type Product } from "@/data/products";
+import { products as catalogProducts, getProductDetailPath, getProductSlug, type Product } from "@/data/products";
 import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 
@@ -40,6 +40,8 @@ export function prefabBuildingModels(products: Product[]) {
       return {
         name: p.name,
         slug: getProductSlug(p),
+        // Nested for a product child (Prefab Marketing Office) — the flat slug 308-redirects.
+        path: getProductDetailPath(p),
         price: sellPrice(c.basePrice),
         size: c.size,
         bestFor: c.bestFor,
@@ -155,7 +157,7 @@ export function PrefabBuildingCategoryContent({ products }: { products: Product[
                   <tr key={mdl.slug} className="border-t border-border/60">
                     <td className="px-4 py-3">
                       <Link
-                        href={`/products/${mdl.slug}`}
+                        href={mdl.path}
                         className="font-medium text-accent hover:underline"
                       >
                         {mdl.name}
