@@ -8257,10 +8257,11 @@ export const CITY_PAGES: CityPage[] = [
    * page/…", 1344×768 ×4 and 1200×896), copied byte-for-byte to clean slug names. Alt text and the
    * caption describe the ACTUAL renders: a charcoal-black corrugated-steel container office with two
    * steel doors and a five-pane ribbon window. Because the page is about Kalaburagi's summer heat, the
-   * feature caption points at the optional heat-reflective roof coating, and the disclaimer says the
-   * colour shown is one finish option. The interior render shows exposed corrugated walls and ceiling,
-   * so the customOutro and the disclaimer say standard units have finished panels and an insulated ceiling;
-   * its alt text says "illustrative render" and it carries the visible caption Bagalkot uses for the same case.
+   * feature caption points at the optional heat-reflective roof coating. The interior render shows exposed
+   * corrugated walls and ceiling, so the customOutro says standard units have finished panels and an insulated
+   * ceiling; its alt text says "illustrative render" and it carries the visible caption Bagalkot uses for the
+   * same case. Owner review (2026-10-16): the disclaimer says every image, exterior and interior, is an
+   * illustrative render, and that actual colours, materials and finishes depend on the approved specifications.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
    * Davanagere); the call / WhatsApp buttons are on by default.
@@ -8554,7 +8555,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kalaburagi district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The images on this page show Portable Office Cabin's standard container office design in one colour option, together with an optionally furnished interior with an exposed corrugated finish; they are not photographs of installations in Kalaburagi. Industrial areas, roads, towns, industries and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any cement plant, mine, quarry, dal mill, industrial estate, developer, utility, university, hospital, government department or public-sector undertaking in the district, and entry to any such premises is subject to that facility's own permissions. Notes on temperatures, soils, foundations, dust and drainage are general guidance, not engineering advice; the base, anchoring, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kalaburagi district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's standard container office design, shown in one colour option and with an optionally furnished interior in an exposed corrugated finish; they are not photographs of installations in Kalaburagi. Actual cabin colours, materials and finishes depend on the approved specifications for each order. Industrial areas, roads, towns, industries and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any cement plant, mine, quarry, dal mill, industrial estate, developer, utility, university, hospital, government department or public-sector undertaking in the district, and entry to any such premises is subject to that facility's own permissions. Notes on temperatures, soils, foundations, dust and drainage are general guidance, not engineering advice; the base, anchoring, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
