@@ -301,6 +301,21 @@ export function hubLinksFor(slugs: string[]): { name: string; href: string }[] {
   });
 }
 
+/* Belagavi (#120) and Bidar (#125) went live with an index-based pillar-link phrasing a few hours before
+   #126 pinned the anchors. They keep the phrasing they were published with, so the pin changes no live
+   page except the eighteen originals. This sits outside pillarAnchorFor() on purpose, so branches that
+   still carry #126's pin hunk merge cleanly. Values are PILLAR_ANCHORS indexes. */
+const PILLAR_ANCHOR_LIVE: Record<string, number> = {
+  "container-office-in-belagavi": 3,
+  "container-office-in-bidar": 0,
+};
+
+/** Text of a location page's pillar link: its published phrasing where one is recorded, else pillarAnchorFor(). */
+export function pillarLinkTextFor(slug: string): string {
+  const live = PILLAR_ANCHOR_LIVE[slug];
+  return live === undefined ? pillarAnchorFor(slug) : PILLAR_ANCHORS[live];
+}
+
 /**
  * Pillar-link wording for a location page's "nearby" block. Rotates through four phrasings so the
  * pages do not repeat one exact-match anchor.
