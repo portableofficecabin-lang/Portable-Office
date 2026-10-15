@@ -22,6 +22,7 @@ import { OTPVerificationModal } from "@/components/booking/OTPVerificationModal"
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { FreshInsightSection } from "@/components/products/FreshInsightSection";
+import { enquiryLengthError } from "@/lib/enquiries/enquiryLimits";
 
 const PRODUCT_OPTIONS = [
   "Portable Cabins",
@@ -88,7 +89,7 @@ const initialData: FormData = {
 
 const step1Schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
-  email: z.string().trim().email("Please enter a valid email").max(255),
+  email: z.string().trim().email("Please enter a valid email").max(254),
   phone: z.string().trim().min(7, "Phone number is required").max(20),
   company: z.string().trim().max(150).optional(),
 });
@@ -179,6 +180,14 @@ export default function ContactPage() {
 
   const handleSubmit = async () => {
     if (!validateStep(1) || !validateStep(2) || !validateStep(3)) return;
+    // The final row (same shape as the insert after OTP, with a reference of the same length)
+    // must fit public.enquiries' column limits — checked before the OTP is sent, while the
+    // visitor can still edit the form.
+    const lengthError = enquiryLengthError(buildEnquiryRow(generateRefNumber()));
+    if (lengthError) {
+      toast({ title: "Please shorten your request", description: lengthError, variant: "destructive" });
+      return;
+    }
     setIsSubmitting(true);
     setOtpError(null);
     try {
@@ -215,6 +224,17 @@ export default function ContactPage() {
     ].filter(Boolean).join("\n");
   };
 
+  /** The exact row inserted into public.enquiries for reference `ref`. */
+  const buildEnquiryRow = (ref: string) => ({
+    name: formData.name.trim(),
+    email: formData.email.trim(),
+    phone: formData.phone.trim(),
+    company: formData.company.trim() || null,
+    subject: `[${ref}] Quote Request — ${formData.products.slice(0, 2).join(", ")}${formData.products.length > 2 ? " +more" : ""}`,
+    message: buildMessageBody(ref),
+    enquiry_type: "quote" as const,
+  });
+
   const handleVerifyOTP = async (otp: string) => {
     setIsVerifyingOTP(true);
     setOtpError(null);
@@ -233,17 +253,7 @@ export default function ContactPage() {
       }
 
       const ref = generateRefNumber();
-      const subject = `[${ref}] Quote Request — ${formData.products.slice(0, 2).join(", ")}${formData.products.length > 2 ? " +more" : ""}`;
-
-      const enquiryData = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        company: formData.company.trim() || null,
-        subject,
-        message: buildMessageBody(ref),
-        enquiry_type: "quote" as const,
-      };
+      const enquiryData = buildEnquiryRow(ref);
 
       const { error } = await supabase.from("enquiries").insert(enquiryData as any);
       if (error) throw error;
@@ -410,19 +420,19 @@ export default function ContactPage() {
                           <div className="grid sm:grid-cols-2 gap-5">
                             <div className="space-y-2">
                               <Label htmlFor="name">Full Name *</Label>
-                              <Input id="name" value={formData.name} onChange={(e) => update("name", e.target.value)} placeholder="John Doe" />
+                              <Input id="name" maxLength={100} value={formData.name} onChange={(e) => update("name", e.target.value)} placeholder="John Doe" />
                             </div>
                             <div className="space-y-2">
                               <Label htmlFor="email">Email *</Label>
-                              <Input id="email" type="email" value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@example.com" />
+                              <Input id="email" type="email" maxLength={254} value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@example.com" />
                             </div>
                             <div className="space-y-2">
                               <Label htmlFor="phone">Phone Number *</Label>
-                              <Input id="phone" type="tel" value={formData.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+91 9731897976" />
+                              <Input id="phone" type="tel" maxLength={20} value={formData.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+91 9731897976" />
                             </div>
                             <div className="space-y-2">
                               <Label htmlFor="company">Company / Organisation</Label>
-                              <Input id="company" value={formData.company} onChange={(e) => update("company", e.target.value)} placeholder="Optional" />
+                              <Input id="company" maxLength={150} value={formData.company} onChange={(e) => update("company", e.target.value)} placeholder="Optional" />
                             </div>
                           </div>
                         </div>
@@ -469,11 +479,11 @@ export default function ContactPage() {
                           <div className="grid sm:grid-cols-2 gap-5">
                             <div className="space-y-2">
                               <Label htmlFor="quantity">Quantity / Size *</Label>
-                              <Input id="quantity" value={formData.quantity} onChange={(e) => update("quantity", e.target.value)} placeholder="e.g. 2 units, 20x10 ft" />
+                              <Input id="quantity" maxLength={50} value={formData.quantity} onChange={(e) => update("quantity", e.target.value)} placeholder="e.g. 2 units, 20x10 ft" />
                             </div>
                             <div className="space-y-2">
                               <Label htmlFor="location">Delivery Location *</Label>
-                              <Input id="location" value={formData.location} onChange={(e) => update("location", e.target.value)} placeholder="City, State" />
+                              <Input id="location" maxLength={150} value={formData.location} onChange={(e) => update("location", e.target.value)} placeholder="City, State" />
                             </div>
                             <div className="space-y-2">
                               <Label>Budget Range *</Label>
@@ -496,7 +506,7 @@ export default function ContactPage() {
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="message">Additional Notes (optional)</Label>
-                            <Textarea id="message" value={formData.message} onChange={(e) => update("message", e.target.value)} rows={4} placeholder="Specific features, customisations, or questions..." />
+                            <Textarea id="message" maxLength={2000} value={formData.message} onChange={(e) => update("message", e.target.value)} rows={4} placeholder="Specific features, customisations, or questions..." />
                           </div>
                         </div>
                       )}

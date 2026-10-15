@@ -1,8 +1,7 @@
 import { cache } from "react";
 import { createStaticClient } from "@/lib/supabase/static";
-import type { DBProduct, DBCategory } from "@/types/database";
+import type { DBCategory } from "@/types/database";
 import {
-  products as staticProducts,
   categories as staticCategories,
   getProductBySlug,
   getProductSlug,
@@ -11,7 +10,8 @@ import {
 } from "@/data/products";
 import { fetchProductReviewData, type ProductReviewData } from "@/lib/reviews/data";
 import { EMPTY_RATING_SUMMARY } from "@/lib/reviews/summary";
-import { convertDBProduct, convertDBCategory, mergeProducts, mergeCategories } from "@/lib/products/merge";
+import { convertDBCategory, mergeCategories } from "@/lib/products/merge";
+import { loadAllProductsMerged } from "@/lib/products/catalogue";
 
 // Server-side product/category/review data, fetched at build / ISR-revalidate time
 // via the anon (cookie-less) Supabase client. Every query falls back to the static
@@ -22,24 +22,10 @@ const normalizeSlug = (slug: string) => slug.replace(/\.html$/i, "");
 /** Full merged catalog (DB overrides static by slug; static fills the gaps).
  *  Wrapped in React cache() so the many call sites within a single ISR render
  *  (page body + getProductBySlugMerged + getMergedCategories) share ONE Supabase
- *  query instead of issuing 2-3 identical `select * from products` round-trips. */
-export const getAllProductsMerged = cache(async (): Promise<Product[]> => {
-  try {
-    const supabase = createStaticClient();
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .order("sort_order", { ascending: true })
-      .order("created_at", { ascending: false });
-    if (error) throw error;
-    if (!data || data.length === 0) return staticProducts;
-    const converted = (data as DBProduct[]).map(convertDBProduct);
-    return mergeProducts(converted, staticProducts);
-  } catch (err) {
-    console.error("getAllProductsMerged: falling back to static catalog:", err);
-    return staticProducts;
-  }
-});
+ *  query instead of issuing 2-3 identical `select * from products` round-trips.
+ *  The loader itself lives in catalogue.ts (unchanged), so code that runs outside the
+ *  Next.js runtime — the sitemap under the variants test — can use it without cache(). */
+export const getAllProductsMerged = cache(loadAllProductsMerged);
 
 /** Merged categories with product counts derived from the merged catalog.
  *  cache()-wrapped so list/category pages don't re-fetch the catalog/categories. */

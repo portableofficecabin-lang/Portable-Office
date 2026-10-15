@@ -285,6 +285,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
               loading="lazy"
             />
+            {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
+            {page.interiorImage.caption && (
+              <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
+                {page.interiorImage.caption}
+              </figcaption>
+            )}
           </figure>
         )}
         <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>

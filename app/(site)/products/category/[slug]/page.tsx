@@ -4,7 +4,7 @@ import { CategoryListingWithParams } from "@/views/Products";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
-import { categories as staticCategories, getProductSlug } from "@/data/products";
+import { categories as staticCategories, getProductDetailPath } from "@/data/products";
 import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
 import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
@@ -17,6 +17,8 @@ import {
   containerOfficeModels,
   containerOfficesMetaDescription,
 } from "@/components/products/containerOfficesCategoryData";
+import { CategoryLandingContent } from "@/components/products/CategoryLandingContent";
+import { categoryLandingMetaDescription, resolveCategoryLanding } from "@/data/categoryLandings";
 
 /** Categories that ship a rich landing page (copy + FAQ + ItemList schema), keyed by slug. */
 const RICH_CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
@@ -130,16 +132,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     });
   }
   const override = CATEGORY_META[slug];
+  /* Categories with a shared landing section (src/data/categoryLandings.ts) get a real meta
+   * description in place of the one-line tagline (36–69 characters before). Computed from the
+   * merged catalogue, so its model count always matches the grid. */
+  const mergedProducts = await getAllProductsMerged();
+  const landingDescription = override
+    ? undefined
+    : categoryLandingMetaDescription(slug, mergedProducts, cat.name);
   return buildPageMetadata({
     // No brand suffix here — the root layout title template appends
     // "| Portable Office Cabin" exactly once (avoids a doubled brand).
     title: override?.title ?? `${cat.name} — Models, Specs & Prices`,
     description:
       override?.description ||
+      landingDescription ||
       cat.description ||
       `Browse all ${cat.name} models, specifications and prices. Manufactured in-house and delivered installation-ready across India.`,
     keywords: override?.keywords,
     path: `/products/category/${slug}`,
+    // Empty categories keep their current index status and sitemap entry (owner decision
+    // 2026-10-13: no noindex until their Search Console performance has been reviewed).
+    // src/lib/seo/categoryIndexing.ts holds the proposed rule, deliberately not wired in.
   });
 }
 
@@ -175,9 +188,10 @@ export default async function Page({ params }: PageProps) {
               "@type": "Product",
               name: p.name,
               // p.slug is an optional OVERRIDE most products don't set — the canonical URL comes
-              // from getProductSlug(). The raw field emitted "/products/undefined" into this
-              // schema for every product without an explicit slug.
-              url: `${SITE}/products/${getProductSlug(p)}`,
+              // from getProductDetailPath(), which also nests a product child under its parent
+              // (/products/marketing-office/prefab-marketing-office). getProductSlug() gave the
+              // flat child slug, which 308-redirects, so the list pointed at a redirect.
+              url: `${SITE}${getProductDetailPath(p)}`,
               offers: {
                 "@type": "Offer",
                 priceCurrency: "INR",
@@ -189,8 +203,8 @@ export default async function Page({ params }: PageProps) {
       }
     : null;
 
-  /* Container offices: a summary list (no Product / Offer nodes — see CONTAINER_OFFICES_META) and the
-   * FAQ array the page renders, both from the same merged catalogue the cards use. */
+  /* Container offices (PR #82): a summary list (no Product / Offer nodes — see CONTAINER_OFFICES_META)
+   * and the FAQ array the page renders, both from the same merged catalogue the cards use. */
   const isContainerOffices = slug === CONTAINER_OFFICES_SLUG;
   const containerSummaryList = isContainerOffices
     ? {
@@ -198,6 +212,26 @@ export default async function Page({ params }: PageProps) {
         "@type": "ItemList",
         name: "Container office models",
         itemListElement: containerOfficeModels(products).map((m, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${SITE}${m.path}`,
+          name: m.name,
+        })),
+      }
+    : null;
+
+  /* Shared landing section for categories without hand-built content (PR #86). Resolved ONCE: the same
+   * object feeds the rendered section, its FAQPage and its summary ItemList, so the visible FAQ and
+   * the markup are one array. The ItemList carries position, URL and name only — no Product/Offer
+   * nodes on a category page; each product page carries its own offer. container-offices is not one
+   * of the landing categories, so at most one of the two lists exists on any page. */
+  const landing = resolveCategoryLanding(slug, products, categories);
+  const landingItemList = landing
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: `${category.name} models`,
+        itemListElement: landing.models.map((m, i) => ({
           "@type": "ListItem",
           position: i + 1,
           url: `${SITE}${m.path}`,
@@ -221,6 +255,8 @@ export default async function Page({ params }: PageProps) {
       {RICH_CATEGORY_FAQS[slug] && <JsonLd data={generateFAQSchema(RICH_CATEGORY_FAQS[slug])} />}
       {containerSummaryList && <JsonLd data={containerSummaryList} />}
       {containerFaqs && <JsonLd data={generateFAQSchema(containerFaqs)} />}
+      {landingItemList && <JsonLd data={landingItemList} />}
+      {landing && <JsonLd data={generateFAQSchema(landing.faqs)} />}
       {/* No searchParams in the page → static/ISR (revalidate=1800 now effective).
           activeCategory comes from the path slug so content stays server-rendered
           and crawlable; ?page deep-links are resolved client-side after hydration. */}
@@ -230,7 +266,11 @@ export default async function Page({ params }: PageProps) {
         activeCategory={slug}
         basePath={`/products/category/${slug}`}
         categoryContent={
-          isContainerOffices ? <ContainerOfficesCategoryContent products={products} /> : undefined
+          isContainerOffices ? (
+            <ContainerOfficesCategoryContent products={products} />
+          ) : landing ? (
+            <CategoryLandingContent landing={landing} />
+          ) : undefined
         }
       />
     </>

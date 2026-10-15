@@ -19,7 +19,7 @@ import {
   containerOfficeLocation,
   containerOfficeLocationsIn,
   locationPath,
-  pillarAnchorFor,
+  pillarLinkTextFor,
 } from "@/data/containerOfficeCluster";
 
 /** Directory section: one card per location, grouped Karnataka / Tamil Nadu. */
@@ -122,7 +122,7 @@ export function ContainerOfficeNearbyBlock({
       <p className="mb-4 leading-relaxed text-muted-foreground">
         Compare{" "}
         <Link href={CONTAINER_OFFICE_PILLAR_PATH} className="font-medium text-foreground underline underline-offset-4">
-          {pillarAnchorFor(slug)}
+          {pillarLinkTextFor(slug)}
         </Link>
         {nearby.length > 0
           ? ", or see the locations we also serve nearby."
