@@ -8247,7 +8247,10 @@ export const CITY_PAGES: CityPage[] = [
    *     "Website:" dropped (redundant on-site). The draft already says "manufacturing base near
    *     Hosur, Tamil Nadu" and "office in Bengaluru", which matches COMPANY.
    *   • FAQs: the draft has none, but the template always renders the FAQ section and FAQPage
-   *     JSON-LD, so seven questions are answered ONLY with statements already on this page.
+   *     JSON-LD, so seven questions are answered ONLY with statements already on this page. Owner
+   *     review (2026-10-16): the five questions that repeated a sibling page's question word for word
+   *     (summer heat, buy or rent, sizes, delivery areas, quotation details) were replaced with
+   *     Kalaburagi-specific ones; no question now matches another city page's.
    * No ₹, lead times, warranty terms or project counts (the draft states none; none added).
    *
    * Images: five owner-dropped webp renders ("public/images/Container Offices in Kalaburagi city
@@ -8256,7 +8259,8 @@ export const CITY_PAGES: CityPage[] = [
    * steel doors and a five-pane ribbon window. Because the page is about Kalaburagi's summer heat, the
    * feature caption points at the optional heat-reflective roof coating, and the disclaimer says the
    * colour shown is one finish option. The interior render shows exposed corrugated walls and ceiling,
-   * so the customOutro and the disclaimer say standard units have finished panels and an insulated ceiling.
+   * so the customOutro and the disclaimer say standard units have finished panels and an insulated ceiling;
+   * its alt text says "illustrative render" and it carries the visible caption Bagalkot uses for the same case.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
    * Davanagere); the call / WhatsApp buttons are on by default.
@@ -8289,9 +8293,11 @@ export const CITY_PAGES: CityPage[] = [
     },
     interiorImage: {
       src: "/images/cities/container-office-in-kalaburagi/container-office-in-kalaburagi-interior.webp",
-      alt: "Container office in Kalaburagi — optionally furnished interior with dark exposed corrugated walls and ceiling, a wall-mounted desk with laptops and office chairs along a large window, two lounge chairs, shelving, pendant lights and wood-look flooring",
+      alt: "Container office in Kalaburagi — illustrative render of an optionally furnished interior with dark exposed corrugated walls and ceiling, a wall-mounted desk with laptops and office chairs along a large window, two lounge chairs, shelving, a pendant light and wood-look flooring",
       width: 1200,
       height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
     },
     gallery: [
       {
@@ -8492,9 +8498,9 @@ export const CITY_PAGES: CityPage[] = [
 
     faqs: [
       {
-        question: "Can a container office stay comfortable in Kalaburagi's summer heat?",
+        question: "How should a container office be specified for summer days above 40°C in Kalaburagi?",
         answer:
-          "Our container offices can be manufactured with PUF or glass wool insulation for walls and roofing, insulated roofing systems, optional heat-reflective roof coatings, provisions for split air-conditioning, and suitable ventilation. These features help reduce heat gain when combined with appropriate cooling; for regular use in peak summer, the insulation specification and air-conditioning capacity should be evaluated according to cabin size, occupancy, and expected heat exposure.",
+          "Plan insulation, solar control and cooling together. Walls and roof can be insulated with PUF or glass wool, the roof can take a heat-reflective coating, and windows can have solar-control film or blinds. The charcoal-black finish shown on this page is one colour option, and a lighter exterior colour can be chosen instead. Air-conditioning capacity is then sized for the cabin's dimensions, occupancy and heat exposure, and confirmed in the quotation.",
       },
       {
         question: "What foundation does a container office need on black cotton soil?",
@@ -8507,24 +8513,24 @@ export const CITY_PAGES: CityPage[] = [
           "Yes. Container offices can be configured as supervisor cabins, contractor and maintenance offices, weighbridge cabins, security offices, and meeting rooms near cement plants, limestone mines, and stone quarries such as those around Sedam, Wadi, Chincholi, and Shahabad. Appropriate sealing, ventilation, filtration, and maintenance provisions should be selected based on the site's dust conditions.",
       },
       {
-        question: "Can I buy or rent a container office in Kalaburagi?",
+        question: "Should a Kalaburagi dal mill rent a container office for the season or buy one?",
         answer:
-          "Yes. Portable Office Cabin offers purchase and rental options based on project duration, specifications, and unit availability, and can provide quotations for both so you can compare costs.",
+          "If the extra office is needed only for seasonal procurement, billing, quality-control or dispatch work, renting can reduce the initial capital outlay for the period you need it, subject to unit availability. If the mill will use the office every season, or move it between its own premises, buying gives you a reusable office. We can quote both options so you can compare the costs.",
       },
       {
-        question: "What container office sizes are available?",
+        question: "What size container office suits a weighbridge cabin at a Sedam cement plant or a Shahabad stone yard?",
         answer:
-          "Typical sizes are 10 ft × 10 ft, 12 ft × 10 ft, 16 ft × 10 ft, 20 ft × 8 ft, 20 ft × 10 ft, 30 ft × 10 ft, and 40 ft × 10 ft. Custom dimensions and layouts can also be manufactured based on workspace requirements, occupancy, transportation feasibility, and project specifications.",
+          "Our standard size for a site office or weighbridge room is 20 ft × 8 ft. For other roles at the same site, a 10 ft × 10 ft unit suits a small supervisor cabin, 12 ft × 10 ft a compact security or administrative office, and 16 ft × 10 ft a site engineers' office or contractor cabin. Custom dimensions are possible, provided the finished unit can still be transported to the site.",
       },
       {
-        question: "Which areas around Kalaburagi do you deliver to?",
+        question: "Can you deliver to remote project sites around Jewargi, Afzalpur or Chincholi?",
         answer:
-          "We serve Kalaburagi city and surrounding locations, including Nandur, Kapnoor Industrial Area, Sedam, Wadi, Shahabad, Chittapur, Jewargi, Aland, Afzalpur, Chincholi, Solapur Road and Hyderabad Road locations, and surrounding industrial estates and infrastructure sites. For cement plants, mines, quarries, and sites reached by narrow roads, transportation feasibility should be checked before dispatch.",
+          "Yes. Jewargi, Afzalpur and Chincholi are in our Kalaburagi service area, along with Aland, Chittapur, Sedam, Wadi and Shahabad. For solar, irrigation, quarry or mine sites reached by narrow village roads, we check before dispatch that a truck and trailer can get in and turn, that there is space for a crane or Hydra to unload, that no overhead cables are in the way, and that the foundation is ready on stable ground.",
       },
       {
-        question: "What details do you need for a quotation?",
+        question: "Do you have a factory or yard in Kalaburagi (Gulbarga)?",
         answer:
-          "Share the project location in Kalaburagi district, the required container office dimensions, the number of occupants or workstations, the preferred internal layout, additional facilities such as AC, an attached toilet, pantry, or furniture, whether you want to buy or rent, and your expected delivery schedule.",
+          "No. Our container offices are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Kalaburagi district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading and placement are arranged for each project, and the timeline depends on the specification, transport distance, road conditions and site readiness.",
       },
     ],
 
