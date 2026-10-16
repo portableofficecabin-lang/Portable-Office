@@ -1856,10 +1856,9 @@ export const CITY_PAGES: CityPage[] = [
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN KUDLIGI — Kudligi town, Vijayanagara district: highway and road contractors,
-   * industrial and mining contractors, solar and wind project teams, farms and roadside businesses,
-   * with delivery enquiries welcomed from Gudekote, Hosahalli, Kanahosahalli, Kottur, Hosapete, Sandur,
-   * Ballari, Harapanahalli, Jagalur and Chitradurga. Its cluster neighbour is Davanagere (~70 km by the
-   * pages' own geo), linked both ways through containerOfficeCluster.ts.
+   * industrial and mining contractors, solar and wind project teams, farms and roadside businesses.
+   * Its cluster neighbour is Davanagere (~70 km by the pages' own geo), linked both ways through
+   * containerOfficeCluster.ts.
    *
    * Owner copy of 2026-10-17, mapped onto the fixed template slots in the draft's own order; nothing
    * is dropped, and the draft's three tables become lists:
@@ -1879,7 +1878,7 @@ export const CITY_PAGES: CityPage[] = [
    *   • "Delivery Enquiries" → areasText; "Delivery and Installation" → how (five steps, the site-access
    *     note folded into step 3). The template renders areas before how, so these two swap order.
    *   • FAQs: the owner's eight questions, unchanged; none matches another city page's question word
-   *     for word. Answers 1 and 5 were reworded in the claims review below.
+   *     for word. Answers 1 and 5 were reworded in the claims reviews below.
    *   • "Request a Quote" → CTA, its checklist as prose; "[Phone Number]" / "[Email Address]" →
    *     COMPANY, "[Brand Name]" → Portable Office Cabin. The draft's "Before publishing" note is an
    *     instruction, not page copy.
@@ -1889,14 +1888,21 @@ export const CITY_PAGES: CityPage[] = [
    * Pavagada's owner-approved entry (typical spec, add-ons, heat options, sizes, rental terms, itemised
    * quotation) and ContainerOfficeContent.tsx (cement board with vinyl, sliding windows, 10/20/40 ft,
    * G+1, entrance canopies, CCTV readiness). Everything else is worded as follows:
-   *   • Specs, sizes, layouts and add-ons are options "agreed in the quotation" (no approved content
-   *     backs the shop shutter, serving window or window canopies).
+   *   • Specs, sizes, layouts and add-ons are options "agreed in the quotation".
    *   • Rental is "subject to availability", and no stock is promised.
    *   • FAQ 1 no longer says the schedule depends on "stock availability". It says the delivery schedule
    *     is confirmed in the quotation.
    *   • Transport, crane hire, unloading, connections, inspection and handover follow "the scope agreed
    *     in the quotation".
-   *   • The towns are an "enquiry and service area", with no branch, yard or office there.
+   * SECOND REVIEW (owner instruction, 2026-10-17). Claims that stayed unconfirmed were removed:
+   *   • Shop shutters, serving windows and shop counters: removed from the add-ons and from FAQ 5,
+   *     which now only covers permissions and the quotation. "Counters" as a use in the Applications
+   *     list stays; Pavagada's approved page lists the same use.
+   *   • Canopies: "entrance canopies" only (as in ContainerOfficeContent.tsx), in both the heat-and-dust
+   *     options and the add-ons.
+   *   • The draft's list of eleven service towns: removed. The areas text now says delivery feasibility,
+   *     transport charges and scope for the customer's location are confirmed in the quotation. The
+   *     cluster card names Kudligi and Vijayanagara district only.
    *
    * Images: five owner-dropped webp renders ("public/images/cities/cities we serve container-office-
    * in-kudligi/Container Office in Kudligi/cabin*.webp", 1200×896 ×4 and a 600×448 interior), copied
@@ -2030,7 +2036,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Secondary roof with an air gap", text: "helps reduce direct solar heat gain." },
       { title: "Light-coloured exterior finish", text: "helps reduce heat absorption." },
       { title: "Planned ventilation", text: "windows and exhaust fans positioned around the layout." },
-      { title: "Door and window canopies", text: "provide shade and weather protection where specified." },
+      { title: "Entrance canopies", text: "provide shade and weather protection where specified." },
       { title: "AC provision", text: "wiring, a dedicated point and circuit protection sized for the agreed equipment." },
       { title: "Sealed doors and windows", text: "help reduce dust entry." },
       { title: "Protective steel coatings", text: "surface preparation, primer and exterior paint suited to the exposure." },
@@ -2045,7 +2051,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Optional add-ons",
-        text: "Air conditioning; an attached toilet and wash basin; a pantry counter and sink; partitions and office furniture; a shop shutter and serving window; window safety grills and canopies; CCTV and network provisions; and company colours and branding.",
+        text: "Air conditioning; an attached toilet and wash basin; a pantry counter and sink; partitions and office furniture; window safety grills and entrance canopies; CCTV and network provisions; and company colours and branding.",
       },
     ],
     customOutro: "Your quotation will confirm the materials, fittings and quantities included.",
@@ -2069,7 +2075,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Kudligi",
     areasText:
-      "Our enquiry and service area includes sites in Kudligi town, Gudekote, Hosahalli, Kanahosahalli, Kottur, Hosapete, Sandur, Ballari, Harapanahalli, Jagalur and Chitradurga. Cabins are delivered from our factory near Hosur; we have no branch, yard or office in these towns. For other locations, share a site map pin so delivery feasibility, access and transport charges can be confirmed.",
+      "Share your site location or a map pin when you enquire. Delivery feasibility, transport charges and the delivery scope for your location will be confirmed in the quotation. Cabins are fabricated at our factory near Hosur; we have no branch, yard or office in Kudligi.",
 
     howHeading: "Delivery and Installation in Kudligi",
     howSteps: [
@@ -2119,7 +2125,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can I run a roadside shop from a container?",
         answer:
-          "A shutter, serving window and counter can be specified as options in the agreed quotation. The proposed location and use must have the necessary landowner, local authority and highway permissions, where applicable.",
+          "It may be possible, subject to permissions. The proposed location and use must have the necessary landowner, local authority and highway permissions, where applicable, and the cabin's layout and specification will be agreed in your quotation.",
       },
       {
         question: "Can I get an attached toilet?",
@@ -2157,7 +2163,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Kudligi or the surrounding area. Transport, crane hire, unloading, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour and with an optionally furnished interior; they are not photographs of installations in Kudligi. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Towns and project types are named only to describe the enquiry and service area and typical uses; Portable Office Cabin is not affiliated with any highway authority, contractor, industrial, mining, solar or wind project operator, school, hostel or government department in the area, and entry to any such site is subject to its own permissions. Notes on heat, dust, ground conditions, foundations and security are general guidance, not engineering advice; the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Kudligi or the surrounding area. Transport, crane hire, unloading, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour and with an optionally furnished interior; they are not photographs of installations in Kudligi. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Project types are named only to describe typical uses; Portable Office Cabin is not affiliated with any highway authority, contractor, industrial, mining, solar or wind project operator, school, hostel or government department in the area, and entry to any such site is subject to its own permissions. Notes on heat, dust, ground conditions, foundations and security are general guidance, not engineering advice; the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
   },
   {
     slug: "container-office-in-doddaballapura",

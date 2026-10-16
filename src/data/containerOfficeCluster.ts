@@ -206,8 +206,8 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     state: "Karnataka",
     name: "Kudligi",
     placeName: "Kudligi",
-    area: "Kudligi town, Kottur, Hosapete and Sandur",
-    hubAnchor: "Container offices for Kudligi, Hosapete and Sandur sites",
+    area: "Kudligi, Vijayanagara district",
+    hubAnchor: "Container offices for Kudligi project sites",
     nearbyLabel: "Kudligi",
     neighbours: ["container-office-in-davanagere"], // ~70 km
   },
