@@ -1909,8 +1909,10 @@ export const CITY_PAGES: CityPage[] = [
    * byte-for-byte to clean slug names. Alt text describes the ACTUAL renders: a dark bronze corrugated-
    * steel container office with a wood-finish door under a transom, a glazed entrance door and two tall
    * windows, and a light-coloured roof (aerial view). The page recommends a light-coloured exterior for
-   * heat, so the hero caption says the colour, doors and windows follow the agreed specification, and
-   * the feature caption points at the light roof the aerial render actually shows. The interior render
+   * heat. The hero has no visible caption: the owner removed it on 2026-10-17. Its alt text still says
+   * "illustrative render", and the disclaimer still says actual colours, doors, windows and finishes
+   * follow the approved specification. The feature caption points at the light roof the aerial render
+   * actually shows. The interior render
    * shows optional furniture and a speckled floor, so it carries a visible "illustrative render" caption as
    * on Kalaburagi. At 600×448 it is narrower than the template's image frame, so the template shows it at
    * no more than its natural width and without the hover zoom.
@@ -1936,7 +1938,6 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Container office in Kudligi — illustrative render of a dark bronze corrugated-steel container office with a wood-finish door under a transom window, a glazed entrance door between two tall windows and a flat roof edge, on a paved forecourt with planting",
       width: 1200,
       height: 896,
-      caption: "Illustrative render. Exterior colour, doors and windows follow the agreed specification.",
     },
     featureImage: {
       src: "/images/cities/container-office-in-kudligi/container-office-in-kudligi-aerial-view.webp",
