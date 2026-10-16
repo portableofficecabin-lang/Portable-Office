@@ -73,7 +73,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Kalaburagi city, Nandur, Kapnoor, Sedam and Wadi",
     hubAnchor: "Container offices for Kalaburagi and the Sedam–Wadi cement belt",
     nearbyLabel: "Kalaburagi district",
-    neighbours: ["container-office-in-bidar"], // ~97 km (both Kalyana Karnataka)
+    neighbours: ["container-office-in-bidar", "container-office-in-yadgir"], // ~97 km / ~70 km (all Kalyana Karnataka)
+  },
+  {
+    slug: "container-office-in-yadgir",
+    state: "Karnataka",
+    name: "Yadgir",
+    placeName: "Yadgir",
+    area: "Yadgir city, Shahapur, Shorapur and Gurmitkal",
+    hubAnchor: "Container offices for Yadgir, Shahapur and Shorapur",
+    nearbyLabel: "Yadgir district",
+    neighbours: ["container-office-in-kalaburagi"], // ~70 km (both Kalyana Karnataka); Bidar is ~133 km
   },
   {
     slug: "container-office-in-jigani",
