@@ -1878,11 +1878,25 @@ export const CITY_PAGES: CityPage[] = [
    *   • "Buy or Rent" → whyUs (purchase / rent / compare the total cost).
    *   • "Delivery Enquiries" → areasText; "Delivery and Installation" → how (five steps, the site-access
    *     note folded into step 3). The template renders areas before how, so these two swap order.
-   *   • FAQs: the owner's eight, verbatim; none matches another city page's question word for word.
+   *   • FAQs: the owner's eight questions, unchanged; none matches another city page's question word
+   *     for word. Answers 1 and 5 were reworded in the claims review below.
    *   • "Request a Quote" → CTA, its checklist as prose; "[Phone Number]" / "[Email Address]" →
    *     COMPANY, "[Brand Name]" → Portable Office Cabin. The draft's "Before publishing" note is an
    *     instruction, not page copy.
    * No ₹ amounts, lead times, warranty terms or project counts (the draft states none; none added).
+   *
+   * CLAIMS REVIEW (owner instruction, 2026-10-17). Wording already backed by approved, live content stays:
+   * Pavagada's owner-approved entry (typical spec, add-ons, heat options, sizes, rental terms, itemised
+   * quotation) and ContainerOfficeContent.tsx (cement board with vinyl, sliding windows, 10/20/40 ft,
+   * G+1, entrance canopies, CCTV readiness). Everything else is worded as follows:
+   *   • Specs, sizes, layouts and add-ons are options "agreed in the quotation" (no approved content
+   *     backs the shop shutter, serving window or window canopies).
+   *   • Rental is "subject to availability", and no stock is promised.
+   *   • FAQ 1 no longer says the schedule depends on "stock availability". It says the delivery schedule
+   *     is confirmed in the quotation.
+   *   • Transport, crane hire, unloading, connections, inspection and handover follow "the scope agreed
+   *     in the quotation".
+   *   • The towns are an "enquiry and service area", with no branch, yard or office there.
    *
    * Images: five owner-dropped webp renders ("public/images/cities/cities we serve container-office-
    * in-kudligi/Container Office in Kudligi/cabin*.webp", 1200×896 ×4 and a 600×448 interior), copied
@@ -1952,8 +1966,8 @@ export const CITY_PAGES: CityPage[] = [
     tagline: "Portable Site Offices and Cabins in Kudligi, Vijayanagara District",
     intro: [
       "Highway contractors, industrial teams, farms and local businesses need practical workspace close to their operations. A container office provides an enclosed, organised space with less on-site construction than a conventional building.",
-      "We supply container offices in Kudligi for project teams, engineers, security staff and businesses. Choose a compact gate cabin, a small team office or a larger layout with workstations, a manager's room, pantry and attached toilet.",
-      "The cabin is fabricated at our facility and transported to your location. Once the site supports, unloading and required utility connections are complete, your team can start using the space.",
+      "We supply container offices in Kudligi for project teams, engineers, security staff and businesses. Choose a compact gate cabin, a small team office or a larger layout with workstations, a manager's room, a pantry or an attached toilet.",
+      "The cabin is fabricated at our facility and delivered to your location under the transport scope agreed in the quotation. Once the site supports, unloading and required utility connections are complete, your team can start using the space.",
       "Planning a container office in Kudligi? Share your site location, team size and requirements to request a layout and quotation.",
     ],
 
@@ -1996,11 +2010,11 @@ export const CITY_PAGES: CityPage[] = [
 
     featuresHeading: "Container Office Sizes and Layouts",
     featuresIntro:
-      "The sizes below refer to nominal cabin length. Width, height and usable floor space will be confirmed in the proposed layout.",
+      "The sizes below refer to nominal cabin length. Width, height, usable floor space and the layout options included will be confirmed in the proposed layout and quotation.",
     features: [
       "10 ft cabin — compact gate office, weighbridge cabin or security post.",
       "20 ft cabin — small team office, farm office or shop.",
-      "40 ft cabin — larger office with partitions, workstations and optional pantry or toilet.",
+      "40 ft cabin — larger office with options for partitions, workstations, a pantry or a toilet.",
       "Joined units — expanded workspaces and multi-room offices.",
       "Stacked units — additional space, subject to structural design and approvals.",
       "Custom builds — dimensions, partitions and facilities arranged around the agreed requirements.",
@@ -2010,7 +2024,7 @@ export const CITY_PAGES: CityPage[] = [
 
     industriesHeading: "Specification Options for Heat and Dust",
     industriesIntro:
-      "The cabin specification should account for sun exposure, dust, occupancy and daily working hours. Indoor comfort depends on the complete design: insulation reduces heat transfer, while suitable ventilation and correctly sized air conditioning may be needed during hot weather. Available options can include:",
+      "The cabin specification should account for sun exposure, dust, occupancy and daily working hours. Indoor comfort depends on the complete design: insulation reduces heat transfer, while suitable ventilation and correctly sized air conditioning may be needed during hot weather. Options that can be specified in the agreed quotation include:",
     industries: [
       { title: "Insulated walls and roof", text: "insulation material and thickness selected for the application." },
       { title: "Secondary roof with an air gap", text: "helps reduce direct solar heat gain." },
@@ -2023,7 +2037,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     customHeading: "Inside Your Container Office",
-    customIntro: "Each container office is built to a typical specification, with optional add-ons chosen for the site:",
+    customIntro: "A typical specification and the optional add-ons can include the following, as agreed in your quotation:",
     customBullets: [
       {
         title: "Typical specification",
@@ -2045,7 +2059,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Rent for temporary requirements",
-        text: "Rental may suit short contracts, seasonal work or projects with an uncertain duration. Availability and minimum rental terms will be confirmed when you enquire.",
+        text: "Rental may suit short contracts, seasonal work or projects with an uncertain duration. Rental is subject to availability; the minimum rental period, deposit, transport and installation charges will be confirmed in the quotation.",
       },
       {
         title: "Compare the total cost",
@@ -2055,7 +2069,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Kudligi",
     areasText:
-      "We welcome enquiries for sites in Kudligi town, Gudekote, Hosahalli, Kanahosahalli, Kottur, Hosapete, Sandur, Ballari, Harapanahalli, Jagalur and Chitradurga. For other locations, share a site map pin so delivery feasibility, access and transport charges can be confirmed.",
+      "Our enquiry and service area includes sites in Kudligi town, Gudekote, Hosahalli, Kanahosahalli, Kottur, Hosapete, Sandur, Ballari, Harapanahalli, Jagalur and Chitradurga. Cabins are delivered from our factory near Hosur; we have no branch, yard or office in these towns. For other locations, share a site map pin so delivery feasibility, access and transport charges can be confirmed.",
 
     howHeading: "Delivery and Installation in Kudligi",
     howSteps: [
@@ -2065,7 +2079,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Review the layout and quotation",
-        text: "Confirm dimensions, doors, windows, partitions, fittings and the scope of supply.",
+        text: "Confirm dimensions, doors, windows, partitions, fittings and the scope of supply, transport and installation.",
       },
       {
         title: "Prepare the site during fabrication",
@@ -2073,11 +2087,11 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Deliver and position the cabin",
-        text: "Coordinate transport and safe lifting. Responsibility for transport, crane hire and unloading will be stated in the quotation.",
+        text: "Transport, crane hire and unloading are arranged according to the scope agreed in the quotation, with safe lifting at the site.",
       },
       {
         title: "Connect services and complete handover",
-        text: "Complete the required electrical and plumbing connections, inspect the unit and carry out the agreed handover.",
+        text: "Electrical and plumbing connections, inspection and handover are carried out according to the scope agreed in the quotation.",
       },
     ],
 
@@ -2085,7 +2099,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does it take to get a container office in Kudligi?",
         answer:
-          "The schedule depends on stock availability, cabin size, specifications and fabrication workload. Custom layouts may take longer. The expected delivery programme will be confirmed in your quotation.",
+          "The delivery schedule depends on the cabin size, specification and fabrication workload, and is confirmed in your quotation. Custom layouts may take longer.",
       },
       {
         question: "Will it get too hot inside?",
@@ -2105,7 +2119,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can I run a roadside shop from a container?",
         answer:
-          "A cabin can be fitted with a shutter, serving window and counter. The proposed location and use must have the necessary landowner, local authority and highway permissions, where applicable.",
+          "A shutter, serving window and counter can be specified as options in the agreed quotation. The proposed location and use must have the necessary landowner, local authority and highway permissions, where applicable.",
       },
       {
         question: "Can I get an attached toilet?",
@@ -2143,7 +2157,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office, yard or service partner in Kudligi or the surrounding area. Delivery, unloading and placement are arranged for each project, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour and with an optionally furnished interior; they are not photographs of installations in Kudligi. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Towns and project types are named only to describe delivery enquiry locations and typical uses; Portable Office Cabin is not affiliated with any highway authority, contractor, industrial, mining, solar or wind project operator, school, hostel or government department in the area, and entry to any such site is subject to its own permissions. Notes on heat, dust, ground conditions, foundations and security are general guidance, not engineering advice; the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Kudligi or the surrounding area. Transport, crane hire, unloading, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour and with an optionally furnished interior; they are not photographs of installations in Kudligi. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Towns and project types are named only to describe the enquiry and service area and typical uses; Portable Office Cabin is not affiliated with any highway authority, contractor, industrial, mining, solar or wind project operator, school, hostel or government department in the area, and entry to any such site is subject to its own permissions. Notes on heat, dust, ground conditions, foundations and security are general guidance, not engineering advice; the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
   },
   {
     slug: "container-office-in-doddaballapura",
