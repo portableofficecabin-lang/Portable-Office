@@ -350,6 +350,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // state hub reaches every Karnataka location page.
     ...hubLinksFor([
       "container-office-in-bagalkot",
+      "container-office-in-kudligi",
       "container-office-in-jigani",
       "container-office-in-bommasandra",
       "container-office-in-sarjapur",
