@@ -2723,28 +2723,38 @@ export const CITY_PAGES: CityPage[] = [
    *     featuresIntro is a one-line lead-in.
    *   • "Who It's For" → industries, with a one-line lead-in. The template renders sizes BEFORE the
    *     industries slot, so these two H2s swap order.
-   *   • "What You Get" → the custom slot beside the interior render: the eight standard items (short
-   *     titles added), "Popular Extras in Kudankulam" as one last item, the quotation line as
+   *   • "What You Get" → the custom slot beside the interior render: the eight specification items
+   *     (short titles added), "Popular Extras in Kudankulam" as one last item, the quotation line as
    *     customOutro.
    *   • "Looking After a Container Office by the Sea" → whyUs: the five habits (short titles added),
    *     with the closing maintenance-instructions line as a sixth item.
-   *   • "Where We Deliver in Tirunelveli District and Nearby" → areasText, the list as prose; "Getting
-   *     It to Your Site" → how, with the "Site access note" folded into step 5. The template renders
-   *     the areas BEFORE the process, so these two swap.
+   *   • "Where We Deliver in Tirunelveli District and Nearby" → areas, the list as prose; "Getting It
+   *     to Your Site" → how, with the "Site access note" folded into step 5. The template renders the
+   *     areas BEFORE the process, so these two swap.
    *   • FAQs: the owner's seven. "How fast can you deliver?" is localised ("…to Kudankulam?") because
-   *     another city page asks it word for word. Its "[X–Y days]" placeholder is not filled: the answer
-   *     says the date is confirmed in the quotation (no lead times on city pages until the owner
-   *     supplies one).
+   *     another city page asks it word for word.
    *   • CTA as supplied; "[Phone Number]" and "[Email Address]" come from COMPANY. The draft's
-   *     editorial note is an instruction to the editor, not page copy.
+   *     editorial note is an instruction to the editor, not page copy, and stays off the page.
    * No ₹, lead times, warranty terms or superlatives (the draft states none; none added).
+   *
+   * Owner wording instructions (2026-10-16, PR #138 review; no delivery range or unconfirmed
+   * specification is approved):
+   *   • "[X–Y days]" → "The delivery schedule is confirmed in your quotation after reviewing the
+   *     specification, site access and production schedule."
+   *   • Coating, fittings, vapour control and the "What You Get" inclusions are described as options
+   *     confirmed in the approved specification and quotation (the three "How We Build" items, the
+   *     "What You Get" intro, the meta description's "Rust-protected, insulated, delivered and
+   *     installed", and the disclaimer).
+   *   • Rental is stated as subject to availability (rent-or-buy FAQ and disclaimer).
+   *   • The areas section is framed as delivery enquiry locations ("Delivery Enquiries in Tirunelveli
+   *     District and Nearby"), with feasibility and charges confirmed after reviewing the site.
    *
    * Images: five owner-dropped webp renders ("public/images/cities/City Page · Kudankulam
    * (Koodankulam), Tirunelveli District/…/cabin (1–5).webp", all 1200×896), copied byte-for-byte to
    * clean slug names: the three-quarter exterior = hero / og:image; the top-down view = feature band;
    * the office interior = beside "What You Get"; the front and side elevations = gallery. The renders
    * show glazed doors, a full-height window, a timber-look canopy and a wood-look floor, where the
-   * standard specification lists a lockable steel door, sliding windows with grills and a vinyl
+   * draft's specification lists a lockable steel door, sliding windows with grills and a vinyl
    * finish, so the captions and disclaimer say the finishes follow the approved specification.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
@@ -2756,7 +2766,7 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Container Office in Kudankulam, Tirunelveli",
     metaTitle: "Container Office in Kudankulam, Tirunelveli | Portable Office Cabin",
     metaDescription:
-      "Coastal-ready container offices in Kudankulam, Tirunelveli for project sites, wind farms, crews and shops. Rust-protected, insulated, delivered and installed.",
+      "Container offices in Kudankulam, Tirunelveli for project sites, wind farms, crews and shops. Coastal coating and insulation options; delivery quoted per site.",
     keywords:
       "Container Office in Kudankulam, Container Office Kudankulam Tirunelveli, Container Office Koodankulam, Coastal Container Office Kudankulam, Site Office Container Kudankulam, Portable Office Cabin Kudankulam, Container Accommodation Kudankulam, Container Shop Kudankulam, Container Office Vallioor, Container Office Radhapuram, Portable Cabin Nagercoil",
     geo: {
@@ -2844,15 +2854,15 @@ export const CITY_PAGES: CityPage[] = [
     solutions: [
       {
         title: "Protection Against Rust",
-        text: "Salt is the biggest enemy here. We clean the steel properly before painting, then apply an epoxy primer and a polyurethane top coat. Hinges, locks, screws and other fittings are galvanised or stainless steel, with aluminium windows.",
+        text: "Salt is the biggest enemy here. Coastal protection options include thorough surface preparation before painting, an epoxy primer with a polyurethane top coat, galvanised or stainless-steel hinges, locks, screws and other fittings, and aluminium windows. The coating system and fittings supplied are confirmed in the approved specification and quotation.",
       },
       {
         title: "Holding Firm in the Wind",
-        text: "Coastal sites need careful attention to anchoring and roof fixings. Anchor plates secure the unit to a suitable base, while roof sheets are firmly fixed. Doors get stoppers to help prevent them from slamming in sudden gusts. The anchoring arrangement and foundation requirements should be confirmed for the site's exposure and the approved design.",
+        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include anchor plates to secure the unit to a suitable base, firmly fixed roof sheets, and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. The anchoring arrangement and foundation requirements should be confirmed for the site's exposure and the approved design.",
       },
       {
         title: "Staying Comfortable Inside",
-        text: "The coast here is warm and humid for much of the year. Insulated walls and roof help reduce heat entering the cabin. A suitable vapour-control arrangement and ventilation help manage moisture, while a dedicated AC point allows for cooling when required.",
+        text: "The coast here is warm and humid for much of the year. Insulated walls and roof can be specified to help reduce heat entering the cabin, with vapour-control and ventilation options to help manage moisture and a dedicated AC point for cooling when required. The insulation, vapour control and ventilation supplied are confirmed in the approved specification and quotation.",
       },
     ],
 
@@ -2880,7 +2890,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     customHeading: "What You Get",
-    customIntro: "The standard specification includes:",
+    customIntro: "Typical specification options; the items supplied are confirmed in the approved specification and quotation:",
     customBullets: [
       { title: "Frame", text: "Steel frame." },
       { title: "Walls and roof", text: "Insulated wall and roof panels." },
@@ -2914,9 +2924,9 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
 
-    areasHeading: "Where We Deliver in Tirunelveli District and Nearby",
+    areasHeading: "Delivery Enquiries in Tirunelveli District and Nearby",
     areasText:
-      "Share your site location for delivery planning in Kudankulam and Chettikulam; Radhapuram, Vallioor and Panagudi; Thisayanvilai and Nanguneri; Tirunelveli city and Palayamkottai; Anjugramam, Kanyakumari and Nagercoil; and Thoothukudi. Delivery feasibility and charges are confirmed after reviewing the location and access.",
+      "We welcome delivery enquiries from Kudankulam and Chettikulam; Radhapuram, Vallioor and Panagudi; Thisayanvilai and Nanguneri; Tirunelveli city and Palayamkottai; Anjugramam, Kanyakumari and Nagercoil; and Thoothukudi. Share your site location, and we will confirm delivery feasibility and charges after reviewing the site and access.",
 
     howHeading: "Getting It to Your Site",
     howSteps: [
@@ -2963,12 +2973,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How fast can you deliver to Kudankulam?",
         answer:
-          "Timing depends on the agreed specification and production schedule. Custom layouts may take longer. We'll confirm the delivery date in the quotation.",
+          "The delivery schedule is confirmed in your quotation after reviewing the specification, site access and production schedule. Custom layouts may take longer.",
       },
       {
         question: "Should I rent or buy?",
         answer:
-          "Buying may suit longer projects and repeated use. Renting may suit shorter jobs or individual project phases, subject to availability. Share your timeline so we can quote the available options for comparison.",
+          "Buying may suit longer projects and repeated use. Renting may suit shorter jobs or individual project phases. Rental is subject to availability. Share your timeline so we can quote the available options for comparison.",
       },
       {
         question: "What does a container office cost?",
@@ -2996,7 +3006,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district; delivery, crane placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery locations and typical uses, not as clients or completed projects, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district; delivery, crane placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
