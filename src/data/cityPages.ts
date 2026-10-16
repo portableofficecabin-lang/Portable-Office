@@ -2745,6 +2745,8 @@ export const CITY_PAGES: CityPage[] = [
    *     confirmed in the approved specification and quotation (the three "How We Build" items, the
    *     "What You Get" intro, the meta description's "Rust-protected, insulated, delivered and
    *     installed", and the disclaimer).
+   *   • The intro's "Every unit is put together with the coast in mind." → "We can tailor the
+   *     specification to your coastal site conditions."
    *   • Rental is stated as subject to availability (rent-or-buy FAQ and disclaimer).
    *   • The areas section is framed as delivery enquiry locations ("Delivery Enquiries in Tirunelveli
    *     District and Nearby"), with feasibility and charges confirmed after reviewing the site.
@@ -2821,7 +2823,7 @@ export const CITY_PAGES: CityPage[] = [
     intro: [
       "The wind that hardly ever stops. The salty air that leaves a white film on everything. And a project calendar that always seems to run longer than planned.",
       "This small village at the southern end of Tirunelveli district, also spelled Koodankulam, is home to one of India's largest nuclear power projects. New units are going up beside the ones already working, bringing contractors, vendors and crews with them. Out on the plains around Radhapuram and Panagudi, wind turbines stand in long rows, each with service teams of its own.",
-      "All these people need somewhere to work. A container office provides a practical way to give them that space. It's built at our facility, arrives on a truck, gets placed by crane and is ready for use once installation and the required connections are complete. Every unit is put together with the coast in mind.",
+      "All these people need somewhere to work. A container office provides a practical way to give them that space. It's built at our facility, arrives on a truck, gets placed by crane and is ready for use once installation and the required connections are complete. We can tailor the specification to your coastal site conditions.",
     ],
 
     whyHeading: "Container Office or Brick Site Office?",
