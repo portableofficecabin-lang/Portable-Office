@@ -351,6 +351,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-kudligi",
+      "container-office-in-sandur-ballari",
       "container-office-in-jigani",
       "container-office-in-bommasandra",
       "container-office-in-sarjapur",
