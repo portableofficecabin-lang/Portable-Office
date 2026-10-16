@@ -339,8 +339,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // Bengaluru-belt pages predate this map; the container-office cluster review (Oct 2026) added them
   // to the "Container Office" key below. The other three keyword keys list Mysore and Tumkur, plus the
   // North and Central Karnataka pages (Bagalkot, Belagavi, Bidar, Davanagere, Haveri, Kalaburagi,
-  // Chitradurga) that #126 planned to add to them; Bengaluru-belt pages stay on the Bangalore and
-  // Container Office hubs only.
+  // Yadgir, Chitradurga) that #126 planned to add to them, and Pavagada (Tumakuru district, outside the
+  // Bengaluru belt); Bengaluru-belt pages stay on the Bangalore and Container Office hubs only.
   "Container Office|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
@@ -374,7 +374,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-davanagere",
       "container-office-in-haveri",
       "container-office-in-kalaburagi",
+      "container-office-in-yadgir",
       "container-office-in-chitradurga",
+      "container-office-in-pavagada",
     ]),
   ],
   "Portable Cabin|Karnataka": [
@@ -387,7 +389,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-davanagere",
       "container-office-in-haveri",
       "container-office-in-kalaburagi",
+      "container-office-in-yadgir",
       "container-office-in-chitradurga",
+      "container-office-in-pavagada",
     ]),
   ],
   "Porta Cabin|Karnataka": [
@@ -400,7 +404,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-davanagere",
       "container-office-in-haveri",
       "container-office-in-kalaburagi",
+      "container-office-in-yadgir",
       "container-office-in-chitradurga",
+      "container-office-in-pavagada",
     ]),
   ],
   // Shipping-container hub — every Karnataka shipping-container city page (the box itself, new / used /

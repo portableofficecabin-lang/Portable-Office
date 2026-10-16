@@ -148,7 +148,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Pavagada town, Thirumani, Vallur, Madhugiri and Sira",
     hubAnchor: "Container offices for Pavagada's solar and project sites",
     nearbyLabel: "Pavagada",
-    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura"], // ~86 km / ~94 km
+    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura", "container-office-in-chitradurga"], // ~86 km / ~94 km / ~96 km
   },
   {
     slug: "container-office-in-davanagere",
@@ -189,7 +189,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Chitradurga city, Challakere, Hiriyur and the NH-48 corridor",
     hubAnchor: "Container offices for Chitradurga's wind, canal and highway sites",
     nearbyLabel: "Chitradurga district",
-    neighbours: ["container-office-in-davanagere", "container-office-in-tumkur"], // ~58 km / ~125 km, both on NH-48
+    neighbours: ["container-office-in-davanagere", "container-office-in-tumkur", "container-office-in-pavagada"], // ~58 km / ~125 km (both NH-48) / ~96 km
   },
   {
     slug: "container-office-in-belagavi",
