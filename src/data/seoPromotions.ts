@@ -346,6 +346,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // state hub reaches every Karnataka location page.
     ...hubLinksFor([
       "container-office-in-bagalkot",
+      "container-office-in-kudligi",
       "container-office-in-jigani",
       "container-office-in-bommasandra",
       "container-office-in-sarjapur",
@@ -353,7 +354,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-haveri",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
+      "container-office-in-pavagada",
       "container-office-in-belagavi",
+      "container-office-in-yadgir",
       "container-office-in-kalaburagi",
     ]),
     { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },

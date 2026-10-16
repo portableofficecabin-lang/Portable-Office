@@ -72,6 +72,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
+/* Tailwind `max-w-2xl` (42rem): the widest the hero and interior images are ever displayed. */
+const MAX_W_2XL_PX = 672;
+
 const h2 = "mt-10 mb-3 text-2xl font-bold tracking-tight";
 const h3 = "mt-6 mb-1.5 text-lg font-semibold";
 const p = "mb-4 leading-relaxed text-muted-foreground";
@@ -100,6 +103,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
   const mc = (cls: string) => (page.motion ? ` ${cls}` : "");
   const fadeDelay = (ms: number) =>
     page.motion ? { animationDelay: `${ms}ms`, animationFillMode: "both" as const } : undefined;
+  /* An interior render narrower than the max-w-2xl frame (Kudligi's 600 px) is capped at its own width
+     and skips the hover zoom, so it is never shown larger than its natural size. Wider renders keep
+     their original sizes and classes, with no style attribute. */
+  const interiorNarrow = !!page.interiorImage && page.interiorImage.width < MAX_W_2XL_PX;
 
   return (
     /* WRAPPED IN <Layout> — header, nav, footer, WhatsApp button and skip link.
@@ -281,8 +288,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               alt={page.interiorImage.alt}
               width={page.interiorImage.width}
               height={page.interiorImage.height}
-              sizes="(max-width: 896px) 100vw, 896px"
-              className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
+              sizes={
+                interiorNarrow
+                  ? `(max-width: ${page.interiorImage.width}px) 100vw, ${page.interiorImage.width}px`
+                  : "(max-width: 896px) 100vw, 896px"
+              }
+              className={`mx-auto h-auto w-full max-w-2xl${
+                interiorNarrow ? "" : mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")
+              }`}
+              style={interiorNarrow ? { maxWidth: page.interiorImage.width } : undefined}
               loading="lazy"
             />
             {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
