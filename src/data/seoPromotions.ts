@@ -352,6 +352,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-davanagere",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
+      "container-office-in-pavagada",
       "container-office-in-belagavi",
       "container-office-in-kalaburagi",
     ]),

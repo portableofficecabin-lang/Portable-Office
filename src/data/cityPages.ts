@@ -5444,6 +5444,282 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN PAVAGADA — Pavagada taluk, Tumakuru district: the solar project area
+   * around Thirumani, Vallur, Kyathaganacharlu, Rayacharlu and Balasamudra, the taluk's towns
+   * and villages, and enquiries towards Madhugiri, Sira, Tumakuru, Hindupur and Penukonda. Its
+   * cluster neighbours are Tumkur (~86 km) and Doddaballapura (~94 km) by the pages' own geo;
+   * Doddaballapura links back. Tumkur → Pavagada is left for a follow-up because the
+   * Chitradurga branch edits Tumkur's neighbour line, so the two PRs merge in either order.
+   *
+   * Owner copy of 2026-10-17, mapped onto the fixed template slots; nothing is dropped:
+   *   • H1 as supplied. The first sentence of the opening paragraph is the tagline; the rest of
+   *     that paragraph, the next two and the "Planning a site office" line are the intro.
+   *   • "Why Choose…" → why: its four H3s as bullets. whyIntro is an added one-line lead-in.
+   *   • "Container Offices for Different Site Requirements" table → solutions (Application =
+   *     title, Suitable Uses = text); solutionsIntro is a short lead-in plus the draft's
+   *     control-room / electrical-equipment note.
+   *   • "Sizes and Layout Options": the nominal-length note → featuresIntro, the table rows →
+   *     features[] as "Size — layouts", the "Tell us how many people…" line → sizesNote.
+   *   • "Buy or Rent" → industries (its two H3s); its closing line → industriesIntro.
+   *   • "Specification Options for Pavagada's Heat and Dust" → the custom slot beside the
+   *     interior render: lead-in, the eight titled options, the comfort note as customOutro.
+   *   • "Construction and Fit-Out" → whyUs: the lead-in, the seven typical-specification items
+   *     (short titles added) and the "Optional Add-Ons" H3 as one last item.
+   *   • "Delivery Enquiries Around Pavagada" → areasText prose; "Delivery and Installation
+   *     Process" → how, with the "Site access" note folded into step 4. The template renders
+   *     areas before how, so these two H2s swap order.
+   *   • FAQs: the draft's seven. "Does a container office need a foundation?" repeated the
+   *     Tumkur page's question word for word, so it reads "…in Pavagada…" (Kalaburagi review
+   *     rule, 2026-10-16: no FAQ question matches another city page's). Answers unchanged.
+   *   • "Request a … Quote" → CTA, its checklist as prose. The draft's "[Phone Number]"
+   *     placeholder is replaced by COMPANY's number; the e-mail comes from COMPANY too.
+   * No ₹, lead times, warranty terms, counts or superlatives (the draft states none; none added).
+   *
+   * Images: four owner-dropped 1152×864 webp renders ("public/images/Container Office in
+   * Pavagada, city page/…"), copied byte-for-byte to clean slug names: the front elevation of a
+   * double-storey stacked unit (grey ground floor, yellow upper floor, balcony, spiral stair) =
+   * hero / og:image; its aerial view = feature band, captioned with the draft's double-storey
+   * size row; the smaller interior = beside the heat-and-dust options, with the visible
+   * "illustrative render" caption Bagalkot and Kalaburagi use; the brighter workspace = gallery
+   * after the sizes and layouts. The interiors show exposed corrugated side walls, so the
+   * caption and disclaimer say finishes follow the approved specification.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`,
+   * as on Kalaburagi); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-pavagada",
+    city: "Pavagada",
+    listTitle: "Container Office in Pavagada",
+    metaTitle: "Container Office in Pavagada | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Pavagada for solar projects, construction sites and businesses. Explore insulated layouts, purchase and rental options. Request a quote.",
+    keywords:
+      "Container Office in Pavagada, Container Office Pavagada, Portable Office Cabin Pavagada, Site Office Container Pavagada, Solar Site Office Pavagada, Container Office for Rent Pavagada, Container Office for Sale Pavagada, Security Cabin Pavagada, Portable Cabin Madhugiri, Container Office Sira",
+    geo: { region: "IN-KA", placename: "Pavagada, Tumakuru district, Karnataka, India", position: "14.0995;77.2802", icbm: "14.0995, 77.2802" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-front-elevation.webp",
+      alt: "Container office in Pavagada — front elevation of a double-storey container office: a grey ground-floor unit and a yellow upper unit, each with a window and a glazed door, a railed upper balcony and a yellow external spiral staircase, on a paved forecourt",
+      width: 1152,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-aerial-view.webp",
+      alt: "Container office in Pavagada — aerial view of the double-storey container office showing the yellow corrugated roof of the upper unit, its balcony and the spiral staircase, on a paved slab beside open scrubland",
+      width: 1152,
+      height: 864,
+      caption: "Double-storey units add office space, subject to structural design and approvals.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-interior.webp",
+      alt: "Container office in Pavagada — illustrative render of an optionally furnished office interior with a wooden desk and mesh chair, wall shelves, recessed ceiling lights, a sliding window, a glazed door, two lounge chairs and wood-look flooring",
+      width: 1152,
+      height: 864,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-workspace.webp",
+        alt: "Container office in Pavagada — illustrative render of an optionally furnished workspace with a wooden desk and mesh chair beside three tall glazed windows, open shelving, pendant lights, a cove-lit false ceiling and wood-look flooring",
+        width: 1152,
+        height: 864,
+      },
+    ],
+
+    h1: "Container Office in Pavagada, Ready for Your Site",
+    tagline: "Solar projects, construction teams and local businesses need a practical place to work close to their operations.",
+    intro: [
+      "A container office provides an enclosed workspace without the lengthy construction process of a conventional building.",
+      "Portable Office Cabin supplies container offices in Pavagada for project teams, engineers, security staff and businesses. Choose a compact cabin or a larger layout with workstations, a manager's room, meeting space, pantry or attached toilet.",
+      "Units arrive prefabricated. Once the site is prepared, unloading is complete and the required services are connected, your team can start using the office.",
+      "Planning a site office in Pavagada? Share your location, team size and requirements to request a layout and quotation.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Pavagada?",
+    whyIntro: "Four reasons a container office suits project sites and businesses in Pavagada:",
+    whyBullets: [
+      {
+        title: "Practical for temporary and leased sites",
+        text: "A relocatable office can suit projects where permanent construction is unsuitable. Placement remains subject to the landowner's permission, lease conditions and applicable local requirements.",
+      },
+      {
+        title: "Move the office as work progresses",
+        text: "When a project moves to another location, a suitable container office can be lifted, transported and installed again. Relocation requires transport access, lifting arrangements and a prepared destination.",
+      },
+      {
+        title: "Reduce construction work at remote locations",
+        text: "Factory fabrication reduces the amount of construction work needed at the project site. Your team prepares the access, supports and utility connections while the cabin is manufactured.",
+      },
+      {
+        title: "Specify the cabin for heat and dust",
+        text: "Insulation, ventilation, exterior finishes and sealed openings help manage heat gain and dust entry. The final specification should reflect the site's exposure, occupancy and cooling requirements.",
+      },
+    ],
+
+    solutionsHeading: "Container Offices for Different Site Requirements",
+    solutionsIntro:
+      "Suitable uses for each type of site are listed below. Control rooms and cabins housing electrical equipment require a separately agreed technical specification.",
+    solutions: [
+      { title: "Solar EPC and O&M Teams", text: "Project offices, engineer cabins, staff rest areas and stores." },
+      { title: "Security Teams", text: "Gate cabins, visitor entry points and access-control offices." },
+      { title: "Road and Civil Contractors", text: "Site offices, supervisor rooms and material stores." },
+      { title: "Farmers and Agricultural Businesses", text: "Farm offices, tool stores and sheltered rest spaces." },
+      { title: "Shops and Local Businesses", text: "Container shops, counters and kiosks, subject to permissions." },
+      { title: "Government and Institutions", text: "Temporary administrative offices, training rooms and health camp cabins." },
+    ],
+
+    featuresHeading: "Container Office Sizes and Layout Options",
+    featuresIntro:
+      "The sizes below refer to nominal cabin length. Width, height and usable space will be confirmed in the layout.",
+    features: [
+      "10 ft cabin — compact gate office, security cabin or billing counter.",
+      "20 ft cabin — small team office, store or shop.",
+      "40 ft cabin — larger workspace with options for partitions, pantry or toilet.",
+      "Combined units — expanded work areas, meeting rooms and separate departments.",
+      "Double-storey units — additional accommodation or office space, subject to structural design and approvals.",
+      "Custom layouts — workstations, manager cabins, meeting rooms and other agreed requirements.",
+    ],
+    sizesNote:
+      "Tell us how many people will use the cabin and which facilities you need. We can suggest a suitable layout.",
+
+    industriesHeading: "Buy or Rent a Container Office in Pavagada",
+    industriesIntro: "Share your expected project duration so we can help you compare the available options.",
+    industries: [
+      {
+        title: "Purchase for continued use",
+        text: "Buying may suit businesses that need the office over a longer period or intend to reuse it across several projects.",
+      },
+      {
+        title: "Rent for temporary requirements",
+        text: "Rental may suit shorter projects or businesses that want to reduce the initial purchase cost. Availability, minimum rental period, deposit, transport and installation charges will be confirmed in the quotation.",
+      },
+    ],
+
+    customHeading: "Specification Options for Pavagada's Heat and Dust",
+    customIntro: "The following features can be included in the quotation according to your requirements:",
+    customBullets: [
+      { title: "Wall and roof insulation", text: "Select the material and thickness to suit the application." },
+      { title: "Secondary roof with an air gap", text: "An optional measure to reduce direct solar heat gain." },
+      { title: "Light-coloured exterior finish", text: "Helps reduce heat absorption." },
+      { title: "Planned ventilation", text: "Windows and exhaust fans positioned around the layout." },
+      { title: "AC provision", text: "Wiring, a dedicated electrical point and protection sized for the agreed equipment." },
+      { title: "Sealed doors and windows", text: "Help reduce dust entry." },
+      { title: "Protective steel coating", text: "Surface preparation, primer and exterior paint specified for the exposure." },
+      { title: "Raised installation", text: "Supports and finished floor height planned around drainage and ground conditions." },
+    ],
+    customOutro:
+      "Insulation reduces heat transfer, but indoor comfort also depends on ventilation, occupancy and correctly sized cooling equipment.",
+
+    whyUsHeading: "Container Office Construction and Fit-Out",
+    whyUsIntro:
+      "Your quotation will confirm the materials, quantities and fittings included. A typical specification can include:",
+    whyUsBullets: [
+      { title: "Structure", text: "Steel frame and external cladding." },
+      { title: "Insulation", text: "Insulated wall and roof construction." },
+      { title: "Flooring", text: "Cement board flooring with a vinyl finish." },
+      { title: "Interior lining", text: "Interior wall and ceiling lining." },
+      { title: "Electrical", text: "Electrical wiring, lights, fans, switches and distribution protection." },
+      { title: "Windows", text: "Aluminium or UPVC windows." },
+      { title: "Entrance door", text: "Lockable entrance door." },
+      {
+        title: "Optional add-ons",
+        text: "Air conditioning, attached toilet and plumbing, pantry counter, internal partitions, office furniture, CCTV and network provisions, window safety grills, and exterior colours and company branding.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Pavagada",
+    areasText:
+      "We welcome enquiries for sites in Pavagada town and surrounding project areas; Thirumani, Vallur and Kyathaganacharlu; Rayacharlu and Balasamudra; Y.N. Hosakote and Nagalamadike; Madhugiri, Sira and Tumakuru; and Hindupur and Penukonda. Share your site pin location so access, transport feasibility and delivery charges can be confirmed.",
+
+    howHeading: "Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Tell us the site location, team size, preferred layout and required delivery date.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm the dimensions, materials, fittings, delivery scope and commercial terms.",
+      },
+      {
+        title: "Prepare the site",
+        text: "Arrange suitable access, level supports, drainage and utility provisions according to the agreed installation requirements.",
+      },
+      {
+        title: "Deliver and position the cabin",
+        text: "Transport and lifting arrangements are coordinated according to the quotation and site conditions. Site access: the location must have suitable truck access and sufficient space for safe unloading and crane operation. Delivery and placement dates depend on fabrication, transport, weather and site readiness.",
+      },
+      {
+        title: "Connect services and inspect",
+        text: "Complete the electrical and plumbing connections, where applicable, and inspect the installed unit before use.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How quickly can you deliver a container office in Pavagada?",
+        answer:
+          "Delivery depends on stock availability, cabin size, specification and fabrication workload. We confirm the expected schedule in the quotation. Custom layouts may require additional time.",
+      },
+      {
+        question: "Will a container office stay cool during summer?",
+        answer:
+          "Insulation helps reduce heat gain. Ventilation, shading or a secondary roof can also help, while air conditioning may be needed for comfortable working conditions during hot weather. Cooling requirements depend on the cabin size, occupancy and site exposure.",
+      },
+      {
+        question: "Does a container office in Pavagada need a foundation?",
+        answer:
+          "It needs a stable, level support arrangement. Depending on the unit and ground conditions, this may involve designed concrete supports, a plinth or foundations. Support positions and requirements should be confirmed before delivery, especially for joined or stacked cabins.",
+      },
+      {
+        question: "Can I move the office to another site later?",
+        answer:
+          "Yes. Units designed for relocation can be moved using suitable lifting equipment and transport. Utilities must be disconnected safely, and the cabin and lifting points should be checked before moving.",
+      },
+      {
+        question: "Can you include an attached toilet?",
+        answer:
+          "Yes. An attached toilet can be included in the agreed layout. The site needs suitable water supply and an approved wastewater arrangement. Plumbing scope and connections will be confirmed in the quotation.",
+      },
+      {
+        question: "Do you offer container offices on rent in Pavagada?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. The quotation will specify the rental period, deposit, transport, unloading and other applicable terms.",
+      },
+      {
+        question: "How much does a container office cost?",
+        answer:
+          "The price depends on dimensions, insulation, interiors, electrical fittings and optional facilities. Transport, lifting, taxes and site work should also be considered. Share your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Container Office Quote for Pavagada",
+    ctaText: `From a compact gate cabin to a larger project office, we can help you plan a layout around your team and site requirements. For a quotation, share your site location or map pin, preferred cabin size, number of users, required rooms and facilities, purchase or rental requirement, and expected delivery date. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Pavagada or the surrounding area; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin container office designs, shown in one colour option, as a double-storey arrangement and with optionally furnished interiors in an exposed corrugated finish; they are not photographs of installations in Pavagada. Actual cabin colours, materials and finishes depend on the approved specifications for each order, and double-storey units are subject to structural design and approvals. Towns, villages and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any solar park, solar developer, EPC or O&M contractor, utility, landowner, institution or government department in the area, and entry to any project premises is subject to that site's own permissions. Notes on heat, dust, ventilation, cooling and foundations are general guidance, not engineering advice; the supports, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINER IN TUMKUR — new and used shipping containers (the box itself: sale,
    * rental, storage, modification) for the NH 48 industrial belt (Vasanthanarasapura, the
    * Machine Tool Park, Gubbi, Kyathsandra–Dabaspet) and the agricultural taluks (Tiptur copra,
