@@ -73,7 +73,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Kalaburagi city, Nandur, Kapnoor, Sedam and Wadi",
     hubAnchor: "Container offices for Kalaburagi and the Sedam–Wadi cement belt",
     nearbyLabel: "Kalaburagi district",
-    neighbours: ["container-office-in-bidar"], // ~97 km (both Kalyana Karnataka)
+    neighbours: ["container-office-in-bidar", "container-office-in-yadgir"], // ~97 km / ~70 km (all Kalyana Karnataka)
+  },
+  {
+    slug: "container-office-in-yadgir",
+    state: "Karnataka",
+    name: "Yadgir",
+    placeName: "Yadgir",
+    area: "Yadgir city, Shahapur, Shorapur and Gurmitkal",
+    hubAnchor: "Container offices for Yadgir, Shahapur and Shorapur",
+    nearbyLabel: "Yadgir district",
+    neighbours: ["container-office-in-kalaburagi"], // ~70 km (both Kalyana Karnataka); Bidar is ~133 km
   },
   {
     slug: "container-office-in-jigani",
@@ -127,8 +137,18 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Doddaballapura Industrial Area, Devanahalli, Yelahanka and North Bengaluru",
     hubAnchor: "Container offices for Doddaballapura and North Bengaluru",
     nearbyLabel: "Doddaballapura and North Bengaluru",
-    neighbours: ["container-office-in-hoskote", "container-office-in-tumkur"],
+    neighbours: ["container-office-in-hoskote", "container-office-in-tumkur", "container-office-in-pavagada"], // Pavagada ~94 km north
     bangaloreRegion: true,
+  },
+  {
+    slug: "container-office-in-pavagada",
+    state: "Karnataka",
+    name: "Pavagada",
+    placeName: "Pavagada",
+    area: "Pavagada town, Thirumani, Vallur, Madhugiri and Sira",
+    hubAnchor: "Container offices for Pavagada's solar and project sites",
+    nearbyLabel: "Pavagada",
+    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura"], // ~86 km / ~94 km
   },
   {
     slug: "container-office-in-davanagere",
@@ -138,7 +158,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
     hubAnchor: "Container offices for Davanagere and Harihar",
     nearbyLabel: "Davanagere",
-    neighbours: [], // nearest cluster page on main is Tumkur, ~180 km away
+    neighbours: ["container-office-in-kudligi"], // Kudligi ~70 km
   },
   {
     slug: "container-office-in-tumkur",
@@ -180,6 +200,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     hubAnchor: "Container offices across Bagalkot district",
     nearbyLabel: "Bagalkot district",
     neighbours: [], // North Karnataka: the nearest cluster page (Belagavi) is ~133 km away, past the 130 km limit
+  },
+  {
+    slug: "container-office-in-kudligi",
+    state: "Karnataka",
+    name: "Kudligi",
+    placeName: "Kudligi",
+    area: "Kudligi, Vijayanagara district",
+    hubAnchor: "Container offices for Kudligi project sites",
+    nearbyLabel: "Kudligi",
+    neighbours: ["container-office-in-davanagere"], // ~70 km
   },
 
   // ── Tamil Nadu ── the Hosur–Krishnagiri belt first (it borders South Bengaluru), then the west
