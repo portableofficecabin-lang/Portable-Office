@@ -158,7 +158,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
     hubAnchor: "Container offices for Davanagere and Harihar",
     nearbyLabel: "Davanagere",
-    neighbours: ["container-office-in-haveri", "container-office-in-chitradurga"], // ~67 km / ~58 km, both on NH-48
+    neighbours: ["container-office-in-haveri", "container-office-in-chitradurga", "container-office-in-kudligi"], // ~67 km / ~58 km (both NH-48) / ~70 km
   },
   {
     slug: "container-office-in-haveri",
@@ -220,6 +220,16 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     hubAnchor: "Container offices across Bagalkot district",
     nearbyLabel: "Bagalkot district",
     neighbours: [], // North Karnataka: the nearest cluster page (Belagavi) is ~133 km away, past the 130 km limit
+  },
+  {
+    slug: "container-office-in-kudligi",
+    state: "Karnataka",
+    name: "Kudligi",
+    placeName: "Kudligi",
+    area: "Kudligi, Vijayanagara district",
+    hubAnchor: "Container offices for Kudligi project sites",
+    nearbyLabel: "Kudligi",
+    neighbours: ["container-office-in-davanagere"], // ~70 km
   },
 
   // ── Tamil Nadu ── the Hosur–Krishnagiri belt first (it borders South Bengaluru), then the west
