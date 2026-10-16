@@ -137,8 +137,18 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Doddaballapura Industrial Area, Devanahalli, Yelahanka and North Bengaluru",
     hubAnchor: "Container offices for Doddaballapura and North Bengaluru",
     nearbyLabel: "Doddaballapura and North Bengaluru",
-    neighbours: ["container-office-in-hoskote", "container-office-in-tumkur"],
+    neighbours: ["container-office-in-hoskote", "container-office-in-tumkur", "container-office-in-pavagada"], // Pavagada ~94 km north
     bangaloreRegion: true,
+  },
+  {
+    slug: "container-office-in-pavagada",
+    state: "Karnataka",
+    name: "Pavagada",
+    placeName: "Pavagada",
+    area: "Pavagada town, Thirumani, Vallur, Madhugiri and Sira",
+    hubAnchor: "Container offices for Pavagada's solar and project sites",
+    nearbyLabel: "Pavagada",
+    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura"], // ~86 km / ~94 km
   },
   {
     slug: "container-office-in-davanagere",
