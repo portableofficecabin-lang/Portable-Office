@@ -8497,6 +8497,287 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN YADGIR — Kalyana Karnataka: factories and industrial plots, canal,
+   * irrigation and road projects, railway and government works, farms, shops, schools and hostels
+   * across Yadgir district (Shahapur, Shorapur, Gurmitkal and the towns around them). Its cluster
+   * neighbour is Kalaburagi (~70 km by the pages' own geo), linked both ways through
+   * containerOfficeCluster.ts; Bidar (~133 km) is outside the 130 km rule.
+   *
+   * Sits before Kalaburagi rather than after it so it does not collide with the Chitradurga entry
+   * (feat/city-chitradurga), which is inserted after Kalaburagi.
+   *
+   * Owner copy of 2026-10-17, mapped onto the fixed template slots. The H1, meta title and meta
+   * description are verbatim. Nothing is dropped:
+   *   • tagline: the draft has none, so it joins the meta title's "Site Office & Portable Cabins"
+   *     with the draft's page label "Yadgir, Kalyana Karnataka".
+   *   • "Why Choose a Container Office in Yadgir?" → why: its four H3s as bullets (the two
+   *     black-cotton-soil paragraphs joined). whyIntro is a one-line lead-in.
+   *   • "Where Container Offices Can Be Used in Yadgir" → solutions: the six table rows as numbered
+   *     H3s. The note on laboratories, pump rooms, stores, classrooms and accommodation follows the
+   *     table in the draft; the template has no outro slot there, so it closes the solutions intro.
+   *   • "Container Office Sizes and Layouts" → features: the nominal-length note as featuresIntro,
+   *     the six table rows as "Size — uses", the closing "Share the number of users…" as sizesNote.
+   *   • "Should You Buy or Rent?" → industries: Buy / Rent, with the closing paragraph as the intro.
+   *   • "Specification Options for Yadgir's Heat and Dust" → the custom slot beside the interior
+   *     render: intro, the eight bullets, and the indoor-comfort note as customOutro.
+   *   • "Construction and Fit-Out" → whyUs: its intro, and the table's two columns (typical
+   *     specification / optional add-ons) as two items.
+   *   • "Delivery Enquiries Across Yadgir and Nearby Areas" → areasText, the list as prose and the
+   *     map-pin line last. The template renders the areas BEFORE the process, so the two swap.
+   *   • "From First Enquiry to Handover" → how: the five steps, with the "Site access" note folded
+   *     into step 3 (which already says "Arrange access").
+   *   • FAQs: the draft's seven, verbatim. None repeats another city page's question.
+   *   • "Planning Work in Yadgir?" → CTA, its checklist as prose. The [Phone Number], [Email
+   *     Address] and [Brand Name] placeholders come from COMPANY; the draft's "Before publishing"
+   *     line is an instruction to the editor, not page copy.
+   * No ₹, lead times, warranty terms or project counts (the draft states none; none added).
+   *
+   * Images: four owner-dropped webp renders ("public/images/cities/Container Office in Yadgir city
+   * page/Container Office in Yadgir/cabin (1–4).webp", all 1200×896), copied byte-for-byte to clean
+   * slug names. Alt text describes the ACTUAL renders: a charcoal-grey corrugated-steel container
+   * office with a glazed double door on one end, a ribbon window and a glazed door on one side, and
+   * a solid steel door and a louvred vent at the back. The draft recommends a light-coloured exterior
+   * for the heat, so the feature caption says the dark finish shown is one colour option. The
+   * interior render carries the illustrative-render caption Bagalkot and Kalaburagi use, and the
+   * disclaimer says every image is an illustrative render.
+   *
+   * Owner review (2026-10-17): the tagline, the section order, the tables shown as lists, the image
+   * captions and the disclaimer are approved as described above.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
+   * Kalaburagi); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-yadgir",
+    city: "Yadgir",
+    listTitle: "Container Office in Yadgir",
+    metaTitle: "Container Office in Yadgir | Site Office & Portable Cabins",
+    metaDescription:
+      "Insulated container offices in Yadgir for factories, construction projects, farms and shops. Explore purchase and rental options. Request a layout and quote.",
+    keywords:
+      "Container Office in Yadgir, Container Office Yadgir, Site Office Yadgir, Portable Cabin Yadgir, Portable Office Cabin Yadgir, Container Office for Rent Yadgir, Container Office for Sale Yadgir, Site Office Container Shahapur, Portable Cabin Shorapur, Container Office Gurmitkal",
+    geo: { region: "IN-KA", placename: "Yadgir (Yadgiri), Karnataka, India", position: "16.7700;77.1376", icbm: "16.7700, 77.1376" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-exterior.webp",
+      alt: "Container office in Yadgir — illustrative render of a charcoal-grey corrugated-steel container office with a glazed double door on the end wall, a long ribbon window and a glazed side door, on a paved forecourt with solar path lights",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-aerial-view.webp",
+      alt: "Container office in Yadgir — aerial view of the charcoal-grey container office showing its flat roof inside a raised edge, with the ribbon window and glazed door along one side, on a paved pad surrounded by lawn and planting",
+      width: 1200,
+      height: 896,
+      caption: "The dark finish shown is one colour option; a light-coloured exterior finish helps reduce heat absorption.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-interior.webp",
+      alt: "Container office in Yadgir — illustrative render of an optionally furnished interior with one dark corrugated feature wall, light grey finished walls, LED ceiling panels, a four-desk workstation cluster with monitors and office chairs, a storage unit, wood-look flooring and glazed doors",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-rear-view.webp",
+        alt: "Container office in Yadgir — rear of the charcoal-grey container office: a solid steel door in the end wall, and a louvred vent and a small wall-mounted box on the long side",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Yadgir, Built for the Heat and Ready to Work",
+    tagline: "Site Offices and Portable Cabins in Yadgir, Kalyana Karnataka",
+    intro: [
+      "A site office in Yadgir needs to do more than provide shelter. It needs a specification that accounts for summer heat, dust, daily use and the practical demands of the project.",
+      "From industrial plots and construction sites to farms and local businesses, container offices provide enclosed workspace with less on-site construction than a conventional building.",
+      "We fabricate the cabin at our facility and transport it to your location. Once the prepared supports, unloading and utility connections are complete, your team can start using the space.",
+      "Choose a compact gate cabin, a small team office or a larger layout with separate rooms, meeting space, a pantry and an attached toilet.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Yadgir?",
+    whyIntro: "Four reasons a container office suits project sites and businesses in Yadgir:",
+    whyBullets: [
+      {
+        title: "Reduce on-site construction",
+        text: "A conventional site office involves masonry, curing, plastering and finishing. A prefabricated container office reduces this work at your location while your team prepares the base, access and services.",
+      },
+      {
+        title: "Plan the base for local ground conditions",
+        text: "Sites with black cotton soil need particular attention because the ground can expand and shrink as moisture changes. A steel cabin still requires properly designed supports; it does not remove the risk of ground movement. Support positions, drainage and foundation requirements should be confirmed for the unit and site before delivery.",
+      },
+      {
+        title: "Move the office as your project progresses",
+        text: "Road, canal and other linear projects may need offices at different locations over time. A cabin designed for relocation can be lifted, transported and installed again with suitable equipment and access.",
+      },
+      {
+        title: "Create a professional workspace",
+        text: "A finished cabin provides an organised place to meet visitors, manage documents and coordinate site work. Exterior colours and branding can be specified where required.",
+      },
+    ],
+
+    solutionsHeading: "Where Container Offices Can Be Used in Yadgir",
+    solutionsIntro:
+      "Container offices can be set up for the uses below. Site laboratories, pump rooms, chemical or fertiliser stores, classrooms and accommodation require specifications suited to their use, including ventilation, loading, fire safety and any necessary approvals.",
+    solutions: [
+      { title: "Factories and Industrial Plots", text: "Gate cabins, time offices, stores and construction-stage offices." },
+      { title: "Canal, Irrigation and Road Projects", text: "Engineer offices, material stores and staff rest areas." },
+      { title: "Railway and Government Works", text: "Contractor offices and temporary administrative space." },
+      { title: "Farms", text: "Farm offices, tool stores and watchman cabins." },
+      { title: "Shops and Small Businesses", text: "Container shops, kiosks and service counters." },
+      { title: "Schools and Hostels", text: "Additional offices, staff rooms and teaching space, subject to applicable requirements." },
+    ],
+
+    featuresHeading: "Container Office Sizes and Layouts",
+    featuresIntro:
+      "The sizes below refer to nominal cabin length. Width, height and usable floor space will be confirmed in the proposed layout.",
+    features: [
+      "10 ft cabin — gate office, watchman cabin or time office.",
+      "20 ft cabin — small team office, farm office or shop.",
+      "40 ft cabin — project office with separate rooms, meeting space and optional toilet.",
+      "Joined units — larger workspaces and multi-room offices.",
+      "Stacked units — additional office or accommodation space, subject to structural design and approvals.",
+      "Custom builds — site laboratory, pantry, toilet block or another agreed layout.",
+    ],
+    sizesNote: "Share the number of users and the facilities you need. We can suggest a suitable size and arrangement.",
+
+    industriesHeading: "Should You Buy or Rent?",
+    industriesIntro:
+      "Share your expected duration so available purchase and rental options can be compared. Rental availability and minimum terms will be confirmed in the quotation.",
+    industries: [
+      {
+        title: "Buy for continued use",
+        text: "Purchasing may suit a factory gate office, farm office or cabin that will be used across several projects. It gives you a relocatable asset for ongoing requirements.",
+      },
+      {
+        title: "Rent for temporary requirements",
+        text: "Rental may suit a shorter project or an uncertain programme. The overall cost depends on the rental duration, deposit, transport, lifting and other agreed charges.",
+      },
+    ],
+
+    customHeading: "Specification Options for Yadgir's Heat and Dust",
+    customIntro:
+      "Insulation is an important part of planning a workspace for hot conditions. The following features can be specified in your quotation:",
+    customBullets: [
+      { title: "Insulated walls and roof", text: "material and thickness selected for the application." },
+      { title: "Secondary roof with a ventilated gap", text: "helps reduce direct solar heat gain." },
+      { title: "Light-coloured exterior finish", text: "helps reduce heat absorption." },
+      { title: "Planned ventilation", text: "window positions and exhaust fans arranged around the room layout." },
+      { title: "Window and door sunshades", text: "reduce direct sunlight where appropriate." },
+      { title: "AC provision", text: "a dedicated point, wiring and circuit protection sized for the agreed equipment." },
+      { title: "Sealed doors and windows", text: "help reduce dust entry." },
+      { title: "Protective steel coatings", text: "surface preparation, primer and paint selected for the exposure." },
+    ],
+    customOutro:
+      "Indoor comfort depends on the complete design, including insulation, occupancy, equipment heat, ventilation and correctly sized air conditioning. Insulation alone does not guarantee a comfortable temperature.",
+
+    whyUsHeading: "Construction and Fit-Out",
+    whyUsIntro: "Your quotation will identify the materials, fittings and quantities included.",
+    whyUsBullets: [
+      {
+        title: "Typical specification",
+        text: "steel frame and external cladding; insulated wall and roof construction; cement board flooring with vinyl finish; finished interior lining; electrical wiring, lights, fans, switches and distribution protection; sliding windows; lockable entrance door; agreed exterior finish.",
+      },
+      {
+        title: "Optional add-ons",
+        text: "air conditioning; attached toilet and plumbing; pantry counter and sink; partitions and furniture; CCTV and network provisions; window safety grills and sunshades; power backup provision; company colours and branding.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Across Yadgir and Nearby Areas",
+    areasText:
+      "We welcome delivery enquiries for Yadgir city, Shahapur, Shorapur (Surapura), Gurmitkal, Hunasagi, Wadagera, Saidapur, Kadechur, Kembhavi and Narayanpur, and for nearby Kalaburagi, Wadi, Sedam and Raichur. Share your site location or map pin so transport feasibility, access and delivery charges can be confirmed.",
+
+    howHeading: "From First Enquiry to Handover",
+    howSteps: [
+      {
+        title: "Share your requirement",
+        text: "Provide the intended use, preferred size, site location and required delivery date.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm doors, windows, partitions, electrical points and any toilet or pantry facilities, along with the commercial terms.",
+      },
+      {
+        title: "Prepare the site during fabrication",
+        text: "Arrange access, drainage, supports and utility provisions according to the agreed installation requirements. Site access: the location needs suitable truck access, ground capable of supporting delivery and lifting equipment, and sufficient clearance for safe crane operation.",
+      },
+      {
+        title: "Deliver and position the cabin",
+        text: "Coordinate transport and safe lifting. Responsibility for the truck, crane and unloading will be stated in the quotation.",
+      },
+      {
+        title: "Connect services and inspect",
+        text: "Complete electrical and plumbing connections where applicable, inspect the unit and carry out the agreed handover.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How soon can a container office reach my site in Yadgir?",
+        answer:
+          "The schedule depends on stock availability, size, specifications and fabrication workload. Custom layouts may need additional time. The expected delivery programme will be confirmed in your quotation.",
+      },
+      {
+        question: "Can a container office handle Yadgir's summer heat?",
+        answer:
+          "A suitable combination of insulation, roof design, shading and cooling can help manage indoor conditions. Air conditioning may be required during hot weather, depending on occupancy and use. We can specify the cabin around these requirements.",
+      },
+      {
+        question: "My site has black cotton soil. Is that a problem?",
+        answer:
+          "It requires careful base planning. Expansive soil can affect supports and cause uneven movement, even beneath a steel cabin. A qualified site professional should determine the necessary ground preparation, drainage and foundation arrangement. We can provide the cabin's support locations and relevant loading information.",
+      },
+      {
+        question: "Can I get an attached toilet?",
+        answer:
+          "Yes. An attached toilet can be included in the agreed layout. The site needs suitable water supply and an approved wastewater connection or treatment arrangement. Plumbing responsibilities will be confirmed in the quotation.",
+      },
+      {
+        question: "Can you make a site laboratory or store instead of an office?",
+        answer:
+          "Yes, subject to the required specification. Share the equipment, materials, floor loads and services involved so the layout, ventilation and safety provisions can be assessed.",
+      },
+      {
+        question: "Do you offer container offices on rent?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. Pricing depends on the unit, fittings and duration. The quotation will state the minimum period, deposit, transport, unloading and other applicable terms.",
+      },
+      {
+        question: "How much does a container office cost?",
+        answer:
+          "The cost depends on dimensions, insulation, finishes, electrical fittings and optional facilities. Transport, lifting, taxes and site works also affect the total. Share your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Planning Work in Yadgir?",
+    ctaText: `From a single gate cabin to a larger project office, we can help you plan a layout around your team and site requirements. For a quotation, share your site location or map pin, the intended use and number of users, your preferred cabin size, the rooms and facilities you need, whether you want to purchase or rent, and your expected delivery date. Call or WhatsApp Portable Office Cabin on ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Yadgir district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Yadgir. Actual cabin colours, materials and finishes depend on the approved specifications for each order. Towns, project types and sectors are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial area, canal or irrigation project, railway, government department, school or hostel in the district, and entry to any such premises is subject to that facility's own permissions. Notes on heat, soils, foundations, dust, ventilation and drainage are general guidance, not engineering advice; the base, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN KALABURAGI (Gulbarga) — Kalyana Karnataka: the Sedam / Wadi / Chincholi
    * cement and limestone belt, Shahabad stone quarries, the tur-dal mills and agricultural
    * processing units, the Nandur and Kapnoor industrial areas, and highway / railway / irrigation /
