@@ -229,7 +229,19 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Kudligi, Vijayanagara district",
     hubAnchor: "Container offices for Kudligi project sites",
     nearbyLabel: "Kudligi",
-    neighbours: ["container-office-in-davanagere"], // ~70 km
+    neighbours: ["container-office-in-davanagere", "container-office-in-sandur-ballari"], // ~70 km / Sandur 26.7 km
+  },
+  {
+    slug: "container-office-in-sandur-ballari",
+    state: "Karnataka",
+    name: "Sandur, Ballari",
+    placeName: "Sandur",
+    area: "Sandur town, Toranagallu, Kurekuppa and Donimalai",
+    hubAnchor: "Container offices for Sandur's mines and steel plant sites",
+    nearbyLabel: "Sandur, Ballari district",
+    // Davanagere does not link back yet: its neighbours line is being edited by Haveri (#129) and the
+    // Karnataka-hubs follow-up (#137), so that owner adds Sandur to Davanagere's union of slugs.
+    neighbours: ["container-office-in-kudligi", "container-office-in-davanagere"], // 26.7 km / 96.4 km
   },
 
   // ── Tamil Nadu ── the Hosur–Krishnagiri belt first (it borders South Bengaluru), then the west
