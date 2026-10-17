@@ -148,7 +148,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
     hubAnchor: "Container offices for Davanagere and Harihar",
     nearbyLabel: "Davanagere",
-    neighbours: ["container-office-in-haveri"], // ~67 km along NH-48
+    neighbours: ["container-office-in-haveri", "container-office-in-chitradurga"], // ~67 km / ~58 km, both on NH-48
   },
   {
     slug: "container-office-in-haveri",
