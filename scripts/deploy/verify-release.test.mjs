@@ -133,6 +133,8 @@ async function fakeRelease({ slugs = ["c1", "c2"], buildId = "BUILD1", extraSite
     if (p === "/robots.txt") return send(200, "User-agent: *", "text/plain");
     if (p === "/api/build-info") {
       if (faults.noBuildInfo) return send(404, html(buildId));
+      if (faults.buildInfoStatus) return send(faults.buildInfoStatus, "upstream error");
+      if (faults.buildInfoRaw !== undefined) return send(200, faults.buildInfoRaw, faults.buildInfoType || "application/json");
       return send(200, JSON.stringify(buildInfo), "application/json");
     }
     if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, html(faults.wrongBuildOnRoot ? "OTHER" : buildId));
@@ -305,6 +307,31 @@ test("--expect-commit catches a stale page from another build even without --bui
   } finally {
     await f.close();
   }
+});
+
+test("--expect-commit FAILS on invalid endpoint answers (500, HTML at 200, JSON null)", async () => {
+  const cases = [
+    [{ buildInfoStatus: 500 }, /answered 500/],
+    [{ buildInfoRaw: "<!DOCTYPE html><html><body>Maintenance</body></html>", buildInfoType: "text/html" }, /did not return JSON/],
+    [{ buildInfoRaw: "null" }, /did not return JSON/],
+    [{ buildInfoRaw: '{"commit": "a835' }, /did not return JSON/],
+  ];
+  for (const [faults, expected] of cases) {
+    const f = await fakeRelease({ faults });
+    try {
+      const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, quick: true });
+      assert.equal(r.ok, false, JSON.stringify(faults));
+      assert.ok(r.failures.some((x) => expected.test(x)), `${JSON.stringify(faults)} → ${r.failures.join(" | ")}`);
+      assert.equal(r.counts.identity, 0);
+    } finally {
+      await f.close();
+    }
+  }
+});
+
+test("checkBuildInfo accepts a process started in the same millisecond as its build", () => {
+  const t = "2026-10-17T12:00:00.000Z";
+  assert.deepEqual(checkBuildInfo({ commit: SHA, buildId: "x", builtAt: t, startedAt: t }, { expectCommit: SHA }), []);
 });
 
 test("--expect-commit with a known --build-id FAILS when the live build differs", async () => {

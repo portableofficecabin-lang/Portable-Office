@@ -213,6 +213,12 @@ S1_BUILD=$(cat "$S1_REL/.next/BUILD_ID")
 grep -q "^DEPLOYED_BUILD_ID=$S1_BUILD$" "$WORK/last.log" || fail "S1: DEPLOYED_BUILD_ID line missing"
 grep -q "^DEPLOYED_REVISION=$V2$" "$WORK/last.log" || fail "S1: DEPLOYED_REVISION line missing"
 grep -q "verify: PASSED" "$WORK/last.log" || fail "S1: the pre-switch route gate did not run"
+# Build identity: the pre-switch gate AND the nginx re-check both asked the running release
+# (GET /api/build-info) which commit it is, and both got v2 from build S1. Printed so a green run
+# shows the evidence, not just the absence of a failure.
+[ "$(grep -cF "identity 1/1" "$WORK/last.log")" -ge 2 ] || fail "S1: the pre-switch gate and the nginx re-check did not both verify the release's commit"
+grep -qF "verify: identity: commit ${V2:0:12} · build $S1_BUILD" "$WORK/last.log" || fail "S1: the gate did not report commit ${V2:0:12} / build $S1_BUILD"
+grep -F -e "verify: identity:" -e "identity 1/1" "$WORK/last.log" | sed 's/^/    /'
 [ -L "$S1_REL/.env.local" ] && [ "$(readlink "$S1_REL/.env.local")" = "$APP_ROOT/shared/.env.local" ] || fail "S1: .env.local is not linked to shared"
 grep -q NEXT_PUBLIC_FROM_GIT "$S1_REL/.env" || fail "S1: the committed .env was replaced"
 [ -f "$S1_REL/public/bimi/logo.svg" ] || fail "S1: server-only public file not carried over"
@@ -258,6 +264,21 @@ grep -q "/cities-we-serve/city-broken answered 404" "$WORK/last.log" || fail "S4
 grep -q "NOT switching traffic" "$WORK/last.log" || fail "S4: no 'NOT switching' message"
 pass "S4: the route gate caught the 404 before any traffic moved; idle slot removed"
 bot_untouched "S4"
+
+# ── S4b: the new release reports another commit than the one it was built from ───────────
+# A failed identity check must only stop the switch: no traffic move, no restart of the live slot,
+# no rollback, nothing touched on the other tenant.
+step "S4b new release reports a different commit → gate blocks the switch"
+rm -f "$WORK/src/fault.txt"; set_cities city-a city-b city-new
+echo "wrong-commit" > "$WORK/src/fault.txt"
+commit "v4b: identity mismatch" >/dev/null
+poll_start; deploy fail; poll_stop "S4b"
+[ "$(live_build)" = "$BEFORE" ] && [ "$(upstream_port)" = "$PORT_BEFORE" ] && [ "$(pm2_names)" = "$NAMES_BEFORE" ] || fail "S4b: production changed although the identity check failed"
+grep -qF "identity: production serves commit 000000000000" "$WORK/last.log" || fail "S4b: the gate did not report the commit mismatch"
+grep -q "NOT switching traffic" "$WORK/last.log" || fail "S4b: no 'NOT switching' message"
+grep -F "identity: production serves commit" "$WORK/last.log" | sed 's/^/    /'
+pass "S4b: a commit mismatch blocked the switch; production, live slot and upstream untouched"
+bot_untouched "S4b"
 
 # ── S5: good commit, then rollback ─────────────────────────────────────────────────────
 step "S5 good commit, then rollback to the previous release"

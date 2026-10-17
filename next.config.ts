@@ -63,10 +63,21 @@ function resolveCommit(): string {
 }
 
 function deploymentIdentity(): { commit: string; buildId: string; builtAt: string } {
+  // Re-use the identity a parent build process stored, but only if every field has the shape this
+  // file produces. Nothing taken from the environment can reach /api/build-info unchecked.
   const inherited = process.env[IDENTITY_ENV];
   if (inherited) {
     try {
-      return JSON.parse(inherited);
+      const v = JSON.parse(inherited);
+      if (
+        (v.commit === "unknown" || COMMIT_SHA.test(v.commit)) &&
+        /^[a-z0-9]{1,12}_[a-z0-9]{1,12}$/.test(v.buildId) &&
+        typeof v.builtAt === "string" &&
+        !Number.isNaN(Date.parse(v.builtAt)) &&
+        new Date(v.builtAt).toISOString() === v.builtAt
+      ) {
+        return { commit: v.commit, buildId: v.buildId, builtAt: v.builtAt };
+      }
     } catch {
       /* malformed — recompute below */
     }

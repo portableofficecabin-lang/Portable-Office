@@ -113,11 +113,11 @@ as merged, it would have failed every deploy:
 
 ## Tests (`.github/workflows/deploy-script-tests.yml`, runs on every PR touching the pipeline)
 
-- `node --test scripts/deploy/verify-release.test.mjs`: 23 tests for the route gate. They cover:
+- `node --test scripts/deploy/verify-release.test.mjs`: 25 tests for the route gate. They cover:
   - slug and sitemap parsing against the real `cityPages.ts`;
   - the App Router build-ID marker;
-  - `/api/build-info` checks: wrong commit, missing endpoint, a process older than its build, and a
-    build-ID mismatch;
+  - `/api/build-info` checks: wrong commit, missing endpoint, a 500 error, an HTML page or broken
+    JSON at status 200, a process older than its build, and a build-ID mismatch;
   - a local fake release, serving HTML shaped like real Next 15, that answers a cached 404, a stale
     page from an older build, a page missing from the prerender manifest, `/` served by another
     build, a broken sitemap URL, new routes, vanished pages (warning only) and an unreachable
@@ -131,10 +131,11 @@ as merged, it would have failed every deploy:
 
   | Scenario | Expected result |
   | --- | --- |
-  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over |
+  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over; both route gates confirm the release's exact commit (printed in the CI log) |
   | Re-run of the same commit | A fresh release is built and goes live |
   | Failing build | Production untouched |
   | New page that 404s in the new build | The gate blocks the switch; production untouched |
+  | New release reports another commit (`/api/build-info`) | The gate blocks the switch; production, the live slot and the upstream are untouched |
   | Good deploy, then `rollback` | The previous release is live again |
   | Two concurrent deploys | The second is refused by the lock |
   | Prune | Old releases removed, current/previous kept |

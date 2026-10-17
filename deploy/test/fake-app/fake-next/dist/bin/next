@@ -35,8 +35,11 @@ const readOr = (file, fallback) => {
   }
 };
 const revision = readOr("REVISION", "");
+// fault.txt (committed in the fake app, one fault per line): wrong-commit makes the running app
+// report a commit other than the one it was built from (integration.sh scenario S4b).
+const faults = readOr("fault.txt", "").split("\n").map((s) => s.trim());
 const buildInfo = JSON.stringify({
-  commit: /^[0-9a-f]{40}$/.test(revision) ? revision : "unknown",
+  commit: faults.includes("wrong-commit") ? "0".repeat(40) : /^[0-9a-f]{40}$/.test(revision) ? revision : "unknown",
   buildId,
   builtAt: readOr(".next/BUILT_AT", "unknown"),
   startedAt: new Date(Date.now() - process.uptime() * 1000).toISOString(),
