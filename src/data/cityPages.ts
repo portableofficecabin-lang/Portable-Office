@@ -29,6 +29,13 @@ export interface CityPageLink {
   href: string;
 }
 
+/** An optional extra H2 section (see CityPage.extraSections). */
+export interface CityPageSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+}
+
 export interface CityPage {
   /** URL slug under /cities-we-serve/, e.g. "container-office-in-jigani". */
   slug: string;
@@ -118,6 +125,15 @@ export interface CityPage {
 
   howHeading: string;
   howSteps: CityPageListItem[];
+
+  /**
+   * Optional extra H2 sections rendered after the "how" steps and before the FAQs, for owner copy
+   * with more sections than the fixed slots hold (first used by Portable Cabins in Tumkur). Each
+   * renders its heading, its paragraphs, then an optional "title: text" bullet list, with the same
+   * classes and motion as the fixed sections. Unset = nothing rendered, so every other page's HTML
+   * is unchanged.
+   */
+  extraSections?: CityPageSection[];
 
   faqs: CityPageFaq[];
 
@@ -695,6 +711,345 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a container depot or yard in Jigani. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The images on this page are illustrative renders of representative 20 ft and 40 ft dry shipping containers and are not photographs of stock held in Jigani. KIADB (Karnataka Industrial Areas Development Board), industrial areas and roads are named only to describe delivery locations; Portable Office Cabin is not affiliated with KIADB or with any industrial estate named here. Container dimensions, floor areas and grade descriptions are indicative trade figures, and notes on export suitability, certification, floor loading, foundations and permissions are general guidance, not engineering or legal advice — confirm export requirements with the carrier, structural loads with a qualified engineer and permissions with the competent local or industrial authority.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN JIGANI (Anekal taluk, Bengaluru) — the portable-cabin intent for Jigani:
+   * gate and security cabins, time offices, driver rest rooms, builders' site offices, labour
+   * accommodation, toilet units, container offices and stores, and sales cabins for the KIADB
+   * Jigani and Bommasandra industrial areas and the Jigani–Anekal Road projects. The third Jigani
+   * page beside container-office-in-jigani and shipping-container-in-jigani; it links to both. Not a
+   * container-office cluster location, so the /cities-we-serve index lists it with the local-service
+   * pages.
+   *
+   * Owner copy of 2026-10-17 ("Portable Cabins in Jigani — Website City Page Content"), mapped onto
+   * the fixed template slots the same way as Portable Cabins in Tumkur. The H1, meta title, meta
+   * description and slug are verbatim. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Jigani Runs on Factories…" → why: its first paragraph as whyIntro, the next three as bullets
+   *     (short titles added), the plant-rearranging line as whyOutro.
+   *   • "How Businesses in Jigani Use Our Cabins" → solutions: its eight H3s as the numbered H3s.
+   *   • "What Goes Into Every Cabin" → features: the seven table rows as "Part — typical build;
+   *     options: …", the closing line as sizesNote.
+   *   • "Built for Bengaluru Weather and Jigani Dust" → industries (heat, rain, dust), and
+   *     "Ready-Made, Custom-Built or Rented" → the custom slot beside the interior render, so the
+   *     owner's section order is kept.
+   *   • "Why Jigani Customers Work With Us" → whyUs, "Areas We Deliver Near Jigani" → areasText,
+   *     "Getting a Cabin into Your Jigani Site" → how (four steps). The template renders these three
+   *     in that order (the Tumkur arrangement).
+   *   • "How We Price a Portable Cabin in Jigani" → extraSections; its closing line moves above the
+   *     list because a section renders its paragraphs first.
+   *   • FAQs: the owner's eight. CTA: the phone number and email come from COMPANY (the draft's
+   *     "[Your …]" placeholders are not published).
+   * Owner wording rule (the Kudankulam / Tumkur rule) applied to the draft's "Claims to Verify"
+   * list: specifications and finishes are options confirmed in the approved specification and
+   * quotation; rental is subject to availability; the towns are delivery enquiry locations; placement
+   * time, the base and crane responsibilities are confirmed per site; no "serve regularly", "same
+   * day", "in days" or plant-rules promises; permission notes are general guidance. "Why Jigani
+   * Customers Work With Us" reads "Why Work With Us Around Jigani" (no customer claims). The H1
+   * "Delivered Ready to Use" is qualified in the intro. No ₹, lead times, warranty terms or
+   * superlatives. Kept apart from container-office-in-jigani: no "container office Jigani" meta
+   * keyword, cross-links only.
+   *
+   * Images: three owner-dropped webp renders ("public/images/cities/Portable Cabins in Jigani city
+   * page/…/cabin (1–3).webp"), copied byte-for-byte to clean slug names: the front elevation
+   * (1184×864) = hero / og:image, with no caption (owner preference); the office interior
+   * (1200×896) = beside the ready-made / custom / rented section; the three-quarter view (1200×896)
+   * = a one-image gallery after the parts list. The interior caption and the disclaimer say they
+   * are illustrative and that the solar panels, furniture and landscaping shown are not included
+   * unless quoted.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-in-jigani",
+    city: "Jigani",
+    listTitle: "Portable Cabins in Jigani",
+    metaTitle: "Portable Cabins in Jigani | Security & Site Office Cabins",
+    metaDescription:
+      "Need a portable cabin in Jigani? We build security cabins, site offices, labour rooms and toilet units for factories and builders around Jigani and Anekal.",
+    keywords:
+      "Portable Cabin in Jigani, Portable Cabin Jigani Industrial Area, Security Cabin Jigani, Site Office Cabin Jigani, Portable Cabin Bommasandra, Portable Cabin Anekal, Labour Cabin Jigani, Portable Cabin on Rent in Jigani, Portable Cabin Manufacturer near Jigani",
+    geo: { region: "IN-KA", placename: "Jigani, Anekal Taluk, Bengaluru, Karnataka, India", position: "12.7861;77.6386", icbm: "12.7861, 77.6386" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-in-jigani/portable-cabin-in-jigani-front-elevation.webp",
+      alt: "Portable cabin in Jigani — illustrative render of a container-style portable cabin with two-tone grey corrugated walls, two steel doors, two framed windows and solar panels on the roof, behind a landscaped paved yard",
+      width: 1184,
+      height: 864,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-in-jigani/portable-cabin-in-jigani-interior.webp",
+      alt: "Portable cabin in Jigani — illustrative render of an optionally furnished office interior with desks, monitors and mesh chairs, a low storage unit, light grey wall panels, flush LED ceiling lights, framed windows, internal doors and wood-look flooring",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-in-jigani/portable-cabin-in-jigani-three-quarter-view.webp",
+        alt: "Portable cabin in Jigani — illustrative three-quarter view of the container-style cabin showing two steel doors, three framed windows, the end wall and roof-mounted solar panels, on a landscaped paved yard",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Cabins in Jigani, Delivered Ready to Use",
+    tagline: "If you've driven down Jigani Link Road around shift change, you know the scene.",
+    intro: [
+      "Company buses lined up at the gates, trucks waiting to load, and a new building coming up on a plot that was empty last year. Jigani keeps growing, and almost everyone here runs into the same problem sooner or later. There just isn't enough room.",
+      "Maybe your security guard is working from a plastic chair under a tin sheet. Maybe your site engineer is running a 200-flat project out of a car. Or maybe the factory needs a QC room by next month, and the civil contractor is talking about three.",
+      "A portable cabin solves all of these without months of masonry work. We build them, welcome delivery enquiries from across Jigani and the Anekal belt, and place them so you can start using the cabin once it sits on the prepared base and the power is connected. Placement time and base requirements depend on the site and are confirmed in the quotation.",
+    ],
+
+    whyHeading: "Jigani Runs on Factories, and Factories Always Need More Room",
+    whyIntro:
+      "The KIADB industrial area at Jigani, along with the Bommasandra estate right next door, is packed with units of every size, from small fabrication shops to large manufacturing plants.",
+    whyBullets: [
+      {
+        title: "Space is short",
+        text: "Add the apartment projects along Jigani–Anekal Road, the warehouses toward Attibele and the metro now reaching Bommasandra, and you get a place where space is always short and time is even shorter.",
+      },
+      {
+        title: "Building inside a running plant is slow",
+        text: "Putting up a permanent room inside a running factory is a headache. There's digging, dust, approvals, and weeks of masons working around your forklifts.",
+      },
+      {
+        title: "A portable cabin skips all of that",
+        text: "It's built at our unit, arrives on a truck, is lifted into place by crane, and is ready to use once it is placed and the power line is connected.",
+      },
+    ],
+    whyOutro: "If you rearrange the plant later, the cabin simply moves with you.",
+
+    solutionsHeading: "How Businesses in Jigani Use Our Cabins",
+    solutionsIntro:
+      "Eight common uses around Jigani. Sizes, layouts and fittings are options confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Gate and Security Cabins",
+        text: "Often the first cabin a factory needs. Glass on three sides gives the guard a clear view of the gate and the road, with room inside for a desk, a visitor register and a CCTV monitor. They can be made as single-guard booths or as larger rooms for a full security team.",
+      },
+      {
+        title: "Time Office and Visitor Rooms",
+        text: "A small cabin near the gate for attendance, contractor passes and visitor check-in helps keep outsiders from wandering into the plant. It's one of the easiest ways to bring some order to how people enter your premises.",
+      },
+      {
+        title: "Driver Rest Rooms",
+        text: "Truck drivers often wait hours at the loading bay with nowhere to sit. A cabin with a fan, a bench, a drinking water point and an attached toilet makes a real difference to them, and it keeps your loading area clear too.",
+      },
+      {
+        title: "Site Offices for Builders",
+        text: "Apartment and villa projects around Jigani, Chandapura and Anekal need a proper base for engineers and supervisors. These can be planned with room for work desks, a drawing table and storage racks, with lights, fans and an AC point.",
+      },
+      {
+        title: "Labour Accommodation",
+        text: "Bunk-bed cabins with ventilation, lighting and charging points for site crews. When ground space is tight, which it usually is around here, they can be stacked two floors high with a steel staircase, subject to structural design and approvals.",
+      },
+      {
+        title: "Toilet Cabins",
+        text: "Ready-made toilet and bathroom units, single or in a row, Indian or Western style, with provision for a water tank. They're handy on construction sites, during factory expansions and at events, especially where the drainage isn't finished yet.",
+      },
+      {
+        title: "Container Offices and Stores",
+        text: "Tough, lockable container-style cabins in 20 ft and 40 ft sizes. Use one to store tools, spares and finished stock, or as a no-nonsense office that can handle daily knocks.",
+      },
+      {
+        title: "Sales and Experience Cabins",
+        text: "For real estate projects that need a smart front from day one. Think glass frontage, a false ceiling, an ACP or painted exterior in your brand colours, and enough space inside for a scale model and a seating corner.",
+      },
+    ],
+
+    featuresHeading: "What Goes Into Every Cabin",
+    featuresIntro:
+      "Every cabin is built from the same seven parts. Here is the typical build of each and what you can add; the items supplied are confirmed in the approved specification and quotation:",
+    features: [
+      "Frame — MS steel sections, welded and primed; options: heavier sections for stacked units.",
+      "Walls — steel sheet with insulation inside; options: PUF panels for better cooling.",
+      "Roof — sloped and sealed steel roof; options: extra insulation, rain gutter.",
+      "Floor — plywood or cement board base; options: vinyl sheet or ceramic tiles.",
+      "Doors and windows — steel door, sliding aluminium windows; options: glass door, more windows, grills.",
+      "Electricals — lights, fans, switchboard, MCB; options: AC point, extra sockets, exhaust fan.",
+      "Finish — anti-rust primer and enamel paint; options: ACP cladding, custom colours, branding.",
+    ],
+    sizesNote:
+      "Tell us what the cabin is for, and we'll suggest a sensible spec. We won't push extras you're never going to use.",
+
+    industriesHeading: "Built for Bengaluru Weather and Jigani Dust",
+    industriesIntro:
+      "Bengaluru is kinder than most cities, but three things still shape how a cabin is specified around Jigani. The insulation, roof, sealing and finishes supplied are confirmed in the approved specification and quotation.",
+    industries: [
+      {
+        title: "Heat",
+        text: "April afternoons still get warm inside a steel box. Insulated walls and roof keep the cabin comfortable, and the windows can be placed to catch a cross-breeze.",
+      },
+      {
+        title: "Rain",
+        text: "The September–October rains can be heavy. A sloped, sealed roof lets water run straight off, and if your plot tends to collect water, the cabin can be set on a slightly higher base.",
+      },
+      {
+        title: "Dust",
+        text: "With trucks moving in and out all day, industrial roads in Jigani are rarely clean. Well-fitting sliding windows, sealed joints and wipe-clean interior finishes keep the cabin tidy without it becoming a daily chore.",
+      },
+    ],
+
+    customHeading: "Ready-Made, Custom-Built or Rented",
+    customIntro: "Three ways to get a cabin:",
+    customBullets: [
+      {
+        title: "Ready-made portable cabins",
+        text: "Standard sizes and layouts. Usually the quickest route when you need a cabin soon and a standard layout does the job.",
+      },
+      {
+        title: "Custom-built portable cabins",
+        text: "Your size, your layout, your fittings. Partitions, a pantry, an attached toilet, extra windows, branding. It takes a little longer, and it's worth it for long-term use.",
+      },
+      {
+        title: "Portable cabins on rent",
+        text: "Monthly rental for short projects or a trial run, subject to availability. Low upfront cost, and we collect the cabin when you're done, as agreed in the quotation.",
+      },
+    ],
+    customOutro:
+      "Some people rent first and buy later, once they know exactly what works for them. Both are fine by us. Availability, timelines and rental terms are confirmed in the quotation.",
+
+    whyUsHeading: "Why Work With Us Around Jigani",
+    whyUsIntro: "What you can expect:",
+    whyUsBullets: [
+      {
+        title: "Close by",
+        text: "Our Bengaluru office is at Electronic City Phase 1, in Anekal taluk like Jigani, and our factory is near Hosur. Site visits, small changes and repairs are arranged as agreed in the quotation.",
+      },
+      {
+        title: "Quotes in writing, line by line",
+        text: "You'll know exactly what you're paying for before you say yes.",
+      },
+      {
+        title: "Steel that holds up",
+        text: "Proper sections, neat welds, and paint applied over primer rather than straight onto bare metal; material grades and the paint system follow the approved specification.",
+      },
+      {
+        title: "Your plant rules",
+        text: "Tell us your gate-pass, safety-shoe and work-timing requirements when you ask for a quotation, and delivery and placement are planned around them.",
+      },
+      {
+        title: "Changes later",
+        text: "Need a partition, another window, or the cabin shifted to a different corner of the plant? Modification and relocation enquiries are welcome, subject to technical feasibility and the agreed scope.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Near Jigani",
+    areasText:
+      "We welcome delivery enquiries from Jigani and the surrounding areas (Jigani Town, Jigani Industrial Area, Jigani Link Road, Haragadde, Kallubalu, Bukkasagara and Kyalasanahalli); the nearby industrial belts of Bommasandra, Attibele, Harohalli and Electronic City; and the towns and main roads of Anekal, Chandapura, Hennagara, Bannerghatta Road, Hosur Road and Sarjapura. If your site is anywhere in south Bengaluru or Anekal taluk, just give us a call. We confirm delivery feasibility and charges after reviewing the site and access.",
+
+    howHeading: "Getting a Cabin into Your Jigani Site",
+    howSteps: [
+      {
+        title: "A Quick Call or Site Visit",
+        text: "Share the size, what it's for and where it's going. If access looks tight, we'll check the gate width, any overhead cables and where the crane can stand, from photos or on a site visit where one is arranged.",
+      },
+      {
+        title: "A Drawing and a Written Quote",
+        text: "You get a simple layout and an itemised quote covering the cabin and, as applicable, transport, crane and unloading. Nothing gets added later without your OK.",
+      },
+      {
+        title: "Fabrication",
+        text: "We build the cabin at our unit while you get the base ready, which is usually a few concrete blocks or a small PCC bed. We'll send you the measurements; the base needed and the timelines are confirmed in the quotation.",
+      },
+      {
+        title: "Delivery and Setup",
+        text: "Delivery is planned around your shift timings and gate rules to keep disruption to production low. Crane, unloading and placement responsibilities are confirmed before dispatch; once the cabin is placed, we check the doors, windows and electricals and hand it over.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "How We Price a Portable Cabin in Jigani",
+        paragraphs: [
+          "There's no single price, because no two cabins are quite the same. Share the details below on a call or WhatsApp, and you'll get a written quote you can compare line by line with anyone else's.",
+          "Here's what shapes your quote:",
+        ],
+        bullets: [
+          { text: "The size you need, from a compact guard booth to a 40 ft office." },
+          { text: "The wall type and level of insulation." },
+          { text: "What goes inside, like flooring, false ceiling, electricals, AC or a toilet." },
+          { text: "Doors, windows and any partitions." },
+          { text: "Whether you buy it or rent it by the month." },
+          { text: "Crane and transport for your exact location." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a crane lift the cabin over our compound wall?",
+        answer:
+          "In many cases, yes. Placing a cabin over a wall is common. Before delivery day, the crane's reach, the cabin's weight and any overhead lines are checked, so nothing catches you off guard; crane and placement responsibilities are confirmed in the quotation.",
+      },
+      {
+        question: "Do we need permission to place a cabin inside our factory?",
+        answer:
+          "The rules differ between industrial estates, landlords and local bodies, and some treat a cabin differently from a permanent building. It's worth a quick check with your estate office, landlord or local authority. If they ask, we can share drawings and specifications.",
+      },
+      {
+        question: "How long does installation take on site?",
+        answer:
+          "Once the base is ready, placing the cabin and connecting the power is usually a short job compared with building on site; bigger or stacked units take longer. Placement time depends on the cabin, crane access and site conditions, and is confirmed in the quotation.",
+      },
+      {
+        question: "Can two cabins be joined to make one big room?",
+        answer:
+          "Yes, where the layout allows. Matching units can be built to join side by side, with the joint sealed, so together they work as one larger hall. The joint details are confirmed in the approved drawing.",
+      },
+      {
+        question: "Can I rent a cabin for just a few months?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. Monthly rental works well for short projects, audits, extra seasonal staff or temporary storage. The minimum rental period is mentioned in the quote.",
+      },
+      {
+        question: "Will the cabin rust?",
+        answer:
+          "Steel needs protecting, and how well a cabin resists rust depends on how it is built and painted. The paint system, such as an anti-rust primer under the final coat, is confirmed in the approved specification, and a repaint every few years keeps the cabin looking good.",
+      },
+      {
+        question: "Can you add an AC and a toilet inside?",
+        answer:
+          "Both can be included where technically suitable. We plan the AC point and the drainage at the drawing stage so everything lines up neatly.",
+      },
+      {
+        question: "What size will fit near my gate?",
+        answer:
+          "Send us a photo and rough measurements of the spot. We'll suggest a size that fits without blocking vehicle movement.",
+      },
+    ],
+
+    ctaHeading: "Short on Space in Jigani? Let's Sort It Out",
+    ctaText: `Tell us what you need the cabin for and where it's going. We'll send a drawing and a clear quote, and take it from there. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The quotation button plus the default call and WhatsApp buttons; an empty list drops the two
+    // container-office secondary buttons, as on Portable Cabins in Tumkur.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
+      { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
+      { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a factory or yard in Jigani. Delivery, unloading and crane placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The sizes, layouts, insulation, fittings, finishes and other specification items described on this page, including the typical build listed for each part, are options; the items supplied are confirmed in the approved specification and quotation for each order, and stacked or joined units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the solar panels, furniture and landscaping shown are not included unless listed in the quotation, other build types look different, and the images are not photographs of installations in Jigani. KIADB and its industrial areas, the Bommasandra industrial area and Namma Metro are named only to describe the region; Portable Office Cabin is not affiliated with KIADB, BMRCL or any industrial estate, and the businesses, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions. Notes on permissions, cranes, foundations, weather, insulation and rust protection are general guidance, not engineering or legal advice.",
   },
 
   {
