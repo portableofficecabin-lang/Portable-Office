@@ -90,9 +90,19 @@ jobs:
       # ── Post-deploy verification ─────────────────────────────────────────────────────────
       # With the release-based server script (deploy/deploy-portable-office.sh) the new release
       # has already passed the same checks on its own port before traffic moved; this repeats
-      # them on the public site: every city page of the deployed commit (new ones first) and
-      # every sitemap URL must answer 200, and — when the server reported it — every page must
-      # come from the deployed build (no cached 404, no stale page from an older build).
+      # them on the public site.
+      #   • identity — GET /api/build-info must name EXACTLY the commit the server says it built,
+      #     and the serving process must have started after that build. Every page must then
+      #     carry that process's build id. This works with the legacy in-place script as well:
+      #     next.config.ts reads the commit from the checkout at build time (see
+      #     app/api/build-info/route.ts).
+      #   • every city page of the deployed commit (new ones first) and every sitemap URL must
+      #     answer 200 from that build (no cached 404, no stale page from an older build).
+      # Which commit is expected: DEPLOYED_REVISION= (release-based script), or the legacy
+      # script's "=== Deployment successful: <sha> ===" / "Target: <sha>" lines; this run's
+      # commit only if the server printed none. The server deploys origin/main when the job
+      # runs, so it may build a NEWER main than this run's commit. That is accepted only when
+      # GitHub confirms it contains this run's commit (the newer run then verifies it as well).
       # Remedy for a red run: Actions → Deploy Portable Office → Run workflow (deploy). The
       # release-based script builds a fresh release on every run, also for an unchanged commit.
       # (The legacy in-place script answered "Already up to date" and rebuilt nothing.)
@@ -102,15 +112,41 @@ jobs:
         shell: bash
         env:
           NEW_ROUTES: ${{ steps.routes.outputs.new }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           base="https://portableofficecabin.com"
-          build_id=$(sed -nE 's/^DEPLOYED_BUILD_ID=([A-Za-z0-9_-]+)$/\1/p' "$RUNNER_TEMP/deploy.log" | tail -1)
+          log="$RUNNER_TEMP/deploy.log"
+          build_id=$(sed -nE 's/^DEPLOYED_BUILD_ID=([A-Za-z0-9_-]+)$/\1/p' "$log" | tail -1)
           if [ -n "$build_id" ]; then
             echo "The server reported BUILD_ID $build_id — every page must come from it."
-          else
-            echo "::notice::The server did not report a BUILD_ID (legacy in-place script) — checking status codes only."
           fi
+          server_commit=$(sed -nE -e 's/^DEPLOYED_REVISION=([0-9a-f]{40})$/\1/p' \
+                                  -e 's/^=== Deployment successful: ([0-9a-f]{40})( .*)? ===$/\1/p' "$log" | tail -1)
+          [ -n "$server_commit" ] || server_commit=$(sed -nE 's/^Target: +([0-9a-f]{40})$/\1/p' "$log" | tail -1)
+          if [ -z "$server_commit" ]; then
+            echo "::warning::The server did not say which commit it built; expecting this run's commit $GITHUB_SHA."
+            server_commit=$GITHUB_SHA
+          elif [ "$server_commit" != "$GITHUB_SHA" ]; then
+            # Does the server's commit contain this run's commit? GitHub's compare API (3 tries), then
+            # git itself as a fallback (commit history only, no file contents). Fails closed.
+            relation=unknown
+            for i in 1 2 3; do
+              relation=$(gh api "repos/$GITHUB_REPOSITORY/compare/$GITHUB_SHA...$server_commit" --jq .status 2>/dev/null || echo unknown)
+              [ "$relation" != unknown ] && break
+              sleep 5
+            done
+            if [ "$relation" = unknown ] && git fetch --quiet --filter=blob:none --unshallow origin main 2>/dev/null; then
+              if git merge-base --is-ancestor "$GITHUB_SHA" "$server_commit" 2>/dev/null; then relation=ahead; else relation="not an ancestor (git)"; fi
+            fi
+            if [ "$relation" = "ahead" ]; then
+              echo "::notice::The server built a newer main ($server_commit), which contains this run's commit $GITHUB_SHA. Verifying that commit."
+            else
+              echo "::error::The server built $server_commit, which does not contain this run's commit $GITHUB_SHA (compare: $relation)."
+              exit 1
+            fi
+          fi
+          echo "Expecting production to serve commit $server_commit."
           # The legacy script reloads PM2 at the very end; give the site up to a minute.
           for i in $(seq 1 12); do
             [ "$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$base/" || echo 000)" = 200 ] && break
@@ -118,10 +154,19 @@ jobs:
           done
           attempt=1
           until node scripts/deploy/verify-release.mjs --base "$base" --source-dir . --github \
+                  --expect-commit "$server_commit" \
                   ${build_id:+--build-id "$build_id"} ${NEW_ROUTES:+--new-routes "$NEW_ROUTES"}; do
             if [ "$attempt" -ge 3 ]; then
-              echo "::error::The deployed site failed verification. Re-run this workflow (Run workflow → deploy) to build a fresh release; see deploy/README.md."
+              echo "::error::The deployed site failed verification. This check only reads the public site; it changed nothing in production (no restart, no rollback). Release-based script: Run workflow → deploy builds a fresh release. Legacy in-place script: a re-run of an unchanged main rebuilds nothing; a stale ISR page heals at its next revalidation or with the next deploy. See deploy/README.md."
               exit 1
             fi
             attempt=$((attempt + 1)); echo "Retrying verification in 20 s (attempt $attempt of 3)"; sleep 20
           done
+          # A record of what is live, in the run summary.
+          {
+            echo "### Live production build"
+            echo '```json'
+            curl -sS --max-time 20 "$base/api/build-info" || echo '"unavailable"'
+            echo
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

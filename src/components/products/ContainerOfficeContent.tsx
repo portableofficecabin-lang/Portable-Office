@@ -7,9 +7,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import Link from "next/link";
 import containerOfficeModernGlass from "@/assets/products/container-office-modern-glass.webp";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 import { formatINR } from "@/lib/pricing/gst";
+
+/** The warranty FAQ answer links to /warranty (MetalPortableCabinContent pattern). */
+const WARRANTY_QUESTION = "What warranty is provided on container offices?";
 
 /**
  * `offer` is present when the CURRENT product page is purchasable (isPurchasable() — passed in by
@@ -754,8 +758,8 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
               a: "Cargo-worthy used containers offer excellent value when properly refurbished. We inspect, repair, and treat used containers to match new-unit durability, with 20–30% cost savings for budget-conscious projects.",
             },
             {
-              q: "What warranty is provided on container offices?",
-              a: "We offer 12-month warranty on structural integrity, waterproofing, and electrical systems. Interiors (flooring, panels, doors) carry 6-month warranty against manufacturing defects. Extended warranty options are available.",
+              q: WARRANTY_QUESTION,
+              a: "Our published warranty applies: structural cover depends on the cabin material, with separate cover for leakage, electrical components and paint and finish. The full terms are on our Warranty page.",
             },
             {
               q: "Can furniture be included in the container office package?",
@@ -768,6 +772,15 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 {faq.a}
+                {faq.q === WARRANTY_QUESTION && (
+                  <>
+                    {" "}
+                    <Link href="/warranty" className="font-medium text-accent underline-offset-4 hover:underline">
+                      Read the warranty terms
+                    </Link>
+                    .
+                  </>
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}

@@ -2,6 +2,10 @@ import { Building2, CheckCircle2, Wrench, ShieldCheck, Truck, Users, Factory, Gr
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import Link from "next/link";
+
+/** The warranty FAQ answer links to /warranty (MetalPortableCabinContent pattern). */
+const WARRANTY_QUESTION = "What warranty is provided on structure, leakage, and interiors?";
 
 /**
  * `offer` is present when the CURRENT product page is purchasable (isPurchasable() — passed in by
@@ -765,8 +769,8 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
               a: "Absolutely. This is one of the primary advantages. Containers are designed for transport on standard trailers. A 20 ft unit can travel anywhere in India accessible by road, with crane placement at the destination site.",
             },
             {
-              q: "What warranty is provided on structure, leakage, and interiors?",
-              a: "We offer 12-month warranty on structural integrity, waterproofing, and electrical systems. Interiors (flooring, panels, doors) carry 6-month warranty against manufacturing defects. Extended warranty options are available.",
+              q: WARRANTY_QUESTION,
+              a: "Our published warranty applies: structural cover depends on the cabin material, with separate cover for leakage, electrical components and paint and finish. The full terms are on our Warranty page.",
             },
             {
               q: "Are second hand containers as reliable as new ones?",
@@ -783,6 +787,15 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground leading-relaxed">
                 {faq.a}
+                {faq.q === WARRANTY_QUESTION && (
+                  <>
+                    {" "}
+                    <Link href="/warranty" className="font-medium text-accent underline-offset-4 hover:underline">
+                      Read the warranty terms
+                    </Link>
+                    .
+                  </>
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}
