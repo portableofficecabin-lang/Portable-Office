@@ -8034,9 +8034,16 @@ export const CITY_PAGES: CityPage[] = [
    * copy written for the page the cluster test already expected; it is NOT the owner's draft and
    * needs owner review before merge.
    *
+   * Owner corrections (2026-10-17): no visible hero caption; towns are geographic context only, with
+   * delivery feasibility, charges and scope "confirmed in the quotation" (Kudligi / Sandur wording);
+   * readiness tied to the quotation scope, site readiness and installation; rainfall softened to
+   * "around" CGWB long-term normals. Other facts checked: Byadgi chilli GI (application 129),
+   * cold storages for colour, Haveri district formed 24 Aug 1997, the 40 ft unit (products.ts).
+   *
    * What makes it Haveri's page and not a copy of Davanagere's (67 km away): the district's rainfall
-   * gradient (Hangal in the west normally > 1,000 mm a year, Ranebennur in the east < 700 mm; CGWB
-   * district and taluk aquifer reports), so the specification advice differs by taluk; the Byadgi
+   * gradient (around 1,000 mm a year at Hangal in the west, 1,044 mm 1961–2010 normal but 963 mm in
+   * CGWB's 2020 table; around 630 mm at Ranebennur in the east, 1981–2010 normal; CGWB district and
+   * taluk aquifer reports), so the specification advice differs by taluk; the Byadgi
    * chilli trade (GI-tagged; market yard and cold storages that hold the chilli cold to keep its
    * colour); black soils across Haveri taluk and low ground along the Varada and Tungabhadra; and
    * NH-48 through the district. No company, plant or market is named as a customer.
@@ -8070,7 +8077,6 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Container office in Haveri — Portable Office Cabin's 40 ft × 10 ft container site office: white corrugated-steel walls above a navy-blue base band, two steel doors with canopies and four aluminium-framed windows, on a levelled site",
       width: 1024,
       height: 1024,
-      caption: "Shown: our 40 ft × 10 ft container site office. Standard sizes start at 10 ft × 10 ft.",
     },
     featureImage: {
       src: "/images/products/container-site-office-side-angle.webp",
@@ -8104,10 +8110,10 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Offices in Haveri",
     tagline: "Site and Trading Offices for Byadgi, Ranebennur and the NH-48 Corridor",
     intro: [
-      "Haveri district sits where the wetter Malnad fringe meets the drier plains of Central Karnataka. Hangal, in the west, normally receives more than 1,000 mm of rain a year, while Ranebennur, in the east, receives less than 700 mm. A container office that suits one end of the district is not automatically right for the other, and this page explains the difference.",
+      "Haveri district sits where the wetter Malnad fringe meets the drier plains of Central Karnataka. By long-term CGWB normals, Hangal, in the west, receives around 1,000 mm of rain a year, while Ranebennur, in the east, receives around 630 mm. A container office that suits one end of the district is not automatically right for the other, and this page explains the difference.",
       "The district's economy runs on agriculture and trade. Byadgi gives its name to the Byadgi chilli, which carries a Geographical Indication (GI) tag, and its market yard, cold storages and processing units are busy through the arrival season. Ranebennur is a commercial and agricultural trading town, and NH-48 runs through the district from Haveri town towards Ranebennur and the Tungabhadra.",
-      "Traders, cold-storage operators, contractors and institutions here often need a working office sooner than a building can be put up, or for a season rather than for good. A container office in Haveri is a finished, wired office that arrives on a truck and can be moved when the work moves.",
-      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu, and supplies them across Haveri district, including Haveri town, Ranebennur, Byadgi, Hangal, Hirekerur, Rattihalli, Savanur, Shiggaon and project locations along NH-48.",
+      "Traders, cold-storage operators, contractors and institutions here often need a working office sooner than a building can be put up, or for a season rather than for good. A container office in Haveri is fabricated, wired and finished at the factory, delivered by truck, and can be moved when the work moves.",
+      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu. For a site in Haveri district, whether in or around Haveri town, Ranebennur, Byadgi or Hangal or along NH-48, share the location when you enquire; delivery feasibility, transport charges and the delivery scope are confirmed in the quotation.",
       "The images on this page show our 40 ft × 10 ft container site office, which seats 15 workstations. Smaller and larger offices, from a 10 ft × 10 ft supervisor's cabin to interconnected multi-unit offices, use the same construction.",
     ],
 
@@ -8127,8 +8133,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Road, irrigation and utility contractors working along NH-48 and the district roads relocate their site offices as each stretch is completed. A container office is lifted onto a truck and re-sited, so one office can follow a project through the district.",
       },
       {
-        title: "Ready to use on arrival",
-        text: "Container offices are fabricated, wired and finished at the factory. On site, the work is limited to a prepared base, placement and connecting power and any services, so an office can be in use without masonry work inside a busy market yard, campus or factory compound.",
+        title: "Largely finished before it arrives",
+        text: "Container offices are fabricated, wired and finished at the factory, which reduces the masonry and finishing work needed inside a busy market yard, campus or factory compound. The office is ready to use once the base, placement, installation, checks and required connections agreed in the quotation are complete, and the timing depends on site readiness.",
       },
     ],
     whyOutro:
@@ -8238,14 +8244,14 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Custom layouts", text: "Custom dimensions and office configurations." },
       { title: "Facilities", text: "Optional air-conditioning, attached toilets, pantry and furniture." },
       { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
-      { title: "Delivery coordination", text: "Delivery coordination across Haveri district." },
+      { title: "Delivery planning", text: "Delivery planning for your site in Haveri district, with feasibility and scope confirmed in the quotation." },
       { title: "Relocatable", text: "Offices that can be lifted and moved to the next site." },
       { title: "Written quotations", text: "Specification, scope and charges stated in writing in the quotation." },
     ],
 
-    areasHeading: "Container Office Delivery and Installation in Haveri",
+    areasHeading: "Delivery Enquiries Around Haveri",
     areasText:
-      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported to the customer's site on suitable commercial vehicles. We serve Haveri town and district, including Ranebennur, Byadgi, Hangal, Hirekerur, Rattihalli, Savanur, Shiggaon, Motebennur, Guttal and Kumarapatnam, the NH-48 corridor, market yards and cold-storage areas, and surrounding industrial and project sites.",
+      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported by truck. Share your site location or a map pin when you enquire, whether the site is in or near Haveri town, Ranebennur, Byadgi or Hangal, along the NH-48 corridor, or in a market yard or cold-storage compound. Delivery feasibility, transport charges and the delivery and installation scope for your location are confirmed in the quotation.",
 
     howHeading: "Our Delivery and Installation Process",
     howSteps: [
@@ -8275,7 +8281,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Should a container office in Hangal be specified differently from one in Ranebennur?",
         answer:
-          "Often, yes. Hangal, in the west of Haveri district, normally receives more than 1,000 mm of rain a year, while Ranebennur, in the east, receives less than 700 mm and is hotter and drier. For western sites, give priority to roof drainage, sealed joints and a raised, well-drained base; for eastern sites, give priority to roof and wall insulation, ventilation and air-conditioning provisions. One specification can include both.",
+          "Often, yes. By long-term CGWB normals, Hangal, in the west of Haveri district, receives around 1,000 mm of rain a year, while Ranebennur, in the east, receives around 630 mm and is hotter and drier. For western sites, give priority to roof drainage, sealed joints and a raised, well-drained base; for eastern sites, give priority to roof and wall insulation, ventilation and air-conditioning provisions. One specification can include both.",
       },
       {
         question: "Can a container office be placed at a Byadgi cold storage or market yard?",
@@ -8298,19 +8304,19 @@ export const CITY_PAGES: CityPage[] = [
           "Fifteen. Our 40 ft × 10 ft container site office has 15 workstation tables with overhead file cabinets, 15 revolving chairs and a half-partition manager's cabin or meeting room, with complete internal wiring and provision for two air conditioners. Smaller teams can use a 20 ft or 30 ft unit, and larger teams can use interconnected units.",
       },
       {
-        question: "Do you deliver to sites along NH-48 between Haveri and Ranebennur?",
+        question: "Can I enquire about delivery to a site along NH-48 between Haveri and Ranebennur?",
         answer:
-          "Yes. NH-48 project sites, yards and warehouses in Haveri district are in our service area, along with Haveri town, Ranebennur, Byadgi, Hangal, Hirekerur, Rattihalli, Savanur and Shiggaon. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+          "Yes. Share the site location or a map pin when you enquire. Delivery feasibility, transport charges and the delivery scope are confirmed in the quotation, after the route, access and unloading space have been checked. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
       },
       {
         question: "Do you have a factory or depot in Haveri district?",
         answer:
-          "No. Our container offices are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Haveri district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading and placement are arranged for each project.",
+          "No. Our container offices are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Haveri district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading and placement are arranged for each project under the scope agreed in the quotation.",
       },
     ],
 
     ctaHeading: "Get a Container Office Quotation in Haveri",
-    ctaText: `To receive a quotation for a container office in Haveri district, share the site location (town or taluk), the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration suited to that part of the district and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Service area: Haveri district and the NH-48 corridor.`,
+    ctaText: `To receive a quotation for a container office in Haveri district, share the site location (town or taluk), the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration suited to that part of the district and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Enquiries are welcome for sites in Haveri district and along the NH-48 corridor; delivery is confirmed in the quotation.`,
     ctaButtonLabel: "Request a Quotation",
     ctaSecondaryLinks: [
       { label: "Explore Container Office Models", href: "/products/category/container-offices" },
@@ -8328,7 +8334,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Haveri district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The images on this page show Portable Office Cabin's 40 ft × 10 ft container site office and its furnished interior; they were not taken in Haveri district, and the colours, finishes and fittings of each order follow its approved specification. Rainfall figures are long-term normals from public records and vary from year to year. Towns, markets, rivers, highways and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any agricultural produce market committee, cold storage, trader, processing unit, highway authority, utility, institution or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on soils, drainage, foundations and insulation are general guidance, not engineering advice; the base, insulation and cooling for a specific site are confirmed in the approved quotation.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Haveri district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The images on this page show Portable Office Cabin's 40 ft × 10 ft container site office and its furnished interior; they were not taken in Haveri district, and the colours, finishes and fittings of each order follow its approved specification. Rainfall figures are long-term normals from public records and vary from year to year. Towns, markets, rivers, highways and project types are named only as geographic context and to describe typical uses, not as guaranteed delivery or service areas; Portable Office Cabin is not affiliated with any agricultural produce market committee, cold storage, trader, processing unit, highway authority, utility, institution or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on soils, drainage, foundations and insulation are general guidance, not engineering advice; the base, insulation and cooling for a specific site are confirmed in the approved quotation.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

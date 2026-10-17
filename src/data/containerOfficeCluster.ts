@@ -165,7 +165,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     state: "Karnataka",
     name: "Haveri",
     placeName: "Haveri",
-    area: "Haveri town, Ranebennur, Byadgi, Hangal and the NH-48 corridor",
+    area: "Haveri and the NH-48 corridor",
     hubAnchor: "Container offices for Haveri, Byadgi and Ranebennur",
     nearbyLabel: "Haveri district",
     neighbours: ["container-office-in-davanagere"], // ~67 km along NH-48
