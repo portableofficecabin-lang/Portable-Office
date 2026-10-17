@@ -270,8 +270,29 @@ start_slot() { # name port release
       -- start -H 127.0.0.1 -p "$port" >/dev/null )
 }
 
+# True when the HTML in $2 was rendered by build $1. Next 15 (App Router) prints the build id
+# reliably in one place: the RSC payload, \"b\":\"<id>\" inside the page's inline script.
+#   <!--<id>-->        only in pages prerendered at build time; ISR-regenerated pages lose it
+#   /_next/static/<id>/ a Pages Router path this site's HTML never contains
+# The old check grepped only for the second marker, so it could never pass. Both are still
+# accepted as extra evidence; the rule matches servedByBuild() in scripts/deploy/verify-release.mjs.
+# A here-string, not a pipe: with pipefail, `curl | grep -q` fails whenever grep exits before curl
+# has written the whole page.
+serves_build() { # build_id html
+  grep -qF -e "\\\"b\\\":\\\"$1\\\"" -e "/_next/static/$1/" -e "<!--$1-->" <<<"$2"
+}
+
+# --expect-commit for the route gate, when the release's verifier has it (releases built from
+# older commits do not): /api/build-info must name the commit in the release's REVISION file.
+expect_commit_args() { # release
+  local rel=$1
+  if [ -s "$rel/REVISION" ] && grep -q -- '--expect-commit' "$rel/$VERIFY_SCRIPT" 2>/dev/null; then
+    printf '%s\n' --expect-commit "$(cat "$rel/REVISION")"
+  fi
+}
+
 health_check() { # port release
-  local port=$1 rel=$2 build_id path code waited=0
+  local port=$1 rel=$2 build_id path code body waited=0
   build_id=$(cat "$rel/.next/BUILD_ID")
   log "health: waiting for 127.0.0.1:$port to answer (timeout ${START_TIMEOUT}s)"
   until [ "$(http_code "$port" /)" = 200 ]; do
@@ -282,22 +303,23 @@ health_check() { # port release
     code=$(http_code "$port" "$path")
     [ "$code" = 200 ] || die "health: $path returned $code on port $port"
   done
-  curl -sS -m 20 -H "Host: $HOST_NAME" "http://127.0.0.1:$port/" | grep -q "/_next/static/$build_id/" \
-    || die "health: port $port is not serving BUILD_ID $build_id"
+  body=$(curl -sS -m 20 -H "Host: $HOST_NAME" "http://127.0.0.1:$port/" || true)
+  serves_build "$build_id" "$body" || die "health: port $port is not serving BUILD_ID $build_id"
   log "health: OK on port $port — BUILD_ID $build_id, ${#HEALTH_PATHS[@]} paths returned 200"
 }
 
 # The full route gate (scripts/deploy/verify-release.mjs from the release itself). Releases built
 # from commits older than the verifier only get the health check above.
 verify_routes() { # port release [compare_port]
-  local port=$1 rel=$2 compare=${3:-}
+  local port=$1 rel=$2 compare=${3:-} identity
   if [ ! -f "$rel/$VERIFY_SCRIPT" ]; then
     log "verify: $VERIFY_SCRIPT is not in this release — health check only"
     return 0
   fi
+  mapfile -t identity < <(expect_commit_args "$rel")
   log "verify: every route of the release on port $port (pre-switch, production untouched)"
   ( cd "$rel" && node "$VERIFY_SCRIPT" --base "http://127.0.0.1:$port" --host "$HOST_NAME" \
-      --release-dir "$rel" ${compare:+--compare-base "http://127.0.0.1:$compare"} ) \
+      --release-dir "$rel" "${identity[@]}" ${compare:+--compare-base "http://127.0.0.1:$compare"} ) \
     || die "verify: the new release failed the route checks — NOT switching traffic"
 }
 
@@ -316,17 +338,18 @@ EOF
 }
 
 verify_via_nginx() { # expected build id, release
-  local i body build_id=$1 rel=$2
+  local i body build_id=$1 rel=$2 identity
   for i in 1 2 3 4 5 6; do
     body=$(curl -sS -m 20 --resolve "$HOST_NAME:443:127.0.0.1" "https://$HOST_NAME/" 2>/dev/null || true)
-    if printf '%s' "$body" | grep -q "/_next/static/$build_id/"; then break; fi
+    if serves_build "$build_id" "$body"; then break; fi
     [ "$i" -lt 6 ] || return 1
     sleep 2
   done
   # Every city page, through nginx + TLS, from the new build (already warm from the gate).
   if [ -f "$rel/$VERIFY_SCRIPT" ]; then
+    mapfile -t identity < <(expect_commit_args "$rel")
     ( cd "$rel" && node "$VERIFY_SCRIPT" --base "https://$HOST_NAME" --resolve 127.0.0.1 \
-        --host "$HOST_NAME" --release-dir "$rel" --quick ) || return 1
+        --host "$HOST_NAME" --release-dir "$rel" "${identity[@]}" --quick ) || return 1
   fi
   return 0
 }

@@ -11,6 +11,40 @@ previous release ready for a one-command rollback. No VPS or terminal step is ne
 Until that installation is done, the server still runs the legacy in-place script described in
 the next section, with its known window of 404s.
 
+## Build identity: which commit is live (works with both scripts)
+
+`GET https://portableofficecabin.com/api/build-info` (read-only JSON, `no-store`, `noindex`):
+
+```json
+{ "commit": "<40-hex sha>", "buildId": "<sha12>-<base36>", "builtAt": "<ISO>", "startedAt": "<ISO>" }
+```
+
+| Field | Source | What it proves |
+| --- | --- | --- |
+| `commit` | Fixed by `next.config.ts` when `next build` starts. The first valid value of: `DEPLOY_COMMIT_SHA`, `REVISION` (written by the release script, whose `git archive` export has no `.git`), `git rev-parse HEAD` (the legacy in-place checkout, and CI), `GITHUB_SHA`. Otherwise `"unknown"`. | The exact commit the serving build was made from |
+| `buildId` | `generateBuildId` returns `<sha12>_<base36 ms>`, so this is Next's `BUILD_ID`, and every page carries it as `"b"` in its RSC payload | Each page can be tied to the same build; the ID is still unique per build, so the stale-page checks keep working on a re-run of the same commit |
+| `builtAt` | Build start time, inlined at build time | When the live build was made |
+| `startedAt` | `process.uptime()` of the process answering | `startedAt < builtAt` means the process was not restarted after the build: it still runs the previous code |
+
+After every deploy, `.github/workflows/deploy-hostinger.yml` works out which commit the server built:
+- `DEPLOYED_REVISION=` from the release script, or the legacy script's `=== Deployment successful: <sha> ===` / `Target: <sha>` lines.
+- If the server built a newer `main` than the run's commit (it deploys `origin/main` when the job runs), GitHub must confirm the newer commit contains the run's commit.
+
+`scripts/deploy/verify-release.mjs --expect-commit <sha>` then requires:
+- `/api/build-info` names exactly that commit;
+- the serving process started after the build;
+- every city page carries the reported build ID.
+
+Any mismatch fails the run with the reason. The PR build job runs the same check against the build of the PR itself. The run summary records the live JSON.
+
+Security: the repository is public and the build ID was already in every page, so nothing new is disclosed. No environment variables, paths, hostnames or versions are read or returned. `/api/` is disallowed in `robots.txt`, and the endpoint is not in the sitemap.
+
+**Fixed with this change.** Next 15 (App Router) prints the build ID reliably in one place only: the RSC payload, `\"b\":\"<id>\"`, on every page. The checks used two other markers, measured on production on 2026-10-17:
+- **`/_next/static/<id>/`** is a Pages Router path that this site's HTML never contains, not even right after a build. The release script's health check and nginx check looked only for it, so once installed the script would have aborted every deploy.
+- **`<!--<id>-->`** is written only into pages prerendered at build time, with `-` rewritten to `_` and the ID cut to 24 characters. ISR-regenerated pages lose it: 0 of 20 live city pages had it, hours after a deploy. So `verify-release.mjs` could only confirm a build right after it went live, and only for an ID without a hyphen.
+
+The test fixtures printed both old markers, so CI never noticed. Both the fixtures and the checks now rely on the RSC marker. The old markers are still accepted as extra evidence.
+
 ## Root cause of the "new page answers 404" incidents (2026-10-10 and 2026-10-12)
 
 The installed script (`/usr/local/bin/deploy-portable-office`, 827 bytes, root-only, dated Oct 2)
@@ -71,18 +105,23 @@ as merged, it would have failed every deploy:
   while the new build used it. It is now a per-release copy.
 - **Gap: no skew protection.** The old build's static assets are now carried over.
 - **Gap: no build ID check from GitHub.** The script now prints `DEPLOYED_BUILD_ID=` /
-  `DEPLOYED_REVISION=`, and the workflow requires the public site to serve that exact build.
+  `DEPLOYED_REVISION=`, and the workflow requires the public site to serve that exact build and
+  commit (see "Build identity" above; the commit check also works with the legacy script).
 - **Workflow:** `ssh-keyscan` retries (a runner flake made a manual run fail on 2026-10-12), the
   routes a push introduces are checked first and named, and verification uses the same
   `verify-release.mjs`.
 
 ## Tests (`.github/workflows/deploy-script-tests.yml`, runs on every PR touching the pipeline)
 
-- `node --test scripts/deploy/verify-release.test.mjs`: 14 tests for the route gate. They cover
-  slug and sitemap parsing against the real `cityPages.ts`, and a local fake release that answers
-  a cached 404, a stale page from an older build, a page missing from the prerender manifest, `/`
-  served by another build, a broken sitemap URL, new routes, vanished pages (warning only) and an
-  unreachable server.
+- `node --test scripts/deploy/verify-release.test.mjs`: 25 tests for the route gate. They cover:
+  - slug and sitemap parsing against the real `cityPages.ts`;
+  - the App Router build-ID marker;
+  - `/api/build-info` checks: wrong commit, missing endpoint, a 500 error, an HTML page or broken
+    JSON at status 200, a process older than its build, and a build-ID mismatch;
+  - a local fake release, serving HTML shaped like real Next 15, that answers a cached 404, a stale
+    page from an older build, a page missing from the prerender manifest, `/` served by another
+    build, a broken sitemap URL, new routes, vanished pages (warning only) and an unreachable
+    server.
 - `shellcheck` + `bash -n` for both shell scripts.
 - `deploy/test/integration.sh` runs on a GitHub runner, never the VPS. It uses real nginx with TLS,
   real PM2, git, npm, flock and symlinks. It recreates today's production layout: the legacy app
@@ -92,10 +131,11 @@ as merged, it would have failed every deploy:
 
   | Scenario | Expected result |
   | --- | --- |
-  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over |
+  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over; both route gates confirm the release's exact commit (printed in the CI log) |
   | Re-run of the same commit | A fresh release is built and goes live |
   | Failing build | Production untouched |
   | New page that 404s in the new build | The gate blocks the switch; production untouched |
+  | New release reports another commit (`/api/build-info`) | The gate blocks the switch; production, the live slot and the upstream are untouched |
   | Good deploy, then `rollback` | The previous release is live again |
   | Two concurrent deploys | The second is refused by the lock |
   | Prune | Old releases removed, current/previous kept |
