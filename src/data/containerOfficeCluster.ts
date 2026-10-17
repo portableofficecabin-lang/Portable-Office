@@ -219,7 +219,19 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Kudligi, Vijayanagara district",
     hubAnchor: "Container offices for Kudligi project sites",
     nearbyLabel: "Kudligi",
-    neighbours: ["container-office-in-davanagere"], // ~70 km
+    neighbours: ["container-office-in-davanagere", "container-office-in-sandur-ballari"], // ~70 km / Sandur 26.7 km
+  },
+  {
+    slug: "container-office-in-sandur-ballari",
+    state: "Karnataka",
+    name: "Sandur, Ballari",
+    placeName: "Sandur",
+    area: "Sandur town, Toranagallu, Kurekuppa and Donimalai",
+    hubAnchor: "Container offices for Sandur's mines and steel plant sites",
+    nearbyLabel: "Sandur, Ballari district",
+    // Davanagere does not link back yet: its neighbours line is being edited by Haveri (#129) and the
+    // Karnataka-hubs follow-up (#137), so that owner adds Sandur to Davanagere's union of slugs.
+    neighbours: ["container-office-in-kudligi", "container-office-in-davanagere"], // 26.7 km / 96.4 km
   },
 
   // ── Tamil Nadu ── the Hosur–Krishnagiri belt first (it borders South Bengaluru), then the west
@@ -322,7 +334,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Harbour Estate, SIPCOT Meelavittan and Thoothukudi city",
     hubAnchor: "Portable container offices in Thoothukudi",
     nearbyLabel: "Thoothukudi",
-    neighbours: ["container-office-in-tirunelveli"],
+    neighbours: ["container-office-in-tirunelveli", "container-office-in-kudankulam-tirunelveli"], // Kudankulam ~81 km south-west
   },
   {
     slug: "container-office-in-tirunelveli",
@@ -332,7 +344,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Tirunelveli, Gangaikondan and the Aralvaimozhi wind corridor",
     hubAnchor: "Tirunelveli container offices for wind and solar project sites",
     nearbyLabel: "Tirunelveli",
-    neighbours: ["portable-container-office-in-thoothukudi"],
+    neighbours: ["portable-container-office-in-thoothukudi", "container-office-in-kudankulam-tirunelveli"], // Kudankulam ~61 km south
+  },
+  {
+    slug: "container-office-in-kudankulam-tirunelveli",
+    state: "Tamil Nadu",
+    name: "Kudankulam, Tirunelveli",
+    placeName: "Kudankulam",
+    area: "Kudankulam, Chettikulam, Radhapuram and Vallioor",
+    hubAnchor: "Coastal container offices for Kudankulam, Tirunelveli",
+    nearbyLabel: "Kudankulam",
+    neighbours: ["container-office-in-tirunelveli", "portable-container-office-in-thoothukudi"], // ~61 km / ~81 km
   },
 ];
 
