@@ -63,7 +63,7 @@ export function MarketplacePage() {
                     {promo.keyword} in {promo.location}
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                    Premium quality {promo.imageAlt} with fast installation and 10-year warranty.
+                    Factory-built {promo.imageAlt} with fast installation and a material-based warranty.
                   </p>
                   <div className="flex items-center text-primary font-semibold gap-1 text-sm">
                     <span>View Offer</span>

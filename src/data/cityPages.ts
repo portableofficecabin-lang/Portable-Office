@@ -2632,9 +2632,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-tirunelveli",
     city: "Tirunelveli",
     listTitle: "Container Office in Tirunelveli",
-    metaTitle: "Container Office in Tirunelveli – Sizes, Price & Delivery",
+    metaTitle: "Container Office in Tirunelveli – Sizes, Specs & Delivery",
     metaDescription:
-      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, built in 10–15 days and delivered across the district.",
+      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, with delivery across the district quoted per site.",
     keywords:
       "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
@@ -3085,14 +3085,14 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-exterior.webp",
-      alt: "Container office in Kudankulam — illustrative render of a charcoal-grey corrugated-steel container office with glazed double doors under a timber-look canopy on the long side, a large picture window in the end wall and planted beds along a paved forecourt",
+      alt: "Render of a charcoal corrugated container office for Kudankulam: glazed double doors, a timber-look canopy and a large end window",
       width: 1200,
       height: 896,
       caption: "Illustrative render. Doors, glazing, the canopy and finishes follow the approved specification.",
     },
     featureImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-aerial-view.webp",
-      alt: "Container office in Kudankulam — top-down view of the charcoal-grey container office showing its corrugated roof, corner castings and timber-look entrance canopy, on a paved pad with planted beds and boulders",
+      alt: "Top-down render of the container office: corrugated roof, corner castings and a timber-look entrance canopy on a paved pad",
       width: 1200,
       height: 896,
       caption:
@@ -3100,7 +3100,7 @@ export const CITY_PAGES: CityPage[] = [
     },
     interiorImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-interior.webp",
-      alt: "Container office in Kudankulam — illustrative render of an optionally furnished office interior with two desks and monitors, office chairs, storage cabinets with files and a printer, light panelled walls, an LED ceiling light, wood-look flooring, a full-height glazed double door and windows with roller blinds",
+      alt: "Interior render with optional furniture: two desks with monitors, storage cabinets, a wood-look floor and a full-height glazed door",
       width: 1200,
       height: 896,
       caption:
@@ -3109,13 +3109,13 @@ export const CITY_PAGES: CityPage[] = [
     gallery: [
       {
         src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-front-elevation.webp",
-        alt: "Container office in Kudankulam — illustrative front elevation of the charcoal-grey container office: glazed double doors under a timber-look canopy in the middle of the long side, a concrete entry step and planted beds on either side",
+        alt: "Front elevation render: glazed double doors under a timber-look canopy on the long side, with a concrete step and planted beds",
         width: 1200,
         height: 896,
       },
       {
         src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-side-elevation.webp",
-        alt: "Container office in Kudankulam — illustrative side elevation of the container office: a plain corrugated-steel wall with corner castings and no openings, on a paved pad between planted beds",
+        alt: "Side elevation render: a plain corrugated-steel wall with corner castings and no openings, on a paved pad",
         width: 1200,
         height: 896,
       },
@@ -3206,7 +3206,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Door", text: "Lockable steel door." },
       { title: "Paint", text: "Coastal paint system." },
       {
-        title: "Popular extras in Kudankulam",
+        title: "Popular extras for coastal sites",
         text: "Split AC with a dedicated circuit; attached toilet and wash area; bunk beds and lockers for crew rooms; partitions, workstations and a small pantry; network, CCTV and data points; company name and exterior colours.",
       },
     ],
