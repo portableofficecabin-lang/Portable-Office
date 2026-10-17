@@ -9990,8 +9990,8 @@ export const CITY_PAGES: CityPage[] = [
    *     were replaced: both show a third-party-style "MODUVA" / "NODUVA" sign (#100 precedent).
    *   • Permission FAQ no longer says a cabin "usually does not need" sanction (legal advice).
    *   • Moved onto the current template: motion pass and Service JSON-LD.
-   *   OWNER TO CONFIRM: factory visits "by appointment" (intro, why, how step 3, FAQ 2). If visits
-   *   are not offered, delete those four mentions; the page still stands on "made near Hosur".
+   *   • Factory-visit offers removed (owner, 2026-10-17) until the owner confirms the service. Do not
+   *     offer visits again — in the copy, the steps or the FAQs — without that confirmation.
    *
    * No ₹ figure (file-header rule). No ISO claim, founding year, counts, capacity or superlatives.
    * ──────────────────────────────────────────────────────────────────────────────────────── */
@@ -10048,12 +10048,12 @@ export const CITY_PAGES: CityPage[] = [
     tagline: "Cabins Built at Our Factory Near Hosur, in Krishnagiri District",
     intro: [
       "Portable Office Cabin manufactures portable cabins at its factory at Kamandoddi, Post Addakurukki, in Krishnagiri district, near Hosur. Cabins for customers in Hosur and the surrounding industrial belt are fabricated, wired and finished there, then driven to site.",
-      "For a buyer in Hosur, that changes two practical things. The transport leg from the factory to your site is short, and the factory is close enough to visit, by appointment, to see how a cabin is put together before you order.",
+      "For a buyer in Hosur, the cabin is specified, built and dispatched within Krishnagiri district, so the transport leg from the factory to your site is short.",
       "This page covers the cabin range built at the factory, what goes into a standard unit and how an order moves from enquiry to installation. Container offices for SIPCOT Hosur and the industrial belt around the Tata Electronics plant have their own pages, linked below.",
     ],
 
     whyHeading: "What a Factory Near Hosur Changes for Your Order",
-    whyIntro: "Four practical differences for customers in Hosur and the surrounding belt:",
+    whyIntro: "Three practical differences for customers in Hosur and the surrounding belt:",
     whyBullets: [
       {
         title: "You specify, not just choose",
@@ -10062,10 +10062,6 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "A short transport leg",
         text: "Fewer kilometres on the road means less handling between the factory and your site. The build time stays the same; what being near Hosur shortens is the transit.",
-      },
-      {
-        title: "See it before you order",
-        text: "Factory visits can be arranged by appointment, so you can see the frames, panels, wiring and finishes of cabins in production.",
       },
       {
         title: "The specification in writing",
@@ -10206,10 +10202,6 @@ export const CITY_PAGES: CityPage[] = [
         text: "Sizes, frame and panel specification, what is included and what is charged separately, with the transport to your site stated.",
       },
       {
-        title: "Factory visit, if you want one",
-        text: "A visit to the factory near Hosur can be arranged by appointment before you order.",
-      },
-      {
         title: "Fabrication",
         text: "Frame, panels, flooring, doors and windows, wiring and finishing, with the services checked before the panels are closed.",
       },
@@ -10229,9 +10221,9 @@ export const CITY_PAGES: CityPage[] = [
         answer: `Yes. Our factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur. Cabins for Hosur customers are fabricated and finished there and driven to site.`,
       },
       {
-        question: "Can I visit the factory before ordering?",
+        question: "Is this page about container offices for SIPCOT Hosur?",
         answer:
-          "Yes, by appointment. Call first so that someone is available to show you round, and bring your drawing if you have one.",
+          "No. This page covers the built-up cabin range made at our factory: site offices, security cabins, toilet blocks, worker accommodation and stores. Container offices for SIPCOT Hosur and for supplier units around the Tata Electronics plant have their own pages, linked below.",
       },
       {
         question: "How long does a portable cabin take to build?",
