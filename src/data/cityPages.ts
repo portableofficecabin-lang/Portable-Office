@@ -2632,9 +2632,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-tirunelveli",
     city: "Tirunelveli",
     listTitle: "Container Office in Tirunelveli",
-    metaTitle: "Container Office in Tirunelveli – Sizes, Price & Delivery",
+    metaTitle: "Container Office in Tirunelveli – Sizes, Specs & Delivery",
     metaDescription:
-      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, built in 10–15 days and delivered across the district.",
+      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, with delivery across the district quoted per site.",
     keywords:
       "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
@@ -3044,6 +3044,16 @@ export const CITY_PAGES: CityPage[] = [
    *   • The areas section is framed as delivery enquiry locations ("Delivery Enquiries in Tirunelveli
    *     District and Nearby"), with feasibility and charges confirmed after reviewing the site.
    *
+   * Owner corrections (2026-10-17, after the live claims review): anchoring and generator changeover
+   * are not confirmed services, so neither is stated unconditionally.
+   *   • Anchoring is conditional everywhere: the disclaimer uses the owner's sentences ("Delivery and
+   *     crane placement are arranged for each project. Anchoring, where required, is subject to site
+   *     conditions and confirmation in the quotation."), the wind section says the method, plates or
+   *     bolts and supply/installation responsibility are agreed in the quotation, and the maintenance
+   *     habit reads "If the unit is anchored, inspect the anchor bolts after the windy season."
+   *   • The power FAQ no longer offers a generator changeover; it uses the owner's sentence asking the
+   *     customer to mention a generator when requesting a quotation.
+   *
    * Images: five owner-dropped webp renders ("public/images/cities/City Page · Kudankulam
    * (Koodankulam), Tirunelveli District/…/cabin (1–5).webp", all 1200×896), copied byte-for-byte to
    * clean slug names: the three-quarter exterior = hero / og:image; the top-down view = feature band;
@@ -3075,22 +3085,22 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-exterior.webp",
-      alt: "Container office in Kudankulam — illustrative render of a charcoal-grey corrugated-steel container office with glazed double doors under a timber-look canopy on the long side, a large picture window in the end wall and planted beds along a paved forecourt",
+      alt: "Render of a charcoal corrugated container office for Kudankulam: glazed double doors, a timber-look canopy and a large end window",
       width: 1200,
       height: 896,
       caption: "Illustrative render. Doors, glazing, the canopy and finishes follow the approved specification.",
     },
     featureImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-aerial-view.webp",
-      alt: "Container office in Kudankulam — top-down view of the charcoal-grey container office showing its corrugated roof, corner castings and timber-look entrance canopy, on a paved pad with planted beds and boulders",
+      alt: "Top-down render of the container office: corrugated roof, corner castings and a timber-look entrance canopy on a paved pad",
       width: 1200,
       height: 896,
       caption:
-        "Illustrative render of a single unit. Anchoring and foundation requirements are confirmed for the site's exposure and the approved design.",
+        "Illustrative render of a single unit. Foundation requirements, and any anchoring the site needs, are confirmed in the quotation for the site's exposure and the approved design.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-interior.webp",
-      alt: "Container office in Kudankulam — illustrative render of an optionally furnished office interior with two desks and monitors, office chairs, storage cabinets with files and a printer, light panelled walls, an LED ceiling light, wood-look flooring, a full-height glazed double door and windows with roller blinds",
+      alt: "Interior render with optional furniture: two desks with monitors, storage cabinets, a wood-look floor and a full-height glazed door",
       width: 1200,
       height: 896,
       caption:
@@ -3099,13 +3109,13 @@ export const CITY_PAGES: CityPage[] = [
     gallery: [
       {
         src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-front-elevation.webp",
-        alt: "Container office in Kudankulam — illustrative front elevation of the charcoal-grey container office: glazed double doors under a timber-look canopy in the middle of the long side, a concrete entry step and planted beds on either side",
+        alt: "Front elevation render: glazed double doors under a timber-look canopy on the long side, with a concrete step and planted beds",
         width: 1200,
         height: 896,
       },
       {
         src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-side-elevation.webp",
-        alt: "Container office in Kudankulam — illustrative side elevation of the container office: a plain corrugated-steel wall with corner castings and no openings, on a paved pad between planted beds",
+        alt: "Side elevation render: a plain corrugated-steel wall with corner castings and no openings, on a paved pad",
         width: 1200,
         height: 896,
       },
@@ -3153,7 +3163,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Holding Firm in the Wind",
-        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include anchor plates to secure the unit to a suitable base, firmly fixed roof sheets, and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. The anchoring arrangement and foundation requirements should be confirmed for the site's exposure and the approved design.",
+        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include firmly fixed roof sheets and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. Where a site requires anchoring, the anchoring method, any anchor plates or bolts, and who supplies and installs them must be agreed in the quotation, subject to site conditions, technical feasibility and the approved design.",
       },
       {
         title: "Staying Comfortable Inside",
@@ -3196,7 +3206,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Door", text: "Lockable steel door." },
       { title: "Paint", text: "Coastal paint system." },
       {
-        title: "Popular extras in Kudankulam",
+        title: "Popular extras for coastal sites",
         text: "Split AC with a dedicated circuit; attached toilet and wash area; bunk beds and lockers for crew rooms; partitions, workstations and a small pantry; network, CCTV and data points; company name and exterior colours.",
       },
     ],
@@ -3211,7 +3221,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       { title: "Repair paint damage", text: "Touch up scratches or chips in the paint promptly." },
       { title: "Check seals", text: "Check door and window seals before the northeast monsoon." },
-      { title: "Inspect anchor bolts", text: "Inspect anchor bolts after the windy season." },
+      { title: "Inspect anchor bolts, if fitted", text: "If the unit is anchored, inspect the anchor bolts after the windy season." },
       { title: "Keep the roof clear", text: "Keep the roof and drip edges clear of sand and leaves." },
       {
         title: "Follow the supplied instructions",
@@ -3239,8 +3249,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Prepare a level base and suitable concrete pedestals or foundations according to the agreed drawings.",
       },
       {
-        title: "Delivery, anchoring and handover",
-        text: "Coordinate placement, anchoring, connections and handover according to the agreed scope. Site access note: the truck needs a clear route to the unloading position, and the crane needs sufficient working space. Responsibility for transport, crane hire, unloading, anchoring and utility connections must be stated in the quotation.",
+        title: "Delivery, placement and handover",
+        text: "Coordinate placement, connections, any anchoring confirmed in the quotation, and handover according to the agreed scope. Site access note: the truck needs a clear route to the unloading position, and the crane needs sufficient working space. Responsibility for transport, crane hire, unloading, anchoring and utility connections must be stated in the quotation.",
       },
     ],
 
@@ -3253,7 +3263,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can I move it from Kudankulam to another site later?",
         answer:
-          "Yes. A relocatable unit can be disconnected, unbolted and lifted onto a suitable truck for the next site. Joined units, plumbing and other additions may need dismantling first. Transport and lifting arrangements depend on the unit's size and condition.",
+          "Yes. A relocatable unit can be disconnected, released from any anchor bolts and lifted onto a suitable truck for the next site. Joined units, plumbing and other additions may need dismantling first. Transport and lifting arrangements depend on the unit's size and condition.",
       },
       {
         question: "Do I need permission to place a container office?",
@@ -3263,7 +3273,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "What power connection does it need?",
         answer:
-          "The supply requirement depends on the total electrical load. Lights, fans and computers may operate on a suitable single-phase connection, while AC requires a correctly sized dedicated circuit. A generator changeover arrangement can be included where specified.",
+          "The supply requirement depends on the total electrical load. Lights, fans and computers may operate on a suitable single-phase connection, while AC requires a correctly sized dedicated circuit. If you plan to use a generator, please mention this when requesting a quotation so the required electrical provisions can be reviewed and confirmed.",
       },
       {
         question: "How fast can you deliver to Kudankulam?",
@@ -3301,7 +3311,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district; delivery, crane placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district. Delivery and crane placement are arranged for each project. Anchoring, where required, is subject to site conditions and confirmation in the quotation. Delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

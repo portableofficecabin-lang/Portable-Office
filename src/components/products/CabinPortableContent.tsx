@@ -513,9 +513,9 @@ export function CabinPortableContent() {
           <div className="bg-card border border-border/40 rounded-xl p-5">
             <h3 className="font-semibold text-foreground mb-3">Typical Warranty Structure</h3>
             <ul className="space-y-1.5 text-sm text-muted-foreground">
-              <li>• 1-year standard warranty on defects</li>
-              <li>• Optional extended warranties</li>
-              <li>• Limited coverage for electrical fixtures</li>
+              <li>• Structural cover by material (MS, GI, ACP or PUF)</li>
+              <li>• Separate cover for leakage, electrical components and paint and finish</li>
+              <li>• Full terms on our <Link href="/warranty" className="text-primary hover:underline">Warranty page</Link></li>
             </ul>
           </div>
           <div className="bg-card border border-border/40 rounded-xl p-5">

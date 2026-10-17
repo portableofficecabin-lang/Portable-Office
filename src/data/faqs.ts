@@ -106,11 +106,11 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "What kind of warranty do you offer?",
-        a: "Our structural warranty depends on the material used — 5 years for MS, 15 years for GI, 20 years for ACP, and 25 years for PUF panel structures. Electrical fittings are covered for 1 year, and paint/finish work for 6 months. Full details are shared with every order.",
+        a: "Our structural warranty depends on the material used — 5 years for MS, 15 years for GI, 20 years for ACP, and 25 years for PUF panel structures. Electrical fittings and leakage are covered for 1 year, and paint/finish work for 6 months. Full details are shared with every order.",
       },
       {
         q: "What does the warranty cover?",
-        a: "The structural warranty covers defects in materials and workmanship — things like panel warping, welding failures, or leaks caused by manufacturing issues. Normal wear and tear, misuse, or damage from natural disasters aren't covered, but we're always here to help with repairs.",
+        a: "The structural warranty covers defects in materials and workmanship — things like panel warping or welding failures. Leaks caused by manufacturing issues are covered for 1 year. Normal wear and tear, misuse, or damage from natural disasters aren't covered, but we're always here to help with repairs.",
       },
     ],
   },
