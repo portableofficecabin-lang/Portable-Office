@@ -341,7 +341,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
   // Bengaluru-belt pages predate this map; the container-office cluster review (Oct 2026) added them
-  // to the "Container Office" key below. The other three keyword keys still list Mysore and Tumkur only.
+  // to the "Container Office" key below. The other three keyword keys list Mysore and Tumkur, plus the
+  // North and Central Karnataka pages (Bagalkot, Belagavi, Bidar, Davanagere, Kalaburagi) that #126
+  // planned to add to them; Bengaluru-belt pages stay on the Bangalore and Container Office hubs only.
   "Container Office|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
@@ -369,14 +371,34 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     { name: "Container Office in Bagalkot", href: "/cities-we-serve/container-office-in-bagalkot" },
+    ...hubLinksFor([
+      "container-office-in-belagavi",
+      "container-office-in-bidar",
+      "container-office-in-davanagere",
+      "container-office-in-kalaburagi",
+    ]),
   ],
   "Portable Cabin|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    ...hubLinksFor([
+      "container-office-in-bagalkot",
+      "container-office-in-belagavi",
+      "container-office-in-bidar",
+      "container-office-in-davanagere",
+      "container-office-in-kalaburagi",
+    ]),
   ],
   "Porta Cabin|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    ...hubLinksFor([
+      "container-office-in-bagalkot",
+      "container-office-in-belagavi",
+      "container-office-in-bidar",
+      "container-office-in-davanagere",
+      "container-office-in-kalaburagi",
+    ]),
   ],
   // Shipping-container hub — every Karnataka shipping-container city page (the box itself, new / used /
   // rental): Mysore first, then Jigani (2026-10-12); each page links back to this hub.
