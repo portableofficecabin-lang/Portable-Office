@@ -472,7 +472,7 @@ export const products: Product[] = [
       "Everything included — turnkey",
       "Lower electricity bills than brick homes",
       "Installation in 5-7 days",
-      "10-year structural warranty",
+      "Structural warranty as set out on our Warranty page",
       "Pick your own interiors",
     ],
     images: [
@@ -1285,7 +1285,7 @@ export const products: Product[] = [
       { label: "Wind Resistance", value: "Up to 150 km/h (container-based)" },
       { label: "Service Life", value: "10-25 years with basic maintenance" },
       { label: "Installation Time", value: "1-2 days after delivery" },
-      { label: "Warranty", value: "1 year standard; extended options available" },
+      { label: "Warranty", value: "As per our published warranty policy (structural cover by material)" },
     ],
     features: [
       "40-60% cheaper than RCC construction",
