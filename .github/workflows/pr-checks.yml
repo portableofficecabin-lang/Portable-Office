@@ -148,6 +148,12 @@ jobs:
       - name: City pages are fully server-rendered (SSR audit)
         if: ${{ !cancelled() }}
         run: npm run cities:audit -- http://localhost:3000
+      # Deployment identity, end to end on the real build. GET /api/build-info must name the commit
+      # this job built, and every city page must carry that build's id. This is the same check the
+      # deploy workflow runs against production (scripts/deploy/verify-release.mjs --expect-commit).
+      - name: Build identity — /api/build-info names this commit, every page carries its build id
+        if: ${{ !cancelled() }}
+        run: node scripts/deploy/verify-release.mjs --base http://localhost:3000 --source-dir . --expect-commit "$(git rev-parse HEAD)" --quick
       - name: Server log (on failure)
         if: ${{ failure() }}
         run: tail -n 200 next-start.log || true

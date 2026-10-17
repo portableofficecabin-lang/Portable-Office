@@ -14,8 +14,18 @@ import {
   sitePath,
   missingFromManifest,
   servedByBuild,
+  buildIdOfPage,
+  checkBuildInfo,
   verifyRelease,
 } from "./verify-release.mjs";
+
+/** HTML as Next 15 (App Router) serves an ISR-regenerated page: the build id ONLY in the escaped
+ *  RSC "b" (a page prerendered at build time also has <!--id-->; regenerated pages lose it). */
+const appRouterHtml = (id) =>
+  `<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/></head><body><main>page</main>` +
+  `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${id}\\",\\"p\\":\\"\\",\\"c\\":[\\"\\",\\"\\"]}\\n"])</script></body></html>`;
+const SHA = "a835e86a552f92ac59be861bf116dd3e452083a9";
+const OTHER_SHA = "64dfddaf70ee64f02e805aa2970ad10b0a84019c";
 
 const HOST = "portableofficecabin.com";
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -47,11 +57,46 @@ test("missingFromManifest lists city routes the build did not prerender", () => 
   assert.deepEqual(missingFromManifest({}, ["a"]), ["/cities-we-serve/a"]);
 });
 
-test("servedByBuild recognises both places Next prints the build id", () => {
+test("servedByBuild recognises the App Router RSC marker — the one Next 15 always prints", () => {
+  assert.ok(servedByBuild(appRouterHtml("a835e86a552f_mvcbu719"), "a835e86a552f_mvcbu719"));
+  assert.ok(servedByBuild('0:{"P":null,"b":"abc123","p":""}', "abc123"), "raw RSC payload");
+  assert.ok(!servedByBuild(appRouterHtml("old999"), "abc123"));
+  assert.ok(!servedByBuild(appRouterHtml("abc1234"), "abc123"), "a longer id is a different build");
+  assert.ok(servedByBuild("anything", undefined), "no build id given ⇒ not checked");
+});
+
+test("servedByBuild still accepts the two Pages Router markers", () => {
   assert.ok(servedByBuild("<!DOCTYPE html><!--abc123--><html>", "abc123"));
   assert.ok(servedByBuild('<script src="/_next/static/abc123/_buildManifest.js">', "abc123"));
   assert.ok(!servedByBuild("<!DOCTYPE html><!--old999--><html>", "abc123"));
-  assert.ok(servedByBuild("anything", undefined), "no build id given ⇒ not checked");
+});
+
+test("buildIdOfPage reads the RSC build id (for failure messages)", () => {
+  assert.equal(buildIdOfPage(appRouterHtml("a835e86a552f_mvcbu719")), "a835e86a552f_mvcbu719");
+  assert.equal(buildIdOfPage("<html>no payload</html>"), null);
+});
+
+test("checkBuildInfo passes only the expected commit, on a process restarted after its build", () => {
+  const info = { commit: SHA, buildId: "a835e86a552f-x", builtAt: "2026-10-17T11:42:21.213Z", startedAt: "2026-10-17T11:53:34.642Z" };
+  assert.deepEqual(checkBuildInfo(info, { expectCommit: SHA }), []);
+  assert.deepEqual(checkBuildInfo(info, { expectCommit: SHA.slice(0, 7) }), [], "abbreviated SHA");
+  assert.deepEqual(checkBuildInfo(info, { expectCommit: SHA.toUpperCase() }), [], "case-insensitive");
+  assert.deepEqual(checkBuildInfo(info, { expectCommit: SHA, buildId: "a835e86a552f-x" }), []);
+
+  const wrong = checkBuildInfo(info, { expectCommit: OTHER_SHA });
+  assert.equal(wrong.length, 1);
+  assert.match(wrong[0], /serves commit a835e86a552f, expected 64dfddaf70ee/);
+
+  assert.match(checkBuildInfo({ ...info, commit: "unknown" }, { expectCommit: SHA })[0], /does not know its commit/);
+  assert.match(checkBuildInfo(info, { expectCommit: SHA, buildId: "other-build" })[0], /is not the deployed build other-build/);
+  assert.match(
+    checkBuildInfo({ ...info, startedAt: "2026-10-17T11:00:00.000Z" }, { expectCommit: SHA })[0],
+    /BEFORE this build/,
+    "a process that was not restarted after the build",
+  );
+  assert.match(checkBuildInfo({ ...info, builtAt: "unknown" }, { expectCommit: SHA })[0], /unreadable timestamps/);
+  assert.match(checkBuildInfo(info, { expectCommit: "main" })[0], /not a hex commit SHA/);
+  assert.match(checkBuildInfo(null, { expectCommit: SHA })[0], /did not return a JSON object/);
 });
 
 // ── end-to-end against a fake release ─────────────────────────────────────────────────────
@@ -65,8 +110,15 @@ async function fakeRelease({ slugs = ["c1", "c2"], buildId = "BUILD1", extraSite
   const routes = Object.fromEntries(slugs.filter((s) => s !== faults.notPrerendered).map((s) => [`/cities-we-serve/${s}`, {}]));
   writeFileSync(join(dir, ".next/prerender-manifest.json"), JSON.stringify({ version: 4, routes }));
 
-  const html = (id) => `<!DOCTYPE html><!--${id}--><html><body><script src="/_next/static/${id}/_buildManifest.js"></script></body></html>`;
+  const html = appRouterHtml;
   const sitemapPaths = ["/", "/cities-we-serve", ...slugs.map((s) => `/cities-we-serve/${s}`), ...extraSitemap];
+  const buildInfo = {
+    commit: SHA,
+    buildId,
+    builtAt: "2026-10-17T11:42:21.213Z",
+    startedAt: "2026-10-17T11:53:34.642Z",
+    ...(faults.buildInfo || {}),
+  };
   const seenHosts = new Set();
   const server = http.createServer((req, res) => {
     seenHosts.add(req.headers.host);
@@ -79,6 +131,12 @@ async function fakeRelease({ slugs = ["c1", "c2"], buildId = "BUILD1", extraSite
       return send(200, `<urlset>${sitemapPaths.map((x) => `<url><loc>https://${HOST}${x}</loc></url>`).join("")}</urlset>`, "application/xml");
     }
     if (p === "/robots.txt") return send(200, "User-agent: *", "text/plain");
+    if (p === "/api/build-info") {
+      if (faults.noBuildInfo) return send(404, html(buildId));
+      if (faults.buildInfoStatus) return send(faults.buildInfoStatus, "upstream error");
+      if (faults.buildInfoRaw !== undefined) return send(200, faults.buildInfoRaw, faults.buildInfoType || "application/json");
+      return send(200, JSON.stringify(buildInfo), "application/json");
+    }
     if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, html(faults.wrongBuildOnRoot ? "OTHER" : buildId));
     const m = p.match(/^\/cities-we-serve\/([a-z0-9-]+)$/);
     if (m && slugs.includes(m[1])) {
@@ -102,7 +160,7 @@ test("a healthy release passes every check, with the Host header of the real sit
     assert.deepEqual(r.failures, []);
     assert.equal(r.ok, true);
     assert.equal(r.buildId, "BUILD1");
-    assert.deepEqual(r.counts, { build: 2, health: 5, city: 2, new: 0, sitemap: 1 });
+    assert.deepEqual(r.counts, { build: 2, health: 5, city: 2, new: 0, sitemap: 1, identity: 0 });
     assert.deepEqual([...f.seenHosts], [HOST]);
   } finally {
     await f.close();
@@ -186,6 +244,103 @@ test("pages that vanish from the sitemap are WARNINGS, not failures", async () =
   } finally {
     await oldRel.close();
     await newRel.close();
+  }
+});
+
+// ── --expect-commit: the live process names its commit (GET /api/build-info) ─────────────────
+// These run the way the deploy workflow does: --source-dir only, no release dir, no build id.
+test("--expect-commit passes and adopts the live build id for every page", async () => {
+  const f = await fakeRelease({ buildId: "a835e86a552f-mvcbu719" });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, quick: true });
+    assert.deepEqual(r.failures, []);
+    assert.equal(r.counts.identity, 1);
+    assert.equal(r.buildId, "a835e86a552f-mvcbu719", "the live process's build id became the expected one");
+    assert.equal(r.counts.city, 2);
+    assert.equal(r.identity.commit, SHA);
+  } finally {
+    await f.close();
+  }
+});
+
+test("--expect-commit FAILS when production serves another commit", async () => {
+  const f = await fakeRelease();
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: OTHER_SHA, quick: true });
+    assert.equal(r.ok, false);
+    assert.equal(r.counts.identity, 0);
+    assert.ok(r.failures.some((x) => x.includes("expected 64dfddaf70ee")), r.failures.join("\n"));
+  } finally {
+    await f.close();
+  }
+});
+
+test("--expect-commit FAILS when the endpoint is missing (the new build is not the one serving)", async () => {
+  const f = await fakeRelease({ faults: { noBuildInfo: true } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, quick: true });
+    assert.ok(r.failures.some((x) => x.startsWith("identity: /api/build-info answered 404")), r.failures.join("\n"));
+  } finally {
+    await f.close();
+  }
+});
+
+test("--expect-commit FAILS when the serving process predates the build (PM2 not reloaded)", async () => {
+  const f = await fakeRelease({ faults: { buildInfo: { startedAt: "2026-10-17T10:00:00.000Z" } } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, quick: true });
+    assert.ok(r.failures.some((x) => x.includes("BEFORE this build")), r.failures.join("\n"));
+  } finally {
+    await f.close();
+  }
+});
+
+test("--expect-commit catches a stale page from another build even without --build-id", async () => {
+  const f = await fakeRelease({ buildId: "a835e86a552f-new", faults: { stale: "c2" } });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, quick: true });
+    assert.equal(r.counts.identity, 1);
+    assert.ok(
+      r.failures.some((x) => x.includes("/cities-we-serve/c2") && x.includes("stale page: OLDBUILD") && x.includes("expected a835e86a552f-new")),
+      r.failures.join("\n"),
+    );
+  } finally {
+    await f.close();
+  }
+});
+
+test("--expect-commit FAILS on invalid endpoint answers (500, HTML at 200, JSON null)", async () => {
+  const cases = [
+    [{ buildInfoStatus: 500 }, /answered 500/],
+    [{ buildInfoRaw: "<!DOCTYPE html><html><body>Maintenance</body></html>", buildInfoType: "text/html" }, /did not return JSON/],
+    [{ buildInfoRaw: "null" }, /did not return JSON/],
+    [{ buildInfoRaw: '{"commit": "a835' }, /did not return JSON/],
+  ];
+  for (const [faults, expected] of cases) {
+    const f = await fakeRelease({ faults });
+    try {
+      const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, quick: true });
+      assert.equal(r.ok, false, JSON.stringify(faults));
+      assert.ok(r.failures.some((x) => expected.test(x)), `${JSON.stringify(faults)} → ${r.failures.join(" | ")}`);
+      assert.equal(r.counts.identity, 0);
+    } finally {
+      await f.close();
+    }
+  }
+});
+
+test("checkBuildInfo accepts a process started in the same millisecond as its build", () => {
+  const t = "2026-10-17T12:00:00.000Z";
+  assert.deepEqual(checkBuildInfo({ commit: SHA, buildId: "x", builtAt: t, startedAt: t }, { expectCommit: SHA }), []);
+});
+
+test("--expect-commit with a known --build-id FAILS when the live build differs", async () => {
+  const f = await fakeRelease({ buildId: "a835e86a552f-live" });
+  try {
+    const r = await verifyRelease({ base: f.base, host: HOST, sourceDir: f.dir, expectCommit: SHA, buildId: "a835e86a552f-deployed", quick: true });
+    assert.ok(r.failures.some((x) => x.includes("is not the deployed build a835e86a552f-deployed")), r.failures.join("\n"));
+  } finally {
+    await f.close();
   }
 });
 
