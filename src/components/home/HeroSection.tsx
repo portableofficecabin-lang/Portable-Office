@@ -26,7 +26,7 @@ export function HeroSection() {
           win instead — both paint immediately.
           It is intentionally a preloaded, art-directed <picture>/<img> (NOT a CSS
           background-image and NOT next/image):
-            • <link rel=preload as=image fetchpriority=high> in app/layout.tsx makes
+            • <link rel=preload as=image fetchpriority=high> in app/(site)/page.tsx makes
               the preload scanner fetch the correct variant at <head> parse — same
               priority next/image priority would give, but earlier.
             • <picture media> art-directs a smaller, differently-cropped file to

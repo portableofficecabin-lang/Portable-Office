@@ -51,7 +51,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Family Prefab Home 2BHK
   "4": {
     title: "2BHK Prefab Home | Portable Office Cabin",
-    description: "Complete 2BHK prefab home with modular kitchen, bathroom & 10-year warranty. Ideal for farmhouses & resorts. Call or WhatsApp us today!",
+    description: "Complete 2BHK prefab home with modular kitchen, bathroom & material-based warranty. Ideal for farmhouses & resorts. Call or WhatsApp us today!",
     keywords: "2BHK prefab home, prefab house India, prefabricated home price, modular home 2BHK, quick build home, farmhouse prefab, prefab home manufacturer India",
   },
   // Portable Toilet Block - 4 Unit
