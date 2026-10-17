@@ -5,7 +5,7 @@
  *   PILLAR            /products/category/container-offices        broad "container office" intent
  *   BANGALORE LANDING /promotions/container-office-in-bangalore   Bangalore commercial intent
  *   DIRECTORY         /cities-we-serve#container-office-locations every location, grouped by state
- *   LOCATION PAGES    /cities-we-serve/<slug>                       one local intent each (18 pages)
+ *   LOCATION PAGES    /cities-we-serve/<slug>                       one local intent each
  *
  * Read by: the pillar's locations block (ContainerOfficeCategoryContent), the directory section
  * (CitiesWeServe), the "nearby locations" block on every location page (cities-we-serve/[slug])
@@ -148,7 +148,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Pavagada town, Thirumani, Vallur, Madhugiri and Sira",
     hubAnchor: "Container offices for Pavagada's solar and project sites",
     nearbyLabel: "Pavagada",
-    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura"], // ~86 km / ~94 km
+    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura", "container-office-in-chitradurga"], // ~86 km / ~94 km / ~96 km
   },
   {
     slug: "container-office-in-davanagere",
@@ -158,7 +158,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
     hubAnchor: "Container offices for Davanagere and Harihar",
     nearbyLabel: "Davanagere",
-    neighbours: ["container-office-in-kudligi"], // Kudligi ~70 km
+    neighbours: ["container-office-in-haveri", "container-office-in-chitradurga", "container-office-in-kudligi", "container-office-in-sandur-ballari"], // ~67 km / ~58 km (both NH-48) / ~70 km / 96.4 km
+  },
+  {
+    slug: "container-office-in-haveri",
+    state: "Karnataka",
+    name: "Haveri",
+    placeName: "Haveri",
+    area: "Haveri town, Ranebennur, Byadgi, Hangal and the NH-48 corridor",
+    hubAnchor: "Container offices for Haveri, Byadgi and Ranebennur",
+    nearbyLabel: "Haveri district",
+    neighbours: ["container-office-in-davanagere"], // ~67 km along NH-48
   },
   {
     slug: "container-office-in-tumkur",
@@ -168,8 +178,18 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Tumkur city, Vasanthanarasapura and Kyathsandra",
     hubAnchor: "Container offices and site offices in Tumkur",
     nearbyLabel: "Tumkur district",
-    neighbours: ["container-office-in-doddaballapura"],
+    neighbours: ["container-office-in-doddaballapura", "container-office-in-chitradurga"], // Chitradurga ~125 km up NH-48
     bangaloreRegion: true,
+  },
+  {
+    slug: "container-office-in-chitradurga",
+    state: "Karnataka",
+    name: "Chitradurga",
+    placeName: "Chitradurga",
+    area: "Chitradurga city, Challakere, Hiriyur and the NH-48 corridor",
+    hubAnchor: "Container offices for Chitradurga's wind, canal and highway sites",
+    nearbyLabel: "Chitradurga district",
+    neighbours: ["container-office-in-davanagere", "container-office-in-tumkur", "container-office-in-pavagada"], // ~58 km / ~125 km (both NH-48) / ~96 km
   },
   {
     slug: "container-office-in-belagavi",
@@ -199,7 +219,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Bagalkot city, Navanagar, Mudhol and Jamkhandi",
     hubAnchor: "Container offices across Bagalkot district",
     nearbyLabel: "Bagalkot district",
-    neighbours: [], // North Karnataka: the nearest cluster page (Tumkur) is ~350 km away
+    neighbours: [], // North Karnataka: the nearest cluster page (Belagavi) is ~133 km away, past the 130 km limit
   },
   {
     slug: "container-office-in-kudligi",
