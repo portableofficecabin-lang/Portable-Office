@@ -339,6 +339,26 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ol>
 
+        {/* Optional extra sections (`extraSections`): owner copy with more H2s than the fixed slots
+            hold. Same classes and motion as the sections above; unset = nothing rendered. */}
+        {page.extraSections?.map((sec) => (
+          <section key={sec.heading}>
+            <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
+            {sec.paragraphs?.map((text) => (
+              <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
+            ))}
+            {sec.bullets && sec.bullets.length > 0 && (
+              <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+                {sec.bullets.map((b) => (
+                  <li key={b.title ?? b.text} className={li}>
+                    {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+
         <h2 className={`${h2}${mc("reveal")}`}>Frequently Asked Questions (FAQs)</h2>
         {page.faqs.map((f, i) => (
           <section key={f.question} className={`mb-4${mc("reveal")}`}>

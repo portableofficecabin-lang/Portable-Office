@@ -29,6 +29,13 @@ export interface CityPageLink {
   href: string;
 }
 
+/** An optional extra H2 section (see CityPage.extraSections). */
+export interface CityPageSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+}
+
 export interface CityPage {
   /** URL slug under /cities-we-serve/, e.g. "container-office-in-jigani". */
   slug: string;
@@ -118,6 +125,15 @@ export interface CityPage {
 
   howHeading: string;
   howSteps: CityPageListItem[];
+
+  /**
+   * Optional extra H2 sections rendered after the "how" steps and before the FAQs, for owner copy
+   * with more sections than the fixed slots hold (first used by Portable Cabins in Tumkur). Each
+   * renders its heading, its paragraphs, then an optional "title: text" bullet list, with the same
+   * classes and motion as the fixed sections. Unset = nothing rendered, so every other page's HTML
+   * is unchanged.
+   */
+  extraSections?: CityPageSection[];
 
   faqs: CityPageFaq[];
 
@@ -6351,6 +6367,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Doddaballapura", href: "/cities-we-serve/container-office-in-doddaballapura" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
       { label: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     ],
 
     disclaimer:
@@ -6626,6 +6643,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -7021,10 +7039,354 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
       { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     ],
 
     disclaimer:
       "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Tumkur district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The images show a representative dry shipping container, not a unit at a site in Tumkur. Dimensions, volumes, weights and bag counts on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. The Machine Tool Park, Pavagada Solar Park, Vasanthanarasapura and other places are named only to describe the service area: Portable Office Cabin is not affiliated with any industrial area, solar park, developer, operator or market. Notes on produce storage, anchoring, certification and local permissions are general guidance, not agronomic, engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN TUMKUR (Tumakuru) — the portable-cabin intent for Tumkur city and district:
+   * site offices, security cabins, labour accommodation, toilet units, container offices, real
+   * estate sales offices and storage cabins for the NH-48 corridor, the KIADB industrial areas
+   * (Vasanthanarasapura, Antharasanahalli, Sathyamangala, Hirehalli), the Gubbi and Pavagada
+   * projects and the taluks. The sibling of the container-office and shipping-container Tumkur
+   * pages (each links to the other two); not a container-office cluster location, so the
+   * /cities-we-serve index lists it with the local-service pages. On the Portable Cabin and Porta
+   * Cabin Karnataka hubs.
+   *
+   * Owner copy of 2026-10-17 ("Portable Cabins in Tumkur" content draft), mapped onto the fixed
+   * template slots. The H1 and meta title are verbatim; the owner's slug "/portable-cabin-in-tumkur"
+   * follows the site pattern as /cities-we-serve/portable-cabin-in-tumkur. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Why Tumkur Projects Are Choosing Portable Cabins" → why: its first sentence as whyIntro, the
+   *     industrial-area / project / Smart City facts as three bullets (short titles added), the
+   *     second paragraph as whyOutro.
+   *   • "Portable Cabins We Supply in Tumkur" → solutions: its seven H3s as the numbered H3s.
+   *     solutionsIntro is a one-line lead-in.
+   *   • "Pick the Build That Suits Your Site" → features: the five table rows as "Build — made of;
+   *     works best for", the closing "Not sure which one you need?…" as sizesNote.
+   *   • "Rent or Buy? An Honest Way to Decide" → industries: the table's two columns as two items,
+   *     the closing line as the intro. "Built for Tumkur's Heat and Rain" → the custom slot beside the
+   *     interior render: its two paragraphs as two items. The template renders industries BEFORE the
+   *     custom slot, so these two H2s swap (the Yadgir arrangement).
+   *   • "Who We Work With in Tumkur" → whyUs: the eight bullets in four groups (titles added). The
+   *     heading reads "Who Uses Portable Cabins in Tumkur", per the owner's rule of claiming no
+   *     customers or projects in Tumkur.
+   *   • "Areas We Cover in and Around Tumkur" → areasText, the four groups as prose; "How It Works,
+   *     Start to Finish" → how, the owner's five steps. The template renders the areas BEFORE the
+   *     process.
+   *   • "Why Choose Portable Office Cabin?" and "What Does a Portable Cabin Cost in Tumkur?" →
+   *     extraSections (rendered after the process, before the FAQs), as written.
+   *   • FAQs: the owner's eight, as written; none repeats another city page's question.
+   *   • "Need a Cabin on Your Tumkur Site?" → CTA. The phone number and email come from COMPANY. The
+   *     owner lists three buttons (Request a Quotation, Call, WhatsApp), so ctaSecondaryLinks is
+   *     empty; the call button keeps the template's "Call <number>" label.
+   * Owner wording rule (the Kudankulam rule, applied at the owner's instruction of 2026-10-17): no
+   * unconfirmed specification, timing or coverage — specifications and finishes are options
+   * confirmed in the approved specification and quotation, rental is subject to availability, the
+   * towns are delivery enquiry locations, and placement time and the base are confirmed per site.
+   * The H1 "Ready When Your Site Is" is a slogan, not a delivery timeline. No ₹, lead times,
+   * warranty terms or superlatives. Kept apart from the container-office Tumkur page: its own
+   * keyword ("portable cabin"), no "container office Tumkur" meta keyword, cross-links only.
+   *
+   * Images: four owner-dropped webp renders ("public/images/cities/Portable Cabins in Tumkur city
+   * page/…/cabin (1–4).webp"), copied byte-for-byte to clean slug names: the long-side elevation
+   * (1184×864) = hero / og:image, with no caption (owner instruction); the office interior
+   * (1200×896) = beside the heat-and-rain section; the three-quarter view (600×448, too small for a
+   * full-width slot) and the end elevation (1184×864) = a two-column gallery. They show one
+   * container-style design; the interior caption and the disclaimer say they are illustrative and
+   * that other build types differ.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-in-tumkur",
+    city: "Tumkur",
+    listTitle: "Portable Cabins in Tumkur",
+    metaTitle: "Portable Cabins in Tumkur | Buy or Rent Ready-to-Use Cabins",
+    metaDescription:
+      "Looking for a portable cabin in Tumkur? We build site offices, security cabins, labour rooms and toilet units, with delivery quoted per site. Buy or rent.",
+    keywords:
+      "Portable Cabin in Tumkur, Portable Cabin Tumakuru, Portable Site Office Tumkur, Security Cabin Tumkur, Labour Accommodation Cabin Tumkur, Portable Toilet Cabin Tumkur, Portable Cabin on Rent in Tumkur, Prefabricated Cabin Manufacturer near Tumkur",
+    geo: { region: "IN-KA", placename: "Tumakuru (Tumkur), Karnataka, India", position: "13.3392;77.1139", icbm: "13.3392, 77.1139" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-exterior.webp",
+      alt: "Portable cabin in Tumkur — illustrative render of a container-style portable cabin with light grey corrugated walls, a charcoal lower band, bronze-brown corner posts and two framed sliding windows on the long side, on a paved yard",
+      width: 1184,
+      height: 864,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-interior.webp",
+      alt: "Portable cabin in Tumkur — illustrative render of an optionally furnished site office interior with two desks and monitors, mesh office chairs, low storage units and filing cabinets, light grey wall panels, linear LED ceiling lights, sliding windows, a glazed door and wood-look flooring",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-three-quarter-view.webp",
+        alt: "Portable cabin in Tumkur — illustrative three-quarter view of the container-style cabin showing two framed windows on the long side, the plain end wall, bronze-brown corner posts and the charcoal lower band, on a paved yard with potted plants",
+        width: 600,
+        height: 448,
+      },
+      {
+        src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-end-elevation.webp",
+        alt: "Portable cabin in Tumkur — illustrative end elevation of a container-style cabin with one framed sliding window under a small hood, light grey corrugated walls and a charcoal lower band, with a similar cabin alongside",
+        width: 1184,
+        height: 864,
+      },
+    ],
+
+    h1: "Portable Cabins in Tumkur, Ready When Your Site Is",
+    tagline: "Spend a morning on NH-48 near Tumkur and you'll see how fast this place is growing.",
+    intro: [
+      "New sheds are going up in Vasanthanarasapura, road crews are busy on the service lanes, and fresh layouts are being marked out on almost every edge of town. Every one of those jobs needs a base. The engineer needs a dry office with a working fan. The guard needs a cabin at the gate. The crew needs somewhere decent to rest, change and wash up.",
+      "We build portable cabins for exactly these needs, and welcome delivery enquiries from Tumkur city and the taluks across the district. Your cabin arrives finished and is ready to use once it is placed on the prepared base and the power is connected; placement time and base requirements depend on the site and are confirmed in the quotation. There's no masonry to build and no waiting on masons. And when the job wraps up, the cabin can go with you to the next one.",
+    ],
+
+    whyHeading: "Why Tumkur Projects Are Choosing Portable Cabins",
+    whyIntro: "Tumkur, or Tumakuru as it's officially called now, sits about 70 km from Bengaluru, and that closeness has changed the city:",
+    whyBullets: [
+      {
+        title: "Industrial areas",
+        text: "Vasanthanarasapura, Antharasanahalli, Sathyamangala and Hirehalli keep adding new units.",
+      },
+      {
+        title: "Major projects",
+        text: "The HAL helicopter factory in Gubbi taluk and the huge Pavagada solar park have brought in contractors and technical teams from all over the country.",
+      },
+      {
+        title: "Smart City works",
+        text: "Inside the city, Smart City works have kept roads and public spaces under steady upgrade.",
+      },
+    ],
+    whyOutro:
+      "Most of this work runs on a deadline. A road package might need a site office for eighteen months. A new factory often needs a security cabin before the compound wall is even finished. Putting up a brick-and-mortar room for a short-term need means paying for something you'll eventually knock down. A portable cabin avoids that. You use it, you move it, and you use it again.",
+
+    solutionsHeading: "Portable Cabins We Supply in Tumkur",
+    solutionsIntro:
+      "Seven cabin types cover most site needs around Tumkur. Sizes, layouts and fittings are options confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Site Office Cabins",
+        text: "A site office is often the first cabin a project needs. It can be planned with room for desks, drawings and a small meeting table, windows on two sides, lights, fans, plug points and an optional AC provision, and partitioned into a main office and a separate room for the project manager.",
+      },
+      {
+        title: "Security Cabins and Guard Rooms",
+        text: "Compact cabins for one or two guards, with glass on the sides facing the gate so nothing slips past unseen. Factories, warehouses, apartment complexes and petrol bunks along the highway use these a lot. Sizes start from small booths that fit right beside a gate pillar.",
+      },
+      {
+        title: "Labour Accommodation Cabins",
+        text: "Built for bigger crews, especially on industrial and solar sites far from town, with options for bunk beds, ventilation, lighting and charging points. Need more space without taking up more ground? Units can be stacked into a double-storey block with a steel staircase, subject to structural design and approvals.",
+      },
+      {
+        title: "Portable Toilet and Bathroom Cabins",
+        text: "Single or multi-seat units in Indian or Western style, with provision for an overhead water tank. A lot of sites forget about toilets until a client visit or an inspection is around the corner. It's far easier to sort it out on day one.",
+      },
+      {
+        title: "Container Offices",
+        text: "Built on a strong container-style body in 20 ft and 40 ft lengths. They're tough, lockable and take rough handling well, which makes them a good fit for remote sites or anywhere you'll leave equipment overnight.",
+      },
+      {
+        title: "Real Estate Sales Offices",
+        text: "Plotted layouts and apartment projects are coming up all around Tumkur, and the sales office is often the first thing a buyer sees. These can be specified with a cleaner finish, glass fronts, false ceilings and your brand colours on the outside, so the cabin looks like part of the project.",
+      },
+      {
+        title: "Storage Cabins",
+        text: "Lockable rooms for cement, tools, cables and spares. Simple, secure, and an alternative to building a store room you'll only need for one season.",
+      },
+    ],
+
+    featuresHeading: "Pick the Build That Suits Your Site",
+    featuresIntro: "Each build type, what it is made of and where it works best:",
+    features: [
+      "MS cabin — mild steel frame and sheet walls, insulated inside; works best for construction sites, heavy use and frequent shifting.",
+      "PUF panel cabin — insulated PUF panels between steel sheets; works best for offices, labour rooms and hot locations.",
+      "Container cabin — heavy container-style steel body; works best for remote, high-security or long-term sites.",
+      "FRP cabin — fibre-reinforced plastic, light and rust-free; works best for toilets, guard booths and damp locations.",
+      "ACP finish — aluminium composite panels outside; works best for sales offices and customer-facing cabins.",
+    ],
+    sizesNote:
+      "Not sure which one you need? Tell us what the cabin is for and how long you'll use it. That usually settles it in a couple of minutes.",
+
+    industriesHeading: "Rent or Buy? An Honest Way to Decide",
+    industriesIntro:
+      "Still on the fence? Call us with your timeline, and we'll work out the cost both ways so you can compare them. Rental is subject to availability.",
+    industries: [
+      {
+        title: "Renting makes sense if",
+        text: "the project finishes within about a year, you want lower upfront costs, or your future need is uncertain.",
+      },
+      {
+        title: "Buying makes sense if",
+        text: "you'll use the cabin beyond one or two years, relocate it between sites, or need heavy customisation or branding.",
+      },
+    ],
+
+    customHeading: "Built for Tumkur's Heat and Rain",
+    customIntro: "Two seasons shape how a cabin is specified here:",
+    customBullets: [
+      {
+        title: "Summer heat",
+        text: "From March to May, afternoons in Tumkur regularly climb into the mid to high 30s. A plain metal box can feel like an oven by lunchtime, and nobody does good work in that. Insulated walls and roof, windows placed for cross-ventilation and an AC point where you want one can be specified, and PUF panel construction adds insulation for hot locations.",
+      },
+      {
+        title: "Monsoon rain",
+        text: "When the monsoon arrives, the roof matters just as much. A sloped roof lets water run off instead of sitting on top, joints are sealed, and an anti-rust primer can go under the final coat of paint, because many of these cabins end up working for years, not months.",
+      },
+    ],
+    customOutro:
+      "The insulation, roof, sealing and paint system supplied are confirmed in the approved specification and quotation.",
+
+    whyUsHeading: "Who Uses Portable Cabins in Tumkur",
+    whyUsIntro: "Portable cabins suit a wide range of users, including:",
+    whyUsBullets: [
+      {
+        title: "Construction and projects",
+        text: "builders and civil contractors; solar, power and infrastructure projects; real estate developers and plotted layout projects.",
+      },
+      {
+        title: "Industry and highway businesses",
+        text: "factories and warehouses in the KIADB industrial areas; petrol bunks, toll plazas and highway businesses.",
+      },
+      {
+        title: "Schools and healthcare",
+        text: "schools and colleges that need extra rooms or an exam office; hospitals and clinics that need a temporary screening or pharmacy space.",
+      },
+      { title: "Farms", text: "farm owners who want a store room or a small farm office." },
+    ],
+
+    areasHeading: "Delivery Enquiries in and Around Tumkur",
+    areasText:
+      "We welcome delivery enquiries from Tumkur city (Batawadi, Kyathsandra, SS Puram, Saraswathipuram, Gubbi Gate, Maralur, Hanumanthapura, Kunigal Road and BH Road); the industrial areas at Vasanthanarasapura, Antharasanahalli, Sathyamangala and Hirehalli; the taluks of Gubbi, Kunigal, Tiptur, Turuvekere, Chikkanayakanahalli, Sira, Madhugiri, Koratagere and Pavagada; and along the highway at Dobbaspet, Nelamangala and the stretch toward Bengaluru. Don't see your site on the list? Ask anyway. We confirm delivery feasibility and charges after reviewing the site and access.",
+
+    howHeading: "How It Works, Start to Finish",
+    howSteps: [
+      {
+        title: "Tell Us What You Need",
+        text: "Call or WhatsApp us with the cabin size, intended use and site location. A rough requirement is enough to begin.",
+      },
+      {
+        title: "Get a Layout and Clear Quotation",
+        text: "We prepare a proposed layout and itemised quotation covering the selected specifications, transport, unloading and applicable installation requirements.",
+      },
+      {
+        title: "We Build Your Cabin",
+        text: "The cabin is fabricated according to the approved specification. Manufacturing and delivery timelines are confirmed in the quotation.",
+      },
+      {
+        title: "Delivery and Placement",
+        text: "The cabin is transported to the site, subject to access and delivery feasibility. The foundation or supporting base, crane, unloading and placement responsibilities are confirmed before dispatch.",
+      },
+      {
+        title: "Support After Delivery",
+        text: "Customers can contact us regarding maintenance, modifications or future relocation enquiries. Services are subject to technical feasibility, warranty terms and the agreed scope.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        bullets: [
+          {
+            title: "Clear quotations",
+            text: "Specifications, pricing and applicable charges are communicated before order confirmation.",
+          },
+          {
+            title: "Custom manufacturing",
+            text: "Doors, windows, partitions, insulation and interior finishes can be selected based on requirements.",
+          },
+          { title: "Durable construction", text: "Material grades and fabrication details follow the approved specifications." },
+          {
+            title: "Relocatable designs",
+            text: "Suitable cabins can be moved between projects, subject to structural condition and safe handling.",
+          },
+          { title: "After-sales support", text: "Warranty and service obligations follow the agreed terms." },
+        ],
+      },
+      {
+        heading: "What Does a Portable Cabin Cost in Tumkur?",
+        paragraphs: [
+          "Pricing depends on cabin size, construction materials, insulation, interior finishes, electrical fittings, doors, windows, rental or purchase requirements, and delivery location.",
+          "Share your requirements to receive an itemised quotation.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Do I need a foundation for a portable cabin?",
+        answer:
+          "Many portable cabins can be installed on suitable concrete blocks or a prepared PCC foundation. The actual base requirements depend on cabin size, structural loads and site conditions.",
+      },
+      {
+        question: "How quickly can you deliver a cabin in Tumkur?",
+        answer:
+          "Lead time depends on cabin dimensions, available stock, customisation and transport arrangements. The expected delivery schedule is confirmed in the quotation.",
+      },
+      {
+        question: "Can I move the cabin to another site later?",
+        answer:
+          "Many portable cabins are designed for relocation. Moving them requires suitable lifting equipment, transportation and a structural assessment where necessary.",
+      },
+      {
+        question: "Will a portable cabin become hot during summer?",
+        answer:
+          "Insulated wall and roofing options, ventilation and suitable air-conditioning provisions can improve indoor comfort. Actual performance depends on the selected specification and local conditions.",
+      },
+      {
+        question: "Do you provide portable cabins on rent in Tumkur?",
+        answer:
+          "Rental enquiries are welcome. Availability, rental duration, security deposit, transportation and other applicable charges are confirmed in the quotation.",
+      },
+      {
+        question: "Can you deliver to Tiptur, Sira, Madhugiri and Pavagada?",
+        answer:
+          "We welcome delivery enquiries from these locations. Delivery feasibility, transport charges and unloading arrangements are confirmed after reviewing the site requirements.",
+      },
+      {
+        question: "Can the cabin have our company branding?",
+        answer:
+          "Custom exterior colours, branding provisions and ACP finishes can be included where technically suitable and agreed in the quotation.",
+      },
+      {
+        question: "How much maintenance does a portable cabin require?",
+        answer:
+          "Periodic inspection of roofing, sealants, paint, doors, windows and electrical fittings is recommended. Maintenance depends on the selected materials, site exposure and usage.",
+      },
+    ],
+
+    ctaHeading: "Need a Cabin on Your Tumkur Site?",
+    ctaText: `Looking for a portable site office, security cabin, labour accommodation, toilet cabin or custom prefabricated unit? Share your required size, layout, site location and intended use. Our team can help you review suitable specifications and request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's CTA has three buttons (Request a Quotation, Call, WhatsApp): the call and WhatsApp
+    // buttons are on by default, and an empty list drops the two default secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+      { label: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
+      { label: "Container Office in Pavagada", href: "/cities-we-serve/container-office-in-pavagada" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office, yard or service partner in Tumkur district. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The sizes, layouts, build types, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and stacked or double-storey units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other build types (MS, PUF panel, FRP, ACP) look different, and the images are not photographs of installations in Tumkur. Hindustan Aeronautics Limited (HAL) and its Gubbi helicopter factory, the Pavagada solar park and its developers, KIADB and its industrial areas, and the Tumakuru Smart City programme are independent organisations and projects with which Portable Office Cabin is not affiliated; they, the businesses and institutions described and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on build types, heat, rain, insulation and ventilation are general guidance, not engineering advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
