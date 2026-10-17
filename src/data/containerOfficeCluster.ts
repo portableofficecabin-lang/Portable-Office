@@ -148,8 +148,18 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Tumkur city, Vasanthanarasapura and Kyathsandra",
     hubAnchor: "Container offices and site offices in Tumkur",
     nearbyLabel: "Tumkur district",
-    neighbours: ["container-office-in-doddaballapura"],
+    neighbours: ["container-office-in-doddaballapura", "container-office-in-chitradurga"], // Chitradurga ~125 km up NH-48
     bangaloreRegion: true,
+  },
+  {
+    slug: "container-office-in-chitradurga",
+    state: "Karnataka",
+    name: "Chitradurga",
+    placeName: "Chitradurga",
+    area: "Chitradurga city, Challakere, Hiriyur and the NH-48 corridor",
+    hubAnchor: "Container offices for Chitradurga's wind, canal and highway sites",
+    nearbyLabel: "Chitradurga district",
+    neighbours: ["container-office-in-davanagere", "container-office-in-tumkur"], // ~58 km / ~125 km, both on NH-48
   },
   {
     slug: "container-office-in-belagavi",
