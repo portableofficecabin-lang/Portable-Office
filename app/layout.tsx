@@ -43,22 +43,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Resource hints: open the connection (DNS + TCP + TLS) to the origins
             the app uses early — Supabase data/auth on the critical path, plus
             analytics/geo — so requests don't pay the full handshake on first use. */}
-        {/* Preload the hero LCP background so the preload scanner fetches it at the
-            highest priority before CSS/picture resolution. Variant matched by media. */}
-        <link
-          rel="preload"
-          as="image"
-          href="/assets/hero-bg-mobile.webp"
-          media="(max-width: 768px)"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/assets/hero-bg.webp"
-          media="(min-width: 769px)"
-          fetchPriority="high"
-        />
+        {/* The home hero background preloads live on the home page (app/(site)/page.tsx).
+            In this root layout they were fetched at high priority on every route, including
+            the city, product and promotion pages that never show that image. */}
         <link rel="preconnect" href={SUPABASE_ORIGIN} crossOrigin="anonymous" />
         <link rel="dns-prefetch" href={SUPABASE_ORIGIN} />
         <link rel="preconnect" href="https://www.googletagmanager.com" />

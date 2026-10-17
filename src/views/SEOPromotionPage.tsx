@@ -51,7 +51,7 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
               {content.h1}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8">
-              Premium quality {content.imageAlt} with fast installation and 10-year warranty.
+              Factory-built {content.imageAlt} with fast installation and a material-based warranty.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="accent" size="lg" className="text-lg font-bold px-8 py-6" asChild>
@@ -234,7 +234,7 @@ export function SEOPromotionPage({ content }: SEOPromotionPageProps) {
                     15+ Years Experience
                   </span>
                   <span className="px-3 py-1 bg-card rounded-full text-sm font-medium border border-border text-muted-foreground">
-                    10-Year Warranty
+                    Material-Based Warranty
                   </span>
                   <span className="px-3 py-1 bg-card rounded-full text-sm font-medium border border-border text-muted-foreground">
                     Pan-India Delivery
