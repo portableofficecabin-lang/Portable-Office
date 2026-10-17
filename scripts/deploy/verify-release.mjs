@@ -10,6 +10,9 @@
  *      after the deploy, from the deployed commit's checkout.
  *
  * What it checks (all GETs, no redirects followed):
+ *   • identity  — with --expect-commit: GET /api/build-info must name that commit, the build it
+ *                 reports becomes the build every page below must come from, and the serving
+ *                 process must have started after that build (i.e. it was restarted)
  *   • build     — every city slug in src/data/cityPages.ts is a prerendered route in
  *                 .next/prerender-manifest.json (only when --release-dir points at a built release)
  *   • health    — /, /cities-we-serve, /products, /sitemap.xml, /robots.txt answer 200
@@ -25,7 +28,7 @@
  *   node scripts/deploy/verify-release.mjs --base http://127.0.0.1:3010 --host portableofficecabin.com \
  *        --release-dir /srv/apps/portableofficecabin.com/releases/<id> [--compare-base http://127.0.0.1:3000]
  *   node scripts/deploy/verify-release.mjs --base https://portableofficecabin.com --source-dir . \
- *        --build-id <id> --new-routes /cities-we-serve/x,/cities-we-serve/y --quick --github
+ *        --expect-commit <sha> [--build-id <id>] --new-routes /cities-we-serve/x,/cities-we-serve/y --quick --github
  *   (--resolve 127.0.0.1 connects an https base to that address with the real SNI / certificate)
  *
  * Exit code: 0 = all checks passed, 1 = at least one failure, 2 = usage error or crash.
@@ -71,10 +74,64 @@ export function missingFromManifest(manifest, slugs) {
   return slugs.map((s) => `/cities-we-serve/${s}`).filter((r) => !(r in routes));
 }
 
-/** True when an HTML body was rendered by the build with this id (Next prints it in two places). */
+/**
+ * True when an HTML body was rendered by the build with this id.
+ *
+ * Next 15 (App Router, what this site runs) prints the build id reliably in ONE place: the RSC
+ * payload, as `"b":"<id>"`. Inside the page's inline <script> the quotes are backslash-escaped,
+ * `\"b\":\"<id>\"`. That is the marker this function relies on.
+ * Measured on production on 2026-10-17, the other two markers are not reliable:
+ *   • `<!--<id>-->` — only in pages prerendered at build time ("-" rewritten to "_", id cut to
+ *     24 characters). It disappears once ISR regenerates a page: 0 of 20 live city pages had it,
+ *     hours after a deploy.
+ *   • `/_next/static/<id>/` — a Pages Router path that this site's HTML never contains.
+ * Both are still accepted as extra evidence, never required.
+ */
 export function servedByBuild(body, buildId) {
   if (!buildId) return true;
-  return body.includes(`<!--${buildId}-->`) || body.includes(`/_next/static/${buildId}/`);
+  return (
+    body.includes(`\\"b\\":\\"${buildId}\\"`) ||
+    body.includes(`"b":"${buildId}"`) ||
+    body.includes(`<!--${buildId}-->`) ||
+    body.includes(`/_next/static/${buildId}/`)
+  );
+}
+
+/** The build id an HTML page was rendered by (its RSC "b" value), or null. For messages. */
+export function buildIdOfPage(body) {
+  const m = body.match(/\\?"b\\?":\\?"([A-Za-z0-9_-]+)\\?"/);
+  return m ? m[1] : null;
+}
+
+/**
+ * Checks a parsed GET /api/build-info answer (app/api/build-info/route.ts) against the deploy.
+ * Returns a list of failure messages; empty means the live process is the expected build.
+ *   expectCommit — the commit the deploy built (required: a full or abbreviated hex SHA)
+ *   buildId      — when known (release dir / DEPLOYED_BUILD_ID), the live build id must equal it
+ */
+export function checkBuildInfo(info, { expectCommit, buildId } = {}) {
+  const failures = [];
+  if (!info || typeof info !== "object") return ["identity: /api/build-info did not return a JSON object"];
+  const commit = String(info.commit || "").toLowerCase();
+  const expected = String(expectCommit || "").toLowerCase();
+  if (!/^[0-9a-f]{7,40}$/.test(expected)) failures.push(`identity: --expect-commit "${expectCommit}" is not a hex commit SHA`);
+  else if (!/^[0-9a-f]{40}$/.test(commit)) {
+    failures.push(`identity: the live build does not know its commit ("${info.commit}") — next.config.ts found no DEPLOY_COMMIT_SHA, REVISION, git checkout or GITHUB_SHA when it was built`);
+  } else if (!commit.startsWith(expected)) {
+    failures.push(`identity: production serves commit ${commit.slice(0, 12)}, expected ${expected.slice(0, 12)} — the deployed build is not the live one`);
+  }
+  if (!info.buildId || info.buildId === "unknown") failures.push("identity: /api/build-info reports no buildId");
+  else if (buildId && info.buildId !== buildId) failures.push(`identity: live build ${info.buildId} is not the deployed build ${buildId}`);
+  const built = Date.parse(info.builtAt);
+  const started = Date.parse(info.startedAt);
+  if (Number.isNaN(built) || Number.isNaN(started)) {
+    failures.push(`identity: unreadable timestamps (builtAt "${info.builtAt}", startedAt "${info.startedAt}")`);
+  } else if (started < built) {
+    failures.push(
+      `identity: the serving process started at ${info.startedAt}, BEFORE this build (${info.builtAt}) — it was not restarted after the build, so it may still run the previous code`,
+    );
+  }
+  return failures;
 }
 
 /** One GET without following redirects. Resolves { status, body, contentType } — never rejects. */
@@ -137,12 +194,14 @@ export async function verifyRelease(opts) {
     quick = false,
     concurrency = 4,
     timeoutMs = 30000,
+    expectCommit,
     log = () => {},
   } = opts;
   let { buildId } = opts;
   const failures = [];
   const warnings = [];
-  const counts = { build: 0, health: 0, city: 0, new: 0, sitemap: 0 };
+  const counts = { build: 0, health: 0, city: 0, new: 0, sitemap: 0, identity: 0 };
+  let identity = null;
   const req = (path, b = base) => get(b, path, { host, resolveTo: b === base ? resolveTo : undefined, timeoutMs });
 
   // ── build: the release's own source + manifest + BUILD_ID ─────────────────────────────────
@@ -174,6 +233,33 @@ export async function verifyRelease(opts) {
       }
     }
   }
+  // ── identity: the live process names the commit it was built from (--expect-commit) ───────
+  // Its build id then becomes the build every page below must come from: a page rendered by any
+  // other process or build (a stale or cached page) fails, even when no --build-id was given.
+  if (expectCommit) {
+    const r = await req("/api/build-info");
+    let info = null;
+    if (r.status === 200) {
+      try {
+        info = JSON.parse(r.body);
+      } catch {
+        /* reported below */
+      }
+    }
+    if (r.status !== 200) {
+      failures.push(`identity: /api/build-info answered ${r.status || r.error} — the deployed build (which has this endpoint) is not the one serving`);
+    } else if (!info) {
+      failures.push("identity: /api/build-info did not return JSON");
+    } else {
+      const f = checkBuildInfo(info, { expectCommit, buildId });
+      failures.push(...f);
+      identity = info;
+      if (!buildId && info.buildId && info.buildId !== "unknown") buildId = info.buildId;
+      if (f.length === 0) counts.identity = 1;
+      log(`identity: commit ${String(info.commit).slice(0, 12)} · build ${info.buildId} · built ${info.builtAt} · process started ${info.startedAt}`);
+    }
+  }
+
   log(`build id ${buildId || "(not checked)"} · ${slugs.length} city pages in the source`);
 
   // ── health paths + the build marker on / ──────────────────────────────────────────────────
@@ -192,7 +278,9 @@ export async function verifyRelease(opts) {
   const checkPage = async (p, kind) => {
     const r = await req(p);
     if (r.status !== 200) return `${kind}: ${p} answered ${r.status || r.error}`;
-    if (!servedByBuild(r.body, buildId)) return `${kind}: ${p} answered 200 but from another build (stale page, expected ${buildId})`;
+    if (!servedByBuild(r.body, buildId)) {
+      return `${kind}: ${p} answered 200 but from another build (stale page: ${buildIdOfPage(r.body) || "no build id"}, expected ${buildId})`;
+    }
     counts[kind]++;
     return null;
   };
@@ -231,7 +319,7 @@ export async function verifyRelease(opts) {
     }
   }
 
-  return { ok: failures.length === 0, failures, warnings, counts, buildId };
+  return { ok: failures.length === 0, failures, warnings, counts, buildId, identity };
 }
 
 function parseArgs(argv) {
@@ -245,6 +333,7 @@ function parseArgs(argv) {
     else if (k === "--release-dir") a.releaseDir = resolve(v());
     else if (k === "--source-dir") a.sourceDir = resolve(v());
     else if (k === "--build-id") a.buildId = v();
+    else if (k === "--expect-commit") a.expectCommit = v();
     else if (k === "--compare-base") a.compareBase = v();
     else if (k === "--new-routes") a.newRoutes.push(...v().split(",").map((s) => s.trim()).filter(Boolean));
     else if (k === "--concurrency") a.concurrency = Number(v());
@@ -270,7 +359,7 @@ async function main() {
   const res = await verifyRelease({ ...args, log: (m) => console.log(`verify: ${m}`) });
   const c = res.counts;
   console.log(
-    `verify: ${args.base} — build ${c.build}, health ${c.health}/${HEALTH_PATHS.length}, new ${c.new}, city ${c.city}, sitemap ${c.sitemap} OK` +
+    `verify: ${args.base} — ${args.expectCommit ? `identity ${c.identity}/1, ` : ""}build ${c.build}, health ${c.health}/${HEALTH_PATHS.length}, new ${c.new}, city ${c.city}, sitemap ${c.sitemap} OK` +
       ` · ${res.failures.length} failure(s), ${res.warnings.length} warning(s) · ${((Date.now() - started) / 1000).toFixed(1)}s`,
   );
   for (const w of res.warnings) console.log(args.github ? `::warning::${w}` : `verify: WARNING ${w}`);
