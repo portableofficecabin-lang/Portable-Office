@@ -148,7 +148,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
     hubAnchor: "Container offices for Davanagere and Harihar",
     nearbyLabel: "Davanagere",
-    neighbours: [], // nearest cluster page on main is Tumkur, ~180 km away
+    neighbours: ["container-office-in-haveri"], // ~67 km along NH-48
+  },
+  {
+    slug: "container-office-in-haveri",
+    state: "Karnataka",
+    name: "Haveri",
+    placeName: "Haveri",
+    area: "Haveri town, Ranebennur, Byadgi, Hangal and the NH-48 corridor",
+    hubAnchor: "Container offices for Haveri, Byadgi and Ranebennur",
+    nearbyLabel: "Haveri district",
+    neighbours: ["container-office-in-davanagere"], // ~67 km along NH-48
   },
   {
     slug: "container-office-in-tumkur",
