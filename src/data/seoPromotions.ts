@@ -364,6 +364,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-belagavi",
       "container-office-in-yadgir",
       "container-office-in-kalaburagi",
+      "container-office-in-chitradurga",
     ]),
     { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
