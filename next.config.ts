@@ -311,6 +311,35 @@ const nextConfig: NextConfig = {
       // Other legacy aliases that point at the canonical short slugs / products.
       { source: "/products/shipping-container", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-storage-container-shipping-container", destination: "/products/20ft-40ft-storage-container-corten-steel", statusCode: 301 },
+      // ── City-page aliases ──────────────────────────────────────────────────
+      // The Kudankulam page went live as /cities-we-serve/container-office-in-kudankulam-tirunelveli
+      // (#138). The shorter /cities-we-serve/container-office-in-kudankulam (the never-published first
+      // draft's slug) is a natural guess, and visitors arrived there from an AI-assistant link
+      // (?utm_source=chatgpt.com) and got a 404, because dynamicParams:false 404s every unknown city
+      // slug. The owner's content draft suggested /container-office-kudankulam-tirunelveli, and the
+      // page names the Koodankulam spelling, so those 301 too. A config redirect runs before
+      // routing; it forwards the query string (harmless here, since the page's canonical is the
+      // clean URL).
+      {
+        source: "/cities-we-serve/container-office-in-kudankulam",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
+      {
+        source: "/cities-we-serve/container-office-in-koodankulam",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
+      {
+        source: "/cities-we-serve/container-office-kudankulam-tirunelveli",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
+      {
+        source: "/container-office-kudankulam-tirunelveli",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
       // NOTE: legacy `/products?category=<x>` URLs 301 → `/products/category/<x>`
       // in middleware.ts. It is handled there (not here) because next.config
       // redirects always forward the original query string, so a config redirect
