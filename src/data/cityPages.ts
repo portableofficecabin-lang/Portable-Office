@@ -10360,6 +10360,13 @@ export const CITY_PAGES: CityPage[] = [
    * on another laptop on 14 Oct; no branch, commit, draft or image for it ever reached GitHub. This
    * entry is new copy, NOT the owner's draft, and needs owner review before merge.
    *
+   * Owner corrections (2026-10-17), matching the Haveri page: no visible hero caption (the alt text
+   * still says "design render" and the disclaimer covers renders); towns are geographic context only,
+   * with delivery feasibility, charges and scope "confirmed in the quotation"; readiness tied to the
+   * quotation scope, site readiness, installation and anchoring; rainfall attributed to CGWB normals
+   * (Chitradurga taluk 671 mm, Challakere 516 mm, Hosadurga 723 mm, 1981–2010); meta description says
+   * "Anchored to site spec." because anchoring is provided where the site's exposure requires it.
+   *
    * What makes it Chitradurga's page and not a copy of Davanagere's or Tumkur's: open, wind-exposed
    * sites (wind farms on the hills around the city, Jogimatti among them), so ANCHORING leads the
    * specification advice, using the position already approved on the Tirunelveli and Thoothukudi
@@ -10388,7 +10395,7 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Container Office in Chitradurga",
     metaTitle: "Container Office in Chitradurga | Portable Office Cabin",
     metaDescription:
-      "Container offices in Chitradurga for wind and solar sites, canal and railway works, Challakere mills and NH-48 projects. Anchored, insulated. Get a quote.",
+      "Container offices in Chitradurga for wind and solar sites, canal and railway works, Challakere mills and NH-48 projects. Anchored to site spec. Get a quote.",
     keywords:
       "Container Office in Chitradurga, Container Office Chitradurga, Portable Office Cabin Chitradurga, Site Office Container Chitradurga, Container Office Challakere, Portable Cabin Hiriyur, Site Office Hosadurga, Wind Farm Site Office Chitradurga, Container Office for Rent Chitradurga, Container Office for Sale Chitradurga",
     geo: { region: "IN-KA", placename: "Chitradurga, Karnataka, India", position: "14.2251;76.3980", icbm: "14.2251, 76.3980" },
@@ -10400,7 +10407,6 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Container office in Chitradurga — design render of a white corrugated-steel container office above a blue base band, with a steel door with a keypad lock and small canopy between two aluminium sliding windows, louvred vents and corner lifting lugs",
       width: 1024,
       height: 1024,
-      caption: "Design render. Colours, door hardware and window positions are chosen for each order.",
     },
     featureImage: {
       src: "/images/products/container-office-1.webp",
@@ -10434,10 +10440,10 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Offices in Chitradurga",
     tagline: "Site Offices for Open, Dry and Wind-Exposed Project Sites in Central Karnataka",
     intro: [
-      "Chitradurga is one of the drier districts of Karnataka. Long-term average rainfall is roughly 500 to 700 mm across most of its taluks, and lower around Challakere, while the plains and rocky ridges around the city are exposed enough that wind farms stand on the hills, the Jogimatti area among them.",
+      "Chitradurga is one of the drier districts of Karnataka. Long-term CGWB normals put rainfall at roughly 500 to 700 mm a year across most of its taluks, at the lower end around Challakere, while the plains and rocky ridges around the city are exposed enough that wind farms stand on the hills, the Jogimatti area among them.",
       "The work in the district follows that landscape: wind and solar energy projects, the canal and tank-filling works of the Upper Bhadra irrigation project, the new Tumakuru–Chitradurga–Davanagere railway line, highway works on NH-48 and on NH-50 towards Hosapete, Challakere's edible-oil mills, and the research campuses near Challakere.",
       "Many of these sites are open, hot and a long way from the nearest building, so the office has to arrive complete, stay put in strong wind and stay usable in the heat. A container office in Chitradurga does all three when it is specified for its site.",
-      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu, and supplies them across Chitradurga district, including Chitradurga city, Challakere, Hiriyur, Holalkere, Hosadurga, Molakalmuru and project locations along NH-48 and NH-50.",
+      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu. For a site in Chitradurga district, whether in or around Chitradurga city, Challakere or Hiriyur or along NH-48 and NH-50, share the location when you enquire; delivery feasibility, transport charges and the delivery scope are confirmed in the quotation.",
       "This page sets out what to specify for wind, heat and dust, where container offices are used in the district, and how delivery to a remote site is planned.",
     ],
 
@@ -10458,7 +10464,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Remote sites far from services",
-        text: "Wind and solar blocks, canal stretches and railway sections are often far from the nearest town. A container office arrives fabricated, wired and finished, so the site needs only a prepared base, placement and a power connection, and the office can move to the next block or section when the work does.",
+        text: "Wind and solar blocks, canal stretches and railway sections are often far from the nearest town. A container office is fabricated, wired and finished at the factory, which reduces the work needed on a remote site; it is ready to use once the base, placement, anchoring, checks and required connections agreed in the quotation are complete, and the timing depends on site readiness. The office can then move to the next block or section when the work does.",
       },
     ],
     whyOutro:
@@ -10594,9 +10600,9 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Written quotations", text: "Specification, scope and charges stated in writing in the quotation." },
     ],
 
-    areasHeading: "Container Office Delivery and Installation in Chitradurga",
+    areasHeading: "Delivery Enquiries Around Chitradurga",
     areasText:
-      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported to the customer's site on suitable commercial vehicles. We serve Chitradurga city and district, including Challakere, Hiriyur, Holalkere, Hosadurga, Molakalmuru, Bharamasagara and Chikkajajur, the NH-48 and NH-50 corridors, wind and solar project sites, canal and railway works, and surrounding industrial and project locations.",
+      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported by truck. Share your site location or a map pin when you enquire, whether the site is in or near Chitradurga city, Challakere or Hiriyur, along the NH-48 or NH-50 corridors, or on a wind, solar, canal or railway project. Delivery feasibility, transport charges and the delivery, installation and anchoring scope for your location are confirmed in the quotation.",
 
     howHeading: "Our Delivery and Installation Process",
     howSteps: [
@@ -10649,19 +10655,19 @@ export const CITY_PAGES: CityPage[] = [
           "Yes. Container offices are used beside mills, yards and warehouses as billing and procurement offices, weighbridge cabins, dispatch offices, and gate and security offices. Space, vehicle access and the base are checked before dispatch, and entry to any premises is subject to its own permissions.",
       },
       {
-        question: "Which parts of Chitradurga district do you deliver to?",
+        question: "How do I check delivery to a site in Chitradurga district?",
         answer:
-          "Sites across the district, including Chitradurga city, Challakere, Hiriyur, Holalkere, Hosadurga, Molakalmuru, Bharamasagara and Chikkajajur, the NH-48 and NH-50 corridors, and remote wind, solar, canal and railway sites, subject to vehicle access. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+          "Share the site location or a map pin when you enquire, with photos of the approach track if the site is remote. Delivery feasibility, transport charges and the delivery scope are confirmed in the quotation, after vehicle access, unloading space and the base have been checked. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
       },
       {
         question: "Are your container offices made in Chitradurga?",
         answer:
-          "No. They are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Chitradurga district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading, placement and anchoring are arranged for each project.",
+          "No. They are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Chitradurga district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading, placement and anchoring are arranged for each project under the scope agreed in the quotation.",
       },
     ],
 
     ctaHeading: "Get a Container Office Quotation in Chitradurga",
-    ctaText: `To receive a quotation for a container office in Chitradurga district, share the site location (town, taluk or project site), how open and exposed the site is, the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration for the site and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Service area: Chitradurga district and the NH-48 and NH-50 corridors.`,
+    ctaText: `To receive a quotation for a container office in Chitradurga district, share the site location (town, taluk or project site), how open and exposed the site is, the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration for the site and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Enquiries are welcome for sites in Chitradurga district and along the NH-48 and NH-50 corridors; delivery is confirmed in the quotation.`,
     ctaButtonLabel: "Request a Quotation",
     ctaSecondaryLinks: [
       { label: "Explore Container Office Models", href: "/products/category/container-offices" },
@@ -10679,7 +10685,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Chitradurga district; delivery, unloading, placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior images on this page are design renders of a Portable Office Cabin container office and the interior image shows a finished cabin interior; none was taken in Chitradurga district, and the colours, door hardware, finishes and fittings of each order follow its approved specification. Rainfall and soil figures are approximate long-term values from public records. Towns, highways, projects, mills and campuses are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any wind or solar developer, irrigation, railway or highway authority, mill, research institution, college, hospital or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on wind, anchoring, foundations, insulation and dust are general guidance, not engineering advice; the anchoring, base, insulation and cooling for a specific site are designed for its conditions and confirmed in the approved quotation and drawing.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Chitradurga district; delivery, unloading, placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior images on this page are design renders of a Portable Office Cabin container office and the interior image shows a finished cabin interior; none was taken in Chitradurga district, and the colours, door hardware, finishes and fittings of each order follow its approved specification. Rainfall and soil figures are approximate long-term values from public records. Towns, highways, projects, mills and campuses are named only as geographic context and to describe typical uses, not as guaranteed delivery or service areas; Portable Office Cabin is not affiliated with any wind or solar developer, irrigation, railway or highway authority, mill, research institution, college, hospital or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on wind, anchoring, foundations, insulation and dust are general guidance, not engineering advice; the anchoring, base, insulation and cooling for a specific site are designed for its conditions and confirmed in the approved quotation and drawing.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

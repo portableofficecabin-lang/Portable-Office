@@ -186,7 +186,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     state: "Karnataka",
     name: "Chitradurga",
     placeName: "Chitradurga",
-    area: "Chitradurga city, Challakere, Hiriyur and the NH-48 corridor",
+    area: "Chitradurga and the NH-48 corridor",
     hubAnchor: "Container offices for Chitradurga's wind, canal and highway sites",
     nearbyLabel: "Chitradurga district",
     neighbours: ["container-office-in-davanagere", "container-office-in-tumkur", "container-office-in-pavagada"], // ~58 km / ~125 km (both NH-48) / ~96 km
