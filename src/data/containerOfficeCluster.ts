@@ -5,7 +5,7 @@
  *   PILLAR            /products/category/container-offices        broad "container office" intent
  *   BANGALORE LANDING /promotions/container-office-in-bangalore   Bangalore commercial intent
  *   DIRECTORY         /cities-we-serve#container-office-locations every location, grouped by state
- *   LOCATION PAGES    /cities-we-serve/<slug>                       one local intent each (18 pages)
+ *   LOCATION PAGES    /cities-we-serve/<slug>                       one local intent each
  *
  * Read by: the pillar's locations block (ContainerOfficeCategoryContent), the directory section
  * (CitiesWeServe), the "nearby locations" block on every location page (cities-we-serve/[slug])
@@ -179,7 +179,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Bagalkot city, Navanagar, Mudhol and Jamkhandi",
     hubAnchor: "Container offices across Bagalkot district",
     nearbyLabel: "Bagalkot district",
-    neighbours: [], // North Karnataka: the nearest cluster page (Tumkur) is ~350 km away
+    neighbours: [], // North Karnataka: the nearest cluster page (Belagavi) is ~133 km away, past the 130 km limit
   },
 
   // ── Tamil Nadu ── the Hosur–Krishnagiri belt first (it borders South Bengaluru), then the west
