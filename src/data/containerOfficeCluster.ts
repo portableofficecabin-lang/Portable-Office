@@ -344,7 +344,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Harbour Estate, SIPCOT Meelavittan and Thoothukudi city",
     hubAnchor: "Portable container offices in Thoothukudi",
     nearbyLabel: "Thoothukudi",
-    neighbours: ["container-office-in-tirunelveli"],
+    neighbours: ["container-office-in-tirunelveli", "container-office-in-kudankulam-tirunelveli"], // Kudankulam ~81 km south-west
   },
   {
     slug: "container-office-in-tirunelveli",
@@ -354,7 +354,17 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Tirunelveli, Gangaikondan and the Aralvaimozhi wind corridor",
     hubAnchor: "Tirunelveli container offices for wind and solar project sites",
     nearbyLabel: "Tirunelveli",
-    neighbours: ["portable-container-office-in-thoothukudi"],
+    neighbours: ["portable-container-office-in-thoothukudi", "container-office-in-kudankulam-tirunelveli"], // Kudankulam ~61 km south
+  },
+  {
+    slug: "container-office-in-kudankulam-tirunelveli",
+    state: "Tamil Nadu",
+    name: "Kudankulam, Tirunelveli",
+    placeName: "Kudankulam",
+    area: "Kudankulam, Chettikulam, Radhapuram and Vallioor",
+    hubAnchor: "Coastal container offices for Kudankulam, Tirunelveli",
+    nearbyLabel: "Kudankulam",
+    neighbours: ["container-office-in-tirunelveli", "portable-container-office-in-thoothukudi"], // ~61 km / ~81 km
   },
 ];
 
