@@ -44,7 +44,8 @@ step() { echo; echo "━━ $* ━━"; }
 
 live_code()  { curl -s -o /dev/null -w '%{http_code}' -m 10 --resolve "$SITE:443:127.0.0.1" "https://$SITE$1" || echo 000; }
 live_body()  { curl -s -m 10 --resolve "$SITE:443:127.0.0.1" "https://$SITE$1" || true; }
-live_build() { live_body / | sed -nE 's/.*<!--([0-9a-f]+)-->.*/\1/p' | head -1; }
+# The build id as Next 15 prints it: \"b\":\"<id>\" in the RSC payload of the page.
+live_build() { live_body / | sed -nE 's/.*\\"b\\":\\"([0-9a-f]+)\\".*/\1/p' | head -1; }
 bot_body()   { curl -s -m 10 --resolve "$BOT_SITE:443:127.0.0.1" "https://$BOT_SITE/" || true; }
 pm2_pid()    { pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const p=JSON.parse(s).find(x=>x.name===process.argv[1]);process.stdout.write(p?String(p.pid):"")})' "$1"; }
 pm2_names()  { pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).map(x=>x.name).sort().join(",")))'; }

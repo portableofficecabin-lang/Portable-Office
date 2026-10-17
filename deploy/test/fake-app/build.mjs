@@ -23,6 +23,9 @@ const serve404 = faults.filter((f) => f.startsWith("serve-404:")).map((f) => f.s
 const id = randomBytes(10).toString("hex");
 
 writeFileSync(".next/BUILD_ID", id);
+// When the build ran: the fake server reports it as builtAt from GET /api/build-info, as the
+// real build inlines it (next.config.ts, "DEPLOYMENT IDENTITY").
+writeFileSync(".next/BUILT_AT", new Date().toISOString());
 const routes = { "/": {}, "/cities-we-serve": {} };
 for (const s of slugs) if (!notPrerendered.includes(s)) routes[`/cities-we-serve/${s}`] = { initialRevalidateSeconds: 3600 };
 writeFileSync(".next/prerender-manifest.json", JSON.stringify({ version: 4, routes }, null, 2));

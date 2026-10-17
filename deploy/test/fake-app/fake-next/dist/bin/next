@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 // Fake `next start [-H host] [-p port]` for deploy/test/integration.sh. Serves the build in
-// ./.next the way the real server looks from the outside: the BUILD_ID in every HTML page, the
-// city pages the build knows (404 otherwise), a sitemap, and /_next/static files from disk.
+// ./.next the way the real server looks from the outside:
+//   • the BUILD_ID in every HTML page, only where Next 15 (App Router) always prints it: the RSC
+//     payload \"b\":\"<id>\". There is no <!--id--> comment (ISR-regenerated pages lose it) and no
+//     /_next/static/<id>/ path (never printed), so the deploy script must rely on the RSC marker.
+//   • the city pages the build knows (404 otherwise), a sitemap, and /_next/static files from disk
+//   • GET /api/build-info: the commit (REVISION in the release dir, as next.config.ts reads it),
+//     the build id, when it was built, and when this process started
 "use strict";
 const http = require("node:http");
 const fs = require("node:fs");
@@ -22,11 +27,25 @@ const dir = process.cwd();
 const buildId = fs.readFileSync(path.join(dir, ".next/BUILD_ID"), "utf8").trim();
 const { slugs } = JSON.parse(fs.readFileSync(path.join(dir, ".next/serve.json"), "utf8"));
 const siteHost = process.env.FAKE_SITE_HOST || "portableofficecabin.com";
+const readOr = (file, fallback) => {
+  try {
+    return fs.readFileSync(path.join(dir, file), "utf8").trim() || fallback;
+  } catch {
+    return fallback;
+  }
+};
+const revision = readOr("REVISION", "");
+const buildInfo = JSON.stringify({
+  commit: /^[0-9a-f]{40}$/.test(revision) ? revision : "unknown",
+  buildId,
+  builtAt: readOr(".next/BUILT_AT", "unknown"),
+  startedAt: new Date(Date.now() - process.uptime() * 1000).toISOString(),
+});
 
 const page = (title) =>
-  `<!DOCTYPE html><!--${buildId}--><html><head><title>${title}</title>` +
-  `<script src="/_next/static/${buildId}/_buildManifest.js"></script>` +
-  `<script src="/_next/static/chunks/page-${buildId}.js"></script></head><body>${title}</body></html>`;
+  `<!DOCTYPE html><html><head><title>${title}</title>` +
+  `<script src="/_next/static/chunks/page-${buildId}.js"></script></head><body>${title}` +
+  `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${buildId}\\",\\"p\\":\\"\\"}\\n"])</script></body></html>`;
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, "http://x");
@@ -37,6 +56,7 @@ const server = http.createServer((req, res) => {
   };
   if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, page(p));
   if (p === "/robots.txt") return send(200, "User-agent: *\nAllow: /\n", "text/plain");
+  if (p === "/api/build-info") return send(200, buildInfo, "application/json");
   if (p === "/sitemap.xml") {
     const paths = ["/", "/cities-we-serve", "/products", ...slugs.map((s) => `/cities-we-serve/${s}`)];
     return send(200, `<?xml version="1.0"?><urlset>${paths.map((x) => `<url><loc>https://${siteHost}${x}</loc></url>`).join("")}</urlset>`, "application/xml");
