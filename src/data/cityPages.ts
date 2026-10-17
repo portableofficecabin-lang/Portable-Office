@@ -3399,6 +3399,16 @@ export const CITY_PAGES: CityPage[] = [
    *   • The areas section is framed as delivery enquiry locations ("Delivery Enquiries in Tirunelveli
    *     District and Nearby"), with feasibility and charges confirmed after reviewing the site.
    *
+   * Owner corrections (2026-10-17, after the live claims review): anchoring and generator changeover
+   * are not confirmed services, so neither is stated unconditionally.
+   *   • Anchoring is conditional everywhere: the disclaimer uses the owner's sentences ("Delivery and
+   *     crane placement are arranged for each project. Anchoring, where required, is subject to site
+   *     conditions and confirmation in the quotation."), the wind section says the method, plates or
+   *     bolts and supply/installation responsibility are agreed in the quotation, and the maintenance
+   *     habit reads "If the unit is anchored, inspect the anchor bolts after the windy season."
+   *   • The power FAQ no longer offers a generator changeover; it uses the owner's sentence asking the
+   *     customer to mention a generator when requesting a quotation.
+   *
    * Images: five owner-dropped webp renders ("public/images/cities/City Page · Kudankulam
    * (Koodankulam), Tirunelveli District/…/cabin (1–5).webp", all 1200×896), copied byte-for-byte to
    * clean slug names: the three-quarter exterior = hero / og:image; the top-down view = feature band;
@@ -3441,7 +3451,7 @@ export const CITY_PAGES: CityPage[] = [
       width: 1200,
       height: 896,
       caption:
-        "Illustrative render of a single unit. Anchoring and foundation requirements are confirmed for the site's exposure and the approved design.",
+        "Illustrative render of a single unit. Foundation requirements, and any anchoring the site needs, are confirmed in the quotation for the site's exposure and the approved design.",
     },
     interiorImage: {
       src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-interior.webp",
@@ -3508,7 +3518,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Holding Firm in the Wind",
-        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include anchor plates to secure the unit to a suitable base, firmly fixed roof sheets, and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. The anchoring arrangement and foundation requirements should be confirmed for the site's exposure and the approved design.",
+        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include firmly fixed roof sheets and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. Where a site requires anchoring, the anchoring method, any anchor plates or bolts, and who supplies and installs them must be agreed in the quotation, subject to site conditions, technical feasibility and the approved design.",
       },
       {
         title: "Staying Comfortable Inside",
@@ -3566,7 +3576,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       { title: "Repair paint damage", text: "Touch up scratches or chips in the paint promptly." },
       { title: "Check seals", text: "Check door and window seals before the northeast monsoon." },
-      { title: "Inspect anchor bolts", text: "Inspect anchor bolts after the windy season." },
+      { title: "Inspect anchor bolts, if fitted", text: "If the unit is anchored, inspect the anchor bolts after the windy season." },
       { title: "Keep the roof clear", text: "Keep the roof and drip edges clear of sand and leaves." },
       {
         title: "Follow the supplied instructions",
@@ -3594,8 +3604,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "Prepare a level base and suitable concrete pedestals or foundations according to the agreed drawings.",
       },
       {
-        title: "Delivery, anchoring and handover",
-        text: "Coordinate placement, anchoring, connections and handover according to the agreed scope. Site access note: the truck needs a clear route to the unloading position, and the crane needs sufficient working space. Responsibility for transport, crane hire, unloading, anchoring and utility connections must be stated in the quotation.",
+        title: "Delivery, placement and handover",
+        text: "Coordinate placement, connections, any anchoring confirmed in the quotation, and handover according to the agreed scope. Site access note: the truck needs a clear route to the unloading position, and the crane needs sufficient working space. Responsibility for transport, crane hire, unloading, anchoring and utility connections must be stated in the quotation.",
       },
     ],
 
@@ -3608,7 +3618,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can I move it from Kudankulam to another site later?",
         answer:
-          "Yes. A relocatable unit can be disconnected, unbolted and lifted onto a suitable truck for the next site. Joined units, plumbing and other additions may need dismantling first. Transport and lifting arrangements depend on the unit's size and condition.",
+          "Yes. A relocatable unit can be disconnected, released from any anchor bolts and lifted onto a suitable truck for the next site. Joined units, plumbing and other additions may need dismantling first. Transport and lifting arrangements depend on the unit's size and condition.",
       },
       {
         question: "Do I need permission to place a container office?",
@@ -3618,7 +3628,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "What power connection does it need?",
         answer:
-          "The supply requirement depends on the total electrical load. Lights, fans and computers may operate on a suitable single-phase connection, while AC requires a correctly sized dedicated circuit. A generator changeover arrangement can be included where specified.",
+          "The supply requirement depends on the total electrical load. Lights, fans and computers may operate on a suitable single-phase connection, while AC requires a correctly sized dedicated circuit. If you plan to use a generator, please mention this when requesting a quotation so the required electrical provisions can be reviewed and confirmed.",
       },
       {
         question: "How fast can you deliver to Kudankulam?",
@@ -3656,7 +3666,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district; delivery, crane placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district. Delivery and crane placement are arranged for each project. Anchoring, where required, is subject to site conditions and confirmation in the quotation. Delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
