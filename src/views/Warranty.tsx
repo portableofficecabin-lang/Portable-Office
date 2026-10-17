@@ -118,6 +118,7 @@ export default function WarrantyPage() {
               </div>
               <ul className="space-y-3">
                 <Bullet><strong>Electrical components</strong> — 1-year warranty covering wiring, switches, and fixtures.</Bullet>
+                <Bullet><strong>Leakage</strong> — 1-year warranty against leakage.</Bullet>
                 <Bullet><strong>Paint & finish</strong> — 6-month warranty against peeling, fading, or bubbling under normal conditions.</Bullet>
                 <Bullet>Warranty claims are processed within 7 working days of inspection.</Bullet>
               </ul>

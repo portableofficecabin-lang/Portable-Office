@@ -2166,6 +2166,298 @@ export const CITY_PAGES: CityPage[] = [
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Kudligi or the surrounding area. Transport, crane hire, unloading, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour and with an optionally furnished interior; they are not photographs of installations in Kudligi. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Project types are named only to describe typical uses; Portable Office Cabin is not affiliated with any highway authority, contractor, industrial, mining, solar or wind project operator, school, hostel or government department in the area, and entry to any such site is subject to its own permissions. Notes on heat, dust, ground conditions, foundations and security are general guidance, not engineering advice; the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN SANDUR, BALLARI — the iron ore and manganese belt of Sandur taluk (the
+   * Donimalai and Kumaraswamy ranges), the Toranagallu steel plant area and the ore-transport roads
+   * of Ballari district. Its cluster neighbours are Kudligi (26.7 km) and Davanagere (96.4 km) by the
+   * pages' own geo and the cluster test's haversine. Kudligi links back. Davanagere's `neighbours`
+   * line is left alone, because Haveri (#129) and the Karnataka-hubs follow-up (#137) both edit it;
+   * the #137 owner adds Sandur to Davanagere's union of slugs.
+   *
+   * Owner copy of 2026-10-16, mapped onto the fixed template slots in the draft's own order. Nothing is
+   * dropped, and the draft's two tables become lists:
+   *   • H1 as written. The draft has no tagline; the tagline joins the meta title's "Mine & Site
+   *     Cabins" to the page label's "Sandur, Ballari District" (Kudligi precedent).
+   *   • Intro: the draft's four paragraphs.
+   *   • "What Sandur Sites Demand" → why (its four numbered H3s); whyIntro is a one-line lead-in.
+   *   • "Where … Containers Work" table → solutions (site type as the H3, typical units as its text).
+   *     The heading says "Container Offices", not "Our Containers": the draft's wording read as a
+   *     claim of existing installations in the region. solutionsIntro adds the Kudligi-approved note
+   *     that classrooms, clinic rooms and accommodation need use-specific specifications and permissions.
+   *   • "Choosing the Right Size": lead-in → featuresIntro, table rows → features, the approved-drawing
+   *     note → sizesNote.
+   *   • "A Quick Word on Colour" → industries (two titled items). It stays right after the sizes, as
+   *     in the draft.
+   *   • "Fittings: Standard and Heavy-Duty Options" → custom beside the interior render: the two
+   *     H3 lists become two items, and the approved-quotation note becomes customOutro.
+   *   • "Rent or Buy?" → whyUs (rent / buy / compare). The template renders custom before whyUs, so
+   *     this section and Fittings swap order.
+   *   • "Areas We Serve" → areasText, with the draft's towns as delivery-planning enquiries and the
+   *     Kudligi "no branch, yard or office" line. "How We Get It to Your Site" → how (five steps,
+   *     the site-access note folded into step 5). Areas renders before how, so they swap order.
+   *   • FAQs: the owner's seven questions. None matches another city page's question word for word.
+   *   • "Running a Site in Sandur?" → CTA. "[Phone Number]" / "[Email Address]" → COMPANY, and
+   *     "[Brand Name]" → Portable Office Cabin. The editorial note is an instruction, not page copy.
+   *
+   * UNCONFIRMED ITEMS (the draft's own editorial note lists them for confirmation). They are worded
+   * the way the owner approved for Kudligi (2026-10-17):
+   *   • FAQ 6 "[X–Y days]": no lead time is published. The answer says the delivery date is confirmed
+   *     with the quotation.
+   *   • Dust sealing, electrical protection, the secondary roof, the standard specification and the
+   *     heavy-duty add-ons are options that "can be specified" or "as agreed in your quotation". The
+   *     meta description's "Dust-sealed" becomes "dust-sealing options", and its "Delivered and
+   *     installed" is dropped: delivery responsibilities follow the quotation scope.
+   *   • Rental is "subject to availability". Transport, crane hire, unloading, foundations and
+   *     connections follow "the scope agreed in the quotation".
+   * Owner approval (2026-10-16): these wordings, the section order and the URL. The town list stays,
+   * framed as delivery-planning enquiries. Unconfirmed specifications stay quotation options.
+   * No ₹ amounts, lead times, warranty terms or project counts.
+   *
+   * Images: four owner-dropped 1200×896 webp renders ("public/images/cities/container-office-sandur-
+   * ballari/…/cabin*.webp"), copied byte-for-byte to clean slug names. The alt text describes the
+   * ACTUAL renders: a light grey-green corrugated-steel container office with a flat overhanging roof,
+   * two black-framed sliding glass panels on the long side and a tall end window. The renders show
+   * full-height glazing, while the draft's standard specification is sealed sliding windows with
+   * grills and a lockable steel door. Owner review (2026-10-16): no visible hero caption (the Kudligi
+   * preference, PR #139); the image and alt text stay. One concise note, the interior caption, says
+   * the renders show design options and final specifications follow the quotation, and the
+   * disclaimer repeats it. The roof render's caption ties its light grey finish to the draft's colour
+   * advice.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`); the
+   * call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-sandur-ballari",
+    city: "Sandur",
+    listTitle: "Container Office in Sandur, Ballari",
+    metaTitle: "Container Office in Sandur, Ballari | Mine & Site Cabins | Portable Office Cabin",
+    metaDescription:
+      "Insulated container offices in Sandur, Ballari with dust-sealing options for mines, steel plant contractors, transporters and site teams. Buy or rent.",
+    keywords:
+      "Container Office in Sandur, Container Office Sandur Ballari, Site Office Container Sandur, Mine Site Office Sandur, Weighbridge Cabin Sandur, Container Office Toranagallu, Portable Cabin Ballari, Crew Rest Room Container Ballari, Container Office for Rent Sandur, Container Office for Sale Sandur",
+    geo: { region: "IN-KA", placename: "Sandur, Ballari, Karnataka, India", position: "15.0860;76.5470", icbm: "15.0860, 76.5470" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-exterior.webp",
+      alt: "Container office in Sandur, Ballari — illustrative render of a light grey-green corrugated-steel container office with a flat overhanging roof, two black-framed sliding glass panels along the long side and a tall end window, on a paved forecourt with planting",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-roof-view.webp",
+      alt: "Container office in Sandur, Ballari — top-down view of the light grey-green container office showing its flat roof and corner castings, on a paved forecourt bordered by planting",
+      width: 1200,
+      height: 896,
+      caption: "A light grey finish, as shown, makes red dust less noticeable than white between washes.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-interior.webp",
+      alt: "Container office in Sandur, Ballari — illustrative render of an optionally furnished office interior with two desks, mesh office chairs, wood-finish wall panels and storage, linear ceiling lights and full-height sliding glass panels",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative renders showing design options, including full-height glazing and optional furniture. Final specifications follow the agreed quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-side-view.webp",
+        alt: "Container office in Sandur, Ballari — straight-on side elevation of the light grey-green corrugated-steel container office with a small framed window and a small lockable steel access panel",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Sandur, Ballari, Tough Enough for Mining Country",
+    tagline: "Mine and Site Cabins in Sandur, Ballari District",
+    intro: [
+      "Sandur doesn't look like the rest of Ballari district. The plains around it are flat and dry, but Sandur sits in a valley ringed by green hills. Those same hills are rich in iron ore and manganese, and that's what keeps this taluk working.",
+      "Mines run across the Donimalai and Kumaraswamy ranges. Ore trucks move along the roads from early morning to late at night. Down at Toranagallu, steel plant operations keep contractors, transporters and ancillary units busy. Much of this work runs in shifts, often around the clock.",
+      "The teams behind it need offices, weighbridge cabins and rest rooms right where the work happens. In Sandur, those spaces also have to handle red dust, heavy traffic, everyday wear and hot summers.",
+      "That's the kind of container office we build: manufactured at our facility, delivered by truck and placed by crane under the scope agreed in the quotation, and ready for use once installation, checks and the required connections are complete.",
+    ],
+
+    whyHeading: "What Sandur Sites Demand From a Container Office",
+    whyIntro: "Four things a container office has to handle on Sandur's mine, plant and transport sites:",
+    whyBullets: [
+      {
+        title: "Keeping the red dust out",
+        text: "Iron ore dust is fine, red and stubborn. It settles on files, gets into keyboards and clogs AC filters. Rubber-gasketed windows, tightly sealed door frames and covered cable entries can be specified to help reduce the amount of dust entering the cabin.",
+      },
+      {
+        title: "Taking rough, everyday use",
+        text: "Site offices see muddy boots, equipment movement and doors opening repeatedly throughout each shift. A strong steel frame, durable flooring, sturdy hinges and solid locks help the cabin withstand regular site use.",
+      },
+      {
+        title: "Meeting your site safety requirements",
+        text: "Mines and plants have their own safety requirements. Electrical protection, earthing arrangements and additional fittings should be agreed against your safety team's checklist. Options can include RCCB protection, fire extinguisher brackets, emergency lights and other specified provisions. Final acceptance remains subject to your site's inspection and approval.",
+      },
+      {
+        title: "Handling heat and heavy rain",
+        text: "Insulated walls and roofing help reduce heat entering the cabin. A ventilated secondary roof and AC provision can be included where specified. A suitable raised base, site drainage and properly sealed openings help manage rainwater around the unit.",
+      },
+    ],
+
+    solutionsHeading: "Where Container Offices Work in the Sandur Region",
+    solutionsIntro:
+      "Typical site types around Sandur and the units a container office can serve as. Classrooms, clinic and first-aid rooms, and crew or labour accommodation require specifications and permissions appropriate to their use.",
+    solutions: [
+      {
+        title: "Mines and quarries",
+        text: "Site office, shift-in-charge cabin, weighbridge cabin, check-post cabin, first-aid room and crew rest room.",
+      },
+      { title: "Steel plant contractors", text: "Project office, supervisor cabin, tool and material store, and workers' rest room." },
+      { title: "Ore transporters and logistics", text: "Dispatch office, drivers' rest room and yard security cabin." },
+      { title: "Ancillary units and industrial plots", text: "Gate cabin, time office and administration office." },
+      { title: "Townships, schools and public offices", text: "Additional classrooms, clinic rooms and temporary offices." },
+    ],
+
+    featuresHeading: "Choosing the Right Size",
+    featuresIntro:
+      "Start with what happens inside. One person checking trucks needs far less space than a project team holding daily meetings. Common uses around Sandur by nominal cabin length:",
+    features: [
+      "10 ft — weighbridge cabin, check post or security cabin.",
+      "20 ft — shift office, dispatch office or store room.",
+      "40 ft — project office with options for a meeting area and an attached toilet, depending on layout.",
+      "Combined units — site office blocks, crew rest rooms and labour accommodation.",
+    ],
+    sizesNote: "Final width, usable floor area and layout are confirmed in the approved drawing.",
+
+    industriesHeading: "A Quick Word on Colour",
+    industriesIntro: "Red dust quickly becomes visible on a white exterior.",
+    industries: [
+      {
+        title: "Light grey or beige",
+        text: "practical alternatives to white, making dust less noticeable between washes.",
+      },
+      {
+        title: "Coating and insulation",
+        text: "choose the exterior colour together with a suitable coating system and insulation specification for the site.",
+      },
+    ],
+
+    customHeading: "Fittings: Standard and Heavy-Duty Options",
+    customIntro: "The standard specification and heavy-duty add-ons can include the following, as agreed in your quotation:",
+    customBullets: [
+      {
+        title: "Standard specification",
+        text: "Steel frame with insulated walls and roof; cement board floor with heavy-duty vinyl; finished interior walls; concealed wiring, lights, fans and switches; an electrical board with the agreed protection and earthing provisions; sealed sliding windows with grills; and a lockable steel door.",
+      },
+      {
+        title: "Heavy-duty add-ons",
+        text: "Anti-skid chequered plate at the entrance; steel window shutters for remote sites; AC with accessible, washable filters; a fire extinguisher bracket and emergency light; an attached toilet and wash area; bunk beds and lockers for rest rooms; and network and CCTV points.",
+      },
+    ],
+    customOutro: "Final materials, quantities, electrical protection and finishes are recorded in the approved quotation.",
+
+    whyUsHeading: "Rent or Buy?",
+    whyUsIntro: "Renting and buying suit different timelines:",
+    whyUsBullets: [
+      {
+        title: "Rent for short requirements",
+        text: "A plant shutdown or short maintenance contract may need an office for only a few months. Renting can suit that requirement, subject to availability.",
+      },
+      {
+        title: "Buy for long-term use",
+        text: "Buying may offer better value for a mine office or transporter's yard that will operate for years or reuse the cabin across projects.",
+      },
+      {
+        title: "Compare the options",
+        text: "Share your timeline, and we'll quote the available purchase and rental options so you can compare.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Share your location for delivery planning in Sandur town; Toranagallu and Kurekuppa; Yeshwantnagar and Donimalai; Ballari city and Hosapete; and Kudligi, Kampli and Kurugodu. Is your site elsewhere in the mining belt? Send us the map location, and we'll confirm delivery feasibility and charges in the quotation. Cabins are fabricated at our factory near Hosur; we have no branch, yard or office in Sandur or Ballari district.",
+
+    howHeading: "How We Get It to Your Site",
+    howSteps: [
+      {
+        title: "Send your requirement",
+        text: "Tell us what the unit is for, the size, your site location and when you need it.",
+      },
+      {
+        title: "Approve the layout and quotation",
+        text: "Review a simple drawing and a clear, itemised price.",
+      },
+      {
+        title: "Arrange site entry",
+        text: "Confirm your mine or plant's entry requirements. Required vehicle documents, driver details and crew information can be coordinated in advance, along with applicable safety induction.",
+      },
+      {
+        title: "Prepare the base",
+        text: "Prepare suitable foundations or concrete pedestals according to the agreed drawings. Sloping sites require assessment of ground stability, drainage and support heights before installation.",
+      },
+      {
+        title: "Delivery and handover",
+        text: "Coordinate crane placement, installation, connections, inspection and handover according to the agreed scope. Site access: the delivery truck needs a suitable access route, and the crane needs firm ground and adequate working space. Transport, crane hire, unloading, foundations and utility-connection responsibilities must be stated in the quotation.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Will the red dust still get inside?",
+        answer:
+          "Some dust is unavoidable on a mining site. Sealed windows, gasketed doors and covered cable entries help reduce its entry, but doors opening during shifts will still let dust in. Clean surfaces regularly, inspect seals and service AC filters according to the manufacturer's instructions and site conditions.",
+      },
+      {
+        question: "Can it go on a slope or an uneven hill site?",
+        answer:
+          "It may be possible using a properly designed, level support arrangement. The solution depends on ground stability, slope, drainage and crane access. A site assessment is needed before confirming the foundation and placement method.",
+      },
+      {
+        question: "Will it pass our site safety audit?",
+        answer:
+          "Share your safety team's checklist before fabrication so the agreed requirements can be included in the design and quotation. These may cover electrical protection, earthing, emergency lighting, exits, signage and extinguisher provisions. Passing the audit depends on the final installation and your site authority's approval.",
+      },
+      {
+        question: "Can it be used as a weighbridge cabin?",
+        answer:
+          "Yes. The layout can include a wide window facing the weighbridge platform, a work counter and wiring points for the weighing indicator, computer and printer. Confirm the equipment and cable requirements before fabrication.",
+      },
+      {
+        question: "Can you deliver inside a mine lease or a plant?",
+        answer:
+          "Delivery can be arranged subject to site permission, vehicle access and your entry procedures. Your team must confirm the required documents, induction and lifting arrangements in advance.",
+      },
+      {
+        question: "How quickly can I get it?",
+        answer:
+          "The delivery schedule depends on the cabin size, specification and production schedule, and the delivery date is confirmed with the quotation. Custom builds may take longer.",
+      },
+      {
+        question: "What does it cost to buy or rent?",
+        answer:
+          "The price depends on size, insulation, fittings and delivery requirements. Rental pricing also depends on duration and availability. Send us your requirements for an itemised quotation covering the available options.",
+      },
+    ],
+
+    ctaHeading: "Running a Site in Sandur?",
+    ctaText: `From a single weighbridge cabin to a site office with crew rest rooms, we can propose a layout and specification suited to your site conditions and shift requirements. Share your location and requirements, and we'll send you a layout and price. Call or WhatsApp Portable Office Cabin on ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Sandur, Ballari district or the surrounding area. Transport, crane hire, unloading, foundations, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour, with full-height glazing and with an optionally furnished interior; they are not photographs of installations in Sandur. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Towns, hills, mines, plants and site types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any mining lease holder, mine or quarry operator, steel plant, contractor, transporter, township, school, government department or public-sector undertaking in the area, and entry to any such site is subject to its own permissions and safety procedures. Notes on dust, safety provisions, heat, rain, slopes and foundations are general guidance, not engineering or safety advice; acceptance by a site's safety team depends on the final installation and that site's approval, and the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
+  },
   {
     slug: "container-office-in-doddaballapura",
     city: "Doddaballapura",
@@ -2340,9 +2632,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-tirunelveli",
     city: "Tirunelveli",
     listTitle: "Container Office in Tirunelveli",
-    metaTitle: "Container Office in Tirunelveli – Sizes, Price & Delivery",
+    metaTitle: "Container Office in Tirunelveli – Sizes, Specs & Delivery",
     metaDescription:
-      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, built in 10–15 days and delivered across the district.",
+      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, with delivery across the district quoted per site.",
     keywords:
       "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
@@ -2701,6 +2993,325 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tirunelveli district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show a Portable Office Cabin container office design and are not photographs of an installation in Tirunelveli. Notes on wind exposure, anchoring, insulation, drainage and corrosion protection are general guidance: wind resistance, the base, anchoring and any structural checks for a specific site are established by project-specific engineering and defined in the approved quotation and drawing. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) is an independent Government of Tamil Nadu undertaking with which Portable Office Cabin is not affiliated; place names, industrial estates and projects such as the Kulasekarapattinam spaceport are mentioned only to describe the region and service locations, not as clients or completed projects. Permission notes on this page are general guidance, not legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN KUDANKULAM (Koodankulam), TIRUNELVELI — the coastal village at the southern
+   * end of Tirunelveli district: power-project subcontractors, wind farm service teams around
+   * Radhapuram and Panagudi, crew accommodation, and shops, schools and clinics. Its cluster
+   * neighbours are Tirunelveli (~61 km) and Thoothukudi (~81 km) by the pages' own geo; both link
+   * back through containerOfficeCluster.ts.
+   *
+   * Owner copy of 2026-10-16 (the rewrite that replaced the first Kudankulam draft), mapped onto the
+   * fixed template slots. The H1, meta title and meta description are verbatim; "[Brand Name]" is
+   * Portable Office Cabin. The owner's suggested URL "/container-office-kudankulam-tirunelveli"
+   * follows the site pattern as /cities-we-serve/container-office-in-kudankulam-tirunelveli (cf.
+   * Mettur, Salem). Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Container Office or Brick Site Office?" → why: the five table rows as bullets (Consideration =
+   *     title, both columns in the text).
+   *   • "How We Build for the Kudankulam Coast" → solutions: its three H3s as the numbered H3s (the two
+   *     wind paragraphs joined). solutionsIntro is a one-line lead-in.
+   *   • "Sizes at a Glance" → features: the four table rows, the nominal-area note as sizesNote.
+   *     featuresIntro is a one-line lead-in.
+   *   • "Who It's For" → industries, with a one-line lead-in. The template renders sizes BEFORE the
+   *     industries slot, so these two H2s swap order.
+   *   • "What You Get" → the custom slot beside the interior render: the eight specification items
+   *     (short titles added), "Popular Extras in Kudankulam" as one last item, the quotation line as
+   *     customOutro.
+   *   • "Looking After a Container Office by the Sea" → whyUs: the five habits (short titles added),
+   *     with the closing maintenance-instructions line as a sixth item.
+   *   • "Where We Deliver in Tirunelveli District and Nearby" → areas, the list as prose; "Getting It
+   *     to Your Site" → how, with the "Site access note" folded into step 5. The template renders the
+   *     areas BEFORE the process, so these two swap.
+   *   • FAQs: the owner's seven. "How fast can you deliver?" is localised ("…to Kudankulam?") because
+   *     another city page asks it word for word.
+   *   • CTA as supplied; "[Phone Number]" and "[Email Address]" come from COMPANY. The draft's
+   *     editorial note is an instruction to the editor, not page copy, and stays off the page.
+   * No ₹, lead times, warranty terms or superlatives (the draft states none; none added).
+   *
+   * Owner wording instructions (2026-10-16, PR #138 review; no delivery range or unconfirmed
+   * specification is approved):
+   *   • "[X–Y days]" → "The delivery schedule is confirmed in your quotation after reviewing the
+   *     specification, site access and production schedule."
+   *   • Coating, fittings, vapour control and the "What You Get" inclusions are described as options
+   *     confirmed in the approved specification and quotation (the three "How We Build" items, the
+   *     "What You Get" intro, the meta description's "Rust-protected, insulated, delivered and
+   *     installed", and the disclaimer).
+   *   • The intro's "Every unit is put together with the coast in mind." → "We can tailor the
+   *     specification to your coastal site conditions."
+   *   • Rental is stated as subject to availability (rent-or-buy FAQ and disclaimer).
+   *   • The areas section is framed as delivery enquiry locations ("Delivery Enquiries in Tirunelveli
+   *     District and Nearby"), with feasibility and charges confirmed after reviewing the site.
+   *
+   * Owner corrections (2026-10-17, after the live claims review): anchoring and generator changeover
+   * are not confirmed services, so neither is stated unconditionally.
+   *   • Anchoring is conditional everywhere: the disclaimer uses the owner's sentences ("Delivery and
+   *     crane placement are arranged for each project. Anchoring, where required, is subject to site
+   *     conditions and confirmation in the quotation."), the wind section says the method, plates or
+   *     bolts and supply/installation responsibility are agreed in the quotation, and the maintenance
+   *     habit reads "If the unit is anchored, inspect the anchor bolts after the windy season."
+   *   • The power FAQ no longer offers a generator changeover; it uses the owner's sentence asking the
+   *     customer to mention a generator when requesting a quotation.
+   *
+   * Images: five owner-dropped webp renders ("public/images/cities/City Page · Kudankulam
+   * (Koodankulam), Tirunelveli District/…/cabin (1–5).webp", all 1200×896), copied byte-for-byte to
+   * clean slug names: the three-quarter exterior = hero / og:image; the top-down view = feature band;
+   * the office interior = beside "What You Get"; the front and side elevations = gallery. The renders
+   * show glazed doors, a full-height window, a timber-look canopy and a wood-look floor, where the
+   * draft's specification lists a lockable steel door, sliding windows with grills and a vinyl
+   * finish, so the captions and disclaimer say the finishes follow the approved specification.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
+   * Kalaburagi, Pavagada and Yadgir); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-kudankulam-tirunelveli",
+    city: "Kudankulam",
+    listTitle: "Container Office in Kudankulam, Tirunelveli",
+    metaTitle: "Container Office in Kudankulam, Tirunelveli | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Kudankulam, Tirunelveli for project sites, wind farms, crews and shops. Coastal coating and insulation options; delivery quoted per site.",
+    keywords:
+      "Container Office in Kudankulam, Container Office Kudankulam Tirunelveli, Container Office Koodankulam, Coastal Container Office Kudankulam, Site Office Container Kudankulam, Portable Office Cabin Kudankulam, Container Accommodation Kudankulam, Container Shop Kudankulam, Container Office Vallioor, Container Office Radhapuram, Portable Cabin Nagercoil",
+    geo: {
+      region: "IN-TN",
+      placename: "Kudankulam (Koodankulam), Tirunelveli district, Tamil Nadu, India",
+      position: "8.1667;77.7167",
+      icbm: "8.1667, 77.7167",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-exterior.webp",
+      alt: "Render of a charcoal corrugated container office for Kudankulam: glazed double doors, a timber-look canopy and a large end window",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render. Doors, glazing, the canopy and finishes follow the approved specification.",
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-aerial-view.webp",
+      alt: "Top-down render of the container office: corrugated roof, corner castings and a timber-look entrance canopy on a paved pad",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a single unit. Foundation requirements, and any anchoring the site needs, are confirmed in the quotation for the site's exposure and the approved design.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-interior.webp",
+      alt: "Interior render with optional furniture: two desks with monitors, storage cabinets, a wood-look floor and a full-height glazed door",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-front-elevation.webp",
+        alt: "Front elevation render: glazed double doors under a timber-look canopy on the long side, with a concrete step and planted beds",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-side-elevation.webp",
+        alt: "Side elevation render: a plain corrugated-steel wall with corner castings and no openings, on a paved pad",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Kudankulam, Tirunelveli, Made for Life on the Coast",
+    tagline: "Ask any site engineer who has worked in Kudankulam what they remember most, and you'll hear the same things.",
+    intro: [
+      "The wind that hardly ever stops. The salty air that leaves a white film on everything. And a project calendar that always seems to run longer than planned.",
+      "This small village at the southern end of Tirunelveli district, also spelled Koodankulam, is home to one of India's largest nuclear power projects. New units are going up beside the ones already working, bringing contractors, vendors and crews with them. Out on the plains around Radhapuram and Panagudi, wind turbines stand in long rows, each with service teams of its own.",
+      "All these people need somewhere to work. A container office provides a practical way to give them that space. It's built at our facility, arrives on a truck, gets placed by crane and is ready for use once installation and the required connections are complete. We can tailor the specification to your coastal site conditions.",
+    ],
+
+    whyHeading: "Container Office or Brick Site Office?",
+    whyIntro: "If you're still weighing it up, here's how the two compare on a typical Kudankulam site:",
+    whyBullets: [
+      {
+        title: "Ready to use",
+        text: "Container office — after placement, installation and required connections. Brick site office — after construction, curing and fit-out.",
+      },
+      {
+        title: "Water on site",
+        text: "Container office — minimal for placement; plumbing depends on the layout. Brick site office — needed for mixing and curing.",
+      },
+      {
+        title: "Mess on site",
+        text: "Container office — limited site work and debris. Brick site office — sand, cement, bricks and construction debris.",
+      },
+      {
+        title: "Moving it",
+        text: "Container office — can be relocated using a truck and crane. Brick site office — cannot be relocated as a complete structure.",
+      },
+      {
+        title: "When the project ends",
+        text: "Container office — reuse, rent out or sell, subject to condition. Brick site office — demolish or retain for another use.",
+      },
+    ],
+
+    solutionsHeading: "How We Build for the Kudankulam Coast",
+    solutionsIntro: "Three coastal conditions shape the build: salt, wind and humidity.",
+    solutions: [
+      {
+        title: "Protection Against Rust",
+        text: "Salt is the biggest enemy here. Coastal protection options include thorough surface preparation before painting, an epoxy primer with a polyurethane top coat, galvanised or stainless-steel hinges, locks, screws and other fittings, and aluminium windows. The coating system and fittings supplied are confirmed in the approved specification and quotation.",
+      },
+      {
+        title: "Holding Firm in the Wind",
+        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include firmly fixed roof sheets and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. Where a site requires anchoring, the anchoring method, any anchor plates or bolts, and who supplies and installs them must be agreed in the quotation, subject to site conditions, technical feasibility and the approved design.",
+      },
+      {
+        title: "Staying Comfortable Inside",
+        text: "The coast here is warm and humid for much of the year. Insulated walls and roof can be specified to help reduce heat entering the cabin, with vapour-control and ventilation options to help manage moisture and a dedicated AC point for cooling when required. The insulation, vapour control and ventilation supplied are confirmed in the approved specification and quotation.",
+      },
+    ],
+
+    featuresHeading: "Sizes at a Glance",
+    featuresIntro: "Approximate floor area and a typical setup for each size:",
+    features: [
+      "10 ft × 8 ft (approx. 80 sq ft): one desk, security cabin, gate office or time office.",
+      "20 ft × 8 ft (approx. 160 sq ft): two to four desks, or a small shop with a counter.",
+      "40 ft × 8 ft (approx. 320 sq ft): open office with a private cabin and toilet, depending on layout.",
+      "Joined units (area as designed): office blocks, crew accommodation and engineered two-storey layouts.",
+    ],
+    sizesNote: "Areas shown are nominal footprint areas. Usable internal space depends on insulation, partitions and fittings.",
+
+    industriesHeading: "Who It's For",
+    industriesIntro: "Typical users around Kudankulam:",
+    industries: [
+      {
+        title: "Power-project subcontractors",
+        text: "An office, document room and store at the laydown yard, ready before work starts.",
+      },
+      { title: "Wind farm service teams", text: "A base near the turbines for technicians, spare parts and rest between jobs." },
+      { title: "Contractors housing crews", text: "Bunk rooms and toilets close to the site, reducing daily travel." },
+      { title: "Shop owners", text: "A container shop with a shutter for locations such as Chettikulam or Vallioor." },
+      { title: "Schools and clinics", text: "Additional space without undertaking a full conventional construction project." },
+    ],
+
+    customHeading: "What You Get",
+    customIntro: "Typical specification options; the items supplied are confirmed in the approved specification and quotation:",
+    customBullets: [
+      { title: "Frame", text: "Steel frame." },
+      { title: "Walls and roof", text: "Insulated wall and roof panels." },
+      { title: "Floor", text: "Cement board flooring with a vinyl finish." },
+      { title: "Interior", text: "Finished interior wall lining." },
+      { title: "Electrical", text: "Concealed wiring with lights, fans, switches and MCB protection." },
+      { title: "Windows", text: "Aluminium sliding windows with grills." },
+      { title: "Door", text: "Lockable steel door." },
+      { title: "Paint", text: "Coastal paint system." },
+      {
+        title: "Popular extras for coastal sites",
+        text: "Split AC with a dedicated circuit; attached toilet and wash area; bunk beds and lockers for crew rooms; partitions, workstations and a small pantry; network, CCTV and data points; company name and exterior colours.",
+      },
+    ],
+    customOutro: "The final materials, quantities and finishes are recorded in the approved quotation.",
+
+    whyUsHeading: "Looking After a Container Office by the Sea",
+    whyUsIntro: "A few simple habits help protect your unit:",
+    whyUsBullets: [
+      {
+        title: "Rinse off salt",
+        text: "Rinse the exterior with fresh water periodically to remove salt deposits, keeping water away from electrical equipment.",
+      },
+      { title: "Repair paint damage", text: "Touch up scratches or chips in the paint promptly." },
+      { title: "Check seals", text: "Check door and window seals before the northeast monsoon." },
+      { title: "Inspect anchor bolts, if fitted", text: "If the unit is anchored, inspect the anchor bolts after the windy season." },
+      { title: "Keep the roof clear", text: "Keep the roof and drip edges clear of sand and leaves." },
+      {
+        title: "Follow the supplied instructions",
+        text: "Follow the maintenance instructions supplied for the coating system and installed equipment.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries in Tirunelveli District and Nearby",
+    areasText:
+      "We welcome delivery enquiries from Kudankulam and Chettikulam; Radhapuram, Vallioor and Panagudi; Thisayanvilai and Nanguneri; Tirunelveli city and Palayamkottai; Anjugramam, Kanyakumari and Nagercoil; and Thoothukudi. Share your site location, and we will confirm delivery feasibility and charges after reviewing the site and access.",
+
+    howHeading: "Getting It to Your Site",
+    howSteps: [
+      {
+        title: "Tell us about your site",
+        text: "Share what the space is for, how many people will use it, its location and when you need it.",
+      },
+      { title: "Approve the drawing and price", text: "Review a simple layout and an itemised quotation." },
+      {
+        title: "Arrange site access",
+        text: "For restricted areas, vehicle and crew details can be supplied in advance to support your project team's entry-pass arrangements. Access remains subject to site approval.",
+      },
+      {
+        title: "Prepare the base",
+        text: "Prepare a level base and suitable concrete pedestals or foundations according to the agreed drawings.",
+      },
+      {
+        title: "Delivery, placement and handover",
+        text: "Coordinate placement, connections, any anchoring confirmed in the quotation, and handover according to the agreed scope. Site access note: the truck needs a clear route to the unloading position, and the crane needs sufficient working space. Responsibility for transport, crane hire, unloading, anchoring and utility connections must be stated in the quotation.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How long will a container office last this close to the sea?",
+        answer:
+          "Service life depends on the steel specification, protective coatings, site exposure and maintenance. A suitable coastal paint system, regular inspections and prompt repairs help extend its useful life.",
+      },
+      {
+        question: "Can I move it from Kudankulam to another site later?",
+        answer:
+          "Yes. A relocatable unit can be disconnected, released from any anchor bolts and lifted onto a suitable truck for the next site. Joined units, plumbing and other additions may need dismantling first. Transport and lifting arrangements depend on the unit's size and condition.",
+      },
+      {
+        question: "Do I need permission to place a container office?",
+        answer:
+          "Requirements depend on the land, intended use and site restrictions. Confirm the necessary permissions with the project authority and relevant local authority before installation.",
+      },
+      {
+        question: "What power connection does it need?",
+        answer:
+          "The supply requirement depends on the total electrical load. Lights, fans and computers may operate on a suitable single-phase connection, while AC requires a correctly sized dedicated circuit. If you plan to use a generator, please mention this when requesting a quotation so the required electrical provisions can be reviewed and confirmed.",
+      },
+      {
+        question: "How fast can you deliver to Kudankulam?",
+        answer:
+          "The delivery schedule is confirmed in your quotation after reviewing the specification, site access and production schedule. Custom layouts may take longer.",
+      },
+      {
+        question: "Should I rent or buy?",
+        answer:
+          "Buying may suit longer projects and repeated use. Renting may suit shorter jobs or individual project phases. Rental is subject to availability. Share your timeline so we can quote the available options for comparison.",
+      },
+      {
+        question: "What does a container office cost?",
+        answer:
+          "The price depends on the size, insulation, interior layout and extras you choose. Send us your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Let's Get Your Kudankulam Site Office Ready",
+    ctaText: `Whether you need one cabin at a gate or a full office and crew block, share your site conditions so we can propose a suitable specification for coastal use. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Send us your site location and requirements, and we'll share a layout and price.`,
+    ctaButtonLabel: "Request a Quote",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Bunk House Cabins", href: "/products/category/bunker-bed-container-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district. Delivery and crane placement are arranged for each project. Anchoring, where required, is subject to site conditions and confirmation in the quotation. Delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
