@@ -5,7 +5,7 @@ import { adminNotification, customerAcknowledgement, type EmailContent } from ".
 
 /**
  * send-enquiry-notification — e-mails the business inbox about a new enquiry and sends the customer a
- * short acknowledgement.
+ * short acknowledgement (Reply-To: the published sales address).
  *
  * HARDENED 2026-10-12 (PR #86). The previous version:
  *   • interpolated every field into the HTML unescaped (HTML injection into the sales inbox);
@@ -33,7 +33,9 @@ import { adminNotification, customerAcknowledgement, type EmailContent } from ".
  * not deploy edge functions).
  */
 
-const ADMIN_EMAIL = "info@portableofficecabin.com";
+/** Where every business enquiry notification is delivered (owner's choice, 2026-10-18). The website
+ *  and the customer acknowledgement keep showing sales@portableofficecabin.com (templates.ts). */
+const BUSINESS_NOTIFICATION_TO = "portableofficecabin@gmail.com";
 
 /** Every environment read goes through here (one Deno reference for the Node-side typecheck). */
 const env = (name: string): string | undefined => Deno.env.get(name);
@@ -103,7 +105,14 @@ const handler = async (req: Request): Promise<Response> => {
         auth: { username: smtpUsername, password: env("SMTP_PASSWORD") || "" },
       },
     });
-    await smtp.client.send({ from, to, subject: mail.subject, content: mail.text, html: mail.html });
+    await smtp.client.send({
+      from,
+      to,
+      subject: mail.subject,
+      content: mail.text,
+      html: mail.html,
+      ...(mail.replyTo ? { replyTo: mail.replyTo } : {}),
+    });
   };
 
   try {
@@ -118,7 +127,7 @@ const handler = async (req: Request): Promise<Response> => {
           p_error: error,
         });
       },
-      sendAdmin: (enquiry) => send(ADMIN_EMAIL, adminNotification(enquiry)),
+      sendAdmin: (enquiry) => send(BUSINESS_NOTIFICATION_TO, adminNotification(enquiry)),
       sendAcknowledgement: (to) => send(to, customerAcknowledgement()),
       log: (message) => console.warn(`send-enquiry-notification: ${message}`),
     });

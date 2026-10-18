@@ -8,8 +8,12 @@
  *     from the request; every value is HTML-escaped and header values are single-line.
  *   • customerAcknowledgement() — to the visitor. It takes no arguments, so nothing the visitor
  *     typed (name, message, company, …) can ever appear in it. That is what makes it useless as a
- *     spam carrier even when someone stores an enquiry under another person's address.
+ *     spam carrier even when someone stores an enquiry under another person's address. It shows the
+ *     published sales address and sets it as Reply-To, so a customer's reply reaches sales.
  */
+
+/** The address published on the website; shown in, and the Reply-To of, the acknowledgement. */
+export const SALES_EMAIL = "sales@portableofficecabin.com";
 
 /** The stored enquiry fields the admin e-mail shows (as returned by claim_enquiry_notification). */
 export interface StoredEnquiry {
@@ -27,6 +31,8 @@ export interface EmailContent {
   subject: string;
   text: string;
   html: string;
+  /** Reply-To header; omitted → replies go to the sender. */
+  replyTo?: string;
 }
 
 const TYPE_LABELS: Record<string, string> = {
@@ -128,6 +134,10 @@ export function customerAcknowledgement(): EmailContent {
               Thank you for reaching out to Portable Office Cabin. We have received your enquiry and our team will get back to you within 24 hours.
             </p>
 
+            <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
+              To add anything, reply to this e-mail or write to <a href="mailto:${SALES_EMAIL}" style="color: #2563eb;">${SALES_EMAIL}</a>.
+            </p>
+
             <div style="text-align: center; padding-top: 24px; border-top: 1px solid #e5e7eb;">
               <p style="color: #9ca3af; font-size: 12px; margin: 0;">
                 Portable Office Cabin | Premium Portable Solutions
@@ -141,7 +151,8 @@ export function customerAcknowledgement(): EmailContent {
 
   return {
     subject: "We've Received Your Enquiry - Portable Office Cabin",
-    text: "Hello, thank you for contacting Portable Office Cabin. We have received your enquiry and our team will get back to you within 24 hours.",
+    text: `Hello, thank you for contacting Portable Office Cabin. We have received your enquiry and our team will get back to you within 24 hours. To add anything, reply to this e-mail or write to ${SALES_EMAIL}.`,
     html,
+    replyTo: SALES_EMAIL,
   };
 }

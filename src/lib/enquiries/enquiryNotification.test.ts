@@ -11,6 +11,7 @@ import {
 import {
   adminNotification,
   customerAcknowledgement,
+  SALES_EMAIL,
 } from "../../../supabase/functions/send-enquiry-notification/templates";
 
 /**
@@ -119,6 +120,14 @@ describe("customer acknowledgement", () => {
     }
   });
 
+  it("shows the published sales address and sets it as Reply-To", () => {
+    const ack = customerAcknowledgement();
+    assert.equal(SALES_EMAIL, "sales@portableofficecabin.com");
+    assert.equal(ack.replyTo, SALES_EMAIL);
+    assert.ok(ack.text.includes(SALES_EMAIL));
+    assert.ok(ack.html.includes(`mailto:${SALES_EMAIL}`));
+  });
+
   it("is identical whatever was submitted", async () => {
     const a = harness(new FakeStore([enquiry("e1", "a@example.com")]));
     const b = harness(new FakeStore([enquiry("e2", "b@example.com", { name: "Someone else", message: "Different" })]));
@@ -136,6 +145,22 @@ describe("business notification", () => {
     assert.ok(m.html.includes("&lt;script&gt;steal()&lt;/script&gt;"));
     assert.ok(m.html.includes("Evil &amp; Co &lt;b&gt;"));
     assert.ok(!/[\r\n]/.test(m.subject), "subject is single-line");
+  });
+
+  it("sets no Reply-To (only the customer acknowledgement does)", () => {
+    assert.equal(adminNotification(enquiry("e1")).replyTo, undefined);
+  });
+
+  it("is delivered to the owner's notification inbox with the existing authenticated sender", () => {
+    const src = readFileSync(join("supabase", "functions", "send-enquiry-notification", "index.ts"), "utf8");
+    assert.ok(src.includes('const BUSINESS_NOTIFICATION_TO = "portableofficecabin@gmail.com";'));
+    assert.ok(src.includes("sendAdmin: (enquiry) => send(BUSINESS_NOTIFICATION_TO, adminNotification(enquiry))"));
+    assert.ok(src.includes("sendAcknowledgement: (to) => send(to, customerAcknowledgement())"));
+    assert.ok(src.includes("...(mail.replyTo ? { replyTo: mail.replyTo } : {})"), "Reply-To is passed to SMTP");
+    // Sender unchanged: the SMTP mailbox from the function's secrets.
+    assert.ok(src.includes('const smtpFrom = env("SMTP_FROM") || smtpUsername;'));
+    assert.ok(src.includes('const from = `${env("SMTP_FROM_NAME") || "Portable Office Cabin"} <${smtpFrom}>`;'));
+    assert.ok(!src.includes("info@portableofficecabin.com"), "no stale recipient");
   });
 
   it("is built from the stored enquiry, not the request", async () => {
