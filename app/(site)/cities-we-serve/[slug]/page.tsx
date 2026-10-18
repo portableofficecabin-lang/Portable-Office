@@ -173,6 +173,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             width={page.heroImage.width}
             height={page.heroImage.height}
             priority
+            fetchPriority="high"
             sizes="(max-width: 896px) 100vw, 896px"
             className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
           />

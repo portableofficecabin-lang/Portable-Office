@@ -144,6 +144,7 @@ export function ShippingDeliveryModal() {
                 <AccordionContent>
                   <ul className="space-y-3">
                     <InfoItem icon={CheckCircle2} text="Electrical components: 1 year" />
+                  <InfoItem icon={CheckCircle2} text="Leakage: 1 year" />
                     <InfoItem icon={CheckCircle2} text="Paint & finish: 6 months" />
                   </ul>
                 </AccordionContent>
