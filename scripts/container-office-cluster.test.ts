@@ -66,16 +66,14 @@ const km = (a: [number, number], b: [number, number]) => {
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * rad) * Math.cos(b[0] * rad) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
 };
-/* Pages with no other cluster page within 130 km: no forced "nearby" link (Mysore, and the North and
-   Central Karnataka pages Belagavi, Bagalkot, Bidar, Davanagere and Haveri). Davanagere and Haveri are
-   ~67 km apart: they are linked to each other in a follow-up once both pages are live. */
+/* Pages exempt from the "has a neighbour" checks: Mysore and the North Karnataka pages Belagavi,
+   Bagalkot and Bidar. Davanagere and Haveri, ~67 km apart on NH-48, are linked to each other, so they
+   are checked like every other page. */
 const ISOLATED = new Set([
   "container-office-in-mysore",
   "container-office-in-belagavi",
   "container-office-in-bagalkot",
   "container-office-in-bidar",
-  "container-office-in-davanagere",
-  "container-office-in-haveri",
 ]);
 for (const loc of CONTAINER_OFFICE_LOCATIONS) {
   if (!ISOLATED.has(loc.slug)) check(loc.neighbours.length > 0, `"${loc.slug}" has at least one neighbour`);
