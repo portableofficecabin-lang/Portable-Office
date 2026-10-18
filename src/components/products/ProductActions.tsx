@@ -91,7 +91,9 @@ export function ProductActions({
       </div>
       {showShippingTerms && (
         <div className="mb-8">
-          <ShippingDeliveryModal showWarranty={showWarranty} />
+          {/* A purchasable SKU's transport is priced by PIN-code zone at checkout, so the modal
+              states the checkout terms; quote-only SKUs keep the written-quotation wording. */}
+          <ShippingDeliveryModal showWarranty={showWarranty} transportAtCheckout={purchasable} />
         </div>
       )}
     </>
