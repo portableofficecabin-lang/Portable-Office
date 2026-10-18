@@ -43,9 +43,21 @@ export const productApplications: Record<string, string> = {
     "Offices, site cabins, accommodation units & workspaces",
 };
 
-/** Application/use-case text for a category, with a safe generic fallback. */
-export function getProductApplication(categorySlug: string): string {
+/**
+ * Per-product overrides, keyed by canonical product slug, for a product whose use is not the one
+ * its category describes. The Container Cafe & Restaurant is filed under Portable Cabins, whose
+ * line ("Construction site offices, security cabins…") would misdescribe it; the text below is
+ * the five formats from its own content document.
+ */
+const productApplicationsBySlug: Record<string, string> = {
+  "container-cafe-restaurant":
+    "Takeaway kiosks, dine-in cafes, container restaurants, two-storey & rooftop cafes and food court clusters",
+};
+
+/** Application/use-case text for a product (slug override first), then its category, then a safe generic fallback. */
+export function getProductApplication(categorySlug: string, productSlug?: string): string {
   return (
+    (productSlug ? productApplicationsBySlug[productSlug] : undefined) ||
     productApplications[categorySlug] ||
     "Site offices, accommodation, storage & modular building solutions across India"
   );

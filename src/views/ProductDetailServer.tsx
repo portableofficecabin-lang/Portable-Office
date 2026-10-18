@@ -19,7 +19,7 @@ import {
   type Product,
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
-import { getImageAltText, getImageCaption } from "@/data/productImageCaptions";
+import { getImageAltText, getImageCaption, getProductGalleryNote } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
 import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
@@ -74,6 +74,7 @@ import { VipContainerOfficeContent } from "@/components/products/VipContainerOff
 import { MarketingOfficeContent } from "@/components/products/MarketingOfficeContent";
 import { PrefabMarketingOfficeContent } from "@/components/products/PrefabMarketingOfficeContent";
 import { ConstructionIndividualBuildingContent } from "@/components/products/ConstructionIndividualBuildingContent";
+import { ContainerCafeRestaurantContent } from "@/components/products/ContainerCafeRestaurantContent";
 
 const SITE = "https://portableofficecabin.com";
 
@@ -165,6 +166,17 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
    * Brand and the MSME registration stay: both are true of every SKU.
    */
   const isOnSiteService = commerce?.kind === "service";
+
+  /**
+   * TRUE for a built-to-brief project (kind "custom" — today only POC-CCR-CUSTOM, the Container
+   * Cafe & Restaurant). Its scope, steel and programme are set per quotation, so two template
+   * claims written for standard cabins are withheld:
+   *   · "Pan-India Delivery · Dispatch 7-15 days + 1-5 days transit" — the build time depends on
+   *     the format; the firm timeline comes with the quotation (commerce.deliveryDays says so).
+   *   · the "Steel Grade" row — no grade has been confirmed for this build. Its structure is
+   *     described in the product's own specifications instead.
+   */
+  const isBuiltToBrief = commerce?.kind === "custom";
 
   /**
    * Handed to the long-form category content (ContainerOfficeContent, PortableToiletContent,
@@ -391,6 +403,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               featured={product.featured}
               inStock={product.inStock}
               purchasable={purchasable}
+              note={getProductGalleryNote(slug)}
             />
 
             {/* Info */}
@@ -428,8 +441,9 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 )}
 
                 {/* Pan-India delivery + timeline. Hidden for on-site civil work: nothing is
-                    dispatched or transported, and the real programme is stated further down. */}
-                {!isOnSiteService && (
+                    dispatched or transported, and the real programme is stated further down.
+                    Hidden for a built-to-brief project too: its timeline comes with the quote. */}
+                {!isOnSiteService && !isBuiltToBrief && (
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Truck className="h-4 w-4 text-accent" />
                     <span className="font-medium text-foreground">Pan-India Delivery</span>
@@ -460,7 +474,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
                     <dt className="font-semibold text-foreground sm:w-32 shrink-0">Application</dt>
-                    <dd className="text-muted-foreground">{getProductApplication(product.categorySlug)}</dd>
+                    <dd className="text-muted-foreground">{getProductApplication(product.categorySlug, slug)}</dd>
                   </div>
                   {/* Sheet-steel grades for a fabricated cabin body. Meaningless — and wrong —
                       on a cast-in-place RCC house, so it is replaced there by the structural
@@ -473,7 +487,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                         IS 2185. Grades are fixed in your written specification.
                       </dd>
                     </div>
-                  ) : (
+                  ) : isBuiltToBrief ? null : (
                     <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
                       <dt className="font-semibold text-foreground sm:w-32 shrink-0">Steel Grade</dt>
                       <dd className="text-muted-foreground">
@@ -702,6 +716,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {slug === "marketing-office" && <div className="mt-16"><MarketingOfficeContent /></div>}
           {slug === "prefab-marketing-office" && <div className="mt-16"><PrefabMarketingOfficeContent /></div>}
           {slug === "construction-individual-building" && <div className="mt-16"><ConstructionIndividualBuildingContent /></div>}
+          {slug === "container-cafe-restaurant" && <div className="mt-16"><ContainerCafeRestaurantContent /></div>}
           {/* marketing-office + prefab-marketing-office carry their own full narrative above —
               without them in this exclusion list the generic container copy rendered TWICE-over
               beneath the owner's copy (live bug fixed 2026-08-16). */}

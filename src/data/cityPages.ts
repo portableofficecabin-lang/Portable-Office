@@ -1042,6 +1042,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Container Cafe & Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
       { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
       { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },

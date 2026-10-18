@@ -21,6 +21,9 @@ interface ProductGalleryProps {
    *  (isPurchasable). Drives whether the overlay badge reads "Available to Order" (buyable) or
    *  "Made to Order" (quote-only), so the image does not contradict a working Add-to-Cart. */
   purchasable?: boolean;
+  /** Optional visible line under the gallery, e.g. stating that every image is a render.
+   *  Unset = no element, so galleries without one are unchanged. */
+  note?: string;
 }
 
 /**
@@ -63,6 +66,7 @@ export function ProductGallery({
   featured,
   inStock,
   purchasable,
+  note,
 }: ProductGalleryProps) {
   // Normalise to real, non-empty URLs once. Empty/placeholder entries are dropped
   // so they can never become the selected main image.
@@ -163,6 +167,8 @@ export function ProductGallery({
           ))}
         </div>
       )}
+
+      {note && <p className="mt-3 text-sm text-muted-foreground italic">{note}</p>}
 
       <div className="absolute top-4 left-4 z-[2] flex gap-2">
         {featured && (

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { COMPANY } from "@/lib/company";
@@ -575,7 +576,7 @@ export function CargoContainersContent() {
         <h2 className="text-3xl font-bold text-foreground mb-6">Container Cafés, Prefab Canteens & Rooftop Sheds</h2>
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
-            Container cafés and prefab canteens have emerged across Indian cities since approximately 2015, accelerating after 2020 for quick, flexible food and beverage setups.
+            <Link href="/products/container-cafe-restaurant" className="text-accent underline-offset-4 hover:underline font-medium">Container cafés</Link> and prefab canteens have emerged across Indian cities since approximately 2015, accelerating after 2020 for quick, flexible food and beverage setups.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="border-border">

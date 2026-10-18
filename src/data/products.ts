@@ -2012,6 +2012,58 @@ export const products: Product[] = [
     featured: false,
     inStock: true,
   },
+  {
+    // CONTAINER CAFE & RESTAURANT — a built-to-order project, QUOTE ONLY. kind:"custom" +
+    // priceConfirmed:false in productCommerce.ts keep it out of isPurchasable(): no price, no Add
+    // to Cart, no JSON-LD Offer (the schema helper emits a Service node) and no Merchant feed
+    // entry. Copy is the owner's "Container Cafe & Restaurant · Product page content" document
+    // (17 Oct 2026); the long-form sections live in ContainerCafeRestaurantContent.tsx.
+    // Filed under Portable Cabins on the owner's instruction (2026-10-17) — no new category.
+    // The explicit `slug` pins the canonical URL to the document's /container-cafe-restaurant.
+    // Every image is an AI-generated render; the gallery note (productImageCaptions.ts) says so.
+    id: "47",
+    sku: "POC-CCR-CUSTOM",
+    name: "Container Cafe & Restaurant",
+    category: "Portable Cabins",
+    categorySlug: "portable-cabins",
+    slug: "container-cafe-restaurant",
+    description:
+      "Most cafe ideas don't stall because of the coffee. They stall at the building. You find a good spot, then spend months on deposits, interior contractors and a landlord who won't let you touch the walls. By the time the shutter finally goes up, half the budget is gone.\n\nA container cafe flips that around. We build the whole thing at our unit, from the kitchen counter to the lights and the signboard, while you work on your menu and hire your team. Then it arrives on a trailer, gets placed on site, and you're ready to open once the final connections are done. It also happens to look great, which is no small thing when half your customers will take a photo before they take a sip.",
+    shortDescription:
+      "Custom-built container cafes and restaurants — takeaway kiosks, dine-in cafes, full-kitchen restaurants and stacked designs, built to order.",
+    specifications: [
+      { label: "Sizes", value: "10 ft, 20 ft or 40 ft containers, 2 × 40 ft side by side, or stacked units" },
+      { label: "Approx. Footprint", value: "10 × 8 ft to 40 × 16 ft on one level; two floors when stacked" },
+      { label: "Headroom", value: "High cube containers give about a foot of extra headroom" },
+      { label: "Formats", value: "Takeaway kiosk, dine-in cafe, restaurant with a full kitchen, two-storey or rooftop cafe, food court cluster" },
+      { label: "Container Options", value: "Refurbished shipping container or a new container-style build" },
+      { label: "Kitchen Planning", value: "Planned around your menu — power and plumbing sized to your equipment" },
+      { label: "Site Base", value: "Usually a level concrete plinth or pedestals; the base drawing is confirmed for your site" },
+      { label: "Delivery & Setup", value: "Transport, crane placement, utility connections, anchoring and final setup as set out in your approved quotation" },
+      { label: "Pricing Basis", value: "Built to order — your itemised quotation lists exactly what is included" },
+      { label: "Timeline", value: "Depends on size and interiors — a firm timeline comes with your quote" },
+    ],
+    features: [
+      "Built off-site while your plot is prepared, so both jobs run at the same time",
+      "No heavy civil work and no ripping out a previous tenant's interiors",
+      "Can be lifted onto a trailer and moved if the lease ends or a better spot comes up",
+      "Big glass windows, a deck and your branding — hard to walk past",
+      "Works on highway plots, farm land, resort lawns, campuses and tech park courtyards",
+      "Kitchen planned around your menu, from a coffee bar to a tandoor and two fryers",
+      "Itemised quote, so nothing is hidden",
+    ],
+    // Hero = the container kitchen (a single-level fit-out every format shares); the stacked
+    // concept's exterior views and its upper-floor dining room follow. All renders.
+    images: [
+      "/images/products/container-cafe-restaurant/container-cafe-restaurant-kitchen.webp",
+      "/images/products/container-cafe-restaurant/container-cafe-restaurant-front-exterior.webp",
+      "/images/products/container-cafe-restaurant/container-cafe-restaurant-staircase-deck.webp",
+      "/images/products/container-cafe-restaurant/container-cafe-restaurant-aerial.webp",
+      "/images/products/container-cafe-restaurant/container-cafe-restaurant-dining-interior.webp",
+    ],
+    featured: false,
+    inStock: true,
+  },
 ];
 
 /**
