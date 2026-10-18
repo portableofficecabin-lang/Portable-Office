@@ -753,10 +753,11 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
      * no Add to Cart, no JSON-LD Offer and no feedEligible() entry, structurally. basePrice is 0
      * because no price has been confirmed — do not put a placeholder figure here.
      * feedTitle is the page <title> (this SKU is never fed) and must stay byte-identical to
-     * productSEO "47".title. h1Title is the document's H1. */
+     * productSEO "47".title. Title and H1 are both "Container Cafe and Restaurant", set by the
+     * owner on 2026-10-18; they replaced the document's longer headline and SEO title. */
     id: "47", sku: "POC-CCR-CUSTOM", basePrice: 0, priceConfirmed: false, kind: "custom", inStock: true,
-    h1Title: "Container Cafe and Restaurant, Built to Open Fast and Get Noticed",
-    feedTitle: "Container Cafe & Restaurant | Custom-Built, Ready to Open",
+    h1Title: "Container Cafe and Restaurant",
+    feedTitle: "Container Cafe and Restaurant",
     size: "10 ft, 20 ft, 40 ft, 2 × 40 ft or stacked",
     material: "Steel container body with steel-framed cut-outs",
     bestFor: "Cafes, kiosks and restaurants",
