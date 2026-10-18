@@ -148,7 +148,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Pavagada town, Thirumani, Vallur, Madhugiri and Sira",
     hubAnchor: "Container offices for Pavagada's solar and project sites",
     nearbyLabel: "Pavagada",
-    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura"], // ~86 km / ~94 km
+    neighbours: ["container-office-in-tumkur", "container-office-in-doddaballapura", "container-office-in-chitradurga"], // ~86 km / ~94 km / ~96 km
   },
   {
     slug: "container-office-in-davanagere",
@@ -158,7 +158,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Davanagere city, Harihar, Karur Industrial Area and the NH-48 corridor",
     hubAnchor: "Container offices for Davanagere and Harihar",
     nearbyLabel: "Davanagere",
-    neighbours: ["container-office-in-haveri", "container-office-in-kudligi"], // ~67 km along NH-48 / ~70 km
+    neighbours: ["container-office-in-haveri", "container-office-in-chitradurga", "container-office-in-kudligi", "container-office-in-sandur-ballari"], // ~67 km / ~58 km (both NH-48) / ~70 km / 96.4 km
   },
   {
     slug: "container-office-in-haveri",
@@ -178,7 +178,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Tumkur city, Vasanthanarasapura and Kyathsandra",
     hubAnchor: "Container offices and site offices in Tumkur",
     nearbyLabel: "Tumkur district",
-    neighbours: ["container-office-in-doddaballapura", "container-office-in-chitradurga"], // Chitradurga ~125 km up NH-48
+    neighbours: ["container-office-in-doddaballapura", "container-office-in-chitradurga", "container-office-in-pavagada"], // Chitradurga ~125 km up NH-48 / Pavagada ~86 km
     bangaloreRegion: true,
   },
   {
@@ -189,7 +189,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Chitradurga and the NH-48 corridor",
     hubAnchor: "Container offices for Chitradurga's wind, canal and highway sites",
     nearbyLabel: "Chitradurga district",
-    neighbours: ["container-office-in-davanagere", "container-office-in-tumkur"], // ~58 km / ~125 km, both on NH-48
+    neighbours: ["container-office-in-davanagere", "container-office-in-tumkur", "container-office-in-pavagada", "container-office-in-kudligi"], // ~58 km / ~125 km (both NH-48) / ~96 km / ~76 km
   },
   {
     slug: "container-office-in-belagavi",
@@ -229,7 +229,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Kudligi, Vijayanagara district",
     hubAnchor: "Container offices for Kudligi project sites",
     nearbyLabel: "Kudligi",
-    neighbours: ["container-office-in-davanagere", "container-office-in-sandur-ballari"], // ~70 km / Sandur 26.7 km
+    neighbours: ["container-office-in-davanagere", "container-office-in-sandur-ballari", "container-office-in-chitradurga"], // ~70 km / Sandur 26.7 km / Chitradurga ~76 km
   },
   {
     slug: "container-office-in-sandur-ballari",
@@ -239,8 +239,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Sandur town, Toranagallu, Kurekuppa and Donimalai",
     hubAnchor: "Container offices for Sandur's mines and steel plant sites",
     nearbyLabel: "Sandur, Ballari district",
-    // Davanagere does not link back yet: its neighbours line is being edited by Haveri (#129) and the
-    // Karnataka-hubs follow-up (#137), so that owner adds Sandur to Davanagere's union of slugs.
+    // Davanagere links back to Sandur (added in the Karnataka-hubs follow-up, #137).
     neighbours: ["container-office-in-kudligi", "container-office-in-davanagere"], // 26.7 km / 96.4 km
   },
 
