@@ -178,7 +178,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Tumkur city, Vasanthanarasapura and Kyathsandra",
     hubAnchor: "Container offices and site offices in Tumkur",
     nearbyLabel: "Tumkur district",
-    neighbours: ["container-office-in-doddaballapura", "container-office-in-chitradurga"], // Chitradurga ~125 km up NH-48
+    neighbours: ["container-office-in-doddaballapura", "container-office-in-chitradurga", "container-office-in-pavagada"], // Chitradurga ~125 km up NH-48 / Pavagada ~86 km
     bangaloreRegion: true,
   },
   {
