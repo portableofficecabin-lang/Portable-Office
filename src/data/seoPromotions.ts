@@ -384,6 +384,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    // Portable-cabin page (#145), here and on Porta Cabin: the Bengaluru-belt rule above covers container-office pages.
+    { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -396,6 +398,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
