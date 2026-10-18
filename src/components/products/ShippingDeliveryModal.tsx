@@ -39,7 +39,12 @@ function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   );
 }
 
-export function ShippingDeliveryModal() {
+/**
+ * `showWarranty` (default true) hides the Warranty tab for a product whose warranty terms the
+ * owner has not confirmed — the structural term depends on the cabin's material, so the policy
+ * table cannot be shown as applying to it. Omitted = the three-tab modal every page had before.
+ */
+export function ShippingDeliveryModal({ showWarranty = true }: { showWarranty?: boolean } = {}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -59,9 +64,11 @@ export function ShippingDeliveryModal() {
         </DialogHeader>
 
         <Tabs defaultValue="shipping" className="mt-2">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className={`grid w-full ${showWarranty ? "grid-cols-3" : "grid-cols-2"}`}>
             <TabsTrigger value="shipping" className="text-xs sm:text-sm">🚚 Shipping</TabsTrigger>
-            <TabsTrigger value="warranty" className="text-xs sm:text-sm">📦 Warranty</TabsTrigger>
+            {showWarranty && (
+              <TabsTrigger value="warranty" className="text-xs sm:text-sm">📦 Warranty</TabsTrigger>
+            )}
             <TabsTrigger value="installation" className="text-xs sm:text-sm">🛠 Installation</TabsTrigger>
           </TabsList>
 
@@ -117,6 +124,7 @@ export function ShippingDeliveryModal() {
           </TabsContent>
 
           {/* Warranty Tab */}
+          {showWarranty && (
           <TabsContent value="warranty">
             <Accordion type="multiple" defaultValue={["structural-warranty", "warranty-coverage", "support"]} className="w-full">
               <AccordionItem value="structural-warranty">
@@ -166,6 +174,7 @@ export function ShippingDeliveryModal() {
               </AccordionItem>
             </Accordion>
           </TabsContent>
+          )}
 
           {/* Installation Tab */}
           <TabsContent value="installation">

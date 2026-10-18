@@ -19,7 +19,7 @@ import {
   type Product,
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
-import { getImageAltText, getImageCaption } from "@/data/productImageCaptions";
+import { getImageAltText, getImageCaption, getProductGalleryNote } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
 import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
@@ -54,6 +54,7 @@ import { LabourHutmentsStaffAccommodationContent } from "@/components/products/L
 import { PrefabPortaCabinContent } from "@/components/products/PrefabPortaCabinContent";
 import { LaborHutmentsContent } from "@/components/products/LaborHutmentsContent";
 import { CabinPortableContent } from "@/components/products/CabinPortableContent";
+import { PortableShopCabinContent } from "@/components/products/PortableShopCabinContent";
 import { SecurityCabinContent } from "@/components/products/SecurityCabinContent";
 import { CabinsInOfficeContent } from "@/components/products/CabinsInOfficeContent";
 import { SteelPortableOfficeContainerContent } from "@/components/products/SteelPortableOfficeContainerContent";
@@ -268,6 +269,18 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
 
   const cs = product.categorySlug;
 
+  /**
+   * TRUE for a product whose build specification the owner has not yet confirmed — today only
+   * the Portable Shop Cabin (id 48): its wall, roof and floor materials and its warranty are still
+   * "[confirm …]" in the owner's copy (2026-10-18). Two generic template claims would otherwise
+   * state an unconfirmed specification for it, so both are withheld on this page only:
+   *   · the "Steel Grade" row (MS CR / CRCA sheet — IS 513 & IS 2062 · Corten · ISO-Grade);
+   *   · the Warranty tab of the Shipping & Delivery modal — the policy's structural term depends
+   *     on the cabin's material, so no term can be shown as applying to it.
+   * Every other product is unchanged. Remove the slug once the owner confirms the build.
+   */
+  const hasUnconfirmedBuildSpec = slug === "portable-shop-cabin";
+
   /* FALLBACK image alt/title, used only for gallery images that have no caption of their own
    * in productImageCaptions.
    *
@@ -391,6 +404,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               featured={product.featured}
               inStock={product.inStock}
               purchasable={purchasable}
+              note={getProductGalleryNote(slug)}
             />
 
             {/* Info */}
@@ -464,8 +478,9 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                   </div>
                   {/* Sheet-steel grades for a fabricated cabin body. Meaningless — and wrong —
                       on a cast-in-place RCC house, so it is replaced there by the structural
-                      standards that actually govern the work. */}
-                  {isOnSiteService ? (
+                      standards that actually govern the work. Withheld entirely where the owner
+                      has not confirmed the build (hasUnconfirmedBuildSpec). */}
+                  {hasUnconfirmedBuildSpec ? null : isOnSiteService ? (
                     <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 border-t border-border/40 pt-3">
                       <dt className="font-semibold text-foreground sm:w-32 shrink-0">Structure</dt>
                       <dd className="text-muted-foreground">
@@ -641,7 +656,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
                 </div>
               )}
 
-              <ProductActions product={product} />
+              <ProductActions product={product} showWarranty={!hasUnconfirmedBuildSpec} />
 
               {/* Features */}
               <div className="border-t border-border pt-6">
@@ -686,6 +701,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
           {cs === "portable-cabins" && slug === "prefab-porta-cabin" && <div className="mt-16"><PrefabPortaCabinContent /></div>}
           {cs === "portable-cabins" && slug === "labor-hutments" && <div className="mt-16"><LaborHutmentsContent /></div>}
           {cs === "portable-cabins" && slug === "cabin-portable" && <div className="mt-16"><CabinPortableContent /></div>}
+          {cs === "portable-cabins" && slug === "portable-shop-cabin" && <div className="mt-16"><PortableShopCabinContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "construction-site-portable-office" && <div className="mt-16"><ConstructionSitePortableOfficeContent offer={contentOffer} /></div>}
           {cs === "site-office-containers" && slug === "site-office-container-manufacturers" && <div className="mt-16"><SiteOfficeContainerManufacturersContent /></div>}
           {cs === "site-office-containers" && slug === "steel-portable-office-container" && <div className="mt-16"><SteelPortableOfficeContainerContent /></div>}

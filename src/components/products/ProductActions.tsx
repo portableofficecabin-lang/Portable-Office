@@ -15,7 +15,14 @@ import type { Product } from "@/data/products";
 
 // Client island for the product CTAs (cart is client-only). Kept minimal so the
 // surrounding product content stays server-rendered.
-export function ProductActions({ product }: { product: Product }) {
+export function ProductActions({
+  product,
+  showWarranty = true,
+}: {
+  product: Product;
+  /** Passed to the Shipping & Delivery modal; false hides its Warranty tab (see the modal). */
+  showWarranty?: boolean;
+}) {
   const { addToCart } = useCart();
   const router = useRouter();
 
@@ -78,7 +85,7 @@ export function ProductActions({ product }: { product: Product }) {
         </Button>
       </div>
       <div className="mb-8">
-        <ShippingDeliveryModal />
+        <ShippingDeliveryModal showWarranty={showWarranty} />
       </div>
     </>
   );

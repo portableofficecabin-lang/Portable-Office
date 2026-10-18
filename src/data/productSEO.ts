@@ -113,6 +113,16 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in 7–21 days.",
     keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
   },
+  /* Portable Shop Cabin (id 48). `title` mirrors productCommerce "48".feedTitle, which is what
+   * renders. `description` is the Product JSON-LD description, so it carries no ₹ figure: the
+   * schema Offer states the price. The owner's draft meta title put the price in the title,
+   * which would also become the Merchant feed title, so it is left out here. */
+  "48": {
+    title: "Portable Shop Cabin 10 ft x 10 ft with Glass Front for Retail Shops | Portable Office Cabin",
+    h1: "Portable Shop Cabin — 10 ft × 10 ft",
+    description: "Workshop-built 10 × 10 ft portable shop cabin with an MS steel frame, glazed display front, lockable door, flooring, wiring and LED lights. Shelves, counter and AC on quotation.",
+    keywords: "portable shop cabin, shop cabin 10x10, portable shop, readymade shop cabin, portable kiosk cabin, retail cabin, container shop, prefab shop cabin, kirana shop cabin, relocatable shop",
+  },
   // 20ft Storage Container – Corten Steel. 20 ft only: the fixed price buys the 20 ft unit.
   // `description` and `keywords` are the Product JSON-LD description and keywords.
   "12": {

@@ -188,6 +188,19 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
   {
+    /* Portable Shop Cabin (id 48, added 2026-10-18). The owner approved selling it online at
+     * ₹1,77,000 incl. 18% GST: sellPrice(150000) = 177000 exactly. ONE configuration — the
+     * 10 ft × 10 ft glazed-front build with a lockable door — so one fixed price describes one
+     * deliverable thing. Shelves, counter, AC and a rolling-shutter front are quoted separately
+     * and are not part of this offer. feedTitle carries no price or promotional wording and is
+     * also the page <title>; productSEO "48".title mirrors it. */
+    id: "48", sku: "POC-PSC-1010", basePrice: 150000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Portable Shop Cabin — 10 ft × 10 ft",
+    feedTitle: "Portable Shop Cabin 10 ft x 10 ft with Glass Front for Retail Shops | Portable Office Cabin",
+    size: "10 ft × 10 ft (100 sq ft)", material: "MS Steel Frame, Primed & Painted", bestFor: "Retail Shops & Kiosks",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
+  },
+  {
     /* feedTitle carries "Steel Portable Cabin" since 2026-09-04: /products/steel-portable-cabin
      * 301s to this page, so this is now the canonical page for that phrase too, and <title> IS
      * <g:title> (productPageMeta.ts) — the two must stay identical. The OFFER is untouched:
