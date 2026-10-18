@@ -2529,9 +2529,8 @@ export const CITY_PAGES: CityPage[] = [
    * CONTAINER OFFICE IN SANDUR, BALLARI — the iron ore and manganese belt of Sandur taluk (the
    * Donimalai and Kumaraswamy ranges), the Toranagallu steel plant area and the ore-transport roads
    * of Ballari district. Its cluster neighbours are Kudligi (26.7 km) and Davanagere (96.4 km) by the
-   * pages' own geo and the cluster test's haversine. Kudligi links back. Davanagere's `neighbours`
-   * line is left alone, because Haveri (#129) and the Karnataka-hubs follow-up (#137) both edit it;
-   * the #137 owner adds Sandur to Davanagere's union of slugs.
+   * pages' own geo and the cluster test's haversine. Both link back: Kudligi in #140, and Davanagere
+   * in the Karnataka-hubs follow-up (#137).
    *
    * Owner copy of 2026-10-16, mapped onto the fixed template slots in the draft's own order. Nothing is
    * dropped, and the draft's two tables become lists:
