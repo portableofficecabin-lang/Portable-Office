@@ -188,6 +188,11 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("areas", "areas text", p.areasText);
   t("how", "how heading", p.howHeading);
   p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); t("how", `step ${i + 1} text`, s.text); });
+  (p.extraSections ?? []).forEach((s, i) => {
+    t("extra", `extra section ${i + 1} heading`, s.heading);
+    (s.paragraphs ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} paragraph ${j + 1}`, x));
+    (s.bullets ?? []).forEach((b, j) => { t("extra", `extra section ${i + 1} bullet ${j + 1} title`, b.title ?? ""); t("extra", `extra section ${i + 1} bullet ${j + 1} text`, b.text); });
+  });
   t("faq", "FAQ section heading", "Frequently Asked Questions");
   p.faqs.forEach((f, i) => { t("faq", `FAQ ${i + 1} question`, f.question); t("faq", `FAQ ${i + 1} answer`, f.answer); });
   t("cta", "CTA heading", p.ctaHeading);
