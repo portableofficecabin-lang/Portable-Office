@@ -77,6 +77,11 @@ export const productImages: Record<string, string | StaticImageData> = {
   "46": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
   "POC-PC-STEEL": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
   "steel-portable-cabin": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",
+  // Container Cafe & Restaurant — the container kitchen render. Must stay identical to products.ts
+  // images[0] so the card, the product page and the OG image all show the same primary shot.
+  "47": "/images/products/container-cafe-restaurant/container-cafe-restaurant-kitchen.webp",
+  "POC-CCR-CUSTOM": "/images/products/container-cafe-restaurant/container-cafe-restaurant-kitchen.webp",
+  "container-cafe-restaurant": "/images/products/container-cafe-restaurant/container-cafe-restaurant-kitchen.webp",
   // 20ft Storage Container: three-quarter render (issue #100). Must stay identical to products.ts
   // images[0] so the card, page, OG, JSON-LD and feed all show the same primary image.
   "12": "/images/products/storage-container-corten-steel/20ft-storage-container-corten-steel-three-quarter.webp",

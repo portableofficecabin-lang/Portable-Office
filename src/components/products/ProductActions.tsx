@@ -5,7 +5,7 @@ import { MessageCircle, Phone, ShoppingCart, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShippingDeliveryModal } from "@/components/products/ShippingDeliveryModal";
 import { useCart } from "@/contexts/CartContext";
-import { isPurchasable } from "@/data/productCommerce";
+import { getCommerce, isPurchasable } from "@/data/productCommerce";
 import { COMPANY } from "@/lib/company";
 import type { Product } from "@/data/products";
 
@@ -30,6 +30,11 @@ export function ProductActions({
   // Merchant feed inclusion. A product a customer cannot actually buy at the listed price must
   // never show Add to Cart — that is the mismatch that got the account suspended.
   const purchasable = isPurchasable(product.id);
+  // A built-to-brief project (kind "custom" — the Container Cafe & Restaurant) gets its delivery
+  // terms and timeline in the written quotation. The shared modal states fixed ones (7–14 working
+  // days, free delivery within 50 km, a damage-free guarantee, a 1–2 day installation), which this
+  // page must not promise, so it is not offered there. Every other SKU is unchanged.
+  const showShippingTerms = getCommerce(product.id)?.kind !== "custom";
 
   return (
     <>
@@ -84,9 +89,11 @@ export function ProductActions({
           </a>
         </Button>
       </div>
-      <div className="mb-8">
-        <ShippingDeliveryModal showWarranty={showWarranty} />
-      </div>
+      {showShippingTerms && (
+        <div className="mb-8">
+          <ShippingDeliveryModal showWarranty={showWarranty} />
+        </div>
+      )}
     </>
   );
 }

@@ -760,6 +760,24 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     productType: "Home Construction",
     note: "Priced per sq ft of built-up area after a site visit; rate depends on the agreed specification.",
   },
+  {
+    /* CONTAINER CAFE & RESTAURANT — a built-to-order project, deliberately QUOTE ONLY (owner
+     * decision, 2026-10-17). kind:"custom" and priceConfirmed:false make isPurchasable() false:
+     * no Add to Cart, no JSON-LD Offer and no feedEligible() entry, structurally. basePrice is 0
+     * because no price has been confirmed — do not put a placeholder figure here.
+     * feedTitle is the page <title> (this SKU is never fed) and must stay byte-identical to
+     * productSEO "47".title. h1Title is the document's H1. */
+    id: "47", sku: "POC-CCR-CUSTOM", basePrice: 0, priceConfirmed: false, kind: "custom", inStock: true,
+    h1Title: "Container Cafe and Restaurant, Built to Open Fast and Get Noticed",
+    feedTitle: "Container Cafe & Restaurant | Custom-Built, Ready to Open",
+    size: "10 ft, 20 ft, 40 ft, 2 × 40 ft or stacked",
+    material: "Steel container body with steel-framed cut-outs",
+    bestFor: "Cafes, kiosks and restaurants",
+    deliveryDays: "Firm timeline given with your quotation",
+    googleProductCategory: CAT_CONSTRUCTION,
+    productType: "Portable Cabins",
+    note: "Built to order; priced from an itemised quotation once format, layout and site are known.",
+  },
 ];
 
 const BY_ID = new Map(PRODUCT_COMMERCE.map((c) => [c.id, c]));
