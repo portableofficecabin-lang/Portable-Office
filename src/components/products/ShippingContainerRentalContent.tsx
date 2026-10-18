@@ -226,7 +226,7 @@ export function ShippingContainerRentalContent() {
           </div>
           <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
             <li>• Transport is calculated at checkout from your delivery pincode; pickup at off-hire is arranged with our team.</li>
-            <li>• Fitted container offices, labour accommodation, and container cafés are configured and priced per fit-out scope.</li>
+            <li>• Fitted container offices, labour accommodation, and <Link href="/products/container-cafe-restaurant" className="text-accent underline-offset-4 hover:underline">container cafés</Link> are configured and priced per fit-out scope.</li>
             <li>• Crane costs apply where direct side-loader access is not possible.</li>
             <li>• Long-term agreements can qualify for lower effective monthly rates.</li>
           </ul>
