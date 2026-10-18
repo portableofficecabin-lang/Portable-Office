@@ -42,6 +42,8 @@ const GUIDES_BY_PRODUCT_SLUG: Record<string, string[]> = {
   "portable-cabin-40ft-bunkhouse": ["with-toilet-and-pantry", "sizes-and-dimensions", "price-and-cost-guide"],
   "labor-hutments": ["with-toilet-and-pantry", "insulation-and-cooling", "price-and-cost-guide"],
   "prefabricated-labour-hutments-staff-accommodation": ["with-toilet-and-pantry", "insulation-and-cooling", "price-and-cost-guide"],
+  // Matches the cafe page's own heat, site-preparation and delivery sections.
+  "container-cafe-restaurant": ["insulation-and-cooling", "installation-and-site-preparation", "transport-and-delivery"],
 };
 
 const cardClass =

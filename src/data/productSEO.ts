@@ -311,6 +311,15 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, assembled on site in days and relocatable to your next launch.",
     keywords: "prefab marketing office, prefab sales gallery, prefabricated marketing office, sales gallery structure, real estate sales gallery, prefab sales office India, township launch gallery, relocatable sales gallery, prefab pavilion, project launch office",
   },
+  /* Container Cafe & Restaurant (id 47) — quote-only. Title, description and keywords are the SEO
+   * setup in the owner's product page content document (17 Oct 2026), verbatim. `title` must stay
+   * byte-identical to productCommerce "47".feedTitle, which is what actually renders. */
+  "47": {
+    title: "Container Cafe & Restaurant | Custom-Built, Ready to Open",
+    h1: "Container Cafe and Restaurant, Built to Open Fast and Get Noticed",
+    description: "Open your cafe faster with a custom container cafe or restaurant. Kiosks, dine-in cafes and stacked designs, with kitchen, insulation and branding built in.",
+    keywords: "container cafe, container restaurant, shipping container cafe, container cafe design, container cafe manufacturer, container cafe price, 20 ft container cafe, 40 ft container cafe, container kitchen, container coffee kiosk, modular restaurant",
+  },
 };
 
 export function getProductSEO(productId: string, productName: string): ProductSEOData {
