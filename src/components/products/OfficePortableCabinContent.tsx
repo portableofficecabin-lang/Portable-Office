@@ -110,6 +110,23 @@ const sizeRows = [
   ["40x10 ft", "Full office with pantry, conference room, and multiple workstations"],
 ];
 
+/* Design option, quoted separately: it is NOT in the cart, the Product/Offer JSON-LD or the
+   Merchant feed, so this section must not carry a ₹ figure (only the approved price may appear
+   on this fed landing page). The two images are separate design references, not two views of
+   one unit, and 10 ft × 10 ft is the proposed configuration, not a size read off them. */
+const executiveOptionImages = [
+  {
+    label: "Exterior Design",
+    src: "/images/products/office-portable-cabin/executive-office-portable-cabin-exterior.webp",
+    alt: "Executive Office Portable Cabin exterior design: off-white corrugated steel cabin with a pitched roof, two doors, grilled windows under rain hoods and a split AC outdoor unit, standing on gravel",
+  },
+  {
+    label: "Wood-Finish Interior Option",
+    src: "/images/products/office-portable-cabin/executive-office-portable-cabin-wood-finish-interior.webp",
+    alt: "Wood-finish interior option for the Executive Office Portable Cabin: wood-panelled walls and ceiling, wooden desk with a leather office chair, two lounge chairs, wall shelf, track lighting and a floor-standing AC unit",
+  },
+];
+
 const faqs = [
   {
     question: "What does the office portable cabin on this page cost?",
@@ -231,6 +248,49 @@ export function OfficePortableCabinContent() {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <div className="space-y-3">
+          <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
+            Executive Office Portable Cabin — 10 ft × 10 ft Design Option
+          </h2>
+          <p className="text-muted-foreground">
+            A design option for this office cabin, proposed in a 10 ft × 10 ft configuration. The size is the proposed layout for the option, not a dimension measured from the images, and the exterior and interior are shown as separate design references rather than two views of one unit.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
+          <figure>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {executiveOptionImages.map((image) => (
+                <figure key={image.src} className="overflow-hidden rounded-2xl bg-card shadow-card">
+                  <figcaption className="px-4 py-3 text-sm font-semibold text-foreground">{image.label}</figcaption>
+                  <OptimizedImage
+                    src={image.src}
+                    alt={image.alt}
+                    title={`Executive Office Portable Cabin — ${image.label}`}
+                    aspectRatio="square"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </figure>
+              ))}
+            </div>
+            <figcaption className="mt-3 text-sm text-muted-foreground">
+              Executive Office Portable Cabin — exterior design and wood-finish interior options. Finishes, furniture and AC are subject to quotation.
+            </figcaption>
+          </figure>
+
+          <aside className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <h3 className="font-display text-lg font-semibold text-foreground">Pricing for this option</h3>
+            <p className="mt-3 text-muted-foreground">
+              <strong className="text-foreground">Basic insulated 10 ft × 10 ft cabin:</strong> priced on quotation. Transport extra. Wood-finish interiors, furniture and AC are additional and quoted separately.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              This design option is not sold online and is not the cabin priced at the top of this page.
+            </p>
+          </aside>
         </div>
       </section>
 
