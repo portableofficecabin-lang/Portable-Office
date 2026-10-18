@@ -10708,6 +10708,342 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN CHITRADURGA — Central Karnataka on NH-48, between Tumkur (~125 km) and
+   * Davanagere (~58 km): Chitradurga city, Challakere, Hiriyur, Holalkere, Hosadurga, Molakalmuru.
+   *
+   * RECOVERED PAGE (2026-10-17). #127 lists Chitradurga among the Karnataka city pages in progress
+   * on another laptop on 14 Oct; no branch, commit, draft or image for it ever reached GitHub. This
+   * entry is new copy, NOT the owner's draft, and needs owner review before merge.
+   *
+   * Owner corrections (2026-10-17), matching the Haveri page: no visible hero caption (the alt text
+   * still says "design render" and the disclaimer covers renders); towns are geographic context only,
+   * with delivery feasibility, charges and scope "confirmed in the quotation"; readiness tied to the
+   * quotation scope, site readiness, installation and anchoring; rainfall attributed to CGWB normals
+   * (Chitradurga taluk 671 mm, Challakere 516 mm, Hosadurga 723 mm, 1981–2010); meta description says
+   * "Anchored to site spec." because anchoring is provided where the site's exposure requires it.
+   *
+   * What makes it Chitradurga's page and not a copy of Davanagere's or Tumkur's: open, wind-exposed
+   * sites (wind farms on the hills around the city, Jogimatti among them), so ANCHORING leads the
+   * specification advice, using the position already approved on the Tirunelveli and Thoothukudi
+   * pages (engineered anchoring; weight alone does not make a cabin wind-safe); a semi-arid district
+   * (long-term rainfall roughly 500–700 mm across most taluks, lower in Challakere; CGWB / KSCST) with
+   * mostly red soils (ICAR district profile: ~62 % red, ~38 % black), so heat and dust come next; and
+   * the district's project types: wind and solar sites, the Upper Bhadra canal and tank-filling works,
+   * the Tumakuru–Chitradurga–Davanagere railway line under construction, NH-48 and NH-50 (towards
+   * Hosapete), Challakere's edible-oil mills and the research campuses near Challakere. No developer,
+   * mill, institution or authority is named as a customer.
+   *
+   * No ₹, lead times, warranty terms, project counts or superlatives (file-header rule; issue #107).
+   * The specification lines and the seven standard sizes are the ones already approved on the
+   * Davanagere and Kalaburagi pages; the anchorage line follows Thoothukudi's.
+   *
+   * Images: the owner's own container office images in public/images/products (container-office-1 to
+   * -5, used by no other page), referenced in place rather than copied. 1, 2, 3 and 5 are design
+   * renders of a white and blue corrugated container office; 4 is a finished cabin interior. Alt text
+   * describes what is in frame; the disclaimer says none was taken in Chitradurga.
+   *
+   * Opts into the CSS-only motion pass and the Service JSON-LD, as Davanagere and Kalaburagi do.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-chitradurga",
+    city: "Chitradurga",
+    listTitle: "Container Office in Chitradurga",
+    metaTitle: "Container Office in Chitradurga | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Chitradurga for wind and solar sites, canal and railway works, Challakere mills and NH-48 projects. Anchored to site spec. Get a quote.",
+    keywords:
+      "Container Office in Chitradurga, Container Office Chitradurga, Portable Office Cabin Chitradurga, Site Office Container Chitradurga, Container Office Challakere, Portable Cabin Hiriyur, Site Office Hosadurga, Wind Farm Site Office Chitradurga, Container Office for Rent Chitradurga, Container Office for Sale Chitradurga",
+    geo: { region: "IN-KA", placename: "Chitradurga, Karnataka, India", position: "14.2251;76.3980", icbm: "14.2251, 76.3980" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/products/container-office-5.webp",
+      alt: "Container office in Chitradurga — design render of a white corrugated-steel container office above a blue base band, with a steel door with a keypad lock and small canopy between two aluminium sliding windows, louvred vents and corner lifting lugs",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/products/container-office-1.webp",
+      alt: "Container office in Chitradurga — design render from above of the white and blue container office, showing its corrugated steel roof, the lifting lugs at each corner, the door and two sliding windows",
+      width: 1024,
+      height: 1024,
+      caption: "On open, exposed sites, ask for engineered anchoring.",
+    },
+    interiorImage: {
+      src: "/images/products/container-office-4.webp",
+      alt: "Container office in Chitradurga — finished cabin interior with light wood-grain wall panels, a wood-finish feature wall and ceiling section, wood-look flooring, ceiling fans and roller blinds over two windows",
+      width: 1024,
+      height: 1024,
+      caption: "Finished wall and ceiling panels, wood-look flooring and fans. Finishes are chosen for each order.",
+    },
+    gallery: [
+      {
+        src: "/images/products/container-office-3.webp",
+        alt: "Container office in Chitradurga — design render, three-quarter view of the white and blue container office with its end wall, steel door and two aluminium sliding windows",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/products/container-office-2.webp",
+        alt: "Container office in Chitradurga — design render of the windowed side and corrugated end wall of the white and blue container office, with louvred vents below the roof line",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Container Offices in Chitradurga",
+    tagline: "Site Offices for Open, Dry and Wind-Exposed Project Sites in Central Karnataka",
+    intro: [
+      "Chitradurga is one of the drier districts of Karnataka. Long-term CGWB normals put rainfall at roughly 500 to 700 mm a year across most of its taluks, at the lower end around Challakere, while the plains and rocky ridges around the city are exposed enough that wind farms stand on the hills, the Jogimatti area among them.",
+      "The work in the district follows that landscape: wind and solar energy projects, the canal and tank-filling works of the Upper Bhadra irrigation project, the new Tumakuru–Chitradurga–Davanagere railway line, highway works on NH-48 and on NH-50 towards Hosapete, Challakere's edible-oil mills, and the research campuses near Challakere.",
+      "Many of these sites are open, hot and a long way from the nearest building, so the office has to arrive complete, stay put in strong wind and stay usable in the heat. A container office in Chitradurga does all three when it is specified for its site.",
+      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu. For a site in Chitradurga district, whether in or around Chitradurga city, Challakere or Hiriyur or along NH-48 and NH-50, share the location when you enquire; delivery feasibility, transport charges and the delivery scope are confirmed in the quotation.",
+      "This page sets out what to specify for wind, heat and dust, where container offices are used in the district, and how delivery to a remote site is planned.",
+    ],
+
+    whyHeading: "Why Container Offices Suit Chitradurga's Project Sites",
+    whyIntro: "Four conditions shape a site office in Chitradurga district:",
+    whyBullets: [
+      {
+        title: "Wind on open ground and ridges",
+        text: "Wind farms on the hills around Chitradurga show how exposed the district can be, and in Karnataka the strongest winds generally come with the south-west monsoon. A container office on an open site should be tied to its base with an engineered anchoring arrangement, with roof sheets, doors and windows fastened to suit the exposure. A steel cabin is not wind-safe just because it is heavy; the anchoring, base and fixings for a specific site are designed for its conditions and confirmed in the quotation.",
+      },
+      {
+        title: "Dry heat for most of the year",
+        text: "With low rainfall and long, hot dry seasons, the roof and walls take most of the heat. Insulated wall and roof panels, an insulated ceiling, a lighter exterior colour, ventilation and air-conditioning provisions sized to the occupancy keep an office usable through the working day.",
+      },
+      {
+        title: "Dust from red soil and open ground",
+        text: "Around three-fifths of the district has red soils, and many project sites are open ground, so dust is a daily condition. Sealed exterior joints, well-fitting doors and windows, mosquito mesh and flooring that is easy to sweep and wash help keep the inside workable.",
+      },
+      {
+        title: "Remote sites far from services",
+        text: "Wind and solar blocks, canal stretches and railway sections are often far from the nearest town. A container office is fabricated, wired and finished at the factory, which reduces the work needed on a remote site; it is ready to use once the base, placement, anchoring, checks and required connections agreed in the quotation are complete, and the timing depends on site readiness. The office can then move to the next block or section when the work does.",
+      },
+    ],
+    whyOutro:
+      "Plan the access route as carefully as the base. A loaded truck and a crane or Hydra have to reach the spot along field tracks or service roads, and on a remote site that is often harder to arrange than the office itself.",
+
+    solutionsHeading: "Applications of Container Offices in Chitradurga",
+    solutionsIntro: "Where container offices are typically used across Chitradurga district:",
+    solutions: [
+      {
+        title: "Wind and Solar Energy Project Offices",
+        text: "Wind and solar projects on the plains and hills of the district need offices on site during construction and for operation and maintenance afterwards. Container offices can serve as project offices, O&M offices, engineers' cabins, stores for spares and records, and security cabins at block gates. On exposed sites, the anchoring arrangement is part of the specification from the start.",
+      },
+      {
+        title: "Upper Bhadra Canal and Tank-Filling Works",
+        text: "The Upper Bhadra irrigation project carries water through branch canals to fill tanks in the drought-prone taluks of Chitradurga and Tumakuru districts. Contractors on canal stretches and tank works need offices that move along the alignment: project offices, survey and quality-control rooms, meeting rooms and stores for drawings and registers.",
+      },
+      {
+        title: "Railway and Highway Construction Offices",
+        text: "The new Tumakuru–Chitradurga–Davanagere railway line is under construction, and NH-48 and NH-50 carry continuing road works. Contractors use container offices as section offices, engineers' cabins, meeting rooms and document rooms, relocated as each section is completed.",
+      },
+      {
+        title: "Challakere Oil Mills, Markets and Warehouses",
+        text: "Challakere is known for its edible-oil mills, and agricultural markets and warehouses operate across the district. Container offices can be used as billing and procurement offices, weighbridge cabins, warehouse and dispatch offices, and gate and security offices beside mills and yards.",
+      },
+      {
+        title: "Research, Educational and Institutional Campuses",
+        text: "Research and educational campuses near Challakere, and colleges, hospitals and government offices in Chitradurga city, use temporary offices during construction and expansion: contractors' site offices, administrative and records rooms, and staff rooms. Access to any secured campus is subject to its own permissions, and clinical or laboratory use must be designed to the applicable healthcare, hygiene, ventilation and safety requirements.",
+      },
+      {
+        title: "Construction and Real Estate Site Offices",
+        text: "Residential layouts, commercial buildings and public works in Chitradurga city, Hiriyur and Challakere use container offices as site offices, sales offices and engineers' cabins, which move to the next project when this one is handed over.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Sizes",
+    featuresIntro:
+      "Container offices are built on a welded mild-steel frame with protective cladding, insulated walls and roof, and factory-fitted wiring. Standard construction features, followed by the standard sizes and their typical uses in Chitradurga district:",
+    features: [
+      "Structure — welded mild steel structural framework.",
+      "Exterior walls — MS or GI sheet cladding according to approved specifications.",
+      "Wall insulation — PUF or glass wool insulation options.",
+      "Roofing — weather-resistant roofing system with insulation options.",
+      "Entry door — lockable steel door with suitable hardware.",
+      "Windows — aluminium sliding windows with optional mosquito mesh.",
+      "Flooring — vinyl or laminate flooring over a suitable floor base.",
+      "Interior walls — finished interior wall panels.",
+      "Ceiling — insulated ceiling with optional false ceiling.",
+      "Lighting — LED interior lighting.",
+      "Electrical system — switches, power sockets, distribution board, and appropriate earthing provisions.",
+      "Exterior finish — protective paint system according to the approved specification.",
+      "Anchorage — engineered anchoring arrangement where the site's exposure requires it, confirmed in the quotation.",
+      "Final specifications — final material thicknesses, insulation types, finishes, and electrical provisions depend on the approved quotation.",
+      "10 ft × 10 ft container office — security cabin at a block gate or supervisor's cabin.",
+      "12 ft × 10 ft container office — compact site office or billing room.",
+      "16 ft × 10 ft container office — engineers' cabin or O&M office.",
+      "20 ft × 8 ft container office — standard site office or weighbridge room.",
+      "20 ft × 10 ft container office — project office or meeting room.",
+      "30 ft × 10 ft container office — partitioned office with a manager's cabin.",
+      "40 ft × 10 ft container office — multi-room project office or section office.",
+    ],
+    sizesNote:
+      "Custom dimensions and layouts can be built, provided the finished unit can be transported to the site and lifted into place there.",
+
+    industriesHeading: "Specifying for Wind, Heat and Dust in Chitradurga",
+    industriesIntro: "What to ask for when the office will stand on an open, dry site in the district:",
+    industries: [
+      {
+        title: "Anchoring",
+        text: "An engineered anchoring arrangement that ties the frame to its base, designed for the site's exposure. The weight of the cabin alone does not establish wind resistance.",
+      },
+      {
+        title: "Roof and openings",
+        text: "Roof sheets, doors and windows fastened to suit the exposure, with doors placed so they are not caught by the prevailing wind when opened.",
+      },
+      {
+        title: "Base",
+        text: "A level base of concrete pedestals, a plinth or steel skids, suited to the ground. Red soils are the most common in the district and black soils occur in parts of it; the base for a specific site is confirmed with the quotation.",
+      },
+      { title: "Insulation", text: "PUF or glass wool insulation in the walls and roof, with an insulated ceiling." },
+      {
+        title: "Cooling and ventilation",
+        text: "Air-conditioning provisions sized to the cabin's dimensions and occupancy, with ventilation for the hours the AC is off.",
+      },
+      {
+        title: "Exterior colour",
+        text: "A lighter exterior colour absorbs less of the sun's heat than a dark one; the colour is chosen for each order.",
+      },
+      {
+        title: "Dust sealing",
+        text: "Sealed exterior joints, well-fitting doors and windows, mosquito mesh, and flooring that is easy to sweep and wash.",
+      },
+      {
+        title: "Short, heavy rain",
+        text: "Even in a dry district, rain can arrive in short, heavy spells, so roof drainage and sealed joints still matter.",
+      },
+      {
+        title: "Maintenance",
+        text: "Periodic checks of the anchoring fixings, roof fastenings and exterior coatings help keep the office sound, especially after a windy season.",
+      },
+    ],
+
+    customHeading: "Container Office for Sale or Rent in Chitradurga",
+    customIntro:
+      "Container offices are available to buy or to rent, depending on project duration, specification and unit availability.",
+    customBullets: [
+      {
+        title: "Buy a container office in Chitradurga",
+        text: "Buying suits long-term operation and maintenance offices, mills and warehouses, institutions, and contractors who move an office from one project to the next. An owned office can be specified exactly, including anchoring, insulation, layout, toilet and furniture.",
+      },
+      {
+        title: "Rent a container office in Chitradurga",
+        text: "Renting suits a fixed construction period: a wind or solar block, a canal or railway section, a highway package or a building project. It reduces the initial outlay for the period you need the office, subject to unit availability.",
+      },
+      {
+        title: "Compare both options",
+        text: "We can quote purchase and rental for the same requirement, so you can compare them over your project duration.",
+      },
+    ],
+    customOutro:
+      "The interior shown has finished wood-grain wall and ceiling panels, wood-look flooring and ceiling fans; the finishes, fittings and furniture for each office are confirmed in its quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin in Chitradurga?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable and prefabricated container offices at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru. What we offer customers in Chitradurga district:",
+    whyUsBullets: [
+      { title: "Manufacturing", text: "Container offices manufactured at our factory near Hosur." },
+      { title: "Site-specific specification", text: "Anchoring, insulation and dust-sealing advice for open, dry sites." },
+      { title: "Custom layouts", text: "Custom dimensions and office configurations." },
+      { title: "Facilities", text: "Optional air-conditioning, attached toilets, pantry and furniture." },
+      { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
+      { title: "Remote-site delivery planning", text: "Access, unloading and base checks before dispatch." },
+      { title: "Relocatable", text: "Offices that can be lifted and moved to the next block or section." },
+      { title: "Written quotations", text: "Specification, scope and charges stated in writing in the quotation." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Chitradurga",
+    areasText:
+      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported by truck. Share your site location or a map pin when you enquire, whether the site is in or near Chitradurga city, Challakere or Hiriyur, along the NH-48 or NH-50 corridors, or on a wind, solar, canal or railway project. Delivery feasibility, transport charges and the delivery, installation and anchoring scope for your location are confirmed in the quotation.",
+
+    howHeading: "Our Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Requirement and site details",
+        text: "Share the use, size, number of occupants, layout, options and site location, with photos of the site and its approach track if it is remote.",
+      },
+      {
+        title: "Quotation and specification",
+        text: "We recommend a configuration for the site's exposure and confirm the specification, anchoring, scope and charges in a written quotation.",
+      },
+      {
+        title: "Manufacturing and finishing",
+        text: "The office is fabricated, insulated, wired and finished at our factory to the approved specification.",
+      },
+      {
+        title: "Access and base check",
+        text: "Before dispatch we confirm that a loaded truck can reach and turn at the site, that there is room for a crane or Hydra to unload, that no overhead lines are in the way, and that the base and anchoring points are ready.",
+      },
+      {
+        title: "Placement, anchoring and handover",
+        text: "The office is placed on the prepared base with lifting equipment arranged under the agreed scope, anchored where specified, checked and handed over. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How is a container office kept stable on a windy site near Chitradurga?",
+        answer:
+          "By tying it to its base with an engineered anchoring arrangement designed for the site's exposure, and by fastening the roof sheets, doors and windows to suit. A steel container office is not wind-safe just because it is heavy: the anchoring, base and fixings for a specific site are designed for its conditions and confirmed in the quotation and drawing.",
+      },
+      {
+        question: "What should a container office for a wind or solar block include?",
+        answer:
+          "Usually an engineered anchoring arrangement, insulated walls and roof, air-conditioning provisions, sealed joints, dust-resistant doors and windows, and enough power points for the equipment used. Typical uses are project and O&M offices, engineers' cabins, stores for spares and records, and security cabins at block gates.",
+      },
+      {
+        question: "Can a container office move along a canal or railway section as the work progresses?",
+        answer:
+          "Yes. The office is lifted onto a truck, moved to the next section and placed on a new prepared base. Each move needs vehicle access, unloading space for a crane or Hydra, and a ready base and anchoring points at the new location.",
+      },
+      {
+        question: "How is a container office kept cool in Chitradurga's dry heat?",
+        answer:
+          "By specifying insulation, colour and cooling together: PUF or glass wool insulation in the walls and roof, an insulated ceiling, a lighter exterior colour, ventilation, and air-conditioning provisions sized to the cabin's dimensions and occupancy. The final specification is confirmed in the quotation.",
+      },
+      {
+        question: "Can you supply offices for oil mills and warehouses in Challakere?",
+        answer:
+          "Yes. Container offices are used beside mills, yards and warehouses as billing and procurement offices, weighbridge cabins, dispatch offices, and gate and security offices. Space, vehicle access and the base are checked before dispatch, and entry to any premises is subject to its own permissions.",
+      },
+      {
+        question: "How do I check delivery to a site in Chitradurga district?",
+        answer:
+          "Share the site location or a map pin when you enquire, with photos of the approach track if the site is remote. Delivery feasibility, transport charges and the delivery scope are confirmed in the quotation, after vehicle access, unloading space and the base have been checked. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+      },
+      {
+        question: "Are your container offices made in Chitradurga?",
+        answer:
+          "No. They are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Chitradurga district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading, placement and anchoring are arranged for each project under the scope agreed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Chitradurga",
+    ctaText: `To receive a quotation for a container office in Chitradurga district, share the site location (town, taluk or project site), how open and exposed the site is, the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration for the site and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Enquiries are welcome for sites in Chitradurga district and along the NH-48 and NH-50 corridors; delivery is confirmed in the quotation.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "40 ft Container Site Office (15 workstations)", href: "/products/container-site-office" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Chitradurga district; delivery, unloading, placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior images on this page are design renders of a Portable Office Cabin container office and the interior image shows a finished cabin interior; none was taken in Chitradurga district, and the colours, door hardware, finishes and fittings of each order follow its approved specification. Rainfall and soil figures are approximate long-term values from public records. Towns, highways, projects, mills and campuses are named only as geographic context and to describe typical uses, not as guaranteed delivery or service areas; Portable Office Cabin is not affiliated with any wind or solar developer, irrigation, railway or highway authority, mill, research institution, college, hospital or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on wind, anchoring, foundations, insulation and dust are general guidance, not engineering advice; the anchoring, base, insulation and cooling for a specific site are designed for its conditions and confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * VILLA CONSTRUCTION COMPANY BANGALORE
    *
    * The first SERVICE page in this file — every sibling above sells a container or cabin at a
