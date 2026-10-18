@@ -324,6 +324,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       // Sibling page (2026-10-12): the shipping-container box itself for Jigani; it links back here.
       { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
+      // Sibling page (#145): the portable-cabin intent for Jigani; it links back here.
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
     ],
   },
 
@@ -703,6 +705,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
