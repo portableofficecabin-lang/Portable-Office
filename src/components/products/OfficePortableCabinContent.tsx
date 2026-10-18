@@ -1,5 +1,6 @@
 import officePortableCabinMain from "@/assets/products/office-portable-cabin-main.webp";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { DesignOptionQuoteButton } from "@/components/products/DesignOptionQuoteButton";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import {
   Accordion,
@@ -112,18 +113,23 @@ const sizeRows = [
 
 /* Design option, quoted separately: it is NOT in the cart, the Product/Offer JSON-LD or the
    Merchant feed, so this section must not carry a ₹ figure (only the approved price may appear
-   on this fed landing page). The two images are separate design references, not two views of
-   one unit, and 10 ft × 10 ft is the proposed configuration, not a size read off them. */
-const executiveOptionImages = [
+   on this fed landing page). It states no size either: size and layout are customized on
+   quotation. The two images are separate design references, not two views of one unit. */
+const WOOD_FINISH_OPTION = "Wood-Finish Office Cabin Design Option";
+/** This page's product in the static catalogue (src/data/products.ts, SKU POC-PC-OFFICE). The quote
+ *  enquiry is recorded against it, with the option named in product_name. */
+const OFFICE_PORTABLE_CABIN = { id: "21", name: "Office Portable Cabin" };
+
+const woodFinishOptionImages = [
   {
     label: "Exterior Design",
-    src: "/images/products/office-portable-cabin/executive-office-portable-cabin-exterior.webp",
-    alt: "Executive Office Portable Cabin exterior design: off-white corrugated steel cabin with a pitched roof, two doors, grilled windows under rain hoods and a split AC outdoor unit, standing on gravel",
+    src: "/images/products/office-portable-cabin/wood-finish-office-cabin-exterior.webp",
+    alt: "Wood-Finish Office Cabin design option, exterior: off-white corrugated steel cabin with a pitched roof, two doors, grilled windows under rain hoods and a split AC outdoor unit, standing on gravel",
   },
   {
     label: "Wood-Finish Interior Option",
-    src: "/images/products/office-portable-cabin/executive-office-portable-cabin-wood-finish-interior.webp",
-    alt: "Wood-finish interior option for the Executive Office Portable Cabin: wood-panelled walls and ceiling, wooden desk with a leather office chair, two lounge chairs, wall shelf, track lighting and a floor-standing AC unit",
+    src: "/images/products/office-portable-cabin/wood-finish-office-cabin-interior.webp",
+    alt: "Wood-Finish Office Cabin design option, interior: wood-panelled walls and ceiling, wooden desk with a leather office chair, two lounge chairs, wall shelf, track lighting and a floor-standing AC unit",
   },
 ];
 
@@ -254,23 +260,23 @@ export function OfficePortableCabinContent() {
       <section className="space-y-6">
         <div className="space-y-3">
           <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
-            Executive Office Portable Cabin — 10 ft × 10 ft Design Option
+            {WOOD_FINISH_OPTION}
           </h2>
           <p className="text-muted-foreground">
-            A design option for this office cabin, proposed in a 10 ft × 10 ft configuration. The size is the proposed layout for the option, not a dimension measured from the images, and the exterior and interior are shown as separate design references rather than two views of one unit.
+            A wood-finish design option for this office cabin. The exterior and interior are shown as separate design references rather than two views of one unit.
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
           <figure>
             <div className="grid gap-4 sm:grid-cols-2">
-              {executiveOptionImages.map((image) => (
+              {woodFinishOptionImages.map((image) => (
                 <figure key={image.src} className="overflow-hidden rounded-2xl bg-card shadow-card">
                   <figcaption className="px-4 py-3 text-sm font-semibold text-foreground">{image.label}</figcaption>
                   <OptimizedImage
                     src={image.src}
                     alt={image.alt}
-                    title={`Executive Office Portable Cabin — ${image.label}`}
+                    title={`${WOOD_FINISH_OPTION} — ${image.label}`}
                     aspectRatio="square"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
@@ -278,18 +284,25 @@ export function OfficePortableCabinContent() {
               ))}
             </div>
             <figcaption className="mt-3 text-sm text-muted-foreground">
-              Executive Office Portable Cabin — exterior design and wood-finish interior options. Finishes, furniture and AC are subject to quotation.
+              Wood-Finish Office Cabin — exterior design and wood-finish interior options. Finishes, furniture and AC are subject to quotation.
             </figcaption>
           </figure>
 
           <aside className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h3 className="font-display text-lg font-semibold text-foreground">Pricing for this option</h3>
             <p className="mt-3 text-muted-foreground">
-              <strong className="text-foreground">Basic insulated 10 ft × 10 ft cabin:</strong> priced on quotation. Transport extra. Wood-finish interiors, furniture and AC are additional and quoted separately.
+              <strong className="text-foreground">Basic insulated cabin:</strong> priced on quotation. Size and layout customized on quotation. Transport extra. Wood-finish interiors, furniture and AC are additional and quoted separately.
             </p>
             <p className="mt-3 text-sm text-muted-foreground">
               This design option is not sold online and is not the cabin priced at the top of this page.
             </p>
+            <div className="mt-5">
+              <DesignOptionQuoteButton
+                productId={OFFICE_PORTABLE_CABIN.id}
+                productName={OFFICE_PORTABLE_CABIN.name}
+                designOption={WOOD_FINISH_OPTION}
+              />
+            </div>
           </aside>
         </div>
       </section>
