@@ -1,7 +1,7 @@
 {
   "tool": "eslint",
   "note": "Pre-existing errors tolerated by scripts/ci/ratchet.mjs. Counts may only go DOWN; see the header of ratchet.mjs.",
-  "total": 391,
+  "total": 390,
   "errors": {
     "next-env.d.ts|@typescript-eslint/triple-slash-reference": 1,
     "src/components/admin/RichTextEditor.tsx|@typescript-eslint/no-explicit-any": 1,
@@ -65,7 +65,6 @@
     "supabase/functions/google-merchant-feed/index.ts|@typescript-eslint/no-explicit-any": 1,
     "supabase/functions/send-appointment-confirmation/index.ts|@typescript-eslint/no-explicit-any": 1,
     "supabase/functions/send-booking-otp/index.ts|@typescript-eslint/no-explicit-any": 1,
-    "supabase/functions/send-enquiry-notification/index.ts|@typescript-eslint/no-explicit-any": 1,
     "supabase/functions/setup-admin/index.ts|@typescript-eslint/no-explicit-any": 1,
     "supabase/functions/signup-with-otp/index.ts|@typescript-eslint/no-explicit-any": 1,
     "supabase/functions/verify-booking-otp/index.ts|@typescript-eslint/no-explicit-any": 1,
