@@ -311,15 +311,17 @@ const productSEOMap: Record<string, ProductSEOData> = {
     description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, assembled on site in days and relocatable to your next launch.",
     keywords: "prefab marketing office, prefab sales gallery, prefabricated marketing office, sales gallery structure, real estate sales gallery, prefab sales office India, township launch gallery, relocatable sales gallery, prefab pavilion, project launch office",
   },
-  /* Container Cafe & Restaurant (id 47) — quote-only. Title and keywords are the SEO setup in the
-   * owner's product page content document (17 Oct 2026), verbatim. The description's closing
-   * clause was revised by the owner on 2026-10-18: the document's "with kitchen, insulation and
-   * branding built in" read as standard inclusions, so it now names them as options set by the
-   * quotation. `title` must stay byte-identical to productCommerce "47".feedTitle, which is what
-   * actually renders. */
+  /* Container Cafe & Restaurant (id 47) — quote-only. Keywords are the SEO setup in the owner's
+   * product page content document (17 Oct 2026), verbatim. Owner revisions on 2026-10-18:
+   *   · the description's closing clause — the document's "with kitchen, insulation and branding
+   *     built in" read as standard inclusions, so it now names them as options set by the quotation;
+   *   · title and H1 — both "Container Cafe and Restaurant", replacing the document's
+   *     "Container Cafe & Restaurant | Custom-Built, Ready to Open" and its longer headline.
+   * `title` must stay byte-identical to productCommerce "47".feedTitle, which is what actually
+   * renders. */
   "47": {
-    title: "Container Cafe & Restaurant | Custom-Built, Ready to Open",
-    h1: "Container Cafe and Restaurant, Built to Open Fast and Get Noticed",
+    title: "Container Cafe and Restaurant",
+    h1: "Container Cafe and Restaurant",
     description: "Open your cafe faster with a custom container cafe or restaurant. Kiosks, dine-in cafes and stacked designs, with kitchen layout, insulation and branding options, as specified in the quotation.",
     keywords: "container cafe, container restaurant, shipping container cafe, container cafe design, container cafe manufacturer, container cafe price, 20 ft container cafe, 40 ft container cafe, container kitchen, container coffee kiosk, modular restaurant",
   },
