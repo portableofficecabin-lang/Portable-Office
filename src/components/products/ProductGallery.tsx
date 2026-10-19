@@ -13,8 +13,10 @@ interface ProductGalleryProps {
   /** SEO title attribute for images (page title / keyword related). Falls back to alt. */
   productImageTitle?: string;
   /** Per-image alt/title, aligned by index with galleryImages. Overrides the
-   *  generic alt/title for that image when present (per-image descriptive SEO). */
-  imageMeta?: { alt: string; title: string }[];
+   *  generic alt/title for that image when present (per-image descriptive SEO).
+   *  `label` is an optional short visible tag printed on the image while it is shown
+   *  (e.g. "Illustrative example"); unset = no element. */
+  imageMeta?: { alt: string; title: string; label?: string }[];
   featured?: boolean;
   inStock?: boolean;
   /** True when the SKU is a standard fixed-price product that can be bought online right now
@@ -133,6 +135,13 @@ export function ProductGallery({
             />
           );
         })}
+        {/* Bottom-left so it never collides with the Featured / availability badges (top-left).
+            Tied to the selected index, so SSR prints the first image's label. */}
+        {imageMeta?.[index]?.label && (
+          <span className="pointer-events-none absolute bottom-3 left-3 z-[2] rounded-full bg-background/90 px-3 py-1 text-xs font-semibold text-foreground shadow-sm">
+            {imageMeta[index].label}
+          </span>
+        )}
       </div>
 
       {images.length > 1 && (
