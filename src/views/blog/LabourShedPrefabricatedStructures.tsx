@@ -118,7 +118,7 @@ export default function LabourShedPrefabricatedStructures() {
             Labour Shed Prefabricated Structures
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/80 max-w-3xl">
-            Factory-made, quickly installed worker accommodations for Indian construction and infrastructure projects — installed in 10–30 days.
+            Factory-made, quickly installed worker accommodations for Indian construction and infrastructure projects.
           </p>
         </div>
       </section>
@@ -134,7 +134,7 @@ export default function LabourShedPrefabricatedStructures() {
             <ul className="space-y-4">
               {[
                 "Prefabricated labour sheds are factory-made, quickly installed worker accommodations widely used on Indian construction and infrastructure projects since around 2010.",
-                "Portable Office Cabin designs and manufactures complete prefab labour colonies—including sleeping blocks, toilets, canteens, and first-aid rooms—that can be installed in 10–30 days depending on capacity.",
+                "Portable Office Cabin designs and manufactures complete prefab labour colonies—including sleeping blocks, toilets, canteens, and first-aid rooms—whose installation time depends on capacity and site readiness.",
                 "Contractors benefit from 40–60% faster deployment compared to traditional brick structures, predictable per-square-foot pricing, reusability across multiple sites, and built-in compliance with basic welfare norms and IS codes.",
                 "Labour sheds are constructed using durable PUF/EPS insulated panels and galvanized steel frames, engineered for Indian climates ranging from 45°C heat to heavy monsoon rains, with 8–15+ years of service life.",
                 "Portable Office Cabin serves both B2B clients and government tenders across India, offering comprehensive prefab building solutions including labour accommodation, site offices, container toilets, and complete modular building projects."
@@ -535,7 +535,7 @@ export default function LabourShedPrefabricatedStructures() {
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Need a Labour Shed for Your Project?</h2>
           <p className="text-primary-foreground/80 mb-8">
-            Talk to our prefab experts on call or WhatsApp. We serve projects across India with 10–30 day installation timelines.
+            Talk to our prefab experts on call or WhatsApp. We serve projects across India; your written quotation sets out the installation programme.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="default" className="bg-accent hover:bg-accent/90 text-accent-foreground">

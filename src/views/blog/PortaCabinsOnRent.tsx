@@ -29,7 +29,7 @@ const faqStructuredData = {
       name: "How quickly can a rental porta cabin be delivered and installed?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Standard rental units can be delivered within 3–7 days of order confirmation in western India. Customized configurations typically take 10–21 days. On-site commissioning completes within a few hours once the cabin arrives."
+        text: "Standard rental units can be delivered within 3–7 days of order confirmation in western India. Customized configurations take longer, and your written quotation sets out the timeline. On-site commissioning follows delivery, subject to site readiness."
       }
     },
     {
@@ -151,7 +151,7 @@ export default function PortaCabinsOnRent() {
             </h2>
             <ul className="space-y-4">
               {[
-                "Porta cabins on rent eliminate upfront capital investment while providing fully finished, pre-tested cabins commissioned at your location in hours.",
+                "Porta cabins on rent eliminate upfront capital investment while providing fully finished, pre-tested cabins commissioned at your location.",
                 "We serve projects across Maharashtra, Gujarat, Rajasthan, Madhya Pradesh, Karnataka, Delhi NCR with 3–7 day delivery for standard models.",
                 "Available types: Office Cabins, Container Offices, Security Cabins, Labour Accommodation, Prefab Canteens, Container Cafés, Portable Toilets & Control Rooms.",
                 "Flexible rental tenure from 1–36 months with customization options including branding, partitions, AC, furniture, and plumbing.",
@@ -189,7 +189,7 @@ export default function PortaCabinsOnRent() {
                 {[
                   { icon: MapPin, title: "Pan-India Coverage", desc: "Maharashtra, Gujarat, Rajasthan, MP, Karnataka, Delhi NCR and expanding regions" },
                   { icon: Building2, title: "Infrastructure Proven", desc: "Metro projects in Navi Mumbai, industrial plants near Pune-Chakan, logistics hubs in Bhiwandi" },
-                  { icon: IndianRupee, title: "Zero Capital Investment", desc: "Fully finished, pre-tested cabins commissioned at your location in hours" },
+                  { icon: IndianRupee, title: "Zero Capital Investment", desc: "Fully finished, pre-tested cabins commissioned at your location" },
                   { icon: Wrench, title: "Turnkey Support", desc: "Design through removal, with short-term or long-term hire options" },
                 ].map((item, i) => (
                   <div key={i} className="bg-card border border-border rounded-lg p-5 flex gap-4">
@@ -220,7 +220,7 @@ export default function PortaCabinsOnRent() {
                   "Standard fit-outs include electrical wiring, MCB panels, LED lighting, power sockets, windows, doors, and insulated walls",
                   "AC units, furniture, false ceilings, and basic plumbing available for offices, canteens, and toilet units",
                   "Cabins are fully finished and pre-tested at our plant before dispatch",
-                  "On-site commissioning typically completes within a few hours once the cabin arrives",
+                  "On-site commissioning follows delivery, subject to site readiness",
                   "Flexible rental tenure extensions available with prior notice and adjusted terms",
                   "Dedicated support contact for structural or service issues during the rental period"
                 ].map((item, i) => (
@@ -474,7 +474,7 @@ export default function PortaCabinsOnRent() {
               <div className="bg-card border border-border rounded-xl p-6 mt-6">
                 <h3 className="font-bold text-foreground mb-3">One-Time Charges</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Transportation to site (based on distance and vehicle type)</li>
+                  <li>• Transportation to site (as set out in your written quotation)</li>
                   <li>• Installation and handling at site</li>
                   <li>• Refundable security deposit (typically 1–3 months' rent)</li>
                 </ul>

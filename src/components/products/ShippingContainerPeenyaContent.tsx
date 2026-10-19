@@ -17,7 +17,7 @@ const PEENYA_PRODUCT_ID = "34";
 const peenyaPrice = formatINR(sellPrice(getCommerce(PEENYA_PRODUCT_ID)!.basePrice));
 
 const highlights = [
-  { icon: Clock, title: "2–5 Day Setup", description: "Quick deployment versus weeks for traditional construction on Peenya's leased plots" },
+  { icon: Clock, title: "Quick Setup", description: "Quick deployment versus weeks for traditional construction on Peenya's leased plots" },
   { icon: Truck, title: "Full Relocatability", description: "Move containers to Dobbaspet, Bidadi, or Jigani when factory operations shift" },
   { icon: IndianRupee, title: "Lower Upfront Cost", description: "Significantly cheaper than permanent RCC structures for 3–5 year industrial leases" },
   { icon: Shield, title: "ISO-Grade Build", description: "Corten steel body with marine-grade plywood flooring — weather-resistant for Bengaluru monsoons" },
@@ -63,7 +63,7 @@ const faqs = [
   },
   {
     q: "How quickly can a container be delivered and set up in Peenya?",
-    a: "In-stock standard containers can be delivered within 2–4 working days from our Tamil Nadu factory near Hosur — roughly 40 km from Bengaluru — reaching Peenya via the Outer Ring Road and Tumkur Road. Complete setup including placement, electrical connections, and AC installation typically takes 2–5 days depending on customization level."
+    a: "In-stock standard containers can be delivered within 2–4 working days from our Tamil Nadu factory near Hosur — roughly 40 km from Bengaluru — reaching Peenya via the Outer Ring Road and Tumkur Road. Setup time — placement, electrical connections and AC installation — depends on the customisation level and is set out in your written quotation."
   },
   {
     q: "What is the price of a shipping container in Peenya?",
@@ -151,7 +151,7 @@ export function ShippingContainerPeenyaContent() {
           <ul className="space-y-2">
             <li>Quick plug-in storage or office capacity for leased industrial sheds</li>
             <li>Popular in Tumkur Road auto ancillaries, Peenya 2nd Stage FMCG warehousing, and electrical machine shops</li>
-            <li>Lower upfront cost and 2–5 day setup versus building new permanent sheds</li>
+            <li>Lower upfront cost and quicker setup than building new permanent sheds</li>
             <li>Weather-resistant ISO containers protect materials during Bengaluru's monsoon and dust-heavy conditions</li>
             <li>Full relocatability if operations shift to Nelamangala, Jigani, or Hoskote</li>
           </ul>
@@ -458,7 +458,7 @@ export function ShippingContainerPeenyaContent() {
                 <li>Technical specifications and recommended grade</li>
                 <li>Customization options and delivery timelines</li>
                 <li>Approximate transport and crane charges</li>
-                <li>Transparent pricing with no hidden costs</li>
+                <li>Transparent pricing — GST and transport listed separately in your written quotation</li>
               </ul>
             </div>
           </div>

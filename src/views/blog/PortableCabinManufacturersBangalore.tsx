@@ -320,7 +320,7 @@ export default function PortableCabinManufacturersBangalore() {
             { icon: Layers, title: "Product Range", desc: "Choose portable office cabin manufacturers offering offices, toilets, security cabins, bunk houses, and container conversions for future scalability" },
             { icon: Shield, title: "Quality Standards", desc: "Verify adherence to IS 1079 steel grades, consistent MIG welding, and epoxy coatings; ISO-certified processes add confidence" },
             { icon: HardHat, title: "Design Support", desc: "Expect 2D/3D layout drawings and interior plans before fabrication; this expertise matters for IT parks and institutions" },
-            { icon: Clock, title: "Delivery Timelines", desc: "Standard cabins take 2–3 weeks manufacturing plus 1–2 days for delivery and installation across Bengaluru" },
+            { icon: Clock, title: "Delivery Timelines", desc: "Standard cabins bought online are dispatched within 7–15 working days, then 1–2 working days in transit to Bengaluru PIN codes beginning 560; optional installation follows, subject to site readiness" },
             { icon: Wrench, title: "After-sales & Warranty", desc: "Confirm 1–5 year warranty on structure and leakage, with 48-hour service response for electrical/plumbing issues" },
           ].map((item, idx) => (
             <div key={idx} className="flex gap-4 bg-card border border-border/40 rounded-xl p-5">

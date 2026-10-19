@@ -242,7 +242,7 @@ export function SteelPortableCabinContent() {
           If you have ever waited three months for a brick-and-mortar site office, you already know
           why steel portable cabins exist. We build the whole cabin in our factory — frame, walls,
           roof, floor, wiring, doors and windows — then load it onto a truck and place it on your
-          site. Most of our customers are working inside it the same day it arrives.
+          site. It arrives finished, so there is no building work on site.
         </p>
         <p>
           Portable Office Cabin manufactures steel cabins at our Tamil Nadu factory in Kamandoddi,

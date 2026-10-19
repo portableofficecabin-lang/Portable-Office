@@ -255,7 +255,7 @@ export function MSContainerOfficeCabinContent() {
             Advantages of Choosing MS Container Office Cabins
           </h2>
           <p className="text-muted-foreground">
-            Compared with conventional RCC site offices, MS office cabins install in 1–2 days, require simpler foundations, and move with your project. That means faster mobilisation, better cost control, and an asset you can reuse instead of abandoning at the end of a project.
+            Compared with conventional RCC site offices, MS office cabins need far less time on site, require simpler foundations, and move with your project. That means faster mobilisation, better cost control, and an asset you can reuse instead of abandoning at the end of a project.
           </p>
           <div className="space-y-3">
             {[
@@ -299,7 +299,7 @@ export function MSContainerOfficeCabinContent() {
               "Standard delivery timelines of 7–15 working days for common layouts",
               "Flatbed truck transport with hydra crane unloading at site",
               "Level ground or PCC support blocks recommended before arrival",
-              "Operational within hours once connections are completed",
+              "Ready to use once service connections are completed",
               "Designed for repeat shifting across project cycles",
             ].map((item) => (
               <div key={item} className="flex items-start gap-3">

@@ -85,7 +85,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: Clock,
               title: "Rapid Deployment Timelines",
-              desc: "A standard 20 ft container office can be set up within 7–10 days from order confirmation—including fabrication, delivery, and on-site installation. Even a small permanent structure would require months of construction activity.",
+              desc: "Standard products bought online are dispatched within 7–15 working days of order confirmation, with delivery and optional on-site installation to follow. Even a small permanent structure would require months of construction activity.",
             },
             {
               icon: Truck,
@@ -397,7 +397,7 @@ export function ContainerOfficeGenericContent() {
             {
               step: "05",
               title: "Logistics & Installation",
-              desc: "Transportation by trailer, craning or placement using appropriate equipment, and on-site connections for power, water, and drainage. Most single-container installations complete within 1–3 days.",
+              desc: "Transportation by trailer, craning or placement using appropriate equipment, and on-site connections for power, water, and drainage. Installation time depends on site readiness.",
             },
             {
               step: "06",
@@ -489,7 +489,7 @@ export function ContainerOfficeGenericContent() {
             Access to replacement parts and accessories is straightforward, making repairs and upgrades hassle-free. Businesses should also consider the cost and availability of maintenance services when investing in a container office, as well as the permission required for any structural modifications or enhancements.
           </p>
           <p>
-            By staying proactive with maintenance and repairs, organizations can extend the lifespan of their container offices and ensure they continue to provide a productive workspace. This approach not only protects your investment but also guarantees that your office remains compliant with safety standards and ready to meet your evolving business needs.
+            By staying proactive with maintenance and repairs, organizations can extend the lifespan of their container offices and ensure they continue to provide a productive workspace. This approach not only protects your investment but also helps keep your office compliant with safety standards and ready to meet your evolving business needs.
           </p>
         </div>
       </section>

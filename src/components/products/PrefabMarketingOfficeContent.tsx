@@ -31,7 +31,7 @@ export const PREFAB_MARKETING_OFFICE_FAQS: { question: string; answer: string }[
   {
     question: "How is this different from your container marketing office?",
     answer:
-      "A container arrives as a finished box and is working the same day — but it's 8 ft wide per module and needs a crane. Prefab is assembled on site over a few days, spans any width as one hall, follows your floor plan exactly, and reaches sites a trailer can't. We build both and we'll tell you plainly which fits your launch.",
+      "A container arrives as a finished box — but it's 8 ft wide per module and needs a crane. Prefab is assembled on site over a few days, spans any width as one hall, follows your floor plan exactly, and reaches sites a trailer can't. We build both and we'll tell you plainly which fits your launch.",
   },
   {
     question: "How long does assembly take?",
@@ -151,7 +151,7 @@ export function PrefabMarketingOfficeContent() {
           ))}
         </ul>
         <p className="mt-5 rounded-xl border border-accent/30 bg-accent/5 p-4 text-foreground leading-relaxed">
-          Short version: fixed sizes and same-day placement, choose a container. A bigger gallery,
+          Short version: fixed sizes and a finished box on arrival, choose a container. A bigger gallery,
           your own floor plan, or a tight-access site — prefab. Tell us the situation and we&apos;ll
           tell you which, without pushing either.
         </p>

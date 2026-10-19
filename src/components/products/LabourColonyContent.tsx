@@ -31,7 +31,7 @@ const lifespanRows = [
 ];
 
 const highlights = [
-  { icon: Clock, title: "Quick Installation", desc: "50–300 worker camps delivered and installed in 2–4 weeks — 60–70% faster than conventional construction" },
+  { icon: Clock, title: "Quick Installation", desc: "Factory-built units mean far less time on site than conventional construction" },
   { icon: IndianRupee, title: "Cost Effective", desc: "20–40% savings versus RCC with recyclable steel structures and relocatable modules" },
   { icon: Users, title: "Scalable Capacity", desc: "From 50-bed single-storey to 500+ bed G+2 configurations with modular expansion" },
   { icon: Shield, title: "Compliance Ready", desc: "Designs aligned with BIS standards, NBC 2016, BOCW Act, and client EHS/ESG audits" },
@@ -50,7 +50,7 @@ const applications = [
 
 const faqs = [
   { q: "What is a labour colony?", a: "A labour colony is a structured worker accommodation facility deployed near project sites, factories, and infrastructure works. It includes dormitories, kitchens, toilets, dining halls, and recreation spaces designed for large workforces." },
-  { q: "How quickly can a prefab labour colony be installed?", a: "Camps for 50–100 workers are typically installed in 2–3 weeks. Large colonies for 500+ workers take 4–8 weeks depending on site preparation and layout complexity." },
+  { q: "How quickly can a prefab labour colony be installed?", a: "Installation time depends on the number of workers housed, site preparation and layout complexity; your written quotation sets out the programme for your camp." },
   { q: "What materials are used for labour colony construction?", a: "We use mild steel structural frames with PUF/EPS sandwich panels, PPGI sheets, or Aerocon panels for walls and roofs. All materials are corrosion-resistant with anti-rust coatings for coastal and humid locations." },
   { q: "Can labour colonies be relocated to another project site?", a: "Yes. Prefab labour colonies are designed for disassembly and relocation. Modular panels and steel frames can be transported and reinstalled at new sites, retaining 80–90% of material value." },
   { q: "What is the cost of a prefab labour colony?", a: `The listed 80 ft × 24 ft G+2 labour colony configuration has a fixed price of ${listedPrice} including 18% GST and can be purchased online with secure payment. Custom capacities, configurations, insulation, and fit-out levels are priced separately — contact us for a tailored proposal.` },

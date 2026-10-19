@@ -86,7 +86,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           <div>
             <FixedPriceCallout offer={offer} />
             <p className="text-sm text-muted-foreground mt-4">
-              Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
+              Cabins are delivered ready-to-use or in knock-down form and installation time depends on size and site readiness.
             </p>
           </div>
         ) : (
@@ -108,7 +108,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
               ))}
             </div>
             <p className="text-sm text-muted-foreground mt-4">
-              Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
+              Cabins are delivered ready-to-use or in knock-down form and installation time depends on size and site readiness.
             </p>
           </div>
         )}

@@ -29,7 +29,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { DISPATCH_WORKING_DAYS, FREE_DELIVERY_PIN_PREFIXES_TEXT, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
+import {
+  DISPATCH_WORKING_DAYS,
+  FREE_DELIVERY_PIN_PREFIXES_TEXT,
+  INSTALLATION,
+  INSTALLATION_SCOPE,
+  TRANSIT_WORKING_DAYS,
+} from "@/data/shippingZones";
+import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 
 function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
@@ -55,16 +62,16 @@ const DISPATCH = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} wo
  * Tracking is now an offer to give status updates; transit damage states the published process
  * (Refund & Cancellation Policy §7 / Shipping & Delivery policy: report within 48 hours with
  * photographs; once confirmed in transit, repair at no cost, replace the affected components or
- * agree compensation); the installation steps keep their order but no longer promise durations.
+ * agree compensation). Installation lists exactly what the paid checkout option covers
+ * (INSTALLATION_SCOPE) — no durations, no foundation work, no "professional installation on request".
  */
 const SHIPMENT_UPDATES = "Ask our team for shipment status updates once your order is dispatched";
 const TRANSIT_DAMAGE =
   "Damage in transit: tell us within 48 hours of delivery, with photographs. Once our team confirms it, we repair the unit at no cost, replace the affected components or agree compensation, as set out in our Refund & Cancellation Policy";
-const INSTALLATION_STEPS = [
-  { step: "1", title: "Site Preparation", time: "Completed before delivery" },
-  { step: "2", title: "Delivery & Setup", time: "On the scheduled date" },
-  { step: "3", title: "Final Inspection", time: "At handover" },
-];
+/** The paid checkout option (bought-online products), priced from INSTALLATION. */
+const INSTALLATION_OPTION = `Optional ${INSTALLATION.label.toLowerCase()}: ${formatINR(INSTALLATION.rate)} including ${GST_PERCENT_LABEL} GST, added at checkout`;
+/** Rentals and quote-only products: installation is part of the written quotation. */
+const INSTALLATION_BY_QUOTATION = "Installation: set out in your written quotation";
 
 /**
  * `showWarranty` (default true) hides the Warranty tab for a product whose warranty terms the
@@ -124,13 +131,13 @@ export function ShippingDeliveryModal({
                       <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}`} />
                       <InfoItem icon={MapPin} text="Other PIN codes: transport is charged by delivery zone and shown at checkout before you pay" />
                       <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order — express delivery is not a checkout option" />
-                      <InfoItem icon={Wrench} text="Professional installation available upon request" />
+                      <InfoItem icon={Wrench} text={INSTALLATION_OPTION} />
                     </ul>
                   ) : (
                     <ul className="space-y-3">
                       <InfoItem icon={MapPin} text="Transport: confirmed in your written quotation" />
                       <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order" />
-                      <InfoItem icon={Wrench} text="Professional installation available upon request" />
+                      <InfoItem icon={Wrench} text={INSTALLATION_BY_QUOTATION} />
                     </ul>
                   )}
                 </AccordionContent>
@@ -229,21 +236,30 @@ export function ShippingDeliveryModal({
           <TabsContent value="installation">
             <div className="space-y-4">
               <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <Wrench className="h-4 w-4 text-accent" /> Installation Steps
+                <Wrench className="h-4 w-4 text-accent" /> What Installation Covers
               </h4>
-              <div className="grid gap-3">
-                {INSTALLATION_STEPS.map((item) => (
-                  <div key={item.step} className="flex items-center gap-4 bg-muted/50 rounded-lg p-4">
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-sm shrink-0">
-                      {item.step}
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-foreground">{item.title}</p>
-                      <p className="text-sm text-muted-foreground">{item.time}</p>
-                    </div>
+              {transportAtCheckout ? (
+                <>
+                  <p className="text-sm text-muted-foreground">{INSTALLATION_OPTION}. It covers:</p>
+                  <div className="grid gap-3">
+                    {INSTALLATION_SCOPE.map((item, i) => (
+                      <div key={item.title} className="flex items-center gap-4 bg-muted/50 rounded-lg p-4">
+                        <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-sm shrink-0">
+                          {i + 1}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-foreground">{item.title}</p>
+                          <p className="text-sm text-muted-foreground">{item.text}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </>
+              ) : (
+                <ul className="space-y-2">
+                  <InfoItem icon={Wrench} text="Installation scope and charges are set out in your written quotation" />
+                </ul>
+              )}
 
               {/* Manufacturing & Lead Time */}
               <div className="mt-6 bg-accent/5 border border-accent/20 rounded-lg p-4">

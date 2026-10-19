@@ -41,7 +41,7 @@ export const seoData = {
   about: {
     title: "About Us | Portable Office Cabin Manufacturer",
     description:
-      "Portable Office Cabin: 15+ years building portable cabins & prefab solutions across India. 500+ projects delivered, quality guaranteed.",
+      "Portable Office Cabin: 15+ years building portable cabins & prefab solutions across India. 500+ projects delivered.",
     keywords:
       "portable cabin manufacturer, prefab company India, modular building supplier, portable office manufacturer, about portable cabin company",
   },

@@ -12,7 +12,7 @@ import { BuyNowCTA } from "@/components/products/BuyNowCTA";
 export const WorkmenAccommodationContent = () => {
   const keyFeatures = [
     { icon: Building2, title: "Steel & PEB Framework", desc: "Designed for wind speeds up to 44 m/s with PUF/EPS sandwich panels and PPGI sheets" },
-    { icon: Clock, title: "Rapid Deployment", desc: "100–300 worker camps delivered and installed within 2–4 weeks" },
+    { icon: Clock, title: "Rapid Deployment", desc: "Factory-built units mean far less time on site than conventional construction" },
     { icon: Shield, title: "Fire & Safety Compliant", desc: "Extinguisher points, emergency exits, fire-resistant materials per NBC 2016" },
     { icon: Users, title: "Scalable Capacity", desc: "From 50-bed single-storey to 500-bed double-storey modular colonies" },
     { icon: Wrench, title: "Complete Ecosystem", desc: "Dormitories, kitchens, dining halls, toilets, recreation rooms, security cabins" },
@@ -20,7 +20,7 @@ export const WorkmenAccommodationContent = () => {
   ];
 
   const benefits = [
-    { label: "Time Savings", value: "10,000 sq ft camp installed in 20–30 days vs 3–4 months for RCC" },
+    { label: "Time Savings", value: "Far less time on site than RCC for a 10,000 sq ft camp" },
     { label: "Cost Optimisation", value: "20–40% savings through lower cost per bed and relocatable structures" },
     { label: "Worker Wellbeing", value: "Better ventilation, lighting, and sanitation reduce absenteeism by 15–20%" },
     { label: "Compliance", value: "Meets client EHS audits, ESG requirements, and third-party inspections" },
@@ -68,7 +68,7 @@ export const WorkmenAccommodationContent = () => {
   ];
 
   const faqs = [
-    { q: "How quickly can a workmen accommodation camp be installed?", a: "A typical 10,000 sq ft prefabricated labour camp can be installed in 20–30 days, compared to 3–4 months for conventional RCC or brick structures. Portable Office Cabin handles turnkey delivery including foundations, structure erection, utility connections, and furnishings." },
+    { q: "How quickly can a workmen accommodation camp be installed?", a: "A prefabricated labour camp needs far less time on site than conventional RCC or brick structures; installation time depends on the camp's size, layout and site readiness, and your written quotation sets out the programme. Portable Office Cabin handles turnkey delivery including foundations, structure erection, utility connections, and furnishings." },
     { q: "What is the capacity range for prefab labour colonies?", a: "We deliver camps ranging from 50-bed single-storey setups for small projects to 500+ bed double-storey modular colonies for large infrastructure, metro rail, and refinery projects. Capacity depends on land availability and layout design." },
     { q: "Can workmen accommodation be relocated to another project site?", a: "Yes. Prefabricated and container-based accommodation is designed for disassembly, transport, and reinstallation. This eliminates demolition waste and preserves your capital investment across multiple projects." },
     { q: "What compliance standards do your labour camps meet?", a: "Our designs comply with BIS standards, NBC 2016 building codes, BOCW Act requirements, and client-specified EHS/ESG guidelines. Proper documentation supports tender submissions and third-party audits on large EPC contracts." },
@@ -91,7 +91,7 @@ export const WorkmenAccommodationContent = () => {
               In the Indian construction and industrial context, workmen accommodation refers to temporary and semi-permanent housing for site workers, technicians, labourers, and support staff. These facilities are essential on construction sites, metro rail developments, highways, refineries, and power projects where a skilled workforce migrates from rural areas and requires on-site living arrangements.
             </p>
             <p>
-              Portable Office Cabin designs, manufactures, and installs prefabricated workmen accommodation across India. Typical camps for 100–300 workers are delivered and installed within 2–4 weeks depending on location and layout complexity. Key benefits include quick installation, cost-effective construction, worker retention, and compliance with BIS and labour welfare guidelines.
+              Portable Office Cabin designs, manufactures, and installs prefabricated workmen accommodation across India. Delivery and installation time for camps of 100–300 workers depends on location and layout complexity. Key benefits include quick installation, cost-effective construction, worker retention, and compliance with BIS and labour welfare guidelines.
             </p>
             <p>
               Prefab labour camps provide sleeping quarters, restrooms, kitchens, and communal areas with waste management systems, sanitation facilities, and clean water supplies. These structures are built with sturdy materials and construction techniques to withstand diverse environmental conditions.
@@ -130,7 +130,7 @@ export const WorkmenAccommodationContent = () => {
             Labour accommodation is a vital component of successful industrial projects, ensuring that workers, technicians, and support staff have access to safe, comfortable, and well-equipped living spaces during their time on site. Prefabricated labour camps and prefab labour hutments have emerged as the preferred solution for both temporary and semi-permanent worker housing in India's fast-paced construction and infrastructure sectors.
           </p>
           <p>
-            These structures are engineered with sturdy construction materials and assembled by a skilled workforce, guaranteeing durability and resilience against diverse environmental conditions. The versatile range of prefabricated labour camps available today allows clients to select options that perfectly match their site requirements, workforce size, and project timelines.
+            These structures are engineered with sturdy construction materials and assembled by a skilled workforce, built for durability and resilience against diverse environmental conditions. The versatile range of prefabricated labour camps available today allows clients to select options that perfectly match their site requirements, workforce size, and project timelines.
           </p>
           <p>
             One of the standout advantages of prefab labour hutments is their quick installation and easy construction, making them ideal for projects with tight deadlines or limited land availability. Their economical nature ensures that clients can provide high-quality accommodation without exceeding budget constraints. Furthermore, these structures can be customized to meet specific requirements, offering flexibility in layout, amenities, and finishes.

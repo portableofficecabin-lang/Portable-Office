@@ -44,7 +44,7 @@ export function CabinPortableContent() {
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {[
             { icon: IndianRupee, title: "60% Cheaper", desc: "Up to 60% cheaper than reinforced cement concrete (RCC) structures for temporary or semi-permanent needs" },
-            { icon: Clock, title: "1-2 Day Install", desc: "Installation achievable in 1-2 days after delivery" },
+            { icon: Clock, title: "Optional Installation", desc: "On-site installation & positioning can be added at checkout" },
             { icon: Shield, title: "10-20+ Year Lifespan", desc: "Lifespan extending 10-20+ years with basic maintenance like periodic repainting and sealant checks" },
             { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where traditional construction is too slow or costly" },
           ].map((item, idx) => (
@@ -162,7 +162,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Portable Office Cabins & Site Office Containers</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          The portable office cabin represents the most in-demand cabin portable product for construction, infrastructure, and corporate projects across India. These office spaces provide reliable, comfortable work environments that can be operational within days.
+          The portable office cabin represents the most in-demand cabin portable product for construction, infrastructure, and corporate projects across India. These office spaces provide reliable, comfortable work environments that arrive factory-finished.
         </p>
 
         <h3 className="text-xl font-semibold text-foreground mb-4">Key differences between fabricated MS cabins and container offices:</h3>
@@ -433,7 +433,7 @@ export function CabinPortableContent() {
             <h3 className="font-semibold text-foreground mb-2 text-sm">Speed Benefits</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
               <li>• Factory production: 2-4 weeks</li>
-              <li>• On-site install: 1-2 days</li>
+              <li>• On-site installation: optional, added at checkout</li>
               <li>• No weather-dependent curing</li>
             </ul>
           </div>

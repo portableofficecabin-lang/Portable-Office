@@ -25,7 +25,7 @@ import {
 
 const switchReasons = [
   "40–60% cheaper than conventional RCC structures when civil work and approvals are included",
-  "Installation completed in 1–3 days for most standard configurations",
+  "Optional on-site installation, added at checkout",
   "Fully relocatable across project phases and new sites",
   "Compliant electrical planning with insulation and AC-ready provisions",
   "Designed for demanding Indian site conditions across heat, rain, and dust",
@@ -142,7 +142,7 @@ const faqs = [
   {
     question: "How long does it take to deliver and install an office portable cabin?",
     answer:
-      "Most standard designs take about 2–4 weeks for manufacturing after order confirmation, while single-cabin installation is usually completed within 8–24 hours once the cabin reaches site.",
+      "Standard designs bought online are dispatched within 7–15 working days of order confirmation; on-site installation time depends on site readiness.",
   },
   {
     question: "What kind of foundation is needed?",
@@ -211,7 +211,7 @@ export function OfficePortableCabinContent() {
         <div className="grid gap-3 sm:grid-cols-2">
           {[
             "Typical delivery in 10–20 days from design approval for standard configurations",
-            "Installation in 8–24 hours for units such as 20x10 ft office cabins",
+            "Optional on-site installation for units such as 20x10 ft office cabins, added at checkout",
             "Up to 60% lower total project cost compared to conventional construction",
             "Little to no complex foundation work for temporary deployment",
             "Built for Indian conditions across heat, rain, industrial dust, and site movement",

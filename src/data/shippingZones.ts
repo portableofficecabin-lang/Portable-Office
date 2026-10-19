@@ -47,6 +47,20 @@ export const INSTALLATION = {
 } as const;
 
 /**
+ * What the paid installation option covers, item by item — the same four things
+ * INSTALLATION.description says (keep the two in step). The Shipping & Delivery page and the
+ * product-page Shipping & Delivery pop-up list these, so no page promises more than checkout sells.
+ * Foundation / civil work is deliberately absent: the checkout option does not mention it and the
+ * owner has not yet confirmed whether it is included (2026-10-19).
+ */
+export const INSTALLATION_SCOPE = [
+  { title: "Base levelling", text: "Our team levels the base." },
+  { title: "Positioning", text: "We position the unit on site." },
+  { title: "Crane / hydra", text: "Crane or hydra charges at site are included for standard single-unit placements." },
+  { title: "Handover", text: "We complete the handover." },
+] as const;
+
+/**
  * ZONE 1 IS GENUINELY FREE — owner-confirmed. Free delivery within ~50 km of the facility.
  * Do not set a zone's rate to 0 unless delivery there really is free of charge.
  */
@@ -152,7 +166,7 @@ export function resolveShippingZone(pincode: string): ShippingZone | null {
   return best ?? SHIPPING_ZONES.find((z) => z.id === FALLBACK_ZONE_ID) ?? null;
 }
 
-/** Total delivery window (dispatch + transit) for a zone, in days — for display. */
+/** Total delivery window (dispatch + transit) for a zone, in working days — for display. */
 export function deliveryEstimate(zone: ShippingZone): { min: number; max: number } {
   return {
     min: DISPATCH_WORKING_DAYS.min + zone.transitDaysMin,

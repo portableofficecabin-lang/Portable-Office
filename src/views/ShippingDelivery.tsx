@@ -25,6 +25,7 @@ import {
   DISPATCH_WORKING_DAYS,
   FREE_DELIVERY_PIN_PREFIXES_TEXT,
   INSTALLATION,
+  INSTALLATION_SCOPE,
 } from "@/data/shippingZones";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 
@@ -109,7 +110,7 @@ export default function ShippingDeliveryPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             <InfoCard icon={Truck} title="Delivery Options" index={0}>
               <ul className="space-y-3">
-                <Bullet>For products bought online, standard delivery is <strong>free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</strong> (Zone 1) — genuinely free, with no hidden charges.</Bullet>
+                <Bullet>For products bought online, standard delivery is <strong>free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</strong> (Zone 1) — genuinely free: no transport charge is added at checkout.</Bullet>
                 <Bullet>For all other PIN codes, transport is charged <strong>by delivery zone</strong>. Enter your pincode at checkout and the exact transport charge is calculated and shown to you before you pay — see the zone table below.</Bullet>
                 <Bullet>Unloading (crane or hydra) and on-site installation are <strong>optional and charged separately</strong> at {formatINR(INSTALLATION.rate)} — never bundled into the transport charge.</Bullet>
                 <Bullet>Custom orders and rentals: transport is confirmed in your written quotation.</Bullet>
@@ -139,7 +140,7 @@ export default function ShippingDeliveryPage() {
               <ul className="space-y-3">
                 <Bullet>We deliver across Karnataka, Tamil Nadu, and neighbouring states, and to all other serviceable pincodes across India.</Bullet>
                 <Bullet>Deliveries outside the free zone carry a transport charge set by the delivery zone your pincode falls in.</Bullet>
-                <Bullet>For remote or challenging site locations, our logistics team will coordinate the best route.</Bullet>
+                <Bullet>For remote or hard-to-reach sites, tell our team about road access and unloading space before you order.</Bullet>
               </ul>
             </InfoCard>
           </div>
@@ -311,37 +312,21 @@ export default function ShippingDeliveryPage() {
           >
             <h2 className="font-display text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
               <Wrench className="h-6 w-6 text-accent" />
-              Installation Process
+              What Installation Covers
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl">
-              Our trained installation crew follows a clear three-step process to get your cabin ready for use — quickly and professionally. Installation is optional and charged separately at {formatINR(INSTALLATION.rate)}; you choose whether to add it at checkout, and it is never bundled into the transport charge.
+              {INSTALLATION.label} is optional. For products bought online, add it at checkout for{" "}
+              {formatINR(INSTALLATION.rate)} (including {GST_PERCENT_LABEL} GST); it is never bundled into the
+              transport charge. It covers:
             </p>
-            {/* Steps keep their ORIGINAL scope wording — installation scope is flagged for the owner's
-                decision (2026-10-19). Only the unverified durations ("1 – 2 days", "1 day", "Same day")
-                were removed, as on the product-page Shipping & Delivery modal. */}
-            <div className="grid sm:grid-cols-3 gap-6 mb-12">
-              {[
-                {
-                  step: "01",
-                  title: "Site Preparation",
-                  time: "Completed before delivery",
-                  desc: "We assess the ground, level the surface, and prepare the foundation for a stable setup.",
-                },
-                {
-                  step: "02",
-                  title: "Delivery & Assembly",
-                  time: "On the scheduled date",
-                  desc: "The cabin is transported, positioned using a crane or trailer, and assembled on-site.",
-                },
-                {
-                  step: "03",
-                  title: "Final Inspection",
-                  time: "At handover",
-                  desc: "We perform a complete quality check — electrical, plumbing, doors, windows — before handover.",
-                },
-              ].map((item, i) => (
+            {/* Exactly the paid checkout option (INSTALLATION_SCOPE = INSTALLATION.description, item by
+                item). The old three steps also claimed "prepare the foundation", on-site assembly and an
+                electrical/plumbing inspection, and gave durations; none of those is in the checkout option,
+                so they are left for the owner to confirm (2026-10-19). */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              {INSTALLATION_SCOPE.map((item, i) => (
                 <motion.div
-                  key={item.step}
+                  key={item.title}
                   custom={i}
                   initial="hidden"
                   whileInView="visible"
@@ -350,14 +335,17 @@ export default function ShippingDeliveryPage() {
                   className="card-premium p-6 text-center"
                 >
                   <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
-                    <span className="font-display text-xl font-bold text-accent">{item.step}</span>
+                    <span className="font-display text-xl font-bold text-accent">{String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3 className="font-display font-bold text-foreground mb-1">{item.title}</h3>
-                  <p className="text-sm text-accent font-semibold mb-3">{item.time}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <h3 className="font-display font-bold text-foreground mb-3">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
                 </motion.div>
               ))}
             </div>
+            <p className="text-muted-foreground mb-12 max-w-2xl">
+              Installation is scheduled after delivery, subject to crew availability and your site readiness. For
+              custom orders and rentals, installation is set out in your written quotation.
+            </p>
           </motion.div>
 
           {/* Before You Order */}

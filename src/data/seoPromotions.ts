@@ -486,7 +486,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
   const baseFAQs = [
     {
       question: `What is the starting price for ${keyword.toLowerCase()} in ${location}?`,
-      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport and installation, which your written quotation confirms. We provide a detailed written quotation with no hidden charges.`,
+      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport and installation, which your written quotation confirms. Your detailed written quotation states each of them.`,
     },
     {
       question: `How long does delivery and installation take in ${location}?`,
@@ -502,7 +502,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
     },
     {
       question: `Do you provide delivery and installation services throughout ${location}?`,
-      answer: `Yes. We offer door-to-door delivery and professional installation across ${location} and all major cities in India. For products bought online, delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} and other PIN codes are charged by delivery zone at checkout; for custom orders and rentals, transport is confirmed in your written quotation.`,
+      answer: `Yes. We deliver door-to-door across ${location} and all major cities in India, and on-site installation is available as an optional extra. For products bought online, delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} and other PIN codes are charged by delivery zone at checkout; for custom orders and rentals, transport is confirmed in your written quotation.`,
     },
   ];
   return baseFAQs;

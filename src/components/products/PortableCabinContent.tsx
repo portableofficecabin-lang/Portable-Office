@@ -377,7 +377,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
               </span>
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground leading-relaxed pb-4">
-              All our products are manufactured in accordance with relevant Indian standards, ensuring proper structural safety, electrical safety, and fire resistance. We adhere to quality benchmarks such as ISO 9001:2015, guaranteeing that our portable cabins meet rigorous safety and performance criteria. For government tenders and corporate projects, we provide complete documentation including test certificates, material specifications, and compliance reports.
+              All our products are manufactured in accordance with relevant Indian standards, ensuring proper structural safety, electrical safety, and fire resistance. We work to quality benchmarks such as ISO 9001:2015 for the safety and performance of our portable cabins. For government tenders and corporate projects, we provide complete documentation including test certificates, material specifications, and compliance reports.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

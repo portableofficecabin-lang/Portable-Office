@@ -483,7 +483,7 @@ export const products: Product[] = [
     features: [
       "Everything included — turnkey",
       "Lower electricity bills than brick homes",
-      "Installation in 5-7 days",
+      "On-site installation time depends on the layout and site readiness",
       "Structural warranty as set out on our Warranty page",
       "Pick your own interiors",
     ],
@@ -624,7 +624,7 @@ export const products: Product[] = [
       { label: "Lifespan", value: "15–25 years with proper maintenance" },
     ],
     features: [
-      "Quick installation in 1–7 days",
+      "Optional on-site installation, added at checkout",
       "30–40% cheaper than traditional construction",
       "Easy relocation between project sites",
       "Thermal insulation for Indian climate",
@@ -800,7 +800,7 @@ export const products: Product[] = [
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
     description:
-      "Factory-built steel cabins for site offices, staff rooms, security posts and worker housing — delivered ready to use anywhere in India. The whole cabin is built in our factory — welded MS frame, insulated walls, sloping roof, flooring, wiring, doors and windows — then loaded onto a truck and placed on your site, so most customers are working inside it the same day it arrives. A steel cabin takes monsoon rain, dust, forklifts brushing past and repeated crane lifts in its stride; with a proper primer and topcoat the frame and walls last 15 to 20 years or more on basic maintenance. When one site finishes, the same cabin goes on a truck to the next one.",
+      "Factory-built steel cabins for site offices, staff rooms, security posts and worker housing — delivered ready to use anywhere in India. The whole cabin is built in our factory — welded MS frame, insulated walls, sloping roof, flooring, wiring, doors and windows — then loaded onto a truck and placed on your site, arriving finished rather than built on site. A steel cabin takes monsoon rain, dust, forklifts brushing past and repeated crane lifts in its stride; with a proper primer and topcoat the frame and walls last 15 to 20 years or more on basic maintenance. When one site finishes, the same cabin goes on a truck to the next one.",
     shortDescription:
       "Factory-built insulated steel cabin, priced here as the 20 × 10 ft build — site offices, staff rooms, security posts and worker housing, delivered ready to use.",
     specifications: [
@@ -1202,13 +1202,13 @@ export const products: Product[] = [
       { label: "Thermal Range", value: "-5°C to 50°C ambient" },
       { label: "Configurations", value: "G, G+1, G+2 dormitory and staff blocks" },
       { label: "Capacity", value: "8–24 persons per module (bunk bed layout)" },
-      { label: "Installation", value: "Factory prep 2–4 weeks + site install 7–21 days" },
+      { label: "Installation", value: "Optional — on-site time depends on the number of units, the layout and site readiness" },
       { label: "Design Life", value: "10–15+ years, reusable across 3–5 project sites" },
       { label: "Compliance", value: "BOCW Act, NBC 2016, IS 456/800/875" },
     ],
     features: [
       "20–30% cheaper than traditional RCC/brick construction with 80% material recovery on relocation",
-      "G+1 colony for 100–300 workers installs in 3–6 weeks versus months for traditional construction",
+      "A G+1 colony for 100–300 workers needs far less time on site than traditional construction",
       "Fire-retardant panels (BS 476 Class 1) with concealed FRLS wiring",
       "Cross-ventilation with MS grill windows, mosquito nets, and AC provisions",
       "Complete colony packages: dormitories, canteens, toilets, first-aid centres, security cabins",
@@ -1243,7 +1243,7 @@ export const products: Product[] = [
     ],
     features: [
       "40–60% lower cost than conventional RCC construction with minimal waste",
-      "Installation in hours to 2 days versus months for traditional buildings",
+      "Far less time on site than traditional buildings",
       "Relocatable 5–10 times over lifespan with bolted joint assembly",
       "PUF insulation reduces AC loads by up to 30% in extreme heat",
       "90% recyclable materials with zero construction debris",
@@ -1274,7 +1274,7 @@ export const products: Product[] = [
       { label: "Reusability", value: "3–10 project cycles with 90–95% material recovery" },
     ],
     features: [
-      "10–20 day installation for 100-person camp versus 60–90 days for masonry",
+      "Far less time on site than masonry for a 100-person camp",
       "20–35% lifecycle savings through reusability across 3–10 projects",
       "30–60mm PUF/EPS insulation reduces indoor temperatures by 10–15°C",
       "Pre-planned toilets, bathing areas, water tanks, and septic systems",
@@ -1293,7 +1293,7 @@ export const products: Product[] = [
     name: "Cabin Portable",
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
-    description: "Complete cabin portable solutions including site offices, worker accommodation, security cabins, portable toilets, and container conversions. MS, GI, FRP, and sandwich panel construction with 10-25 year lifespan. 40-60% cheaper than RCC construction with 1-2 day installation across India.",
+    description: "Complete cabin portable solutions including site offices, worker accommodation, security cabins, portable toilets, and container conversions. MS, GI, FRP, and sandwich panel construction with 10-25 year lifespan. 40-60% cheaper than RCC construction, delivered across India.",
     shortDescription: "Complete guide to portable cabins, offices & site solutions – MS, GI, container-based units for construction, industrial & commercial projects across India.",
     specifications: [
       { label: "Structure Types", value: "MS Framed, GI Modular, Container Conversion, Sandwich Panel" },
@@ -1311,7 +1311,7 @@ export const products: Product[] = [
     ],
     features: [
       "40-60% cheaper than RCC construction",
-      "Installation in 1-2 days after delivery",
+      "Optional on-site installation, added at checkout",
       "10-25 year lifespan with basic maintenance",
       "PUF/EPS/Rockwool insulated panels for climate control",
       "Pre-wired electrical systems with MCBs & LED lighting",
@@ -1630,7 +1630,7 @@ export const products: Product[] = [
     slug: "shipping-container-in-peenya-industrial",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    description: "Shipping containers for Peenya Industrial Area, Bengaluru — new and used 20 ft & 40 ft ISO units for storage, container offices, security cabins, labour accommodation, and modular conversions. 2–5 day setup across all four phases of Asia's largest industrial hub.",
+    description: "Shipping containers for Peenya Industrial Area, Bengaluru — new and used 20 ft & 40 ft ISO units for storage, container offices, security cabins, labour accommodation, and modular conversions. Supplied across all four phases of Asia's largest industrial hub.",
     shortDescription: "Shipping containers for Peenya Industrial Area — storage, offices & modular solutions along Tumkur Road",
     specifications: [
       { label: "Sizes Available", value: "20 ft, 40 ft GP & 40 ft HC" },
@@ -1813,7 +1813,7 @@ export const products: Product[] = [
     name: "Workmen Accommodation",
     category: "G+1 Workmen Accommodation",
     categorySlug: "g1-workmen-accommodation",
-    description: "Prefabricated workmen accommodation — labour colonies, portable camps, and modular dormitory blocks for 50–500 workers. G+1 double-storey designs with PUF insulation, sanitary blocks, kitchens, and dining halls. 20–40% cheaper than RCC with 2–4 week installation across India.",
+    description: "Prefabricated workmen accommodation — labour colonies, portable camps, and modular dormitory blocks for 50–500 workers. G+1 double-storey designs with PUF insulation, sanitary blocks, kitchens, and dining halls. 20–40% cheaper than RCC, installed across India.",
     shortDescription: "Prefab labour colonies & portable camps for 50–500 workers — G+1 modular blocks with turnkey delivery in 2–4 weeks.",
     specifications: [
       { label: "Capacity Range", value: "50–500+ workers per colony" },
@@ -1848,7 +1848,7 @@ export const products: Product[] = [
     name: "Labour Colony",
     category: "G+1 Workmen Accommodation",
     categorySlug: "g1-workmen-accommodation",
-    description: "Prefabricated labour colony — structured worker accommodation for construction sites, metro rail projects, refineries, and industrial plants. Single-storey, G+1, and G+2 modular configurations with dormitories, kitchens, toilets, and dining halls. 20–40% cheaper than RCC with 2–4 week installation across India.",
+    description: "Prefabricated labour colony — structured worker accommodation for construction sites, metro rail projects, refineries, and industrial plants. Single-storey, G+1, and G+2 modular configurations with dormitories, kitchens, toilets, and dining halls. 20–40% cheaper than RCC, installed across India.",
     shortDescription: "Prefab labour colonies for 50–500+ workers — G+1/G+2 modular blocks with turnkey delivery across India.",
     specifications: [
       // First row on purpose: this is the configuration the indicative price on the page

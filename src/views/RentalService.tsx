@@ -426,7 +426,7 @@ const benefits = [
   {
     icon: Truck,
     title: "Delivery & Setup",
-    description: "Delivery and installation by our own team. Ready-stock rental units are typically delivered within 48 hours of confirmation, subject to availability. Transport is charged as per distance and confirmed in your written quotation"
+    description: "Delivery and installation by our own team. Ready-stock rental units are typically delivered within 48 hours of confirmation, subject to availability. Transport is set out in your written quotation"
   },
   {
     icon: Wrench,
@@ -435,7 +435,7 @@ const benefits = [
   },
   {
     icon: Shield,
-    title: "Quality Guaranteed",
+    title: "Inspected Before Delivery",
     description: "All cabins are thoroughly inspected and sanitized before delivery"
   }
 ];
@@ -707,7 +707,7 @@ export default function RentalServicePage() {
                           </div>
 
                           <div className="text-xs text-muted-foreground mb-4">
-                            <p>✓ Delivery Charges: Applicable as per distance (delivery not included)</p>
+                            <p>✓ Delivery Charges: set out in your written quotation (not included in the rental rate)</p>
                             <p>✓ Min. rental: {cabin.minRental}</p>
                           </div>
 

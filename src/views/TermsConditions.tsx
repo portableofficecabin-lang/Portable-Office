@@ -62,7 +62,7 @@ export default function TermsConditionsPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> 17 July 2026
+            <strong>Last updated:</strong> October 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             Welcome to Portable Office Cabin. These Terms and Conditions govern your use of our website, products, and services. By placing an order, booking an appointment, or using any part of our website, you agree to be bound by the terms outlined below.
@@ -118,7 +118,7 @@ export default function TermsConditionsPage() {
 
           <Section title="5. Order Cancellation" index={4}>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Orders can be cancelled within 48 hours of confirmation, provided manufacturing has not yet started. A full refund of the advance will be processed in this case.</li>
+              <li>Orders can be cancelled within 48 hours of confirmation, provided manufacturing has not yet started. A full refund will be processed in this case — of the amount paid for an online order (paid in full at checkout), or of the advance for a custom order on the quotation route.</li>
               <li>If manufacturing has already begun, cancellation charges will apply based on the work completed and materials consumed.</li>
               <li>Custom-built products made to your specific requirements are non-cancellable once production has started.</li>
             </ul>

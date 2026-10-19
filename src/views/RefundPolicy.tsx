@@ -95,7 +95,12 @@ export default function RefundPolicyPage() {
 
           <Section title="1. Order Cancellation Rules" index={0}>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of any advance payment, provided manufacturing has not yet commenced.</li>
+              {/* Split by payment route (2026-10-19): online orders are paid in full at checkout (section 2), so
+                  "a full refund of any advance payment" did not describe them. Same 48-hour window and the same
+                  "manufacturing has not yet commenced" condition for both; the online wording matches the
+                  published Container Offices FAQ ("cancelled for a full refund within 48 hours"). */}
+              <li><strong>Online orders (paid in full at checkout) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the amount paid, provided manufacturing has not yet commenced.</li>
+              <li><strong>Custom orders (advance paid on the quotation route) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the advance payment, provided manufacturing has not yet commenced.</li>
               <li><strong>After 48 hours / manufacturing started:</strong> If production has already begun, the order cannot be fully cancelled. Cancellation charges will apply based on the extent of work completed and materials consumed.</li>
               <li><strong>Custom orders:</strong> Products built to your specific dimensions, design, or layout requirements are non-cancellable once manufacturing has started, as these units cannot be repurposed for other customers.</li>
             </ul>

@@ -129,7 +129,7 @@ export function PrefabPortaCabinContent() {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { icon: Zap, title: "Rapid Deployment", desc: "Installation in hours to 2 days versus months for RCC buildings" },
+            { icon: Zap, title: "Rapid Deployment", desc: "Far less time on site than RCC buildings" },
             { icon: Shield, title: "Cost Effectiveness", desc: "40–60% lower than conventional construction with less waste" },
             { icon: RotateCcw, title: "Relocatable Design", desc: "Units can be shifted 5–10 times over their lifespan without structural degradation" },
             { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation reduces AC loads by up to 30% in extreme heat" },
@@ -336,7 +336,7 @@ export function PrefabPortaCabinContent() {
           Price of This Prefab Porta Cabin
         </h2>
         <p className="text-muted-foreground mb-6">
-          This cabin is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode — there is no separate negotiation and no hidden extra.
+          This cabin is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport is calculated at checkout from your delivery pincode, and optional installation is a separate fixed line — both are shown before you pay.
         </p>
 
         <h3 className="font-semibold text-foreground mb-3">Options that change the specification (and are quoted separately):</h3>
@@ -405,7 +405,7 @@ export function PrefabPortaCabinContent() {
               ))}
             </ul>
             <p className="text-sm text-muted-foreground mt-3 italic">
-              Installation typically completes in a few hours to one day for standard cabins, causing minimal disruption to ongoing site work.
+              Standard cabins arrive factory-finished, so installation causes minimal disruption to ongoing site work.
             </p>
           </div>
         </div>

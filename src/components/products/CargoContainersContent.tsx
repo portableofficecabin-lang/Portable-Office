@@ -485,7 +485,7 @@ export function CargoContainersContent() {
             <div className="space-y-2">
               <h3 className="font-semibold text-foreground">Advantages for developers:</h3>
               <ul className="text-muted-foreground text-sm space-y-1">
-                <li>• Fast deployment: typically 30–60 days from design to installation</li>
+                <li>• Fast deployment: your written quotation sets out the programme from design to installation</li>
                 <li>• Factory-controlled quality and consistent finishes</li>
                 <li>• High structural strength from original container frame</li>
                 <li>• Relocatability for project-based applications</li>

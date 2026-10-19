@@ -19,7 +19,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What is the price of a shipping container in Bangalore?",
     answer:
-      "Prices start from ₹1.5 lakh for basic models. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. We provide detailed written quotes with no hidden charges.",
+      "Prices start from ₹1.5 lakh for basic models. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. Your detailed written quote lists GST and transport separately.",
   },
   {
     question: "How long does delivery take in Bangalore?",
@@ -223,7 +223,7 @@ export function ShippingContainerBangaloreContent() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote with no hidden charges.</p>
+        <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote that lists GST and transport separately.</p>
         <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture in-house at our own Tamil Nadu factory near Hosur rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
       </section>
 
@@ -298,7 +298,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days.
+              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer; unloading by crane or Hydra is optional and set out in your written quotation. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (

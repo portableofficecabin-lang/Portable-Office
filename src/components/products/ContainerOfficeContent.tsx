@@ -216,7 +216,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             {
               icon: Truck,
               title: "Speed of Deployment",
-              desc: "Factory production runs parallel to site preparation. A single-container office can be installed and commissioned within one working day.",
+              desc: "Factory production runs parallel to site preparation. Installation and commissioning time depends on site readiness and service connections.",
             },
             {
               icon: CheckCircle,
@@ -465,7 +465,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
           <div>
             <h3 className="font-display text-xl font-semibold text-foreground mb-3">Installation</h3>
             <p className="text-muted-foreground mb-4">
-              A crane or hydra positions units onto prepared foundations—a process taking hours rather than days. Utility connections follow: electrical, plumbing, and telecom. Standard single-container offices achieve full commissioning within one working day.
+              A crane or hydra positions units onto prepared foundations. Utility connections follow: electrical, plumbing, and telecom. Commissioning time depends on site readiness and service connections.
             </p>
 
             <h3 className="font-display text-xl font-semibold text-foreground mb-3">Relocation</h3>
@@ -747,7 +747,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
                 ]),
             {
               q: "How quickly can a container office be deployed?",
-              a: "Factory production takes 4–6 weeks from order. Once delivered, a single-container office can be installed and commissioned within one working day when site preparation is complete.",
+              a: "Standard products bought online are dispatched within 7–15 working days of order confirmation; custom builds follow the timeline in your written quotation. Once delivered, installation and commissioning time depends on site readiness and service connections.",
             },
             {
               q: "Can we relocate the container office to another city?",

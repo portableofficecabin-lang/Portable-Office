@@ -469,7 +469,7 @@ export default function CheckoutPage() {
                               ) : (
                                 <span>transport {formatINR(totals.zone.rate)}</span>
                               )}
-                              . Estimated delivery {eta.min}–{eta.max} days from payment.
+                              . Estimated delivery {eta.min}–{eta.max} working days from payment.
                             </span>
                           </p>
                         )}

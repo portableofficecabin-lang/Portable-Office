@@ -310,7 +310,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
           {[
             {
               question: "How quickly can a construction site portable office be installed?",
-              answer: "Most standard units are fabricated in 10–20 working days and placed on site within hours once transport and crane access are arranged.",
+              answer: "Standard units bought online are dispatched within 7–15 working days of order confirmation; placement on site follows once transport and crane access are arranged.",
             },
             {
               question: "Is buying a site office cabin a good investment?",

@@ -69,7 +69,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
             { icon: ArrowRightLeft, title: "Easy Relocation", desc: "Minimal disassembly between project sites" },
             /* Purchasable SKU: "per sq ft pricing" is a rate-based framing that contradicts the
                fixed checkout price — the offer branch keeps the argument, drops the rate model. */
-            { icon: IndianRupee, title: "Predictable Cost", desc: offer ? "One fixed price with no hidden civil work expenses" : "Per sq ft pricing with no hidden civil work expenses" },
+            { icon: IndianRupee, title: "Predictable Cost", desc: offer ? "One fixed price, with transport and optional installation shown before you pay" : "Per sq ft pricing, confirmed in your written quotation" },
             { icon: Building2, title: "Minimal Foundation", desc: "Simple concrete blocks suffice" },
             { icon: ShieldCheck, title: "Factory-Built Quality", desc: "Better quality control under controlled conditions" },
             { icon: Package, title: "Reusable", desc: "Across 3-5 projects with proper maintenance" },

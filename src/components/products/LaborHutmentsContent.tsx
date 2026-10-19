@@ -29,7 +29,7 @@ export function LaborHutmentsContent() {
           Labor hutments serve as temporary and semi-permanent housing for workers at construction sites, infrastructure development projects, and industrial locations across India. From metros like Mumbai, Delhi NCR, Bengaluru, Hyderabad, and Ahmedabad to remote project sites in the Middle East and Africa, these prefabricated structures provide affordable housing for the workforce powering large-scale developments.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach ensures rapid installation — typically 5–15 days for small colonies — along with significant cost savings versus brick-and-mortar construction, reusability between projects, and improved living standards for labourers.
+          Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach means most of the work is done in the factory, shortening on-site installation, along with significant cost savings versus brick-and-mortar construction, reusability between projects, and improved living standards for labourers.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This article covers: types of hutments and building configurations, design features including insulation, safety, and sanitary fixtures, customization options for specific requirements, specification factors, installation timelines and typical applications.
@@ -318,7 +318,7 @@ export function LaborHutmentsContent() {
           With years of experience serving India's leading construction and infrastructure development projects, Portable Office Cabin has become a trusted name in prefabricated labour hutments and modular building solutions. Our team of experts collaborates closely with clients to understand their specific requirements, ensuring that every prefabricated structure is tailored to the unique demands of each site and industry.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          All our prefabricated labor hutments are constructed off site in controlled environments using high quality materials, which guarantees consistent quality and rapid installation at your desired location. This off-site manufacturing approach not only speeds up project timelines but also minimizes disruption at the construction site, allowing your operations to continue smoothly.
+          All our prefabricated labor hutments are constructed off site in controlled environments using high quality materials, for consistent quality and quicker installation at your desired location. This off-site manufacturing approach not only speeds up project timelines but also minimizes disruption at the construction site, allowing your operations to continue smoothly.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
           We prioritize compliance with safety regulations and use weather resistant materials to ensure long-term durability, even in challenging environments. Our solutions are designed to be cost effective, supporting your workforce with reliable, comfortable accommodation that stands up to daily use and harsh conditions.
