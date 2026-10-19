@@ -1,4 +1,99 @@
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { NextConfig } from "next";
+
+/* ── DEPLOYMENT IDENTITY ──────────────────────────────────────────────────────────────────────
+ * Ties the running site to the exact Git commit it was built from. It is read back from
+ * GET /api/build-info and by the post-deploy check in .github/workflows/deploy-hostinger.yml.
+ *
+ * WHY: Next's default BUILD_ID is a random string. The VPS builds the site itself (the legacy
+ * in-place script, or the release-based deploy/deploy-portable-office.sh), so nothing that a
+ * visitor or the deploy workflow could see said which commit is live, and a deploy could only
+ * be checked by status codes.
+ *
+ * WHAT: three values, fixed ONCE per `next build`:
+ *   commit  — 40-hex SHA. The first valid one of:
+ *               DEPLOY_COMMIT_SHA (explicit override)
+ *               REVISION (written by the release script; its git-archive export has no .git)
+ *               `git rev-parse HEAD` (the legacy in-place checkout, and CI)
+ *               GITHUB_SHA
+ *             else "unknown"
+ *   builtAt — ISO time when the build started
+ *   buildId — "<sha12>_<base36 ms>", 21 characters. It is still unique per build, so a re-run of
+ *             the same commit gets a new id and the stale-page checks keep working, and it now
+ *             names its commit. It is returned from generateBuildId, so it IS Next's BUILD_ID, the
+ *             "b" value every page carries. An underscore, not a hyphen: Next writes the id into
+ *             build-time-prerendered pages as <!--id--> with "-" rewritten to "_" and the id cut
+ *             to 24 characters, so this form makes that comment match the id exactly.
+ * Next loads this file in its build worker processes as well. The first load stores the values
+ * in process.env (inherited by workers), so .next/BUILD_ID and the values inlined into
+ * /api/build-info always agree.
+ *
+ * PUBLIC BY DESIGN: the repository is public, so the commit SHA is not secret, and the build id
+ * is already in every page's HTML. Nothing else (env, paths, hosts, versions) is exposed. */
+const COMMIT_SHA = /^[0-9a-f]{40}$/;
+const IDENTITY_ENV = "__POC_DEPLOYMENT_IDENTITY";
+
+function resolveCommit(): string {
+  const sources: Array<() => string | undefined> = [
+    () => process.env.DEPLOY_COMMIT_SHA,
+    () => {
+      const file = join(process.cwd(), "REVISION");
+      return existsSync(file) ? readFileSync(file, "utf8") : undefined;
+    },
+    () =>
+      execFileSync("git", ["rev-parse", "HEAD"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+        timeout: 5000,
+      }),
+    () => process.env.GITHUB_SHA,
+  ];
+  for (const source of sources) {
+    try {
+      const sha = source()?.trim().toLowerCase();
+      if (sha && COMMIT_SHA.test(sha)) return sha;
+    } catch {
+      /* not available here — try the next source */
+    }
+  }
+  return "unknown";
+}
+
+function deploymentIdentity(): { commit: string; buildId: string; builtAt: string } {
+  // Re-use the identity a parent build process stored, but only if every field has the shape this
+  // file produces. Nothing taken from the environment can reach /api/build-info unchecked.
+  const inherited = process.env[IDENTITY_ENV];
+  if (inherited) {
+    try {
+      const v = JSON.parse(inherited);
+      if (
+        (v.commit === "unknown" || COMMIT_SHA.test(v.commit)) &&
+        /^[a-z0-9]{1,12}_[a-z0-9]{1,12}$/.test(v.buildId) &&
+        typeof v.builtAt === "string" &&
+        !Number.isNaN(Date.parse(v.builtAt)) &&
+        new Date(v.builtAt).toISOString() === v.builtAt
+      ) {
+        return { commit: v.commit, buildId: v.buildId, builtAt: v.builtAt };
+      }
+    } catch {
+      /* malformed — recompute below */
+    }
+  }
+  const commit = resolveCommit();
+  const now = new Date();
+  const identity = {
+    commit,
+    builtAt: now.toISOString(),
+    buildId: `${commit === "unknown" ? "nocommit" : commit.slice(0, 12)}_${now.getTime().toString(36)}`,
+  };
+  process.env[IDENTITY_ENV] = JSON.stringify(identity);
+  return identity;
+}
+
+const identity = deploymentIdentity();
 
 // Content-Security-Policy.
 // A static (non-nonce) policy is used deliberately so the site's static/ISR
@@ -101,6 +196,14 @@ const PUBLIC_HTML_MATCHER =
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
+  // Deployment identity (see the top of this file): the BUILD_ID names its commit, and the same
+  // values are inlined for app/api/build-info/route.ts.
+  generateBuildId: async () => identity.buildId,
+  env: {
+    BUILD_INFO_COMMIT: identity.commit,
+    BUILD_INFO_BUILD_ID: identity.buildId,
+    BUILD_INFO_BUILT_AT: identity.builtAt,
+  },
   experimental: {
     // Tree-shake large barrel packages so route chunks only include the icons /
     // components actually used, reducing JS parsed and executed on the client.
@@ -208,6 +311,35 @@ const nextConfig: NextConfig = {
       // Other legacy aliases that point at the canonical short slugs / products.
       { source: "/products/shipping-container", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-storage-container-shipping-container", destination: "/products/20ft-40ft-storage-container-corten-steel", statusCode: 301 },
+      // ── City-page aliases ──────────────────────────────────────────────────
+      // The Kudankulam page went live as /cities-we-serve/container-office-in-kudankulam-tirunelveli
+      // (#138). The shorter /cities-we-serve/container-office-in-kudankulam (the never-published first
+      // draft's slug) is a natural guess, and visitors arrived there from an AI-assistant link
+      // (?utm_source=chatgpt.com) and got a 404, because dynamicParams:false 404s every unknown city
+      // slug. The owner's content draft suggested /container-office-kudankulam-tirunelveli, and the
+      // page names the Koodankulam spelling, so those 301 too. A config redirect runs before
+      // routing; it forwards the query string (harmless here, since the page's canonical is the
+      // clean URL).
+      {
+        source: "/cities-we-serve/container-office-in-kudankulam",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
+      {
+        source: "/cities-we-serve/container-office-in-koodankulam",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
+      {
+        source: "/cities-we-serve/container-office-kudankulam-tirunelveli",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
+      {
+        source: "/container-office-kudankulam-tirunelveli",
+        destination: "/cities-we-serve/container-office-in-kudankulam-tirunelveli",
+        statusCode: 301,
+      },
       // NOTE: legacy `/products?category=<x>` URLs 301 → `/products/category/<x>`
       // in middleware.ts. It is handled there (not here) because next.config
       // redirects always forward the original query string, so a config redirect

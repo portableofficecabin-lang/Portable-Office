@@ -352,7 +352,7 @@ export function LabourHutmentsStaffAccommodationContent() {
             { label: "Reuse Potential", value: "3–5 project cycles with 40–50% steel salvage value" },
             { label: "Repainting", value: "Every 3–5 years (coastal/industrial areas)" },
             { label: "Panel Replacement", value: "Individual sections replaceable without full disassembly" },
-            { label: "Warranty", value: "1–2 years structural, 5 years panels" },
+            { label: "Warranty", value: "As per our published warranty policy (structural cover by material)" },
             { label: "AMC", value: "Annual maintenance contracts available for large colonies" },
           ].map((item) => (
             <div key={item.label} className="bg-card rounded-lg p-4 border border-border">

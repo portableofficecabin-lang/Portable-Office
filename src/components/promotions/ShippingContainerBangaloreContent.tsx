@@ -49,7 +49,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What maintenance does a container need?",
     answer:
-      "Very little. We recommend repainting every few years and periodic checks of door seals and fittings. Maintained this way, a container lasts 15–20 years or more, and every unit carries our 10-year structural warranty.",
+      "Very little. We recommend repainting every few years and periodic checks of door seals and fittings. Maintained this way, a container lasts 15–20 years or more. Warranty cover follows our published warranty policy; the full terms are on our Warranty page.",
   },
   {
     question: "Can you deliver outside Bangalore?",
@@ -122,7 +122,7 @@ const DELIVERY_AREAS = ["Whitefield", "Electronic City", "Peenya", "Bommasandra"
 const WHY_US = [
   "Manufacturer, not middleman — factory-direct pricing from our own Kamandoddi (Tamil Nadu) factory near Hosur, about 40 km from Bangalore",
   "15+ years of manufacturing experience and 500+ projects delivered across India",
-  "10-year structural warranty on every unit",
+  "Material-based structural warranty, as set out on our Warranty page",
   "End-to-end service: design, fabrication, delivery, installation, and after-sales support",
   "GST-registered and verified (GSTIN: 33FVKPK6238Q1ZT) with transparent, written quotations",
   "Pan-India delivery if your project moves beyond Bangalore",

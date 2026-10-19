@@ -29,6 +29,13 @@ export interface CityPageLink {
   href: string;
 }
 
+/** An optional extra H2 section (see CityPage.extraSections). */
+export interface CityPageSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: CityPageListItem[];
+}
+
 export interface CityPage {
   /** URL slug under /cities-we-serve/, e.g. "container-office-in-jigani". */
   slug: string;
@@ -118,6 +125,15 @@ export interface CityPage {
 
   howHeading: string;
   howSteps: CityPageListItem[];
+
+  /**
+   * Optional extra H2 sections rendered after the "how" steps and before the FAQs, for owner copy
+   * with more sections than the fixed slots hold (first used by Portable Cabins in Tumkur). Each
+   * renders its heading, its paragraphs, then an optional "title: text" bullet list, with the same
+   * classes and motion as the fixed sections. Unset = nothing rendered, so every other page's HTML
+   * is unchanged.
+   */
+  extraSections?: CityPageSection[];
 
   faqs: CityPageFaq[];
 
@@ -308,6 +324,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       // Sibling page (2026-10-12): the shipping-container box itself for Jigani; it links back here.
       { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
+      // Sibling page (#145): the portable-cabin intent for Jigani; it links back here.
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
     ],
   },
 
@@ -687,6 +705,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
@@ -695,6 +714,346 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a container depot or yard in Jigani. Shipping containers are supplied subject to availability, and the specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The images on this page are illustrative renders of representative 20 ft and 40 ft dry shipping containers and are not photographs of stock held in Jigani. KIADB (Karnataka Industrial Areas Development Board), industrial areas and roads are named only to describe delivery locations; Portable Office Cabin is not affiliated with KIADB or with any industrial estate named here. Container dimensions, floor areas and grade descriptions are indicative trade figures, and notes on export suitability, certification, floor loading, foundations and permissions are general guidance, not engineering or legal advice — confirm export requirements with the carrier, structural loads with a qualified engineer and permissions with the competent local or industrial authority.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN JIGANI (Anekal taluk, Bengaluru) — the portable-cabin intent for Jigani:
+   * gate and security cabins, time offices, driver rest rooms, builders' site offices, labour
+   * accommodation, toilet units, container offices and stores, and sales cabins for the KIADB
+   * Jigani and Bommasandra industrial areas and the Jigani–Anekal Road projects. The third Jigani
+   * page beside container-office-in-jigani and shipping-container-in-jigani; it links to both. Not a
+   * container-office cluster location, so the /cities-we-serve index lists it with the local-service
+   * pages.
+   *
+   * Owner copy of 2026-10-17 ("Portable Cabins in Jigani — Website City Page Content"), mapped onto
+   * the fixed template slots the same way as Portable Cabins in Tumkur. The H1, meta title, meta
+   * description and slug are verbatim. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Jigani Runs on Factories…" → why: its first paragraph as whyIntro, the next three as bullets
+   *     (short titles added), the plant-rearranging line as whyOutro.
+   *   • "How Businesses in Jigani Use Our Cabins" → solutions: its eight H3s as the numbered H3s.
+   *   • "What Goes Into Every Cabin" → features: the seven table rows as "Part — typical build;
+   *     options: …", the closing line as sizesNote.
+   *   • "Built for Bengaluru Weather and Jigani Dust" → industries (heat, rain, dust), and
+   *     "Ready-Made, Custom-Built or Rented" → the custom slot beside the interior render, so the
+   *     owner's section order is kept.
+   *   • "Why Jigani Customers Work With Us" → whyUs, "Areas We Deliver Near Jigani" → areasText,
+   *     "Getting a Cabin into Your Jigani Site" → how (four steps). The template renders these three
+   *     in that order (the Tumkur arrangement).
+   *   • "How We Price a Portable Cabin in Jigani" → extraSections; its closing line moves above the
+   *     list because a section renders its paragraphs first.
+   *   • FAQs: the owner's eight. CTA: the phone number and email come from COMPANY (the draft's
+   *     "[Your …]" placeholders are not published).
+   * Owner wording rule (the Kudankulam / Tumkur rule) applied to the draft's "Claims to Verify"
+   * list: specifications and finishes are options confirmed in the approved specification and
+   * quotation; rental is subject to availability; the towns are delivery enquiry locations; placement
+   * time, the base and crane responsibilities are confirmed per site; no "serve regularly", "same
+   * day", "in days" or plant-rules promises; permission notes are general guidance. "Why Jigani
+   * Customers Work With Us" reads "Why Work With Us Around Jigani" (no customer claims). The H1
+   * "Delivered Ready to Use" is qualified in the intro. No ₹, lead times, warranty terms or
+   * superlatives. Kept apart from container-office-in-jigani: no "container office Jigani" meta
+   * keyword, cross-links only.
+   *
+   * Images: three owner-dropped webp renders ("public/images/cities/Portable Cabins in Jigani city
+   * page/…/cabin (1–3).webp"), copied byte-for-byte to clean slug names: the front elevation
+   * (1184×864) = hero / og:image, with no caption (owner preference); the office interior
+   * (1200×896) = beside the ready-made / custom / rented section; the three-quarter view (1200×896)
+   * = a one-image gallery after the parts list. The interior caption and the disclaimer say they
+   * are illustrative and that the solar panels, furniture and landscaping shown are not included
+   * unless quoted.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-in-jigani",
+    city: "Jigani",
+    listTitle: "Portable Cabins in Jigani",
+    metaTitle: "Portable Cabins in Jigani | Security & Site Office Cabins",
+    metaDescription:
+      "Need a portable cabin in Jigani? We build security cabins, site offices, labour rooms and toilet units for factories and builders around Jigani and Anekal.",
+    keywords:
+      "Portable Cabin in Jigani, Portable Cabin Jigani Industrial Area, Security Cabin Jigani, Site Office Cabin Jigani, Portable Cabin Bommasandra, Portable Cabin Anekal, Labour Cabin Jigani, Portable Cabin on Rent in Jigani, Portable Cabin Manufacturer near Jigani",
+    geo: { region: "IN-KA", placename: "Jigani, Anekal Taluk, Bengaluru, Karnataka, India", position: "12.7861;77.6386", icbm: "12.7861, 77.6386" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-in-jigani/portable-cabin-in-jigani-front-elevation.webp",
+      alt: "Portable cabin in Jigani — illustrative render of a container-style portable cabin with two-tone grey corrugated walls, two steel doors, two framed windows and solar panels on the roof, behind a landscaped paved yard",
+      width: 1184,
+      height: 864,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-in-jigani/portable-cabin-in-jigani-interior.webp",
+      alt: "Portable cabin in Jigani — illustrative render of an optionally furnished office interior with desks, monitors and mesh chairs, a low storage unit, light grey wall panels, flush LED ceiling lights, framed windows, internal doors and wood-look flooring",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-in-jigani/portable-cabin-in-jigani-three-quarter-view.webp",
+        alt: "Portable cabin in Jigani — illustrative three-quarter view of the container-style cabin showing two steel doors, three framed windows, the end wall and roof-mounted solar panels, on a landscaped paved yard",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Cabins in Jigani, Delivered Ready to Use",
+    tagline: "If you've driven down Jigani Link Road around shift change, you know the scene.",
+    intro: [
+      "Company buses lined up at the gates, trucks waiting to load, and a new building coming up on a plot that was empty last year. Jigani keeps growing, and almost everyone here runs into the same problem sooner or later. There just isn't enough room.",
+      "Maybe your security guard is working from a plastic chair under a tin sheet. Maybe your site engineer is running a 200-flat project out of a car. Or maybe the factory needs a QC room by next month, and the civil contractor is talking about three.",
+      "A portable cabin solves all of these without months of masonry work. We build them, welcome delivery enquiries from across Jigani and the Anekal belt, and place them so you can start using the cabin once it sits on the prepared base and the power is connected. Placement time and base requirements depend on the site and are confirmed in the quotation.",
+    ],
+
+    whyHeading: "Jigani Runs on Factories, and Factories Always Need More Room",
+    whyIntro:
+      "The KIADB industrial area at Jigani, along with the Bommasandra estate right next door, is packed with units of every size, from small fabrication shops to large manufacturing plants.",
+    whyBullets: [
+      {
+        title: "Space is short",
+        text: "Add the apartment projects along Jigani–Anekal Road, the warehouses toward Attibele and the metro now reaching Bommasandra, and you get a place where space is always short and time is even shorter.",
+      },
+      {
+        title: "Building inside a running plant is slow",
+        text: "Putting up a permanent room inside a running factory is a headache. There's digging, dust, approvals, and weeks of masons working around your forklifts.",
+      },
+      {
+        title: "A portable cabin skips all of that",
+        text: "It's built at our unit, arrives on a truck, is lifted into place by crane, and is ready to use once it is placed and the power line is connected.",
+      },
+    ],
+    whyOutro: "If you rearrange the plant later, the cabin simply moves with you.",
+
+    solutionsHeading: "How Businesses in Jigani Use Our Cabins",
+    solutionsIntro:
+      "Eight common uses around Jigani. Sizes, layouts and fittings are options confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Gate and Security Cabins",
+        text: "Often the first cabin a factory needs. Glass on three sides gives the guard a clear view of the gate and the road, with room inside for a desk, a visitor register and a CCTV monitor. They can be made as single-guard booths or as larger rooms for a full security team.",
+      },
+      {
+        title: "Time Office and Visitor Rooms",
+        text: "A small cabin near the gate for attendance, contractor passes and visitor check-in helps keep outsiders from wandering into the plant. It's one of the easiest ways to bring some order to how people enter your premises.",
+      },
+      {
+        title: "Driver Rest Rooms",
+        text: "Truck drivers often wait hours at the loading bay with nowhere to sit. A cabin with a fan, a bench, a drinking water point and an attached toilet makes a real difference to them, and it keeps your loading area clear too.",
+      },
+      {
+        title: "Site Offices for Builders",
+        text: "Apartment and villa projects around Jigani, Chandapura and Anekal need a proper base for engineers and supervisors. These can be planned with room for work desks, a drawing table and storage racks, with lights, fans and an AC point.",
+      },
+      {
+        title: "Labour Accommodation",
+        text: "Bunk-bed cabins with ventilation, lighting and charging points for site crews. When ground space is tight, which it usually is around here, they can be stacked two floors high with a steel staircase, subject to structural design and approvals.",
+      },
+      {
+        title: "Toilet Cabins",
+        text: "Ready-made toilet and bathroom units, single or in a row, Indian or Western style, with provision for a water tank. They're handy on construction sites, during factory expansions and at events, especially where the drainage isn't finished yet.",
+      },
+      {
+        title: "Container Offices and Stores",
+        text: "Tough, lockable container-style cabins in 20 ft and 40 ft sizes. Use one to store tools, spares and finished stock, or as a no-nonsense office that can handle daily knocks.",
+      },
+      {
+        title: "Sales and Experience Cabins",
+        text: "For real estate projects that need a smart front from day one. Think glass frontage, a false ceiling, an ACP or painted exterior in your brand colours, and enough space inside for a scale model and a seating corner.",
+      },
+    ],
+
+    featuresHeading: "What Goes Into Every Cabin",
+    featuresIntro:
+      "Every cabin is built from the same seven parts. Here is the typical build of each and what you can add; the items supplied are confirmed in the approved specification and quotation:",
+    features: [
+      "Frame — MS steel sections, welded and primed; options: heavier sections for stacked units.",
+      "Walls — steel sheet with insulation inside; options: PUF panels for better cooling.",
+      "Roof — sloped and sealed steel roof; options: extra insulation, rain gutter.",
+      "Floor — plywood or cement board base; options: vinyl sheet or ceramic tiles.",
+      "Doors and windows — steel door, sliding aluminium windows; options: glass door, more windows, grills.",
+      "Electricals — lights, fans, switchboard, MCB; options: AC point, extra sockets, exhaust fan.",
+      "Finish — anti-rust primer and enamel paint; options: ACP cladding, custom colours, branding.",
+    ],
+    sizesNote:
+      "Tell us what the cabin is for, and we'll suggest a sensible spec. We won't push extras you're never going to use.",
+
+    industriesHeading: "Built for Bengaluru Weather and Jigani Dust",
+    industriesIntro:
+      "Bengaluru is kinder than most cities, but three things still shape how a cabin is specified around Jigani. The insulation, roof, sealing and finishes supplied are confirmed in the approved specification and quotation.",
+    industries: [
+      {
+        title: "Heat",
+        text: "April afternoons still get warm inside a steel box. Insulated walls and roof keep the cabin comfortable, and the windows can be placed to catch a cross-breeze.",
+      },
+      {
+        title: "Rain",
+        text: "The September–October rains can be heavy. A sloped, sealed roof lets water run straight off, and if your plot tends to collect water, the cabin can be set on a slightly higher base.",
+      },
+      {
+        title: "Dust",
+        text: "With trucks moving in and out all day, industrial roads in Jigani are rarely clean. Well-fitting sliding windows, sealed joints and wipe-clean interior finishes keep the cabin tidy without it becoming a daily chore.",
+      },
+    ],
+
+    customHeading: "Ready-Made, Custom-Built or Rented",
+    customIntro: "Three ways to get a cabin:",
+    customBullets: [
+      {
+        title: "Ready-made portable cabins",
+        text: "Standard sizes and layouts. Usually the quickest route when you need a cabin soon and a standard layout does the job.",
+      },
+      {
+        title: "Custom-built portable cabins",
+        text: "Your size, your layout, your fittings. Partitions, a pantry, an attached toilet, extra windows, branding. It takes a little longer, and it's worth it for long-term use.",
+      },
+      {
+        title: "Portable cabins on rent",
+        text: "Monthly rental for short projects or a trial run, subject to availability. Low upfront cost, and we collect the cabin when you're done, as agreed in the quotation.",
+      },
+    ],
+    customOutro:
+      "Some people rent first and buy later, once they know exactly what works for them. Both are fine by us. Availability, timelines and rental terms are confirmed in the quotation.",
+
+    whyUsHeading: "Why Work With Us Around Jigani",
+    whyUsIntro: "What you can expect:",
+    whyUsBullets: [
+      {
+        title: "Close by",
+        text: "Our Bengaluru office is at Electronic City Phase 1, in Anekal taluk like Jigani, and our factory is near Hosur. Site visits, small changes and repairs are arranged as agreed in the quotation.",
+      },
+      {
+        title: "Quotes in writing, line by line",
+        text: "You'll know exactly what you're paying for before you say yes.",
+      },
+      {
+        title: "Steel that holds up",
+        text: "Proper sections, neat welds, and paint applied over primer rather than straight onto bare metal; material grades and the paint system follow the approved specification.",
+      },
+      {
+        title: "Your plant rules",
+        text: "Tell us your gate-pass, safety-shoe and work-timing requirements when you ask for a quotation, and delivery and placement are planned around them.",
+      },
+      {
+        title: "Changes later",
+        text: "Need a partition, another window, or the cabin shifted to a different corner of the plant? Modification and relocation enquiries are welcome, subject to technical feasibility and the agreed scope.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Near Jigani",
+    areasText:
+      "We welcome delivery enquiries from Jigani and the surrounding areas (Jigani Town, Jigani Industrial Area, Jigani Link Road, Haragadde, Kallubalu, Bukkasagara and Kyalasanahalli); the nearby industrial belts of Bommasandra, Attibele, Harohalli and Electronic City; and the towns and main roads of Anekal, Chandapura, Hennagara, Bannerghatta Road, Hosur Road and Sarjapura. If your site is anywhere in south Bengaluru or Anekal taluk, just give us a call. We confirm delivery feasibility and charges after reviewing the site and access.",
+
+    howHeading: "Getting a Cabin into Your Jigani Site",
+    howSteps: [
+      {
+        title: "A Quick Call or Site Visit",
+        text: "Share the size, what it's for and where it's going. If access looks tight, we'll check the gate width, any overhead cables and where the crane can stand, from photos or on a site visit where one is arranged.",
+      },
+      {
+        title: "A Drawing and a Written Quote",
+        text: "You get a simple layout and an itemised quote covering the cabin and, as applicable, transport, crane and unloading. Nothing gets added later without your OK.",
+      },
+      {
+        title: "Fabrication",
+        text: "We build the cabin at our unit while you get the base ready, which is usually a few concrete blocks or a small PCC bed. We'll send you the measurements; the base needed and the timelines are confirmed in the quotation.",
+      },
+      {
+        title: "Delivery and Setup",
+        text: "Delivery is planned around your shift timings and gate rules to keep disruption to production low. Crane, unloading and placement responsibilities are confirmed before dispatch; once the cabin is placed, we check the doors, windows and electricals and hand it over.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "How We Price a Portable Cabin in Jigani",
+        paragraphs: [
+          "There's no single price, because no two cabins are quite the same. Share the details below on a call or WhatsApp, and you'll get a written quote you can compare line by line with anyone else's.",
+          "Here's what shapes your quote:",
+        ],
+        bullets: [
+          { text: "The size you need, from a compact guard booth to a 40 ft office." },
+          { text: "The wall type and level of insulation." },
+          { text: "What goes inside, like flooring, false ceiling, electricals, AC or a toilet." },
+          { text: "Doors, windows and any partitions." },
+          { text: "Whether you buy it or rent it by the month." },
+          { text: "Crane and transport for your exact location." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a crane lift the cabin over our compound wall?",
+        answer:
+          "In many cases, yes. Placing a cabin over a wall is common. Before delivery day, the crane's reach, the cabin's weight and any overhead lines are checked, so nothing catches you off guard; crane and placement responsibilities are confirmed in the quotation.",
+      },
+      {
+        question: "Do we need permission to place a cabin inside our factory?",
+        answer:
+          "The rules differ between industrial estates, landlords and local bodies, and some treat a cabin differently from a permanent building. It's worth a quick check with your estate office, landlord or local authority. If they ask, we can share drawings and specifications.",
+      },
+      {
+        question: "How long does installation take on site?",
+        answer:
+          "Once the base is ready, placing the cabin and connecting the power is usually a short job compared with building on site; bigger or stacked units take longer. Placement time depends on the cabin, crane access and site conditions, and is confirmed in the quotation.",
+      },
+      {
+        question: "Can two cabins be joined to make one big room?",
+        answer:
+          "Yes, where the layout allows. Matching units can be built to join side by side, with the joint sealed, so together they work as one larger hall. The joint details are confirmed in the approved drawing.",
+      },
+      {
+        question: "Can I rent a cabin for just a few months?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. Monthly rental works well for short projects, audits, extra seasonal staff or temporary storage. The minimum rental period is mentioned in the quote.",
+      },
+      {
+        question: "Will the cabin rust?",
+        answer:
+          "Steel needs protecting, and how well a cabin resists rust depends on how it is built and painted. The paint system, such as an anti-rust primer under the final coat, is confirmed in the approved specification, and a repaint every few years keeps the cabin looking good.",
+      },
+      {
+        question: "Can you add an AC and a toilet inside?",
+        answer:
+          "Both can be included where technically suitable. We plan the AC point and the drainage at the drawing stage so everything lines up neatly.",
+      },
+      {
+        question: "What size will fit near my gate?",
+        answer:
+          "Send us a photo and rough measurements of the spot. We'll suggest a size that fits without blocking vehicle movement.",
+      },
+    ],
+
+    ctaHeading: "Short on Space in Jigani? Let's Sort It Out",
+    ctaText: `Tell us what you need the cabin for and where it's going. We'll send a drawing and a clear quote, and take it from there. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The quotation button plus the default call and WhatsApp buttons; an empty list drops the two
+    // container-office secondary buttons, as on Portable Cabins in Tumkur.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Container Cafe & Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
+      { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
+      { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a factory or yard in Jigani. Delivery, unloading and crane placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The sizes, layouts, insulation, fittings, finishes and other specification items described on this page, including the typical build listed for each part, are options; the items supplied are confirmed in the approved specification and quotation for each order, and stacked or joined units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the solar panels, furniture and landscaping shown are not included unless listed in the quotation, other build types look different, and the images are not photographs of installations in Jigani. KIADB and its industrial areas, the Bommasandra industrial area and Namma Metro are named only to describe the region; Portable Office Cabin is not affiliated with KIADB, BMRCL or any industrial estate, and the businesses, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions. Notes on permissions, cranes, foundations, weather, insulation and rust protection are general guidance, not engineering or legal advice.",
   },
 
   {
@@ -1853,6 +2212,610 @@ export const CITY_PAGES: CityPage[] = [
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Bagalkot district; transport, unloading and installation are arranged for each project, and rental is subject to availability and the agreed rental terms. The images on this page are illustrative renders of Portable Office Cabin's standard container office design, including an optionally furnished interior, and are not photographs of installations in Bagalkot; the doors, windows, wall, ceiling and floor finishes supplied follow the approved specification and quotation. Towns, industries, roads and the Almatti reservoir area are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any sugar mill, cement plant, project authority or facility operator in the district, and entry to any such site is subject to its own permissions. Notes on foundations and ground conditions are general guidance, not engineering advice; the base for a specific site is confirmed in the approved quotation and drawing.",
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN KUDLIGI — Kudligi town, Vijayanagara district: highway and road contractors,
+   * industrial and mining contractors, solar and wind project teams, farms and roadside businesses.
+   * Its cluster neighbour is Davanagere (~70 km by the pages' own geo), linked both ways through
+   * containerOfficeCluster.ts.
+   *
+   * Owner copy of 2026-10-17, mapped onto the fixed template slots in the draft's own order; nothing
+   * is dropped, and the draft's three tables become lists:
+   *   • H1 as written. The draft has no tagline; the tagline joins the meta title's "Portable Site
+   *     Offices & Cabins" to the page label's "Kudligi, Vijayanagara District".
+   *   • Intro: the three paragraphs plus the bold "Planning a container office…" line.
+   *   • "Five Reasons…" → why (five titled bullets); whyIntro is a one-line lead-in.
+   *   • "Applications" table → solutions (customer type as the H3, suitable uses as its text); the
+   *     note on classrooms, cafés, accommodation and chemical stores → solutionsIntro.
+   *   • "Sizes and Layouts": nominal-length note → featuresIntro, table rows → features, the "tell us
+   *     how many people" line → sizesNote.
+   *   • "Specification Options for Heat and Dust" → industries; its closing "indoor comfort" note is
+   *     folded into industriesIntro (the slot has no outro).
+   *   • "Inside Your Container Office" → custom beside the interior render: the table's two columns
+   *     become two items (typical specification / optional add-ons), the quotation line → customOutro.
+   *   • "Buy or Rent" → whyUs (purchase / rent / compare the total cost).
+   *   • "Delivery Enquiries" → areasText; "Delivery and Installation" → how (five steps, the site-access
+   *     note folded into step 3). The template renders areas before how, so these two swap order.
+   *   • FAQs: the owner's eight questions, unchanged; none matches another city page's question word
+   *     for word. Answers 1 and 5 were reworded in the claims reviews below.
+   *   • "Request a Quote" → CTA, its checklist as prose; "[Phone Number]" / "[Email Address]" →
+   *     COMPANY, "[Brand Name]" → Portable Office Cabin. The draft's "Before publishing" note is an
+   *     instruction, not page copy.
+   * No ₹ amounts, lead times, warranty terms or project counts (the draft states none; none added).
+   *
+   * CLAIMS REVIEW (owner instruction, 2026-10-17). Wording already backed by approved, live content stays:
+   * Pavagada's owner-approved entry (typical spec, add-ons, heat options, sizes, rental terms, itemised
+   * quotation) and ContainerOfficeContent.tsx (cement board with vinyl, sliding windows, 10/20/40 ft,
+   * G+1, entrance canopies, CCTV readiness). Everything else is worded as follows:
+   *   • Specs, sizes, layouts and add-ons are options "agreed in the quotation".
+   *   • Rental is "subject to availability", and no stock is promised.
+   *   • FAQ 1 no longer says the schedule depends on "stock availability". It says the delivery schedule
+   *     is confirmed in the quotation.
+   *   • Transport, crane hire, unloading, connections, inspection and handover follow "the scope agreed
+   *     in the quotation".
+   * SECOND REVIEW (owner instruction, 2026-10-17). Claims that stayed unconfirmed were removed:
+   *   • Shop shutters, serving windows and shop counters: removed from the add-ons and from FAQ 5,
+   *     which now only covers permissions and the quotation. "Counters" as a use in the Applications
+   *     list stays; Pavagada's approved page lists the same use.
+   *   • Canopies: "entrance canopies" only (as in ContainerOfficeContent.tsx), in both the heat-and-dust
+   *     options and the add-ons.
+   *   • The draft's list of eleven service towns: removed. The areas text now says delivery feasibility,
+   *     transport charges and scope for the customer's location are confirmed in the quotation. The
+   *     cluster card names Kudligi and Vijayanagara district only.
+   *
+   * Images: five owner-dropped webp renders ("public/images/cities/cities we serve container-office-
+   * in-kudligi/Container Office in Kudligi/cabin*.webp", 1200×896 ×4 and a 600×448 interior), copied
+   * byte-for-byte to clean slug names. Alt text describes the ACTUAL renders: a dark bronze corrugated-
+   * steel container office with a wood-finish door under a transom, a glazed entrance door and two tall
+   * windows, and a light-coloured roof (aerial view). The page recommends a light-coloured exterior for
+   * heat. The hero has no visible caption: the owner removed it on 2026-10-17. Its alt text still says
+   * "illustrative render", and the disclaimer still says actual colours, doors, windows and finishes
+   * follow the approved specification. The feature caption points at the light roof the aerial render
+   * actually shows. The interior render
+   * shows optional furniture and a speckled floor, so it carries a visible "illustrative render" caption as
+   * on Kalaburagi. At 600×448 it is narrower than the template's image frame, so the template shows it at
+   * no more than its natural width and without the hover zoom.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`); the
+   * call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-kudligi",
+    city: "Kudligi",
+    listTitle: "Container Office in Kudligi",
+    metaTitle: "Container Office in Kudligi | Portable Site Offices & Cabins",
+    metaDescription:
+      "Insulated container offices in Kudligi for highway projects, industrial sites, farms and shops. Explore purchase and rental options. Request a quote.",
+    keywords:
+      "Container Office in Kudligi, Container Office Kudligi, Portable Site Office Kudligi, Portable Cabin Kudligi, Site Office Container Kudligi, Container Office for Rent Kudligi, Container Office for Sale Kudligi, Container Shop Kudligi, Weighbridge Cabin Kudligi, Container Office Vijayanagara",
+    geo: { region: "IN-KA", placename: "Kudligi, Vijayanagara, Karnataka, India", position: "14.9050;76.3840", icbm: "14.9050, 76.3840" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-kudligi/container-office-in-kudligi-exterior.webp",
+      alt: "Container office in Kudligi — illustrative render of a dark bronze corrugated-steel container office with a wood-finish door under a transom window, a glazed entrance door between two tall windows and a flat roof edge, on a paved forecourt with planting",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-kudligi/container-office-in-kudligi-aerial-view.webp",
+      alt: "Container office in Kudligi — aerial view of the container office showing its light-coloured flat roof panels, the wood-finish door, the glazed entrance door and two windows along one side, on a paved forecourt beside trees",
+      width: 1200,
+      height: 896,
+      caption: "Shown with a light-coloured roof, which helps reduce heat absorption.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-kudligi/container-office-in-kudligi-interior.webp",
+      alt: "Container office in Kudligi — illustrative render of an optionally furnished office interior with light finished wall panels, a wood-slat feature wall, linear ceiling lights, desks with computers, mesh office chairs, shelving, and a glazed door beside tall windows",
+      width: 600,
+      height: 448,
+      caption:
+        "Illustrative render, shown with optional furniture. Wall, ceiling and floor finishes follow the agreed specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-kudligi/container-office-in-kudligi-front-view.webp",
+        alt: "Container office in Kudligi — straight-on elevation of the dark bronze container office: a wood-finish door with a transom window, a glazed entrance door and two tall framed windows",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/container-office-in-kudligi/container-office-in-kudligi-side-view.webp",
+        alt: "Container office in Kudligi — a plain corrugated-steel wall of the dark bronze container office without openings, with corner castings and a flat roof edge, beside a planter",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Kudligi for Sites, Shops and Farms",
+    tagline: "Portable Site Offices and Cabins in Kudligi, Vijayanagara District",
+    intro: [
+      "Highway contractors, industrial teams, farms and local businesses need practical workspace close to their operations. A container office provides an enclosed, organised space with less on-site construction than a conventional building.",
+      "We supply container offices in Kudligi for project teams, engineers, security staff and businesses. Choose a compact gate cabin, a small team office or a larger layout with workstations, a manager's room, a pantry or an attached toilet.",
+      "The cabin is fabricated at our facility and delivered to your location under the transport scope agreed in the quotation. Once the site supports, unloading and required utility connections are complete, your team can start using the space.",
+      "Planning a container office in Kudligi? Share your site location, team size and requirements to request a layout and quotation.",
+    ],
+
+    whyHeading: "Five Reasons to Choose a Container Office in Kudligi",
+    whyIntro: "Five reasons a container office suits sites, shops and farms around Kudligi:",
+    whyBullets: [
+      {
+        title: "Reduce on-site construction",
+        text: "Factory fabrication reduces the masonry, plastering and finishing needed at your site. Installation time depends on site readiness, access, lifting arrangements and utility connections.",
+      },
+      {
+        title: "Reduce water needed for construction",
+        text: "The prefabricated cabin itself does not require on-site masonry curing. Concrete supports or foundations may still require water and curing, depending on the approved base design.",
+      },
+      {
+        title: "Specify security for your site",
+        text: "A steel enclosure, suitable locks and window grills can help protect the workspace. Security lights, CCTV provisions and site security arrangements can provide additional protection.",
+      },
+      {
+        title: "Move the office as work progresses",
+        text: "A cabin designed for relocation can move between project locations using suitable lifting equipment and transport. Each destination needs appropriate access and prepared supports.",
+      },
+      {
+        title: "Reuse it after the project",
+        text: "A relocatable cabin can serve future projects or be adapted for another suitable use. Its condition, specification and maintenance will affect reuse and resale options.",
+      },
+    ],
+
+    solutionsHeading: "Container Office Applications Around Kudligi",
+    solutionsIntro:
+      "Typical customers and project types around Kudligi, with the uses a container office can suit. Classrooms, cafés, accommodation and stores for chemicals or fertilisers require specifications and permissions appropriate to their use.",
+    solutions: [
+      { title: "Highway and road contractors", text: "Site offices, engineer rooms, material stores and toll-support cabins." },
+      { title: "Industrial and mining contractors", text: "Project offices, gate cabins, weighbridge offices and staff rest areas." },
+      { title: "Solar and wind project teams", text: "Site offices, security cabins and spare-parts stores." },
+      { title: "Farmers", text: "Farm offices, tool stores and watchman cabins." },
+      { title: "Roadside businesses", text: "Container shops, cafés, counters and service outlets." },
+      { title: "Schools, hostels and departments", text: "Temporary offices, staff rooms and additional teaching space." },
+    ],
+
+    featuresHeading: "Container Office Sizes and Layouts",
+    featuresIntro:
+      "The sizes below refer to nominal cabin length. Width, height, usable floor space and the layout options included will be confirmed in the proposed layout and quotation.",
+    features: [
+      "10 ft cabin — compact gate office, weighbridge cabin or security post.",
+      "20 ft cabin — small team office, farm office or shop.",
+      "40 ft cabin — larger office with options for partitions, workstations, a pantry or a toilet.",
+      "Joined units — expanded workspaces and multi-room offices.",
+      "Stacked units — additional space, subject to structural design and approvals.",
+      "Custom builds — dimensions, partitions and facilities arranged around the agreed requirements.",
+    ],
+    sizesNote:
+      "Tell us how many people will use the space and what they need to do there. We can suggest a suitable layout.",
+
+    industriesHeading: "Specification Options for Heat and Dust",
+    industriesIntro:
+      "The cabin specification should account for sun exposure, dust, occupancy and daily working hours. Indoor comfort depends on the complete design: insulation reduces heat transfer, while suitable ventilation and correctly sized air conditioning may be needed during hot weather. Options that can be specified in the agreed quotation include:",
+    industries: [
+      { title: "Insulated walls and roof", text: "insulation material and thickness selected for the application." },
+      { title: "Secondary roof with an air gap", text: "helps reduce direct solar heat gain." },
+      { title: "Light-coloured exterior finish", text: "helps reduce heat absorption." },
+      { title: "Planned ventilation", text: "windows and exhaust fans positioned around the layout." },
+      { title: "Entrance canopies", text: "provide shade and weather protection where specified." },
+      { title: "AC provision", text: "wiring, a dedicated point and circuit protection sized for the agreed equipment." },
+      { title: "Sealed doors and windows", text: "help reduce dust entry." },
+      { title: "Protective steel coatings", text: "surface preparation, primer and exterior paint suited to the exposure." },
+    ],
+
+    customHeading: "Inside Your Container Office",
+    customIntro: "A typical specification and the optional add-ons can include the following, as agreed in your quotation:",
+    customBullets: [
+      {
+        title: "Typical specification",
+        text: "Steel frame and external cladding; insulated wall and roof construction; cement board flooring with vinyl finish; finished interior lining; electrical wiring, lights, fans, switches and distribution protection; sliding windows; a lockable entrance door; and the agreed exterior finish.",
+      },
+      {
+        title: "Optional add-ons",
+        text: "Air conditioning; an attached toilet and wash basin; a pantry counter and sink; partitions and office furniture; window safety grills and entrance canopies; CCTV and network provisions; and company colours and branding.",
+      },
+    ],
+    customOutro: "Your quotation will confirm the materials, fittings and quantities included.",
+
+    whyUsHeading: "Buy or Rent a Container Office in Kudligi",
+    whyUsIntro: "Purchase and rental suit different project durations:",
+    whyUsBullets: [
+      {
+        title: "Purchase for continued use",
+        text: "Buying may suit businesses that need a cabin for ongoing operations or intend to reuse it across several projects.",
+      },
+      {
+        title: "Rent for temporary requirements",
+        text: "Rental may suit short contracts, seasonal work or projects with an uncertain duration. Rental is subject to availability; the minimum rental period, deposit, transport and installation charges will be confirmed in the quotation.",
+      },
+      {
+        title: "Compare the total cost",
+        text: "The best option depends on the total cost, including purchase or rent, deposit, transport, lifting, installation and future relocation. Share your expected duration so available options can be compared.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Kudligi",
+    areasText:
+      "Share your site location or a map pin when you enquire. Delivery feasibility, transport charges and the delivery scope for your location will be confirmed in the quotation. Cabins are fabricated at our factory near Hosur; we have no branch, yard or office in Kudligi.",
+
+    howHeading: "Delivery and Installation in Kudligi",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Tell us the intended use, number of users, site location and preferred delivery date.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm dimensions, doors, windows, partitions, fittings and the scope of supply, transport and installation.",
+      },
+      {
+        title: "Prepare the site during fabrication",
+        text: "Arrange suitable supports, access, drainage and utility provisions according to the agreed installation requirements. Site access: the location needs suitable truck access, sufficient lifting clearance and ground capable of supporting delivery and crane operations.",
+      },
+      {
+        title: "Deliver and position the cabin",
+        text: "Transport, crane hire and unloading are arranged according to the scope agreed in the quotation, with safe lifting at the site.",
+      },
+      {
+        title: "Connect services and complete handover",
+        text: "Electrical and plumbing connections, inspection and handover are carried out according to the scope agreed in the quotation.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How long does it take to get a container office in Kudligi?",
+        answer:
+          "The delivery schedule depends on the cabin size, specification and fabrication workload, and is confirmed in your quotation. Custom layouts may take longer.",
+      },
+      {
+        question: "Will it get too hot inside?",
+        answer:
+          "An uninsulated steel enclosure can become hot in direct sunlight. Insulation, shading, roof design and ventilation help manage heat gain. Air conditioning may be required for comfortable working conditions, depending on occupancy and use.",
+      },
+      {
+        question: "Can you install a cabin on rocky or uneven ground?",
+        answer:
+          "It may be possible, subject to a site assessment. Rocky ground is not automatically level or suitable for supporting the cabin and crane. The support arrangement, drainage and any necessary ground preparation must be confirmed before delivery.",
+      },
+      {
+        question: "Is it safe to leave equipment inside overnight?",
+        answer:
+          "A steel enclosure with suitable locks and window protection can improve physical security, but it cannot guarantee protection against theft. CCTV provisions, security lighting and site supervision can be included in your security planning.",
+      },
+      {
+        question: "Can I run a roadside shop from a container?",
+        answer:
+          "It may be possible, subject to permissions. The proposed location and use must have the necessary landowner, local authority and highway permissions, where applicable, and the cabin's layout and specification will be agreed in your quotation.",
+      },
+      {
+        question: "Can I get an attached toilet?",
+        answer:
+          "Yes. An attached toilet can be included in the agreed layout. The site needs a suitable water supply and an approved wastewater arrangement. Plumbing scope and connection responsibilities will be confirmed in the quotation.",
+      },
+      {
+        question: "Do you offer container offices on rent?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. Pricing depends on the size, fittings and duration. Minimum rental period, deposit, transport and unloading terms will be stated in the quotation.",
+      },
+      {
+        question: "How much does a container office cost?",
+        answer:
+          "The price depends on dimensions, insulation, interiors and optional facilities. Transport, lifting, taxes and site work also affect the total. Share your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Container Office Quote for Kudligi",
+    ctaText: `Whether you need a weighbridge cabin, a shop or a larger project office, we can help plan a layout around your site and budget. For a quotation, share your site location or map pin, intended use and number of users, preferred cabin size, required rooms and facilities, purchase or rental requirement, and expected delivery date. Call or WhatsApp Portable Office Cabin on ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Kudligi or the surrounding area. Transport, crane hire, unloading, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour and with an optionally furnished interior; they are not photographs of installations in Kudligi. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Project types are named only to describe typical uses; Portable Office Cabin is not affiliated with any highway authority, contractor, industrial, mining, solar or wind project operator, school, hostel or government department in the area, and entry to any such site is subject to its own permissions. Notes on heat, dust, ground conditions, foundations and security are general guidance, not engineering advice; the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN SANDUR, BALLARI — the iron ore and manganese belt of Sandur taluk (the
+   * Donimalai and Kumaraswamy ranges), the Toranagallu steel plant area and the ore-transport roads
+   * of Ballari district. Its cluster neighbours are Kudligi (26.7 km) and Davanagere (96.4 km) by the
+   * pages' own geo and the cluster test's haversine. Both link back: Kudligi in #140, and Davanagere
+   * in the Karnataka-hubs follow-up (#137).
+   *
+   * Owner copy of 2026-10-16, mapped onto the fixed template slots in the draft's own order. Nothing is
+   * dropped, and the draft's two tables become lists:
+   *   • H1 as written. The draft has no tagline; the tagline joins the meta title's "Mine & Site
+   *     Cabins" to the page label's "Sandur, Ballari District" (Kudligi precedent).
+   *   • Intro: the draft's four paragraphs.
+   *   • "What Sandur Sites Demand" → why (its four numbered H3s); whyIntro is a one-line lead-in.
+   *   • "Where … Containers Work" table → solutions (site type as the H3, typical units as its text).
+   *     The heading says "Container Offices", not "Our Containers": the draft's wording read as a
+   *     claim of existing installations in the region. solutionsIntro adds the Kudligi-approved note
+   *     that classrooms, clinic rooms and accommodation need use-specific specifications and permissions.
+   *   • "Choosing the Right Size": lead-in → featuresIntro, table rows → features, the approved-drawing
+   *     note → sizesNote.
+   *   • "A Quick Word on Colour" → industries (two titled items). It stays right after the sizes, as
+   *     in the draft.
+   *   • "Fittings: Standard and Heavy-Duty Options" → custom beside the interior render: the two
+   *     H3 lists become two items, and the approved-quotation note becomes customOutro.
+   *   • "Rent or Buy?" → whyUs (rent / buy / compare). The template renders custom before whyUs, so
+   *     this section and Fittings swap order.
+   *   • "Areas We Serve" → areasText, with the draft's towns as delivery-planning enquiries and the
+   *     Kudligi "no branch, yard or office" line. "How We Get It to Your Site" → how (five steps,
+   *     the site-access note folded into step 5). Areas renders before how, so they swap order.
+   *   • FAQs: the owner's seven questions. None matches another city page's question word for word.
+   *   • "Running a Site in Sandur?" → CTA. "[Phone Number]" / "[Email Address]" → COMPANY, and
+   *     "[Brand Name]" → Portable Office Cabin. The editorial note is an instruction, not page copy.
+   *
+   * UNCONFIRMED ITEMS (the draft's own editorial note lists them for confirmation). They are worded
+   * the way the owner approved for Kudligi (2026-10-17):
+   *   • FAQ 6 "[X–Y days]": no lead time is published. The answer says the delivery date is confirmed
+   *     with the quotation.
+   *   • Dust sealing, electrical protection, the secondary roof, the standard specification and the
+   *     heavy-duty add-ons are options that "can be specified" or "as agreed in your quotation". The
+   *     meta description's "Dust-sealed" becomes "dust-sealing options", and its "Delivered and
+   *     installed" is dropped: delivery responsibilities follow the quotation scope.
+   *   • Rental is "subject to availability". Transport, crane hire, unloading, foundations and
+   *     connections follow "the scope agreed in the quotation".
+   * Owner approval (2026-10-16): these wordings, the section order and the URL. The town list stays,
+   * framed as delivery-planning enquiries. Unconfirmed specifications stay quotation options.
+   * No ₹ amounts, lead times, warranty terms or project counts.
+   *
+   * Images: four owner-dropped 1200×896 webp renders ("public/images/cities/container-office-sandur-
+   * ballari/…/cabin*.webp"), copied byte-for-byte to clean slug names. The alt text describes the
+   * ACTUAL renders: a light grey-green corrugated-steel container office with a flat overhanging roof,
+   * two black-framed sliding glass panels on the long side and a tall end window. The renders show
+   * full-height glazing, while the draft's standard specification is sealed sliding windows with
+   * grills and a lockable steel door. Owner review (2026-10-16): no visible hero caption (the Kudligi
+   * preference, PR #139); the image and alt text stay. One concise note, the interior caption, says
+   * the renders show design options and final specifications follow the quotation, and the
+   * disclaimer repeats it. The roof render's caption ties its light grey finish to the draft's colour
+   * advice.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`); the
+   * call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-sandur-ballari",
+    city: "Sandur",
+    listTitle: "Container Office in Sandur, Ballari",
+    metaTitle: "Container Office in Sandur, Ballari | Mine & Site Cabins | Portable Office Cabin",
+    metaDescription:
+      "Insulated container offices in Sandur, Ballari with dust-sealing options for mines, steel plant contractors, transporters and site teams. Buy or rent.",
+    keywords:
+      "Container Office in Sandur, Container Office Sandur Ballari, Site Office Container Sandur, Mine Site Office Sandur, Weighbridge Cabin Sandur, Container Office Toranagallu, Portable Cabin Ballari, Crew Rest Room Container Ballari, Container Office for Rent Sandur, Container Office for Sale Sandur",
+    geo: { region: "IN-KA", placename: "Sandur, Ballari, Karnataka, India", position: "15.0860;76.5470", icbm: "15.0860, 76.5470" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-exterior.webp",
+      alt: "Container office in Sandur, Ballari — illustrative render of a light grey-green corrugated-steel container office with a flat overhanging roof, two black-framed sliding glass panels along the long side and a tall end window, on a paved forecourt with planting",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-roof-view.webp",
+      alt: "Container office in Sandur, Ballari — top-down view of the light grey-green container office showing its flat roof and corner castings, on a paved forecourt bordered by planting",
+      width: 1200,
+      height: 896,
+      caption: "A light grey finish, as shown, makes red dust less noticeable than white between washes.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-interior.webp",
+      alt: "Container office in Sandur, Ballari — illustrative render of an optionally furnished office interior with two desks, mesh office chairs, wood-finish wall panels and storage, linear ceiling lights and full-height sliding glass panels",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative renders showing design options, including full-height glazing and optional furniture. Final specifications follow the agreed quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-sandur-ballari/container-office-in-sandur-ballari-side-view.webp",
+        alt: "Container office in Sandur, Ballari — straight-on side elevation of the light grey-green corrugated-steel container office with a small framed window and a small lockable steel access panel",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Sandur, Ballari, Tough Enough for Mining Country",
+    tagline: "Mine and Site Cabins in Sandur, Ballari District",
+    intro: [
+      "Sandur doesn't look like the rest of Ballari district. The plains around it are flat and dry, but Sandur sits in a valley ringed by green hills. Those same hills are rich in iron ore and manganese, and that's what keeps this taluk working.",
+      "Mines run across the Donimalai and Kumaraswamy ranges. Ore trucks move along the roads from early morning to late at night. Down at Toranagallu, steel plant operations keep contractors, transporters and ancillary units busy. Much of this work runs in shifts, often around the clock.",
+      "The teams behind it need offices, weighbridge cabins and rest rooms right where the work happens. In Sandur, those spaces also have to handle red dust, heavy traffic, everyday wear and hot summers.",
+      "That's the kind of container office we build: manufactured at our facility, delivered by truck and placed by crane under the scope agreed in the quotation, and ready for use once installation, checks and the required connections are complete.",
+    ],
+
+    whyHeading: "What Sandur Sites Demand From a Container Office",
+    whyIntro: "Four things a container office has to handle on Sandur's mine, plant and transport sites:",
+    whyBullets: [
+      {
+        title: "Keeping the red dust out",
+        text: "Iron ore dust is fine, red and stubborn. It settles on files, gets into keyboards and clogs AC filters. Rubber-gasketed windows, tightly sealed door frames and covered cable entries can be specified to help reduce the amount of dust entering the cabin.",
+      },
+      {
+        title: "Taking rough, everyday use",
+        text: "Site offices see muddy boots, equipment movement and doors opening repeatedly throughout each shift. A strong steel frame, durable flooring, sturdy hinges and solid locks help the cabin withstand regular site use.",
+      },
+      {
+        title: "Meeting your site safety requirements",
+        text: "Mines and plants have their own safety requirements. Electrical protection, earthing arrangements and additional fittings should be agreed against your safety team's checklist. Options can include RCCB protection, fire extinguisher brackets, emergency lights and other specified provisions. Final acceptance remains subject to your site's inspection and approval.",
+      },
+      {
+        title: "Handling heat and heavy rain",
+        text: "Insulated walls and roofing help reduce heat entering the cabin. A ventilated secondary roof and AC provision can be included where specified. A suitable raised base, site drainage and properly sealed openings help manage rainwater around the unit.",
+      },
+    ],
+
+    solutionsHeading: "Where Container Offices Work in the Sandur Region",
+    solutionsIntro:
+      "Typical site types around Sandur and the units a container office can serve as. Classrooms, clinic and first-aid rooms, and crew or labour accommodation require specifications and permissions appropriate to their use.",
+    solutions: [
+      {
+        title: "Mines and quarries",
+        text: "Site office, shift-in-charge cabin, weighbridge cabin, check-post cabin, first-aid room and crew rest room.",
+      },
+      { title: "Steel plant contractors", text: "Project office, supervisor cabin, tool and material store, and workers' rest room." },
+      { title: "Ore transporters and logistics", text: "Dispatch office, drivers' rest room and yard security cabin." },
+      { title: "Ancillary units and industrial plots", text: "Gate cabin, time office and administration office." },
+      { title: "Townships, schools and public offices", text: "Additional classrooms, clinic rooms and temporary offices." },
+    ],
+
+    featuresHeading: "Choosing the Right Size",
+    featuresIntro:
+      "Start with what happens inside. One person checking trucks needs far less space than a project team holding daily meetings. Common uses around Sandur by nominal cabin length:",
+    features: [
+      "10 ft — weighbridge cabin, check post or security cabin.",
+      "20 ft — shift office, dispatch office or store room.",
+      "40 ft — project office with options for a meeting area and an attached toilet, depending on layout.",
+      "Combined units — site office blocks, crew rest rooms and labour accommodation.",
+    ],
+    sizesNote: "Final width, usable floor area and layout are confirmed in the approved drawing.",
+
+    industriesHeading: "A Quick Word on Colour",
+    industriesIntro: "Red dust quickly becomes visible on a white exterior.",
+    industries: [
+      {
+        title: "Light grey or beige",
+        text: "practical alternatives to white, making dust less noticeable between washes.",
+      },
+      {
+        title: "Coating and insulation",
+        text: "choose the exterior colour together with a suitable coating system and insulation specification for the site.",
+      },
+    ],
+
+    customHeading: "Fittings: Standard and Heavy-Duty Options",
+    customIntro: "The standard specification and heavy-duty add-ons can include the following, as agreed in your quotation:",
+    customBullets: [
+      {
+        title: "Standard specification",
+        text: "Steel frame with insulated walls and roof; cement board floor with heavy-duty vinyl; finished interior walls; concealed wiring, lights, fans and switches; an electrical board with the agreed protection and earthing provisions; sealed sliding windows with grills; and a lockable steel door.",
+      },
+      {
+        title: "Heavy-duty add-ons",
+        text: "Anti-skid chequered plate at the entrance; steel window shutters for remote sites; AC with accessible, washable filters; a fire extinguisher bracket and emergency light; an attached toilet and wash area; bunk beds and lockers for rest rooms; and network and CCTV points.",
+      },
+    ],
+    customOutro: "Final materials, quantities, electrical protection and finishes are recorded in the approved quotation.",
+
+    whyUsHeading: "Rent or Buy?",
+    whyUsIntro: "Renting and buying suit different timelines:",
+    whyUsBullets: [
+      {
+        title: "Rent for short requirements",
+        text: "A plant shutdown or short maintenance contract may need an office for only a few months. Renting can suit that requirement, subject to availability.",
+      },
+      {
+        title: "Buy for long-term use",
+        text: "Buying may offer better value for a mine office or transporter's yard that will operate for years or reuse the cabin across projects.",
+      },
+      {
+        title: "Compare the options",
+        text: "Share your timeline, and we'll quote the available purchase and rental options so you can compare.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve",
+    areasText:
+      "Share your location for delivery planning in Sandur town; Toranagallu and Kurekuppa; Yeshwantnagar and Donimalai; Ballari city and Hosapete; and Kudligi, Kampli and Kurugodu. Is your site elsewhere in the mining belt? Send us the map location, and we'll confirm delivery feasibility and charges in the quotation. Cabins are fabricated at our factory near Hosur; we have no branch, yard or office in Sandur or Ballari district.",
+
+    howHeading: "How We Get It to Your Site",
+    howSteps: [
+      {
+        title: "Send your requirement",
+        text: "Tell us what the unit is for, the size, your site location and when you need it.",
+      },
+      {
+        title: "Approve the layout and quotation",
+        text: "Review a simple drawing and a clear, itemised price.",
+      },
+      {
+        title: "Arrange site entry",
+        text: "Confirm your mine or plant's entry requirements. Required vehicle documents, driver details and crew information can be coordinated in advance, along with applicable safety induction.",
+      },
+      {
+        title: "Prepare the base",
+        text: "Prepare suitable foundations or concrete pedestals according to the agreed drawings. Sloping sites require assessment of ground stability, drainage and support heights before installation.",
+      },
+      {
+        title: "Delivery and handover",
+        text: "Coordinate crane placement, installation, connections, inspection and handover according to the agreed scope. Site access: the delivery truck needs a suitable access route, and the crane needs firm ground and adequate working space. Transport, crane hire, unloading, foundations and utility-connection responsibilities must be stated in the quotation.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Will the red dust still get inside?",
+        answer:
+          "Some dust is unavoidable on a mining site. Sealed windows, gasketed doors and covered cable entries help reduce its entry, but doors opening during shifts will still let dust in. Clean surfaces regularly, inspect seals and service AC filters according to the manufacturer's instructions and site conditions.",
+      },
+      {
+        question: "Can it go on a slope or an uneven hill site?",
+        answer:
+          "It may be possible using a properly designed, level support arrangement. The solution depends on ground stability, slope, drainage and crane access. A site assessment is needed before confirming the foundation and placement method.",
+      },
+      {
+        question: "Will it pass our site safety audit?",
+        answer:
+          "Share your safety team's checklist before fabrication so the agreed requirements can be included in the design and quotation. These may cover electrical protection, earthing, emergency lighting, exits, signage and extinguisher provisions. Passing the audit depends on the final installation and your site authority's approval.",
+      },
+      {
+        question: "Can it be used as a weighbridge cabin?",
+        answer:
+          "Yes. The layout can include a wide window facing the weighbridge platform, a work counter and wiring points for the weighing indicator, computer and printer. Confirm the equipment and cable requirements before fabrication.",
+      },
+      {
+        question: "Can you deliver inside a mine lease or a plant?",
+        answer:
+          "Delivery can be arranged subject to site permission, vehicle access and your entry procedures. Your team must confirm the required documents, induction and lifting arrangements in advance.",
+      },
+      {
+        question: "How quickly can I get it?",
+        answer:
+          "The delivery schedule depends on the cabin size, specification and production schedule, and the delivery date is confirmed with the quotation. Custom builds may take longer.",
+      },
+      {
+        question: "What does it cost to buy or rent?",
+        answer:
+          "The price depends on size, insulation, fittings and delivery requirements. Rental pricing also depends on duration and availability. Send us your requirements for an itemised quotation covering the available options.",
+      },
+    ],
+
+    ctaHeading: "Running a Site in Sandur?",
+    ctaText: `From a single weighbridge cabin to a site office with crew rest rooms, we can propose a layout and specification suited to your site conditions and shift requirements. Share your location and requirements, and we'll send you a layout and price. Call or WhatsApp Portable Office Cabin on ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Sandur, Ballari district or the surrounding area. Transport, crane hire, unloading, foundations, placement, connections, inspection and handover follow the scope agreed in each quotation, delivery dates are not guaranteed, and rental is subject to availability and the agreed rental terms. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one exterior colour, with full-height glazing and with an optionally furnished interior; they are not photographs of installations in Sandur. Actual colours, doors, windows, materials and finishes depend on the approved specification for each order. Towns, hills, mines, plants and site types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any mining lease holder, mine or quarry operator, steel plant, contractor, transporter, township, school, government department or public-sector undertaking in the area, and entry to any such site is subject to its own permissions and safety procedures. Notes on dust, safety provisions, heat, rain, slopes and foundations are general guidance, not engineering or safety advice; acceptance by a site's safety team depends on the final installation and that site's approval, and the base, specification and services for a specific site are confirmed in the approved quotation and drawing.",
+  },
   {
     slug: "container-office-in-doddaballapura",
     city: "Doddaballapura",
@@ -2027,9 +2990,9 @@ export const CITY_PAGES: CityPage[] = [
     slug: "container-office-in-tirunelveli",
     city: "Tirunelveli",
     listTitle: "Container Office in Tirunelveli",
-    metaTitle: "Container Office in Tirunelveli – Sizes, Price & Delivery",
+    metaTitle: "Container Office in Tirunelveli – Sizes, Specs & Delivery",
     metaDescription:
-      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, built in 10–15 days and delivered across the district.",
+      "Container office in Tirunelveli: insulated 10–40 ft units for SIPCOT, solar, wind and building sites, with delivery across the district quoted per site.",
     keywords:
       "Container Office in Tirunelveli, portable cabin Tirunelveli, porta cabin Tirunelveli, site office container Tirunelveli, container office Gangaikondan SIPCOT, portable office for solar and wind project sites Tamil Nadu, container office price in Tirunelveli, container office on rent Tirunelveli, container office Palayamkottai, container office Nanguneri, Nellai container office",
     geo: { region: "IN-TN", placename: "Tirunelveli, Tamil Nadu, India", position: "8.7139;77.7567", icbm: "8.7139, 77.7567" },
@@ -2388,6 +3351,325 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tirunelveli district; delivery and installation are arranged for each project and delivery dates are not guaranteed. The images on this page show a Portable Office Cabin container office design and are not photographs of an installation in Tirunelveli. Notes on wind exposure, anchoring, insulation, drainage and corrosion protection are general guidance: wind resistance, the base, anchoring and any structural checks for a specific site are established by project-specific engineering and defined in the approved quotation and drawing. SIPCOT (State Industries Promotion Corporation of Tamil Nadu) is an independent Government of Tamil Nadu undertaking with which Portable Office Cabin is not affiliated; place names, industrial estates and projects such as the Kulasekarapattinam spaceport are mentioned only to describe the region and service locations, not as clients or completed projects. Permission notes on this page are general guidance, not legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN KUDANKULAM (Koodankulam), TIRUNELVELI — the coastal village at the southern
+   * end of Tirunelveli district: power-project subcontractors, wind farm service teams around
+   * Radhapuram and Panagudi, crew accommodation, and shops, schools and clinics. Its cluster
+   * neighbours are Tirunelveli (~61 km) and Thoothukudi (~81 km) by the pages' own geo; both link
+   * back through containerOfficeCluster.ts.
+   *
+   * Owner copy of 2026-10-16 (the rewrite that replaced the first Kudankulam draft), mapped onto the
+   * fixed template slots. The H1, meta title and meta description are verbatim; "[Brand Name]" is
+   * Portable Office Cabin. The owner's suggested URL "/container-office-kudankulam-tirunelveli"
+   * follows the site pattern as /cities-we-serve/container-office-in-kudankulam-tirunelveli (cf.
+   * Mettur, Salem). Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Container Office or Brick Site Office?" → why: the five table rows as bullets (Consideration =
+   *     title, both columns in the text).
+   *   • "How We Build for the Kudankulam Coast" → solutions: its three H3s as the numbered H3s (the two
+   *     wind paragraphs joined). solutionsIntro is a one-line lead-in.
+   *   • "Sizes at a Glance" → features: the four table rows, the nominal-area note as sizesNote.
+   *     featuresIntro is a one-line lead-in.
+   *   • "Who It's For" → industries, with a one-line lead-in. The template renders sizes BEFORE the
+   *     industries slot, so these two H2s swap order.
+   *   • "What You Get" → the custom slot beside the interior render: the eight specification items
+   *     (short titles added), "Popular Extras in Kudankulam" as one last item, the quotation line as
+   *     customOutro.
+   *   • "Looking After a Container Office by the Sea" → whyUs: the five habits (short titles added),
+   *     with the closing maintenance-instructions line as a sixth item.
+   *   • "Where We Deliver in Tirunelveli District and Nearby" → areas, the list as prose; "Getting It
+   *     to Your Site" → how, with the "Site access note" folded into step 5. The template renders the
+   *     areas BEFORE the process, so these two swap.
+   *   • FAQs: the owner's seven. "How fast can you deliver?" is localised ("…to Kudankulam?") because
+   *     another city page asks it word for word.
+   *   • CTA as supplied; "[Phone Number]" and "[Email Address]" come from COMPANY. The draft's
+   *     editorial note is an instruction to the editor, not page copy, and stays off the page.
+   * No ₹, lead times, warranty terms or superlatives (the draft states none; none added).
+   *
+   * Owner wording instructions (2026-10-16, PR #138 review; no delivery range or unconfirmed
+   * specification is approved):
+   *   • "[X–Y days]" → "The delivery schedule is confirmed in your quotation after reviewing the
+   *     specification, site access and production schedule."
+   *   • Coating, fittings, vapour control and the "What You Get" inclusions are described as options
+   *     confirmed in the approved specification and quotation (the three "How We Build" items, the
+   *     "What You Get" intro, the meta description's "Rust-protected, insulated, delivered and
+   *     installed", and the disclaimer).
+   *   • The intro's "Every unit is put together with the coast in mind." → "We can tailor the
+   *     specification to your coastal site conditions."
+   *   • Rental is stated as subject to availability (rent-or-buy FAQ and disclaimer).
+   *   • The areas section is framed as delivery enquiry locations ("Delivery Enquiries in Tirunelveli
+   *     District and Nearby"), with feasibility and charges confirmed after reviewing the site.
+   *
+   * Owner corrections (2026-10-17, after the live claims review): anchoring and generator changeover
+   * are not confirmed services, so neither is stated unconditionally.
+   *   • Anchoring is conditional everywhere: the disclaimer uses the owner's sentences ("Delivery and
+   *     crane placement are arranged for each project. Anchoring, where required, is subject to site
+   *     conditions and confirmation in the quotation."), the wind section says the method, plates or
+   *     bolts and supply/installation responsibility are agreed in the quotation, and the maintenance
+   *     habit reads "If the unit is anchored, inspect the anchor bolts after the windy season."
+   *   • The power FAQ no longer offers a generator changeover; it uses the owner's sentence asking the
+   *     customer to mention a generator when requesting a quotation.
+   *
+   * Images: five owner-dropped webp renders ("public/images/cities/City Page · Kudankulam
+   * (Koodankulam), Tirunelveli District/…/cabin (1–5).webp", all 1200×896), copied byte-for-byte to
+   * clean slug names: the three-quarter exterior = hero / og:image; the top-down view = feature band;
+   * the office interior = beside "What You Get"; the front and side elevations = gallery. The renders
+   * show glazed doors, a full-height window, a timber-look canopy and a wood-look floor, where the
+   * draft's specification lists a lockable steel door, sliding windows with grills and a vinyl
+   * finish, so the captions and disclaimer say the finishes follow the approved specification.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
+   * Kalaburagi, Pavagada and Yadgir); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-kudankulam-tirunelveli",
+    city: "Kudankulam",
+    listTitle: "Container Office in Kudankulam, Tirunelveli",
+    metaTitle: "Container Office in Kudankulam, Tirunelveli | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Kudankulam, Tirunelveli for project sites, wind farms, crews and shops. Coastal coating and insulation options; delivery quoted per site.",
+    keywords:
+      "Container Office in Kudankulam, Container Office Kudankulam Tirunelveli, Container Office Koodankulam, Coastal Container Office Kudankulam, Site Office Container Kudankulam, Portable Office Cabin Kudankulam, Container Accommodation Kudankulam, Container Shop Kudankulam, Container Office Vallioor, Container Office Radhapuram, Portable Cabin Nagercoil",
+    geo: {
+      region: "IN-TN",
+      placename: "Kudankulam (Koodankulam), Tirunelveli district, Tamil Nadu, India",
+      position: "8.1667;77.7167",
+      icbm: "8.1667, 77.7167",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-exterior.webp",
+      alt: "Render of a charcoal corrugated container office for Kudankulam: glazed double doors, a timber-look canopy and a large end window",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render. Doors, glazing, the canopy and finishes follow the approved specification.",
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-aerial-view.webp",
+      alt: "Top-down render of the container office: corrugated roof, corner castings and a timber-look entrance canopy on a paved pad",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a single unit. Foundation requirements, and any anchoring the site needs, are confirmed in the quotation for the site's exposure and the approved design.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-interior.webp",
+      alt: "Interior render with optional furniture: two desks with monitors, storage cabinets, a wood-look floor and a full-height glazed door",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-front-elevation.webp",
+        alt: "Front elevation render: glazed double doors under a timber-look canopy on the long side, with a concrete step and planted beds",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/container-office-in-kudankulam-tirunelveli/container-office-in-kudankulam-tirunelveli-side-elevation.webp",
+        alt: "Side elevation render: a plain corrugated-steel wall with corner castings and no openings, on a paved pad",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Kudankulam, Tirunelveli, Made for Life on the Coast",
+    tagline: "Ask any site engineer who has worked in Kudankulam what they remember most, and you'll hear the same things.",
+    intro: [
+      "The wind that hardly ever stops. The salty air that leaves a white film on everything. And a project calendar that always seems to run longer than planned.",
+      "This small village at the southern end of Tirunelveli district, also spelled Koodankulam, is home to one of India's largest nuclear power projects. New units are going up beside the ones already working, bringing contractors, vendors and crews with them. Out on the plains around Radhapuram and Panagudi, wind turbines stand in long rows, each with service teams of its own.",
+      "All these people need somewhere to work. A container office provides a practical way to give them that space. It's built at our facility, arrives on a truck, gets placed by crane and is ready for use once installation and the required connections are complete. We can tailor the specification to your coastal site conditions.",
+    ],
+
+    whyHeading: "Container Office or Brick Site Office?",
+    whyIntro: "If you're still weighing it up, here's how the two compare on a typical Kudankulam site:",
+    whyBullets: [
+      {
+        title: "Ready to use",
+        text: "Container office — after placement, installation and required connections. Brick site office — after construction, curing and fit-out.",
+      },
+      {
+        title: "Water on site",
+        text: "Container office — minimal for placement; plumbing depends on the layout. Brick site office — needed for mixing and curing.",
+      },
+      {
+        title: "Mess on site",
+        text: "Container office — limited site work and debris. Brick site office — sand, cement, bricks and construction debris.",
+      },
+      {
+        title: "Moving it",
+        text: "Container office — can be relocated using a truck and crane. Brick site office — cannot be relocated as a complete structure.",
+      },
+      {
+        title: "When the project ends",
+        text: "Container office — reuse, rent out or sell, subject to condition. Brick site office — demolish or retain for another use.",
+      },
+    ],
+
+    solutionsHeading: "How We Build for the Kudankulam Coast",
+    solutionsIntro: "Three coastal conditions shape the build: salt, wind and humidity.",
+    solutions: [
+      {
+        title: "Protection Against Rust",
+        text: "Salt is the biggest enemy here. Coastal protection options include thorough surface preparation before painting, an epoxy primer with a polyurethane top coat, galvanised or stainless-steel hinges, locks, screws and other fittings, and aluminium windows. The coating system and fittings supplied are confirmed in the approved specification and quotation.",
+      },
+      {
+        title: "Holding Firm in the Wind",
+        text: "Coastal sites need careful attention to anchoring and roof fixings. Options include firmly fixed roof sheets and door stoppers to help prevent doors from slamming in sudden gusts, subject to the approved specification and quotation. Where a site requires anchoring, the anchoring method, any anchor plates or bolts, and who supplies and installs them must be agreed in the quotation, subject to site conditions, technical feasibility and the approved design.",
+      },
+      {
+        title: "Staying Comfortable Inside",
+        text: "The coast here is warm and humid for much of the year. Insulated walls and roof can be specified to help reduce heat entering the cabin, with vapour-control and ventilation options to help manage moisture and a dedicated AC point for cooling when required. The insulation, vapour control and ventilation supplied are confirmed in the approved specification and quotation.",
+      },
+    ],
+
+    featuresHeading: "Sizes at a Glance",
+    featuresIntro: "Approximate floor area and a typical setup for each size:",
+    features: [
+      "10 ft × 8 ft (approx. 80 sq ft): one desk, security cabin, gate office or time office.",
+      "20 ft × 8 ft (approx. 160 sq ft): two to four desks, or a small shop with a counter.",
+      "40 ft × 8 ft (approx. 320 sq ft): open office with a private cabin and toilet, depending on layout.",
+      "Joined units (area as designed): office blocks, crew accommodation and engineered two-storey layouts.",
+    ],
+    sizesNote: "Areas shown are nominal footprint areas. Usable internal space depends on insulation, partitions and fittings.",
+
+    industriesHeading: "Who It's For",
+    industriesIntro: "Typical users around Kudankulam:",
+    industries: [
+      {
+        title: "Power-project subcontractors",
+        text: "An office, document room and store at the laydown yard, ready before work starts.",
+      },
+      { title: "Wind farm service teams", text: "A base near the turbines for technicians, spare parts and rest between jobs." },
+      { title: "Contractors housing crews", text: "Bunk rooms and toilets close to the site, reducing daily travel." },
+      { title: "Shop owners", text: "A container shop with a shutter for locations such as Chettikulam or Vallioor." },
+      { title: "Schools and clinics", text: "Additional space without undertaking a full conventional construction project." },
+    ],
+
+    customHeading: "What You Get",
+    customIntro: "Typical specification options; the items supplied are confirmed in the approved specification and quotation:",
+    customBullets: [
+      { title: "Frame", text: "Steel frame." },
+      { title: "Walls and roof", text: "Insulated wall and roof panels." },
+      { title: "Floor", text: "Cement board flooring with a vinyl finish." },
+      { title: "Interior", text: "Finished interior wall lining." },
+      { title: "Electrical", text: "Concealed wiring with lights, fans, switches and MCB protection." },
+      { title: "Windows", text: "Aluminium sliding windows with grills." },
+      { title: "Door", text: "Lockable steel door." },
+      { title: "Paint", text: "Coastal paint system." },
+      {
+        title: "Popular extras for coastal sites",
+        text: "Split AC with a dedicated circuit; attached toilet and wash area; bunk beds and lockers for crew rooms; partitions, workstations and a small pantry; network, CCTV and data points; company name and exterior colours.",
+      },
+    ],
+    customOutro: "The final materials, quantities and finishes are recorded in the approved quotation.",
+
+    whyUsHeading: "Looking After a Container Office by the Sea",
+    whyUsIntro: "A few simple habits help protect your unit:",
+    whyUsBullets: [
+      {
+        title: "Rinse off salt",
+        text: "Rinse the exterior with fresh water periodically to remove salt deposits, keeping water away from electrical equipment.",
+      },
+      { title: "Repair paint damage", text: "Touch up scratches or chips in the paint promptly." },
+      { title: "Check seals", text: "Check door and window seals before the northeast monsoon." },
+      { title: "Inspect anchor bolts, if fitted", text: "If the unit is anchored, inspect the anchor bolts after the windy season." },
+      { title: "Keep the roof clear", text: "Keep the roof and drip edges clear of sand and leaves." },
+      {
+        title: "Follow the supplied instructions",
+        text: "Follow the maintenance instructions supplied for the coating system and installed equipment.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries in Tirunelveli District and Nearby",
+    areasText:
+      "We welcome delivery enquiries from Kudankulam and Chettikulam; Radhapuram, Vallioor and Panagudi; Thisayanvilai and Nanguneri; Tirunelveli city and Palayamkottai; Anjugramam, Kanyakumari and Nagercoil; and Thoothukudi. Share your site location, and we will confirm delivery feasibility and charges after reviewing the site and access.",
+
+    howHeading: "Getting It to Your Site",
+    howSteps: [
+      {
+        title: "Tell us about your site",
+        text: "Share what the space is for, how many people will use it, its location and when you need it.",
+      },
+      { title: "Approve the drawing and price", text: "Review a simple layout and an itemised quotation." },
+      {
+        title: "Arrange site access",
+        text: "For restricted areas, vehicle and crew details can be supplied in advance to support your project team's entry-pass arrangements. Access remains subject to site approval.",
+      },
+      {
+        title: "Prepare the base",
+        text: "Prepare a level base and suitable concrete pedestals or foundations according to the agreed drawings.",
+      },
+      {
+        title: "Delivery, placement and handover",
+        text: "Coordinate placement, connections, any anchoring confirmed in the quotation, and handover according to the agreed scope. Site access note: the truck needs a clear route to the unloading position, and the crane needs sufficient working space. Responsibility for transport, crane hire, unloading, anchoring and utility connections must be stated in the quotation.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How long will a container office last this close to the sea?",
+        answer:
+          "Service life depends on the steel specification, protective coatings, site exposure and maintenance. A suitable coastal paint system, regular inspections and prompt repairs help extend its useful life.",
+      },
+      {
+        question: "Can I move it from Kudankulam to another site later?",
+        answer:
+          "Yes. A relocatable unit can be disconnected, released from any anchor bolts and lifted onto a suitable truck for the next site. Joined units, plumbing and other additions may need dismantling first. Transport and lifting arrangements depend on the unit's size and condition.",
+      },
+      {
+        question: "Do I need permission to place a container office?",
+        answer:
+          "Requirements depend on the land, intended use and site restrictions. Confirm the necessary permissions with the project authority and relevant local authority before installation.",
+      },
+      {
+        question: "What power connection does it need?",
+        answer:
+          "The supply requirement depends on the total electrical load. Lights, fans and computers may operate on a suitable single-phase connection, while AC requires a correctly sized dedicated circuit. If you plan to use a generator, please mention this when requesting a quotation so the required electrical provisions can be reviewed and confirmed.",
+      },
+      {
+        question: "How fast can you deliver to Kudankulam?",
+        answer:
+          "The delivery schedule is confirmed in your quotation after reviewing the specification, site access and production schedule. Custom layouts may take longer.",
+      },
+      {
+        question: "Should I rent or buy?",
+        answer:
+          "Buying may suit longer projects and repeated use. Renting may suit shorter jobs or individual project phases. Rental is subject to availability. Share your timeline so we can quote the available options for comparison.",
+      },
+      {
+        question: "What does a container office cost?",
+        answer:
+          "The price depends on the size, insulation, interior layout and extras you choose. Send us your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Let's Get Your Kudankulam Site Office Ready",
+    ctaText: `Whether you need one cabin at a gate or a full office and crew block, share your site conditions so we can propose a suitable specification for coastal use. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Send us your site location and requirements, and we'll share a layout and price.`,
+    ctaButtonLabel: "Request a Quote",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Bunk House Cabins", href: "/products/category/bunker-bed-container-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
+      { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kudankulam or Tirunelveli district. Delivery and crane placement are arranged for each project. Anchoring, where required, is subject to site conditions and confirmation in the quotation. Delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The coating system, fittings, insulation, vapour control, ventilation and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The exterior and interior images on this page are illustrative renders of a Portable Office Cabin container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Kudankulam. Actual doors, windows, glazing, canopies, colours and finishes depend on the approved specification for each order, and joined or two-storey units are subject to structural design and approvals. The nuclear power project at Kudankulam, its operator, contractors and subcontractors, and the wind farms and their operators in the area are independent organisations with which Portable Office Cabin is not affiliated; they and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any restricted or high-security premises is subject to that site's own permissions, security clearance and procedures. The comparison with a brick site office and the notes on coastal corrosion protection, wind, humidity, foundations, anchoring and maintenance are general guidance, not engineering advice; the coating system, base, anchoring and any structural certification for a specific site are confirmed in the approved quotation and drawing. Permission notes on this page are general guidance, not legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -5437,10 +6719,288 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Doddaballapura", href: "/cities-we-serve/container-office-in-doddaballapura" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
       { label: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office or service partner in Tumkur district; delivery, unloading and placement are arranged for each project, and the lead times on this page are indicative, not guaranteed. The images on this page show Portable Office Cabin's standard container office designs, including an optionally furnished interior, and are not photographs of installations in Tumkur. Industrial areas, highways, towns and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial estate, developer or facility operator in the district, and entry to any such premises is subject to that facility's own permissions. Notes on approvals and foundations are general guidance, not legal or engineering advice; the base, anchoring and any approvals for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN PAVAGADA — Pavagada taluk, Tumakuru district: the solar project area
+   * around Thirumani, Vallur, Kyathaganacharlu, Rayacharlu and Balasamudra, the taluk's towns
+   * and villages, and enquiries towards Madhugiri, Sira, Tumakuru, Hindupur and Penukonda. Its
+   * cluster neighbours are Tumkur (~86 km) and Doddaballapura (~94 km) by the pages' own geo;
+   * Doddaballapura links back. Tumkur → Pavagada is left for a follow-up because the
+   * Chitradurga branch edits Tumkur's neighbour line, so the two PRs merge in either order.
+   *
+   * Owner copy of 2026-10-17, mapped onto the fixed template slots; nothing is dropped:
+   *   • H1 as supplied. The first sentence of the opening paragraph is the tagline; the rest of
+   *     that paragraph, the next two and the "Planning a site office" line are the intro.
+   *   • "Why Choose…" → why: its four H3s as bullets. whyIntro is an added one-line lead-in.
+   *   • "Container Offices for Different Site Requirements" table → solutions (Application =
+   *     title, Suitable Uses = text); solutionsIntro is a short lead-in plus the draft's
+   *     control-room / electrical-equipment note.
+   *   • "Sizes and Layout Options": the nominal-length note → featuresIntro, the table rows →
+   *     features[] as "Size — layouts", the "Tell us how many people…" line → sizesNote.
+   *   • "Buy or Rent" → industries (its two H3s); its closing line → industriesIntro.
+   *   • "Specification Options for Pavagada's Heat and Dust" → the custom slot beside the
+   *     interior render: lead-in, the eight titled options, the comfort note as customOutro.
+   *   • "Construction and Fit-Out" → whyUs: the lead-in, the seven typical-specification items
+   *     (short titles added) and the "Optional Add-Ons" H3 as one last item.
+   *   • "Delivery Enquiries Around Pavagada" → areasText prose; "Delivery and Installation
+   *     Process" → how, with the "Site access" note folded into step 4. The template renders
+   *     areas before how, so these two H2s swap order.
+   *   • FAQs: the draft's seven. "Does a container office need a foundation?" repeated the
+   *     Tumkur page's question word for word, so it reads "…in Pavagada…" (Kalaburagi review
+   *     rule, 2026-10-16: no FAQ question matches another city page's). Answers unchanged.
+   *   • "Request a … Quote" → CTA, its checklist as prose. The draft's "[Phone Number]"
+   *     placeholder is replaced by COMPANY's number; the e-mail comes from COMPANY too.
+   * No ₹, lead times, warranty terms, counts or superlatives (the draft states none; none added).
+   *
+   * Images: four owner-dropped 1152×864 webp renders ("public/images/Container Office in
+   * Pavagada, city page/…"), copied byte-for-byte to clean slug names: the front elevation of a
+   * double-storey stacked unit (grey ground floor, yellow upper floor, balcony, spiral stair) =
+   * hero / og:image; its aerial view = feature band, captioned with the draft's double-storey
+   * size row; the smaller interior = beside the heat-and-dust options, with the visible
+   * "illustrative render" caption Bagalkot and Kalaburagi use; the brighter workspace = gallery
+   * after the sizes and layouts. The interiors show exposed corrugated side walls, so the
+   * caption and disclaimer say finishes follow the approved specification.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`,
+   * as on Kalaburagi); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-pavagada",
+    city: "Pavagada",
+    listTitle: "Container Office in Pavagada",
+    metaTitle: "Container Office in Pavagada | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Pavagada for solar projects, construction sites and businesses. Explore insulated layouts, purchase and rental options. Request a quote.",
+    keywords:
+      "Container Office in Pavagada, Container Office Pavagada, Portable Office Cabin Pavagada, Site Office Container Pavagada, Solar Site Office Pavagada, Container Office for Rent Pavagada, Container Office for Sale Pavagada, Security Cabin Pavagada, Portable Cabin Madhugiri, Container Office Sira",
+    geo: { region: "IN-KA", placename: "Pavagada, Tumakuru district, Karnataka, India", position: "14.0995;77.2802", icbm: "14.0995, 77.2802" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-front-elevation.webp",
+      alt: "Container office in Pavagada — front elevation of a double-storey container office: a grey ground-floor unit and a yellow upper unit, each with a window and a glazed door, a railed upper balcony and a yellow external spiral staircase, on a paved forecourt",
+      width: 1152,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-aerial-view.webp",
+      alt: "Container office in Pavagada — aerial view of the double-storey container office showing the yellow corrugated roof of the upper unit, its balcony and the spiral staircase, on a paved slab beside open scrubland",
+      width: 1152,
+      height: 864,
+      caption: "Double-storey units add office space, subject to structural design and approvals.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-interior.webp",
+      alt: "Container office in Pavagada — illustrative render of an optionally furnished office interior with a wooden desk and mesh chair, wall shelves, recessed ceiling lights, a sliding window, a glazed door, two lounge chairs and wood-look flooring",
+      width: 1152,
+      height: 864,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-pavagada/container-office-in-pavagada-workspace.webp",
+        alt: "Container office in Pavagada — illustrative render of an optionally furnished workspace with a wooden desk and mesh chair beside three tall glazed windows, open shelving, pendant lights, a cove-lit false ceiling and wood-look flooring",
+        width: 1152,
+        height: 864,
+      },
+    ],
+
+    h1: "Container Office in Pavagada, Ready for Your Site",
+    tagline: "Solar projects, construction teams and local businesses need a practical place to work close to their operations.",
+    intro: [
+      "A container office provides an enclosed workspace without the lengthy construction process of a conventional building.",
+      "Portable Office Cabin supplies container offices in Pavagada for project teams, engineers, security staff and businesses. Choose a compact cabin or a larger layout with workstations, a manager's room, meeting space, pantry or attached toilet.",
+      "Units arrive prefabricated. Once the site is prepared, unloading is complete and the required services are connected, your team can start using the office.",
+      "Planning a site office in Pavagada? Share your location, team size and requirements to request a layout and quotation.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Pavagada?",
+    whyIntro: "Four reasons a container office suits project sites and businesses in Pavagada:",
+    whyBullets: [
+      {
+        title: "Practical for temporary and leased sites",
+        text: "A relocatable office can suit projects where permanent construction is unsuitable. Placement remains subject to the landowner's permission, lease conditions and applicable local requirements.",
+      },
+      {
+        title: "Move the office as work progresses",
+        text: "When a project moves to another location, a suitable container office can be lifted, transported and installed again. Relocation requires transport access, lifting arrangements and a prepared destination.",
+      },
+      {
+        title: "Reduce construction work at remote locations",
+        text: "Factory fabrication reduces the amount of construction work needed at the project site. Your team prepares the access, supports and utility connections while the cabin is manufactured.",
+      },
+      {
+        title: "Specify the cabin for heat and dust",
+        text: "Insulation, ventilation, exterior finishes and sealed openings help manage heat gain and dust entry. The final specification should reflect the site's exposure, occupancy and cooling requirements.",
+      },
+    ],
+
+    solutionsHeading: "Container Offices for Different Site Requirements",
+    solutionsIntro:
+      "Suitable uses for each type of site are listed below. Control rooms and cabins housing electrical equipment require a separately agreed technical specification.",
+    solutions: [
+      { title: "Solar EPC and O&M Teams", text: "Project offices, engineer cabins, staff rest areas and stores." },
+      { title: "Security Teams", text: "Gate cabins, visitor entry points and access-control offices." },
+      { title: "Road and Civil Contractors", text: "Site offices, supervisor rooms and material stores." },
+      { title: "Farmers and Agricultural Businesses", text: "Farm offices, tool stores and sheltered rest spaces." },
+      { title: "Shops and Local Businesses", text: "Container shops, counters and kiosks, subject to permissions." },
+      { title: "Government and Institutions", text: "Temporary administrative offices, training rooms and health camp cabins." },
+    ],
+
+    featuresHeading: "Container Office Sizes and Layout Options",
+    featuresIntro:
+      "The sizes below refer to nominal cabin length. Width, height and usable space will be confirmed in the layout.",
+    features: [
+      "10 ft cabin — compact gate office, security cabin or billing counter.",
+      "20 ft cabin — small team office, store or shop.",
+      "40 ft cabin — larger workspace with options for partitions, pantry or toilet.",
+      "Combined units — expanded work areas, meeting rooms and separate departments.",
+      "Double-storey units — additional accommodation or office space, subject to structural design and approvals.",
+      "Custom layouts — workstations, manager cabins, meeting rooms and other agreed requirements.",
+    ],
+    sizesNote:
+      "Tell us how many people will use the cabin and which facilities you need. We can suggest a suitable layout.",
+
+    industriesHeading: "Buy or Rent a Container Office in Pavagada",
+    industriesIntro: "Share your expected project duration so we can help you compare the available options.",
+    industries: [
+      {
+        title: "Purchase for continued use",
+        text: "Buying may suit businesses that need the office over a longer period or intend to reuse it across several projects.",
+      },
+      {
+        title: "Rent for temporary requirements",
+        text: "Rental may suit shorter projects or businesses that want to reduce the initial purchase cost. Availability, minimum rental period, deposit, transport and installation charges will be confirmed in the quotation.",
+      },
+    ],
+
+    customHeading: "Specification Options for Pavagada's Heat and Dust",
+    customIntro: "The following features can be included in the quotation according to your requirements:",
+    customBullets: [
+      { title: "Wall and roof insulation", text: "Select the material and thickness to suit the application." },
+      { title: "Secondary roof with an air gap", text: "An optional measure to reduce direct solar heat gain." },
+      { title: "Light-coloured exterior finish", text: "Helps reduce heat absorption." },
+      { title: "Planned ventilation", text: "Windows and exhaust fans positioned around the layout." },
+      { title: "AC provision", text: "Wiring, a dedicated electrical point and protection sized for the agreed equipment." },
+      { title: "Sealed doors and windows", text: "Help reduce dust entry." },
+      { title: "Protective steel coating", text: "Surface preparation, primer and exterior paint specified for the exposure." },
+      { title: "Raised installation", text: "Supports and finished floor height planned around drainage and ground conditions." },
+    ],
+    customOutro:
+      "Insulation reduces heat transfer, but indoor comfort also depends on ventilation, occupancy and correctly sized cooling equipment.",
+
+    whyUsHeading: "Container Office Construction and Fit-Out",
+    whyUsIntro:
+      "Your quotation will confirm the materials, quantities and fittings included. A typical specification can include:",
+    whyUsBullets: [
+      { title: "Structure", text: "Steel frame and external cladding." },
+      { title: "Insulation", text: "Insulated wall and roof construction." },
+      { title: "Flooring", text: "Cement board flooring with a vinyl finish." },
+      { title: "Interior lining", text: "Interior wall and ceiling lining." },
+      { title: "Electrical", text: "Electrical wiring, lights, fans, switches and distribution protection." },
+      { title: "Windows", text: "Aluminium or UPVC windows." },
+      { title: "Entrance door", text: "Lockable entrance door." },
+      {
+        title: "Optional add-ons",
+        text: "Air conditioning, attached toilet and plumbing, pantry counter, internal partitions, office furniture, CCTV and network provisions, window safety grills, and exterior colours and company branding.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Pavagada",
+    areasText:
+      "We welcome enquiries for sites in Pavagada town and surrounding project areas; Thirumani, Vallur and Kyathaganacharlu; Rayacharlu and Balasamudra; Y.N. Hosakote and Nagalamadike; Madhugiri, Sira and Tumakuru; and Hindupur and Penukonda. Share your site pin location so access, transport feasibility and delivery charges can be confirmed.",
+
+    howHeading: "Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Tell us the site location, team size, preferred layout and required delivery date.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm the dimensions, materials, fittings, delivery scope and commercial terms.",
+      },
+      {
+        title: "Prepare the site",
+        text: "Arrange suitable access, level supports, drainage and utility provisions according to the agreed installation requirements.",
+      },
+      {
+        title: "Deliver and position the cabin",
+        text: "Transport and lifting arrangements are coordinated according to the quotation and site conditions. Site access: the location must have suitable truck access and sufficient space for safe unloading and crane operation. Delivery and placement dates depend on fabrication, transport, weather and site readiness.",
+      },
+      {
+        title: "Connect services and inspect",
+        text: "Complete the electrical and plumbing connections, where applicable, and inspect the installed unit before use.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How quickly can you deliver a container office in Pavagada?",
+        answer:
+          "Delivery depends on stock availability, cabin size, specification and fabrication workload. We confirm the expected schedule in the quotation. Custom layouts may require additional time.",
+      },
+      {
+        question: "Will a container office stay cool during summer?",
+        answer:
+          "Insulation helps reduce heat gain. Ventilation, shading or a secondary roof can also help, while air conditioning may be needed for comfortable working conditions during hot weather. Cooling requirements depend on the cabin size, occupancy and site exposure.",
+      },
+      {
+        question: "Does a container office in Pavagada need a foundation?",
+        answer:
+          "It needs a stable, level support arrangement. Depending on the unit and ground conditions, this may involve designed concrete supports, a plinth or foundations. Support positions and requirements should be confirmed before delivery, especially for joined or stacked cabins.",
+      },
+      {
+        question: "Can I move the office to another site later?",
+        answer:
+          "Yes. Units designed for relocation can be moved using suitable lifting equipment and transport. Utilities must be disconnected safely, and the cabin and lifting points should be checked before moving.",
+      },
+      {
+        question: "Can you include an attached toilet?",
+        answer:
+          "Yes. An attached toilet can be included in the agreed layout. The site needs suitable water supply and an approved wastewater arrangement. Plumbing scope and connections will be confirmed in the quotation.",
+      },
+      {
+        question: "Do you offer container offices on rent in Pavagada?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. The quotation will specify the rental period, deposit, transport, unloading and other applicable terms.",
+      },
+      {
+        question: "How much does a container office cost?",
+        answer:
+          "The price depends on dimensions, insulation, interiors, electrical fittings and optional facilities. Transport, lifting, taxes and site work should also be considered. Share your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Container Office Quote for Pavagada",
+    ctaText: `From a compact gate cabin to a larger project office, we can help you plan a layout around your team and site requirements. For a quotation, share your site location or map pin, preferred cabin size, number of users, required rooms and facilities, purchase or rental requirement, and expected delivery date. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Pavagada or the surrounding area; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin container office designs, shown in one colour option, as a double-storey arrangement and with optionally furnished interiors in an exposed corrugated finish; they are not photographs of installations in Pavagada. Actual cabin colours, materials and finishes depend on the approved specifications for each order, and double-storey units are subject to structural design and approvals. Towns, villages and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any solar park, solar developer, EPC or O&M contractor, utility, landowner, institution or government department in the area, and entry to any project premises is subject to that site's own permissions. Notes on heat, dust, ventilation, cooling and foundations are general guidance, not engineering advice; the supports, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -5831,10 +7391,652 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
       { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     ],
 
     disclaimer:
       "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Tumkur district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The images show a representative dry shipping container, not a unit at a site in Tumkur. Dimensions, volumes, weights and bag counts on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. The Machine Tool Park, Pavagada Solar Park, Vasanthanarasapura and other places are named only to describe the service area: Portable Office Cabin is not affiliated with any industrial area, solar park, developer, operator or market. Notes on produce storage, anchoring, certification and local permissions are general guidance, not agronomic, engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN TUMKUR (Tumakuru) — the portable-cabin intent for Tumkur city and district:
+   * site offices, security cabins, labour accommodation, toilet units, container offices, real
+   * estate sales offices and storage cabins for the NH-48 corridor, the KIADB industrial areas
+   * (Vasanthanarasapura, Antharasanahalli, Sathyamangala, Hirehalli), the Gubbi and Pavagada
+   * projects and the taluks. The sibling of the container-office and shipping-container Tumkur
+   * pages (each links to the other two); not a container-office cluster location, so the
+   * /cities-we-serve index lists it with the local-service pages. On the Portable Cabin and Porta
+   * Cabin Karnataka hubs.
+   *
+   * Owner copy of 2026-10-17 ("Portable Cabins in Tumkur" content draft), mapped onto the fixed
+   * template slots. The H1 and meta title are verbatim; the owner's slug "/portable-cabin-in-tumkur"
+   * follows the site pattern as /cities-we-serve/portable-cabin-in-tumkur. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Why Tumkur Projects Are Choosing Portable Cabins" → why: its first sentence as whyIntro, the
+   *     industrial-area / project / Smart City facts as three bullets (short titles added), the
+   *     second paragraph as whyOutro.
+   *   • "Portable Cabins We Supply in Tumkur" → solutions: its seven H3s as the numbered H3s.
+   *     solutionsIntro is a one-line lead-in.
+   *   • "Pick the Build That Suits Your Site" → features: the five table rows as "Build — made of;
+   *     works best for", the closing "Not sure which one you need?…" as sizesNote.
+   *   • "Rent or Buy? An Honest Way to Decide" → industries: the table's two columns as two items,
+   *     the closing line as the intro. "Built for Tumkur's Heat and Rain" → the custom slot beside the
+   *     interior render: its two paragraphs as two items. The template renders industries BEFORE the
+   *     custom slot, so these two H2s swap (the Yadgir arrangement).
+   *   • "Who We Work With in Tumkur" → whyUs: the eight bullets in four groups (titles added). The
+   *     heading reads "Who Uses Portable Cabins in Tumkur", per the owner's rule of claiming no
+   *     customers or projects in Tumkur.
+   *   • "Areas We Cover in and Around Tumkur" → areasText, the four groups as prose; "How It Works,
+   *     Start to Finish" → how, the owner's five steps. The template renders the areas BEFORE the
+   *     process.
+   *   • "Why Choose Portable Office Cabin?" and "What Does a Portable Cabin Cost in Tumkur?" →
+   *     extraSections (rendered after the process, before the FAQs), as written.
+   *   • FAQs: the owner's eight, as written; none repeats another city page's question.
+   *   • "Need a Cabin on Your Tumkur Site?" → CTA. The phone number and email come from COMPANY. The
+   *     owner lists three buttons (Request a Quotation, Call, WhatsApp), so ctaSecondaryLinks is
+   *     empty; the call button keeps the template's "Call <number>" label.
+   * Owner wording rule (the Kudankulam rule, applied at the owner's instruction of 2026-10-17): no
+   * unconfirmed specification, timing or coverage — specifications and finishes are options
+   * confirmed in the approved specification and quotation, rental is subject to availability, the
+   * towns are delivery enquiry locations, and placement time and the base are confirmed per site.
+   * The H1 "Ready When Your Site Is" is a slogan, not a delivery timeline. No ₹, lead times,
+   * warranty terms or superlatives. Kept apart from the container-office Tumkur page: its own
+   * keyword ("portable cabin"), no "container office Tumkur" meta keyword, cross-links only.
+   *
+   * Images: four owner-dropped webp renders ("public/images/cities/Portable Cabins in Tumkur city
+   * page/…/cabin (1–4).webp"), copied byte-for-byte to clean slug names: the long-side elevation
+   * (1184×864) = hero / og:image, with no caption (owner instruction); the office interior
+   * (1200×896) = beside the heat-and-rain section; the three-quarter view (600×448, too small for a
+   * full-width slot) and the end elevation (1184×864) = a two-column gallery. They show one
+   * container-style design; the interior caption and the disclaimer say they are illustrative and
+   * that other build types differ.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-in-tumkur",
+    city: "Tumkur",
+    listTitle: "Portable Cabins in Tumkur",
+    metaTitle: "Portable Cabins in Tumkur | Buy or Rent Ready-to-Use Cabins",
+    metaDescription:
+      "Looking for a portable cabin in Tumkur? We build site offices, security cabins, labour rooms and toilet units, with delivery quoted per site. Buy or rent.",
+    keywords:
+      "Portable Cabin in Tumkur, Portable Cabin Tumakuru, Portable Site Office Tumkur, Security Cabin Tumkur, Labour Accommodation Cabin Tumkur, Portable Toilet Cabin Tumkur, Portable Cabin on Rent in Tumkur, Prefabricated Cabin Manufacturer near Tumkur",
+    geo: { region: "IN-KA", placename: "Tumakuru (Tumkur), Karnataka, India", position: "13.3392;77.1139", icbm: "13.3392, 77.1139" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-exterior.webp",
+      alt: "Portable cabin in Tumkur — illustrative render of a container-style portable cabin with light grey corrugated walls, a charcoal lower band, bronze-brown corner posts and two framed sliding windows on the long side, on a paved yard",
+      width: 1184,
+      height: 864,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-interior.webp",
+      alt: "Portable cabin in Tumkur — illustrative render of an optionally furnished site office interior with two desks and monitors, mesh office chairs, low storage units and filing cabinets, light grey wall panels, linear LED ceiling lights, sliding windows, a glazed door and wood-look flooring",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-three-quarter-view.webp",
+        alt: "Portable cabin in Tumkur — illustrative three-quarter view of the container-style cabin showing two framed windows on the long side, the plain end wall, bronze-brown corner posts and the charcoal lower band, on a paved yard with potted plants",
+        width: 600,
+        height: 448,
+      },
+      {
+        src: "/images/cities/portable-cabin-in-tumkur/portable-cabin-in-tumkur-end-elevation.webp",
+        alt: "Portable cabin in Tumkur — illustrative end elevation of a container-style cabin with one framed sliding window under a small hood, light grey corrugated walls and a charcoal lower band, with a similar cabin alongside",
+        width: 1184,
+        height: 864,
+      },
+    ],
+
+    h1: "Portable Cabins in Tumkur, Ready When Your Site Is",
+    tagline: "Spend a morning on NH-48 near Tumkur and you'll see how fast this place is growing.",
+    intro: [
+      "New sheds are going up in Vasanthanarasapura, road crews are busy on the service lanes, and fresh layouts are being marked out on almost every edge of town. Every one of those jobs needs a base. The engineer needs a dry office with a working fan. The guard needs a cabin at the gate. The crew needs somewhere decent to rest, change and wash up.",
+      "We build portable cabins for exactly these needs, and welcome delivery enquiries from Tumkur city and the taluks across the district. Your cabin arrives finished and is ready to use once it is placed on the prepared base and the power is connected; placement time and base requirements depend on the site and are confirmed in the quotation. There's no masonry to build and no waiting on masons. And when the job wraps up, the cabin can go with you to the next one.",
+    ],
+
+    whyHeading: "Why Tumkur Projects Are Choosing Portable Cabins",
+    whyIntro: "Tumkur, or Tumakuru as it's officially called now, sits about 70 km from Bengaluru, and that closeness has changed the city:",
+    whyBullets: [
+      {
+        title: "Industrial areas",
+        text: "Vasanthanarasapura, Antharasanahalli, Sathyamangala and Hirehalli keep adding new units.",
+      },
+      {
+        title: "Major projects",
+        text: "The HAL helicopter factory in Gubbi taluk and the huge Pavagada solar park have brought in contractors and technical teams from all over the country.",
+      },
+      {
+        title: "Smart City works",
+        text: "Inside the city, Smart City works have kept roads and public spaces under steady upgrade.",
+      },
+    ],
+    whyOutro:
+      "Most of this work runs on a deadline. A road package might need a site office for eighteen months. A new factory often needs a security cabin before the compound wall is even finished. Putting up a brick-and-mortar room for a short-term need means paying for something you'll eventually knock down. A portable cabin avoids that. You use it, you move it, and you use it again.",
+
+    solutionsHeading: "Portable Cabins We Supply in Tumkur",
+    solutionsIntro:
+      "Seven cabin types cover most site needs around Tumkur. Sizes, layouts and fittings are options confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Site Office Cabins",
+        text: "A site office is often the first cabin a project needs. It can be planned with room for desks, drawings and a small meeting table, windows on two sides, lights, fans, plug points and an optional AC provision, and partitioned into a main office and a separate room for the project manager.",
+      },
+      {
+        title: "Security Cabins and Guard Rooms",
+        text: "Compact cabins for one or two guards, with glass on the sides facing the gate so nothing slips past unseen. Factories, warehouses, apartment complexes and petrol bunks along the highway use these a lot. Sizes start from small booths that fit right beside a gate pillar.",
+      },
+      {
+        title: "Labour Accommodation Cabins",
+        text: "Built for bigger crews, especially on industrial and solar sites far from town, with options for bunk beds, ventilation, lighting and charging points. Need more space without taking up more ground? Units can be stacked into a double-storey block with a steel staircase, subject to structural design and approvals.",
+      },
+      {
+        title: "Portable Toilet and Bathroom Cabins",
+        text: "Single or multi-seat units in Indian or Western style, with provision for an overhead water tank. A lot of sites forget about toilets until a client visit or an inspection is around the corner. It's far easier to sort it out on day one.",
+      },
+      {
+        title: "Container Offices",
+        text: "Built on a strong container-style body in 20 ft and 40 ft lengths. They're tough, lockable and take rough handling well, which makes them a good fit for remote sites or anywhere you'll leave equipment overnight.",
+      },
+      {
+        title: "Real Estate Sales Offices",
+        text: "Plotted layouts and apartment projects are coming up all around Tumkur, and the sales office is often the first thing a buyer sees. These can be specified with a cleaner finish, glass fronts, false ceilings and your brand colours on the outside, so the cabin looks like part of the project.",
+      },
+      {
+        title: "Storage Cabins",
+        text: "Lockable rooms for cement, tools, cables and spares. Simple, secure, and an alternative to building a store room you'll only need for one season.",
+      },
+    ],
+
+    featuresHeading: "Pick the Build That Suits Your Site",
+    featuresIntro: "Each build type, what it is made of and where it works best:",
+    features: [
+      "MS cabin — mild steel frame and sheet walls, insulated inside; works best for construction sites, heavy use and frequent shifting.",
+      "PUF panel cabin — insulated PUF panels between steel sheets; works best for offices, labour rooms and hot locations.",
+      "Container cabin — heavy container-style steel body; works best for remote, high-security or long-term sites.",
+      "FRP cabin — fibre-reinforced plastic, light and rust-free; works best for toilets, guard booths and damp locations.",
+      "ACP finish — aluminium composite panels outside; works best for sales offices and customer-facing cabins.",
+    ],
+    sizesNote:
+      "Not sure which one you need? Tell us what the cabin is for and how long you'll use it. That usually settles it in a couple of minutes.",
+
+    industriesHeading: "Rent or Buy? An Honest Way to Decide",
+    industriesIntro:
+      "Still on the fence? Call us with your timeline, and we'll work out the cost both ways so you can compare them. Rental is subject to availability.",
+    industries: [
+      {
+        title: "Renting makes sense if",
+        text: "the project finishes within about a year, you want lower upfront costs, or your future need is uncertain.",
+      },
+      {
+        title: "Buying makes sense if",
+        text: "you'll use the cabin beyond one or two years, relocate it between sites, or need heavy customisation or branding.",
+      },
+    ],
+
+    customHeading: "Built for Tumkur's Heat and Rain",
+    customIntro: "Two seasons shape how a cabin is specified here:",
+    customBullets: [
+      {
+        title: "Summer heat",
+        text: "From March to May, afternoons in Tumkur regularly climb into the mid to high 30s. A plain metal box can feel like an oven by lunchtime, and nobody does good work in that. Insulated walls and roof, windows placed for cross-ventilation and an AC point where you want one can be specified, and PUF panel construction adds insulation for hot locations.",
+      },
+      {
+        title: "Monsoon rain",
+        text: "When the monsoon arrives, the roof matters just as much. A sloped roof lets water run off instead of sitting on top, joints are sealed, and an anti-rust primer can go under the final coat of paint, because many of these cabins end up working for years, not months.",
+      },
+    ],
+    customOutro:
+      "The insulation, roof, sealing and paint system supplied are confirmed in the approved specification and quotation.",
+
+    whyUsHeading: "Who Uses Portable Cabins in Tumkur",
+    whyUsIntro: "Portable cabins suit a wide range of users, including:",
+    whyUsBullets: [
+      {
+        title: "Construction and projects",
+        text: "builders and civil contractors; solar, power and infrastructure projects; real estate developers and plotted layout projects.",
+      },
+      {
+        title: "Industry and highway businesses",
+        text: "factories and warehouses in the KIADB industrial areas; petrol bunks, toll plazas and highway businesses.",
+      },
+      {
+        title: "Schools and healthcare",
+        text: "schools and colleges that need extra rooms or an exam office; hospitals and clinics that need a temporary screening or pharmacy space.",
+      },
+      { title: "Farms", text: "farm owners who want a store room or a small farm office." },
+    ],
+
+    areasHeading: "Delivery Enquiries in and Around Tumkur",
+    areasText:
+      "We welcome delivery enquiries from Tumkur city (Batawadi, Kyathsandra, SS Puram, Saraswathipuram, Gubbi Gate, Maralur, Hanumanthapura, Kunigal Road and BH Road); the industrial areas at Vasanthanarasapura, Antharasanahalli, Sathyamangala and Hirehalli; the taluks of Gubbi, Kunigal, Tiptur, Turuvekere, Chikkanayakanahalli, Sira, Madhugiri, Koratagere and Pavagada; and along the highway at Dobbaspet, Nelamangala and the stretch toward Bengaluru. Don't see your site on the list? Ask anyway. We confirm delivery feasibility and charges after reviewing the site and access.",
+
+    howHeading: "How It Works, Start to Finish",
+    howSteps: [
+      {
+        title: "Tell Us What You Need",
+        text: "Call or WhatsApp us with the cabin size, intended use and site location. A rough requirement is enough to begin.",
+      },
+      {
+        title: "Get a Layout and Clear Quotation",
+        text: "We prepare a proposed layout and itemised quotation covering the selected specifications, transport, unloading and applicable installation requirements.",
+      },
+      {
+        title: "We Build Your Cabin",
+        text: "The cabin is fabricated according to the approved specification. Manufacturing and delivery timelines are confirmed in the quotation.",
+      },
+      {
+        title: "Delivery and Placement",
+        text: "The cabin is transported to the site, subject to access and delivery feasibility. The foundation or supporting base, crane, unloading and placement responsibilities are confirmed before dispatch.",
+      },
+      {
+        title: "Support After Delivery",
+        text: "Customers can contact us regarding maintenance, modifications or future relocation enquiries. Services are subject to technical feasibility, warranty terms and the agreed scope.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        bullets: [
+          {
+            title: "Clear quotations",
+            text: "Specifications, pricing and applicable charges are communicated before order confirmation.",
+          },
+          {
+            title: "Custom manufacturing",
+            text: "Doors, windows, partitions, insulation and interior finishes can be selected based on requirements.",
+          },
+          { title: "Durable construction", text: "Material grades and fabrication details follow the approved specifications." },
+          {
+            title: "Relocatable designs",
+            text: "Suitable cabins can be moved between projects, subject to structural condition and safe handling.",
+          },
+          { title: "After-sales support", text: "Warranty and service obligations follow the agreed terms." },
+        ],
+      },
+      {
+        heading: "What Does a Portable Cabin Cost in Tumkur?",
+        paragraphs: [
+          "Pricing depends on cabin size, construction materials, insulation, interior finishes, electrical fittings, doors, windows, rental or purchase requirements, and delivery location.",
+          "Share your requirements to receive an itemised quotation.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Do I need a foundation for a portable cabin?",
+        answer:
+          "Many portable cabins can be installed on suitable concrete blocks or a prepared PCC foundation. The actual base requirements depend on cabin size, structural loads and site conditions.",
+      },
+      {
+        question: "How quickly can you deliver a cabin in Tumkur?",
+        answer:
+          "Lead time depends on cabin dimensions, available stock, customisation and transport arrangements. The expected delivery schedule is confirmed in the quotation.",
+      },
+      {
+        question: "Can I move the cabin to another site later?",
+        answer:
+          "Many portable cabins are designed for relocation. Moving them requires suitable lifting equipment, transportation and a structural assessment where necessary.",
+      },
+      {
+        question: "Will a portable cabin become hot during summer?",
+        answer:
+          "Insulated wall and roofing options, ventilation and suitable air-conditioning provisions can improve indoor comfort. Actual performance depends on the selected specification and local conditions.",
+      },
+      {
+        question: "Do you provide portable cabins on rent in Tumkur?",
+        answer:
+          "Rental enquiries are welcome. Availability, rental duration, security deposit, transportation and other applicable charges are confirmed in the quotation.",
+      },
+      {
+        question: "Can you deliver to Tiptur, Sira, Madhugiri and Pavagada?",
+        answer:
+          "We welcome delivery enquiries from these locations. Delivery feasibility, transport charges and unloading arrangements are confirmed after reviewing the site requirements.",
+      },
+      {
+        question: "Can the cabin have our company branding?",
+        answer:
+          "Custom exterior colours, branding provisions and ACP finishes can be included where technically suitable and agreed in the quotation.",
+      },
+      {
+        question: "How much maintenance does a portable cabin require?",
+        answer:
+          "Periodic inspection of roofing, sealants, paint, doors, windows and electrical fittings is recommended. Maintenance depends on the selected materials, site exposure and usage.",
+      },
+    ],
+
+    ctaHeading: "Need a Cabin on Your Tumkur Site?",
+    ctaText: `Looking for a portable site office, security cabin, labour accommodation, toilet cabin or custom prefabricated unit? Share your required size, layout, site location and intended use. Our team can help you review suitable specifications and request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's CTA has three buttons (Request a Quotation, Call, WhatsApp): the call and WhatsApp
+    // buttons are on by default, and an empty list drops the two default secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+      { label: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
+      { label: "Container Office in Pavagada", href: "/cities-we-serve/container-office-in-pavagada" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, office, yard or service partner in Tumkur district. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The sizes, layouts, build types, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and stacked or double-storey units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other build types (MS, PUF panel, FRP, ACP) look different, and the images are not photographs of installations in Tumkur. Hindustan Aeronautics Limited (HAL) and its Gubbi helicopter factory, the Pavagada solar park and its developers, KIADB and its industrial areas, and the Tumakuru Smart City programme are independent organisations and projects with which Portable Office Cabin is not affiliated; they, the businesses and institutions described and the towns named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on build types, heat, rain, insulation and ventilation are general guidance, not engineering advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABIN MANUFACTURER DEVANAHALLI AIRPORT — the portable-cabin intent for the
+   * Kempegowda International Airport belt north of Bengaluru: site offices, guard cabins, labour
+   * accommodation, toilet blocks, stores and kiosks for the NH-44 corridor, the Bagalur / Budigere
+   * warehousing belt, the KIADB Aerospace Park and the Nandi Hills farmhouses. Not a container-office
+   * cluster location, so the /cities-we-serve index lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-19 ("Portable Cabin Manufacturer in Devanahalli Airport — Page content, SEO
+   * fields and image metadata"), mapped onto the fixed template slots. The slug is the owner's URL
+   * slug; "[Company Name]", "[Phone]" and "[Email]" are Portable Office Cabin and COMPANY's numbers
+   * and sales address. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "What we build" → why: its lead-in as whyIntro, the six cabin types as bullets, the
+   *     custom-layouts line as whyOutro.
+   *   • "Why work with a manufacturer close to the airport" is split: its transport paragraph →
+   *     solutions ("Getting a Cabin to the Airport Side", three numbered H3s), its five reasons →
+   *     whyUs ("Why Work With Us"). The template renders whyUs after the uses and extras.
+   *   • "Construction details" → features: the table rows as "Component — options", the dimensions
+   *     paragraph as sizesNote. The table's "Extras" row → the custom slot beside the interior
+   *     render (two short groups), so the extras sit next to a fitted-out office.
+   *   • "Where our cabins are used" → industries (short titles added), as "Where Portable Cabins Are
+   *     Used Around the Airport" (no customer or project claims).
+   *   • The transport paragraph's places and the delivery FAQ's districts → areasText; "How ordering
+   *     works" → how (five steps); the six FAQs; "Talk to us" → CTA.
+   *   • The draft's image-metadata table (file names, EXIF/IPTC shoot date, GPS, captions) describes
+   *     five photographs that were not supplied — a security cabin at a layout gate, bunkhouses, a
+   *     factory, a crane delivery. It is not used: the alt text describes the renders actually
+   *     dropped, and no date, GPS or "original photo" metadata is claimed for them.
+   * Location rule (see biz note on locationStripText in src/lib/site-navigation.ts): manufacturing
+   * happens only at the factory near Hosur, Tamil Nadu. The draft's "our manufacturing happens in the
+   * Devanahalli belt", "our Devanahalli unit", "workshop in Devanahalli" and "a short drive away" are
+   * rewritten to the Hosur factory; the H1 and meta title read "Portable Cabin Manufacturer Devanahalli
+   * Airport" (owner wording of 2026-10-19), without the draft's "in", which would place a factory at
+   * the airport; the proximity argument becomes the transport section, in the
+   * owner's approved Tumkur / Kudankulam wording for transport, the base, crane and site access.
+   * Owner wording rule (the Kudankulam / Tumkur rule): no unconfirmed specification, timing, coverage
+   * or customer claims. "Ready within 7–12 working days", "stock models even faster", "within days
+   * rather than months", "within one working day", "same-day", "we usually respond the same day",
+   * "easily serves 10 to 15 years", "regularly build odd sizes", "handled by the same team" and
+   * "popular with contractors" are removed or reworded; specifications, extras and the base are
+   * options confirmed in the approved specification and quotation; rental is subject to
+   * availability; towns are delivery enquiry locations. No ₹ (the cost FAQ compares sizes only).
+   *
+   * Images: five owner-dropped 2048×2048 webp renders ("Portable Cabin Manufacturer in Devanahalli
+   * airport (1–5).webp") of one white ribbed-steel cabin with a sloped roof, a steel door and grilled
+   * windows, plus a furnished office interior. The exteriors are cropped to 4:3 (sky and gravel
+   * only) and the raised view to 3:2 for the feature band, all resized to ≤1600 px at webp q82:
+   * (1) three-quarter view = hero / og:image, no caption (as on Tumkur and Jigani); (4) raised view
+   * of the roof = feature band; (3) front and (2) gable-end views = two-column gallery; (5) interior
+   * = beside the extras. The interior caption and the disclaimer say they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-manufacturer-devanahalli-airport",
+    city: "Devanahalli",
+    listTitle: "Portable Cabins near Devanahalli Airport",
+    metaTitle: "Portable Cabin Manufacturer Devanahalli Airport | Portable Office Cabin",
+    metaDescription:
+      "Ready-to-install portable cabins for Devanahalli Airport sites: site offices, security cabins, bunkhouses & more. Delivery quoted per site in North Bengaluru.",
+    keywords:
+      "Portable Cabin Manufacturer in Devanahalli Airport, Portable Cabin Devanahalli, Portable Cabins near Kempegowda Airport, Prefab Cabin Devanahalli, Site Office Cabin North Bengaluru, Security Cabin Manufacturer Devanahalli, Labour Cabin Devanahalli, Portable Cabin on Rent near Devanahalli",
+    geo: { region: "IN-KA", placename: "Devanahalli, Bengaluru Rural, Karnataka, India", position: "13.2473;77.7128", icbm: "13.2473, 77.7128" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-exterior.webp",
+      alt: "Portable cabin for Devanahalli Airport sites — illustrative render of a white portable cabin with ribbed steel walls, a sloped roof, a steel door and grilled windows on the long side and end wall, standing on steel legs on a cleared plot",
+      width: 1600,
+      height: 1200,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-roof-view.webp",
+      alt: "Portable cabin for Devanahalli Airport sites — illustrative raised view of the white cabin showing its sloped roof, the steel door and grilled windows, with cement bags and pallets beside it on a cleared site",
+      width: 1536,
+      height: 1024,
+      caption: "A sloped roof lets monsoon rain run off.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-interior.webp",
+      alt: "Portable cabin for Devanahalli Airport sites — illustrative render of an optionally furnished office interior with wood-look wall panels, a white desk, three white office chairs, a low storage unit, recessed and pendant LED lights, grilled windows and wood-look flooring",
+      width: 1600,
+      height: 1600,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-front-view.webp",
+        alt: "Portable cabin for Devanahalli Airport sites — illustrative front view of the white cabin showing the steel door between a small and a large grilled window, with a third window on the end wall",
+        width: 1600,
+        height: 1200,
+      },
+      {
+        src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-end-view.webp",
+        alt: "Portable cabin for Devanahalli Airport sites — illustrative three-quarter view from the gable end, showing a grilled window under a small hood, a large grilled window, the steel door and a third window on the long side",
+        width: 1600,
+        height: 1200,
+      },
+    ],
+
+    h1: "Portable Cabin Manufacturer Devanahalli Airport",
+    tagline: "The stretch around Kempegowda International Airport has changed faster than almost any other part of Bengaluru.",
+    intro: [
+      "Warehouses, aerospace parks, hotels, gated layouts and logistics hubs are coming up on every side of the NH-44 corridor, and each of them needs working space before the permanent building is ready.",
+      "That is exactly the gap Portable Office Cabin fills. We manufacture portable cabins at our factory near Hosur and welcome delivery enquiries from Devanahalli and the airport zone. Each cabin arrives finished, so your team can have an office, a guard post or a rest room on site without months of masonry work; placement time and base requirements depend on the site and are confirmed in the quotation.",
+    ],
+
+    whyHeading: "What We Build",
+    whyIntro:
+      "Every cabin leaves our factory as a complete, closed structure. You do not need to arrange plastering, roofing or electrical work after it lands on your plot; the fittings included are confirmed in the approved specification and quotation.",
+    whyBullets: [
+      {
+        title: "Site office cabins",
+        text: "Single or multi-room units that can be planned with a reception area, meeting space and a small pantry. A good fit for contractors on airport-side projects who need a presentable office for client visits.",
+      },
+      {
+        title: "Security and guard cabins",
+        text: "Compact units with wide viewing windows, a counter, lighting and fan points. Sizes range from 4×4 ft for a single guard to larger gatehouse models for layouts and industrial parks.",
+      },
+      {
+        title: "Labour accommodation and bunkhouses",
+        text: "Ventilated sleeping units with bunk provisions, attached or separate washrooms, and insulated roof options that help keep the interior bearable through the Devanahalli summer.",
+      },
+      {
+        title: "Toilet and bathroom blocks",
+        text: "Portable sanitation units with Indian or Western fittings, water tank mounts and plumbing connections for hook-up on site.",
+      },
+      {
+        title: "Storage and tool cabins",
+        text: "Lockable containers for cement, hardware, survey equipment or anything else that should not sit under the open sky.",
+      },
+      {
+        title: "Canteen, pantry and kiosk units",
+        text: "Serving counters, food stalls and ticket booths for events, farmhouses and roadside commercial plots.",
+      },
+    ],
+    whyOutro:
+      "We also take up custom layouts. If you have a floor plan in mind, send it across and we will tell you what is possible and what it will cost.",
+
+    solutionsHeading: "Getting a Cabin to the Airport Side",
+    solutionsIntro:
+      "Transport is the hidden cost in portable cabins. A finished cabin travels on a trailer and is lifted into place by crane, so the route, the handling and the site itself all show up in the price. Our factory is near Hosur, Tamil Nadu, and three things are settled for every delivery to Devanahalli and the airport zone:",
+    solutions: [
+      {
+        title: "Transport",
+        text: "The haul from our factory to your site is quoted as its own line, so the cost of the distance is clear before you order.",
+      },
+      {
+        title: "Crane, Unloading and Placement",
+        text: "The foundation or supporting base, crane, unloading and placement responsibilities are confirmed before dispatch.",
+      },
+      {
+        title: "Site Access",
+        text: "Delivery feasibility and charges are confirmed after reviewing the site and its access, including the approach road and the gate width.",
+      },
+    ],
+
+    featuresHeading: "Construction Details",
+    featuresIntro:
+      "Our standard portable cabin is built on a welded MS frame with a galvanised iron or PUF-insulated panel body. Depending on the use, you can choose from these options; the items supplied are confirmed in the approved specification and quotation:",
+    features: [
+      "Wall panels — GI sheet, PUF sandwich panel (40/50 mm), or Rockwool panel where fire resistance is required",
+      "Roof — sloped PUF or Rockwool panel with gutter and downpipe",
+      "Flooring — cement board with vinyl, chequered MS plate, or plywood with laminate",
+      "Doors and windows — MS, aluminium or UPVC, with glass or louvre options",
+      "Electrical — concealed wiring, MCB panel, LED fittings, fan and AC points",
+    ],
+    sizesNote:
+      "Dimensions are flexible. Common sizes are 10×10 ft, 10×20 ft, 20×20 ft and 20×40 ft, and other sizes can be built to fit a narrow plot or a specific gate width.",
+
+    industriesHeading: "Where Portable Cabins Are Used Around the Airport",
+    industriesIntro: "Portable cabins suit a wide range of uses in and around the Devanahalli belt, including:",
+    industries: [
+      { title: "Construction and infrastructure", text: "projects along the airport corridor." },
+      { title: "Warehousing and logistics", text: "parks in Bagalur, Budigere and Hosakote." },
+      { title: "Aerospace and electronics", text: "units in the KIADB zone." },
+      { title: "Farmhouses and estates", text: "around Nandi Hills." },
+      { title: "Solar and telecom", text: "solar installations and telecom sites." },
+      { title: "Schools and healthcare", text: "schools, hospitals and temporary clinics needing quick extra rooms." },
+      { title: "Events and shoots", text: "events, exhibitions and film shoots." },
+    ],
+
+    customHeading: "Extras You Can Add",
+    customIntro: "Depending on how the cabin will be used, these extras can be added:",
+    customBullets: [
+      {
+        title: "Inside",
+        text: "an AC provision (the wall cut-out, power point and drainage for a split or window AC), a false ceiling and a wash basin.",
+      },
+      { title: "Outside", text: "a sun shade, and a ramp or steps at the entrance." },
+    ],
+    customOutro: "The extras and finishes supplied are confirmed in the approved specification and quotation.",
+
+    whyUsHeading: "Why Work With Us",
+    whyUsIntro: "A few reasons to work with us on an airport-side project:",
+    whyUsBullets: [
+      {
+        title: "Clear timelines",
+        text: "Manufacturing and delivery timelines depend on the specification, available stock and the production schedule, and are confirmed in your quotation.",
+      },
+      {
+        title: "Built for this climate",
+        text: "Insulated sandwich panels and sloped roofs with proper drainage can be specified, because the north Bengaluru region sees both harsh sun and heavy monsoon spells.",
+      },
+      {
+        title: "Relocatable",
+        text: "Finished one project? Suitable cabins can be lifted and shifted to the next site without dismantling, subject to their structural condition and safe handling.",
+      },
+      {
+        title: "Itemised pricing",
+        text: "You get an itemised quotation, with the structure, electrical work, flooring, transport and installation listed separately, so each cost is clear before delivery.",
+      },
+      {
+        title: "After-sales support",
+        text: "Repairs, extensions and modifications can be discussed with our team, subject to technical feasibility, warranty terms and the agreed scope.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Devanahalli Airport",
+    areasText:
+      "We welcome delivery enquiries from Devanahalli town and the airport zone, Yelahanka, Chikkaballapur Road, Doddaballapur, Vijayapura, Bagalur, Budigere, Hosakote, the KIADB Aerospace Park and the Nandi Hills belt, and from across Bengaluru and nearby districts including Chikkaballapur, Kolar and Tumakuru. Don't see your site on the list? Ask anyway. We confirm delivery feasibility and charges after reviewing the site and its access.",
+
+    howHeading: "How Ordering Works",
+    howSteps: [
+      {
+        title: "Share your requirement",
+        text: "Call, WhatsApp or fill the enquiry form. Tell us the purpose, rough size and where the site is.",
+      },
+      { title: "Get a quotation", text: "We send a drawing and an itemised price for your requirement." },
+      {
+        title: "Confirm and manufacture",
+        text: "Once the advance is received, fabrication begins at our factory near Hosur. You are welcome to visit and inspect. Manufacturing and delivery timelines are confirmed in the quotation.",
+      },
+      {
+        title: "Delivery and installation",
+        text: "Our team transports the cabin, places it on your prepared base and connects the electricals. Crane, unloading and placement arrangements are confirmed before dispatch.",
+      },
+      { title: "Handover", text: "A quick walkthrough, and the cabin is yours to use." },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a portable cabin cost near Devanahalli?",
+        answer:
+          "Prices depend on size, panel type and fittings. A basic 10×10 ft GI security cabin sits at the lower end; a fully fitted 20×40 ft office with AC and washroom sits at the upper end. Ask for a quote with your exact specification for a firm number; transport, unloading and installation are listed separately in it.",
+      },
+      {
+        question: "Do I need a foundation?",
+        answer:
+          "A level, compacted surface is enough for many units. For long-term use we recommend a plinth or concrete pedestals so the frame stays off standing water. The base your cabin needs depends on its size, loads and site conditions, and is confirmed in the quotation.",
+      },
+      {
+        question: "Can the cabin be air-conditioned?",
+        answer:
+          "Yes. PUF-insulated units hold cool air well, and an AC provision (the wall cut-out, power point and drainage for a split or window AC) can be included in the specification.",
+      },
+      {
+        question: "How long do portable cabins last?",
+        answer:
+          "Service life depends on the materials, the site and upkeep. Basic care, such as repainting the frame every few years and keeping gutters clear, goes a long way, and a well-built unit can serve for many years.",
+      },
+      {
+        question: "Do you offer cabins on rent?",
+        answer:
+          "Selected models are available on monthly rental for short-term projects, subject to availability. Ask about it when you enquire.",
+      },
+      {
+        question: "Can you deliver outside Devanahalli?",
+        answer:
+          "Yes. We welcome delivery enquiries from across Bengaluru and nearby districts including Chikkaballapur, Kolar and Tumakuru. Delivery feasibility and charges are confirmed after reviewing the site.",
+      },
+    ],
+
+    ctaHeading: "Talk to Us",
+    ctaText: `If you need a portable cabin near Devanahalli Airport, send us your site location and requirement, and we will come back with a design and a clear price. Call ${COMPANY.phones[0].display} or write to ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The draft offers call, WhatsApp and the enquiry form: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabins on Rent", href: "/rental-service" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Devanahalli or at Kempegowda International Airport. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, panel types, fittings, extras and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and any fire-resistance performance depends on the certified panel specified. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished office interior; they are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, KIADB and its Aerospace Park, and the businesses, institutions and places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on foundations, insulation, climate and upkeep are general guidance, not engineering advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -6832,6 +9034,319 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, depot or service partner in Davanagere; delivery, unloading and installation are arranged for each project and delivery dates are not guaranteed. Rental units are subject to availability. The images on this page are design renders of a Portable Office Cabin container office, not photographs of installations in Davanagere: the full-height glazing and glazed doors they show are a design option (the standard specification is aluminium sliding windows and a lockable steel door) and the interior is optionally furnished; glazing, doors, colours and finishes for a specific order are confirmed in the approved quotation and drawing. Notes on foundations, lifting, site access, healthcare use and approvals are general guidance, not legal or regulatory advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN HAVERI — Central Karnataka on NH-48, between Davanagere (~67 km) and
+   * Hubballi: Haveri town, Ranebennur, Byadgi, Hangal, Hirekerur, Rattihalli, Savanur and Shiggaon.
+   *
+   * RECOVERED PAGE (2026-10-17). Haveri was built alongside Belagavi, Bidar, Davanagere and Bagalkot
+   * on another laptop (#120, #121, #125 and #126 all refer to its working tree) but was never
+   * committed or pushed, and its owner draft and renders did not reach GitHub. This entry is new
+   * copy written for the page the cluster test already expected; it is NOT the owner's draft and
+   * needs owner review before merge.
+   *
+   * Owner corrections (2026-10-17): no visible hero caption; towns are geographic context only, with
+   * delivery feasibility, charges and scope "confirmed in the quotation" (Kudligi / Sandur wording);
+   * readiness tied to the quotation scope, site readiness and installation; rainfall softened to
+   * "around" CGWB long-term normals. Other facts checked: Byadgi chilli GI (application 129),
+   * cold storages for colour, Haveri district formed 24 Aug 1997, the 40 ft unit (products.ts).
+   *
+   * What makes it Haveri's page and not a copy of Davanagere's (67 km away): the district's rainfall
+   * gradient (around 1,000 mm a year at Hangal in the west, 1,044 mm 1961–2010 normal but 963 mm in
+   * CGWB's 2020 table; around 630 mm at Ranebennur in the east, 1981–2010 normal; CGWB district and
+   * taluk aquifer reports), so the specification advice differs by taluk; the Byadgi
+   * chilli trade (GI-tagged; market yard and cold storages that hold the chilli cold to keep its
+   * colour); black soils across Haveri taluk and low ground along the Varada and Tungabhadra; and
+   * NH-48 through the district. No company, plant or market is named as a customer.
+   *
+   * No ₹, lead times, warranty terms, project counts or superlatives (file-header rule; issue #107).
+   * The specification lines and the seven standard sizes are the ones already approved on the
+   * Davanagere and Kalaburagi pages; the 40 ft unit's details (15 workstations, half-partition
+   * cabin, provision for two ACs) come from the Container Site Office product entry in products.ts.
+   *
+   * Images: the owner's own Container Site Office product images (products.ts, id "container-site-
+   * office"), referenced in place rather than copied, as the Mysore shipping-container and labour
+   * camp pages do. Alt text describes what is in frame; the disclaimer says none was taken in Haveri.
+   *
+   * Opts into the CSS-only motion pass and the Service JSON-LD, as Davanagere and Kalaburagi do.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-haveri",
+    city: "Haveri",
+    listTitle: "Container Office in Haveri",
+    metaTitle: "Container Office in Haveri | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Haveri for Byadgi chilli traders, cold storages, Ranebennur and NH-48 projects. Specified for local rainfall. Buy or rent. Get a quote.",
+    keywords:
+      "Container Office in Haveri, Container Office Haveri, Portable Office Cabin Haveri, Site Office Container Haveri, Container Office Ranebennur, Portable Cabin Byadgi, Site Office Hangal, Container Office for Rent Haveri, Container Office for Sale Haveri, Container Office Supplier Haveri",
+    geo: { region: "IN-KA", placename: "Haveri, Karnataka, India", position: "14.7951;75.3991", icbm: "14.7951, 75.3991" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/products/container-site-office-main.webp",
+      alt: "Container office in Haveri — Portable Office Cabin's 40 ft × 10 ft container site office: white corrugated-steel walls above a navy-blue base band, two steel doors with canopies and four aluminium-framed windows, on a levelled site",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/products/container-site-office-side-angle.webp",
+      alt: "Container office in Haveri — three-quarter view of the white and navy container site office showing its corrugated end wall, side windows with canopies and the steel base frame resting on supports",
+      width: 1024,
+      height: 1024,
+      caption: "West of the district, specify for rain. East, specify for heat.",
+    },
+    interiorImage: {
+      src: "/images/products/container-site-office-interior.webp",
+      alt: "Container office in Haveri — inside the 40 ft container site office: workstation tables with overhead file cabinets along both walls, revolving chairs, a half-height partition, sliding windows with roller blinds and ceiling fans",
+      width: 1024,
+      height: 1024,
+      caption: "The 15-workstation fit-out of our 40 ft × 10 ft container site office.",
+    },
+    gallery: [
+      {
+        src: "/images/products/container-site-office-side.webp",
+        alt: "Container office in Haveri — side elevation of the white and navy container site office with a steel door between aluminium-framed windows, beside a gravel and plant bed",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/products/container-site-office-rear.webp",
+        alt: "Container office in Haveri — rear view of the container site office: a plain corrugated-steel wall above the navy-blue base band, standing on supports clear of the ground",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Container Offices in Haveri",
+    tagline: "Site and Trading Offices for Byadgi, Ranebennur and the NH-48 Corridor",
+    intro: [
+      "Haveri district sits where the wetter Malnad fringe meets the drier plains of Central Karnataka. By long-term CGWB normals, Hangal, in the west, receives around 1,000 mm of rain a year, while Ranebennur, in the east, receives around 630 mm. A container office that suits one end of the district is not automatically right for the other, and this page explains the difference.",
+      "The district's economy runs on agriculture and trade. Byadgi gives its name to the Byadgi chilli, which carries a Geographical Indication (GI) tag, and its market yard, cold storages and processing units are busy through the arrival season. Ranebennur is a commercial and agricultural trading town, and NH-48 runs through the district from Haveri town towards Ranebennur and the Tungabhadra.",
+      "Traders, cold-storage operators, contractors and institutions here often need a working office sooner than a building can be put up, or for a season rather than for good. A container office in Haveri is fabricated, wired and finished at the factory, delivered by truck, and can be moved when the work moves.",
+      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu. For a site in Haveri district, whether in or around Haveri town, Ranebennur, Byadgi or Hangal or along NH-48, share the location when you enquire; delivery feasibility, transport charges and the delivery scope are confirmed in the quotation.",
+      "The images on this page show our 40 ft × 10 ft container site office, which seats 15 workstations. Smaller and larger offices, from a 10 ft × 10 ft supervisor's cabin to interconnected multi-unit offices, use the same construction.",
+    ],
+
+    whyHeading: "Why a Container Office Works in Haveri District",
+    whyIntro: "Four practical reasons, each tied to how work is organised in the district:",
+    whyBullets: [
+      {
+        title: "One district, two climates",
+        text: "The west of the district, around Hangal and Hirekerur, is wetter and greener, while the east around Ranebennur is drier and hotter. On wetter sites, give priority to roof drainage, sealed joints and a base that keeps the floor clear of standing water. On drier eastern sites, give priority to roof and wall insulation, ventilation and air-conditioning provisions. One specification can include both.",
+      },
+      {
+        title: "Seasonal work that does not justify a building",
+        text: "Chilli arrivals at Byadgi, procurement and grading, and cold-storage loading are concentrated in part of the year. A rented container office covers the busy months without the cost and time of permanent construction, and an owned unit can be shifted between premises as the work moves.",
+      },
+      {
+        title: "Highway and project sites that keep moving",
+        text: "Road, irrigation and utility contractors working along NH-48 and the district roads relocate their site offices as each stretch is completed. A container office is lifted onto a truck and re-sited, so one office can follow a project through the district.",
+      },
+      {
+        title: "Largely finished before it arrives",
+        text: "Container offices are fabricated, wired and finished at the factory, which reduces the masonry and finishing work needed inside a busy market yard, campus or factory compound. The office is ready to use once the base, placement, installation, checks and required connections agreed in the quotation are complete, and the timing depends on site readiness.",
+      },
+    ],
+    whyOutro:
+      "Plan the base before dispatch. Black soils are common across Haveri taluk and the plains of the district, and low-lying ground near the Varada and Tungabhadra rivers can hold water after heavy rain. A level, well-drained pad or pedestal supports that lift the frame clear of the ground suit most sites; the right base for a specific location depends on its ground and drainage conditions and is confirmed with the quotation.",
+
+    solutionsHeading: "Applications of Container Offices in Haveri",
+    solutionsIntro: "Where container offices are typically used across Haveri district:",
+    solutions: [
+      {
+        title: "Byadgi Chilli Trade and Cold-Storage Offices",
+        text: "Byadgi's market yard draws traders, commission agents, transporters and buyers through the arrival season, and the town's cold storages hold chilli at low temperatures to protect its colour. Processing units, including oleoresin extraction plants, add their own administrative needs. Container offices can serve as trading and billing offices, cold-storage administration rooms, weighbridge cabins, sample rooms and dispatch offices beside the storage blocks. An insulated, air-conditioned office also gives staff an enclosed room close to the stock.",
+      },
+      {
+        title: "Agricultural Markets, Warehouses and Procurement Offices",
+        text: "Agricultural produce markets at Ranebennur, Haveri and the taluk towns support traders, warehouses and processing units. Container offices can be used as procurement and billing offices, warehouse supervisor cabins, gate and security offices, and extra accounts rooms during peak arrivals, then closed up or moved when the season ends.",
+      },
+      {
+        title: "NH-48 Highway and Logistics Projects",
+        text: "NH-48 carries traffic between Bengaluru and Hubballi through Haveri district. Highway maintenance and improvement contractors, transport operators, warehouses and roadside developments use container offices as project offices, site engineers' cabins, contractor meeting rooms, dispatch and transport offices, and gate offices for yards near the highway.",
+      },
+      {
+        title: "Irrigation, Water-Supply and Utility Works",
+        text: "Irrigation and drinking-water projects drawing on the Tungabhadra and Varada rivers, along with pipeline, tank-filling and electrical works, need offices close to the work that can move as it progresses. Container offices serve as project management offices, survey and documentation rooms, and stores for drawings, registers and samples.",
+      },
+      {
+        title: "District Offices, Colleges and Hospitals",
+        text: "Haveri became a separate district in 1997, and its district offices, colleges, hospitals and schools continue to expand. Container offices can provide admissions and enquiry offices, administrative and records rooms, and temporary staff rooms during construction or renovation. Any clinical or laboratory use must be designed to the applicable healthcare, hygiene, ventilation and safety requirements.",
+      },
+      {
+        title: "Real Estate and Construction Site Offices",
+        text: "Residential layouts, commercial buildings and public works around Haveri town and Ranebennur use container offices as construction site offices, sales and marketing offices, engineers' cabins and client meeting rooms. When the project is complete, the office can be relocated to the next site.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Sizes",
+    featuresIntro:
+      "Container offices are built on a welded mild-steel frame with protective cladding, insulated walls and roof, and factory-fitted wiring. Standard construction features, followed by the standard sizes and their typical uses in Haveri district:",
+    features: [
+      "Structure — welded mild steel structural framework.",
+      "Exterior walls — MS or GI sheet cladding according to approved specifications.",
+      "Wall insulation — PUF or glass wool insulation options.",
+      "Roofing — weather-resistant roofing system with insulation options.",
+      "Entry door — lockable steel door with suitable hardware.",
+      "Windows — aluminium sliding windows with optional mosquito mesh.",
+      "Flooring — vinyl or laminate flooring over a suitable floor base.",
+      "Interior walls — finished interior wall panels.",
+      "Ceiling — insulated ceiling with optional false ceiling.",
+      "Lighting — LED interior lighting.",
+      "Electrical system — switches, power sockets, distribution board, and appropriate earthing provisions.",
+      "Exterior finish — protective paint system according to the approved specification.",
+      "Final specifications — final material thicknesses, insulation types, finishes, and electrical provisions depend on the approved quotation.",
+      "10 ft × 10 ft container office — supervisor's cabin or gate office.",
+      "12 ft × 10 ft container office — security office or small billing room.",
+      "16 ft × 10 ft container office — engineers' cabin or cold-storage administration room.",
+      "20 ft × 8 ft container office — standard site office or weighbridge room.",
+      "20 ft × 10 ft container office — trading office or project meeting room.",
+      "30 ft × 10 ft container office — partitioned office with a manager's cabin.",
+      "40 ft × 10 ft container office — multi-desk project office; the container site office shown on this page seats 15 workstations.",
+    ],
+    sizesNote:
+      "Custom dimensions and layouts can be built to suit the number of occupants and the site, provided the finished unit can still be transported on the roads that lead to it.",
+
+    industriesHeading: "Container Office for Sale or Rent in Haveri",
+    industriesIntro:
+      "Container offices are available to buy or to rent, depending on project duration, specification and unit availability.",
+    industries: [
+      {
+        title: "Buy a container office in Haveri",
+        text: "Buying suits businesses that will use the office every year or move it between their own premises: cold-storage operators, traders with yards in more than one town, institutions, and contractors who carry an office from one project to the next. An owned office can be specified exactly, including insulation, layout, toilet, pantry and furniture.",
+      },
+      {
+        title: "Rent a container office in Haveri",
+        text: "Renting suits a defined period: a chilli or procurement season, a highway or pipeline stretch, a renovation, or a sales office for a layout launch. It reduces the initial outlay for the period you need the office, subject to unit availability.",
+      },
+      {
+        title: "Compare both options",
+        text: "We can quote purchase and rental for the same requirement, so you can compare them over your project duration.",
+      },
+    ],
+
+    customHeading: "Optional Customisation",
+    customIntro: "Options commonly specified for projects in Haveri district:",
+    customBullets: [
+      { title: "Air-conditioning", text: "Split air-conditioning units, or openings and electrical points ready for them." },
+      { title: "Enhanced insulation", text: "Thicker roof and wall insulation for the hotter, drier east of the district." },
+      { title: "Roof drainage", text: "Roof run-off arrangements and sealed exterior joints for the wetter west." },
+      { title: "Attached toilet", text: "Attached toilet with wash basin, flush system and exhaust provisions." },
+      { title: "Pantry", text: "Pantry counter and storage cabinets." },
+      { title: "Workstations", text: "Workstation tables, overhead file cabinets and chairs." },
+      { title: "Partitions", text: "Manager's cabins, meeting rooms and internal partitions." },
+      { title: "Exterior finish", text: "Exterior painting in preferred colour combinations." },
+      { title: "Multi-unit offices", text: "Multiple interconnected container units." },
+      {
+        title: "Ground-plus-one",
+        text: "Ground-plus-one modular arrangements with engineered structural support and external staircase provisions.",
+      },
+    ],
+    customOutro:
+      "The interior image shows the 15-workstation fit-out of our 40 ft × 10 ft container site office. The options, finishes and fittings for each office are confirmed in its quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin in Haveri?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable and prefabricated container offices at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru. What we offer customers in Haveri district:",
+    whyUsBullets: [
+      { title: "Manufacturing", text: "Container offices manufactured at our factory near Hosur." },
+      { title: "Specification by location", text: "Insulation, drainage and base advice for the part of the district your site is in." },
+      { title: "Custom layouts", text: "Custom dimensions and office configurations." },
+      { title: "Facilities", text: "Optional air-conditioning, attached toilets, pantry and furniture." },
+      { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
+      { title: "Delivery planning", text: "Delivery planning for your site in Haveri district, with feasibility and scope confirmed in the quotation." },
+      { title: "Relocatable", text: "Offices that can be lifted and moved to the next site." },
+      { title: "Written quotations", text: "Specification, scope and charges stated in writing in the quotation." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Haveri",
+    areasText:
+      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported by truck. Share your site location or a map pin when you enquire, whether the site is in or near Haveri town, Ranebennur, Byadgi or Hangal, along the NH-48 corridor, or in a market yard or cold-storage compound. Delivery feasibility, transport charges and the delivery and installation scope for your location are confirmed in the quotation.",
+
+    howHeading: "Our Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Requirement and site details",
+        text: "Share the use, size, number of occupants, preferred layout, options and site location. Photos of the site and its approach road help.",
+      },
+      {
+        title: "Quotation and specification",
+        text: "We recommend a configuration for your part of the district and confirm the specification, scope and charges in a written quotation.",
+      },
+      {
+        title: "Manufacturing and finishing",
+        text: "The office is fabricated, insulated, wired and finished at our factory to the approved specification.",
+      },
+      {
+        title: "Transport planning",
+        text: "Before dispatch we check vehicle access to the site, turning space, unloading space for a crane or Hydra, overhead cables and whether the base is ready. Market yards and town-centre premises can have tight gates and restricted access hours, which are worth confirming early.",
+      },
+      {
+        title: "Placement and handover",
+        text: "The office is placed on the prepared base with lifting equipment arranged under the agreed scope, checked and handed over. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Should a container office in Hangal be specified differently from one in Ranebennur?",
+        answer:
+          "Often, yes. By long-term CGWB normals, Hangal, in the west of Haveri district, receives around 1,000 mm of rain a year, while Ranebennur, in the east, receives around 630 mm and is hotter and drier. For western sites, give priority to roof drainage, sealed joints and a raised, well-drained base; for eastern sites, give priority to roof and wall insulation, ventilation and air-conditioning provisions. One specification can include both.",
+      },
+      {
+        question: "Can a container office be placed at a Byadgi cold storage or market yard?",
+        answer:
+          "Yes, subject to space and access. Container offices are used there as trading and billing offices, cold-storage administration rooms, weighbridge cabins, sample rooms and dispatch offices. Yards and storage compounds can be busy and tightly laid out, so vehicle entry, unloading space, overhead cables and the base are checked before dispatch, and entry to any market yard or private premises is subject to its own permissions.",
+      },
+      {
+        question: "Is it better to rent or buy a container office for the chilli season?",
+        answer:
+          "If the office is needed only for the arrival and storage months, renting can reduce the initial outlay for that period, subject to unit availability. If you will use it every season or move it between your own premises, buying gives you a reusable office specified to your needs. We can quote both so you can compare.",
+      },
+      {
+        question: "What base does a container office need on black soil near the Varada or Tungabhadra?",
+        answer:
+          "A level, well-drained base that keeps the frame clear of standing water. Black soils are common across Haveri taluk and the plains, and low-lying ground near the rivers can hold water after heavy rain, so pedestal supports or a raised pad are typical. The right base for a specific site depends on its ground and drainage conditions and is confirmed with the quotation.",
+      },
+      {
+        question: "How many people can work in the 40 ft container site office shown on this page?",
+        answer:
+          "Fifteen. Our 40 ft × 10 ft container site office has 15 workstation tables with overhead file cabinets, 15 revolving chairs and a half-partition manager's cabin or meeting room, with complete internal wiring and provision for two air conditioners. Smaller teams can use a 20 ft or 30 ft unit, and larger teams can use interconnected units.",
+      },
+      {
+        question: "Can I enquire about delivery to a site along NH-48 between Haveri and Ranebennur?",
+        answer:
+          "Yes. Share the site location or a map pin when you enquire. Delivery feasibility, transport charges and the delivery scope are confirmed in the quotation, after the route, access and unloading space have been checked. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+      },
+      {
+        question: "Do you have a factory or depot in Haveri district?",
+        answer:
+          "No. Our container offices are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Haveri district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading and placement are arranged for each project under the scope agreed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Haveri",
+    ctaText: `To receive a quotation for a container office in Haveri district, share the site location (town or taluk), the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration suited to that part of the district and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Enquiries are welcome for sites in Haveri district and along the NH-48 corridor; delivery is confirmed in the quotation.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "40 ft Container Site Office (15 workstations)", href: "/products/container-site-office" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Haveri district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The images on this page show Portable Office Cabin's 40 ft × 10 ft container site office and its furnished interior; they were not taken in Haveri district, and the colours, finishes and fittings of each order follow its approved specification. Rainfall figures are long-term normals from public records and vary from year to year. Towns, markets, rivers, highways and project types are named only as geographic context and to describe typical uses, not as guaranteed delivery or service areas; Portable Office Cabin is not affiliated with any agricultural produce market committee, cold storage, trader, processing unit, highway authority, utility, institution or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on soils, drainage, foundations and insulation are general guidance, not engineering advice; the base, insulation and cooling for a specific site are confirmed in the approved quotation.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -8221,6 +10736,287 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN YADGIR — Kalyana Karnataka: factories and industrial plots, canal,
+   * irrigation and road projects, railway and government works, farms, shops, schools and hostels
+   * across Yadgir district (Shahapur, Shorapur, Gurmitkal and the towns around them). Its cluster
+   * neighbour is Kalaburagi (~70 km by the pages' own geo), linked both ways through
+   * containerOfficeCluster.ts; Bidar (~133 km) is outside the 130 km rule.
+   *
+   * Sits before Kalaburagi rather than after it so it does not collide with the Chitradurga entry
+   * (feat/city-chitradurga), which is inserted after Kalaburagi.
+   *
+   * Owner copy of 2026-10-17, mapped onto the fixed template slots. The H1, meta title and meta
+   * description are verbatim. Nothing is dropped:
+   *   • tagline: the draft has none, so it joins the meta title's "Site Office & Portable Cabins"
+   *     with the draft's page label "Yadgir, Kalyana Karnataka".
+   *   • "Why Choose a Container Office in Yadgir?" → why: its four H3s as bullets (the two
+   *     black-cotton-soil paragraphs joined). whyIntro is a one-line lead-in.
+   *   • "Where Container Offices Can Be Used in Yadgir" → solutions: the six table rows as numbered
+   *     H3s. The note on laboratories, pump rooms, stores, classrooms and accommodation follows the
+   *     table in the draft; the template has no outro slot there, so it closes the solutions intro.
+   *   • "Container Office Sizes and Layouts" → features: the nominal-length note as featuresIntro,
+   *     the six table rows as "Size — uses", the closing "Share the number of users…" as sizesNote.
+   *   • "Should You Buy or Rent?" → industries: Buy / Rent, with the closing paragraph as the intro.
+   *   • "Specification Options for Yadgir's Heat and Dust" → the custom slot beside the interior
+   *     render: intro, the eight bullets, and the indoor-comfort note as customOutro.
+   *   • "Construction and Fit-Out" → whyUs: its intro, and the table's two columns (typical
+   *     specification / optional add-ons) as two items.
+   *   • "Delivery Enquiries Across Yadgir and Nearby Areas" → areasText, the list as prose and the
+   *     map-pin line last. The template renders the areas BEFORE the process, so the two swap.
+   *   • "From First Enquiry to Handover" → how: the five steps, with the "Site access" note folded
+   *     into step 3 (which already says "Arrange access").
+   *   • FAQs: the draft's seven, verbatim. None repeats another city page's question.
+   *   • "Planning Work in Yadgir?" → CTA, its checklist as prose. The [Phone Number], [Email
+   *     Address] and [Brand Name] placeholders come from COMPANY; the draft's "Before publishing"
+   *     line is an instruction to the editor, not page copy.
+   * No ₹, lead times, warranty terms or project counts (the draft states none; none added).
+   *
+   * Images: four owner-dropped webp renders ("public/images/cities/Container Office in Yadgir city
+   * page/Container Office in Yadgir/cabin (1–4).webp", all 1200×896), copied byte-for-byte to clean
+   * slug names. Alt text describes the ACTUAL renders: a charcoal-grey corrugated-steel container
+   * office with a glazed double door on one end, a ribbon window and a glazed door on one side, and
+   * a solid steel door and a louvred vent at the back. The draft recommends a light-coloured exterior
+   * for the heat, so the feature caption says the dark finish shown is one colour option. The
+   * interior render carries the illustrative-render caption Bagalkot and Kalaburagi use, and the
+   * disclaimer says every image is an illustrative render.
+   *
+   * Owner review (2026-10-17): the tagline, the section order, the tables shown as lists, the image
+   * captions and the disclaimer are approved as described above.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`, as on
+   * Kalaburagi); the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-yadgir",
+    city: "Yadgir",
+    listTitle: "Container Office in Yadgir",
+    metaTitle: "Container Office in Yadgir | Site Office & Portable Cabins",
+    metaDescription:
+      "Insulated container offices in Yadgir for factories, construction projects, farms and shops. Explore purchase and rental options. Request a layout and quote.",
+    keywords:
+      "Container Office in Yadgir, Container Office Yadgir, Site Office Yadgir, Portable Cabin Yadgir, Portable Office Cabin Yadgir, Container Office for Rent Yadgir, Container Office for Sale Yadgir, Site Office Container Shahapur, Portable Cabin Shorapur, Container Office Gurmitkal",
+    geo: { region: "IN-KA", placename: "Yadgir (Yadgiri), Karnataka, India", position: "16.7700;77.1376", icbm: "16.7700, 77.1376" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-exterior.webp",
+      alt: "Container office in Yadgir — illustrative render of a charcoal-grey corrugated-steel container office with a glazed double door on the end wall, a long ribbon window and a glazed side door, on a paved forecourt with solar path lights",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-aerial-view.webp",
+      alt: "Container office in Yadgir — aerial view of the charcoal-grey container office showing its flat roof inside a raised edge, with the ribbon window and glazed door along one side, on a paved pad surrounded by lawn and planting",
+      width: 1200,
+      height: 896,
+      caption: "The dark finish shown is one colour option; a light-coloured exterior finish helps reduce heat absorption.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-interior.webp",
+      alt: "Container office in Yadgir — illustrative render of an optionally furnished interior with one dark corrugated feature wall, light grey finished walls, LED ceiling panels, a four-desk workstation cluster with monitors and office chairs, a storage unit, wood-look flooring and glazed doors",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/container-office-in-yadgir/container-office-in-yadgir-rear-view.webp",
+        alt: "Container office in Yadgir — rear of the charcoal-grey container office: a solid steel door in the end wall, and a louvred vent and a small wall-mounted box on the long side",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Container Office in Yadgir, Built for the Heat and Ready to Work",
+    tagline: "Site Offices and Portable Cabins in Yadgir, Kalyana Karnataka",
+    intro: [
+      "A site office in Yadgir needs to do more than provide shelter. It needs a specification that accounts for summer heat, dust, daily use and the practical demands of the project.",
+      "From industrial plots and construction sites to farms and local businesses, container offices provide enclosed workspace with less on-site construction than a conventional building.",
+      "We fabricate the cabin at our facility and transport it to your location. Once the prepared supports, unloading and utility connections are complete, your team can start using the space.",
+      "Choose a compact gate cabin, a small team office or a larger layout with separate rooms, meeting space, a pantry and an attached toilet.",
+    ],
+
+    whyHeading: "Why Choose a Container Office in Yadgir?",
+    whyIntro: "Four reasons a container office suits project sites and businesses in Yadgir:",
+    whyBullets: [
+      {
+        title: "Reduce on-site construction",
+        text: "A conventional site office involves masonry, curing, plastering and finishing. A prefabricated container office reduces this work at your location while your team prepares the base, access and services.",
+      },
+      {
+        title: "Plan the base for local ground conditions",
+        text: "Sites with black cotton soil need particular attention because the ground can expand and shrink as moisture changes. A steel cabin still requires properly designed supports; it does not remove the risk of ground movement. Support positions, drainage and foundation requirements should be confirmed for the unit and site before delivery.",
+      },
+      {
+        title: "Move the office as your project progresses",
+        text: "Road, canal and other linear projects may need offices at different locations over time. A cabin designed for relocation can be lifted, transported and installed again with suitable equipment and access.",
+      },
+      {
+        title: "Create a professional workspace",
+        text: "A finished cabin provides an organised place to meet visitors, manage documents and coordinate site work. Exterior colours and branding can be specified where required.",
+      },
+    ],
+
+    solutionsHeading: "Where Container Offices Can Be Used in Yadgir",
+    solutionsIntro:
+      "Container offices can be set up for the uses below. Site laboratories, pump rooms, chemical or fertiliser stores, classrooms and accommodation require specifications suited to their use, including ventilation, loading, fire safety and any necessary approvals.",
+    solutions: [
+      { title: "Factories and Industrial Plots", text: "Gate cabins, time offices, stores and construction-stage offices." },
+      { title: "Canal, Irrigation and Road Projects", text: "Engineer offices, material stores and staff rest areas." },
+      { title: "Railway and Government Works", text: "Contractor offices and temporary administrative space." },
+      { title: "Farms", text: "Farm offices, tool stores and watchman cabins." },
+      { title: "Shops and Small Businesses", text: "Container shops, kiosks and service counters." },
+      { title: "Schools and Hostels", text: "Additional offices, staff rooms and teaching space, subject to applicable requirements." },
+    ],
+
+    featuresHeading: "Container Office Sizes and Layouts",
+    featuresIntro:
+      "The sizes below refer to nominal cabin length. Width, height and usable floor space will be confirmed in the proposed layout.",
+    features: [
+      "10 ft cabin — gate office, watchman cabin or time office.",
+      "20 ft cabin — small team office, farm office or shop.",
+      "40 ft cabin — project office with separate rooms, meeting space and optional toilet.",
+      "Joined units — larger workspaces and multi-room offices.",
+      "Stacked units — additional office or accommodation space, subject to structural design and approvals.",
+      "Custom builds — site laboratory, pantry, toilet block or another agreed layout.",
+    ],
+    sizesNote: "Share the number of users and the facilities you need. We can suggest a suitable size and arrangement.",
+
+    industriesHeading: "Should You Buy or Rent?",
+    industriesIntro:
+      "Share your expected duration so available purchase and rental options can be compared. Rental availability and minimum terms will be confirmed in the quotation.",
+    industries: [
+      {
+        title: "Buy for continued use",
+        text: "Purchasing may suit a factory gate office, farm office or cabin that will be used across several projects. It gives you a relocatable asset for ongoing requirements.",
+      },
+      {
+        title: "Rent for temporary requirements",
+        text: "Rental may suit a shorter project or an uncertain programme. The overall cost depends on the rental duration, deposit, transport, lifting and other agreed charges.",
+      },
+    ],
+
+    customHeading: "Specification Options for Yadgir's Heat and Dust",
+    customIntro:
+      "Insulation is an important part of planning a workspace for hot conditions. The following features can be specified in your quotation:",
+    customBullets: [
+      { title: "Insulated walls and roof", text: "material and thickness selected for the application." },
+      { title: "Secondary roof with a ventilated gap", text: "helps reduce direct solar heat gain." },
+      { title: "Light-coloured exterior finish", text: "helps reduce heat absorption." },
+      { title: "Planned ventilation", text: "window positions and exhaust fans arranged around the room layout." },
+      { title: "Window and door sunshades", text: "reduce direct sunlight where appropriate." },
+      { title: "AC provision", text: "a dedicated point, wiring and circuit protection sized for the agreed equipment." },
+      { title: "Sealed doors and windows", text: "help reduce dust entry." },
+      { title: "Protective steel coatings", text: "surface preparation, primer and paint selected for the exposure." },
+    ],
+    customOutro:
+      "Indoor comfort depends on the complete design, including insulation, occupancy, equipment heat, ventilation and correctly sized air conditioning. Insulation alone does not guarantee a comfortable temperature.",
+
+    whyUsHeading: "Construction and Fit-Out",
+    whyUsIntro: "Your quotation will identify the materials, fittings and quantities included.",
+    whyUsBullets: [
+      {
+        title: "Typical specification",
+        text: "steel frame and external cladding; insulated wall and roof construction; cement board flooring with vinyl finish; finished interior lining; electrical wiring, lights, fans, switches and distribution protection; sliding windows; lockable entrance door; agreed exterior finish.",
+      },
+      {
+        title: "Optional add-ons",
+        text: "air conditioning; attached toilet and plumbing; pantry counter and sink; partitions and furniture; CCTV and network provisions; window safety grills and sunshades; power backup provision; company colours and branding.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Across Yadgir and Nearby Areas",
+    areasText:
+      "We welcome delivery enquiries for Yadgir city, Shahapur, Shorapur (Surapura), Gurmitkal, Hunasagi, Wadagera, Saidapur, Kadechur, Kembhavi and Narayanpur, and for nearby Kalaburagi, Wadi, Sedam and Raichur. Share your site location or map pin so transport feasibility, access and delivery charges can be confirmed.",
+
+    howHeading: "From First Enquiry to Handover",
+    howSteps: [
+      {
+        title: "Share your requirement",
+        text: "Provide the intended use, preferred size, site location and required delivery date.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm doors, windows, partitions, electrical points and any toilet or pantry facilities, along with the commercial terms.",
+      },
+      {
+        title: "Prepare the site during fabrication",
+        text: "Arrange access, drainage, supports and utility provisions according to the agreed installation requirements. Site access: the location needs suitable truck access, ground capable of supporting delivery and lifting equipment, and sufficient clearance for safe crane operation.",
+      },
+      {
+        title: "Deliver and position the cabin",
+        text: "Coordinate transport and safe lifting. Responsibility for the truck, crane and unloading will be stated in the quotation.",
+      },
+      {
+        title: "Connect services and inspect",
+        text: "Complete electrical and plumbing connections where applicable, inspect the unit and carry out the agreed handover.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How soon can a container office reach my site in Yadgir?",
+        answer:
+          "The schedule depends on stock availability, size, specifications and fabrication workload. Custom layouts may need additional time. The expected delivery programme will be confirmed in your quotation.",
+      },
+      {
+        question: "Can a container office handle Yadgir's summer heat?",
+        answer:
+          "A suitable combination of insulation, roof design, shading and cooling can help manage indoor conditions. Air conditioning may be required during hot weather, depending on occupancy and use. We can specify the cabin around these requirements.",
+      },
+      {
+        question: "My site has black cotton soil. Is that a problem?",
+        answer:
+          "It requires careful base planning. Expansive soil can affect supports and cause uneven movement, even beneath a steel cabin. A qualified site professional should determine the necessary ground preparation, drainage and foundation arrangement. We can provide the cabin's support locations and relevant loading information.",
+      },
+      {
+        question: "Can I get an attached toilet?",
+        answer:
+          "Yes. An attached toilet can be included in the agreed layout. The site needs suitable water supply and an approved wastewater connection or treatment arrangement. Plumbing responsibilities will be confirmed in the quotation.",
+      },
+      {
+        question: "Can you make a site laboratory or store instead of an office?",
+        answer:
+          "Yes, subject to the required specification. Share the equipment, materials, floor loads and services involved so the layout, ventilation and safety provisions can be assessed.",
+      },
+      {
+        question: "Do you offer container offices on rent?",
+        answer:
+          "Rental enquiries are welcome, subject to availability. Pricing depends on the unit, fittings and duration. The quotation will state the minimum period, deposit, transport, unloading and other applicable terms.",
+      },
+      {
+        question: "How much does a container office cost?",
+        answer:
+          "The cost depends on dimensions, insulation, finishes, electrical fittings and optional facilities. Transport, lifting, taxes and site works also affect the total. Share your requirements for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Planning Work in Yadgir?",
+    ctaText: `From a single gate cabin to a larger project office, we can help you plan a layout around your team and site requirements. For a quotation, share your site location or map pin, the intended use and number of users, your preferred cabin size, the rooms and facilities you need, whether you want to purchase or rent, and your expected delivery date. Call or WhatsApp Portable Office Cabin on ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Prefabricated Buildings and Cabins", href: "/products/category/prefab-building" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Yadgir district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's container office design, shown in one colour option and with an optionally furnished interior; they are not photographs of installations in Yadgir. Actual cabin colours, materials and finishes depend on the approved specifications for each order. Towns, project types and sectors are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any industrial area, canal or irrigation project, railway, government department, school or hostel in the district, and entry to any such premises is subject to that facility's own permissions. Notes on heat, soils, foundations, dust, ventilation and drainage are general guidance, not engineering advice; the base, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN KALABURAGI (Gulbarga) — Kalyana Karnataka: the Sedam / Wadi / Chincholi
    * cement and limestone belt, Shahabad stone quarries, the tur-dal mills and agricultural
    * processing units, the Nandur and Kapnoor industrial areas, and highway / railway / irrigation /
@@ -8556,6 +11352,342 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, yard or service partner in Kalaburagi district; delivery, unloading and placement are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior and interior images on this page are illustrative renders of Portable Office Cabin's standard container office design, shown in one colour option and with an optionally furnished interior in an exposed corrugated finish; they are not photographs of installations in Kalaburagi. Actual cabin colours, materials and finishes depend on the approved specifications for each order. Industrial areas, roads, towns, industries and project types are named only to describe delivery locations and typical uses; Portable Office Cabin is not affiliated with any cement plant, mine, quarry, dal mill, industrial estate, developer, utility, university, hospital, government department or public-sector undertaking in the district, and entry to any such premises is subject to that facility's own permissions. Notes on temperatures, soils, foundations, dust and drainage are general guidance, not engineering advice; the base, anchoring, insulation and cooling for a specific site are confirmed in the approved quotation and drawing.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICE IN CHITRADURGA — Central Karnataka on NH-48, between Tumkur (~125 km) and
+   * Davanagere (~58 km): Chitradurga city, Challakere, Hiriyur, Holalkere, Hosadurga, Molakalmuru.
+   *
+   * RECOVERED PAGE (2026-10-17). #127 lists Chitradurga among the Karnataka city pages in progress
+   * on another laptop on 14 Oct; no branch, commit, draft or image for it ever reached GitHub. This
+   * entry is new copy, NOT the owner's draft, and needs owner review before merge.
+   *
+   * Owner corrections (2026-10-17), matching the Haveri page: no visible hero caption (the alt text
+   * still says "design render" and the disclaimer covers renders); towns are geographic context only,
+   * with delivery feasibility, charges and scope "confirmed in the quotation"; readiness tied to the
+   * quotation scope, site readiness, installation and anchoring; rainfall attributed to CGWB normals
+   * (Chitradurga taluk 671 mm, Challakere 516 mm, Hosadurga 723 mm, 1981–2010); meta description says
+   * "Anchored to site spec." because anchoring is provided where the site's exposure requires it.
+   *
+   * What makes it Chitradurga's page and not a copy of Davanagere's or Tumkur's: open, wind-exposed
+   * sites (wind farms on the hills around the city, Jogimatti among them), so ANCHORING leads the
+   * specification advice, using the position already approved on the Tirunelveli and Thoothukudi
+   * pages (engineered anchoring; weight alone does not make a cabin wind-safe); a semi-arid district
+   * (long-term rainfall roughly 500–700 mm across most taluks, lower in Challakere; CGWB / KSCST) with
+   * mostly red soils (ICAR district profile: ~62 % red, ~38 % black), so heat and dust come next; and
+   * the district's project types: wind and solar sites, the Upper Bhadra canal and tank-filling works,
+   * the Tumakuru–Chitradurga–Davanagere railway line under construction, NH-48 and NH-50 (towards
+   * Hosapete), Challakere's edible-oil mills and the research campuses near Challakere. No developer,
+   * mill, institution or authority is named as a customer.
+   *
+   * No ₹, lead times, warranty terms, project counts or superlatives (file-header rule; issue #107).
+   * The specification lines and the seven standard sizes are the ones already approved on the
+   * Davanagere and Kalaburagi pages; the anchorage line follows Thoothukudi's.
+   *
+   * Images: the owner's own container office images in public/images/products (container-office-1 to
+   * -5, used by no other page), referenced in place rather than copied. 1, 2, 3 and 5 are design
+   * renders of a white and blue corrugated container office; 4 is a finished cabin interior. Alt text
+   * describes what is in frame; the disclaimer says none was taken in Chitradurga.
+   *
+   * Opts into the CSS-only motion pass and the Service JSON-LD, as Davanagere and Kalaburagi do.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-in-chitradurga",
+    city: "Chitradurga",
+    listTitle: "Container Office in Chitradurga",
+    metaTitle: "Container Office in Chitradurga | Portable Office Cabin",
+    metaDescription:
+      "Container offices in Chitradurga for wind and solar sites, canal and railway works, Challakere mills and NH-48 projects. Anchored to site spec. Get a quote.",
+    keywords:
+      "Container Office in Chitradurga, Container Office Chitradurga, Portable Office Cabin Chitradurga, Site Office Container Chitradurga, Container Office Challakere, Portable Cabin Hiriyur, Site Office Hosadurga, Wind Farm Site Office Chitradurga, Container Office for Rent Chitradurga, Container Office for Sale Chitradurga",
+    geo: { region: "IN-KA", placename: "Chitradurga, Karnataka, India", position: "14.2251;76.3980", icbm: "14.2251, 76.3980" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/products/container-office-5.webp",
+      alt: "Container office in Chitradurga — design render of a white corrugated-steel container office above a blue base band, with a steel door with a keypad lock and small canopy between two aluminium sliding windows, louvred vents and corner lifting lugs",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/products/container-office-1.webp",
+      alt: "Container office in Chitradurga — design render from above of the white and blue container office, showing its corrugated steel roof, the lifting lugs at each corner, the door and two sliding windows",
+      width: 1024,
+      height: 1024,
+      caption: "On open, exposed sites, ask for engineered anchoring.",
+    },
+    interiorImage: {
+      src: "/images/products/container-office-4.webp",
+      alt: "Container office in Chitradurga — finished cabin interior with light wood-grain wall panels, a wood-finish feature wall and ceiling section, wood-look flooring, ceiling fans and roller blinds over two windows",
+      width: 1024,
+      height: 1024,
+      caption: "Finished wall and ceiling panels, wood-look flooring and fans. Finishes are chosen for each order.",
+    },
+    gallery: [
+      {
+        src: "/images/products/container-office-3.webp",
+        alt: "Container office in Chitradurga — design render, three-quarter view of the white and blue container office with its end wall, steel door and two aluminium sliding windows",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/products/container-office-2.webp",
+        alt: "Container office in Chitradurga — design render of the windowed side and corrugated end wall of the white and blue container office, with louvred vents below the roof line",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Container Offices in Chitradurga",
+    tagline: "Site Offices for Open, Dry and Wind-Exposed Project Sites in Central Karnataka",
+    intro: [
+      "Chitradurga is one of the drier districts of Karnataka. Long-term CGWB normals put rainfall at roughly 500 to 700 mm a year across most of its taluks, at the lower end around Challakere, while the plains and rocky ridges around the city are exposed enough that wind farms stand on the hills, the Jogimatti area among them.",
+      "The work in the district follows that landscape: wind and solar energy projects, the canal and tank-filling works of the Upper Bhadra irrigation project, the new Tumakuru–Chitradurga–Davanagere railway line, highway works on NH-48 and on NH-50 towards Hosapete, Challakere's edible-oil mills, and the research campuses near Challakere.",
+      "Many of these sites are open, hot and a long way from the nearest building, so the office has to arrive complete, stay put in strong wind and stay usable in the heat. A container office in Chitradurga does all three when it is specified for its site.",
+      "Portable Office Cabin manufactures container offices at its factory near Hosur, Tamil Nadu. For a site in Chitradurga district, whether in or around Chitradurga city, Challakere or Hiriyur or along NH-48 and NH-50, share the location when you enquire; delivery feasibility, transport charges and the delivery scope are confirmed in the quotation.",
+      "This page sets out what to specify for wind, heat and dust, where container offices are used in the district, and how delivery to a remote site is planned.",
+    ],
+
+    whyHeading: "Why Container Offices Suit Chitradurga's Project Sites",
+    whyIntro: "Four conditions shape a site office in Chitradurga district:",
+    whyBullets: [
+      {
+        title: "Wind on open ground and ridges",
+        text: "Wind farms on the hills around Chitradurga show how exposed the district can be, and in Karnataka the strongest winds generally come with the south-west monsoon. A container office on an open site should be tied to its base with an engineered anchoring arrangement, with roof sheets, doors and windows fastened to suit the exposure. A steel cabin is not wind-safe just because it is heavy; the anchoring, base and fixings for a specific site are designed for its conditions and confirmed in the quotation.",
+      },
+      {
+        title: "Dry heat for most of the year",
+        text: "With low rainfall and long, hot dry seasons, the roof and walls take most of the heat. Insulated wall and roof panels, an insulated ceiling, a lighter exterior colour, ventilation and air-conditioning provisions sized to the occupancy keep an office usable through the working day.",
+      },
+      {
+        title: "Dust from red soil and open ground",
+        text: "Around three-fifths of the district has red soils, and many project sites are open ground, so dust is a daily condition. Sealed exterior joints, well-fitting doors and windows, mosquito mesh and flooring that is easy to sweep and wash help keep the inside workable.",
+      },
+      {
+        title: "Remote sites far from services",
+        text: "Wind and solar blocks, canal stretches and railway sections are often far from the nearest town. A container office is fabricated, wired and finished at the factory, which reduces the work needed on a remote site; it is ready to use once the base, placement, anchoring, checks and required connections agreed in the quotation are complete, and the timing depends on site readiness. The office can then move to the next block or section when the work does.",
+      },
+    ],
+    whyOutro:
+      "Plan the access route as carefully as the base. A loaded truck and a crane or Hydra have to reach the spot along field tracks or service roads, and on a remote site that is often harder to arrange than the office itself.",
+
+    solutionsHeading: "Applications of Container Offices in Chitradurga",
+    solutionsIntro: "Where container offices are typically used across Chitradurga district:",
+    solutions: [
+      {
+        title: "Wind and Solar Energy Project Offices",
+        text: "Wind and solar projects on the plains and hills of the district need offices on site during construction and for operation and maintenance afterwards. Container offices can serve as project offices, O&M offices, engineers' cabins, stores for spares and records, and security cabins at block gates. On exposed sites, the anchoring arrangement is part of the specification from the start.",
+      },
+      {
+        title: "Upper Bhadra Canal and Tank-Filling Works",
+        text: "The Upper Bhadra irrigation project carries water through branch canals to fill tanks in the drought-prone taluks of Chitradurga and Tumakuru districts. Contractors on canal stretches and tank works need offices that move along the alignment: project offices, survey and quality-control rooms, meeting rooms and stores for drawings and registers.",
+      },
+      {
+        title: "Railway and Highway Construction Offices",
+        text: "The new Tumakuru–Chitradurga–Davanagere railway line is under construction, and NH-48 and NH-50 carry continuing road works. Contractors use container offices as section offices, engineers' cabins, meeting rooms and document rooms, relocated as each section is completed.",
+      },
+      {
+        title: "Challakere Oil Mills, Markets and Warehouses",
+        text: "Challakere is known for its edible-oil mills, and agricultural markets and warehouses operate across the district. Container offices can be used as billing and procurement offices, weighbridge cabins, warehouse and dispatch offices, and gate and security offices beside mills and yards.",
+      },
+      {
+        title: "Research, Educational and Institutional Campuses",
+        text: "Research and educational campuses near Challakere, and colleges, hospitals and government offices in Chitradurga city, use temporary offices during construction and expansion: contractors' site offices, administrative and records rooms, and staff rooms. Access to any secured campus is subject to its own permissions, and clinical or laboratory use must be designed to the applicable healthcare, hygiene, ventilation and safety requirements.",
+      },
+      {
+        title: "Construction and Real Estate Site Offices",
+        text: "Residential layouts, commercial buildings and public works in Chitradurga city, Hiriyur and Challakere use container offices as site offices, sales offices and engineers' cabins, which move to the next project when this one is handed over.",
+      },
+    ],
+
+    featuresHeading: "Container Office Specifications and Sizes",
+    featuresIntro:
+      "Container offices are built on a welded mild-steel frame with protective cladding, insulated walls and roof, and factory-fitted wiring. Standard construction features, followed by the standard sizes and their typical uses in Chitradurga district:",
+    features: [
+      "Structure — welded mild steel structural framework.",
+      "Exterior walls — MS or GI sheet cladding according to approved specifications.",
+      "Wall insulation — PUF or glass wool insulation options.",
+      "Roofing — weather-resistant roofing system with insulation options.",
+      "Entry door — lockable steel door with suitable hardware.",
+      "Windows — aluminium sliding windows with optional mosquito mesh.",
+      "Flooring — vinyl or laminate flooring over a suitable floor base.",
+      "Interior walls — finished interior wall panels.",
+      "Ceiling — insulated ceiling with optional false ceiling.",
+      "Lighting — LED interior lighting.",
+      "Electrical system — switches, power sockets, distribution board, and appropriate earthing provisions.",
+      "Exterior finish — protective paint system according to the approved specification.",
+      "Anchorage — engineered anchoring arrangement where the site's exposure requires it, confirmed in the quotation.",
+      "Final specifications — final material thicknesses, insulation types, finishes, and electrical provisions depend on the approved quotation.",
+      "10 ft × 10 ft container office — security cabin at a block gate or supervisor's cabin.",
+      "12 ft × 10 ft container office — compact site office or billing room.",
+      "16 ft × 10 ft container office — engineers' cabin or O&M office.",
+      "20 ft × 8 ft container office — standard site office or weighbridge room.",
+      "20 ft × 10 ft container office — project office or meeting room.",
+      "30 ft × 10 ft container office — partitioned office with a manager's cabin.",
+      "40 ft × 10 ft container office — multi-room project office or section office.",
+    ],
+    sizesNote:
+      "Custom dimensions and layouts can be built, provided the finished unit can be transported to the site and lifted into place there.",
+
+    industriesHeading: "Specifying for Wind, Heat and Dust in Chitradurga",
+    industriesIntro: "What to ask for when the office will stand on an open, dry site in the district:",
+    industries: [
+      {
+        title: "Anchoring",
+        text: "An engineered anchoring arrangement that ties the frame to its base, designed for the site's exposure. The weight of the cabin alone does not establish wind resistance.",
+      },
+      {
+        title: "Roof and openings",
+        text: "Roof sheets, doors and windows fastened to suit the exposure, with doors placed so they are not caught by the prevailing wind when opened.",
+      },
+      {
+        title: "Base",
+        text: "A level base of concrete pedestals, a plinth or steel skids, suited to the ground. Red soils are the most common in the district and black soils occur in parts of it; the base for a specific site is confirmed with the quotation.",
+      },
+      { title: "Insulation", text: "PUF or glass wool insulation in the walls and roof, with an insulated ceiling." },
+      {
+        title: "Cooling and ventilation",
+        text: "Air-conditioning provisions sized to the cabin's dimensions and occupancy, with ventilation for the hours the AC is off.",
+      },
+      {
+        title: "Exterior colour",
+        text: "A lighter exterior colour absorbs less of the sun's heat than a dark one; the colour is chosen for each order.",
+      },
+      {
+        title: "Dust sealing",
+        text: "Sealed exterior joints, well-fitting doors and windows, mosquito mesh, and flooring that is easy to sweep and wash.",
+      },
+      {
+        title: "Short, heavy rain",
+        text: "Even in a dry district, rain can arrive in short, heavy spells, so roof drainage and sealed joints still matter.",
+      },
+      {
+        title: "Maintenance",
+        text: "Periodic checks of the anchoring fixings, roof fastenings and exterior coatings help keep the office sound, especially after a windy season.",
+      },
+    ],
+
+    customHeading: "Container Office for Sale or Rent in Chitradurga",
+    customIntro:
+      "Container offices are available to buy or to rent, depending on project duration, specification and unit availability.",
+    customBullets: [
+      {
+        title: "Buy a container office in Chitradurga",
+        text: "Buying suits long-term operation and maintenance offices, mills and warehouses, institutions, and contractors who move an office from one project to the next. An owned office can be specified exactly, including anchoring, insulation, layout, toilet and furniture.",
+      },
+      {
+        title: "Rent a container office in Chitradurga",
+        text: "Renting suits a fixed construction period: a wind or solar block, a canal or railway section, a highway package or a building project. It reduces the initial outlay for the period you need the office, subject to unit availability.",
+      },
+      {
+        title: "Compare both options",
+        text: "We can quote purchase and rental for the same requirement, so you can compare them over your project duration.",
+      },
+    ],
+    customOutro:
+      "The interior shown has finished wood-grain wall and ceiling panels, wood-look flooring and ceiling fans; the finishes, fittings and furniture for each office are confirmed in its quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin in Chitradurga?",
+    whyUsIntro:
+      "Portable Office Cabin manufactures portable and prefabricated container offices at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru. What we offer customers in Chitradurga district:",
+    whyUsBullets: [
+      { title: "Manufacturing", text: "Container offices manufactured at our factory near Hosur." },
+      { title: "Site-specific specification", text: "Anchoring, insulation and dust-sealing advice for open, dry sites." },
+      { title: "Custom layouts", text: "Custom dimensions and office configurations." },
+      { title: "Facilities", text: "Optional air-conditioning, attached toilets, pantry and furniture." },
+      { title: "Purchase or rental", text: "Purchase and rental options based on availability." },
+      { title: "Remote-site delivery planning", text: "Access, unloading and base checks before dispatch." },
+      { title: "Relocatable", text: "Offices that can be lifted and moved to the next block or section." },
+      { title: "Written quotations", text: "Specification, scope and charges stated in writing in the quotation." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Chitradurga",
+    areasText:
+      "Our container offices are fabricated at our factory near Hosur, Tamil Nadu, and transported by truck. Share your site location or a map pin when you enquire, whether the site is in or near Chitradurga city, Challakere or Hiriyur, along the NH-48 or NH-50 corridors, or on a wind, solar, canal or railway project. Delivery feasibility, transport charges and the delivery, installation and anchoring scope for your location are confirmed in the quotation.",
+
+    howHeading: "Our Delivery and Installation Process",
+    howSteps: [
+      {
+        title: "Requirement and site details",
+        text: "Share the use, size, number of occupants, layout, options and site location, with photos of the site and its approach track if it is remote.",
+      },
+      {
+        title: "Quotation and specification",
+        text: "We recommend a configuration for the site's exposure and confirm the specification, anchoring, scope and charges in a written quotation.",
+      },
+      {
+        title: "Manufacturing and finishing",
+        text: "The office is fabricated, insulated, wired and finished at our factory to the approved specification.",
+      },
+      {
+        title: "Access and base check",
+        text: "Before dispatch we confirm that a loaded truck can reach and turn at the site, that there is room for a crane or Hydra to unload, that no overhead lines are in the way, and that the base and anchoring points are ready.",
+      },
+      {
+        title: "Placement, anchoring and handover",
+        text: "The office is placed on the prepared base with lifting equipment arranged under the agreed scope, anchored where specified, checked and handed over. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How is a container office kept stable on a windy site near Chitradurga?",
+        answer:
+          "By tying it to its base with an engineered anchoring arrangement designed for the site's exposure, and by fastening the roof sheets, doors and windows to suit. A steel container office is not wind-safe just because it is heavy: the anchoring, base and fixings for a specific site are designed for its conditions and confirmed in the quotation and drawing.",
+      },
+      {
+        question: "What should a container office for a wind or solar block include?",
+        answer:
+          "Usually an engineered anchoring arrangement, insulated walls and roof, air-conditioning provisions, sealed joints, dust-resistant doors and windows, and enough power points for the equipment used. Typical uses are project and O&M offices, engineers' cabins, stores for spares and records, and security cabins at block gates.",
+      },
+      {
+        question: "Can a container office move along a canal or railway section as the work progresses?",
+        answer:
+          "Yes. The office is lifted onto a truck, moved to the next section and placed on a new prepared base. Each move needs vehicle access, unloading space for a crane or Hydra, and a ready base and anchoring points at the new location.",
+      },
+      {
+        question: "How is a container office kept cool in Chitradurga's dry heat?",
+        answer:
+          "By specifying insulation, colour and cooling together: PUF or glass wool insulation in the walls and roof, an insulated ceiling, a lighter exterior colour, ventilation, and air-conditioning provisions sized to the cabin's dimensions and occupancy. The final specification is confirmed in the quotation.",
+      },
+      {
+        question: "Can you supply offices for oil mills and warehouses in Challakere?",
+        answer:
+          "Yes. Container offices are used beside mills, yards and warehouses as billing and procurement offices, weighbridge cabins, dispatch offices, and gate and security offices. Space, vehicle access and the base are checked before dispatch, and entry to any premises is subject to its own permissions.",
+      },
+      {
+        question: "How do I check delivery to a site in Chitradurga district?",
+        answer:
+          "Share the site location or a map pin when you enquire, with photos of the approach track if the site is remote. Delivery feasibility, transport charges and the delivery scope are confirmed in the quotation, after vehicle access, unloading space and the base have been checked. Delivery timelines depend on the specification, transport distance, road conditions and site readiness.",
+      },
+      {
+        question: "Are your container offices made in Chitradurga?",
+        answer:
+          "No. They are fabricated and finished at our factory near Hosur, Tamil Nadu, and transported to your site in Chitradurga district on a suitable commercial vehicle; our office is in Bengaluru. Delivery, unloading, placement and anchoring are arranged for each project under the scope agreed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Container Office Quotation in Chitradurga",
+    ctaText: `To receive a quotation for a container office in Chitradurga district, share the site location (town, taluk or project site), how open and exposed the site is, the office size or number of people, the preferred layout, options such as AC, an attached toilet, a pantry or furniture, whether you want to buy or rent, and when you need it. We will recommend a configuration for the site and prepare a written quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Manufacturing: our factory near Hosur, Tamil Nadu; office in Bengaluru, Karnataka. Enquiries are welcome for sites in Chitradurga district and along the NH-48 and NH-50 corridors; delivery is confirmed in the quotation.`,
+    ctaButtonLabel: "Request a Quotation",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "40 ft Container Site Office (15 workstations)", href: "/products/container-site-office" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and does not operate a factory, office, depot or service partner in Chitradurga district; delivery, unloading, placement and anchoring are arranged for each project, and delivery timelines are not guaranteed. Purchase and rental options are subject to unit availability. The exterior images on this page are design renders of a Portable Office Cabin container office and the interior image shows a finished cabin interior; none was taken in Chitradurga district, and the colours, door hardware, finishes and fittings of each order follow its approved specification. Rainfall and soil figures are approximate long-term values from public records. Towns, highways, projects, mills and campuses are named only as geographic context and to describe typical uses, not as guaranteed delivery or service areas; Portable Office Cabin is not affiliated with any wind or solar developer, irrigation, railway or highway authority, mill, research institution, college, hospital or government department in the district, and entry to any premises is subject to that facility's own permissions. Notes on wind, anchoring, foundations, insulation and dust are general guidance, not engineering advice; the anchoring, base, insulation and cooling for a specific site are designed for its conditions and confirmed in the approved quotation and drawing.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

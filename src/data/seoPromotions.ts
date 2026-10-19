@@ -271,6 +271,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Kudankulam, Tirunelveli", href: "/cities-we-serve/container-office-in-kudankulam-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -289,6 +290,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Kudankulam, Tirunelveli", href: "/cities-we-serve/container-office-in-kudankulam-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -300,6 +302,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Kudankulam, Tirunelveli", href: "/cities-we-serve/container-office-in-kudankulam-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -309,6 +312,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+    { name: "Container Office in Kudankulam, Tirunelveli", href: "/cities-we-serve/container-office-in-kudankulam-tirunelveli" },
     { name: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
@@ -341,7 +345,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
   // Bengaluru-belt pages predate this map; the container-office cluster review (Oct 2026) added them
-  // to the "Container Office" key below. The other three keyword keys still list Mysore and Tumkur only.
+  // to the "Container Office" key below. The other three keyword keys list Mysore and Tumkur, plus the
+  // North and Central Karnataka pages (Bagalkot, Belagavi, Bidar, Davanagere, Haveri, Kudligi,
+  // Kalaburagi, Yadgir, Chitradurga) that #126 planned to add to them, and Pavagada (Tumakuru district,
+  // outside the Bengaluru belt); Bengaluru-belt pages stay on the Bangalore and Container Office hubs only.
   "Container Office|Karnataka": [
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
@@ -350,14 +357,20 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // state hub reaches every Karnataka location page.
     ...hubLinksFor([
       "container-office-in-bagalkot",
+      "container-office-in-kudligi",
+      "container-office-in-sandur-ballari",
       "container-office-in-jigani",
       "container-office-in-bommasandra",
       "container-office-in-sarjapur",
       "container-office-in-davanagere",
+      "container-office-in-haveri",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
+      "container-office-in-pavagada",
       "container-office-in-belagavi",
+      "container-office-in-yadgir",
       "container-office-in-kalaburagi",
+      "container-office-in-chitradurga",
     ]),
     { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
@@ -365,14 +378,57 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     { name: "Container Office in Bagalkot", href: "/cities-we-serve/container-office-in-bagalkot" },
+    ...hubLinksFor([
+      "container-office-in-belagavi",
+      "container-office-in-bidar",
+      "container-office-in-davanagere",
+      "container-office-in-haveri",
+      "container-office-in-kudligi",
+      "container-office-in-sandur-ballari",
+      "container-office-in-kalaburagi",
+      "container-office-in-yadgir",
+      "container-office-in-chitradurga",
+      "container-office-in-pavagada",
+    ]),
   ],
   "Portable Cabin|Karnataka": [
+    { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    // Portable-cabin page (#145), here and on Porta Cabin: the Bengaluru-belt rule above covers container-office pages.
+    { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+    ...hubLinksFor([
+      "container-office-in-bagalkot",
+      "container-office-in-belagavi",
+      "container-office-in-bidar",
+      "container-office-in-davanagere",
+      "container-office-in-haveri",
+      "container-office-in-kudligi",
+      "container-office-in-sandur-ballari",
+      "container-office-in-kalaburagi",
+      "container-office-in-yadgir",
+      "container-office-in-chitradurga",
+      "container-office-in-pavagada",
+    ]),
   ],
   "Porta Cabin|Karnataka": [
+    { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+    { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+    ...hubLinksFor([
+      "container-office-in-bagalkot",
+      "container-office-in-belagavi",
+      "container-office-in-bidar",
+      "container-office-in-davanagere",
+      "container-office-in-haveri",
+      "container-office-in-kudligi",
+      "container-office-in-sandur-ballari",
+      "container-office-in-kalaburagi",
+      "container-office-in-yadgir",
+      "container-office-in-chitradurga",
+      "container-office-in-pavagada",
+    ]),
   ],
   // Shipping-container hub — every Karnataka shipping-container city page (the box itself, new / used /
   // rental): Mysore first, then Jigani (2026-10-12); each page links back to this hub.
@@ -457,6 +513,10 @@ const META_DESC_MAX = 158;
 
 // Mix of short and longer suffixes so each "<keyword> in <location>" title can be
 // padded toward the ideal 50–60 band without ever exceeding 60.
+// Replace a suffix with one of the SAME length: the length filter and the variation
+// rotation below choose by position, so a longer or shorter suffix re-words other pages'
+// titles too. No superlatives ("Best Price") or warranty periods ("10Y Warranty"): the
+// warranty terms are the material-based ones on /warranty (src/views/Warranty.tsx).
 const titleSuffixes = [
   " | Manufacturer",
   " | Supplier",
@@ -465,13 +525,13 @@ const titleSuffixes = [
   " | Fast Delivery",
   " | ISO Grade",
   " | 7-15 Day Dispatch",
-  " | 10Y Warranty",
+  " | Custom Sizes",
   " | Custom Built",
   " | Factory Direct",
-  " | Best Price",
+  " | Get Quotes",
   " | Call Us Today",
   " | Manufacturer & Supplier",
-  " | Best Price, Call Today",
+  " | Free Quote, Call Today",
   " | ISO-Grade, Fast Delivery",
   " | Manufacturer in India",
   " | Factory Direct Pricing",
@@ -497,21 +557,24 @@ function generateMetaTitle(keyword: string, location: string, variation: number)
   return truncateMeta(base, META_TITLE_MAX);
 }
 
+// Same rules as the titles: no unverified superlatives ("Top-rated", "Leading", "India's
+// trusted"), no warranty periods and no local presence ("local teams in <location>") — the
+// company has its factory near Hosur and an office in Bengaluru only.
 function generateMetaDescription(keyword: string, location: string, variation: number): string {
   const mainKeyword = `${keyword} in ${location}`;
   const templates = [
-    `${mainKeyword} from India's trusted prefab maker. PUF insulated units, custom sizes & pan-India delivery to ${location}. Enquire today!`,
-    `Looking for ${mainKeyword}? 10-year warranty, IS-grade steel & full customization across ${location}. Call +91 9731897976 to discuss your requirement.`,
+    `${mainKeyword} from a prefab manufacturer near Hosur. PUF insulated units, custom sizes & pan-India delivery to ${location}. Enquire today!`,
+    `Looking for ${mainKeyword}? Material-based warranty, IS-grade steel & full customization across ${location}. Call +91 9731897976 to discuss your requirement.`,
     `Need ${mainKeyword}? Factory-direct from ₹1.5L. Weatherproof PUF panels, on-site setup & expert support in ${location}. Call or WhatsApp us.`,
     `${mainKeyword} supplier with 15+ years experience. Galvanized frames, turnkey delivery & flexible layouts for every site in ${location}. Enquire now.`,
-    `Premium ${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics with local teams in ${location}. Book a site visit.`,
+    `${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics to sites in ${location}. Book a site visit.`,
     `Affordable ${mainKeyword} for contractors & builders. Quick install, relocatable design & ISO-grade materials supplied across ${location}. Talk to us.`,
-    `Top-rated ${mainKeyword} manufacturer. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Call us today.`,
+    `${mainKeyword} manufacturer with its own factory. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Call us today.`,
     `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & on-time delivery throughout ${location}. Call today.`,
-    `Get ${mainKeyword} at the best price. Modular design, 10-year structural warranty & professional installation teams serving ${location}. Contact us.`,
+    `Get ${mainKeyword} at factory-direct prices. Modular design, material-based structural warranty & installation support serving ${location}. Contact us.`,
     `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Talk to our team.`,
-    `Expert ${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,
-    `Leading ${mainKeyword} provider. PUF sandwich panels, anti-corrosion coating & complete electrical fit-outs delivered across ${location}. Call now.`,
+    `${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,
+    `${mainKeyword} manufacturer & supplier. PUF sandwich panels, anti-corrosion coating & complete electrical fit-outs delivered across ${location}. Call now.`,
   ];
 
   return truncateMeta(templates[variation % templates.length], META_DESC_MAX);
@@ -542,7 +605,7 @@ function generateContent(
     `Galvanized steel frame for corrosion resistance`,
     `Dispatch in 7-15 working days; transit to ${location} typically 1-5 days`,
     `Fully customizable layouts and finishes`,
-    `10-year structural warranty`,
+    `Material-based structural warranty, as set out on our Warranty page`,
     `Pan-India delivery and installation support`,
   ];
 

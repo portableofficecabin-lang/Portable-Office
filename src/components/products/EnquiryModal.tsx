@@ -14,12 +14,17 @@ import { supabase } from "@/integrations/supabase/client";
 import { enquiryLengthError } from "@/lib/enquiries/enquiryLimits";
 
 interface EnquiryModalProps {
-  product: Product | null;
+  /** Only the id and name are read, so a full Product or a minimal reference both work. */
+  product: Pick<Product, "id" | "name"> | null;
+  /** A named design option of `product` that is quoted separately (e.g. a finish shown in the
+   *  page content). The enquiry is recorded against the option and NO price is shown: the
+   *  product's fixed price does not apply to it. */
+  designOption?: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
+export function EnquiryModal({ product, designOption, isOpen, onClose }: EnquiryModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -31,6 +36,10 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
 
   if (!isOpen || !product) return null;
 
+  // What the enquiry is for, as stored and shown. Without a design option this is exactly the
+  // product name, as before.
+  const enquiryName = designOption ? `${designOption} (${product.name})` : product.name;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const enquiryData = {
@@ -40,11 +49,11 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
       company: formData.company.trim() || null,
       // The message box is optional, but public.enquiries requires a non-empty message once the
       // hardening migration is applied — a blank one is stored as a clear default instead.
-      message: formData.message.trim() || `Quote request for ${product.name} (no message entered).`,
+      message: formData.message.trim() || `Quote request for ${enquiryName} (no message entered).`,
       enquiry_type: "quote" as const,
       product_id: product.id,
-      product_name: product.name,
-      subject: `Quote Request for ${product.name}`,
+      product_name: enquiryName,
+      subject: `Quote Request for ${enquiryName}`,
     };
     const lengthError = enquiryLengthError(enquiryData);
     if (lengthError) {
@@ -107,7 +116,7 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
               Request a Quote
             </h2>
             <p className="text-sm text-muted-foreground mt-1">
-              {product.name}
+              {enquiryName}
             </p>
           </div>
           <button
@@ -190,10 +199,13 @@ export function EnquiryModal({ product, isOpen, onClose }: EnquiryModalProps) {
           {/* Product Summary */}
           <div className="bg-muted rounded-lg p-4">
             <div className="text-sm font-medium text-foreground mb-2">Product Summary</div>
-            <div className="text-sm text-muted-foreground">{product.name}</div>
+            <div className="text-sm text-muted-foreground">{enquiryName}</div>
             {/* Only a purchasable SKU has a real, payable price. Quote-only products show no
-                figure at all — the whole point of this modal is that their price is quoted. */}
-            {isPurchasable(product.id) && (
+                figure at all — the whole point of this modal is that their price is quoted.
+                A design option is quoted separately, so it never shows its product's price. */}
+            {designOption ? (
+              <div className="text-sm text-muted-foreground mt-1">Priced on quotation</div>
+            ) : isPurchasable(product.id) && (
               <div className="text-sm text-accent font-medium mt-1">
                 Price (incl. {GST_PERCENT_LABEL} GST): {formatINR(sellPrice(getCommerce(product.id)!.basePrice))}
               </div>
