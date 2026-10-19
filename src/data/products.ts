@@ -1140,7 +1140,17 @@ export const products: Product[] = [
       "Suitable for construction sites, schools, petrol bunks, and industrial projects",
       "Reusable asset with strong long-term value versus temporary site buildings",
     ],
-    images: [msContainerOfficeCabinMain],
+    // Owner-supplied exterior and interior (2026-10-19) lead, with the original image third. Neither
+    // is confirmed as the 15ft x 10ft unit listed here, so both are shown as illustrative examples:
+    // per-image alt text and on-image label, and the gallery note (productImageCaptions.ts). The
+    // first image is also the JSON-LD, OG and product-card image. This SKU is held out of the
+    // Merchant feed (merchantFeedPolicy.ts, image-policy), so the feed is unchanged; these examples
+    // are not grounds for releasing it until the owner confirms they show this model.
+    images: [
+      "/images/products/ms-container-office-cabin/container-office-cabin-exterior-example.webp",
+      "/images/products/ms-container-office-cabin/container-office-cabin-interior-example.webp",
+      msContainerOfficeCabinMain,
+    ],
     price: 240000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
     featured: true,
