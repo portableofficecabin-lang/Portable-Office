@@ -19,7 +19,7 @@ import {
   type Product,
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
-import { getImageAltText, getImageCaption, getProductGalleryNote } from "@/data/productImageCaptions";
+import { getImageAltText, getImageCaption, getImageLabel, getProductGalleryNote } from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
 import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
@@ -325,6 +325,13 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
       title: `${imageTitle} – view ${i + 1}`,
     };
   });
+  /* An image listed in productImageLabels (e.g. an illustrative example, not a photo of the unit
+   * sold) also carries a visible on-image label. The key is only added when there is one, so every
+   * other gallery receives exactly what it did before. */
+  const labelledImageMeta = imageMeta.map((meta, i) => {
+    const label = getImageLabel(galleryImages[i]);
+    return label ? { ...meta, label } : meta;
+  });
 
   // Trust strip values: size (dimensions/area) + delivery. The rating + review count
   // are rendered by <ProductRatingSummary> (a client island seeded with reviewSummary),
@@ -399,7 +406,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               productName={product.name}
               productImageAlt={imageAlt}
               productImageTitle={imageTitle}
-              imageMeta={imageMeta}
+              imageMeta={labelledImageMeta}
               featured={product.featured}
               inStock={product.inStock}
               purchasable={purchasable}
