@@ -94,7 +94,7 @@ export default function CustomProductPolicyPage() {
             <ul className="space-y-3">
               <Bullet>For a <strong>customised</strong> unit — where you choose a non-standard size, layout or fit-out — any price shown on a product page is an <strong>indicative starting price</strong>, because the unit is built to your specification. (A standard, fixed-price product instead shows a final, GST-inclusive price you can pay online.)</Bullet>
               <Bullet>The exact price of a customised unit depends on <strong>size, specification, fit-out and delivery location</strong>.</Bullet>
-              <Bullet>For customised units the exact price is <strong>confirmed in a written quotation</strong>. Indicative figures shown for them are before GST, transport beyond the 50 km free zone, and optional installation.</Bullet>
+              <Bullet>For customised units the exact price is <strong>confirmed in a written quotation</strong>. Indicative figures shown for them are before GST, transport and optional installation.</Bullet>
             </ul>
             <p className="mt-3">
               See our{" "}
