@@ -1128,15 +1128,20 @@ export const products: Product[] = [
       "Suitable for construction sites, schools, petrol bunks, and industrial projects",
       "Reusable asset with strong long-term value versus temporary site buildings",
     ],
-    // Owner-supplied exterior and interior (2026-10-19) lead, with the original image third. Neither
-    // is confirmed as the 15ft x 10ft unit listed here, so both are shown as illustrative examples:
-    // per-image alt text and on-image label, and the gallery note (productImageCaptions.ts). The
-    // first image is also the JSON-LD, OG and product-card image. This SKU is held out of the
-    // Merchant feed (merchantFeedPolicy.ts, image-policy), so the feed is unchanged; these examples
-    // are not grounds for releasing it until the owner confirms they show this model.
+    // The owner's five images (2026-10-19) lead, uncropped: the exterior with the door first, the
+    // interior second, then the other exterior views and the roof; the original image stays last.
+    // None is confirmed as the 15ft x 10ft unit listed here, so all five are shown as illustrative
+    // examples: per-image alt text and on-image label, and the gallery note (productImageCaptions.ts),
+    // displayed whole (productGalleryFit "contain"). The first image is also the JSON-LD, OG and
+    // product-card image. This SKU is held out of the Merchant feed (merchantFeedPolicy.ts,
+    // image-policy), so the feed is unchanged; these examples are not grounds for releasing it
+    // until the owner confirms they show this model.
     images: [
-      "/images/products/ms-container-office-cabin/container-office-cabin-exterior-example.webp",
-      "/images/products/ms-container-office-cabin/container-office-cabin-interior-example.webp",
+      "/images/products/ms-container-office-cabin/container-office-cabin-exterior-door-side-example.webp",
+      "/images/products/ms-container-office-cabin/container-office-cabin-interior-wide-example.webp",
+      "/images/products/ms-container-office-cabin/container-office-cabin-exterior-end-view-example.webp",
+      "/images/products/ms-container-office-cabin/container-office-cabin-exterior-long-side-example.webp",
+      "/images/products/ms-container-office-cabin/container-office-cabin-roof-aerial-example.webp",
       msContainerOfficeCabinMain,
     ],
     price: 240000,

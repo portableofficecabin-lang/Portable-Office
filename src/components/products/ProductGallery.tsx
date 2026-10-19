@@ -26,6 +26,9 @@ interface ProductGalleryProps {
   /** Optional visible line under the gallery, e.g. stating that every image is a render.
    *  Unset = no element, so galleries without one are unchanged. */
   note?: string;
+  /** "contain" shows every image whole in the main frame and the thumbnails (letterboxed, never
+   *  cropped or stretched). Unset = the default "cover", so other galleries are unchanged. */
+  fit?: "cover" | "contain";
 }
 
 /**
@@ -69,6 +72,7 @@ export function ProductGallery({
   inStock,
   purchasable,
   note,
+  fit = "cover",
 }: ProductGalleryProps) {
   // Normalise to real, non-empty URLs once. Empty/placeholder entries are dropped
   // so they can never become the selected main image.
@@ -120,6 +124,7 @@ export function ProductGallery({
               title={imageMeta?.[i]?.title || imageTitle}
               productName={productName}
               aspectRatio="4/3"
+              objectFit={fit}
               /* opacity (not display:none) keeps every frame rasterised, so the switch costs one
                  compositor frame. `transition-none` on the incoming frame would be safer still, but
                  a short cross-fade reads better and does not delay the first painted pixel. */
@@ -160,7 +165,7 @@ export function ProductGallery({
               aria-current={i === index}
               className={`relative aspect-square rounded-lg overflow-hidden border-2 transition ${
                 i === index ? "border-accent" : "border-transparent hover:border-muted-foreground/30"
-              }`}
+              }${fit === "contain" ? " bg-muted" : ""}`}
             >
               {/* Thumbnails are tiny (~110px) — serve a matched variant via next/image
                   so they aren't shipped at full resolution (image-delivery budget). */}
@@ -170,7 +175,7 @@ export function ProductGallery({
                 title={imageMeta?.[i]?.title || `${imageTitle} – view ${i + 1}`}
                 fill
                 sizes="(max-width: 768px) 20vw, 110px"
-                className="object-cover"
+                className={fit === "contain" ? "object-contain" : "object-cover"}
               />
             </button>
           ))}

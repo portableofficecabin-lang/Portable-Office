@@ -54,7 +54,19 @@ export const productImageAltText: Record<string, string> = {
     "Illustrative render of the upper-floor dining room in a container restaurant concept, with full-height glazing",
   // MS Container Office Cabin (id 20). Owner-supplied, but not confirmed as the 15ft x 10ft unit
   // sold on the page, so each alt says "illustrative example" and names only what is visible:
-  // no size, material or included-fitting claims.
+  // no size, material or included-fitting claims. The five full-frame images in the gallery:
+  "container-office-cabin-exterior-door-side-example.webp":
+    "Illustrative example of a white and blue container office cabin with a door and three windows fitted with grilles",
+  "container-office-cabin-interior-wide-example.webp":
+    "Illustrative example of a container office interior with wood-grain wall panels, two ceiling fans, a tube light and sliding windows",
+  "container-office-cabin-exterior-end-view-example.webp":
+    "Illustrative example of a white and blue container office cabin seen from one end, with an outdoor wall light and three windows fitted with grilles",
+  "container-office-cabin-exterior-long-side-example.webp":
+    "Illustrative example of the long side of a white and blue container office cabin, with three windows fitted with grilles",
+  "container-office-cabin-roof-aerial-example.webp":
+    "Illustrative example of a container office cabin seen from above, showing its blue profiled roof sheets",
+  // The first version's 4:3 crops of two of them. No longer in the gallery; the files are kept so
+  // URLs already crawled (og:image, JSON-LD) resolve, and stay labelled if ever shown again.
   "container-office-cabin-exterior-example.webp":
     "Illustrative example of a white and blue container office cabin with a door and three windows fitted with grilles",
   "container-office-cabin-interior-example.webp":
@@ -67,6 +79,11 @@ export const productImageAltText: Record<string, string> = {
  * disclosure sits on the image itself and not only in its alt text or the gallery note.
  */
 export const productImageLabels: Record<string, string> = {
+  "container-office-cabin-exterior-door-side-example.webp": "Illustrative example",
+  "container-office-cabin-interior-wide-example.webp": "Illustrative example",
+  "container-office-cabin-exterior-end-view-example.webp": "Illustrative example",
+  "container-office-cabin-exterior-long-side-example.webp": "Illustrative example",
+  "container-office-cabin-roof-aerial-example.webp": "Illustrative example",
   "container-office-cabin-exterior-example.webp": "Illustrative example",
   "container-office-cabin-interior-example.webp": "Illustrative example",
 };
@@ -80,12 +97,27 @@ export const productGalleryNotes: Record<string, string> = {
   "container-cafe-restaurant":
     "All images on this page are illustrative renders of container cafe concepts, not photographs of a completed project.",
   "ms-container-office-cabin":
-    "The first two images are illustrative examples of container office cabins and may differ from the 15 ft × 10 ft unit sold on this page in size, layout and finish. What the unit includes is set out in its specifications.",
+    "Images marked “Illustrative example” show container office cabins and may differ from the 15 ft × 10 ft unit sold on this page in size, layout and finish. What the unit includes is set out in its specifications.",
 };
 
 /** The visible gallery note for a product slug, if it has one. */
 export function getProductGalleryNote(slug: string): string | undefined {
   return productGalleryNotes[slug];
+}
+
+/**
+ * How a product's gallery fits its images into the 4:3 frame, keyed by canonical slug. Unlisted
+ * products keep the default "cover" (fills the frame, may trim edges). "contain" shows every image
+ * whole, never cropped or stretched — for galleries whose images differ in shape and must be seen
+ * in full.
+ */
+export const productGalleryFit: Record<string, "contain"> = {
+  "ms-container-office-cabin": "contain",
+};
+
+/** The gallery fit for a product slug, if it is not the default. */
+export function getProductGalleryFit(slug: string): "contain" | undefined {
+  return productGalleryFit[slug];
 }
 
 function imageBasename(imageUrl: string): string {
