@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateFAQSchema } from "@/lib/seo/structured-data";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 /**
  * PREFABRICATED PORTABLE CABIN (products.ts id 13, SKU POC-PC-PREFAB).
@@ -109,7 +110,7 @@ const SIZES: { size: string; area: string; use: string }[] = [
 
 /** Prefabricated vs built on site, on the five axes buyers actually weigh. */
 const COMPARISON: { axis: string; prefab: string; onSite: string }[] = [
-  { axis: "Time", prefab: "7–21 days in the factory, one day on site", onSite: "Two to four months, weather permitting" },
+  { axis: "Time", prefab: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days, then ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days in transit by delivery zone`, onSite: "Two to four months, weather permitting" },
   { axis: "Quality", prefab: "Jig-welded frame, factory-tested wiring, leak-checked before dispatch", onSite: "Depends on the crew, the weather and who is watching" },
   { axis: "Disruption", prefab: "No material dumps, no masons, no curing time on your land", onSite: "All of the above, on your site" },
   { axis: "Reuse", prefab: "Lift it, move it, use it again", onSite: "Demolish it" },

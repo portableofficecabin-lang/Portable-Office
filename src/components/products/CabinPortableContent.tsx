@@ -7,6 +7,7 @@ import cabinPortableSite from "@/assets/products/cabin-portable-site.webp";
 import cabinPortableOffice from "@/assets/products/cabin-portable-office.webp";
 import cabinPortableContainer from "@/assets/products/cabin-portable-container.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 
 export function CabinPortableContent() {
   return (
@@ -602,7 +603,7 @@ export function CabinPortableContent() {
 
         <h3 className="text-xl font-semibold text-foreground mb-4">What sits outside the unit price:</h3>
         <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Transport to your site — calculated at checkout from your delivery pincode, and free within 50 km of our works</li>
+          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Transport to your site — calculated at checkout from your delivery pincode, and free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</li>
           <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Installation — an optional line item you can add at checkout</li>
           <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Utility connection work at your end (power and water hookup)</li>
           <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Relocating the cabin to a future site — arranged and quoted at the time</li>

@@ -2,6 +2,9 @@
 // (rendering) and the FAQ route (server-side FAQPage JSON-LD), so the schema
 // always matches the visible Q&A content.
 
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
+import { GST_PERCENT_LABEL } from "@/lib/pricing/gst";
+
 export type FaqItem = { q: string; a: string };
 export type FaqCategory = {
   id: string;
@@ -91,7 +94,10 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Is delivery free?",
-        a: "Delivery is free within a 50 km radius of our facility — genuinely free, with no hidden charges. Beyond 50 km, transport is charged based on distance and the size of the structure, and the exact amount is confirmed in your written quotation before you place the order. We do not offer free delivery nationwide. Unloading (crane or hydra) and installation are charged separately unless your quotation includes them, and GST applies extra.",
+        // Free zone and zone charging as checkout applies them (shippingZones.ts). The old answer said
+        // "within a 50 km radius", "charged based on distance and the size of the structure" and "GST
+        // applies extra"; checkout charges by PIN-code zone and its transport/installation lines include GST.
+        a: `Delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} — genuinely free, with no hidden charges. For other PIN codes, transport is charged by delivery zone: for a product bought online it is worked out from your pincode and shown at checkout before you pay; for a custom order it is confirmed in your written quotation. We do not offer free delivery nationwide. Unloading (crane or hydra) and installation are optional and charged separately — as a line at checkout, or as set out in your quotation. Transport and installation amounts shown at checkout include ${GST_PERCENT_LABEL} GST.`,
       },
       {
         q: "Can the cabin be relocated later?",

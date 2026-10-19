@@ -6,6 +6,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { RotateCcw, ChevronRight, Mail, Phone, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "@/components/ui/static-motion";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -63,7 +64,7 @@ export default function RefundPolicyPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> February 2026
+            <strong>Last updated:</strong> October 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             At Portable Office Cabin, we understand that plans can change. This policy outlines the rules and conditions around order cancellations, refunds, and how we handle unexpected situations — so you know exactly where you stand.
@@ -124,7 +125,7 @@ export default function RefundPolicyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Prices shown on product pages are inclusive of 18% GST</strong> — the price you see is the price of the item. GST is shown separately on your tax invoice.</li>
               <li>Transport is charged separately, based on the delivery pincode. It is calculated and shown to you at checkout before payment, and is confirmed in the written quotation on the custom route.</li>
-              <li>Delivery is free within a 50 km radius of our facility. Beyond 50 km, transport is charged based on distance. Installation, where required, is an optional charge shown separately.</li>
+              <li>Delivery is free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}. Other PIN codes are charged by delivery zone. Installation, where required, is an optional charge shown separately.</li>
               <li>Freight or transport charges already incurred on an order that has been dispatched or is in transit are <strong>not refundable</strong>.</li>
             </ul>
           </Section>

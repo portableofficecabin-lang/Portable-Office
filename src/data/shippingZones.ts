@@ -114,6 +114,18 @@ export const DELIVERY_WORKING_DAYS = {
 } as const;
 
 /**
+ * The free delivery zone's PIN-code prefixes as display text — "560, 562, 563 or 635". Policies
+ * and FAQs describe the free zone by PIN code because that is how checkout assigns it; a
+ * distance ("within 50 km") is not what the customer is charged on.
+ */
+export const FREE_DELIVERY_PIN_PREFIXES_TEXT: string = (() => {
+  const prefixes = SHIPPING_ZONES.find((zone) => zone.rate === 0)?.pincodePrefixes ?? [];
+  return prefixes.length <= 1
+    ? prefixes.join("")
+    : `${prefixes.slice(0, -1).join(", ")} or ${prefixes[prefixes.length - 1]}`;
+})();
+
+/**
  * Resolve a 6-digit Indian pincode to a zone. Longest matching prefix wins, so "560"
  * (Zone 1) beats "56" (Zone 2) for a Bengaluru address.
  *

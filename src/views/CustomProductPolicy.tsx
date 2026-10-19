@@ -13,6 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 // Server Component (no "use client") — the full policy text is in the initial HTML
 // so Google Merchant Center and crawlers can read it without executing JS.
@@ -66,7 +67,7 @@ export default function CustomProductPolicyPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> July 2026
+            <strong>Last updated:</strong> October 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             Portable Office Cabin sells in two ways. Our <strong>standard, fixed-configuration products</strong> can be bought and paid for online at a fixed, GST-inclusive price — <strong>this policy does not apply to those</strong>; they follow our{" "}
@@ -113,7 +114,7 @@ export default function CustomProductPolicyPage() {
           <Section title="3. Manufacturing & Delivery Timeline">
             <ul className="space-y-3">
               <Bullet><strong>Dispatch:</strong> typically <strong>7–15 working days</strong> after order confirmation and advance payment.</Bullet>
-              <Bullet><strong>Transit:</strong> a further <strong>1–5 days</strong>, depending on your location.</Bullet>
+              <Bullet><strong>Transit:</strong> a further <strong>{`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days`}</strong>, depending on your delivery zone.</Bullet>
               <Bullet>Timelines start only after the order is confirmed and the advance is received — not from the date of enquiry.</Bullet>
             </ul>
             <p className="mt-3">
@@ -174,7 +175,7 @@ export default function CustomProductPolicyPage() {
             <ul className="space-y-3">
               <Bullet><Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link> — prices, GST, accepted payment methods and advance terms.</Bullet>
               <Bullet><Link href="/refund-policy" className="text-accent hover:underline">Return, Refund &amp; Cancellation Policy</Link> — cancellation windows, refunds and defective goods.</Bullet>
-              <Bullet><Link href="/shipping" className="text-accent hover:underline">Shipping &amp; Delivery Policy</Link> — free delivery within 50 km, transport beyond 50 km, installation.</Bullet>
+              <Bullet><Link href="/shipping" className="text-accent hover:underline">Shipping &amp; Delivery Policy</Link> — the free delivery zone, transport charges by zone, installation.</Bullet>
               <Bullet><Link href="/warranty" className="text-accent hover:underline">Warranty Policy</Link> — what is covered after your unit is delivered.</Bullet>
             </ul>
           </Section>

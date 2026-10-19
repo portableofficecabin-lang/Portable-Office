@@ -1,3 +1,8 @@
+import { DELIVERY_WORKING_DAYS } from "@/data/shippingZones";
+
+/** Door-to-door window (dispatch + zone transit), the same 8–25 the Delivery chip shows. Was a hand-typed 7–21. */
+const DOOR_TO_DOOR = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} days`;
+
 // Unique, professionally written meta data for each product page
 // Aligned with Google SEO guidelines: titles < 60 chars, descriptions < 160 chars
 
@@ -110,7 +115,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "46": {
     title: "Steel Portable Cabin Manufacturer in India | Portable Office Cabin",
     h1: "Steel Portable Cabin",
-    description: "Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in 7–21 days.",
+    description: `Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in ${DOOR_TO_DOOR}.`,
     keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
   },
   /* Portable Shop Cabin (id 48). `title` mirrors productCommerce "48".feedTitle, which is what
@@ -140,7 +145,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * carry a second figure. */
   "13": {
     title: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
-    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 days. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.",
+    description: `See how a prefabricated portable cabin is built, checked and delivered in ${DOOR_TO_DOOR}. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.`,
     keywords: "prefabricated portable cabin, how prefabricated cabins are made, prefab cabin manufacturing process, factory built portable cabin, prefabricated cabin India, modular cabin fabrication, prefab site office cabin, prefabricated cabin delivery time",
   },
   // New & Used Shipping Container for Sale in India

@@ -3,6 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 /**
  * `offer` is present when the CURRENT product page is purchasable (passed in by
@@ -464,9 +465,9 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             <tbody>
               {[
                 { phase: "Design and approval", duration: "2–5 days" },
-                { phase: "Manufacturing", duration: "7–20 days (size dependent)" },
-                { phase: "Transport", duration: "1–5 days (distance dependent)" },
-                { phase: "Installation", duration: "1–3 days (small units), 7–10 days (multi-unit)" },
+                { phase: "Manufacturing", duration: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days` },
+                { phase: "Transport", duration: `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days (by delivery zone)` },
+                { phase: "Installation", duration: "Optional — added at checkout" },
               ].map((row, i) => (
                 <tr key={row.phase} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
                   <td className="px-6 py-4 font-medium text-foreground text-sm">{row.phase}</td>
@@ -632,7 +633,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               q: "How soon can Portable Office Cabin deliver?",
-              a: "Standard models typically ship within 7–20 days after design approval. Urgent requirements can be discussed case-by-case, with expedited manufacturing available for priority projects. Lead times depend on cabin size, specifications, and current production schedules.",
+              a: `Standard models are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days in transit depending on your delivery zone. If you need a unit sooner, ask our team before you order — express delivery is not a checkout option. Custom builds follow the timeline in your written quotation.`,
             },
           ].map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`} className="bg-card border border-border rounded-xl px-6">

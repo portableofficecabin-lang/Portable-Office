@@ -29,7 +29,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { DISPATCH_WORKING_DAYS, SHIPPING_ZONES, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, FREE_DELIVERY_PIN_PREFIXES_TEXT, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
@@ -40,17 +40,12 @@ function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   );
 }
 
-/** "560, 562, 563 or 635" */
-function listOr(items: readonly string[]): string {
-  return items.length <= 1 ? items.join("") : `${items.slice(0, -1).join(", ")} or ${items[items.length - 1]}`;
-}
-
 /**
  * Checkout-accurate shipping lines, read from shippingZones.ts — the same source the cart,
  * checkout, Razorpay order, JSON-LD handlingTime and Merchant feed shipping use. Zones are
- * described by PIN-code prefix (how checkout assigns them), never by distance.
+ * described by PIN-code prefix (FREE_DELIVERY_PIN_PREFIXES_TEXT, how checkout assigns them),
+ * never by distance.
  */
-const FREE_ZONE = SHIPPING_ZONES.find((zone) => zone.rate === 0 && zone.pincodePrefixes.length > 0);
 const DISPATCH = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`;
 
 /**
@@ -126,18 +121,16 @@ export function ShippingDeliveryModal({
                 <AccordionContent>
                   {transportAtCheckout ? (
                     <ul className="space-y-3">
-                      {FREE_ZONE && (
-                        <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${listOr(FREE_ZONE.pincodePrefixes)}`} />
-                      )}
+                      <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}`} />
                       <InfoItem icon={MapPin} text="Other PIN codes: transport is charged by delivery zone and shown at checkout before you pay" />
                       <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order — express delivery is not a checkout option" />
                       <InfoItem icon={Wrench} text="Professional installation available upon request" />
                     </ul>
                   ) : (
                     <ul className="space-y-3">
-                      <InfoItem icon={CheckCircle2} text="Free standard delivery within a 50 km radius" />
-                      <InfoItem icon={MapPin} text="Beyond 50 km, transport is charged based on distance — confirmed in your written quotation" />
-                      <InfoItem icon={CheckCircle2} text="Express delivery available at an additional cost (optional)" />
+                      <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}`} />
+                      <InfoItem icon={MapPin} text="Other PIN codes: transport is charged by delivery zone — confirmed in your written quotation" />
+                      <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order" />
                       <InfoItem icon={Wrench} text="Professional installation available upon request" />
                     </ul>
                   )}
@@ -158,8 +151,7 @@ export function ShippingDeliveryModal({
                     </ul>
                   ) : (
                     <ul className="space-y-3">
-                      <InfoItem icon={CalendarDays} text="Standard delivery: 7–14 working days" />
-                      <InfoItem icon={CalendarDays} text="Express delivery: 3–7 working days" />
+                      <InfoItem icon={CalendarDays} text="Delivery timeline: set out in your written quotation" />
                       <InfoItem icon={MapPin} text={SHIPMENT_UPDATES} />
                     </ul>
                   )}
@@ -267,8 +259,7 @@ export function ShippingDeliveryModal({
                   </ul>
                 ) : (
                   <ul className="space-y-2">
-                    <InfoItem icon={CalendarDays} text="After placing the order, the manufacturing lead time is 7–14 days or 20–30 working days" />
-                    <InfoItem icon={Package} text="Manufacturing time may vary depending on the project size (Small, Medium, or Large)" />
+                    <InfoItem icon={CalendarDays} text="The manufacturing timeline is set out in your written quotation" />
                   </ul>
                 )}
               </div>
@@ -294,7 +285,7 @@ export function ShippingDeliveryModal({
                   <InfoItem icon={Clock} text="Installation scheduling is subject to availability" />
                   <InfoItem
                     icon={MapPin}
-                    text={transportAtCheckout ? "Transport for your PIN code is shown at checkout before you pay" : "Additional charges may apply outside the 50 km radius"}
+                    text={transportAtCheckout ? "Transport for your PIN code is shown at checkout before you pay" : "Transport outside the free delivery zone is confirmed in your written quotation"}
                   />
                 </ul>
               </div>

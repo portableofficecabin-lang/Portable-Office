@@ -130,7 +130,7 @@ const WHY_US = [
 
 const STEPS = [
   "Share your requirement — call " + CONTACT.telDisplay + " or send an enquiry with size, use case, and site location.",
-  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and any transport beyond 50 km listed separately.",
+  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and any transport outside the free delivery zone listed separately.",
   "Production — your container is fabricated and fitted at our factory; standard units are dispatched within 7–15 working days of order confirmation and advance.",
   "Delivery and installation — we transport, place, and hand over the unit ready for use.",
 ];
