@@ -1,4 +1,3 @@
-import msContainerOfficeCabinMain from "@/assets/products/ms-container-office-cabin-main.webp";
 import officePortableCabinMain from "@/assets/products/office-portable-cabin-main.webp";
 import labourHutmentsMain from "@/assets/products/labour-hutments-staff-accommodation-1.webp";
 // Labour Colony gallery (product id 40): the existing aerial image (already the live
@@ -1128,8 +1127,9 @@ export const products: Product[] = [
       "Suitable for construction sites, schools, petrol bunks, and industrial projects",
       "Reusable asset with strong long-term value versus temporary site buildings",
     ],
-    // The owner's five images (2026-10-19) lead, uncropped: the exterior with the door first, the
-    // interior second, then the other exterior views and the roof; the original image stays last.
+    // The owner's five images (2026-10-19), uncropped: the exterior with the door first, the
+    // interior second, then the other exterior views and the roof. The original "MST" render was
+    // removed from the gallery on the owner's instruction (it still illustrates the content section).
     // None is confirmed as the 15ft x 10ft unit listed here, so all five are shown as illustrative
     // examples: per-image alt text and on-image label, and the gallery note (productImageCaptions.ts),
     // displayed whole (productGalleryFit "contain"). The first image is also the JSON-LD, OG and
@@ -1142,7 +1142,6 @@ export const products: Product[] = [
       "/images/products/ms-container-office-cabin/container-office-cabin-exterior-end-view-example.webp",
       "/images/products/ms-container-office-cabin/container-office-cabin-exterior-long-side-example.webp",
       "/images/products/ms-container-office-cabin/container-office-cabin-roof-aerial-example.webp",
-      msContainerOfficeCabinMain,
     ],
     price: 240000,
     priceLabel: "Basic Price (GST, Transport & Installation Extra)",
