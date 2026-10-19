@@ -559,7 +559,8 @@ function generateMetaTitle(keyword: string, location: string, variation: number)
 }
 
 // Same rules as the titles: no unverified superlatives ("Top-rated", "Leading", "India's
-// trusted"), no warranty periods and no local presence ("local teams in <location>") — the
+// trusted"), no warranty periods, no delivery promises ("on-time delivery") and no local
+// presence ("local teams in <location>") — the
 // company has its factory near Hosur and an office in Bengaluru only.
 function generateMetaDescription(keyword: string, location: string, variation: number): string {
   const mainKeyword = `${keyword} in ${location}`;
@@ -571,7 +572,7 @@ function generateMetaDescription(keyword: string, location: string, variation: n
     `${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics to sites in ${location}. Book a site visit.`,
     `Affordable ${mainKeyword} for contractors & builders. Quick install, relocatable design & ISO-grade materials supplied across ${location}. Talk to us.`,
     `${mainKeyword} manufacturer with its own factory. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Call us today.`,
-    `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & on-time delivery throughout ${location}. Call today.`,
+    `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & delivery throughout ${location}. Call today.`,
     `Get ${mainKeyword} at factory-direct prices. Modular design, material-based structural warranty & installation support serving ${location}. Contact us.`,
     `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Talk to our team.`,
     `${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,

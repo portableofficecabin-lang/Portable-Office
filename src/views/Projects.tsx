@@ -25,6 +25,7 @@ import {
   Bolt,
   Container,
 } from "lucide-react";
+import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 
 import projectsHeroBg from "@/assets/projects/projects-hero-bg.webp";
 import portaCabin1 from "@/assets/projects/porta-cabin-project-1.jpg";
@@ -92,7 +93,9 @@ const prefabShowcase = [
 const whyChoose = [
   { icon: Container, title: "Custom-Built Solutions", desc: "Every structure tailored to your exact project requirements." },
   { icon: Shield, title: "Premium Materials", desc: "GI, ACP, PUF panels — built to last decades, not months." },
-  { icon: Clock, title: "On-Time Delivery", desc: "Precision manufacturing with 7–30 day turnarounds." },
+  // Was "On-Time Delivery" / "7–30 day turnarounds": an unconfirmed promise in bare days. Now the
+  // confirmed dispatch window for online orders; custom work follows its written quotation.
+  { icon: Clock, title: "Clear Timelines", desc: `Online orders dispatch within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days; custom projects follow the timeline in your written quotation.` },
   { icon: IndianRupee, title: "Competitive Pricing", desc: "Factory-direct pricing with no middlemen." },
   { icon: Headphones, title: "After-Sales Support", desc: "Dedicated team for warranty, repairs & modifications." },
 ];
