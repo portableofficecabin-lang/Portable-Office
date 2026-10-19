@@ -107,7 +107,7 @@ export const productChildGroups: ProductChildGroup[] = [
             heading: "What is included — and what is quoted separately",
             paragraphs: [
               "The displayed price is the ex-works cabin price including GST. Transport to your site and crane unloading are quoted separately because they depend entirely on distance and site access — the checkout calculates transport from your delivery PIN code before you pay, so there are no surprises.",
-              "Installation is light by design: cabins arrive factory-finished and are placed on a simple level base, so most sites are operational the same day the cabin lands.",
+              "Installation is light by design: cabins arrive factory-finished and are placed on a simple level base, so on-site work is limited to placement, levelling and service connections.",
             ],
           },
           {
@@ -220,7 +220,7 @@ export const productChildGroups: ProductChildGroup[] = [
           {
             heading: "Interior finishes",
             paragraphs: [
-              "Interiors are pre-finished at the factory: PPGI or laminated wall lining, vinyl or laminate flooring over marine plywood, concealed wiring with switches and LED lights in place. That is what makes same-day occupancy possible — there is no site-side painting or wiring stage.",
+              "Interiors are pre-finished at the factory: PPGI or laminated wall lining, vinyl or laminate flooring over marine plywood, concealed wiring with switches and LED lights in place. That is why there is little left to do once the cabin is placed — there is no site-side painting or wiring stage.",
             ],
           },
           {
@@ -420,7 +420,7 @@ export const productChildGroups: ProductChildGroup[] = [
           {
             heading: "Delivery day, step by step",
             paragraphs: [
-              "The lorry arrives, the crane slings the cabin from its lifting points, and the cabin lands on the prepared base and gets levelled. Utilities connect to the wall points — power to the DB, water and drain where wet areas exist — and the cabin is handed over the same day. Total time on a prepared site is measured in hours.",
+              "The lorry arrives, the crane slings the cabin from its lifting points, and the cabin lands on the prepared base and gets levelled. Utilities connect to the wall points — power to the DB, water and drain where wet areas exist — and the cabin is handed over. Time on site depends on how ready the site is.",
             ],
           },
         ],

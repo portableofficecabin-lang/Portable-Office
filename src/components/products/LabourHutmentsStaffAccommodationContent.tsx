@@ -10,7 +10,7 @@ export function LabourHutmentsStaffAccommodationContent() {
   // No "cost per bed" row: this page sells one unit at one fixed, GST-inclusive price, and a
   // per-bed range beside it would contradict the cart, the JSON-LD offer and the feed.
   const comparisonRows = [
-    ["Installation time", "3–6 weeks", "4–6 months"],
+    ["Installation time", "Far shorter — set out in your written quotation", "4–6 months"],
     ["Foundation needs", "Simple plinth", "Full RCC footings"],
     ["Reusability", "3–5 sites over 10 years", "Fixed location"],
     ["Monsoon delays", "Minimal", "Significant"],

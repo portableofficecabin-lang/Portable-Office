@@ -313,7 +313,7 @@ export function CabinsInOfficeContent() {
           <div>
             <h4 className="font-semibold text-foreground mb-3">Timeline examples:</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><strong className="text-foreground">4–6 single cabins:</strong> Installed over one weekend in a 5,000 ft² office</li>
+              <li><strong className="text-foreground">4–6 single cabins:</strong> timeline set out in your written quotation</li>
               <li><strong className="text-foreground">20-cabin cluster:</strong> timeline set out in your written quotation</li>
             </ul>
             <p className="text-sm text-muted-foreground mt-4 italic">

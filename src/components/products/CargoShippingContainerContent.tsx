@@ -345,7 +345,7 @@ export function CargoShippingContainerContent() {
               </thead>
               <tbody>
                 {[
-                  ["Deployment time", "4–6 weeks", "3–6 months"],
+                  ["Deployment time", "Far shorter — set out in your written quotation", "3–6 months"],
                   ["Cost savings", "40–60% lower", "Baseline"],
                   ["Relocation", "Crane and flatbed", "Demolition required"],
                   ["End-of-project waste", "Near zero", "Significant debris"],

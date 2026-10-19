@@ -690,7 +690,7 @@ const LANDING_COPY: Record<string, CategoryLandingCopy> = {
       },
       {
         title: "Warehouse and factory overflow",
-        text: "Extra storage that can be placed in a yard in a day and removed when it is no longer needed.",
+        text: "Extra storage that can be placed in a yard and removed when it is no longer needed.",
       },
       {
         title: "A base for conversion",

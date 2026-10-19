@@ -231,7 +231,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Cabins in Office
   "27": {
     title: "Office Cabins – Modular Workspaces | Portable Office Cabin",
-    description: "Modern modular office cabins — glass partitions, acoustic booths, meeting pods & executive suites. 30–40 dB sound cut. Install in a weekend. Get a quote!",
+    description: "Modern modular office cabins — glass partitions, acoustic booths, meeting pods & executive suites. 30–40 dB sound cut. Get a quote!",
     keywords: "cabins in office, office cabin, modular office cabin, glass office partition, acoustic office booth, phone booth office, meeting pod, prefab office cabin, office cabin price India, modular workspace",
   },
   // Steel Portable Office Container — INTENT: Portability + ISMC/RHS structural steel + stackable G+1

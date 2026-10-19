@@ -1421,7 +1421,7 @@ export const products: Product[] = [
       { label: "Weight (20 ft)", value: "2000–2200 kg empty" },
       { label: "Design Life", value: "10–25 years with periodic maintenance" },
       { label: "Electrical", value: "Factory-fitted copper wiring, MCB panel, 6–12 LEDs, 15A sockets" },
-      { label: "Delivery", value: "7–15 working days; 1–2 days onsite placement" },
+      { label: "Delivery", value: "Dispatched within 7–15 working days; on-site placement depends on site readiness" },
     ],
     features: [
       "ISMC/RHS structural steel framework — IS 800 compliant",
