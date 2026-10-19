@@ -33,6 +33,8 @@
 --       10 minutes; service role and admins exempt), now taking a per-address transaction lock
 --       before counting, so simultaneous inserts for one address are counted correctly.
 --
+--  RELEASE ORDER: 20261012120000_enquiries_insert_hardening.sql →
+--  20261018110000_backfill_empty_enquiry_messages.sql → this file → deploy the edge function.
 --  APPLY MANUALLY, BEFORE deploying the edge function version that calls these functions:
 --  Supabase dashboard → SQL editor → run this file (or `supabase db push`).
 --  NEVER run full_schema.sql against production.

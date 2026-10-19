@@ -278,3 +278,45 @@ describe("migration 20261018120000 — safety properties", () => {
     assert.ok(readFileSync(join("supabase", "rollback", "20261018120000_enquiry_notification_claim.down.sql"), "utf8").includes("drop table if exists public.enquiry_notifications"));
   });
 });
+
+describe("migration 20261018110000 — backfill of the four empty messages", () => {
+  const sql = readFileSync(join("supabase", "migrations", "20261018110000_backfill_empty_enquiry_messages.sql"), "utf8");
+  const code = sql.split("\n").filter((l) => !l.trim().startsWith("--")).join("\n");
+  const CONFIRMED = [
+    "5878ac58-57e0-4564-941e-f3dfd373adb6",
+    "8cb4e17c-70e5-4d8b-8b5d-4ad18249747a",
+    "dfbfe207-a654-4f71-a7f8-925ed81b4d74",
+    "e865deb4-4c6c-4360-900d-79e10f4dcdce",
+  ];
+
+  it("targets exactly the four rows confirmed in production, by id", () => {
+    const ids = [...code.matchAll(/'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/g)].map((m) => m[1]);
+    assert.deepEqual(ids, CONFIRMED);
+    assert.match(code, /where id = any \(target_ids\)\s+and coalesce\(char_length\(message\), 0\) = 0;/);
+  });
+
+  it("changes only the message, never deletes, inserts or drops", () => {
+    assert.equal((code.match(/\bupdate public\.enquiries\b/g) ?? []).length, 1);
+    assert.match(code, /update public\.enquiries\s+set message = case/);
+    assert.ok(!/\b(drop|delete|truncate|insert)\b/i.test(code));
+  });
+
+  it("writes the quote form's own default text", () => {
+    const modal = readFileSync(join("src", "components", "products", "EnquiryModal.tsx"), "utf8");
+    assert.ok(modal.includes("`Quote request for ${enquiryName} (no message entered).`"), "the form's default");
+    assert.ok(code.includes("'Quote request for ' || product_name || ' (no message entered).'"));
+  });
+
+  it("preserves updated_at (trigger off for the one UPDATE, back on in the same transaction)", () => {
+    const off = code.indexOf("alter table public.enquiries disable trigger update_enquiries_updated_at;");
+    const upd = code.indexOf("update public.enquiries");
+    const on = code.indexOf("alter table public.enquiries enable trigger update_enquiries_updated_at;");
+    assert.ok(off > 0 && off < upd && upd < on);
+  });
+
+  it("has a rollback that restores only the exact backfilled text, after the hardening rollback", () => {
+    const rb = readFileSync(join("supabase", "rollback", "20261018110000_backfill_empty_enquiry_messages.down.sql"), "utf8");
+    assert.match(rb, /if exists \([\s\S]*conname = 'enquiries_field_lengths_check'[\s\S]*raise exception 'Roll back 20261012120000/);
+    assert.match(rb, /set message = ''\s+where id = any \(target_ids\)\s+and message = case/);
+  });
+});
