@@ -54,34 +54,34 @@ const CONTACT = {
 };
 
 /** The factory sequence. Day ranges are the owner's; they are the point of this page. */
-const STEPS: { n: string; days: string; icon: React.ComponentType<{ className?: string }>; title: string; body: string }[] = [
+const STEPS: { n: string; icon: React.ComponentType<{ className?: string }>; title: string; body: string }[] = [
   {
-    n: "1", days: "Day 0–2", icon: PencilRuler,
+    n: "1", icon: PencilRuler,
     title: "Drawing and confirmation",
     body: "You tell us the size, what the cabin is for and where it is going. We send back a dimensioned drawing showing the door, windows, partitions and electrical points. Nothing is cut until you approve it.",
   },
   {
-    n: "2", days: "Day 2–6", icon: Flame,
+    n: "2", icon: Flame,
     title: "Frame fabrication",
     body: "The base and wall frames are welded from MS C-channel (75 × 40 mm) or RHS (50 × 50 × 3 mm) on a flat jig, so the cabin is square and the floor is level. Galvanised C and Z purlins go in for the roof. Lifting lugs are welded to the corners now, not bolted on later.",
   },
   {
-    n: "3", days: "Day 6–10", icon: Layers3,
+    n: "3", icon: Layers3,
     title: "Skinning and insulation",
     body: "1.5–2 mm MS sheet — or GI / PPGI if you have chosen it — is fixed to the frame. 30–50 mm glass wool or rock wool goes into the wall and roof cavities, then the inner lining closes it up. The sloping roof gets EPDM waterproofing at every joint.",
   },
   {
-    n: "4", days: "Day 10–13", icon: DoorOpen,
+    n: "4", icon: DoorOpen,
     title: "Floor, doors and windows",
     body: "18 mm cement board is laid on the floor joists and finished with 2 mm vinyl. The MS flush door and aluminium sliding windows are fitted and adjusted so they close properly — something that is surprisingly hard to get right on site.",
   },
   {
-    n: "5", days: "Day 13–17", icon: Zap,
+    n: "5", icon: Zap,
     title: "Electricals and finishing",
     body: "Concealed wiring, MCB board, LED lights, fans and modular switches are installed and tested. The whole cabin is primed with epoxy zinc phosphate and finished in PU topcoat in your colour.",
   },
   {
-    n: "6", days: "Day 17–21", icon: ClipboardCheck,
+    n: "6", icon: ClipboardCheck,
     title: "Inspection and dispatch",
     body: "Every cabin is hosed down to check for leaks, every circuit is tested, every door and window is opened and closed. Then it is loaded on a trailer and driven to your site, where a crane or hydra places it in one lift.",
   },
@@ -110,7 +110,7 @@ const SIZES: { size: string; area: string; use: string }[] = [
 
 /** Prefabricated vs built on site, on the five axes buyers actually weigh. */
 const COMPARISON: { axis: string; prefab: string; onSite: string }[] = [
-  { axis: "Time", prefab: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days, then ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days in transit by delivery zone`, onSite: "Two to four months, weather permitting" },
+  { axis: "Time", prefab: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days, then ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit by delivery zone`, onSite: "Two to four months, weather permitting" },
   { axis: "Quality", prefab: "Jig-welded frame, factory-tested wiring, leak-checked before dispatch", onSite: "Depends on the crew, the weather and who is watching" },
   { axis: "Disruption", prefab: "No material dumps, no masons, no curing time on your land", onSite: "All of the above, on your site" },
   { axis: "Reuse", prefab: "Lift it, move it, use it again", onSite: "Demolish it" },
@@ -241,8 +241,12 @@ export function PrefabricatedPortableCabinContent() {
       {/* ------------------------------------------------ the process ---------------------- */}
       <div className="mt-12">
         <SectionHeading id="process" icon={ClipboardCheck}>How Your Cabin Is Built</SectionHeading>
-        {/* A numbered sequence because the content genuinely IS one: each step depends on the
-            one before it, and the day ranges only make sense in order. */}
+        {/* A numbered sequence because each step depends on the one before it. The per-step "Day"
+            ranges were removed (2026-10-19): they had no stated unit and ran to day 21, past the
+            confirmed 7–15 working-day dispatch window, which is stated once instead. */}
+        <p className="text-muted-foreground leading-relaxed mb-5">
+          {`All six steps happen in our factory, and the cabin is dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation.`}
+        </p>
         <ol className="space-y-4">
           {STEPS.map((s) => (
             <li key={s.n} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
@@ -255,9 +259,6 @@ export function PrefabricatedPortableCabinContent() {
                     <h3 className="font-semibold text-foreground">
                       <span className="text-accent">Step {s.n}</span> — {s.title}
                     </h3>
-                    <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-                      {s.days}
-                    </span>
                   </div>
                 </div>
               </div>

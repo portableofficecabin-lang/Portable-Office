@@ -128,8 +128,7 @@ export function ShippingDeliveryModal({
                     </ul>
                   ) : (
                     <ul className="space-y-3">
-                      <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}`} />
-                      <InfoItem icon={MapPin} text="Other PIN codes: transport is charged by delivery zone — confirmed in your written quotation" />
+                      <InfoItem icon={MapPin} text="Transport: confirmed in your written quotation" />
                       <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order" />
                       <InfoItem icon={Wrench} text="Professional installation available upon request" />
                     </ul>
@@ -161,13 +160,11 @@ export function ShippingDeliveryModal({
               <AccordionItem value="packaging">
                 <AccordionTrigger className="font-semibold">
                   <span className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-accent" /> Packaging & Handling
+                    <Package className="h-4 w-4 text-accent" /> Damage in Transit
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-3">
-                    <InfoItem icon={Shield} text="Secure, high-quality packaging to prevent damage" />
-                    <InfoItem icon={CheckCircle2} text="Weather-protected transport" />
                     <InfoItem icon={CheckCircle2} text={TRANSIT_DAMAGE} />
                   </ul>
                 </AccordionContent>
@@ -285,7 +282,7 @@ export function ShippingDeliveryModal({
                   <InfoItem icon={Clock} text="Installation scheduling is subject to availability" />
                   <InfoItem
                     icon={MapPin}
-                    text={transportAtCheckout ? "Transport for your PIN code is shown at checkout before you pay" : "Transport outside the free delivery zone is confirmed in your written quotation"}
+                    text={transportAtCheckout ? "Transport for your PIN code is shown at checkout before you pay" : "Transport is confirmed in your written quotation"}
                   />
                 </ul>
               </div>

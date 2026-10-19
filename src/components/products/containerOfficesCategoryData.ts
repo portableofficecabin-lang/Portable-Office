@@ -140,7 +140,7 @@ export function containerOfficeFaqs(products: Product[]): { question: string; an
       question: "How long does delivery take?",
       answer:
         `Manufacturing and dispatch take ${dispatch} after the order is confirmed and paid. Transit then depends on the delivery zone: `
-        + SHIPPING_ZONES.map((z) => `${z.name}: ${z.transitDaysMin}–${z.transitDaysMax} days`).join("; ")
+        + SHIPPING_ZONES.map((z) => `${z.name}: ${z.transitDaysMin}–${z.transitDaysMax} working days`).join("; ")
         + ".",
     },
     {

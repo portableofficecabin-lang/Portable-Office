@@ -53,8 +53,11 @@ export const INSTALLATION = {
 export const SHIPPING_ZONES: ShippingZone[] = [
   {
     id: "zone-1",
-    name: "Zone 1 — Local (within ~50 km)",
-    description: "Free delivery within approximately 50 km of our facility.",
+    // Display text only (owner-approved, 2026-10-19): the zone is assigned by the PIN-code
+    // prefixes below, not by distance, so the name and description say so. The description must
+    // list the same prefixes as pincodePrefixes. id, rate, transit days and prefixes are unchanged.
+    name: "Zone 1 — Eligible PIN codes",
+    description: "Free delivery to PIN codes beginning 560, 562, 563 or 635.",
     rate: 0,
     transitDaysMin: 1,
     transitDaysMax: 2,

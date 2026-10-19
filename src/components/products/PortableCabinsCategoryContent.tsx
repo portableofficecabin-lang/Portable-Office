@@ -26,7 +26,7 @@ import { sellPrice } from "@/lib/pricing/gst";
 import { DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 /** Dispatch + transit as the product pages, the feed and the JSON-LD state them. Was "7–21 working days". */
-const DISPATCH_AND_TRANSIT = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days in transit depending on your delivery zone`;
+const DISPATCH_AND_TRANSIT = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit depending on your delivery zone`;
 
 /**
  * One-H1-per-page overrides, keyed by category slug (used by the listing view). Shared map: it
@@ -120,7 +120,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "Do you deliver portable cabins outside Bangalore?",
     answer:
-      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is charged by delivery zone — worked out from your PIN code and shown at checkout before you pay. On-site installation and positioning, including crane or hydra for standard single-unit placements, is an optional line at checkout.",
+      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is charged by delivery zone — worked out from your PIN code and shown at checkout before you pay — and our team manages the crane and placement at delivery.",
   },
   {
     question: "Are portable cabins cheaper than brick-and-mortar construction?",

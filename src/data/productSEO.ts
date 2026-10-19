@@ -1,7 +1,7 @@
 import { DELIVERY_WORKING_DAYS } from "@/data/shippingZones";
 
 /** Door-to-door window (dispatch + zone transit), the same 8–25 the Delivery chip shows. Was a hand-typed 7–21. */
-const DOOR_TO_DOOR = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} days`;
+const DOOR_TO_DOOR = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} working days`;
 
 // Unique, professionally written meta data for each product page
 // Aligned with Google SEO guidelines: titles < 60 chars, descriptions < 160 chars

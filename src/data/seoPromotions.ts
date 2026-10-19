@@ -3,7 +3,7 @@ import { FREE_DELIVERY_PIN_PREFIXES_TEXT, TRANSIT_WORKING_DAYS } from "@/data/sh
 
 /** Transit as the zone table states it (1-10 days across India). The promotion locations include
  *  West Bengal and Maharashtra, whose zone takes up to 10 days, so "typically 1-5 days" was wrong there. */
-const TRANSIT_RANGE = `${TRANSIT_WORKING_DAYS.min}-${TRANSIT_WORKING_DAYS.max} days`;
+const TRANSIT_RANGE = `${TRANSIT_WORKING_DAYS.min}-${TRANSIT_WORKING_DAYS.max} working days`;
 
 export interface SEOContent {
   keyword: string;
@@ -486,7 +486,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
   const baseFAQs = [
     {
       question: `What is the starting price for ${keyword.toLowerCase()} in ${location}?`,
-      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport outside the free delivery zone (PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}), and installation. We provide a detailed written quotation with no hidden charges.`,
+      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport and installation, which your written quotation confirms. We provide a detailed written quotation with no hidden charges.`,
     },
     {
       question: `How long does delivery and installation take in ${location}?`,
@@ -502,7 +502,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
     },
     {
       question: `Do you provide delivery and installation services throughout ${location}?`,
-      answer: `Yes. We offer door-to-door delivery and professional installation across ${location} and all major cities in India. Delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}; elsewhere, transport is charged by delivery zone — shown at checkout for products bought online, or confirmed in your written quotation.`,
+      answer: `Yes. We offer door-to-door delivery and professional installation across ${location} and all major cities in India. For products bought online, delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} and other PIN codes are charged by delivery zone at checkout; for custom orders and rentals, transport is confirmed in your written quotation.`,
     },
   ];
   return baseFAQs;

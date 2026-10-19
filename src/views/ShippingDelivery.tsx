@@ -87,7 +87,7 @@ export default function ShippingDeliveryPage() {
         }
         // Same reason as the warranty page: the H1 said "Delivery" but never "Shipping", which is
         // both the slug (/shipping) and the lead word of the title tag. Voice preserved.
-        title={<>Shipping &amp; Delivery — <span className="text-accent">Hassle-Free, Every Time</span></>}
+        title={<>Shipping &amp; Delivery — <span className="text-accent">Charges, Zones &amp; Timelines</span></>}
         description="From our factory floor to your site. Here's exactly what to expect when you order from us."
       />
 
@@ -109,9 +109,10 @@ export default function ShippingDeliveryPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             <InfoCard icon={Truck} title="Delivery Options" index={0}>
               <ul className="space-y-3">
-                <Bullet>Standard delivery is <strong>free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</strong> (Zone 1) — genuinely free, with no hidden charges.</Bullet>
+                <Bullet>For products bought online, standard delivery is <strong>free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</strong> (Zone 1) — genuinely free, with no hidden charges.</Bullet>
                 <Bullet>For all other PIN codes, transport is charged <strong>by delivery zone</strong>. Enter your pincode at checkout and the exact transport charge is calculated and shown to you before you pay — see the zone table below.</Bullet>
                 <Bullet>Unloading (crane or hydra) and on-site installation are <strong>optional and charged separately</strong> at {formatINR(INSTALLATION.rate)} — never bundled into the transport charge.</Bullet>
+                <Bullet>Custom orders and rentals: transport is confirmed in your written quotation.</Bullet>
                 <Bullet>Need it sooner? Express delivery is not a checkout option — ask our team before you order.</Bullet>
               </ul>
             </InfoCard>
@@ -184,10 +185,7 @@ export default function ShippingDeliveryPage() {
                       <tr key={zone.id} className="border-t border-border align-top">
                         <td className="p-4 font-semibold text-foreground text-sm">{zone.name}</td>
                         <td className="p-4 text-muted-foreground text-sm leading-relaxed">
-                          {/* The free zone is described by PIN code, as checkout assigns it. */}
-                          {zone.rate === 0
-                            ? `Delivery PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}.`
-                            : zone.description}
+                          {zone.description}
                         </td>
                         <td className="p-4 text-sm font-semibold whitespace-nowrap">
                           {zone.rate === 0 ? (
@@ -198,11 +196,11 @@ export default function ShippingDeliveryPage() {
                         </td>
                         <td className="p-4 text-sm text-muted-foreground leading-relaxed">
                           <span className="font-semibold text-foreground">
-                            {estimate.min} – {estimate.max} days
+                            {estimate.min} – {estimate.max} working days
                           </span>
                           <span className="block text-xs mt-1">
                             {DISPATCH_WORKING_DAYS.min} – {DISPATCH_WORKING_DAYS.max} working days
-                            dispatch + {zone.transitDaysMin} – {zone.transitDaysMax} days transit
+                            dispatch + {zone.transitDaysMin} – {zone.transitDaysMax} working days transit
                           </span>
                         </td>
                       </tr>
@@ -316,30 +314,30 @@ export default function ShippingDeliveryPage() {
               Installation Process
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl">
-              Installation is optional and charged separately at {formatINR(INSTALLATION.rate)} ({INSTALLATION.label.toLowerCase()}). {INSTALLATION.description} You choose whether to add it at checkout, and it is never bundled into the transport charge.
+              Our trained installation crew follows a clear three-step process to get your cabin ready for use — quickly and professionally. Installation is optional and charged separately at {formatINR(INSTALLATION.rate)}; you choose whether to add it at checkout, and it is never bundled into the transport charge.
             </p>
-            {/* Steps without durations: the owner marked the old "1 – 2 days / 1 day / Same day"
-                timings unverified (2026-10-19). Wording comes from INSTALLATION (the checkout line)
-                and the Terms (the customer prepares the site for unloading and installation). */}
+            {/* Steps keep their ORIGINAL scope wording — installation scope is flagged for the owner's
+                decision (2026-10-19). Only the unverified durations ("1 – 2 days", "1 day", "Same day")
+                were removed, as on the product-page Shipping & Delivery modal. */}
             <div className="grid sm:grid-cols-3 gap-6 mb-12">
               {[
                 {
                   step: "01",
                   title: "Site Preparation",
                   time: "Completed before delivery",
-                  desc: "Make sure your site is accessible and prepared for unloading and installation.",
+                  desc: "We assess the ground, level the surface, and prepare the foundation for a stable setup.",
                 },
                 {
                   step: "02",
-                  title: "Delivery & Positioning",
+                  title: "Delivery & Assembly",
                   time: "On the scheduled date",
-                  desc: "Our team levels the base and positions the unit.",
+                  desc: "The cabin is transported, positioned using a crane or trailer, and assembled on-site.",
                 },
                 {
                   step: "03",
-                  title: "Handover",
+                  title: "Final Inspection",
                   time: "At handover",
-                  desc: "Our team completes handover of the unit.",
+                  desc: "We perform a complete quality check — electrical, plumbing, doors, windows — before handover.",
                 },
               ].map((item, i) => (
                 <motion.div

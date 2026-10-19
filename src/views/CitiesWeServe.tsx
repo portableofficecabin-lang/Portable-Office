@@ -210,7 +210,7 @@ export default function CitiesWeServe() {
                     <p className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
                       <span className="text-muted-foreground">
-                        {eta.min}–{eta.max} days incl. dispatch
+                        {eta.min}–{eta.max} working days incl. dispatch
                       </span>
                     </p>
                   </div>

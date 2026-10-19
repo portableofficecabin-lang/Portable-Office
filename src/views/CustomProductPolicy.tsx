@@ -114,7 +114,7 @@ export default function CustomProductPolicyPage() {
           <Section title="3. Manufacturing & Delivery Timeline">
             <ul className="space-y-3">
               <Bullet><strong>Dispatch:</strong> typically <strong>7–15 working days</strong> after order confirmation and advance payment.</Bullet>
-              <Bullet><strong>Transit:</strong> a further <strong>{`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days`}</strong>, depending on your delivery zone.</Bullet>
+              <Bullet><strong>Transit:</strong> a further <strong>{`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days`}</strong>, depending on your delivery zone — confirmed in your written quotation.</Bullet>
               <Bullet>Timelines start only after the order is confirmed and the advance is received — not from the date of enquiry.</Bullet>
             </ul>
             <p className="mt-3">

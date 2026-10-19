@@ -22,8 +22,8 @@ import { DELIVERY_WORKING_DAYS, DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } fr
  */
 const DOOR_TO_DOOR_LEAD_TIME =
   `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} working days — ` +
-  `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} dispatch, plus ` +
-  `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days transit by delivery zone`;
+  `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days dispatch, plus ` +
+  `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days transit by delivery zone`;
 
 export interface Product {
   id: string;

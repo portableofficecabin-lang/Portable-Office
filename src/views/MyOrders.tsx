@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { SEOHead } from "@/components/SEOHead";
-import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 import { Package, ArrowLeft, Clock, CheckCircle2, Truck, Factory, Search, ShieldCheck, XCircle } from "lucide-react";
 
 const statusConfig: Record<string, { label: string; icon: any; color: string }> = {
@@ -150,7 +149,7 @@ export default function MyOrdersPage() {
                             <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
                               {order.payment_status === "paid"
                                 ? "Paid in full, inclusive of 18% GST. Transport and any optional installation you selected are included in this total."
-                                : `Indicative starting prices, exclusive of GST. Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}; elsewhere, transport is charged by delivery zone. Installation is charged separately. Your final price is confirmed in your written quotation.`}
+                                : "Indicative starting prices, exclusive of GST. Transport and installation are charged separately; your written quotation confirms them and your final price."}
                             </p>
                           </div>
                         ) : null}

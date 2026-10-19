@@ -24,7 +24,7 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "How long does delivery take in Bangalore?",
     answer:
-      "Standard units are dispatched within 7–15 working days of order confirmation and receipt of the advance, with transit typically taking 1–5 days. Larger or custom projects take longer. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
+      "Standard units are dispatched within 7–15 working days of order confirmation and receipt of the advance, with transit typically taking 1–5 working days. Larger or custom projects take longer. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
   },
   {
     question: "Do you sell both new and used shipping containers?",
@@ -130,7 +130,7 @@ const WHY_US = [
 
 const STEPS = [
   "Share your requirement — call " + CONTACT.telDisplay + " or send an enquiry with size, use case, and site location.",
-  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and any transport outside the free delivery zone listed separately.",
+  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and transport listed separately.",
   "Production — your container is fabricated and fitted at our factory; standard units are dispatched within 7–15 working days of order confirmation and advance.",
   "Delivery and installation — we transport, place, and hand over the unit ready for use.",
 ];
@@ -298,7 +298,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 days.
+              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (

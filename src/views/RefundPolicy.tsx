@@ -125,7 +125,7 @@ export default function RefundPolicyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Prices shown on product pages are inclusive of 18% GST</strong> — the price you see is the price of the item. GST is shown separately on your tax invoice.</li>
               <li>Transport is charged separately, based on the delivery pincode. It is calculated and shown to you at checkout before payment, and is confirmed in the written quotation on the custom route.</li>
-              <li>Delivery is free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}. Other PIN codes are charged by delivery zone. Installation, where required, is an optional charge shown separately.</li>
+              <li>For online orders, delivery is free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}; other PIN codes are charged by delivery zone. Installation, where required, is an optional charge shown separately.</li>
               <li>Freight or transport charges already incurred on an order that has been dispatched or is in transit are <strong>not refundable</strong>.</li>
             </ul>
           </Section>

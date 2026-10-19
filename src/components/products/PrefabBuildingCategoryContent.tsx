@@ -68,7 +68,7 @@ export const prefabBuildingFaqs: { question: string; answer: string }[] = [
   {
     question: "How long does a prefab building take to put up?",
     answer:
-      `Fabrication runs in our Tamil Nadu factory while your site is being prepared. Dispatch is 7–15 working days from order confirmation, with ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days in transit depending on your delivery zone, and assembly on site is measured in days rather than months. The exact programme depends on the size and finish, and your written quotation states it.`,
+      `Fabrication runs in our Tamil Nadu factory while your site is being prepared. Dispatch is 7–15 working days from order confirmation, with ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit depending on your delivery zone, and assembly on site is measured in days rather than months. The exact programme depends on the size and finish, and your written quotation states it.`,
   },
   {
     question: "Can a prefab building be dismantled and moved later?",
@@ -219,7 +219,7 @@ export function PrefabBuildingCategoryContent({ products }: { products: Product[
         <p className="text-muted-foreground leading-relaxed">
           Fabrication happens at our Tamil Nadu factory while your site is prepared, so the two run
           in parallel rather than end to end. Dispatch is 7–15 working days from order confirmation
-          with {`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days`} in transit depending on your delivery zone, and assembly on site is a matter of days. You need a level, firm
+          with {`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days`} in transit depending on your delivery zone, and assembly on site is a matter of days. You need a level, firm
           surface and clear vehicle access; our team confirms site readiness before anything leaves
           the factory, and handles placement and handover on arrival.
         </p>

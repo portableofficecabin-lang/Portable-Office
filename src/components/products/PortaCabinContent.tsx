@@ -466,7 +466,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
               {[
                 { phase: "Design and approval", duration: "2–5 days" },
                 { phase: "Manufacturing", duration: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days` },
-                { phase: "Transport", duration: `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days (by delivery zone)` },
+                { phase: "Transport", duration: `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days (by delivery zone)` },
                 { phase: "Installation", duration: "Optional — added at checkout" },
               ].map((row, i) => (
                 <tr key={row.phase} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
@@ -633,7 +633,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               q: "How soon can Portable Office Cabin deliver?",
-              a: `Standard models are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days in transit depending on your delivery zone. If you need a unit sooner, ask our team before you order — express delivery is not a checkout option. Custom builds follow the timeline in your written quotation.`,
+              a: `Standard models are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit depending on your delivery zone. If you need a unit sooner, ask our team before you order — express delivery is not a checkout option. Custom builds follow the timeline in your written quotation.`,
             },
           ].map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`} className="bg-card border border-border rounded-xl px-6">
