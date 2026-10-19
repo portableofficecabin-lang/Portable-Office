@@ -7742,6 +7742,304 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABIN MANUFACTURER DEVANAHALLI AIRPORT — the portable-cabin intent for the
+   * Kempegowda International Airport belt north of Bengaluru: site offices, guard cabins, labour
+   * accommodation, toilet blocks, stores and kiosks for the NH-44 corridor, the Bagalur / Budigere
+   * warehousing belt, the KIADB Aerospace Park and the Nandi Hills farmhouses. Not a container-office
+   * cluster location, so the /cities-we-serve index lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-19 ("Portable Cabin Manufacturer in Devanahalli Airport — Page content, SEO
+   * fields and image metadata"), mapped onto the fixed template slots. The slug is the owner's URL
+   * slug; "[Company Name]", "[Phone]" and "[Email]" are Portable Office Cabin and COMPANY's numbers
+   * and sales address. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "What we build" → why: its lead-in as whyIntro, the six cabin types as bullets, the
+   *     custom-layouts line as whyOutro.
+   *   • "Why work with a manufacturer close to the airport" is split: its transport paragraph →
+   *     solutions ("Getting a Cabin to the Airport Side", three numbered H3s), its five reasons →
+   *     whyUs ("Why Work With Us"). The template renders whyUs after the uses and extras.
+   *   • "Construction details" → features: the table rows as "Component — options", the dimensions
+   *     paragraph as sizesNote. The table's "Extras" row → the custom slot beside the interior
+   *     render (two short groups), so the extras sit next to a fitted-out office.
+   *   • "Where our cabins are used" → industries (short titles added), as "Where Portable Cabins Are
+   *     Used Around the Airport" (no customer or project claims).
+   *   • The transport paragraph's places and the delivery FAQ's districts → areasText; "How ordering
+   *     works" → how (five steps); the six FAQs; "Talk to us" → CTA.
+   *   • The draft's image-metadata table (file names, EXIF/IPTC shoot date, GPS, captions) describes
+   *     five photographs that were not supplied — a security cabin at a layout gate, bunkhouses, a
+   *     factory, a crane delivery. It is not used: the alt text describes the renders actually
+   *     dropped, and no date, GPS or "original photo" metadata is claimed for them.
+   * Location rule (see biz note on locationStripText in src/lib/site-navigation.ts): manufacturing
+   * happens only at the factory near Hosur, Tamil Nadu. The draft's "our manufacturing happens in the
+   * Devanahalli belt", "our Devanahalli unit", "workshop in Devanahalli" and "a short drive away" are
+   * rewritten to the Hosur factory; the H1 and meta title read "Portable Cabin Manufacturer Devanahalli
+   * Airport" (owner wording of 2026-10-19), without the draft's "in", which would place a factory at
+   * the airport; the proximity argument becomes the transport section, in the
+   * owner's approved Tumkur / Kudankulam wording for transport, the base, crane and site access.
+   * Owner wording rule (the Kudankulam / Tumkur rule): no unconfirmed specification, timing, coverage
+   * or customer claims. "Ready within 7–12 working days", "stock models even faster", "within days
+   * rather than months", "within one working day", "same-day", "we usually respond the same day",
+   * "easily serves 10 to 15 years", "regularly build odd sizes", "handled by the same team" and
+   * "popular with contractors" are removed or reworded; specifications, extras and the base are
+   * options confirmed in the approved specification and quotation; rental is subject to
+   * availability; towns are delivery enquiry locations. No ₹ (the cost FAQ compares sizes only).
+   *
+   * Images: five owner-dropped 2048×2048 webp renders ("Portable Cabin Manufacturer in Devanahalli
+   * airport (1–5).webp") of one white ribbed-steel cabin with a sloped roof, a steel door and grilled
+   * windows, plus a furnished office interior. The exteriors are cropped to 4:3 (sky and gravel
+   * only) and the raised view to 3:2 for the feature band, all resized to ≤1600 px at webp q82:
+   * (1) three-quarter view = hero / og:image, no caption (as on Tumkur and Jigani); (4) raised view
+   * of the roof = feature band; (3) front and (2) gable-end views = two-column gallery; (5) interior
+   * = beside the extras. The interior caption and the disclaimer say they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-manufacturer-devanahalli-airport",
+    city: "Devanahalli",
+    listTitle: "Portable Cabins near Devanahalli Airport",
+    metaTitle: "Portable Cabin Manufacturer Devanahalli Airport | Portable Office Cabin",
+    metaDescription:
+      "Ready-to-install portable cabins for Devanahalli Airport sites: site offices, security cabins, bunkhouses & more. Delivery quoted per site in North Bengaluru.",
+    keywords:
+      "Portable Cabin Manufacturer in Devanahalli Airport, Portable Cabin Devanahalli, Portable Cabins near Kempegowda Airport, Prefab Cabin Devanahalli, Site Office Cabin North Bengaluru, Security Cabin Manufacturer Devanahalli, Labour Cabin Devanahalli, Portable Cabin on Rent near Devanahalli",
+    geo: { region: "IN-KA", placename: "Devanahalli, Bengaluru Rural, Karnataka, India", position: "13.2473;77.7128", icbm: "13.2473, 77.7128" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-exterior.webp",
+      alt: "Portable cabin for Devanahalli Airport sites — illustrative render of a white portable cabin with ribbed steel walls, a sloped roof, a steel door and grilled windows on the long side and end wall, standing on steel legs on a cleared plot",
+      width: 1600,
+      height: 1200,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-roof-view.webp",
+      alt: "Portable cabin for Devanahalli Airport sites — illustrative raised view of the white cabin showing its sloped roof, the steel door and grilled windows, with cement bags and pallets beside it on a cleared site",
+      width: 1536,
+      height: 1024,
+      caption: "A sloped roof lets monsoon rain run off.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-interior.webp",
+      alt: "Portable cabin for Devanahalli Airport sites — illustrative render of an optionally furnished office interior with wood-look wall panels, a white desk, three white office chairs, a low storage unit, recessed and pendant LED lights, grilled windows and wood-look flooring",
+      width: 1600,
+      height: 1600,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-front-view.webp",
+        alt: "Portable cabin for Devanahalli Airport sites — illustrative front view of the white cabin showing the steel door between a small and a large grilled window, with a third window on the end wall",
+        width: 1600,
+        height: 1200,
+      },
+      {
+        src: "/images/cities/portable-cabin-manufacturer-devanahalli-airport/portable-cabin-manufacturer-devanahalli-airport-end-view.webp",
+        alt: "Portable cabin for Devanahalli Airport sites — illustrative three-quarter view from the gable end, showing a grilled window under a small hood, a large grilled window, the steel door and a third window on the long side",
+        width: 1600,
+        height: 1200,
+      },
+    ],
+
+    h1: "Portable Cabin Manufacturer Devanahalli Airport",
+    tagline: "The stretch around Kempegowda International Airport has changed faster than almost any other part of Bengaluru.",
+    intro: [
+      "Warehouses, aerospace parks, hotels, gated layouts and logistics hubs are coming up on every side of the NH-44 corridor, and each of them needs working space before the permanent building is ready.",
+      "That is exactly the gap Portable Office Cabin fills. We manufacture portable cabins at our factory near Hosur and welcome delivery enquiries from Devanahalli and the airport zone. Each cabin arrives finished, so your team can have an office, a guard post or a rest room on site without months of masonry work; placement time and base requirements depend on the site and are confirmed in the quotation.",
+    ],
+
+    whyHeading: "What We Build",
+    whyIntro:
+      "Every cabin leaves our factory as a complete, closed structure. You do not need to arrange plastering, roofing or electrical work after it lands on your plot; the fittings included are confirmed in the approved specification and quotation.",
+    whyBullets: [
+      {
+        title: "Site office cabins",
+        text: "Single or multi-room units that can be planned with a reception area, meeting space and a small pantry. A good fit for contractors on airport-side projects who need a presentable office for client visits.",
+      },
+      {
+        title: "Security and guard cabins",
+        text: "Compact units with wide viewing windows, a counter, lighting and fan points. Sizes range from 4×4 ft for a single guard to larger gatehouse models for layouts and industrial parks.",
+      },
+      {
+        title: "Labour accommodation and bunkhouses",
+        text: "Ventilated sleeping units with bunk provisions, attached or separate washrooms, and insulated roof options that help keep the interior bearable through the Devanahalli summer.",
+      },
+      {
+        title: "Toilet and bathroom blocks",
+        text: "Portable sanitation units with Indian or Western fittings, water tank mounts and plumbing connections for hook-up on site.",
+      },
+      {
+        title: "Storage and tool cabins",
+        text: "Lockable containers for cement, hardware, survey equipment or anything else that should not sit under the open sky.",
+      },
+      {
+        title: "Canteen, pantry and kiosk units",
+        text: "Serving counters, food stalls and ticket booths for events, farmhouses and roadside commercial plots.",
+      },
+    ],
+    whyOutro:
+      "We also take up custom layouts. If you have a floor plan in mind, send it across and we will tell you what is possible and what it will cost.",
+
+    solutionsHeading: "Getting a Cabin to the Airport Side",
+    solutionsIntro:
+      "Transport is the hidden cost in portable cabins. A finished cabin travels on a trailer and is lifted into place by crane, so the route, the handling and the site itself all show up in the price. Our factory is near Hosur, Tamil Nadu, and three things are settled for every delivery to Devanahalli and the airport zone:",
+    solutions: [
+      {
+        title: "Transport",
+        text: "The haul from our factory to your site is quoted as its own line, so the cost of the distance is clear before you order.",
+      },
+      {
+        title: "Crane, Unloading and Placement",
+        text: "The foundation or supporting base, crane, unloading and placement responsibilities are confirmed before dispatch.",
+      },
+      {
+        title: "Site Access",
+        text: "Delivery feasibility and charges are confirmed after reviewing the site and its access, including the approach road and the gate width.",
+      },
+    ],
+
+    featuresHeading: "Construction Details",
+    featuresIntro:
+      "Our standard portable cabin is built on a welded MS frame with a galvanised iron or PUF-insulated panel body. Depending on the use, you can choose from these options; the items supplied are confirmed in the approved specification and quotation:",
+    features: [
+      "Wall panels — GI sheet, PUF sandwich panel (40/50 mm), or Rockwool panel where fire resistance is required",
+      "Roof — sloped PUF or Rockwool panel with gutter and downpipe",
+      "Flooring — cement board with vinyl, chequered MS plate, or plywood with laminate",
+      "Doors and windows — MS, aluminium or UPVC, with glass or louvre options",
+      "Electrical — concealed wiring, MCB panel, LED fittings, fan and AC points",
+    ],
+    sizesNote:
+      "Dimensions are flexible. Common sizes are 10×10 ft, 10×20 ft, 20×20 ft and 20×40 ft, and other sizes can be built to fit a narrow plot or a specific gate width.",
+
+    industriesHeading: "Where Portable Cabins Are Used Around the Airport",
+    industriesIntro: "Portable cabins suit a wide range of uses in and around the Devanahalli belt, including:",
+    industries: [
+      { title: "Construction and infrastructure", text: "projects along the airport corridor." },
+      { title: "Warehousing and logistics", text: "parks in Bagalur, Budigere and Hosakote." },
+      { title: "Aerospace and electronics", text: "units in the KIADB zone." },
+      { title: "Farmhouses and estates", text: "around Nandi Hills." },
+      { title: "Solar and telecom", text: "solar installations and telecom sites." },
+      { title: "Schools and healthcare", text: "schools, hospitals and temporary clinics needing quick extra rooms." },
+      { title: "Events and shoots", text: "events, exhibitions and film shoots." },
+    ],
+
+    customHeading: "Extras You Can Add",
+    customIntro: "Depending on how the cabin will be used, these extras can be added:",
+    customBullets: [
+      {
+        title: "Inside",
+        text: "an AC provision (the wall cut-out, power point and drainage for a split or window AC), a false ceiling and a wash basin.",
+      },
+      { title: "Outside", text: "a sun shade, and a ramp or steps at the entrance." },
+    ],
+    customOutro: "The extras and finishes supplied are confirmed in the approved specification and quotation.",
+
+    whyUsHeading: "Why Work With Us",
+    whyUsIntro: "A few reasons to work with us on an airport-side project:",
+    whyUsBullets: [
+      {
+        title: "Clear timelines",
+        text: "Manufacturing and delivery timelines depend on the specification, available stock and the production schedule, and are confirmed in your quotation.",
+      },
+      {
+        title: "Built for this climate",
+        text: "Insulated sandwich panels and sloped roofs with proper drainage can be specified, because the north Bengaluru region sees both harsh sun and heavy monsoon spells.",
+      },
+      {
+        title: "Relocatable",
+        text: "Finished one project? Suitable cabins can be lifted and shifted to the next site without dismantling, subject to their structural condition and safe handling.",
+      },
+      {
+        title: "Itemised pricing",
+        text: "You get an itemised quotation, with the structure, electrical work, flooring, transport and installation listed separately, so each cost is clear before delivery.",
+      },
+      {
+        title: "After-sales support",
+        text: "Repairs, extensions and modifications can be discussed with our team, subject to technical feasibility, warranty terms and the agreed scope.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Devanahalli Airport",
+    areasText:
+      "We welcome delivery enquiries from Devanahalli town and the airport zone, Yelahanka, Chikkaballapur Road, Doddaballapur, Vijayapura, Bagalur, Budigere, Hosakote, the KIADB Aerospace Park and the Nandi Hills belt, and from across Bengaluru and nearby districts including Chikkaballapur, Kolar and Tumakuru. Don't see your site on the list? Ask anyway. We confirm delivery feasibility and charges after reviewing the site and its access.",
+
+    howHeading: "How Ordering Works",
+    howSteps: [
+      {
+        title: "Share your requirement",
+        text: "Call, WhatsApp or fill the enquiry form. Tell us the purpose, rough size and where the site is.",
+      },
+      { title: "Get a quotation", text: "We send a drawing and an itemised price for your requirement." },
+      {
+        title: "Confirm and manufacture",
+        text: "Once the advance is received, fabrication begins at our factory near Hosur. You are welcome to visit and inspect. Manufacturing and delivery timelines are confirmed in the quotation.",
+      },
+      {
+        title: "Delivery and installation",
+        text: "Our team transports the cabin, places it on your prepared base and connects the electricals. Crane, unloading and placement arrangements are confirmed before dispatch.",
+      },
+      { title: "Handover", text: "A quick walkthrough, and the cabin is yours to use." },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a portable cabin cost near Devanahalli?",
+        answer:
+          "Prices depend on size, panel type and fittings. A basic 10×10 ft GI security cabin sits at the lower end; a fully fitted 20×40 ft office with AC and washroom sits at the upper end. Ask for a quote with your exact specification for a firm number; transport, unloading and installation are listed separately in it.",
+      },
+      {
+        question: "Do I need a foundation?",
+        answer:
+          "A level, compacted surface is enough for many units. For long-term use we recommend a plinth or concrete pedestals so the frame stays off standing water. The base your cabin needs depends on its size, loads and site conditions, and is confirmed in the quotation.",
+      },
+      {
+        question: "Can the cabin be air-conditioned?",
+        answer:
+          "Yes. PUF-insulated units hold cool air well, and an AC provision (the wall cut-out, power point and drainage for a split or window AC) can be included in the specification.",
+      },
+      {
+        question: "How long do portable cabins last?",
+        answer:
+          "Service life depends on the materials, the site and upkeep. Basic care, such as repainting the frame every few years and keeping gutters clear, goes a long way, and a well-built unit can serve for many years.",
+      },
+      {
+        question: "Do you offer cabins on rent?",
+        answer:
+          "Selected models are available on monthly rental for short-term projects, subject to availability. Ask about it when you enquire.",
+      },
+      {
+        question: "Can you deliver outside Devanahalli?",
+        answer:
+          "Yes. We welcome delivery enquiries from across Bengaluru and nearby districts including Chikkaballapur, Kolar and Tumakuru. Delivery feasibility and charges are confirmed after reviewing the site.",
+      },
+    ],
+
+    ctaHeading: "Talk to Us",
+    ctaText: `If you need a portable cabin near Devanahalli Airport, send us your site location and requirement, and we will come back with a design and a clear price. Call ${COMPANY.phones[0].display} or write to ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The draft offers call, WhatsApp and the enquiry form: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two container-office secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabins on Rent", href: "/rental-service" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Devanahalli or at Kempegowda International Airport. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, panel types, fittings, extras and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and any fire-resistance performance depends on the certified panel specified. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished office interior; they are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, KIADB and its Aerospace Park, and the businesses, institutions and places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on foundations, insulation, climate and upkeep are general guidance, not engineering advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN BELAGAVI — North Karnataka: the Udyambag / Machhe / Honaga / Kakati
    * industrial areas, the NH 48 (Pune–Bengaluru) logistics corridor, the Gokak / Chikodi sugar
    * belt and the high-rainfall Khanapur taluk below the Western Ghats.
