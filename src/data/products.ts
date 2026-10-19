@@ -12,6 +12,18 @@ import labourColonyNew4 from "@/assets/products/labour-colony-new-4.webp";
 // Standard size variants. productFamilies.ts imports only TYPES from here, so there is no
 // runtime cycle — see the COMMERCE BRIDGE note in that file.
 import { getVariantById, variantAsProduct } from "@/data/productFamilies";
+import { DELIVERY_WORKING_DAYS, DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
+
+/**
+ * The "Door-to-Door Lead Time" spec value, derived from the confirmed windows in shippingZones.ts
+ * (dispatch + zone transit) so the spec table, the Delivery chip, the delivery line, the feed's
+ * handling/transit times and the JSON-LD all state the same thing. Was a hand-typed
+ * "7–21 working days", which no longer covered the rest-of-India zone.
+ */
+const DOOR_TO_DOOR_LEAD_TIME =
+  `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} working days — ` +
+  `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} dispatch, plus ` +
+  `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days transit by delivery zone`;
 
 export interface Product {
   id: string;
@@ -805,8 +817,8 @@ export const products: Product[] = [
       { label: "Expected Life", value: "15–20+ years with basic maintenance" },
       // Labelled door-to-door on purpose: the template renders a "Dispatch: Within 7–15 working
       // days" chip from DISPATCH_WORKING_DAYS, and JSON-LD handlingTime carries the same 7–15. An
-      // unqualified "Lead Time: 7–21" beside it read as a contradiction; 7–21 is dispatch + transit.
-      { label: "Door-to-Door Lead Time", value: "7–21 working days — 7–15 dispatch, plus transit to your pincode" },
+      // unqualified "Lead Time" beside it read as a contradiction; door-to-door is dispatch + transit.
+      { label: "Door-to-Door Lead Time", value: DOOR_TO_DOOR_LEAD_TIME },
     ],
     features: [
       "Built complete in the factory — frame, walls, roof, floor, wiring, doors and windows",
@@ -2108,8 +2120,8 @@ export const products: Product[] = [
       { label: "Relocatable", value: "Yes — can be lifted and moved to another prepared site" },
       // Labelled door-to-door on purpose, as on the Steel Portable Cabin: the template's
       // "Dispatch: Within 7–15 working days" chip and the JSON-LD handlingTime carry 7–15;
-      // 7–21 is dispatch plus transit, matching the commerce deliveryDays.
-      { label: "Door-to-Door Lead Time", value: "7–21 working days — 7–15 dispatch, plus transit to your pincode" },
+      // door-to-door is dispatch plus zone transit, matching the commerce deliveryDays.
+      { label: "Door-to-Door Lead Time", value: DOOR_TO_DOOR_LEAD_TIME },
       { label: "Not in the Price", value: "Transport, installation, site base, mains connection, shelves, sales counter and AC" },
     ],
     features: [

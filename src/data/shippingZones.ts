@@ -94,6 +94,26 @@ export const SHIPPING_ZONES: ShippingZone[] = [
 export const FALLBACK_ZONE_ID = "zone-4";
 
 /**
+ * The road-leg (transit) window across every zone: the shortest transitDaysMin to the longest
+ * transitDaysMax. Derived, so the product pages and the shipping modal can never state a
+ * different transit range from the per-zone times the Merchant feed and the JSON-LD carry.
+ */
+export const TRANSIT_WORKING_DAYS = {
+  min: Math.min(...SHIPPING_ZONES.map((zone) => zone.transitDaysMin)),
+  max: Math.max(...SHIPPING_ZONES.map((zone) => zone.transitDaysMax)),
+} as const;
+
+/**
+ * Door-to-door envelope, dispatch + transit: the "Delivery" window shown on product pages and
+ * in their meta descriptions. Derived from the two confirmed windows above. It replaced the
+ * hand-typed "7–21 Working Days", which no longer covered the rest-of-India zone (15 + 10).
+ */
+export const DELIVERY_WORKING_DAYS = {
+  min: DISPATCH_WORKING_DAYS.min + TRANSIT_WORKING_DAYS.min,
+  max: DISPATCH_WORKING_DAYS.max + TRANSIT_WORKING_DAYS.max,
+} as const;
+
+/**
  * Resolve a 6-digit Indian pincode to a zone. Longest matching prefix wins, so "560"
  * (Zone 1) beats "56" (Zone 2) for a Bengaluru address.
  *

@@ -29,7 +29,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { DISPATCH_WORKING_DAYS, SHIPPING_ZONES } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, SHIPPING_ZONES, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
@@ -51,9 +51,25 @@ function listOr(items: readonly string[]): string {
  * described by PIN-code prefix (how checkout assigns them), never by distance.
  */
 const FREE_ZONE = SHIPPING_ZONES.find((zone) => zone.rate === 0 && zone.pincodePrefixes.length > 0);
-const TRANSIT_MIN = Math.min(...SHIPPING_ZONES.map((zone) => zone.transitDaysMin));
-const TRANSIT_MAX = Math.max(...SHIPPING_ZONES.map((zone) => zone.transitDaysMax));
 const DISPATCH = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`;
+
+/**
+ * Lines shown in EVERY mode. The modal used to promise "GPS shipment tracking provided for all
+ * orders", a "Damage-free guarantee (damaged items replaced or refunded)" and installation
+ * durations ("1–2 days", "1 day", "Same day"); the owner marked all three unverified (2026-10-19).
+ * Tracking is now an offer to give status updates; transit damage states the published process
+ * (Refund & Cancellation Policy §7 / Shipping & Delivery policy: report within 48 hours with
+ * photographs; once confirmed in transit, repair at no cost, replace the affected components or
+ * agree compensation); the installation steps keep their order but no longer promise durations.
+ */
+const SHIPMENT_UPDATES = "Ask our team for shipment status updates once your order is dispatched";
+const TRANSIT_DAMAGE =
+  "Damage in transit: tell us within 48 hours of delivery, with photographs. Once our team confirms it, we repair the unit at no cost, replace the affected components or agree compensation, as set out in our Refund & Cancellation Policy";
+const INSTALLATION_STEPS = [
+  { step: "1", title: "Site Preparation", time: "Completed before delivery" },
+  { step: "2", title: "Delivery & Setup", time: "On the scheduled date" },
+  { step: "3", title: "Final Inspection", time: "At handover" },
+];
 
 /**
  * `showWarranty` (default true) hides the Warranty tab for a product whose warranty terms the
@@ -137,14 +153,14 @@ export function ShippingDeliveryModal({
                 <AccordionContent>
                   {transportAtCheckout ? (
                     <ul className="space-y-3">
-                      <InfoItem icon={CalendarDays} text={`Dispatched within ${DISPATCH}, then ${TRANSIT_MIN}–${TRANSIT_MAX} working days in transit, depending on your delivery zone`} />
-                      <InfoItem icon={MapPin} text="GPS shipment tracking provided for all orders" />
+                      <InfoItem icon={CalendarDays} text={`Dispatched within ${DISPATCH}, then ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit, depending on your delivery zone`} />
+                      <InfoItem icon={MapPin} text={SHIPMENT_UPDATES} />
                     </ul>
                   ) : (
                     <ul className="space-y-3">
                       <InfoItem icon={CalendarDays} text="Standard delivery: 7–14 working days" />
                       <InfoItem icon={CalendarDays} text="Express delivery: 3–7 working days" />
-                      <InfoItem icon={MapPin} text="GPS shipment tracking provided for all orders" />
+                      <InfoItem icon={MapPin} text={SHIPMENT_UPDATES} />
                     </ul>
                   )}
                 </AccordionContent>
@@ -160,7 +176,7 @@ export function ShippingDeliveryModal({
                   <ul className="space-y-3">
                     <InfoItem icon={Shield} text="Secure, high-quality packaging to prevent damage" />
                     <InfoItem icon={CheckCircle2} text="Weather-protected transport" />
-                    <InfoItem icon={CheckCircle2} text="Damage-free guarantee (damaged items replaced or refunded)" />
+                    <InfoItem icon={CheckCircle2} text={TRANSIT_DAMAGE} />
                   </ul>
                 </AccordionContent>
               </AccordionItem>
@@ -224,14 +240,10 @@ export function ShippingDeliveryModal({
           <TabsContent value="installation">
             <div className="space-y-4">
               <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <Wrench className="h-4 w-4 text-accent" /> Installation Timeline
+                <Wrench className="h-4 w-4 text-accent" /> Installation Steps
               </h4>
               <div className="grid gap-3">
-                {[
-                  { step: "1", title: "Site Preparation", time: "1–2 days" },
-                  { step: "2", title: "Delivery & Setup", time: "1 day" },
-                  { step: "3", title: "Final Inspection", time: "Same day" },
-                ].map((item) => (
+                {INSTALLATION_STEPS.map((item) => (
                   <div key={item.step} className="flex items-center gap-4 bg-muted/50 rounded-lg p-4">
                     <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-sm shrink-0">
                       {item.step}

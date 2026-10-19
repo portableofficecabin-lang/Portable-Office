@@ -36,6 +36,7 @@
  *            would create duplicate offers at conflicting prices.
  */
 import { variantCommerceRows } from "@/data/productFamilies";
+import { DELIVERY_WORKING_DAYS } from "@/data/shippingZones";
 
 export type ProductKind = "product" | "custom" | "rental" | "service" | "guide" | "location";
 
@@ -155,8 +156,9 @@ export interface ProductCommerce {
 /** Everything on this site is manufactured and sold by one brand. */
 export const BRAND = "Portable Office Cabin";
 
-/** Default delivery window shown on product pages. Conservative envelope over the zone table. */
-const DELIVERY = "7–21 Working Days";
+/** Default delivery window shown on product pages: the door-to-door envelope over the zone table
+ *  (dispatch + transit), derived in shippingZones.ts so it cannot drift from the feed/JSON-LD. */
+const DELIVERY = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} Working Days`;
 
 /** Google taxonomy leaves actually used by this catalog. */
 const CAT_CONSTRUCTION = "114"; // Business & Industrial > Construction

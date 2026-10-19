@@ -25,7 +25,7 @@ import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productC
 import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
 import { ProductSizeSelector } from "@/components/products/ProductSizeSelector";
 import { generateProductGroupSchema, productGroupNodeId } from "@/lib/seo/productGroupSchema";
-import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
+import { DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 import { GST_PERCENT_LABEL, formatINR, gstAmount, sellPrice } from "@/lib/pricing/gst";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { generateProductStructuredData, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -455,12 +455,15 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
 
                 {/* Pan-India delivery + timeline. Hidden for on-site civil work: nothing is
                     dispatched or transported, and the real programme is stated further down.
-                    Hidden for a built-to-brief project too: its timeline comes with the quote. */}
+                    Hidden for a built-to-brief project too: its timeline comes with the quote.
+                    Both windows come from shippingZones.ts — the dispatch window the feed's
+                    handling time uses and the zone transit range its transit times use — so this
+                    line cannot drift from them (it used to say a hand-typed "1–5 days transit"). */}
                 {!isOnSiteService && !isBuiltToBrief && (
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Truck className="h-4 w-4 text-accent" />
                     <span className="font-medium text-foreground">Pan-India Delivery</span>
-                    <span>· Dispatch 7–15 days + 1–5 days transit</span>
+                    <span>{`· Dispatch ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} days + ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days transit`}</span>
                   </div>
                 )}
               </div>
