@@ -190,8 +190,8 @@ export const categoryServiceLinks: CategoryServiceLink[] = [
   /* Container Cafe and Restaurant (owner request, 2026-10-19). It is the existing product page (id 47,
    * filed under Portable Cabins with no category of its own, per the owner on 2026-10-17), so like Steel
    * Portable Cabin it needs an entry here to appear in either menu. Added AFTER Metal so the earlier
-   * entries keep their positions. Quote-only, so the line carries no price; the wording is the product's
-   * own shortDescription. */
+   * entries keep their positions. Quote-only, so the line carries no price; the wording is condensed from
+   * the product's shortDescription, adding nothing it doesn't say. */
   {
     parentSlug: "portable-cabins",
     name: "Container Cafe and Restaurant",
