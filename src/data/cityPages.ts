@@ -1042,7 +1042,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
-      { label: "Container Cafe & Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
       { label: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
       { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
@@ -9051,13 +9051,15 @@ export const CITY_PAGES: CityPage[] = [
    * readiness tied to the quotation scope, site readiness and installation; rainfall softened to
    * "around" CGWB long-term normals. Other facts checked: Byadgi chilli GI (application 129),
    * cold storages for colour, Haveri district formed 24 Aug 1997, the 40 ft unit (products.ts).
+   * Owner correction (2026-10-19): the district-wide black-soil statement was removed; the base
+   * advice and its FAQ now ask for a site-by-site check of ground, drainage and level instead.
    *
    * What makes it Haveri's page and not a copy of Davanagere's (67 km away): the district's rainfall
    * gradient (around 1,000 mm a year at Hangal in the west, 1,044 mm 1961–2010 normal but 963 mm in
    * CGWB's 2020 table; around 630 mm at Ranebennur in the east, 1981–2010 normal; CGWB district and
    * taluk aquifer reports), so the specification advice differs by taluk; the Byadgi
    * chilli trade (GI-tagged; market yard and cold storages that hold the chilli cold to keep its
-   * colour); black soils across Haveri taluk and low ground along the Varada and Tungabhadra; and
+   * colour); site-by-site ground and drainage checks before the base is chosen; and
    * NH-48 through the district. No company, plant or market is named as a customer.
    *
    * No ₹, lead times, warranty terms, project counts or superlatives (file-header rule; issue #107).
@@ -9150,7 +9152,7 @@ export const CITY_PAGES: CityPage[] = [
       },
     ],
     whyOutro:
-      "Plan the base before dispatch. Black soils are common across Haveri taluk and the plains of the district, and low-lying ground near the Varada and Tungabhadra rivers can hold water after heavy rain. A level, well-drained pad or pedestal supports that lift the frame clear of the ground suit most sites; the right base for a specific location depends on its ground and drainage conditions and is confirmed with the quotation.",
+      "Plan the base before dispatch. Ground conditions differ from one site to the next, even within a town, so the base is chosen for the spot where the office will stand rather than for the district as a whole. A level, well-drained concrete pad, plinth or pedestal supports that lift the frame clear of the ground suit most sites; ground that is soft, filled or prone to waterlogging may need more. Share photos of the spot when you enquire; the base for your site is confirmed in the quotation.",
 
     solutionsHeading: "Applications of Container Offices in Haveri",
     solutionsIntro: "Where container offices are typically used across Haveri district:",
@@ -9306,9 +9308,9 @@ export const CITY_PAGES: CityPage[] = [
           "If the office is needed only for the arrival and storage months, renting can reduce the initial outlay for that period, subject to unit availability. If you will use it every season or move it between your own premises, buying gives you a reusable office specified to your needs. We can quote both so you can compare.",
       },
       {
-        question: "What base does a container office need on black soil near the Varada or Tungabhadra?",
+        question: "How should I check the ground before a container office is placed in Haveri district?",
         answer:
-          "A level, well-drained base that keeps the frame clear of standing water. Black soils are common across Haveri taluk and the plains, and low-lying ground near the rivers can hold water after heavy rain, so pedestal supports or a raised pad are typical. The right base for a specific site depends on its ground and drainage conditions and is confirmed with the quotation.",
+          "Check three things at the exact spot: that the ground is firm, that it is level or can be levelled, and that rainwater drains away rather than collecting there. Low ground near a river, canal or drain needs particular care. Soft, filled or waterlogged ground may need a raised or reinforced base instead of a simple pad or pedestals. Send photos of the spot with your enquiry, and the base for your site is confirmed in the quotation.",
       },
       {
         question: "How many people can work in the 40 ft container site office shown on this page?",
