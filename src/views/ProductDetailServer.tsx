@@ -19,7 +19,13 @@ import {
   type Product,
 } from "@/data/products";
 import { getBestProductImage } from "@/data/productImages";
-import { getImageAltText, getImageCaption, getImageLabel, getProductGalleryNote } from "@/data/productImageCaptions";
+import {
+  getImageAltText,
+  getImageCaption,
+  getImageLabel,
+  getProductGalleryFit,
+  getProductGalleryNote,
+} from "@/data/productImageCaptions";
 import { getProductApplication } from "@/data/productApplications";
 import { getCommerce, hasGenuineSalePrice, isPurchasable } from "@/data/productCommerce";
 import { getFamilyBySlug, publishedVariants } from "@/data/productFamilies";
@@ -424,6 +430,7 @@ export function ProductDetailServer({ product, reviews, reviewSummary, allProduc
               inStock={product.inStock}
               purchasable={purchasable}
               note={getProductGalleryNote(slug)}
+              fit={getProductGalleryFit(slug)}
             />
 
             {/* Info */}
