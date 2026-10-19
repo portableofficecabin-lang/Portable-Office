@@ -7975,7 +7975,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Get a quotation", text: "We send a drawing and an itemised price for your requirement." },
       {
         title: "Confirm and manufacture",
-        text: "Once the advance is received, fabrication begins at our factory near Hosur. You are welcome to visit and inspect. Manufacturing and delivery timelines are confirmed in the quotation.",
+        text: "Once the advance is received, fabrication begins at our factory near Hosur. Manufacturing and delivery timelines are confirmed in the quotation.",
       },
       {
         title: "Delivery and installation",
