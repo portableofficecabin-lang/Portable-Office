@@ -29,7 +29,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
         {/* Key Benefits Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: Truck, title: "Quick Installation", desc: "Often within 1–3 days of delivery" },
+            { icon: Truck, title: "Optional Installation", desc: "On-site installation can be added at checkout" },
             { icon: Building2, title: "Reusable", desc: "Across multiple projects over many years" },
             { icon: Wrench, title: "Minimal Civil Work", desc: "No heavy foundations required at site" },
             { icon: ShieldCheck, title: "Easy Relocation", desc: "Move using crane or hydra effortlessly" },
@@ -140,7 +140,7 @@ export function PortableCabinContent({ offer }: { offer?: { productId?: string; 
           </div>
           <div className="space-y-4">
             {[
-              { label: "Speed of Deployment", value: "A standard 20 ft office cabin can be delivered and placed on a level surface in under 24–72 hours from order confirmation." },
+              { label: "Speed of Deployment", value: "A standard 20 ft office cabin bought online is dispatched within 7–15 working days of order confirmation, then delivered and placed on a level surface." },
               { label: "Portability", value: "Cabins can be lifted by crane or hydra and transported on trucks—suitable for construction sites, mining areas, highway projects, and temporary events." },
               { label: "Reusability & Long Life", value: "Quality MS or GI cabins can last 10–15 years with proper maintenance. Repainting every 3–5 years keeps them in excellent condition." },
               { label: "Minimal Site Preparation", value: "Most sites only require simple PCC blocks or ISMB support beams instead of full foundations." },

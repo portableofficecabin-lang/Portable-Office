@@ -465,7 +465,7 @@ export function SteelPortableCabinContent() {
         </p>
         <p className="text-muted-foreground leading-relaxed">
           We deliver across India. Dispatch from the factory is 7 to 15 working days depending on
-          size and customisation; door to door, allow 7 to 21 working days once transit to your
+          size and customisation; door to door, allow 8 to 25 working days once transit to your
           pincode is added. Freight is calculated from that pincode at checkout.
         </p>
       </div>

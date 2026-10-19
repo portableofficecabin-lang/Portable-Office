@@ -215,8 +215,8 @@ export function CabinPortableContent() {
 
         <h3 className="text-xl font-semibold text-foreground mb-3">Delivery timelines:</h3>
         <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Standard 20 ft cabin: 2-3 weeks from order confirmation</li>
-          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Customized conference or training room cabins: 3-4 weeks</li>
+          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Standard 20 ft cabin bought online: dispatched within 7–15 working days of order confirmation</li>
+          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Customized conference or training room cabins: timeline set out in your written quotation</li>
         </ul>
       </section>
 
@@ -432,7 +432,7 @@ export function CabinPortableContent() {
             <Zap className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-semibold text-foreground mb-2 text-sm">Speed Benefits</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
-              <li>• Factory production: 2-4 weeks</li>
+              <li>• Dispatch: within 7–15 working days of order confirmation</li>
               <li>• On-site installation: optional, added at checkout</li>
               <li>• No weather-dependent curing</li>
             </ul>
@@ -650,7 +650,7 @@ export function CabinPortableContent() {
           </ul>
         </div>
         <p className="text-muted-foreground leading-relaxed">
-          Lead times run 2-4 weeks for standard units, so early confirmation helps align manufacturing and logistics with your project milestones. Send your enquiry today to ensure your site offices, accommodation, and utility units are ready when you need them.
+          Standard units bought online are dispatched within 7–15 working days, so early confirmation helps align manufacturing and logistics with your project milestones. Send your enquiry today to ensure your site offices, accommodation, and utility units are ready when you need them.
         </p>
       </section>
     </div>

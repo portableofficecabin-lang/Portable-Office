@@ -533,7 +533,7 @@ export function ContainerOfficeGenericContent() {
             </thead>
             <tbody>
               {[
-                { config: "Standard 20 ft cabin", timeline: "2–3 weeks" },
+                { config: "Standard 20 ft cabin", timeline: "Dispatched within 7–15 working days (bought online)" },
                 { config: "Fitted 40 ft office", timeline: "3–4 weeks" },
                 { config: "Multi-container complex", timeline: "4–6 weeks" },
                 { config: "Large custom projects", timeline: "Based on scope" },

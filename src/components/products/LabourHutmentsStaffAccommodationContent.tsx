@@ -317,7 +317,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         </h2>
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div className="bg-card rounded-xl p-6 border border-border">
-            <h3 className="font-semibold text-foreground mb-3">Factory Fabrication (2–4 weeks)</h3>
+            <h3 className="font-semibold text-foreground mb-3">Factory Fabrication</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />CNC panel cutting</li>
               <li className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />Frame welding and pre-finishing</li>

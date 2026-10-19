@@ -210,7 +210,7 @@ export function OfficePortableCabinContent() {
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            "Typical delivery in 10–20 days from design approval for standard configurations",
+            "Standard configurations bought online are dispatched within 7–15 working days of order confirmation",
             "Optional on-site installation for units such as 20x10 ft office cabins, added at checkout",
             "Up to 60% lower total project cost compared to conventional construction",
             "Little to no complex foundation work for temporary deployment",
@@ -395,7 +395,7 @@ export function OfficePortableCabinContent() {
             <p><strong className="text-foreground">Consultation:</strong> Requirements, occupant count, utilities, site access, timeline, and budget are reviewed first.</p>
             <p><strong className="text-foreground">Design & pricing:</strong> Layout drawings, doors, windows, furniture planning, and quote approval are completed before production.</p>
             <p><strong className="text-foreground">Manufacturing:</strong> Cutting, welding, panel fixing, wiring, painting, and quality checks happen in the factory.</p>
-            <p><strong className="text-foreground">Delivery & installation:</strong> Trailer transport and crane placement usually make the office usable within one day for single-cabin projects.</p>
+            <p><strong className="text-foreground">Delivery & installation:</strong> Trailer transport and crane placement; on-site time depends on site readiness.</p>
           </div>
         </div>
 

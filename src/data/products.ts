@@ -303,7 +303,7 @@ export const products: Product[] = [
       { label: "Add-ons", value: "Washroom, pantry, deck/pergola, security cabin, CCTV & networking" },
     ],
     features: [
-      "Fabricated off-site and delivered finished — stock units in days, custom builds in 2–4 weeks",
+      "Fabricated off-site and delivered finished — units bought online are dispatched within 7–15 working days; custom builds follow your written quotation",
       "Insulated panels, canopy roof and split AC as standard — cool the moment buyers enter",
       "Finished like an interior: false ceiling, tiled floor, glass manager cabin, display walls",
       "Exterior painted or vinyl-wrapped in your project branding, end to end",
@@ -364,7 +364,7 @@ export const products: Product[] = [
       { label: "Flooring", value: "Tile, vinyl or laminate" },
       { label: "Windows", value: "Powder-coated aluminium with grills and mesh, placed to your plan" },
       { label: "Electrical", value: "Concealed wiring, MCB board, LED lighting, screen & display points" },
-      { label: "Assembly", value: "Single hall 3–5 working days; multi-room gallery about 7–10 days" },
+      { label: "Assembly", value: "On-site time depends on the layout (single hall or multi-room gallery) and site readiness" },
     ],
     features: [
       "Clear-span open halls — 20, 30, 40 ft across without walls forced by a module",
@@ -469,8 +469,8 @@ export const products: Product[] = [
     name: "Family Prefab Home 2BHK",
     category: "Prefab Homes",
     categorySlug: "prefab-homes",
-    description: "We started making these when clients asked for something more permanent but without the year-long construction timeline. Full 2BHK — two bedrooms, hall, kitchen, bathroom. Takes about a week to install once the foundation is ready. Good for farmhouses, resort accommodations, or when you need a home fast.",
-    shortDescription: "Complete 2BHK home, installed in about a week",
+    description: "We started making these when clients asked for something more permanent but without the year-long construction timeline. Full 2BHK — two bedrooms, hall, kitchen, bathroom. Installed on site once the foundation is ready; installation time depends on the layout and site readiness. Good for farmhouses, resort accommodations, or when you need a home fast.",
+    shortDescription: "Complete 2BHK home, factory-built and installed on site",
     specifications: [
       { label: "Total Area", value: "800 sq ft" },
       { label: "Bedrooms", value: "2" },
@@ -662,7 +662,7 @@ export const products: Product[] = [
       { label: "Windows", value: "Powder-coated aluminium or uPVC with glass" },
     ],
     features: [
-      "Deployable in 7–10 days from order confirmation",
+      "Dispatched within 7–15 working days of order confirmation",
       "20–30% more economical than traditional construction",
       "Fully relocatable across project sites",
       "Reusable across multiple project cycles",
@@ -1176,7 +1176,7 @@ export const products: Product[] = [
       { label: "Windows", value: "uPVC or aluminium sliding windows" },
       { label: "Electrical", value: "Concealed wiring, MCB box, LED lights, 5A/15A sockets, AC point" },
       { label: "Design Life", value: "10–15 years with proper maintenance" },
-      { label: "Installation", value: "Typically 8–24 hours for single cabin placement" },
+      { label: "Installation", value: "Optional — added at checkout" },
     ],
     features: [
       "40–60% lower project cost than conventional site-built office space",
@@ -1241,7 +1241,7 @@ export const products: Product[] = [
       { label: "Sizes", value: "8x10 ft to 20x40 ft (80–800 sq ft), custom sizes available" },
       { label: "Flooring", value: "18mm cement board or marine plywood with vinyl/tile finish" },
       { label: "Wind Load", value: "Designed per IS 875 (150–200 km/h for coastal areas)" },
-      { label: "Installation", value: "Hours to 2 days on simple PCC block foundation" },
+      { label: "Installation", value: "Optional — added at checkout" },
       { label: "Service Life", value: "15–25+ years with proper maintenance" },
       { label: "Relocations", value: "5–10 times without structural degradation" },
     ],
@@ -1273,7 +1273,7 @@ export const products: Product[] = [
       { label: "Worker Density", value: "6–12 workers per room with bunk beds" },
       { label: "Configurations", value: "Single-story, G+1, G+2 with staircases and corridors" },
       { label: "Capacity", value: "50–1,000+ workers per colony" },
-      { label: "Installation", value: "5–15 days for small colonies; 3–4 weeks for 200–300 workers" },
+      { label: "Installation", value: "Optional — on-site time depends on the number of units, the layout and site readiness" },
       { label: "Service Life", value: "1–3 years temporary, up to 15–20 years semi-permanent" },
       { label: "Reusability", value: "3–10 project cycles with 90–95% material recovery" },
     ],
@@ -1310,7 +1310,7 @@ export const products: Product[] = [
       { label: "Electrical", value: "Pre-wired with MCBs, LED lighting, split AC provision" },
       { label: "Wind Resistance", value: "Up to 150 km/h (container-based)" },
       { label: "Service Life", value: "10-25 years with basic maintenance" },
-      { label: "Installation Time", value: "1-2 days after delivery" },
+      { label: "Installation", value: "Optional — added at checkout" },
       { label: "Warranty", value: "As per our published warranty policy (structural cover by material)" },
     ],
     features: [
@@ -1359,7 +1359,7 @@ export const products: Product[] = [
       "Powder-coated exterior for 10–15 year rust protection",
       "Custom branding, corporate colours, and logo panels",
       "Police booth, toll booth, and container office variants",
-      "Pan-India delivery with 7–15 day lead time",
+      "Pan-India delivery; dispatched within 7–15 working days",
     ],
     images: [],
     price: 280000,
@@ -1382,7 +1382,7 @@ export const products: Product[] = [
       { label: "Insulation", value: "PUF/EPS/Gypsum modular panels" },
       { label: "Lighting", value: "LED with motion sensors, 3000K warm tone" },
       { label: "Size Range", value: "1 m² phone booth to 18+ m² executive cabin" },
-      { label: "Installation", value: "4–6 cabins in 1 weekend; 20-cabin cluster in 2–3 weeks" },
+      { label: "Installation", value: "Depends on the number of cabins and the office layout" },
       { label: "Service Life", value: "15–20+ years with proper maintenance" },
     ],
     features: [
@@ -1409,7 +1409,7 @@ export const products: Product[] = [
     name: "Steel Portable Office Container",
     category: "Site Office Containers",
     categorySlug: "site-office-containers",
-    description: "Steel portable office container built from ISMC/RHS structural steel framing with 1.2–1.6 mm MS or GI cladding. Available in 10 ft, 20 ft, 30 ft, and 40 ft lengths. Factory-fitted electricals, PUF/EPS/rock wool insulation (40–60 mm), and modular furniture. Deploys in 7–15 days with 1–2 day onsite placement. Reusable for 8–10 project cycles with 10–25 year service life.",
+    description: "Steel portable office container built from ISMC/RHS structural steel framing with 1.2–1.6 mm MS or GI cladding. Available in 10 ft, 20 ft, 30 ft, and 40 ft lengths. Factory-fitted electricals, PUF/EPS/rock wool insulation (40–60 mm), and modular furniture. Dispatched within 7–15 working days; on-site placement depends on site readiness. Reusable for 8–10 project cycles with 10–25 year service life.",
     shortDescription: "Prefabricated steel office containers — 10 ft to 40 ft with factory-fitted interiors, insulation & rapid deployment",
     specifications: [
       { label: "Frame Material", value: "ISMC / RHS structural steel" },
@@ -1818,7 +1818,7 @@ export const products: Product[] = [
     category: "G+1 Workmen Accommodation",
     categorySlug: "g1-workmen-accommodation",
     description: "Prefabricated workmen accommodation — labour colonies, portable camps, and modular dormitory blocks for 50–500 workers. G+1 double-storey designs with PUF insulation, sanitary blocks, kitchens, and dining halls. 20–40% cheaper than RCC, installed across India.",
-    shortDescription: "Prefab labour colonies & portable camps for 50–500 workers — G+1 modular blocks with turnkey delivery in 2–4 weeks.",
+    shortDescription: "Prefab labour colonies & portable camps for 50–500 workers — G+1 modular blocks, delivered and installed on site.",
     specifications: [
       { label: "Capacity Range", value: "50–500+ workers per colony" },
       { label: "Configuration", value: "Single-storey & G+1 double-storey modular blocks" },
@@ -1826,7 +1826,7 @@ export const products: Product[] = [
       { label: "Wall/Roof Panels", value: "PUF/EPS sandwich panels, PPGI sheets, Aerocon panels" },
       { label: "Insulation", value: "40–60 mm PUF for hot and coastal climates" },
       { label: "Wind Resistance", value: "Up to 44 m/s" },
-      { label: "Installation Time", value: "2–4 weeks for 100–300 worker camps" },
+      { label: "Installation", value: "On-site time depends on the camp size, layout and site readiness" },
       { label: "Cost Savings", value: "20–40% lower than conventional RCC construction" },
       { label: "Compliance", value: "BIS, NBC 2016, BOCW Act, EHS/ESG guidelines" },
     ],
@@ -1869,7 +1869,7 @@ export const products: Product[] = [
       // ONE fixed GST-inclusive price for the priced configuration above, and rate ranges in
       // the spec table would contradict it. Panel/build tiers live on as material options.
       { label: "Build Tiers", value: "Economy (EPS, 10–15 yr) · Standard (PUF, 15–25 yr) · Premium (PEB, 25–40+ yr)" },
-      { label: "Installation Time", value: "2–4 weeks for 100–300 worker camps" },
+      { label: "Installation", value: "On-site time depends on the camp size, layout and site readiness" },
       { label: "Cost Savings", value: "20–40% lower than conventional RCC construction" },
     ],
     features: [

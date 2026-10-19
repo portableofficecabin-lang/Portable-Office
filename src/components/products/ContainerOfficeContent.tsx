@@ -118,7 +118,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
         <h3 className="font-display text-xl font-semibold text-foreground mb-3">Against Traditional Brick Construction</h3>
         <div className="space-y-4 text-muted-foreground mb-8">
           <p>
-            Traditional offices require 6–12 months of construction time, involving RCC foundations, masonry work, plastering, multiple contractor coordination, and regulatory approvals. A container office achieves the same functional outcome in 4–8 weeks. The capital expenditure for traditional offices runs significantly higher, and once built, the structure cannot be relocated.
+            Traditional offices require 6–12 months of construction time, involving RCC foundations, masonry work, plastering, multiple contractor coordination, and regulatory approvals. A container office achieves the same functional outcome far sooner. The capital expenditure for traditional offices runs significantly higher, and once built, the structure cannot be relocated.
           </p>
           <p>
             Container offices skip the need for full RCC structures. Simple block foundations or levelled pads suffice, reducing site preparation costs and timelines. When the project ends or the lease expires, the office moves to the next location.

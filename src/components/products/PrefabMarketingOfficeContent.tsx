@@ -36,7 +36,7 @@ export const PREFAB_MARKETING_OFFICE_FAQS: { question: string; answer: string }[
   {
     question: "How long does assembly take?",
     answer:
-      "A single hall, three to five working days. A full multi-room gallery, about a week to ten days. Fabrication before that is two to four weeks depending on the specification.",
+      "On-site assembly time depends on the layout — a single hall or a full multi-room gallery — and on site readiness. Units bought online are dispatched within 7–15 working days; other specifications follow the timeline in your written quotation.",
   },
   {
     question: "Does it need a foundation?",
@@ -167,8 +167,8 @@ export function PrefabMarketingOfficeContent() {
             bolting, not bricklaying.
           </p>
           <p>
-            A typical single-hall marketing office goes up in three to five working days. A larger
-            multi-room gallery, roughly a week to ten days. There&apos;s no curing time, no
+            A marketing office goes up in a fraction of the time a built one takes, whether it is a
+            single hall or a larger multi-room gallery. There&apos;s no curing time, no
             plastering, no painting crew living on your most visible corner for a season. The site
             stays clean, and the office is ready before the hoardings have finished going up along
             the road.

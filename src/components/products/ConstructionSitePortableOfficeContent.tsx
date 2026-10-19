@@ -217,7 +217,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
           <h3 className="font-display text-2xl font-bold text-foreground mb-5">Advantages over conventional site sheds</h3>
           <div className="space-y-3">
             {[
-              "10–20 working day fabrication for most standard cabins",
+              "Standard cabins bought online are dispatched within 7–15 working days",
               "Reusable across multiple projects and workfront shifts",
               "Better insulation, aesthetics, and day-long work comfort",
               "Easier compliance for safety, fire, and audit requirements",

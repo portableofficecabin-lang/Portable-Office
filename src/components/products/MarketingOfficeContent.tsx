@@ -27,7 +27,7 @@ export const MARKETING_OFFICE_FAQS: { question: string; answer: string }[] = [
   {
     question: "How fast can a marketing office be at my site?",
     answer:
-      "A stock unit with standard finish, under a week. A branded sales gallery built to your layout, usually 2 to 4 weeks. Either way, weeks — not the months a built office takes.",
+      "A stock unit bought online is dispatched within 7–15 working days. A branded sales gallery built to your layout follows the timeline in your written quotation. Either way, weeks — not the months a built office takes.",
   },
   {
     question: "Will customers know it's a container?",

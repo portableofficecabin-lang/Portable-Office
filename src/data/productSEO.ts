@@ -86,7 +86,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Container Office — INTENT: Buy single standard unit (transactional)
   "10": {
     title: "Container Office for Sale in India | Portable Office Cabin",
-    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Call or WhatsApp us.",
+    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 working-day dispatch. PAN-India shipping. Call or WhatsApp us.",
     keywords: "container office for sale India, buy container office, 20ft container office price, 40ft container office price, ready container office, container office delivery India",
   },
   // Porta Cabin
@@ -225,7 +225,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Security Cabin
   "26": {
     title: "Portable Security Guard Cabin | Portable Office Cabin",
-    description: "Portable security & guard cabin in MS steel with PUF insulation. Police, toll & gate booths with pan-India dispatch in 7–15 days. Price incl. GST, buy online.",
+    description: "Portable security & guard cabin in MS steel with PUF insulation. Police, toll & gate booths with pan-India dispatch in 7–15 working days. Price incl. GST, buy online.",
     keywords: "security cabin, portable security cabin, security guard cabin, watchman cabin, GI security cabin, FRP security cabin, MS security cabin, steel security cabin, portable guard cabin, gate security cabin, toll booth cabin, police booth cabin, security cabin price, security cabin manufacturer India",
   },
   // Cabins in Office
@@ -257,12 +257,12 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "32": {
     title: "Shipping Container in Chennai | Portable Office Cabin",
-    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. 7–15 day dispatch. Request a free quote.",
+    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. 7–15 working-day dispatch. Request a free quote.",
     keywords: "shipping container Chennai, container office Chennai, used shipping container Chennai, container rental Chennai, container home ECR, shipping container Ennore, container café OMR, modular container Sriperumbudur",
   },
   "33": {
     title: "Shipping Container in Narsapura | Portable Office Cabin",
-    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices & labour colonies for KIADB plots. 7–15 day dispatch.",
+    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices & labour colonies for KIADB plots. 7–15 working-day dispatch.",
     keywords: "shipping container Narsapura, container office KIADB, shipping container Narsapura Industrial Area, container storage Kolar, portable office Narsapura, container Vemgal, container Malur, modular container Hoskote",
   },
   "34": {

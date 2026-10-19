@@ -37,7 +37,7 @@ const faqs = [
   { q: "Can containers be stacked safely on-site?", a: "Yes. Shipping containers stack up to 9 high on ships using twistlocks. For building applications, properly engineered foundations and connections allow 3–6 level stacking depending on structural analysis." },
   { q: "What approvals are needed for container buildings in India?", a: "Container structures require local building permissions from the municipal corporation or panchayat. NBC Part 4 mandates 2-hour fire rating for certain occupancy types. Electrical installations must comply with IS 1642 standards." },
   { q: "How do you make containers comfortable in hot climates?", a: "Insulation is critical—100 mm PIR panels achieve U-values of 0.25 W/m²K. Additional strategies include green roofs, shading canopies, evaporative coolers (achieving 15–20°C drops), and light-coloured exterior finishes to reduce solar gain." },
-  { q: "How quickly can Portable Office Cabin deliver a container office?", a: "Standard container offices and portable cabins take 2–4 weeks from order confirmation. Complex multi-unit configurations or customized interiors may require 4–6 weeks depending on specifications." },
+  { q: "How quickly can Portable Office Cabin deliver a container office?", a: "Standard products bought online are dispatched within 7–15 working days of order confirmation. Complex multi-unit configurations or customized interiors follow the timeline in your written quotation." },
 ];
 
 export function CargoShippingContainerContent() {

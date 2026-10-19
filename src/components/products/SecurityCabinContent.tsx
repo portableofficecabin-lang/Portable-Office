@@ -45,7 +45,7 @@ const faqs = [
   },
   {
     q: "What is the delivery timeline for security cabins?",
-    a: "Standard sizes ship within 7–15 working days. Fully customised designs or bulk orders take 15–25 days. Stock configurations may ship within one week. Metro city delivery is typically faster than remote locations."
+    a: "Standard sizes ship within 7–15 working days. Fully customised designs or bulk orders follow the timeline in your written quotation. Metro city delivery is typically faster than remote locations."
   },
   {
     q: "Can security cabins be relocated?",

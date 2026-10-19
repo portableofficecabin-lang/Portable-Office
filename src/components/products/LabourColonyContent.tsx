@@ -258,7 +258,7 @@ export function LabourColonyContent() {
         <div className="grid md:grid-cols-3 gap-4">
           {[
             { step: "1", title: "Design & Approval", desc: "Requirement capture, CAD layouts, BOQ, and structural checks for wind and seismic loads" },
-            { step: "2", title: "Factory Fabrication", desc: "10–20 days manufacturing of steel structures and panels at our facility" },
+            { step: "2", title: "Factory Fabrication", desc: "Manufacturing of steel structures and panels at our facility" },
             { step: "3", title: "Logistics & Foundation", desc: "Transport coordination, on-site RCC pedestal preparation, and services planning" },
             { step: "4", title: "Structure Erection", desc: "Panel installation, staircase fitting, and corridor assembly at the project site" },
             { step: "5", title: "Services Fit-Out", desc: "Electrical, plumbing, furnishings (bunk beds, mattresses), and utility connections" },

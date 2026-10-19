@@ -328,7 +328,7 @@ export const WorkmenAccommodationContent = () => {
             { step: "1", title: "Requirement Capture", desc: "Workers count, site location, project duration, climatic zone, compliance standards" },
             { step: "2", title: "Concept Layout", desc: "CAD drawings showing dormitories, toilets, kitchen, admin areas with detailed BOQ" },
             { step: "3", title: "Design Finalisation", desc: "Structural checks for wind and seismic loads per Indian standards" },
-            { step: "4", title: "Manufacturing", desc: "10–20 days factory lead time depending on camp size" },
+            { step: "4", title: "Manufacturing", desc: "Factory lead time depends on camp size and is set out in your written quotation" },
             { step: "5", title: "Logistics & Installation", desc: "Transport to site, foundation work, structure erection, utility connections" },
             { step: "6", title: "Handover", desc: "As-built documentation, maintenance guidelines, support contacts" },
           ].map((item) => (

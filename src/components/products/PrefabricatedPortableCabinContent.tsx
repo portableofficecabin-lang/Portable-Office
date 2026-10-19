@@ -267,8 +267,8 @@ export function PrefabricatedPortableCabinContent() {
           ))}
         </ol>
         <p className="text-muted-foreground leading-relaxed mt-5">
-          Smaller standard cabins move through this faster; large or heavily customised ones take
-          the full three weeks.
+          Smaller standard cabins move through this faster; large or heavily customised ones follow
+          the timeline in your written quotation.
         </p>
       </div>
 

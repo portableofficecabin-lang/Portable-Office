@@ -21,7 +21,7 @@ export function PrefabPortaCabinContent() {
   const faqs = [
     {
       q: "How long does delivery take?",
-      a: "Standard 10x20 ft office cabins are typically ready in 2–3 weeks from order approval. Custom or larger units may require 3–4 weeks.",
+      a: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation. Custom or larger units follow the timeline in your written quotation.",
     },
     {
       q: "Can porta cabins be relocated?",
@@ -118,7 +118,7 @@ export function PrefabPortaCabinContent() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground italic">
-          Assembly relies on bolted joints rather than on-site welding. Most installations require only simple concrete plinths or PCC blocks as foundation, allowing completion in 1–2 days.
+          Assembly relies on bolted joints rather than on-site welding. Most installations require only simple concrete plinths or PCC blocks as foundation, which keeps on-site work short.
         </p>
       </section>
 

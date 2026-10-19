@@ -65,7 +65,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {[
-            { icon: Calendar, title: "Quick Installation", desc: "5-7 days after order confirmation" },
+            { icon: Calendar, title: "Dispatch Window", desc: "Dispatched within 7–15 working days of order confirmation" },
             { icon: ArrowRightLeft, title: "Easy Relocation", desc: "Minimal disassembly between project sites" },
             /* Purchasable SKU: "per sq ft pricing" is a rate-based framing that contradicts the
                fixed checkout price — the offer branch keeps the argument, drops the rate model. */
@@ -101,7 +101,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
               <tr className="bg-muted/30">
                 <td className="px-6 py-3 text-sm text-foreground">Container office</td>
                 <td className="px-6 py-3 text-sm text-muted-foreground">20-40 m²</td>
-                <td className="px-6 py-3 text-sm text-accent font-semibold">1-3 weeks</td>
+                <td className="px-6 py-3 text-sm text-accent font-semibold">Dispatched within 7–15 working days</td>
               </tr>
               <tr>
                 <td className="px-6 py-3 text-sm text-foreground">Conventional construction</td>
@@ -529,7 +529,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
           {[
             { step: "1", title: "Design Finalization", desc: "2-3 days for layout approval and specification confirmation" },
             { step: "2", title: "Fabrication & Fit-Out", desc: "7-15 working days depending on complexity and customization" },
-            { step: "3", title: "Transport & Placement", desc: "1-3 days based on location and site access" },
+            { step: "3", title: "Transport & Placement", desc: "1–10 working days in transit by delivery zone; placement depends on site access" },
           ].map((item) => (
             <div key={item.step} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center">
               <div className="w-10 h-10 rounded-full bg-accent text-white font-bold flex items-center justify-center mx-auto mb-3 text-lg">

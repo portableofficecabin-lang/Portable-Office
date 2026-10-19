@@ -8,7 +8,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 export function LaborHutmentsContent() {
   const faqs = [
-    { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp takes 10–20 days versus 60–90 days for masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
+    { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp needs far less time on site than masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
     { q: "What does the labor hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Larger colonies are sized to the brief — panel thickness, interior furnishings, sanitary provisions, and number of floors all change the build — so those are quoted separately." },
     { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition. Units are designed for 3–10 project reuses." },
     { q: "What is the service life of prefab labor hutments?", a: "Can be temporary (1–3 years) or semi-permanent (up to 15–20 years) depending on specifications, foundation type, and maintenance practices. Anti-corrosive coatings and galvanized steel ensure long-term durability." },
@@ -111,7 +111,7 @@ export function LaborHutmentsContent() {
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { title: "Fast Installation", desc: "A 100-person camp takes 10–20 days versus 60–90 days for masonry — critical for reducing project mobilization time" },
+            { title: "Fast Installation", desc: "A 100-person camp needs far less time on site than masonry — critical for reducing project mobilization time" },
             { title: "Cost Efficiency", desc: "Lower foundation needs, controlled fabrication, and reuse across 3–10 projects deliver 20–35% lifecycle savings as a cost effective solution" },
             { title: "Reusability", desc: "Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition" },
             { title: "Scalability", desc: "Add or remove blocks as workforce size changes during phased EPC contracts for highways, metro rail, or refineries" },
@@ -278,7 +278,7 @@ export function LaborHutmentsContent() {
         <div className="bg-accent/10 rounded-xl p-6 mt-6">
           <p className="text-foreground font-semibold mb-1">Typical Timelines</p>
           <p className="text-muted-foreground text-sm">
-            50–80 workers in 1–2 weeks after material reaches site; 200–300 workers in 3–4 weeks; weather and foundation prep can affect schedules.
+            On-site time depends on the number of workers housed, weather and foundation preparation; your written quotation sets out the programme for your camp.
           </p>
         </div>
       </section>

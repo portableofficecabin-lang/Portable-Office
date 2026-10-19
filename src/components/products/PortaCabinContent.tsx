@@ -35,7 +35,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
         {/* Key Benefits Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: Truck, title: "Quick Installation", desc: "1–7 days depending on size" },
+            { icon: Truck, title: "Optional Installation", desc: "Added at checkout" },
             { icon: IndianRupee, title: "Cost-Effective", desc: "30–40% cheaper than traditional" },
             { icon: Building2, title: "Reusable & Relocatable", desc: "Move across multiple project sites" },
             { icon: Leaf, title: "Eco-Friendly", desc: "70–80% less construction waste" },
@@ -173,7 +173,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             {
               icon: Zap,
               title: "Speed of Installation",
-              desc: "Typical timelines range from 1–3 days for small cabins to 7–15 days for larger blocks. A standard 20ft × 10ft site office can be delivered and installed in under a week.",
+              desc: "Installation time depends on the size of the cabin or block and on site readiness.",
             },
             {
               icon: IndianRupee,

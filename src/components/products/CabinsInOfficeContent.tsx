@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: "How long does it take to install modular office cabins?",
-    a: "4–6 single cabins can be installed over one weekend in a 5,000 ft² office. A 20-cabin cluster typically takes 2–3 weeks. Most fabrication happens off-site, minimizing disruption to ongoing operations."
+    a: "Installation time depends on the number of cabins and the office layout. Most fabrication happens off-site, minimizing disruption to ongoing operations."
   },
   {
     q: "What materials are used in modern office cabins?",
@@ -314,7 +314,7 @@ export function CabinsInOfficeContent() {
             <h4 className="font-semibold text-foreground mb-3">Timeline examples:</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><strong className="text-foreground">4–6 single cabins:</strong> Installed over one weekend in a 5,000 ft² office</li>
-              <li><strong className="text-foreground">20-cabin cluster:</strong> Completed in 2–3 weeks</li>
+              <li><strong className="text-foreground">20-cabin cluster:</strong> timeline set out in your written quotation</li>
             </ul>
             <p className="text-sm text-muted-foreground mt-4 italic">
               Example: A mid-size consulting firm in India upgraded to 12 prefabricated office cabins without shutting down operations — the team installed cabins floor-by-floor during evenings.
