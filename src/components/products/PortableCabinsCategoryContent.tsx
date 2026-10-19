@@ -120,7 +120,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "Do you deliver portable cabins outside Bangalore?",
     answer:
-      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is quoted based on distance to your site, and our team manages the crane and placement at delivery.",
+      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is charged by delivery zone — worked out from your PIN code and shown at checkout before you pay. On-site installation and positioning, including crane or hydra for standard single-unit placements, is an optional line at checkout.",
   },
   {
     question: "Are portable cabins cheaper than brick-and-mortar construction?",
