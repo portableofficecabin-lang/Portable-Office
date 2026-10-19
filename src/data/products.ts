@@ -2043,9 +2043,11 @@ export const products: Product[] = [
     // Filed under Portable Cabins on the owner's instruction (2026-10-17) — no new category.
     // The explicit `slug` pins the canonical URL to the document's /container-cafe-restaurant.
     // Every image is an AI-generated render; the gallery note (productImageCaptions.ts) says so.
+    // Display name "and", not "&" (owner, 2026-10-19), matching the title and H1 set in #152; it is
+    // what the product card, the A–Z index and the breadcrumb show. id, sku and slug are unchanged.
     id: "47",
     sku: "POC-CCR-CUSTOM",
-    name: "Container Cafe & Restaurant",
+    name: "Container Cafe and Restaurant",
     category: "Portable Cabins",
     categorySlug: "portable-cabins",
     slug: "container-cafe-restaurant",
