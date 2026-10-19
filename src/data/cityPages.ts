@@ -69,6 +69,13 @@ export interface CityPage {
   serviceJsonLd?: { serviceType: string };
 
   /**
+   * Verified editorial dates, opt-in per page. Keep these as recorded ISO dates;
+   * never derive freshness from the build, request or ISR revalidation time.
+   * The author/publisher is the business identity in COMPANY, not a made-up person.
+   */
+  publication?: { publishedOn: string; updatedOn: string };
+
+  /**
    * Hero image (also the page's og:image). Root-relative path under /public. `caption` (optional)
    * renders a visible line under it, e.g. to mark a render as a design option; unset = no caption.
    */
@@ -7798,6 +7805,8 @@ export const CITY_PAGES: CityPage[] = [
   {
     slug: "portable-cabin-manufacturer-devanahalli-airport",
     city: "Devanahalli",
+    // First published in f45bfe5 on 19 October 2026; provenance added the same day.
+    publication: { publishedOn: "2026-10-19", updatedOn: "2026-10-19" },
     listTitle: "Portable Cabins near Devanahalli Airport",
     metaTitle: "Portable Cabin Manufacturer Devanahalli Airport | Portable Office Cabin",
     metaDescription:

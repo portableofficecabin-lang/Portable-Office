@@ -27,6 +27,8 @@
  *   • "CSR-only"         = (with --dom) items absent from the server HTML but present in the
  *                          JavaScript-rendered DOM, divided by all items. Without --dom the
  *                          audit still proves the server side; it just cannot observe hydration.
+ *   • "CSR-only fold"    = the same calculation restricted to the defined fold subset.
+ *   A requested --dom check that cannot run is a failure, never a reported zero.
  *   Hydration scripts and optional UI interactivity are never counted as content.
  *
  * Exit code 1 when any page fails any check, so it can gate CI like scripts/robots-policy.test.ts.
@@ -123,6 +125,23 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   items.push({ group: "metadata", label: "og:image = hero image", test: (mk) => new RegExp(`property="og:image" content="[^"]*${p.heroImage.src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`).test(mk) });
   items.push({ group: "metadata", label: "no noindex robots meta", test: (mk) => !/name="robots" content="[^"]*noindex/i.test(mk) });
   m("metadata", "geo.region", `name="geo.region" content="${p.geo.region}"`);
+  if (p.publication) {
+    m("metadata", "organization author", `name="author" content="${COMPANY.tradingName}"`);
+    m("metadata", "recorded publication date", `name="dcterms.created" content="${p.publication.publishedOn}"`);
+    m("metadata", "recorded update date", `name="dcterms.modified" content="${p.publication.updatedOn}"`);
+    t("provenance", "visible organization byline", `By ${COMPANY.tradingName}`, true);
+    items.push({
+      group: "provenance", label: "author profile link", fold: true,
+      test: (mk) => /<a\b(?=[^>]*href="\/about-us")(?=[^>]*rel="author")[^>]*>[^<]+<\/a>/.test(mk),
+    });
+    for (const [label, date] of [["Published", p.publication.publishedOn], ["Updated", p.publication.updatedOn]]) {
+      items.push({
+        group: "provenance", label: `visible ${label.toLowerCase()} date ${date}`, fold: true,
+        test: (mk) => new RegExp(`${label}\\s*<time\\b[^>]*datetime="${date}"[^>]*>[^<]+</time>`, "i").test(mk),
+      });
+    }
+    items.push({ group: "jsonld", label: "WebPage author and dates", test: () => false });
+  }
 
   // above the fold
   t("fold", "breadcrumb: Home", "Home", true);
@@ -214,15 +233,33 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
 }
 
 /** JSON-LD is inside <script>, so it is checked on the RAW html, not the script-stripped text. */
-function checkJsonLd(html: string, p: CityPage, pageUrl: string): { faq: boolean; breadcrumb: boolean; detail: string } {
+function checkJsonLd(html: string, p: CityPage, pageUrl: string): { faq: boolean; breadcrumb: boolean; provenance: boolean; detail: string } {
   const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   let faq = false;
   let breadcrumb = false;
+  let provenance = !p.publication;
   const notes: string[] = [];
   for (const b of blocks) {
     let j: unknown;
     try { j = JSON.parse(b); } catch { notes.push("invalid JSON-LD block"); continue; }
     const node = j as { "@type"?: string; mainEntity?: { name: string; acceptedAnswer?: { text: string } }[]; itemListElement?: { name: string; item?: string }[] };
+    if (node["@type"] === "WebPage" && p.publication) {
+      const webpage = j as {
+        url?: string; name?: string; datePublished?: string; dateModified?: string;
+        author?: { "@type"?: string; name?: string; url?: string };
+        publisher?: { "@type"?: string; name?: string; url?: string };
+      };
+      provenance = webpage.url === pageUrl && webpage.name === p.h1
+        && webpage.datePublished === p.publication.publishedOn
+        && webpage.dateModified === p.publication.updatedOn
+        && webpage.author?.["@type"] === "Organization"
+        && webpage.author.name === COMPANY.tradingName
+        && webpage.author.url === `${COMPANY.url}/about-us`
+        && webpage.publisher?.["@type"] === "Organization"
+        && webpage.publisher.name === COMPANY.tradingName
+        && webpage.publisher.url === COMPANY.url;
+      if (!provenance) notes.push("WebPage author/publisher or recorded dates do not match the page");
+    }
     if (node["@type"] === "FAQPage" && Array.isArray(node.mainEntity)) {
       const names = node.mainEntity.map((q) => squash(q.name));
       const sameCount = names.length === p.faqs.length;
@@ -238,7 +275,8 @@ function checkJsonLd(html: string, p: CityPage, pageUrl: string): { faq: boolean
     }
   }
   if (!blocks.length) notes.push("no JSON-LD blocks");
-  return { faq, breadcrumb, detail: notes.join("; ") };
+  if (!provenance) notes.push("missing or mismatched WebPage provenance");
+  return { faq, breadcrumb, provenance, detail: notes.join("; ") };
 }
 
 /* ------------------------------------------------------------------ fetch helpers ------------ */
@@ -298,6 +336,7 @@ interface PageResult {
   foldFound: number;
   foldCoveragePct: number;
   csrOnlyPct: number | null;
+  csrOnlyFoldPct: number | null;
   csrOnlyItems: string[];
   metadataOk: boolean;
   jsonLdOk: boolean;
@@ -323,6 +362,8 @@ async function auditPage(p: CityPage): Promise<PageResult> {
   // splice the two structural JSON-LD results in
   items[items.length - 2].test = () => ld.faq;
   items[items.length - 1].test = () => ld.breadcrumb;
+  const provenanceItem = items.find((it) => it.group === "jsonld" && it.label === "WebPage author and dates");
+  if (provenanceItem) provenanceItem.test = () => ld.provenance;
 
   const evaluate = (mkSrc: string, txSrc: string) =>
     items.map((it) => {
@@ -360,19 +401,29 @@ async function auditPage(p: CityPage): Promise<PageResult> {
 
   // hydrated DOM (optional): essential items that exist only after JavaScript
   let csrOnlyPct: number | null = null;
+  let csrOnlyFoldPct: number | null = null;
   const csrOnlyItems: string[] = [];
   if (wantDom) {
     const dom = renderedDom(url);
     if (dom) {
       const domOk = evaluate(markupOf(dom), textOf(dom));
-      items.forEach((it, i) => { if (!serverOk[i] && domOk[i]) csrOnlyItems.push(`${it.group}: ${it.label}`); });
-      csrOnlyPct = Math.round((csrOnlyItems.length / items.length) * 10000) / 100;
+      if (domOk.every(Boolean)) {
+        items.forEach((it, i) => { if (!serverOk[i] && domOk[i]) csrOnlyItems.push(`${it.group}: ${it.label}`); });
+        csrOnlyPct = Math.round((csrOnlyItems.length / items.length) * 10000) / 100;
+        const foldCsrOnly = foldIdx.filter((i) => !serverOk[i] && domOk[i]).length;
+        csrOnlyFoldPct = Math.round((foldCsrOnly / foldIdx.length) * 10000) / 100;
+      } else {
+        missing.push("hydrated DOM: expected page content is missing; comparison is incomplete");
+      }
+    } else {
+      missing.push("hydrated DOM: requested --dom comparison could not run");
     }
   }
 
   const metadataOk = items.filter((it) => it.group === "metadata").every((it) => serverOk[items.indexOf(it)]);
   const heroOk = items.filter((it) => it.label.startsWith("hero image")).every((it) => serverOk[items.indexOf(it)]);
-  const pass = status === 200 && found === items.length && linksBroken.length === 0 && imagesBroken.length === 0 && ld.faq && ld.breadcrumb;
+  const domOk = !wantDom || (csrOnlyPct === 0 && csrOnlyFoldPct === 0);
+  const pass = status === 200 && found === items.length && linksBroken.length === 0 && imagesBroken.length === 0 && ld.faq && ld.breadcrumb && ld.provenance && domOk;
   return {
     slug: p.slug,
     url,
@@ -385,9 +436,10 @@ async function auditPage(p: CityPage): Promise<PageResult> {
     foldFound,
     foldCoveragePct: Math.round((foldFound / foldIdx.length) * 10000) / 100,
     csrOnlyPct,
+    csrOnlyFoldPct,
     csrOnlyItems,
     metadataOk,
-    jsonLdOk: ld.faq && ld.breadcrumb,
+    jsonLdOk: ld.faq && ld.breadcrumb && ld.provenance,
     heroOk,
     linksChecked: hrefs.length,
     linksBroken,
@@ -411,10 +463,11 @@ async function auditPage(p: CityPage): Promise<PageResult> {
     console.log(
       `${tag}  ${r.slug}\n` +
         `      status ${r.status} (${r.cache || "no cache header"}) | server ${r.found}/${r.items} = ${r.serverCoveragePct}% | fold ${r.foldFound}/${r.foldItems} = ${r.foldCoveragePct}%` +
-        ` | CSR-only ${r.csrOnlyPct === null ? "n/a (no --dom)" : r.csrOnlyPct + "%"}\n` +
+        ` | CSR-only ${r.csrOnlyPct === null ? (wantDom ? "unavailable (DOM check failed)" : "n/a (no --dom)") : r.csrOnlyPct + "%"}\n` +
+        `      CSR-only fold ${r.csrOnlyFoldPct === null ? "n/a (no DOM measurement)" : r.csrOnlyFoldPct + "%"}\n` +
         `      metadata ${r.metadataOk ? "ok" : "FAIL"} | JSON-LD ${r.jsonLdOk ? "ok" : "FAIL " + r.jsonLdDetail} | hero ${r.heroOk ? "ok" : "FAIL"} | links ${r.linksChecked} checked, ${r.linksBroken.length} broken | images ${r.imagesChecked} checked, ${r.imagesBroken.length} broken`,
     );
-    if (r.missing.length) console.log("      missing in server HTML: " + r.missing.slice(0, 12).join(" · ") + (r.missing.length > 12 ? ` … (+${r.missing.length - 12})` : ""));
+    if (r.missing.length) console.log("      failed checks: " + r.missing.slice(0, 12).join(" · ") + (r.missing.length > 12 ? ` … (+${r.missing.length - 12})` : ""));
     if (r.csrOnlyItems.length) console.log("      CSR-only: " + r.csrOnlyItems.join(" · "));
     if (r.linksBroken.length) console.log("      broken links: " + r.linksBroken.join(" · "));
     if (r.imagesBroken.length) console.log("      broken images: " + r.imagesBroken.join(" · "));
