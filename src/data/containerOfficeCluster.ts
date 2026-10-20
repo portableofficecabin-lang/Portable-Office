@@ -126,7 +126,7 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Hoskote town, Old Madras Road and the Chokkahalli and Pillagumpe industrial areas",
     hubAnchor: "Hoskote and Old Madras Road container offices",
     nearbyLabel: "Hoskote and Old Madras Road",
-    neighbours: ["container-office-in-sarjapur", "container-office-in-bommasandra", "container-office-in-doddaballapura"],
+    neighbours: ["container-office-in-sarjapur", "container-office-in-bommasandra", "container-office-in-doddaballapura", "container-office-devanahalli-airport"], // Devanahalli ~21.7 km
     bangaloreRegion: true,
   },
   {
@@ -137,7 +137,18 @@ export const CONTAINER_OFFICE_LOCATIONS: ContainerOfficeLocation[] = [
     area: "Doddaballapura Industrial Area, Devanahalli, Yelahanka and North Bengaluru",
     hubAnchor: "Container offices for Doddaballapura and North Bengaluru",
     nearbyLabel: "Doddaballapura and North Bengaluru",
-    neighbours: ["container-office-in-hoskote", "container-office-in-tumkur", "container-office-in-pavagada"], // Pavagada ~94 km north
+    neighbours: ["container-office-in-hoskote", "container-office-in-tumkur", "container-office-in-pavagada", "container-office-devanahalli-airport"], // Pavagada ~94 km north / Devanahalli ~19.5 km
+    bangaloreRegion: true,
+  },
+  {
+    slug: "container-office-devanahalli-airport",
+    state: "Karnataka",
+    name: "Devanahalli Airport",
+    placeName: "Devanahalli",
+    area: "Devanahalli Town, KIADB Aerospace Park, Bagalur and Yelahanka",
+    hubAnchor: "Container offices near Kempegowda Airport, Devanahalli",
+    nearbyLabel: "Devanahalli and the airport belt",
+    neighbours: ["container-office-in-doddaballapura", "container-office-in-hoskote"], // ~19.5 km / ~21.7 km
     bangaloreRegion: true,
   },
   {
