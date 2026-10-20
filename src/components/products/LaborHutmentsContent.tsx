@@ -209,7 +209,7 @@ export function LaborHutmentsContent() {
             { title: "Application Types", desc: "Standalone labor rooms, full colonies with internal roads, combined office-and-accommodation blocks, remote work camps" },
             { title: "Capacity Bands", desc: "50–100 workers for small sites, 200–500 for mid-scale construction, 1,000+ for mega infrastructure development projects" },
             { title: "Integrated Solutions", desc: "Container offices for site management, portable security cabins, prefabricated canteens, and portable toilets" },
-            { title: "Example Configurations", desc: "A 250-bed G+1 labour colony for a warehouse project, or a 400-person camp for a solar park in Rajasthan" },
+            { title: "Typical Configurations", desc: "G+1 labour colonies for warehouse and logistics projects, and larger camps for remote sites such as solar parks" },
           ].map((item) => (
             <div key={item.title} className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
               <Check className="h-5 w-5 text-accent shrink-0 mt-0.5" />

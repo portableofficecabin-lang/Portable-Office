@@ -47,7 +47,7 @@ export function ContainerOfficeGenericContent() {
 
         <div className="grid sm:grid-cols-2 gap-4 mt-8">
           {[
-            "Speed of setup: Deployable in days rather than months",
+            "Speed of setup: far less time on site than conventional construction",
             "Cost-efficiency: Significantly lower capital expenditure",
             "Portability: Relocate to new sites when projects move",
             "Reduced material wastage: Factory-controlled fabrication minimizes on-site waste",
@@ -57,12 +57,6 @@ export function ContainerOfficeGenericContent() {
               <span className="text-muted-foreground">{item}</span>
             </div>
           ))}
-        </div>
-
-        <div className="bg-accent/5 border border-accent/20 rounded-xl p-6 mt-8">
-          <p className="text-muted-foreground">
-            <strong className="text-foreground">Real Project Example:</strong> We delivered a fully fitted 40 ft container office as a project site office for a metro rail contractor in Mumbai in 2023. Similarly, a real estate developer in Pune used our container offices as sales galleries, impressing clients with modern aesthetics while maintaining complete flexibility to relocate as the project phases progressed.
-          </p>
         </div>
       </section>
 
@@ -342,7 +336,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: Landmark,
               title: "Government & Public Sector",
-              desc: "Disaster relief coordination offices, command centres for large-scale operations, and temporary administrative cabins during public events, elections, or census activities. Rapid deployment within days.",
+              desc: "Disaster relief coordination offices, command centres for large-scale operations, and temporary administrative cabins during public events, elections, or census activities. Far less time on site than conventional construction.",
             },
             {
               icon: ShoppingBag,

@@ -206,7 +206,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
           {[
             {
               title: "Standard Portable Office Container",
-              desc: "Fully finished interiors with vinyl flooring, modular electrical wiring, LED lighting, and optional basic furniture. This configuration suits quick site setup where teams need functional workspace within days of project commencement.",
+              desc: "Fully finished interiors with vinyl flooring, modular electrical wiring, LED lighting, and optional basic furniture. This configuration suits quick site setup, with far less time on site than conventional construction.",
             },
             {
               title: "Site Office Container",

@@ -31,7 +31,7 @@ export const PREFAB_MARKETING_OFFICE_FAQS: { question: string; answer: string }[
   {
     question: "How is this different from your container marketing office?",
     answer:
-      "A container arrives as a finished box — but it's 8 ft wide per module and needs a crane. Prefab is assembled on site over a few days, spans any width as one hall, follows your floor plan exactly, and reaches sites a trailer can't. We build both and we'll tell you plainly which fits your launch.",
+      "A container arrives as a finished box — but it's 8 ft wide per module and needs a crane. Prefab takes far less time on site than conventional construction, spans any width as one hall, follows your floor plan exactly, and reaches sites a trailer can't. We build both and we'll tell you plainly which fits your launch.",
   },
   {
     question: "How long does assembly take?",
@@ -98,7 +98,7 @@ export function PrefabMarketingOfficeContent() {
       {/* ------------------------------------------------ the hook ------------------------- */}
       <div className="space-y-4 text-muted-foreground leading-relaxed">
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-          A Sales Gallery Built to Your Plan, Up in Days
+          A Sales Gallery Built to Your Plan, With Far Less Time on Site
         </h2>
         <p>
           Some launches fit in a container. Plenty don&apos;t. When the master plan needs a table of
@@ -109,7 +109,7 @@ export function PrefabMarketingOfficeContent() {
         <p>
           A prefab marketing office isn&apos;t a box that arrives on a trailer. It&apos;s a building
           system: insulated wall panels, a steel truss roof, doors, windows and flooring, all
-          fabricated in our workshop and assembled on your site in a matter of days. Any footprint,
+          fabricated in our workshop and assembled on your site in far less time than conventional construction. Any footprint,
           any layout, one large open hall or a warren of cabins — the plan is yours, we build to it.
         </p>
         <p>
@@ -159,7 +159,7 @@ export function PrefabMarketingOfficeContent() {
 
       {/* ------------------------------------------------ speed ---------------------------- */}
       <div className="mt-12">
-        <SectionHeading id="speed" icon={Timer}>Up in Days, Not Months</SectionHeading>
+        <SectionHeading id="speed" icon={Timer}>Far Less Time on Site</SectionHeading>
         <div className="space-y-4 text-muted-foreground leading-relaxed">
           <p>
             The panels, trusses, doors and windows are all made in our workshop while your launch

@@ -81,7 +81,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: Calendar, title: "Fast deployment", desc: "Factory-built units ready for site installation in days" },
+            { icon: Calendar, title: "Fast deployment", desc: "Factory-built units with far less time on site than conventional construction" },
             { icon: Truck, title: "Relocatable", desc: "Easy to shift between project phases and future sites" },
             { icon: ShieldCheck, title: "Engineered build", desc: "Insulated steel structures made for dust, heat, and rough handling" },
             { icon: IndianRupee, title: "Budget clarity", desc: "Predictable pricing based on size, fit-out, and transport" },

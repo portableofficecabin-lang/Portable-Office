@@ -80,7 +80,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Luxury Prefab Villa G+1 Floors
   "8": {
     title: "Luxury Prefab Villa 3BHK G+1 | Portable Office Cabin",
-    description: "Premium 3BHK prefab villa with 1500 sq ft, real wood interiors & smart home wiring. Ready in days, not months. Perfect for farmhouses & resorts in India.",
+    description: "Premium 3BHK prefab villa with 1500 sq ft, real wood interiors & smart home wiring — far less time on site than conventional construction.",
     keywords: "luxury prefab villa, 3BHK prefab home, prefab villa India, G+1 prefab house, premium modular home, farmhouse villa prefab, prefab villa price India",
   },
   // Container Office — INTENT: Buy single standard unit (transactional)
@@ -323,7 +323,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "44": {
     title: "Prefab Marketing Office — Sales Gallery Built to Plan | Portable Office Cabin",
     h1: "Prefab Marketing Office",
-    description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, assembled on site in days and relocatable to your next launch.",
+    description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, relocatable to your next launch — far less time on site than conventional construction.",
     keywords: "prefab marketing office, prefab sales gallery, prefabricated marketing office, sales gallery structure, real estate sales gallery, prefab sales office India, township launch gallery, relocatable sales gallery, prefab pavilion, project launch office",
   },
   /* Container Cafe & Restaurant (id 47) — quote-only. Keywords are the SEO setup in the owner's

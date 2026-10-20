@@ -298,7 +298,7 @@ export const productChildGroups: ProductChildGroup[] = [
           "Portable classrooms for schools and institutions: sizes per class strength, ventilation and lighting, safety points, and delivery timed to the academic term.",
         h1: "Portable Cabins for Schools & Classrooms",
         intro: [
-          "When admissions outgrow buildings, a portable classroom bridges the gap in days rather than a construction season. Schools use cabins as classrooms, staff rooms, labs, libraries and admin offices — this guide covers what a classroom cabin needs to get right.",
+          "When admissions outgrow buildings, a portable classroom bridges the gap with far less time on site than conventional construction. Schools use cabins as classrooms, staff rooms, labs, libraries and admin offices — this guide covers what a classroom cabin needs to get right.",
         ],
         sections: [
           {

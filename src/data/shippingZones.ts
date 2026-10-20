@@ -38,11 +38,13 @@ export const DISPATCH_WORKING_DAYS = { min: 7, max: 15 } as const;
 /**
  * Optional on-site installation. Charged only if the customer opts in at checkout.
  * GST-inclusive. Set to null to remove the option from checkout entirely.
+ * The description's last sentence (foundation and civil work quoted separately) was added at the
+ * owner's request on 2026-10-20; it is display text only and changes no amount.
  */
 export const INSTALLATION = {
   label: "On-site installation & positioning",
   description:
-    "Our team levels the base, positions the unit and completes handover. Crane/hydra charges at site are included for standard single-unit placements.",
+    "Our team levels the base, positions the unit and completes handover. Crane/hydra charges at site are included for standard single-unit placements. Foundation and civil work are quoted separately.",
   rate: 15000,
 } as const;
 

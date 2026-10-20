@@ -188,7 +188,7 @@ export default function PortaCabinsOnRent() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   { icon: MapPin, title: "Pan-India Coverage", desc: "Maharashtra, Gujarat, Rajasthan, MP, Karnataka, Delhi NCR and expanding regions" },
-                  { icon: Building2, title: "Infrastructure Proven", desc: "Metro projects in Navi Mumbai, industrial plants near Pune-Chakan, logistics hubs in Bhiwandi" },
+                  { icon: Building2, title: "Built for Project Sites", desc: "Suited to metro and road projects, industrial plants and logistics hubs" },
                   { icon: IndianRupee, title: "Zero Capital Investment", desc: "Fully finished, pre-tested cabins commissioned at your location" },
                   { icon: Wrench, title: "Turnkey Support", desc: "Design through removal, with short-term or long-term hire options" },
                 ].map((item, i) => (
@@ -249,7 +249,7 @@ export default function PortaCabinsOnRent() {
                 Our strongest rental presence spans Mumbai, Navi Mumbai, Thane, Pune, and across Maharashtra and Gujarat. Delivery dates for rental units are set out in your rental quotation, subject to availability.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Typical clients in this region include infrastructure contractors executing metro and elevated road projects in Navi Mumbai, industrial manufacturing plants in the Pune-Chakan corridor, logistics parks and warehouse operators in Bhiwandi, and real estate developers building residential and commercial projects in Ahmedabad and Vadodara.
+                Rental cabins suit infrastructure contractors on metro and elevated road projects, industrial manufacturing plants, logistics parks and warehouse operators, and real estate developers building residential and commercial projects.
               </p>
 
               <div className="rounded-xl overflow-hidden shadow-md border border-border mb-6">

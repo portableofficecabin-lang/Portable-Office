@@ -425,7 +425,7 @@ const benefits = [
   {
     icon: Truck,
     title: "Delivery & Setup",
-    description: "Delivery and installation by our own team. The delivery date and transport are set out in your written quotation, subject to availability"
+    description: "Delivery, installation and transport as set out in your rental quotation, subject to availability"
   },
   {
     icon: Wrench,

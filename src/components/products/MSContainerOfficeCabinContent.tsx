@@ -130,7 +130,7 @@ export function MSContainerOfficeCabinContent() {
             MS Container Office Cabin
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            When project timelines are tight and mobility matters, an MS container office cabin gives you a ready-to-use workspace that can be deployed in days rather than weeks. Businesses across India choose these mild steel office cabins for structural strength, weather resistance, and easy relocation.
+            When project timelines are tight and mobility matters, an MS container office cabin gives you a ready-to-use workspace with far less time on site than conventional construction. Businesses across India choose these mild steel office cabins for structural strength, weather resistance, and easy relocation.
           </p>
           <p className="text-muted-foreground">
             Portable Office Cabin manufactures and supplies MS container office cabins across Chennai, Mumbai, Bengaluru, Ahmedabad, and Delhi NCR. Whether you need a compact 10’x10’ site cabin or a 40’x10’ project office with meeting space, the layout can be tailored to your operational needs.

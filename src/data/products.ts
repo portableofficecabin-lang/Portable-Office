@@ -106,7 +106,7 @@ export const categories: Category[] = [
     id: "4",
     name: "Prefab Homes",
     slug: "prefab-homes",
-    description: "Full homes installed in days, not months — actually liveable",
+    description: "Full homes with far less time on site than conventional construction — actually liveable",
     icon: "home",
     productCount: 7,
   },
@@ -348,9 +348,9 @@ export const products: Product[] = [
     category: "Prefab Building",
     categorySlug: "prefab-building",
     description:
-      "A sales gallery built to your plan, up in days. A prefab marketing office isn't a box that arrives on a trailer — it's a building system: insulated wall panels, a steel truss roof, doors, windows and flooring, all fabricated in our workshop and assembled on your site in a matter of days. Any footprint, any layout, one large open hall or a warren of cabins — the plan is yours, we build to it. Clear-span width for the scale model and Saturday footfall, ceiling height a container can't give, and access by hand to sites a trailer can't reach. When the project sells out, the same panels unbolt, load onto a truck, and stand up again at your next launch.",
+      "A sales gallery built to your plan, with far less time on site than conventional construction. A prefab marketing office isn't a box that arrives on a trailer — it's a building system: insulated wall panels, a steel truss roof, doors, windows and flooring, all fabricated in our workshop and assembled on your site in far less time than conventional construction. Any footprint, any layout, one large open hall or a warren of cabins — the plan is yours, we build to it. Clear-span width for the scale model and Saturday footfall, ceiling height a container can't give, and access by hand to sites a trailer can't reach. When the project sells out, the same panels unbolt, load onto a truck, and stand up again at your next launch.",
     shortDescription:
-      "Prefab sales galleries built to your floor plan — clear-span halls, steel truss roof, insulated panels, assembled on site in days and relocatable to your next launch.",
+      "Prefab sales galleries built to your floor plan — clear-span halls, steel truss roof, insulated panels, assembled on site in far less time than conventional construction, and relocatable to your next launch.",
     specifications: [
       // Owner-supplied footprint of the as-listed ₹1,16,00,000 build (2026-08-16).
       { label: "Overall Size", value: "165 ft × 58 ft" },
@@ -687,7 +687,7 @@ export const products: Product[] = [
     name: "Luxury Prefab Villa G+1 Floors",
     category: "Prefab Homes",
     categorySlug: "prefab-homes",
-    description: "Our top-end offering — 3 bedrooms, 2 bathrooms, big living room, full kitchen. We use premium wood finishes, proper ceiling height so it doesn't feel cramped. Popular for farmhouses around Bangalore and resort projects in Coorg. Looks like a real home because it is one.",
+    description: "Our top-end offering — 3 bedrooms, 2 bathrooms, big living room, full kitchen. We use premium wood finishes, proper ceiling height so it doesn't feel cramped. Suited to farmhouses and resort projects. Looks like a real home because it is one.",
     shortDescription: "Premium 3BHK villa with high-end finishes",
     specifications: [
       // Owner-supplied overall size (2026-08-19). 60 x 25 = 1,500 sq ft, which matches the

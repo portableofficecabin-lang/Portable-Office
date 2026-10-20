@@ -18,14 +18,14 @@ type InsightContent = {
 const INSIGHTS: Record<string, InsightContent> = {
   "executive-portable-cabin-20ft": {
     pillTag: "Field-tested unit",
-    h2: "What our team has learned after building the Executive 20ft for six years",
+    h2: "What our team has learned building the Executive 20ft",
     intro:
       "This particular cabin is the one we rebuild most often inside our Hosur and Krishnagiri workshops, and a lot of the small details on it exist because a site engineer once called us about a problem. We have written this section as a plain account of how the unit is actually used in the field, not as marketing copy.",
     blocks: [
       {
         heading: "Why the 20ft footprint keeps winning over the 16ft version",
         paragraphs: [
-          "When clients ask us to compare the 16ft and the 20ft, we usually pull out a project photo from a 2024 IT build in Whitefield. The site office was running on a 16ft cabin and the project manager could not fit a printer, a meeting table for four and a tea station without it feeling crowded. They upgraded to the 20ft the next month. The extra forty inches of width plus a slightly taller 9.5ft ceiling completely changes how the unit feels indoors.",
+          "When clients ask us to compare the 16ft and the 20ft, the practical test is the furniture: a 16ft site office struggles to fit a printer, a meeting table for four and a tea station without feeling crowded. The extra forty inches of width plus a slightly taller 9.5ft ceiling completely changes how the unit feels indoors.",
           "Most of our repeat buyers — civil contractors, EPC project teams, RMC plant supervisors — settle on the 20ft because it gives them one usable workspace, one small storage zone and a discreet washroom corner if they want plumbing added later. Smaller sizes force compromises that get expensive in worker hours.",
         ],
       },
@@ -54,26 +54,23 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "Honest answers to what people actually ask us on call",
         paragraphs: [
-          "How long does this cabin last on a real site? Our oldest Executive 20ft still in service was installed at a Bengaluru metro depot in 2018 and is now on its third project — we have refurbished the floor and repainted twice. The steel base frame is engineered for 10 to 12 relocations.",
+          "How long does this cabin last on a real site? The steel base frame is engineered for 10 to 12 relocations, and the floor and paint can be refurbished between projects.",
           "Can it be locked up for the monsoon and left vacant? Yes. Close the slider windows, leave the AC off, and we recommend placing a small bowl of silica gel inside. Reopen it in October and it is ready to use.",
           "Will the unit pass a labour department inspection? The Executive 20ft, when used as a site office, meets the BOCW rest-shelter clauses for spaces below 200 sq ft. We can provide a build certificate for any site inspection.",
         ],
       },
     ],
     fieldNotes: [
-      { city: "Bengaluru", note: "Two units running at a metro extension package since 2022, no panel replacements required." },
-      { city: "Chennai (Sriperumbudur)", note: "An auto ancillary plant uses it as a quality lab — added vinyl flooring upgrade in year two." },
-      { city: "Hyderabad (Patancheru)", note: "Pharma client uses it as a documentation room with HEPA upgrade fitted on top of the standard build." },
     ],
     closing:
       "If you have a specific site condition we have not covered here, call the factory directly and ask for the technical desk. We will tell you honestly whether the Executive 20ft is the right unit or whether one of our larger 30ft or G+1 builds will save you money over the project lifetime.",
   },
 
   "labour-colony": {
-    pillTag: "From recent deployments",
-    h2: "Lessons from the last twelve large labour colonies we delivered",
+    pillTag: "From our labour-colony work",
+    h2: "What we recommend for large labour colonies",
     intro:
-      "Between January 2025 and the start of the 2026 monsoon we handed over twelve labour-colony packages ranging from 80 beds to 540 beds. The text below summarises what worked, what we changed mid-project, and what we now recommend by default. Nothing here is sourced from a brochure — it is taken straight from our handover notes.",
+      "The text below sets out what we now recommend by default for large labour colonies, and what we quote separately so the budget stays honest.",
     blocks: [
       {
         heading: "Bed-block layouts that survive a real headcount",
@@ -86,7 +83,7 @@ const INSIGHTS: Record<string, InsightContent> = {
         heading: "The sanitation block is where projects either succeed or fail",
         paragraphs: [
           "Our current recommendation is one shower and one WC for every eight workers, with a separate hand-wash trough at the entry to the dining hall. Anything below this ratio creates queues before the morning shift, and we have measured productivity dips of 30 to 45 minutes on sites that under-sized this.",
-          "For colonies above 200 beds we now propose a small biogas digester linked to the kitchen waste line. Two of our recent clients in the cement sector reduced LPG bills by close to 35 percent within six months. It is not the cheapest add-on, but the payback is real.",
+          "For colonies above 200 beds we now propose a small biogas digester linked to the kitchen waste line, to cut LPG use. It is not the cheapest add-on.",
         ],
         checklist: [
           "1 WC + 1 shower per 8 workers — non-negotiable for camps over 100 beds",
@@ -97,7 +94,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "What we have stopped doing — and why",
         paragraphs: [
-          "We no longer ship PPGI roofing without an additional anti-condensation underlay for high-altitude camps. After a project near Munnar reported water dripping inside the dorms in February, we tore down the cause to night-time condensation on the underside of the metal roof. The fix is now standard on every colony shipped above 1,000 metres.",
+          "We no longer ship PPGI roofing without an additional anti-condensation underlay for high-altitude camps, where night-time condensation on the underside of a metal roof can drip inside the dorms. The underlay is now standard on every colony shipped above 1,000 metres.",
           "We have also stopped using untreated plywood doors for the toilet blocks. The combination of high humidity and constant water splash was warping doors inside eight months. Compact laminate doors cost about 2.4 times more per piece but last the entire project.",
         ],
       },
@@ -110,9 +107,6 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Mumbai (Bhiwandi)", note: "320-bed colony for a logistics-park client, including site grading." },
-      { city: "Ahmedabad (Sanand)", note: "180-bed unit with a covered dining hall and prayer room added on customer request." },
-      { city: "Hyderabad", note: "240-bed G+1 with rooftop solar — currently offsetting roughly 42 percent of the colony's daily electricity load." },
     ],
     closing:
       "If you are evaluating two or three quotes, send all of them to us and we will mark up — line by line — what is realistic, what is under-quoted and what you should push back on. We would rather lose a deal honestly than win one by hiding the cost of a sanitation block.",
@@ -153,9 +147,6 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Pune (Chakan)", note: "40ft container office split into a meeting room, two workstations and a small pantry." },
-      { city: "Bengaluru (Electronic City)", note: "Three 20ft units stacked as a temporary engineering office during a campus expansion." },
-      { city: "Kolkata (Howrah)", note: "20ft unit fitted as a weighbridge cabin with reinforced flooring and a sealed cable trench." },
     ],
     closing:
       "Send us any quote you have received from another supplier. We will return it with notes on what is realistic, what is missing and where you can save without losing build quality. No obligation to buy from us.",
@@ -203,9 +194,6 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Coorg", note: "Family home with cedar cladding and a wood-burning stove, installed on a sloped plot." },
-      { city: "Tirupati", note: "2BHK + study built as a retirement home for an NRI client, full handover including registration support." },
-      { city: "Pondicherry", note: "Beach-facing 2BHK with marine-grade anti-corrosion treatment on every steel surface." },
     ],
     closing:
       "If you are weighing a prefab home against a conventional construction, ask us for a side-by-side cost and timeline sheet for your specific plot. We will be honest about cases where a traditional build is genuinely the better answer.",
@@ -292,6 +280,9 @@ export function FreshInsightSection({ slug }: { slug: string }) {
         ))}
       </div>
 
+      {/* Project field notes were removed (owner, 2026-10-20: unverified project claims); only lists
+          that still have entries render. */}
+      {data.fieldNotes.length > 0 && (
       <div className="mt-12">
         <h3 className="text-xl font-semibold text-foreground mb-5 flex items-center gap-2">
           <MapPin className="h-5 w-5 text-primary" />
@@ -309,6 +300,7 @@ export function FreshInsightSection({ slug }: { slug: string }) {
           ))}
         </div>
       </div>
+      )}
 
       <div className="mt-10 rounded-xl bg-primary/5 border border-primary/20 p-6 flex items-start gap-3">
         <ShieldCheck className="h-5 w-5 text-primary mt-1 shrink-0" />

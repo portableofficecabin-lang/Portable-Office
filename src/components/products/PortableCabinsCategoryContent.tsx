@@ -141,8 +141,8 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
       <div className="space-y-4 text-muted-foreground leading-relaxed">
         <p>
           Portable cabins from Portable Office Cabin are complete, ready-to-use buildings —
-          manufactured, insulated, wired and finished in our own factory, then delivered to your
-          site in days instead of months. Whether you need a site office for a construction project,
+          manufactured, insulated, wired and finished in our own factory, then delivered ready to
+          use, with far less time on site than conventional construction. Whether you need a site office for a construction project,
           secure staff accommodation, a sales office or a{" "}
           <Link href="/products/category/security-cabins" className="text-accent hover:underline">security cabin</Link>,
           our portable cabins cost up to 60% less than conventional construction and can be

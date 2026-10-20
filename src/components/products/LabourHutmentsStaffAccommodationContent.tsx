@@ -23,20 +23,6 @@ export function LabourHutmentsStaffAccommodationContent() {
     ["500 beds", "1+ acre", "G+2 with STP"],
   ];
 
-  const caseStudies = [
-    {
-      title: "Maharashtra Metro Project (2023)",
-      desc: "250-worker G+1 labour colony, including dormitory blocks, canteen, and first-aid centre. Client reported 20% improvement in worker retention versus previous tin shed arrangements.",
-    },
-    {
-      title: "Odisha Steel Plant Expansion (2022)",
-      desc: "Mixed prefab labor hutments (180 labour beds + 12 staff units) with integrated canteen. Repeat order placed for phase 2, demonstrating the comfortable and safe stay our units provide.",
-    },
-    {
-      title: "Rajasthan Solar Park (2024)",
-      desc: "80-technician container-based temporary housing with enhanced dust seals and heat-proofing — unlimited possibilities with modular design.",
-    },
-  ];
 
   const productComparison = [
     { product: "Labour Hutments", use: "Worker dormitories", diff: "Bunk-optimised, hygiene-focused" },
@@ -408,21 +394,6 @@ export function LabourHutmentsStaffAccommodationContent() {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Case Studies */}
-      <section>
-        <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Case Examples of Labour & Staff Colonies by Portable Office Cabin
-        </h2>
-        <div className="space-y-4">
-          {caseStudies.map((cs) => (
-            <div key={cs.title} className="bg-card rounded-xl p-6 border border-border">
-              <h3 className="font-semibold text-foreground mb-2">{cs.title}</h3>
-              <p className="text-sm text-muted-foreground">{cs.desc}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Comparison with Other Products */}

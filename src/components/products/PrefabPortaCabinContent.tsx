@@ -386,7 +386,7 @@ export function PrefabPortaCabinContent() {
               ))}
             </ul>
             <p className="text-sm text-muted-foreground mt-3 italic">
-              Once drawings receive approval, manufacturing slots and delivery timelines are confirmed. Leading manufacturers complete this phase within days.
+              Once drawings receive approval, manufacturing slots and delivery timelines are confirmed.
             </p>
           </div>
 

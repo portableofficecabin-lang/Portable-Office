@@ -135,8 +135,8 @@ export function MarketingOfficeContent() {
             That&apos;s the argument for containers over civil construction, in one line: a built
             marketing office takes three to four months of masonry, plastering, wiring and finishing
             on your most visible corner. Ours is fabricated off-site while your team works on the
-            launch, and lands finished. Stock units go out in days. Fully custom builds take two to
-            four weeks.
+            launch, and lands finished. Stock units bought online are dispatched within 7–15 working days;
+            fully custom builds follow the timeline in your written quotation.
           </p>
           <p className="rounded-xl border border-accent/30 bg-accent/5 p-4 text-foreground">
             The maths is blunt. If your marketing office opens two months earlier and books even two
@@ -275,7 +275,7 @@ export function MarketingOfficeContent() {
             >
               Prefab Marketing Office
             </Link>
-            {" "}— a clear-span sales gallery built to your floor plan, assembled on site in days.
+            {" "}— a clear-span sales gallery built to your floor plan, with far less time on site than conventional construction.
           </p>
         </div>
       </div>

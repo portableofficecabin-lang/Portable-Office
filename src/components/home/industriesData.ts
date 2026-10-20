@@ -142,7 +142,7 @@ export const industries: Industry[] = [
   },
   {
     icon: Building2, name: "Real Estate & Sales Offices",
-    desc: "Glass-front marketing suites and sales galleries that open on site in days.",
+    desc: "Glass-front marketing suites and sales galleries with far less time on site than conventional construction.",
     chips: ["Sales galleries", "Marketing suites"],
     card: { image: imgRealEstate, alt: "Timber-clad glass sales gallery cabin in front of high-rise apartments" },
     gallery: [
