@@ -3013,9 +3013,9 @@ export const CITY_PAGES: CityPage[] = [
    * planters and a bistro set, plus a furnished interior with a pantry. (3) three-quarter view →
    * hero / og:image, cropped to 4:3 (sky and grass only) and resized to 1600×1200, no caption (as on
    * Tumkur and Jigani); (2) the long side with the deck → feature band, cropped to 3:2, 1536×1024;
-   * (1) the 600×448 interior, copied byte for byte → beside the toilet / pantry / add-ons. The
-   * interior caption and the disclaimer say they are illustrative renders, and the disclaimer says
-   * the deck, planting and furniture are styling.
+   * (1) the 600×448 interior, copied byte for byte → beside the toilet / pantry / add-ons, with no
+   * caption (the owner removed it, 2026-10-20). The disclaimer says they are illustrative renders and
+   * that the deck, planting and furniture are styling.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`); the
    * call / WhatsApp buttons are on by default.
@@ -3051,8 +3051,6 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Container office for Devanahalli Airport sites — illustrative render of an optionally furnished interior with wood-finish walls and ceiling, a pantry counter with a sink, hob and under-counter fridge, open shelving, a desk with a black office chair, grilled windows and a grey floor",
       width: 600,
       height: 448,
-      caption:
-        "Illustrative render, shown with optional furniture and pantry fittings. Supplied fittings and finishes follow the approved specification.",
     },
 
     h1: "Container Offices in Devanahalli, Near Kempegowda International Airport",
