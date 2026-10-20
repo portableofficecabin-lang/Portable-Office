@@ -8033,11 +8033,284 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      // The porta-cabin page for the same area (owner decision, 2026-10-20: separate pages that link
+      // to each other). Added before "Areas We Serve" so the earlier links keep their positions.
+      { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Devanahalli or at Kempegowda International Airport. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, panel types, fittings, extras and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and any fire-resistance performance depends on the certified panel specified. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished office interior; they are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, KIADB and its Aerospace Park, and the businesses, institutions and places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on foundations, insulation, climate and upkeep are general guidance, not engineering advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTA CABINS IN DEVANAHALLI — the porta-cabin intent for Devanahalli and the Kempegowda
+   * International Airport belt: site offices, guard cabins, bunkhouses, toilet units, stores, sales
+   * offices and canteens for project sites north of Bengaluru. A SEPARATE page from Portable Cabin
+   * Manufacturer Devanahalli Airport (the entry above) on the owner's decision of 2026-10-20, in line
+   * with the site's existing porta-cabin / portable-cabin split (/products/porta-cabin,
+   * /promotions/porta-cabin-in-bangalore); the two pages link to each other. Not a container-office
+   * cluster location, so the /cities-we-serve index lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-20 ("Devanahalli Airport Page — Porta Cabins"), mapped onto the fixed
+   * template slots. The owner's slug "/porta-cabin-devanahalli-airport" is used under /cities-we-serve/,
+   * where every city page lives. Nothing is dropped except the editorial checklist, the "Website:"
+   * line (redundant on-site) and the "Serving:" line (see the areas rule below):
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Why Choose Porta Cabins for Airport-Area Projects?" → why, its three scenarios as whyIntro.
+   *   • "Types of Porta Cabins We Manufacture" (seven H3s) → solutions.
+   *   • "Construction and Specifications": the table rows → features as "Component — options", the
+   *     joined-and-stacked note → sizesNote. The table's "Optional additions" row → the custom slot
+   *     beside the interior render (as on the entry above), split into inside / outside.
+   *   • "Common Cabin Sizes" → industries (size — typical use); its "custom sizes" line joins the intro,
+   *     because every list item in this template carries a bold title.
+   *   • "Planning a Cabin Near Bengaluru Airport" (three H3s) → whyUs. The template renders it before
+   *     the areas and the five steps, so it now precedes "From Enquiry to Installation".
+   *   • "Areas We Serve" (table) → areasText, its four groups kept in order, as delivery enquiry
+   *     locations under "Delivery Enquiries Around …" (owner rule of 2026-10-17: towns are geographic
+   *     context, not confirmed coverage). For the same reason the CTA drops "Serving: …".
+   *   • "From Enquiry to Installation" → how; the seven FAQs; the closing section → CTA, with COMPANY's
+   *     WhatsApp/call number and sales address for "[Phone Number]" and "[Confirmed Sales Email]".
+   *   • The rental FAQ is the answer already live on the entry above (owner's choice, 2026-10-20).
+   * Location rule (see the entry above): manufacturing happens only at the factory near Hosur, so
+   * "we manufacture cabins for businesses … in Devanahalli" names the factory. No ₹, lead times or
+   * customer claims (the copy states none; none added). solutionsIntro, customIntro, customOutro and
+   * whyUsIntro are one-line lead-ins the template requires.
+   *
+   * Images: three owner-dropped webp renders ("Porta Cabins in Devanahalli city page/porta cabin in
+   * devanahalli airport/cabin (1–3).webp") of one white ribbed-steel cabin with a terracotta base band,
+   * hooded grilled windows and a white door, plus a fitted interior. (1) three-quarter view, 2048² cropped
+   * to 4:3 (sky and sand only) and resized to 1600×1200 = hero / og:image, no caption; (2) raised view
+   * cropped to 3:2, 1536×1024 = feature band; (3) interior, 1200×896, copied unchanged = beside the
+   * optional additions. The interior caption and the disclaimer say they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "porta-cabin-devanahalli-airport",
+    city: "Devanahalli",
+    listTitle: "Porta Cabins in Devanahalli",
+    metaTitle: "Porta Cabins in Devanahalli | Portable Office Cabin",
+    metaDescription:
+      "Porta cabins for site offices, security, labour accommodation and storage in Devanahalli and near Bengaluru Airport. Custom sizes and fit-outs available.",
+    keywords:
+      "Porta Cabin Devanahalli, Porta Cabins in Devanahalli, Porta Cabin near Bengaluru Airport, Porta Cabin Devanahalli Airport, Site Office Porta Cabin Devanahalli, Security Porta Cabin Devanahalli, Labour Accommodation Porta Cabin Devanahalli, Porta Cabin North Bengaluru",
+    geo: { region: "IN-KA", placename: "Devanahalli, Bengaluru Rural, Karnataka, India", position: "13.2473;77.7128", icbm: "13.2473, 77.7128" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Porta Cabin" },
+
+    heroImage: {
+      src: "/images/cities/porta-cabin-devanahalli-airport/porta-cabin-devanahalli-airport-exterior.webp",
+      alt: "Porta cabin for Devanahalli and Bengaluru Airport-area sites — illustrative render of a white ribbed-steel cabin with a terracotta base band, two grilled windows under small hoods and a white door, on a levelled sand plot behind a stone kerb",
+      width: 1600,
+      height: 1200,
+    },
+    featureImage: {
+      src: "/images/cities/porta-cabin-devanahalli-airport/porta-cabin-devanahalli-airport-aerial-view.webp",
+      alt: "Porta cabin for Devanahalli and Bengaluru Airport-area sites — illustrative raised view of the white and terracotta cabin showing its brown ribbed roof, two hooded grilled windows and the white door on a cleared sand plot",
+      width: 1536,
+      height: 1024,
+      caption: "Relocatable cabin space for project sites across the airport belt.",
+    },
+    interiorImage: {
+      src: "/images/cities/porta-cabin-devanahalli-airport/porta-cabin-devanahalli-airport-interior.webp",
+      alt: "Porta cabin for Devanahalli and Bengaluru Airport-area sites — illustrative render of a fitted interior with a pantry counter, sink and two-plate electric hob, two tables with chairs, a single bed, a WC door, sliding grilled windows with blinds and wood-look flooring",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with optional fittings and furniture. Supplied layouts, fittings and finishes follow the approved layout and quotation.",
+    },
+
+    h1: "Porta Cabins in Devanahalli and the Bengaluru Airport Area",
+    tagline:
+      "From construction gates and warehouse sites to new residential layouts, porta cabins provide practical space while projects take shape across the airport belt.",
+    intro: [
+      "At Portable Office Cabin, we manufacture cabins at our factory near Hosur for businesses, contractors and landowners in Devanahalli and North Bengaluru. Share your requirement, preferred size and site location, and we'll help you plan a cabin suited to your work.",
+      "Delivery, placement and readiness for use depend on site access, the agreed scope and the availability of electrical, water and drainage connections.",
+    ],
+
+    whyHeading: "Why Choose Porta Cabins for Airport-Area Projects?",
+    whyIntro:
+      "A logistics project may need an office before its main building is ready. A contractor may need accommodation that can move with the project. A developer may need an on-site sales office to meet prospective buyers. Porta cabins offer:",
+    whyBullets: [
+      { title: "Faster site preparation", text: "Create usable space without waiting for a permanent building." },
+      { title: "Relocation flexibility", text: "Move the cabin to another site using suitable lifting and transport arrangements." },
+      { title: "Long-term reuse", text: "Use the same cabin across multiple projects." },
+      { title: "Less on-site construction", text: "Most fabrication and fit-out work takes place before delivery." },
+    ],
+
+    solutionsHeading: "Types of Porta Cabins We Manufacture",
+    solutionsIntro: "Each type is planned around how the cabin will be used:",
+    solutions: [
+      {
+        title: "Site Office Cabins",
+        text: "Office cabins with workstations, meeting space, partitions and optional attached toilets. Electrical fittings can include lighting, plug points and provisions for computers, printers and air conditioning.",
+      },
+      {
+        title: "Security and Guard Cabins",
+        text: "Compact cabins for construction gates, residential layouts, warehouses, farmhouses and parking areas. Window placement, counters, lighting and ventilation can be planned around the guard's duties and required visibility.",
+      },
+      {
+        title: "Labour Accommodation and Bunkhouses",
+        text: "Accommodation cabins with layouts for beds, ventilation, lighting and fans. Separate toilet and bathing units can be included in the project requirement.",
+      },
+      {
+        title: "Portable Toilet Cabins",
+        text: "Single toilet units or multi-unit blocks with specified sanitary fittings and provisions for water supply and wastewater connections.",
+      },
+      {
+        title: "Store and Tool Rooms",
+        text: "Lockable cabins for tools, electrical materials and other site supplies. Storage requirements, floor loading and ventilation should be confirmed before fabrication.",
+      },
+      {
+        title: "Sales and Marketing Offices",
+        text: "Customer-facing cabins with options such as glazed fronts, partitions, false ceilings and exterior branding for property sales and project enquiries.",
+      },
+      {
+        title: "Canteens, Clinics and Counters",
+        text: "Custom layouts for canteens, first-aid rooms, ticket counters and similar uses. Fit-outs and service connections are specified according to the intended application.",
+      },
+    ],
+
+    featuresHeading: "Construction and Specifications",
+    featuresIntro: "The final materials and fittings are confirmed in the quotation and approved layout.",
+    features: [
+      "Frame — steel sections with protective treatment and paint, as specified",
+      "Walls — insulated panel systems or metal-sheet construction with insulation",
+      "Roof — construction with insulation and suitable rainwater drainage",
+      "Floor — cement board on a steel base, with vinyl or another specified finish",
+      "Doors and windows — door and window types, sizes and positions to suit the layout",
+      "Electrical fittings — wiring, distribution board, lights, fans, sockets and AC points as required",
+    ],
+    sizesNote:
+      "Joined and stacked cabins: multi-unit layouts can be planned subject to structural design, site conditions, access and applicable approvals. Staircases and railings are included where specified.",
+
+    industriesHeading: "Common Cabin Sizes",
+    industriesIntro:
+      "These approximate sizes provide a starting point. The usable capacity depends on furniture, partitions, circulation space and fittings. Custom sizes and internal layouts are available on request.",
+    industries: [
+      { title: "6 × 6 ft to 8 × 8 ft", text: "security or guard cabin" },
+      { title: "10 × 8 ft", text: "small store room or toilet layout" },
+      { title: "20 × 10 ft", text: "compact site office" },
+      { title: "30 × 10 ft", text: "office with separate cabin and workstations" },
+      { title: "40 × 10 ft", text: "larger office, bunkhouse or canteen" },
+      { title: "Joined or stacked units", text: "multi-room offices and accommodation layouts" },
+    ],
+
+    customHeading: "Optional Additions",
+    customIntro: "Depending on how the cabin will be used, these can be added to the specification:",
+    customBullets: [
+      { title: "Inside", text: "an attached toilet, a pantry counter, partitions and a false ceiling." },
+      { title: "Outside", text: "branding, and steps or a ramp." },
+    ],
+    customOutro: "Optional additions are supplied only where they are specified in the approved layout and quotation.",
+
+    whyUsHeading: "Planning a Cabin Near Bengaluru Airport",
+    whyUsIntro: "Three things to check early for a site around the airport belt:",
+    whyUsBullets: [
+      {
+        title: "Check Delivery Access",
+        text: "Some sites around Devanahalli are reached through unpaved roads or narrow village lanes. Share access photographs and details of gates, overhead obstructions and available turning space early.",
+      },
+      {
+        title: "Confirm the Supporting Base",
+        text: "The required supports depend on cabin size, loading, soil and site conditions. Obtain the agreed support layout before preparing blocks, pedestals or foundations.",
+      },
+      {
+        title: "Review Height and Local Approval Requirements",
+        text: "For stacked cabins, tall structures or sites close to airport operations, confirm applicable airport-related height restrictions and local permissions before ordering. Requirements depend on the site location, elevation, overall height and intended use.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Devanahalli and the Airport Belt",
+    areasText:
+      "We welcome delivery enquiries from Devanahalli and surrounding parts of the airport belt and North Bengaluru: Devanahalli Town, Sadahalli, Doddajala, Chikkajala and Bettahalasur around the airport; the KIADB Aerospace Park, Hardware Park and Bagalur industrial and development areas; Vidyanagar Cross, Kogilu, Yelahanka and Rajanukunte in North Bengaluru; and nearby project locations including Budigere Cross, Vijayapura, Doddaballapur Industrial Area, Hoskote and Chikkaballapur. Share your exact site location so we can confirm delivery arrangements and transport charges.",
+
+    howHeading: "From Enquiry to Installation",
+    howSteps: [
+      {
+        title: "Share Your Requirement",
+        text: "Tell us the intended use, preferred dimensions, number of users, required fittings and delivery location.",
+      },
+      {
+        title: "Review the Site",
+        text: "We review site photographs, access details or a site visit where agreed. This helps identify ground preparation, trailer access and crane placement requirements.",
+      },
+      {
+        title: "Confirm the Layout and Quotation",
+        text: "Review the proposed drawing, materials, fittings, price and scope. Confirm changes before fabrication begins.",
+      },
+      {
+        title: "Fabrication and Site Preparation",
+        text: "We manufacture the cabin while the receiving site prepares the agreed supports, access and service connections.",
+      },
+      {
+        title: "Delivery and Placement",
+        text: "Transport, unloading, crane placement and installation responsibilities are confirmed in the quotation. Handover follows completion of the agreed work and required connections.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How soon can I get a porta cabin?",
+        answer:
+          "The delivery schedule depends on cabin size, specifications, quantity and the current fabrication schedule. We confirm the lead time in your quotation.",
+      },
+      {
+        question: "Can I move the cabin to another site later?",
+        answer:
+          "Yes. Relocation requires suitable lifting equipment, a trailer and access at both locations. Electrical, plumbing and other external connections must be disconnected before moving.",
+      },
+      {
+        question: "Do I need a concrete foundation?",
+        answer:
+          "The support arrangement depends on the cabin and site conditions. Some installations use suitable blocks or pedestals; others may require a designed foundation. Confirm the support requirements before preparing the site.",
+      },
+      {
+        question: "Can I run AC and computers inside?",
+        answer:
+          "Yes. Electrical points and wiring can be specified for the agreed equipment load. The incoming power supply, earthing and final connections must suit the installation.",
+      },
+      {
+        question: "Do you rent porta cabins or only sell them?",
+        answer:
+          "Selected models are available on monthly rental for short-term projects, subject to availability. Ask about it when you enquire.",
+      },
+      {
+        question: "How long does a porta cabin last?",
+        answer:
+          "Service life depends on materials, exposure, maintenance and handling during relocation. Regular inspections, protective painting and keeping drainage paths clear help maintain the cabin.",
+      },
+      {
+        question: "What does a porta cabin cost in Devanahalli?",
+        answer:
+          "The price depends on dimensions, construction materials, insulation, fittings and delivery requirements. Send your requirement and site location for an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Get a Quote for Your Devanahalli Project",
+    ctaText: `Need a site office, security cabin, accommodation unit or storage cabin near Bengaluru Airport? Share your required size, layout, fittings and site location with Portable Office Cabin. Call or WhatsApp ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Get a Free Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Porta Cabin", href: "/products/porta-cabin" },
+      { label: "Prefab Porta Cabin", href: "/products/prefab-porta-cabin" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Cabins on Rent", href: "/rental-service" },
+      { label: "Porta Cabin in Bangalore", href: "/promotions/porta-cabin-in-bangalore" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Portable Cabin Manufacturer Devanahalli Airport", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Devanahalli or at Kempegowda International Airport (Bengaluru Airport). Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, materials, fittings, optional additions and other specification items described on this page are options; the items supplied are confirmed in the approved layout and quotation for each order, and joined or stacked units are subject to structural design, site conditions and applicable approvals. The images on this page are illustrative renders of one Portable Office Cabin design, shown with optional fittings and furniture; they are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, KIADB and its Aerospace Park and Hardware Park, and the places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on site access, supports, height restrictions and approvals are general guidance, not engineering, legal or regulatory advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
