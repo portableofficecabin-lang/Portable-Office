@@ -545,7 +545,7 @@ export function LabourHutmentsStaffAccommodationContent() {
           Ready to Order Your Labour Hutments?
         </h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Buy the labour hutment unit on this page online with secure payment — transport and optional installation are calculated at checkout from your delivery pincode. For complete colony packages, share your project location, required bed count, and preferred timeline, and our engineering team provides preliminary layout suggestions within days of receiving inputs.
+          Buy the labour hutment unit on this page online with secure payment — transport and optional installation are calculated at checkout from your delivery pincode. For complete colony packages, share your project location, required bed count, and preferred timeline, and our engineering team provides preliminary layout suggestions once it has your inputs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <BuyNowCTA productId="22" />

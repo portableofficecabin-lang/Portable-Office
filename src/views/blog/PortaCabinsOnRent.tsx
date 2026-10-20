@@ -176,7 +176,7 @@ export default function PortaCabinsOnRent() {
             <section className="mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Porta Cabins on Rent – The Smart Choice for Temporary Space</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                When your project demands ready-to-use workspace without the wait of traditional construction, porta cabins on rent offer the ideal solution. Whether you're setting up a site office for a metro rail project in Mumbai, accommodating workers at a highway construction site in Rajasthan, or creating temporary classrooms during a school expansion in Tamilnadu, Karnataka or Andhra Pradesh, rental porta cabins deliver the space you need within days—not months.
+                When your project demands ready-to-use workspace without the wait of traditional construction, porta cabins on rent offer the ideal solution. Whether you're setting up a site office for a metro rail project in Mumbai, accommodating workers at a highway construction site in Rajasthan, or creating temporary classrooms during a school expansion in Tamilnadu, Karnataka or Andhra Pradesh, rental porta cabins deliver the space you need without the wait of a building, on the delivery date set out in your rental quotation.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Portable Office Cabin supplies modular buildings and portable cabin solutions across India for construction companies, project developers, industries, educational institutions, and event organizers. As a manufacturer and supplier (not a broker), we ensure factory-direct quality, faster delivery timelines, and competitive pricing that makes hiring cabins a practical choice for projects of any scale.
@@ -300,7 +300,7 @@ export default function PortaCabinsOnRent() {
                     <li className="flex gap-2"><CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />Quick setup: cabins arrive ready to use</li>
                     <li className="flex gap-2"><CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />Easy relocation if project phases shift</li>
                     <li className="flex gap-2"><CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />Scalability—add or remove cabins as needed</li>
-                    <li className="flex gap-2"><CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />Space available in days, not months</li>
+                    <li className="flex gap-2"><CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />Delivery date set out in your rental quotation</li>
                   </ul>
                 </div>
 

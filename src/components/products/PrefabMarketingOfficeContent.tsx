@@ -353,8 +353,7 @@ export function PrefabMarketingOfficeContent() {
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-5">
           The project, the expected footfall, and the date the campaign breaks. If you have a
-          sketch or a floor plan, send that too. You&apos;ll have a layout and a clear price inside
-          a day.
+          sketch or a floor plan, send that too. You&apos;ll have a layout and a clear price.
         </p>
         <div className="flex flex-wrap gap-3">
           <a

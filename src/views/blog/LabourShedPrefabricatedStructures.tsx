@@ -135,7 +135,7 @@ export default function LabourShedPrefabricatedStructures() {
               {[
                 "Prefabricated labour sheds are factory-made, quickly installed worker accommodations widely used on Indian construction and infrastructure projects since around 2010.",
                 "Portable Office Cabin designs and manufactures complete prefab labour colonies—including sleeping blocks, toilets, canteens, and first-aid rooms—whose installation time depends on capacity and site readiness.",
-                "Contractors benefit from 40–60% faster deployment compared to traditional brick structures, predictable per-square-foot pricing, reusability across multiple sites, and built-in compliance with basic welfare norms and IS codes.",
+                "Contractors benefit from faster deployment than traditional brick structures, predictable per-square-foot pricing, reusability across multiple sites, and built-in compliance with basic welfare norms and IS codes.",
                 "Labour sheds are constructed using durable PUF/EPS insulated panels and galvanized steel frames, engineered for Indian climates ranging from 45°C heat to heavy monsoon rains, with 8–15+ years of service life.",
                 "Portable Office Cabin serves both B2B clients and government tenders across India, offering comprehensive prefab building solutions including labour accommodation, site offices, container toilets, and complete modular building projects."
               ].map((item, i) => (

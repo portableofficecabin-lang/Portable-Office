@@ -1450,7 +1450,7 @@ export const products: Product[] = [
     slug: "shipping-container-in-kormangala",
     category: "Cargo Storage & Shipping Containers",
     categorySlug: "cargo-storage-shipping-containers",
-    shortDescription: "Buy 20 ft & 40 ft shipping containers in Koramangala, Bangalore — offices, cafés, homes, storage & labour camps with same-week local delivery.",
+    shortDescription: "Buy 20 ft & 40 ft shipping containers in Koramangala, Bangalore — offices, cafés, homes, storage & labour camps, dispatched within 7–15 working days when bought online.",
     description: "Portable Office Cabin supplies and converts new and used 20 ft and 40 ft shipping containers in Koramangala (560034), Bangalore. From container offices near Forum Mall to rooftop cafés on 5th Block, we deliver modular solutions with 50–70% cost savings over traditional construction. Our Bangalore office and our Tamil Nadu factory near Hosur ensure quicker site visits and comprehensive after-sales support across Koramangala, HSR Layout, Ejipura, and Domlur.",
     specifications: [
       { label: "Sizes Available", value: "20 ft, 40 ft standard & high cube" },
@@ -1469,7 +1469,7 @@ export const products: Product[] = [
       "Rooftop structures after RCC load checks — offices, gyms, studios",
       "Labour accommodation with bunk layouts for 8–12 per unit",
       "Security guard cabins, portable toilets, prefab canteens",
-      "Same-week delivery for standard units in Koramangala",
+      "Dispatched within 7–15 working days when bought online",
       "Available to rent or purchase with full customization",
       "AutoCAD drawings (1:50 scale) for BBMP/BDA approvals",
       "90% container reuse — minimal debris vs brick-and-mortar",

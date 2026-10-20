@@ -16,7 +16,7 @@ const onlinePrice = formatINR(sellPrice(getCommerce("29")!.basePrice));
 
 const highlights = [
   { icon: Container, title: "20 ft & 40 ft ISO stock", description: "Standard and high-cube containers available for offices, cafés, storage, and labour accommodation in Koramangala." },
-  { icon: MapPin, title: "Koramangala delivery", description: "Same-week delivery for standard units within Koramangala — 1st to 8th Block, HSR Layout, Ejipura, and Domlur." },
+  { icon: MapPin, title: "Koramangala delivery", description: "Delivery within Koramangala — 1st to 8th Block, HSR Layout, Ejipura, and Domlur; units bought online are dispatched within 7–15 working days." },
   { icon: Home, title: "Homes, cafés & rooftop", description: "Container homes, rooftop cafés, studios, and modular retail structures with PUF insulation and acoustic treatment." },
   { icon: Truck, title: "Buy online", description: "Outright purchase at one fixed GST-inclusive price with full customization and relocation freedom." },
 ];
