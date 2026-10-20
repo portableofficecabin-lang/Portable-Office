@@ -2962,6 +2962,314 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * CONTAINER OFFICES IN DEVANAHALLI, NEAR KEMPEGOWDA INTERNATIONAL AIRPORT — the container-office
+   * intent for the airport belt north of Bengaluru: the KIADB Aerospace Park, Hardware Park and IT
+   * Investment Region, the NH 44 warehouse sites, the Sadahalli / Bettahalasur / Budigere Cross
+   * plotted layouts and the Nandi Hills farms. The portable-cabin intent for the same belt is
+   * portable-cabin-manufacturer-devanahalli-airport (#157); this page links to it and is written
+   * differently, as the owner's draft asks. Cluster neighbours, by the pages' own geo and the cluster
+   * test's haversine: Doddaballapura (~19.5 km) and Hoskote (~21.7 km), both linking back.
+   *
+   * Owner copy of 2026-10-20 ("CITY PAGE CONTENT · DEVANAHALLI AIRPORT · PRODUCT: CONTAINER OFFICE"),
+   * mapped onto the fixed template slots. The slug is the owner's URL slug under /cities-we-serve/.
+   * "[Brand Name]" → Portable Office Cabin; phone and email → COMPANY. The draft's "Before you publish"
+   * list is an editorial note, not page copy. Nothing else is dropped:
+   *   • H1 as written; the tagline is the meta description's first line; the two opening paragraphs
+   *     are the intro.
+   *   • "Why container offices suit the airport belt" → why (its paragraph as whyIntro, its five
+   *     points as bullets).
+   *   • "Who uses them around Devanahalli" → solutions (five numbered H3s), as "Who Uses Container
+   *     Offices Around Devanahalli" (the Tumkur wording; no customer claims).
+   *   • "What we build into a container office" → features ("Component — options"), the joined /
+   *     stacked line as sizesNote. Its "Toilet and pantry" and "Add-ons" items → the custom slot
+   *     beside the interior render, which shows a pantry.
+   *   • "Sizes and typical layouts" table → industries (one row per size: inside size, layout, seats).
+   *   • "Made for North Bengaluru weather" → whyUs (the paragraph's three parts as bullets).
+   *   • "Areas we serve around Devanahalli" → areas, as delivery enquiries; "How it works" → how
+   *     (five steps); "A word about access" and "Approvals near the airport" → extraSections. The
+   *     template renders areas before how and weather before both, so those sections move up.
+   *   • The eight FAQs; "Do I need a foundation?" gains "for a container office", because the sibling
+   *     portable-cabin page already asks it word for word. "Get your office on site" → CTA, with the
+   *     draft's "Get a Free Quote" button.
+   * Pick-one FAQs (the draft's own note): "old or new containers" → "We offer both" (the site already
+   * offers refurbished containers or a new container-style build, on the container cafe page), with
+   * refurbished units subject to availability; "rental" → "We sell and also rent", subject to
+   * availability (/rental-service).
+   * Owner wording rule (the Kudankulam / Tumkur rule): no unconfirmed specification, timing, coverage
+   * or customer claims. "[X–Y] weeks", "[24 hours]", "placed on your site in a day", "the same
+   * afternoon" and "placement takes a few hours" are not published: dates follow the quotation, and
+   * placement time depends on the site. The work happens at the factory near Hosur, not "our yard".
+   * "The most common order", "use container offices as sales lounges", "customers run them…", "both
+   * are common requests and we handle them", "we'll share what other customers in the area have done"
+   * and "we most likely deliver there already" are reworded; "insulation isn't optional on our
+   * containers" becomes "insulation matters on every container office"; specifications, add-ons and
+   * the base are options confirmed in the approved specification and quotation; "a knock from a JCB"
+   * names no brand ("an excavator"). No ₹.
+   *
+   * Images: three owner-dropped webp renders ("Container Offices in Devanahall city page/Container
+   * cabin/cabin (1–3).webp") of one white ribbed-panel container-style cabin with a green lower band
+   * and a yellow stripe, a gabled roof, grilled windows and a steel door, styled with a timber deck,
+   * planters and a bistro set, plus a furnished interior with a pantry. (3) three-quarter view →
+   * hero / og:image, cropped to 4:3 (sky and grass only) and resized to 1600×1200, no caption (as on
+   * Tumkur and Jigani); (2) the long side with the deck → feature band, cropped to 3:2, 1536×1024;
+   * (1) the 600×448 interior, copied byte for byte → beside the toilet / pantry / add-ons. The
+   * interior caption and the disclaimer say they are illustrative renders, and the disclaimer says
+   * the deck, planting and furniture are styling.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`); the
+   * call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "container-office-devanahalli-airport",
+    city: "Devanahalli",
+    listTitle: "Container Offices near Devanahalli Airport",
+    metaTitle: "Container Offices in Devanahalli | Near Bengaluru Airport | Portable Office Cabin",
+    metaDescription:
+      "Ready-to-use container offices for Devanahalli and the airport belt: insulated, wired and fitted out at our factory, then placed on your prepared base.",
+    keywords:
+      "Container Office in Devanahalli, Container Office Devanahalli Airport, Container Office near Kempegowda Airport, Site Office Container Devanahalli, 40 ft Container Office North Bengaluru, Container Sales Office Devanahalli, Container Office for Rent Devanahalli, Refurbished Container Office Bengaluru",
+    geo: { region: "IN-KA", placename: "Devanahalli, Bengaluru Rural, Karnataka, India", position: "13.2473;77.7128", icbm: "13.2473, 77.7128" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Container Office" },
+
+    heroImage: {
+      src: "/images/cities/container-office-devanahalli-airport/container-office-devanahalli-airport-exterior.webp",
+      alt: "Container office for Devanahalli Airport sites — illustrative render of a container-style office with white ribbed walls, a green lower band under a yellow stripe, a gabled roof, grilled windows and a steel door, beside a timber deck with planters and a bistro set",
+      width: 1600,
+      height: 1200,
+    },
+    featureImage: {
+      src: "/images/cities/container-office-devanahalli-airport/container-office-devanahalli-airport-deck-view.webp",
+      alt: "Container office for Devanahalli Airport sites — illustrative view along the long side of the white and green container office, showing three grilled windows and the steel door, with a timber deck, potted plants and a small table and chairs in front",
+      width: 1536,
+      height: 1024,
+      caption: "Sandblasted, primed and painted in your colour.",
+    },
+    interiorImage: {
+      src: "/images/cities/container-office-devanahalli-airport/container-office-devanahalli-airport-interior.webp",
+      alt: "Container office for Devanahalli Airport sites — illustrative render of an optionally furnished interior with wood-finish walls and ceiling, a pantry counter with a sink, hob and under-counter fridge, open shelving, a desk with a black office chair, grilled windows and a grey floor",
+      width: 600,
+      height: 448,
+      caption:
+        "Illustrative render, shown with optional furniture and pantry fittings. Supplied fittings and finishes follow the approved specification.",
+    },
+
+    h1: "Container Offices in Devanahalli, Near Kempegowda International Airport",
+    tagline: "Ready-to-use container offices for Devanahalli and the airport belt.",
+    intro: [
+      "If you've driven past the Aerospace Park or any of the new warehouse sites off NH 44, you've seen them: steel boxes with glass doors, an AC unit on the side and a company logo painted on the front. They look like shipping containers because that's what they started as. Inside, they're proper offices with desks, lights, air conditioning and a toilet.",
+      "We build container offices for companies, contractors and developers working around Devanahalli. You tell us how many people need to sit in it and what it's for. We fit it out at our factory near Hosur, bring it to your site on a trailer and set it down on your prepared base, under the scope agreed in the quotation. Once it is levelled and connected, your team can move straight in.",
+    ],
+
+    whyHeading: "Why Container Offices Suit the Airport Belt",
+    whyIntro:
+      "The area around Kempegowda Airport is one big work-in-progress. Logistics parks, aerospace units, data centres, plotted layouts and road widening are all happening at the same time. Every one of these projects needs an office on site long before any permanent building is ready, and many of them will pack up and move in a year or two. A container office is built for exactly that:",
+    whyBullets: [
+      {
+        title: "It's tough",
+        text: "A shipping container is made to be stacked on a ship and lifted by crane. Dust, rain and the odd knock from an excavator don't bother it.",
+      },
+      {
+        title: "It's secure",
+        text: "Steel walls, a steel door and a lockable frame. Your laptops, drawings and documents are a lot safer than in a plywood shed.",
+      },
+      {
+        title: "It arrives finished",
+        text: "The flooring, wiring, lights and windows, plus the AC and toilet if you order them, are done at our factory near Hosur. On site, it only needs to be placed, levelled and connected to power and water.",
+      },
+      {
+        title: "It moves with your project",
+        text: "When this site is done, the same office goes to the next one. You don't leave anything behind.",
+      },
+      {
+        title: "It looks the part",
+        text: "With cladding, a glass front and your branding, a container office looks like a real office, not a temporary fix. Clients and visitors notice.",
+      },
+    ],
+
+    solutionsHeading: "Who Uses Container Offices Around Devanahalli",
+    solutionsIntro: "Five kinds of teams a container office suits around the airport belt:",
+    solutions: [
+      {
+        title: "Construction and infrastructure contractors",
+        text: "Project managers, engineers and site supervisors need somewhere to sit, review drawings and hold morning meetings. A 40-ft container with a cabin for the PM, open workstations and a toilet is a layout that suits many sites on the airport road.",
+      },
+      {
+        title: "Warehouse and logistics operators",
+        text: "Dispatch offices, security control rooms and driver waiting rooms at the gate. Container units can be placed right at the yard entrance and shifted if the layout changes.",
+      },
+      {
+        title: "Real estate developers",
+        text: "Plot and villa projects near Sadahalli, Bettahalasur and Budigere Cross can use a container office as a sales lounge. A glass front, false ceiling, wood-finish floor and a small pantry turn a steel box into a space you're happy to bring buyers into.",
+      },
+      {
+        title: "Factories and industrial units",
+        text: "Extra office space for a growing team, a QC room, a time office near the gate or a visitor reception, without disturbing production or waiting for a civil extension.",
+      },
+      {
+        title: "Landowners and farm businesses",
+        text: "A small office-cum-store on farmland, or a manager's room at a nursery, poultry farm or resort project near Nandi Hills.",
+      },
+    ],
+
+    featuresHeading: "What We Build Into a Container Office",
+    featuresIntro:
+      "We start with a 20-ft or 40-ft container, or a purpose-built steel module of the same shape, and fit it out from the inside out. You can choose from these options; the items supplied are confirmed in the approved specification and quotation:",
+    features: [
+      "Structure — marine-grade or new-build steel shell, sandblasted, primed and painted in your colour",
+      "Insulation — PUF, rockwool or glass wool between the steel and the inner wall, to help it stay cool in April and quiet in the monsoon",
+      "Inner walls and ceiling — PUF panel, gypsum or PVC finish, with a false ceiling if you want it",
+      "Flooring — cement board base with a vinyl, wood-finish or tile top",
+      "Doors and windows — aluminium or UPVC sliding windows with mesh and grills, and a glass or steel entry door",
+      "Electricals — concealed wiring, MCB distribution board, LED lights, fans, plug points, data points and AC provision",
+    ],
+    sizesNote:
+      "Need two containers joined into one wide office? Or stacked for a two-storey site camp with a staircase? Both can be planned, subject to structural design and approvals.",
+
+    industriesHeading: "Sizes and Typical Layouts",
+    industriesIntro:
+      "Approximate inside sizes, typical layouts and seats for each container size. The final layout and seating are confirmed in the approved drawing.",
+    industries: [
+      { title: "10 ft (approx. 9 × 7 ft inside)", text: "security room or single-person office; 1 to 2 seats." },
+      { title: "20 ft (approx. 19 × 7.5 ft inside)", text: "open office with toilet, or one cabin plus two desks; 3 to 4 seats." },
+      { title: "40 ft (approx. 39 × 7.5 ft inside)", text: "manager cabin, workstations, meeting area, toilet and pantry; 6 to 10 seats." },
+      { title: "2 × 40 ft joined (approx. 39 × 15 ft inside)", text: "full project office or sales lounge; 12 to 20 seats." },
+      { title: "Stacked units (two levels)", text: "office below, rest rooms or stores above; seats depend on the layout." },
+    ],
+
+    customHeading: "Toilet, Pantry and Add-ons",
+    customIntro: "Depending on how the office will be used, these can be added:",
+    customBullets: [
+      {
+        title: "Toilet and pantry (optional)",
+        text: "Western WC, basin, exhaust fan, and a water inlet and outlet ready to connect; a small pantry counter with sink.",
+      },
+      {
+        title: "Add-ons",
+        text: "Partition walls, reception counter, external branding, steps or ramp, awning, and solar panels on the roof.",
+      },
+    ],
+    customOutro: "The fittings and add-ons supplied are confirmed in the approved specification and quotation.",
+
+    whyUsHeading: "Made for North Bengaluru Weather",
+    whyUsIntro: "Bare steel in the sun turns into an oven. That's why insulation matters on every container office:",
+    whyUsBullets: [
+      {
+        title: "Heat",
+        text: "combined with a false ceiling, reflective roof paint and a correctly sized AC, insulation helps keep the inside comfortable through the hottest weeks.",
+      },
+      { title: "Monsoon", text: "sealed joints and a slight roof slope help handle the monsoon." },
+      { title: "Standing water", text: "raising the unit on pedestals keeps it clear of standing water." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Devanahalli",
+    areasText:
+      "We welcome delivery enquiries from Devanahalli Town, the KIADB Aerospace Park, the Hardware Park, the IT Investment Region and the airport surroundings; Sadahalli, Bettahalasur, Vidyanagar Cross, Bagalur, Chikkajala, Doddajala and Budigere Cross; Vijayapura, Kogilu, Yelahanka and Rajanukunte; and the Doddaballapur Industrial Area, Hosakote, Chikkaballapur and the Nandi Hills road. If your site is anywhere in North Bengaluru, call us. We confirm delivery feasibility and charges after reviewing the site and its access.",
+
+    howHeading: "How It Works",
+    howSteps: [
+      {
+        title: "Tell us what you need",
+        text: "How many people, what the office is for, and where the site is. A WhatsApp message with a few details is enough.",
+      },
+      {
+        title: "Site check",
+        text: "We check the ground level, how a trailer and crane will get in, and where you'll draw power and water from. Many sites near the airport are on half-made roads, so this step matters.",
+      },
+      {
+        title: "Layout and quote",
+        text: "You get a drawing with the cabin, desk and toilet positions, and an itemised price. Change anything before we start.",
+      },
+      {
+        title: "Fit-out at our factory",
+        text: "We insulate, wire, panel and finish the container indoors at our factory near Hosur, while you get a simple level base ready (usually six concrete pedestals or blocks).",
+      },
+      {
+        title: "Delivery and placement",
+        text: "The container arrives on a trailer, a crane sets it on the base, it is levelled and connected to power and water, and you get the keys. Transport, crane, placement and connection responsibilities are confirmed in the quotation.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "A Word About Access",
+        paragraphs: [
+          "A 40-ft container needs a 40-ft trailer and a crane with enough reach. Village lanes around Devanahalli, overhead power lines and freshly laid layout roads can all get in the way. Tell us about your approach road when you enquire. If a 40-ft unit can't reach, two 20-ft units joined on site usually can.",
+        ],
+      },
+      {
+        heading: "Approvals Near the Airport",
+        paragraphs: [
+          "A single container office on a construction or industrial site is normally treated as temporary site infrastructure. If you're placing it on a plotted layout, farmland or close to the airport boundary, it's worth a quick check with the local gram panchayat or BIAAPA (the Bangalore International Airport Area Planning Authority). Building heights near the runway approach are regulated by the Airports Authority of India, so plan stacked units with that in mind. We can share the general points to check, but the final call depends on your land records and your use.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How long does it take to get a container office?",
+        answer:
+          "It depends on the size, the specification and the production schedule; the delivery date is confirmed with your quotation once you approve the layout. Joined and stacked units take a little longer. Placement time on site depends on the base, the access and the crane.",
+      },
+      {
+        question: "Is a container office hot inside?",
+        answer:
+          "Not when it's insulated properly. Our containers can be specified with PUF or rockwool insulation, a false ceiling and AC provision, and an insulated container office with a correctly sized AC can work as a full-time office through the summer.",
+      },
+      {
+        question: "Do I need a foundation for a container office?",
+        answer:
+          "Usually not a full foundation. For a single unit, a level base of concrete pedestals or blocks at the corners and mid-points is usually enough. We'll give you the exact positions before delivery; joined or stacked units and soft ground can need more.",
+      },
+      {
+        question: "Can I move it to another site later?",
+        answer:
+          "Yes. That's the whole point. A crane and trailer can lift it and shift it whenever your project moves, subject to safe handling and access at both sites.",
+      },
+      {
+        question: "Can I have a toilet and pantry inside?",
+        answer:
+          "Yes. A 20-ft unit fits a compact toilet; a 40-ft unit fits a toilet and a pantry comfortably. You'll need water and drainage on site to connect them.",
+      },
+      {
+        question: "Do you use old shipping containers or new ones?",
+        answer:
+          "We offer both. Refurbished containers cost less and are subject to availability; new-build modules give you a cleaner finish and custom sizes. Tell us your budget and we'll suggest the right option.",
+      },
+      {
+        question: "Do you rent container offices?",
+        answer:
+          "We sell and also rent for short-term projects, subject to availability. Share your project duration and we'll tell you what works out cheaper.",
+      },
+      {
+        question: "What does a container office cost in Devanahalli?",
+        answer:
+          "It depends on the size, whether it's refurbished or new, and the level of fit-out. A basic 20-ft office costs much less than a branded 40-ft sales lounge with toilet and pantry. Send your requirement and we'll send an itemised quotation.",
+      },
+    ],
+
+    ctaHeading: "Get Your Office on Site",
+    ctaText: `Starting work near the airport? Don't run your project out of a car boot while you wait for a building. Tell us how many people need a desk and we'll build the office and bring it to you. Call or WhatsApp ${COMPANY.phones[0].display}, or email ${COMPANY.email.sales}. We welcome enquiries from Devanahalli, the airport belt and North Bengaluru.`,
+    ctaButtonLabel: "Get a Free Quote",
+    ctaSecondaryLinks: [
+      { label: "Explore Container Office Models", href: "/products/category/container-offices" },
+      { label: "Container Office on Rent", href: "/rental-service" },
+    ],
+    relatedLinks: [
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabins near Devanahalli Airport", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, branch, office, yard or service partner in Devanahalli or at Kempegowda International Airport. Transport, crane hire, unloading, the base, placement and connections follow the scope agreed in each quotation, placement time depends on the site, delivery dates are not guaranteed, and rental and refurbished containers are subject to availability. The sizes, seats, layouts, insulation, finishes, fittings, toilets, pantries and add-ons described on this page are options; the items supplied are confirmed in the approved specification, drawing and quotation for each order, and joined or stacked units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, styled with landscaping, a timber deck, planters and outdoor furniture, and shown with an optionally furnished interior with pantry fittings; the styling is not part of the supply unless listed in the quotation, converted shipping containers and other builds look different, and the images are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, the Airports Authority of India, BIAAPA, KIADB and its Aerospace Park, the Hardware Park and IT Investment Region, and the businesses, layouts, farms and places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on approvals, building heights, foundations, insulation, heat and rain are general guidance, not legal or engineering advice; check the approvals for your land and use with the authorities concerned.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN TIRUNELVELI — SIPCOT Gangaikondan (solar cell and module plants),
    * the Nanguneri industrial belt, the Radhapuram / Thisayanvilai / Aralvaimozhi wind belt,
    * Palayamkottai institutions and the NH 44 corridor, out to Tenkasi and Thoothukudi.
