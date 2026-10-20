@@ -4160,6 +4160,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
     ],
   },
 
@@ -13094,6 +13095,335 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer: `Portable Office Cabin is registered under GSTIN ${COMPANY.gstin} and Udyam (MSME) ${COMPANY.udyam}. Bangalore office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. Works: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, near Hosur, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}. The BBMP, the BDA, the BMRDA, ELCITA and the local panchayats are independent statutory and administrative bodies; Portable Office Cabin is not affiliated with any of them and does not control their approval timelines. Khata and approval notes on this page are planning guidance, not legal advice, and the position for your own plot is confirmed from your documents before drawings are filed. The images on this page are architectural design visualisations supplied by Portable Office Cabin, not photographs of completed buildings, and are not represented as projects at any named Neeladri Road or Neeladri Nagar address.`,
+  },
+  /* ────────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABIN MANUFACTURERS IN HOSUR — first written 2026-09-08 on owner request (f62a048,
+   * branch feat/city-portable-cabin-manufacturers-hosur, pushed but never opened as a PR); revised
+   * 2026-10-17 for review. APPROVED IN PRINCIPLE by the owner 2026-10-19 (keep the page: the factory
+   * is near Hosur), subject to the duplication audit below and all checks; merge needs final approval.
+   *
+   * ── WHY THIS PAGE IS NOT A DUPLICATE (re-audited 2026-10-19 against all 246 live sitemap URLs) ──
+   *   Primary keyword "Portable Cabin Manufacturers in Hosur": no live page targets it. Nearest pages:
+   *   /products/portable-cabin              "Portable Cabin Sizes, Specifications & Prices" — national
+   *   /products/category/portable-cabins    "Portable Cabins in India"              — national
+   *   /promotions/portable-cabin-in-tamil-nadu, /promotions/porta-cabin-in-tamil-nadu — state hubs
+   *   /blog/portable-cabin-manufacturers-in-bangalore                               — Bangalore
+   *   /cities-we-serve/portable-cabin-manufacturer-devanahalli-airport              — Devanahalli
+   *   /cities-we-serve/portable-cabin-in-jigani, /portable-cabin-in-tumkur          — Karnataka towns
+   *   /about-us                             company and Tamil Nadu factory (linked from here)
+   *   /cities-we-serve/container-office-in-sipcot-hosur          — Hosur, CONTAINER OFFICES only
+   *   /cities-we-serve/container-office-near-tata-electronics-hosur — Hosur, CONTAINER OFFICES only
+   *   Copy overlap with every live page is at most 1.4% of 8-word phrases, all of it the shared
+   *   contact and hours boilerplate; no sentence of this page's own copy appears anywhere else.
+   * This page owns the one thing none of them say: the cabins are BUILT near Hosur. The factory is
+   * at Kamandoddi, Krishnagiri district (COMPANY.addresses.tamilNaduFactory). Keep it about the
+   * factory and the whole cabin range; do not add container-office delivery copy here, and do not
+   * add factory copy to the two container pages. Keywords avoid "site office" and "SIPCOT", which
+   * the SIPCOT Hosur container page targets.
+   *
+   * ── WHAT THE 2026-10-17 REVISION CHANGED ───────────────────────────────────────────────
+   *   • Removed claims nothing on record supports (issue #107 territory): that most local sellers
+   *     do not manufacture; "roughly half" of output is custom; "a fortnight instead of a year";
+   *     deliveries "almost daily"; "half an hour" to the border; service visits "in a van"; offices
+   *     reused "through three or four projects"; Andhra Pradesh deliveries; "no appointment fee".
+   *   • "Hosur district" corrected: Kamandoddi is in Krishnagiri district, near Hosur.
+   *   • Specification lines no longer quote materials or thicknesses (#107: structural material
+   *     claims await owner approval); they say what is set in the written specification.
+   *   • Alt text rewritten to describe what is actually in each image. The two porta-cabin renders
+   *     were replaced: both show a third-party-style "MODUVA" / "NODUVA" sign (#100 precedent).
+   *   • Permission FAQ no longer says a cabin "usually does not need" sanction (legal advice).
+   *   • Moved onto the current template: motion pass and Service JSON-LD.
+   *   • Factory-visit offers removed (owner, 2026-10-17) until the owner confirms the service. Do not
+   *     offer visits again — in the copy, the steps or the FAQs — without that confirmation.
+   *
+   * ── WHAT THE 2026-10-19 REVISION CHANGED (owner rules from the Haveri, Kudligi and Sandur reviews) ──
+   *   • No visible hero caption.
+   *   • Delivery towns are geographic context for an enquiry, with delivery feasibility, transport
+   *     charges and scope "confirmed in the quotation" (areas section and the Karnataka FAQ).
+   *   • Specification lines match the MS Portable Cabin / Steel Portable Cabin entries in products.ts
+   *     (materials only, no thicknesses); unsupported details dropped: laminate flooring, window
+   *     grilles, frame lifting provisions and the pre-closing inspection step.
+   *   • Related links: the /products/portable-cabin label follows that page's current title, and
+   *     /about-us (company and factory) is linked.
+   *
+   * No ₹ figure (file-header rule). No ISO claim, founding year, counts, capacity or superlatives.
+   * ──────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-manufacturers-in-hosur",
+    city: "Hosur",
+    listTitle: "Portable Cabin Manufacturers in Hosur",
+    metaTitle: "Portable Cabin Manufacturers in Hosur – Our Factory",
+    metaDescription:
+      "Portable cabins made at our factory near Hosur, at Kamandoddi in Krishnagiri district: site offices, security, toilet and accommodation cabins. Get a quote.",
+    keywords:
+      "Portable Cabin Manufacturers in Hosur, Portable Cabin Manufacturer Hosur, Portable Cabin Factory near Hosur, Porta Cabin Hosur, Prefab Cabin Manufacturer Krishnagiri, Security Cabin Manufacturer Hosur, Toilet Cabin Hosur, Bunkhouse Manufacturer Hosur, MS Portable Cabin Hosur",
+    geo: { region: "IN-TN", placename: "Hosur, Krishnagiri, Tamil Nadu, India", position: "12.7409;77.8253", icbm: "12.7409, 77.8253" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/products/ms-portable-cabin-front.webp",
+      alt: "Portable cabin manufacturers in Hosur — front view of an MS portable cabin with a corrugated steel shell, glazed double doors under a small canopy, two dark-framed windows and a sign frame on the roof, raised on a steel stand",
+      width: 800,
+      height: 800,
+    },
+    featureImage: {
+      src: "/images/products/ms-portable-cabin-angle.webp",
+      alt: "Portable cabin manufacturers in Hosur — three-quarter view of the MS portable cabin on its steel stand, showing a large side window, the door canopy and the base frame",
+      width: 800,
+      height: 800,
+      caption: "Fabricated, wired and finished before it leaves the factory.",
+    },
+    interiorImage: {
+      src: "/images/products/ms-portable-cabin-interior.webp",
+      alt: "Portable cabin manufacturers in Hosur — inside an MS portable cabin: wood-finish wall panels, a white panelled ceiling with LED lights, wood-look flooring, glazed double doors and a desk with a chair and drawer unit",
+      width: 800,
+      height: 800,
+      caption: "Interior finishes and furniture are set in each order's specification.",
+    },
+    gallery: [
+      {
+        src: "/images/products/guard-security-cabin-front.webp",
+        alt: "Portable cabin manufacturers in Hosur — design render of a guard security cabin with large windows on both sides of a glazed door and a desk inside",
+        width: 800,
+        height: 800,
+      },
+      {
+        src: "/images/products/portable-toilet-block-4unit-right-angle.webp",
+        alt: "Portable cabin manufacturers in Hosur — design render of a four-unit portable toilet block with four numbered doors along one side",
+        width: 800,
+        height: 800,
+      },
+    ],
+
+    h1: "Portable Cabin Manufacturers in Hosur",
+    tagline: "Cabins Built at Our Factory Near Hosur, in Krishnagiri District",
+    intro: [
+      "Portable Office Cabin manufactures portable cabins at its factory at Kamandoddi, Post Addakurukki, in Krishnagiri district, near Hosur. Cabins for customers in Hosur and the surrounding industrial belt are fabricated, wired and finished there, then driven to site.",
+      "For a buyer in Hosur, the cabin is specified, built and dispatched within Krishnagiri district, so the transport leg from the factory to your site is short.",
+      "This page covers the cabin range built at the factory, what goes into a standard unit and how an order moves from enquiry to installation. Container offices for SIPCOT Hosur and the industrial belt around the Tata Electronics plant have their own pages, linked below.",
+    ],
+
+    whyHeading: "What a Factory Near Hosur Changes for Your Order",
+    whyIntro: "Three practical differences for customers in Hosur and the surrounding belt:",
+    whyBullets: [
+      {
+        title: "You specify, not just choose",
+        text: "Size, door and window positions, the switchboard location and the partition layout are set in your specification before fabrication starts, rather than picked from whatever is in stock.",
+      },
+      {
+        title: "A short transport leg",
+        text: "Fewer kilometres on the road means less handling between the factory and your site. The build time stays the same; what being near Hosur shortens is the transit.",
+      },
+      {
+        title: "The specification in writing",
+        text: "Frame, sheet, insulation and wiring are stated in the written quotation, together with what is included and what is charged separately.",
+      },
+    ],
+
+    solutionsHeading: "Cabins Built at Our Factory",
+    solutionsIntro: "The cabin range built at the factory, and the orders that come most often from Hosur and the surrounding belt:",
+    solutions: [
+      {
+        title: "Site offices and project offices",
+        text: "Supervisors' rooms, meeting spaces and project offices for construction and industrial sites, wired and lit, with air-conditioning provisions.",
+      },
+      {
+        title: "Security and guard cabins",
+        text: "Gate cabins for factory entrances, yards and residential gates, with glazing on the sides that need to be seen from.",
+      },
+      {
+        title: "Toilet cabins and sanitation blocks",
+        text: "Single toilet cabins through to multi-unit blocks, with plumbing and exhaust provisions, for sites and premises.",
+      },
+      {
+        title: "Worker accommodation and bunkhouses",
+        text: "Sleeping cabins for project sites, with bunks and lockers, and attached or separate toilet blocks depending on headcount.",
+      },
+      {
+        title: "Container offices",
+        text: "Where the brief calls for a container office rather than a built-up cabin, our SIPCOT Hosur and Tata Electronics belt pages cover it in detail.",
+      },
+      {
+        title: "Stores, canteens and utility rooms",
+        text: "Tool and material stores, canteen and rest rooms, first-aid rooms and weighbridge cabins.",
+      },
+    ],
+
+    featuresHeading: "What Goes Into a Standard Cabin",
+    featuresIntro:
+      "The specification is agreed in writing before fabrication starts. A standard cabin is built from these elements, each stated in the quotation:",
+    features: [
+      "Frame — a welded mild steel (MS) structural frame",
+      "Walls and roof — MS sheet outside, insulation and an interior finish sheet, under a sloping insulated roof with waterproofing",
+      "Insulation — type and thickness chosen for the use and stated in the quotation",
+      "Flooring — a cement-board floor base with a vinyl finish",
+      "Doors and windows — a lockable steel door and aluminium sliding windows, with mosquito mesh on request",
+      "Electrical — concealed wiring, an MCB board, LED lights and switches, with air-conditioning provisions where specified",
+      "Finish — a primer and top-coat paint system in the colour chosen for the order",
+    ],
+    sizesNote:
+      "Standard sizes run from small guard cabins up to 40 ft units, and larger requirements are met by joining units or building to your drawing. Sizes, specifications and prices for each model are on the product pages; this page is about where they are made.",
+
+    industriesHeading: "Who Orders Cabins in Hosur",
+    industriesIntro: "Hosur is an industrial town, and most orders come from industry and construction:",
+    industries: [
+      {
+        title: "Factories in SIPCOT and the industrial estate",
+        text: "Gate cabins, supervisors' cabins, stores, and rest or canteen rooms added beside existing buildings.",
+      },
+      {
+        title: "Construction and infrastructure contractors",
+        text: "Site offices at the start of a project and worker accommodation beside them, moved to the next site when the work ends.",
+      },
+      {
+        title: "Auto and electronics suppliers",
+        text: "Quality rooms, dispatch offices and visitor rooms for vendor units in the industrial belt.",
+      },
+      {
+        title: "Schools, hospitals and institutions",
+        text: "Extra administrative rooms and staff rooms during expansion or renovation. Clinical or laboratory use must be designed to the applicable healthcare, hygiene and safety requirements.",
+      },
+      {
+        title: "Farms, estates and private plots",
+        text: "Watchman rooms and farm stores on land around Hosur, Thally Road and Denkanikottai.",
+      },
+    ],
+
+    customHeading: "If the Standard Sizes Do Not Fit",
+    customIntro: "Custom sizes and layouts are built to a written specification:",
+    customBullets: [
+      {
+        title: "Built to your drawing",
+        text: "Send a sketch with the dimensions and the positions of doors, windows and partitions. If a layout does not work structurally, we say so before fabrication.",
+      },
+      {
+        title: "Sized to the space you have",
+        text: "A gap between two sheds, a corner of a yard or a roof with a load limit: the cabin is sized to the space, subject to transport and lifting.",
+      },
+      {
+        title: "Fitted out for the use",
+        text: "Extra power points for equipment, a wash basin, heavier insulation for a room where the AC runs all day, or a stronger door for a cash office.",
+      },
+      {
+        title: "Joined and stacked",
+        text: "Two or more units combined into one wide space, or stacked with an external staircase where the footprint is limited, with engineered structural support.",
+      },
+    ],
+    customOutro:
+      "Tell us the use before the size: a quality lab and a store of the same dimensions are built differently.",
+
+    whyUsHeading: "Questions to Ask Any Cabin Manufacturer",
+    whyUsIntro: "Useful questions for any quotation, including ours:",
+    whyUsBullets: [
+      {
+        title: "Where is it made?",
+        text: "Ask for the factory address. Ours is at Kamandoddi, in Krishnagiri district near Hosur, and is given at the foot of this page.",
+      },
+      {
+        title: "What frame and sheet?",
+        text: "The frame sections and sheet specification should be stated in the quotation, not described only as heavy-duty.",
+      },
+      {
+        title: "What insulation, and how thick?",
+        text: "Insulation type and thickness decide how usable the cabin is in a Hosur summer, so they should be in writing.",
+      },
+      {
+        title: "What is included, and what is extra?",
+        text: "Transport, unloading, crane, installation and the electrical connection at your end should each be stated.",
+      },
+      {
+        title: "Who do I contact afterwards?",
+        text: `Ask for a name and a number, and check the registrations before paying a deposit. Ours are GSTIN ${COMPANY.gstin} and Udyam ${COMPANY.udyam}.`,
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries From the Factory",
+    areasText:
+      "Cabins are built at our factory at Kamandoddi, near Hosur, and transported to site by truck. Share your site location or a map pin when you enquire, whether the site is in Hosur town or SIPCOT Hosur, along the Bagalur, Thally or Denkanikottai roads, around Shoolagiri and Krishnagiri, or across the state border towards Attibele, Anekal and Electronic City. Delivery feasibility, transport charges and the delivery and installation scope for your location are confirmed in the quotation.",
+
+    howHeading: "From Enquiry to a Cabin on Your Site",
+    howSteps: [
+      {
+        title: "Tell us the use and the site",
+        text: "What the cabin is for, roughly what size and where it is going. Call, send a WhatsApp photo of the spot or use the enquiry form, and send a drawing if you have one.",
+      },
+      {
+        title: "Specification and quotation in writing",
+        text: "Sizes, frame and panel specification, what is included and what is charged separately, with the transport to your site stated.",
+      },
+      {
+        title: "Fabrication",
+        text: "Frame, panels, flooring, doors and windows, wiring and finishing, built to the agreed specification.",
+      },
+      {
+        title: "Delivery and placing",
+        text: "Loaded at the factory and driven to your site. We confirm beforehand the access the truck needs and whether a crane or Hydra is required.",
+      },
+      {
+        title: "Installation and handover",
+        text: "Levelled, joined if it is a multi-unit set, connected to your supply points under the agreed scope, and handed over. Dates depend on the specification, the production schedule and site readiness.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Are your portable cabins made near Hosur?",
+        answer: `Yes. Our factory is at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur. Cabins for Hosur customers are fabricated and finished there and driven to site.`,
+      },
+      {
+        question: "Is this page about container offices for SIPCOT Hosur?",
+        answer:
+          "No. This page covers the built-up cabin range made at our factory: site offices, security cabins, toilet blocks, worker accommodation and stores. Container offices for SIPCOT Hosur and for supplier units around the Tata Electronics plant have their own pages, linked below.",
+      },
+      {
+        question: "How long does a portable cabin take to build?",
+        answer:
+          "It depends on the size, the specification and the production schedule, so the date is given in your quotation rather than as a general figure. Being near Hosur shortens the transport to your site, not the build.",
+      },
+      {
+        question: "What does a portable cabin cost in Hosur?",
+        answer:
+          "It depends on the size, insulation, flooring and fit-out. Standard models and their prices are on the product pages; for a custom requirement you receive a written quotation with the transport to your site stated.",
+      },
+      {
+        question: "Can I enquire about delivery to a site in Karnataka as well as Tamil Nadu?",
+        answer:
+          "Yes. Attibele, Anekal and Electronic City lie just across the state border from Hosur, and we also have an office in Electronic City, Bengaluru. Share the site location when you enquire; delivery feasibility, transport charges and the delivery scope are confirmed in the quotation.",
+      },
+      {
+        question: "Can a portable cabin be moved to another site later?",
+        answer:
+          "Yes. A cabin can be lifted onto a truck and re-sited, subject to its condition and size and to the lifting and access arrangements at both sites.",
+      },
+      {
+        question: "Do I need permission to place a portable cabin?",
+        answer:
+          "It depends on the site, how the land is classified and how long the cabin will stay. Check with your local authority, or your factory's compliance team, before installation; the cabin's drawing and specification from your quotation can support that check.",
+      },
+    ],
+
+    ctaHeading: "Get a Quotation From Our Factory Near Hosur",
+    ctaText: `Tell us what the cabin is for, roughly what size and where it is going, and you will receive a written specification and quotation with the transport to your site stated. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Factory: Kamandoddi, Krishnagiri district, near Hosur, Tamil Nadu; office in Electronic City, Bengaluru.`,
+    ctaButtonLabel: "Get a Written Quotation",
+    ctaSecondaryLinks: [
+      { label: "Portable Cabin Range", href: "/products/category/portable-cabins" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+    ],
+
+    relatedLinks: [
+      { label: "Portable Cabin Sizes, Specifications & Prices", href: "/products/portable-cabin" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Colony & Worker Accommodation", href: "/products/labour-colony" },
+      { label: "About Our Company and Tamil Nadu Factory", href: "/about-us" },
+      { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+      { label: "Container Office Near Tata Electronics, Hosur", href: "/cities-we-serve/container-office-near-tata-electronics-hosur" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}, in Krishnagiri district near Hosur. Karnataka office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. GSTIN ${COMPANY.gstin}; Udyam (MSME) ${COMPANY.udyam}. ${COMPANY.businessHours.weekdays.display}; ${COMPANY.businessHours.sunday.display}. SIPCOT, the Hosur Industrial Estate and the industries named on this page are independent organisations; Portable Office Cabin is not affiliated with any of them, and none of them endorses this page. The images show cabins of the types described, including design renders, and are not photographs of installations at any Hosur address. Production and delivery dates are confirmed in each quotation and are not guaranteed. Whether a portable cabin needs permission at a particular site is decided by the local authority; notes on this page are general guidance, not legal advice.`,
   },
 ];
 
