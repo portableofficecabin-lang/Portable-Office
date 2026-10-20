@@ -2965,8 +2965,9 @@ export const CITY_PAGES: CityPage[] = [
    * CONTAINER OFFICES IN DEVANAHALLI, NEAR KEMPEGOWDA INTERNATIONAL AIRPORT — the container-office
    * intent for the airport belt north of Bengaluru: the KIADB Aerospace Park, Hardware Park and IT
    * Investment Region, the NH 44 warehouse sites, the Sadahalli / Bettahalasur / Budigere Cross
-   * plotted layouts and the Nandi Hills farms. The portable-cabin intent for the same belt is
-   * portable-cabin-manufacturer-devanahalli-airport (#157); this page links to it and is written
+   * plotted layouts and the Nandi Hills farms. The portable-cabin and porta-cabin intents for the same
+   * belt are portable-cabin-manufacturer-devanahalli-airport (#157) and porta-cabin-devanahalli-airport
+   * (#161); the three pages link to each other (owner decision, 2026-10-20) and are written
    * differently, as the owner's draft asks. Cluster neighbours, by the pages' own geo and the cluster
    * test's haversine: Doddaballapura (~19.5 km) and Hoskote (~21.7 km), both linking back.
    *
@@ -3261,6 +3262,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Portable Cabins near Devanahalli Airport", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
+      { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
@@ -8344,6 +8346,8 @@ export const CITY_PAGES: CityPage[] = [
       // The porta-cabin page for the same area (owner decision, 2026-10-20: separate pages that link
       // to each other). Added before "Areas We Serve" so the earlier links keep their positions.
       { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
+      // The container-office page for the same area, linked the same way.
+      { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -8614,6 +8618,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Porta Cabin in Bangalore", href: "/promotions/porta-cabin-in-bangalore" },
       { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
       { label: "Portable Cabin Manufacturer Devanahalli Airport", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
+      { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
