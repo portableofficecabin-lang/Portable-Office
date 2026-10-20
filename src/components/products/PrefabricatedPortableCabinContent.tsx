@@ -347,8 +347,8 @@ export function PrefabricatedPortableCabinContent() {
           project rather than demolish.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Standard sizes can be ordered online with UPI, cards or net banking. Custom builds are
-          quoted within one working day.
+          Standard sizes can be ordered online with UPI, cards or net banking. Custom builds follow a
+          written quotation.
         </p>
       </div>
 

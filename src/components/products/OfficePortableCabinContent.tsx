@@ -443,7 +443,7 @@ export function OfficePortableCabinContent() {
           Get Your Office Portable Cabin in Place Now
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-          Whether you need a single site office or a multi-cabin complex, Portable Office Cabin can deliver a fast, professional workspace that fits your budget and timeline. Share your project details and get a design suggestion and quotation within 24–48 hours.
+          Whether you need a single site office or a multi-cabin complex, Portable Office Cabin can deliver a fast, professional workspace that fits your budget and timeline. Share your project details and get a design suggestion and quotation.
         </p>
       </section>
     </div>

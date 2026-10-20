@@ -27,7 +27,7 @@ export const seoData = {
   home: {
     title: "Portable Office Cabin Manufacturer Serving Bangalore | India",
     description:
-      "Leading portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7-15 days delivery. Call now!",
+      "Leading portable office cabin manufacturer serving Bangalore from our Hosur factory. Container offices, site cabins & prefab structures. 7–15 working-day dispatch. Call now!",
     keywords:
       "portable office cabin manufacturer Bangalore, container office, site cabin, prefab structure, porta cabin India",
   },

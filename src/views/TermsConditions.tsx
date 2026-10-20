@@ -118,7 +118,7 @@ export default function TermsConditionsPage() {
 
           <Section title="5. Order Cancellation" index={4}>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Orders can be cancelled within 48 hours of confirmation, provided manufacturing has not yet started. A full refund will be processed in this case — of the amount paid for an online order (paid in full at checkout), or of the advance for a custom order on the quotation route.</li>
+              <li>Orders can be cancelled within 48 hours of confirmation, provided manufacturing has not yet started. A full refund will be processed in this case — of the amount paid for an online order (paid in full at checkout), including transport, installation and GST, with no deduction for payment-gateway fees; or of the advance for a custom order on the quotation route.</li>
               <li>If manufacturing has already begun, cancellation charges will apply based on the work completed and materials consumed.</li>
               <li>Custom-built products made to your specific requirements are non-cancellable once production has started.</li>
             </ul>

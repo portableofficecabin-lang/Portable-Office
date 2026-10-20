@@ -439,7 +439,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           ))}
         </div>
         <p className="text-muted-foreground mt-6 leading-relaxed">
-          Contact Portable Office Cabin for same-day estimates and layout drawings based on your specific capacity, layout, and functional needs.
+          Contact Portable Office Cabin for estimates and layout drawings based on your specific capacity, layout, and functional needs.
         </p>
       </section>
 
@@ -464,7 +464,6 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             </thead>
             <tbody>
               {[
-                { phase: "Design and approval", duration: "2–5 days" },
                 { phase: "Manufacturing", duration: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days` },
                 { phase: "Transport", duration: `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days (by delivery zone)` },
                 { phase: "Installation", duration: "Optional — added at checkout" },
@@ -621,7 +620,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               q: "Can porta cabins be shifted to another location?",
-              a: "Yes, relocation is a core advantage. The process involves disconnecting utilities, securing internal fixtures, arranging crane access at both locations, and planning transport routes. Most cabins can be relocated within 2–5 days depending on distance and logistics.",
+              a: "Yes, relocation is a core advantage. The process involves disconnecting utilities, securing internal fixtures, arranging crane access at both locations, and planning transport routes; the time it takes depends on distance and logistics.",
             },
             {
               q: "Do porta cabins require government approvals?",

@@ -8,7 +8,6 @@ import {
   Building2, 
   Clock, 
   Truck, 
-  Shield, 
   Wrench, 
   Phone, 
   CheckCircle2,
@@ -426,17 +425,12 @@ const benefits = [
   {
     icon: Truck,
     title: "Delivery & Setup",
-    description: "Delivery and installation by our own team. Ready-stock rental units are typically delivered within 48 hours of confirmation, subject to availability. Transport is set out in your written quotation"
+    description: "Delivery and installation by our own team. The delivery date and transport are set out in your written quotation, subject to availability"
   },
   {
     icon: Wrench,
-    title: "Maintenance Included",
-    description: "Support Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM, with free maintenance during the rental period"
-  },
-  {
-    icon: Shield,
-    title: "Inspected Before Delivery",
-    description: "All cabins are thoroughly inspected and sanitized before delivery"
+    title: "Maintenance & Support",
+    description: "Support Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM; maintenance during the rental period as set out in your rental agreement"
   }
 ];
 
@@ -542,7 +536,7 @@ export default function RentalServicePage() {
       {/* Benefits Section */}
       <section className="py-16 bg-muted/30">
         <div className="container-custom">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {benefits.map((benefit, index) => (
               <motion.div
                 key={benefit.title}

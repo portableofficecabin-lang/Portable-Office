@@ -102,7 +102,7 @@ const faqs = [
   {
     question: "How fast can an MS container office cabin be delivered?",
     answer:
-      "Standard sizes usually take 7–15 working days depending on current production load and delivery location. Larger custom layouts or multi-cabin complexes may take 20–30 days.",
+      "Standard sizes bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Larger custom layouts or multi-cabin complexes follow the timeline in your written quotation.",
   },
   {
     question: "Can the cabin be shifted to another project site later?",
@@ -296,7 +296,7 @@ export function MSContainerOfficeCabinContent() {
           </p>
           <div className="space-y-3">
             {[
-              "Standard delivery timelines of 7–15 working days for common layouts",
+              "Standard sizes bought online dispatched within 7–15 working days",
               "Flatbed truck transport with hydra crane unloading at site",
               "Level ground or PCC support blocks recommended before arrival",
               "Ready to use once service connections are completed",

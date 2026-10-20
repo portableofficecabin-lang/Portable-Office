@@ -390,8 +390,8 @@ export function MetalPortableCabinContent() {
           and shown before you confirm.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Standard MS sizes can be ordered online straight away. GI and PPGI builds are quoted within
-          one working day.
+          Standard MS sizes can be ordered online straight away. GI and PPGI builds follow a written
+          quotation.
         </p>
       </div>
 

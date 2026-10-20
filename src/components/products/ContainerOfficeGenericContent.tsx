@@ -61,7 +61,7 @@ export function ContainerOfficeGenericContent() {
 
         <div className="bg-accent/5 border border-accent/20 rounded-xl p-6 mt-8">
           <p className="text-muted-foreground">
-            <strong className="text-foreground">Real Project Example:</strong> We delivered a project site office for a metro rail contractor in Mumbai in 2023—a fully fitted 40 ft container office was operational within 12 days of order confirmation. Similarly, a real estate developer in Pune used our container offices as sales galleries, impressing clients with modern aesthetics while maintaining complete flexibility to relocate as the project phases progressed.
+            <strong className="text-foreground">Real Project Example:</strong> We delivered a fully fitted 40 ft container office as a project site office for a metro rail contractor in Mumbai in 2023. Similarly, a real estate developer in Pune used our container offices as sales galleries, impressing clients with modern aesthetics while maintaining complete flexibility to relocate as the project phases progressed.
           </p>
         </div>
       </section>
@@ -377,12 +377,12 @@ export function ContainerOfficeGenericContent() {
             {
               step: "01",
               title: "Client Consultation",
-              desc: "Our team conducts a requirement study covering intended use, occupancy numbers, site conditions, MEP needs, and timeline expectations. This phase typically completes within 2–3 working days after enquiry.",
+              desc: "Our team conducts a requirement study covering intended use, occupancy numbers, site conditions, MEP needs, and timeline expectations.",
             },
             {
               step: "02",
               title: "Design & Costing",
-              desc: "We produce 2D layout drawings showing furniture placement, basic 3D views for visualization, and detailed BOQ submissions covering all materials, fixtures, and installation costs. Turnaround within 5–7 days.",
+              desc: "We produce 2D layout drawings showing furniture placement, basic 3D views for visualization, and detailed BOQ submissions covering all materials, fixtures, and installation costs.",
             },
             {
               step: "03",
@@ -534,8 +534,8 @@ export function ContainerOfficeGenericContent() {
             <tbody>
               {[
                 { config: "Standard 20 ft cabin", timeline: "Dispatched within 7–15 working days (bought online)" },
-                { config: "Fitted 40 ft office", timeline: "3–4 weeks" },
-                { config: "Multi-container complex", timeline: "4–6 weeks" },
+                { config: "Fitted 40 ft office", timeline: "Set out in your written quotation" },
+                { config: "Multi-container complex", timeline: "Set out in your written quotation" },
                 { config: "Large custom projects", timeline: "Based on scope" },
               ].map((row, index) => (
                 <tr key={row.config} className={index % 2 === 0 ? "bg-muted/30" : "bg-card"}>

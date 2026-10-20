@@ -53,7 +53,7 @@ const MAJOR_CITIES = [
   { city: "Hosur", state: "Tamil Nadu", note: "Factory belt — local-zone delivery" },
   { city: "Krishnagiri", state: "Tamil Nadu", note: "Factory belt — local-zone delivery" },
   { city: "Chennai", state: "Tamil Nadu", note: "Port city — container stock dispatched fast" },
-  { city: "Coimbatore", state: "Tamil Nadu", note: "2–4 day transit from our factory" },
+  { city: "Coimbatore", state: "Tamil Nadu", note: "2–4 working-day transit from our factory" },
   { city: "Hyderabad", state: "Telangana", note: "South-zone transport" },
   { city: "Mumbai", state: "Maharashtra", note: "Pan-India zone delivery" },
   { city: "Pune", state: "Maharashtra", note: "Pan-India zone delivery" },

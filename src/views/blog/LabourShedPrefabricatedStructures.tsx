@@ -248,7 +248,7 @@ export default function LabourShedPrefabricatedStructures() {
               {/* Benefit Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 {[
-                  { icon: Clock, title: "40–60% Faster Deployment", desc: "Parallel work streams cut installation from 45–60 days to 10–15 days for a 100-worker camp." },
+                  { icon: Clock, title: "Faster Deployment", desc: "Parallel factory and site work shortens installation for a 100-worker camp." },
                   { icon: IndianRupee, title: "Predictable Pricing", desc: "Per-square-foot rates enable accurate budgeting. 20–30% less material wastage than traditional methods." },
                   { icon: Shield, title: "Quality Assurance", desc: "Factory-controlled manufacturing ensures consistent quality impossible to achieve on outdoor sites." },
                   { icon: Wrench, title: "Flexible & Reusable", desc: "Modular design supports expansion, reconfiguration, and relocation across multiple project sites." }
@@ -266,7 +266,7 @@ export default function LabourShedPrefabricatedStructures() {
                 Off-site fabrication fundamentally changes project scheduling. While traditional brick construction requires sequential steps—pour foundation, cure, lay bricks, cure again, plaster, finish—prefab construction enables parallel work streams. The factory manufactures panels and frames while site teams prepare foundations. This overlap cuts deployment time dramatically.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Consider a practical example: installing a 100-worker camp using prefab methods typically requires 10–15 days from foundation completion to move-in readiness. The same capacity using traditional brick construction demands 45–60 days minimum, often extending longer due to weather delays or material shortages.
+                Consider a practical example: installing a 100-worker camp using prefab methods takes far less time from foundation completion to move-in readiness than the same capacity in traditional brick construction, which often runs longer still due to weather delays or material shortages.
               </p>
 
               <h3 className="text-xl font-semibold text-foreground mb-3">Cost Effectiveness and Budget Predictability</h3>
@@ -408,23 +408,6 @@ export default function LabourShedPrefabricatedStructures() {
             {/* Installation & Timelines */}
             <section className="mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Installation, Relocation & Project Timelines</h2>
-
-              <div className="bg-card rounded-xl border p-6 md:p-8 mb-8 shadow-sm">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Indicative Installation Timelines</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    { workers: "50 Workers", days: "5–7 Days", icon: "🏗️" },
-                    { workers: "200 Workers", days: "10–15 Days", icon: "🏘️" },
-                    { workers: "500+ Workers", days: "3–5 Weeks", icon: "🏙️" }
-                  ].map((item, i) => (
-                    <div key={i} className="bg-secondary rounded-xl p-6 text-center border border-border hover:shadow-md transition-shadow">
-                      <div className="text-3xl mb-2">{item.icon}</div>
-                      <div className="text-2xl font-bold text-accent mb-1">{item.days}</div>
-                      <div className="text-sm font-medium text-muted-foreground">{item.workers}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
               <h3 className="text-xl font-semibold text-foreground mb-3">Pre-Installation Planning</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">

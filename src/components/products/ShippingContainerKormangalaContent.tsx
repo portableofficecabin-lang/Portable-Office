@@ -96,7 +96,7 @@ const faqs = [
   { q: "Do you deliver to Koramangala's narrow lanes?", a: "Yes. We use 20/32 ft multi-axle trucks and hydra/crane trucks for placement. Our team coordinates timing (9 AM–6 PM) and provides AutoCAD drawings for local approvals." },
   { q: "Can a shipping container be converted into a café or home?", a: "Absolutely. We fabricate container cafés with serving counters, seating for 20–30, exhaust hoods, and branding. Container homes include bedrooms, kitchenettes, toilets, and balcony cutouts." },
   { q: "What permissions are needed for a container in Koramangala?", a: "Commercial cafés, offices, and rooftop containers may require BBMP/BDA approvals. We provide 1:50 scale AutoCAD drawings to support your application." },
-  { q: "How quickly can you deliver a container to Koramangala?", a: "Standard in-stock units deliver within 3–7 days. Custom-fitted container offices take 12–20 days including fabrication." },
+  { q: "How quickly can you deliver a container to Koramangala?", a: "The standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Custom-fitted container offices follow the timeline in your written quotation." },
   { q: "Can containers be placed on rooftops in Koramangala?", a: "Yes, after structural load checks on the existing RCC building. We supply rooftop offices, gyms, studios, and cafés with proper waterproofing and drainage." },
 ];
 
@@ -295,7 +295,7 @@ export function ShippingContainerKormangalaContent() {
         <div className="rounded-3xl border border-border bg-card p-8">
           <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Delivery & installation in Koramangala</h3>
           <div className="space-y-4 text-muted-foreground">
-            <p><strong className="text-foreground">Delivery:</strong> 20/32 ft multi-axle trucks from our Tamil Nadu factory near Hosur; 3–7 days for in-stock units.</p>
+            <p><strong className="text-foreground">Delivery:</strong> 20/32 ft multi-axle trucks from our Tamil Nadu factory near Hosur; units bought online are dispatched within 7–15 working days.</p>
             <p><strong className="text-foreground">Installation:</strong> Hydra or crane trucks; placement on concrete blocks or steel supports; levelling and fit-out checks.</p>
             <p><strong className="text-foreground">Permissions:</strong> Commercial cafés, offices, and rooftop containers may require BBMP/BDA approvals — we provide AutoCAD drawings (1:50 scale).</p>
             <p><strong className="text-foreground">Timing:</strong> Daytime installation (9 AM–6 PM) to comply with noise bylaws.</p>

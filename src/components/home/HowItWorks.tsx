@@ -5,8 +5,8 @@ const steps = [
   {
     icon: MapPin,
     step: "01",
-    title: "Site Assessment",
-    description: "We come and assess your site — don't worry, it'll only take a few minutes. We'll evaluate the space, terrain and access points.",
+    title: "Share Your Site Details",
+    description: "Tell us about your site — the space, the ground and the access for delivery vehicles — so we can confirm what fits and how it will reach you.",
   },
   {
     icon: PenTool,

@@ -25,6 +25,7 @@ import {
   DISPATCH_WORKING_DAYS,
   FREE_DELIVERY_PIN_PREFIXES_TEXT,
   INSTALLATION,
+  INSTALLATION_NOT_COVERED,
   INSTALLATION_SCOPE,
 } from "@/data/shippingZones";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
@@ -322,7 +323,7 @@ export default function ShippingDeliveryPage() {
             {/* Exactly the paid checkout option (INSTALLATION_SCOPE = INSTALLATION.description, item by
                 item). The old three steps also claimed "prepare the foundation", on-site assembly and an
                 electrical/plumbing inspection, and gave durations; none of those is in the checkout option,
-                so they are left for the owner to confirm (2026-10-19). */}
+                and the owner keeps them out (2026-10-19). What the option excludes is listed below it. */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
               {INSTALLATION_SCOPE.map((item, i) => (
                 <motion.div
@@ -342,6 +343,12 @@ export default function ShippingDeliveryPage() {
                 </motion.div>
               ))}
             </div>
+            <p className="font-semibold text-foreground mb-2">Not included:</p>
+            <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6 max-w-2xl">
+              {INSTALLATION_NOT_COVERED.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
             <p className="text-muted-foreground mb-12 max-w-2xl">
               Installation is scheduled after delivery, subject to crew availability and your site readiness. For
               custom orders and rentals, installation is set out in your written quotation.

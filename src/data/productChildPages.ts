@@ -478,7 +478,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Do cabins rust?", a: "The structure is primed and painted against corrosion and the skins are pre-painted steel. Rust starts at neglected scratches — touch them up and the cabin stays sound." },
           { q: "Can worn parts be replaced?", a: "Yes — panels, doors, windows, flooring and fittings are all serviceable or replaceable, which is what makes refurbishment economical." },
           { q: "Does relocation shorten a cabin's life?", a: "Not when lifted correctly from its lifting points onto a level base. Re-check levelness after every move — that is the one post-move task that matters." },
-          { q: "Is there after-sales support?", a: "Yes — a maintenance guide ships with every cabin and our after-sales team is available on call for repairs and parts." },
+          { q: "Is there after-sales support?", a: "Yes — repairs and spare parts after delivery are provided as set out in your quotation or maintenance agreement." },
         ],
         related: [
           { label: "Warranty information", href: "/warranty" },

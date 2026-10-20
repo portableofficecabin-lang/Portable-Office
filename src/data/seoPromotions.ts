@@ -477,7 +477,7 @@ function generateUniqueContent(keyword: string, location: string, variation: num
     `Every ${mainKeyword} we supply features 50mm PUF insulated panels, galvanized steel framing, and weatherproof construction suited to ${location}'s climate. Each unit is engineered for year-round comfort and long service life.`,
     `Clients across ${location} choose us because we handle design, manufacturing, delivery, and installation end to end. From layout planning to electrical fit-outs, our team supports your project at every stage.`,
     `We have delivered ${mainKeyword} throughout ${location} for contractors, infrastructure firms, factories, and government agencies. Whether you need a single unit or a multi-block setup, we scale to your requirements.`,
-    `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Standard units are dispatched within 7-15 working days of order confirmation, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone; larger or custom projects take longer.`,
+    `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Standard units bought online are dispatched within 7-15 working days of order confirmation, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone; larger or custom projects follow the timeline in your written quotation.`,
     `If you are planning a project in ${location}, contact us for a free written quotation on ${mainKeyword}. Every order starts with a quotation — we offer customization in size, interiors, branding, and utilities so your unit is ready for immediate use on site.`,
   ];
 }
@@ -490,7 +490,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
     },
     {
       question: `How long does delivery and installation take in ${location}?`,
-      answer: `Standard ${keyword.toLowerCase()} units are dispatched within 7-15 working days of order confirmation and receipt of the advance, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone. Larger or custom projects take longer; your written quotation confirms the exact timeline.`,
+      answer: `Standard ${keyword.toLowerCase()} units bought online are dispatched within 7-15 working days of order confirmation, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone. Larger or custom projects follow the timeline in your written quotation.`,
     },
     {
       question: `Can you customize ${keyword.toLowerCase()} to meet my specific needs in ${location}?`,

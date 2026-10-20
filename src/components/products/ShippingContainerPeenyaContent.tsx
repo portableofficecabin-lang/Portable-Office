@@ -63,7 +63,7 @@ const faqs = [
   },
   {
     q: "How quickly can a container be delivered and set up in Peenya?",
-    a: "In-stock standard containers can be delivered within 2–4 working days from our Tamil Nadu factory near Hosur — roughly 40 km from Bengaluru — reaching Peenya via the Outer Ring Road and Tumkur Road. Setup time — placement, electrical connections and AC installation — depends on the customisation level and is set out in your written quotation."
+    a: "The standard container bought online is dispatched within 7–15 working days of order confirmation from our Tamil Nadu factory near Hosur — roughly 40 km from Bengaluru — reaching Peenya via the Outer Ring Road and Tumkur Road, and checkout shows the delivery estimate for your PIN code. Setup time — placement, electrical connections and AC installation — depends on the customisation level and is set out in your written quotation."
   },
   {
     q: "What is the price of a shipping container in Peenya?",
@@ -328,7 +328,7 @@ export function ShippingContainerPeenyaContent() {
             <li>Delivery from our Tamil Nadu factory near Hosur — about 40 km from Bengaluru — via Outer Ring Road / Tumkur Road</li>
             <li>Trailers for 40 ft containers, multi-axle trucks for 20 ft units</li>
             <li>On-site crane or hydra support for unloading where required</li>
-            <li>In-stock units delivered within 2–4 working days, depending on customization</li>
+            <li>Units bought online dispatched within 7–15 working days; custom builds per written quotation</li>
             <li>Coordination with factory management for gate permissions and placement within tight internal roads</li>
           </ul>
         </div>

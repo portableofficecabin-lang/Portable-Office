@@ -75,7 +75,7 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "How long does it take to manufacture a cabin?",
-        a: "For standard models, production typically takes 7 to 15 working days. Custom or larger projects — like multi-room offices or prefab homes — may take 15 to 30 days depending on the complexity. We'll give you a clear timeline before you confirm your order.",
+        a: "Standard products bought online are dispatched within 7 to 15 working days of order confirmation. Custom or larger projects — like multi-room offices or prefab homes — follow the timeline in your written quotation, which you receive before you confirm your order.",
       },
       {
         q: "Can I visit your factory before placing an order?",
@@ -146,11 +146,11 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "Do you offer maintenance or repair services after delivery?",
-        a: "Yes. We provide ongoing maintenance support for all our structures. Whether it's a minor repair, a fresh coat of paint, or replacement of fittings, our service team is just a call away. We also offer annual maintenance contracts for businesses with multiple units.",
+        a: "Yes. Maintenance and repairs after delivery — a minor repair, a fresh coat of paint or replacement fittings — are provided as set out in your quotation or maintenance agreement. Businesses with multiple units can ask us about an annual maintenance contract.",
       },
       {
         q: "How do I reach your support team?",
-        a: "You can call us on +91 97318 97976 or +91 90199 10931, send a WhatsApp message to +91 97318 97976, or email us at sales@portableofficecabin.com. Our business hours are Monday to Saturday, 7:00 AM to 10:00 PM, and Sunday, 10:00 AM to 7:00 PM. We respond to every enquiry within 24 hours, and calling is always the fastest option.",
+        a: "You can call us on +91 97318 97976 or +91 90199 10931, send a WhatsApp message to +91 97318 97976, or email us at sales@portableofficecabin.com. Our business hours are Monday to Saturday, 7:00 AM to 10:00 PM, and Sunday, 10:00 AM to 7:00 PM. Calling is always the fastest option.",
       },
     ],
   },

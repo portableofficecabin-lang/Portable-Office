@@ -50,14 +50,23 @@ export const INSTALLATION = {
  * What the paid installation option covers, item by item — the same four things
  * INSTALLATION.description says (keep the two in step). The Shipping & Delivery page and the
  * product-page Shipping & Delivery pop-up list these, so no page promises more than checkout sells.
- * Foundation / civil work is deliberately absent: the checkout option does not mention it and the
- * owner has not yet confirmed whether it is included (2026-10-19).
+ * Foundation / civil work is not part of the option (owner, 2026-10-19): see INSTALLATION_NOT_COVERED.
  */
 export const INSTALLATION_SCOPE = [
   { title: "Base levelling", text: "Our team levels the base." },
   { title: "Positioning", text: "We position the unit on site." },
   { title: "Crane / hydra", text: "Crane or hydra charges at site are included for standard single-unit placements." },
   { title: "Handover", text: "We complete the handover." },
+] as const;
+
+/**
+ * What the paid installation option does NOT cover (owner decisions, 2026-10-19), listed under
+ * INSTALLATION_SCOPE on the Shipping & Delivery page and in the product-page pop-up. Display text
+ * only: INSTALLATION (label, description, rate) and every checkout calculation are unchanged.
+ */
+export const INSTALLATION_NOT_COVERED = [
+  "Foundation and civil work are not part of the installation option; they are quoted separately.",
+  "Crane or hydra for a non-standard placement (for example a multi-unit or stacked placement, or a site with restricted access) is subject to feasibility and needs a separate written quotation, agreed before you pay.",
 ] as const;
 
 /**

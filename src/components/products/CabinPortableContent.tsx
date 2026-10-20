@@ -531,8 +531,7 @@ export function CabinPortableContent() {
           <div className="bg-card border border-border/40 rounded-xl p-5">
             <h3 className="font-semibold text-foreground mb-3">After-Sales Support</h3>
             <ul className="space-y-1.5 text-sm text-muted-foreground">
-              <li>• 24-72 hour service response</li>
-              <li>• Spare parts availability</li>
+              <li>• Maintenance and repairs as set out in your quotation or agreement</li>
               <li>• Relocation & refitting services</li>
             </ul>
           </div>

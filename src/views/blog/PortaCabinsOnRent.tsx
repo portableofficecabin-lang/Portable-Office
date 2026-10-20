@@ -29,7 +29,7 @@ const faqStructuredData = {
       name: "How quickly can a rental porta cabin be delivered and installed?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Standard rental units can be delivered within 3–7 days of order confirmation in western India. Customized configurations take longer, and your written quotation sets out the timeline. On-site commissioning follows delivery, subject to site readiness."
+        text: "Delivery dates for rental units, including customized configurations, are set out in your written quotation, subject to availability. On-site commissioning follows delivery, subject to site readiness."
       }
     },
     {
@@ -120,7 +120,7 @@ export default function PortaCabinsOnRent() {
             Porta Cabins on Rent – Flexible Portable Space
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/80 max-w-3xl">
-            Ready-to-use workspace delivered within days. Office cabins, security posts, labour accommodation & more—available on hire across India.
+            Ready-to-use workspace, delivered on the date in your rental quotation. Office cabins, security posts, labour accommodation & more—available on hire across India.
           </p>
           <div className="flex flex-wrap items-center gap-4 mt-6 text-sm text-primary-foreground/70">
             <span className="flex items-center gap-1"><Clock className="h-4 w-4 text-accent" /> 18 min read</span>
@@ -152,7 +152,7 @@ export default function PortaCabinsOnRent() {
             <ul className="space-y-4">
               {[
                 "Porta cabins on rent eliminate upfront capital investment while providing fully finished, pre-tested cabins commissioned at your location.",
-                "We serve projects across Maharashtra, Gujarat, Rajasthan, Madhya Pradesh, Karnataka, Delhi NCR with 3–7 day delivery for standard models.",
+                "We serve projects across Maharashtra, Gujarat, Rajasthan, Madhya Pradesh, Karnataka, Delhi NCR, with delivery dates set out in your rental quotation.",
                 "Available types: Office Cabins, Container Offices, Security Cabins, Labour Accommodation, Prefab Canteens, Container Cafés, Portable Toilets & Control Rooms.",
                 "Flexible rental tenure from 1–36 months with customization options including branding, partitions, AC, furniture, and plumbing.",
                 "As a manufacturer (not broker), we ensure factory-direct quality, faster delivery, and competitive pricing for projects of any scale."
@@ -246,7 +246,7 @@ export default function PortaCabinsOnRent() {
             <section className="mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Portable Cabin for Rent in Mumbai, Pune & Western India</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Our strongest rental presence spans Mumbai, Navi Mumbai, Thane, Pune, and across Maharashtra and Gujarat. Portable Office Cabin manufactures cabins in western India, allowing us to deliver standard rental units to these regions within 3–7 days of order confirmation—significantly faster than competitors relying on distant production facilities.
+                Our strongest rental presence spans Mumbai, Navi Mumbai, Thane, Pune, and across Maharashtra and Gujarat. Delivery dates for rental units are set out in your rental quotation, subject to availability.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 Typical clients in this region include infrastructure contractors executing metro and elevated road projects in Navi Mumbai, industrial manufacturing plants in the Pune-Chakan corridor, logistics parks and warehouse operators in Bhiwandi, and real estate developers building residential and commercial projects in Ahmedabad and Vadodara.
@@ -262,7 +262,7 @@ export default function PortaCabinsOnRent() {
                 </h3>
                 <ul className="space-y-2 text-muted-foreground text-sm">
                   <li><strong className="text-foreground">Cities:</strong> Mumbai, Navi Mumbai, Thane, Pune, Nashik, Nagpur, Ahmedabad, Vadodara, Surat, Rajkot</li>
-                  <li><strong className="text-foreground">Response time:</strong> 3–7 days for standard models; 10–21 days for customized configurations</li>
+                  <li><strong className="text-foreground">Delivery timeline:</strong> set out in your rental quotation, subject to availability</li>
                   <li><strong className="text-foreground">Common use-cases:</strong> Metro rail site offices, highway project accommodation, industrial plant security cabins, warehouse weighbridge offices</li>
                   <li><strong className="text-foreground">Customization:</strong> Rental interiors (partitions, extra windows, company branding) while maintaining reusability</li>
                 </ul>
@@ -419,7 +419,7 @@ export default function PortaCabinsOnRent() {
                 {[
                   { step: "1", title: "Share Requirements", desc: "Provide project location, cabin type, size, rental duration, and utilities needed (AC, furniture, plumbing)." },
                   { step: "2", title: "Receive Proposal", desc: "We suggest suitable models, provide layout drawings, and submit a commercial proposal with monthly rent, deposit, and transport charges." },
-                  { step: "3", title: "Confirm & Schedule", desc: "On confirmation and deposit, we schedule fabrication/refurbishment. Delivery typically 3–21 days." },
+                  { step: "3", title: "Confirm & Schedule", desc: "On confirmation and deposit, we schedule fabrication/refurbishment; the delivery date is set out in your quotation." },
                   { step: "4", title: "Delivery & Installation", desc: "Cabins arrive via trailer. We handle installation and commission electrical/plumbing interfaces." },
                   { step: "5", title: "Rental Period Support", desc: "Support for structural issues during the rental term. Client handles routine usage and cleaning." },
                   { step: "6", title: "End of Term & Removal", desc: "We dismantle connections, transport cabins back. Final settlement addresses damage or extensions." },
@@ -591,7 +591,7 @@ export default function PortaCabinsOnRent() {
             <section className="mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">How to Enquire About a Porta Cabin Rental</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Ready to explore porta cabins on rent for your upcoming project? Share the following details for a tailored quote within 24–48 working hours:
+                Ready to explore porta cabins on rent for your upcoming project? Share the following details for a tailored quote:
               </p>
               <div className="bg-card border border-border rounded-xl p-6">
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-muted-foreground">
@@ -649,7 +649,7 @@ export default function PortaCabinsOnRent() {
             Ready to Rent a Porta Cabin?
           </h2>
           <p className="text-primary-foreground/70 mb-8 max-w-xl mx-auto">
-            Get a free rental quote tailored to your project. Factory-direct pricing, 3–7 day delivery, and turnkey support from India's trusted manufacturer.
+            Get a free rental quote tailored to your project. Factory-direct pricing, delivery dates confirmed in your quote, and turnkey support from India's trusted manufacturer.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="btn-accent">

@@ -290,7 +290,7 @@ export default function MSPortableCabinBlog() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-foreground group-hover:text-accent transition-colors mb-2">Porta Cabins on Rent – Flexible Portable Space</h3>
-                  <p className="text-sm text-foreground/70 line-clamp-2">Complete guide to renting porta cabins in India with 3–7 day delivery.</p>
+                  <p className="text-sm text-foreground/70 line-clamp-2">Complete guide to renting porta cabins in India.</p>
                 </div>
               </Link>
               <Link href="/blog/labour-shed-prefabricated-structures" className="group bg-card border border-border/50 rounded-xl overflow-hidden hover:shadow-lg transition-all">

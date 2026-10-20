@@ -315,7 +315,7 @@ export function PrefabMarketingOfficeContent() {
         <ol className="space-y-4">
           {[
             ["Tell us the project.", "What you're selling, expected footfall, the site, and any plan you already have."],
-            ["We send a layout and a price.", "Itemised — structure, transport and assembly shown separately — usually inside 24 hours."],
+            ["We send a layout and a price.", "Itemised — structure, transport and assembly shown separately."],
             ["You approve the drawing.", "Layout, finishes and exterior creative, before fabrication starts."],
             ["We fabricate.", "Panels, trusses and joinery made and checked at our workshop."],
             ["We assemble at your site.", "Typically three to ten days depending on size."],

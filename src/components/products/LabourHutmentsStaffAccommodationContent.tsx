@@ -26,7 +26,7 @@ export function LabourHutmentsStaffAccommodationContent() {
   const caseStudies = [
     {
       title: "Maharashtra Metro Project (2023)",
-      desc: "250-worker G+1 labour colony completed in 40 days. Included dormitory blocks, canteen, and first-aid centre. Client reported 20% improvement in worker retention versus previous tin shed arrangements.",
+      desc: "250-worker G+1 labour colony, including dormitory blocks, canteen, and first-aid centre. Client reported 20% improvement in worker retention versus previous tin shed arrangements.",
     },
     {
       title: "Odisha Steel Plant Expansion (2022)",
@@ -34,7 +34,7 @@ export function LabourHutmentsStaffAccommodationContent() {
     },
     {
       title: "Rajasthan Solar Park (2024)",
-      desc: "80-technician container-based temporary housing with enhanced dust seals and heat-proofing. Quick installation enabled project mobilisation 3 weeks ahead of schedule — unlimited possibilities with modular design.",
+      desc: "80-technician container-based temporary housing with enhanced dust seals and heat-proofing — unlimited possibilities with modular design.",
     },
   ];
 
@@ -514,7 +514,7 @@ export function LabourHutmentsStaffAccommodationContent() {
             "15+ years of prefabrication experience",
             "In-house design, manufacturing & installation",
             "500+ projects delivered",
-            "Enquiry response within 24 hours, with a written quotation for every order",
+            "A written quotation for every order",
             "Track record in labour colonies, container offices, PEB structures",
             "Commitment to quality, worker well-being & sustainable construction",
           ].map((item) => (

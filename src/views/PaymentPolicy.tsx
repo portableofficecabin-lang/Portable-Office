@@ -199,7 +199,7 @@ export default function PaymentPolicyPage() {
               <h2 className="font-display text-xl font-bold text-foreground">Customer Service</h2>
             </div>
             <p className="text-muted-foreground mb-5">
-              Questions about pricing, GST, transport charges or payment terms? Talk to us before you confirm anything — we respond within 24 hours.
+              Questions about pricing, GST, transport charges or payment terms? Talk to us before you confirm anything.
             </p>
             <ul className="text-muted-foreground leading-relaxed space-y-3 mb-6">
               <li className="flex items-start gap-3">
@@ -232,7 +232,7 @@ export default function PaymentPolicyPage() {
               <li className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                 <span>
-                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM. We respond to all enquiries within 24 hours.
+                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.
                 </span>
               </li>
             </ul>

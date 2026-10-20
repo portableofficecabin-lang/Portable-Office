@@ -378,7 +378,7 @@ export function CargoContainerForSaleContent({ offer }: { offer?: FixedOffer }) 
         <div className="rounded-3xl border border-border bg-muted/30 p-8">
           <h3 className="mb-5 font-display text-2xl font-bold text-foreground">Real-world delivery examples</h3>
           <div className="space-y-4 text-muted-foreground">
-            <p>40 ft container office block supplied for a metro rail contractor in Mumbai and deployed within 12 days of order confirmation.</p>
+            <p>40 ft container office block supplied for a metro rail contractor in Mumbai.</p>
             <p>20 ft site office cabins installed for a solar plant project in Rajasthan with heat- and dust-ready detailing.</p>
             <p>Multi-storey labour colony using 48 container units delivered for a highway project in Karnataka.</p>
             <p>PEB shed integration available above container clusters for large covered workspaces and warehouse-style layouts.</p>

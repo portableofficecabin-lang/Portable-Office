@@ -33,6 +33,7 @@ import {
   DISPATCH_WORKING_DAYS,
   FREE_DELIVERY_PIN_PREFIXES_TEXT,
   INSTALLATION,
+  INSTALLATION_NOT_COVERED,
   INSTALLATION_SCOPE,
   TRANSIT_WORKING_DAYS,
 } from "@/data/shippingZones";
@@ -223,8 +224,7 @@ export function ShippingDeliveryModal({
                 <AccordionContent>
                   <ul className="space-y-3">
                     <InfoItem icon={Phone} text="Customer support 7 days a week — Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM" />
-                    <InfoItem icon={Wrench} text="On-site maintenance service available" />
-                    <InfoItem icon={CheckCircle2} text="Spare parts readily available" />
+                    <InfoItem icon={Wrench} text="Maintenance and repairs: as set out in your quotation or maintenance agreement" />
                   </ul>
                 </AccordionContent>
               </AccordionItem>
@@ -254,6 +254,11 @@ export function ShippingDeliveryModal({
                       </div>
                     ))}
                   </div>
+                  <ul className="space-y-2">
+                    {INSTALLATION_NOT_COVERED.map((line) => (
+                      <InfoItem key={line} icon={AlertCircle} text={line} />
+                    ))}
+                  </ul>
                 </>
               ) : (
                 <ul className="space-y-2">

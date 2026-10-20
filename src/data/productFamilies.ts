@@ -355,7 +355,8 @@ function unpricedContainerOfficeSize(
     basePricePaise: undefined,
     priceConfirmed: false,
     availability: "in_stock",
-    leadTime: DELIVERY,
+    // Not sold online, so the online door-to-door window (8–25 working days) does not apply (owner, 2026-10-19).
+    leadTime: "Set out in your written quotation",
     additionalImages: [],
     specifications: [],
     includedConfiguration: CONTAINER_OFFICE_INCLUDED,

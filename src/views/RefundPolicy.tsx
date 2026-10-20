@@ -98,8 +98,9 @@ export default function RefundPolicyPage() {
               {/* Split by payment route (2026-10-19): online orders are paid in full at checkout (section 2), so
                   "a full refund of any advance payment" did not describe them. Same 48-hour window and the same
                   "manufacturing has not yet commenced" condition for both; the online wording matches the
-                  published Container Offices FAQ ("cancelled for a full refund within 48 hours"). */}
-              <li><strong>Online orders (paid in full at checkout) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the amount paid, provided manufacturing has not yet commenced.</li>
+                  published Container Offices FAQ ("cancelled for a full refund within 48 hours"). Owner decision (2026-10-19): the
+                  online refund is everything paid (transport, installation and GST included) with no gateway-fee deduction. */}
+              <li><strong>Online orders (paid in full at checkout) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the amount paid, including transport, installation and GST, with no deduction for payment-gateway fees, provided manufacturing has not yet commenced.</li>
               <li><strong>Custom orders (advance paid on the quotation route) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the advance payment, provided manufacturing has not yet commenced.</li>
               <li><strong>After 48 hours / manufacturing started:</strong> If production has already begun, the order cannot be fully cancelled. Cancellation charges will apply based on the extent of work completed and materials consumed.</li>
               <li><strong>Custom orders:</strong> Products built to your specific dimensions, design, or layout requirements are non-cancellable once manufacturing has started, as these units cannot be repurposed for other customers.</li>
@@ -168,7 +169,7 @@ export default function RefundPolicyPage() {
             <p>If you receive a product that is damaged or has manufacturing defects:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>Notify us within <strong>48 hours</strong> of delivery with photographs and a clear description of the issue.</li>
-              <li>Our quality team will review the complaint and respond within 3 business days.</li>
+              <li>Our quality team will review the complaint and respond to you.</li>
               <li>If the damage occurred during transit and is confirmed by our team, we will either repair the unit at no cost, replace the affected components, or offer an appropriate compensation.</li>
               <li>Damage caused after delivery — during unloading, installation, or usage — is not covered under this policy.</li>
             </ul>
@@ -189,7 +190,6 @@ export default function RefundPolicyPage() {
               <li>Call us at <a href="tel:+919731897976" className="text-accent hover:underline">+91 97318 97976</a> or <a href="tel:+919019910931" className="text-accent hover:underline">+91 90199 10931</a>.</li>
               <li>Message us on <a href="https://wa.me/919731897976" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">WhatsApp (+91 97318 97976)</a> with your order reference number.</li>
               <li><strong>Business hours:</strong> Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.</li>
-              <li>We respond to every cancellation or refund request <strong>within 24 hours</strong>.</li>
             </ul>
             <p className="mt-3">Please include your order number, the reason for cancellation, and any supporting documents or photos.</p>
           </Section>
@@ -217,7 +217,7 @@ export default function RefundPolicyPage() {
               </div>
               <h2 className="font-display text-xl font-bold text-foreground">Have Questions About a Refund?</h2>
             </div>
-            <p className="text-muted-foreground mb-6">Our team is here to help. Reach out and we'll guide you through the process — we reply within 24 hours.</p>
+            <p className="text-muted-foreground mb-6">Our team is here to help. Reach out and we'll guide you through the process.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="accent" size="lg" asChild>
                 <Link href="/contact">

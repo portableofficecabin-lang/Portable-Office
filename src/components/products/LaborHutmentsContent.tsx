@@ -209,7 +209,7 @@ export function LaborHutmentsContent() {
             { title: "Application Types", desc: "Standalone labor rooms, full colonies with internal roads, combined office-and-accommodation blocks, remote work camps" },
             { title: "Capacity Bands", desc: "50–100 workers for small sites, 200–500 for mid-scale construction, 1,000+ for mega infrastructure development projects" },
             { title: "Integrated Solutions", desc: "Container offices for site management, portable security cabins, prefabricated canteens, and portable toilets" },
-            { title: "Example Configurations", desc: "A 250-bed G+1 labour colony for a warehouse project delivered in 3 weeks, or a 400-person camp for a solar park in Rajasthan" },
+            { title: "Example Configurations", desc: "A 250-bed G+1 labour colony for a warehouse project, or a 400-person camp for a solar park in Rajasthan" },
           ].map((item) => (
             <div key={item.title} className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
               <Check className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -264,8 +264,8 @@ export function LaborHutmentsContent() {
         </p>
         <div className="space-y-4">
           {[
-            { step: "1. Planning", desc: "Site survey, layout finalization, structural design, and BOQ approval with client (1–3 days)" },
-            { step: "2. Fabrication", desc: "Cutting, welding, panel manufacturing, and pre-assembly quality checks at factory (1–3 weeks)" },
+            { step: "1. Planning", desc: "Site survey, layout finalization, structural design, and BOQ approval with client" },
+            { step: "2. Fabrication", desc: "Cutting, welding, panel manufacturing, and pre-assembly quality checks at factory" },
             { step: "3. On-Site Erection", desc: "Foundation prep, steel framework, panel fixing, roof installation, doors/windows, plumbing, and electrical works" },
             { step: "4. Testing & Handover", desc: "Electrical and sanitary fixtures testing, finishing, cleaning, and inspection before workers move in" },
           ].map((item) => (

@@ -527,7 +527,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
         {/* Timeline Steps */}
         <div className="grid sm:grid-cols-3 gap-4 mb-8">
           {[
-            { step: "1", title: "Design Finalization", desc: "2-3 days for layout approval and specification confirmation" },
+            { step: "1", title: "Design Finalization", desc: "Layout approval and specification confirmation" },
             { step: "2", title: "Fabrication & Fit-Out", desc: "7-15 working days depending on complexity and customization" },
             { step: "3", title: "Transport & Placement", desc: "1–10 working days in transit by delivery zone; placement depends on site access" },
           ].map((item) => (

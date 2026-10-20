@@ -113,7 +113,7 @@ export default function CustomProductPolicyPage() {
 
           <Section title="3. Manufacturing & Delivery Timeline">
             <ul className="space-y-3">
-              <Bullet><strong>Dispatch:</strong> typically <strong>7–15 working days</strong> after order confirmation and advance payment.</Bullet>
+              <Bullet><strong>Dispatch:</strong> the dispatch date for a customised order is set out in your written quotation. (Standard products bought online are dispatched within <strong>7–15 working days</strong> of order confirmation and payment.)</Bullet>
               <Bullet><strong>Transit:</strong> a further <strong>{`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days`}</strong>, depending on your delivery zone — confirmed in your written quotation.</Bullet>
               <Bullet>Timelines start only after the order is confirmed and the advance is received — not from the date of enquiry.</Bullet>
             </ul>
@@ -189,7 +189,7 @@ export default function CustomProductPolicyPage() {
               <h2 className="font-display text-xl font-bold text-foreground">Customer Service</h2>
             </div>
             <p className="text-muted-foreground mb-5">
-              Not sure which size or specification you need? Talk to us before you approve anything — we respond within 24 hours.
+              Not sure which size or specification you need? Talk to us before you approve anything.
             </p>
             <ul className="text-muted-foreground leading-relaxed space-y-3 mb-6">
               <li className="flex items-start gap-3">
@@ -222,7 +222,7 @@ export default function CustomProductPolicyPage() {
               <li className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                 <span>
-                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM. We respond to all enquiries within 24 hours.
+                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.
                 </span>
               </li>
             </ul>

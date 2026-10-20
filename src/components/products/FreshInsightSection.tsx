@@ -110,7 +110,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Mumbai (Bhiwandi)", note: "320-bed colony for a logistics-park client, delivered in 26 days including site grading." },
+      { city: "Mumbai (Bhiwandi)", note: "320-bed colony for a logistics-park client, including site grading." },
       { city: "Ahmedabad (Sanand)", note: "180-bed unit with a covered dining hall and prayer room added on customer request." },
       { city: "Hyderabad", note: "240-bed G+1 with rooftop solar — currently offsetting roughly 42 percent of the colony's daily electricity load." },
     ],
@@ -153,12 +153,12 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Pune (Chakan)", note: "40ft container office split into a meeting room, two workstations and a small pantry — delivered in 11 days." },
+      { city: "Pune (Chakan)", note: "40ft container office split into a meeting room, two workstations and a small pantry." },
       { city: "Bengaluru (Electronic City)", note: "Three 20ft units stacked as a temporary engineering office during a campus expansion." },
       { city: "Kolkata (Howrah)", note: "20ft unit fitted as a weighbridge cabin with reinforced flooring and a sealed cable trench." },
     ],
     closing:
-      "Send us any quote you have received from another supplier. We will return it the same day with notes on what is realistic, what is missing and where you can save without losing build quality. No obligation to buy from us.",
+      "Send us any quote you have received from another supplier. We will return it with notes on what is realistic, what is missing and where you can save without losing build quality. No obligation to buy from us.",
   },
 
   "family-prefab-home-2bhk": {
@@ -203,7 +203,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Coorg", note: "Family home with cedar cladding and a wood-burning stove, installed in 9 days on a sloped plot." },
+      { city: "Coorg", note: "Family home with cedar cladding and a wood-burning stove, installed on a sloped plot." },
       { city: "Tirupati", note: "2BHK + study built as a retirement home for an NRI client, full handover including registration support." },
       { city: "Pondicherry", note: "Beach-facing 2BHK with marine-grade anti-corrosion treatment on every steel surface." },
     ],
@@ -220,7 +220,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       {
         heading: "Who picks up what at our office",
         paragraphs: [
-          "Site office and portable cabin enquiries are handled by our cabins desk between 9:30 am and 7:00 pm, Monday to Saturday. For shipping container sales — new, used or modified — ask for the container team; they have the live stock list for our factory yard near Hosur.",
+          "Site office and portable cabin enquiries are handled by our cabins desk. For shipping container sales — new, used or modified — ask for the container team; they have the live stock list for our factory yard near Hosur.",
           "Labour colony, G+1 worker accommodation and large camp tenders go to our projects desk, where a senior engineer reviews the brief before sending a costing. For prefab homes and 2BHK builds the conversation usually involves drawings, so we set up a callback with the design team rather than a quick phone quote.",
         ],
       },
@@ -246,7 +246,7 @@ const INSIGHTS: Record<string, InsightContent> = {
       },
     ],
     fieldNotes: [
-      { city: "Email", note: "sales@portableofficecabin.com — we respond within 24 hours." },
+      { city: "Email", note: "sales@portableofficecabin.com" },
       { city: "WhatsApp", note: "Faster than email for short queries and live stock photos." },
       { city: "Factory call", note: "Use the projects desk for orders above 1,000 sq ft or multi-unit deployments." },
     ],

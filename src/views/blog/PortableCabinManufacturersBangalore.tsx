@@ -166,7 +166,7 @@ export default function PortableCabinManufacturersBangalore() {
               <h3 className="font-semibold text-foreground">Speed Advantage</h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Portable cabins deploy in 1–2 weeks versus 3–6 months for brick buildings, with 70–80% cost savings on initial setup
+              Portable cabins take far less time to deploy than brick buildings, with lower initial setup costs
             </p>
           </div>
           <div className="bg-card border border-border/40 rounded-xl p-6">
@@ -373,7 +373,7 @@ export default function PortableCabinManufacturersBangalore() {
           {[
             { step: "1", title: "Site Assessment", desc: "Brief visit or online discussion using site photos to check crane access, base preparation needs, and power/water points" },
             { step: "2", title: "Design & Quotation", desc: "Sharing layouts with detailed breakup covering cabin cost, transport, taxes, and portable cabin installation service charges" },
-            { step: "3", title: "Fabrication", desc: "1–3 week manufacturing at the manufacturer's own works — ours is at Kamandoddi, near Hosur — covering structure, insulation, electricals, and painting" },
+            { step: "3", title: "Fabrication", desc: "Manufacturing at the manufacturer's own works — ours is at Kamandoddi, near Hosur — covering structure, insulation, electricals, and painting" },
             { step: "4", title: "Delivery & Installation", desc: "Transport by trailer, positioning using Hydra crane, levelling, and utility connections, once the site is ready" },
           ].map((step, idx) => (
             <div key={idx} className="flex gap-4 items-start">

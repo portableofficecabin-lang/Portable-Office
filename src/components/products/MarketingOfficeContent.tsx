@@ -342,7 +342,7 @@ export function MarketingOfficeContent() {
         <ol className="space-y-3">
           {[
             ["Tell us the project.", "What you're selling, expected footfall, and where the office will stand."],
-            ["We send a layout and a price.", "Itemised, usually inside 24 hours."],
+            ["We send a layout and a price.", "Itemised, not a range."],
             ["Your branding goes on the drawing.", "You approve the exterior creative and interior finish before fabrication."],
             ["We build and inspect it.", "At our workshop, checked before it moves."],
             ["It lands on site.", "Trailer to your gate, crane down, levelled, connected."],
@@ -378,7 +378,7 @@ export function MarketingOfficeContent() {
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-5">
           Tell us the project, the footfall you expect, and the date your hoarding goes up.
-          You&apos;ll have a layout and a clear price inside a day.
+          You&apos;ll have a layout and a clear price.
         </p>
         <div className="flex flex-wrap gap-3">
           <a
