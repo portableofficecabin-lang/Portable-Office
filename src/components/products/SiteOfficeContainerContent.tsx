@@ -528,7 +528,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
         <div className="grid sm:grid-cols-3 gap-4 mb-8">
           {[
             { step: "1", title: "Design Finalization", desc: "Layout approval and specification confirmation" },
-            { step: "2", title: "Fabrication & Fit-Out", desc: "7-15 working days depending on complexity and customization" },
+            { step: "2", title: "Fabrication & Fit-Out", desc: "Standard units bought online are dispatched within 7–15 working days; custom fit-outs follow your written quotation" },
             { step: "3", title: "Transport & Placement", desc: "1–10 working days in transit by delivery zone; placement depends on site access" },
           ].map((item) => (
             <div key={item.step} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center">
