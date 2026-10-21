@@ -267,6 +267,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Site Office Container|Bangalore": [
     { name: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
   ],
+  // Portable-cabin page inside Bengaluru (Vasanthapura Industrial Area, South Bengaluru): the Bangalore
+  // portable-cabin hub's first city page; the page links back here and to both Karnataka hubs.
+  "Portable Cabin|Bangalore": [
+    { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+  ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
@@ -399,6 +404,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     // Portable-cabin page (#145), here and on Porta Cabin: the Bengaluru-belt rule above covers container-office pages.
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+    // Portable-cabin page for Vasanthapura (South Bengaluru), here and on Porta Cabin, as for Jigani.
+    { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -421,6 +428,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Porta-cabin page (#161, owner request 2026-10-20), on this hub only: it is the porta-cabin intent,
     // and the Bengaluru-belt rule above covers container-office pages (as for Jigani).
     { name: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
+    { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
