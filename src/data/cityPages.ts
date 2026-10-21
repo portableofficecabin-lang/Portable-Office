@@ -8625,6 +8625,316 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN MACHENAHALLI INDUSTRIAL AREA, SHIVAMOGGA — the KIADB Nidige–Machenahalli
+   * estate on the Shivamogga–Bhadravathi road (NH-206), a wet, humid part of Karnataka below
+   * the Western Ghats: food and agro processing, rice mills, fabrication workshops, godowns and
+   * construction projects.
+   *
+   * Owner copy of 2026-10-21 (meta title, meta description and the suggested URL used as given;
+   * the root slug sits under /cities-we-serve, as for the Devanahalli pages, because no root route
+   * exists). The draft's sections mapped onto the fixed template slots, nothing dropped:
+   *   • "Extra Space for Your Factory…" → tagline; its three paragraphs → intro.
+   *   • "Planning for Rain and Humid Conditions" → why: the lead-in and "we can plan:" line →
+   *     whyIntro, the five planning items → whyBullets, the low-lying-plot note → whyOutro.
+   *   • "How Businesses Can Use Our Cabins" (five H3s) → solutions.
+   *   • "Cabin Specifications and Order Inclusions" → features: the nine inclusion lines →
+   *     features[], "Your quotation can include:" → featuresIntro, the scope line → sizesNote.
+   *   • "Our Portable Cabin Range" table → industries: cabin type as the bold title, typical use
+   *     as the text; the dimensions note → industriesIntro.
+   *   • "Choose Your Cabin Finish" table → custom (beside the interior render): one bullet per
+   *     feature row, "Standard: … Upgraded: …"; the combining note + quotation line → customOutro.
+   *   • "Delivery and Placement Planning" → how (its five numbered steps). The section's lead-in
+   *     and its transport-cost line → an extra section after the steps, so neither is dropped.
+   *   • "Areas We Serve Around Machenahalli" → areas, reframed as "Delivery Enquiries Around …"
+   *     with the ten places as geographic context and charges confirmed in the quotation (owner
+   *     rule from the Haveri, Kudligi and Sandur reviews).
+   *   • FAQs (seven) → faqs, as written; "Get a Quote for Your Machenahalli Site" → CTA, the
+   *     "[Your Phone Number]" / "[Your Email Address]" / "[Your WhatsApp Number]" placeholders →
+   *     COMPANY, and the closing "Contact us…" line folded into ctaText.
+   *   • whyUs: the draft has no "why us" section and the slot is mandatory, so its four points
+   *     restate only what this page already says (designed around the site, built off-site,
+   *     drawing before manufacturing, scope fixed in the quotation). No new claims.
+   * No ₹ figure, no lead time, no capacity, count or ISO claim; the factory is near Hosur.
+   *
+   * Images: four owner-dropped webp renders ("public/images/portable-cabin-shivamogga-machenahalli-
+   * industrial-area city page/…", 1168×880 ×2 and 2336×1760 ×2), copied byte-for-byte to clean
+   * slug names. They show one container-style design: light grey ribbed walls over a charcoal
+   * band in a black frame; the alt text describes what is actually in each render, the interior is
+   * captioned as illustrative with optional furniture, and the disclaimer says none of them is a
+   * photograph of an installation in Machenahalli or Shivamogga.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD; the call and
+   * WhatsApp CTA buttons are on by default and the two container-office secondary buttons are
+   * dropped (not a container-office page).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-shivamogga-machenahalli-industrial-area",
+    city: "Machenahalli Industrial Area, Shivamogga",
+    listTitle: "Portable Cabins in Machenahalli, Shivamogga",
+    metaTitle: "Portable Cabins in Machenahalli Industrial Area, Shivamogga",
+    metaDescription:
+      "Buy or rent portable cabins in Machenahalli, Shivamogga. Custom site offices, security cabins, labour rooms and storage units. Request a quote.",
+    keywords:
+      "Portable Cabins in Machenahalli, Portable Cabin Machenahalli Industrial Area, Portable Cabin Shivamogga, Portable Cabin Shimoga, Site Office Cabin Shivamogga, Security Cabin Shivamogga, Labour Accommodation Cabin Shivamogga, Portable Cabin on Rent in Shivamogga, Portable Cabin Bhadravathi, Portable Cabin Nidige Industrial Area",
+    geo: {
+      region: "IN-KA",
+      placename: "Machenahalli Industrial Area, Shivamogga, Karnataka, India",
+      position: "13.8990;75.6300",
+      icbm: "13.8990, 75.6300",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-shivamogga-machenahalli-industrial-area/portable-cabin-shivamogga-machenahalli-industrial-area-front-elevation.webp",
+      alt: "Portable cabin in Machenahalli Industrial Area, Shivamogga — illustrative render of a container-style portable cabin with light grey ribbed steel walls over a charcoal lower band in a black frame, a dark steel door with a slim glazed panel, two black-framed sliding windows and a wall louvre, raised on short legs over a concrete pad with lawn in front",
+      width: 1168,
+      height: 880,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-shivamogga-machenahalli-industrial-area/portable-cabin-shivamogga-machenahalli-industrial-area-roof-view.webp",
+      alt: "Portable cabin in Machenahalli Industrial Area, Shivamogga — illustrative top-down render of the cabin's dark panelled roof inside its black edge frame, standing on a concrete strip between two lawns",
+      width: 2336,
+      height: 1760,
+      caption: "Roof slope, sealed joints and drainage outlets are planned around the site before fabrication.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-shivamogga-machenahalli-industrial-area/portable-cabin-shivamogga-machenahalli-industrial-area-interior.webp",
+      alt: "Portable cabin in Machenahalli Industrial Area, Shivamogga — illustrative render of an optionally furnished office interior with wood-finish wall and ceiling panels, recessed ceiling lights, an executive desk with two leather chairs, a low sideboard, two black-framed windows, a door with a slim glazed panel and grey carpet-tile flooring",
+      width: 1168,
+      height: 880,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-shivamogga-machenahalli-industrial-area/portable-cabin-shivamogga-machenahalli-industrial-area-side-elevation.webp",
+        alt: "Portable cabin in Machenahalli Industrial Area, Shivamogga — illustrative side elevation of the container-style cabin showing its plain long wall of light grey ribbed steel over a charcoal lower band, the black frame and the short legs on a concrete pad",
+        width: 2336,
+        height: 1760,
+      },
+    ],
+
+    h1: "Portable Cabins in Machenahalli Industrial Area, Shivamogga",
+    tagline: "Extra space for your factory, warehouse or project site.",
+    intro: [
+      "Need an office, security cabin, worker rest room or storage unit at your Machenahalli site? Portable cabins provide additional space without lengthy construction at your premises.",
+      "At Portable Office Cabin, we manufacture and supply cabins for industrial units, workshops, warehouses and construction projects in Machenahalli and surrounding areas of Shivamogga.",
+      "Each cabin can be designed around your available space, intended use and budget. It is built off-site, transported to your location and placed on prepared supports before the required service connections are completed.",
+    ],
+
+    whyHeading: "Planning for Rain and Humid Conditions",
+    whyIntro:
+      "Roof drainage, protective finishes and site preparation are important for cabins exposed to prolonged rain and damp conditions. For your Machenahalli site, we can plan:",
+    whyBullets: [
+      { title: "Roof drainage", text: "Suitable roof slope, sealed joints and outlets to help rainwater drain away." },
+      { title: "Corrosion protection", text: "Protective coatings for the steel frame and suitable exterior sheets." },
+      { title: "Raised supports", text: "A base arrangement that provides appropriate ground clearance." },
+      { title: "Doors and windows", text: "Suitable fittings, seals and detailing to limit rain entry." },
+      { title: "Insulation and ventilation", text: "Panel specifications and ventilation suited to the cabin's use." },
+    ],
+    whyOutro:
+      "If your plot is low-lying or prone to waterlogging, share this before ordering. Support height and drainage should be planned around actual site conditions.",
+
+    solutionsHeading: "How Businesses Can Use Our Cabins",
+    solutionsIntro: "Five common uses around Machenahalli. Layouts, finishes and fittings are confirmed in the approved drawing and quotation.",
+    solutions: [
+      {
+        title: "Food and Agro Processing Units",
+        text: "Separate rooms for administration, staff changing, quality-control activities or laboratory use. Specialist uses require finishes, ventilation, utilities and equipment provisions suited to the intended process.",
+      },
+      {
+        title: "Rice Mills and Produce Buyers",
+        text: "Offices for purchase entries, weighing records, billing and meetings. Additional cabins can provide rest areas for drivers waiting to load or unload.",
+      },
+      {
+        title: "Fabrication and Engineering Workshops",
+        text: "Supervisor offices close to the work area and lockable stores for tools, consumables and suitable spare parts.",
+      },
+      {
+        title: "Warehouses and Godowns",
+        text: "Security cabins at entrances, dispatch offices near loading areas and additional storage where required.",
+      },
+      {
+        title: "Construction Projects",
+        text: "Site offices, meeting rooms, material stores, labour accommodation and toilet blocks for building and infrastructure projects.",
+      },
+    ],
+
+    featuresHeading: "Cabin Specifications and Order Inclusions",
+    featuresIntro: "Your quotation can include:",
+    features: [
+      "Layout drawing for approval before manufacturing",
+      "MS frame designed for the selected cabin",
+      "Insulated wall and roof options",
+      "Finished flooring suited to the intended use",
+      "Lockable doors and specified windows",
+      "Electrical wiring, protection and agreed fittings",
+      "Optional partitions, AC provisions, pantry or attached toilet",
+      "Transport and lifting arrangements",
+      "Installation guidance and after-sales support under agreed terms",
+    ],
+    sizesNote: "The approved drawing and quotation will confirm the exact scope of supply.",
+
+    industriesHeading: "Our Portable Cabin Range",
+    industriesIntro:
+      "Each cabin type is listed with its typical use. Dimensions and layouts are subject to structural design, transport access and intended use.",
+    industries: [
+      { title: "Site office cabin", text: "Project administration, meetings and paperwork." },
+      { title: "Security cabin", text: "Gate monitoring and visitor registration." },
+      { title: "Labour accommodation cabin", text: "Worker accommodation with ventilation and sleeping arrangements." },
+      { title: "Toilet and bathroom cabin", text: "Sanitation facilities with site service connections." },
+      { title: "Store room cabin", text: "Lockable storage for tools and suitable materials." },
+      { title: "Container office", text: "Durable, relocatable workspace." },
+      { title: "Canteen or rest room cabin", text: "Staff dining and break areas." },
+      { title: "QC or laboratory cabin", text: "Dedicated workspace built to agreed process requirements." },
+      { title: "Custom multi-room cabin", text: "Combined offices, stores, pantries and other facilities." },
+    ],
+
+    customHeading: "Choose Your Cabin Finish",
+    customIntro:
+      "Each feature is listed with its standard finish options, then its upgraded finish options:",
+    customBullets: [
+      {
+        title: "Typical use",
+        text: "Standard: guard rooms, stores and basic accommodation. Upgraded: offices, meeting rooms and customer-facing spaces.",
+      },
+      {
+        title: "Walls and roof",
+        text: "Standard: insulated panels to agreed specifications. Upgraded: alternative panel thicknesses and finishes.",
+      },
+      { title: "Ceiling", text: "Standard: internal panel finish. Upgraded: false ceiling with planned lighting." },
+      { title: "Flooring", text: "Standard: vinyl on a suitable base. Upgraded: premium vinyl or suitable tile finishes." },
+      { title: "Windows", text: "Standard: aluminium sliding windows. Upgraded: UPVC windows or larger glazed sections." },
+      {
+        title: "Interiors",
+        text: "Standard: essential electrical fittings. Upgraded: partitions, AC provisions and furniture options.",
+      },
+    ],
+    customOutro:
+      "You can combine different finishes within one cabin, for example an upgraded office beside a basic store room. The final quotation will identify the selected materials and fittings.",
+
+    whyUsHeading: "Why Plan Your Cabin With Portable Office Cabin",
+    whyUsIntro: "What you can expect when you enquire:",
+    whyUsBullets: [
+      {
+        title: "Designed around your site",
+        text: "each cabin is planned around your available space, intended use and budget, including rain, drainage and ground conditions at Machenahalli.",
+      },
+      {
+        title: "Built off-site",
+        text: "the cabin is fabricated at our factory near Hosur, transported to your location and placed on prepared supports, so there is no lengthy construction at your premises.",
+      },
+      {
+        title: "A drawing before manufacturing",
+        text: "a layout drawing is prepared for your approval before fabrication begins.",
+      },
+      {
+        title: "Scope fixed in the quotation",
+        text: "the selected materials, fittings, transport, lifting responsibilities and charges are identified in the quotation, and after-sales support follows the agreed terms.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Machenahalli",
+    areasText:
+      "Along with Machenahalli Industrial Area, we welcome portable cabin enquiries from nearby locations, including Shivamogga City, Bhadravathi, Nidige, Sogane, Holehonnur, Tirthahalli, Sagar, Shikaripura, Hosanagara and Soraba. Share your exact site location so we can confirm delivery availability and charges in the quotation.",
+
+    howHeading: "Delivery and Placement Planning",
+    howSteps: [
+      {
+        title: "Confirm the location and access",
+        text: "Share your plot location, gate width, approach road details and proposed placement area.",
+      },
+      {
+        title: "Prepare the ground and supports",
+        text: "The cabin needs stable ground and suitable supports. Drainage and possible ground movement should be considered.",
+      },
+      {
+        title: "Agree on the delivery schedule",
+        text: "We will coordinate the delivery date with your team, taking site access and weather conditions into account.",
+      },
+      {
+        title: "Arrange unloading and placement",
+        text: "Truck and crane requirements, responsibilities and charges will be confirmed in the quotation.",
+      },
+      {
+        title: "Complete service connections",
+        text: "Electrical, water, drainage and waste connections must be completed as required before use.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Transport and Lifting Costs",
+        paragraphs: [
+          "Delivery to Machenahalli requires coordination between transport, lifting arrangements and site readiness. Transport and lifting costs depend on cabin dimensions, route, site access and placement requirements, and are confirmed in the quotation.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Are portable cabins suitable for heavy rainfall?",
+        answer:
+          "A cabin can be specified for rainy conditions with appropriate roofing, sealed joints, protective coatings and suitable supports. Site drainage and regular maintenance also matter. Share your site conditions so these requirements can be considered in the design.",
+      },
+      {
+        question: "Do you deliver portable cabins to Machenahalli?",
+        answer:
+          "Yes. Delivery can be arranged to Machenahalli Industrial Area, subject to route and site access. Transport and lifting charges will be confirmed in your quotation.",
+      },
+      {
+        question: "Can a cabin be used as a QC room or laboratory?",
+        answer:
+          "Yes, subject to the intended activity and required specifications. Flooring, wall finishes, ventilation, plumbing, electrical loads and any specialist requirements should be agreed before manufacturing.",
+      },
+      {
+        question: "Can we rent instead of buying?",
+        answer:
+          "Rental options are available subject to stock, location and rental terms. Renting may suit temporary requirements, while buying allows ownership and reuse. Compare the total costs over your expected usage period.",
+      },
+      {
+        question: "How much space is needed for delivery?",
+        answer:
+          "The delivery vehicle needs suitable road and gate access, while lifting equipment needs adequate working space and overhead clearance. Requirements depend on the cabin's size and placement location.",
+      },
+      {
+        question: "Can you add an attached toilet?",
+        answer:
+          "Yes. Office and accommodation cabins can include an attached toilet where the layout allows. Suitable water supply, drainage and waste connections must be prepared at the site.",
+      },
+      {
+        question: "Can the cabin be relocated later?",
+        answer:
+          "Relocatable cabins can be transported to another suitable site using appropriate lifting equipment, subject to cabin condition and access at both locations.",
+      },
+    ],
+
+    ctaHeading: "Get a Quote for Your Machenahalli Site",
+    ctaText: `Need additional space at your factory, warehouse or construction site? Share your intended use, preferred dimensions and site location with Portable Office Cabin. We will help you plan a suitable layout and provide a quotation with the agreed specifications and delivery requirements. Call or WhatsApp ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}, to discuss portable cabins for your Machenahalli site.`,
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Cabin Sizes, Specifications & Prices", href: "/products/portable-cabin" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Cabins on Rent", href: "/rental-service" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a factory, workshop, yard or service partner in Machenahalli, Shivamogga or Bhadravathi. Delivery, unloading and crane placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to stock, location and rental terms. The cabin types, finishes, specifications, inclusions and other items described on this page are options; the items supplied are confirmed in the approved drawing and quotation for each order, and multi-room, joined or specialist cabins are subject to structural design, site conditions and the agreed process requirements. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the furniture and landscaping shown are not included unless listed in the quotation, other cabin types look different, and the images are not photographs of installations in Machenahalli or Shivamogga. KIADB and the Nidige–Machenahalli industrial area are named only to describe the location; Portable Office Cabin is not affiliated with KIADB or any industrial estate, and the businesses, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions. Notes on rain, drainage, corrosion protection, supports, access and service connections are general guidance, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN BELAGAVI — North Karnataka: the Udyambag / Machhe / Honaga / Kakati
    * industrial areas, the NH 48 (Pune–Bengaluru) logistics corridor, the Gokak / Chikodi sugar
    * belt and the high-rainfall Khanapur taluk below the Western Ghats.
@@ -9615,6 +9925,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Site Office Container in Karnataka", href: "/promotions/site-office-container-in-karnataka" },
+      { label: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     ],
 
     disclaimer:
