@@ -14063,8 +14063,9 @@ export const CITY_PAGES: CityPage[] = [
    * blocks with a three-step stair. (3) front elevation, resized to 1600×1200 = hero / og:image, no
    * caption; (2) (1) top-down roof view, cropped to 3:2 (paving only) and resized to 1536×1024 =
    * feature band; (1) (1) plain side elevation, resized to 1600×1200 = single-image gallery; (1) the
-   * 1168×880 plywood-lined office interior, byte-for-byte = beside the rent-or-buy section, captioned
-   * as illustrative. The disclaimer repeats that they are renders.
+   * 1168×880 plywood-lined office interior, byte-for-byte = beside the rent-or-buy section, with no
+   * caption (owner instruction of 2026-10-21, matching Devanahalli #164); the page-level disclaimer
+   * states that the images are illustrative renders.
    *
    * Geo: Kolar city, 13.1367 N 78.1292 E.
    *
@@ -14102,8 +14103,6 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Portable cabin in Kolar — illustrative render of an optionally furnished office interior with plywood-finish wall panels, a panelled door, two black-framed sliding windows, recessed ceiling lights, a desk with a monitor, a second desk with shelving, office chairs and wood-look flooring",
       width: 1168,
       height: 880,
-      caption:
-        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
     },
     gallery: [
       {
