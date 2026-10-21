@@ -68,6 +68,15 @@ does `git fetch` → `git reset --hard` → `npm ci` → `next build` **inside t
 2. **A re-run cannot repair it.** The legacy script prints `Current: <sha> / Target: <sha> /
    Already up to date.` and exits when `main` has not moved (proven by run 38240824471): no build,
    no reload. Both incidents were only cleared by the *next* merge.
+3. **An interrupted build leaves the live directory half-built (2026-10-21, #166).** Run
+   39610102765 (deploy #95, 12ddd61) lost its SSH session during `next build`
+   (`client_loop: send disconnect: Broken pipe`, exit 255, about 4.5 minutes into the step). By then
+   the script had already reset the live directory to the new commit, run `npm ci` and started
+   rewriting `.next/`, but it never reached `pm2 reload`. The old process kept serving: `/`, the
+   product pages and checkout stayed 200, while 57 ISR pages (all 45 city pages, the 11
+   `/products/portable-cabin/*` guides and the prefab marketing office) answered cached 404s
+   (`x-nextjs-cache: HIT`). Attempt 2 of the same run printed `Already up to date` (defect 2), so
+   only a new commit on `main` triggers the full build and reload that repairs it.
 
 ## The fix: release-based, blue/green deploys (`deploy/deploy-portable-office.sh`)
 
