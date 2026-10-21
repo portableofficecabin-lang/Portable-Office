@@ -181,13 +181,15 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("custom", "custom intro", p.customIntro);
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
-  t("whyUs", "why-us heading", p.whyUsHeading);
-  t("whyUs", "why-us intro", p.whyUsIntro);
-  p.whyUsBullets.forEach((b, i) => { t("whyUs", `why-us bullet ${i + 1} title`, b.title ?? ""); t("whyUs", `why-us bullet ${i + 1} text`, b.text); });
+  if (p.whyUsHeading) t("whyUs", "why-us heading", p.whyUsHeading);
+  if (p.whyUsIntro) t("whyUs", "why-us intro", p.whyUsIntro);
+  (p.whyUsBullets ?? []).forEach((b, i) => { t("whyUs", `why-us bullet ${i + 1} title`, b.title ?? ""); t("whyUs", `why-us bullet ${i + 1} text`, b.text); });
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
   t("how", "how heading", p.howHeading);
-  p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); t("how", `step ${i + 1} text`, s.text); });
+  if (p.howIntro) t("how", "how intro", p.howIntro);
+  p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
+  if (p.howOutro) t("how", "how outro", p.howOutro);
   (p.extraSections ?? []).forEach((s, i) => {
     t("extra", `extra section ${i + 1} heading`, s.heading);
     (s.paragraphs ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} paragraph ${j + 1}`, x));

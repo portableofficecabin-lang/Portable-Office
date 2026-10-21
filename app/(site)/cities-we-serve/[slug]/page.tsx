@@ -318,27 +318,37 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         </ul>
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.whyUsBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
-            </li>
-          ))}
-        </ul>
+        {/* "Why us" block — optional since 2026-10-21 (unset on Portable Cabins in Krishnagiri Industrial
+            Area). Every earlier entry sets it, so their HTML is unchanged. */}
+        {page.whyUsBullets && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {page.whyUsBullets.map((b) => (
+                <li key={b.title} className={li}>
+                  <strong className="text-foreground">{b.title}</strong> — {b.text}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
+        {/* Optional lead-in / closing paragraphs (`howIntro`, `howOutro`); unset = no element. A step
+            with an empty `text` (an owner list of titles only) renders its title alone. */}
+        {page.howIntro && <p className={`${p}${mc("reveal")}`}>{page.howIntro}</p>}
         <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>
           {page.howSteps.map((s0) => (
             <li key={s0.title} className={li}>
-              <strong className="text-foreground">{s0.title}</strong> — {s0.text}
+              <strong className="text-foreground">{s0.title}</strong>{s0.text ? <> — {s0.text}</> : null}
             </li>
           ))}
         </ol>
+        {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
 
         {/* Optional extra sections (`extraSections`): owner copy with more H2s than the fixed slots
             hold. Same classes and motion as the sections above; unset = nothing rendered. */}
