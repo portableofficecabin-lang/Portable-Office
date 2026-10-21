@@ -117,9 +117,10 @@ export interface CityPage {
   customOutro: string;
 
   /**
-   * The "why us" block. Optional since 2026-10-21 (first unset by Portable Cabins in Krishnagiri
-   * Industrial Area, whose owner draft has no such section): when `whyUsBullets` is unset the block
-   * is not rendered at all. Every earlier entry sets all three, so their HTML is unchanged.
+   * "Why work with us" slot. Optional since Portable Cabins in Kanakapura (2026-10-21), whose
+   * owner copy has no such section: when whyUsHeading is unset the template renders nothing for
+   * the slot and the SSR audit skips it. Every earlier entry sets all three, so their HTML is
+   * unchanged.
    */
   whyUsHeading?: string;
   whyUsIntro?: string;
