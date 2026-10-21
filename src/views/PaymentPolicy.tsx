@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PaymentMethods } from "@/components/PaymentMethods";
 import { GST_PERCENT_LABEL, formatINR } from "@/lib/pricing/gst";
-import { INSTALLATION } from "@/data/shippingZones";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT, INSTALLATION } from "@/data/shippingZones";
 
 // Server Component (no "use client") — the full policy text is in the initial HTML
 // so Google Merchant Center and crawlers can read it without executing JS.
@@ -69,7 +69,7 @@ export default function PaymentPolicyPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> July 2026
+            <strong>Last updated:</strong> October 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             Portable Office Cabin sells in two ways. Our <strong>standard, fixed-price products</strong> can be bought
@@ -117,7 +117,7 @@ export default function PaymentPolicyPage() {
 
           <Section title="3. Delivery, Transport & Installation Charges">
             <ul className="space-y-3">
-              <Bullet><strong>Free delivery within ~50 km</strong> of our facility (Zone 1) — this is genuinely honoured and no transport charge applies.</Bullet>
+              <Bullet><strong>Free delivery to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</strong> (Zone 1) — this is genuinely honoured and no transport charge applies.</Bullet>
               <Bullet><strong>Beyond that</strong>, transport is charged by <strong>delivery zone</strong>, worked out from your pincode. The exact amount appears in your order total at checkout, before payment.</Bullet>
               <Bullet><strong>On-site installation is optional</strong> and charged separately at {formatINR(INSTALLATION.rate)} — it is never bundled into the transport charge. You choose whether to add it at checkout.</Bullet>
               <Bullet>Transport and installation charges also <strong>include {GST_PERCENT_LABEL} GST</strong>.</Bullet>
@@ -199,7 +199,7 @@ export default function PaymentPolicyPage() {
               <h2 className="font-display text-xl font-bold text-foreground">Customer Service</h2>
             </div>
             <p className="text-muted-foreground mb-5">
-              Questions about pricing, GST, transport charges or payment terms? Talk to us before you confirm anything — we respond within 24 hours.
+              Questions about pricing, GST, transport charges or payment terms? Talk to us before you confirm anything.
             </p>
             <ul className="text-muted-foreground leading-relaxed space-y-3 mb-6">
               <li className="flex items-start gap-3">
@@ -232,7 +232,7 @@ export default function PaymentPolicyPage() {
               <li className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                 <span>
-                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM. We respond to all enquiries within 24 hours.
+                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.
                 </span>
               </li>
             </ul>

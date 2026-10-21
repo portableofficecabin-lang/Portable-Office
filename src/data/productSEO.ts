@@ -1,3 +1,8 @@
+import { DELIVERY_WORKING_DAYS } from "@/data/shippingZones";
+
+/** Door-to-door window (dispatch + zone transit), the same 8–25 the Delivery chip shows. Was a hand-typed 7–21. */
+const DOOR_TO_DOOR = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} working days`;
+
 // Unique, professionally written meta data for each product page
 // Aligned with Google SEO guidelines: titles < 60 chars, descriptions < 160 chars
 
@@ -75,13 +80,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Luxury Prefab Villa G+1 Floors
   "8": {
     title: "Luxury Prefab Villa 3BHK G+1 | Portable Office Cabin",
-    description: "Premium 3BHK prefab villa with 1500 sq ft, real wood interiors & smart home wiring. Ready in days, not months. Perfect for farmhouses & resorts in India.",
+    description: "Premium 3BHK prefab villa with 1500 sq ft, real wood interiors & smart home wiring — far less time on site than conventional construction.",
     keywords: "luxury prefab villa, 3BHK prefab home, prefab villa India, G+1 prefab house, premium modular home, farmhouse villa prefab, prefab villa price India",
   },
   // Container Office — INTENT: Buy single standard unit (transactional)
   "10": {
     title: "Container Office for Sale in India | Portable Office Cabin",
-    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 day dispatch. PAN-India shipping. Call or WhatsApp us.",
+    description: "Ready-to-deploy container offices in India — 20ft & 40ft units. Insulated, relocatable, 7–15 working-day dispatch. PAN-India shipping. Call or WhatsApp us.",
     keywords: "container office for sale India, buy container office, 20ft container office price, 40ft container office price, ready container office, container office delivery India",
   },
   // Porta Cabin
@@ -110,7 +115,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "46": {
     title: "Steel Portable Cabin Manufacturer in India | Portable Office Cabin",
     h1: "Steel Portable Cabin",
-    description: "Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in 7–21 days.",
+    description: `Factory-built steel portable cabins from 8×10 ft to 40×10 ft. Welded MS frame, insulated walls, ready electricals. ISO 9001 maker, pan-India delivery in ${DOOR_TO_DOOR}.`,
     keywords: "steel portable cabin, steel portable cabin manufacturer India, steel cabin price, portable steel office cabin, insulated steel cabin, steel site office cabin, steel security cabin, steel bunkhouse, portable cabin manufacturer India, relocatable steel cabin",
   },
   /* Portable Shop Cabin (id 48). `title` mirrors productCommerce "48".feedTitle, which is what
@@ -140,7 +145,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
    * carry a second figure. */
   "13": {
     title: "Prefabricated Portable Cabin — Factory-Built, Delivered Ready | Portable Office Cabin",
-    description: "See how a prefabricated portable cabin is built, checked and delivered in 7-21 days. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.",
+    description: `See how a prefabricated portable cabin is built, checked and delivered in ${DOOR_TO_DOOR}. Sizes from 8x8 to 40x10 ft, from an ISO 9001 factory, pan-India.`,
     keywords: "prefabricated portable cabin, how prefabricated cabins are made, prefab cabin manufacturing process, factory built portable cabin, prefabricated cabin India, modular cabin fabrication, prefab site office cabin, prefabricated cabin delivery time",
   },
   // New & Used Shipping Container for Sale in India
@@ -220,13 +225,13 @@ const productSEOMap: Record<string, ProductSEOData> = {
   // Security Cabin
   "26": {
     title: "Portable Security Guard Cabin | Portable Office Cabin",
-    description: "Portable security & guard cabin in MS steel with PUF insulation. Police, toll & gate booths with pan-India dispatch in 7–15 days. Price incl. GST, buy online.",
+    description: "Portable security & guard cabin in MS steel with PUF insulation. Police, toll & gate booths with pan-India dispatch in 7–15 working days. Price incl. GST, buy online.",
     keywords: "security cabin, portable security cabin, security guard cabin, watchman cabin, GI security cabin, FRP security cabin, MS security cabin, steel security cabin, portable guard cabin, gate security cabin, toll booth cabin, police booth cabin, security cabin price, security cabin manufacturer India",
   },
   // Cabins in Office
   "27": {
     title: "Office Cabins – Modular Workspaces | Portable Office Cabin",
-    description: "Modern modular office cabins — glass partitions, acoustic booths, meeting pods & executive suites. 30–40 dB sound cut. Install in a weekend. Get a quote!",
+    description: "Modern modular office cabins — glass partitions, acoustic booths, meeting pods & executive suites. 30–40 dB sound cut. Get a quote!",
     keywords: "cabins in office, office cabin, modular office cabin, glass office partition, acoustic office booth, phone booth office, meeting pod, prefab office cabin, office cabin price India, modular workspace",
   },
   // Steel Portable Office Container — INTENT: Portability + ISMC/RHS structural steel + stackable G+1
@@ -252,12 +257,12 @@ const productSEOMap: Record<string, ProductSEOData> = {
   },
   "32": {
     title: "Shipping Container in Chennai | Portable Office Cabin",
-    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. 7–15 day dispatch. Request a free quote.",
+    description: "Shipping containers in Chennai for sale, rent or conversion — storage, offices, homes & cafés. 7–15 working-day dispatch. Request a free quote.",
     keywords: "shipping container Chennai, container office Chennai, used shipping container Chennai, container rental Chennai, container home ECR, shipping container Ennore, container café OMR, modular container Sriperumbudur",
   },
   "33": {
     title: "Shipping Container in Narsapura | Portable Office Cabin",
-    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices & labour colonies for KIADB plots. 7–15 day dispatch.",
+    description: "Shipping containers in Narsapura Industrial Area for sale or rent — storage, offices & labour colonies for KIADB plots. 7–15 working-day dispatch.",
     keywords: "shipping container Narsapura, container office KIADB, shipping container Narsapura Industrial Area, container storage Kolar, portable office Narsapura, container Vemgal, container Malur, modular container Hoskote",
   },
   "34": {
@@ -318,7 +323,7 @@ const productSEOMap: Record<string, ProductSEOData> = {
   "44": {
     title: "Prefab Marketing Office — Sales Gallery Built to Plan | Portable Office Cabin",
     h1: "Prefab Marketing Office",
-    description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, assembled on site in days and relocatable to your next launch.",
+    description: "Prefab marketing offices built to your floor plan — clear-span sales galleries with steel truss roofs and insulated panels, relocatable to your next launch — far less time on site than conventional construction.",
     keywords: "prefab marketing office, prefab sales gallery, prefabricated marketing office, sales gallery structure, real estate sales gallery, prefab sales office India, township launch gallery, relocatable sales gallery, prefab pavilion, project launch office",
   },
   /* Container Cafe & Restaurant (id 47) — quote-only. Keywords are the SEO setup in the owner's

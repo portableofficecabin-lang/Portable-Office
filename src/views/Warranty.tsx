@@ -140,8 +140,7 @@ export default function WarrantyPage() {
               </div>
               <ul className="space-y-3">
                 <Bullet><strong>Customer support 7 days a week</strong> — reach us by phone, email, or WhatsApp, Mon-Sat 7:00 AM - 10:00 PM and Sunday 10:00 AM - 7:00 PM.</Bullet>
-                <Bullet><strong>On-site maintenance</strong> — our service team can visit your location for repairs and upkeep.</Bullet>
-                <Bullet><strong>Genuine spare parts</strong> — replacement parts are readily available and competitively priced.</Bullet>
+                <Bullet><strong>Maintenance and repairs</strong> — on-site visits, repairs and upkeep as set out in your quotation or maintenance agreement.</Bullet>
               </ul>
             </motion.div>
           </div>
@@ -178,7 +177,7 @@ export default function WarrantyPage() {
           >
             <h2 className="font-display text-2xl font-bold text-foreground mb-3">Have a Warranty Question?</h2>
             <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-              Our team is happy to help with any warranty enquiries. Reach out and we'll get back to you within 24 hours.
+              Our team is happy to help with any warranty enquiries. Reach out and we'll get back to you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="accent" size="lg" asChild>

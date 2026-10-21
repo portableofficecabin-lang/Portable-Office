@@ -17,7 +17,7 @@ const onlinePrice = formatINR(sellPrice(getCommerce("30")!.basePrice));
 
 const highlights = [
   { icon: Shield, title: "Corten Steel Durability", description: "Corrosion-resistant steel withstands hot summers and monsoon rains in Krishnagiri" },
-  { icon: Clock, title: "Deploy in 3–7 Days", description: "Standard units delivered within a week versus 30–60 days for conventional structures" },
+  { icon: Clock, title: "Clear Dispatch Window", description: "Bought online: dispatched in 7–15 working days; custom builds follow your written quotation" },
   { icon: IndianRupee, title: "20–35% Cost Savings", description: "Lower than RCC buildings with predictable budgeting and minimal civil work" },
   { icon: Truck, title: "Relocatable Units", description: "Move containers between Krishnagiri, Hosur, and Dharmapuri as projects shift" },
   { icon: Recycle, title: "Sustainable Choice", description: "Repurposing containers reduces construction waste and embodied carbon" },
@@ -56,7 +56,7 @@ const faqs = [
   { q: "What sizes of shipping containers are available in Krishnagiri?", a: "We supply standard 10 ft, 20 ft, and 40 ft containers in both standard height (8.6 ft) and high cube (9.6 ft) variants. Custom sizes can be fabricated on request." },
   { q: "Can shipping containers be used as permanent structures?", a: "Yes. With proper foundation, insulation, anti-corrosive coatings, and periodic maintenance, containers can serve as permanent structures lasting 25+ years." },
   { q: "Do I need approvals for placing a container in Krishnagiri?", a: "Check with your local panchayat or municipal authority. Commercial uses and structures on agricultural land may require specific permissions. We provide AutoCAD drawings to support your application." },
-  { q: "What is the delivery timeline for containers in Krishnagiri?", a: "Stock units deliver in 3–5 days. Custom-built containers with interior fit-out take 15–30 days from design freeze." },
+  { q: "What is the delivery timeline for containers in Krishnagiri?", a: "The standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Custom-built containers with interior fit-out follow the timeline in your written quotation." },
   { q: "Can I relocate the container later?", a: "Absolutely. Containers are designed for relocation via crane and flatbed trailer. We handle logistics for moves within Tamil Nadu and across India." },
   { q: "What is the difference between cargo-worthy and refurbished containers?", a: "Cargo-worthy containers have minor dents and are suitable for basic storage. Refurbished containers are sandblasted, repainted, and fitted with new flooring—ideal for offices and homes." },
   { q: "Can I get help with custom container requirements in Krishnagiri?", a: "Yes. Beyond the fixed-price container on this page, our team supports custom sizes, fitted offices and container homes — call or WhatsApp us with your requirement." },
@@ -272,7 +272,7 @@ export function ShippingContainerKrishnagiriContent() {
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
           How to Get Started
         </h2>
-        <p className="text-muted-foreground mb-4">The standard container on this page can be bought online right away at the fixed GST-inclusive price shown above. For custom builds, share these details with us for a detailed proposal within 24 hours:</p>
+        <p className="text-muted-foreground mb-4">The standard container on this page can be bought online right away at the fixed GST-inclusive price shown above. For custom builds, share these details with us for a detailed proposal:</p>
         <ul className="space-y-2 mb-4">
           {[
             "Intended use (storage, office, home, café, labour camp)",
@@ -289,7 +289,7 @@ export function ShippingContainerKrishnagiriContent() {
           ))}
         </ul>
         <p className="text-muted-foreground">
-          Custom-project quotations include container cost, fabrication charges, basic electrical/plumbing, delivery within Tamil Nadu, and optional installation. Site visits in Krishnagiri can be scheduled within 1–3 days for complex projects.
+          Custom-project quotations include container cost, fabrication charges, basic electrical/plumbing, delivery within Tamil Nadu, and optional installation. Site visits in Krishnagiri can be arranged for complex projects.
         </p>
       </section>
 

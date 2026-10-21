@@ -172,7 +172,7 @@ export function CategoryEnquiryForm({
         {heading}
       </h2>
       <p className="mt-2 max-w-3xl text-muted-foreground leading-relaxed">
-        {`The models above are sold online at their listed prices. For another size, a different layout or a multi-unit order, send your requirement and our sales team will reply ${COMPANY.responseTime.toLowerCase()} to confirm the details before preparing a written quotation.`}
+        {`The models above are sold online at their listed prices. For another size, a different layout or a multi-unit order, send your requirement and our sales team will reply to confirm the details before preparing a written quotation.`}
       </p>
 
       {status === "sent" ? (
@@ -186,7 +186,7 @@ export function CategoryEnquiryForm({
           <div>
             <p className="font-semibold text-foreground">Thank you — your requirement has been sent.</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {`Our sales team replies ${COMPANY.responseTime.toLowerCase()}. For anything urgent, call `}
+              {`For anything urgent, call `}
               <a href={`tel:${COMPANY.phones[0].e164}`} className="font-medium text-accent hover:underline">
                 {COMPANY.phones[0].display}
               </a>

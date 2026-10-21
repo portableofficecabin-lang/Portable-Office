@@ -50,7 +50,7 @@ export const VIP_FAQS: { question: string; answer: string }[] = [
   {
     question: "How quickly can it be set up?",
     answer:
-      "Once your order is confirmed, units are typically delivered and made operational within a few days, depending on customisation and location.",
+      "Standard products bought online are dispatched within 7–15 working days of order confirmation; delivery and installation then depend on customisation, location and site readiness, and custom builds follow your written quotation.",
   },
 ];
 
@@ -111,7 +111,7 @@ const WHY_US = [
   "Full ownership — a premium, relocatable asset that serves project after project",
   "Pan-India delivery — units transported and installed across the country",
   "Full customisation — sizes, layouts, furniture, washrooms, and branding",
-  "Transparent pricing — clear quotes with no hidden costs",
+  "Transparent pricing — transport and installation shown separately from the price",
   "End-to-end service — design, delivery, installation, and support handled for you",
 ];
 

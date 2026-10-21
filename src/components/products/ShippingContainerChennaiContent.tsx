@@ -18,8 +18,8 @@ import { formatINR, sellPrice } from "@/lib/pricing/gst";
 const chennaiPrice = formatINR(sellPrice(getCommerce("32")!.basePrice));
 
 const highlights = [
-  { icon: Anchor, title: "Chennai Port Proximity", description: "Fast dispatch within 24–72 hours from yards near Chennai Port, Ennore, and Kattupalli" },
-  { icon: Clock, title: "Same-Day to 6 Weeks", description: "Bare containers in 48 hours; fitted offices in 2–4 weeks; full homes in 3–6 weeks" },
+  { icon: Anchor, title: "Chennai Port Proximity", description: "Containers supplied from yards near Chennai Port, Ennore, and Kattupalli" },
+  { icon: Clock, title: "Clear Timelines", description: "Bought online: dispatched in 7–15 working days; fitted offices and homes follow your written quotation" },
   { icon: IndianRupee, title: "Fixed Online Price", description: `Buy online at ${chennaiPrice} incl. GST — the same price at cart, checkout, and payment` },
   { icon: Truck, title: "Turnkey Delivery", description: "20–40 ton trailers with Hydra crane placement across North and South Chennai" },
   { icon: Factory, title: "Industrial Coverage", description: "Sriperumbudur, Oragadam, OMR, ECR, Ennore, Kattupalli — all zones served" },
@@ -73,7 +73,7 @@ const faqs = [
   { q: "What sizes of shipping containers are available in Chennai?", a: "We supply 10 ft, 20 ft, 40 ft GP and 40 ft HC containers. Custom sizes can be fabricated. The most common lengths are 20 ft and 40 ft, designed for transporting goods over long distances." },
   { q: "How much does a used shipping container cost in Chennai?", a: `Our shipping container is priced at ${chennaiPrice} including GST — one fixed price you can order online with secure checkout. One-trip containers offer near-new condition; contact us for current grade availability.` },
   { q: "Can containers withstand Chennai's coastal climate?", a: "Absolutely. Our containers use ISO-grade Corten steel with corrosion resistance suited to Chennai's coastal salinity. We apply marine-grade epoxy coatings (120 microns DFT) and recommend 1–2m roof overhangs for monsoon protection." },
-  { q: "How quickly can you deliver containers in Chennai?", a: "Bare containers dispatch within 24–72 hours. Fitted container offices take 2–4 weeks. Container homes with full interiors require 3–6 weeks from design freeze." },
+  { q: "How quickly can you deliver containers in Chennai?", a: "The standard container bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Fitted container offices and container homes with full interiors follow the timeline in your written quotation." },
   { q: "Do I need approvals for container structures in Chennai?", a: "Temporary structure permits (valid 1–3 years, renewable) may be required. Setback requirements are typically 3–5m. We guide clients on CMDA bylaws and Chennai Corporation documentation." },
   { q: "Can you convert containers into homes and cafés?", a: "Yes. We design container homes with partitioned bedrooms, pantry, attached toilets, and large sliding glass windows. Container cafés include SS counters, kitchen zoning, and exhaust hoods." },
   { q: "Which areas in Chennai do you cover?", a: "We cover all of Chennai including OMR, ECR, Ennore, Kattupalli, Sriperumbudur, Oragadam, Mahabalipuram, and surrounding industrial zones. Site visits are available for large or complex setups." },
@@ -347,12 +347,11 @@ export function ShippingContainerChennaiContent() {
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground mb-3">Installation Timelines</h3>
+            <h3 className="font-semibold text-foreground mb-3">Timelines &amp; Site Rules</h3>
             <ul className="space-y-2">
               {[
-                "Bare containers: Same-day to 48 hours",
-                "Fitted container offices: 2–4 weeks",
-                "Container homes with full interiors: 3–6 weeks",
+                "Standard container bought online: dispatched in 7–15 working days",
+                "Fitted container offices and homes: timeline set out in your written quotation",
                 "Setback requirements: typically 3–5m",
                 "Temporary permits valid 1–3 years (renewable)",
               ].map((timeline) => (
@@ -436,7 +435,7 @@ export function ShippingContainerChennaiContent() {
         <h2 className="font-display text-2xl font-bold text-foreground mb-4">
           How to Get Started
         </h2>
-        <p className="text-muted-foreground mb-4">Buy the standard container online at the fixed GST-inclusive price shown above, or share these details for a customized proposal within 24 hours:</p>
+        <p className="text-muted-foreground mb-4">Buy the standard container online at the fixed GST-inclusive price shown above, or share these details for a customized proposal:</p>
         <ul className="space-y-2 mb-4">
           {[
             "Intended use (storage, office, home, café, workshop, lab)",

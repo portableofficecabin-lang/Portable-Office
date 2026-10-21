@@ -7,6 +7,7 @@ import cabinPortableSite from "@/assets/products/cabin-portable-site.webp";
 import cabinPortableOffice from "@/assets/products/cabin-portable-office.webp";
 import cabinPortableContainer from "@/assets/products/cabin-portable-container.webp";
 import { resolveImageUrl } from "@/utils/resolveImageUrl";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 
 export function CabinPortableContent() {
   return (
@@ -43,7 +44,7 @@ export function CabinPortableContent() {
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {[
             { icon: IndianRupee, title: "60% Cheaper", desc: "Up to 60% cheaper than reinforced cement concrete (RCC) structures for temporary or semi-permanent needs" },
-            { icon: Clock, title: "1-2 Day Install", desc: "Installation achievable in 1-2 days after delivery" },
+            { icon: Clock, title: "Optional Installation", desc: "On-site installation & positioning can be added at checkout" },
             { icon: Shield, title: "10-20+ Year Lifespan", desc: "Lifespan extending 10-20+ years with basic maintenance like periodic repainting and sealant checks" },
             { icon: Zap, title: "Dynamic Environments", desc: "Ideal for dynamic project environments where traditional construction is too slow or costly" },
           ].map((item, idx) => (
@@ -161,7 +162,7 @@ export function CabinPortableContent() {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">Portable Office Cabins & Site Office Containers</h2>
         <p className="text-muted-foreground leading-relaxed mb-6">
-          The portable office cabin represents the most in-demand cabin portable product for construction, infrastructure, and corporate projects across India. These office spaces provide reliable, comfortable work environments that can be operational within days.
+          The portable office cabin represents the most in-demand cabin portable product for construction, infrastructure, and corporate projects across India. These office spaces provide reliable, comfortable work environments that arrive factory-finished.
         </p>
 
         <h3 className="text-xl font-semibold text-foreground mb-4">Key differences between fabricated MS cabins and container offices:</h3>
@@ -214,8 +215,8 @@ export function CabinPortableContent() {
 
         <h3 className="text-xl font-semibold text-foreground mb-3">Delivery timelines:</h3>
         <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Standard 20 ft cabin: 2-3 weeks from order confirmation</li>
-          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Customized conference or training room cabins: 3-4 weeks</li>
+          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Standard 20 ft cabin bought online: dispatched within 7–15 working days of order confirmation</li>
+          <li className="flex items-start gap-2"><Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Customized conference or training room cabins: timeline set out in your written quotation</li>
         </ul>
       </section>
 
@@ -431,8 +432,8 @@ export function CabinPortableContent() {
             <Zap className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-semibold text-foreground mb-2 text-sm">Speed Benefits</h3>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
-              <li>• Factory production: 2-4 weeks</li>
-              <li>• On-site install: 1-2 days</li>
+              <li>• Dispatch: within 7–15 working days of order confirmation</li>
+              <li>• On-site installation: optional, added at checkout</li>
               <li>• No weather-dependent curing</li>
             </ul>
           </div>
@@ -530,8 +531,7 @@ export function CabinPortableContent() {
           <div className="bg-card border border-border/40 rounded-xl p-5">
             <h3 className="font-semibold text-foreground mb-3">After-Sales Support</h3>
             <ul className="space-y-1.5 text-sm text-muted-foreground">
-              <li>• 24-72 hour service response</li>
-              <li>• Spare parts availability</li>
+              <li>• Maintenance and repairs as set out in your quotation or agreement</li>
               <li>• Relocation & refitting services</li>
             </ul>
           </div>
@@ -602,7 +602,7 @@ export function CabinPortableContent() {
 
         <h3 className="text-xl font-semibold text-foreground mb-4">What sits outside the unit price:</h3>
         <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Transport to your site — calculated at checkout from your delivery pincode, and free within 50 km of our works</li>
+          <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Transport to your site — calculated at checkout from your delivery pincode, and free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</li>
           <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Installation — an optional line item you can add at checkout</li>
           <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Utility connection work at your end (power and water hookup)</li>
           <li className="flex items-start gap-2"><IndianRupee className="w-4 h-4 text-primary mt-0.5 shrink-0" /> Relocating the cabin to a future site — arranged and quoted at the time</li>
@@ -649,7 +649,7 @@ export function CabinPortableContent() {
           </ul>
         </div>
         <p className="text-muted-foreground leading-relaxed">
-          Lead times run 2-4 weeks for standard units, so early confirmation helps align manufacturing and logistics with your project milestones. Send your enquiry today to ensure your site offices, accommodation, and utility units are ready when you need them.
+          Standard units bought online are dispatched within 7–15 working days, so early confirmation helps align manufacturing and logistics with your project milestones. Send your enquiry today to ensure your site offices, accommodation, and utility units are ready when you need them.
         </p>
       </section>
     </div>
