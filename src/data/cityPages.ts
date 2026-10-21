@@ -1049,11 +1049,291 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      // The portable-cabin page for Attibele, along Hosur Road (2026-10-21), before "Areas We Serve" so
+      // the earlier links keep their positions.
+      { label: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a factory or yard in Jigani. Delivery, unloading and crane placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability. The sizes, layouts, insulation, fittings, finishes and other specification items described on this page, including the typical build listed for each part, are options; the items supplied are confirmed in the approved specification and quotation for each order, and stacked or joined units are subject to structural design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the solar panels, furniture and landscaping shown are not included unless listed in the quotation, other build types look different, and the images are not photographs of installations in Jigani. KIADB and its industrial areas, the Bommasandra industrial area and Namma Metro are named only to describe the region; Portable Office Cabin is not affiliated with KIADB, BMRCL or any industrial estate, and the businesses, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions. Notes on permissions, cranes, foundations, weather, insulation and rust protection are general guidance, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN ATTIBELE — the portable-cabin intent for Attibele town and the Attibele
+   * Industrial Area on Hosur Road, at the Karnataka–Tamil Nadu border south-east of Bengaluru: factories,
+   * warehouses and logistics yards, plotted layouts and civil contractors. Not a container-office
+   * cluster location (no "container-office" in the slug), so the /cities-we-serve index lists it with
+   * the local-service pages. Linked from the nearest portable-cabin page (Jigani) and the "Portable
+   * Cabin|Karnataka" and "Porta Cabin|Karnataka" hubs, after Jigani (the #145 arrangement).
+   *
+   * Owner copy of 2026-10-21, mapped onto the fixed template slots. The slug is the owner's URL slug
+   * under /cities-we-serve/; the CTA's "[Your Phone Number]", "[Your Email Address]" and "[Your
+   * WhatsApp Number]" are COMPANY's numbers and sales address. Nothing is dropped:
+   *   • H1 as written; the draft's first H2 ("Portable Cabins for Factories, Warehouses and
+   *     Construction Sites") is the tagline, and its three paragraphs are the intro.
+   *   • "Who We Build For in Attibele" → why (its four H3s as bullets, with a one-line lead-in).
+   *   • "Our Portable Cabin Range" table → solutions (cabin type as the H3, typical use as its text).
+   *   • "Materials and Construction Options" fills two slots, because the draft has one section fewer
+   *     than the template: the frame, walls and roof, exterior and flooring → features, with the
+   *     approval line as sizesNote; doors, windows and electricals → industries, as "Doors, Windows
+   *     and Electrical Fittings", right after the front-view render that shows them.
+   *   • "Rent or Buy: Compare Your Options" table → custom, beside the interior render (the Jigani
+   *     arrangement), one bullet per row, with the draft's closing note as customOutro.
+   *   • "Keeping Your Cabin in Good Condition" → whyUs (short titles added to the seven checks); its
+   *     closing line moves into the intro, because the slot has no outro.
+   *   • "Areas Around Attibele We Serve" → areas, as "Delivery Enquiries Around Attibele"; "From
+   *     Enquiry to Installation" → how (five steps). The template renders maintenance and areas
+   *     before the steps, so those two sections move up.
+   *   • The seven FAQs. "How long does a portable cabin last?" is already asked on five pages, so it
+   *     reads "…on an Attibele site?". "Get a Quote for Your Attibele Site" → CTA.
+   * Owner wording rules (the Kudankulam / Tumkur rule and the final terms of #156 / #163): the draft
+   * already follows them, so its wording is kept; only "we supply cabins to nearby locations" becomes
+   * delivery enquiries. No lead times, quote turnaround, inspection or "quality" claims; specifications
+   * are options confirmed in the approved specification and quotation; rental is subject to
+   * availability and the rental quotation; service and repair follow the applicable service terms;
+   * foundation and civil work are quoted separately (the checkout note). No ₹.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Portable Cabins in Attibele city page/
+   * Portable Cabins in Attibele/…") of one cabin with white and navy corrugated walls in a black frame,
+   * black-framed windows and a dark entrance door with a glass strip, on concrete block supports in a
+   * paved industrial yard, plus a furnished executive interior with the same door and windows.
+   * (3) three-quarter view → hero / og:image and (1 (1)) front view → one-image gallery, both trimmed
+   * 8 px to an exact 4:3 and resized to 1600×1200; (2 (1)) top-down roof view → feature band, cropped
+   * to 3:2 (1536×1024); (1) the 1168×880 interior, copied byte for byte → beside rent or buy. No hero
+   * or interior caption (the owner removed the Devanahalli interior caption in #164); the disclaimer
+   * says they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`); the
+   * call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-attibele",
+    city: "Attibele",
+    listTitle: "Portable Cabins in Attibele",
+    metaTitle: "Portable Cabins in Attibele | Office, Security & Labour Cabins",
+    metaDescription:
+      "Buy or rent portable cabins in Attibele and along Hosur Road. Custom site offices, security cabins, labour rooms and storage units. Request a quote.",
+    keywords:
+      "Portable Cabin in Attibele, Portable Cabin Attibele Industrial Area, Portable Cabin Hosur Road, Security Cabin Attibele, Site Office Cabin Attibele, Labour Cabin Attibele, Weighbridge Cabin Attibele, Portable Sales Office Attibele, Portable Cabin on Rent in Attibele",
+    geo: { region: "IN-KA", placename: "Attibele, Anekal Taluk, Bengaluru, Karnataka, India", position: "12.7797;77.7713", icbm: "12.7797, 77.7713" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-attibele/portable-cabin-attibele-exterior.webp",
+      alt: "Portable cabin in Attibele — illustrative render of a portable cabin with white and navy corrugated steel walls in a black frame, two black-framed windows and a wall light, raised on concrete block supports in a paved industrial yard",
+      width: 1600,
+      height: 1200,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-attibele/portable-cabin-attibele-roof-view.webp",
+      alt: "Portable cabin in Attibele — illustrative top-down view of the cabin's flat dark roof inside its black frame, with the concrete entrance steps and the landscaped paving around it",
+      width: 1536,
+      height: 1024,
+      caption: "A flat roof, seen from above. Keep its drainage outlets clear.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-attibele/portable-cabin-attibele-interior.webp",
+      alt: "Portable cabin in Attibele — illustrative render of an optionally furnished executive office interior with wood-finish wall panels, a wooden desk and black leather chair, two tan armchairs and a coffee table, a lit bookshelf, recessed ceiling lights, black-framed windows and a dark entrance door with a glass strip",
+      width: 1168,
+      height: 880,
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-attibele/portable-cabin-attibele-front-view.webp",
+        alt: "Portable cabin in Attibele — illustrative front view of the white and navy cabin with a dark entrance door with a glass strip and pull handle, two black-framed sliding windows, a wall light and concrete steps, on concrete supports",
+        width: 1600,
+        height: 1200,
+      },
+    ],
+
+    h1: "Portable Cabins in Attibele, Bengaluru",
+    tagline: "Portable Cabins for Factories, Warehouses and Construction Sites",
+    intro: [
+      "Need additional space at your factory, warehouse or project site in Attibele? Portable cabins provide practical rooms for working, resting, security and storage without lengthy construction at your premises.",
+      "At Portable Office Cabin, we design and supply cabins for industrial units, logistics yards, real estate projects and contractors. Each cabin is built off-site, transported to your location and placed on prepared supports before the required service connections are completed.",
+      "Choose rental or purchase options according to your project duration, budget and requirements.",
+    ],
+
+    whyHeading: "Who We Build For in Attibele",
+    whyIntro: "Portable cabins for four kinds of sites around Attibele:",
+    whyBullets: [
+      {
+        title: "Factories and industrial units",
+        text: "Create additional space for production supervisors, administration, suitable inspection activities, storage or gate security. Cabin dimensions and placement can be planned around your existing buildings and site access.",
+      },
+      {
+        title: "Warehouses and logistics yards",
+        text: "We supply cabins for security teams, dispatch staff, weighbridge operators and drivers. Layouts can include counters, workstations and windows positioned for visibility across entrances and loading areas.",
+      },
+      {
+        title: "Layout developers and builders",
+        text: "A portable sales office provides a dedicated place to meet prospective buyers. Options include glass fronts, finished ceilings, lighting, seating and space for brochures or project displays.",
+      },
+      {
+        title: "Civil contractors",
+        text: "Set up engineer offices, meeting rooms, material stores, worker accommodation and toilet blocks. Relocatable cabins can be transported to another suitable site when the project ends.",
+      },
+    ],
+
+    solutionsHeading: "Our Portable Cabin Range",
+    solutionsIntro:
+      "Nine cabin types and their typical uses. Sizes, layouts and fittings are confirmed in the approved specification and quotation.",
+    solutions: [
+      { title: "Site office cabin", text: "Project administration, meetings and paperwork." },
+      { title: "Security cabin", text: "Gate monitoring and visitor registration." },
+      { title: "Weighbridge and dispatch cabin", text: "Operator workspace near vehicle movement areas." },
+      { title: "Labour accommodation cabin", text: "Worker accommodation with ventilation and sleeping arrangements." },
+      { title: "Portable toilet cabin", text: "Single or multiple sanitation units." },
+      { title: "Storage cabin", text: "Lockable space for tools, spares and suitable materials." },
+      { title: "Sales office cabin", text: "Customer meetings and real estate project displays." },
+      { title: "Container office", text: "Durable, relocatable workspace." },
+      { title: "Custom cabin", text: "Canteens, first aid rooms, pantries and other agreed uses." },
+    ],
+
+    featuresHeading: "Materials and Construction Options",
+    featuresIntro: "Cabin materials and fittings are selected according to the intended use and approved specifications.",
+    features: [
+      "Mild steel structure — a welded MS frame forms the cabin's base and supporting structure. Frame specifications and lifting arrangements are planned for the selected design.",
+      "Insulated walls and roof — PUF or EPS sandwich panels are available, depending on the cabin model. Insulation helps reduce heat transfer, while ventilation and air conditioning can improve indoor comfort further.",
+      "Exterior finish — pre-painted GI sheets or other agreed cladding options provide an exterior finish suited to the design. Colours and signage can be selected to match your company branding.",
+      "Flooring — options include a cement board or other suitable base finished with vinyl or tiles. The floor specification should match the expected furniture, foot traffic and storage loads.",
+    ],
+    sizesNote: "You will receive a proposed layout and specifications for approval before manufacturing.",
+
+    industriesHeading: "Doors, Windows and Electrical Fittings",
+    industriesIntro: "Openings and electricals are chosen with the layout:",
+    industries: [
+      {
+        title: "Doors and windows",
+        text: "choose suitable steel or aluminium doors and aluminium or UPVC windows. Their positions can be adjusted to suit access, ventilation, visibility and furniture placement.",
+      },
+      {
+        title: "Electrical fittings",
+        text: "electrical options include wiring, MCB protection, lights, fan points, sockets and AC provisions. Final connections should be completed by a qualified electrician.",
+      },
+    ],
+
+    customHeading: "Rent or Buy: Compare Your Options",
+    customIntro: "How renting and buying compare:",
+    customBullets: [
+      { title: "Suitable for", text: "rent for temporary needs and short projects; buy for long-term or repeated use." },
+      { title: "Initial payment", text: "renting is usually lower, subject to deposit and rental terms; buying means the purchase price and agreed charges." },
+      { title: "Ownership", text: "a rented cabin remains with the supplier; a bought cabin belongs to you." },
+      { title: "After use", text: "a rented cabin is collected under the rental agreement; a bought cabin can be retained, relocated, reused or resold." },
+      {
+        title: "Costs to compare",
+        text: "for rent, the rent, deposit, transport, lifting and return charges; for purchase, the price, transport, lifting, maintenance and future relocation.",
+      },
+    ],
+    customOutro:
+      "Share your expected usage period so we can help you compare the overall costs. Rental availability and minimum duration will be confirmed in your quotation.",
+
+    whyUsHeading: "Keeping Your Cabin in Good Condition",
+    whyUsIntro:
+      "Regular checks and basic maintenance help protect your cabin. Contact us to discuss repairs or maintenance support under the applicable service terms.",
+    whyUsBullets: [
+      { title: "Roof and drainage", text: "keep the roof and drainage outlets clear of leaves and debris." },
+      { title: "Base", text: "prevent water from collecting around the base." },
+      { title: "Hinges and locks", text: "lubricate them according to the fitting manufacturer's guidance." },
+      { title: "Coatings", text: "repair damaged protective coatings with a suitable treatment." },
+      { title: "Joints and openings", text: "check roof joints, sealants, doors and windows for wear." },
+      { title: "Electricals", text: "arrange electrical inspections through a qualified electrician." },
+      { title: "Supports", text: "check the cabin's supports after relocation or visible ground movement." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Attibele",
+    areasText:
+      "Along with Attibele town and Attibele Industrial Area, we welcome delivery enquiries from nearby locations, including Chandapura, Anekal, Bommasandra, Jigani, Hebbagodi, Electronic City, Sarjapur, Dommasandra, Neraluru, Huskur and Hosur. Share your exact site location to confirm delivery availability and transport charges.",
+
+    howHeading: "From Enquiry to Installation",
+    howSteps: [
+      {
+        title: "Share your requirement",
+        text: "Send us the intended use, approximate dimensions, preferred fittings and site location in or around Attibele.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "We will provide the proposed drawing, specifications and applicable charges.",
+      },
+      {
+        title: "Approve the order",
+        text: "Manufacturing begins after the design and order terms are confirmed.",
+      },
+      {
+        title: "Prepare for delivery",
+        text: "We will coordinate truck access, ground and support requirements, overhead clearance and lifting arrangements.",
+      },
+      {
+        title: "Place and connect the cabin",
+        text: "Once the cabin is positioned, complete the necessary electrical, water and drainage connections before use.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Do you supply portable cabins along Hosur Road near Attibele?",
+        answer:
+          "Yes. We arrange delivery to sites in Attibele and surrounding locations along Hosur Road. Delivery depends on the cabin dimensions, route and access at your site.",
+      },
+      {
+        question: "Can I order a cabin in my company's colours?",
+        answer: "Yes. Exterior colours, logos and signage can be included according to the agreed design and quotation.",
+      },
+      {
+        question: "Can a portable cabin be used as a sales office?",
+        answer:
+          "Yes. Sales office layouts can include glazing, finished interiors, lighting, seating and display areas. The design can be customised to suit your customer meetings and project requirements.",
+      },
+      {
+        question: "How long does a portable cabin last on an Attibele site?",
+        answer:
+          "Service life depends on the materials, construction, exposure, installation and maintenance. A suitably specified cabin can provide many years of use with appropriate care.",
+      },
+      {
+        question: "Can several cabins be combined into a larger space?",
+        answer:
+          "Multiple cabins can be arranged as a larger facility. Creating connected interiors requires planned structural openings, weatherproof joints and suitable supports, so this requirement should be discussed before manufacturing.",
+      },
+      {
+        question: "Do you arrange transport and crane placement?",
+        answer:
+          "Transport and lifting can be coordinated as part of the order. The quotation will confirm the scope, charges and any site arrangements required from you.",
+      },
+      {
+        question: "Can I order a cabin with an attached toilet?",
+        answer:
+          "Yes. Office and accommodation cabins can include an attached toilet, subject to the layout. Suitable water supply, drainage and waste connections must be arranged at the site.",
+      },
+    ],
+
+    ctaHeading: "Get a Quote for Your Attibele Site",
+    ctaText: `Need an office, security cabin, labour room or storage unit? Share your requirements with Portable Office Cabin for a proposed layout and quotation. Call ${COMPANY.phones[0].display}, WhatsApp ${COMPANY.whatsapp.display} or email ${COMPANY.email.sales}. Contact us to discuss a portable cabin for your Attibele site.`,
+    ctaButtonLabel: "Request a Quote",
+    // The quotation button plus the default call and WhatsApp buttons; an empty list drops the two
+    // container-office secondary buttons, as on Portable Cabins in Jigani and Tumkur.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Portable Cabins on Rent", href: "/rental-service" },
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+      { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
+      { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a factory, branch, yard or service partner in Attibele. Delivery, unloading, lifting and placement are arranged for each project; placement time and the supports depend on the site, foundation and civil work are quoted separately, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental is subject to availability and the rental quotation. The cabin types, sizes, layouts, materials, insulation, finishes, fittings and other specification items described on this page are options; the items supplied are confirmed in the approved layout, specification and quotation for each order, and combined or connected cabins are subject to structural design and approvals. Repairs and maintenance support follow the applicable service terms. The images on this page are illustrative renders of one Portable Office Cabin design, shown with landscaping and an optionally furnished executive interior that are not included unless listed in the quotation; other build types look different, and the images are not photographs of installations in Attibele. Attibele Industrial Area and the towns, roads and places named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on materials, electrical work, connections, supports and maintenance are general guidance, not engineering or electrical advice; electrical connections should be completed by a qualified electrician.",
   },
 
   {
