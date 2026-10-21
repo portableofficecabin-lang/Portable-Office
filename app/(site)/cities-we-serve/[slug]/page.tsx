@@ -271,15 +271,21 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </div>
         )}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.industriesHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.industriesIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.industries.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
-            </li>
-          ))}
-        </ul>
+        {/* Optional since 2026-10-21 (see CityPage.industriesHeading): unset = no section. The fragment
+            adds no markup, so pages that set it render byte-identical HTML. */}
+        {page.industriesHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.industriesHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.industriesIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.industries ?? []).map((b) => (
+                <li key={b.title} className={li}>
+                  <strong className="text-foreground">{b.title}</strong> — {b.text}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.customHeading}</h2>
         {page.interiorImage && (
@@ -318,12 +324,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         </ul>
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
 
-        {/* "Why work with us" slot — optional since Portable Cabins in Kanakapura (owner copy without such
-            a section). Unset heading = nothing rendered; every page that sets it renders exactly as before. */}
+        {/* Optional since 2026-10-21 (see CityPage.whyUsHeading): unset = no section. */}
         {page.whyUsHeading && (
           <>
             <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
-            {page.whyUsIntro && <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>}
+            <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
             <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
               {(page.whyUsBullets ?? []).map((b) => (
                 <li key={b.title} className={li}>

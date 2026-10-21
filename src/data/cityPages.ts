@@ -107,9 +107,14 @@ export interface CityPage {
   features: string[];
   sizesNote: string;
 
-  industriesHeading: string;
-  industriesIntro: string;
-  industries: CityPageListItem[];
+  /**
+   * The industries (uses) section. Optional since 2026-10-21, for owner copy that has no such section
+   * (first used by Portable Cabins in Vemgal Industrial Area): the section renders only when
+   * `industriesHeading` is set, so every earlier page, which sets all three, renders as before.
+   */
+  industriesHeading?: string;
+  industriesIntro?: string;
+  industries?: CityPageListItem[];
 
   customHeading: string;
   customIntro: string;
@@ -117,10 +122,8 @@ export interface CityPage {
   customOutro: string;
 
   /**
-   * "Why work with us" slot. Optional since Portable Cabins in Kanakapura (2026-10-21), whose
-   * owner copy has no such section: when whyUsHeading is unset the template renders nothing for
-   * the slot and the SSR audit skips it. Every earlier entry sets all three, so their HTML is
-   * unchanged.
+   * The "why us" section. Optional since 2026-10-21 on the same terms as the industries section:
+   * it renders only when `whyUsHeading` is set, and every earlier page sets all three.
    */
   whyUsHeading?: string;
   whyUsIntro?: string;
@@ -8081,9 +8084,9 @@ export const CITY_PAGES: CityPage[] = [
    *   • "Areas We Serve Around Kanakapura" → areasText, the ten places as prose; "From Enquiry to
    *     Placement" → how, the owner's five steps, with its closing line appended to step 5. The
    *     template renders the areas BEFORE the process, and both after the rent-or-buy section.
-   *   • The draft has no "why us" section, so whyUs is unset: the slot became optional with this page
-   *     (the template and the SSR audit skip it when whyUsHeading is unset; every other page is
-   *     unchanged).
+   *   • The draft has no "why us" section, so whyUs is unset: the slot is optional since 2026-10-21
+   *     (a template change shared with the Kolar and Vemgal pages: the route, the SSR audit and the
+   *     cluster test skip it when whyUsHeading is unset, and every other page is unchanged).
    *   • FAQs: the owner's seven, as written. "Get a Quote for Your Kanakapura Site" → CTA; the phone
    *     number and email come from COMPANY (the draft's "[Your …]" placeholders are not published).
    *     The owner lists phone, email and WhatsApp, so the buttons are Request a Quotation, Call and
