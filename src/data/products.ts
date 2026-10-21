@@ -11,6 +11,18 @@ import labourColonyNew4 from "@/assets/products/labour-colony-new-4.webp";
 // Standard size variants. productFamilies.ts imports only TYPES from here, so there is no
 // runtime cycle — see the COMMERCE BRIDGE note in that file.
 import { getVariantById, variantAsProduct } from "@/data/productFamilies";
+import { DELIVERY_WORKING_DAYS, DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
+
+/**
+ * The "Door-to-Door Lead Time" spec value, derived from the confirmed windows in shippingZones.ts
+ * (dispatch + zone transit) so the spec table, the Delivery chip, the delivery line, the feed's
+ * handling/transit times and the JSON-LD all state the same thing. Was a hand-typed
+ * "7–21 working days", which no longer covered the rest-of-India zone.
+ */
+const DOOR_TO_DOOR_LEAD_TIME =
+  `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} working days — ` +
+  `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} dispatch, plus ` +
+  `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} days transit by delivery zone`;
 
 export interface Product {
   id: string;
@@ -804,8 +816,8 @@ export const products: Product[] = [
       { label: "Expected Life", value: "15–20+ years with basic maintenance" },
       // Labelled door-to-door on purpose: the template renders a "Dispatch: Within 7–15 working
       // days" chip from DISPATCH_WORKING_DAYS, and JSON-LD handlingTime carries the same 7–15. An
-      // unqualified "Lead Time: 7–21" beside it read as a contradiction; 7–21 is dispatch + transit.
-      { label: "Door-to-Door Lead Time", value: "7–21 working days — 7–15 dispatch, plus transit to your pincode" },
+      // unqualified "Lead Time" beside it read as a contradiction; door-to-door is dispatch + transit.
+      { label: "Door-to-Door Lead Time", value: DOOR_TO_DOOR_LEAD_TIME },
     ],
     features: [
       "Built complete in the factory — frame, walls, roof, floor, wiring, doors and windows",
@@ -2077,6 +2089,78 @@ export const products: Product[] = [
       "/images/products/container-cafe-restaurant/container-cafe-restaurant-aerial.webp",
       "/images/products/container-cafe-restaurant/container-cafe-restaurant-dining-interior.webp",
     ],
+    featured: false,
+    inStock: true,
+  },
+  {
+    /**
+     * PORTABLE SHOP CABIN — 10 ft × 10 ft (id 48, SKU POC-PSC-1010), at
+     * /products/portable-shop-cabin. Long-form sections live in PortableShopCabinContent.tsx.
+     *
+     * PRICE: owner-approved on 2026-10-18 for online sale at ₹1,77,000 incl. 18% GST.
+     * sellPrice(150000) = 177000 exactly, so the commerce basePrice is 150000. The page, cart,
+     * checkout, JSON-LD and feed all read that one row; no copy on the page types the figure.
+     *
+     * CONFIGURATION: glass front with a lockable entrance door — what every render shows. The
+     * owner's draft described a rolling shutter; the owner chose the glazed configuration
+     * instead (2026-10-18), so a shutter is offered only as a quoted alternative.
+     *
+     * CONFIRMED FACTS ONLY: height, wall/roof/floor materials, electrical point counts and the
+     * standard colour were still placeholders in the owner's draft, so no row states them.
+     * Add them here when the owner confirms the build. Every image is an AI-generated render;
+     * the gallery note and alt text (productImageCaptions.ts) say so.
+     *
+     * `name` carries the size because the cart, checkout and order lines show `name`, and the
+     * agreed 10 ft × 10 ft must read the same there as in the H1, JSON-LD and feed title. The
+     * explicit `slug` pins the URL, so the name can change without moving the page.
+     * Appended after the Container Cafe & Restaurant (id 47), so every existing product keeps its
+     * position in the array; within Portable Cabins it is listed last.
+     */
+    id: "48",
+    sku: "POC-PSC-1010",
+    name: "Portable Shop Cabin — 10 ft × 10 ft",
+    slug: "portable-shop-cabin",
+    category: "Portable Cabins",
+    categorySlug: "portable-cabins",
+    description:
+      "A compact retail space, built in our workshop and delivered to your site. The 10 ft × 10 ft cabin gives you 100 sq ft of floor area on an MS steel frame, with a glazed display front, a lockable entrance door, flooring, internal wiring and LED lights fitted before it leaves the workshop.\n\nOnce the cabin is placed on a prepared base and connected to the main power supply, you can fit it out and stock it. It suits a kirana counter, a mobile accessories shop, a small boutique or a ticket counter. If your business moves, the cabin can be lifted and taken to another prepared site.",
+    shortDescription:
+      "A 10 ft × 10 ft workshop-built shop cabin with a glazed display front and lockable door — 100 sq ft of retail space, delivered to your site.",
+    specifications: [
+      { label: "Size", value: "10 ft × 10 ft (L × W)" },
+      { label: "Floor Area", value: "100 sq ft — usable internal space depends on wall thickness" },
+      { label: "Frame", value: "MS steel structure, primed and painted" },
+      { label: "Front", value: "Glazed display front with a lockable entrance door" },
+      { label: "Flooring", value: "Fitted in the workshop before dispatch" },
+      { label: "Electricals", value: "Internal wiring and LED lights, fitted in the workshop" },
+      { label: "Relocatable", value: "Yes — can be lifted and moved to another prepared site" },
+      // Labelled door-to-door on purpose, as on the Steel Portable Cabin: the template's
+      // "Dispatch: Within 7–15 working days" chip and the JSON-LD handlingTime carry 7–15;
+      // door-to-door is dispatch plus zone transit, matching the commerce deliveryDays.
+      { label: "Door-to-Door Lead Time", value: DOOR_TO_DOOR_LEAD_TIME },
+      { label: "Not in the Price", value: "Transport, installation, site base, mains connection, shelves, sales counter and AC" },
+    ],
+    features: [
+      "Built in our workshop and delivered to your site",
+      "100 sq ft of shop floor on a 10 × 10 ft footprint",
+      "MS steel frame, primed and painted",
+      "Glazed display front and a lockable entrance door",
+      "Flooring, internal wiring and LED lights fitted before dispatch",
+      "Relocatable — lift it onto a truck and set it up at a new site",
+      "Shelves, sales counter, AC, brand colours and signboard available on quotation",
+    ],
+    /* Gallery order: three-quarter view of the glazed front and door (hero, also the card / OG /
+       feed image) → the fully glazed side → overhead view → solid rear wall. All renders. */
+    images: [
+      "/images/products/portable-shop-cabin/portable-shop-cabin-front-three-quarter.webp",
+      "/images/products/portable-shop-cabin/portable-shop-cabin-glazed-side.webp",
+      "/images/products/portable-shop-cabin/portable-shop-cabin-overhead.webp",
+      "/images/products/portable-shop-cabin/portable-shop-cabin-rear-wall.webp",
+    ],
+    // Legacy mirror of the commerce base — every customer surface renders from
+    // productCommerce.ts via sellPrice(), never from here. sellPrice(150000) = ₹1,77,000.
+    price: 150000,
+    priceLabel: "+ 18% GST — Total ₹1,77,000",
     featured: false,
     inStock: true,
   },

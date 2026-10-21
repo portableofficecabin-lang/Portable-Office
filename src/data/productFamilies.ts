@@ -51,6 +51,7 @@
 import type { KeySpec, ProductCommerce } from "@/data/productCommerce";
 import type { Product } from "@/data/products";
 import { GST_RATE } from "@/lib/pricing/gst";
+import { DELIVERY_WORKING_DAYS } from "@/data/shippingZones";
 
 /** Paise per rupee. Base prices are stored in paise so no float ever touches money. */
 export const PAISE_PER_RUPEE = 100;
@@ -304,7 +305,8 @@ export interface ProductFamily {
   variants: SizeVariant[];
 }
 
-const DELIVERY = "7–21 Working Days";
+/** Same derived door-to-door window as productCommerce.ts (dispatch + transit, shippingZones.ts). */
+const DELIVERY = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} Working Days`;
 const CAT_CONSTRUCTION = "114"; // Business & Industrial > Construction
 const BRAND = "Portable Office Cabin";
 
