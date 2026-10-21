@@ -221,14 +221,14 @@ export const CITY_PAGES: CityPage[] = [
     tagline: "Ready-to-Use Container Offices in Jigani by Portable Office Cabin",
     intro: [
       "If you are searching for a reliable container office in Jigani, Portable Office Cabin is your trusted partner. We design, manufacture, and deliver high-quality container offices that are ready to use from day one. Whether you need a site office for a construction project, an admin cabin for your factory, or a comfortable workspace inside an industrial unit, our container offices give you a professional, secure, and fully functional office — without the time and cost of civil construction.",
-      "Jigani is one of the fastest-growing industrial hubs on the southern edge of Bengaluru. With the Jigani Industrial Area, Jigani-Bommasandra Link Road, and hundreds of manufacturing units, warehouses, pharma companies, and granite processing facilities operating in the region, the demand for quick, flexible, and movable office space is higher than ever. That is exactly what our container offices deliver: a durable steel workspace that can be transported, installed, and occupied within days — not months.",
+      "Jigani is one of the fastest-growing industrial hubs on the southern edge of Bengaluru. With the Jigani Industrial Area, Jigani-Bommasandra Link Road, and hundreds of manufacturing units, warehouses, pharma companies, and granite processing facilities operating in the region, the demand for quick, flexible, and movable office space is higher than ever. That is exactly what our container offices deliver: a durable steel workspace that can be transported, installed and occupied with far less time on site than conventional construction.",
     ],
 
     whyHeading: "Why Businesses in Jigani Choose Container Offices",
     whyIntro:
       "Traditional brick-and-mortar office construction takes months, requires approvals, blocks capital, and cannot be moved once built. A container office solves all of these problems at once. Here is why factories, contractors, and businesses across Jigani are switching to container offices:",
     whyBullets: [
-      { title: "Fast installation", text: "Your office is manufactured at our facility and delivered to your site ready to use. In most cases, you can start working inside your new container office within a few days of placing the order." },
+      { title: "Fast installation", text: "Your office is manufactured at our facility and delivered to your site ready to use." },
       { title: "Cost-effective", text: "A container office costs a fraction of conventional construction. There is no foundation work, no long labour engagement, and no material wastage on site." },
       { title: "Completely movable", text: "When your project in Jigani ends or your site shifts, your office moves with you. Simply load it onto a truck and relocate it to your next site — your investment is never wasted." },
       { title: "Durable and secure", text: "Built with heavy-duty steel structures, our container offices withstand harsh sun, heavy monsoon rain, and dust-heavy industrial environments. Lockable doors and strong walls keep your documents, computers, and equipment safe." },
@@ -296,7 +296,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Fast delivery and installation in Jigani", text: "our team handles transport, unloading, and placement at your site." },
       { title: "Custom designs", text: "from a basic watchman-cum-office cabin to a fully furnished AC executive office." },
       { title: "Buy or rent options", text: "flexible plans for short-term projects and long-term use." },
-      { title: "After-sales support", text: "we stand behind every cabin we deliver with prompt service support." },
+      { title: "After-sales support", text: "Warranty and service obligations follow the agreed terms." },
       { title: "Experience", text: "years of expertise in manufacturing portable cabins, container offices, security cabins, bunk houses, and portable toilets." },
     ],
 
@@ -308,13 +308,13 @@ export const CITY_PAGES: CityPage[] = [
     howSteps: [
       { title: "Share your requirement", text: "call or WhatsApp us with your size, layout, and usage details." },
       { title: "Get a free quotation", text: "we send you the design options and transparent pricing." },
-      { title: "Manufacturing", text: "your container office is fabricated at our facility with strict quality checks." },
+      { title: "Manufacturing", text: "your container office is fabricated at our facility." },
       { title: "Delivery & installation at your Jigani site", text: "we transport the cabin, place it, and hand it over ready to use." },
     ],
 
     faqs: [
-      { question: "What is the price of a container office in Jigani?", answer: "The price depends on the size, insulation type, interior finish, and add-ons you choose. A basic cabin costs much less than a fully furnished AC office container. Contact us with your requirement and we will share an exact quotation — with no hidden charges." },
-      { question: "How long does it take to deliver a container office in Jigani?", answer: "Standard cabins can typically be delivered within a few days. Customized container offices usually take 1–3 weeks depending on the specifications. Delivery and installation at your Jigani site are handled by our team." },
+      { question: "What is the price of a container office in Jigani?", answer: "The price depends on the size, insulation type, interior finish, and add-ons you choose. A basic cabin costs much less than a fully furnished AC office container. Contact us with your requirement and we will share an exact, itemised quotation." },
+      { question: "How long does it take to deliver a container office in Jigani?", answer: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Customized container offices follow the timeline in your written quotation. Delivery and installation at your Jigani site are handled by our team." },
       { question: "Can I rent a container office instead of buying one?", answer: "Yes. We offer container offices on rent for project-based requirements. This is a popular option for construction companies and contractors working on short-term projects in and around Jigani." },
       { question: "Do container offices get hot in summer?", answer: "No. Our cabins are built with insulated panels (PUF/EPS/Rockwool) that keep the interior significantly cooler. With AC provision, the cabin stays comfortable throughout the year." },
       { question: "Can the container office be shifted to another site later?", answer: "Absolutely. Portability is one of the biggest advantages. The cabin can be lifted, loaded onto a truck, and relocated to any new site whenever needed." },
@@ -1111,7 +1111,7 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Office in Bommasandra",
     tagline: "Durable, Ready-to-Use Container Offices in Bommasandra by Portable Office Cabin",
     intro: [
-      "Setting up an office in an industrial area should not take months of construction. If your business needs a container office in Bommasandra, Portable Office Cabin can deliver a fully finished, secure, and comfortable workspace directly to your site — ready to occupy within days. As a direct manufacturer of container offices, portable cabins, and prefab structures, we help companies across Bommasandra get professional office space at a fraction of the cost of conventional buildings.",
+      "Setting up an office in an industrial area should not take months of construction. If your business needs a container office in Bommasandra, Portable Office Cabin can deliver a fully finished, secure, and comfortable workspace directly to your site — with far less time on site than conventional construction. As a direct manufacturer of container offices, portable cabins, and prefab structures, we help companies across Bommasandra get professional office space at a fraction of the cost of conventional buildings.",
       "Bommasandra is one of Bengaluru's most important industrial zones. Located on Hosur Road with excellent connectivity to Electronic City, Hebbagodi, Chandapura, Attibele, and the Jigani-Bommasandra Link Road, the area is home to the Bommasandra Industrial Area (KIADB), large pharma and biotech campuses, engineering units, automotive component manufacturers, warehouses, and countless growing businesses. With the metro now reaching Bommasandra, the region is expanding faster than ever — and with that growth comes an urgent need for quick, flexible office space. That is exactly the need our container offices are built to solve.",
     ],
 
@@ -1119,7 +1119,7 @@ export const CITY_PAGES: CityPage[] = [
     whyIntro:
       "A container office is a steel-structured, factory-built office cabin that arrives at your site complete with insulated walls, flooring, windows, doors, and electrical fittings. Unlike civil construction, there is no digging, no curing time, no scaffolding, and no months of waiting. The cabin is simply transported to your location, placed on a level surface, connected to power — and your team starts working. For businesses in Bommasandra, this approach has clear advantages:",
     whyBullets: [
-      { title: "Speed", text: "Factories expanding their capacity, contractors starting new projects, and companies waiting for permanent buildings cannot afford delays. A container office gives you usable workspace in days." },
+      { title: "Speed", text: "Factories expanding their capacity, contractors starting new projects, and companies waiting for permanent buildings cannot afford delays. A container office gives you usable workspace with far less time on site than conventional construction." },
       { title: "Lower cost", text: "You avoid the heavy expenses of foundations, masonry, labour contracts, and finishing work. The total cost is far below traditional construction — and rental options bring the entry cost down even further." },
       { title: "Relocatable asset", text: "Industrial plots change, projects finish, and companies shift. Your container office is not tied to the ground. Lift it, load it, and take it to your next site anywhere in or around Bengaluru." },
       { title: "Built for industrial conditions", text: "Dust, heat, and monsoon rain are part of daily life on Hosur Road. Our cabins are engineered with anti-corrosive steel frames, insulated panels, and leak-proof roofing to handle it all." },
@@ -1197,13 +1197,13 @@ export const CITY_PAGES: CityPage[] = [
     howSteps: [
       { title: "Tell us what you need", text: "Call or WhatsApp us with your size, layout, and site details." },
       { title: "Receive your quotation", text: "We share design options and transparent pricing — free of charge." },
-      { title: "We manufacture your cabin", text: "Your container office is built at our facility under strict quality checks." },
+      { title: "We manufacture your cabin", text: "Your container office is built at our facility." },
       { title: "Delivery & handover at your Bommasandra site", text: "We transport, place, and hand over your office ready to use." },
     ],
 
     faqs: [
       { question: "How much does a container office cost in Bommasandra?", answer: "Pricing depends on size, insulation, interiors, and add-ons. A basic site cabin is very economical, while fully furnished AC offices cost more. Share your requirement and we will send an exact, no-obligation quotation." },
-      { question: "How quickly can you deliver to Bommasandra?", answer: "Ready-stock cabins can reach your site within a few days. Customized offices typically take 1–3 weeks depending on specifications. Bommasandra's location on Hosur Road makes transport and installation quick and easy for our team." },
+      { question: "How quickly can you deliver to Bommasandra?", answer: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Customized offices follow the timeline in your written quotation. Bommasandra's location on Hosur Road makes transport and installation quick and easy for our team." },
       { question: "Is renting available instead of buying?", answer: "Yes. Rental container offices are available for project-based needs — a popular choice for contractors and companies with temporary requirements in the industrial area." },
       { question: "Will the cabin stay cool in summer?", answer: "Yes. Insulated PUF/EPS/Rockwool panels keep the interior noticeably cooler than outside. With the AC provision we include, the cabin remains comfortable in every season." },
       { question: "Can I move the office to a different site later?", answer: "Of course. That is the core benefit of a container office — it can be lifted onto a truck and relocated to any new site whenever your project moves." },
@@ -1499,7 +1499,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Dispatch and delivery",
-        text: "Transportation and placement are coordinated according to the agreed responsibilities and the site's access conditions. Standard portable cabins typically require approximately 10–15 days of manufacturing, depending on dimensions, customization and production requirements; specialized or larger cabins may require additional fabrication time, and final delivery dates are confirmed when the order is accepted.",
+        text: "Transportation and placement are coordinated according to the agreed responsibilities and the site's access conditions. Standard portable cabins bought online are dispatched within 7–15 working days of order confirmation; specialized, larger or customised cabins follow the timeline in your written quotation, and final delivery dates are confirmed when the order is accepted.",
       },
     ],
 
@@ -1517,7 +1517,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does container office manufacturing take?",
         answer:
-          "Typical standard-cabin manufacturing requires approximately 10–15 days. Custom cabins may require more time depending on the design.",
+          "Standard cabins bought online are dispatched within 7–15 working days of order confirmation. Custom cabins follow the timeline in your written quotation.",
       },
       {
         question: "Are container offices suitable for Mysore's monsoon?",
@@ -2859,7 +2859,7 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Office in Doddaballapura",
     tagline: "Smart, Ready-Made Container Offices in Doddaballapura by Portable Office Cabin",
     intro: [
-      "When your business needs office space at a factory, warehouse, or project site, waiting months for construction is simply not an option. Portable Office Cabin brings you the smarter alternative — a fully finished container office in Doddaballapura, manufactured at our facility and delivered to your site ready to use. With insulated walls, complete electricals, secure doors, and a professional finish, our container offices let your team start working within days of your order.",
+      "When your business needs office space at a factory, warehouse, or project site, waiting months for construction is simply not an option. Portable Office Cabin brings you the smarter alternative — a fully finished container office in Doddaballapura, manufactured at our facility and delivered to your site ready to use. With insulated walls, complete electricals, secure doors, and a professional finish, our container offices need far less time on site than conventional construction.",
       "Doddaballapura, in the northern part of Bengaluru, has grown into a major industrial and manufacturing destination. The KIADB Doddaballapura Industrial Area at Bashettihalli, the well-known Apparel Park, and a growing cluster of textile, garment, engineering, pharma, and food processing units have made the region a hub of activity. Its location near Devanahalli and Kempegowda International Airport, with good road connectivity to Yelahanka, Rajanakunte, Nelamangala, and Dabaspet, is attracting new warehouses, logistics parks, and construction projects every year. All of this growth needs one thing in common — fast, flexible, affordable workspace. That is exactly what our container offices provide.",
     ],
 
@@ -2867,7 +2867,7 @@ export const CITY_PAGES: CityPage[] = [
     whyIntro:
       "A container office is a factory-built steel cabin that works as a complete office the moment it lands at your site. For businesses in and around Doddaballapura, the benefits are hard to ignore:",
     whyBullets: [
-      { title: "Ready in days, not months", text: "Because the cabin is manufactured off-site, there is no construction activity at your location. Delivery, placement, and power connection are all it takes to make your office operational." },
+      { title: "Far less time on site", text: "Because the cabin is manufactured off-site, there is no construction activity at your location. Delivery, placement, and power connection are all it takes to make your office operational." },
       { title: "Major cost savings", text: "No foundation, no brickwork, no plastering, no long labour engagement. You get a finished office at a fraction of the cost of a permanent structure — and rental plans reduce the upfront cost even further." },
       { title: "Move it anytime", text: "Projects end, plots change, and businesses grow. A container office is a movable asset — lift it onto a truck and shift it to your next site in Doddaballapura, Devanahalli, or anywhere across Karnataka." },
       { title: "Weather-ready construction", text: "Our cabins are built with anti-corrosive steel frames, insulated sandwich panels, and leak-proof roofing that stand up to hot summers, heavy rain, and dusty industrial surroundings." },
@@ -2944,13 +2944,13 @@ export const CITY_PAGES: CityPage[] = [
     howSteps: [
       { title: "Share your requirement", text: "Call or WhatsApp us with the size, layout, and location details." },
       { title: "Get your free quotation", text: "We send design options with transparent, itemised pricing." },
-      { title: "We build your cabin", text: "Manufactured at our facility under strict quality checks." },
+      { title: "We build your cabin", text: "Manufactured at our facility." },
       { title: "Delivery and handover", text: "We transport and install the cabin at your Doddaballapura site, ready to occupy." },
     ],
 
     faqs: [
-      { question: "What does a container office cost in Doddaballapura?", answer: "It depends on the size, insulation, interior finish, and add-ons. Basic site cabins are very affordable, while furnished AC offices cost more. Send us your requirement and we will share an exact quotation with no hidden charges." },
-      { question: "How soon can you deliver to Doddaballapura?", answer: "Ready cabins can be delivered within a few days. Customized offices generally take 1–3 weeks depending on the design. Doddaballapura's highway connectivity makes transport straightforward for our team." },
+      { question: "What does a container office cost in Doddaballapura?", answer: "It depends on the size, insulation, interior finish, and add-ons. Basic site cabins are very affordable, while furnished AC offices cost more. Send us your requirement and we will share an exact, itemised quotation." },
+      { question: "How soon can you deliver to Doddaballapura?", answer: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Customized offices follow the timeline in your written quotation. Doddaballapura's highway connectivity makes transport straightforward for our team." },
       { question: "Can I take a container office on rent?", answer: "Yes. Rental units are available for project-based requirements — ideal for contractors and companies working on temporary sites in North Bengaluru." },
       { question: "Will the cabin be comfortable in summer?", answer: "Yes. The insulated panels significantly reduce interior heat, and with the built-in AC provision the cabin stays comfortable throughout the year." },
       { question: "Can the office be relocated later?", answer: "Absolutely — that is the biggest advantage. The cabin can be loaded onto a truck and moved to any new location whenever your project shifts." },
@@ -3595,7 +3595,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does manufacturing and delivery take?",
         answer:
-          "Manufacturing typically depends on cabin size, design, quantity and material availability. Standard cabins may require approximately 10–15 days, while larger or customised projects can require additional time. The confirmed manufacturing and delivery schedule will be stated in the quotation.",
+          "Manufacturing typically depends on cabin size, design, quantity and material availability. Standard cabins bought online are dispatched within 7–15 working days of order confirmation, while larger or customised projects can require additional time. The confirmed manufacturing and delivery schedule will be stated in the quotation.",
       },
       {
         question: "Are container offices suitable for wind-farm sites around Radhapuram?",
@@ -4359,7 +4359,7 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Container Office in SIPCOT Hosur",
     tagline: "Portable Office Cabins Delivered Ready-to-Use Across SIPCOT Hosur",
     intro: [
-      "SIPCOT Hosur runs on speed. New lines get commissioned, contracts get awarded, and teams need a working office on the ground in days — not the six months a masonry structure takes. That is exactly the gap a container office fills, and it is the reason supervisors, contractors and plant managers across the estate keep coming back to us.",
+      "SIPCOT Hosur runs on speed. New lines get commissioned, contracts get awarded, and teams need a working office on the ground with far less time on site than a masonry structure takes. That is exactly the gap a container office fills, and it is the reason supervisors, contractors and plant managers across the estate keep coming back to us.",
       "Portable Office Cabin supplies and installs container offices across SIPCOT Hosur Phase 1 and Phase 2, the Hosur Industrial Estate and the surrounding belt. Our own factory sits in that same belt — at Kamandoddi, just outside Hosur — so SIPCOT is one of the shortest delivery runs we make. Each unit arrives fully built, with insulated walls, wiring, lighting, flooring, windows and doors already in place. You place it, connect the power, and start working.",
     ],
 
@@ -4367,7 +4367,7 @@ export const CITY_PAGES: CityPage[] = [
     whyIntro:
       "A masonry site office ties up capital, needs approvals, and cannot follow you when the project moves. On a leased SIPCOT plot with a running production line next door, that is a poor fit. A container office answers all of it at once:",
     whyBullets: [
-      { title: "Ready in days, not months", text: "Standard cabins reach your gate within a few days of confirmation. Custom builds typically take two to four weeks depending on the specification." },
+      { title: "Far less time on site", text: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation. Custom builds follow the timeline in your written quotation." },
       { title: "Built for Hosur's climate", text: "PUF or rockwool insulated panels with a weatherproof roof keep interiors workable through the peak summer months, and every cabin is wired with AC provision as standard." },
       { title: "Relocatable capital", text: "When a contract ends or the plant expands, the office is lifted onto a trailer and moved with you. Nothing is written off." },
       { title: "Zero disruption to production", text: "No foundation work, no wet construction, no debris and no shutdown of the adjacent bay while the cabin is installed." },
@@ -4441,7 +4441,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Quality materials", text: "tested steel sections, branded insulation and reliable electrical fittings throughout." },
       { title: "One supplier for the whole site", text: "offices, security cabins, bunk houses, toilets, canteens and storage units from a single order." },
       { title: "Buy or rent", text: "flexible plans covering both short-term project work and long-term installations." },
-      { title: "After-sales support", text: "we stand behind every cabin we deliver, with service support across the Hosur and Krishnagiri belt." },
+      { title: "After-sales support", text: "Warranty and service obligations follow the agreed terms." },
     ],
 
     areasHeading: "Areas We Deliver Around SIPCOT Hosur",
@@ -4453,14 +4453,14 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Share your requirement", text: "Call or WhatsApp us with the size, purpose, headcount and your site location in Hosur." },
       { title: "Get a quotation", text: "We send a clear, itemised price, normally within twenty-four hours." },
       { title: "Approve the layout", text: "For custom builds we share drawings and finish options before anything is cut." },
-      { title: "Fabrication and quality check", text: "Your cabin is built at our Tamil Nadu factory and inspected before dispatch." },
+      { title: "Fabrication", text: "Your cabin is built at our Tamil Nadu factory." },
       { title: "Delivery to your SIPCOT gate", text: "Transported by trailer, with crane or hydraulic unloading depending on your site access." },
-      { title: "Placement and handover", text: "Positioned, levelled, connected and handed over ready to use — usually within a few hours of arrival." },
+      { title: "Placement and handover", text: "Positioned, levelled, connected and handed over ready to use." },
     ],
 
     faqs: [
-      { question: "How long does it take to get a container office in SIPCOT Hosur?", answer: "Standard cabins can reach your site within a few days of order confirmation. Custom-built offices usually take two to four weeks depending on the specification and finish. Because our factory is in the Hosur belt itself, transport time into SIPCOT is short." },
-      { question: "What does a container office cost in Hosur?", answer: "It depends on the size, insulation, interior finish and add-ons you choose — a basic security cabin and a fully furnished AC admin block are very different builds. Send us your requirement and we will share an exact, itemised quotation with no hidden charges. Standard listed cabins can also be bought outright online at a fixed, GST-inclusive price." },
+      { question: "How long does it take to get a container office in SIPCOT Hosur?", answer: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Custom-built offices follow the timeline in your written quotation. Because our factory is in the Hosur belt itself, transport time into SIPCOT is short." },
+      { question: "What does a container office cost in Hosur?", answer: "It depends on the size, insulation, interior finish and add-ons you choose — a basic security cabin and a fully furnished AC admin block are very different builds. Send us your requirement and we will share an exact, itemised quotation. Standard listed cabins can also be bought outright online at a fixed, GST-inclusive price." },
       { question: "Do I need a foundation or civil work?", answer: "No. A level, firm surface is enough. On soft ground we recommend simple concrete pedestals or plinth blocks, and our team will advise you on site preparation before delivery." },
       { question: "Is a container office comfortable in Hosur's summer?", answer: "Yes, when it is insulated properly. Our PUF and rockwool panels with a weatherproof roof significantly reduce heat gain, and every cabin is wired with AC provision as standard." },
       { question: "Can I move it later if my plant relocates?", answer: "Yes — that is one of the main advantages. The cabin is designed to be lifted and transported again, so it can follow you to the next plot or project site." },
@@ -4645,9 +4645,9 @@ export const CITY_PAGES: CityPage[] = [
     howHeading: "From Your Call to Your First Day Inside",
     howSteps: [
       { title: "You tell us the basics.", text: "Size, what it's for, how many people, where the plot is." },
-      { title: "We send a price.", text: "Itemised, usually within 24 hours. No vague ranges." },
+      { title: "We send a price.", text: "Itemised. No vague ranges." },
       { title: "You approve the layout.", text: "For anything custom, we share a drawing and finish options first." },
-      { title: "We build and check it.", text: "Fabricated at our workshop, inspected before it goes anywhere." },
+      { title: "We build it.", text: "Fabricated at our workshop." },
       { title: "It reaches Shoolagiri.", text: "By trailer, to your gate, on the agreed date." },
       { title: "We place and hand over.", text: "Set down, levelled, connected, keys to you." },
     ],
@@ -4655,7 +4655,7 @@ export const CITY_PAGES: CityPage[] = [
     faqs: [
       {
         question: "How soon can I get one?",
-        answer: "If it's a standard unit we have in stock, 2 to 5 days. Built to your spec, usually 2 to 4 weeks depending on the finish you want.",
+        answer: "A standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Built to your spec, the timeline is set out in your written quotation.",
       },
       {
         question: "Do I have to do any civil work first?",
@@ -4689,7 +4689,7 @@ export const CITY_PAGES: CityPage[] = [
 
     ctaHeading: "Tell Us About Your Shoolagiri Site",
     ctaText:
-      "Give us the size, what you'll use it for, and where the plot is. You'll have a clear price within a day, and there's no obligation attached to it.",
+      "Give us the size, what you'll use it for, and where the plot is. You'll have a clear price, and there's no obligation attached to it.",
   },
 
   {
@@ -4836,7 +4836,7 @@ export const CITY_PAGES: CityPage[] = [
     customOutro:
       "Genuinely not sure? Tell us how many months and we'll put both figures side by side. Sometimes renting is obviously the cheaper call. Sometimes it isn't, and we'll tell you that too.",
 
-    whyUsHeading: "Delivered to Your Gate, Working the Same Day",
+    whyUsHeading: "Delivered to Your Gate, Ready to Use",
     whyUsIntro:
       "You tell us what you need and where. We build it at our workshop, inspect it, and put it on a trailer. It reaches your site, we set it down — crane or hydraulic unloading, depending how much room there is to swing — level it, connect the power, hand over the keys.",
     whyUsBullets: [
@@ -4853,9 +4853,9 @@ export const CITY_PAGES: CityPage[] = [
     howHeading: "What Happens After You Call",
     howSteps: [
       { title: "You give us the basics.", text: "Size, what it's for, how many people, where the site is." },
-      { title: "We send a price.", text: "Itemised, normally inside 24 hours. Not a range." },
+      { title: "We send a price.", text: "Itemised. Not a range." },
       { title: "You sign off the layout.", text: "For custom builds we share a drawing and finish options first." },
-      { title: "We build it and check it.", text: "Made at our workshop, inspected before it moves." },
+      { title: "We build it.", text: "Made at our workshop." },
       { title: "It travels to Krishnagiri.", text: "By trailer, to your gate, on the day we agreed." },
       { title: "We place it and hand over.", text: "Set down, levelled, connected, keys in your hand." },
     ],
@@ -4863,7 +4863,7 @@ export const CITY_PAGES: CityPage[] = [
     faqs: [
       {
         question: "How quickly can one reach my site?",
-        answer: "A standard unit from stock, 2 to 5 days. Built to your specification, usually 2 to 4 weeks depending on the finish.",
+        answer: "A standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Built to your specification, the timeline is set out in your written quotation.",
       },
       {
         question: "Will transport to Krishnagiri cost a lot?",
@@ -4905,7 +4905,7 @@ export const CITY_PAGES: CityPage[] = [
 
     ctaHeading: "Send Us Your Site Details",
     ctaText:
-      "Size, what you'll use it for, and where in Krishnagiri district the site is. You'll have a clear price inside a day, with nothing attached to it.",
+      "Size, what you'll use it for, and where in Krishnagiri district the site is. You'll have a clear price, with nothing attached to it.",
   },
 
   {
@@ -5076,7 +5076,7 @@ export const CITY_PAGES: CityPage[] = [
     howHeading: "How the Order Runs",
     howSteps: [
       { title: "You give us the basics.", text: "Size, purpose, headcount, where the site is." },
-      { title: "We send a price.", text: "Itemised, usually inside 24 hours. Not a range." },
+      { title: "We send a price.", text: "Itemised. Not a range." },
       { title: "You approve the layout.", text: "Drawing and finish options first, for anything custom." },
       { title: "We build and inspect it.", text: "At our workshop, checked before it moves." },
       { title: "It reaches your site.", text: "By trailer, to your gate, on the agreed date." },
@@ -5086,7 +5086,7 @@ export const CITY_PAGES: CityPage[] = [
     faqs: [
       {
         question: "How fast can you deliver?",
-        answer: "Standard stock unit, 2 to 5 days. Built to your specification, usually 2 to 4 weeks depending on the finish.",
+        answer: "A standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Built to your specification, the timeline is set out in your written quotation.",
       },
       {
         question: "Will it pass a customer audit?",
@@ -5128,7 +5128,7 @@ export const CITY_PAGES: CityPage[] = [
 
     ctaHeading: "Tell Us What You Need",
     ctaText:
-      "Size, what it's for, and where your site is. You'll have a clear price inside a day, with no obligation attached.",
+      "Size, what it's for, and where your site is. You'll have a clear price, with no obligation attached.",
 
     disclaimer:
       "We are an independent manufacturer and supplier of portable container offices. We are not affiliated with, endorsed by, or an authorised vendor of Tata Electronics Private Limited or any Tata Group company. References to the Hosur plant describe the location we deliver to. All trademarks are the property of their respective owners.",
@@ -5182,7 +5182,7 @@ export const CITY_PAGES: CityPage[] = [
     intro: [
       "Coimbatore isn't a place waiting to become industrial. It already is, and has been for eighty years. Pumps and motors, textile machinery, foundries, wet grinders, precision machining, auto components — thousands of units, most of them family-run, most of them on compounds that filled up a long time ago.",
       "Which makes the problem here different from a greenfield belt. Nobody's asking us for an office because they've got empty land. They're asking because they've run out of it. The shed is full of machines, the yard is full of material, and somewhere in that they need a QC room, a supervisor's cabin, a place to sit a customer down.",
-      "A container office solves it because it doesn't need a footing, doesn't need a wall knocked through, and doesn't take your shed floor away. It gets craned into the corner of the yard, connected, and used the same day.",
+      "A container office solves it because it doesn't need a footing, doesn't need a wall knocked through, and doesn't take your shed floor away. It gets craned into the corner of the yard and connected.",
     ],
 
     whyHeading: "Space Is the Problem Here, Not Land",
@@ -5300,7 +5300,7 @@ export const CITY_PAGES: CityPage[] = [
     howHeading: "How the Order Runs",
     howSteps: [
       { title: "You give us the basics.", text: "Size, purpose, headcount, and where in the compound it's going." },
-      { title: "We send a price.", text: "Itemised, with transport shown separately, usually inside 24 hours." },
+      { title: "We send a price.", text: "Itemised, with transport shown separately." },
       { title: "You approve the layout.", text: "Drawing and finish options first, for anything custom." },
       { title: "We build and inspect it.", text: "Made at our workshop, checked before it moves." },
       { title: "It travels to Coimbatore.", text: "By trailer, to your gate, on the agreed date." },
@@ -5330,7 +5330,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         question: "How soon can I get one?",
-        answer: "Standard stock unit, within a week including travel. Built to your specification, usually 2 to 4 weeks depending on the finish.",
+        answer: "A standard unit bought online is dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Built to your specification, the timeline is set out in your written quotation.",
       },
       {
         question: "Can I move it later if the layout changes?",
@@ -5352,7 +5352,7 @@ export const CITY_PAGES: CityPage[] = [
 
     ctaHeading: "Tell Us About Your Compound",
     ctaText:
-      "Size, what it's for, and where it's going to stand. A photo of the spot helps more than anything. You'll have a clear price inside a day, with no obligation attached.",
+      "Size, what it's for, and where it's going to stand. A photo of the spot helps more than anything. You'll have a clear price, with no obligation attached.",
     relatedLinks: [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
@@ -5645,7 +5645,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does it take to manufacture a container office?",
         answer:
-          "Manufacturing generally takes around 10–15 days for many standard configurations, depending on the current production schedule, quantity and materials. Custom cabins, large project office setups and special industrial specifications may require additional time. Transportation and site installation are scheduled separately.",
+          "Standard configurations bought online are dispatched within 7–15 working days of order confirmation. Custom cabins, large project office setups and special industrial specifications follow the timeline in your written quotation. Transportation and site installation are scheduled separately.",
       },
       {
         question: "Can a portable office cabin be installed inside Mettur Thermal Power Station or an industrial plant?",
@@ -6634,7 +6634,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Transportation and installation",
-        text: "The completed cabin is transported to the project site. Crane unloading, placement, site preparation and utility connections are handled according to the agreed scope. Standard lead times are typically 10–15 days, depending on specifications, order confirmation, manufacturing capacity and weather conditions. Larger custom projects may require more time.",
+        text: "The completed cabin is transported to the project site. Crane unloading, placement, site preparation and utility connections are handled according to the agreed scope. Standard cabins bought online are dispatched within 7–15 working days of order confirmation; larger custom projects follow the timeline in your written quotation.",
       },
     ],
 
@@ -6647,7 +6647,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does delivery take?",
         answer:
-          "Standard portable office cabins generally require around 10–15 days, depending on the approved design, manufacturing schedule and project requirements. Customized larger cabins may take longer.",
+          "Standard portable office cabins bought online are dispatched within 7–15 working days of order confirmation. Customized larger cabins follow the timeline in your written quotation.",
       },
       {
         question: "Can I rent a container office in Hoskote?",
@@ -6961,7 +6961,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Transportation and placement",
-        text: "The cabin is transported to the project location, with unloading and placement arranged as agreed. Typical manufacturing lead time is approximately 10–15 days for standard cabins, subject to size, customization, material availability and order confirmation; larger or more complex cabins may require additional time.",
+        text: "The cabin is transported to the project location, with unloading and placement arranged as agreed. Standard cabins bought online are dispatched within 7–15 working days of order confirmation; larger or more complex cabins follow the timeline in your written quotation.",
       },
     ],
 
@@ -6979,7 +6979,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does manufacturing take?",
         answer:
-          "Standard cabin manufacturing typically takes approximately 10–15 days. The confirmed delivery schedule depends on order specifications, production capacity and logistics.",
+          "Standard cabins bought online are dispatched within 7–15 working days of order confirmation. For other orders, the confirmed delivery schedule depends on order specifications, production capacity and logistics.",
       },
       {
         question: "Are insulated container offices suitable for Tumkur weather?",
@@ -9128,8 +9128,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "The unit is positioned on a prepared foundation using suitable lifting equipment arranged under the agreed scope.",
       },
       {
-        title: "Final Inspection and Handover",
-        text: "After placement, applicable finishing work and checks are completed before handover. Delivery schedules depend on manufacturing status, transport distance, road conditions, unloading arrangements, and site readiness.",
+        title: "Placement and Handover",
+        text: "After placement, applicable finishing work is completed before handover. Delivery schedules depend on manufacturing status, transport distance, road conditions, unloading arrangements, and site readiness.",
       },
     ],
 
@@ -9415,7 +9415,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Order confirmation and manufacturing",
-        text: "Fabrication begins after acceptance of the quotation, drawings and applicable commercial terms. Standard portable office cabins typically require approximately 10–15 days for manufacturing, subject to dimensions, customization, material availability and production scheduling; larger customized cabins and modular arrangements may require additional time.",
+        text: "Fabrication begins after acceptance of the quotation, drawings and applicable commercial terms. Standard portable office cabins bought online are dispatched within 7–15 working days of order confirmation; larger customized cabins and modular arrangements follow the timeline in your written quotation.",
       },
       {
         title: "Inspection and dispatch",
@@ -9461,7 +9461,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "What is the typical manufacturing time?",
         answer:
-          "Standard portable office cabins generally require approximately 10–15 days, depending on specifications and production availability. Transport and unloading are assessed separately for each site.",
+          "Standard portable office cabins bought online are dispatched within 7–15 working days of order confirmation. Transport and unloading are assessed separately for each site.",
       },
       {
         question: "Can a G+1 portable cabin be installed on a small site?",
@@ -9800,8 +9800,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "The container is positioned on a suitable prepared foundation using appropriate lifting equipment arranged under the agreed scope.",
       },
       {
-        title: "Final inspection and handover",
-        text: "After placement, applicable installation work and final checks are completed before handing over the unit.",
+        title: "Placement and handover",
+        text: "After placement, applicable installation work is completed before handing over the unit.",
       },
     ],
 
@@ -11172,7 +11172,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How long does it take to manufacture and deliver a container office to Chennai?",
         answer:
-          "Standard cabin manufacturing typically takes around 10–15 days, depending on the design, quantity, materials and production schedule. Larger or highly customised projects may require additional time. Transportation and site installation schedules are confirmed separately.",
+          "Standard cabins bought online are dispatched within 7–15 working days of order confirmation. Larger or highly customised projects follow the timeline in your written quotation. Transportation and site installation schedules are confirmed separately.",
       },
       {
         question: "Are container offices suitable for coastal locations such as Ennore and Kattupalli?",
@@ -11500,8 +11500,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "The unit is positioned on a properly prepared foundation using suitable lifting equipment arranged under the agreed scope.",
       },
       {
-        title: "Inspection and handover",
-        text: "After placement, applicable installation work and final checks are completed before handover.",
+        title: "Placement and handover",
+        text: "After placement, applicable installation work is completed before handover.",
       },
     ],
 
@@ -12133,8 +12133,8 @@ export const CITY_PAGES: CityPage[] = [
         text: "The container office is positioned on a suitable prepared foundation using appropriate lifting equipment arranged under the agreed scope.",
       },
       {
-        title: "Final Inspection and Handover",
-        text: "After placement, applicable installation activities and final checks are completed before handing over the unit. Delivery timelines depend on manufacturing requirements, container dimensions, transport distance, road conditions, unloading arrangements, and site readiness.",
+        title: "Placement and Handover",
+        text: "After placement, applicable installation activities are completed before handing over the unit. Delivery timelines depend on manufacturing requirements, container dimensions, transport distance, road conditions, unloading arrangements, and site readiness.",
       },
     ],
 
@@ -13033,7 +13033,7 @@ export const CITY_PAGES: CityPage[] = [
 
     solutionsHeading: "What a Complete Camp from Us Includes",
     solutionsIntro:
-      "Everything is built at our factory at Kamandoddi, near Hosur, under our ISO 9001:2015 system, delivered on trailers and placed by hydra. A 100-worker camp is typically on the ground within three to four weeks of drawing approval; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
+      "Everything is built at our factory at Kamandoddi, near Hosur, under our ISO 9001:2015 system, delivered on trailers and placed by hydra. Your written quotation sets out the programme for your camp; a 500-worker camp is phased so the first blocks are occupied while the rest are being built. Block by block, this is what you get. For unit specifications and pricing, see the Labour Colony and Workmen Accommodation product pages linked at the end of this page.",
     solutions: [
       {
         title: "Dormitory blocks",
@@ -13152,11 +13152,11 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "A local delivery",
-        text: "Our factory at Kamandoddi near Hosur is about 40 km from the city, and our Bangalore office is in Electronic City. Standard blocks leave the factory and are on most Bangalore sites the same day.",
+        text: "Our factory at Kamandoddi near Hosur is about 40 km from the city, and our Bangalore office is in Electronic City.",
       },
       {
         title: "Phased for large camps",
-        text: "A 100-worker camp is typically installed three to four weeks from drawing approval; a 500-worker camp is phased so the first blocks are occupied while the rest are being built.",
+        text: "Your written quotation sets out the installation programme; a 500-worker camp is phased so the first blocks are occupied while the rest are being built.",
       },
       {
         title: "Relocation or buy-back at the end",
@@ -13170,7 +13170,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Where We Are Setting Up Camps Around Bangalore",
     areasText:
-      "From our factory near Hosur we reach every part of the metro area within a few hours, which is why so many of our recent camps are along the growth corridors: the airport and Devanahalli belt, where logistics parks and aerospace units are coming up; Whitefield, KR Puram and the ORR IT corridor, with its tower and tech-park projects; Electronic City, Bommasandra, Jigani and Attibele on Hosur Road, for industrial construction and plant expansions; Sarjapur Road, Varthur and Gunjur, for large residential townships; Yelahanka, Doddaballapura and Tumakuru Road, for industrial estates and warehousing; Peenya, Nelamangala and Bidadi, for manufacturing and the western highway works; and the metro and suburban-rail packages that cut across all of these. If your site is in Hosur, Krishnagiri, Tumakuru, Kolar, Ramanagara or Mysuru, we cover those too — see our other Cities We Serve pages.",
+      "From our factory near Hosur we deliver across the metro area, which is why so many of our recent camps are along the growth corridors: the airport and Devanahalli belt, where logistics parks and aerospace units are coming up; Whitefield, KR Puram and the ORR IT corridor, with its tower and tech-park projects; Electronic City, Bommasandra, Jigani and Attibele on Hosur Road, for industrial construction and plant expansions; Sarjapur Road, Varthur and Gunjur, for large residential townships; Yelahanka, Doddaballapura and Tumakuru Road, for industrial estates and warehousing; Peenya, Nelamangala and Bidadi, for manufacturing and the western highway works; and the metro and suburban-rail packages that cut across all of these. If your site is in Hosur, Krishnagiri, Tumakuru, Kolar, Ramanagara or Mysuru, we cover those too — see our other Cities We Serve pages.",
 
     howHeading: "How a Camp Comes Together",
     howSteps: [
@@ -13180,7 +13180,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Block plan and quote",
-        text: "Within two working days you get a layout showing every block, the services runs and a fixed price.",
+        text: "You get a layout showing every block, the services runs and a fixed price.",
       },
       {
         title: "Base preparation",
@@ -13205,7 +13205,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How fast can you deliver inside Bangalore?",
         answer:
-          "Standard blocks leave our factory near Hosur and are on most Bangalore sites the same day. A complete 100-worker camp is usually installed three to four weeks from drawing approval.",
+          "Standard blocks are built at our factory near Hosur, about 40 km from the city. Your written quotation sets out the installation programme for a complete camp.",
       },
       {
         question: "Do the blocks need a foundation?",
@@ -13239,7 +13239,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Plan Your Camp",
-    ctaText: `Send us the peak headcount, the site location and the project duration. We will visit if you are in the metro area and return a block plan and fixed quote within two working days. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display} (${COMPANY.businessHours.weekdays.display}; ${COMPANY.businessHours.sunday.display}).`,
+    ctaText: `Send us the peak headcount, the site location and the project duration. We will visit if you are in the metro area and return a block plan and fixed quote. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display} (${COMPANY.businessHours.weekdays.display}; ${COMPANY.businessHours.sunday.display}).`,
     ctaButtonLabel: "Get a Camp Layout & Quote",
     ctaSecondaryLinks: [
       { label: "Labour Colony — Specs & Pricing", href: "/products/labour-colony" },
@@ -13920,7 +13920,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Book a Site Visit on Neeladri Road",
-    ctaText: `Send us your site location and what you are planning, and we will come and look at it. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. A written estimate follows the visit, and enquiries are answered ${COMPANY.responseTime.toLowerCase()}. Business hours are ${COMPANY.businessHours.weekdays.display} and ${COMPANY.businessHours.sunday.display}.`,
+    ctaText: `Send us your site location and what you are planning, and we will come and look at it. Call or WhatsApp ${COMPANY.phones[0].display} or ${COMPANY.phones[1].display}, or email ${COMPANY.email.sales}. A written estimate follows the visit. Business hours are ${COMPANY.businessHours.weekdays.display} and ${COMPANY.businessHours.sunday.display}.`,
     ctaButtonLabel: "Book a Site Visit",
     ctaSecondaryLinks: [
       { label: "House Construction in Electronic City", href: "/cities-we-serve/house-construction-contractor-services-in-electronic-city-bangalore" },
