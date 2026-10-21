@@ -690,7 +690,7 @@ const LANDING_COPY: Record<string, CategoryLandingCopy> = {
       },
       {
         title: "Warehouse and factory overflow",
-        text: "Extra storage that can be placed in a yard in a day and removed when it is no longer needed.",
+        text: "Extra storage that can be placed in a yard and removed when it is no longer needed.",
       },
       {
         title: "A base for conversion",
@@ -1041,7 +1041,7 @@ function transportRows(): TransportRow[] {
     zone: zoneLabel(zone),
     areas: zoneAreas(zone),
     charge: zone.rate === 0 ? "Free" : formatINR(zone.rate),
-    transit: `${zone.transitDaysMin}–${zone.transitDaysMax} days`,
+    transit: `${zone.transitDaysMin}–${zone.transitDaysMax} working days`,
   }));
 }
 
@@ -1058,9 +1058,9 @@ function facts(slug: string, categoryName: string, products: Product[]): Categor
     dispatch: `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`,
     installation: formatINR(INSTALLATION.rate),
     gst: GST_PERCENT_LABEL,
-    localTransit: `${local.transitDaysMin}–${local.transitDaysMax} days`,
+    localTransit: `${local.transitDaysMin}–${local.transitDaysMax} working days`,
     localPins: listOr(local.pincodePrefixes),
-    farthestTransit: `${farthest.transitDaysMin}–${farthest.transitDaysMax} days`,
+    farthestTransit: `${farthest.transitDaysMin}–${farthest.transitDaysMax} working days`,
     farthestZone: farthest.name.replace(/^Zone\s*\d+\s*[—-]\s*/, "").replace(/^Rest/, "the rest"),
   };
 }

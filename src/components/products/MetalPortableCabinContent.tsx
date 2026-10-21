@@ -390,8 +390,8 @@ export function MetalPortableCabinContent() {
           and shown before you confirm.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Standard MS sizes can be ordered online straight away. GI and PPGI builds are quoted within
-          one working day.
+          Standard MS sizes can be ordered online straight away. GI and PPGI builds follow a written
+          quotation.
         </p>
       </div>
 
@@ -464,7 +464,7 @@ export function MetalPortableCabinContent() {
           placement. Connect one power supply and the cabin is live.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Delivery is 7 to 21 working days, pan-India, from our Tamil Nadu factory at Kamandoddi near
+          Delivery is 8 to 25 working days, pan-India, from our Tamil Nadu factory at Kamandoddi near
           Hosur. Freight is calculated from your pincode and shown before you confirm the order.
         </p>
       </div>

@@ -242,7 +242,7 @@ export function SteelPortableCabinContent() {
           If you have ever waited three months for a brick-and-mortar site office, you already know
           why steel portable cabins exist. We build the whole cabin in our factory — frame, walls,
           roof, floor, wiring, doors and windows — then load it onto a truck and place it on your
-          site. Most of our customers are working inside it the same day it arrives.
+          site. It arrives finished, so there is no building work on site.
         </p>
         <p>
           Portable Office Cabin manufactures steel cabins at our Tamil Nadu factory in Kamandoddi,
@@ -465,7 +465,7 @@ export function SteelPortableCabinContent() {
         </p>
         <p className="text-muted-foreground leading-relaxed">
           We deliver across India. Dispatch from the factory is 7 to 15 working days depending on
-          size and customisation; door to door, allow 7 to 21 working days once transit to your
+          size and customisation; door to door, allow 8 to 25 working days once transit to your
           pincode is added. Freight is calculated from that pincode at checkout.
         </p>
       </div>

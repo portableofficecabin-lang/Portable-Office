@@ -10,7 +10,7 @@ export function LabourHutmentsStaffAccommodationContent() {
   // No "cost per bed" row: this page sells one unit at one fixed, GST-inclusive price, and a
   // per-bed range beside it would contradict the cart, the JSON-LD offer and the feed.
   const comparisonRows = [
-    ["Installation time", "3–6 weeks", "4–6 months"],
+    ["Installation time", "Far shorter — set out in your written quotation", "4–6 months"],
     ["Foundation needs", "Simple plinth", "Full RCC footings"],
     ["Reusability", "3–5 sites over 10 years", "Fixed location"],
     ["Monsoon delays", "Minimal", "Significant"],
@@ -23,20 +23,6 @@ export function LabourHutmentsStaffAccommodationContent() {
     ["500 beds", "1+ acre", "G+2 with STP"],
   ];
 
-  const caseStudies = [
-    {
-      title: "Maharashtra Metro Project (2023)",
-      desc: "250-worker G+1 labour colony completed in 40 days. Included dormitory blocks, canteen, and first-aid centre. Client reported 20% improvement in worker retention versus previous tin shed arrangements.",
-    },
-    {
-      title: "Odisha Steel Plant Expansion (2022)",
-      desc: "Mixed prefab labor hutments (180 labour beds + 12 staff units) with integrated canteen. Repeat order placed for phase 2, demonstrating the comfortable and safe stay our units provide.",
-    },
-    {
-      title: "Rajasthan Solar Park (2024)",
-      desc: "80-technician container-based temporary housing with enhanced dust seals and heat-proofing. Quick installation enabled project mobilisation 3 weeks ahead of schedule — unlimited possibilities with modular design.",
-    },
-  ];
 
   const productComparison = [
     { product: "Labour Hutments", use: "Worker dormitories", diff: "Bunk-optimised, hygiene-focused" },
@@ -46,7 +32,7 @@ export function LabourHutmentsStaffAccommodationContent() {
   ];
 
   const faqs = [
-    { q: "How quickly can a 100-bed labour colony be installed?", a: "A 100-bed G+1 modular labour hutment colony takes 2–3 weeks factory prep + 10–14 days site installation post civil readiness. Work progresses parallel to main site mobilisation, saving valuable project time." },
+    { q: "How quickly can a 100-bed labour colony be installed?", a: "For a 100-bed G+1 modular labour hutment colony, your written quotation sets out factory preparation and site installation, which starts once civil work is ready. Work progresses parallel to main site mobilisation, saving valuable project time." },
     { q: "What does the labour hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Full colony packages are sized to the brief — configuration, panel thickness, and amenities all change the build — so those are quoted separately. Either way it is 20–30% cheaper than traditional RCC/brick construction, with the added benefit of reusability across 3–5 project sites." },
     { q: "Can labour hutments be relocated to another project site?", a: "Yes. Bolt-together assembly allows easy dismantling with 80% material recovery for transport and reinstallation at subsequent sites, making them highly cost-effective over multiple project cycles." },
     { q: "What compliance standards do your labour hutments meet?", a: "Our structures comply with BOCW Act requirements, NBC 2016 fire safety and egress norms, IS 456/800/875 structural standards, and client-specific HSE requirements. Complete documentation including drawings, test certificates, and O&M manuals is provided." },
@@ -117,7 +103,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         <h3 className="font-display text-lg font-semibold text-foreground mb-4">Key Advantages</h3>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { title: "Rapid Deployment", desc: "A G+1 labour colony for 100–300 workers installs in 3–6 weeks versus months for RCC structures" },
+            { title: "Rapid Deployment", desc: "A G+1 labour colony for 100–300 workers needs far less time on site than RCC structures" },
             { title: "Cost Effective Solution", desc: "20–30% savings from minimal foundations, no curing time, and reusability across multiple sites" },
             { title: "Easy Relocation", desc: "Dismantling via bolted joints achieves 80% material recovery for subsequent project sites" },
             { title: "Compliance Ready", desc: "Easier adherence to NBC 2016 guidelines for 3.5–4.5 sqm/person floor space and BOCW Act requirements" },
@@ -178,7 +164,7 @@ export function LabourHutmentsStaffAccommodationContent() {
           {[
             { icon: Users, title: "Standard Labour Hutments", desc: "Dormitory-style blocks with bunk beds for 8–24 persons per module, shared toilets, common wash areas" },
             { icon: Building2, title: "Staff Accommodation", desc: "1BHK and 2BHK prefab structures for engineers and supervisors with attached toilets and kitchenettes" },
-            { icon: HardHat, title: "Container-Based Units", desc: "20ft and 40ft container cabins for quick installation and guaranteed protection" },
+            { icon: HardHat, title: "Container-Based Units", desc: "20ft and 40ft container cabins for quick installation and weather protection" },
             { icon: Building2, title: "Multi-Storey Hutments", desc: "G+1 and G+2 solutions maximising space availability on land-scarce urban sites" },
             { icon: Settings, title: "Support Buildings", desc: "Prefab canteens (50–200 pax), first-aid centres, portable toilets, security cabins" },
           ].map((item) => (
@@ -317,7 +303,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         </h2>
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div className="bg-card rounded-xl p-6 border border-border">
-            <h3 className="font-semibold text-foreground mb-3">Factory Fabrication (2–4 weeks)</h3>
+            <h3 className="font-semibold text-foreground mb-3">Factory Fabrication</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />CNC panel cutting</li>
               <li className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />Frame welding and pre-finishing</li>
@@ -325,7 +311,7 @@ export function LabourHutmentsStaffAccommodationContent() {
             </ul>
           </div>
           <div className="bg-card rounded-xl p-6 border border-border">
-            <h3 className="font-semibold text-foreground mb-3">Site Installation (7–21 days)</h3>
+            <h3 className="font-semibold text-foreground mb-3">Site Installation</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />Crane-lift module placement</li>
               <li className="flex items-start gap-2"><Check className="h-4 w-4 text-accent shrink-0 mt-0.5" />Bolt/weld connections</li>
@@ -336,7 +322,7 @@ export function LabourHutmentsStaffAccommodationContent() {
         <div className="bg-accent/10 rounded-xl p-6">
           <p className="text-foreground font-semibold mb-1">Sample Timeline</p>
           <p className="text-muted-foreground text-sm">
-            A 100-bed G+1 modular labour hutment colony: factory prep 2–3 weeks + site install 10–14 days post civil readiness. Work progresses parallel to main site mobilisation, saving valuable time.
+            For a 100-bed G+1 modular labour hutment colony, your written quotation sets out factory preparation and site installation, which starts once civil work is ready. Work progresses parallel to main site mobilisation, saving valuable time.
           </p>
         </div>
       </section>
@@ -408,21 +394,6 @@ export function LabourHutmentsStaffAccommodationContent() {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Case Studies */}
-      <section>
-        <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-          Case Examples of Labour & Staff Colonies by Portable Office Cabin
-        </h2>
-        <div className="space-y-4">
-          {caseStudies.map((cs) => (
-            <div key={cs.title} className="bg-card rounded-xl p-6 border border-border">
-              <h3 className="font-semibold text-foreground mb-2">{cs.title}</h3>
-              <p className="text-sm text-muted-foreground">{cs.desc}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Comparison with Other Products */}
@@ -514,7 +485,7 @@ export function LabourHutmentsStaffAccommodationContent() {
             "15+ years of prefabrication experience",
             "In-house design, manufacturing & installation",
             "500+ projects delivered",
-            "Enquiry response within 24 hours, with a written quotation for every order",
+            "A written quotation for every order",
             "Track record in labour colonies, container offices, PEB structures",
             "Commitment to quality, worker well-being & sustainable construction",
           ].map((item) => (
@@ -545,7 +516,7 @@ export function LabourHutmentsStaffAccommodationContent() {
           Ready to Order Your Labour Hutments?
         </h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Buy the labour hutment unit on this page online with secure payment — transport and optional installation are calculated at checkout from your delivery pincode. For complete colony packages, share your project location, required bed count, and preferred timeline, and our engineering team provides preliminary layout suggestions within days of receiving inputs.
+          Buy the labour hutment unit on this page online with secure payment — transport and optional installation are calculated at checkout from your delivery pincode. For complete colony packages, share your project location, required bed count, and preferred timeline, and our engineering team provides preliminary layout suggestions once it has your inputs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <BuyNowCTA productId="22" />

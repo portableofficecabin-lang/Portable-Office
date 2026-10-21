@@ -166,7 +166,7 @@ export default function PortableCabinManufacturersBangalore() {
               <h3 className="font-semibold text-foreground">Speed Advantage</h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Portable cabins deploy in 1–2 weeks versus 3–6 months for brick buildings, with 70–80% cost savings on initial setup
+              Portable cabins take far less time to deploy than brick buildings, with lower initial setup costs
             </p>
           </div>
           <div className="bg-card border border-border/40 rounded-xl p-6">
@@ -320,7 +320,7 @@ export default function PortableCabinManufacturersBangalore() {
             { icon: Layers, title: "Product Range", desc: "Choose portable office cabin manufacturers offering offices, toilets, security cabins, bunk houses, and container conversions for future scalability" },
             { icon: Shield, title: "Quality Standards", desc: "Verify adherence to IS 1079 steel grades, consistent MIG welding, and epoxy coatings; ISO-certified processes add confidence" },
             { icon: HardHat, title: "Design Support", desc: "Expect 2D/3D layout drawings and interior plans before fabrication; this expertise matters for IT parks and institutions" },
-            { icon: Clock, title: "Delivery Timelines", desc: "Standard cabins take 2–3 weeks manufacturing plus 1–2 days for delivery and installation across Bengaluru" },
+            { icon: Clock, title: "Delivery Timelines", desc: "Standard cabins bought online are dispatched within 7–15 working days, then 1–2 working days in transit to Bengaluru PIN codes beginning 560; optional installation follows, subject to site readiness" },
             { icon: Wrench, title: "After-sales & Warranty", desc: "Confirm 1–5 year warranty on structure and leakage, with 48-hour service response for electrical/plumbing issues" },
           ].map((item, idx) => (
             <div key={idx} className="flex gap-4 bg-card border border-border/40 rounded-xl p-5">
@@ -373,8 +373,8 @@ export default function PortableCabinManufacturersBangalore() {
           {[
             { step: "1", title: "Site Assessment", desc: "Brief visit or online discussion using site photos to check crane access, base preparation needs, and power/water points" },
             { step: "2", title: "Design & Quotation", desc: "Sharing layouts with detailed breakup covering cabin cost, transport, taxes, and portable cabin installation service charges" },
-            { step: "3", title: "Fabrication", desc: "1–3 week manufacturing at the manufacturer's own works — ours is at Kamandoddi, near Hosur — covering structure, insulation, electricals, and painting" },
-            { step: "4", title: "Delivery & Installation", desc: "Transport by trailer, positioning using Hydra crane, levelling, and utility connections—typically completed in 1–2 days" },
+            { step: "3", title: "Fabrication", desc: "Manufacturing at the manufacturer's own works — ours is at Kamandoddi, near Hosur — covering structure, insulation, electricals, and painting" },
+            { step: "4", title: "Delivery & Installation", desc: "Transport by trailer, positioning using Hydra crane, levelling, and utility connections, once the site is ready" },
           ].map((step, idx) => (
             <div key={idx} className="flex gap-4 items-start">
               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm shrink-0">{step.step}</div>

@@ -2164,7 +2164,7 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
       supabase.functions.invoke("send-enquiry-notification", { body: enquiry }).catch(() => {});
       setSubmitted(true);
       try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
-      toast({ title: "Quotation request sent!", description: "Our team will send a verified quotation within 24 hours." });
+      toast({ title: "Quotation request sent!", description: "Our team will review your configuration and send a verified quotation." });
     } catch (err) {
       toast({ title: "Something went wrong", description: "Please try again or call us directly.", variant: "destructive" });
     } finally {
@@ -3515,7 +3515,7 @@ export default function CabinCalculator({ adminTools = false }: { adminTools?: b
                     <CheckCircle2 className="h-12 w-12 text-emerald-500" />
                     <h4 className="text-lg font-bold text-foreground">Request received!</h4>
                     <p className="max-w-sm text-sm text-muted-foreground">
-                      Thank you, {lead.name.split(" ")[0] || "there"}. Our sales team will review your configuration and send a verified quotation within 24 hours.
+                      Thank you, {lead.name.split(" ")[0] || "there"}. Our sales team will review your configuration and send a verified quotation.
                     </p>
                     <div className="mt-2 flex flex-wrap justify-center gap-2">
                       <Button variant="outline" onClick={downloadPDF}><Download className="h-4 w-4" /> Download Estimate</Button>

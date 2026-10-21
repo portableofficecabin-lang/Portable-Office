@@ -215,7 +215,7 @@ export default function BookAppointment() {
       setIsSubmitted(true);
       toast({
         title: "Appointment Requested!",
-        description: "We'll confirm your appointment within 24 hours.",
+        description: "We'll review your request and confirm your appointment.",
       });
     } catch (err: any) {
       console.error("Unexpected error:", err);
@@ -242,7 +242,7 @@ export default function BookAppointment() {
               Appointment Requested!
             </h1>
             <p className="text-muted-foreground mb-6">
-              Thank you for booking an appointment with us. We'll review your request and send you a confirmation email within 24 hours.
+              Thank you for booking an appointment with us. We'll review your request and send you a confirmation email.
             </p>
             <Button variant="accent" asChild>
               <a href="/">Return to Home</a>

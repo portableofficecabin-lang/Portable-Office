@@ -289,7 +289,7 @@ export function ContainerOfficesCategoryContent({ products }: { products: Produc
                   <td className="px-4 py-3 font-medium text-foreground">{z.name}</td>
                   <td className={td}>{z.description}</td>
                   <td className={`${td} whitespace-nowrap`}>{freightLabel(z.rate)}</td>
-                  <td className={`${td} whitespace-nowrap`}>{z.transitDaysMin}–{z.transitDaysMax} days</td>
+                  <td className={`${td} whitespace-nowrap`}>{z.transitDaysMin}–{z.transitDaysMax} working days</td>
                 </tr>
               ))}
             </tbody>

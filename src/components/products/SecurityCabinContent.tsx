@@ -45,7 +45,7 @@ const faqs = [
   },
   {
     q: "What is the delivery timeline for security cabins?",
-    a: "Standard sizes ship within 7–15 working days. Fully customised designs or bulk orders take 15–25 days. Stock configurations may ship within one week. Metro city delivery is typically faster than remote locations."
+    a: "Standard sizes ship within 7–15 working days. Fully customised designs or bulk orders follow the timeline in your written quotation. Metro city delivery is typically faster than remote locations."
   },
   {
     q: "Can security cabins be relocated?",
@@ -450,8 +450,8 @@ export function SecurityCabinContent() {
         </p>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-semibold text-foreground mb-2">Standard delivery time:</h4>
-            <p className="text-sm text-muted-foreground">7–15 working days for common sizes; 15–25 days for fully customised designs or large orders. One week turnaround possible for stock configurations.</p>
+            <h4 className="font-semibold text-foreground mb-2">Lead time:</h4>
+            <p className="text-sm text-muted-foreground">Common sizes bought online are dispatched within 7–15 working days of order confirmation. Fully customised designs and large orders follow the timeline in your written quotation.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-2">Ordering steps (custom cabins):</h4>

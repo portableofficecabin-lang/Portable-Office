@@ -2,7 +2,6 @@ import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
-import { COMPANY } from "@/lib/company";
 import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 
 /**
@@ -38,8 +37,7 @@ export function PreFooterCTA() {
             </h2>
             <p className="mt-2.5 text-sm leading-relaxed text-navy-deep/85 sm:text-base">
               Send us your site requirement — size, layout and location — and our team will come
-              back with sizing, specification and a written quotation. Replies {""}
-              {COMPANY.responseTime.toLowerCase()}.
+              back with sizing, specification and a written quotation.
             </p>
           </div>
 

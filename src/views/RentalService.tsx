@@ -8,7 +8,6 @@ import {
   Building2, 
   Clock, 
   Truck, 
-  Shield, 
   Wrench, 
   Phone, 
   CheckCircle2,
@@ -426,17 +425,12 @@ const benefits = [
   {
     icon: Truck,
     title: "Delivery & Setup",
-    description: "Delivery and installation by our own team. Ready-stock rental units are typically delivered within 48 hours of confirmation, subject to availability. Transport is charged as per distance and confirmed in your written quotation"
+    description: "Delivery, installation and transport as set out in your rental quotation, subject to availability"
   },
   {
     icon: Wrench,
-    title: "Maintenance Included",
-    description: "Support Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM, with free maintenance during the rental period"
-  },
-  {
-    icon: Shield,
-    title: "Quality Guaranteed",
-    description: "All cabins are thoroughly inspected and sanitized before delivery"
+    title: "Maintenance & Support",
+    description: "Support Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM; maintenance during the rental period as set out in your rental agreement"
   }
 ];
 
@@ -542,7 +536,7 @@ export default function RentalServicePage() {
       {/* Benefits Section */}
       <section className="py-16 bg-muted/30">
         <div className="container-custom">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {benefits.map((benefit, index) => (
               <motion.div
                 key={benefit.title}
@@ -707,7 +701,7 @@ export default function RentalServicePage() {
                           </div>
 
                           <div className="text-xs text-muted-foreground mb-4">
-                            <p>✓ Delivery Charges: Applicable as per distance (delivery not included)</p>
+                            <p>✓ Delivery Charges: set out in your written quotation (not included in the rental rate)</p>
                             <p>✓ Min. rental: {cabin.minRental}</p>
                           </div>
 

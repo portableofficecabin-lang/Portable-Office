@@ -36,6 +36,7 @@
  *            would create duplicate offers at conflicting prices.
  */
 import { variantCommerceRows } from "@/data/productFamilies";
+import { DELIVERY_WORKING_DAYS } from "@/data/shippingZones";
 
 export type ProductKind = "product" | "custom" | "rental" | "service" | "guide" | "location";
 
@@ -155,8 +156,9 @@ export interface ProductCommerce {
 /** Everything on this site is manufactured and sold by one brand. */
 export const BRAND = "Portable Office Cabin";
 
-/** Default delivery window shown on product pages. Conservative envelope over the zone table. */
-const DELIVERY = "7–21 Working Days";
+/** Default delivery window shown on product pages: the door-to-door envelope over the zone table
+ *  (dispatch + transit), derived in shippingZones.ts so it cannot drift from the feed/JSON-LD. */
+const DELIVERY = `${DELIVERY_WORKING_DAYS.min}–${DELIVERY_WORKING_DAYS.max} Working Days`;
 
 /** Google taxonomy leaves actually used by this catalog. */
 const CAT_CONSTRUCTION = "114"; // Business & Industrial > Construction
@@ -185,6 +187,19 @@ export const PRODUCT_COMMERCE: ProductCommerce[] = [
     h1Title: "Steel Portable Cabin",
     feedTitle: "Steel Portable Cabin 20ft x 10ft Insulated MS Frame for Site Offices | Portable Office Cabin",
     size: "20 ft × 10 ft × 8.5 ft (200 sq ft)", material: "Welded MS Frame, 1.5–2 mm MS Sheet, 30–50 mm Insulation", bestFor: "Site Offices, Staff Rooms & Security Posts",
+    deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
+  },
+  {
+    /* Portable Shop Cabin (id 48, added 2026-10-18). The owner approved selling it online at
+     * ₹1,77,000 incl. 18% GST: sellPrice(150000) = 177000 exactly. ONE configuration — the
+     * 10 ft × 10 ft glazed-front build with a lockable door — so one fixed price describes one
+     * deliverable thing. Shelves, counter, AC and a rolling-shutter front are quoted separately
+     * and are not part of this offer. feedTitle carries no price or promotional wording and is
+     * also the page <title>; productSEO "48".title mirrors it. */
+    id: "48", sku: "POC-PSC-1010", basePrice: 150000, priceConfirmed: true, kind: "product", inStock: true,
+    h1Title: "Portable Shop Cabin — 10 ft × 10 ft",
+    feedTitle: "Portable Shop Cabin 10 ft x 10 ft with Glass Front for Retail Shops | Portable Office Cabin",
+    size: "10 ft × 10 ft (100 sq ft)", material: "MS Steel Frame, Primed & Painted", bestFor: "Retail Shops & Kiosks",
     deliveryDays: DELIVERY, googleProductCategory: CAT_CONSTRUCTION, productType: "Portable Cabins",
   },
   {

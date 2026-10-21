@@ -52,6 +52,9 @@ export const productApplications: Record<string, string> = {
 const productApplicationsBySlug: Record<string, string> = {
   "container-cafe-restaurant":
     "Takeaway kiosks, dine-in cafes, container restaurants, two-storey & rooftop cafes and food court clusters",
+  // Owner decision (2026-10-20): the Portable Cabins line ("Construction site offices, security
+  // cabins…") misdescribed the shop cabin.
+  "portable-shop-cabin": "Retail shops, kiosks and ticket counters",
 };
 
 /** Application/use-case text for a product (slug override first), then its category, then a safe generic fallback. */

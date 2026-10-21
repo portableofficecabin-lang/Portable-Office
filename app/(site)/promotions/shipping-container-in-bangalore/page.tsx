@@ -96,7 +96,7 @@ export default function ShippingContainerBangalorePage() {
                 {H1}
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                Looking for a <strong className="text-foreground">shipping container in Bangalore</strong> for storage, a site office, or a custom conversion? Portable Office Cabin manufactures and supplies containers directly from our own Tamil Nadu factory at Kamandoddi, near Hosur — barely 40 km from Bangalore on the Hosur road corridor — which means factory pricing, faster delivery, and full control over quality. We have supplied 500+ clients across India over 15+ years, and most Bangalore orders are delivered and installed within 7–10 days.
+                Looking for a <strong className="text-foreground">shipping container in Bangalore</strong> for storage, a site office, or a custom conversion? Portable Office Cabin manufactures and supplies containers directly from our own Tamil Nadu factory at Kamandoddi, near Hosur — barely 40 km from Bangalore on the Hosur road corridor — which means factory pricing, faster delivery, and full control over quality. We have supplied 500+ clients across India over 15+ years.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-7">
                 Every unit is built with IS-grade steel, a galvanized frame for corrosion resistance, and optional 50mm PUF insulated panels for thermal comfort in Bangalore&apos;s climate. Prices start from ₹1.5 lakh, and warranty cover follows our published <Link href="/warranty" className="font-medium text-accent underline-offset-4 hover:underline">warranty policy</Link>.

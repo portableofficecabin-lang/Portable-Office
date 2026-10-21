@@ -3,6 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { TechnicalSpecsPreset } from "./TechnicalSpecsPreset";
 import { FixedPriceCallout, type FixedOffer } from "./FixedPriceCallout";
 import { BuyNowCTA } from "@/components/products/BuyNowCTA";
+import { DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 /**
  * `offer` is present when the CURRENT product page is purchasable (passed in by
@@ -34,7 +35,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
         {/* Key Benefits Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: Truck, title: "Quick Installation", desc: "1–7 days depending on size" },
+            { icon: Truck, title: "Optional Installation", desc: "Added at checkout" },
             { icon: IndianRupee, title: "Cost-Effective", desc: "30–40% cheaper than traditional" },
             { icon: Building2, title: "Reusable & Relocatable", desc: "Move across multiple project sites" },
             { icon: Leaf, title: "Eco-Friendly", desc: "70–80% less construction waste" },
@@ -85,7 +86,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           <div>
             <FixedPriceCallout offer={offer} />
             <p className="text-sm text-muted-foreground mt-4">
-              Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
+              Cabins are delivered ready-to-use or in knock-down form and installation time depends on size and site readiness.
             </p>
           </div>
         ) : (
@@ -107,7 +108,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
               ))}
             </div>
             <p className="text-sm text-muted-foreground mt-4">
-              Cabins are delivered ready-to-use or in knock-down form and can be installed in 1–7 days depending on size and site readiness. Most standard units become operational within a week of delivery.
+              Cabins are delivered ready-to-use or in knock-down form and installation time depends on size and site readiness.
             </p>
           </div>
         )}
@@ -172,7 +173,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             {
               icon: Zap,
               title: "Speed of Installation",
-              desc: "Typical timelines range from 1–3 days for small cabins to 7–15 days for larger blocks. A standard 20ft × 10ft site office can be delivered and installed in under a week.",
+              desc: "Installation time depends on the size of the cabin or block and on site readiness.",
             },
             {
               icon: IndianRupee,
@@ -438,7 +439,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
           ))}
         </div>
         <p className="text-muted-foreground mt-6 leading-relaxed">
-          Contact Portable Office Cabin for same-day estimates and layout drawings based on your specific capacity, layout, and functional needs.
+          Contact Portable Office Cabin for estimates and layout drawings based on your specific capacity, layout, and functional needs.
         </p>
       </section>
 
@@ -463,10 +464,9 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             </thead>
             <tbody>
               {[
-                { phase: "Design and approval", duration: "2–5 days" },
-                { phase: "Manufacturing", duration: "7–20 days (size dependent)" },
-                { phase: "Transport", duration: "1–5 days (distance dependent)" },
-                { phase: "Installation", duration: "1–3 days (small units), 7–10 days (multi-unit)" },
+                { phase: "Manufacturing", duration: `Dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days` },
+                { phase: "Transport", duration: `${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days (by delivery zone)` },
+                { phase: "Installation", duration: "Optional — added at checkout" },
               ].map((row, i) => (
                 <tr key={row.phase} className={i % 2 === 0 ? "bg-muted/30" : "bg-card"}>
                   <td className="px-6 py-4 font-medium text-foreground text-sm">{row.phase}</td>
@@ -620,7 +620,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               q: "Can porta cabins be shifted to another location?",
-              a: "Yes, relocation is a core advantage. The process involves disconnecting utilities, securing internal fixtures, arranging crane access at both locations, and planning transport routes. Most cabins can be relocated within 2–5 days depending on distance and logistics.",
+              a: "Yes, relocation is a core advantage. The process involves disconnecting utilities, securing internal fixtures, arranging crane access at both locations, and planning transport routes; the time it takes depends on distance and logistics.",
             },
             {
               q: "Do porta cabins require government approvals?",
@@ -632,7 +632,7 @@ export function PortaCabinContent({ offer }: { offer?: FixedOffer & { productId?
             },
             {
               q: "How soon can Portable Office Cabin deliver?",
-              a: "Standard models typically ship within 7–20 days after design approval. Urgent requirements can be discussed case-by-case, with expedited manufacturing available for priority projects. Lead times depend on cabin size, specifications, and current production schedules.",
+              a: `Standard models are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit depending on your delivery zone. If you need a unit sooner, ask our team before you order — express delivery is not a checkout option. Custom builds follow the timeline in your written quotation.`,
             },
           ].map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`} className="bg-card border border-border rounded-xl px-6">

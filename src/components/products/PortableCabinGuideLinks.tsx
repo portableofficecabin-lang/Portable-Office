@@ -44,6 +44,10 @@ const GUIDES_BY_PRODUCT_SLUG: Record<string, string[]> = {
   "prefabricated-labour-hutments-staff-accommodation": ["with-toilet-and-pantry", "insulation-and-cooling", "price-and-cost-guide"],
   // Matches the cafe page's own heat, site-preparation and delivery sections.
   "container-cafe-restaurant": ["insulation-and-cooling", "installation-and-site-preparation", "transport-and-delivery"],
+  // Matches the shop cabin page's own transport, site-preparation and fit-out (shelves/counter)
+  // sections. Deliberately NOT the default materials (MS vs PUF) or insulation guides: this
+  // cabin's wall, roof and insulation materials are not confirmed yet.
+  "portable-shop-cabin": ["transport-and-delivery", "installation-and-site-preparation", "layouts-and-interiors"],
 };
 
 const cardClass =
