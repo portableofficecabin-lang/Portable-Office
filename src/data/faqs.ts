@@ -2,6 +2,9 @@
 // (rendering) and the FAQ route (server-side FAQPage JSON-LD), so the schema
 // always matches the visible Q&A content.
 
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
+import { GST_PERCENT_LABEL } from "@/lib/pricing/gst";
+
 export type FaqItem = { q: string; a: string };
 export type FaqCategory = {
   id: string;
@@ -72,7 +75,7 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "How long does it take to manufacture a cabin?",
-        a: "For standard models, production typically takes 7 to 15 working days. Custom or larger projects — like multi-room offices or prefab homes — may take 15 to 30 days depending on the complexity. We'll give you a clear timeline before you confirm your order.",
+        a: "Standard products bought online are dispatched within 7 to 15 working days of order confirmation. Custom or larger projects — like multi-room offices or prefab homes — follow the timeline in your written quotation, which you receive before you confirm your order.",
       },
       {
         q: "Can I visit your factory before placing an order?",
@@ -91,7 +94,10 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Is delivery free?",
-        a: "Delivery is free within a 50 km radius of our facility — genuinely free, with no hidden charges. Beyond 50 km, transport is charged based on distance and the size of the structure, and the exact amount is confirmed in your written quotation before you place the order. We do not offer free delivery nationwide. Unloading (crane or hydra) and installation are charged separately unless your quotation includes them, and GST applies extra.",
+        // Free zone and zone charging as checkout applies them (shippingZones.ts). The old answer said
+        // "within a 50 km radius", "charged based on distance and the size of the structure" and "GST
+        // applies extra"; checkout charges by PIN-code zone and its transport/installation lines include GST.
+        a: `For products bought online, delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} — genuinely free: no transport charge is added at checkout. Other PIN codes are charged by delivery zone, worked out from your pincode and shown at checkout before you pay. For custom orders and rentals, transport is confirmed in your written quotation. We do not offer free delivery nationwide. Unloading (crane or hydra) and installation are optional and charged separately — as a line at checkout, or as set out in your quotation. Transport and installation amounts shown at checkout include ${GST_PERCENT_LABEL} GST.`,
       },
       {
         q: "Can the cabin be relocated later?",
@@ -140,11 +146,11 @@ export const faqCategories: FaqCategory[] = [
     faqs: [
       {
         q: "Do you offer maintenance or repair services after delivery?",
-        a: "Yes. We provide ongoing maintenance support for all our structures. Whether it's a minor repair, a fresh coat of paint, or replacement of fittings, our service team is just a call away. We also offer annual maintenance contracts for businesses with multiple units.",
+        a: "Yes. Maintenance and repairs after delivery — a minor repair, a fresh coat of paint or replacement fittings — are provided as set out in your quotation or maintenance agreement. Businesses with multiple units can ask us about an annual maintenance contract.",
       },
       {
         q: "How do I reach your support team?",
-        a: "You can call us on +91 97318 97976 or +91 90199 10931, send a WhatsApp message to +91 97318 97976, or email us at sales@portableofficecabin.com. Our business hours are Monday to Saturday, 7:00 AM to 10:00 PM, and Sunday, 10:00 AM to 7:00 PM. We respond to every enquiry within 24 hours, and calling is always the fastest option.",
+        a: "You can call us on +91 97318 97976 or +91 90199 10931, send a WhatsApp message to +91 97318 97976, or email us at sales@portableofficecabin.com. Our business hours are Monday to Saturday, 7:00 AM to 10:00 PM, and Sunday, 10:00 AM to 7:00 PM. Calling is always the fastest option.",
       },
     ],
   },

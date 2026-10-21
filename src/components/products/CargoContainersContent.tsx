@@ -485,7 +485,7 @@ export function CargoContainersContent() {
             <div className="space-y-2">
               <h3 className="font-semibold text-foreground">Advantages for developers:</h3>
               <ul className="text-muted-foreground text-sm space-y-1">
-                <li>• Fast deployment: typically 30–60 days from design to installation</li>
+                <li>• Fast deployment: your written quotation sets out the programme from design to installation</li>
                 <li>• Factory-controlled quality and consistent finishes</li>
                 <li>• High structural strength from original container frame</li>
                 <li>• Relocatability for project-based applications</li>
@@ -507,7 +507,7 @@ export function CargoContainersContent() {
         <h2 className="text-3xl font-bold text-foreground mb-6">Container Offices & Project Site Infrastructure</h2>
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
-            Construction companies, infrastructure developers, and industrial plants across India rely on container-based offices for speed and flexibility. These units arrive fully fitted, connect to power, and begin operations within days rather than months.
+            Construction companies, infrastructure developers, and industrial plants across India rely on container-based offices for speed and flexibility. These units arrive fully fitted and connect to power, with far less time on site than conventional construction.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="border-border">

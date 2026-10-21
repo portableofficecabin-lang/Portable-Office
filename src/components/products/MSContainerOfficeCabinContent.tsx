@@ -102,7 +102,7 @@ const faqs = [
   {
     question: "How fast can an MS container office cabin be delivered?",
     answer:
-      "Standard sizes usually take 7–15 working days depending on current production load and delivery location. Larger custom layouts or multi-cabin complexes may take 20–30 days.",
+      "Standard sizes bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Larger custom layouts or multi-cabin complexes follow the timeline in your written quotation.",
   },
   {
     question: "Can the cabin be shifted to another project site later?",
@@ -130,7 +130,7 @@ export function MSContainerOfficeCabinContent() {
             MS Container Office Cabin
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            When project timelines are tight and mobility matters, an MS container office cabin gives you a ready-to-use workspace that can be deployed in days rather than weeks. Businesses across India choose these mild steel office cabins for structural strength, weather resistance, and easy relocation.
+            When project timelines are tight and mobility matters, an MS container office cabin gives you a ready-to-use workspace with far less time on site than conventional construction. Businesses across India choose these mild steel office cabins for structural strength, weather resistance, and easy relocation.
           </p>
           <p className="text-muted-foreground">
             Portable Office Cabin manufactures and supplies MS container office cabins across Chennai, Mumbai, Bengaluru, Ahmedabad, and Delhi NCR. Whether you need a compact 10’x10’ site cabin or a 40’x10’ project office with meeting space, the layout can be tailored to your operational needs.
@@ -255,7 +255,7 @@ export function MSContainerOfficeCabinContent() {
             Advantages of Choosing MS Container Office Cabins
           </h2>
           <p className="text-muted-foreground">
-            Compared with conventional RCC site offices, MS office cabins install in 1–2 days, require simpler foundations, and move with your project. That means faster mobilisation, better cost control, and an asset you can reuse instead of abandoning at the end of a project.
+            Compared with conventional RCC site offices, MS office cabins need far less time on site, require simpler foundations, and move with your project. That means faster mobilisation, better cost control, and an asset you can reuse instead of abandoning at the end of a project.
           </p>
           <div className="space-y-3">
             {[
@@ -296,10 +296,10 @@ export function MSContainerOfficeCabinContent() {
           </p>
           <div className="space-y-3">
             {[
-              "Standard delivery timelines of 7–15 working days for common layouts",
+              "Standard sizes bought online dispatched within 7–15 working days",
               "Flatbed truck transport with hydra crane unloading at site",
               "Level ground or PCC support blocks recommended before arrival",
-              "Operational within hours once connections are completed",
+              "Ready to use once service connections are completed",
               "Designed for repeat shifting across project cycles",
             ].map((item) => (
               <div key={item} className="flex items-start gap-3">

@@ -401,11 +401,8 @@ export function ShippingContainerContent() {
             <CardContent className="p-6">
               <h3 className="font-display text-2xl font-semibold text-foreground mb-4">Typical lead times</h3>
               <ul className="space-y-3 text-muted-foreground leading-7">
-                <li>Standard guard cabins: 1–2 weeks</li>
-                <li>20 ft office cabins: 3–4 weeks</li>
-                <li>40 ft office cabins: 4–5 weeks</li>
-                <li>Multi-container complexes: 6+ weeks</li>
-                <li>Container laboratories: 4–8 weeks depending on complexity</li>
+                <li>Standard products bought online: dispatched within 7–15 working days of order confirmation</li>
+                <li>Guard cabins, office conversions, multi-container complexes and container laboratories: timeline set out in your written quotation</li>
               </ul>
             </CardContent>
           </Card>

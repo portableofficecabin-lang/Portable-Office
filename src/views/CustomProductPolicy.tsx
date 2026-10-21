@@ -13,6 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
 
 // Server Component (no "use client") — the full policy text is in the initial HTML
 // so Google Merchant Center and crawlers can read it without executing JS.
@@ -66,7 +67,7 @@ export default function CustomProductPolicyPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> July 2026
+            <strong>Last updated:</strong> October 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             Portable Office Cabin sells in two ways. Our <strong>standard, fixed-configuration products</strong> can be bought and paid for online at a fixed, GST-inclusive price — <strong>this policy does not apply to those</strong>; they follow our{" "}
@@ -93,7 +94,7 @@ export default function CustomProductPolicyPage() {
             <ul className="space-y-3">
               <Bullet>For a <strong>customised</strong> unit — where you choose a non-standard size, layout or fit-out — any price shown on a product page is an <strong>indicative starting price</strong>, because the unit is built to your specification. (A standard, fixed-price product instead shows a final, GST-inclusive price you can pay online.)</Bullet>
               <Bullet>The exact price of a customised unit depends on <strong>size, specification, fit-out and delivery location</strong>.</Bullet>
-              <Bullet>For customised units the exact price is <strong>confirmed in a written quotation</strong>. Indicative figures shown for them are before GST, transport beyond the 50 km free zone, and optional installation.</Bullet>
+              <Bullet>For customised units the exact price is <strong>confirmed in a written quotation</strong>. Indicative figures shown for them are before GST, transport and optional installation.</Bullet>
             </ul>
             <p className="mt-3">
               See our{" "}
@@ -112,8 +113,8 @@ export default function CustomProductPolicyPage() {
 
           <Section title="3. Manufacturing & Delivery Timeline">
             <ul className="space-y-3">
-              <Bullet><strong>Dispatch:</strong> typically <strong>7–15 working days</strong> after order confirmation and advance payment.</Bullet>
-              <Bullet><strong>Transit:</strong> a further <strong>1–5 days</strong>, depending on your location.</Bullet>
+              <Bullet><strong>Dispatch:</strong> the dispatch date for a customised order is set out in your written quotation. (Standard products bought online are dispatched within <strong>7–15 working days</strong> of order confirmation and payment.)</Bullet>
+              <Bullet><strong>Transit:</strong> a further <strong>{`${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days`}</strong>, depending on your delivery zone — confirmed in your written quotation.</Bullet>
               <Bullet>Timelines start only after the order is confirmed and the advance is received — not from the date of enquiry.</Bullet>
             </ul>
             <p className="mt-3">
@@ -174,7 +175,7 @@ export default function CustomProductPolicyPage() {
             <ul className="space-y-3">
               <Bullet><Link href="/payment-policy" className="text-accent hover:underline">Payment Policy</Link> — prices, GST, accepted payment methods and advance terms.</Bullet>
               <Bullet><Link href="/refund-policy" className="text-accent hover:underline">Return, Refund &amp; Cancellation Policy</Link> — cancellation windows, refunds and defective goods.</Bullet>
-              <Bullet><Link href="/shipping" className="text-accent hover:underline">Shipping &amp; Delivery Policy</Link> — free delivery within 50 km, transport beyond 50 km, installation.</Bullet>
+              <Bullet><Link href="/shipping" className="text-accent hover:underline">Shipping &amp; Delivery Policy</Link> — the free delivery zone, transport charges by zone, installation.</Bullet>
               <Bullet><Link href="/warranty" className="text-accent hover:underline">Warranty Policy</Link> — what is covered after your unit is delivered.</Bullet>
             </ul>
           </Section>
@@ -188,7 +189,7 @@ export default function CustomProductPolicyPage() {
               <h2 className="font-display text-xl font-bold text-foreground">Customer Service</h2>
             </div>
             <p className="text-muted-foreground mb-5">
-              Not sure which size or specification you need? Talk to us before you approve anything — we respond within 24 hours.
+              Not sure which size or specification you need? Talk to us before you approve anything.
             </p>
             <ul className="text-muted-foreground leading-relaxed space-y-3 mb-6">
               <li className="flex items-start gap-3">
@@ -221,7 +222,7 @@ export default function CustomProductPolicyPage() {
               <li className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                 <span>
-                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM. We respond to all enquiries within 24 hours.
+                  Business hours: Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.
                 </span>
               </li>
             </ul>

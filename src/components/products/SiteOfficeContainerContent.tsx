@@ -65,11 +65,11 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {[
-            { icon: Calendar, title: "Quick Installation", desc: "5-7 days after order confirmation" },
+            { icon: Calendar, title: "Dispatch Window", desc: "Dispatched within 7–15 working days of order confirmation" },
             { icon: ArrowRightLeft, title: "Easy Relocation", desc: "Minimal disassembly between project sites" },
             /* Purchasable SKU: "per sq ft pricing" is a rate-based framing that contradicts the
                fixed checkout price — the offer branch keeps the argument, drops the rate model. */
-            { icon: IndianRupee, title: "Predictable Cost", desc: offer ? "One fixed price with no hidden civil work expenses" : "Per sq ft pricing with no hidden civil work expenses" },
+            { icon: IndianRupee, title: "Predictable Cost", desc: offer ? "One fixed price, with transport and optional installation shown before you pay" : "Per sq ft pricing, confirmed in your written quotation" },
             { icon: Building2, title: "Minimal Foundation", desc: "Simple concrete blocks suffice" },
             { icon: ShieldCheck, title: "Factory-Built Quality", desc: "Better quality control under controlled conditions" },
             { icon: Package, title: "Reusable", desc: "Across 3-5 projects with proper maintenance" },
@@ -101,7 +101,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
               <tr className="bg-muted/30">
                 <td className="px-6 py-3 text-sm text-foreground">Container office</td>
                 <td className="px-6 py-3 text-sm text-muted-foreground">20-40 m²</td>
-                <td className="px-6 py-3 text-sm text-accent font-semibold">1-3 weeks</td>
+                <td className="px-6 py-3 text-sm text-accent font-semibold">Dispatched within 7–15 working days</td>
               </tr>
               <tr>
                 <td className="px-6 py-3 text-sm text-foreground">Conventional construction</td>
@@ -206,7 +206,7 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
           {[
             {
               title: "Standard Portable Office Container",
-              desc: "Fully finished interiors with vinyl flooring, modular electrical wiring, LED lighting, and optional basic furniture. This configuration suits quick site setup where teams need functional workspace within days of project commencement.",
+              desc: "Fully finished interiors with vinyl flooring, modular electrical wiring, LED lighting, and optional basic furniture. This configuration suits quick site setup, with far less time on site than conventional construction.",
             },
             {
               title: "Site Office Container",
@@ -527,9 +527,9 @@ export function SiteOfficeContainerContent({ offer }: { offer?: FixedOffer }) {
         {/* Timeline Steps */}
         <div className="grid sm:grid-cols-3 gap-4 mb-8">
           {[
-            { step: "1", title: "Design Finalization", desc: "2-3 days for layout approval and specification confirmation" },
-            { step: "2", title: "Fabrication & Fit-Out", desc: "7-15 working days depending on complexity and customization" },
-            { step: "3", title: "Transport & Placement", desc: "1-3 days based on location and site access" },
+            { step: "1", title: "Design Finalization", desc: "Layout approval and specification confirmation" },
+            { step: "2", title: "Fabrication & Fit-Out", desc: "Standard units bought online are dispatched within 7–15 working days; custom fit-outs follow your written quotation" },
+            { step: "3", title: "Transport & Placement", desc: "1–10 working days in transit by delivery zone; placement depends on site access" },
           ].map((item) => (
             <div key={item.step} className="bg-accent/5 border border-accent/15 rounded-xl p-5 text-center">
               <div className="w-10 h-10 rounded-full bg-accent text-white font-bold flex items-center justify-center mx-auto mb-3 text-lg">

@@ -216,7 +216,7 @@ export function ProductVariantView({
                 <span className="flex items-center gap-1.5 text-muted-foreground">
                   <Truck className="h-4 w-4 text-accent" aria-hidden="true" />
                   <span className="font-medium text-foreground">Pan-India Delivery</span>
-                  <span>· Dispatch {DISPATCH_WORKING_DAYS.min}–{DISPATCH_WORKING_DAYS.max} days + transit</span>
+                  <span>{`· Dispatch ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days + transit`}</span>
                 </span>
               </div>
 

@@ -69,7 +69,7 @@ const faqs = [
   },
   {
     q: "How long does it take to get a pink container delivered?",
-    a: "Repainting with light modifications takes 2–3 weeks. Fully customised units with interiors, electrical, AC, and glazing take 4–6 weeks. Transport via 16-tyre trailers with hydra crane setup is available across India.",
+    a: "The standard unit bought online is dispatched within 7–15 working days of order confirmation. Repainting, light modifications and fully customised units with interiors, electrical, AC, and glazing follow the timeline in your written quotation. Transport via 16-tyre trailers with hydra crane setup is available across India.",
   },
   {
     q: "Does the pink paint affect durability?",
@@ -417,10 +417,10 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
               <CardContent className="p-4">
                 <h3 className="font-bold text-foreground text-sm mb-2">Timelines</h3>
                 <ul className="text-muted-foreground text-xs space-y-1">
-                  <li>• Repaint + light mods: 2–3 weeks</li>
-                  <li>• Fully customised: 4–6 weeks</li>
+                  <li>• Bought online: dispatched in 7–15 working days</li>
+                  <li>• Repaint, mods and custom builds: per written quotation</li>
                   <li>• Transport: 16-tyre trailers</li>
-                  <li>{offer ? "• Hydra crane arranged at site (charged at actuals)" : "• Hydra crane: ₹50k/day"}</li>
+                  <li>{offer ? "• Crane / hydra: in the optional on-site installation for standard single-unit placements; other placements by separate written quotation agreed before payment" : "• Hydra crane: ₹50k/day"}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -429,7 +429,7 @@ export function CargoStorageContainersPinkContent({ offer }: { offer?: FixedOffe
                 <h3 className="font-bold text-foreground text-sm mb-2">Why Buy</h3>
                 <ul className="text-muted-foreground text-xs space-y-1">
                   <li>• One-time investment for long-term use & branding</li>
-                  <li>• MCD/BMC permits: 15–30 days</li>
+                  <li>• MCD/BMC permits: timeline set by the authority</li>
                   <li>• PAN-India delivery available</li>
                   <li>
                     • Prefer renting instead? See our{" "}

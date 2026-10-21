@@ -77,8 +77,8 @@ export function variantPageDescription(family: ProductFamily, variant: SizeVaria
   const head = `${variant.sizeLabelPlain} ${family.groupTitle} — ${dims}, ${area} sq ft built-up area, ${family.material}.`;
 
   const tail = priced
-    ? `${formatINR(sellPrice(commerce.basePrice))} including 18% GST. Dispatch ${variant.leadTime}. Buy online with UPI, cards or net banking.`
-    : `Dispatch ${variant.leadTime}. Request a written quotation for this size.`;
+    ? `${formatINR(sellPrice(commerce.basePrice))} including 18% GST. Delivery ${variant.leadTime}. Buy online with UPI, cards or net banking.`
+    : `Request a written quotation for this size; it sets out the delivery timeline.`;
 
   return truncateOnWordBoundary(`${head} ${tail}`, META_DESCRIPTION_MAX);
 }

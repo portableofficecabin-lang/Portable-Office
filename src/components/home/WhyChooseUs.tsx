@@ -1,10 +1,11 @@
 import { Zap, CloudRain, Settings, IndianRupee, Leaf, Wrench } from "lucide-react";
+import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 
 const reasons = [
   {
     icon: Zap,
-    title: "Lightning-Fast Setup",
-    description: "We can have your space up and running in a matter of days, not months — that's how quick we are.",
+    title: "Factory-Built for Speed",
+    description: `Cabins are built in our factory, so there is far less work on site than building from the ground up. Standard products bought online are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days.`,
   },
   {
     icon: CloudRain,
