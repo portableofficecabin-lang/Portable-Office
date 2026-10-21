@@ -781,8 +781,7 @@ export function ResidentialBuildingConstructionContractorContent() {
           </div>
 
           <p className="mt-5 text-sm text-muted-foreground">
-            {COMPANY.businessHours.weekdays.display} · {COMPANY.businessHours.sunday.display} ·
-            Enquiries answered {COMPANY.responseTime.toLowerCase()}.
+            {COMPANY.businessHours.weekdays.display} · {COMPANY.businessHours.sunday.display}
           </p>
         </div>
       </section>

@@ -29,6 +29,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  DISPATCH_WORKING_DAYS,
+  FREE_DELIVERY_PIN_PREFIXES_TEXT,
+  INSTALLATION,
+  INSTALLATION_NOT_COVERED,
+  INSTALLATION_SCOPE,
+  TRANSIT_WORKING_DAYS,
+} from "@/data/shippingZones";
+import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 
 function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
@@ -39,7 +48,48 @@ function InfoItem({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   );
 }
 
-export function ShippingDeliveryModal() {
+/**
+ * Checkout-accurate shipping lines, read from shippingZones.ts — the same source the cart,
+ * checkout, Razorpay order, JSON-LD handlingTime and Merchant feed shipping use. Zones are
+ * described by PIN-code prefix (FREE_DELIVERY_PIN_PREFIXES_TEXT, how checkout assigns them),
+ * never by distance.
+ */
+const DISPATCH = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`;
+
+/**
+ * Lines shown in EVERY mode. The modal used to promise "GPS shipment tracking provided for all
+ * orders", a "Damage-free guarantee (damaged items replaced or refunded)" and installation
+ * durations ("1–2 days", "1 day", "Same day"); the owner marked all three unverified (2026-10-19).
+ * Tracking is now an offer to give status updates; transit damage states the published process
+ * (Refund & Cancellation Policy §7 / Shipping & Delivery policy: report within 48 hours with
+ * photographs; once confirmed in transit, repair at no cost, replace the affected components or
+ * agree compensation). Installation lists exactly what the paid checkout option covers
+ * (INSTALLATION_SCOPE) — no durations, no foundation work, no "professional installation on request".
+ */
+const SHIPMENT_UPDATES = "Ask our team for shipment status updates once your order is dispatched";
+const TRANSIT_DAMAGE =
+  "Damage in transit: tell us within 48 hours of delivery, with photographs. Once our team confirms it, we repair the unit at no cost, replace the affected components or agree compensation, as set out in our Refund & Cancellation Policy";
+/** The paid checkout option (bought-online products), priced from INSTALLATION. */
+const INSTALLATION_OPTION = `Optional ${INSTALLATION.label.toLowerCase()}: ${formatINR(INSTALLATION.rate)} including ${GST_PERCENT_LABEL} GST, added at checkout`;
+/** Rentals and quote-only products: installation is part of the written quotation. */
+const INSTALLATION_BY_QUOTATION = "Installation: set out in your written quotation";
+
+/**
+ * `showWarranty` (default true) hides the Warranty tab for a product whose warranty terms the
+ * owner has not confirmed — the structural term depends on the cabin's material, so the policy
+ * table cannot be shown as applying to it. Omitted = the three-tab modal every page had before.
+ *
+ * `transportAtCheckout` (default false) is set for a product that is bought online, where
+ * checkout prices transport by PIN-code zone before payment and the dispatch window is the
+ * fixed DISPATCH_WORKING_DAYS. The generic lines ("within a 50 km radius", "confirmed in your
+ * written quotation", "7–14 working days", "express 3–7 working days") contradicted that, so
+ * they are replaced with the checkout terms. Enquiry-only callers (rentals, quote-only products)
+ * omit it and keep the original quotation wording, which is accurate for them.
+ */
+export function ShippingDeliveryModal({
+  showWarranty = true,
+  transportAtCheckout = false,
+}: { showWarranty?: boolean; transportAtCheckout?: boolean } = {}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -59,9 +109,11 @@ export function ShippingDeliveryModal() {
         </DialogHeader>
 
         <Tabs defaultValue="shipping" className="mt-2">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className={`grid w-full ${showWarranty ? "grid-cols-3" : "grid-cols-2"}`}>
             <TabsTrigger value="shipping" className="text-xs sm:text-sm">🚚 Shipping</TabsTrigger>
-            <TabsTrigger value="warranty" className="text-xs sm:text-sm">📦 Warranty</TabsTrigger>
+            {showWarranty && (
+              <TabsTrigger value="warranty" className="text-xs sm:text-sm">📦 Warranty</TabsTrigger>
+            )}
             <TabsTrigger value="installation" className="text-xs sm:text-sm">🛠 Installation</TabsTrigger>
           </TabsList>
 
@@ -75,12 +127,20 @@ export function ShippingDeliveryModal() {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-3">
-                    <InfoItem icon={CheckCircle2} text="Free standard delivery within a 50 km radius" />
-                    <InfoItem icon={MapPin} text="Beyond 50 km, transport is charged based on distance — confirmed in your written quotation" />
-                    <InfoItem icon={CheckCircle2} text="Express delivery available at an additional cost (optional)" />
-                    <InfoItem icon={Wrench} text="Professional installation available upon request" />
-                  </ul>
+                  {transportAtCheckout ? (
+                    <ul className="space-y-3">
+                      <InfoItem icon={CheckCircle2} text={`Free delivery to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT}`} />
+                      <InfoItem icon={MapPin} text="Other PIN codes: transport is charged by delivery zone and shown at checkout before you pay" />
+                      <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order — express delivery is not a checkout option" />
+                      <InfoItem icon={Wrench} text={INSTALLATION_OPTION} />
+                    </ul>
+                  ) : (
+                    <ul className="space-y-3">
+                      <InfoItem icon={MapPin} text="Transport: confirmed in your written quotation" />
+                      <InfoItem icon={CheckCircle2} text="Need it sooner? Ask our team before you order" />
+                      <InfoItem icon={Wrench} text={INSTALLATION_BY_QUOTATION} />
+                    </ul>
+                  )}
                 </AccordionContent>
               </AccordionItem>
 
@@ -91,25 +151,29 @@ export function ShippingDeliveryModal() {
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-3">
-                    <InfoItem icon={CalendarDays} text="Standard delivery: 7–14 working days" />
-                    <InfoItem icon={CalendarDays} text="Express delivery: 3–7 working days" />
-                    <InfoItem icon={MapPin} text="GPS shipment tracking provided for all orders" />
-                  </ul>
+                  {transportAtCheckout ? (
+                    <ul className="space-y-3">
+                      <InfoItem icon={CalendarDays} text={`Dispatched within ${DISPATCH}, then ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit, depending on your delivery zone`} />
+                      <InfoItem icon={MapPin} text={SHIPMENT_UPDATES} />
+                    </ul>
+                  ) : (
+                    <ul className="space-y-3">
+                      <InfoItem icon={CalendarDays} text="Delivery timeline: set out in your written quotation" />
+                      <InfoItem icon={MapPin} text={SHIPMENT_UPDATES} />
+                    </ul>
+                  )}
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="packaging">
                 <AccordionTrigger className="font-semibold">
                   <span className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-accent" /> Packaging & Handling
+                    <Package className="h-4 w-4 text-accent" /> Damage in Transit
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-3">
-                    <InfoItem icon={Shield} text="Secure, high-quality packaging to prevent damage" />
-                    <InfoItem icon={CheckCircle2} text="Weather-protected transport" />
-                    <InfoItem icon={CheckCircle2} text="Damage-free guarantee (damaged items replaced or refunded)" />
+                    <InfoItem icon={CheckCircle2} text={TRANSIT_DAMAGE} />
                   </ul>
                 </AccordionContent>
               </AccordionItem>
@@ -117,6 +181,7 @@ export function ShippingDeliveryModal() {
           </TabsContent>
 
           {/* Warranty Tab */}
+          {showWarranty && (
           <TabsContent value="warranty">
             <Accordion type="multiple" defaultValue={["structural-warranty", "warranty-coverage", "support"]} className="w-full">
               <AccordionItem value="structural-warranty">
@@ -159,47 +224,62 @@ export function ShippingDeliveryModal() {
                 <AccordionContent>
                   <ul className="space-y-3">
                     <InfoItem icon={Phone} text="Customer support 7 days a week — Mon-Sat 7:00 AM - 10:00 PM, Sun 10:00 AM - 7:00 PM" />
-                    <InfoItem icon={Wrench} text="On-site maintenance service available" />
-                    <InfoItem icon={CheckCircle2} text="Spare parts readily available" />
+                    <InfoItem icon={Wrench} text="Maintenance and repairs: as set out in your quotation or maintenance agreement" />
                   </ul>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </TabsContent>
+          )}
 
           {/* Installation Tab */}
           <TabsContent value="installation">
             <div className="space-y-4">
               <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <Wrench className="h-4 w-4 text-accent" /> Installation Timeline
+                <Wrench className="h-4 w-4 text-accent" /> What Installation Covers
               </h4>
-              <div className="grid gap-3">
-                {[
-                  { step: "1", title: "Site Preparation", time: "1–2 days" },
-                  { step: "2", title: "Delivery & Setup", time: "1 day" },
-                  { step: "3", title: "Final Inspection", time: "Same day" },
-                ].map((item) => (
-                  <div key={item.step} className="flex items-center gap-4 bg-muted/50 rounded-lg p-4">
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-sm shrink-0">
-                      {item.step}
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-foreground">{item.title}</p>
-                      <p className="text-sm text-muted-foreground">{item.time}</p>
-                    </div>
+              {transportAtCheckout ? (
+                <>
+                  <p className="text-sm text-muted-foreground">{INSTALLATION_OPTION}. It covers:</p>
+                  <div className="grid gap-3">
+                    {INSTALLATION_SCOPE.map((item, i) => (
+                      <div key={item.title} className="flex items-center gap-4 bg-muted/50 rounded-lg p-4">
+                        <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-sm shrink-0">
+                          {i + 1}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-foreground">{item.title}</p>
+                          <p className="text-sm text-muted-foreground">{item.text}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                  <ul className="space-y-2">
+                    {INSTALLATION_NOT_COVERED.map((line) => (
+                      <InfoItem key={line} icon={AlertCircle} text={line} />
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <ul className="space-y-2">
+                  <InfoItem icon={Wrench} text="Installation scope and charges are set out in your written quotation" />
+                </ul>
+              )}
 
               {/* Manufacturing & Lead Time */}
               <div className="mt-6 bg-accent/5 border border-accent/20 rounded-lg p-4">
                 <h4 className="font-semibold text-foreground flex items-center gap-2 mb-3">
                   <Clock className="h-4 w-4 text-accent" /> Manufacturing & Lead Time
                 </h4>
-                <ul className="space-y-2">
-                  <InfoItem icon={CalendarDays} text="After placing the order, the manufacturing lead time is 7–14 days or 20–30 working days" />
-                  <InfoItem icon={Package} text="Manufacturing time may vary depending on the project size (Small, Medium, or Large)" />
-                </ul>
+                {transportAtCheckout ? (
+                  <ul className="space-y-2">
+                    <InfoItem icon={CalendarDays} text={`After you place the order, it is dispatched within ${DISPATCH}`} />
+                  </ul>
+                ) : (
+                  <ul className="space-y-2">
+                    <InfoItem icon={CalendarDays} text="The manufacturing timeline is set out in your written quotation" />
+                  </ul>
+                )}
               </div>
 
               {/* Order Confirmation */}
@@ -221,7 +301,10 @@ export function ShippingDeliveryModal() {
                 <ul className="space-y-2">
                   <InfoItem icon={CalendarDays} text="Delivery times begin after order confirmation" />
                   <InfoItem icon={Clock} text="Installation scheduling is subject to availability" />
-                  <InfoItem icon={MapPin} text="Additional charges may apply outside the 50 km radius" />
+                  <InfoItem
+                    icon={MapPin}
+                    text={transportAtCheckout ? "Transport for your PIN code is shown at checkout before you pay" : "Transport is confirmed in your written quotation"}
+                  />
                 </ul>
               </div>
             </div>

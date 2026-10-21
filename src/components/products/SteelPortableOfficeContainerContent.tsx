@@ -23,7 +23,7 @@ const applications = [
 ];
 
 const advantages = [
-  { icon: Truck, title: "Speed", desc: "Complete prefabrication in 7–15 days; 1–2 days onsite placement" },
+  { icon: Truck, title: "Speed", desc: "Dispatched within 7–15 working days; on-site placement depends on site readiness" },
   { icon: IndianRupee, title: "Cost Control", desc: "One fixed, GST-inclusive price for the listed unit — no mid-project overruns" },
   { icon: Recycle, title: "Reusability", desc: "Same units serve 8–10 project cycles, reducing embodied carbon by 40–60%" },
   { icon: ThermometerSun, title: "Durability", desc: "Anti-corrosive coatings handle harsh coastal humidity and industrial environments" },
@@ -31,11 +31,11 @@ const advantages = [
 
 const faqs = [
   { q: "What sizes are available for steel portable office containers?", a: "We manufacture standard sizes from 10 ft to 40 ft lengths with heights ranging from 8.5 ft to 9.5 ft. The most popular configurations are 10'x20' (160 sq ft) for compact offices and 10'x40' (320 sq ft) for open-plan workspaces. Custom sizes are available on request." },
-  { q: "How long does delivery and installation take?", a: "Standard cabins ship within 7–15 working days after order confirmation. Onsite placement requires 1–2 days with crane and basic electrical hookup. Larger customized multi-container complexes need 3–6 weeks for fabrication and fit-out." },
+  { q: "How long does delivery and installation take?", a: "Standard cabins ship within 7–15 working days after order confirmation. Onsite placement uses a crane and basic electrical hookup; its time depends on site readiness. Larger customized multi-container complexes follow the timeline in your written quotation." },
   { q: "What insulation options are available for Indian climate conditions?", a: "We offer PUF panels (best thermal performance), EPS panels (cost-effective), glass wool, and rock wool in 40–60 mm thickness. PUF panels carry a 20% premium but deliver superior insulation for extreme heat in North and Central India and humidity in coastal zones." },
   { q: "Can steel containers be stacked for multi-storey offices?", a: "Yes, we design G+1 and G+2 configurations with proper staircase, railing, and structural reinforcement. Stacked containers suit large infrastructure projects and urban sites with limited ground-level space." },
   { q: "What is the expected lifespan of a steel portable office container?", a: "With periodic maintenance including triennial repainting and annual sealant inspection, steel portable office containers offer 10–25 years of service life. Well-maintained units can serve 8–10 project relocation cycles." },
-  { q: "How do steel portable offices compare to traditional brick-and-mortar site offices?", a: "Total project time drops from 60–90 days to 14–21 days, translating to faster mobilization and earlier revenue generation. The unit is relocatable rather than written off at the end of the project, and it produces 90% less onsite debris. The container listed on this page is sold at the single price shown above, inclusive of 18% GST." },
+  { q: "How do steel portable offices compare to traditional brick-and-mortar site offices?", a: "Total project time is far shorter than for a brick-and-mortar site office, translating to faster mobilization and earlier revenue generation. The unit is relocatable rather than written off at the end of the project, and it produces 90% less onsite debris. The container listed on this page is sold at the single price shown above, inclusive of 18% GST." },
   { q: "What customization options are available?", a: "Full customization includes external branding (company colours, logo vinyls, ACP facades), internal partitioning with modular 75 mm panels, reinforced security doors for server rooms, and extensions like verandahs and canopies. Modules can be connected with common doors or weatherproof passages." },
   { q: "What compliance and safety standards do these containers meet?", a: "Our units adhere to IS 800 for structural steel design, IS 732 for electrical installations, and NBC fire safety norms. Pre-dispatch quality checks include ultrasonic weld testing, insulation continuity verification, alignment checks, and simulated rain leakage testing." },
 ];

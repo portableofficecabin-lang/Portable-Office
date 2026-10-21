@@ -6,6 +6,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { RotateCcw, ChevronRight, Mail, Phone, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "@/components/ui/static-motion";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT } from "@/data/shippingZones";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -63,7 +64,7 @@ export default function RefundPolicyPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <p className="text-muted-foreground leading-relaxed mb-10">
-            <strong>Last updated:</strong> February 2026
+            <strong>Last updated:</strong> October 2026
           </p>
           <p className="text-muted-foreground leading-relaxed mb-10">
             At Portable Office Cabin, we understand that plans can change. This policy outlines the rules and conditions around order cancellations, refunds, and how we handle unexpected situations — so you know exactly where you stand.
@@ -94,7 +95,13 @@ export default function RefundPolicyPage() {
 
           <Section title="1. Order Cancellation Rules" index={0}>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of any advance payment, provided manufacturing has not yet commenced.</li>
+              {/* Split by payment route (2026-10-19): online orders are paid in full at checkout (section 2), so
+                  "a full refund of any advance payment" did not describe them. Same 48-hour window and the same
+                  "manufacturing has not yet commenced" condition for both; the online wording matches the
+                  published Container Offices FAQ ("cancelled for a full refund within 48 hours"). Owner decision (2026-10-19): the
+                  online refund is everything paid (transport, installation and GST included) with no gateway-fee deduction. */}
+              <li><strong>Online orders (paid in full at checkout) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the amount paid, including transport, installation and GST, with no deduction for payment-gateway fees, provided manufacturing has not yet commenced.</li>
+              <li><strong>Custom orders (advance paid on the quotation route) — within 48 hours of order confirmation:</strong> You may cancel your order and receive a full refund of the advance payment, provided manufacturing has not yet commenced.</li>
               <li><strong>After 48 hours / manufacturing started:</strong> If production has already begun, the order cannot be fully cancelled. Cancellation charges will apply based on the extent of work completed and materials consumed.</li>
               <li><strong>Custom orders:</strong> Products built to your specific dimensions, design, or layout requirements are non-cancellable once manufacturing has started, as these units cannot be repurposed for other customers.</li>
             </ul>
@@ -124,7 +131,7 @@ export default function RefundPolicyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Prices shown on product pages are inclusive of 18% GST</strong> — the price you see is the price of the item. GST is shown separately on your tax invoice.</li>
               <li>Transport is charged separately, based on the delivery pincode. It is calculated and shown to you at checkout before payment, and is confirmed in the written quotation on the custom route.</li>
-              <li>Delivery is free within a 50 km radius of our facility. Beyond 50 km, transport is charged based on distance. Installation, where required, is an optional charge shown separately.</li>
+              <li>For online orders, delivery is free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}; other PIN codes are charged by delivery zone. Installation, where required, is an optional charge shown separately.</li>
               <li>Freight or transport charges already incurred on an order that has been dispatched or is in transit are <strong>not refundable</strong>.</li>
             </ul>
           </Section>
@@ -162,7 +169,7 @@ export default function RefundPolicyPage() {
             <p>If you receive a product that is damaged or has manufacturing defects:</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>Notify us within <strong>48 hours</strong> of delivery with photographs and a clear description of the issue.</li>
-              <li>Our quality team will review the complaint and respond within 3 business days.</li>
+              <li>Our quality team will review the complaint and respond to you.</li>
               <li>If the damage occurred during transit and is confirmed by our team, we will either repair the unit at no cost, replace the affected components, or offer an appropriate compensation.</li>
               <li>Damage caused after delivery — during unloading, installation, or usage — is not covered under this policy.</li>
             </ul>
@@ -183,7 +190,6 @@ export default function RefundPolicyPage() {
               <li>Call us at <a href="tel:+919731897976" className="text-accent hover:underline">+91 97318 97976</a> or <a href="tel:+919019910931" className="text-accent hover:underline">+91 90199 10931</a>.</li>
               <li>Message us on <a href="https://wa.me/919731897976" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">WhatsApp (+91 97318 97976)</a> with your order reference number.</li>
               <li><strong>Business hours:</strong> Monday – Saturday, 7:00 AM – 10:00 PM; Sunday, 10:00 AM – 7:00 PM.</li>
-              <li>We respond to every cancellation or refund request <strong>within 24 hours</strong>.</li>
             </ul>
             <p className="mt-3">Please include your order number, the reason for cancellation, and any supporting documents or photos.</p>
           </Section>
@@ -211,7 +217,7 @@ export default function RefundPolicyPage() {
               </div>
               <h2 className="font-display text-xl font-bold text-foreground">Have Questions About a Refund?</h2>
             </div>
-            <p className="text-muted-foreground mb-6">Our team is here to help. Reach out and we'll guide you through the process — we reply within 24 hours.</p>
+            <p className="text-muted-foreground mb-6">Our team is here to help. Reach out and we'll guide you through the process.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="accent" size="lg" asChild>
                 <Link href="/contact">

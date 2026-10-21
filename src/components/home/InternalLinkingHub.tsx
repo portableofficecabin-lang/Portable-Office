@@ -44,7 +44,7 @@ const linkClusters = [
   {
     pillar: "Prefab Homes & Villas",
     pillarHref: "/products/category/prefab-homes",
-    description: "Factory-built prefabricated homes installed in days — 2BHK, 3BHK, villas and resort accommodations.",
+    description: "Factory-built prefabricated homes with far less time on site than conventional construction — 2BHK, 3BHK, villas and resort accommodations.",
     links: [
       { label: "All Prefab Homes", href: "/products/category/prefab-homes" },
       { label: "Family Prefab Home 2BHK", href: "/products/family-prefab-home-2bhk" },

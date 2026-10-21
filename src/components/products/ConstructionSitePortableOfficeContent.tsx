@@ -81,7 +81,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: Calendar, title: "Fast deployment", desc: "Factory-built units ready for site installation in days" },
+            { icon: Calendar, title: "Fast deployment", desc: "Factory-built units with far less time on site than conventional construction" },
             { icon: Truck, title: "Relocatable", desc: "Easy to shift between project phases and future sites" },
             { icon: ShieldCheck, title: "Engineered build", desc: "Insulated steel structures made for dust, heat, and rough handling" },
             { icon: IndianRupee, title: "Budget clarity", desc: "Predictable pricing based on size, fit-out, and transport" },
@@ -217,7 +217,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
           <h3 className="font-display text-2xl font-bold text-foreground mb-5">Advantages over conventional site sheds</h3>
           <div className="space-y-3">
             {[
-              "10–20 working day fabrication for most standard cabins",
+              "Standard cabins bought online are dispatched within 7–15 working days",
               "Reusable across multiple projects and workfront shifts",
               "Better insulation, aesthetics, and day-long work comfort",
               "Easier compliance for safety, fire, and audit requirements",
@@ -310,7 +310,7 @@ export function ConstructionSitePortableOfficeContent({ offer }: { offer?: Fixed
           {[
             {
               question: "How quickly can a construction site portable office be installed?",
-              answer: "Most standard units are fabricated in 10–20 working days and placed on site within hours once transport and crane access are arranged.",
+              answer: "Standard units bought online are dispatched within 7–15 working days of order confirmation; placement on site follows once transport and crane access are arranged.",
             },
             {
               question: "Is buying a site office cabin a good investment?",

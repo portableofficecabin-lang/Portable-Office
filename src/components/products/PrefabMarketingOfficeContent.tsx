@@ -31,12 +31,12 @@ export const PREFAB_MARKETING_OFFICE_FAQS: { question: string; answer: string }[
   {
     question: "How is this different from your container marketing office?",
     answer:
-      "A container arrives as a finished box and is working the same day — but it's 8 ft wide per module and needs a crane. Prefab is assembled on site over a few days, spans any width as one hall, follows your floor plan exactly, and reaches sites a trailer can't. We build both and we'll tell you plainly which fits your launch.",
+      "A container arrives as a finished box — but it's 8 ft wide per module and needs a crane. Prefab takes far less time on site than conventional construction, spans any width as one hall, follows your floor plan exactly, and reaches sites a trailer can't. We build both and we'll tell you plainly which fits your launch.",
   },
   {
     question: "How long does assembly take?",
     answer:
-      "A single hall, three to five working days. A full multi-room gallery, about a week to ten days. Fabrication before that is two to four weeks depending on the specification.",
+      "On-site assembly time depends on the layout — a single hall or a full multi-room gallery — and on site readiness. Units bought online are dispatched within 7–15 working days; other specifications follow the timeline in your written quotation.",
   },
   {
     question: "Does it need a foundation?",
@@ -98,7 +98,7 @@ export function PrefabMarketingOfficeContent() {
       {/* ------------------------------------------------ the hook ------------------------- */}
       <div className="space-y-4 text-muted-foreground leading-relaxed">
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-          A Sales Gallery Built to Your Plan, Up in Days
+          A Sales Gallery Built to Your Plan, With Far Less Time on Site
         </h2>
         <p>
           Some launches fit in a container. Plenty don&apos;t. When the master plan needs a table of
@@ -109,7 +109,7 @@ export function PrefabMarketingOfficeContent() {
         <p>
           A prefab marketing office isn&apos;t a box that arrives on a trailer. It&apos;s a building
           system: insulated wall panels, a steel truss roof, doors, windows and flooring, all
-          fabricated in our workshop and assembled on your site in a matter of days. Any footprint,
+          fabricated in our workshop and assembled on your site in far less time than conventional construction. Any footprint,
           any layout, one large open hall or a warren of cabins — the plan is yours, we build to it.
         </p>
         <p>
@@ -151,7 +151,7 @@ export function PrefabMarketingOfficeContent() {
           ))}
         </ul>
         <p className="mt-5 rounded-xl border border-accent/30 bg-accent/5 p-4 text-foreground leading-relaxed">
-          Short version: fixed sizes and same-day placement, choose a container. A bigger gallery,
+          Short version: fixed sizes and a finished box on arrival, choose a container. A bigger gallery,
           your own floor plan, or a tight-access site — prefab. Tell us the situation and we&apos;ll
           tell you which, without pushing either.
         </p>
@@ -159,7 +159,7 @@ export function PrefabMarketingOfficeContent() {
 
       {/* ------------------------------------------------ speed ---------------------------- */}
       <div className="mt-12">
-        <SectionHeading id="speed" icon={Timer}>Up in Days, Not Months</SectionHeading>
+        <SectionHeading id="speed" icon={Timer}>Far Less Time on Site</SectionHeading>
         <div className="space-y-4 text-muted-foreground leading-relaxed">
           <p>
             The panels, trusses, doors and windows are all made in our workshop while your launch
@@ -167,8 +167,8 @@ export function PrefabMarketingOfficeContent() {
             bolting, not bricklaying.
           </p>
           <p>
-            A typical single-hall marketing office goes up in three to five working days. A larger
-            multi-room gallery, roughly a week to ten days. There&apos;s no curing time, no
+            A marketing office goes up in a fraction of the time a built one takes, whether it is a
+            single hall or a larger multi-room gallery. There&apos;s no curing time, no
             plastering, no painting crew living on your most visible corner for a season. The site
             stays clean, and the office is ready before the hoardings have finished going up along
             the road.
@@ -315,7 +315,7 @@ export function PrefabMarketingOfficeContent() {
         <ol className="space-y-4">
           {[
             ["Tell us the project.", "What you're selling, expected footfall, the site, and any plan you already have."],
-            ["We send a layout and a price.", "Itemised — structure, transport and assembly shown separately — usually inside 24 hours."],
+            ["We send a layout and a price.", "Itemised — structure, transport and assembly shown separately."],
             ["You approve the drawing.", "Layout, finishes and exterior creative, before fabrication starts."],
             ["We fabricate.", "Panels, trusses and joinery made and checked at our workshop."],
             ["We assemble at your site.", "Typically three to ten days depending on size."],
@@ -353,8 +353,7 @@ export function PrefabMarketingOfficeContent() {
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-5">
           The project, the expected footfall, and the date the campaign breaks. If you have a
-          sketch or a floor plan, send that too. You&apos;ll have a layout and a clear price inside
-          a day.
+          sketch or a floor plan, send that too. You&apos;ll have a layout and a clear price.
         </p>
         <div className="flex flex-wrap gap-3">
           <a
