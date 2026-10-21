@@ -318,15 +318,21 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         </ul>
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.whyUsBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
-            </li>
-          ))}
-        </ul>
+        {/* "Why work with us" slot — optional since Portable Cabins in Kanakapura (owner copy without such
+            a section). Unset heading = nothing rendered; every page that sets it renders exactly as before. */}
+        {page.whyUsHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
+            {page.whyUsIntro && <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>}
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.whyUsBullets ?? []).map((b) => (
+                <li key={b.title} className={li}>
+                  <strong className="text-foreground">{b.title}</strong> — {b.text}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
