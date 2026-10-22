@@ -9433,6 +9433,278 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN MAGADI (Magadi town and Magadi Road, west of Bengaluru) — the portable-cabin
+   * intent for the farmland, plotted layouts, warehouses, campsites and construction sites around
+   * Magadi: caretakers' rooms, layout sales offices, security cabins, site offices, labour rooms,
+   * stores and toilet units. Not a container-office cluster location, so the /cities-we-serve index
+   * lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-21 ("Portable Cabins in Magadi | Farm, Office & Security Cabins"), mapped
+   * onto the fixed template slots the same way as Portable Cabins in Tumkur and Jigani. The H1, meta
+   * title and meta description are verbatim; the owner's "Suggested URL" /portable-cabin-magadi is the
+   * slug under /cities-we-serve (no root route exists, as for Porta Cabins in Devanahalli). Nothing is
+   * dropped:
+   *   • tagline: the owner's H2 "Practical Space for Farms, Layouts and Businesses"; the opening's
+   *     first two paragraphs are the intro, and its third paragraph (designed around your space,
+   *     built off-site, transported, placed, connected) → how (H2 "How It Works", four steps).
+   *   • "Who We Supply" → why (short titles added to the six untitled user types; the specialist-uses
+   *     line as whyOutro). The template renders why before the solutions, so this section moves up
+   *     one place; every other section keeps the owner's order.
+   *   • "Find a Cabin for Your Situation" → solutions: its four quoted H3s as the numbered H3s.
+   *   • "How Our Cabins Are Built" → features: the six H3s as "Part — text", its lead-in as
+   *     featuresIntro and the drawing-approval line as sizesNote.
+   *   • "Optional Features" → industries: the nine options in four short groups (services, interior,
+   *     exterior, furniture); the availability line is folded into the intro.
+   *   • "Should You Rent or Buy?" → the custom slot beside the interior render: each table row as
+   *     "Expected requirement — option to consider; costs to compare", the closing lines as
+   *     customOutro.
+   *   • "Planning Your Order and Delivery" → whyUs: each table row as "You provide … — we
+   *     coordinate …"; its closing line moves into the intro because the slot has no outro.
+   *   • "Areas We Serve Near Magadi" → areasText; the seven FAQs; "Get a Quote for Your Magadi
+   *     Site" → CTA, with the phone number and email from COMPANY (the draft's "[Your …]"
+   *     placeholders are not published).
+   * Owner wording rule (the Kudankulam / Tumkur rule): the draft already states no lead times,
+   * prices, warranty terms, customer or project claims, and none are added. Specifications,
+   * optional features and the base are options confirmed in the approved specification and
+   * quotation; rental availability and minimum duration are subject to confirmation; the towns are
+   * delivery enquiry locations; the permissions and ground notes are general guidance. Manufacturing
+   * happens only at the factory near Hosur, Tamil Nadu (see the note on locationStripText in
+   * src/lib/site-navigation.ts); the owner's "built off-site" is kept and the disclaimer names the
+   * factory. No ₹.
+   *
+   * Images: five owner-dropped webp renders ("public/images/portable cabins in magadi city page/
+   * Portable Cabins in Magadi/cabin (1–5).webp", 1168×880 and 2336×1760 ×4) of one olive-green
+   * container-style cabin with a charcoal lower band, a steel door under a small hood, a porthole
+   * and two grilled sliding windows, plus a furnished office interior. The four exteriors are resized
+   * to 1600 px wide at webp q82: (4) three-quarter front view = hero / og:image, no caption (as on
+   * Tumkur and Jigani); (5) aerial roof view, cropped to 3:2 = feature band, captioned with the
+   * owner's roofing line; (3) front elevation and (2) rear three-quarter view = two-column gallery;
+   * (1) interior, copied byte-for-byte = beside the rent-or-buy section. The interior caption and the
+   * disclaimer say they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-magadi",
+    city: "Magadi",
+    listTitle: "Portable Cabins in Magadi",
+    metaTitle: "Portable Cabins in Magadi | Farm, Office & Security Cabins",
+    metaDescription:
+      "Buy or rent portable cabins in Magadi and along Magadi Road. Custom farm cabins, site offices, security rooms and stores. Request a quote.",
+    keywords:
+      "Portable Cabin in Magadi, Portable Cabins Magadi Road, Farm Cabin Magadi, Caretaker Cabin Magadi, Site Office Cabin Magadi, Security Cabin Magadi, Sales Office Cabin Magadi, Portable Cabin on Rent in Magadi, Portable Cabin Manufacturer near Magadi",
+    geo: { region: "IN-KA", placename: "Magadi, Karnataka, India", position: "12.9571;77.2250", icbm: "12.9571, 77.2250" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-magadi/portable-cabin-magadi-three-quarter-view.webp",
+      alt: "Portable cabin in Magadi — illustrative three-quarter view of an olive-green container-style portable cabin with a charcoal lower band, a steel door under a small hood, a porthole and two grilled sliding windows, on a paved yard beside a lawn",
+      width: 1600,
+      height: 1205,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-magadi/portable-cabin-magadi-roof-view.webp",
+      alt: "Portable cabin in Magadi — illustrative aerial view of the olive-green cabin's corrugated roof and door hood, placed on a concrete pad surrounded by lawn",
+      width: 1600,
+      height: 1066,
+      caption: "Roofing is detailed with suitable drainage, sealed joints and protective finishes to help manage rainwater.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-magadi/portable-cabin-magadi-interior.webp",
+      alt: "Portable cabin in Magadi — illustrative render of an optionally furnished office interior with a desk, two monitors and chairs, white wall panels, flush LED ceiling lights, two curtained windows, a steel door and wood-look flooring",
+      width: 1168,
+      height: 880,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-magadi/portable-cabin-magadi-front-elevation.webp",
+        alt: "Portable cabin in Magadi — illustrative front elevation of the olive-green container-style cabin showing the steel door with its hood and porthole, two grilled sliding windows and the charcoal lower band",
+        width: 1600,
+        height: 1205,
+      },
+      {
+        src: "/images/cities/portable-cabin-magadi/portable-cabin-magadi-rear-view.webp",
+        alt: "Portable cabin in Magadi — illustrative rear three-quarter view of the olive-green container-style cabin showing its plain corrugated long wall, the gable end and the charcoal lower band on steel feet",
+        width: 1600,
+        height: 1205,
+      },
+    ],
+
+    h1: "Portable Cabins in Magadi",
+    tagline: "Practical Space for Farms, Layouts and Businesses",
+    intro: [
+      "Need a caretaker's room on your farm, a sales office at your layout or a security cabin at your warehouse? Portable cabins provide additional space without lengthy construction at your premises.",
+      "At Portable Office Cabin, we manufacture and supply cabins for farmland, residential projects, warehouses, campsites and construction sites in Magadi and along Magadi Road.",
+    ],
+
+    whyHeading: "Who We Supply",
+    whyIntro: "Portable cabins around Magadi are supplied to a range of users, including:",
+    whyBullets: [
+      { title: "Farms", text: "farmland owners and managed farm projects." },
+      { title: "Real estate", text: "real estate developers and layout promoters." },
+      { title: "Industry", text: "warehouses and industrial units." },
+      { title: "Contractors", text: "building, road and infrastructure contractors." },
+      { title: "Hospitality", text: "campsites, homestays and recreation properties." },
+      { title: "Institutions", text: "schools, trusts and community organisations." },
+    ],
+    whyOutro:
+      "Specialist uses, including kitchens, classrooms and guest accommodation, require specifications suited to their intended occupancy and activities.",
+
+    solutionsHeading: "Find a Cabin for Your Situation",
+    solutionsIntro: "Four situations we hear about around Magadi, and the cabin that suits each:",
+    solutions: [
+      {
+        title: "“We have farmland but no room for a caretaker.”",
+        text: "A compact cabin can provide a caretaker's room, a rest area or storage for tools and suitable supplies. Optional features include ventilation, lighting, shelving and an attached toilet. If you later build a permanent house, the cabin can continue serving as a staff room or store.",
+      },
+      {
+        title: "“Our layout needs a place to meet buyers.”",
+        text: "A sales office cabin creates a dedicated space for customer meetings, plan displays and paperwork. Options include glazed fronts, finished interiors, seating and AC provisions. A relocatable design allows the cabin to be transported to another suitable project site.",
+      },
+      {
+        title: "“Our warehouse needs a proper security post.”",
+        text: "A security cabin provides a sheltered workspace for guards and visitor registration. Windows can be positioned for visibility across the gate and approach road, with lighting, fan points and a counter included as required.",
+      },
+      {
+        title: "“We need offices and accommodation for a construction project.”",
+        text: "Site offices, stores, labour rooms and toilet units can be planned together. The layout can be matched to your workforce, project duration, site access and available services.",
+      },
+    ],
+
+    featuresHeading: "How Our Cabins Are Built",
+    featuresIntro: "Materials and construction details depend on the selected model and approved specifications.",
+    features: [
+      "Base and supports — The cabin requires stable ground and suitable supports. Ground clearance, drainage and support positions should be planned according to site conditions.",
+      "Flooring — A steel sub-frame supports a suitable floor base, with vinyl, tiles or other agreed finishes. The specification should match the expected furniture, foot traffic and storage loads.",
+      "Mild steel frame — A welded MS structure forms the cabin's supporting frame. Protective coatings and lifting arrangements are selected for the design and handling requirements.",
+      "Insulated walls — PUF or EPS insulated panels are available, depending on the model. Insulation helps reduce heat transfer, while ventilation and cooling arrangements further influence indoor comfort.",
+      "Roofing — Roofing is detailed with suitable drainage, sealed joints and protective finishes to help manage rainwater.",
+      "Doors, windows and electrical fittings — Options include lockable doors, sliding windows, wiring, MCB protection, lights, fan points and sockets. Their positions are planned around the approved layout.",
+    ],
+    sizesNote: "You will receive the proposed drawing and specifications for approval before manufacturing.",
+
+    industriesHeading: "Optional Features",
+    industriesIntro:
+      "Customisation options can include the items below. Availability, specifications and charges will be confirmed in the quotation.",
+    industries: [
+      { title: "Services", text: "attached toilet with plumbing provisions; AC electrical and mounting provisions." },
+      { title: "Interior", text: "false ceiling with suitable lighting; internal partitions; pantry counter and sink." },
+      { title: "Exterior", text: "window grills; exterior colours and cladding; company signage or logo." },
+      { title: "Furniture", text: "tables, chairs and storage racks." },
+    ],
+
+    customHeading: "Should You Rent or Buy?",
+    customIntro: "For each expected requirement, the option to consider and the costs to compare:",
+    customBullets: [
+      {
+        title: "A few months",
+        text: "renting may suit temporary projects or trial setups. Costs to compare: rent, deposit, delivery, lifting and collection.",
+      },
+      {
+        title: "A year or two",
+        text: "compare rental and purchase quotations. Costs to compare: total rental cost against ownership and maintenance.",
+      },
+      {
+        title: "Long-term or repeated use",
+        text: "buying provides ownership and reuse. Costs to compare: purchase, upkeep and future relocation.",
+      },
+    ],
+    customOutro:
+      "The most economical option depends on the cabin's specifications, usage period and transport requirements. Rental availability and minimum duration are subject to confirmation.",
+
+    whyUsHeading: "Planning Your Order and Delivery",
+    whyUsIntro:
+      "The quotation will confirm responsibilities, timelines, delivery charges and lifting arrangements. What you provide, and what we coordinate:",
+    whyUsBullets: [
+      { title: "You provide the intended use, approximate size and number of users", text: "we coordinate the proposed layout and quotation." },
+      { title: "You provide the exact site location and access details", text: "we coordinate the cabin dimensions and delivery requirements." },
+      { title: "You approve the drawing and specifications", text: "we coordinate manufacturing under the agreed order terms." },
+      { title: "You prepare the ground and suitable supports", text: "we coordinate guidance on placement requirements." },
+      { title: "You provide clear vehicle access and unloading space", text: "we coordinate transport and lifting, where included." },
+      { title: "You provide the required power, water and drainage connections", text: "we coordinate handover and support under agreed terms." },
+    ],
+
+    areasHeading: "Areas We Serve Near Magadi",
+    areasText:
+      "Along with Magadi town, we supply portable cabins to nearby locations, including Kudur, Solur, Tavarekere, Thippagondanahalli, Savandurga, Manchanabele, Kadabagere, Machohalli, Nelamangala, Kunigal and Ramanagara. Share your exact site location to confirm delivery availability and access requirements.",
+
+    howHeading: "How It Works",
+    howSteps: [
+      { title: "Designed around your site", text: "Each cabin can be designed around your available space, intended use and budget." },
+      { title: "Built off-site", text: "The cabin is built off-site, at our factory near Hosur, Tamil Nadu." },
+      { title: "Transported and placed", text: "It is transported to your location and placed on prepared supports." },
+      { title: "Connected and ready", text: "Once the required service connections are completed, it is ready for use." },
+    ],
+
+    faqs: [
+      {
+        question: "Can I place a portable cabin on farmland?",
+        answer:
+          "Suitability depends on the proposed use, ground conditions, delivery access and any permissions applicable to the land. Prepare suitable supports and confirm local requirements before installation.",
+      },
+      {
+        question: "Can a cabin be used as a caretaker's room?",
+        answer:
+          "Yes. A cabin can be planned with ventilation, lighting, electrical points and an optional attached toilet. The layout should suit the number of occupants and available services.",
+      },
+      {
+        question: "Do you supply cabins for campsites and homestays?",
+        answer:
+          "Yes. Cabins can be designed for reception areas, staff rooms, stores and other agreed uses. Kitchens and guest accommodation require additional planning for ventilation, sanitation, occupancy and services.",
+      },
+      {
+        question: "How long does a portable cabin last?",
+        answer:
+          "Service life depends on materials, installation, weather exposure, handling and maintenance. Regular checks of roofing, coatings, joints and supports help keep the cabin in good condition.",
+      },
+      {
+        question: "What if my site is sloped or uneven?",
+        answer:
+          "The cabin needs a level, stable support arrangement. Share site details so the ground and support requirements can be assessed before delivery. Significant slopes or unstable ground may require specialist advice.",
+      },
+      {
+        question: "Can I move the cabin to another plot?",
+        answer:
+          "Relocatable cabins can be lifted and transported using suitable equipment, subject to their condition and access at both locations.",
+      },
+      {
+        question: "Can you deliver through a narrow approach road?",
+        answer:
+          "Delivery depends on road width, bends, gradients, overhead clearance and unloading space. Photographs and access measurements help us assess suitable dimensions and transport arrangements.",
+      },
+    ],
+
+    ctaHeading: "Get a Quote for Your Magadi Site",
+    ctaText: `Whether you need a farm caretaker's room, a layout sales office or a construction site setup, Portable Office Cabin can help you plan a suitable space. Share your intended use, preferred dimensions and location for a proposed layout and quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales} to discuss your portable cabin requirement in Magadi.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The quotation button plus the default call and WhatsApp buttons; an empty list drops the two
+    // container-office secondary buttons, as on Portable Cabins in Tumkur and Jigani.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+      { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+      { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a factory, yard or office in Magadi. Delivery, unloading and lifting are arranged for each project, placement requirements and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental availability and minimum duration are subject to confirmation. The sizes, layouts, build details, insulation, optional features, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the furniture, lawn and paving shown are not included unless listed in the quotation, other models look different, and the images are not photographs of installations in Magadi. The towns, roads, reservoirs and hills named here describe the region and delivery enquiry locations only, and the farms, layouts, warehouses, campsites, schools and other uses described are not clients, completed projects or confirmed delivery areas. Notes on permissions, land use, ground conditions, supports, slopes, access roads, insulation and service life are general guidance, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN BELAGAVI — North Karnataka: the Udyambag / Machhe / Honaga / Kakati
    * industrial areas, the NH 48 (Pune–Bengaluru) logistics corridor, the Gokak / Chikodi sugar
    * belt and the high-rainfall Khanapur taluk below the Western Ghats.
