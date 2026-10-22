@@ -306,10 +306,12 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
-  // Portable Cabin Manufacturers in Hosur: the one Tamil Nadu page about portable cabins rather than
-  // container offices (the factory near Hosur), so it leads these two keyword hubs only.
+  // Portable Cabin Manufacturers in Hosur and Portable Cabins in Krishnagiri Industrial Area: the two
+  // Tamil Nadu pages about portable cabins rather than container offices (the factory near Hosur and
+  // the Krishnagiri belt around it), so they lead these two keyword hubs only.
   "Portable Cabin|Tamil Nadu": [
     { name: "Portable cabins made at our factory near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+    { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -320,6 +322,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+    { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
