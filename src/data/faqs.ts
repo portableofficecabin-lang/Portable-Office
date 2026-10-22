@@ -77,10 +77,9 @@ export const faqCategories: FaqCategory[] = [
         q: "How long does it take to manufacture a cabin?",
         a: "Standard products bought online are dispatched within 7 to 15 working days of order confirmation. Custom or larger projects — like multi-room offices or prefab homes — follow the timeline in your written quotation, which you receive before you confirm your order.",
       },
-      {
-        q: "Can I visit your factory before placing an order?",
-        a: "You're welcome to visit our Tamil Nadu factory at Kamandoddi, near Hosur, anytime — it is only about 40 km from Bangalore, so it is an easy drive. Seeing our production process firsthand gives you a better sense of the quality and craftsmanship we put into every unit. Just book an appointment and we'll arrange everything.",
-      },
+      // "Can I visit your factory before placing an order?" was removed on the owner's instruction
+      // (2026-10-19): factory visits are not a confirmed service. Do not add a visit offer back
+      // without the owner's confirmation.
     ],
   },
   {

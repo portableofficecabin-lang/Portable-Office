@@ -225,13 +225,9 @@ const INSIGHTS: Record<string, InsightContent> = {
           "Any site constraints — crane access, road width, height limits",
         ],
       },
-      {
-        heading: "Visiting the factory",
-        paragraphs: [
-          "Our factory at Kamandoddi, near Hosur in Tamil Nadu, is open for customer walk-ins on weekdays between 10:00 am and 5:00 pm. Saturday visits are possible by prior appointment. We have showroom units of the most common builds — Executive 20ft, Container Office, 2BHK Prefab Home, Labour Colony dorm block — set up so you can see the finish and the build quality before placing an order.",
-          "If you are travelling from outside the state, send us a message a day in advance and we will keep a senior engineer available to walk you through the units.",
-        ],
-      },
+      // The "Visiting the factory" block (walk-in hours, Saturday appointments, showroom units,
+      // engineer-led tours) was removed on the owner's instruction (2026-10-19): factory visits are
+      // not a confirmed service. Do not add a visit offer back without the owner's confirmation.
     ],
     fieldNotes: [
       { city: "Email", note: "sales@portableofficecabin.com" },
