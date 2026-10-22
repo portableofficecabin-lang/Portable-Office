@@ -412,6 +412,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
     // Portable-cabin page for Vasanthapura (South Bengaluru), here and on Porta Cabin, as for Jigani.
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    // Portable-cabin page for Attibele (2026-10-21), here and on Porta Cabin, as for Jigani; after
+    // Vasanthapura so the links already live keep their positions.
+    { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     ...hubLinksFor([
@@ -438,6 +441,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // and the Bengaluru-belt rule above covers container-office pages (as for Jigani).
     { name: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     ...hubLinksFor([
