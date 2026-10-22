@@ -14267,6 +14267,300 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer: `Portable Office Cabin. Factory: ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, ${COMPANY.addresses.tamilNaduFactory.region} ${COMPANY.addresses.tamilNaduFactory.postalCode}, in Krishnagiri district near Hosur. Karnataka office: Electronic City Phase 1, Bengaluru ${COMPANY.addresses.bangaloreOffice.postalCode}. GSTIN ${COMPANY.gstin}; Udyam (MSME) ${COMPANY.udyam}. ${COMPANY.businessHours.weekdays.display}; ${COMPANY.businessHours.sunday.display}. SIPCOT, the Hosur Industrial Estate and the industries named on this page are independent organisations; Portable Office Cabin is not affiliated with any of them, and none of them endorses this page. The images show cabins of the types described, including design renders, and are not photographs of installations at any Hosur address. Production and delivery dates are confirmed in each quotation and are not guaranteed. Whether a portable cabin needs permission at a particular site is decided by the local authority; notes on this page are general guidance, not legal advice.`,
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN VASANTHAPURA INDUSTRIAL AREA — the portable-cabin intent for Vasanthapura
+   * and the Kanakapura Road / Uttarahalli side of South Bengaluru. Not a container-office cluster
+   * location, so the /cities-we-serve index lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-21, mapped onto the fixed template slots. The slug is the owner's suggested
+   * URL ("portable-cabin-vasanthapura-industrial-area") under /cities-we-serve/; "[Your Phone
+   * Number]", "[Your Email Address]" and "[Your WhatsApp Number]" are COMPANY's numbers and sales
+   * address, and the call / WhatsApp buttons. Nothing is dropped:
+   *   • tagline: the opening question; the rest of the opening is the intro. "We manufacture and
+   *     supply portable cabins in Vasanthapura" reads "We manufacture portable cabins and supply them
+   *     to Vasanthapura", so it places no factory there (manufacturing is only near Hosur).
+   *   • "Why Choose Our Portable Cabins?" → why (six bullets); the template needs a lead-in, so
+   *     whyIntro names the three sites the opening names.
+   *   • "Types of Portable Cabins We Supply" → solutions (seven types, as written), with the owner's
+   *     rule that sizes, layouts and fittings are options confirmed in the specification and quotation.
+   *   • "Buy or Rent a Portable Cabin" → features: the table's two rows, then the rental-terms and
+   *     "unsure" lines as the bold note.
+   *   • "Materials and Customisation Options" → its table splits across two consecutive slots: the
+   *     structure, insulation, exterior and flooring rows → industries; the electrical, window, door
+   *     and layout rows plus the drawing-approval line → custom, beside the office interior render.
+   *   • whyUs ("Who Uses Portable Cabins Around Vasanthapura") is a slot the copy does not fill; it
+   *     lists only the uses the copy itself names (factories, warehouses, construction sites,
+   *     apartment entrances, businesses, canteens, sales offices). No customers or projects.
+   *   • "Areas We Serve Near Vasanthapura" → areasText (the fourteen localities as prose, with the
+   *     owner's "confirm delivery availability" line); "How to Order" → how (five steps). The template
+   *     renders the areas BEFORE the process.
+   *   • FAQs: the owner's six. "How long does delivery take?" is already a question on another city
+   *     page, so it reads "…take to Vasanthapura?".
+   *   • "Get a Quote for Your Vasanthapura Site" → CTA.
+   * Owner wording rules (Kudankulam / Tumkur, and the final terms of 2026-10-19): no ₹, lead times,
+   * response deadlines, inspection or warranty claims; rental is subject to availability; towns are
+   * delivery enquiry locations; the base is confirmed per site.
+   *
+   * Images: four owner-dropped webp renders ("public/images/portable cabins in Vasanthapura, Bengaluru
+   * city page/…/cabin (1–4).webp") of one white container-style cabin with a charcoal lower band, plus
+   * a furnished office interior. Not cropped: (4) front with the door and two grilled windows, 1168×880,
+   * copied byte-for-byte = hero / og:image, no caption (as on Tumkur); (3) interior, resized to 1600 px
+   * = beside the fittings and layout section; (1) plain long side (1600 px) and (2) aerial view (1200 px,
+   * webp q78 to keep the gravel detail under 260 KB) = two-column gallery. The interior caption and the
+   * disclaimer say they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-vasanthapura-industrial-area",
+    city: "Vasanthapura",
+    listTitle: "Portable Cabins in Vasanthapura",
+    metaTitle: "Portable Cabins in Vasanthapura Industrial Area | Buy or Rent",
+    metaDescription:
+      "Buy or rent portable cabins in Vasanthapura, Bengaluru. Site offices, security cabins, labour rooms and custom cabins. Request a free quote.",
+    keywords:
+      "Portable Cabins in Vasanthapura, Portable Cabin Vasanthapura Industrial Area, Portable Cabin South Bengaluru, Site Office Cabin Vasanthapura, Security Cabin Vasanthapura, Labour Accommodation Cabin Kanakapura Road, Portable Toilet Cabin Vasanthapura, Portable Cabin on Rent Vasanthapura, Container Office Cabin Uttarahalli",
+    geo: {
+      region: "IN-KA",
+      placename: "Vasanthapura, Bengaluru, Karnataka, India",
+      position: "12.8895;77.5560",
+      icbm: "12.8895, 77.5560",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-vasanthapura-industrial-area/portable-cabin-vasanthapura-industrial-area-front.webp",
+      alt: "Portable cabin in Vasanthapura Industrial Area — illustrative render of a container-style portable cabin with white corrugated walls, a charcoal lower band, a steel door with an outdoor light and two windows with security grilles, on a gravel site",
+      width: 1168,
+      height: 880,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-vasanthapura-industrial-area/portable-cabin-vasanthapura-industrial-area-office-interior.webp",
+      alt: "Portable cabin in Vasanthapura — illustrative render of an optionally furnished office interior with wood-look wall and ceiling panels, a desk with a laptop, a mesh office chair, built-in cabinets and shelves, black-framed windows, a linear ceiling light and a grey floor",
+      width: 1600,
+      height: 1205,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-vasanthapura-industrial-area/portable-cabin-vasanthapura-industrial-area-long-side.webp",
+        alt: "Portable cabin in Vasanthapura — illustrative render of the cabin's plain long side, white corrugated walls above a charcoal lower band, standing on supports on a gravel site",
+        width: 1600,
+        height: 1205,
+      },
+      {
+        src: "/images/cities/portable-cabin-vasanthapura-industrial-area/portable-cabin-vasanthapura-industrial-area-aerial-view.webp",
+        alt: "Portable cabin in Vasanthapura — illustrative aerial view of the cabin's white corrugated roof, with window hoods along one long side, on open ground",
+        width: 1200,
+        height: 904,
+      },
+    ],
+
+    h1: "Portable Cabins in Vasanthapura Industrial Area, Bengaluru",
+    tagline: "Need extra space for your factory, warehouse or construction site?",
+    intro: [
+      "We manufacture portable cabins and supply them to Vasanthapura Industrial Area for offices, security, worker accommodation and storage.",
+      "Our cabins are built at our facility and delivered to your location, reducing the need for lengthy construction work at your site. Choose a standard layout or customise the cabin to suit your available space and requirements.",
+      "Whether your site is near Kanakapura Road, Uttarahalli or Vasanthapura, we can help you choose a practical cabin for your budget.",
+    ],
+
+    whyHeading: "Why Choose Our Portable Cabins?",
+    whyIntro: "What a factory-built cabin offers a factory, warehouse or construction site:",
+    whyBullets: [
+      {
+        title: "Quick installation",
+        text: "Factory-built cabins reduce construction work at your site. Placement and connections are arranged according to site readiness.",
+      },
+      { title: "Suitable for compact spaces", text: "Choose dimensions and layouts that suit your available area." },
+      {
+        title: "Relocatable",
+        text: "Move your cabin to another site when your project or business requirements change.",
+      },
+      {
+        title: "Insulated interiors",
+        text: "Insulated walls and roofing help reduce heat transfer and improve indoor comfort.",
+      },
+      {
+        title: "Weather protection",
+        text: "Suitable roofing, protective finishes and sealed joints help protect the cabin from sun and rain.",
+      },
+      {
+        title: "Practical for temporary use",
+        text: "Portable cabins can be a cost-effective choice for temporary and semi-permanent space requirements.",
+      },
+    ],
+
+    solutionsHeading: "Types of Portable Cabins We Supply",
+    solutionsIntro:
+      "Seven cabin types cover most requirements. Sizes, layouts and fittings are options confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Site Office Cabins",
+        text: "Create a dedicated workspace for engineers, supervisors and contractors. Layouts can include desks, seating, file storage, partitions and AC provisions.",
+      },
+      {
+        title: "Security Cabins",
+        text: "Compact guard cabins for factory gates, warehouses and apartment entrances. Window placement, lighting and fan points can be planned for visibility and comfort.",
+      },
+      {
+        title: "Labour Accommodation Cabins",
+        text: "Provide workers with organised accommodation at your site. Options include ventilation, lighting, bunk-bed arrangements and separate or attached toilet facilities.",
+      },
+      {
+        title: "Portable Toilet Cabins",
+        text: "Choose single or multiple toilet units with Indian or Western fittings. Water supply, drainage and waste connections must be prepared at the site.",
+      },
+      {
+        title: "Storage and Store Room Cabins",
+        text: "Lockable storage cabins for tools, spare parts and suitable materials. Flooring and load requirements can be specified according to what you intend to store.",
+      },
+      {
+        title: "Office Container Cabins",
+        text: "Container offices can include finished flooring, insulated interiors, ceilings, windows and electrical fittings. They suit businesses looking for a durable, relocatable workspace.",
+      },
+      {
+        title: "Custom Portable Cabins",
+        text: "We also build cabins for canteens, sales offices, pantries and other requirements. Share your intended use, and we will prepare a suitable layout.",
+      },
+    ],
+
+    featuresHeading: "Buy or Rent a Portable Cabin",
+    featuresIntro: "Here is how the two options compare:",
+    features: [
+      "Buy — suitable for long-term requirements or use across multiple projects. Main benefit: own the cabin and reuse it at future sites.",
+      "Rent — suitable for short-term projects or temporary space requirements. Main benefit: use a cabin for an agreed rental period.",
+    ],
+    sizesNote:
+      "Rental availability, minimum duration, transport charges and other terms will be confirmed in your quotation. If you are unsure which option suits your requirement, share your expected usage period so we can help you compare.",
+
+    industriesHeading: "Materials and Customisation Options",
+    industriesIntro: "Depending on the selected model and agreed specification, cabin options include:",
+    industries: [
+      { title: "Structure", text: "MS frame." },
+      { title: "Insulation", text: "PUF or EPS panels." },
+      { title: "Exterior finish", text: "GI sheets or ACP cladding, depending on design." },
+      { title: "Flooring", text: "Cement board or plywood base with suitable vinyl or tile finishes." },
+    ],
+
+    customHeading: "Fittings and Layout Options",
+    customIntro: "Fittings and layout are chosen with the rest of the specification:",
+    customBullets: [
+      { title: "Electrical fittings", text: "Wiring, switches, lights, fan points and AC provisions." },
+      { title: "Windows", text: "Aluminium or UPVC windows." },
+      { title: "Doors", text: "Lockable steel doors or other agreed options." },
+      { title: "Layout", text: "Partitions, pantry space, toilet provision and furniture arrangements." },
+    ],
+    customOutro:
+      "Choose your cabin size, colour, layout and fittings. We will share the proposed drawing and specifications for approval before manufacturing.",
+
+    whyUsHeading: "Who Uses Portable Cabins Around Vasanthapura",
+    whyUsIntro: "Portable cabins suit a wide range of users, including:",
+    whyUsBullets: [
+      {
+        title: "Factories and warehouses",
+        text: "extra office, security and storage space, with guard cabins at the gate.",
+      },
+      {
+        title: "Construction sites",
+        text: "site offices for engineers, supervisors and contractors, and accommodation for workers.",
+      },
+      { title: "Apartment complexes", text: "compact guard cabins at the entrance." },
+      {
+        title: "Businesses",
+        text: "durable, relocatable workspace, and cabins for canteens, sales offices and pantries.",
+      },
+    ],
+
+    areasHeading: "Areas We Serve Near Vasanthapura",
+    areasText:
+      "We supply portable cabins in Vasanthapura Industrial Area and nearby parts of South Bengaluru, including Uttarahalli, Subramanyapura, Konanakunte, Kanakapura Road, Talaghattapura, Yelachenahalli, Kumaraswamy Layout, Padmanabhanagar, Banashankari, JP Nagar, Gubbalala, Raghuvanahalli, Doddakallasandra and Anjanapura. Contact us to confirm delivery availability for your exact location.",
+
+    howHeading: "How to Order",
+    howSteps: [
+      {
+        title: "Share your requirement",
+        text: "Tell us the cabin's purpose, approximate size, preferred fittings and site location.",
+      },
+      {
+        title: "Review the quotation and layout",
+        text: "We will provide pricing, specifications and a proposed drawing.",
+      },
+      {
+        title: "Confirm the order",
+        text: "Manufacturing begins after approval of the design and agreed order terms.",
+      },
+      {
+        title: "Prepare for delivery",
+        text: "We will coordinate truck access, unloading arrangements and suitable supports at your site.",
+      },
+      {
+        title: "Install and connect",
+        text: "Once placed, the cabin can be connected to the required electrical, water and drainage services.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How long does delivery take to Vasanthapura?",
+        answer:
+          "Delivery time depends on the cabin's size, design, fittings and current production schedule. We will confirm the expected timeline with your quotation.",
+      },
+      {
+        question: "Does a portable cabin need a foundation?",
+        answer:
+          "Support requirements depend on the cabin, ground conditions and intended use. Suitable concrete supports or a prepared plinth may be required. We will guide you on site preparation before delivery.",
+      },
+      {
+        question: "Can the cabin be moved later?",
+        answer:
+          "Yes. Our relocatable cabins can be lifted and transported to another suitable location, subject to access, cabin condition and appropriate lifting arrangements.",
+      },
+      {
+        question: "Will the cabin get hot during summer?",
+        answer:
+          "Insulation helps reduce heat transfer compared with plain metal walls. Ventilation and air conditioning can further improve comfort, depending on the cabin's location and use.",
+      },
+      {
+        question: "Do you offer portable cabins on rent?",
+        answer:
+          "Yes, rental options are available subject to stock, location and rental terms. Contact us with your required size and duration.",
+      },
+      {
+        question: "Can I customise the size and layout?",
+        answer:
+          "Yes. You can request changes to dimensions, partitions, windows, doors, colours and fittings, subject to design and transport limitations.",
+      },
+    ],
+
+    ctaHeading: "Get a Quote for Your Vasanthapura Site",
+    ctaText: `Need a portable office, security cabin, labour room or storage unit? Share your requirements with Portable Office Cabin for a quotation and proposed layout. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Contact us today to discuss your cabin requirement.`,
+    ctaButtonLabel: "Get a Quote",
+    // The owner's CTA lists call, email and WhatsApp: the call and WhatsApp buttons are on by default,
+    // and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+      { label: "Container Office in Jigani", href: "/cities-we-serve/container-office-in-jigani" },
+      { label: "Container Office in Bommasandra", href: "/cities-we-serve/container-office-in-bommasandra" },
+      { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Porta Cabin in Karnataka", href: "/promotions/porta-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Vasanthapura. Delivery, unloading and placement are arranged for each project, placement time and the base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, materials, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Vasanthapura. The localities named are mentioned only as delivery enquiry locations, not as clients, completed projects or confirmed delivery areas. Notes on insulation, heat and site preparation are general guidance, not engineering advice.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
