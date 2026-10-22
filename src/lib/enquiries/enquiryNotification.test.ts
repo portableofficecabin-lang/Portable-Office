@@ -163,6 +163,16 @@ describe("business notification", () => {
     assert.ok(!src.includes("info@portableofficecabin.com"), "no stale recipient");
   });
 
+  it("sends through nodemailer, not denomailer (which exceeded the Edge CPU limit in production)", () => {
+    const src = readFileSync(join("supabase", "functions", "send-enquiry-notification", "index.ts"), "utf8");
+    const code = src.split("\n").filter((l) => !/^\s*(\*|\/\/|\/\*)/.test(l)).join("\n");
+    assert.ok(code.includes('import nodemailer from "npm:nodemailer@6.9.16";'), "pinned nodemailer");
+    assert.ok(!/denomailer|SMTPClient/.test(code), "no denomailer left");
+    assert.ok(code.includes("secure: port === 465"), "implicit TLS on 465, as before");
+    for (const t of ["connectionTimeout: 10_000", "greetingTimeout: 10_000", "socketTimeout: 20_000"]) assert.ok(code.includes(t), t);
+    assert.ok(code.includes("text: mail.text"), "plain-text part kept");
+  });
+
   it("is built from the stored enquiry, not the request", async () => {
     const { deps, mails } = harness(new FakeStore([enquiry("e1", "visitor@example.com", { message: "Stored message only" })]));
     await notifyEnquiry("VISITOR@example.com", deps);
