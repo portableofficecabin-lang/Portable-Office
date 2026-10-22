@@ -29,6 +29,7 @@ import { WhatsAppGlyph } from "@/components/WhatsAppGlyph";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { primaryPhone, whatsappUrl } from "@/lib/site-navigation";
 import { JsonLd } from "@/components/JsonLd";
+import { COMPANY } from "@/lib/company";
 import { generateBreadcrumbSchema, generateFAQSchema, generatePromotionStructuredData } from "@/lib/seo/structured-data";
 
 export const revalidate = 3600; // 1 hour, same as the cities index
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const page = cityPageBySlug(slug);
   if (!page) return {};
-  return buildPageMetadata({
+  const metadata = buildPageMetadata({
     absoluteTitle: page.metaTitle,
     description: page.metaDescription,
     keywords: page.keywords,
@@ -70,6 +71,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     image: page.heroImage.src,
     imageAlt: page.heroImage.alt,
   });
+  if (!page.publication) return metadata;
+  return {
+    ...metadata,
+    authors: [{ name: COMPANY.tradingName, url: `${COMPANY.url}/about-us` }],
+    creator: COMPANY.tradingName,
+    publisher: COMPANY.tradingName,
+    other: {
+      ...metadata.other,
+      "dcterms.created": page.publication.publishedOn,
+      "dcterms.modified": page.publication.updatedOn,
+    },
+  };
 }
 
 /* Tailwind `max-w-2xl` (42rem): the widest the hero and interior images are ever displayed. */
@@ -79,6 +92,12 @@ const h2 = "mt-10 mb-3 text-2xl font-bold tracking-tight";
 const h3 = "mt-6 mb-1.5 text-lg font-semibold";
 const p = "mb-4 leading-relaxed text-muted-foreground";
 const li = "mb-2 leading-relaxed text-muted-foreground";
+
+/** Explicit timezone keeps a recorded calendar date identical on server and client. */
+const publicationDate = (isoDate: string) =>
+  new Date(`${isoDate}T00:00:00Z`).toLocaleDateString("en-IN", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  });
 
 /* Secondary CTA buttons every page carried before `ctaSecondaryLinks` existed. Pages that
    leave that field unset render these two.
@@ -131,6 +150,33 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         ])}
       />
       <JsonLd data={generateFAQSchema(page.faqs)} />
+      {page.publication && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": `${COMPANY.url}/cities-we-serve/${page.slug}#webpage`,
+            url: `${COMPANY.url}/cities-we-serve/${page.slug}`,
+            name: page.h1,
+            description: page.metaDescription,
+            inLanguage: "en-IN",
+            datePublished: page.publication.publishedOn,
+            dateModified: page.publication.updatedOn,
+            author: {
+              "@type": "Organization",
+              "@id": `${COMPANY.url}/#organization`,
+              name: COMPANY.tradingName,
+              url: `${COMPANY.url}/about-us`,
+            },
+            publisher: {
+              "@type": "Organization",
+              "@id": `${COMPANY.url}/#organization`,
+              name: COMPANY.tradingName,
+              url: COMPANY.url,
+            },
+          }}
+        />
+      )}
       {/* Opt-in Service JSON-LD (`serviceJsonLd`): the same generator the promotion pages use, so the
           provider is pinned to the factory and the page's own city goes on areaServed. No offers —
           these pages quote, they do not sell. Pages without the field emit nothing new. */}
@@ -161,6 +207,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
 
         <h1 className={`text-3xl font-extrabold tracking-tight sm:text-4xl${mc("motion-safe:animate-fade-up")}`}>{page.h1}</h1>
         <p className={`mt-2 text-lg font-medium${mc("motion-safe:animate-fade-up")}`} style={fadeDelay(120)}>{page.tagline}</p>
+
+        {page.publication && (
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            By <Link href="/about-us" rel="author" className="underline underline-offset-4">{COMPANY.tradingName}</Link>
+            {" · Published "}<time dateTime={page.publication.publishedOn}>{publicationDate(page.publication.publishedOn)}</time>
+            {" · Updated "}<time dateTime={page.publication.updatedOn}>{publicationDate(page.publication.updatedOn)}</time>
+          </p>
+        )}
 
         {/* hero — the page's own image (also its og:image), LCP-prioritised. Deliberately NOT part
             of the load fade: it is the page's LCP element, and an element painted at opacity 0 is
