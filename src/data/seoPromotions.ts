@@ -406,6 +406,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Portable Cabin|Karnataka": [
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     { name: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+    { name: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     // Portable-cabin page (#145), here and on Porta Cabin: the Bengaluru-belt rule above covers container-office pages.
@@ -434,6 +435,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Porta Cabin|Karnataka": [
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
     { name: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+    { name: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
