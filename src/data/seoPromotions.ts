@@ -416,6 +416,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable-cabin page for Attibele (2026-10-21), here and on Porta Cabin, as for Jigani; after
     // Vasanthapura so the links already live keep their positions.
     { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+    // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
+    { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
@@ -444,6 +446,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
     { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+    // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
+    { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
