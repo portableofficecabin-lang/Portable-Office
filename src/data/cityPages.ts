@@ -17094,6 +17094,320 @@ export const CITY_PAGES: CityPage[] = [
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Tiruvallur or Tiruvallur district. Delivery, unloading, lifting and placement are arranged for each project; the base and supports depend on the site, foundation and civil work are quoted separately, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, connected or combined cabins are subject to structural design, and any fire classification depends on the certified products specified and does not by itself establish the fire performance of a complete cabin. First-aid, welfare and other regulated uses are subject to the requirements confirmed by the customer's responsible safety or compliance team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished office interior; other designs look different, and the images are not photographs of installations in Tiruvallur. The towns, industrial areas and places named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on insulation, drainage, waterlogging, supports, electrical work and site preparation are general guidance, not engineering, electrical or safety advice.",
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS FOR SIPCOT INDUSTRIAL COMPLEX, RANIPET — the portable-cabin intent for an
+   * operating factory in SIPCOT Ranipet and the Ranipet / Arcot / Walajapet / Arakkonam belt (Tamil
+   * Nadu): security posts, supervisor and contractor offices, QC workspaces, rest and toilet units,
+   * and facilities for maintenance shutdowns. Not a container-office cluster location, so the
+   * /cities-we-serve index lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-23 (slug, meta title, meta description and H1 used as given), mapped onto
+   * the template slots; nothing is dropped:
+   *   • tagline: the opening sentence; the rest of the opening → intro (three paragraphs).
+   *   • "Additional Space for an Operating Plant" → why: first paragraph as whyIntro, the other
+   *     three as bullets (titles ours, text the owner's).
+   *   • "Portable Cabin Options" (eight H3s) → solutions; the indicative-sizes line → solutionsIntro.
+   *   • "Specifications for Industrial Surroundings" → features: intro + the six items; the
+   *     "Specialist coatings… not assumed features" note → sizesNote (the bold closing line).
+   *   • "Where a Cabin Can Fit Into Your Factory" table → industries: location + cabin requirement
+   *     as the bold title, the details to plan as the text; the hazardous-environment caveat →
+   *     industriesIntro, since the slot has no outro.
+   *   • "Insulation and Ventilation for Workplace Comfort" → custom (beside the office interior
+   *     render): its four bullets; the "Insulation alone…" note → customOutro.
+   *   • "Why Choose Portable Office Cabin?" → whyUs (five bullets); whyUsIntro is ours.
+   *   • "Delivery Enquiries Around Ranipet" → areas (its three paragraphs joined).
+   *   • "How Ordering Works" → how (five steps); the schedules line → howOutro.
+   *   • "Planning Cabins for a Maintenance Shutdown" → two extra sections after the steps, because
+   *     the slot renders paragraphs before bullets: the lead-in + the five requirements, then
+   *     "Retention, Relocation and Rental After the Shutdown" (heading ours) with the three closing
+   *     paragraphs, including the rental note.
+   *   • FAQs (six) → faqs, as written; "Discuss Your Ranipet Cabin Requirement" → CTA with COMPANY's
+   *     number and sales address (the owner's) and the owner's "Serving:" line as the last sentence.
+   * Owner wording rules kept: no ₹, no lead time, no response deadline, no inspection or warranty
+   * claim; specifications are confirmed in the quotation; towns are delivery enquiry locations; the
+   * supports are confirmed per site. SIPCOT is named nominatively, with the non-affiliation note in
+   * the disclaimer.
+   *
+   * Images: four owner-dropped PNG renders ("public/images/Portable Cabins in Ranipet city page/
+   * Portable Cabins in Ranipet/cabin (1–4).png", 1024² ×3 and 2048², 1.3–7.6 MB) converted to webp
+   * (quality 90) at their original dimensions, since the PNGs are too heavy to serve as og:image or
+   * keep in the repo: (1) three-quarter view = hero / og:image; (2) office interior = beside the
+   * insulation section, captioned as illustrative; (4) front elevation and (3) raised view of the
+   * roof = two-column gallery. They show one white container-style cabin with a navy lower band and
+   * grilled windows; the disclaimer says they are renders, not installations in Ranipet.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD; the call / WhatsApp
+   * buttons are on by default and the two container-office secondary buttons are dropped.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-ranipet",
+    city: "Ranipet",
+    listTitle: "Portable Cabins in Ranipet",
+    metaTitle: "Portable Cabins in Ranipet | SIPCOT Office & Security Cabins",
+    metaDescription:
+      "Portable office cabins, security cabins, contractor offices and toilet units for SIPCOT Ranipet and nearby industrial areas. Request a quotation.",
+    keywords:
+      "Portable Cabins in Ranipet, Portable Cabin SIPCOT Ranipet, Security Cabin Ranipet, Portable Office Cabin Ranipet, Contractor Site Office Ranipet, Portable Toilet Cabin Ranipet, QC Cabin Ranipet, Portable Cabin on Rent Ranipet, Portable Cabin Arcot, Portable Cabin Walajapet, Portable Cabin Arakkonam",
+    geo: {
+      region: "IN-TN",
+      placename: "SIPCOT Industrial Complex, Ranipet, Tamil Nadu, India",
+      position: "12.9336;79.3414",
+      icbm: "12.9336, 79.3414",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-ranipet/portable-cabin-ranipet-exterior.webp",
+      alt: "Portable cabin for SIPCOT Ranipet — illustrative three-quarter render of a container-style portable cabin with white corrugated walls over a navy lower band, a white door under a small hood and two grilled windows, standing on concrete blocks over a paved pad beside a lawn and trees",
+      width: 1024,
+      height: 1024,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-ranipet/portable-cabin-ranipet-office-interior.webp",
+      alt: "Portable cabin for SIPCOT Ranipet — illustrative render of an optionally furnished office interior with white ribbed wall and ceiling panels, a wall-mounted split AC, two desks with monitors and black office chairs, a printer on a low cabinet, two grilled windows, a white door and wood-look flooring",
+      width: 1024,
+      height: 1024,
+      caption:
+        "Illustrative render, shown with optional furniture and AC. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-ranipet/portable-cabin-ranipet-front-view.webp",
+        alt: "Portable cabin for SIPCOT Ranipet — illustrative front elevation of the white and navy container-style cabin: a central door under a hood between two grilled windows, on concrete blocks over a paved pad with trees behind",
+        width: 2048,
+        height: 2048,
+      },
+      {
+        src: "/images/cities/portable-cabin-ranipet/portable-cabin-ranipet-roof-view.webp",
+        alt: "Portable cabin for SIPCOT Ranipet — illustrative raised view of the cabin's white corrugated roof with corner castings, the door and two grilled windows on the long side, on a concrete pad set in a lawn",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Portable Cabins for SIPCOT Industrial Complex, Ranipet",
+    tagline: "A working factory can need more space without having room for a major building extension.",
+    intro: [
+      "A larger security post, a supervisor's office or a temporary contractor room may become necessary while the rest of the plant continues operating.",
+      "Portable Office Cabin manufactures and supplies portable cabins for businesses in SIPCOT Industrial Complex, Ranipet, and surrounding industrial areas of Tamil Nadu.",
+      "We help you plan cabin layouts for everyday plant operations, factory expansions and scheduled maintenance work, with specifications suited to the intended use and site conditions.",
+    ],
+
+    whyHeading: "Additional Space for an Operating Plant",
+    whyIntro: "Portable cabins are fabricated off-site, reducing the amount of construction work required within your premises.",
+    whyBullets: [
+      {
+        title: "Separate rooms where they are needed",
+        text: "They can provide separate rooms near entrances, production areas or contractor yards, subject to suitable access, supports and placement clearances.",
+      },
+      {
+        title: "Installation still requires planning",
+        text: "Delivery vehicles, lifting equipment and utility connections may affect nearby activities, so placement should be coordinated with your plant's operations and safety teams.",
+      },
+      {
+        title: "Mention future relocation early",
+        text: "If future relocation is likely, mention it before fabrication so lifting and transport requirements can be considered.",
+      },
+    ],
+
+    solutionsHeading: "Portable Cabin Options",
+    solutionsIntro:
+      "Indicative sizes range from 8 × 6 ft security cabins to 40 × 10 ft office cabins. Custom dimensions are subject to structural design, transport feasibility and site access.",
+    solutions: [
+      {
+        title: "Security Cabins",
+        text: "Compact guard rooms for gates and checkpoints, with window positions and counter arrangements planned around entrance visibility.",
+      },
+      {
+        title: "Office Cabins",
+        text: "Layouts for administrative staff, HR teams, supervisors and managers. Partitions, desks, meeting areas and AC provisions can be discussed.",
+      },
+      {
+        title: "QC and Inspection Workspaces",
+        text: "Cabins with suitable bench layouts, lighting and electrical points can be assessed for inspection work. Laboratory use requires confirmation of equipment loads, ventilation, services and environmental requirements.",
+      },
+      {
+        title: "Contractor Site Offices",
+        text: "Dedicated workspaces for civil, electrical and mechanical project teams, with room for documents, meetings and project coordination.",
+      },
+      {
+        title: "Toilet Cabins",
+        text: "Single-unit and multiple-unit layouts, with water supply, drainage and waste-management arrangements confirmed before installation.",
+      },
+      {
+        title: "Worker Rest Cabins",
+        text: "Rest spaces planned around occupancy, seating, ventilation and the site's welfare requirements.",
+      },
+      {
+        title: "Storage Cabins",
+        text: "Lockable spaces with floor capacity, ventilation and moisture protection suited to the intended contents.",
+      },
+      {
+        title: "Custom Facilities",
+        text: "Discuss requirements for weighbridge rooms, training rooms, first-aid spaces, waiting areas or canteens. Specialist fittings and approvals depend on the intended use.",
+      },
+    ],
+
+    featuresHeading: "Specifications for Industrial Surroundings",
+    featuresIntro:
+      "Dust, humidity, frequent use and process-related exposure can affect material selection. Discuss these conditions before ordering so the proposed specification can address:",
+    features: [
+      "Steel preparation and protective coatings",
+      "Floor loading and cleaning requirements",
+      "Door hardware, locks and window arrangements",
+      "Electrical protection appropriate to the installation",
+      "Ventilation or filtration requirements",
+      "Maintenance access and inspection needs",
+    ],
+    sizesNote:
+      "Specialist coatings, chemical resistance, fire performance and hazardous-area electrical equipment must be expressly specified and confirmed. They are not assumed features of a standard cabin.",
+
+    industriesHeading: "Where a Cabin Can Fit Into Your Factory",
+    industriesIntro:
+      "Six typical positions, the cabin each one calls for, and the details to plan. Placement near chemicals, treatment facilities or hazardous processes requires a site-specific review; an ordinary office cabin should not be assumed suitable for these environments.",
+    industries: [
+      { title: "Main entrance (security cabin)", text: "Visibility, visitor register, CCTV equipment and electrical points." },
+      { title: "Near production (supervisor office)", text: "Safe separation, ventilation, noise exposure and access." },
+      { title: "Near an effluent treatment plant (operator office)", text: "Exposure conditions, equipment clearance and record storage." },
+      { title: "Inspection or QC area (dedicated workspace)", text: "Benches, lighting, electrical loads and any controlled conditions." },
+      { title: "Parking or staff area (waiting or rest cabin)", text: "Seating, occupancy, ventilation and access." },
+      { title: "Contractor yard (site office and tool store)", text: "Meeting space, secure storage and future relocation." },
+    ],
+
+    customHeading: "Insulation and Ventilation for Workplace Comfort",
+    customIntro: "For cabins occupied throughout the day, insulation and ventilation should be considered alongside the interior layout:",
+    customBullets: [
+      { title: "Insulated panels", text: "PUF or other specified insulation can help reduce heat transfer." },
+      { title: "Windows and ventilation", text: "Openings should suit occupancy, equipment and surrounding air quality." },
+      { title: "AC provisions", text: "Electrical supply, mounting and condensate drainage can be planned where cooling is required." },
+      { title: "Roof drainage", text: "Roof design and sealed joints help manage rainwater when maintained appropriately." },
+    ],
+    customOutro:
+      "Insulation alone does not maintain a fixed indoor temperature. Any requirement for temperature-controlled testing or storage needs a separately assessed specification.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What you can expect when you enquire:",
+    whyUsBullets: [
+      { title: "Application-based planning", text: "Discuss how the cabin will function within your plant." },
+      { title: "Defined specifications", text: "Review materials, fittings and finishes before fabrication." },
+      { title: "Clear quotation scope", text: "Confirm inclusions and applicable additional charges." },
+      { title: "Installation coordination", text: "Plan access, unloading and placement with your site team." },
+      { title: "After-sales enquiries", text: "Contact us for maintenance and service assistance under the agreed terms." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Ranipet",
+    areasText:
+      "We welcome enquiries from SIPCOT Industrial Complex Ranipet, Ranipet town, Arcot, Walajapet, Arakkonam, Sholinghur, Kaveripakkam, Nemili, Panapakkam, Timiri and Kalavai. For sites towards Vellore, Katpadi or other nearby locations, share the exact address so we can assess transport feasibility and delivery arrangements. Entry into industrial premises remains subject to the relevant site permissions and safety procedures.",
+
+    howHeading: "How Ordering Works",
+    howSteps: [
+      {
+        title: "Share the requirement",
+        text: "Tell us the cabin's purpose, approximate size, number of users and proposed position within the plant.",
+      },
+      {
+        title: "Provide access and exposure details",
+        text: "Identify narrow gates, overhead services, lifting restrictions and nearby industrial processes.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm materials, fittings, inclusions and applicable transport, unloading and installation charges.",
+      },
+      {
+        title: "Approve fabrication",
+        text: "Production proceeds according to the agreed specification and order terms.",
+      },
+      {
+        title: "Coordinate delivery and handover",
+        text: "Prepare the supports, access permissions and utility arrangements needed before use.",
+      },
+    ],
+    howOutro: "Delivery and placement schedules are agreed according to production availability, site readiness and plant restrictions.",
+
+    extraSections: [
+      {
+        heading: "Planning Cabins for a Maintenance Shutdown",
+        paragraphs: [
+          "Maintenance work can bring additional contractor teams onto a site for a limited period. Planning their facilities in advance helps organise the work area.",
+          "Cabin requirements may include:",
+        ],
+        bullets: [
+          { text: "Contractor planning and meeting offices" },
+          { text: "Lockable tool and spare-parts stores" },
+          { text: "Worker rest facilities" },
+          { text: "Toilet units with suitable water and waste arrangements" },
+          { text: "A designated first-aid space, where required by the site" },
+        ],
+      },
+      {
+        heading: "Retention, Relocation and Rental After the Shutdown",
+        paragraphs: [
+          "Share the number of users, proposed positions and shutdown dates when enquiring. We will confirm the available configurations and production schedule.",
+          "After the work is complete, suitable cabins may be retained, repurposed or relocated following a review of their condition and new use.",
+          "Rental enquiries: availability in Ranipet, cabin configurations, duration, transport, return arrangements and commercial terms must be confirmed in the rental quotation.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can you install a cabin in a restricted space inside a working plant?",
+        answer:
+          "It depends on vehicle access, lifting reach, overhead obstructions, ground conditions and safe clearances. Share photographs and dimensions so the proposed position can be assessed before dispatch.",
+      },
+      {
+        question: "Will an insulated cabin remain comfortable during summer?",
+        answer:
+          "Insulation helps reduce heat transfer. Comfort also depends on ventilation, sun exposure, occupancy and cooling equipment. Discuss operating hours and AC requirements during planning.",
+      },
+      {
+        question: "Can you manufacture a laboratory or QC cabin?",
+        answer:
+          "We can assess a layout for the proposed application. Share the equipment, bench requirements, electrical loads, ventilation and any temperature-control or certification requirements before a specification is agreed.",
+      },
+      {
+        question: "Can you supply several cabins for a shutdown?",
+        answer:
+          "Share the quantity, required configurations and shutdown schedule. We will confirm production capacity, availability and whether delivery should be arranged together or in stages.",
+      },
+      {
+        question: "Can a cabin be moved within our premises later?",
+        answer:
+          "Relocation may be possible if the cabin's design and condition permit it. Utilities must be disconnected appropriately, and suitable lifting equipment, access and supports must be arranged.",
+      },
+      {
+        question: "How long does fabrication and delivery take for a Ranipet order?",
+        answer:
+          "The timeline depends on the design, quantity, materials, production availability and site arrangements. The expected schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Discuss Your Ranipet Cabin Requirement",
+    ctaText: `Whether you need a guard cabin, an additional office or facilities for a maintenance shutdown, Portable Office Cabin can help you assess a suitable layout. Share your intended use, dimensions, preferred fittings and exact site location to request a quotation. Call or WhatsApp ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}. Serving SIPCOT Industrial Complex Ranipet and surrounding areas of Ranipet district, Tamil Nadu.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is call / WhatsApp / email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Cabins on Rent", href: "/rental-service" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Ranipet, SIPCOT Ranipet or Ranipet district. Delivery, unloading and placement are arranged for each project, the supports depend on the site, and delivery and placement schedules are not guaranteed. Rental is subject to availability and the rental quotation. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and specialist coatings, chemical resistance, fire performance, hazardous-area electrical equipment, laboratory fit-outs and temperature control are supplied only where expressly specified and confirmed. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; they are not photographs of installations in Ranipet. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Ranipet industrial complex are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the plant positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. Notes on placement, hazardous environments, insulation, ventilation, shutdown planning and relocation are general guidance, not engineering, safety or legal advice.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {

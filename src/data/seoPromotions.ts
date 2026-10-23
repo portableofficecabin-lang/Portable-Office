@@ -319,6 +319,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     // Portable-cabin page for Tiruvallur (2026-10-23), here and on Porta Cabin, after Tindivanam.
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -333,6 +334,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
