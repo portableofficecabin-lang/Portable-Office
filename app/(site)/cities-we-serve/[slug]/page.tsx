@@ -197,7 +197,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.whyBullets.map((b) => (
             <li key={b.title ?? b.text} className={li}>
-              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
+              {b.title && <><strong className="text-foreground">{b.title}:</strong> </>}{b.text}
             </li>
           ))}
         </ul>
