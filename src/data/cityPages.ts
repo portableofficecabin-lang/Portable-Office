@@ -11631,6 +11631,9 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
       { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
       { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+      // The portable-cabin page for Tiruvallur district (2026-10-23), appended so the earlier links keep
+      // their positions.
+      { label: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
     ],
 
     disclaimer:
@@ -16529,6 +16532,267 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Perundurai or Erode district. Delivery, unloading and placement are arranged for each project, the base depends on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Perundurai. SIPCOT and the SIPCOT Perundurai industrial park are independent organisations with which Portable Office Cabin is not affiliated; they, the businesses described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate is subject to its own permissions. Notes on insulation, heat and site preparation are general guidance, not engineering advice.",
+  },
+
+  /* ───────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN TIRUVALLUR — the portable-cabin intent for Tiruvallur town and the
+   * industrial belt of Tiruvallur district (Kakkalur, Manavalanagar, Periyapalayam, Ponneri,
+   * Gummidipoondi), Tamil Nadu. Not a container-office cluster location, so the /cities-we-serve
+   * index lists it with the local-service pages. Linked from the "Portable Cabin|Tamil Nadu" and
+   * "Porta Cabin|Tamil Nadu" hubs (after Perundurai) and from container-office-in-athipattu, the
+   * Tiruvallur-district container-office page.
+   *
+   * Owner copy of 2026-10-23, mapped onto the template slots. The slug is the owner's suggested URL;
+   * the meta title, description, H1 and every section are the owner's. "Use the website's company
+   * contact buttons / company email" become COMPANY's number and sales address, with the call /
+   * WhatsApp buttons. Nothing is dropped, and the owner's section order is kept except where noted:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro (Perundurai).
+   *   • "Cabin Requirements for Different Businesses" → why (its four H3s as bullets, each H3's
+   *     paragraphs joined); whyIntro is a one-line lead-in.
+   *   • "Your New Industrial Plot Checklist" → solutions (the six checks as numbered H3s). The slot
+   *     has no outro, so the closing "We can discuss cabin configurations…" moves into the intro.
+   *   • "Plan for Heat, Rain and Ground Conditions" → features (its three H3s as "Topic — text"),
+   *     with a one-line lead-in; the relocation line closing the section is the bold note.
+   *   • "Cabin Specifications and Optional Fittings" table → custom, beside the office interior
+   *     render (one bullet per row); the sizes and fire-classification notes are customOutro.
+   *   • industries / whyUs: unset (both optional since #171).
+   *   • "Delivery Enquiries Around Tiruvallur" → areas (the owner's heading); "From Enquiry to
+   *     Handover" → how (five steps), with the site-contact note as howOutro. The template renders
+   *     the areas BEFORE the process, so those two swap.
+   *   • "Why Choose Portable Office Cabin?" → extraSections, after the process, as in the draft.
+   *   • FAQs: the owner's six. "Discuss Your Tiruvallur Cabin Requirement" → CTA; the closing
+   *     "Serving: …" line becomes an enquiry line (the owner's Devanahalli rule).
+   * Owner wording rules (Kudankulam / Tumkur, and the final terms of #156 / #163): the draft already
+   * follows them — no ₹, lead times, quality, inspection or turnaround claims; specifications are
+   * options confirmed in the quotation; towns are delivery enquiry locations; the base and fire
+   * classification are confirmed per order. The disclaimer adds "foundation and civil work are quoted
+   * separately" (the checkout note).
+   *
+   * Images: four owner-dropped PNG renders ("public/images/Krishnagiri Industrial Area city page for
+   * portable cabin/Krishnagiri Industrial Area/cabin (1–4).png", dropped 2026-10-22; the owner asked
+   * on 2026-10-23 for them to go with this Tiruvallur copy) of one grey corrugated container-style
+   * cabin with a black frame on concrete blocks, plus a furnished office interior. Re-encoded as webp
+   * at q82: (1) three-quarter door-side view → hero / og:image, 1408×1056, no caption; (2) top-down
+   * roof view → feature band, cropped to 3:2 and resized to 1536×1024; (4) the long side → one-image
+   * gallery, 1408×1056; (3) the interior → beside the specifications, 1408×1056, no caption (the
+   * owner removed the Devanahalli interior caption in #164). The disclaimer says they are
+   * illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ─────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-tiruvallur",
+    city: "Tiruvallur",
+    listTitle: "Portable Cabins in Tiruvallur",
+    metaTitle: "Portable Cabins in Tiruvallur | Office & Security Cabins",
+    metaDescription:
+      "Portable office cabins, security cabins, toilet units and storage cabins for factories, warehouses and construction sites in Tiruvallur. Request a quote.",
+    keywords:
+      "Portable Cabins in Tiruvallur, Portable Cabin Tiruvallur, Portable Office Cabin Tiruvallur, Security Cabin Tiruvallur, Site Office Cabin Tiruvallur, Weighbridge Cabin Tiruvallur, Portable Toilet Cabin Tiruvallur, Labour Cabin Tiruvallur, Portable Cabin Gummidipoondi, Portable Cabin Ponneri",
+    geo: {
+      region: "IN-TN",
+      placename: "Tiruvallur, Tamil Nadu, India",
+      position: "13.1439;79.9086",
+      icbm: "13.1439, 79.9086",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-tiruvallur/portable-cabin-tiruvallur-exterior.webp",
+      alt: "Portable cabin in Tiruvallur — illustrative render of a grey corrugated container-style portable cabin with a black frame, a steel entrance door under a hood and grilled windows, raised on concrete blocks on a cleared industrial plot",
+      width: 1408,
+      height: 1056,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-tiruvallur/portable-cabin-tiruvallur-roof-view.webp",
+      alt: "Portable cabin in Tiruvallur — illustrative top-down view of the cabin's grey corrugated roof and corner castings, on a cleared plot surrounded by vegetation",
+      width: 1536,
+      height: 1024,
+      caption: "Roof drainage and sealed joints are important parts of the cabin specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-tiruvallur/portable-cabin-tiruvallur-interior.webp",
+      alt: "Portable cabin in Tiruvallur — illustrative render of an optionally furnished office interior with light panelled walls and ceiling, two dark desks with black mesh chairs, a computer, a laptop, a printer and storage cabinets, a notice board, a linear ceiling light, white grilled windows and wood-look flooring",
+      width: 1408,
+      height: 1056,
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-tiruvallur/portable-cabin-tiruvallur-side-view.webp",
+        alt: "Portable cabin in Tiruvallur — illustrative view of the long side of the grey cabin with two grilled windows under small hoods, on concrete blocks on a gravel plot",
+        width: 1408,
+        height: 1056,
+      },
+    ],
+
+    h1: "Portable Cabins for Tiruvallur Industrial Areas and Factory Expansions",
+    tagline: "Factories, warehouses and construction projects need practical working spaces before permanent facilities are complete.",
+    intro: [
+      "A gate needs a security post, project teams need an office, and workers need suitable rest and sanitation facilities.",
+      "Portable Office Cabin manufactures and supplies portable cabins for businesses and contractors in Tiruvallur and surrounding industrial areas of Tamil Nadu.",
+      "Whether you are developing a new plot or adding facilities to an existing unit, we help you plan a cabin around its intended use, available space and site conditions.",
+    ],
+
+    whyHeading: "Cabin Requirements for Different Businesses",
+    whyIntro: "Four kinds of businesses around Tiruvallur, and the cabins each typically needs:",
+    whyBullets: [
+      {
+        title: "Manufacturers setting up new plants",
+        text: "Security cabins, project offices and toilet units can support the construction stage. Once the factory becomes operational, suitable cabins may be adapted into supervisor offices, time offices or stores after reviewing the new requirements.",
+      },
+      {
+        title: "Warehouses and logistics yards",
+        text: "Dock offices, gate-pass counters, weighbridge cabins and driver waiting rooms provide dedicated spaces for everyday yard operations. Layouts can include service windows, desks, document storage and electrical points for computers and printers.",
+      },
+      {
+        title: "EPC and civil contractors",
+        text: "Site offices, lockable tool stores and worker rest cabins help organise project activities. Where future relocation is planned, lifting and transport requirements should be considered before fabrication.",
+      },
+      {
+        title: "Existing factories expanding their facilities",
+        text: "Separate cabins can provide additional administrative offices, training rooms, visitor waiting areas or staff facilities. Placement and installation should be coordinated with the factory team to manage lifting work, access restrictions and nearby operations.",
+      },
+    ],
+
+    solutionsHeading: "Your New Industrial Plot Checklist",
+    solutionsIntro:
+      "Before ordering, identify which facilities your site needs. We can discuss cabin configurations for these uses; equipment, utilities and specialist fittings are included only when specified in the quotation.",
+    solutions: [
+      { title: "Gate security", text: "A suitable position with visibility of entrances and vehicle movements." },
+      { title: "Project office", text: "Space for engineers, consultants, drawings and meetings." },
+      { title: "Sanitation", text: "Toilet facilities with appropriate water supply and waste disposal." },
+      { title: "Secure storage", text: "A layout suited to the materials, tools and equipment being stored." },
+      { title: "Worker rest area", text: "Ventilation, seating and suitable protection from outdoor exposure." },
+      { title: "First-aid space", text: "A layout assessed against your site's requirements by the responsible safety team." },
+    ],
+
+    featuresHeading: "Plan for Heat, Rain and Ground Conditions",
+    featuresIntro: "Three things to plan for before the cabin is specified:",
+    features: [
+      "Insulation and ventilation — PUF or other specified insulation can help reduce heat transfer. Indoor comfort also depends on ventilation, shading, occupancy and cooling equipment. Discuss the number of users, operating hours and AC requirements before finalising the specification.",
+      "Roof drainage and protective finishes — roof drainage, sealed joints and protective steel coatings are important parts of the cabin specification. Periodic inspection and maintenance help preserve these components.",
+      "Low-lying or waterlogged plots — for plots with a history of waterlogging, assess drainage, ground stability and an appropriate finished floor level before installation. Raised supports may be suitable where properly designed, but they do not make a cabin flood-proof. Foundation, support and anchoring requirements depend on the site and cabin design.",
+    ],
+    sizesNote: "If future relocation is planned, suitable lifting access and transport arrangements must also be considered.",
+
+    customHeading: "Cabin Specifications and Optional Fittings",
+    customIntro: "The final specification will be confirmed in your quotation. The options to discuss for each component:",
+    customBullets: [
+      { title: "Structure", text: "mild steel frame designed for the cabin dimensions and intended loads." },
+      { title: "Walls and roof", text: "panel construction with specified insulation." },
+      { title: "Flooring", text: "suitable floor base, loading capacity and finish." },
+      { title: "Doors and windows", text: "opening positions, service windows, locks and safety grills." },
+      { title: "Electrical fittings", text: "lighting, fan points, sockets, distribution board and AC provisions." },
+      { title: "Exterior finish", text: "protective paint, suitable cladding and company branding." },
+      { title: "Internal layout", text: "partitions, meeting rooms, counters and storage areas." },
+      { title: "Plumbing", text: "attached toilet or pantry provisions." },
+      { title: "Access", text: "entrance steps, wider openings or a suitably designed ramp." },
+    ],
+    customOutro:
+      "Indicative sizes to discuss range from 8 × 6 ft security cabins to 40 × 10 ft office or accommodation cabins. Final dimensions depend on the layout, structural design, transport feasibility and site access. Any requirement for a particular fire classification must be stated before ordering. Material availability and supporting documentation should be confirmed against the proposed specification.",
+
+    areasHeading: "Delivery Enquiries Around Tiruvallur",
+    areasText:
+      "We welcome enquiries from Tiruvallur town, Kakkalur, Manavalanagar, Sevvapet, Periyapalayam, Uthukottai, Ponneri, Gummidipoondi and Tiruttani. For locations towards Pattabiram, Avadi, Thirumazhisai, Poonamallee, Sriperumbudur and western Chennai, share your exact address so we can assess delivery feasibility and transport arrangements. Delivery schedules depend on the cabin specification, production availability, access permissions and site readiness.",
+
+    howHeading: "From Enquiry to Handover",
+    howSteps: [
+      {
+        title: "Explain the requirement",
+        text: "Share the intended use, approximate dimensions, number of users and exact site location. Include photographs or details of the access route where possible.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "Confirm the proposed materials, fittings, inclusions and applicable taxes, transport, unloading and installation charges.",
+      },
+      {
+        title: "Approve fabrication",
+        text: "Fabrication proceeds according to the approved layout, specifications and agreed order terms.",
+      },
+      {
+        title: "Prepare for delivery",
+        text: "Arrange the required base or supports, vehicle access, lifting space and site permissions. Confirm utility connection requirements before dispatch.",
+      },
+      {
+        title: "Complete placement and connections",
+        text: "The cabin is positioned using suitable equipment under the agreed arrangements. Electrical, water and drainage connections are completed as applicable before use.",
+      },
+    ],
+    howOutro:
+      "If your purchase team and site team are in different locations, nominate a site contact to coordinate access, preparation and delivery.",
+
+    extraSections: [
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        bullets: [
+          { title: "Application-based layouts", text: "Plan cabins around office, security, storage or welfare requirements." },
+          { title: "Defined specifications", text: "Review materials and fittings before fabrication." },
+          { title: "Clear quotation scope", text: "Confirm inclusions and applicable additional charges." },
+          { title: "Coordinated delivery", text: "Discuss access, unloading and placement before dispatch." },
+          { title: "After-sales enquiries", text: "Contact us for maintenance and service assistance under the agreed terms." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a cabin be installed on a low-lying plot?",
+        answer:
+          "Installation may be possible after assessing drainage, ground stability, support requirements and flood exposure. A raised base alone does not establish that the location is suitable.",
+      },
+      {
+        question: "Can you make a weighbridge or gate-pass cabin?",
+        answer:
+          "Layouts can be discussed with service windows, desks and electrical points for the intended equipment. Share equipment dimensions, visibility requirements and the proposed cabin position.",
+      },
+      {
+        question: "Can you coordinate directly with our site supervisor?",
+        answer:
+          "You can nominate a site supervisor or authorised representative to coordinate access and delivery. Specifications, approvals and changes should remain documented with the designated company contact.",
+      },
+      {
+        question: "Can a cabin serve as a first-aid or welfare room?",
+        answer:
+          "A cabin can be configured for these uses, subject to suitable space, ventilation, access and fittings. Your responsible safety or compliance team should confirm the applicable requirements.",
+      },
+      {
+        question: "How long does fabrication and delivery take?",
+        answer:
+          "The timeline depends on the design, quantity, materials, production availability and delivery arrangements. The expected schedule is confirmed when the order is finalised.",
+      },
+      {
+        question: "Are fire-rated or fire-retardant panels available?",
+        answer:
+          "Share the exact classification and documentation your project requires. We will confirm whether a suitable option can be supplied. A panel's classification does not by itself establish the fire performance of the complete cabin.",
+      },
+    ],
+
+    ctaHeading: "Discuss Your Tiruvallur Cabin Requirement",
+    ctaText: `Whether you are preparing a new industrial plot, organising a logistics yard or adding space to an existing factory, Portable Office Cabin can help you assess a suitable configuration. Share your required size, intended use, preferred fittings and site location to request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. We welcome enquiries from Tiruvallur and the surrounding industrial areas of Tamil Nadu.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is call / WhatsApp / email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
+      { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Tiruvallur or Tiruvallur district. Delivery, unloading, lifting and placement are arranged for each project; the base and supports depend on the site, foundation and civil work are quoted separately, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, connected or combined cabins are subject to structural design, and any fire classification depends on the certified products specified and does not by itself establish the fire performance of a complete cabin. First-aid, welfare and other regulated uses are subject to the requirements confirmed by the customer's responsible safety or compliance team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished office interior; other designs look different, and the images are not photographs of installations in Tiruvallur. The towns, industrial areas and places named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on insulation, drainage, waterlogging, supports, electrical work and site preparation are general guidance, not engineering, electrical or safety advice.",
   },
 ];
 
