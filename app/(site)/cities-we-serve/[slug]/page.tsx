@@ -79,6 +79,9 @@ const h2 = "mt-10 mb-3 text-2xl font-bold tracking-tight";
 const h3 = "mt-6 mb-1.5 text-lg font-semibold";
 const p = "mb-4 leading-relaxed text-muted-foreground";
 const li = "mb-2 leading-relaxed text-muted-foreground";
+/* Bullet lists (why / industries / custom / why-us): a CityPageListItem without a title renders its text
+   alone. Before 2026-10-23 the lead-in markup rendered regardless, so untitled bullets (first used by
+   Portable Cabins in Perundurai) showed a stray ":" or " — " before the text. Titled bullets are unchanged. */
 
 /* Secondary CTA buttons every page carried before `ctaSecondaryLinks` existed. Pages that
    leave that field unset render these two.
@@ -193,8 +196,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
         <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.whyBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}:</strong> {b.text}
+            <li key={b.title ?? b.text} className={li}>
+              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
             </li>
           ))}
         </ul>
@@ -279,8 +282,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             <p className={`${p}${mc("reveal")}`}>{page.industriesIntro}</p>
             <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
               {(page.industries ?? []).map((b) => (
-                <li key={b.title} className={li}>
-                  <strong className="text-foreground">{b.title}</strong> — {b.text}
+                <li key={b.title ?? b.text} className={li}>
+                  {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
                 </li>
               ))}
             </ul>
@@ -317,8 +320,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>
         <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.customBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
+            <li key={b.title ?? b.text} className={li}>
+              {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
             </li>
           ))}
         </ul>
@@ -331,8 +334,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
             <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
               {(page.whyUsBullets ?? []).map((b) => (
-                <li key={b.title} className={li}>
-                  <strong className="text-foreground">{b.title}</strong> — {b.text}
+                <li key={b.title ?? b.text} className={li}>
+                  {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
                 </li>
               ))}
             </ul>
