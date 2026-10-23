@@ -6695,6 +6695,9 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
+      // The nearest Tamil Nadu portable-cabin page, about 65 km south-west in Viluppuram district (owner
+      // request, 2026-10-23: interlink the new Tindivanam page). Appended so earlier links keep their places.
+      { label: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     ],
 
     disclaimer:
@@ -9438,6 +9441,301 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Vemgal or elsewhere in Kolar district. Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to stock, location and minimum rental terms. The sizes, layouts, panel types, fittings and other specification items described on this page are options; the items supplied are confirmed in the approved drawing, specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin container-style design; other build types look different, and the images are not photographs of installations in Vemgal. Vemgal Industrial Area, Narasapura Industrial Area, Kolar Gold Fields and the other places named here are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any industrial area or premises is subject to its own permissions. Notes on insulation, ventilation and ground preparation are general guidance, not engineering advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN TINDIVANAM AND SIPCOT INDUSTRIAL PARK — the portable-cabin intent for
+   * Tindivanam and the SIPCOT Industrial Park Tindivanam in Viluppuram district, Tamil Nadu: security
+   * cabins, site offices, toilet units, rest cabins and stores for plots moving from fencing through
+   * construction to operations. Not a container-office cluster location, so the /cities-we-serve
+   * index lists it with the local-service pages. No other page targets Tindivanam.
+   *
+   * Owner copy of 2026-10-23, mapped onto the template slots. The owner's URL
+   * "/cities-we-serve/portable-cabin-tindivanam" is used as given; the meta title and description
+   * are the owner's, verbatim. Nothing is dropped except the placeholders and the "Serving:" line:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Planning a Cabin for Your SIPCOT Tindivanam Project" → why: its lead line as whyIntro, the
+   *     four table rows (project stage: requirement — planning considerations) as bullets, the
+   *     closing paragraph as whyOutro.
+   *   • "Choose the Cabin That Fits Your Work" (seven H3s) → solutions.
+   *   • "Plan for Heat, Rain and Site Exposure" → features: its lead line as featuresIntro, the five
+   *     bullets as "Topic — text", the closing paragraph as sizesNote.
+   *   • "Cabin Sizes and Optional Fittings" → the custom slot beside the furnished-office render: the
+   *     sizes and custom-dimensions lines as customIntro, the seven fittings as bullets (short
+   *     titles added), the quotation line as customOutro.
+   *   • "Why Choose Portable Office Cabin?" → whyUs; its closing "target handover date" line becomes
+   *     the last bullet, because the slot has no outro.
+   *   • "Delivery Enquiries Around Tindivanam" → areasText (the owner already frames towns as
+   *     enquiry locations); for the same reason the CTA drops "Serving: …".
+   *   • "From Enquiry to Handover" → how (five steps), its "level patch of ground" note as howOutro.
+   *     The template renders whyUs and the areas before it.
+   *   • The six FAQs, verbatim (the site-visit answer is the owner's, conditional on availability).
+   *   • The closing section → CTA, with COMPANY's call / WhatsApp number and sales address for the
+   *     "contact buttons" and "company email" placeholders.
+   * Location rule: manufacturing happens only at the factory near Hosur, so "manufactures and
+   * supplies portable cabins for projects in Tindivanam" names the factory. No ₹, fixed timelines,
+   * response deadlines, inspection claims or "no hidden charges" (the #156/#163 terms). The industries
+   * slot is left unset (optional since #171). whyUsIntro and solutionsIntro are one-line lead-ins.
+   *
+   * Images: four owner-dropped webp renders (moved by the owner into "Portable Cabin in Tindivanam
+   * city page/…/cabin (1–4)_gm_optimized.webp") of one white cabin with a charcoal lower band, a
+   * gabled roof, a steel door and grilled sliding windows, plus a furnished office interior:
+   * (2) front elevation 2048² → 4:3, 1600×1200 = hero / og:image, no caption; (3) top-down roof view
+   * 2048² → 3:2, 1536×1024 = feature band; (1) three-quarter view 1024² → 4:3, 1024×768 = gallery;
+   * (4) interior 1024², copied unchanged = beside the sizes and fittings. The interior caption and
+   * the disclaimer say they are illustrative renders.
+   *
+   * Geo: Tindivanam town, 12.2369 N 79.6499 E.
+   *
+   * Interlinking (owner request): the page is on the "Portable Cabin|Tamil Nadu" and "Porta Cabin|
+   * Tamil Nadu" hubs after Krishnagiri, and Portable Cabin Manufacturers in Hosur and Container Office
+   * in Kalpakkam (the nearest Tamil Nadu city page) link to it; it links back to both.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-tindivanam",
+    city: "Tindivanam",
+    listTitle: "Portable Cabins in Tindivanam",
+    metaTitle: "Portable Cabins in Tindivanam | SIPCOT, Viluppuram",
+    metaDescription:
+      "Explore portable office cabins, security cabins, site offices and toilet units for Tindivanam and SIPCOT Industrial Park, Viluppuram. Request a quotation.",
+    keywords:
+      "Portable Cabin Tindivanam, Portable Cabins in Tindivanam, Portable Cabin SIPCOT Tindivanam, Portable Office Cabin Viluppuram, Security Cabin Tindivanam, Site Office Cabin Tindivanam, Portable Toilet Cabin Tindivanam, Portable Cabin Viluppuram",
+    geo: { region: "IN-TN", placename: "Tindivanam, Viluppuram, Tamil Nadu, India", position: "12.2369;79.6499", icbm: "12.2369, 79.6499" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-tindivanam/portable-cabin-tindivanam-front.webp",
+      alt: "Portable cabin for Tindivanam and SIPCOT Industrial Park sites — illustrative front view of a white ribbed-steel cabin with a charcoal lower band, a steel door between two grilled sliding windows, standing on concrete blocks on a paved strip",
+      width: 1600,
+      height: 1200,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-tindivanam/portable-cabin-tindivanam-roof-view.webp",
+      alt: "Portable cabin for Tindivanam and SIPCOT Industrial Park sites — illustrative top-down view of the cabin's white gabled roof on a concrete pad, with grass and trees around the plot",
+      width: 1536,
+      height: 1024,
+      caption: "Roof slope, drainage details and sealed joints belong in the agreed specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-tindivanam/portable-cabin-tindivanam-interior.webp",
+      alt: "Portable cabin for Tindivanam and SIPCOT Industrial Park sites — illustrative render of a furnished office interior with wood-look wall panels, two desks with office chairs, a computer, a storage cabinet, ceiling lights, a split AC unit and grilled windows",
+      width: 1024,
+      height: 1024,
+      caption:
+        "Illustrative render, shown with optional furniture, an AC unit and fittings. Supplied layouts, fittings and finishes follow the approved specification and quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-tindivanam/portable-cabin-tindivanam-three-quarter.webp",
+        alt: "Portable cabin for Tindivanam and SIPCOT Industrial Park sites — illustrative three-quarter view of the white and charcoal cabin with its gabled roof, steel door and grilled windows, raised on concrete blocks",
+        width: 1024,
+        height: 768,
+      },
+    ],
+
+    h1: "Portable Cabins in Tindivanam and SIPCOT Industrial Park",
+    tagline: "A new industrial project needs working facilities before the main building is complete.",
+    intro: [
+      "Security personnel need a gate cabin, engineers need somewhere to review drawings, and workers need access to suitable rest and sanitation facilities.",
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur and supplies them for projects in Tindivanam, SIPCOT Industrial Park Tindivanam and surrounding areas of Viluppuram district, Tamil Nadu.",
+      "From a single security booth to a partitioned site office, we help you plan a cabin around your project stage, available space and required fittings.",
+    ],
+
+    whyHeading: "Planning a Cabin for Your SIPCOT Tindivanam Project",
+    whyIntro: "Your space requirements can change as a project moves from an empty plot to an operational facility.",
+    whyBullets: [
+      {
+        title: "Plot preparation and fencing",
+        text: "a security cabin, planned for entrance visibility, guard seating and electrical supply.",
+      },
+      {
+        title: "Construction",
+        text: "a site office, planned for desks, drawing storage, meetings and ventilation.",
+      },
+      {
+        title: "Workforce mobilisation",
+        text: "rest cabins and toilet units, planned for occupancy, water supply, drainage and sanitation.",
+      },
+      {
+        title: "Factory operations",
+        text: "a supervisor office, time office or store, planned for the revised layout, electrical loads and storage requirements.",
+      },
+    ],
+    whyOutro:
+      "A cabin may be adapted for another use later, provided its structure, layout and fittings are suitable. Discuss possible future uses before fabrication so they can be considered in the design.",
+
+    solutionsHeading: "Choose the Cabin That Fits Your Work",
+    solutionsIntro: "Each type is planned around the work it needs to support:",
+    solutions: [
+      {
+        title: "Security Cabins",
+        text: "Compact guard rooms for industrial entrances, warehouses, residential properties and parking areas. Window positions can be planned to provide visibility of the entrance and vehicle movements.",
+      },
+      {
+        title: "Portable Office Cabins",
+        text: "Workspaces for administrative staff, supervisors and small office teams. Specifications can include lighting, sockets, fan points, windows, partitions and AC provisions.",
+      },
+      {
+        title: "Site Office Cabins",
+        text: "Practical offices for contractors, engineers and project teams, with space for desks, documents and visitor discussions. Separate meeting or supervisor rooms can be incorporated where the size allows.",
+      },
+      {
+        title: "Portable Toilet Cabins",
+        text: "Single-unit or multiple-unit layouts with plumbing provisions. Water supply, drainage, waste disposal and any tank requirements must be confirmed before installation.",
+      },
+      {
+        title: "Labour Accommodation and Rest Cabins",
+        text: "Layouts for worker accommodation or rest facilities, with ventilation, electrical fittings and room arrangements planned around the intended occupancy and applicable requirements.",
+      },
+      {
+        title: "Storage Cabins",
+        text: "Lockable spaces for tools, spare parts and suitable materials. Floor loading, moisture protection, ventilation and security fittings should match the items being stored.",
+      },
+      {
+        title: "Custom Cabins",
+        text: "Discuss requirements for canteens, counters, small shops, farm offices or cabins with attached toilets and pantries. Feasibility depends on the layout, structural design, transport limits and site conditions.",
+      },
+    ],
+
+    featuresHeading: "Plan for Heat, Rain and Site Exposure",
+    featuresIntro:
+      "Insulation, drainage and secure installation are important considerations for cabins used in Tindivanam and surrounding areas.",
+    features: [
+      "Insulation — PUF panels can be specified to help reduce heat transfer. Indoor comfort also depends on ventilation, shading, occupancy and cooling equipment.",
+      "Roof drainage — roof slope, drainage details and sealed joints should be included in the agreed specification.",
+      "Base preparation — suitable supports and finished floor levels should account for ground conditions and surface drainage.",
+      "Protective coatings — steel coatings are selected according to the specification and exposure conditions. Sites closer to the coast may require additional corrosion protection.",
+      "Anchoring — support and anchoring requirements depend on the cabin design, location and wind exposure.",
+    ],
+    sizesNote:
+      "Raised supports do not make a cabin flood-proof. Any requirement for specific wind resistance or structural performance should be assessed and confirmed before ordering.",
+
+    customHeading: "Cabin Sizes and Optional Fittings",
+    customIntro:
+      "Sizes to discuss include 10 × 8 ft, 20 × 10 ft, 30 × 10 ft and 40 × 10 ft, subject to design and transport feasibility. Custom dimensions can also be assessed according to your layout and delivery access. Optional fittings may include:",
+    customBullets: [
+      { title: "Partitions", text: "internal partitions and separate rooms" },
+      { title: "Finishes", text: "ceiling and flooring finishes" },
+      { title: "Cladding", text: "ACP exterior cladding" },
+      { title: "Toilet or pantry", text: "an attached toilet or pantry" },
+      { title: "Openings", text: "additional windows and wider doors" },
+      { title: "Access", text: "entrance steps or an access ramp" },
+      { title: "Electrical", text: "AC provisions and additional electrical sockets" },
+    ],
+    customOutro: "The quotation will identify the dimensions, materials and fittings included.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What to expect when you plan a cabin with us:",
+    whyUsBullets: [
+      {
+        title: "Planning around your requirement",
+        text: "choose the layout according to the work the cabin needs to support.",
+      },
+      { title: "Clear specifications", text: "review materials, fittings and finishes before fabrication." },
+      {
+        title: "Defined quotation scope",
+        text: "confirm inclusions, taxes and applicable delivery or installation charges.",
+      },
+      { title: "Site coordination", text: "discuss access, supports, unloading and placement before dispatch." },
+      {
+        title: "After-sales enquiries",
+        text: "contact us for maintenance and service assistance under the agreed terms.",
+      },
+      {
+        title: "Target handover dates",
+        text: "if your project has a target handover date, tell us when enquiring so we can assess a suitable schedule.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Tindivanam",
+    areasText:
+      "We welcome enquiries from Tindivanam town, SIPCOT Industrial Park Tindivanam, Mailam, Kiliyanur, Vanur, Olakkur, Gingee, Marakkanam, Vikravandi and Viluppuram. For sites towards Acharapakkam, Melmaruvathur or Puducherry, share your exact location so we can confirm delivery feasibility and transport arrangements. Delivery timing depends on fabrication, vehicle availability, access permissions and site readiness.",
+
+    howHeading: "From Enquiry to Handover",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Tell us the cabin's intended use, approximate size, number of users and exact site location. Mention any future relocation or change of use.",
+      },
+      {
+        title: "Review the proposal",
+        text: "Review the proposed layout, specifications, quotation and applicable transport, unloading and installation charges.",
+      },
+      {
+        title: "Confirm fabrication",
+        text: "Once the design and order terms are approved, fabrication proceeds according to the agreed specification and schedule.",
+      },
+      {
+        title: "Prepare for delivery",
+        text: "Confirm the access route, entrance clearance, unloading position, ground conditions and required supports. Check any SIPCOT entry or site-access arrangements in advance.",
+      },
+      {
+        title: "Complete placement and connections",
+        text: "The cabin is positioned using suitable equipment under the agreed arrangements. Electrical, water and drainage connections are completed as applicable before use.",
+      },
+    ],
+    howOutro:
+      "A level patch of ground alone may not be sufficient. Site preparation and support requirements must be confirmed for the particular cabin.",
+
+    faqs: [
+      {
+        question: "Can a portable cabin be used during heavy rain?",
+        answer:
+          "Weather protection depends on the roof design, joint sealing, maintenance and installation conditions. Site drainage and suitable placement are also important. Discuss exposure conditions before finalising the specification.",
+      },
+      {
+        question: "What cabin should I consider first for a new SIPCOT plot?",
+        answer:
+          "A security cabin and a construction site office are practical starting points. Your requirements will depend on staffing, project activities, available utilities and estate rules.",
+      },
+      {
+        question: "What should I arrange before delivery?",
+        answer:
+          "Confirm suitable vehicle and lifting access, overhead clearances, a prepared placement area and the required supports. Water, drainage, electrical connections and access permissions may also need to be arranged.",
+      },
+      {
+        question: "Can I change the cabin's use later?",
+        answer:
+          "A change of use may be possible after reviewing the layout, floor loading, ventilation, electrical fittings and sanitation requirements. Some conversions require modifications rather than simply replacing furniture.",
+      },
+      {
+        question: "Can you arrange delivery to Puducherry?",
+        answer:
+          "Share your Puducherry site location and cabin requirements. We will confirm transport feasibility, applicable charges and delivery arrangements when preparing the quotation.",
+      },
+      {
+        question: "Can I request a site visit before ordering?",
+        answer:
+          "Contact us to discuss whether a site visit is needed. Availability, scope and any applicable visit charges will be confirmed before scheduling.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Cabin Quotation in Tindivanam",
+    ctaText: `Whether you are preparing a plot at SIPCOT Industrial Park Tindivanam, setting up a construction office or adding a security post, Portable Office Cabin can help you assess a suitable layout. Share your intended use, required dimensions, preferred fittings and delivery location to request a quotation. Call or WhatsApp ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Cabins on Rent", href: "/rental-service" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Tindivanam, at SIPCOT Industrial Park Tindivanam or elsewhere in Viluppuram district. Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. The sizes, layouts, panel types, fittings and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and any wind-resistance or structural performance must be assessed for the particular cabin. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished office interior; they are not photographs of installations in Tindivanam. SIPCOT and its Tindivanam industrial park, and the towns and places named here, including Puducherry, are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any industrial estate or premises is subject to its own permissions. Notes on insulation, drainage, coatings, anchoring and site preparation are general guidance, not engineering advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -15403,6 +15701,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { label: "Container Office Near Tata Electronics, Hosur", href: "/cities-we-serve/container-office-near-tata-electronics-hosur" },
       { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+      // Tindivanam / SIPCOT Industrial Park (owner request, 2026-10-23: interlink the new page).
+      { label: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
       { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
