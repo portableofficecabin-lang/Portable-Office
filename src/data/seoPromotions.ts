@@ -314,6 +314,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     // Portable-cabin page for Perundurai / SIPCOT Perundurai (Erode), here and on Porta Cabin.
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    // Insulated PUF panel cabins for Padalur / Irur (Perambalur), here and on Porta Cabin.
+    { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     // Tindivanam / SIPCOT Industrial Park, Viluppuram district (owner request, 2026-10-23), on both TN
     // portable-cabin keyword hubs, after Perundurai.
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
@@ -331,6 +333,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },

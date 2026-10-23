@@ -193,8 +193,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
         <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.whyBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}:</strong> {b.text}
+            /* A bullet without a title (an owner list of plain items, first on PUF Panel Cabins in Padalur
+               and Irur) renders its text alone; titled bullets render exactly as before. */
+            <li key={b.title ?? b.text} className={li}>
+              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
             </li>
           ))}
         </ul>
@@ -372,6 +374,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                 ))}
               </ul>
             )}
+            {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
+            {sec.closing?.map((text) => (
+              <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
+            ))}
           </section>
         ))}
 

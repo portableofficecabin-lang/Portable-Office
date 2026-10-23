@@ -34,6 +34,11 @@ export interface CityPageSection {
   heading: string;
   paragraphs?: string[];
   bullets?: CityPageListItem[];
+  /**
+   * Optional paragraphs rendered AFTER the bullets (first used by PUF Panel Cabins in Padalur and
+   * Irur, whose thickness and assembly sections close with a note). Unset = nothing rendered.
+   */
+  closing?: string[];
 }
 
 export interface CityPage {
@@ -16825,6 +16830,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in SIPCOT Coimbatore", href: "/cities-we-serve/container-office-in-sipcot-coimbatore" },
       { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
       { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
       { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
@@ -17093,6 +17099,346 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Tiruvallur or Tiruvallur district. Delivery, unloading, lifting and placement are arranged for each project; the base and supports depend on the site, foundation and civil work are quoted separately, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, connected or combined cabins are subject to structural design, and any fire classification depends on the certified products specified and does not by itself establish the fire performance of a complete cabin. First-aid, welfare and other regulated uses are subject to the requirements confirmed by the customer's responsible safety or compliance team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished office interior; other designs look different, and the images are not photographs of installations in Tiruvallur. The towns, industrial areas and places named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on insulation, drainage, waterlogging, supports, electrical work and site preparation are general guidance, not engineering, electrical or safety advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PUF PANEL CABINS IN PADALUR AND IRUR, PERAMBALUR — the insulated (PUF sandwich panel) cabin
+   * intent for Padalur, Irur and the rest of Perambalur district, Tamil Nadu: insulated offices,
+   * security cabins, sampling and inspection rooms, storage rooms, staff rooms and farm offices.
+   * Not a container-office cluster location, so the /cities-we-serve index lists it with the
+   * local-service pages (Tamil Nadu). On the Portable Cabin and Porta Cabin Tamil Nadu hubs and
+   * linked from the Perundurai portable-cabin page. The owner's draft says "if published
+   * separately", and it is: a sibling of the Portable Cabins in Padalur and Irur page (its own PR),
+   * about the panel system rather than the cabin range.
+   *
+   * Owner copy of 2026-10-23 ("PUF Panel Cabins in Padalur and Irur, Perambalur"), mapped onto the
+   * fixed template slots. The H1, meta title, meta description and slug are verbatim. Nothing is
+   * dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "What Is a PUF Panel Cabin?" → why: its two paragraphs and the lead-in as whyIntro, the seven
+   *     specification items as plain bullets (no bold lead-ins — the first page to use untitled
+   *     bullets in this slot), the closing line as whyOutro.
+   *   • "Why Consider PUF Insulation?" → solutions: the four H3s as the numbered H3s (each H3's
+   *     paragraphs joined). solutionsIntro is a one-line lead-in the template requires.
+   *   • "Cabin Components and Optional Fittings" → features: the lead-in as the intro, the nine
+   *     options as the lines, the furniture note as sizesNote.
+   *   • "Applications Around Padalur and Irur" → industries: the six H3s as "title — text" items;
+   *     industriesIntro is a one-line lead-in.
+   *   • "PUF Panels Compared With Uninsulated Sheet Construction" → the custom slot beside the
+   *     interior render: each table row as "Consideration — PUF panel construction: …
+   *     Uninsulated sheet construction: …", the closing line as customOutro; customIntro is a
+   *     one-line lead-in. The template renders this block after the applications.
+   *   • "Why Choose Portable Office Cabin?" → whyUs (the five bullets; whyUsIntro is a one-line
+   *     lead-in, because the template renders that paragraph whenever the block is set).
+   *   • "Delivery Enquiries Around Perambalur" → areasText (its two paragraphs, as written).
+   *   • "From Specification to Installation" → how: the six numbered steps as "title — text", the
+   *     supports note as howOutro. The template renders the areas BEFORE the process.
+   *   • "Choosing Panel Thickness" and "Delivery and Assembly Options" → extraSections (rendered
+   *     after the process, before the FAQs): the thickness table as "Requirement: what to assess"
+   *     bullets with the two closing paragraphs as `closing` (a new optional field, see
+   *     CityPageSection), and the two assembly H3s as bullets with the availability note as
+   *     `closing`.
+   *   • FAQs: the owner's seven, as written.
+   *   • "Discuss Your PUF Panel Cabin Requirement" → CTA; the owner's phone and email match
+   *     COMPANY; the closing "Serving: …" line becomes an enquiry line (the owner's Devanahalli
+   *     rule). Three contact lines, so the call and WhatsApp buttons stay on and ctaSecondaryLinks
+   *     is empty.
+   * Owner wording rules (Kudankulam / Tumkur, and the final terms of #156 / #163): the draft
+   * already follows them — no ₹, lead times or performance promises ("We do not promise a fixed
+   * temperature reduction or percentage saving"), specifications and charges confirmed in the
+   * quotation, towns as delivery enquiry locations, fire classification and documentation per
+   * product. The factory is near Hosur (Krishnagiri district); the page claims no unit in
+   * Perambalur district, and the draft's "fabricated at our unit" is kept as the factory.
+   *
+   * Images: four owner-dropped webp renders ("public/images/PUF Panel Cabins in Padalur & Irur,
+   * Perambalur city page/PUF Panel Cabins in Padalur & Irur, Perambalur/cabin (1–4).webp") of one
+   * two-module grey flat-panel cabin with a dark steel frame, copied byte-for-byte to slug names:
+   * (2) front elevation with two doors and two grilled windows (1536×1024) = hero / og:image, no
+   * caption (owner rule); (4) top-down roof view (1536×1024, already 3:2) = feature band; (3) the
+   * opposite long side with two windows = one-image gallery; (1) the wood-finish office interior
+   * (1248×832) = beside the comparison, no caption (the owner removed the Devanahalli interior
+   * caption in #164). The disclaimer says they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "puf-panel-cabin-padalur-irur",
+    city: "Padalur",
+    listTitle: "PUF Panel Cabins in Padalur & Irur",
+    metaTitle: "PUF Panel Cabins in Padalur & Irur, Perambalur",
+    metaDescription:
+      "Explore insulated PUF panel cabins for offices, security posts and workspaces in Padalur and Irur, Perambalur. Discuss specifications and request a quote.",
+    keywords:
+      "PUF Panel Cabins in Padalur, PUF Panel Cabin Irur, Insulated Cabin Perambalur, PUF Cabin Perambalur, Insulated Portable Office Perambalur, PUF Security Cabin Padalur, Insulated Site Office Perambalur, Sandwich Panel Cabin Tamil Nadu",
+    geo: { region: "IN-TN", placename: "Padalur, Perambalur district, Tamil Nadu, India", position: "11.1356;78.9906", icbm: "11.1356, 78.9906" },
+    motion: true,
+    serviceJsonLd: { serviceType: "PUF Panel Cabin" },
+
+    heroImage: {
+      src: "/images/cities/puf-panel-cabin-padalur-irur/puf-panel-cabin-padalur-irur-front-elevation.webp",
+      alt: "PUF panel cabins in Padalur and Irur, Perambalur — illustrative render of a two-module grey flat-panel cabin with a dark steel frame, two steel doors under small hoods and two white grilled windows, standing on a gravel base with trees behind",
+      width: 1536,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/cities/puf-panel-cabin-padalur-irur/puf-panel-cabin-padalur-irur-roof-view.webp",
+      alt: "PUF panel cabins in Padalur and Irur, Perambalur — illustrative top-down render of the two-module cabin showing its ribbed grey roof panels, dark steel frame with corner castings and the grilled windows of the long side, on gravel beside a lawn",
+      width: 1536,
+      height: 1024,
+      caption: "Illustrative render seen from above. Roof panels, joints and sealing details are confirmed in the specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/puf-panel-cabin-padalur-irur/puf-panel-cabin-padalur-irur-interior.webp",
+      alt: "PUF panel cabins in Padalur and Irur, Perambalur — illustrative render of an optionally furnished office interior with wood-finish wall and ceiling panels on a dark steel frame, two grilled windows, two steel doors, strip lights, desks with monitors, a round meeting table and a shelving unit",
+      width: 1248,
+      height: 832,
+    },
+    gallery: [
+      {
+        src: "/images/cities/puf-panel-cabin-padalur-irur/puf-panel-cabin-padalur-irur-rear-elevation.webp",
+        alt: "PUF panel cabins in Padalur and Irur, Perambalur — illustrative render of the cabin's opposite long side: two grey flat panels in a dark steel frame, each with one white grilled window, on a gravel base",
+        width: 1536,
+        height: 1024,
+      },
+    ],
+
+    h1: "PUF Panel Cabins in Padalur and Irur, Perambalur",
+    tagline: "When choosing a cabin for daily use, the wall and roof construction matter as much as the layout.",
+    intro: [
+      "Insulation helps limit heat transfer, making it an important consideration for offices, security posts and other occupied workspaces.",
+      "Portable Office Cabin manufactures and supplies PUF panel cabins for customers in Padalur, Irur and surrounding areas of Perambalur district, Tamil Nadu.",
+      "We help you assess panel specifications, room arrangements, ventilation and fittings according to how the cabin will be used.",
+    ],
+
+    whyHeading: "What Is a PUF Panel Cabin?",
+    whyIntro:
+      "PUF stands for polyurethane foam. A PUF sandwich panel consists of a rigid insulating foam core between two facing sheets, commonly coated metal. Panels form part of the cabin's wall and roof system, supported by a structure designed for the dimensions, loads and installation conditions. The specification should identify:",
+    whyBullets: [
+      { text: "Panel thickness" },
+      { text: "Foam core specification" },
+      { text: "Facing-sheet material and thickness" },
+      { text: "Protective coating and finish" },
+      { text: "Panel joints and sealing details" },
+      { text: "Declared thermal performance, where available" },
+      { text: "Relevant fire-test documentation, where required" },
+    ],
+    whyOutro: "The complete cabin's performance depends on its construction and installation, not just the foam core.",
+
+    solutionsHeading: "Why Consider PUF Insulation?",
+    solutionsIntro: "Four points to weigh when deciding on insulated panels:",
+    solutions: [
+      {
+        title: "Reduced Heat Transfer",
+        text: "PUF insulation slows heat passing through the panel. This can help manage indoor conditions compared with an otherwise similar uninsulated enclosure. It does not actively cool the room. Ventilation, shading, equipment, occupancy and air conditioning also affect indoor temperature.",
+      },
+      {
+        title: "Support for Air-Conditioned Spaces",
+        text: "An appropriately insulated and sealed enclosure can reduce the heat entering a cooled room. Actual electricity consumption depends on the complete design, AC efficiency, operating hours and usage. We do not promise a fixed temperature reduction or percentage saving without supporting assessment.",
+      },
+      {
+        title: "Finished Panel Surfaces",
+        text: "Coated panel faces provide a finished surface suitable for many office applications. Cleaning methods and chemical compatibility should follow the panel supplier's guidance.",
+      },
+      {
+        title: "Sealing and Weather Protection",
+        text: "Panel joints, doors, windows and service openings need suitable detailing to limit air, dust and water entry. PUF panels alone do not make a cabin dust-proof, waterproof or soundproof.",
+      },
+    ],
+
+    featuresHeading: "Cabin Components and Optional Fittings",
+    featuresIntro: "Your quotation will confirm the supplied components. Options to discuss include:",
+    features: [
+      "Steel frame with a specified protective coating",
+      "PUF wall and roof panels",
+      "Flooring suited to the intended loads",
+      "Doors, windows, locks and safety grills",
+      "Lighting, sockets, fan points and AC provisions",
+      "Internal partitions",
+      "Attached toilet or pantry provisions",
+      "Exterior finishes and branding",
+      "Suitable entrance steps or access arrangements",
+    ],
+    sizesNote: "Furniture, appliances and specialist equipment are included only when expressly specified.",
+
+    industriesHeading: "Applications Around Padalur and Irur",
+    industriesIntro: "Typical uses for insulated cabins around Padalur and Irur:",
+    industries: [
+      {
+        title: "Insulated Offices",
+        text: "Layouts for administrative teams, supervisors and meetings, with partitions, electrical fittings and AC provisions where specified.",
+      },
+      {
+        title: "Sampling and Inspection Workspaces",
+        text: "Rooms planned around machines, tables, racks and movement space. Share any lighting, cleanliness or environmental requirements before the design is finalised.",
+      },
+      {
+        title: "Suitable Storage Rooms",
+        text: "Spaces for materials that require protection from outdoor exposure. Insulation alone does not maintain a fixed temperature or control humidity.",
+      },
+      {
+        title: "Security Cabins",
+        text: "Compact insulated rooms for guards, with window positions and fittings arranged around entrance visibility and daily use.",
+      },
+      {
+        title: "Staff and Training Rooms",
+        text: "Occupied spaces with ventilation, seating and cooling provisions planned according to the number of users.",
+      },
+      {
+        title: "Farm Offices",
+        text: "Office or watchman-cabin layouts for suitable agricultural sites, subject to access, services and applicable permissions.",
+      },
+    ],
+
+    customHeading: "PUF Panels Compared With Uninsulated Sheet Construction",
+    customIntro: "Each consideration, for PUF panel construction and for uninsulated sheet construction:",
+    customBullets: [
+      {
+        title: "Insulation",
+        text: "PUF panel construction: includes a foam insulation core. Uninsulated sheet construction: has no insulation layer unless separately added.",
+      },
+      {
+        title: "Heat transfer",
+        text: "PUF panel construction: lower through a suitably specified insulated panel. Uninsulated sheet construction: greater through bare metal sheeting.",
+      },
+      {
+        title: "Air-conditioning load",
+        text: "PUF panel construction: can reduce heat gain through the enclosure. Uninsulated sheet construction: may require additional insulation to manage heat gain.",
+      },
+      {
+        title: "Interior surface",
+        text: "PUF panel construction: panel facing provides a finished surface. Uninsulated sheet construction: an internal lining may be specified separately.",
+      },
+      {
+        title: "Dust control",
+        text: "PUF panel construction: depends on seals, joints and ventilation. Uninsulated sheet construction: also depends on seals, joints and ventilation.",
+      },
+      {
+        title: "Sound control",
+        text: "PUF panel construction: requires assessment of the complete assembly. Uninsulated sheet construction: requires assessment of the complete assembly.",
+      },
+    ],
+    customOutro: "The appropriate choice depends on intended use, comfort requirements, budget and the full cabin specification.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What you can expect when working with us:",
+    whyUsBullets: [
+      { title: "Application-based specifications", text: "Discuss insulation according to the intended use." },
+      { title: "Clear material details", text: "Review panel and cabin specifications before fabrication." },
+      { title: "Layout flexibility", text: "Plan partitions, openings and fittings around your requirements." },
+      { title: "Defined quotation scope", text: "Confirm taxes, transport, unloading and installation charges." },
+      { title: "After-sales enquiries", text: "Contact us for service assistance under the agreed terms." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Perambalur",
+    areasText:
+      "We welcome enquiries from Padalur, Irur, Perambalur town, Eraiyur, Siruvachur, Alathur, Kunnam and Veppanthattai. For locations towards Ariyalur, Samayapuram, Thuraiyur, Tiruchirappalli and the Chennai–Trichy highway corridor, share the exact site address so we can assess delivery feasibility and transport arrangements.",
+
+    howHeading: "From Specification to Installation",
+    howSteps: [
+      { title: "Share your application.", text: "Tell us the intended use, occupancy, approximate size and site location." },
+      { title: "Explain the operating conditions.", text: "Include AC requirements, equipment loads and any storage or inspection standards." },
+      { title: "Review the proposal.", text: "Confirm panel specifications, layout, fittings and quotation inclusions." },
+      { title: "Approve fabrication.", text: "Production proceeds according to the agreed drawings and order terms." },
+      { title: "Prepare the site.", text: "Arrange suitable supports, access, lifting space and utility connections." },
+      { title: "Complete installation.", text: "Placement or assembly follows the confirmed scope, with applicable services connected before use." },
+    ],
+    howOutro: "Supports, foundations and anchoring depend on the cabin design and ground conditions. A level surface alone may not be sufficient.",
+
+    extraSections: [
+      {
+        heading: "Choosing Panel Thickness",
+        paragraphs: ["Panel thickness should be selected from the confirmed product range after reviewing the cabin's requirements."],
+        bullets: [
+          { title: "Office or security cabin", text: "Occupancy, operating hours, exposure and ventilation." },
+          { title: "Air-conditioned workspace", text: "Target conditions, cooling load, openings and insulation continuity." },
+          { title: "Sampling or inspection room", text: "Equipment, lighting, cleanliness and environmental requirements." },
+          { title: "Fabric or yarn storage", text: "Moisture control, ventilation and material-storage requirements." },
+          { title: "Equipment room", text: "Heat output, cooling, electrical protection and fire requirements." },
+          { title: "Temperature-controlled storage", text: "Specialist refrigeration and enclosure design." },
+        ],
+        closing: [
+          "Thicker insulation generally offers greater thermal resistance when the material and other conditions are comparable. The selected thickness must still be considered alongside joints, doors, windows and thermal bridges.",
+          "A normal office cabin is not a cold room. Cold storage requires a separate assessment of temperature, refrigeration, vapour control, flooring and other components.",
+        ],
+      },
+      {
+        heading: "Delivery and Assembly Options",
+        bullets: [
+          {
+            title: "Fully Assembled Cabins",
+            text: "Where feasible, the cabin is fabricated at our factory and transported in one piece. This requires suitable road access, vehicle clearance and lifting arrangements.",
+          },
+          {
+            title: "Assembly at the Site",
+            text: "For some configurations, on-site assembly may be assessed where transport dimensions or access make a fully assembled cabin unsuitable.",
+          },
+        ],
+        closing: [
+          "Availability, installation scope, site facilities and charges must be confirmed before ordering. Narrow access alone does not guarantee that on-site assembly is feasible.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Is a PUF panel cabin cooler than an uninsulated sheet cabin?",
+        answer:
+          "PUF insulation reduces heat transfer through the panels. Actual indoor temperature depends on the complete enclosure, ventilation, shading, occupancy and cooling equipment.",
+      },
+      {
+        question: "Will a PUF cabin reduce AC electricity consumption?",
+        answer:
+          "Insulation can reduce heat entering an air-conditioned space. Actual savings vary with the design, equipment efficiency, usage and comparison conditions.",
+      },
+      {
+        question: "Which panel thickness should I choose?",
+        answer:
+          "Share the cabin's purpose, operating hours, AC requirements and any target conditions. We will confirm available thicknesses and propose a specification for review.",
+      },
+      {
+        question: "Is PUF fireproof?",
+        answer:
+          "Do not assume a PUF panel is fireproof. Ask for the exact product classification and relevant test documentation. A panel classification does not establish the fire resistance of the complete cabin.",
+      },
+      {
+        question: "Can insulation protect fabric or yarn from moisture?",
+        answer:
+          "Insulation alone does not control humidity. Storage may also require ventilation, air conditioning, dehumidification or other measures based on the materials and conditions.",
+      },
+      {
+        question: "Can the cabin be extended later?",
+        answer:
+          "An extension may be possible after assessing the structure, connections, supports, weatherproofing and services. Discuss future expansion before fabrication where possible.",
+      },
+      {
+        question: "How long does fabrication and delivery take?",
+        answer:
+          "The timeline depends on the specification, quantity, materials, production availability and site readiness. The expected schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Discuss Your PUF Panel Cabin Requirement",
+    ctaText: `Whether you need an insulated office, security cabin or dedicated workspace, Portable Office Cabin can help you assess a suitable specification. Share your required size, intended use, cooling requirements and delivery location to request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Enquiries from Padalur, Irur and surrounding areas of Perambalur district, Tamil Nadu, are welcome.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is phone/WhatsApp and email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Cabin Sizes, Specifications & Prices", href: "/products/portable-cabin" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+      { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Padalur, Irur or Perambalur district. Delivery, unloading, placement or on-site assembly are arranged for each order under the confirmed scope, the supports and foundation depend on the site, and delivery timelines are not guaranteed. The panel types, thicknesses, facings, coatings, fittings, finishes and other specification items described on this page are options; the items supplied, and the panel product's declared thermal performance and fire-test documentation, are confirmed in the approved specification and quotation for each order. No fixed indoor temperature, temperature reduction or energy saving is promised. The images on this page are illustrative renders of one Portable Office Cabin panel-cabin design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Padalur, Irur or Perambalur district. The towns, highway corridor and uses named here describe the region, typical applications and delivery enquiry locations, not clients, completed projects or confirmed delivery areas. Notes on insulation, heat transfer, air conditioning, humidity, fire classification, sound, electrical provisions, foundations and permissions are general guidance, not engineering, fire-safety or legal advice.",
   },
 ];
 
