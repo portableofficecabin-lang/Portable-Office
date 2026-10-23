@@ -16565,6 +16565,271 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, lifting and placement are arranged for each order, and delivery dates are not guaranteed. Rental is subject to availability. The cabin types, sizes, panels, insulation, electrical fittings, finishes and other items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and cabins for food-related, laboratory or multi-cabin camp use are subject to the agreed specification, design and approvals. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other build types look different, and the images are not photographs of installations in Krishnagiri. The industries, premises and towns named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas. Notes on ventilation, electrical installation, drainage, camp planning and maintenance are general guidance, not engineering, food-safety or legal advice; final site connections should be made by a qualified electrician.`,
   },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN PERUNDURAI, ERODE — the portable-cabin intent for Perundurai town, the SIPCOT
+   * Perundurai industrial park and the Erode belt (Tamil Nadu). Not a container-office cluster
+   * location, so the /cities-we-serve index lists it with the local-service pages.
+   *
+   * Owner copy of 2026-10-23, mapped onto the template slots. The slug is the owner's suggested URL;
+   * the meta title, description, H1 and every section are the owner's. "Use the website's company
+   * contact buttons / company email" become COMPANY's number and sales address, with the call /
+   * WhatsApp buttons. Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro.
+   *   • "Why Choose Portable Cabins in Perundurai?" → why: the first paragraph as whyIntro, the other
+   *     two as untitled bullets.
+   *   • "Portable Cabins We Supply in Perundurai" → solutions (seven types, as written; the office
+   *     cabin's two paragraphs joined). solutionsIntro is the owner's rule that sizes, layouts and
+   *     fittings are options confirmed in the approved specification and quotation.
+   *   • "Insulation and Finishing for Local Conditions" → features: the first paragraph as the intro,
+   *     the PUF and sealing paragraphs as the list, "We will confirm the materials…" as the bold note.
+   *   • "Businesses and Projects We Serve" → industries (the eight uses; no customer claims).
+   *   • "Why Choose Portable Office Cabin?" → custom, beside the office interior render: the five
+   *     bullets as written; the template needs a lead-in (customIntro, ours), and the closing line is
+   *     the owner's "From a single security cabin…" sentence from the quotation section.
+   *   • "Areas We Serve Around Perundurai" → areasText; "How to Order a Portable Cabin" → how (five
+   *     steps). The template renders the areas BEFORE the process.
+   *   • FAQs: the owner's six. "Does a portable cabin need a foundation?" is already a question on
+   *     another city page, so it reads "Does a portable cabin in Perundurai need a foundation?".
+   *   • "Request a Portable Cabin Quotation in Perundurai" → CTA.
+   * Owner wording rules (Kudankulam / Tumkur, and the final terms of 2026-10-19): no ₹, lead times,
+   * response deadlines, inspection or warranty claims; specifications are options confirmed in the
+   * quotation; towns are delivery enquiry locations; the base is confirmed per site. SIPCOT is named
+   * nominatively, with the non-affiliation note in the disclaimer.
+   *
+   * Images: four owner-dropped 1024×1024 webp renders ("public/images/Portable Cabins in Perundurai,
+   * Erode city page/…/cabin (1–4)_gm_optimized.webp", 21–82 KB), copied byte-for-byte: (1) three-
+   * quarter view = hero / og:image, no caption; (4) office interior = beside "Why Choose Portable
+   * Office Cabin?"; (2) front elevation and (3) raised view of the roof = two-column gallery. They show
+   * one white container-style cabin with a navy frame; the interior caption and the disclaimer say
+   * they are illustrative renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-perundurai",
+    city: "Perundurai",
+    listTitle: "Portable Cabins in Perundurai",
+    metaTitle: "Portable Cabins in Perundurai, Erode | SIPCOT Office Cabins",
+    metaDescription:
+      "Explore portable office cabins, security cabins, site offices and toilet units for Perundurai, SIPCOT Perundurai and nearby areas in Erode. Request a quote.",
+    keywords:
+      "Portable Cabins in Perundurai, Portable Cabin Erode, SIPCOT Perundurai Office Cabin, Security Cabin Perundurai, Portable Site Office Erode, Portable Toilet Cabin Perundurai, Labour Accommodation Cabin Perundurai, Container Office Perundurai",
+    geo: {
+      region: "IN-TN",
+      placename: "Perundurai, Erode, Tamil Nadu, India",
+      position: "11.2756;77.5857",
+      icbm: "11.2756, 77.5857",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-perundurai/portable-cabin-perundurai-exterior.webp",
+      alt: "Portable cabin in Perundurai — illustrative render of a container-style portable cabin with white corrugated walls, a navy frame, a door with an outdoor light and two grilled windows under navy hoods, on a concrete yard",
+      width: 1024,
+      height: 1024,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-perundurai/portable-cabin-perundurai-office-interior.webp",
+      alt: "Portable cabin in Perundurai — illustrative render of an optionally furnished office interior with light wood-look wall and ceiling panels, a desk with a laptop and lamp, a black office chair, a ladder bookshelf, grilled windows with navy frames and a grey plank floor",
+      width: 1024,
+      height: 1024,
+      caption:
+        "Illustrative render, shown with optional furniture. Supplied doors, windows, wall, ceiling and floor finishes follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-perundurai/portable-cabin-perundurai-front-view.webp",
+        alt: "Portable cabin in Perundurai — illustrative front elevation of the cabin, a door with an outdoor light and two grilled windows on the long side, white corrugated walls in a navy frame, on supports",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/portable-cabin-perundurai/portable-cabin-perundurai-roof-view.webp",
+        alt: "Portable cabin in Perundurai — illustrative raised view showing the cabin's navy corrugated roof, the door and grilled windows, on a concrete yard beside a lawn",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Portable Cabins in Perundurai, Erode",
+    tagline:
+      "Factories, construction projects and warehouses need practical spaces for staff, security and everyday operations.",
+    intro: [
+      "Portable cabins provide these facilities without the extensive construction work involved in a permanent building.",
+      "At Portable Office Cabin, we manufacture portable office cabins, security cabins, site offices, toilet units and labour accommodation cabins for customers in Perundurai, SIPCOT Perundurai and surrounding areas of Erode district, Tamil Nadu.",
+      "Whether you need a guard cabin at your factory entrance or a workspace for a construction team, we can discuss a layout suited to your site and requirements.",
+    ],
+
+    whyHeading: "Why Choose Portable Cabins in Perundurai?",
+    whyIntro:
+      "A portable cabin can reduce on-site construction work because much of the fabrication and interior fitting takes place before delivery.",
+    whyBullets: [
+      {
+        text: "For businesses expanding in stages, a cabin offers flexibility. It can serve as an office, security post or staff facility and can be relocated later, subject to its design, condition and lifting arrangements.",
+      },
+      {
+        text: "Site preparation, transport access and utility connections are assessed according to the cabin and its intended use.",
+      },
+    ],
+
+    solutionsHeading: "Portable Cabins We Supply in Perundurai",
+    solutionsIntro:
+      "Sizes, layouts and fittings are options confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Portable Office Cabins",
+        text: "Workspaces for administrative staff, supervisors and sales teams. Available fittings can include electrical wiring, lighting, fan points, windows and AC provisions, depending on the agreed specification. Suitable applications include factory offices, warehouse offices and project administration rooms.",
+      },
+      {
+        title: "Security Cabins",
+        text: "Compact guard rooms for factory entrances, residential properties, institutions and parking areas. Window positions, seating space and electrical fittings can be planned around the entrance and visibility requirements.",
+      },
+      {
+        title: "Portable Site Offices",
+        text: "Site offices for builders, civil contractors and infrastructure teams. Layouts can accommodate desks, drawing storage, meeting areas and separate supervisor rooms, depending on the cabin size.",
+      },
+      {
+        title: "Portable Toilet Cabins",
+        text: "Single-unit and multiple-unit toilet layouts for construction sites, factories and worker facilities. Water supply, drainage, waste disposal and tank requirements must be confirmed before installation.",
+      },
+      {
+        title: "Labour Accommodation Cabins",
+        text: "Accommodation layouts for workers staying near a project or factory. Room arrangements, ventilation, electrical fittings and sanitary facilities can be discussed according to occupancy and site requirements.",
+      },
+      {
+        title: "Container Offices",
+        text: "Container-based spaces for offices, storage rooms and other business uses. The structure, insulation, openings and interior finish are specified according to the application.",
+      },
+      {
+        title: "Custom Portable Cabins",
+        text: "Custom layouts for stores, canteens, ticket counters, farm offices and other uses. Share your available space and intended purpose so we can suggest a suitable configuration.",
+      },
+    ],
+
+    featuresHeading: "Insulation and Finishing for Local Conditions",
+    featuresIntro: "Insulation, ventilation and weather protection are important considerations for cabins used in Perundurai.",
+    features: [
+      "PUF-insulated panels can be specified to help reduce heat transfer. Indoor comfort also depends on panel thickness, sun exposure, ventilation, occupancy and air-conditioning arrangements.",
+      "Roof drainage, sealed joints and protective steel coatings form part of the cabin specification. Door and window sealing can also help reduce dust entry.",
+    ],
+    sizesNote: "We will confirm the materials and finishing included in your quotation before fabrication.",
+
+    industriesHeading: "Businesses and Projects We Serve",
+    industriesIntro: "Our cabins can support:",
+    industries: [
+      { text: "Manufacturing and industrial units in SIPCOT Perundurai" },
+      { text: "Textile processing and related businesses" },
+      { text: "Builders, civil contractors and property developers" },
+      { text: "Highway and infrastructure project teams" },
+      { text: "Warehouses and logistics yards" },
+      { text: "Schools, colleges and healthcare facilities" },
+      { text: "Farms and rural properties" },
+      { text: "Temporary event facilities" },
+    ],
+
+    customHeading: "Why Choose Portable Office Cabin?",
+    customIntro: "What working with us involves:",
+    customBullets: [
+      { title: "Layouts suited to your use", text: "Office, security, accommodation and utility configurations." },
+      { title: "Clear specifications", text: "Materials, fittings and finishes detailed in the quotation." },
+      { title: "Standard and custom sizes", text: "Options based on your space, transport requirements and intended use." },
+      { title: "Planned delivery", text: "Access, unloading and placement requirements discussed before dispatch." },
+      {
+        title: "After-sales enquiries",
+        text: "Contact us for assistance with fittings, maintenance or service requirements, subject to the agreed terms.",
+      },
+    ],
+    customOutro:
+      "From a single security cabin to a multi-room site office, Portable Office Cabin can help you choose a layout suited to your space and business needs.",
+
+    areasHeading: "Areas We Serve Around Perundurai",
+    areasText:
+      "We welcome enquiries from Perundurai town, SIPCOT Perundurai, Vijayamangalam, Kanjikoil, Thingalur, Ingur, Nasiyanur and Chennimalai, as well as Erode and surrounding areas. For sites farther away, including Bhavani, Gobichettipalayam and Kangeyam, share your exact location so we can confirm delivery feasibility and transport arrangements.",
+
+    howHeading: "How to Order a Portable Cabin",
+    howSteps: [
+      {
+        title: "Share your requirements",
+        text: "Tell us the cabin's purpose, approximate size, preferred fittings and delivery location.",
+      },
+      {
+        title: "Review the layout and quotation",
+        text: "We outline the specifications, inclusions and applicable transport or installation charges.",
+      },
+      {
+        title: "Confirm the order",
+        text: "Fabrication proceeds according to the approved specifications and agreed terms.",
+      },
+      {
+        title: "Prepare for delivery",
+        text: "Confirm vehicle access, unloading arrangements, suitable supports and any required site preparation.",
+      },
+      {
+        title: "Complete installation and connections",
+        text: "Arrange the electrical, water and drainage connections applicable to your cabin before use.",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How much does a portable cabin cost in Perundurai?",
+        answer:
+          "The cost depends on the cabin size, structure, insulation, interior finish and fittings. Transport, unloading and site requirements can also affect the total. Share your requirements for a quotation with clear inclusions.",
+      },
+      {
+        question: "How long does fabrication and delivery take?",
+        answer:
+          "The schedule depends on the design, material availability, production workload and delivery arrangements. We confirm the expected timeline when quoting and finalising the order.",
+      },
+      {
+        question: "Does a portable cabin in Perundurai need a foundation?",
+        answer:
+          "The required base depends on the cabin's size, loading, ground conditions and intended use. Suitable supports, a prepared base or engineered foundations may be needed. Confirm the site requirements before delivery.",
+      },
+      {
+        question: "Can I move the cabin later?",
+        answer:
+          "Many portable cabins can be relocated using suitable lifting and transport equipment. Relocation depends on the cabin's design, condition, access and any connected services.",
+      },
+      {
+        question: "Will the cabin become hot inside?",
+        answer:
+          "Insulation can help reduce heat transfer, but comfort also depends on ventilation, shading, occupancy and cooling equipment. We can discuss insulation and AC provisions for your intended use.",
+      },
+      {
+        question: "Can you deliver to SIPCOT Perundurai?",
+        answer:
+          "Delivery can be arranged subject to the exact site location, vehicle access, estate entry requirements and unloading arrangements. Share these details when requesting your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Cabin Quotation in Perundurai",
+    ctaText: `Contact us with your required size, fittings and site location to discuss specifications and request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Service area: Perundurai, SIPCOT Perundurai and surrounding areas of Erode district, Tamil Nadu.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is call / WhatsApp / email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Container Office in SIPCOT Coimbatore", href: "/cities-we-serve/container-office-in-sipcot-coimbatore" },
+      { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Perundurai or Erode district. Delivery, unloading and placement are arranged for each project, the base depends on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Perundurai. SIPCOT and the SIPCOT Perundurai industrial park are independent organisations with which Portable Office Cabin is not affiliated; they, the businesses described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate is subject to its own permissions. Notes on insulation, heat and site preparation are general guidance, not engineering advice.",
+  },
 ];
 
 export function cityPageBySlug(slug: string): CityPage | undefined {
