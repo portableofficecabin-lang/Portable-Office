@@ -314,6 +314,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     // Portable-cabin page for Perundurai / SIPCOT Perundurai (Erode), here and on Porta Cabin.
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -326,6 +327,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
     { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
