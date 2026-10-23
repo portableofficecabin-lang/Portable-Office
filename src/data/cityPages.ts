@@ -17098,6 +17098,319 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN PAPPANKUPPAM AND SIPCOT GUMMIDIPOONDI — the portable-cabin intent for the
+   * Gummidipoondi industrial belt of northern Tiruvallur district (Tamil Nadu): gate and documentation
+   * offices, tally and weighbridge cabins, security posts, site offices, toilet units and labour
+   * accommodation for industrial plots, factories and logistics yards. Not a container-office cluster
+   * location, so the /cities-we-serve index lists it with the local-service pages. On the Portable
+   * Cabin and Porta Cabin Tamil Nadu hubs. No other city page targets Gummidipoondi (the Athipattu and
+   * Chennai container-office pages and the SIPCOT shipping-container product name it as a corridor).
+   *
+   * Owner copy of 2026-10-23, mapped onto the template slots. The slug, meta title, meta description,
+   * H1 and every section are the owner's; the phone and email are COMPANY's (they match the owner's
+   * figures). Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro (the
+   *     manufacturing sentence names the factory near Hosur, per the location rule).
+   *   • "Planning Cabins for Industrial and Logistics Sites" → why: the three paragraphs and "Before
+   *     fabrication, discuss:" as whyIntro, the six points as bullets (short titles added, because the
+   *     why list renders a bold title before each point).
+   *   • "Specifications for Exposed Sites" → solutions: its four H3s as the numbered H3s, each H3's two
+   *     paragraphs joined. solutionsIntro is a one-line lead-in the template requires.
+   *   • "Choose Your Cabin Configuration" → features: the seven table rows as "Type — application",
+   *     the indicative-sizes paragraph and the two closing sentences as sizesNote; featuresIntro is a
+   *     one-line lead-in.
+   *   • "Cabins for Yard and Logistics Operations" → industries: its five H3s as "title — text"
+   *     bullets; industriesIntro is a one-line lead-in.
+   *   • "Labour Accommodation and Welfare Facilities" → the custom slot beside the office interior
+   *     render: the opening sentence + "Options to discuss include:" as customIntro, the six options as
+   *     bullets (short titles added), the "Occupancy, fire safety…" paragraph as customOutro.
+   *   • "Why Choose Portable Office Cabin?" → whyUs (five bullets, as written; one-line lead-in).
+   *   • "Delivery Enquiries Around Gummidipoondi" → areasText (three paragraphs as one). "What to Share
+   *     When Requesting a Quote" → how (five steps), with the two closing paragraphs as howOutro. The
+   *     template renders the areas BEFORE the process.
+   *   • "Cabin Requirements as Your Project Develops" → extraSections (after the process, before the
+   *     FAQs): the "A cabin may be reused…" sentence as its paragraph, the four table rows as
+   *     "Stage: Facilities to consider … Details to confirm …" bullets. The template has no table, and
+   *     this is the one owner section the fixed slots cannot hold in its original position.
+   *   • FAQs: the owner's six, verbatim; none repeats another city page's question.
+   *   • "Discuss Your Pappankuppam or Gummidipoondi Project" → CTA, including the "Serving:" line.
+   * Owner wording rules (Kudankulam / Tumkur, and the final terms of 2026-10-19): no ₹, lead times,
+   * response deadlines, inspection or warranty claims; specifications are options confirmed in the
+   * quotation; towns are delivery enquiry locations; the base and anchoring are confirmed per site.
+   * The copy itself states that cabins are not cyclone-proof or flood-proof without assessment, and
+   * that coatings, wind ratings and occupancy must be confirmed. SIPCOT is named nominatively, with the
+   * non-affiliation note in the disclaimer.
+   *
+   * Images: four owner-dropped 1408×1056 PNG renders ("public/images/Portable Cabins in Gummidipoondi
+   * city page/…/cabin (1–4).png", 2.1–2.8 MB each), converted to webp at the same size: (4) front
+   * elevation with the door, outdoor light and two grilled windows = hero / og:image, no caption; (1)
+   * top-down roof view, cropped to 3:2 (gravel only) = feature band; (3) plain side elevation with two
+   * grilled windows = single-image gallery; (2) wood-panelled office interior = beside the labour
+   * accommodation section, with no caption (owner preference since Devanahalli #164 and Kolar #169).
+   * They show one beige container-style cabin with a brown frame and base band; the disclaimer says
+   * they are illustrative renders.
+   *
+   * Geo: Gummidipoondi town, 13.4069 N 80.1117 E (SIPCOT Gummidipoondi and Pappankuppam lie beside it).
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-gummidipoondi",
+    city: "Gummidipoondi",
+    listTitle: "Portable Cabins in Gummidipoondi",
+    metaTitle: "Portable Cabins in Gummidipoondi | Pappankuppam & SIPCOT",
+    metaDescription:
+      "Portable office cabins, security cabins, toilet units and labour accommodation for Pappankuppam and SIPCOT Gummidipoondi, Tiruvallur. Request a quote.",
+    keywords:
+      "Portable Cabins in Gummidipoondi, Portable Cabin Pappankuppam, SIPCOT Gummidipoondi Office Cabin, Security Cabin Gummidipoondi, Portable Site Office Tiruvallur, Portable Toilet Cabin Gummidipoondi, Labour Accommodation Cabin Gummidipoondi, Weighbridge Cabin Gummidipoondi, Container Yard Cabin Tiruvallur",
+    geo: {
+      region: "IN-TN",
+      placename: "Gummidipoondi, Tiruvallur, Tamil Nadu, India",
+      position: "13.4069;80.1117",
+      icbm: "13.4069, 80.1117",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-gummidipoondi/portable-cabin-gummidipoondi-front-elevation.webp",
+      alt: "Portable cabin in Gummidipoondi — illustrative render of a beige container-style portable cabin with ribbed steel walls, a brown frame and lower band, a steel door with an outdoor light under a small hood, and two grilled windows under brown hoods, on a gravel yard",
+      width: 1408,
+      height: 1056,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-gummidipoondi/portable-cabin-gummidipoondi-roof-view.webp",
+      alt: "Portable cabin in Gummidipoondi — illustrative top-down view of the beige ribbed-steel cabin roof with brown corner fittings, the door and the two grilled windows, on a gravel yard",
+      width: 1408,
+      height: 939,
+      caption: "Transport, unloading, placement and utility connections are arranged within the confirmed scope.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-gummidipoondi/portable-cabin-gummidipoondi-office-interior.webp",
+      alt: "Portable cabin in Gummidipoondi — illustrative render of an optionally furnished office interior with wood-finish wall and ceiling panels, two grilled windows, two desks with a laptop and a monitor, mesh office chairs, a tall storage cabinet, drawer units and dark plank flooring",
+      width: 1408,
+      height: 1056,
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-gummidipoondi/portable-cabin-gummidipoondi-side-elevation.webp",
+        alt: "Portable cabin in Gummidipoondi — illustrative side elevation of the beige container-style cabin showing two grilled windows under brown hoods, the brown frame and lower band, on a gravel yard",
+        width: 1408,
+        height: 1056,
+      },
+    ],
+
+    h1: "Portable Cabins in Pappankuppam and SIPCOT Gummidipoondi",
+    tagline: "Industrial projects need practical facilities before permanent buildings are complete.",
+    intro: [
+      "Security personnel need a gate cabin, engineers need a workspace, and workers need suitable rest and sanitation facilities.",
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur and supplies them for businesses and project sites in Pappankuppam, Gummidipoondi and surrounding areas of Tiruvallur district, Tamil Nadu.",
+      "Whether you are preparing an industrial plot, expanding a factory or organising a logistics yard, we help you plan cabin layouts around your operations, available space and site conditions.",
+    ],
+
+    whyHeading: "Planning Cabins for Industrial and Logistics Sites",
+    whyIntro:
+      "Different activities require different cabin specifications. A factory entrance may need visibility and visitor-registration space. A logistics yard may require a service counter, document storage and electrical points for computers. Worker accommodation needs a separate assessment of occupancy, ventilation and welfare facilities. Before fabrication, discuss:",
+    whyBullets: [
+      { title: "Use and users", text: "The cabin's intended use and number of users." },
+      { title: "Exposure", text: "Exposure to dust, moisture or corrosive conditions." },
+      { title: "Ground", text: "Ground levels, drainage and support requirements." },
+      { title: "Access", text: "Vehicle access and lifting space." },
+      { title: "Services", text: "Electrical, water and waste-management arrangements." },
+      { title: "Future use", text: "Possible future relocation or changes of use." },
+    ],
+
+    solutionsHeading: "Specifications for Exposed Sites",
+    solutionsIntro:
+      "Four points to settle for a site exposed to coastal air, wind, rain and heat; each is assessed and confirmed in the quotation.",
+    solutions: [
+      {
+        title: "Corrosion Protection",
+        text: "Tell us about the site's exposure to moisture, salt-laden air or industrial processes. Steel preparation and protective coatings should be selected according to these conditions. Specialist coating options, including any epoxy system, must be confirmed in the quotation. Protective finishes still require inspection and maintenance.",
+      },
+      {
+        title: "Wind Exposure and Anchoring",
+        text: "Support and anchoring requirements depend on the cabin dimensions, structural design and location. If your project requires a specified wind resistance, provide that requirement before ordering so it can be assessed. A standard cabin should not be described as cyclone-proof without supporting design verification.",
+      },
+      {
+        title: "Rainwater and Ground Drainage",
+        text: "Roof drainage, sealed joints and suitable placement help manage rainwater. The base design should consider ground stability, drainage and the appropriate finished floor level. Raised supports do not make a cabin flood-proof. Sites with a history of flooding require a separate assessment before installation.",
+      },
+      {
+        title: "Insulation and Cooling",
+        text: "PUF or other specified insulation can help reduce heat transfer. Indoor comfort also depends on ventilation, shading, occupancy and cooling equipment. AC mounting, electrical supply and condensate drainage can be planned where required.",
+      },
+    ],
+
+    featuresHeading: "Choose Your Cabin Configuration",
+    featuresIntro: "Cabin types and their typical applications:",
+    features: [
+      "Security cabin — gates, checkpoints and yard entrances.",
+      "Office cabin — administrative teams, supervisors and meetings.",
+      "Site office — contractors, engineers and project coordination.",
+      "Toilet cabin — sanitation facilities with agreed utility arrangements.",
+      "Labour cabin — worker rest or accommodation.",
+      "Store cabin — suitable tools, spare parts and materials.",
+      "Custom cabin — counters, training rooms, first-aid spaces or canteens.",
+    ],
+    sizesNote:
+      "Indicative sizes to discuss range from 8 × 6 ft security cabins to 40 × 10 ft office or accommodation cabins. Custom dimensions are subject to structural design, transport feasibility and site access. Final materials, fittings and dimensions will be confirmed in your quotation.",
+
+    industriesHeading: "Cabins for Yard and Logistics Operations",
+    industriesIntro: "Typical cabins for container yards, warehouses and transport operations:",
+    industries: [
+      {
+        title: "Gate and Documentation Offices",
+        text: "Layouts with service windows, desks and document storage for vehicle registration, gate passes and delivery paperwork.",
+      },
+      {
+        title: "Tally Cabins",
+        text: "Dedicated workspaces with lighting and electrical points for the proposed computers, printers and communication equipment.",
+      },
+      {
+        title: "Weighbridge Cabins",
+        text: "Operator rooms planned around equipment dimensions, visibility and service connections. Weighbridge equipment is included only when expressly specified.",
+      },
+      {
+        title: "Driver Waiting and Rest Rooms",
+        text: "Spaces with seating, ventilation and suitable access, planned according to expected occupancy and operating hours.",
+      },
+      {
+        title: "Security Posts",
+        text: "Compact cabins for entrances and checkpoints, with window positions selected around the required field of view.",
+      },
+    ],
+
+    customHeading: "Labour Accommodation and Welfare Facilities",
+    customIntro:
+      "For projects requiring on-site accommodation, share your headcount, proposed layout and duration of use. Options to discuss include:",
+    customBullets: [
+      { title: "Insulation", text: "Insulated wall and roof panels." },
+      { title: "Ventilation", text: "Windows and ventilation." },
+      { title: "Room arrangement", text: "Bunk or open room arrangements." },
+      { title: "Electrical", text: "Lighting, fan points and charging sockets." },
+      { title: "Sanitation", text: "Separate toilet and bathing facilities." },
+      { title: "Access", text: "Safe access and suitable circulation space." },
+    ],
+    customOutro:
+      "Occupancy, fire safety, sanitation and other applicable requirements should be confirmed by your responsible project team. The agreed cabin specification must reflect those requirements.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What you can expect when you work with us:",
+    whyUsBullets: [
+      { title: "Application-based planning", text: "Select a layout around the work the cabin must support." },
+      { title: "Defined specifications", text: "Review materials, fittings and finishes before fabrication." },
+      { title: "Clear quotation scope", text: "Confirm inclusions and applicable additional charges." },
+      { title: "Delivery coordination", text: "Discuss access, supports, unloading and placement before dispatch." },
+      {
+        title: "After-sales enquiries",
+        text: "Contact us for maintenance and service assistance under the agreed terms.",
+      },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Gummidipoondi",
+    areasText:
+      "We welcome enquiries from Pappankuppam, SIPCOT Gummidipoondi, Gummidipoondi town, Kavaraipettai, Elavur and Arambakkam, along with surrounding areas of northern Tiruvallur district. For sites towards Ponneri, Minjur, Pulicat, Periyapalayam, Uthukottai, Red Hills, Ennore or Manali, share the exact location so we can assess delivery feasibility and transport arrangements. Delivery to industrial, logistics or port premises remains subject to the relevant entry permissions and site procedures.",
+
+    howHeading: "What to Share When Requesting a Quote",
+    howSteps: [
+      { title: "Intended use", text: "Office, security, storage, accommodation or another application." },
+      { title: "Size and occupancy", text: "Required dimensions, furniture and number of users." },
+      { title: "Exact location", text: "Site address, access-road details and unloading position." },
+      { title: "Fittings", text: "Partitions, AC provisions, attached toilet, pantry or specialist requirements." },
+      { title: "Preferred schedule", text: "Your target date and current site readiness." },
+    ],
+    howOutro:
+      "We then discuss a layout and quotation. After approval, fabrication proceeds according to the agreed specification and order terms. Transport, unloading, placement and utility connections are arranged within the confirmed scope.",
+
+    extraSections: [
+      {
+        heading: "Cabin Requirements as Your Project Develops",
+        paragraphs: [
+          "A cabin may be reused after construction, but its suitability should be checked against the proposed new use.",
+        ],
+        bullets: [
+          {
+            title: "Plot preparation",
+            text: "Facilities to consider: security cabin and toilet unit. Details to confirm: entrance position, utilities and sanitation.",
+          },
+          {
+            title: "Surveying and construction",
+            text: "Facilities to consider: site office and tool store. Details to confirm: desks, document storage, floor loading and security.",
+          },
+          {
+            title: "Workforce mobilisation",
+            text: "Facilities to consider: rest cabins, accommodation and additional toilets. Details to confirm: occupancy, ventilation, water and waste disposal.",
+          },
+          {
+            title: "Operational use",
+            text: "Facilities to consider: admin office, supervisor room or suitable storage. Details to confirm: revised layout, services and any modifications.",
+          },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Will a cabin need additional corrosion protection?",
+        answer:
+          "That depends on the exposure conditions and required service environment. Share details of coastal or industrial exposure so the coating specification can be assessed. Regular maintenance remains important.",
+      },
+      {
+        question: "Can a portable cabin withstand a cyclone?",
+        answer:
+          "Performance depends on its structural design, supports, anchoring and site exposure. Any required wind rating must be assessed and documented before manufacture. Do not assume a standard cabin is cyclone-proof.",
+      },
+      {
+        question: "Can you supply cabins for a container yard?",
+        answer:
+          "We can assess layouts for gate offices, documentation rooms, weighbridge operators and driver waiting areas. Share the equipment, visibility, access and electrical requirements.",
+      },
+      {
+        question: "Can we start with one cabin and add more later?",
+        answer:
+          "Additional cabins can be planned as requirements grow. If you want a connected layout, discuss it at the design stage: structural openings, supports, weatherproofing and services need coordinated design.",
+      },
+      {
+        question: "How many workers can an accommodation cabin hold?",
+        answer:
+          "Capacity depends on the dimensions, room arrangement, circulation, ventilation and applicable occupancy requirements. Share your headcount so a suitable layout can be assessed.",
+      },
+      {
+        question: "How soon can you deliver?",
+        answer:
+          "The timeline depends on the configuration, quantity, materials, production availability and site readiness. The expected schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Discuss Your Pappankuppam or Gummidipoondi Project",
+    ctaText: `Whether you need one security cabin or a coordinated set of site facilities, Portable Office Cabin can help you assess the layout and specifications. Share your intended use, required dimensions, preferred fittings and exact delivery location to request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Serving: Pappankuppam, SIPCOT Gummidipoondi and surrounding areas of Tiruvallur district, Tamil Nadu.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is call / WhatsApp / email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
+      { label: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Pappankuppam, Gummidipoondi or elsewhere in Tiruvallur district. Delivery, unloading and placement are arranged for each project, the base, supports and anchoring depend on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, coatings, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected or multi-cabin layouts are subject to structural design. No cabin is described as cyclone-proof or flood-proof; wind ratings, flood risk, occupancy, fire safety and sanitation requirements are assessed for each project and confirmed by the customer's responsible project team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Gummidipoondi. SIPCOT and the SIPCOT Gummidipoondi industrial estate are independent organisations with which Portable Office Cabin is not affiliated; they, the industrial, logistics and port premises described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate, yard or port premises is subject to its own permissions and procedures. Notes on corrosion, wind, drainage, insulation and site preparation are general guidance, not engineering, legal or regulatory advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS FOR SIPCOT INDUSTRIAL AREA, CHEYYAR — the portable-cabin intent for the SIPCOT
    * Cheyyar industrial area, Cheyyar town and the Tiruvannamalai belt (Tamil Nadu): workforce
    * facilities (rest rooms, canteens, toilets, changing rooms, first-aid, crèche, training, transport
