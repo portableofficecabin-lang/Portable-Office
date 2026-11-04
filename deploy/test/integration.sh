@@ -12,10 +12,19 @@
 #   S1 first release after the migration (adds a new city page)      → live, zero non-200s
 #   S2 re-run of the SAME commit                                     → fresh rebuild, live
 #   S3 a build that fails                                            → production untouched
+#   S3b a release that crashes at start-up                           → production untouched
 #   S4 a new city page that answers 404 in the new build             → gate blocks the switch
-#   S5 a good commit, then `rollback`                                → previous release live
+#   S4b the new release reports another commit                       → gate blocks the switch
+#   S4c a page answering 200 with the not-found page (soft 404)      → gate blocks the switch
+#   S5 a good commit (chunks of the 2 previous builds still served, redirect 301), then
+#      `rollback`                                                    → previous release live
 #   S6 two deploys at once                                           → the second is refused
 #   S7 prune                                                         → old releases removed
+#   S8 main force-pushed to an older commit                          → refused (stale build);
+#      only `deploy --allow-non-descendant` overrides
+#   S9a caller disconnects mid-deploy (SIGHUP, closed output)        → deploy still completes
+#   S9b deploy killed with SIGKILL before the switch                 → production untouched,
+#      the next run recovers
 # and checks after every step that the other tenant (PM2 process, port, nginx block,
 # responses) is exactly as it was. A poller requests https://portableofficecabin.com/ every
 # 0.2 s during each deploy; a single non-200 fails the test.
@@ -119,6 +128,13 @@ cp -a "$HERE/fake-app/." "$WORK/src/"
 chmod +x "$WORK/src/fake-next/dist/bin/next"
 mkdir -p "$WORK/src/src/data" "$WORK/src/scripts/deploy" "$WORK/src/public"
 cp "$REPO_ROOT/scripts/deploy/verify-release.mjs" "$WORK/src/scripts/deploy/"
+# The fake app's own critical pages and redirect (the real list names pages the fake app lacks).
+cat > "$WORK/src/scripts/deploy/critical-routes.json" <<'EOF'
+{
+  "routes": ["/cities-we-serve/city-a", { "path": "/products", "contains": ["<h1>/products</h1>"] }],
+  "redirects": [{ "from": "/products/shipping-container", "to": "/products", "status": 301 }]
+}
+EOF
 printf 'NEXT_PUBLIC_FROM_GIT=1\n' > "$WORK/src/.env"
 set_cities city-a city-b
 ( cd "$WORK/src" && git init -q -b main && npm install --package-lock-only --no-audit --no-fund --loglevel=error >/dev/null && git remote add origin "$WORK/remote.git" )
@@ -225,6 +241,11 @@ grep -q NEXT_PUBLIC_FROM_GIT "$S1_REL/.env" || fail "S1: the committed .env was 
 [ -e "$S1_REL/.next/cache/webpack/build-$LEGACY_BUILD" ] || fail "S1: build cache was not seeded from the live app"
 [ ! -e "$APP_ROOT/previous" ] && [ ! -L "$APP_ROOT/previous" ] || fail "S1: a previous link exists although nothing was released before"
 [ "$(live_code "/_next/static/chunks/page-$LEGACY_BUILD.js")" = 200 ] || fail "S1: the legacy build's JS chunk is gone (open tabs would break)"
+# The gate's new checks ran before the switch: critical pages + redirect, their assets, and the
+# live (legacy) build's chunks served by the new release; then again through nginx (no continuity).
+grep -qF "critical 2, redirects 1, assets 1, continuity 1," "$WORK/last.log" || fail "S1: the pre-switch gate did not check critical pages, the redirect, assets and continuity"
+[ "$(grep -cF "critical 2, redirects 1, assets 1," "$WORK/last.log")" -ge 2 ] || fail "S1: the nginx re-check did not check critical pages, the redirect and assets"
+grep -F -e "critical 2, redirects 1" -e "static: " "$WORK/last.log" | sed 's/^/    /'
 pass "S1: v2 live on slot B, new page 200, gate ran, env/public/cache/static carried over"
 bot_untouched "S1"
 
@@ -251,6 +272,16 @@ grep -q "production was NOT switched" "$WORK/last.log" || fail "S3: no 'not swit
 ls -d "$APP_ROOT"/releases/*.failed >/dev/null 2>&1 || fail "S3: failed release not kept for inspection"
 pass "S3: failed build left production untouched"
 bot_untouched "S3"
+
+# ── S3b: the new release builds but never starts ───────────────────────────────────────
+step "S3b the new release crashes at start-up → never switched"
+echo start-fail > "$WORK/src/fault.txt"; commit "v3b: start-up crash" >/dev/null
+poll_start; deploy fail; poll_stop "S3b"
+[ "$(live_build)" = "$BEFORE" ] && [ "$(upstream_port)" = "$PORT_BEFORE" ] && [ "$(pm2_names)" = "$NAMES_BEFORE" ] || fail "S3b: production changed after a start-up failure"
+grep -q "did not return 200 on / within" "$WORK/last.log" || fail "S3b: the health check did not report the start-up failure"
+grep -q "production was NOT switched" "$WORK/last.log" || fail "S3b: no 'not switched' message"
+pass "S3b: a release that never answers was not switched to; its PM2 slot was removed"
+bot_untouched "S3b"
 
 # ── S4: a new city page that 404s in the new build (the incident class) ────────────────
 step "S4 new city page answering 404 in the new release → gate blocks the switch"
@@ -280,6 +311,18 @@ grep -F "identity: production serves commit" "$WORK/last.log" | sed 's/^/    /'
 pass "S4b: a commit mismatch blocked the switch; production, live slot and upstream untouched"
 bot_untouched "S4b"
 
+# ── S4c: a page that answers 200 but IS the not-found page (soft 404) ──────────────────
+step "S4c a city page renders the not-found page with status 200 → gate blocks the switch"
+rm -f "$WORK/src/fault.txt"; set_cities city-a city-b city-new
+echo "soft-404:city-new" > "$WORK/src/fault.txt"
+commit "v4c: soft 404" >/dev/null
+poll_start; deploy fail; poll_stop "S4c"
+[ "$(live_build)" = "$BEFORE" ] && [ "$(upstream_port)" = "$PORT_BEFORE" ] && [ "$(pm2_names)" = "$NAMES_BEFORE" ] || fail "S4c: production changed although the gate failed"
+grep -qF "/cities-we-serve/city-new answered 200 but rendered the not-found page (soft 404)" "$WORK/last.log" || fail "S4c: the gate did not report the soft 404"
+grep -q "NOT switching traffic" "$WORK/last.log" || fail "S4c: no 'NOT switching' message"
+pass "S4c: a branded 404 served with status 200 counted as a failure; production untouched"
+bot_untouched "S4c"
+
 # ── S5: good commit, then rollback ─────────────────────────────────────────────────────
 step "S5 good commit, then rollback to the previous release"
 rm -f "$WORK/src/fault.txt"; set_cities city-a city-b city-new city-fixed
@@ -287,6 +330,13 @@ V5=$(commit "v5: good")
 poll_start; deploy ok; poll_stop "S5 deploy"
 S5_REL=$(readlink -f "$APP_ROOT/current"); [ "$(cat "$S5_REL/REVISION")" = "$V5" ] || fail "S5: v5 not live"
 [ "$(live_code /cities-we-serve/city-fixed)" = 200 ] || fail "S5: city-fixed not 200"
+# Static continuity beyond one deploy: the S2 build (just replaced) AND the S1 build (two deploys
+# back) still serve their JS chunks, so tabs opened on either keep working.
+for b in "$(cat "$S2_REL/.next/BUILD_ID")" "$S1_BUILD"; do
+  [ "$(live_code "/_next/static/chunks/page-$b.js")" = 200 ] || fail "S5: the JS chunk of earlier build $b is gone after the deploy"
+done
+[ "$(live_code /products/shipping-container)" = 301 ] || fail "S5: the redirect does not answer 301 through nginx"
+pass "S5: chunks of the previous two builds still served; redirect 301 through nginx"
 poll_start; deploy ok rollback; poll_stop "S5 rollback"
 [ "$(readlink -f "$APP_ROOT/current")" = "$S2_REL" ] || fail "S5: rollback did not re-activate the previous release"
 [ "$(live_build)" = "$(cat "$S2_REL/.next/BUILD_ID")" ] || fail "S5: live build after rollback is wrong"
@@ -310,9 +360,74 @@ bot_untouched "S6"
 step "S7 old releases are pruned"
 deploy ok
 n=$(ls -1d "$APP_ROOT"/releases/*/ | wc -l)
-[ "$n" -le $((KEEP_RELEASES + 2)) ] || fail "S7: $n release dirs kept (limit $KEEP_RELEASES + current/previous)"
+nf=$(ls -1d "$APP_ROOT"/releases/*.failed/ 2>/dev/null | wc -l)
+[ $((n - nf)) -le $((KEEP_RELEASES + 2)) ] || fail "S7: $((n - nf)) good release dirs kept (limit $KEEP_RELEASES + current/previous)"
+[ "$nf" -le 1 ] || fail "S7: $nf failed release dirs kept (limit KEEP_FAILED=1; S3–S4c left five)"
 [ -d "$(readlink -f "$APP_ROOT/current")" ] && [ -d "$(readlink -f "$APP_ROOT/previous")" ] || fail "S7: current/previous pruned"
 pass "S7: $n release directories kept"
 bot_untouched "S7"
+
+# ── S8: main moved back to an older commit (force-push) ────────────────────────────────
+step "S8 main rewound to an older commit → refused; only --allow-non-descendant overrides"
+BEFORE=$(live_build); PORT_BEFORE=$(upstream_port); NAMES_BEFORE=$(pm2_names); CUR_BEFORE=$(readlink -f "$APP_ROOT/current")
+LATEST=$(git -C "$WORK/src" rev-parse HEAD)
+[ "$(cat "$CUR_BEFORE/REVISION")" = "$LATEST" ] || fail "S8: setup — the live release is not the newest commit"
+git -C "$WORK/src" push -q -f origin "$V2:main"
+poll_start; deploy fail; poll_stop "S8"
+[ "$(live_build)" = "$BEFORE" ] && [ "$(upstream_port)" = "$PORT_BEFORE" ] && [ "$(pm2_names)" = "$NAMES_BEFORE" ] && [ "$(readlink -f "$APP_ROOT/current")" = "$CUR_BEFORE" ] || fail "S8: production changed although the deploy was refused"
+grep -q "does not contain the live commit" "$WORK/last.log" || fail "S8: the stale-commit guard did not name the problem"
+pass "S8: an older commit on main was refused; production untouched"
+poll_start; deploy ok deploy --allow-non-descendant; poll_stop "S8 override"
+[ "$(cat "$(readlink -f "$APP_ROOT/current")/REVISION")" = "$V2" ] || fail "S8: --allow-non-descendant did not deploy the rewound commit"
+git -C "$WORK/src" push -q -f origin "$LATEST:main"
+poll_start; deploy ok; poll_stop "S8 forward again"
+[ "$(cat "$(readlink -f "$APP_ROOT/current")/REVISION")" = "$LATEST" ] || fail "S8: main restored but not deployed"
+pass "S8: the explicit override deployed the rewound commit; restoring main moved forward again"
+bot_untouched "S8"
+
+# ── S9: interruptions ──────────────────────────────────────────────────────────────────
+# a) the SSH connection drops mid-deploy: the caller stops reading the output and the script gets
+#    SIGHUP. The deploy must carry on to the end, with its full log on disk.
+step "S9a caller disconnects mid-deploy (SSH drop) → the deploy still completes"
+set_cities city-a city-b city-new city-fixed city-s9
+V9=$(commit "v9: deployed through a dropped connection")
+poll_start
+"$SCRIPT" deploy > >(head -n 3 > /dev/null) 2>&1 &
+S9_PID=$!
+for _ in $(seq 1 100); do ls -d "$APP_ROOT"/releases/*-"${V9:0:7}" >/dev/null 2>&1 && break; sleep 0.1; done
+kill -HUP "$S9_PID" 2>/dev/null || true
+set +e; wait "$S9_PID"; S9_RC=$?; set -e
+sleep 1   # the script's tee may still be writing the last lines of the log
+poll_stop "S9a"
+S9_LOG=$(ls -1t /var/log/deploy-portable-office/*-deploy.log | head -1)
+cp "$S9_LOG" "$WORK/last.log"
+[ "$S9_RC" = 0 ] || fail "S9a: the deploy exited $S9_RC after the caller disconnected"
+grep -q "Deployment successful: $V9" "$S9_LOG" || fail "S9a: the log on disk does not end with the successful deploy"
+[ "$(cat "$(readlink -f "$APP_ROOT/current")/REVISION")" = "$V9" ] && [ "$(live_code /cities-we-serve/city-s9)" = 200 ] || fail "S9a: v9 is not live"
+pass "S9a: SIGHUP + closed output did not stop the deploy; v9 live, full log on disk"
+bot_untouched "S9a"
+
+# b) the deploy is killed outright (kill -9, reboot) after it started the idle slot, before the
+#    switch: production must be untouched and the next run must recover on its own.
+step "S9b deploy killed with SIGKILL before the switch → production untouched, next run recovers"
+BEFORE=$(live_build); PORT_BEFORE=$(upstream_port); CUR_BEFORE=$(readlink -f "$APP_ROOT/current")
+set_cities city-a city-b city-new city-fixed city-s9 city-s9b
+V9B=$(commit "v9b: killed mid-deploy")
+poll_start
+"$SCRIPT" deploy > "$WORK/s9b.log" 2>&1 &
+S9_PID=$!
+for _ in $(seq 1 300); do grep -q "health: waiting for" "$WORK/s9b.log" 2>/dev/null && break; sleep 0.1; done
+grep -q "health: waiting for" "$WORK/s9b.log" || { cp "$WORK/s9b.log" "$WORK/last.log"; fail "S9b: the deploy never reached the idle-slot start"; }
+kill -9 "$S9_PID"; wait "$S9_PID" 2>/dev/null || true
+# Orphaned children of the killed script (a `sleep 2` of the health loop) hold the lock briefly.
+for _ in $(seq 1 30); do flock -n /run/lock/deploy-portable-office.lock true && break; sleep 1; done
+flock -n /run/lock/deploy-portable-office.lock true || fail "S9b: the lock was not released after the killed deploy"
+[ "$(live_build)" = "$BEFORE" ] && [ "$(upstream_port)" = "$PORT_BEFORE" ] && [ "$(readlink -f "$APP_ROOT/current")" = "$CUR_BEFORE" ] || fail "S9b: production changed after the killed deploy"
+deploy ok
+poll_stop "S9b"
+grep -q "pm2: removing stale idle process" "$WORK/last.log" || fail "S9b: the next run did not clear the half-started idle slot"
+[ "$(cat "$(readlink -f "$APP_ROOT/current")/REVISION")" = "$V9B" ] && [ "$(live_code /cities-we-serve/city-s9b)" = 200 ] || fail "S9b: the recovery deploy did not make v9b live"
+pass "S9b: a killed deploy left production untouched; the next run cleared its idle slot and went live"
+bot_untouched "S9b"
 
 echo; echo "ALL $PASS CHECKS PASSED"
