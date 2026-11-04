@@ -375,7 +375,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                 ))}
               </ul>
             )}
-            {sec.outro && <p className={`${p} mt-4${mc("reveal")}`}>{sec.outro}</p>}
+            {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
+            {sec.closing?.map((text) => (
+              <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
+            ))}
           </section>
         ))}
 

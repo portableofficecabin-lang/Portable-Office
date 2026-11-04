@@ -34,8 +34,11 @@ export interface CityPageSection {
   heading: string;
   paragraphs?: string[];
   bullets?: CityPageListItem[];
-  /** Optional closing paragraph rendered after the bullets (added 2026-10-23); unset = no element. */
-  outro?: string;
+  /**
+   * Optional paragraphs rendered AFTER the bullets (first used by PUF Panel Cabins in Padalur and
+   * Irur, whose thickness and assembly sections close with a note). Unset = nothing rendered.
+   */
+  closing?: string[];
 }
 
 export interface CityPage {
@@ -18094,7 +18097,8 @@ export const CITY_PAGES: CityPage[] = [
    *     to Handover" → how (six steps), with the closing paragraph as howOutro. The template renders
    *     the areas BEFORE the process and the why-us list before both.
    *   • "Documents for Procurement Review" → extraSections (after the process, before the FAQs): its
-   *     opening paragraph, the seven untitled bullets and the closing sentence as the section outro.
+   *     opening paragraph, the seven untitled bullets and the closing sentence as the section's `closing`
+   *     paragraph (the optional CityPageSection field also added by the PUF Panel Padalur page, #182).
    *     The fixed slots cannot hold this list in its original position (between the site conditions
    *     and the specification table).
    *   • FAQs: the owner's six, verbatim ("How long does fabrication and delivery take?" also appears on
@@ -18317,7 +18321,7 @@ export const CITY_PAGES: CityPage[] = [
           { text: "Written warranty terms and exclusions" },
           { text: "Defined transport, unloading and installation responsibilities" },
         ],
-        outro: "Specialist calculations, certificates and test reports must be requested and confirmed before ordering.",
+        closing: ["Specialist calculations, certificates and test reports must be requested and confirmed before ordering."],
       },
     ],
 
