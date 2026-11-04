@@ -12684,6 +12684,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+      // SIPCOT Mambakkam / Sriperumbudur Phase IV portable-cabin page (2026-10-23): the Sriperumbudur–Oragadam belt this page describes.
+      { label: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
     ],
 
     disclaimer:
@@ -18062,6 +18064,327 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Padalur, Irur or Perambalur district. Delivery, unloading, lifting and placement are arranged for each project; the base and supports depend on the site, foundation and civil work are quoted separately, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, sealing, lighting, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected or custom-sized cabins are subject to structural design, transport feasibility and site access. A cabin does not by itself establish compliance with any buyer audit, certification scheme, inspection-lighting standard or dust-control requirement, and first-aid, crèche, welfare and other regulated uses are subject to the requirements confirmed by the customer's responsible team. The images on this page are illustrative renders of one Portable Office Cabin design, shown with an optionally furnished office interior; other designs look different, and the images are not photographs of installations in Padalur or Irur. The towns, roads and places named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on insulation, dust, drainage, supports, temporary electricity and site preparation are general guidance, not engineering, electrical or safety advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS FOR SIPCOT MAMBAKKAM, SRIPERUMBUDUR PHASE IV — the portable-cabin intent for the
+   * SIPCOT Industrial Park at Mambakkam (Sriperumbudur Phase IV, Kanchipuram district, Tamil Nadu):
+   * gate and administration cabins, project and EPC offices, safety induction rooms, production-support
+   * rooms and staff facilities for corporate manufacturing sites. Not a container-office cluster
+   * location, so the /cities-we-serve index lists it with the local-service pages. On the Portable
+   * Cabin and Porta Cabin Tamil Nadu hubs after Padalur & Irur, and linked from the Chennai
+   * container-office page (whose Sriperumbudur–Oragadam section is the nearest existing copy).
+   *
+   * Owner copy of 2026-10-23, mapped onto the template slots. The slug, meta title, meta description,
+   * H1 and every section are the owner's; the phone and email are COMPANY's (they match the owner's
+   * figures). Nothing is dropped:
+   *   • tagline: the opening's first sentence; the rest of the opening is the intro (the manufacturing
+   *     sentence names the factory near Hosur, per the location rule).
+   *   • "Working Around Your Project Schedule" → why: its first two paragraphs as whyIntro, the third
+   *     paragraph's two sentences as the bullets (short titles added, because the why list renders a
+   *     bold title before each point).
+   *   • "Planning Around Your Corporate Site Requirements" → solutions: the two opening sentences as
+   *     solutionsIntro, the five H3s as the numbered H3s; the "Approval by your organisation…" line
+   *     closes the fifth.
+   *   • "Cabin Specifications and Options" → features: the nine table rows as "Component — options",
+   *     the indicative-sizes paragraph and its two following sentences as sizesNote; featuresIntro is a
+   *     one-line lead-in the template requires. The template renders this slot before the
+   *     applications, so the table sits earlier than in the owner's document.
+   *   • "Cabin Applications at Mambakkam Sites" → industries: its four H3s as "title — text" bullets,
+   *     each H3's list items joined into a sentence followed by its note; industriesIntro is a one-line
+   *     lead-in.
+   *   • "Insulation, Rain Protection and Site Conditions" → the custom slot beside the side-elevation
+   *     render: its four H3s as "title — text" bullets, customIntro a one-line lead-in, and the
+   *     section's last sentence ("Relocating a cabin should not be treated…") as customOutro.
+   *   • "Why Choose Portable Office Cabin?" → whyUs (six bullets, as written; one-line lead-in).
+   *   • "Delivery Enquiries Around Mambakkam" → areasText (three paragraphs as one). "From Requirement
+   *     to Handover" → how (six steps), with the closing paragraph as howOutro. The template renders
+   *     the areas BEFORE the process and the why-us list before both.
+   *   • "Documents for Procurement Review" → extraSections (after the process, before the FAQs): its
+   *     opening paragraph, the seven untitled bullets and the closing sentence as the section's `closing`
+   *     paragraph (the optional CityPageSection field also added by the PUF Panel Padalur page, #182).
+   *     The fixed slots cannot hold this list in its original position (between the site conditions
+   *     and the specification table).
+   *   • FAQs: the owner's six, verbatim ("How long does fabrication and delivery take?" also appears on
+   *     two earlier pages; kept as written).
+   *   • "Discuss Your Mambakkam Cabin Requirement" → CTA, including the "Serving:" line.
+   * Owner wording rules (Kudankulam / Tumkur, and the final terms of 2026-10-19): no ₹, lead times,
+   * response deadlines, inspection or warranty claims; specifications are options confirmed in the
+   * quotation; towns are delivery enquiry locations; the base and anchoring are confirmed per site.
+   * The copy itself says fire performance, occupancy and corporate approval are the customer's to
+   * confirm, and that raised supports do not make a cabin flood-proof. SIPCOT is named nominatively,
+   * with the non-affiliation note in the disclaimer.
+   *
+   * Images: four owner-dropped 1024×1024 webp renders ("public/images/Portable Cabins in SIPCOT
+   * Mambakkam city page/…/cabin (1–4).webp"), copied as they are: (2) front elevation with the door,
+   * three grilled windows and wall lights = hero / og:image, no caption; (4) top-down roof view =
+   * feature band (cropped 3:2 by the template); (1) office interior with a lounge corner = single-image
+   * gallery after the specification list, with no caption (owner preference since Devanahalli #164 and
+   * Kolar #169); (3) plain side elevation = beside the site-conditions section. They show one
+   * wood-finish container-style cabin with a dark frame and base; the disclaimer says they are
+   * illustrative renders.
+   *
+   * Geo: Sriperumbudur town, 12.9675 N 79.9471 E (the SIPCOT Mambakkam park lies south of it, off the
+   * Sriperumbudur–Oragadam road); the owner's copy gives no coordinates.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-mambakkam",
+    city: "Mambakkam, Sriperumbudur",
+    listTitle: "Portable Cabins in SIPCOT Mambakkam",
+    metaTitle: "Portable Cabins in SIPCOT Mambakkam | Sriperumbudur",
+    metaDescription:
+      "Portable office cabins, security cabins, induction rooms and staff facilities for SIPCOT Mambakkam, Sriperumbudur Phase IV. Request a quotation.",
+    keywords:
+      "Portable Cabins in SIPCOT Mambakkam, Portable Cabin Sriperumbudur, Portable Office Cabin Sriperumbudur Phase IV, Security Cabin Sriperumbudur, Gate Cabin SIPCOT Mambakkam, Safety Induction Room Cabin, Portable Site Office Kanchipuram, Portable Cabin Oragadam, Portable Cabin Irungattukottai, Staff Facility Cabins Sriperumbudur",
+    geo: {
+      region: "IN-TN",
+      placename: "Mambakkam, Sriperumbudur, Kanchipuram, Tamil Nadu, India",
+      position: "12.9675;79.9471",
+      icbm: "12.9675, 79.9471",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-mambakkam/portable-cabin-mambakkam-front-elevation.webp",
+      alt: "Portable cabin for SIPCOT Mambakkam, Sriperumbudur — illustrative render of a wood-finish container-style portable cabin with vertical cladding, a dark steel frame and base, a steel door, three grilled windows and outdoor wall lights, on a gravel yard with trees behind",
+      width: 1024,
+      height: 1024,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-mambakkam/portable-cabin-mambakkam-roof-view.webp",
+      alt: "Portable cabin for SIPCOT Mambakkam, Sriperumbudur — illustrative top-down view of the cabin's dark ribbed roof, the wood-finish side wall and three grilled windows, on a gravel yard enclosed by trees",
+      width: 1024,
+      height: 1024,
+      caption: "Roof design, sealed joints and maintained drainage help manage rainwater.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-mambakkam/portable-cabin-mambakkam-side-elevation.webp",
+      alt: "Portable cabin for SIPCOT Mambakkam, Sriperumbudur — illustrative side elevation of the wood-finish container-style cabin with three grilled windows, a dark frame and raised base, on a gravel yard",
+      width: 1024,
+      height: 1024,
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-mambakkam/portable-cabin-mambakkam-office-interior.webp",
+        alt: "Portable cabin for SIPCOT Mambakkam, Sriperumbudur — illustrative render of an optionally furnished office interior with wood-finish wall and ceiling panels, three grilled windows, a steel door, desks with monitors, mesh office chairs, a shelving unit and a lounge corner with sofas and a side table",
+        width: 1024,
+        height: 1024,
+      },
+    ],
+
+    h1: "Portable Cabins for SIPCOT Mambakkam, Sriperumbudur Phase IV",
+    tagline: "Setting up or expanding an industrial facility involves more than completing the production building.",
+    intro: [
+      "Project teams need offices, security personnel need gate cabins, and contractors need suitable spaces for planning, induction and rest.",
+      "Portable Office Cabin manufactures portable cabins at its factory near Hosur and supplies them for businesses in SIPCOT Industrial Park, Mambakkam—Sriperumbudur Phase IV, Kanchipuram district, Tamil Nadu.",
+      "We help you plan cabin layouts, fittings and delivery arrangements around your operational requirements and site procedures.",
+    ],
+
+    whyHeading: "Working Around Your Project Schedule",
+    whyIntro:
+      "Industrial projects often have several teams working towards the same handover date. A separate project office provides space for drawings, meetings, records and daily coordination while permanent facilities are being completed. Portable cabins are fabricated off-site, reducing the amount of construction work required within your premises.",
+    whyBullets: [
+      { title: "Target dates", text: "Share your target dates early so we can assess production and delivery availability." },
+      {
+        title: "After handover",
+        text: "Once the main building is ready, suitable cabins may be retained, adapted or relocated after reviewing their condition and proposed use.",
+      },
+    ],
+
+    solutionsHeading: "Planning Around Your Corporate Site Requirements",
+    solutionsIntro:
+      "Send your engineering, procurement or EHS checklist before the specification is finalised. We can review the requirements and confirm which items are included, optional or require specialist assessment.",
+    solutions: [
+      {
+        title: "Electrical Fittings",
+        text: "Discuss equipment loads, socket positions, distribution boards, circuit protection, earthing and AC provisions. The quotation and electrical specification should identify the components supplied. Final connection and verification must be completed by suitably qualified personnel.",
+      },
+      {
+        title: "Access and Exits",
+        text: "Door positions, circulation space and exits should suit the intended occupancy and use. Wider doors, steps and ramps can be assessed where required.",
+      },
+      {
+        title: "Fire Requirements",
+        text: "Provide any required material classifications, alarm provisions or fire-resistance requirements before ordering. A panel’s classification does not establish the fire performance of the complete cabin. Specific performance claims require relevant supporting documentation.",
+      },
+      {
+        title: "Lighting and Ventilation",
+        text: "Lighting, windows, ventilation and cooling provisions should reflect the number of users, working hours and equipment inside.",
+      },
+      {
+        title: "Interior and Exterior Finishes",
+        text: "Partitions, flooring, ceiling finishes, suitable cladding and company branding can be included where specified. Approval by your organisation remains subject to its own review and inspection procedures.",
+      },
+    ],
+
+    featuresHeading: "Cabin Specifications and Options",
+    featuresIntro: "Components and the options to discuss for each:",
+    features: [
+      "Structure — mild steel frame designed for the dimensions and intended loads.",
+      "Walls and roof — panel construction with specified insulation.",
+      "Flooring — base, loading capacity and finish suited to the application.",
+      "Doors and windows — materials, positions, locks and safety grills.",
+      "Electrical fittings — lighting, sockets, fan points, protection and AC provisions.",
+      "Internal layout — partitions, counters, meeting areas and storage.",
+      "Plumbing — attached toilet, pantry or washbasin provisions.",
+      "Exterior finish — protective paint, suitable cladding and branding.",
+      "Access — steps, wider doors or a suitably designed ramp.",
+    ],
+    sizesNote:
+      "Indicative sizes range from 8 × 6 ft security booths to 40 × 10 ft offices, dining rooms or induction spaces. Custom dimensions and connected layouts are subject to structural design, transport feasibility and site access. Furniture, appliances and specialist equipment are included only when specified.",
+
+    industriesHeading: "Cabin Applications at Mambakkam Sites",
+    industriesIntro: "Typical cabins for industrial facilities in the park, grouped by use:",
+    industries: [
+      {
+        title: "Security and Administration",
+        text: "Main-gate cabins for visitor registration, material-gate offices for inward and outward records, parking-area security booths, reception and visitor waiting rooms, and HR and administrative offices. Window positions, counters, storage and electrical points can be planned around the equipment and workflow.",
+      },
+      {
+        title: "Projects and Safety Induction",
+        text: "Owner’s project management offices, contractor and EPC team offices, meeting and drawing-review rooms, safety induction rooms and first-aid spaces. For an induction room, share the intended seating capacity and requirements for a screen, projector, lighting and ventilation.",
+      },
+      {
+        title: "Production Support",
+        text: "Supervisor offices, inspection and QC workspaces, spare-parts and consumables stores, and dispatch or scrap-yard documentation offices. Metrology, laboratory and controlled-environment applications require a specific assessment of equipment, vibration, temperature, humidity, cleanliness and services.",
+      },
+      {
+        title: "Staff Facilities",
+        text: "Dining and rest rooms, toilet and washroom units, changing rooms and training rooms. Occupancy, sanitation, ventilation and applicable requirements should be confirmed by your responsible team before design approval.",
+      },
+    ],
+
+    customHeading: "Insulation, Rain Protection and Site Conditions",
+    customIntro: "Four site factors to settle before the placement position and base are agreed:",
+    customBullets: [
+      {
+        title: "Insulation and Cooling",
+        text: "PUF or other specified insulation can help reduce heat transfer. Indoor comfort also depends on sun exposure, ventilation, occupancy and cooling equipment.",
+      },
+      { title: "Roof Drainage", text: "Roof design, sealed joints and maintained drainage help manage rainwater." },
+      {
+        title: "Supports and Ground Preparation",
+        text: "The required base, supports and anchoring depend on the cabin design, loads and ground conditions. For low-lying plots, assess drainage and flood exposure before selecting the placement position. Raised supports do not make a cabin flood-proof.",
+      },
+      {
+        title: "Future Relocation",
+        text: "Relocation may be possible where the cabin’s design and condition permit. It requires planned lifting, disconnected services, suitable access and a prepared destination.",
+      },
+    ],
+    customOutro: "Relocating a cabin should not be treated as an emergency flood-protection measure.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What you can expect when you work with us:",
+    whyUsBullets: [
+      { title: "Requirement-based planning", text: "Review your intended use and site checklist before fabrication." },
+      { title: "Defined specifications", text: "Confirm materials, fittings and finishes." },
+      { title: "Clear quotation scope", text: "Identify inclusions and applicable additional charges." },
+      { title: "Site coordination", text: "Discuss access, lifting and installation procedures in advance." },
+      { title: "Multiple cabin configurations", text: "Assess office, security, induction and staff facilities together." },
+      { title: "After-sales enquiries", text: "Contact us for service assistance under the agreed terms." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Mambakkam",
+    areasText:
+      "We welcome enquiries for SIPCOT Mambakkam, Sriperumbudur Phase IV, and surrounding industrial locations. For sites in Sriperumbudur, Irungattukottai, Thandalam, Sunguvarchatram, Oragadam, Vallam Vadagal, Pillaipakkam, Padappai, Walajabad or Kanchipuram, share your exact address so we can assess transport feasibility and delivery arrangements. Enquiries towards Chengalpattu, Poonamallee and Thirumazhisai can also be reviewed according to the location and cabin requirements.",
+
+    howHeading: "From Requirement to Handover",
+    howSteps: [
+      { title: "Discuss the application.", text: "Share the cabin’s purpose, occupancy, dimensions, location and site rules." },
+      { title: "Review drawings and pricing.", text: "Confirm the layout, specifications, inclusions and applicable charges." },
+      { title: "Approve fabrication.", text: "Production proceeds according to the agreed drawings and order terms." },
+      {
+        title: "Coordinate site access.",
+        text: "Confirm entry permissions, lifting requirements, delivery windows and safety procedures.",
+      },
+      { title: "Prepare for placement.", text: "Arrange suitable supports, clearances, unloading space and utility connections." },
+      {
+        title: "Complete handover.",
+        text: "Review the supplied work against the agreed scope and complete applicable connections before use.",
+      },
+    ],
+    howOutro:
+      "Any required inductions, permits, PPE and contractor documentation should be identified before the delivery arrangements are finalised.",
+
+    extraSections: [
+      {
+        heading: "Documents for Procurement Review",
+        paragraphs: [
+          "Tell us which documents your purchase or vendor-registration process requires. We will confirm the available documentation and agreed scope, which may include:",
+        ],
+        bullets: [
+          { text: "Dimensioned layout drawings" },
+          { text: "An itemised quotation or agreed bill of quantities" },
+          { text: "Material and fitting specifications" },
+          { text: "Relevant supplier documentation where available" },
+          { text: "Applicable GST invoice" },
+          { text: "Written warranty terms and exclusions" },
+          { text: "Defined transport, unloading and installation responsibilities" },
+        ],
+        closing: ["Specialist calculations, certificates and test reports must be requested and confirmed before ordering."],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can delivery personnel follow our site procedures?",
+        answer:
+          "Share your entry rules, induction requirements, PPE standards and documentation checklist before scheduling. We will confirm the arrangements and responsibilities within the delivery scope.",
+      },
+      {
+        question: "Can you provide drawings and a BOQ?",
+        answer:
+          "Request the documents needed for your approval process when enquiring. Available drawings, quotation detail and any separately scoped documentation will be confirmed before ordering.",
+      },
+      {
+        question: "Can you build a safety induction room?",
+        answer:
+          "A layout can be assessed according to seating capacity, exits, screen or projector requirements, lighting, ventilation and cooling provisions.",
+      },
+      {
+        question: "Can a cabin be installed on a plot affected by waterlogging?",
+        answer:
+          "The location requires an assessment of drainage, ground stability, flood exposure and support requirements. A raised base alone does not establish suitability.",
+      },
+      {
+        question: "Can delivery avoid shift-change traffic?",
+        answer:
+          "Share your permitted delivery windows and traffic restrictions. Scheduling is confirmed subject to transport availability, lifting arrangements and site access.",
+      },
+      {
+        question: "How long does fabrication and delivery take?",
+        answer:
+          "The timeline depends on the design, quantity, materials, production availability and site readiness. The expected schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Discuss Your Mambakkam Cabin Requirement",
+    ctaText: `Whether you need a gate cabin, project office, induction room or additional staff facilities, Portable Office Cabin can help you assess a suitable configuration. Share your intended use, dimensions, site checklist and exact delivery location to request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Serving: SIPCOT Mambakkam, Sriperumbudur Phase IV and surrounding industrial areas of Kanchipuram district, Tamil Nadu.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is call / WhatsApp / email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
+      { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Mambakkam, Sriperumbudur or elsewhere in Kanchipuram district. Delivery, unloading and placement are arranged for each project, the base, supports and anchoring depend on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes, documents and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected or multi-cabin layouts are subject to structural design. No cabin is described as fire-rated or flood-proof; fire performance, wind and flood exposure, occupancy, sanitation and corporate approval requirements are assessed for each project and confirmed by the customer's responsible team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Mambakkam or Sriperumbudur. SIPCOT and the SIPCOT Industrial Park at Mambakkam (Sriperumbudur Phase IV) are independent organisations with which Portable Office Cabin is not affiliated; they, the facilities described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate or premises is subject to its own permissions and procedures. Notes on electrical, fire, insulation, drainage and site preparation are general guidance, not engineering, legal or regulatory advice.",
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN SAKKARAKOTTAI AND PATTINAMKATHAN, RAMANATHAPURAM — the portable-cabin intent
