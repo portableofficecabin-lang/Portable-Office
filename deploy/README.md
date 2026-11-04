@@ -61,6 +61,12 @@ does `git fetch` → `git reset --hard` → `npm ci` → `next build` **inside t
      10:20:17Z, after static generation finished (10:19:59Z), 3.6 s before `Reloading PM2` (10:20:20Z).
    - #94 Shipping Container in Mettur, Salem: `.html/.meta/.rsc` rewritten 10:46:21Z with
      `"status":404`, 15 s after the build (10:46:06Z), 30 s before the new process started (10:46:51Z).
+   - #186 Portable Cabins for SIPCOT Mambakkam (2026-11-04, deploy #111, run 41847471632): the
+     build finished at 14:27:10Z and the new process started at 14:29:03Z. Seen from outside, after
+     the reload: the new page answered 404 and both Tamil Nadu portable-cabin hubs answered a stale
+     200 without its link. All three carried the previous build ID (`71e99559d7bc_mw1war4y`) with
+     `x-nextjs-cache: HIT`, so the workflow's verify step failed at 14:30:53Z. The other 262 sitemap
+     URLs, the feed and robots.txt were correct. This is the stale-200 case below, on a real merge.
 
    `dynamicParams = false` on the city route (PR #75) did not prevent it. The same race can also
    freeze a stale 200 of an **updated** page, and it applies to every ISR route (products,
