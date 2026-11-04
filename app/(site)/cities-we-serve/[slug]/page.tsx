@@ -22,6 +22,9 @@ import { notFound } from "next/navigation";
 import { Phone } from "lucide-react";
 
 import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
+import { CATEGORY_LANDING_SLUGS, categoryModels } from "@/data/categoryLandings";
+import { categories, products } from "@/data/products";
+import { CategoryEnquiryForm } from "@/components/products/CategoryEnquiryForm";
 import { ContainerOfficeNearbyBlock } from "@/components/locations/ContainerOfficeLocations";
 import { ShippingContainerNearbyBlock } from "@/components/locations/CityDirectoryGroups";
 import { Layout } from "@/components/layout/Layout";
@@ -110,6 +113,20 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
      and skips the hover zoom, so it is never shown larger than its natural size. Wider renders keep
      their original sizes and classes, with no style attribute. */
   const interiorNarrow = !!page.interiorImage && page.interiorImage.width < MAX_W_2XL_PX;
+  /* Optional enquiry form (`enquiryForm`): the category and its models come from the static catalogue,
+     the same source /api/enquiries validates the model id against. A category the route does not
+     accept renders no form rather than one that can only fail. */
+  const enquiryCategory = page.enquiryForm
+    ? categories.find((c) => c.slug === page.enquiryForm!.categorySlug)
+    : undefined;
+  const enquiry =
+    page.enquiryForm && enquiryCategory && CATEGORY_LANDING_SLUGS.includes(page.enquiryForm.categorySlug)
+      ? {
+          ...page.enquiryForm,
+          categoryName: enquiryCategory.name,
+          models: categoryModels(page.enquiryForm.categorySlug, products).map((m) => ({ id: m.id, name: m.name })),
+        }
+      : undefined;
 
   return (
     /* WRAPPED IN <Layout> — header, nav, footer, WhatsApp button and skip link.
@@ -192,6 +209,45 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
         ))}
 
+        {/* Optional hero contact row (`heroCta`): quotation (the on-page form when there is one), Call
+            and WhatsApp, styled like the CTA box buttons. Not a scroll reveal: it sits near the top
+            and must never start hidden. Unset = no element. */}
+        {page.heroCta && (
+          <div className="mt-2 flex flex-wrap gap-3">
+            {enquiry ? (
+              <a
+                href="#category-enquiry"
+                className={`rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90${mc("btn-sheen press")}`}
+              >
+                {page.ctaButtonLabel ?? "Get a Free Quotation"}
+              </a>
+            ) : (
+              <Link
+                href="/contact"
+                className={`rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90${mc("btn-sheen press")}`}
+              >
+                {page.ctaButtonLabel ?? "Get a Free Quotation"}
+              </Link>
+            )}
+            <a
+              href={`tel:${primaryPhone.e164}`}
+              className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
+            >
+              <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+              Call {primaryPhone.display}
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center justify-center gap-2 rounded-md bg-[#0B7A43] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#096436]${mc("press")}`}
+            >
+              <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+              WhatsApp Us
+            </a>
+          </div>
+        )}
+
         <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
         <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
@@ -238,6 +294,19 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <section key={s0.title} className={page.motion ? "reveal" : undefined}>
             <h3 className={h3}>{i + 1}. {s0.title}</h3>
             <p className={p}>{s0.text}</p>
+            {/* Optional contextual link (`link`), e.g. a cabin type → its product or guide page.
+                Unset = no element, so other pages are unchanged. */}
+            {s0.link && (
+              <p className="-mt-2 mb-4 text-sm">
+                <Link
+                  href={s0.link.href}
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
+                >
+                  {s0.link.label}
+                </Link>
+                <span aria-hidden> →</span>
+              </p>
+            )}
           </section>
         ))}
 
@@ -366,6 +435,44 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             {sec.paragraphs?.map((text) => (
               <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
             ))}
+            {/* Optional table (`table`): header row, first cell of each row as the row header, and a
+                visible caption underneath. The wrapper scrolls only if a table is wider than the
+                column; unset = nothing rendered. Below the `sm` breakpoint the cells use px-3 and
+                the row headers may wrap, so a three-column table fits a 320–430 px phone instead
+                of hiding its last column behind a sideways scroll (2026-11-04, Portable Toilets in
+                Krishnagiri); from `sm` up the markup looks exactly as before. */}
+            {sec.table && (
+              <div className={`mb-4 overflow-x-auto rounded-xl border${mc("reveal")}`}>
+                <table className="w-full border-collapse text-left text-sm">
+                  <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4">
+                    {sec.table.caption}
+                  </caption>
+                  <thead className="bg-muted/50">
+                    <tr>
+                      {sec.table.headers.map((hd) => (
+                        <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4">
+                          {hd}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sec.table.rows.map((row) => (
+                      <tr key={row[0]} className="border-t">
+                        <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4">
+                          {row[0]}
+                        </th>
+                        {row.slice(1).map((cell, j) => (
+                          <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
             {sec.bullets && sec.bullets.length > 0 && (
               <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
                 {sec.bullets.map((b) => (
@@ -436,14 +543,51 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </div>
         </section>
 
+        {/* Optional on-page enquiry form (`enquiryForm`): the category enquiry form, posting to the
+            existing /api/enquiries route (which records this page as the source). Only mounted for
+            a category the route accepts; unset = no form, so every other page is unchanged. */}
+        {enquiry && (
+          <div className="mt-10">
+            <CategoryEnquiryForm
+              categorySlug={enquiry.categorySlug}
+              categoryName={enquiry.categoryName}
+              noun={enquiry.noun}
+              models={enquiry.models}
+              heading={enquiry.heading}
+              intro={enquiry.intro}
+            />
+          </div>
+        )}
+
         {/* Optional related-pages block — the page's own internal links (product pages, the
             promotion / blog pages that own neighbouring keywords, sibling city pages). Rendered
-            as a <nav> so crawlers and screen readers read it as navigation, not body copy. */}
+            as a <nav> so crawlers and screen readers read it as navigation, not body copy.
+            `relatedLinksHeading` (optional) renames it; unset = "Related pages", as before. */}
         {page.relatedLinks && page.relatedLinks.length > 0 && (
-          <nav aria-label="Related pages" className={`mt-10${mc("reveal")}`}>
-            <h2 className="mb-3 text-xl font-bold tracking-tight">Related pages</h2>
+          <nav aria-label={page.relatedLinksHeading ?? "Related pages"} className={`mt-10${mc("reveal")}`}>
+            <h2 className="mb-3 text-xl font-bold tracking-tight">{page.relatedLinksHeading ?? "Related pages"}</h2>
             <ul className={`grid gap-2 sm:grid-cols-2${mc("reveal-stagger")}`}>
               {page.relatedLinks.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className={`block rounded-lg border px-4 py-3 text-sm font-medium hover:bg-muted${mc("hover-lift")}`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        {/* Optional nearby-locations block (`nearbyLinks`), same markup as the related links.
+            Unset = nothing rendered. */}
+        {page.nearbyLinks && page.nearbyLinks.links.length > 0 && (
+          <nav aria-label={page.nearbyLinks.heading} className={`mt-10${mc("reveal")}`}>
+            <h2 className="mb-3 text-xl font-bold tracking-tight">{page.nearbyLinks.heading}</h2>
+            <ul className={`grid gap-2 sm:grid-cols-2${mc("reveal-stagger")}`}>
+              {page.nearbyLinks.links.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
