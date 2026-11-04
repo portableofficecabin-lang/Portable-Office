@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
+// @deno-types="npm:@types/nodemailer@6.4.17"
+import nodemailer from "npm:nodemailer@6.9.16";
 import { notifyEnquiry, type ClaimedEnquiry } from "./notify.ts";
 import { adminNotification, customerAcknowledgement, type EmailContent } from "./templates.ts";
 
@@ -25,6 +26,12 @@ import { adminNotification, customerAcknowledgement, type EmailContent } from ".
  *   • no claim, no e-mail: if the database cannot be reached it sends nothing (fail closed);
  *   • a failed business e-mail releases the claim for a retry (at most 3 attempts in all).
  * SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided by the Supabase Edge runtime.
+ *
+ * SMTP VIA NODEMAILER (2026-10-22). With denomailer 1.6.0 every send was killed by the Edge runtime
+ * with "CPU Time exceeded" (9,045 ms and 3,020 ms of CPU while waiting on Zoho, production logs
+ * 2026-10-19), so no e-mail was ever delivered. nodemailer (Supabase's own SMTP example) is used
+ * instead: one pooled implicit-TLS connection carries both messages, with explicit timeouts so a slow
+ * server cannot hold the function open.
  *
  * Callers are unchanged: every form inserts its row first and then invokes this function.
  * DEPLOY MANUALLY, AFTER applying the 2026-10-18 migration:
@@ -95,21 +102,25 @@ const handler = async (req: Request): Promise<Response> => {
   const smtpFrom = env("SMTP_FROM") || smtpUsername;
   const from = `${env("SMTP_FROM_NAME") || "Portable Office Cabin"} <${smtpFrom}>`;
   // Connected only once a claim succeeded, so replays never open an SMTP session.
-  const smtp: { client: SMTPClient | null } = { client: null };
+  const smtp: { transport: nodemailer.Transporter | null } = { transport: null };
   const send = async (to: string, mail: EmailContent) => {
-    smtp.client ??= new SMTPClient({
-      connection: {
-        hostname: env("SMTP_HOST") || "smtp.zoho.in",
-        port: parseInt(env("SMTP_PORT") || "465"),
-        tls: true,
-        auth: { username: smtpUsername, password: env("SMTP_PASSWORD") || "" },
-      },
-    });
-    await smtp.client.send({
+    const port = parseInt(env("SMTP_PORT") || "465");
+    const transport = (smtp.transport ??= nodemailer.createTransport({
+      host: env("SMTP_HOST") || "smtp.zoho.in",
+      port,
+      secure: port === 465, // implicit TLS, as before
+      auth: { user: smtpUsername, pass: env("SMTP_PASSWORD") || "" },
+      pool: true, // one connection (one TLS handshake) for both messages
+      maxConnections: 1,
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 20_000,
+    }));
+    await transport.sendMail({
       from,
       to,
       subject: mail.subject,
-      content: mail.text,
+      text: mail.text,
       html: mail.html,
       ...(mail.replyTo ? { replyTo: mail.replyTo } : {}),
     });
@@ -137,7 +148,7 @@ const handler = async (req: Request): Promise<Response> => {
     return json(500, { error: "Notification failed" });
   } finally {
     try {
-      await smtp.client?.close();
+      smtp.transport?.close();
     } catch {
       // The connection is already gone; nothing to clean up.
     }
