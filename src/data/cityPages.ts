@@ -3958,6 +3958,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+      { label: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
     ],
 
     disclaimer:
@@ -4276,6 +4277,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
+      { label: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -4595,6 +4597,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
       { label: "Container Office in Athipattu", href: "/cities-we-serve/container-office-in-athipattu" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
+      { label: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
     ],
 
     disclaimer:
@@ -18382,6 +18385,347 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Mambakkam, Sriperumbudur or elsewhere in Kanchipuram district. Delivery, unloading and placement are arranged for each project, the base, supports and anchoring depend on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes, documents and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected or multi-cabin layouts are subject to structural design. No cabin is described as fire-rated or flood-proof; fire performance, wind and flood exposure, occupancy, sanitation and corporate approval requirements are assessed for each project and confirmed by the customer's responsible team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Mambakkam or Sriperumbudur. SIPCOT and the SIPCOT Industrial Park at Mambakkam (Sriperumbudur Phase IV) are independent organisations with which Portable Office Cabin is not affiliated; they, the facilities described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate or premises is subject to its own permissions and procedures. Notes on electrical, fire, insulation, drainage and site preparation are general guidance, not engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE CABINS IN SAKKARAKOTTAI AND PATTINAMKATHAN, RAMANATHAPURAM — the portable-cabin intent
+   * for the SIPCOT Sakkarakottai & Pattinamkathan industrial park and Ramanathapuram district (Tamil
+   * Nadu): site offices, security cabins, toilet units, labour cabins and stores for developing
+   * industrial plots, solar and other remote sites, field operations, events, harbour businesses,
+   * farms and institutions. Not a container-office cluster location, so the /cities-we-serve index
+   * lists it with the local-service pages. On the Portable Cabin and Porta Cabin Tamil Nadu hubs. No
+   * other city page targets Ramanathapuram district.
+   *
+   * Owner copy of 2026-10-23 ("Portable Cabins in Sakkarakottai and Pattinamkathan, Ramanathapuram"),
+   * mapped onto the template slots. The slug is the owner's suggested URL; the meta title, meta
+   * description, H1 and every section are the owner's; the phone and email are COMPANY's (they match
+   * the owner's figures). Nothing is dropped:
+   *   • tagline: the opening's first sentence; the other three opening paragraphs are the intro.
+   *   • "Working Space for Developing Sites" → why: the first sentence + "Typical applications
+   *     include:" as whyIntro, the six applications as untitled bullets, the two closing paragraphs as
+   *     whyOutro.
+   *   • "Specifications for Heat and Site Exposure" → solutions: the five H3s as the numbered H3s, each
+   *     H3's paragraphs joined. solutionsIntro is a one-line lead-in (ours), quotation-gated.
+   *   • "Portable Cabin Options" → features: the seven table rows as "Cabin type — intended
+   *     application", the indicative-sizes and final-dimensions paragraphs as the bold note;
+   *     featuresIntro is a one-line lead-in (ours). The template renders this BEFORE the applications.
+   *   • "Planning Water and Sanitation Facilities" → the custom slot beside the office interior render:
+   *     the opening sentence + "Options to assess include:" as customIntro, the six options as untitled
+   *     bullets, the water-tank paragraphs as customOutro.
+   *   • "Why Choose Portable Office Cabin?" → whyUs: the six bullets as written, with a one-line
+   *     lead-in (ours).
+   *   • "Delivery Enquiries Around Ramanathapuram" → areasText (three paragraphs joined); "How to
+   *     Order" → how: the five steps, the temporary-electricity paragraph as howOutro. The template
+   *     renders the areas and why-us BEFORE the process.
+   *   • "Cabin Applications Across Ramanathapuram" and "Planning Delivery to Remote Sites" →
+   *     extraSections (after the process, before the FAQs), verbatim and in the owner's order: the six
+   *     application H3s as "title: text" bullets with the owner's "possible applications" sentence as
+   *     the closing paragraph; the delivery section's two opening paragraphs, its seven checks as
+   *     untitled bullets and the multiple-cabins sentence as the closing paragraph (the optional
+   *     `CityPageSection.closing`, added by PR #182 / #186 with the same lines, so the three merge cleanly).
+   *   • FAQs: the owner's six. "How long does fabrication and delivery take?" is already a question on
+   *     the Perundurai and Tiruvallur pages, so it reads "…take for a Ramanathapuram order?".
+   *   • "Discuss Your Ramanathapuram Cabin Requirement" → CTA, including the "Serving:" line.
+   * Owner wording rules (Kudankulam / Tumkur, final terms of 2026-10-19): no ₹, lead times or
+   * warranty claims; the copy already confirms every specification in the quotation, makes every
+   * delivery subject to a route check, calls the applications possibilities rather than installations
+   * and treats the towns as enquiry locations. SIPCOT is named nominatively, with the non-affiliation
+   * note in the disclaimer.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Portable Cabins in Sakkarakottai &
+   * Pattinamkathan city page/…/cabin (1–5).webp", 1536×864 except the 1360×768 interior): (2) front
+   * elevation with the glazed door and two grilled windows = hero / og:image, no caption, copied
+   * byte-for-byte; (5) top-down roof view, centre-cropped to 3:2 (1296×864) = the feature band after
+   * the "why" section; (1) office interior = beside the water-and-sanitation section, copied
+   * byte-for-byte, no caption (owner preference since Devanahalli #164 and Kolar #169); (3)
+   * three-quarter view and (4) plain side elevation = a two-column gallery, copied byte-for-byte. They
+   * show one charcoal container-style cabin with vertical cladding; the feature-band caption and the
+   * disclaimer say they are illustrative renders.
+   *
+   * Geo: Sakkarakottai and Pattinamkathan lie beside Ramanathapuram town (about 9.37 N 78.83 E);
+   * the position is the Pattinamkathan village point.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-cabin-sakkarakottai-pattinamkathan",
+    city: "Sakkarakottai and Pattinamkathan, Ramanathapuram",
+    listTitle: "Portable Cabins in Sakkarakottai & Pattinamkathan",
+    metaTitle: "Portable Cabins in Sakkarakottai & Pattinamkathan | Ramanathapuram",
+    metaDescription:
+      "Portable offices, security cabins, toilet units and labour cabins for Sakkarakottai, Pattinamkathan and Ramanathapuram project sites. Request a quote.",
+    keywords:
+      "Portable Cabins in Sakkarakottai, Portable Cabin Pattinamkathan, Portable Cabin Ramanathapuram, SIPCOT Sakkarakottai Pattinamkathan Industrial Park Cabin, Site Office Cabin Ramanathapuram, Security Cabin Ramanathapuram, Portable Toilet Cabin Ramanathapuram, Labour Cabin Ramanathapuram, Portable Cabin Rameswaram, Portable Cabin Paramakudi",
+    geo: {
+      region: "IN-TN",
+      placename: "Sakkarakottai and Pattinamkathan, Ramanathapuram District, Tamil Nadu, India",
+      position: "9.3698;78.8308",
+      icbm: "9.3698, 78.8308",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-cabin-sakkarakottai-pattinamkathan/portable-cabin-sakkarakottai-pattinamkathan-front-elevation.webp",
+      alt: "Portable cabin in Sakkarakottai and Pattinamkathan — illustrative render of a charcoal container-style portable cabin with vertical cladding, a glazed steel door under a hood and two grilled windows, on a concrete step in a gravel yard",
+      width: 1536,
+      height: 864,
+    },
+    featureImage: {
+      src: "/images/cities/portable-cabin-sakkarakottai-pattinamkathan/portable-cabin-sakkarakottai-pattinamkathan-roof-view.webp",
+      alt: "Portable cabin in Sakkarakottai and Pattinamkathan — illustrative view from above of the charcoal container-style cabin showing its corrugated roof and corner castings, set between planting beds and a gravel yard",
+      width: 1296,
+      height: 864,
+      caption:
+        "Illustrative render of one container-style design, seen from above. Roof drainage, supports and any water-storage arrangement are confirmed in the approved specification and quotation.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-cabin-sakkarakottai-pattinamkathan/portable-cabin-sakkarakottai-pattinamkathan-office-interior.webp",
+      alt: "Portable cabin in Sakkarakottai and Pattinamkathan — illustrative render of an optionally furnished office interior with light wood-look wall and ceiling panels, a desk with a monitor and lamp, an office chair, a glazed door, two grilled windows, low shelving with books and boxes, and light plank flooring",
+      width: 1360,
+      height: 768,
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-cabin-sakkarakottai-pattinamkathan/portable-cabin-sakkarakottai-pattinamkathan-three-quarter-view.webp",
+        alt: "Portable cabin in Sakkarakottai and Pattinamkathan — illustrative three-quarter view of the charcoal container-style cabin with a glazed door, three grilled windows under hoods and vertical cladding, beside a gravel path",
+        width: 1536,
+        height: 864,
+      },
+      {
+        src: "/images/cities/portable-cabin-sakkarakottai-pattinamkathan/portable-cabin-sakkarakottai-pattinamkathan-side-elevation.webp",
+        alt: "Portable cabin in Sakkarakottai and Pattinamkathan — illustrative side elevation of the charcoal container-style cabin showing its plain vertical cladding, top rail and corner castings, beside planting beds and a gravel yard",
+        width: 1536,
+        height: 864,
+      },
+    ],
+
+    h1: "Portable Cabins in Sakkarakottai and Pattinamkathan, Ramanathapuram",
+    tagline: "Industrial projects need working facilities before permanent buildings are complete.",
+    intro: [
+      "Surveyors need a base, contractors need somewhere to review plans, and security personnel need a suitable cabin at the entrance.",
+      "Portable Office Cabin manufactures and supplies portable cabins for customers in Sakkarakottai, Pattinamkathan and surrounding areas of Ramanathapuram district, Tamil Nadu.",
+      "For enquiries relating to SIPCOT Sakkarakottai & Pattinamkathan Industrial Park, share your exact site location, access arrangements and intended use so we can assess a suitable configuration.",
+    ],
+
+    whyHeading: "Working Space for Developing Sites",
+    whyIntro:
+      "A portable cabin can provide a separate workspace during surveying, site preparation and construction. Typical applications include:",
+    whyBullets: [
+      { text: "Offices for surveyors and planning consultants" },
+      { text: "Contractor rooms for drawings, records and meetings" },
+      { text: "Workspaces for supervising engineers" },
+      { text: "Security posts at plot entrances" },
+      { text: "Suitable storage for tools and equipment" },
+      { text: "Rest and sanitation facilities for site personnel" },
+    ],
+    whyOutro:
+      "Cabins are fabricated off-site, reducing the amount of building work required at your location. Future relocation or reuse may be possible, depending on the cabin's design, condition and proposed application.",
+
+    solutionsHeading: "Specifications for Heat and Site Exposure",
+    solutionsIntro:
+      "Five specification points for the district's heat, coastal air, dust, wind and rain; the insulation, coatings, seals, supports and drainage details supplied are confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Insulation and Cooling",
+        text: "PUF or other specified insulation can help reduce heat transfer. Indoor comfort also depends on ventilation, shading, occupancy and cooling equipment.",
+      },
+      {
+        title: "Corrosion Protection",
+        text: "Tell us whether the cabin will be exposed to coastal air, moisture or industrial processes. Steel preparation and protective coatings should be selected according to the exposure conditions. Specialist coating systems are included only when confirmed in the specification.",
+      },
+      {
+        title: "Dust Control",
+        text: "Suitable seals around doors, windows and service openings can help reduce dust entry. Sensitive storage or equipment may require additional filtration or environmental controls.",
+      },
+      {
+        title: "Supports and Wind Exposure",
+        text: "The base, supports and anchoring depend on the cabin design, ground conditions and site exposure. Any specified wind-performance requirement should be provided before ordering.",
+      },
+      {
+        title: "Rainwater and Drainage",
+        text: "Roof drainage and sealed joints help manage rainwater. Ground drainage and suitable placement are also important; raised supports do not make a cabin flood-proof.",
+      },
+    ],
+
+    featuresHeading: "Portable Cabin Options",
+    featuresIntro: "Cabin types and their intended applications; the configuration supplied is confirmed in the quotation:",
+    features: [
+      "Site office — Contractors, consultants and project engineers.",
+      "Security cabin — Entrances, checkpoints and property supervision.",
+      "Office cabin — Administration, meetings and project coordination.",
+      "Toilet cabin — Sanitation with agreed water and waste arrangements.",
+      "Labour cabin — Worker rest or accommodation.",
+      "Store cabin — Suitable tools, documents, spares and materials.",
+      "Custom cabin — Counters, first-aid spaces, dining rooms or guest accommodation.",
+    ],
+    sizesNote:
+      "Indicative sizes range from 8 × 6 ft security booths to 40 × 10 ft office or accommodation cabins. Final dimensions depend on occupancy, furniture, structural design, transport feasibility and site access. Connected layouts require coordinated design.",
+
+    customHeading: "Planning Water and Sanitation Facilities",
+    customIntro:
+      "If your site has limited water supply, discuss this before selecting a toilet or accommodation layout. Options to assess include:",
+    customBullets: [
+      { text: "Water-storage arrangements suited to expected usage" },
+      { text: "Low-flow fittings where suitable" },
+      { text: "Plumbing connections and pump requirements" },
+      { text: "Separate toilet and bathing facilities" },
+      { text: "Waste holding or an approved drainage connection" },
+      { text: "Access for refilling, cleaning and waste collection" },
+    ],
+    customOutro:
+      "A water tank does not remove the need for refilling and appropriate waste disposal. Tank capacity, location and support requirements must be confirmed. A tank should not be placed on a cabin roof unless the structure has been designed for that load.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What working with us involves:",
+    whyUsBullets: [
+      { title: "Site-based planning", text: "Discuss access, utilities and exposure before selecting a configuration." },
+      { title: "Water and sanitation coordination", text: "Identify storage, supply and waste-management requirements." },
+      { title: "Defined specifications", text: "Review materials and fittings before fabrication." },
+      { title: "Clear quotation scope", text: "Confirm inclusions and applicable additional charges." },
+      { title: "Multiple cabin options", text: "Assess office, security, storage and welfare requirements together." },
+      { title: "After-sales enquiries", text: "Contact us for service assistance under the agreed terms." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Ramanathapuram",
+    areasText:
+      "We welcome enquiries from Sakkarakottai, Pattinamkathan, Ramanathapuram town, Devipattinam, Uchipuli, Mandapam, Kilakarai, Paramakudi, Kamuthi, Mudukulathur, Sayalkudi, Thiruvadanai and R.S. Mangalam. For Rameswaram and other locations requiring route-specific checks, share the exact address and proposed cabin dimensions so transport access and any restrictions can be assessed. Delivery feasibility, charges and schedules are confirmed for each project.",
+
+    howHeading: "How to Order",
+    howSteps: [
+      {
+        title: "Share the Requirement",
+        text: "Tell us the cabin's purpose, approximate dimensions, number of users and site location.",
+      },
+      {
+        title: "Review the Layout and Quotation",
+        text: "Confirm materials, fittings, inclusions and applicable taxes, transport, unloading and installation charges.",
+      },
+      {
+        title: "Approve Fabrication",
+        text: "Production proceeds according to the approved specification and agreed order terms.",
+      },
+      {
+        title: "Prepare the Site",
+        text: "Arrange the specified base or supports, clear access, lifting space and required permissions.",
+      },
+      {
+        title: "Complete Placement and Connections",
+        text: "The cabin is positioned under the agreed arrangements. Electrical, water and drainage connections are completed as applicable before use.",
+      },
+    ],
+    howOutro:
+      "Where permanent electricity is unavailable, a suitable temporary supply or generator may be considered. A qualified electrician should assess capacity, earthing, protection and connections.",
+
+    extraSections: [
+      {
+        heading: "Cabin Applications Across Ramanathapuram",
+        bullets: [
+          {
+            title: "Industrial and Construction Projects",
+            text: "Project offices, security cabins, contractor rooms and stores for suitable tools and materials.",
+          },
+          {
+            title: "Solar and Other Remote Sites",
+            text: "Workspaces, guard cabins and welfare facilities for project teams. Remote installations require advance planning for access, electricity, water, communications and maintenance.",
+          },
+          {
+            title: "Field Operations",
+            text: "Office and rest layouts can be assessed for field teams. Sites involving flammable substances or hazardous processes require a specific technical review; standard cabins should not be assumed suitable.",
+          },
+          {
+            title: "Events and Temporary Public Facilities",
+            text: "Information counters, security posts, first-aid spaces and toilet layouts can be discussed. Supply arrangements, permissions, utilities and any short-term availability must be confirmed.",
+          },
+          {
+            title: "Harbour and Coastal Businesses",
+            text: "Administrative offices, gate cabins and suitable storage spaces, with specifications assessed against the actual exposure and intended contents.",
+          },
+          {
+            title: "Farms, Traders and Institutions",
+            text: "Farm offices, watchman cabins, administrative rooms and security posts for suitable sites.",
+          },
+        ],
+        closing: ["These are possible applications, not claims of completed installations or affiliations with local projects."],
+      },
+      {
+        heading: "Planning Delivery to Remote Sites",
+        paragraphs: [
+          "Share access details early, especially for unpaved roads, narrow entrances or sites with limited lifting space.",
+          "Before dispatch, confirm:",
+        ],
+        bullets: [
+          { text: "The exact location and delivery route" },
+          { text: "Road width, clearances and ground conditions" },
+          { text: "Vehicle and lifting-equipment access" },
+          { text: "A suitable unloading and placement area" },
+          { text: "Required supports or foundations" },
+          { text: "Entry permissions and permitted delivery hours" },
+          { text: "Utility connections needed before use" },
+        ],
+        closing: [
+          "For multiple cabins, delivery can be assessed in batches or stages according to vehicle availability and site readiness.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can you deliver to a developing industrial plot?",
+        answer:
+          "Delivery depends on the exact location, access permissions, road conditions and lifting arrangements. Share these details before the order is finalised.",
+      },
+      {
+        question: "Can a toilet cabin operate without a piped water connection?",
+        answer:
+          "A suitable stored-water arrangement may be possible. Capacity, refilling, plumbing and waste disposal must be planned according to usage and site conditions.",
+      },
+      {
+        question: "Can you supply a cabin to a remote project site?",
+        answer:
+          "Share the access route, ground conditions and available utilities. We will assess transport feasibility and the installation arrangements required.",
+      },
+      {
+        question: "Can I request cabins for an event in Rameswaram?",
+        answer:
+          "Yes, you can enquire. Availability, route access, duration, utility requirements and commercial terms must be confirmed before booking.",
+      },
+      {
+        question: "How do I maintain a cabin exposed to coastal air?",
+        answer:
+          "Inspect coatings, seals, fasteners and drainage regularly. Follow the relevant material supplier's cleaning and maintenance instructions, and repair damaged protective coatings promptly.",
+      },
+      {
+        question: "How long does fabrication and delivery take for a Ramanathapuram order?",
+        answer:
+          "The timeline depends on the specification, quantity, materials, production availability and site readiness. The expected schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Discuss Your Ramanathapuram Cabin Requirement",
+    ctaText: `Whether you need a project office, security cabin, worker facility or suitable storage room, Portable Office Cabin can help you assess a practical configuration. Share your intended use, required size, preferred fittings and exact delivery location to request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}. Serving Sakkarakottai, Pattinamkathan and surrounding areas of Ramanathapuram district, Tamil Nadu.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The owner's contact block is call / WhatsApp / email: the call and WhatsApp buttons are on by
+    // default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
+      { label: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
+      { label: "Container Office in Kudankulam", href: "/cities-we-serve/container-office-in-kudankulam-tirunelveli" },
+      { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+      { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
+      { label: "Porta Cabin in Tamil Nadu", href: "/promotions/porta-cabin-in-tamil-nadu" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Sakkarakottai, Pattinamkathan or Ramanathapuram district. Delivery, unloading and placement are arranged for each order after a route check, the supports and site preparation depend on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, coatings, seals, water-storage and sanitation arrangements, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected layouts are subject to design, transport feasibility and site access. No cabin is described as flood-proof or suitable for hazardous processes; wind requirements, flood risk, water supply, waste disposal, occupancy, fire safety and electrical connections are assessed for each project and confirmed by the customer's responsible teams and qualified electricians. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Sakkarakottai, Pattinamkathan or Ramanathapuram. SIPCOT and the SIPCOT Sakkarakottai & Pattinamkathan Industrial Park are independent organisations with which Portable Office Cabin is not affiliated; they, the industrial, solar, harbour, event, farm and institutional settings described and the towns named here, including Rameswaram, are mentioned only to describe the region, possible applications and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any premises is subject to its own permissions. Notes on insulation, corrosion, dust, wind, drainage, water storage, electricity and site preparation are general guidance, not engineering, electrical, sanitation or legal advice.",
   },
 ];
 
