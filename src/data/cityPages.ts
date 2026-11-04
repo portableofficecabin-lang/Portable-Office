@@ -35,11 +35,10 @@ export interface CityPageSection {
   paragraphs?: string[];
   bullets?: CityPageListItem[];
   /**
-   * Optional closing paragraph(s) rendered after the bullets (first used by Portable Cabins in
-   * Sakkarakottai and Pattinamkathan, whose owner sections end with a sentence after their lists).
-   * Unset = no element, as before.
+   * Optional paragraphs rendered AFTER the bullets (first used by PUF Panel Cabins in Padalur and
+   * Irur, whose thickness and assembly sections close with a note). Unset = nothing rendered.
    */
-  outro?: string[];
+  closing?: string[];
 }
 
 export interface CityPage {
@@ -18098,8 +18097,8 @@ export const CITY_PAGES: CityPage[] = [
    *     extraSections (after the process, before the FAQs), verbatim and in the owner's order: the six
    *     application H3s as "title: text" bullets with the owner's "possible applications" sentence as
    *     the closing paragraph; the delivery section's two opening paragraphs, its seven checks as
-   *     untitled bullets and the multiple-cabins sentence as the closing paragraph. The closing
-   *     paragraph after a section's bullets (`CityPageSection.outro`) is new with this page.
+   *     untitled bullets and the multiple-cabins sentence as the closing paragraph (the optional
+   *     `CityPageSection.closing`, added by PR #182 / #186 with the same lines, so the three merge cleanly).
    *   • FAQs: the owner's six. "How long does fabrication and delivery take?" is already a question on
    *     the Perundurai and Tiruvallur pages, so it reads "…take for a Ramanathapuram order?".
    *   • "Discuss Your Ramanathapuram Cabin Requirement" → CTA, including the "Serving:" line.
@@ -18324,7 +18323,7 @@ export const CITY_PAGES: CityPage[] = [
             text: "Farm offices, watchman cabins, administrative rooms and security posts for suitable sites.",
           },
         ],
-        outro: ["These are possible applications, not claims of completed installations or affiliations with local projects."],
+        closing: ["These are possible applications, not claims of completed installations or affiliations with local projects."],
       },
       {
         heading: "Planning Delivery to Remote Sites",
@@ -18341,7 +18340,7 @@ export const CITY_PAGES: CityPage[] = [
           { text: "Entry permissions and permitted delivery hours" },
           { text: "Utility connections needed before use" },
         ],
-        outro: [
+        closing: [
           "For multiple cabins, delivery can be assessed in batches or stages according to vehicle availability and site readiness.",
         ],
       },

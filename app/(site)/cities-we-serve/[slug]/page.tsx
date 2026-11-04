@@ -359,8 +359,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
 
         {/* Optional extra sections (`extraSections`): owner copy with more H2s than the fixed slots
-            hold. Same classes and motion as the sections above; unset = nothing rendered. A section's
-            optional `outro` paragraphs render after its bullets (like `howOutro` after the steps). */}
+            hold. Same classes and motion as the sections above; unset = nothing rendered. */}
         {page.extraSections?.map((sec) => (
           <section key={sec.heading}>
             <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
@@ -376,7 +375,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                 ))}
               </ul>
             )}
-            {sec.outro?.map((text) => (
+            {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
+            {sec.closing?.map((text) => (
               <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
             ))}
           </section>
