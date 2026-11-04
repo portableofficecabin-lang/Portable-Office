@@ -372,6 +372,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                 ))}
               </ul>
             )}
+            {sec.outro && <p className={`${p} mt-4${mc("reveal")}`}>{sec.outro}</p>}
           </section>
         ))}
 
