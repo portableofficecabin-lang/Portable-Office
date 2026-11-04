@@ -7003,6 +7003,16 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Explore Container Office Models", href: "/products/category/container-offices" },
       { label: "Container Office on Rent", href: "/rental-service" },
     ],
+    // Links back from the Kolar-side pages (Kolar, Vemgal, Narsapura), which all link to Hoskote.
+    relatedLinks: [
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
+      { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+      { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -9444,6 +9454,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+      { label: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+      { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -16277,6 +16289,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Shipping Containers in Narsapura Industrial Area", href: "/products/shipping-container-in-narsapura-industrial" },
       { label: "Container Office in Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+      { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
