@@ -319,7 +319,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     // Portable-cabin page for Tiruvallur (2026-10-23), here and on Porta Cabin, after Tindivanam.
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
-    // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Tiruvallur.
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
+    // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
     { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
@@ -335,7 +336,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
     { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
     { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
-    // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Tiruvallur.
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
+    // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
     { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
