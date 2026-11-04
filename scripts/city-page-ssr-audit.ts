@@ -173,21 +173,29 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
   t("features", "sizes note", p.sizesNote);
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
-  t("industries", "industries heading", p.industriesHeading);
-  t("industries", "industries intro", p.industriesIntro);
-  p.industries.forEach((b, i) => { t("industries", `industry ${i + 1} title`, b.title ?? ""); t("industries", `industry ${i + 1} text`, b.text); });
+  // Optional section (since 2026-10-21): audited whenever the page sets it.
+  if (p.industriesHeading) {
+    t("industries", "industries heading", p.industriesHeading);
+    t("industries", "industries intro", p.industriesIntro ?? "");
+    (p.industries ?? []).forEach((b, i) => { t("industries", `industry ${i + 1} title`, b.title ?? ""); t("industries", `industry ${i + 1} text`, b.text); });
+  }
   t("custom", "custom heading", p.customHeading);
   if (p.interiorImage) { items.push({ group: "images", label: "interior image src", test: (mk) => imageNeedle(p.interiorImage!.src).test(mk) }); m("images", "interior image alt", `alt="${p.interiorImage.alt}"`); }
   t("custom", "custom intro", p.customIntro);
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
-  t("whyUs", "why-us heading", p.whyUsHeading);
-  t("whyUs", "why-us intro", p.whyUsIntro);
-  p.whyUsBullets.forEach((b, i) => { t("whyUs", `why-us bullet ${i + 1} title`, b.title ?? ""); t("whyUs", `why-us bullet ${i + 1} text`, b.text); });
+  // Optional section (since 2026-10-21): audited whenever the page sets it.
+  if (p.whyUsHeading) {
+    t("whyUs", "why-us heading", p.whyUsHeading);
+    t("whyUs", "why-us intro", p.whyUsIntro ?? "");
+    (p.whyUsBullets ?? []).forEach((b, i) => { t("whyUs", `why-us bullet ${i + 1} title`, b.title ?? ""); t("whyUs", `why-us bullet ${i + 1} text`, b.text); });
+  }
   t("areas", "areas heading", p.areasHeading);
   t("areas", "areas text", p.areasText);
   t("how", "how heading", p.howHeading);
-  p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); t("how", `step ${i + 1} text`, s.text); });
+  if (p.howIntro) t("how", "how intro", p.howIntro);
+  p.howSteps.forEach((s, i) => { t("how", `step ${i + 1} title`, s.title ?? ""); if (s.text) t("how", `step ${i + 1} text`, s.text); });
+  if (p.howOutro) t("how", "how outro", p.howOutro);
   (p.extraSections ?? []).forEach((s, i) => {
     t("extra", `extra section ${i + 1} heading`, s.heading);
     (s.paragraphs ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} paragraph ${j + 1}`, x));

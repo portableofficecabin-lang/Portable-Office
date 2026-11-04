@@ -156,7 +156,7 @@ const FAQS: { question: string; answer: string }[] = [
   {
     question: "Can I see the cabin before it is dispatched?",
     answer:
-      "Yes. You are welcome to visit the factory during fabrication, and we send photographs at each stage if you cannot come.",
+      "Yes, in photographs. We send photographs of the cabin at each stage of fabrication.",
   },
   {
     question: "Do I need any civil work?",

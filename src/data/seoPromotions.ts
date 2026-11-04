@@ -306,10 +306,20 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
-  // Portable Cabin Manufacturers in Hosur: the one Tamil Nadu page about portable cabins rather than
-  // container offices (the factory near Hosur), so it leads these two keyword hubs only.
+  // Portable Cabin Manufacturers in Hosur and Portable Cabins in Krishnagiri Industrial Area: the two
+  // Tamil Nadu pages about portable cabins rather than container offices (the factory near Hosur and
+  // the Krishnagiri belt around it), so they lead these two keyword hubs only.
   "Portable Cabin|Tamil Nadu": [
     { name: "Portable cabins made at our factory near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+    { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+    // Portable-cabin page for Perundurai / SIPCOT Perundurai (Erode), here and on Porta Cabin.
+    { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    // Tindivanam / SIPCOT Industrial Park, Viluppuram district (owner request, 2026-10-23), on both TN
+    // portable-cabin keyword hubs, after Perundurai.
+    { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
+    // Portable-cabin page for Tiruvallur (2026-10-23), here and on Porta Cabin, after Tindivanam.
+    { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -320,6 +330,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   "Porta Cabin|Tamil Nadu": [
     { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+    { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+    { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
+    { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -405,12 +420,20 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   "Portable Cabin|Karnataka": [
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+    { name: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+    { name: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     // Portable-cabin page (#145), here and on Porta Cabin: the Bengaluru-belt rule above covers container-office pages.
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
     // Portable-cabin page for Vasanthapura (South Bengaluru), here and on Porta Cabin, as for Jigani.
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    // Portable-cabin page for Attibele (2026-10-21), here and on Porta Cabin, as for Jigani; after
+    // Vasanthapura so the links already live keep their positions.
+    { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+    // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
+    { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
+    { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -427,13 +450,19 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   "Porta Cabin|Karnataka": [
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+    { name: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+    { name: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+    { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     // Porta-cabin page (#161, owner request 2026-10-20), on this hub only: it is the porta-cabin intent,
     // and the Bengaluru-belt rule above covers container-office pages (as for Jigani).
     { name: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+    // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
+    { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
