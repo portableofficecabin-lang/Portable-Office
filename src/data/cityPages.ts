@@ -9511,7 +9511,7 @@ export const CITY_PAGES: CityPage[] = [
    * Interlinking: on the "Portable Cabin|Tamil Nadu" and "Porta Cabin|Tamil Nadu" hubs; linked from
    * Portable Cabin Manufacturers in Hosur and Container Office in Kalpakkam; links to the product
    * categories, the Hosur, Krishnagiri, Cheyyar, Perundurai, Tiruvallur, Gummidipoondi, Kalpakkam
-   * and Chennai pages and both Tamil Nadu hubs. Ranipet (#179) is not live, so it is not linked.
+   * and Chennai pages and both Tamil Nadu hubs, and to Ranipet (#179, merged before this page).
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
    * the call / WhatsApp buttons are on by default.
@@ -9904,6 +9904,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
       { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
       { label: "Portable Cabins for SIPCOT Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
+      { label: "Portable Cabins in Ranipet SIPCOT", href: "/cities-we-serve/portable-cabin-ranipet" },
       { label: "Portable Cabins in Perundurai, Erode", href: "/cities-we-serve/portable-cabin-perundurai" },
       { label: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
       { label: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
