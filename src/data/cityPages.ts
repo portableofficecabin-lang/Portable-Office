@@ -21,6 +21,12 @@ export interface CityPageListItem {
   /** Bold lead-in (optional). */
   title?: string;
   text: string;
+  /**
+   * Optional contextual internal link, rendered under the item's text in the SOLUTIONS list only
+   * (first used by Portable Security Cabins in Shoolagiri, whose cabin types each point at their
+   * verified product or guide page). Unset = no element, so every other page renders as before.
+   */
+  link?: CityPageLink;
 }
 
 /** A plain internal link — used for CTA buttons and the optional related-pages block. */
@@ -35,10 +41,38 @@ export interface CityPageSection {
   paragraphs?: string[];
   bullets?: CityPageListItem[];
   /**
+   * Optional simple table rendered after the paragraphs and before the bullets (first used by
+   * Portable Security Cabins in Shoolagiri for its indicative sizes). The first cell of each row is
+   * the row header; `caption` renders visibly under the table. Unset = nothing rendered.
+   */
+  table?: CityPageTable;
+  /**
    * Optional paragraphs rendered AFTER the bullets (first used by PUF Panel Cabins in Padalur and
    * Irur, whose thickness and assembly sections close with a note). Unset = nothing rendered.
    */
   closing?: string[];
+}
+
+/** A small data table inside an extra section (see CityPageSection.table). */
+export interface CityPageTable {
+  caption: string;
+  headers: string[];
+  /** Each row has one cell per header; the first cell is rendered as the row header. */
+  rows: string[][];
+}
+
+/**
+ * Optional on-page enquiry form (see CityPage.enquiryForm): the category enquiry form
+ * (src/components/products/CategoryEnquiryForm.tsx) with a city-page heading and intro. It posts to
+ * the existing /api/enquiries route, which records the submitting page in the enquiry message.
+ */
+export interface CityPageEnquiryForm {
+  /** A category with a landing section (CATEGORY_LANDING_SLUGS) — the API rejects any other. */
+  categorySlug: string;
+  /** e.g. "security cabin" — used in the custom-requirement option and the WhatsApp text. */
+  noun: string;
+  heading: string;
+  intro: string;
 }
 
 export interface CityPage {
@@ -175,8 +209,27 @@ export interface CityPage {
    * never from the entry. Shown by default since 2026-10-14 (unset = shown); set `false` to hide.
    */
   ctaContactButtons?: boolean;
+  /**
+   * Optional row of contact buttons under the intro paragraphs: the primary quotation button (to the
+   * on-page enquiry form when `enquiryForm` is set, otherwise /contact) plus Call and WhatsApp from
+   * COMPANY. First used by Portable Security Cabins in Shoolagiri. Unset = no row, as before.
+   */
+  heroCta?: boolean;
+  /**
+   * Optional enquiry form rendered after the CTA box (first used by Portable Security Cabins in
+   * Shoolagiri). Unset = no form, so every other page renders as before.
+   */
+  enquiryForm?: CityPageEnquiryForm;
   /** Optional "Related pages" link block rendered after the CTA, before the disclaimer. */
   relatedLinks?: CityPageLink[];
+  /** Optional heading for the related-links block. Defaults to "Related pages". */
+  relatedLinksHeading?: string;
+  /**
+   * Optional second link block after the related links, for nearby location pages (first used by
+   * Portable Security Cabins in Shoolagiri, which splits related products from nearby service
+   * areas). Same markup as the related-links block. Unset = nothing rendered.
+   */
+  nearbyLinks?: { heading: string; links: CityPageLink[] };
 
   /**
    * Optional legal note rendered muted below the CTA. REQUIRED whenever the page names a
@@ -15716,6 +15769,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
       // Tindivanam / SIPCOT Industrial Park (owner request, 2026-10-23: interlink the new page).
       { label: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
+      // Security-cabin page for Shoolagiri, the next town on NH 44 (2026-11-04).
+      { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
       { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
@@ -16570,6 +16625,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
       { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
       { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+      // Security-cabin page for Shoolagiri, in the same district (2026-11-04).
+      { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
       { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { label: "Portable Cabins in Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
       { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
@@ -19383,6 +19440,379 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Ranipet, SIPCOT Ranipet or Ranipet district. Delivery, unloading and placement are arranged for each project, the supports depend on the site, and delivery and placement schedules are not guaranteed. Rental is subject to availability and the rental quotation. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and specialist coatings, chemical resistance, fire performance, hazardous-area electrical equipment, laboratory fit-outs and temperature control are supplied only where expressly specified and confirmed. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; they are not photographs of installations in Ranipet. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Ranipet industrial complex are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the plant positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. Notes on placement, hazardous environments, insulation, ventilation, shutdown planning and relocation are general guidance, not engineering, safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SECURITY CABIN MANUFACTURERS IN SHOOLAGIRI INDUSTRIAL AREA — the security-cabin intent
+   * for Shoolagiri / SIPCOT Shoolagiri on NH 44 between Hosur and Krishnagiri (Tamil Nadu): guard
+   * cabins, watchman booths, gate and check-post cabins. The site's first security-cabin location
+   * page. It does not compete with "Container Office in SIPCOT Shoolagiri" (container offices, part
+   * of the container-office cluster): this page is about guard posts only, and links to that page.
+   *
+   * Owner brief of 2026-11-04 (slug, meta title and H1 as given; meta description trimmed from 165 to
+   * 158 characters by dropping "custom" before "gate cabins", to fit the 160-character audit limit).
+   * Mapped onto the template slots:
+   *   • Hero → tagline (ours) + the owner's three opening paragraphs + a factory-location line; the
+   *     Request Quote / Call / WhatsApp row sits under the intro (`heroCta`).
+   *   • "Why Security Cabins Are Important" → why (the seven highlights as bullets).
+   *   • "Types of Security Cabins" → solutions (eight types), each with a contextual link (`link`) to
+   *     a verified product or guide page. The FRP section is NOT included: the brief makes it
+   *     conditional on FRP cabins being genuinely available, and the only evidence is the Security
+   *     Cabin product page's material list, so it waits for the owner's confirmation.
+   *   • "Features and Specifications" → features (fourteen items, optional ones marked); nothing is
+   *     described as standard equipment (sizesNote).
+   *   • "SIPCOT Shoolagiri Industrial Applications" → industries (eight gate positions). SIPCOT facts
+   *     checked on sipcotweb.tn.gov.in on 2026-11-04: the Projects page names "the Shoolagiri SIPCOT
+   *     Industrial Estate spanning 989 acres" (existing) and the Upcoming Industrial Parks page lists
+   *     "Shoolagiri (expansion), Krishnagiri – 1918.27 acres" (planned). The intro keeps them apart.
+   *   • "Security Cabins for Shoolagiri Weather" → custom (beside the interior render).
+   *   • "Why Choose Portable Office Cabin" → whyUs; "Areas Served" → areas; "Manufacturing and
+   *     Delivery" → how (six steps).
+   *   • "Price" and "Sizes" → two extra sections; the sizes table uses the new `table` field and is
+   *     labelled indicative. Every size falls inside the 3 × 3 ft to 10 × 8 ft range the Security
+   *     Cabin product page states; manufacturing availability per size is confirmed in the quotation.
+   *   • FAQs (eight, as listed); rental and timeline answers commit to nothing beyond the rental page
+   *     (which lists a Security Guard Cabin) and the quotation.
+   *   • "Request a Quotation" → CTA (COMPANY numbers and sales address) + the category enquiry form
+   *     (`enquiryForm`, security-cabins: site location, size, quantity, specifications), then
+   *     Related products and Nearby service areas (`nearbyLinks`).
+   * Wording rules kept: no ₹, no lead time, no response deadline; specifications are confirmed in
+   * the quotation; towns are delivery enquiry locations; supports are confirmed per site. The factory
+   * is described as the site states it elsewhere (Kamandoddi, Krishnagiri district, near Hosur).
+   * SIPCOT is named nominatively, with the non-affiliation note in the disclaimer.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Portable Security Cabin in Shoolagiri
+   * city page/Portable Security Cabin in Shoolagiri/cabin (1–4).webp", no EXIF/XMP/ICC) copied
+   * byte-for-byte to slug names: (4) three-quarter view (1024²) = hero / og:image, no caption;
+   * (1) interior (1200×896) = beside the weather section, captioned with its optional fittings;
+   * (2) front elevation and (3) rear elevation with ventilation louvres (1200×896) = two-column
+   * gallery. They show one compact single-guard cabin design; the disclaimer says they are renders,
+   * not installations in Shoolagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (security cabin).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-security-cabin-shoolagiri",
+    city: "Shoolagiri",
+    listTitle: "Portable Security Cabins in Shoolagiri",
+    metaTitle: "Portable Security Cabin in Shoolagiri | Guard Cabin Manufacturer",
+    metaDescription:
+      "Portable security cabin manufacturers serving Shoolagiri SIPCOT, Hosur and Krishnagiri. MS and PUF guard cabins, watchman booths and gate cabins. Get a quote.",
+    keywords:
+      "Portable Security Cabin in Shoolagiri, Security Cabin Manufacturers in Shoolagiri, Portable Security Cabin Suppliers Shoolagiri, Security Cabin SIPCOT Shoolagiri, Security Guard Cabin Shoolagiri Industrial Area, Security Cabin Hosur, Prefabricated Security Cabin Shoolagiri, Guard Cabin, Watchman Cabin, Gate Cabin, Check Post Cabin, MS Security Cabin, PUF Security Cabin",
+    geo: {
+      region: "IN-TN",
+      placename: "Shoolagiri, Krishnagiri district, Tamil Nadu, India",
+      position: "12.6740;77.9694",
+      icbm: "12.6740, 77.9694",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Security Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri.webp",
+      alt: "Portable security cabin for Shoolagiri — illustrative three-quarter render of a compact single-guard cabin with white flat wall panels in a bronze-coloured steel frame, a flat roof with a slight overhang, a sliding window on the side and a white door under a small canopy, on a paved base with a factory gate behind",
+      width: 1024,
+      height: 1024,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri-interior.webp",
+      alt: "Portable security cabin for Shoolagiri — illustrative interior render of the single-guard cabin: wood-tone wall panels, a wide sliding window looking out at a factory gate, a small desk and chair with a CCTV monitor, a distribution board, switch and socket points, a tube light, a wall-mounted fire extinguisher, a white door and a chequered floor",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render, shown with an optional desk, chair, CCTV monitor and fire extinguisher. The fittings supplied follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri-front-elevation.webp",
+        alt: "Portable security cabin for Shoolagiri — illustrative front elevation of the single-guard cabin: one white door with a lever handle under a small canopy, set in a bronze-coloured steel frame on a paved path, with a factory gate and boom barrier behind",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri-rear-ventilation.webp",
+        alt: "Portable security cabin for Shoolagiri — illustrative rear elevation of the single-guard cabin: a plain white panel wall in a bronze-coloured steel frame with four louvred ventilation grilles, two below the roof and two near the floor",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Security Cabin Manufacturers in Shoolagiri Industrial Area",
+    tagline: "Guard cabins, watchman booths and gate cabins, built to order for Shoolagiri, Hosur and Krishnagiri district.",
+    intro: [
+      "Portable Office Cabin manufactures and supplies prefabricated security cabins for industrial, commercial and construction applications in Shoolagiri, Hosur and Krishnagiri district.",
+      "Our portable guard cabins provide a practical shelter for security personnel at factory gates, warehouses, construction sites, parking areas and industrial plots.",
+      "Available configurations can include MS construction, PUF-insulated panels, sliding windows, electrical fittings, seating arrangements and custom layouts.",
+      "Cabins are fabricated at our factory at Kamandoddi, near Hosur, in Krishnagiri district, the same district as Shoolagiri, and delivered to your site by road.",
+    ],
+
+    whyHeading: "Why Security Cabins Are Important in Shoolagiri",
+    whyIntro:
+      "New industrial plots, factory entrances, warehouses and construction projects around Shoolagiri need a manned point at the gate from the first day of work, often long before a permanent gatehouse is built. A portable security cabin gives that post a proper room for:",
+    whyBullets: [
+      { title: "Security personnel shelter", text: "a roofed, lockable workspace for guards working long shifts at the gate." },
+      { title: "Visitor registration", text: "a desk or counter for the visitor register, ID checks and gate passes." },
+      { title: "Vehicle entry monitoring", text: "windows positioned so the guard can see vehicles approaching the gate." },
+      { title: "Material movement records", text: "space for inward and outward registers, delivery challans and material gate passes." },
+      { title: "CCTV monitoring provisions", text: "electrical points and a desk position for a CCTV monitor, where your security plan needs one." },
+      { title: "Relocatable security posts", text: "a cabin that can be lifted and moved when the gate changes, for example from a construction entrance to the permanent factory gate." },
+      { title: "Temporary and permanent gate applications", text: "a post for the construction phase or, when specified for it, a long-term gate cabin." },
+    ],
+    whyOutro:
+      "Relocation needs suitable lifting equipment, access and supports. If you expect to move the cabin later, mention it before fabrication.",
+
+    solutionsHeading: "Types of Security Cabins",
+    solutionsIntro:
+      "Every type is built to order. Dimensions, materials and fittings are confirmed in your quotation.",
+    solutions: [
+      {
+        title: "Single-Guard Security Cabin",
+        text: "A compact security booth designed for one guard, with suitable windows, ventilation and space for a small desk or chair. Typical positions are side gates, warehouse entrances and parking entries.",
+        link: { label: "Security cabin materials and size range", href: "/products/security-cabin" },
+      },
+      {
+        title: "Two-Guard Security Cabin",
+        text: "A larger security cabin suitable for two guards, with options for a desk, seating, storage and electrical fittings. It suits main gates that are manned around the clock or handle visitors and vehicles together.",
+        link: { label: "Compare security cabin models", href: "/products/category/security-cabins" },
+      },
+      {
+        title: "Security Cabin with Attached Toilet",
+        text: "A customised guard cabin with an integrated toilet arrangement for sites requiring nearby sanitation facilities. The site needs a water supply and a drainage or waste arrangement, which are confirmed before fabrication.",
+        link: { label: "Planning a cabin with a toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      },
+      {
+        title: "PUF Insulated Security Cabin",
+        text: "A security cabin using insulated wall and roof panels to improve thermal comfort for guards on long shifts. Insulation reduces heat transfer; it does not cool the cabin by itself.",
+        link: { label: "Cabin insulation and cooling guide", href: "/products/portable-cabin/insulation-and-cooling" },
+      },
+      {
+        title: "MS Security Cabin",
+        text: "A mild steel security cabin suitable for industrial entrances, construction projects and temporary security posts.",
+        link: { label: "MS and PUF cabin materials compared", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      },
+      {
+        title: "Gate Cabin / Check Post Cabin",
+        text: "A security cabin designed for entry and exit monitoring, visitor records, vehicle checks and material gate documentation.",
+        link: { label: "Guard Security Cabin for gate posts", href: "/products/guard-security-cabin" },
+      },
+      {
+        title: "Watchman Cabin",
+        text: "A portable shelter for security personnel at industrial plots, warehouses, farmland and commercial properties.",
+        link: { label: "Portable cabins for plots and sites", href: "/products/category/portable-cabins" },
+      },
+      {
+        title: "Parking, Toll and Ticket Booth Cabin",
+        text: "A compact booth for parking management, ticket counters and controlled access points, with a service window where it is needed.",
+        link: { label: "Portable Shop Cabin for kiosks and ticket counters", href: "/products/portable-shop-cabin" },
+      },
+    ],
+
+    featuresHeading: "Features and Specifications",
+    featuresIntro: "Depending on the configuration you choose, a security cabin can include:",
+    features: [
+      "MS structural frame",
+      "Anti-corrosion surface treatment",
+      "MS sheet or PUF-insulated wall construction",
+      "Weather-resistant roofing",
+      "Lockable entrance door",
+      "Sliding windows, with optional safety grills",
+      "Interior flooring",
+      "Electrical wiring provisions",
+      "Lighting and fan points",
+      "Optional AC provision",
+      "Optional attached toilet",
+      "Optional service window",
+      "Optional desk and seating",
+      "Optional company branding",
+    ],
+    sizesNote:
+      "None of these items is assumed: the frame, walls, roof, finishes and fittings supplied are the ones listed in your approved specification and quotation.",
+
+    industriesHeading: "SIPCOT Shoolagiri Industrial Applications",
+    industriesIntro:
+      "SIPCOT's website describes its existing Shoolagiri industrial estate as spanning 989 acres, and separately lists a Shoolagiri expansion of about 1,918 acres among its upcoming industrial parks. Plots in the existing estate can need a gate post straight away; plots in a planned park may still be at the approval or development stage. Gate positions where a security cabin is typically used:",
+    industries: [
+      { title: "Main factory gates", text: "visitor registration, ID checks and a clear view of the approach road." },
+      { title: "Material entry gates", text: "inward and outward registers, delivery challans and material gate passes." },
+      { title: "Truck entry checkpoints", text: "a service window, lighting for night checks and space to check vehicle documents." },
+      { title: "Warehouse entrances", text: "a compact cabin beside the loading gate for entry logs and key control." },
+      { title: "Industrial plot boundaries", text: "a watchman cabin at a second gate or far corner of a large plot." },
+      { title: "Construction site gates", text: "a relocatable post that can move as the works progress." },
+      { title: "Staff parking areas", text: "a small booth for parking passes and vehicle logs." },
+      { title: "Visitor entry checkpoints", text: "a counter for visitor badges, with space for visitors to wait." },
+    ],
+
+    customHeading: "Security Cabins for Shoolagiri Weather",
+    customIntro:
+      "A guard cabin is occupied through the day and night, in sun and rain. Construction features to discuss for local conditions:",
+    customBullets: [
+      { title: "Insulated wall and roof options", text: "PUF-insulated panels reduce heat transfer through the walls and roof compared with bare sheet." },
+      { title: "Roof sealing and drainage", text: "a sloped or overhanging roof and sealed joints help shed rainwater, when they are maintained." },
+      { title: "Corrosion-resistant coatings", text: "surface preparation and protective paint for the steel frame and sheets." },
+      { title: "Ventilation", text: "window positions and ventilation grilles, like the louvres in the rear view above, for air movement." },
+      { title: "Suitable floor elevation", text: "the cabin set on supports above ground level to keep the floor clear of standing water." },
+      { title: "Weather-resistant external finishes", text: "exterior paint or panel finishes suited to outdoor exposure." },
+    ],
+    customOutro:
+      "Insulation does not cool a cabin by itself, and no fixed indoor temperature is promised. For long day shifts, also plan ventilation, shading, fan points and, where needed, an AC provision.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin",
+    whyUsIntro: "What working directly with the manufacturer gives you:",
+    whyUsBullets: [
+      { title: "Custom cabin dimensions", text: "sized to the gate, the number of guards and the space available." },
+      { title: "Multiple material options", text: "MS sheet or PUF-insulated construction, chosen for how the cabin will be used." },
+      { title: "Layout customisation", text: "door, window, counter and desk positions planned around your gate." },
+      { title: "Factory and industrial applications", text: "cabins for factory gates, warehouses, industrial plots and construction sites." },
+      { title: "Optional electrical and interior fittings", text: "lighting, fan and socket points, AC provision, desk and seating when specified." },
+      { title: "Direct quotation process", text: "a written quotation from the manufacturer, with inclusions, taxes and transport charges stated." },
+      { title: "Transportation coordination", text: "delivery from our factory, with unloading and placement planned with your site team." },
+    ],
+
+    areasHeading: "Areas Served Around Shoolagiri",
+    areasText:
+      "We welcome security cabin enquiries from Shoolagiri town and SIPCOT Shoolagiri, Hosur, Krishnagiri, Berigai, Uddanapalli, Kelamangalam, Rayakottai, Denkanikottai and Bagalur, and from sites along NH 44 between Hosur and Krishnagiri. For other locations, share the exact site address so we can confirm transport arrangements. Entry into industrial premises remains subject to each site's own permissions and safety procedures.",
+
+    howHeading: "Manufacturing and Delivery",
+    howIntro: "How an order moves from your enquiry to handover at the gate:",
+    howSteps: [
+      { title: "You share your requirements and site location.", text: "Tell us the cabin's use, the number of guards, a preferred size and where the site is." },
+      { title: "We review the proposed size and layout.", text: "We check the dimensions, door and window positions and fittings against how the gate works." },
+      { title: "You receive a quotation and specifications.", text: "The written quotation lists the specification, inclusions and applicable charges." },
+      { title: "Fabrication begins after order confirmation.", text: "" },
+      { title: "The finished cabin is transported to your site.", text: "" },
+      { title: "Unloading, placement and handover are coordinated.", text: "Placement is on supports prepared as agreed for your site." },
+    ],
+    howOutro:
+      "Production and delivery dates are confirmed when the order is finalised, based on the specification, quantity and site readiness.",
+
+    extraSections: [
+      {
+        heading: "Portable Security Cabin Price in Shoolagiri",
+        paragraphs: [
+          "A security cabin built to order is priced for its configuration. The price depends on:",
+        ],
+        bullets: [
+          { text: "Cabin dimensions" },
+          { text: "Structural materials" },
+          { text: "Insulation requirements" },
+          { text: "Window and door configurations" },
+          { text: "Electrical fittings" },
+          { text: "Interior finishing" },
+          { text: "Toilet and AC provisions" },
+          { text: "Transportation and unloading requirements" },
+        ],
+        closing: [
+          "Standard security cabin models sold online show their fixed price on their own product pages. For a custom size or layout, send your requirement through the enquiry form below, by phone or on WhatsApp, and we will prepare a written quotation for your configuration and site.",
+        ],
+      },
+      {
+        heading: "Security Cabin Sizes",
+        paragraphs: [
+          "The sizes below are indicative configurations, not a stock list. The actual size is confirmed in your quotation after we review the gate, the number of guards and the fittings required.",
+        ],
+        table: {
+          caption: "Indicative security cabin configurations. Manufacturing availability for each size is confirmed with your quotation.",
+          headers: ["Size", "Typical application"],
+          rows: [
+            ["4 × 4 ft", "Compact guard booth"],
+            ["6 × 4 ft", "Single-guard cabin"],
+            ["6 × 6 ft", "Guard cabin with desk"],
+            ["8 × 6 ft", "Two-guard cabin"],
+            ["10 × 8 ft", "Larger cabin with optional toilet"],
+            ["Custom", "Industrial gate cabin"],
+          ],
+        },
+        closing: [
+          "An attached toilet needs extra floor area, plus water supply and drainage arrangements at the site.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a portable security cabin in Shoolagiri?",
+        answer:
+          "It depends on the size, materials, insulation, door and window arrangement, electrical fittings, interior finish, any toilet or AC provision, and transport and unloading at your site. Standard models sold online show their fixed price on their product pages; for a custom cabin, share your requirement and we will send a written quotation.",
+      },
+      {
+        question: "Which security cabin size should I choose?",
+        answer:
+          "Start from the number of guards and what they need inside. One guard with a chair suits a compact booth; a desk and registers need more depth; two guards or an attached toilet need a larger cabin. Tell us how the gate works and we will suggest a size.",
+      },
+      {
+        question: "Can I order a security cabin with an attached toilet?",
+        answer:
+          "A toilet compartment can be planned into a larger security cabin. The site needs a water supply and a drainage or waste arrangement, and the layout and fittings are confirmed in the quotation before fabrication.",
+      },
+      {
+        question: "What is the difference between MS and PUF security cabins?",
+        answer:
+          "An MS security cabin uses mild steel sheet walls on a steel frame, a common choice for industrial gates and temporary posts. A PUF cabin uses insulated sandwich panels that reduce heat transfer through the walls and roof, which helps comfort on long shifts. The right choice depends on how long the cabin is occupied, its exposure and your budget.",
+      },
+      {
+        question: "Can a portable security cabin be relocated?",
+        answer:
+          "Yes, if its design and condition allow it. Utilities must be disconnected, and the move needs suitable lifting equipment, access and supports at the new position. Mention planned moves before fabrication.",
+      },
+      {
+        question: "Do you supply security cabins to SIPCOT Shoolagiri and Hosur?",
+        answer:
+          "We welcome enquiries from SIPCOT Shoolagiri, Hosur and the surrounding Krishnagiri district; our factory is at Kamandoddi in Krishnagiri district, near Hosur. Share the site address so we can confirm transport arrangements. Entry into industrial premises is subject to each site's own permissions.",
+      },
+      {
+        question: "Are security cabins available on rent?",
+        answer:
+          "Our rental page lists a security guard cabin. Availability for a Shoolagiri site, the rental period, transport, return arrangements and terms are confirmed in a rental quotation, so share the cabin type, the period and the site location when you enquire.",
+      },
+      {
+        question: "How long does manufacturing and delivery take?",
+        answer:
+          "The timeline depends on the specification, quantity, production schedule and site readiness. The expected schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Security Cabin Quotation",
+    ctaText: `Tell us the number of guards, the size you have in mind, the quantity and your site location in Shoolagiri, Hosur or Krishnagiri district. Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the enquiry form below.`,
+    ctaButtonLabel: "Request a Quotation",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "security-cabins",
+      noun: "security cabin",
+      heading: "Send Your Security Cabin Requirement",
+      intro:
+        "Share the size, quantity, delivery location and any specifications. Our sales team will reply to confirm the details before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Security Cabin", href: "/products/security-cabin" },
+      { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
+      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+      { label: "MS Container Office Cabin", href: "/products/ms-container-office-cabin" },
+      { label: "Cabins on Rent", href: "/rental-service" },
+      { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
+      { label: "Security Cabin in Bangalore", href: "/promotions/security-cabin-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby service areas",
+      links: [
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
+        { label: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the supports depend on the site, and production and delivery dates are not guaranteed. Rental is subject to availability and the rental quotation. The cabin types, sizes, materials, insulation, fittings, finishes and other specification items described on this page are options, and the sizes shown are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin single-guard cabin design, shown with optional furniture and fittings; other cabin types look different, and the images are not photographs of installations in Shoolagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Shoolagiri estate and planned park are named only to describe the location, with their areas as published on SIPCOT's website; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the gate positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. Notes on insulation, ventilation, toilets, relocation and supports are general guidance, not engineering, safety or legal advice.",
   },
 ];
 

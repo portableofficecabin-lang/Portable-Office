@@ -358,6 +358,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
+  // Security-cabin hub — Portable Security Cabins in Shoolagiri (2026-11-04), the first security-cabin
+  // city page; the page links back to this hub.
+  "Security Cabin|Tamil Nadu": [
+    { name: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
+  ],
   // Chennai hubs — the Chennai city page first: it owns the "container office in Chennai" intent,
   // so the generated promotion page hands that phrase on to it; then the two belt pages
   // (Kalpakkam, Chengalpattu district; Athipattu, Tiruvallur district / Ennore port).
