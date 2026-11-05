@@ -231,7 +231,11 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "security-cabins": {
     locationHeading: "Security cabins by location",
-    locationLinks: promotionLocations("security-cabin"),
+    // The four promotion pages, then the security-cabin city page (Krishnagiri, 2026-11-05).
+    locationLinks: [
+      ...promotionLocations("security-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+    ],
     guideLinks: [GUIDE.materials, GUIDE.insulation, GUIDE.installation],
     relatedCategorySlugs: ["portable-cabins", "site-office-containers"],
     // Small standalone cabins a gate or campus buyer also compares: the 10–40 ft steel office

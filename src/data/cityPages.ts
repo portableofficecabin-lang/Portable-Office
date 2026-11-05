@@ -51,6 +51,12 @@ export interface CityPageSection {
    * Irur, whose thickness and assembly sections close with a note). Unset = nothing rendered.
    */
   closing?: string[];
+  /**
+   * Optional position of the section. Unset = after the "how" steps, where every extra section has
+   * always rendered. "afterSolutions" renders it straight after the solutions list instead (first used
+   * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
+   */
+  placement?: "afterSolutions";
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -133,7 +139,14 @@ export interface CityPage {
 
   whyHeading: string;
   whyIntro: string;
+  /** May be empty when the section is a table (`whyTable`); an empty list renders no <ul>. */
   whyBullets: CityPageListItem[];
+  /**
+   * Optional table rendered after the "why" bullets and before `whyOutro`, with the same markup as an
+   * extra section's table (first used by Portable Security Cabins in Krishnagiri for its portable
+   * cabin vs brick guard room comparison). Unset = no table, as before.
+   */
+  whyTable?: CityPageTable;
   /** Optional closing line rendered after the "why" bullets. */
   whyOutro?: string;
 
@@ -16420,7 +16433,9 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Buy or rent portable cabins in Krishnagiri for factories, warehouses and projects. Custom site offices, security cabins and labour rooms. Get a quote.",
     keywords:
-      "Portable Cabins in Krishnagiri, Portable Cabin Krishnagiri Industrial Area, Site Office Cabin Krishnagiri, Security Cabin Krishnagiri, Labour Accommodation Cabin Krishnagiri, Portable Cabin on Rent Krishnagiri, Prefab Cabin Krishnagiri, Portable Toilet Cabin Krishnagiri",
+      // "Security Cabin Krishnagiri" moved to the dedicated security-cabin page (2026-11-05, owner: no
+      // keyword cannibalisation between the Krishnagiri pages).
+      "Portable Cabins in Krishnagiri, Portable Cabin Krishnagiri Industrial Area, Site Office Cabin Krishnagiri, Labour Accommodation Cabin Krishnagiri, Portable Cabin on Rent Krishnagiri, Prefab Cabin Krishnagiri, Portable Toilet Cabin Krishnagiri",
     geo: { region: "IN-TN", placename: "Krishnagiri, Tamil Nadu, India", position: "12.5266;78.2150", icbm: "12.5266, 78.2150" },
     motion: true,
     serviceJsonLd: { serviceType: "Portable Cabin" },
@@ -16634,6 +16649,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
       // Portable-toilet page for Krishnagiri, the sanitation-only sibling of this page (2026-11-04).
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      // Security-cabin page for Krishnagiri, the guard-room sibling of this page (2026-11-04).
+      { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
       { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
@@ -19866,6 +19883,380 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, seat counts, sizes, panels, fittings, water storage, plumbing and waste provisions and finishes described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. Rental is subject to availability and the rental quotation. The images on this page are illustrative renders of one two-seater toilet cabin design with Western seats; other configurations look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there. The industries, premises and towns named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas. The planning estimate and the notes on sanitation, water supply, wastewater, cleaning and maintenance are general guidance, not engineering, public-health or legal advice; wastewater handling and disposal must comply with applicable local requirements.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SECURITY CABINS IN KRISHNAGIRI — the security-cabin intent for Krishnagiri town, SIPCOT
+   * Kurubarapalli and the Krishnagiri belt (Tamil Nadu). A sibling of the general Portable Cabins in
+   * Krishnagiri Industrial Area page (which covers every cabin type) and of the Portable Toilets in
+   * Krishnagiri page (sanitation only); this page keeps to Krishnagiri's own gate types: SIPCOT factories, mango pulp units, granite quarries, NH 44 / NH 48 truck yards,
+   * residential layouts, campuses and project sites. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-04, mapped onto the template slots in the brief's order wherever the
+   * template allows:
+   *   1 Hero → h1 / tagline / intro + heroCta (Request a Quote, Call, WhatsApp).
+   *   2 Portable cabin vs brick guard room → why, carried by `whyTable` (whyBullets empty); the
+   *     brief's foundation rule ("supports depend on the site") is the whyOutro.
+   *   3 Industries → solutions: seven h3 subsections, each with a verified contextual link where one
+   *     fits.
+   *   4 Choose the right cabin → extra section with `placement: "afterSolutions"` and the brief's
+   *     table, captioned as indicative (the catalogue's security-cabin range is 3 × 3 ft kiosks to
+   *     10 × 8 ft cabins, which covers every size in the table).
+   *   5 Features → features, optional upgrades marked; sizesNote says the camera, floodlight and
+   *     intercom in the side view are illustrative (the cabin gets power points for them).
+   *   6 Weather → custom, beside the interior render.
+   *   7 Price, 8 Rent, 9 Specifications → extra sections after the how steps. Rent is kept because
+   *     the rental page lists a security guard cabin; area availability is left to the rental
+   *     quotation. "Standard Specifications" is titled "Security Cabin Specifications" and every row
+   *     is an option confirmed in the quotation, since no specification is verified as standard.
+   *   10 Delivery → how; 11 Areas → areas; 12 Why us → whyUs; 13 FAQs (the brief's eight, worded
+   *     for Krishnagiri so none repeats another page's question); 14 Quote → CTA + enquiryForm.
+   * Owner wording rules: no ₹, lead times, ratings or customer claims; specifications are options
+   * confirmed in the quotation; towns and highways are delivery enquiry locations; the base is
+   * confirmed per site. SIPCOT is named nominatively (its Kurubarapalli industrial complex is in
+   * SIPCOT's citizen charter and the Tamil Nadu gazette; no area figure is given), with the
+   * non-affiliation note in the disclaimer.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: the page targets security cabins in
+   * Krishnagiri only. The areas list keeps to the Krishnagiri belt (Shoolagiri and Hosur, which have
+   * their own pages, are left to the nearby links), the general Krishnagiri page's "Security Cabin
+   * Krishnagiri" keyword moved here, and link anchors and the CTA line are not shared with any other
+   * page. The planned Shoolagiri security-cabin page (PR #189) is not linked until it is live.
+   *
+   * Images: three owner-dropped webp renders ("public/images/Krishnagiri Industrial Area security
+   * cabin city page/Krishnagiri Industrial Area security cabin/cabin (1–3)_converted.webp", no
+   * EXIF/XMP/ICC/IPTC) copied byte-for-byte to slug names: (1) front view (1024²) = hero / og:image,
+   * no caption; (2) interior (600×448, shown at its natural size) = beside the weather section,
+   * captioned; (3) gate-side elevation with camera, floodlight and intercom (1200×896) = single-image
+   * gallery after the features. One beige single-guard design; the disclaimer says they are renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (security cabin).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-security-cabin-krishnagiri",
+    city: "Krishnagiri",
+    listTitle: "Portable Security Cabins in Krishnagiri",
+    // The brief's title ("… | Guard Cabin Manufacturers", 66 chars) is one over the 65-char limit.
+    metaTitle: "Portable Security Cabin in Krishnagiri | Guard Cabin Manufacturer",
+    metaDescription:
+      "Portable security cabin manufacturers in Krishnagiri supplying guard rooms, watchman cabins and gate booths for factories, quarries and warehouses. Get a quote.",
+    keywords:
+      "Portable Security Cabin in Krishnagiri, Security Cabin Manufacturers in Krishnagiri, Security Guard Cabin Krishnagiri, Security Cabin Suppliers Krishnagiri, Portable Guard Room Krishnagiri, SIPCOT Krishnagiri Security Cabin, Prefabricated Security Cabin Krishnagiri, Watchman Cabin, Guard Booth, Gate Cabin, MS Security Cabin, PUF Security Cabin, Security Cabin with Toilet, AC Security Cabin, Parking Booth, Security Check Post Cabin",
+    geo: { region: "IN-TN", placename: "Krishnagiri, Tamil Nadu, India", position: "12.5266;78.2150", icbm: "12.5266, 78.2150" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Security Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-security-cabin-krishnagiri/portable-security-cabin-krishnagiri.webp",
+      alt: "Portable security cabin for Krishnagiri — illustrative front render of a single-guard cabin with beige flat wall panels, a geometric-pattern panel under a flat overhanging roof, a black-framed glazed entrance door with a lever handle and a black-framed window beside it, on a raised base beside a factory gate",
+      width: 1024,
+      height: 1024,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-security-cabin-krishnagiri/portable-security-cabin-krishnagiri-interior.webp",
+      alt: "Portable security cabin for Krishnagiri — illustrative interior render of the single-guard cabin: wood-tone wall panels with a geometric frieze, a black-framed glazed door and window facing the gate, a corner window on the side wall, a small wooden desk and a ceiling tube light",
+      width: 600,
+      height: 448,
+      caption:
+        "Illustrative interior render, shown with an optional desk. The panels, windows and fittings supplied follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-security-cabin-krishnagiri/portable-security-cabin-krishnagiri-gate-side-elevation.webp",
+        alt: "Portable security cabin for Krishnagiri — illustrative render of the cabin's gate-facing side: beige panels with a geometric-pattern band under the roof, a black-framed window, a wall-mounted intercom panel, a floodlight and a CCTV camera at the roof edge, and a cable entry at the base, between a steel gate and a brick wall",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Security Cabin Manufacturers in Krishnagiri Industrial Area",
+    tagline: "Guard rooms, watchman cabins and gate booths, built to order for factories, quarries, warehouses and sites around Krishnagiri.",
+    intro: [
+      "Portable Office Cabin manufactures and supplies prefabricated security cabins for factories, industrial units, granite quarries, warehouses, residential layouts, institutions and construction sites in Krishnagiri.",
+      "Our security cabins provide practical, relocatable accommodation for security personnel, with configurable windows, electrical fittings, insulation and interior layouts.",
+      "Each cabin is fabricated at our factory at Kamandoddi, near Hosur, in Krishnagiri district, and brought to your gate by road.",
+    ],
+
+    whyHeading: "Portable Security Cabin vs Brick Guard Room",
+    whyIntro:
+      "A brick guard room is built at the gate, course by course, and stays where it is built. A portable security cabin is fabricated as a finished unit in our factory while your site is prepared, then delivered and placed. The practical differences:",
+    whyBullets: [],
+    whyTable: {
+      caption:
+        "A general comparison. The groundwork, installation and schedule for your gate depend on the site, the specification and the order.",
+      headers: ["Aspect", "Portable security cabin", "Brick guard room"],
+      rows: [
+        ["Build process", "Fabricated in the factory while the site is prepared", "Built on site in stages, with time for curing and finishing"],
+        ["Site preparation", "A level base, plinth or supports suited to the cabin and the ground", "Excavation and foundations, then masonry, plaster and roof work"],
+        ["Relocation", "Can be lifted and moved when its design and condition allow", "Stays where it was built"],
+        ["Installation", "Unloading, placement and the final service connections", "Masonry, plastering, roofing, electrical and painting work at the gate"],
+        ["Reuse", "Can serve another gate or project", "Cannot be reused elsewhere"],
+        ["Customisation", "Size, windows, insulation, fittings and finish chosen before fabrication", "Changes after construction usually mean more civil work"],
+      ],
+    },
+    whyOutro:
+      "Portable does not mean no groundwork. Every cabin needs a suitable level base, plinth or supports, chosen for the ground conditions and any engineering requirements at your site and agreed before delivery.",
+
+    solutionsHeading: "Security Cabins for Krishnagiri Industries",
+    solutionsIntro:
+      "Gates around Krishnagiri range from SIPCOT factory entrances to quarry roads and highway truck yards. How a security cabin is typically planned for each:",
+    solutions: [
+      {
+        title: "Factories and SIPCOT Kurubarapalli",
+        text: "At factory gates in SIPCOT Kurubarapalli and the other industrial areas around Krishnagiri, the security cabin is where material entry is checked, visitors are registered and gate passes are issued. A window facing the approach road and power points for a CCTV monitor and an intercom let the guard run the checkpoint from inside the cabin.",
+        link: { label: "Guard Security Cabin for factory gates", href: "/products/guard-security-cabin" },
+      },
+      {
+        title: "Mango Pulp and Food Processing Units",
+        text: "During the mango season, pulp and food processing units see more trucks, more seasonal workers at the gate and frequent deliveries. A cabin with a service window and space for the delivery and worker-entry registers helps the guard keep the gate moving while the factory stays secure.",
+        link: { label: "Cabins on rent for seasonal needs", href: "/rental-service" },
+      },
+      {
+        title: "Granite Quarries and Processing Units",
+        text: "Quarry entrances, machinery yards and block storage areas are often remote, with dust and heavy vehicles close by. A robust MS watchman cabin with a lockable steel door, window grills and a raised base suits these positions; the dust exposure and vehicle movement at the site decide where it is placed.",
+        link: { label: "Choosing MS or PUF for a quarry cabin", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      },
+      {
+        title: "Warehouses and Highway Truck Yards",
+        text: "Warehouses and truck yards along NH 44 and NH 48 need a post for vehicle records, truck entry, dispatch checks and round-the-clock security. A cabin with a desk for the vehicle register, exterior lighting for night checks and an optional AC provision suits 24-hour shifts.",
+        link: { label: "Browse every security cabin model", href: "/products/category/security-cabins" },
+      },
+      {
+        title: "Residential Layouts and Gated Communities",
+        text: "At a residential layout or gated community, the entrance booth is the first thing visitors see. Optional ACP cladding and the developer's branding give it a finished look, and a counter keeps the visitor register at the window.",
+        link: { label: "Security cabin materials, including ACP", href: "/products/security-cabin" },
+      },
+      {
+        title: "Schools, Colleges, Hospitals and Petrol Bunks",
+        text: "Campuses, hospitals and petrol bunks usually need a compact booth for access monitoring and gate operations, sized for one guard with a clear view of the entrance and the vehicles coming in.",
+      },
+      {
+        title: "Construction Sites",
+        text: "A portable guard room secures a construction site from the start of work. When the project is complete, it can be lifted onto a truck for the next one, subject to its condition and the access at both sites.",
+        link: { label: "Container site offices for project sites", href: "/products/container-site-office" },
+      },
+    ],
+
+    featuresHeading: "Security Cabin Features",
+    featuresIntro:
+      "The guard room checklist we work through for each security cabin. Items marked as an optional upgrade are added only when you specify them:",
+    features: [
+      "Windows positioned for a clear view of the gate and its approach",
+      "Interior lighting and an exterior light point",
+      "Power points for a CCTV monitor and an intercom",
+      "Fan point",
+      "Desk or counter space for the visitor register",
+      "Lockable entrance door",
+      "Weather-resistant roof",
+      "Window safety grills (optional upgrade)",
+      "AC provision (optional upgrade)",
+      "Emergency lighting (optional upgrade)",
+      "Roof overhang (optional upgrade)",
+      "Company branding (optional upgrade)",
+    ],
+    sizesNote:
+      "The CCTV camera, floodlight and intercom panel in the side view below are shown for illustration; the cabin is supplied with power points for such equipment where specified. Every item on this list is confirmed in your approved specification and quotation.",
+
+    customHeading: "Weather-Resistant Security Cabins for Krishnagiri",
+    customIntro:
+      "Guards work long shifts through summer heat, monsoon rain and, at quarries and highway gates, dust from passing vehicles. Construction points to agree before fabrication:",
+    customBullets: [
+      { title: "PUF insulation options", text: "insulated wall and roof panels that reduce heat gain compared with bare steel sheet." },
+      { title: "Corrosion-resistant steel finishing", text: "surface preparation, primer and protective paint on the frame and sheets." },
+      { title: "Roof sealing and drainage", text: "sealed roof joints and a slope or overhang so rainwater runs off, kept in condition with routine maintenance." },
+      { title: "Ventilation and window placement", text: "windows placed for cross-ventilation as well as for a view of the gate." },
+      { title: "Dust management", text: "at quarry and highway sites, window seals, a door that faces away from the haul road where possible and a position away from stockpiles reduce the dust that gets in, without sealing it out completely." },
+      { title: "Flooring and base support", text: "cement board with vinyl, or another agreed floor finish, on a base raised clear of standing water." },
+    ],
+    customOutro:
+      "Insulation slows heat transfer but does not cool the cabin by itself, and no indoor temperature, dust level or service life is promised; how long a cabin lasts depends on its materials, exposure and maintenance.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin",
+    whyUsIntro: "Buying from the manufacturer means one team handles the design, fabrication and delivery of your cabin:",
+    whyUsBullets: [
+      { title: "Custom dimensions and layouts", text: "the cabin is sized and laid out around your gate and the number of guards." },
+      { title: "Structural material options", text: "MS sheet or PUF-insulated panel construction, with an ACP finish where the entrance calls for it." },
+      { title: "Industrial and commercial applications", text: "security cabins for factories, quarries, warehouses, residential layouts, campuses and project sites." },
+      { title: "Optional interior and electrical fittings", text: "lighting, fan and socket points, CCTV and intercom power points, an AC provision and a desk or counter, as specified." },
+      { title: "Direct quotation process", text: "a written quotation from us that lists the specification, the inclusions and the applicable charges." },
+      { title: "Transport coordination", text: "delivery from our factory in Krishnagiri district, with unloading planned with your site team." },
+      { title: "Relocatable configurations", text: "cabins designed to be lifted and moved with suitable equipment when the gate changes." },
+    ],
+
+    areasHeading: "Areas Served Around Krishnagiri",
+    areasText:
+      "We welcome security cabin enquiries from Krishnagiri town and SIPCOT Kurubarapalli, Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai and the KRP Dam area, and from Dharmapuri and sites along NH 44 and NH 48. For Shoolagiri and Hosur, see the nearby service areas below. Share the exact site address so we can confirm the route and transport arrangements; entry into industrial or quarry premises remains subject to each site's own permissions and safety procedures.",
+
+    howHeading: "Delivery and Installation",
+    howIntro: "From your first message to the cabin standing at the gate:",
+    howSteps: [
+      { title: "You send the size, quantity and site details.", text: "Include the number of guards, how the gate is used and the site address." },
+      { title: "We review your requirements.", text: "" },
+      { title: "A layout and quotation are prepared.", text: "The quotation lists the specification, inclusions and applicable charges." },
+      { title: "You confirm the order.", text: "" },
+      { title: "The cabin is fabricated at our factory.", text: "" },
+      { title: "Transport and unloading are coordinated.", text: "" },
+      { title: "The cabin is positioned and handed over.", text: "" },
+    ],
+    howOutro:
+      "Before dispatch, we confirm road access to the gate, the prepared ground or supports and the crane or other lifting arrangement for unloading. Production and delivery dates are confirmed when the order is finalised.",
+
+    extraSections: [
+      {
+        heading: "Choose the Right Security Cabin",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Start from how many guards work at the gate and what the post has to handle. Our security cabin range runs from compact kiosks to multi-person cabins; the table is a starting point, and the size and configuration are confirmed in your quotation.",
+        ],
+        table: {
+          caption: "Indicative sizes and configurations, not a stock list. The availability of each configuration is confirmed with your quotation.",
+          headers: ["Requirement", "Suggested cabin"],
+          rows: [
+            ["Single guard", "4 × 4 ft or 6 × 4 ft booth"],
+            ["Two guards", "6 × 6 ft or 8 × 6 ft cabin"],
+            ["Remote gate", "Cabin with an optional attached toilet"],
+            ["Hot weather", "PUF-insulated security cabin"],
+            ["Premium entrance", "ACP-finished security cabin"],
+            ["Construction project", "MS security cabin"],
+          ],
+        },
+        closing: [
+          "An attached toilet adds floor area and needs a water supply and a drainage or waste arrangement at the site. PUF insulation reduces heat gain through the walls and roof; for cooling, plan fan points or an AC provision as well.",
+        ],
+      },
+      {
+        heading: "Security Cabin Price in Krishnagiri",
+        paragraphs: ["Each security cabin is priced for its configuration. The main factors:"],
+        bullets: [
+          { text: "Cabin dimensions" },
+          { text: "MS or PUF materials" },
+          { text: "Wall and roof construction" },
+          { text: "Interior finishing" },
+          { text: "Door and window configuration" },
+          { text: "Electrical fittings" },
+          { text: "Toilet and AC provisions" },
+          { text: "Transportation and unloading" },
+          { text: "Custom branding" },
+        ],
+        closing: [
+          "Send your requirement through the form below, by phone or on WhatsApp, and we will prepare a written quotation for your configuration and site.",
+        ],
+      },
+      {
+        heading: "Security Cabin on Rent",
+        paragraphs: [
+          "For a construction phase, a mango season or another short-term need, renting can be considered. Our rental range includes a security guard cabin; its availability for your Krishnagiri site, the minimum period, the deposit and the transport and collection charges are confirmed in a rental quotation. For a gate you will staff for years, compare the total rental cost with buying a cabin.",
+        ],
+      },
+      {
+        heading: "Security Cabin Specifications",
+        paragraphs: [
+          "The specification options for a portable security cabin. Which items your cabin includes, and their exact materials and thicknesses, are listed in the approved specification.",
+        ],
+        table: {
+          caption: "Specification options. Items marked optional are added only when specified; the items supplied are confirmed in the approved specification and quotation.",
+          headers: ["Component", "Specification"],
+          rows: [
+            ["Frame", "MS (mild steel) structural frame"],
+            ["Frame finish", "Anti-rust treatment and protective paint"],
+            ["Walls", "MS sheet or PUF-insulated panels"],
+            ["Roof", "Roof sheeting or insulated roof panels, with a slope or overhang for drainage"],
+            ["Floor", "Cement board with vinyl, or another agreed finish"],
+            ["Door", "Steel entrance door with a lock"],
+            ["Windows", "Sliding windows; safety grills optional"],
+            ["Electrical", "Wiring with lighting and fan points"],
+            ["AC", "Optional AC provision"],
+            ["Toilet", "Optional attached toilet"],
+            ["Service window", "Optional"],
+            ["Exterior", "Optional ACP cladding and company branding"],
+          ],
+        },
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a portable security cabin in Krishnagiri?",
+        answer:
+          "It depends on the size, MS or PUF construction, the wall and roof build, the interior finish, the doors and windows, the electrical fittings, any toilet or AC provision, branding, and transport and unloading to your site. Share your requirement and we will send a written quotation for your configuration.",
+      },
+      {
+        question: "Can you supply a security cabin for a granite quarry?",
+        answer:
+          "Yes. For quarry entrances and machinery yards, a robust MS watchman cabin with a lockable steel door, window grills and a raised base is a common choice. Tell us about the dust, vehicle movement and access at the site so the placement and specification suit it; entry to the quarry is subject to its own permissions and safety procedures.",
+      },
+      {
+        question: "Which security cabin is suitable for a highway warehouse?",
+        answer:
+          "For a warehouse or truck yard on NH 44 or NH 48, a two-guard cabin of around 6 × 6 ft or 8 × 6 ft, with a desk for vehicle records, a service window for document checks, exterior lighting and an optional AC provision, suits round-the-clock shifts. The size is confirmed after we review the gate.",
+      },
+      {
+        question: "Can a security cabin match our company branding?",
+        answer:
+          "Yes. Company colours, logo panels and an optional ACP finish can be specified, and the branding is shown in the proposed layout for your approval before fabrication.",
+      },
+      {
+        question: "What is the difference between an MS and a PUF security cabin?",
+        answer:
+          "An MS security cabin has mild steel sheet walls on a steel frame: robust, and well suited to construction projects and industrial gates. A PUF security cabin uses insulated sandwich panels that reduce heat gain through the walls and roof, which helps on long day shifts. The choice depends on the exposure, how long the cabin is occupied and your budget.",
+      },
+      {
+        question: "Can a portable security cabin be relocated to another gate?",
+        answer:
+          "Yes, when its design and condition allow. The services are disconnected first, and the move needs a crane or other suitable lifting equipment, road access and a prepared base or supports at the new position. If you expect to move it, tell us before fabrication.",
+      },
+      {
+        question: "Are security cabins available on rent in Krishnagiri?",
+        answer:
+          "Our rental range includes a security guard cabin. Its availability for your Krishnagiri site, the rental period and the deposit, transport and collection terms are confirmed in a rental quotation.",
+      },
+      {
+        question: "How long do manufacturing and delivery to Krishnagiri take?",
+        answer:
+          "It depends on the specification, the quantity, the production schedule and how ready the site is. We confirm the expected schedule when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Security Cabin Quote",
+    ctaText: `Tell us the cabin size, the quantity and your site location in Krishnagiri, with any specifications such as insulation, a toilet or branding. Call or WhatsApp ${COMPANY.whatsapp.display}, write to ${COMPANY.email.sales}, or fill in the form below.`,
+    ctaButtonLabel: "Request a Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "security-cabins",
+      noun: "security cabin",
+      heading: "Request a Quote for Your Krishnagiri Security Cabin",
+      intro:
+        "Choose a cabin size, enter the quantity and your site location, and add any specifications. Our sales team will reply to confirm the details before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Security Cabin", href: "/products/security-cabin" },
+      { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
+      { label: "Cabins with a Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Cabin Insulation and Cooling", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { label: "MS Container Office Cabin", href: "/products/ms-container-office-cabin" },
+      { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby service areas",
+      links: [
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
+        { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base or supports depend on the site, and production and delivery dates are not guaranteed. Rental is subject to availability and the rental quotation. The cabin types, sizes, materials, insulation, fittings, finishes and other specification items on this page are options, and the sizes shown are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin single-guard cabin design; the desk, CCTV camera, floodlight and intercom panel are shown for illustration, other cabin types look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial complex are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, quarry or company there, and the industries, gates, places and highways described here are typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. Notes on foundations, insulation, ventilation, dust, toilets, relocation and supports are general guidance, not engineering, safety or legal advice.",
   },
 ];
 
