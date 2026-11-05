@@ -8438,6 +8438,407 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN HASSAN — the retail shop and kiosk intent for Hassan, Karnataka: portable
+   * shop cabin, readymade shop, prefabricated shop and kiosk, for the KIADB industrial areas and the
+   * Hassan Growth Centre, the surroundings of the KIADB textile and pharmaceutical SEZs, Hassan city
+   * streets, permitted NH 75 roadside plots, coffee and spice kiosks, agricultural supply shops and
+   * heritage-area retail around Belur, Halebidu and Shravanabelagola. A sibling of Portable Shops in
+   * Krishnagiri (a related link each way) and of the Hoskote (#202) and Shivamogga (#195) shop pages,
+   * which are linked from here only once they are live. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05, mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   5 Front options → why (four titled bullets and the brief's design caveat as whyOutro), then the
+   *     feature band (the front elevation). It renders before the environments because the template's
+   *     "why" slot comes first; that way the environments keep their h3 subsections and links.
+   *   2 Four commercial environments → solutions: four h3 subsections, each with a verified link;
+   *     the brief's "potential use cases, not guarantees" line closes the solutions intro.
+   *   3 Seasonal planning, 4 Finish, 6 Interior and exterior features, 7 Sizes, 8 Weather → extra
+   *     sections with `placement: "afterSolutions"`, in that order. The seasonal table has no fixed
+   *     peak-season claim and two columns (each planning idea closes its cell), so it fits a 320 px
+   *     phone; the Mahamastakabhisheka note says the event is periodic, with no date. The
+   *     sizes are planning examples, not confirmed standard models (owner wording of 2026-11-05 on
+   *     #201/#202): only the 10 ft × 10 ft Portable Shop Cabin (id 48) is a catalogue item.
+   *   9 Permissions → features (one item per authority, plus the general list), the brief's
+   *     "we manufacture; the owner obtains the permissions" rule in the bold sizesNote.
+   *   10 Price → custom, beside the interior render; no ₹ anywhere.
+   *   11 Rental → left out: the rental range (src/views/RentalService.tsx) has no shop cabin.
+   *   13 Areas → areas; 12 Ordering → how (the template renders areas before how); 14 Why choose →
+   *     an extra section after how (whyUs unset), so it still comes after ordering, as in the brief;
+   *   15 the brief's eight FAQs, worded for Hassan; 16 CTA (Request Quote, Call, WhatsApp).
+   * No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories, and shops sit
+   * in Portable Cabins, which has none; the quote buttons use the /contact quotation flow.
+   * Left out as unverified: rental, timelines, flood or waterproofing guarantees, SEZ acreages or
+   * unit counts, any event date, and links to pages that do not exist or are not live (a container
+   * shop product, the Hoskote, Shivamogga and Sriperumbudur shop pages, and Belur, Halebidu,
+   * Sakleshpur or Channarayapatna pages). No Hassan parent page exists to link in from.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Hassan, and
+   * no other page names Hassan. The areas list names only towns with no shop page of their own;
+   * link anchors and the CTA line are this page's own. KIADB is named nominatively, with the
+   * non-affiliation note in the disclaimer.
+   *
+   * Images: six owner-dropped webp renders ("public/images/Hassan Industrial Area portable shop city
+   * page/Hassan Industrial Area/cabin (1–6).webp", lossy VP8 with no EXIF/XMP/ICC chunk, 78–156 KB)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image,
+   * captioned; (5) front elevation = the feature band, captioned; (2) interior = beside the price
+   * factors, captioned; (3) elevated view, (4) rear and window side and (6) a closed charcoal
+   * variant with an entry door = the three-image gallery after the permissions. They show one grey
+   * corrugated-steel kiosk with a rolling-shutter serving hatch, plus that closed variant. Every alt
+   * text, caption and the disclaimer say they are illustrative renders, and none names Hassan.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-hassan",
+    city: "Hassan",
+    listTitle: "Portable Shops in Hassan",
+    metaTitle: "Portable Shop Cabin in Hassan | KIADB, Highway & Retail Kiosks",
+    metaDescription:
+      "Portable shop cabins in Hassan for KIADB areas, highway kiosks, agri-input shops and heritage retail. Explore custom shop designs, sizes and fittings.",
+    keywords:
+      "Portable Shop Cabin in Hassan, Portable Shop Hassan, Readymade Shop Cabin Hassan, Prefabricated Shop Hassan, Kiosk Hassan Industrial Area, Shop Cabin KIADB Hassan, Portable Shop Cabin Manufacturers in Hassan, Portable Shop Suppliers Hassan, Portable Shop Cabin Price in Hassan, Coffee Kiosk Hassan, Agricultural Shop Cabin Hassan, Highway Kiosk Hassan",
+    geo: { region: "IN-KA", placename: "Hassan, Karnataka, India", position: "13.0033;76.1004", icbm: "13.0033, 76.1004" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-rolling-shutter-three-quarter-view.webp",
+      alt: "Prefabricated portable shop cabin with a rolling shutter over a fold-down serving counter — illustrative render of a grey corrugated steel kiosk with a black lower band, a pitched corrugated roof and an end-wall window under a prop-up awning, in a paved courtyard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin design; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-front-elevation-serving-counter.webp",
+      alt: "Front elevation of a portable shop cabin — illustrative render of a closed rolling shutter under a pelmet, a fold-down serving counter on steel brackets, grey corrugated walls with a black lower band and a pitched roof",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a rolling-shutter front with a fold-down counter; the pictured design is not a confirmed standard product. Your shop's front, size and fittings follow its approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-interior-shelving-counter.webp",
+      alt: "Interior of a portable shop cabin with shelving and a serving counter — illustrative render with wood-finish wall and ceiling panels, wall shelves and a low rack holding packaged goods, an LED strip light, a sliding window and the open rolling shutter above the counter",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative interior render; the stock is shown for illustration. The shelving, counter and lighting of your shop are set in its approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-elevated-roof-view.webp",
+        alt: "Elevated view of a portable shop cabin — illustrative render of the pitched corrugated roof, the rolling shutter and fold-down counter on the long side and the awning over the end-wall window",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-rear-and-window-side.webp",
+        alt: "Rear of a portable shop cabin — illustrative render of the plain corrugated long side with a black lower band and the end-wall sliding window under its prop-up awning",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-closed-variant-entry-door.webp",
+        alt: "Closed configuration of a portable shop cabin — illustrative render in charcoal corrugated steel with a hinged entry door in the end wall, a low-pitched roof with an overhang and no serving hatch on this side",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Hassan Industrial Area",
+    tagline:
+      "Prefabricated shop cabins and kiosks for KIADB industrial areas, Hassan city streets, permitted NH 75 roadside plots, heritage towns and agricultural markets",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for industrial, urban, highway and rural business requirements in Hassan and surrounding areas.",
+      "Hassan combines industrial activity, agricultural trade, residential development, highway movement and heritage tourism.",
+      "Portable shop cabins can be configured for daily essentials stores, coffee and spice kiosks, agricultural supply counters, mobile shops, souvenir stalls and other permitted retail uses.",
+      "Depending on requirements, cabins may include rolling shutters, glass displays, service counters, shelving, electrical fittings, branding panels and weather protection. Each cabin is built at our factory near Hosur and delivered to Hassan by road.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Portable Shop Cabin Front Options",
+    whyIntro: "The front decides how a shop opens, locks and serves its customers. Four common arrangements:",
+    whyBullets: [
+      { title: "Rolling shutter front", text: "suitable for many compact retail applications where lockable closure is required." },
+      {
+        title: "Glass display front",
+        text: "useful for selected fancy stores, mobile shops and display-oriented retail. The catalogue 10 ft × 10 ft Portable Shop Cabin has this front, with a lockable entrance door.",
+      },
+      { title: "Service window front", text: "a possible option for tea, coffee and snack counters." },
+      { title: "Open counter with awning", text: "may suit flower, fruit or vegetable retail at approved locations." },
+    ],
+    whyOutro:
+      "Final designs should account for weather exposure, security, ventilation and customer access. A shutter and a glass front can also be combined; the arrangement is confirmed in your approved layout.",
+
+    solutionsHeading: "Four Commercial Environments in Hassan",
+    solutionsIntro:
+      "Retail needs around Hassan range from counters near factory gates to village stores. Four broad settings, each with possible shop types. These are potential use cases, not guarantees of customer demand or profitability.",
+    solutions: [
+      {
+        title: "Industrial Hassan",
+        text: "Industrial areas and SEZ surroundings, such as the KIADB Hassan Growth Centre and the areas around the KIADB textile and pharmaceutical SEZs, may support permitted retail businesses serving employees, contractors and visitors. Possible shop cabin applications include fancy stores, snacks and daily essentials shops, mobile accessory counters, compact retail kiosks and smart-finish kiosks for approved commercial locations.",
+        link: { label: "Layouts and interiors for a compact retail cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Hassan City",
+        text: "Residential layouts, colleges, hospitals and commercial streets may require convenient retail facilities. Possible applications include vegetable and fruit shops, daily essentials stores, mobile accessory shops, and snacks and convenience kiosks.",
+        link: { label: "The glazed 10 ft × 10 ft shop cabin in our catalogue", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Highway Hassan",
+        text: "Permitted roadside commercial locations along NH 75 may be suitable for traveller-oriented retail. Possible applications include coffee kiosks, spice retail counters, tea and snack kiosks and local product displays. Roadside placement must follow applicable land-use, access and highway safety requirements.",
+        link: { label: "Container cafe and kiosk formats for a coffee counter", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Heritage and Agricultural Hassan",
+        text: "The district includes heritage destinations, such as Belur, Halebidu and Shravanabelagola, and agricultural communities. Possible applications include souvenir kiosks, pooja and flower stalls, agricultural input shops and village convenience stores. Heritage-area placement and regulated agricultural product sales require appropriate approvals.",
+        link: { label: "Preparing the base and access at a rural site", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+    ],
+
+    featuresHeading: "Permissions for Shop Cabins in Hassan",
+    featuresIntro:
+      "Check these with the authorities concerned before the cabin is delivered. Which of them apply depends on the site and the business:",
+    features: [
+      "Industrial areas and SEZs: permission from the relevant industrial estate operator, landowner or SEZ authority before a commercial cabin is placed. Whether a shop may stand inside a processing zone, or only outside its gates, depends on that zone's own rules.",
+      "KIADB industrial areas: the permitted land use and installation requirements, verified with the relevant authority.",
+      "Heritage locations: the monument-protection, planning and local authority requirements that apply before a kiosk is placed near a protected heritage site.",
+      "Agricultural input shops: the dealer licences and storage compliance needed to sell regulated seeds, fertilisers or pesticides.",
+      "General retail: landowner consent, local body permission, a trade licence, food registration or a food licence, electrical approval, fire safety requirements and any other sector-specific permissions the business needs.",
+    ],
+    sizesNote:
+      "Portable Office Cabin manufactures the cabin according to the approved specification. Obtaining the operating permissions before the shop opens is the business owner's responsibility.",
+
+    customHeading: "Portable Shop Cabin Price in Hassan",
+    customIntro: "There is no list price for a configured shop: each cabin is quoted for its own specification. Pricing depends on:",
+    customBullets: [
+      { text: "Cabin dimensions" },
+      { text: "MS, PUF or other available materials" },
+      { text: "A rolling shutter or a glass front" },
+      { text: "Service windows" },
+      { text: "Interior shelving" },
+      { text: "A billing counter" },
+      { text: "Electrical provisions" },
+      { text: "Exterior cladding" },
+      { text: "Branding and signage" },
+      { text: "A weather canopy" },
+      { text: "Delivery and unloading" },
+      { text: "Order quantity" },
+    ],
+    customOutro:
+      "Share the business type, the dimensions, the front and fittings you want and the installation location, and our sales team will send a written quotation setting out the specification, what is included and the charges that apply.",
+
+    areasHeading: "Areas Served Around Hassan",
+    areasText:
+      "We welcome shop cabin enquiries from Hassan city, the Hassan Industrial Area, the KIADB Hassan Growth Centre and the surroundings of the textile and pharmaceutical SEZs, and from Holenarasipura, Channarayapatna, Arsikere, Belur, Halebidu, Shravanabelagola, Sakleshpur, Alur and sites along the NH 75 corridor. Send the full site address: the route, the transport and the unloading arrangements are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your business requirements", text: "tell us the shop type, preferred dimensions and intended installation location." },
+      { title: "Discuss the layout", text: "review the front style, counters, shelving, equipment space and exterior finish." },
+      { title: "Confirm utilities", text: "discuss electrical requirements, ventilation, water connections and drainage where relevant." },
+      { title: "Approve the quotation", text: "finalise the specifications, commercial terms and delivery requirements." },
+      { title: "Manufacture", text: "we fabricate the approved shop cabin at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "The business owner must obtain the applicable operating permissions before opening. Manufacturing and delivery dates are confirmed when the order is finalised.",
+
+    extraSections: [
+      {
+        heading: "Hassan's Seasonal Retail Planning",
+        placement: "afterSolutions",
+        paragraphs: ["Different businesses may experience seasonal demand changes. Planning ideas for the year:"],
+        table: {
+          caption: "Planning ideas, not forecasts: demand varies by location and business, and no period guarantees trade.",
+          // Two columns, the planning idea closing each cell, so the table fits a 320 px phone without a
+          // sideways scroll (a three-column version measured 310 px in a 286 px box); every value of the
+          // brief's three-column table is kept.
+          headers: ["Period", "Possible retail consideration and shop planning idea"],
+          rows: [
+            ["October–February", "Tourism and pilgrimage activity may vary. Planning idea: souvenir and beverage displays."],
+            ["Agricultural sowing and harvest periods", "Seasonal demand for agricultural supplies. Planning idea: flexible shelving and secure storage."],
+            ["March–May", "Warmer conditions. Planning idea: provisions for cold beverage equipment."],
+            ["June–September", "Monsoon conditions. Planning idea: weather-protected counters and canopies."],
+            ["Festival periods", "Potential short-term customer activity. Planning idea: temporary retail layouts where permitted."],
+            ["Major pilgrimage events", "Event-specific retail requirements. Planning idea: event kiosks subject to official approvals."],
+          ],
+        },
+        closing: [
+          "Shravanabelagola's Mahamastakabhisheka is a periodic religious event held at intervals of several years, not an annual festival. Kiosks for any major event depend on the official arrangements announced for it, so plan them only once those are confirmed.",
+        ],
+      },
+      {
+        heading: "Choosing a Shop Cabin Finish",
+        placement: "afterSolutions",
+        paragraphs: ["The setting also guides the exterior finish:"],
+        table: {
+          caption: "All finishes are subject to the materials available and the approved specification.",
+          headers: ["Location type", "Possible exterior finish"],
+          rows: [
+            ["Approved retail near offices or industrial units", "ACP-style finish and clean signage"],
+            ["Industrial worker retail areas", "Durable shutter, shelving and canopy"],
+            ["Permitted NH 75 retail locations", "Visible signage and exterior lighting"],
+            ["Heritage surroundings", "Subtle colours and locally appropriate design"],
+            ["Villages and market towns", "Durable MS construction and practical shutters"],
+          ],
+        },
+        closing: ["Heritage locations may impose additional restrictions on appearance, signage and placement."],
+      },
+      {
+        heading: "Interior and Exterior Features",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Apart from the catalogue 10 ft × 10 ft cabin, which comes with a glazed front, a lockable door, flooring, internal wiring and LED lights, each shop cabin's fittings are chosen for its trade and listed in the quotation:",
+        ],
+        bullets: [
+          {
+            title: "Interior options",
+            text: "display shelves, retail racks, a billing counter, storage compartments, LED lighting, electrical sockets, equipment space and ventilation provisions.",
+          },
+          {
+            title: "Exterior options",
+            text: "a canopy or awning, a rolling shutter, a signage panel, exterior lighting, custom colours, optional ACP cladding and weather-resistant finishing.",
+          },
+        ],
+        closing: [
+          "Kannada and English signage may be incorporated according to customer requirements and applicable local rules. Anything not listed in your approved specification is not included.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "These are indicative planning sizes, not confirmed standard models. Only the 10 ft × 10 ft Portable Shop Cabin is a catalogue item; every other size is a planning example, subject to an approved drawing and quotation.",
+        ],
+        table: {
+          caption:
+            "Planning examples only. Manufacturing availability, usable internal dimensions and structural requirements are confirmed in the approved drawing and quotation.",
+          headers: ["Indicative size", "Possible application"],
+          rows: [
+            ["6 × 4 ft", "Mobile recharge or coffee counter"],
+            ["8 × 6 ft", "Fancy store, flower or souvenir kiosk"],
+            ["10 × 8 ft", "Snacks, condiments or vegetable shop"],
+            ["20 × 8 ft", "Agricultural supply shop or larger retail kiosk"],
+            ["20 × 10 ft and above", "Mini convenience store"],
+          ],
+        },
+        closing: ["Actual dimensions depend on equipment, occupancy, circulation, storage and site requirements."],
+      },
+      {
+        heading: "Weather Protection for Hassan",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hassan and surrounding locations may experience seasonal rain and varying local weather conditions. Possible shop cabin design considerations include:",
+        ],
+        bullets: [
+          { text: "Properly sealed roof joints" },
+          { text: "A suitable roof slope and drainage" },
+          { text: "Weather-protected service windows" },
+          { text: "Awnings and canopies" },
+          { text: "Corrosion-protective exterior finishes" },
+          { text: "An appropriate base elevation" },
+          { text: "Exterior lighting" },
+          { text: "Ventilation" },
+        ],
+        closing: [
+          "A suitable foundation and site drainage are important. These measures improve protection against rain; they do not make a cabin flood-proof or completely waterproof, and the protection specified for your shop is set out in its quotation.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["What a Hassan shop owner gets from ordering directly from the manufacturer:"],
+        bullets: [
+          { title: "Customized shop cabin dimensions", text: "the size is planned per order and shown on the approved drawing." },
+          { title: "Retail-specific front designs", text: "a rolling shutter, a glass display, a service window or an open counter." },
+          { title: "MS and insulated construction options", text: "MS sheet or insulated PUF panels, chosen for the use and the exposure." },
+          { title: "Display shelves and counters", text: "shelving, racks and counters arranged around what you sell." },
+          { title: "Electrical and ventilation provisions", text: "lighting, sockets and ventilation, as specified." },
+          { title: "Exterior branding options", text: "colours, signage panels and optional cladding." },
+          { title: "Weather-conscious designs", text: "roof drainage, sealed joints, awnings and protective finishes." },
+          { title: "Quotation support", text: "a written quotation for your specification." },
+          { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What portable shop cabin types may suit Hassan industrial areas?",
+        answer:
+          "Daily essentials shops, fancy stores, snack kiosks and mobile accessory counters are possible options, depending on the demand at the location and the permissions for the site. Inside an industrial area, the estate operator's or landowner's permission comes first.",
+      },
+      {
+        question: "Can I place a shop cabin inside an SEZ in Hassan?",
+        answer:
+          "Placement depends on the rules of the SEZ concerned, the land-use permissions and approvals from the appropriate authority. Check with that authority before ordering; we build the cabin to the specification that is approved.",
+      },
+      {
+        question: "Can I install a souvenir kiosk near Belur or Halebidu?",
+        answer:
+          "Possibly, but placement near protected monuments may be restricted, and a kiosk's appearance, signage and position may also be controlled. Confirm the permissions with the authorities concerned before installation.",
+      },
+      {
+        question: "What type of kiosk may suit an approved NH 75 retail location?",
+        answer:
+          "A coffee, spice, tea or snack kiosk may be considered, subject to demand, safe site access and the applicable land-use and highway approvals. A service window, or a shutter with a fold-down counter, lets customers be served from outside the cabin.",
+      },
+      {
+        question: "Do agricultural input shops in Hassan require licences?",
+        answer:
+          "Selling regulated seeds, fertilisers or pesticides generally requires the applicable dealer licences and compliance with the relevant storage and sale rules. The licence is the business owner's responsibility; the shelving and secure storage can be planned around the conditions it sets.",
+      },
+      {
+        question: "Can portable shop cabins be designed for Hassan's seasonal rain?",
+        answer:
+          "Yes, within limits. Sealed roof joints, a suitable roof slope and drainage, weather-protected openings, awnings and corrosion-resistant finishing can improve weather protection, and a raised, well-drained base helps. No cabin is promised to be completely waterproof or flood-proof.",
+      },
+      {
+        question: "Can a portable shop cabin be relocated to another site later?",
+        answer:
+          "Some cabins can be relocated, subject to their structural design, condition, lifting arrangements and transport access at both sites. Mention it before fabrication if you expect to move the shop; the permissions for one site do not carry over to another.",
+      },
+      {
+        question: "How quickly can a shop cabin be delivered to Hassan?",
+        answer:
+          "Manufacturing and delivery timelines depend on the selected configuration, the quantity, our workload, transport and how ready the site is. The schedule is confirmed when the order is finalised; no date is promised in advance.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Hassan",
+    ctaText: `Planning a retail kiosk near an industrial area, a coffee counter at a permitted highway location, a souvenir stall or an agricultural supply shop? Share your business type, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Catalogue Portable Shop Cabin (10 ft × 10 ft)", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Kiosk Formats", href: "/products/container-cafe-restaurant" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Security Guard Cabins", href: "/products/security-cabin" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+      { label: "All Portable Cabin Models", href: "/products/category/portable-cabins" },
+      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+        { label: "Portable Cabins in Shivamogga, Machenahalli", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Container Offices in Chitradurga", href: "/cities-we-serve/container-office-in-chitradurga" },
+        { label: "Portable Cabins Across Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Hassan district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and no manufacturing or delivery date is guaranteed. The shop fronts, finishes, fittings, materials and sizes on this page are options, and the sizes are planning examples; only the 10 ft × 10 ft Portable Shop Cabin is a catalogue item, and what is supplied for each order is confirmed in its approved drawing, specification and quotation. The six images are illustrative renders of one grey corrugated-steel kiosk design with a rolling-shutter serving hatch, outside and inside, and of a closed charcoal variant with an entry door; the pictured design is not a confirmed standard product, the stock is shown for illustration, and the images are not photographs of installations in Hassan. KIADB (the Karnataka Industrial Areas Development Board), its Hassan Growth Centre and the textile and pharmaceutical SEZs are named only to describe locations; Portable Office Cabin is not affiliated with KIADB or with any SEZ, estate, heritage site or company in the district, and the places, highways and businesses named here describe typical uses and enquiry locations, not clients, completed projects or guaranteed delivery areas. No location or season guarantees footfall, demand or sales. Permissions, licences, food registration, heritage-area and highway rules, and electrical and fire requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or regulatory advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN KANAKAPURA — the owner's draft of 2026-10-21 ("Portable Cabins in Kanakapura",
    * meta title "Portable Cabins in Kanakapura | Office, Security & Staff Cabins", suggested URL
    * /portable-cabin-kanakapura) follows the site pattern as /cities-we-serve/portable-cabin-in-kanakapura,
@@ -20789,6 +21190,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { label: "Portable Shop Cabins in Hassan, Karnataka", href: "/cities-we-serve/portable-shop-cabin-hassan" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
