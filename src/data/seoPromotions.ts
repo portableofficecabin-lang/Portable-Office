@@ -387,6 +387,15 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
   ],
+  // Portable-toilet hubs for Karnataka and Bangalore — Portable Toilet Cabins in Doddaballapur
+  // (2026-11-05), the first Karnataka portable-toilet city page (Bengaluru Rural district, on the
+  // Bangalore container-office hub as Doddaballapura); the page links back to both hubs.
+  "Portable Toilet Cabin|Karnataka": [
+    { name: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
+  ],
+  "Portable Toilet Cabin|Bangalore": [
+    { name: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
+  ],
   // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
   // city page, then Portable Security Cabins in Salem (2026-11-05); both pages link back to this hub.
   "Security Cabin|Tamil Nadu": [
