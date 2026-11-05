@@ -16419,8 +16419,10 @@ export const CITY_PAGES: CityPage[] = [
     metaTitle: "Portable Cabins in Krishnagiri | Office & Labour Cabins",
     metaDescription:
       "Buy or rent portable cabins in Krishnagiri for factories, warehouses and projects. Custom site offices, security cabins and labour rooms. Get a quote.",
+    // "Portable Toilet Cabin Krishnagiri" moved to the portable-toilet Krishnagiri page (2026-11-04): one
+    // page per intent, so the two Krishnagiri pages do not compete for the same search.
     keywords:
-      "Portable Cabins in Krishnagiri, Portable Cabin Krishnagiri Industrial Area, Site Office Cabin Krishnagiri, Security Cabin Krishnagiri, Labour Accommodation Cabin Krishnagiri, Portable Cabin on Rent Krishnagiri, Prefab Cabin Krishnagiri, Portable Toilet Cabin Krishnagiri",
+      "Portable Cabins in Krishnagiri, Portable Cabin Krishnagiri Industrial Area, Site Office Cabin Krishnagiri, Security Cabin Krishnagiri, Labour Accommodation Cabin Krishnagiri, Portable Cabin on Rent Krishnagiri, Prefab Cabin Krishnagiri",
     geo: { region: "IN-TN", placename: "Krishnagiri, Tamil Nadu, India", position: "12.5266;78.2150", icbm: "12.5266, 78.2150" },
     motion: true,
     serviceJsonLd: { serviceType: "Portable Cabin" },
