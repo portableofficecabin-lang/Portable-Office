@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -194,6 +196,15 @@ export function ShippingContainerKrishnagiriContent() {
         </div>
         <p className="text-muted-foreground mt-4">
           Many suppliers have branches in nearby industrial areas like Hosur, Vellore, and Chennai, effectively covering the Krishnagiri district. We also serve Dharmapuri and Salem regions.
+        </p>
+        {/* Retail intent belongs to the Krishnagiri portable-shop page (2026-11-05); this page keeps
+            storage and cargo containers, and hands shop buyers on with the anchor "container shop". */}
+        <p className="text-muted-foreground mt-4">
+          Opening a retail outlet rather than storing goods? See our{" "}
+          <Link href="/cities-we-serve/portable-shop-krishnagiri" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+            container shop
+          </Link>{" "}
+          and portable shop options for Krishnagiri.
         </p>
       </section>
 
