@@ -19451,6 +19451,10 @@ export const CITY_PAGES: CityPage[] = [
    *
    * Owner brief of 2026-11-04 (slug, meta title and H1 as given; meta description trimmed from 165 to
    * 158 characters by dropping "custom" before "gate cabins", to fit the 160-character audit limit).
+   * 2026-11-05, owner's no-cannibalisation rule: Portable Security Cabins in Krishnagiri owns the
+   * Krishnagiri intent, so the meta description, keywords, tagline, first intro paragraph, areas text,
+   * the SIPCOT FAQ and the CTA name Shoolagiri / SIPCOT Shoolagiri only. Hosur and Krishnagiri remain
+   * only as facts (the factory's location, the geo placename) and as nearby links.
    * Mapped onto the template slots:
    *   • Hero → tagline (ours) + the owner's three opening paragraphs + a factory-location line; the
    *     Request Quote / Call / WhatsApp row sits under the intro (`heroCta`).
@@ -19497,9 +19501,9 @@ export const CITY_PAGES: CityPage[] = [
     listTitle: "Portable Security Cabins in Shoolagiri",
     metaTitle: "Portable Security Cabin in Shoolagiri | Guard Cabin Manufacturer",
     metaDescription:
-      "Portable security cabin manufacturers serving Shoolagiri SIPCOT, Hosur and Krishnagiri. MS and PUF guard cabins, watchman booths and gate cabins. Get a quote.",
+      "Portable security cabin manufacturers for SIPCOT Shoolagiri and its industrial area. MS and PUF guard cabins, watchman booths and gate cabins. Get a quote.",
     keywords:
-      "Portable Security Cabin in Shoolagiri, Security Cabin Manufacturers in Shoolagiri, Portable Security Cabin Suppliers Shoolagiri, Security Cabin SIPCOT Shoolagiri, Security Guard Cabin Shoolagiri Industrial Area, Security Cabin Hosur, Prefabricated Security Cabin Shoolagiri, Guard Cabin, Watchman Cabin, Gate Cabin, Check Post Cabin, MS Security Cabin, PUF Security Cabin",
+      "Portable Security Cabin in Shoolagiri, Security Cabin Manufacturers in Shoolagiri, Portable Security Cabin Suppliers Shoolagiri, Security Cabin SIPCOT Shoolagiri, Security Guard Cabin Shoolagiri Industrial Area, Prefabricated Security Cabin Shoolagiri, Guard Cabin, Watchman Cabin, Gate Cabin, Check Post Cabin, MS Security Cabin, PUF Security Cabin",
     geo: {
       region: "IN-TN",
       placename: "Shoolagiri, Krishnagiri district, Tamil Nadu, India",
@@ -19539,9 +19543,9 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     h1: "Portable Security Cabin Manufacturers in Shoolagiri Industrial Area",
-    tagline: "Guard cabins, watchman booths and gate cabins, built to order for Shoolagiri, Hosur and Krishnagiri district.",
+    tagline: "Guard cabins, watchman booths and gate cabins, built to order for SIPCOT Shoolagiri and the Shoolagiri industrial area.",
     intro: [
-      "Portable Office Cabin manufactures and supplies prefabricated security cabins for industrial, commercial and construction applications in Shoolagiri, Hosur and Krishnagiri district.",
+      "Portable Office Cabin manufactures and supplies prefabricated security cabins for industrial, commercial and construction applications in Shoolagiri and SIPCOT Shoolagiri.",
       "Our portable guard cabins provide a practical shelter for security personnel at factory gates, warehouses, construction sites, parking areas and industrial plots.",
       "Available configurations can include MS construction, PUF-insulated panels, sliding windows, electrical fittings, seating arrangements and custom layouts.",
       "Cabins are fabricated at our factory at Kamandoddi, near Hosur, in Krishnagiri district, the same district as Shoolagiri, and delivered to your site by road.",
@@ -19671,7 +19675,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas Served Around Shoolagiri",
     areasText:
-      "We welcome security cabin enquiries from Shoolagiri town and SIPCOT Shoolagiri, Hosur, Krishnagiri, Berigai, Uddanapalli, Kelamangalam, Rayakottai, Denkanikottai and Bagalur, and from sites along NH 44 between Hosur and Krishnagiri. For other locations, share the exact site address so we can confirm transport arrangements. Entry into industrial premises remains subject to each site's own permissions and safety procedures.",
+      "We welcome security cabin enquiries from Shoolagiri town and SIPCOT Shoolagiri, Berigai, Uddanapalli, Kelamangalam, Rayakottai, Denkanikottai and Bagalur, and from sites along NH 44 near Shoolagiri. For Krishnagiri and Hosur, see the nearby service areas below. For other locations, share the exact site address so we can confirm transport arrangements. Entry into industrial premises remains subject to each site's own permissions and safety procedures.",
 
     howHeading: "Manufacturing and Delivery",
     howIntro: "How an order moves from your enquiry to handover at the gate:",
@@ -19756,9 +19760,9 @@ export const CITY_PAGES: CityPage[] = [
           "Yes, if its design and condition allow it. Utilities must be disconnected, and the move needs suitable lifting equipment, access and supports at the new position. Mention planned moves before fabrication.",
       },
       {
-        question: "Do you supply security cabins to SIPCOT Shoolagiri and Hosur?",
+        question: "Do you supply security cabins to SIPCOT Shoolagiri?",
         answer:
-          "We welcome enquiries from SIPCOT Shoolagiri, Hosur and the surrounding Krishnagiri district; our factory is at Kamandoddi in Krishnagiri district, near Hosur. Share the site address so we can confirm transport arrangements. Entry into industrial premises is subject to each site's own permissions.",
+          "We welcome enquiries from SIPCOT Shoolagiri, Shoolagiri town and the industrial plots around it, and cabins are delivered by road from our factory at Kamandoddi. Share the site address so we can confirm transport arrangements. Entry into industrial premises is subject to each site's own permissions.",
       },
       {
         question: "Are security cabins available on rent?",
@@ -19773,7 +19777,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     ctaHeading: "Request a Security Cabin Quotation",
-    ctaText: `Tell us the number of guards, the size you have in mind, the quantity and your site location in Shoolagiri, Hosur or Krishnagiri district. Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the enquiry form below.`,
+    ctaText: `Tell us the number of guards, the size you have in mind, the quantity and your site location in Shoolagiri or SIPCOT Shoolagiri. Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the enquiry form below.`,
     ctaButtonLabel: "Request a Quotation",
     // Call and WhatsApp buttons are on by default; an empty list drops the two default
     // (container-office) secondary buttons.
