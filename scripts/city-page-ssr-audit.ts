@@ -181,6 +181,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
   t("features", "sizes note", p.sizesNote);
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
+  // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
+  p.gallery?.forEach((g, i) => { if (g.caption) t("images", `gallery ${i + 1} caption`, g.caption); });
   // Optional section (since 2026-10-21): audited whenever the page sets it.
   if (p.industriesHeading) {
     t("industries", "industries heading", p.industriesHeading);
@@ -192,6 +194,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("custom", "custom intro", p.customIntro);
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
+  // Optional custom links (since 2026-11-05): label text and href.
+  (p.customLinks ?? []).forEach((l, i) => { t("custom", `custom link ${i + 1} "${l.label}"`, l.label); m("custom", `custom link ${i + 1} href ${l.href}`, `href="${l.href}"`); });
   // Optional section (since 2026-10-21): audited whenever the page sets it.
   if (p.whyUsHeading) {
     t("whyUs", "why-us heading", p.whyUsHeading);
@@ -216,6 +220,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     }
     (s.bullets ?? []).forEach((b, j) => { t("extra", `extra section ${i + 1} bullet ${j + 1} title`, b.title ?? ""); t("extra", `extra section ${i + 1} bullet ${j + 1} text`, b.text); });
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
+    // Optional links (since 2026-11-05): label text and href.
+    (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
     // heading and the features heading in the visible text.
     if (s.placement === "afterSolutions") {
@@ -245,6 +251,9 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     t("form", "enquiry form intro", p.enquiryForm.intro);
     for (const label of ["Size required", "Quantity *", "Delivery town or city *", "Additional specifications"]) t("form", `enquiry form field "${label}"`, label);
     m("form", "enquiry form anchor", `id="category-enquiry"`);
+    // Optional rental exclusion (since 2026-11-05): no <option> in the form names a rental model.
+    if (p.enquiryForm.excludeRentalModels)
+      items.push({ group: "form", label: "enquiry form lists no rental model", test: (mk) => !/<option[^>]*>[^<]*\bRental\b/i.test(mk) });
   }
   if (p.relatedLinksHeading) t("links", "related links heading", p.relatedLinksHeading);
   p.relatedLinks?.forEach((l) => { t("links", `related "${l.label}"`, l.label); m("links", `related href ${l.href}`, `href="${l.href}"`); });

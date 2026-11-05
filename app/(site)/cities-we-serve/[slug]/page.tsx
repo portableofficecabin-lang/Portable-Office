@@ -130,7 +130,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       ? {
           ...page.enquiryForm,
           categoryName: enquiryCategory.name,
-          models: categoryModels(page.enquiryForm.categorySlug, products).map((m) => ({ id: m.id, name: m.name })),
+          models: categoryModels(page.enquiryForm.categorySlug, products)
+            /* `excludeRentalModels` (optional): drop monthly-rental models; unset = every model. */
+            .filter((m) => !(page.enquiryForm!.excludeRentalModels && m.rental))
+            .map((m) => ({ id: m.id, name: m.name })),
         }
       : undefined;
 
@@ -173,6 +176,20 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     </div>
   );
 
+  /* Optional contextual link list (an extra section's `links`, or `customLinks`): same link style as a
+     solution's contextual link, one per list item. Callers render it only when the list is non-empty. */
+  const renderLinks = (links: CityPageLink[]) => (
+    <ul className={`mb-4 list-disc pl-6${mc("reveal-stagger")}`}>
+      {links.map((l) => (
+        <li key={l.href} className={li}>
+          <Link href={l.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+            {l.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+
   /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
      hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, or after
      the solutions list when `placement` is "afterSolutions". */
@@ -196,6 +213,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       {sec.closing?.map((text) => (
         <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
       ))}
+      {/* Optional contextual links after the closing paragraphs (`links`); unset = nothing rendered. */}
+      {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
     </section>
   );
 
@@ -412,6 +431,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                   className={page.gallery!.length === 1 ? "mx-auto h-auto w-full max-w-2xl" : "h-auto w-full"}
                   loading="lazy"
                 />
+                {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
+                {g.caption && (
+                  <figcaption className="border-t px-3 py-2 text-sm leading-relaxed text-muted-foreground">
+                    {g.caption}
+                  </figcaption>
+                )}
               </figure>
             ))}
           </div>
@@ -469,6 +494,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
+        {/* Optional contextual links after the outro (`customLinks`); unset = nothing rendered. */}
+        {page.customLinks && page.customLinks.length > 0 && renderLinks(page.customLinks)}
 
         {/* Optional since 2026-10-21 (see CityPage.whyUsHeading): unset = no section. */}
         {page.whyUsHeading && (

@@ -16,6 +16,7 @@ import {
   SHIPPING_CONTAINER_CATEGORY_PATH,
   SHIPPING_CONTAINER_DIRECTORY_PATH,
   cityDirectoryLabel,
+  cityFamily,
   cityPagePath,
   cityPagesByState,
   cityPlaceLine,
@@ -87,7 +88,8 @@ export function ShippingContainerNearbyBlock({
   motion?: boolean;
 }) {
   const page = cityPageBySlug(slug);
-  if (!page || !slug.startsWith("shipping-container-in-")) return null;
+  // Family test, not a slug prefix: it also covers "shipping-container-<place>" slugs (see cityDirectory.ts).
+  if (!page || cityFamily(page) !== "shipping-container") return null;
   const mc = (cls: string) => (motion ? ` ${cls}` : "");
   const skip = new Set(existingHrefs);
   const state = cityState(page);
