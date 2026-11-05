@@ -61,6 +61,12 @@ does `git fetch` → `git reset --hard` → `npm ci` → `next build` **inside t
      10:20:17Z, after static generation finished (10:19:59Z), 3.6 s before `Reloading PM2` (10:20:20Z).
    - #94 Shipping Container in Mettur, Salem: `.html/.meta/.rsc` rewritten 10:46:21Z with
      `"status":404`, 15 s after the build (10:46:06Z), 30 s before the new process started (10:46:51Z).
+   - #186 Portable Cabins for SIPCOT Mambakkam (2026-11-04, deploy #111, run 41847471632): the
+     build finished at 14:27:10Z and the new process started at 14:29:03Z. Seen from outside, after
+     the reload: the new page answered 404 and both Tamil Nadu portable-cabin hubs answered a stale
+     200 without its link. All three carried the previous build ID (`71e99559d7bc_mw1war4y`) with
+     `x-nextjs-cache: HIT`, so the workflow's verify step failed at 14:30:53Z. The other 262 sitemap
+     URLs, the feed and robots.txt were correct. This is the stale-200 case below, on a real merge.
 
    `dynamicParams = false` on the city route (PR #75) did not prevent it. The same race can also
    freeze a stale 200 of an **updated** page, and it applies to every ISR route (products,
@@ -68,6 +74,15 @@ does `git fetch` → `git reset --hard` → `npm ci` → `next build` **inside t
 2. **A re-run cannot repair it.** The legacy script prints `Current: <sha> / Target: <sha> /
    Already up to date.` and exits when `main` has not moved (proven by run 38240824471): no build,
    no reload. Both incidents were only cleared by the *next* merge.
+3. **An interrupted build leaves the live directory half-built (2026-10-21, #166).** Run
+   39610102765 (deploy #95, 12ddd61) lost its SSH session during `next build`
+   (`client_loop: send disconnect: Broken pipe`, exit 255, about 4.5 minutes into the step). By then
+   the script had already reset the live directory to the new commit, run `npm ci` and started
+   rewriting `.next/`, but it never reached `pm2 reload`. The old process kept serving: `/`, the
+   product pages and checkout stayed 200, while 57 ISR pages (all 45 city pages, the 11
+   `/products/portable-cabin/*` guides and the prefab marketing office) answered cached 404s
+   (`x-nextjs-cache: HIT`). Attempt 2 of the same run printed `Already up to date` (defect 2), so
+   only a new commit on `main` triggers the full build and reload that repairs it.
 
 ## The fix: release-based, blue/green deploys (`deploy/deploy-portable-office.sh`)
 
@@ -79,11 +94,13 @@ moves it atomically.
 | --- | --- |
 | Build without touching the live site | `git archive` of the commit into `releases/<utc-stamp>-<sha7>/`, `npm ci --include=dev`, `next build` there. The live directory and process are never written to. |
 | Caches cannot be corrupted by the old version | `.next/cache` of the new release is a **copy** seeded from the live release (webpack cache; `next/image` files older than 2 min), not a shared directory. Each release writes only its own `.next/server/app` ISR cache. |
-| Every existing and new route present before the switch | `scripts/deploy/verify-release.mjs` runs against the new release on its idle port: every city slug in the release's `src/data/cityPages.ts` must be in `.next/prerender-manifest.json`, answer 200 and carry **this** BUILD_ID; `/`, `/cities-we-serve`, `/products`, `/sitemap.xml`, `/robots.txt` must answer 200; every URL of the new sitemap must answer 200. Pages that disappear from the sitemap are listed as warnings. Any failure leaves production untouched. |
+| Every existing and new route present before the switch | `scripts/deploy/verify-release.mjs` runs against the new release on its idle port: every city slug in the release's `src/data/cityPages.ts` must be in `.next/prerender-manifest.json`, answer 200 and carry **this** BUILD_ID; `/`, `/cities-we-serve`, `/products`, `/sitemap.xml`, `/robots.txt` must answer 200; every URL of the new sitemap must answer 200. **No page may be the not-found page**: a branded 404 served with status 200 is a failure. The critical pages in `scripts/deploy/critical-routes.json` (shipping- and cargo-container product pages and category, the Mysore and Mettur-Salem city pages, products, a category, the enquiry page) must come from this build, render an `<h1>` and their required markup (Add to Cart, enquiry inputs); its redirects must answer in one hop with exactly the declared target. Every JS/CSS file and image those pages load must answer 200. Pages that disappear from the sitemap are listed as warnings. Any failure leaves production untouched. |
 | Atomic switch, automatic rollback | The nginx upstream include is rewritten, `nginx -t`, graceful `systemctl reload nginx` (in-flight requests finish). The site is then re-verified **through nginx over TLS** (BUILD_ID on `/` and every city page). If that fails, the script writes the old port back and reloads again while the old process is still running. Bad releases found later: `rollback`. |
 | Re-running a failed deploy really rebuilds | Every `deploy` builds a fresh release, also when the commit is already live (logged as "already live — building a FRESH release"). |
-| Automatic deploy after every merge | Unchanged trigger: push to `main` → same SSH user → same `sudo` command, no arguments, no sudoers change. |
-| Open browser tabs keep working | The live build's own `/_next/static` files are copied into the new release (no-clobber), so pages opened before a switch can still load their JS chunks afterwards. |
+| No stale build replaces a newer one | A deploy only moves forward: if the fetched `main` does not contain the live release's commit (main rewound or force-pushed), the deploy is refused before anything is built. Going back on purpose is `rollback`. After a deliberate rewrite of `main`, root runs `deploy-portable-office deploy --allow-non-descendant` once (the workflow never passes it). |
+| A dropped SSH connection does not cut a deploy in half | The script ignores SIGHUP and its log `tee` keeps writing to `/var/log/deploy-portable-office/` when the caller stops reading. The deploy finishes, or fails before the switch, on its own merits. A hard kill (`kill -9`, reboot) before the switch leaves production untouched, and the next run removes the half-started idle slot. |
+| Automatic deploy after every merge | Unchanged trigger: push to `main` → same SSH user → same `sudo` command, no arguments, no sudoers change. The job refuses to run from any other branch (`if: github.ref == 'refs/heads/main'`) and names the `production` environment (see "GitHub environment" in `ACTIVATION-PLAN.md`). |
+| Open browser tabs keep working | The own `/_next/static` files of the live build **and of the other retained releases** (up to `KEEP_RELEASES` builds) are copied into the new release (no-clobber), so pages opened before a switch, or one or two deploys earlier, can still load their JS chunks. The gate proves it before the switch: every static file the live build's home page references must be served by the new release ("continuity"). |
 | Built on Trust unaffected | The script only touches PM2 names `portable-office` / `portable-office-b`, ports 3000 / 3010, `/srv/apps/portableofficecabin.com`, `/etc/nginx/conf.d/portable-office-upstream.conf` and the `proxy_pass` line of `/etc/nginx/sites-available/portableofficecabin.com`. `nginx -t` gates every reload; reloads are graceful for every server block. The CI test asserts the other tenant's PID, nginx block and responses are unchanged after every scenario. |
 
 ### What PR #77 already had, and what this change adds or fixes
@@ -113,7 +130,7 @@ as merged, it would have failed every deploy:
 
 ## Tests (`.github/workflows/deploy-script-tests.yml`, runs on every PR touching the pipeline)
 
-- `node --test scripts/deploy/verify-release.test.mjs`: 25 tests for the route gate. They cover:
+- `node --test scripts/deploy/verify-release.test.mjs`: 39 tests for the route gate. They cover:
   - slug and sitemap parsing against the real `cityPages.ts`;
   - the App Router build-ID marker;
   - `/api/build-info` checks: wrong commit, missing endpoint, a 500 error, an HTML page or broken
@@ -121,7 +138,14 @@ as merged, it would have failed every deploy:
   - a local fake release, serving HTML shaped like real Next 15, that answers a cached 404, a stale
     page from an older build, a page missing from the prerender manifest, `/` served by another
     build, a broken sitemap URL, new routes, vanished pages (warning only) and an unreachable
-    server.
+    server;
+  - soft 404s (status 200 with the not-found page) on a city page, a critical page, a sitemap URL
+    and a health path; a critical page without `<h1>` or required markup; a missing JS chunk, a
+    broken image optimiser and an HTML page served as a chunk; redirects that chain, change status,
+    leave the site or land on a not-found page; the live build's chunk missing from the new
+    release (continuity);
+  - that `src/views/NotFound.tsx` still renders the not-found marker, that every critical city
+    page exists in `cityPages.ts`, and that every declared redirect exists in `next.config.ts`.
 - `shellcheck` + `bash -n` for both shell scripts.
 - `deploy/test/integration.sh` runs on a GitHub runner, never the VPS. It uses real nginx with TLS,
   real PM2, git, npm, flock and symlinks. It recreates today's production layout: the legacy app
@@ -131,14 +155,19 @@ as merged, it would have failed every deploy:
 
   | Scenario | Expected result |
   | --- | --- |
-  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over; both route gates confirm the release's exact commit (printed in the CI log) |
+  | First release after migration (adds a page) | Live, the new page returns 200; env, public files, cache and static assets carried over; both route gates confirm the release's exact commit and check the critical pages, the redirect and their assets; the pre-switch gate confirms the live build's chunks are served by the new release (all printed in the CI log) |
   | Re-run of the same commit | A fresh release is built and goes live |
   | Failing build | Production untouched |
+  | Release that crashes at start-up | Never switched to; its slot is removed; production untouched |
   | New page that 404s in the new build | The gate blocks the switch; production untouched |
   | New release reports another commit (`/api/build-info`) | The gate blocks the switch; production, the live slot and the upstream are untouched |
-  | Good deploy, then `rollback` | The previous release is live again |
+  | Page that answers 200 with the not-found page | The gate blocks the switch; production untouched |
+  | Good deploy, then `rollback` | The chunks of the two previous builds and the redirect still answer through nginx; after `rollback` the previous release is live again |
   | Two concurrent deploys | The second is refused by the lock |
-  | Prune | Old releases removed, current/previous kept |
+  | Prune | At most `KEEP_RELEASES` good releases (plus current/previous) and one failed release remain |
+  | `main` force-pushed to an older commit | Refused, production untouched; `--allow-non-descendant` deploys it; restoring `main` moves forward again |
+  | Caller disconnects mid-deploy (SIGHUP, closed output) | The deploy completes; the full log is on disk |
+  | Deploy killed with SIGKILL after starting the idle slot | Production untouched; the next run clears the slot and goes live |
 
   A poller requests the site every 0.2 s during each deploy, and a single non-200 fails the test.
   After every scenario the other tenant's PID, nginx block and response are compared.
@@ -225,7 +254,9 @@ changes.
 
 | Situation | Action |
 | --- | --- |
-| Deploy failed before the switch (build, gate) | Nothing to do: production was never touched. The failed slot is deleted, and the release is kept as `<id>.failed` for inspection. |
+| Deploy failed before the switch (build, start-up, gate) | Nothing to do: production was never touched. The failed slot is deleted, and the release is kept as `<id>.failed` for inspection (the newest one is kept; older ones are pruned). |
+| Deploy refused: "does not contain the live commit" | `main` was rewound or force-pushed. Production is untouched. Restore `main`, or, if the rewrite was deliberate, run `sudo /usr/local/bin/deploy-portable-office deploy --allow-non-descendant` once as root. |
+| Deploy interrupted (SSH drop) | The deploy carried on: read `/var/log/deploy-portable-office/<stamp>-deploy.log` and `deploy-portable-office status`, then re-run the workflow's verification (Run workflow → deploy) if the run turned red. |
 | Post-switch verification failed | The script has already switched nginx back to the old port. The new slot is left running for inspection (`deploy-portable-office status`). |
 | Bad release noticed later | Actions → Deploy Portable Office → Run workflow → action `rollback` (or `sudo /usr/local/bin/deploy-portable-office rollback`). The previous release is health-checked and gated, then nginx switches (about 20 s). `rollback <release-id>` targets any release shown by `list`. |
 | Undo the installation (steps 2–3) | `install -m 750 /root/deploy-portable-office.legacy /usr/local/bin/deploy-portable-office`; `cp /root/portableofficecabin.com.nginx.bak /etc/nginx/sites-available/portableofficecabin.com && rm /etc/nginx/conf.d/portable-office-upstream.conf && nginx -t && systemctl reload nginx` |
@@ -252,8 +283,13 @@ Expires;` to the `location /` block before switching it on.
 
 ## Operational notes
 
-- A release is about 2.5 GB plus a copied build cache (about 1.3 GB). Three are kept (about 11 GB
-  of 87 GB free). The preflight requires 8 GB free and 1.5 GB of available RAM.
+- A release is about 2.5 GB plus a copied build cache (about 1.3 GB), about 3.8 GB in all. The
+  carried static files of up to three earlier builds add at most about 70 MB (one build's
+  `.next/static` is about 23 MB). Retention keeps the newest three good releases (current and
+  previous always) and the newest failed one: about 15 GB steady, about 19 GB at the peak of a
+  deploy while the next release builds, plus the legacy checkout (about 2.5 GB) until it is
+  removed. Free space on 13 Oct: 87 GB. The preflight requires 8 GB free and 1.5 GB of available
+  RAM. `KEEP_RELEASES` / `KEEP_FAILED` change the counts.
 - `npm ci` runs for every release (about one minute). The deploy takes longer than today's in-place
   build (about 4–6 minutes), but the site keeps serving the old release until the new one is
   proven.

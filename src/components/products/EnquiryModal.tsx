@@ -78,7 +78,7 @@ export function EnquiryModal({ product, designOption, isOpen, onClose }: Enquiry
 
       toast({
         title: "Enquiry Sent!",
-        description: "We'll get back to you within 24 hours.",
+        description: "We'll get back to you.",
       });
       
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });

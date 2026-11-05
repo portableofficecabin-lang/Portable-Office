@@ -431,7 +431,7 @@ export default function CareersPage() {
               How to Apply
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-              Applying is simple. Send your updated CV along with a brief cover note to either of the emails below. Mention the position you're interested in, and our HR team will get back to you within 3–5 working days.
+              Applying is simple. Send your updated CV along with a brief cover note to either of the emails below. Mention the position you're interested in, and our HR team will get back to you.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
               <Button variant="accent" size="xl" asChild>

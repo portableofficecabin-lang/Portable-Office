@@ -25,7 +25,7 @@ const products = [
   {
     name: "Prefab Homes",
     slug: "prefab-homes",
-    desc: "2BHK family homes and G+1 villas fully installed in days, not months — properly liveable.",
+    desc: "2BHK family homes and G+1 villas with far less time on site than conventional construction — properly liveable.",
   },
   {
     name: "Security Cabins",

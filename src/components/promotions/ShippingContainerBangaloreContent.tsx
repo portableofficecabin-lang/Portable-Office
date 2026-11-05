@@ -19,12 +19,12 @@ export const SHIPPING_BLR_FAQS: { question: string; answer: string }[] = [
   {
     question: "What is the price of a shipping container in Bangalore?",
     answer:
-      "Prices start from ₹1.5 lakh for basic models. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. We provide detailed written quotes with no hidden charges.",
+      "Prices start from ₹1.5 lakh for basic models. A fitted 20ft container office typically costs more depending on insulation, electricals, and interiors. Your detailed written quote lists GST and transport separately.",
   },
   {
     question: "How long does delivery take in Bangalore?",
     answer:
-      "Standard units are dispatched within 7–15 working days of order confirmation and receipt of the advance, with transit typically taking 1–5 days. Larger or custom projects take longer. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
+      "Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days. Larger or custom projects follow the timeline in your written quotation. Our Tamil Nadu factory at Kamandoddi, near Hosur, is roughly 40 km from Bangalore, which keeps Bangalore transport times short, and your written quotation confirms the exact timeline.",
   },
   {
     question: "Do you sell both new and used shipping containers?",
@@ -130,8 +130,8 @@ const WHY_US = [
 
 const STEPS = [
   "Share your requirement — call " + CONTACT.telDisplay + " or send an enquiry with size, use case, and site location.",
-  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and any transport beyond 50 km listed separately.",
-  "Production — your container is fabricated and fitted at our factory; standard units are dispatched within 7–15 working days of order confirmation and advance.",
+  "Get a free written quotation and drawing — we confirm specifications, layout, and pricing, with GST and transport listed separately.",
+  "Production — your container is fabricated and fitted at our factory; standard units bought online are dispatched within 7–15 working days of order confirmation; custom units follow your written quotation.",
   "Delivery and installation — we transport, place, and hand over the unit ready for use.",
 ];
 
@@ -223,7 +223,7 @@ export function ShippingContainerBangaloreContent() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote with no hidden charges.</p>
+        <p className="text-xs text-muted-foreground italic mb-5">*Indicative only — final pricing depends on specification and site. <Link href="/contact" className="text-accent hover:underline">Contact us</Link> for a detailed written quote that lists GST and transport separately.</p>
         <p className="text-muted-foreground leading-relaxed max-w-3xl">Because we manufacture in-house at our own Tamil Nadu factory near Hosur rather than trading imported units, you avoid dealer margins and port repositioning charges that inflate prices elsewhere in the market.</p>
       </section>
 
@@ -298,7 +298,7 @@ export function ShippingContainerBangaloreContent() {
           <OptimizedImage src={`${IMG}/shipping-container-kormangala-crane.webp`} alt="Shipping container being installed by crane at a Bangalore construction site" aspectRatio="3/2" geoTag={false} className="rounded-2xl shadow-lg" />
           <div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer with crane or Hydra placement. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 days.
+              Our factory is at Kamandoddi (Survey No. 222, Road 1C, Post Addakurukki), near Hosur in Tamil Nadu — roughly 40 km from Bangalore on the Hosur road corridor — and our Bangalore office is in Electronic City, so Bangalore deliveries are quick and transport costs stay low. Delivery is by trailer; unloading by crane or Hydra is optional and set out in your written quotation. You need a reasonably level surface and clear vehicle access; our team confirms site readiness before dispatch. Standard units bought online are dispatched within 7–15 working days of order confirmation, with transit typically taking 1–5 working days.
             </p>
             <div className="flex flex-wrap gap-2">
               {DELIVERY_AREAS.map((a) => (
@@ -349,7 +349,7 @@ export function ShippingContainerBangaloreContent() {
       <section className="bg-gradient-to-br from-primary via-primary/95 to-secondary text-primary-foreground rounded-3xl p-8 lg:p-12 text-center">
         <h2 className="font-display text-2xl sm:text-3xl font-bold mb-4">Start Your Container Project Today</h2>
         <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-7">
-          Planning a shipping container project in Bangalore? Call or WhatsApp us with your size, use case, and location, and we&apos;ll respond with a written quotation and delivery timeline — usually within 24 hours.
+          Planning a shipping container project in Bangalore? Call or WhatsApp us with your size, use case, and location, and we&apos;ll respond with a written quotation and delivery timeline.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a href={`tel:${CONTACT.tel}`} className="inline-flex items-center gap-2 border-2 border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white/10 transition-colors"><Phone className="h-4 w-4" /> {CONTACT.telDisplay}</a>

@@ -8,7 +8,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 export function LaborHutmentsContent() {
   const faqs = [
-    { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp takes 10–20 days versus 60–90 days for masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
+    { q: "How quickly can a 100-person labor camp be installed?", a: "A 100-person camp needs far less time on site than masonry construction. Most fabrication happens off site, and on-site erection begins once materials reach the location." },
     { q: "What does the labor hutment unit on this page cost?", a: "It is sold at the single price shown at the top of this page, inclusive of 18% GST, with transport and optional installation calculated at checkout from your delivery pincode. Larger colonies are sized to the brief — panel thickness, interior furnishings, sanitary provisions, and number of floors all change the build — so those are quoted separately." },
     { q: "Can labor hutments be relocated to another project?", a: "Yes. Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition. Units are designed for 3–10 project reuses." },
     { q: "What is the service life of prefab labor hutments?", a: "Can be temporary (1–3 years) or semi-permanent (up to 15–20 years) depending on specifications, foundation type, and maintenance practices. Anti-corrosive coatings and galvanized steel ensure long-term durability." },
@@ -29,7 +29,7 @@ export function LaborHutmentsContent() {
           Labor hutments serve as temporary and semi-permanent housing for workers at construction sites, infrastructure development projects, and industrial locations across India. From metros like Mumbai, Delhi NCR, Bengaluru, Hyderabad, and Ahmedabad to remote project sites in the Middle East and Africa, these prefabricated structures provide affordable housing for the workforce powering large-scale developments.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach ensures rapid installation — typically 5–15 days for small colonies — along with significant cost savings versus brick-and-mortar construction, reusability between projects, and improved living standards for labourers.
+          Portable Office Cabin manufactures prefabricated labour hutments using insulated sandwich panels and steel structures, delivering move in ready accommodations to any desired location. Our modular approach means most of the work is done in the factory, shortening on-site installation, along with significant cost savings versus brick-and-mortar construction, reusability between projects, and improved living standards for labourers.
         </p>
         <p className="text-muted-foreground leading-relaxed">
           This article covers: types of hutments and building configurations, design features including insulation, safety, and sanitary fixtures, customization options for specific requirements, specification factors, installation timelines and typical applications.
@@ -111,7 +111,7 @@ export function LaborHutmentsContent() {
         </p>
         <div className="grid sm:grid-cols-2 gap-4">
           {[
-            { title: "Fast Installation", desc: "A 100-person camp takes 10–20 days versus 60–90 days for masonry — critical for reducing project mobilization time" },
+            { title: "Fast Installation", desc: "A 100-person camp needs far less time on site than masonry — critical for reducing project mobilization time" },
             { title: "Cost Efficiency", desc: "Lower foundation needs, controlled fabrication, and reuse across 3–10 projects deliver 20–35% lifecycle savings as a cost effective solution" },
             { title: "Reusability", desc: "Hutments can be dismantled and relocated with 90–95% material recovery, unlike fixed buildings requiring demolition" },
             { title: "Scalability", desc: "Add or remove blocks as workforce size changes during phased EPC contracts for highways, metro rail, or refineries" },
@@ -209,7 +209,7 @@ export function LaborHutmentsContent() {
             { title: "Application Types", desc: "Standalone labor rooms, full colonies with internal roads, combined office-and-accommodation blocks, remote work camps" },
             { title: "Capacity Bands", desc: "50–100 workers for small sites, 200–500 for mid-scale construction, 1,000+ for mega infrastructure development projects" },
             { title: "Integrated Solutions", desc: "Container offices for site management, portable security cabins, prefabricated canteens, and portable toilets" },
-            { title: "Example Configurations", desc: "A 250-bed G+1 labour colony for a warehouse project delivered in 3 weeks, or a 400-person camp for a solar park in Rajasthan" },
+            { title: "Typical Configurations", desc: "G+1 labour colonies for warehouse and logistics projects, and larger camps for remote sites such as solar parks" },
           ].map((item) => (
             <div key={item.title} className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
               <Check className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -264,8 +264,8 @@ export function LaborHutmentsContent() {
         </p>
         <div className="space-y-4">
           {[
-            { step: "1. Planning", desc: "Site survey, layout finalization, structural design, and BOQ approval with client (1–3 days)" },
-            { step: "2. Fabrication", desc: "Cutting, welding, panel manufacturing, and pre-assembly quality checks at factory (1–3 weeks)" },
+            { step: "1. Planning", desc: "Site survey, layout finalization, structural design, and BOQ approval with client" },
+            { step: "2. Fabrication", desc: "Cutting, welding, panel manufacturing, and pre-assembly quality checks at factory" },
             { step: "3. On-Site Erection", desc: "Foundation prep, steel framework, panel fixing, roof installation, doors/windows, plumbing, and electrical works" },
             { step: "4. Testing & Handover", desc: "Electrical and sanitary fixtures testing, finishing, cleaning, and inspection before workers move in" },
           ].map((item) => (
@@ -278,7 +278,7 @@ export function LaborHutmentsContent() {
         <div className="bg-accent/10 rounded-xl p-6 mt-6">
           <p className="text-foreground font-semibold mb-1">Typical Timelines</p>
           <p className="text-muted-foreground text-sm">
-            50–80 workers in 1–2 weeks after material reaches site; 200–300 workers in 3–4 weeks; weather and foundation prep can affect schedules.
+            On-site time depends on the number of workers housed, weather and foundation preparation; your written quotation sets out the programme for your camp.
           </p>
         </div>
       </section>
@@ -318,7 +318,7 @@ export function LaborHutmentsContent() {
           With years of experience serving India's leading construction and infrastructure development projects, Portable Office Cabin has become a trusted name in prefabricated labour hutments and modular building solutions. Our team of experts collaborates closely with clients to understand their specific requirements, ensuring that every prefabricated structure is tailored to the unique demands of each site and industry.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          All our prefabricated labor hutments are constructed off site in controlled environments using high quality materials, which guarantees consistent quality and rapid installation at your desired location. This off-site manufacturing approach not only speeds up project timelines but also minimizes disruption at the construction site, allowing your operations to continue smoothly.
+          All our prefabricated labor hutments are constructed off site in controlled environments using high quality materials, for consistent quality and quicker installation at your desired location. This off-site manufacturing approach not only speeds up project timelines but also minimizes disruption at the construction site, allowing your operations to continue smoothly.
         </p>
         <p className="text-muted-foreground leading-relaxed mb-4">
           We prioritize compliance with safety regulations and use weather resistant materials to ensure long-term durability, even in challenging environments. Our solutions are designed to be cost effective, supporting your workforce with reliable, comfortable accommodation that stands up to daily use and harsh conditions.

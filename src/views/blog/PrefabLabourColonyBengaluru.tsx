@@ -150,7 +150,7 @@ export default function PrefabLabourColonyBengaluru() {
               Bengaluru's project environment presents a unique combination of challenges. Land costs in the city are among the highest in the country, project timelines are aggressive, and regulatory approvals for permanent structures can take months. For temporary housing needs that might last two to five years, investing in conventional RCC labour sheds simply doesn't make business sense.
             </p>
             <p className="text-foreground/85 leading-relaxed">
-              Prefabricated labour colonies address these realities through a fundamentally different approach. Units are manufactured in the controlled environment of our Tamil Nadu factory at Kamandoddi near Hosur — roughly 40 km from Bengaluru — using advanced machinery for quality control, then transported to site for quick assembly. This means your colony can be operational in days rather than months, with minimal foundation work and almost no wet construction.
+              Prefabricated labour colonies address these realities through a fundamentally different approach. Units are manufactured in the controlled environment of our Tamil Nadu factory at Kamandoddi near Hosur — roughly 40 km from Bengaluru — using advanced machinery for quality control, then transported to site for quick assembly. This means far less time on site than conventional construction, with minimal foundation work and almost no wet construction.
             </p>
             <div className="bg-card border border-border/50 rounded-xl p-6 space-y-3">
               <h3 className="font-bold text-foreground">Key advantages for Bengaluru projects:</h3>
@@ -371,7 +371,7 @@ export default function PrefabLabourColonyBengaluru() {
             <p className="text-foreground/85 leading-relaxed">For decision-makers evaluating labour accommodation options, prefabricated colonies deliver tangible advantages across project management, financial planning, and compliance requirements.</p>
 
             {[
-              { title: "Time Savings", content: "Factory-built units arrive ready for installation, dramatically shortening project mobilisation. While conventional labour sheds might take 8-12 weeks to construct, a prefab colony can be operational in 2-4 weeks. In Bengaluru's competitive development environment, this acceleration can mean the difference between meeting or missing project milestones." },
+              { title: "Time Savings", content: "Factory-built units arrive ready for installation, dramatically shortening project mobilisation. A prefab colony is operational far sooner than conventional labour sheds. In Bengaluru's competitive development environment, this acceleration can mean the difference between meeting or missing project milestones." },
               { title: "Predictable Costs", content: "Standardised modules provide clear, predictable costing—per bed, per room, or per block. This simplifies budgeting and tendering, eliminates cost escalations from on-site delays, and gives procurement teams firm numbers to work with. Our experience suggests clients can save up to 50% on repeated projects through reusability rather than building new sheds each time." },
               { title: "Improved Worker Welfare", content: "A comfortable living environment directly impacts productivity. Insulated roofs reduce heat stress, organised sanitation prevents disease outbreaks, and proper ventilation maintains air quality. Workers in well-designed colonies report better rest, lower absenteeism, and higher morale—benefits that translate to your project output." },
               { title: "Reduced Site Disruption", content: "Prefab construction minimises on-site noise, dust, and debris compared to brick-and-mortar work. This is particularly important when your site is near occupied IT parks, residential communities, or sensitive areas where construction disturbance must be controlled." },
@@ -435,7 +435,7 @@ export default function PrefabLabourColonyBengaluru() {
             <p className="text-foreground/85 leading-relaxed">Many Bengaluru contractors are transitioning from traditional brick-and-mortar labour sheds to prefabricated solutions. Understanding the practical differences helps inform this decision.</p>
 
             {[
-              { title: "Construction Timeline", content: "Conventional masonry labour sheds require foundation excavation, curing time, brick laying, plastering, and finishing—a process that typically spans 8-12 weeks even for simple structures. Prefab colonies are manufactured off-site in parallel with site preparation, then installed in days. Total timeline from order to occupancy can be as short as 2-4 weeks." },
+              { title: "Construction Timeline", content: "Conventional masonry labour sheds require foundation excavation, curing time, brick laying, plastering, and finishing—a process that takes weeks even for simple structures. Prefab colonies are manufactured off-site in parallel with site preparation, then installed on site, so the total timeline from order to occupancy is much shorter; your written quotation sets it out." },
               { title: "Cost Certainty", content: "Traditional construction faces cost variables: material price fluctuations, weather delays, labour availability, and finishing variations. Prefab modules are priced based on standard specifications with minimal on-site variables, providing budget certainty from the start." },
               { title: "Relocation Capability", content: "Masonry structures are permanent—when your project ends, they become either abandoned assets or demolition costs. Prefab colonies are designed for disassembly. Units can be transported to your next site, representing continued value rather than sunk cost." },
               { title: "Finishing Quality", content: "Factory-controlled manufacturing ensures consistent quality across all units. Walls are straight, panels fit precisely, and finishes are uniform. Site-built structures depend heavily on workmanship quality, which varies." },
@@ -455,7 +455,7 @@ export default function PrefabLabourColonyBengaluru() {
 
             <div className="bg-accent/5 border border-accent/20 rounded-xl p-5 space-y-2">
               {[
-                "Prefab: 2-4 weeks vs. Conventional: 8-12 weeks",
+                "Prefab: Shorter timeline vs. Conventional: Longer build on site",
                 "Prefab: Fixed, predictable pricing vs. Conventional: Variable costs",
                 "Prefab: Relocatable asset vs. Conventional: Single-use structure",
                 "Prefab: Minimal foundation work vs. Conventional: Substantial groundwork",
@@ -499,7 +499,7 @@ export default function PrefabLabourColonyBengaluru() {
               { step: "Step 2", title: "Concept Layout and Proposal", desc: "Based on your requirements, we develop a high-level colony layout showing dormitory placement, ancillary facilities, circulation paths, and utility routing. This concept comes with suggested module counts, capacity calculations, and a tentative timeline. Budgetary estimates at this stage give you figures for internal approvals and planning." },
               { step: "Step 3", title: "Design and Engineering", desc: "Once you proceed, our team develops detailed drawings—structural design of individual modules, panel specifications, electrical and plumbing routing, foundation requirements. These drawings serve as the blueprint for manufacturing and installation." },
               { step: "Step 4", title: "Off-Site Manufacturing", desc: "Fabrication happens in our workshop under controlled conditions. MS frames are cut, welded, and coated. Panels are produced to specification. Doors, windows, and fittings are prepared. Each component undergoes quality checks before dispatch. Where beneficial, partial pre-assembly reduces on-site work." },
-              { step: "Step 5", title: "Site Preparation and Installation", desc: "While manufacturing proceeds, your site is prepared with simple foundations or levelled bases. Upon delivery, our installation crew unloads modules, positions them according to the layout, connects structural elements, installs utilities, and completes finishing. The entire installation process typically takes days rather than weeks." },
+              { step: "Step 5", title: "Site Preparation and Installation", desc: "While manufacturing proceeds, your site is prepared with simple foundations or levelled bases. Upon delivery, our installation crew unloads modules, positions them according to the layout, connects structural elements, installs utilities, and completes finishing. Installation takes far less time on site than conventional construction." },
               { step: "Step 6", title: "Handover and Support", desc: "Upon completion, we conduct a walkthrough with your team, covering usage guidelines and basic maintenance. Our after-sales support handles repairs, modifications, or eventual relocation when your project phase ends." },
             ].map((item) => (
               <div key={item.step} className="flex gap-4 items-start">
@@ -716,7 +716,7 @@ export default function PrefabLabourColonyBengaluru() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-foreground group-hover:text-accent transition-colors mb-2">Porta Cabins on Rent – Flexible Portable Space</h3>
-                  <p className="text-sm text-foreground/70 line-clamp-2">Complete guide to renting porta cabins in India with 3–7 day delivery.</p>
+                  <p className="text-sm text-foreground/70 line-clamp-2">Complete guide to renting porta cabins in India.</p>
                 </div>
               </Link>
             </div>

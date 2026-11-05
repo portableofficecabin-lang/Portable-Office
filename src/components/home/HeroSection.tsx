@@ -7,7 +7,7 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 import { startingFromEstimate, formatINR } from "@/components/home/cabin-calculator/pricing";
 
 const highlights = [
-  { icon: Zap, text: "Up & Running in Days" },
+  { icon: Zap, text: "Far Less Time on Site" },
   { icon: IndianRupee, text: "60% Cheaper Than Traditional" },
   { icon: Leaf, text: "Eco-Friendly Materials" },
 ];
@@ -95,7 +95,7 @@ export function HeroSection() {
               style={{ animationDelay: "0.25s" }}
             >
               Up to 60% cheaper than traditional construction. Kinder to the planet. 
-              Ready in days, not months.
+              Far less time on site than conventional construction.
             </p>
 
             {/* Customized cabin estimated price — highlighted, computed live from the

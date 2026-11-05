@@ -67,6 +67,11 @@ export const productImages: Record<string, string | StaticImageData> = {
   "11": "/images/products/ms-portable-cabin-front.webp",
   "POC-PC-MSPC": "/images/products/ms-portable-cabin-front.webp",
   "ms-portable-cabin": "/images/products/ms-portable-cabin-front.webp",
+  // Portable Shop Cabin — three-quarter render of the glazed front. Must stay identical to
+  // products.ts images[0] so the card, the product page, the OG image and the feed all match.
+  "48": "/images/products/portable-shop-cabin/portable-shop-cabin-front-three-quarter.webp",
+  "POC-PSC-1010": "/images/products/portable-shop-cabin/portable-shop-cabin-front-three-quarter.webp",
+  "portable-shop-cabin": "/images/products/portable-shop-cabin/portable-shop-cabin-front-three-quarter.webp",
   // Steel Portable Cabin — front elevation. Must stay identical to products.ts images[0]
   // so the card, the product page, the OG image and the feed all show the same primary shot.
   "46": "/images/products/steel-portable-cabin/steel-portable-cabin-front.webp",

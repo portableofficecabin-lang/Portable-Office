@@ -1,4 +1,9 @@
 import { CONTAINER_OFFICE_DIRECTORY_PATH, hubLinksFor } from "@/data/containerOfficeCluster";
+import { FREE_DELIVERY_PIN_PREFIXES_TEXT, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
+
+/** Transit as the zone table states it (1-10 days across India). The promotion locations include
+ *  West Bengal and Maharashtra, whose zone takes up to 10 days, so "typically 1-5 days" was wrong there. */
+const TRANSIT_RANGE = `${TRANSIT_WORKING_DAYS.min}-${TRANSIT_WORKING_DAYS.max} working days`;
 
 export interface SEOContent {
   keyword: string;
@@ -258,6 +263,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-bommasandra",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
+      "container-office-devanahalli-airport",
     ]),
     { name: "All container office locations in Karnataka and Tamil Nadu", href: CONTAINER_OFFICE_DIRECTORY_PATH },
   ],
@@ -265,6 +271,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // site-office hub so far; it links back to both hubs.
   "Site Office Container|Bangalore": [
     { name: "Container Office in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" },
+  ],
+  // Portable-cabin page inside Bengaluru (Vasanthapura Industrial Area, South Bengaluru): the Bangalore
+  // portable-cabin hub's first city page; the page links back here and to both Karnataka hubs.
+  "Portable Cabin|Bangalore": [
+    { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -295,7 +306,28 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
+  // Portable Cabin Manufacturers in Hosur and Portable Cabins in Krishnagiri Industrial Area: the two
+  // Tamil Nadu pages about portable cabins rather than container offices (the factory near Hosur and
+  // the Krishnagiri belt around it), so they lead these two keyword hubs only.
   "Portable Cabin|Tamil Nadu": [
+    { name: "Portable cabins made at our factory near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+    { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+    // Portable-cabin page for Perundurai / SIPCOT Perundurai (Erode), here and on Porta Cabin.
+    { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    // Insulated PUF panel cabins for Padalur / Irur (Perambalur), here and on Porta Cabin.
+    { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
+    // Tindivanam / SIPCOT Industrial Park, Viluppuram district (owner request, 2026-10-23), on both TN
+    // portable-cabin keyword hubs, after Perundurai.
+    { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
+    // Portable-cabin page for Tiruvallur (2026-10-23), here and on Porta Cabin, after Tindivanam.
+    { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
+    { name: "Portable Cabins in Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
+    // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
+    { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
+    { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
+    { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
+    { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -305,6 +337,19 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
   ],
   "Porta Cabin|Tamil Nadu": [
+    { name: "Porta cabin manufacturer near Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+    { name: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+    { name: "Portable Cabins in Perundurai", href: "/cities-we-serve/portable-cabin-perundurai" },
+    { name: "PUF Panel Cabins in Padalur & Irur, Perambalur", href: "/cities-we-serve/puf-panel-cabin-padalur-irur" },
+    { name: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
+    { name: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+    { name: "Portable Cabins in Gummidipoondi", href: "/cities-we-serve/portable-cabin-gummidipoondi" },
+    { name: "Portable Cabins in Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
+    // Portable-cabin page for Padalur and Irur, Perambalur (2026-10-23), here and on the other TN hub, after Gummidipoondi.
+    { name: "Portable Cabins in Padalur & Irur", href: "/cities-we-serve/portable-cabin-padalur-irur" },
+    { name: "Portable Cabins in SIPCOT Mambakkam, Sriperumbudur", href: "/cities-we-serve/portable-cabin-mambakkam" },
+    { name: "Portable Cabins in Sakkarakottai & Pattinamkathan", href: "/cities-we-serve/portable-cabin-sakkarakottai-pattinamkathan" },
+    { name: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
     { name: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
     { name: "Portable Container Office in Thoothukudi", href: "/cities-we-serve/portable-container-office-in-thoothukudi" },
     { name: "Container Office in Tirunelveli", href: "/cities-we-serve/container-office-in-tirunelveli" },
@@ -337,6 +382,16 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
   ],
+  // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
+  // page; the page links back to this hub.
+  "Portable Toilet Cabin|Tamil Nadu": [
+    { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+  ],
+  // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
+  // city page; the page links back to this hub.
+  "Security Cabin|Tamil Nadu": [
+    { name: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+  ],
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the
@@ -362,6 +417,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
       "container-office-in-haveri",
       "container-office-in-hoskote",
       "container-office-in-doddaballapura",
+      "container-office-devanahalli-airport",
       "container-office-in-pavagada",
       "container-office-in-belagavi",
       "container-office-in-yadgir",
@@ -389,10 +445,20 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   "Portable Cabin|Karnataka": [
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+    { name: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+    { name: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     // Portable-cabin page (#145), here and on Porta Cabin: the Bengaluru-belt rule above covers container-office pages.
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+    // Portable-cabin page for Vasanthapura (South Bengaluru), here and on Porta Cabin, as for Jigani.
+    { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    // Portable-cabin page for Attibele (2026-10-21), here and on Porta Cabin, as for Jigani; after
+    // Vasanthapura so the links already live keep their positions.
+    { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+    // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
+    { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
+    { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -409,9 +475,19 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   ],
   "Porta Cabin|Karnataka": [
     { name: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+    { name: "Portable Cabins in Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+    { name: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
     { name: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
     { name: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
     { name: "Portable Cabins in Jigani", href: "/cities-we-serve/portable-cabin-in-jigani" },
+    { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+    // Porta-cabin page (#161, owner request 2026-10-20), on this hub only: it is the porta-cabin intent,
+    // and the Bengaluru-belt rule above covers container-office pages (as for Jigani).
+    { name: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
+    { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    { name: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+    // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
+    { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -472,7 +548,7 @@ function generateUniqueContent(keyword: string, location: string, variation: num
     `Every ${mainKeyword} we supply features 50mm PUF insulated panels, galvanized steel framing, and weatherproof construction suited to ${location}'s climate. Each unit is engineered for year-round comfort and long service life.`,
     `Clients across ${location} choose us because we handle design, manufacturing, delivery, and installation end to end. From layout planning to electrical fit-outs, our team supports your project at every stage.`,
     `We have delivered ${mainKeyword} throughout ${location} for contractors, infrastructure firms, factories, and government agencies. Whether you need a single unit or a multi-block setup, we scale to your requirements.`,
-    `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Standard units are dispatched within 7-15 working days of order confirmation, with transit to ${location} typically taking 1-5 days; larger or custom projects take longer.`,
+    `Compared with conventional construction, ${mainKeyword} is faster, more cost-effective, and fully relocatable. Standard units bought online are dispatched within 7-15 working days of order confirmation, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone; larger or custom projects follow the timeline in your written quotation.`,
     `If you are planning a project in ${location}, contact us for a free written quotation on ${mainKeyword}. Every order starts with a quotation — we offer customization in size, interiors, branding, and utilities so your unit is ready for immediate use on site.`,
   ];
 }
@@ -481,11 +557,11 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
   const baseFAQs = [
     {
       question: `What is the starting price for ${keyword.toLowerCase()} in ${location}?`,
-      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport beyond 50 km, and installation. We provide a detailed written quotation with no hidden charges.`,
+      answer: `Our ${keyword.toLowerCase()} pricing in ${location} starts from ₹1.5 lakh for basic models, with costs varying based on size, specifications, and customization requirements. Prices are indicative starting prices and exclude GST, transport and installation, which your written quotation confirms. Your detailed written quotation states each of them.`,
     },
     {
       question: `How long does delivery and installation take in ${location}?`,
-      answer: `Standard ${keyword.toLowerCase()} units are dispatched within 7-15 working days of order confirmation and receipt of the advance, with transit to ${location} typically taking 1-5 days. Larger or custom projects take longer; your written quotation confirms the exact timeline.`,
+      answer: `Standard ${keyword.toLowerCase()} units bought online are dispatched within 7-15 working days of order confirmation, with transit to ${location} taking ${TRANSIT_RANGE} depending on the delivery zone. Larger or custom projects follow the timeline in your written quotation.`,
     },
     {
       question: `Can you customize ${keyword.toLowerCase()} to meet my specific needs in ${location}?`,
@@ -497,7 +573,7 @@ function generateUniqueFAQs(keyword: string, location: string, variation: number
     },
     {
       question: `Do you provide delivery and installation services throughout ${location}?`,
-      answer: `Yes. We offer door-to-door delivery and professional installation across ${location} and all major cities in India. Delivery is free within 50 km of our facility; beyond 50 km, transport is charged based on distance and confirmed in your written quotation.`,
+      answer: `Yes. We deliver door-to-door across ${location} and all major cities in India, and on-site installation is available as an optional extra. For products bought online, delivery is free to PIN codes beginning ${FREE_DELIVERY_PIN_PREFIXES_TEXT} and other PIN codes are charged by delivery zone at checkout; for custom orders and rentals, transport is confirmed in your written quotation.`,
     },
   ];
   return baseFAQs;
@@ -554,7 +630,8 @@ function generateMetaTitle(keyword: string, location: string, variation: number)
 }
 
 // Same rules as the titles: no unverified superlatives ("Top-rated", "Leading", "India's
-// trusted"), no warranty periods and no local presence ("local teams in <location>") — the
+// trusted"), no warranty periods, no delivery promises ("on-time delivery") and no local
+// presence ("local teams in <location>") — the
 // company has its factory near Hosur and an office in Bengaluru only.
 function generateMetaDescription(keyword: string, location: string, variation: number): string {
   const mainKeyword = `${keyword} in ${location}`;
@@ -566,7 +643,7 @@ function generateMetaDescription(keyword: string, location: string, variation: n
     `${mainKeyword} built to order. 50mm PUF insulation, MCB wiring & pan-India logistics to sites in ${location}. Book a site visit.`,
     `Affordable ${mainKeyword} for contractors & builders. Quick install, relocatable design & ISO-grade materials supplied across ${location}. Talk to us.`,
     `${mainKeyword} manufacturer with its own factory. Custom cabins, container offices & storage units delivered ready-to-use in ${location}. Call us today.`,
-    `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & on-time delivery throughout ${location}. Call today.`,
+    `Reliable ${mainKeyword} for industrial & construction sites. Durable steel frame, thermal comfort & delivery throughout ${location}. Call today.`,
     `Get ${mainKeyword} at factory-direct prices. Modular design, material-based structural warranty & installation support serving ${location}. Contact us.`,
     `Quality ${mainKeyword} with fast turnaround. Dispatch in 7-15 working days, fully compliant electricals & finishes for ${location} projects. Talk to our team.`,
     `${mainKeyword} solutions for every budget. Rental or ownership options, scalable layouts & after-sales support in ${location}. Learn more.`,
@@ -599,7 +676,7 @@ function generateContent(
     `IS-grade materials for superior quality`,
     `50mm PUF insulated panels for thermal comfort`,
     `Galvanized steel frame for corrosion resistance`,
-    `Dispatch in 7-15 working days; transit to ${location} typically 1-5 days`,
+    `Dispatch in 7-15 working days; transit to ${location} ${TRANSIT_RANGE} by delivery zone`,
     `Fully customizable layouts and finishes`,
     `Material-based structural warranty, as set out on our Warranty page`,
     `Pan-India delivery and installation support`,

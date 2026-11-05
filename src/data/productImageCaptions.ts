@@ -33,6 +33,16 @@ export const productImageCaptions: Record<string, string> = {
 // ProductDetailServer, in place of the "<product name> — <caption>" form built from the
 // captions above. Only the images listed here are affected.
 export const productImageAltText: Record<string, string> = {
+  // Portable Shop Cabin (id 48). All four are AI-generated renders, not photographs of a
+  // delivered cabin, so each alt says so before describing the frame.
+  "portable-shop-cabin-front-three-quarter.webp":
+    "Illustrative render of a 10 ft × 10 ft portable shop cabin with a glazed display front, a lockable entrance door and a glazed side",
+  "portable-shop-cabin-glazed-side.webp":
+    "Illustrative render of the portable shop cabin's glazed side, with display shelving visible inside",
+  "portable-shop-cabin-overhead.webp":
+    "Illustrative render of the portable shop cabin from above, showing the roof, glazed front and entrance door",
+  "portable-shop-cabin-rear-wall.webp":
+    "Illustrative render of the portable shop cabin's solid rear wall, standing on corner blocks",
   // 20ft Storage Container – Corten Steel (id 12, issue #100)
   "20ft-storage-container-corten-steel-three-quarter.webp":
     "20ft Corten Steel Storage Container – Portable Office Cabin",
@@ -94,6 +104,8 @@ export const productImageLabels: Record<string, string> = {
  * gallery needs a disclosure the alt text alone cannot carry — e.g. that every image is a render.
  */
 export const productGalleryNotes: Record<string, string> = {
+  "portable-shop-cabin":
+    "All images on this page are illustrative renders of the shop cabin, not photographs of a delivered unit. Shelves and stock shown inside are not included in the price.",
   "container-cafe-restaurant":
     "All images on this page are illustrative renders of container cafe concepts, not photographs of a completed project.",
   "ms-container-office-cabin":

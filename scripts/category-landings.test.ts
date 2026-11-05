@@ -201,7 +201,7 @@ section("9. Delivery wording comes from SHIPPING_ZONES and describes zones by PI
     SHIPPING_ZONES.forEach((zone, i) => {
       const row = landing.transport[i];
       check(row.charge === (zone.rate === 0 ? "Free" : formatINR(zone.rate)), `${slug}/${zone.id}: charge "${row.charge}" is the checkout rate`);
-      check(row.transit === `${zone.transitDaysMin}–${zone.transitDaysMax} days`, `${slug}/${zone.id}: transit "${row.transit}" is the checkout estimate`);
+      check(row.transit === `${zone.transitDaysMin}–${zone.transitDaysMax} working days`, `${slug}/${zone.id}: transit "${row.transit}" is the checkout estimate`);
       check(zone.name.startsWith(row.zone), `${slug}/${zone.id}: label "${row.zone}" is the configured zone name`);
       check(!/\(/.test(row.zone), `${slug}/${zone.id}: label carries no parenthetical note`);
     });
@@ -222,9 +222,9 @@ section("9. Delivery wording comes from SHIPPING_ZONES and describes zones by PI
     const delivery = landing.faqs.find((f) => /how long does delivery/i.test(f.question));
     if (delivery) {
       check(delivery.answer.includes(`${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`), `${slug}: delivery FAQ quotes the configured dispatch time`);
-      check(delivery.answer.includes(`${local.transitDaysMin}–${local.transitDaysMax} days in the local zone`), `${slug}: delivery FAQ quotes the local transit time`);
+      check(delivery.answer.includes(`${local.transitDaysMin}–${local.transitDaysMax} working days in the local zone`), `${slug}: delivery FAQ quotes the local transit time`);
       check(local.pincodePrefixes.every((p) => delivery.answer.includes(p)), `${slug}: delivery FAQ lists the local PIN prefixes`);
-      check(delivery.answer.includes(`${farthest.transitDaysMin}–${farthest.transitDaysMax} days for the rest of India`), `${slug}: delivery FAQ names the farthest zone naturally`);
+      check(delivery.answer.includes(`${farthest.transitDaysMin}–${farthest.transitDaysMax} working days for the rest of India`), `${slug}: delivery FAQ names the farthest zone naturally`);
       check(!/Zone\s*\d/.test(delivery.answer), `${slug}: delivery FAQ has no raw "Zone N" label`);
     }
   }

@@ -68,12 +68,21 @@ export function CategoryEnquiryForm({
   categoryName,
   noun,
   models,
+  heading: headingOverride,
+  intro: introOverride,
 }: {
   categorySlug: string;
   categoryName: string;
   /** e.g. "security cabin" — used in the heading and the custom option. */
   noun: string;
   models: { id: string; name: string }[];
+  /**
+   * Optional heading and intro for a mount outside a category page (first used by the city page
+   * Portable Security Cabins in Shoolagiri, which has no model list above the form). Unset = the
+   * category-page text below, so category pages render exactly as before.
+   */
+  heading?: string;
+  intro?: string;
 }) {
   const uid = useId();
   const fid = (name: string) => `${uid}-${name}`;
@@ -160,7 +169,10 @@ export function CategoryEnquiryForm({
     }
   }
 
-  const heading = `Need a different ${noun}, or several units?`;
+  const heading = headingOverride ?? `Need a different ${noun}, or several units?`;
+  const intro =
+    introOverride ??
+    `The models above are sold online at their listed prices. For another size, a different layout or a multi-unit order, send your requirement and our sales team will reply to confirm the details before preparing a written quotation.`;
 
   return (
     <section
@@ -172,7 +184,7 @@ export function CategoryEnquiryForm({
         {heading}
       </h2>
       <p className="mt-2 max-w-3xl text-muted-foreground leading-relaxed">
-        {`The models above are sold online at their listed prices. For another size, a different layout or a multi-unit order, send your requirement and our sales team will reply ${COMPANY.responseTime.toLowerCase()} to confirm the details before preparing a written quotation.`}
+        {intro}
       </p>
 
       {status === "sent" ? (
@@ -186,7 +198,7 @@ export function CategoryEnquiryForm({
           <div>
             <p className="font-semibold text-foreground">Thank you — your requirement has been sent.</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {`Our sales team replies ${COMPANY.responseTime.toLowerCase()}. For anything urgent, call `}
+              {`For anything urgent, call `}
               <a href={`tel:${COMPANY.phones[0].e164}`} className="font-medium text-accent hover:underline">
                 {COMPANY.phones[0].display}
               </a>

@@ -47,7 +47,7 @@ export function ContainerOfficeGenericContent() {
 
         <div className="grid sm:grid-cols-2 gap-4 mt-8">
           {[
-            "Speed of setup: Deployable in days rather than months",
+            "Speed of setup: far less time on site than conventional construction",
             "Cost-efficiency: Significantly lower capital expenditure",
             "Portability: Relocate to new sites when projects move",
             "Reduced material wastage: Factory-controlled fabrication minimizes on-site waste",
@@ -57,12 +57,6 @@ export function ContainerOfficeGenericContent() {
               <span className="text-muted-foreground">{item}</span>
             </div>
           ))}
-        </div>
-
-        <div className="bg-accent/5 border border-accent/20 rounded-xl p-6 mt-8">
-          <p className="text-muted-foreground">
-            <strong className="text-foreground">Real Project Example:</strong> We delivered a project site office for a metro rail contractor in Mumbai in 2023—a fully fitted 40 ft container office was operational within 12 days of order confirmation. Similarly, a real estate developer in Pune used our container offices as sales galleries, impressing clients with modern aesthetics while maintaining complete flexibility to relocate as the project phases progressed.
-          </p>
         </div>
       </section>
 
@@ -85,7 +79,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: Clock,
               title: "Rapid Deployment Timelines",
-              desc: "A standard 20 ft container office can be set up within 7–10 days from order confirmation—including fabrication, delivery, and on-site installation. Even a small permanent structure would require months of construction activity.",
+              desc: "Standard products bought online are dispatched within 7–15 working days of order confirmation, with delivery and optional on-site installation to follow. Even a small permanent structure would require months of construction activity.",
             },
             {
               icon: Truck,
@@ -342,7 +336,7 @@ export function ContainerOfficeGenericContent() {
             {
               icon: Landmark,
               title: "Government & Public Sector",
-              desc: "Disaster relief coordination offices, command centres for large-scale operations, and temporary administrative cabins during public events, elections, or census activities. Rapid deployment within days.",
+              desc: "Disaster relief coordination offices, command centres for large-scale operations, and temporary administrative cabins during public events, elections, or census activities. Far less time on site than conventional construction.",
             },
             {
               icon: ShoppingBag,
@@ -377,12 +371,12 @@ export function ContainerOfficeGenericContent() {
             {
               step: "01",
               title: "Client Consultation",
-              desc: "Our team conducts a requirement study covering intended use, occupancy numbers, site conditions, MEP needs, and timeline expectations. This phase typically completes within 2–3 working days after enquiry.",
+              desc: "Our team conducts a requirement study covering intended use, occupancy numbers, site conditions, MEP needs, and timeline expectations.",
             },
             {
               step: "02",
               title: "Design & Costing",
-              desc: "We produce 2D layout drawings showing furniture placement, basic 3D views for visualization, and detailed BOQ submissions covering all materials, fixtures, and installation costs. Turnaround within 5–7 days.",
+              desc: "We produce 2D layout drawings showing furniture placement, basic 3D views for visualization, and detailed BOQ submissions covering all materials, fixtures, and installation costs.",
             },
             {
               step: "03",
@@ -397,7 +391,7 @@ export function ContainerOfficeGenericContent() {
             {
               step: "05",
               title: "Logistics & Installation",
-              desc: "Transportation by trailer, craning or placement using appropriate equipment, and on-site connections for power, water, and drainage. Most single-container installations complete within 1–3 days.",
+              desc: "Transportation by trailer, craning or placement using appropriate equipment, and on-site connections for power, water, and drainage. Installation time depends on site readiness.",
             },
             {
               step: "06",
@@ -489,7 +483,7 @@ export function ContainerOfficeGenericContent() {
             Access to replacement parts and accessories is straightforward, making repairs and upgrades hassle-free. Businesses should also consider the cost and availability of maintenance services when investing in a container office, as well as the permission required for any structural modifications or enhancements.
           </p>
           <p>
-            By staying proactive with maintenance and repairs, organizations can extend the lifespan of their container offices and ensure they continue to provide a productive workspace. This approach not only protects your investment but also guarantees that your office remains compliant with safety standards and ready to meet your evolving business needs.
+            By staying proactive with maintenance and repairs, organizations can extend the lifespan of their container offices and ensure they continue to provide a productive workspace. This approach not only protects your investment but also helps keep your office compliant with safety standards and ready to meet your evolving business needs.
           </p>
         </div>
       </section>
@@ -533,9 +527,9 @@ export function ContainerOfficeGenericContent() {
             </thead>
             <tbody>
               {[
-                { config: "Standard 20 ft cabin", timeline: "2–3 weeks" },
-                { config: "Fitted 40 ft office", timeline: "3–4 weeks" },
-                { config: "Multi-container complex", timeline: "4–6 weeks" },
+                { config: "Standard 20 ft cabin", timeline: "Dispatched within 7–15 working days (bought online)" },
+                { config: "Fitted 40 ft office", timeline: "Set out in your written quotation" },
+                { config: "Multi-container complex", timeline: "Set out in your written quotation" },
                 { config: "Large custom projects", timeline: "Based on scope" },
               ].map((row, index) => (
                 <tr key={row.config} className={index % 2 === 0 ? "bg-muted/30" : "bg-card"}>

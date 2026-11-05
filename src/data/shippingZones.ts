@@ -38,13 +38,38 @@ export const DISPATCH_WORKING_DAYS = { min: 7, max: 15 } as const;
 /**
  * Optional on-site installation. Charged only if the customer opts in at checkout.
  * GST-inclusive. Set to null to remove the option from checkout entirely.
+ * The description's last sentence (foundation and civil work quoted separately) was added at the
+ * owner's request on 2026-10-20; it is display text only and changes no amount.
  */
 export const INSTALLATION = {
   label: "On-site installation & positioning",
   description:
-    "Our team levels the base, positions the unit and completes handover. Crane/hydra charges at site are included for standard single-unit placements.",
+    "Our team levels the base, positions the unit and completes handover. Crane/hydra charges at site are included for standard single-unit placements. Foundation and civil work are quoted separately.",
   rate: 15000,
 } as const;
+
+/**
+ * What the paid installation option covers, item by item — the same four things
+ * INSTALLATION.description says (keep the two in step). The Shipping & Delivery page and the
+ * product-page Shipping & Delivery pop-up list these, so no page promises more than checkout sells.
+ * Foundation / civil work is not part of the option (owner, 2026-10-19): see INSTALLATION_NOT_COVERED.
+ */
+export const INSTALLATION_SCOPE = [
+  { title: "Base levelling", text: "Our team levels the base." },
+  { title: "Positioning", text: "We position the unit on site." },
+  { title: "Crane / hydra", text: "Crane or hydra charges at site are included for standard single-unit placements." },
+  { title: "Handover", text: "We complete the handover." },
+] as const;
+
+/**
+ * What the paid installation option does NOT cover (owner decisions, 2026-10-19), listed under
+ * INSTALLATION_SCOPE on the Shipping & Delivery page and in the product-page pop-up. Display text
+ * only: INSTALLATION (label, description, rate) and every checkout calculation are unchanged.
+ */
+export const INSTALLATION_NOT_COVERED = [
+  "Foundation and civil work are not part of the installation option; they are quoted separately.",
+  "Crane or hydra for a non-standard placement (for example a multi-unit or stacked placement, or a site with restricted access) is subject to feasibility and needs a separate written quotation, agreed before you pay.",
+] as const;
 
 /**
  * ZONE 1 IS GENUINELY FREE — owner-confirmed. Free delivery within ~50 km of the facility.
@@ -53,8 +78,11 @@ export const INSTALLATION = {
 export const SHIPPING_ZONES: ShippingZone[] = [
   {
     id: "zone-1",
-    name: "Zone 1 — Local (within ~50 km)",
-    description: "Free delivery within approximately 50 km of our facility.",
+    // Display text only (owner-approved, 2026-10-19): the zone is assigned by the PIN-code
+    // prefixes below, not by distance, so the name and description say so. The description must
+    // list the same prefixes as pincodePrefixes. id, rate, transit days and prefixes are unchanged.
+    name: "Zone 1 — Eligible PIN codes",
+    description: "Free delivery to PIN codes beginning 560, 562, 563 or 635.",
     rate: 0,
     transitDaysMin: 1,
     transitDaysMax: 2,
@@ -94,6 +122,38 @@ export const SHIPPING_ZONES: ShippingZone[] = [
 export const FALLBACK_ZONE_ID = "zone-4";
 
 /**
+ * The road-leg (transit) window across every zone: the shortest transitDaysMin to the longest
+ * transitDaysMax. Derived, so the product pages and the shipping modal can never state a
+ * different transit range from the per-zone times the Merchant feed and the JSON-LD carry.
+ */
+export const TRANSIT_WORKING_DAYS = {
+  min: Math.min(...SHIPPING_ZONES.map((zone) => zone.transitDaysMin)),
+  max: Math.max(...SHIPPING_ZONES.map((zone) => zone.transitDaysMax)),
+} as const;
+
+/**
+ * Door-to-door envelope, dispatch + transit: the "Delivery" window shown on product pages and
+ * in their meta descriptions. Derived from the two confirmed windows above. It replaced the
+ * hand-typed "7–21 Working Days", which no longer covered the rest-of-India zone (15 + 10).
+ */
+export const DELIVERY_WORKING_DAYS = {
+  min: DISPATCH_WORKING_DAYS.min + TRANSIT_WORKING_DAYS.min,
+  max: DISPATCH_WORKING_DAYS.max + TRANSIT_WORKING_DAYS.max,
+} as const;
+
+/**
+ * The free delivery zone's PIN-code prefixes as display text — "560, 562, 563 or 635". Policies
+ * and FAQs describe the free zone by PIN code because that is how checkout assigns it; a
+ * distance ("within 50 km") is not what the customer is charged on.
+ */
+export const FREE_DELIVERY_PIN_PREFIXES_TEXT: string = (() => {
+  const prefixes = SHIPPING_ZONES.find((zone) => zone.rate === 0)?.pincodePrefixes ?? [];
+  return prefixes.length <= 1
+    ? prefixes.join("")
+    : `${prefixes.slice(0, -1).join(", ")} or ${prefixes[prefixes.length - 1]}`;
+})();
+
+/**
  * Resolve a 6-digit Indian pincode to a zone. Longest matching prefix wins, so "560"
  * (Zone 1) beats "56" (Zone 2) for a Bengaluru address.
  *
@@ -117,7 +177,7 @@ export function resolveShippingZone(pincode: string): ShippingZone | null {
   return best ?? SHIPPING_ZONES.find((z) => z.id === FALLBACK_ZONE_ID) ?? null;
 }
 
-/** Total delivery window (dispatch + transit) for a zone, in days — for display. */
+/** Total delivery window (dispatch + transit) for a zone, in working days — for display. */
 export function deliveryEstimate(zone: ShippingZone): { min: number; max: number } {
   return {
     min: DISPATCH_WORKING_DAYS.min + zone.transitDaysMin,

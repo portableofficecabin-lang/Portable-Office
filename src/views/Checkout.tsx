@@ -465,11 +465,11 @@ export default function CheckoutPage() {
                             <span>
                               <strong className="font-semibold">{totals.zone.name}</strong> —{" "}
                               {totals.zone.rate === 0 ? (
-                                <span className="text-accent font-semibold">Free delivery (within 50 km)</span>
+                                <span className="text-accent font-semibold">Free delivery</span>
                               ) : (
                                 <span>transport {formatINR(totals.zone.rate)}</span>
                               )}
-                              . Estimated delivery {eta.min}–{eta.max} days from payment.
+                              . Estimated delivery {eta.min}–{eta.max} working days from payment.
                             </span>
                           </p>
                         )}
@@ -548,7 +548,7 @@ export default function CheckoutPage() {
                         {totals.shipping === null
                           ? <span className="text-muted-foreground">Enter pincode</span>
                           : totals.shipping === 0
-                            ? <span className="text-accent">Free (within 50 km)</span>
+                            ? <span className="text-accent">Free</span>
                             : formatINR(totals.shipping)}
                       </span>
                     </div>

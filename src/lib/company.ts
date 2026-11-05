@@ -148,7 +148,8 @@ export const COMPANY = Object.freeze({
     },
   },
 
-  /** How quickly enquiries are answered. */
+  /** How quickly enquiries are answered. NOT CONFIRMED (owner, 2026-10-19): response deadlines are being
+   *  removed from the site, so do not render this in new copy. Kept only because a city page still reads it. */
   responseTime: "Within 24 hours",
 
   /** Verified, live social profiles. There is NO Twitter/X profile and NO IndiaMart page — do not link them. */

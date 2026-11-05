@@ -231,7 +231,11 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "security-cabins": {
     locationHeading: "Security cabins by location",
-    locationLinks: promotionLocations("security-cabin"),
+    // The four promotion pages, then the security-cabin city page (Krishnagiri, 2026-11-05).
+    locationLinks: [
+      ...promotionLocations("security-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+    ],
     guideLinks: [GUIDE.materials, GUIDE.insulation, GUIDE.installation],
     relatedCategorySlugs: ["portable-cabins", "site-office-containers"],
     // Small standalone cabins a gate or campus buyer also compares: the 10–40 ft steel office
@@ -240,7 +244,11 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "portable-toilet-cabins": {
     locationHeading: "Portable toilet cabins by location",
-    locationLinks: promotionLocations("portable-toilet-cabin"),
+    // The four promotion pages, then the portable-toilet city page (Krishnagiri, 2026-11-04).
+    locationLinks: [
+      ...promotionLocations("portable-toilet-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    ],
     guideLinks: [
       {
         name: "Portable toilet cabin types",
@@ -690,7 +698,7 @@ const LANDING_COPY: Record<string, CategoryLandingCopy> = {
       },
       {
         title: "Warehouse and factory overflow",
-        text: "Extra storage that can be placed in a yard in a day and removed when it is no longer needed.",
+        text: "Extra storage that can be placed in a yard and removed when it is no longer needed.",
       },
       {
         title: "A base for conversion",
@@ -1041,7 +1049,7 @@ function transportRows(): TransportRow[] {
     zone: zoneLabel(zone),
     areas: zoneAreas(zone),
     charge: zone.rate === 0 ? "Free" : formatINR(zone.rate),
-    transit: `${zone.transitDaysMin}–${zone.transitDaysMax} days`,
+    transit: `${zone.transitDaysMin}–${zone.transitDaysMax} working days`,
   }));
 }
 
@@ -1058,9 +1066,9 @@ function facts(slug: string, categoryName: string, products: Product[]): Categor
     dispatch: `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days`,
     installation: formatINR(INSTALLATION.rate),
     gst: GST_PERCENT_LABEL,
-    localTransit: `${local.transitDaysMin}–${local.transitDaysMax} days`,
+    localTransit: `${local.transitDaysMin}–${local.transitDaysMax} working days`,
     localPins: listOr(local.pincodePrefixes),
-    farthestTransit: `${farthest.transitDaysMin}–${farthest.transitDaysMax} days`,
+    farthestTransit: `${farthest.transitDaysMin}–${farthest.transitDaysMax} working days`,
     farthestZone: farthest.name.replace(/^Zone\s*\d+\s*[—-]\s*/, "").replace(/^Rest/, "the rest"),
   };
 }

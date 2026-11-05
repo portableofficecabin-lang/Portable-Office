@@ -107,7 +107,7 @@ export const productChildGroups: ProductChildGroup[] = [
             heading: "What is included — and what is quoted separately",
             paragraphs: [
               "The displayed price is the ex-works cabin price including GST. Transport to your site and crane unloading are quoted separately because they depend entirely on distance and site access — the checkout calculates transport from your delivery PIN code before you pay, so there are no surprises.",
-              "Installation is light by design: cabins arrive factory-finished and are placed on a simple level base, so most sites are operational the same day the cabin lands.",
+              "Installation is light by design: cabins arrive factory-finished and are placed on a simple level base, so on-site work is limited to placement, levelling and service connections.",
             ],
           },
           {
@@ -220,7 +220,7 @@ export const productChildGroups: ProductChildGroup[] = [
           {
             heading: "Interior finishes",
             paragraphs: [
-              "Interiors are pre-finished at the factory: PPGI or laminated wall lining, vinyl or laminate flooring over marine plywood, concealed wiring with switches and LED lights in place. That is what makes same-day occupancy possible — there is no site-side painting or wiring stage.",
+              "Interiors are pre-finished at the factory: PPGI or laminated wall lining, vinyl or laminate flooring over marine plywood, concealed wiring with switches and LED lights in place. That is why there is little left to do once the cabin is placed — there is no site-side painting or wiring stage.",
             ],
           },
           {
@@ -298,7 +298,7 @@ export const productChildGroups: ProductChildGroup[] = [
           "Portable classrooms for schools and institutions: sizes per class strength, ventilation and lighting, safety points, and delivery timed to the academic term.",
         h1: "Portable Cabins for Schools & Classrooms",
         intro: [
-          "When admissions outgrow buildings, a portable classroom bridges the gap in days rather than a construction season. Schools use cabins as classrooms, staff rooms, labs, libraries and admin offices — this guide covers what a classroom cabin needs to get right.",
+          "When admissions outgrow buildings, a portable classroom bridges the gap with far less time on site than conventional construction. Schools use cabins as classrooms, staff rooms, labs, libraries and admin offices — this guide covers what a classroom cabin needs to get right.",
         ],
         sections: [
           {
@@ -420,7 +420,7 @@ export const productChildGroups: ProductChildGroup[] = [
           {
             heading: "Delivery day, step by step",
             paragraphs: [
-              "The lorry arrives, the crane slings the cabin from its lifting points, and the cabin lands on the prepared base and gets levelled. Utilities connect to the wall points — power to the DB, water and drain where wet areas exist — and the cabin is handed over the same day. Total time on a prepared site is measured in hours.",
+              "The lorry arrives, the crane slings the cabin from its lifting points, and the cabin lands on the prepared base and gets levelled. Utilities connect to the wall points — power to the DB, water and drain where wet areas exist — and the cabin is handed over. Time on site depends on how ready the site is.",
             ],
           },
         ],
@@ -478,7 +478,7 @@ export const productChildGroups: ProductChildGroup[] = [
           { q: "Do cabins rust?", a: "The structure is primed and painted against corrosion and the skins are pre-painted steel. Rust starts at neglected scratches — touch them up and the cabin stays sound." },
           { q: "Can worn parts be replaced?", a: "Yes — panels, doors, windows, flooring and fittings are all serviceable or replaceable, which is what makes refurbishment economical." },
           { q: "Does relocation shorten a cabin's life?", a: "Not when lifted correctly from its lifting points onto a level base. Re-check levelness after every move — that is the one post-move task that matters." },
-          { q: "Is there after-sales support?", a: "Yes — a maintenance guide ships with every cabin and our after-sales team is available on call for repairs and parts." },
+          { q: "Is there after-sales support?", a: "Yes — repairs and spare parts after delivery are provided as set out in your quotation or maintenance agreement." },
         ],
         related: [
           { label: "Warranty information", href: "/warranty" },

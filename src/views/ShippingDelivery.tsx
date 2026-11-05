@@ -23,7 +23,10 @@ import {
   SHIPPING_ZONES,
   deliveryEstimate,
   DISPATCH_WORKING_DAYS,
+  FREE_DELIVERY_PIN_PREFIXES_TEXT,
   INSTALLATION,
+  INSTALLATION_NOT_COVERED,
+  INSTALLATION_SCOPE,
 } from "@/data/shippingZones";
 import { formatINR, GST_PERCENT_LABEL } from "@/lib/pricing/gst";
 
@@ -86,8 +89,8 @@ export default function ShippingDeliveryPage() {
         }
         // Same reason as the warranty page: the H1 said "Delivery" but never "Shipping", which is
         // both the slug (/shipping) and the lead word of the title tag. Voice preserved.
-        title={<>Shipping &amp; Delivery — <span className="text-accent">Hassle-Free, Every Time</span></>}
-        description="From our factory floor to your site — we handle everything. Here's exactly what to expect when you order from us."
+        title={<>Shipping &amp; Delivery — <span className="text-accent">Charges, Zones &amp; Timelines</span></>}
+        description="From our factory floor to your site. Here's exactly what to expect when you order from us."
       />
 
       {/* Breadcrumb */}
@@ -108,10 +111,11 @@ export default function ShippingDeliveryPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             <InfoCard icon={Truck} title="Delivery Options" index={0}>
               <ul className="space-y-3">
-                <Bullet>Standard delivery is <strong>free within a 50 km radius of our facility</strong> (Zone 1) — genuinely free, with no hidden charges.</Bullet>
-                <Bullet>Beyond 50 km, transport is charged <strong>by delivery zone</strong>. Enter your pincode at checkout and the exact transport charge is calculated and shown to you before you pay — see the zone table below.</Bullet>
+                <Bullet>For products bought online, standard delivery is <strong>free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}</strong> (Zone 1) — genuinely free: no transport charge is added at checkout.</Bullet>
+                <Bullet>For all other PIN codes, transport is charged <strong>by delivery zone</strong>. Enter your pincode at checkout and the exact transport charge is calculated and shown to you before you pay — see the zone table below.</Bullet>
                 <Bullet>Unloading (crane or hydra) and on-site installation are <strong>optional and charged separately</strong> at {formatINR(INSTALLATION.rate)} — never bundled into the transport charge.</Bullet>
-                <Bullet>Need it faster? Express delivery is available at a small additional cost.</Bullet>
+                <Bullet>Custom orders and rentals: transport is confirmed in your written quotation.</Bullet>
+                <Bullet>Need it sooner? Express delivery is not a checkout option — ask our team before you order.</Bullet>
               </ul>
             </InfoCard>
 
@@ -119,15 +123,13 @@ export default function ShippingDeliveryPage() {
               <ul className="space-y-3">
                 <Bullet><strong>Manufacturing &amp; dispatch:</strong> {DISPATCH_WORKING_DAYS.min} – {DISPATCH_WORKING_DAYS.max} working days after order confirmation and payment. Larger or fully customised projects take longer — see Manufacturing &amp; Lead Time below.</Bullet>
                 <Bullet><strong>Transit:</strong> additional, and it varies by zone — see the zone table below for the window that applies to your area.</Bullet>
-                <Bullet><strong>Express delivery:</strong> available on request at additional cost — see the expedited shipping policy below.</Bullet>
-                <Bullet>GPS shipment tracking is provided for every order so you always know where your cabin is.</Bullet>
+                <Bullet><strong>Express delivery:</strong> not a checkout option — ask our team before you order (see below).</Bullet>
+                <Bullet>Ask our team for shipment status updates once your order is dispatched.</Bullet>
               </ul>
             </InfoCard>
 
-            <InfoCard icon={Package} title="Packaging & Handling" index={2}>
+            <InfoCard icon={Package} title="Damage in Transit" index={2}>
               <ul className="space-y-3">
-                <Bullet>Every unit is securely packed using high-quality materials to prevent any transit damage.</Bullet>
-                <Bullet>Weather-protected transport ensures your cabin arrives in perfect condition — rain or shine.</Bullet>
                 <Bullet>
                   If a unit is damaged in transit, notify us within 48 hours of delivery with photographs. Once our team confirms the damage occurred in transit, we will repair the unit at no cost, replace the affected components, or agree an appropriate compensation, as set out in our{" "}
                   <Link href="/refund-policy" className="text-accent hover:underline">Refund &amp; Cancellation Policy</Link>.
@@ -138,8 +140,8 @@ export default function ShippingDeliveryPage() {
             <InfoCard icon={MapPin} title="Delivery Coverage" index={3}>
               <ul className="space-y-3">
                 <Bullet>We deliver across Karnataka, Tamil Nadu, and neighbouring states, and to all other serviceable pincodes across India.</Bullet>
-                <Bullet>Deliveries beyond the 50 km free zone carry a transport charge set by the delivery zone your pincode falls in.</Bullet>
-                <Bullet>For remote or challenging site locations, our logistics team will coordinate the best route.</Bullet>
+                <Bullet>Deliveries outside the free zone carry a transport charge set by the delivery zone your pincode falls in.</Bullet>
+                <Bullet>For remote or hard-to-reach sites, tell our team about road access and unloading space before you order.</Bullet>
               </ul>
             </InfoCard>
           </div>
@@ -189,18 +191,18 @@ export default function ShippingDeliveryPage() {
                         </td>
                         <td className="p-4 text-sm font-semibold whitespace-nowrap">
                           {zone.rate === 0 ? (
-                            <span className="text-accent">Free (within ~50 km)</span>
+                            <span className="text-accent">Free</span>
                           ) : (
                             <span className="text-foreground">{formatINR(zone.rate)}</span>
                           )}
                         </td>
                         <td className="p-4 text-sm text-muted-foreground leading-relaxed">
                           <span className="font-semibold text-foreground">
-                            {estimate.min} – {estimate.max} days
+                            {estimate.min} – {estimate.max} working days
                           </span>
                           <span className="block text-xs mt-1">
                             {DISPATCH_WORKING_DAYS.min} – {DISPATCH_WORKING_DAYS.max} working days
-                            dispatch + {zone.transitDaysMin} – {zone.transitDaysMax} days transit
+                            dispatch + {zone.transitDaysMin} – {zone.transitDaysMax} working days transit
                           </span>
                         </td>
                       </tr>
@@ -242,7 +244,7 @@ export default function ShippingDeliveryPage() {
           >
             <strong className="text-foreground">Charges &amp; taxes:</strong> Product prices shown on this website
             are <strong>inclusive of {GST_PERCENT_LABEL} GST</strong>. Transport is charged by delivery zone as set out
-            above (free within ~50 km), and unloading / on-site installation is an optional extra line item. Both are
+            above (free to PIN codes beginning {FREE_DELIVERY_PIN_PREFIXES_TEXT}), and unloading / on-site installation is an optional extra line item. Both are
             shown to you at checkout, before payment, and a GST tax invoice is issued for every order. Made-to-order and
             custom project builds are not sold online — for those, the binding price is the one stated in your written
             quotation.
@@ -261,22 +263,12 @@ export default function ShippingDeliveryPage() {
               <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0">
                 <Truck className="h-5 w-5 text-accent" />
               </div>
-              <h2 className="font-display text-xl font-bold text-foreground">Expedited (Express) Shipping Policy</h2>
+              <h2 className="font-display text-xl font-bold text-foreground">Faster Delivery Requests</h2>
             </div>
-            <p className="text-muted-foreground leading-relaxed mb-5">
-              Need your cabin or container sooner than the standard timeline? We offer an optional Expedited Shipping service for urgent project requirements.
-            </p>
-            <ul className="space-y-3 mb-5">
-              <Bullet><strong>Delivery window:</strong> 3 – 7 working days for dispatch and delivery (subject to ready stock or completed manufacturing).</Bullet>
-              <Bullet><strong>Availability:</strong> On request only — must be confirmed at the time of order.</Bullet>
-              <Bullet><strong>Charges:</strong> Quoted case-by-case based on distance beyond the 50 km free zone, unit size (Small / Medium / Large), and site accessibility (crane or hydra requirement).</Bullet>
-              <Bullet><strong>Priority dispatch:</strong> Orders are moved to the front of the production and loading queue wherever feasible.</Bullet>
-              <Bullet><strong>Dedicated transport:</strong> A dedicated truck or trailer is assigned instead of consolidated loads, ensuring direct point-to-point delivery.</Bullet>
-              <Bullet><strong>Live GPS tracking</strong> and a single point-of-contact coordinator are provided throughout transit.</Bullet>
-              <Bullet><strong>Important:</strong> Expedited shipping compresses dispatch and transit time only — it does not reduce the manufacturing lead time for custom-built units.</Bullet>
-            </ul>
-            <p className="text-sm text-muted-foreground italic">
-              To request expedited shipping, mention "Express Delivery" while confirming your order via phone, WhatsApp, or email — our team will confirm the applicable surcharge in writing before invoicing.
+            <p className="text-muted-foreground leading-relaxed">
+              Express delivery is not a checkout option. If you need your cabin or container sooner than the
+              standard timeline, ask our team before you place your order — by phone, WhatsApp or email. Any
+              faster option, and any extra charge for it, is confirmed by our team in writing before you pay.
             </p>
           </motion.div>
 
@@ -299,13 +291,11 @@ export default function ShippingDeliveryPage() {
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Manufacturing begins once your order is confirmed and payment is received — full payment at checkout for
-              standard products bought online, or the agreed advance for custom, made-to-order projects. Here's a general
-              idea of timelines:
+              standard products bought online, or the agreed advance for custom, made-to-order projects.
             </p>
             <ul className="space-y-3">
-              <Bullet><strong>Small projects</strong> (security cabins, guard booths): 7 – 14 working days.</Bullet>
-              <Bullet><strong>Medium projects</strong> (site offices, portable toilets): 14 – 20 working days.</Bullet>
-              <Bullet><strong>Large projects</strong> (prefab homes, container complexes): 20 – 30 working days.</Bullet>
+              <Bullet><strong>Standard products bought online:</strong> dispatched within {DISPATCH_WORKING_DAYS.min} – {DISPATCH_WORKING_DAYS.max} working days of order confirmation and payment — the window shown on every product page.</Bullet>
+              <Bullet><strong>Custom and made-to-order projects:</strong> the timeline is set out in your written quotation.</Bullet>
             </ul>
             <p className="text-sm text-muted-foreground mt-4 italic">
               * Actual timelines depend on customisation requirements and material availability. Transit is additional and
@@ -323,34 +313,21 @@ export default function ShippingDeliveryPage() {
           >
             <h2 className="font-display text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
               <Wrench className="h-6 w-6 text-accent" />
-              Installation Process
+              What Installation Covers
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl">
-              Our trained installation crew follows a clear three-step process to get your cabin ready for use — quickly and professionally. Installation is optional and charged separately at {formatINR(INSTALLATION.rate)}; you choose whether to add it at checkout, and it is never bundled into the transport charge.
+              {INSTALLATION.label} is optional. For products bought online, add it at checkout for{" "}
+              {formatINR(INSTALLATION.rate)} (including {GST_PERCENT_LABEL} GST); it is never bundled into the
+              transport charge. It covers:
             </p>
-            <div className="grid sm:grid-cols-3 gap-6 mb-12">
-              {[
-                {
-                  step: "01",
-                  title: "Site Preparation",
-                  time: "1 – 2 days",
-                  desc: "We assess the ground, level the surface, and prepare the foundation for a stable setup.",
-                },
-                {
-                  step: "02",
-                  title: "Delivery & Assembly",
-                  time: "1 day",
-                  desc: "The cabin is transported, positioned using a crane or trailer, and assembled on-site.",
-                },
-                {
-                  step: "03",
-                  title: "Final Inspection",
-                  time: "Same day",
-                  desc: "We perform a complete quality check — electrical, plumbing, doors, windows — before handover.",
-                },
-              ].map((item, i) => (
+            {/* Exactly the paid checkout option (INSTALLATION_SCOPE = INSTALLATION.description, item by
+                item). The old three steps also claimed "prepare the foundation", on-site assembly and an
+                electrical/plumbing inspection, and gave durations; none of those is in the checkout option,
+                and the owner keeps them out (2026-10-19). What the option excludes is listed below it. */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              {INSTALLATION_SCOPE.map((item, i) => (
                 <motion.div
-                  key={item.step}
+                  key={item.title}
                   custom={i}
                   initial="hidden"
                   whileInView="visible"
@@ -359,14 +336,23 @@ export default function ShippingDeliveryPage() {
                   className="card-premium p-6 text-center"
                 >
                   <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
-                    <span className="font-display text-xl font-bold text-accent">{item.step}</span>
+                    <span className="font-display text-xl font-bold text-accent">{String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3 className="font-display font-bold text-foreground mb-1">{item.title}</h3>
-                  <p className="text-sm text-accent font-semibold mb-3">{item.time}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <h3 className="font-display font-bold text-foreground mb-3">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
                 </motion.div>
               ))}
             </div>
+            <p className="font-semibold text-foreground mb-2">Not included:</p>
+            <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6 max-w-2xl">
+              {INSTALLATION_NOT_COVERED.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+            <p className="text-muted-foreground mb-12 max-w-2xl">
+              Installation is scheduled after delivery, subject to crew availability and your site readiness. For
+              custom orders and rentals, installation is set out in your written quotation.
+            </p>
           </motion.div>
 
           {/* Before You Order */}
@@ -389,7 +375,7 @@ export default function ShippingDeliveryPage() {
               <Bullet>You can confirm your order through a phone call, email, WhatsApp, or by booking an appointment.</Bullet>
               <Bullet>Delivery timelines begin only after we receive your order confirmation and payment.</Bullet>
               <Bullet>Installation scheduling depends on crew availability and your site readiness.</Bullet>
-              <Bullet>Deliveries beyond the 50 km free zone carry a transport charge set by your delivery zone — it is calculated from your pincode and shown at checkout before you pay.</Bullet>
+              <Bullet>Deliveries outside the free zone carry a transport charge set by your delivery zone — it is calculated from your pincode and shown at checkout before you pay.</Bullet>
               <Bullet>Product prices include {GST_PERCENT_LABEL} GST. Unloading and on-site installation are an optional extra ({formatINR(INSTALLATION.rate)}), billed as a separate line item.</Bullet>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">

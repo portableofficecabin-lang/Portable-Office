@@ -21,7 +21,7 @@ export function PrefabPortaCabinContent() {
   const faqs = [
     {
       q: "How long does delivery take?",
-      a: "Standard 10x20 ft office cabins are typically ready in 2–3 weeks from order approval. Custom or larger units may require 3–4 weeks.",
+      a: "Standard cabins bought online are dispatched within 7–15 working days of order confirmation. Custom or larger units follow the timeline in your written quotation.",
     },
     {
       q: "Can porta cabins be relocated?",
@@ -118,7 +118,7 @@ export function PrefabPortaCabinContent() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground italic">
-          Assembly relies on bolted joints rather than on-site welding. Most installations require only simple concrete plinths or PCC blocks as foundation, allowing completion in 1–2 days.
+          Assembly relies on bolted joints rather than on-site welding. Most installations require only simple concrete plinths or PCC blocks as foundation, which keeps on-site work short.
         </p>
       </section>
 
@@ -129,7 +129,7 @@ export function PrefabPortaCabinContent() {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { icon: Zap, title: "Rapid Deployment", desc: "Installation in hours to 2 days versus months for RCC buildings" },
+            { icon: Zap, title: "Rapid Deployment", desc: "Far less time on site than RCC buildings" },
             { icon: Shield, title: "Cost Effectiveness", desc: "40–60% lower than conventional construction with less waste" },
             { icon: RotateCcw, title: "Relocatable Design", desc: "Units can be shifted 5–10 times over their lifespan without structural degradation" },
             { icon: Thermometer, title: "Energy Efficiency", desc: "PUF insulation reduces AC loads by up to 30% in extreme heat" },
@@ -336,7 +336,7 @@ export function PrefabPortaCabinContent() {
           Price of This Prefab Porta Cabin
         </h2>
         <p className="text-muted-foreground mb-6">
-          This cabin is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport and optional installation are calculated at checkout from your delivery pincode — there is no separate negotiation and no hidden extra.
+          This cabin is sold at the single price shown at the top of this page, inclusive of 18% GST. Transport is calculated at checkout from your delivery pincode, and optional installation is a separate fixed line — both are shown before you pay.
         </p>
 
         <h3 className="font-semibold text-foreground mb-3">Options that change the specification (and are quoted separately):</h3>
@@ -386,7 +386,7 @@ export function PrefabPortaCabinContent() {
               ))}
             </ul>
             <p className="text-sm text-muted-foreground mt-3 italic">
-              Once drawings receive approval, manufacturing slots and delivery timelines are confirmed. Leading manufacturers complete this phase within days.
+              Once drawings receive approval, manufacturing slots and delivery timelines are confirmed.
             </p>
           </div>
 
@@ -405,7 +405,7 @@ export function PrefabPortaCabinContent() {
               ))}
             </ul>
             <p className="text-sm text-muted-foreground mt-3 italic">
-              Installation typically completes in a few hours to one day for standard cabins, causing minimal disruption to ongoing site work.
+              Standard cabins arrive factory-finished, so installation causes minimal disruption to ongoing site work.
             </p>
           </div>
         </div>

@@ -53,7 +53,7 @@ const MAJOR_CITIES = [
   { city: "Hosur", state: "Tamil Nadu", note: "Factory belt — local-zone delivery" },
   { city: "Krishnagiri", state: "Tamil Nadu", note: "Factory belt — local-zone delivery" },
   { city: "Chennai", state: "Tamil Nadu", note: "Port city — container stock dispatched fast" },
-  { city: "Coimbatore", state: "Tamil Nadu", note: "2–4 day transit from our factory" },
+  { city: "Coimbatore", state: "Tamil Nadu", note: "2–4 working-day transit from our factory" },
   { city: "Hyderabad", state: "Telangana", note: "South-zone transport" },
   { city: "Mumbai", state: "Maharashtra", note: "Pan-India zone delivery" },
   { city: "Pune", state: "Maharashtra", note: "Pan-India zone delivery" },
@@ -210,7 +210,7 @@ export default function CitiesWeServe() {
                     <p className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-accent shrink-0" aria-hidden="true" />
                       <span className="text-muted-foreground">
-                        {eta.min}–{eta.max} days incl. dispatch
+                        {eta.min}–{eta.max} working days incl. dispatch
                       </span>
                     </p>
                   </div>

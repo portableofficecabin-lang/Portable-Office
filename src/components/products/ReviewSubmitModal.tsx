@@ -330,7 +330,7 @@ export function ReviewSubmitModal({ productSlug, productName, open, onClose, onS
             <div className="text-5xl">✓</div>
             <p className="text-muted-foreground">
               Your review has been received and will appear on the site after admin
-              approval (usually within 24 hours).
+              approval.
             </p>
             <Button className="w-full" onClick={handleClose}>Close</Button>
           </div>

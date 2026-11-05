@@ -16,7 +16,7 @@ const sipcotPrice = formatINR(sellPrice(getCommerce("31")!.basePrice));
 
 const highlights = [
   { icon: Factory, title: "Built for SIPCOT Estates", description: "Purpose-designed containers for Sriperumbudur, Oragadam, Hosur, and Gummidipoondi industrial parks" },
-  { icon: Clock, title: "7–15 Day Delivery", description: "Factory-to-site delivery across Tamil Nadu SIPCOT locations" },
+  { icon: Clock, title: "7–15 Working-Day Dispatch", description: "Bought online: factory-to-site delivery across Tamil Nadu SIPCOT locations" },
   { icon: IndianRupee, title: "Buy Online", description: "One fixed GST-inclusive price — order online with secure checkout and delivery" },
   { icon: Truck, title: "Estate-to-Estate Relocation", description: "Move containers between Sriperumbudur, Oragadam, and other SIPCOT estates" },
   { icon: Lock, title: "Industrial Security", description: "Heavy-duty locking systems, CCTV provisions, and weather-resistant doors" },
@@ -53,10 +53,10 @@ const whyBuy = [
 ];
 
 const faqs = [
-  { q: "Which SIPCOT estates do you serve?", a: "We deliver to all major SIPCOT estates including Sriperumbudur, Oragadam, Irungattukottai, Gummidipoondi, Ranipet, and Hosur. Site surveys and proposals are provided within 48–72 hours." },
+  { q: "Which SIPCOT estates do you serve?", a: "We deliver to all major SIPCOT estates including Sriperumbudur, Oragadam, Irungattukottai, Gummidipoondi, Ranipet, and Hosur." },
   { q: "What container sizes are available for SIPCOT projects?", a: "We offer 20 ft, 40 ft standard and high cube containers. Custom lengths and multi-container complexes can be fabricated to your specifications." },
   { q: "Can containers be used as permanent plant offices?", a: "Yes. With proper foundation, insulation, anti-corrosive coatings, and periodic maintenance, containers serve as permanent structures lasting 20–25 years." },
-  { q: "How quickly can you deliver to SIPCOT Sriperumbudur?", a: "Standard cabins ship within 7–15 working days. Stock units may be available for faster dispatch — contact us for current availability." },
+  { q: "How quickly can you deliver to SIPCOT Sriperumbudur?", a: "Standard units bought online are dispatched within 7–15 working days of order confirmation, and checkout shows the delivery estimate for your PIN code. Custom builds follow the timeline in your written quotation." },
   { q: "Can I relocate containers between SIPCOT estates?", a: "Absolutely. We provide relocation support via crane and flatbed trailer between estates like Sriperumbudur and Oragadam with scheduled deliveries to minimise production disruption." },
   { q: "What customization options are available?", a: "Full customization including partitions, restrooms, pantry sections, data cabling, extra doors/windows, company branding, and documentation support for plant engineering teams." },
   { q: "Do you supply labour accommodation for SIPCOT factories?", a: "Yes. We design container-based dormitories with bunk houses, attached toilets, bathing areas, dining spaces, G+1 stacking, proper electrical layout, and firefighting provisions." },
@@ -169,7 +169,7 @@ export function ShippingContainerSIPCOTContent() {
             "UPVC/aluminium windows and LED lighting",
             "Split AC provisions (1.5–2 ton) and vinyl flooring",
             "Built-in workstations as required",
-            "Delivery to Sriperumbudur, Gummidipoondi, or Oragadam in 7–15 working days",
+            "Units bought online dispatched within 7–15 working days to Sriperumbudur, Gummidipoondi, or Oragadam",
           ].map((item) => (
             <li key={item} className="flex items-start gap-2">
               <Shield className="h-5 w-5 text-accent shrink-0 mt-0.5" />
@@ -285,7 +285,7 @@ export function ShippingContainerSIPCOTContent() {
           ))}
         </div>
         <p className="text-muted-foreground mt-4">
-          Site surveys and proposals are provided within 48–72 hours. We handle estate road navigation, crane placement, and scheduled deliveries to minimise production disruption.
+          We handle estate road navigation, crane placement, and scheduled deliveries to minimise production disruption.
         </p>
       </section>
 

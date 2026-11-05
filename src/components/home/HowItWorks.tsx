@@ -1,23 +1,24 @@
 import { MapPin, PenTool, Truck, PartyPopper } from "lucide-react";
+import { DISPATCH_WORKING_DAYS } from "@/data/shippingZones";
 
 const steps = [
   {
     icon: MapPin,
     step: "01",
-    title: "Site Assessment",
-    description: "We come and assess your site — don't worry, it'll only take a few minutes. We'll evaluate the space, terrain and access points.",
+    title: "Share Your Site Details",
+    description: "Tell us about your site — the space, the ground and the access for delivery vehicles — so we can confirm what fits and how it will reach you.",
   },
   {
     icon: PenTool,
     step: "02",
     title: "Design & Manufacture",
-    description: "Leveraging our advanced manufacturing process and expertise, we work with you to design and produce high-quality portable office cabins and specialized structures—this takes around 2–3 weeks, depending on the complexity.",
+    description: `Leveraging our advanced manufacturing process and expertise, we work with you to design and produce high-quality portable office cabins and specialized structures. Standard products bought online are dispatched within ${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days; custom designs follow the timeline in your written quotation.`,
   },
   {
     icon: Truck,
     step: "03",
     title: "Delivery & Installation",
-    description: "Our team of experts will deliver and install your portable office cabin efficiently and reliably, ensuring everything is set up on-site within a day or two to meet your timeline. Hassle-free, guaranteed.",
+    description: "We deliver your cabin to site. If you add on-site installation, our team levels the base, positions the unit and completes the handover, with crane or hydra included for standard single-unit placements.",
   },
   {
     icon: PartyPopper,

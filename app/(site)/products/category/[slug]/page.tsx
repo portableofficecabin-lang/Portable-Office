@@ -108,7 +108,7 @@ const CATEGORY_META: Record<string, { title: string; description: string; keywor
   "prefab-building": {
     title: "Prefab Buildings — Panel-Built Structures, Made to Your Plan",
     description:
-      "Prefab buildings assembled on your site in days — insulated panels, steel truss roof, clear-span width and any footprint. ISO 9001 manufacturer, built in Tamil Nadu, delivered pan-India.",
+      "Prefab buildings with far less time on site than conventional construction — insulated panels, steel truss roof, clear-span width and any footprint. ISO 9001 manufacturer, built in Tamil Nadu, delivered pan-India.",
     keywords:
       "prefab building, prefabricated building manufacturer, prefab building system, "
       + "panel built structure, prefab office building, prefab sales gallery, "

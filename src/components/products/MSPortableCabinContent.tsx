@@ -200,7 +200,7 @@ const faqs = [
   },
   {
     q: "How fast can installation happen on site?",
-    a: "Most single cabins can be placed and made operational the same day they arrive, provided the site is level and service connection points are ready.",
+    a: "Single cabins arrive factory-finished, so once the site is level and service connection points are ready, they need only placement and connection.",
   },
   {
     q: "What information is needed for an accurate quote?",
@@ -492,7 +492,7 @@ export function MSPortableCabinContent() {
             "Truck access with checked turning radius and overhead clearance",
             "Electrical, water, and sewage points ready before delivery",
             "Crane or hydra access for unloading and positioning",
-            "Most single units can be installed and made operational the same day",
+            "Single units arrive factory-finished, ready for placement and service connections",
             "Integral lifting points allow repeated relocation across sites",
           ].map((item) => (
             <div key={item} className="flex gap-3 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">

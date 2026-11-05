@@ -449,7 +449,7 @@ export default function MyAccountPage() {
                             <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
                               {order.payment_status === "paid"
                                 ? "Paid in full, inclusive of 18% GST. Transport and any optional installation you selected are included in this total."
-                                : "Indicative starting prices, exclusive of GST. Free delivery within 50 km of our facility; beyond 50 km transport is charged on distance. Installation is charged separately. Your final price is confirmed in your written quotation."}
+                                : "Indicative starting prices, exclusive of GST. Transport and installation are charged separately; your written quotation confirms them and your final price."}
                             </p>
                           </div>
                         ) : null}

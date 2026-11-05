@@ -21,7 +21,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone } from "lucide-react";
 
-import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
+import {
+  CITY_PAGES,
+  cityPageBySlug,
+  type CityPageLink,
+  type CityPageSection,
+  type CityPageTable,
+} from "@/data/cityPages";
+import { CATEGORY_LANDING_SLUGS, categoryModels } from "@/data/categoryLandings";
+import { categories, products } from "@/data/products";
+import { CategoryEnquiryForm } from "@/components/products/CategoryEnquiryForm";
 import { ContainerOfficeNearbyBlock } from "@/components/locations/ContainerOfficeLocations";
 import { ShippingContainerNearbyBlock } from "@/components/locations/CityDirectoryGroups";
 import { Layout } from "@/components/layout/Layout";
@@ -92,6 +101,9 @@ const h2 = "mt-10 mb-3 text-2xl font-bold tracking-tight";
 const h3 = "mt-6 mb-1.5 text-lg font-semibold";
 const p = "mb-4 leading-relaxed text-muted-foreground";
 const li = "mb-2 leading-relaxed text-muted-foreground";
+/* Bullet lists (why / industries / custom / why-us): a CityPageListItem without a title renders its text
+   alone. Before 2026-10-23 the lead-in markup rendered regardless, so untitled bullets (first used by
+   Portable Cabins in Perundurai) showed a stray ":" or " — " before the text. Titled bullets are unchanged. */
 
 /** Explicit timezone keeps a recorded calendar date identical on server and client. */
 const publicationDate = (isoDate: string) =>
@@ -126,6 +138,85 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
      and skips the hover zoom, so it is never shown larger than its natural size. Wider renders keep
      their original sizes and classes, with no style attribute. */
   const interiorNarrow = !!page.interiorImage && page.interiorImage.width < MAX_W_2XL_PX;
+  /* Optional enquiry form (`enquiryForm`): the category and its models come from the static catalogue,
+     the same source /api/enquiries validates the model id against. A category the route does not
+     accept renders no form rather than one that can only fail. */
+  const enquiryCategory = page.enquiryForm
+    ? categories.find((c) => c.slug === page.enquiryForm!.categorySlug)
+    : undefined;
+  const enquiry =
+    page.enquiryForm && enquiryCategory && CATEGORY_LANDING_SLUGS.includes(page.enquiryForm.categorySlug)
+      ? {
+          ...page.enquiryForm,
+          categoryName: enquiryCategory.name,
+          models: categoryModels(page.enquiryForm.categorySlug, products).map((m) => ({ id: m.id, name: m.name })),
+        }
+      : undefined;
+
+  /* Optional table (an extra section's `table`, or `whyTable`): header row, first cell of each row as
+     the row header, and a visible caption underneath. The wrapper scrolls only if a table is wider
+     than the column. Below the `sm` breakpoint the cells use px-3 and the row headers may wrap, so a
+     three-column table fits a 320–430 px phone instead of hiding its last column behind a sideways
+     scroll (2026-11-04, Portable Toilets in Krishnagiri); from `sm` up the markup looks exactly as
+     before. */
+  const renderTable = (table: CityPageTable) => (
+    <div className={`mb-4 overflow-x-auto rounded-xl border${mc("reveal")}`}>
+      <table className="w-full border-collapse text-left text-sm">
+        <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4">
+          {table.caption}
+        </caption>
+        <thead className="bg-muted/50">
+          <tr>
+            {table.headers.map((hd) => (
+              <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4">
+                {hd}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row) => (
+            <tr key={row[0]} className="border-t">
+              <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4">
+                {row[0]}
+              </th>
+              {row.slice(1).map((cell, j) => (
+                <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
+     hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, or after
+     the solutions list when `placement` is "afterSolutions". */
+  const renderSection = (sec: CityPageSection) => (
+    <section key={sec.heading}>
+      <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
+      {sec.paragraphs?.map((text) => (
+        <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
+      ))}
+      {sec.table && renderTable(sec.table)}
+      {sec.bullets && sec.bullets.length > 0 && (
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+          {sec.bullets.map((b) => (
+            <li key={b.title ?? b.text} className={li}>
+              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
+            </li>
+          ))}
+        </ul>
+      )}
+      {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
+      {sec.closing?.map((text) => (
+        <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
+      ))}
+    </section>
+  );
 
   return (
     /* WRAPPED IN <Layout> — header, nav, footer, WhatsApp button and skip link.
@@ -243,15 +334,59 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
         ))}
 
+        {/* Optional hero contact row (`heroCta`): quotation (the on-page form when there is one), Call
+            and WhatsApp, styled like the CTA box buttons. Not a scroll reveal: it sits near the top
+            and must never start hidden. Unset = no element. */}
+        {page.heroCta && (
+          <div className="mt-2 flex flex-wrap gap-3">
+            {enquiry ? (
+              <a
+                href="#category-enquiry"
+                className={`rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90${mc("btn-sheen press")}`}
+              >
+                {page.ctaButtonLabel ?? "Get a Free Quotation"}
+              </a>
+            ) : (
+              <Link
+                href="/contact"
+                className={`rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90${mc("btn-sheen press")}`}
+              >
+                {page.ctaButtonLabel ?? "Get a Free Quotation"}
+              </Link>
+            )}
+            <a
+              href={`tel:${primaryPhone.e164}`}
+              className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
+            >
+              <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+              Call {primaryPhone.display}
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center justify-center gap-2 rounded-md bg-[#0B7A43] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#096436]${mc("press")}`}
+            >
+              <WhatsAppGlyph className="h-4 w-4 shrink-0" />
+              WhatsApp Us
+            </a>
+          </div>
+        )}
+
         <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.whyBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}:</strong> {b.text}
-            </li>
-          ))}
-        </ul>
+        {/* An empty `whyBullets` (a section carried by `whyTable`) renders no list. */}
+        {page.whyBullets.length > 0 && (
+          <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+            {page.whyBullets.map((b) => (
+              <li key={b.title ?? b.text} className={li}>
+                {b.title && <><strong className="text-foreground">{b.title}:</strong> </>}{b.text}
+              </li>
+            ))}
+          </ul>
+        )}
+        {/* Optional table (`whyTable`); unset = no element. */}
+        {page.whyTable && renderTable(page.whyTable)}
         {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
@@ -289,8 +424,19 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <section key={s0.title} className={page.motion ? "reveal" : undefined}>
             <h3 className={h3}>{i + 1}. {s0.title}</h3>
             <p className={p}>{s0.text}</p>
+            {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
+            {s0.link && (
+              <p className={p}>
+                <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+                  {s0.link.label}
+                </Link>
+              </p>
+            )}
           </section>
         ))}
+
+        {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
+        {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
@@ -325,15 +471,21 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </div>
         )}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.industriesHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.industriesIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.industries.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
-            </li>
-          ))}
-        </ul>
+        {/* Optional since 2026-10-21 (see CityPage.industriesHeading): unset = no section. The fragment
+            adds no markup, so pages that set it render byte-identical HTML. */}
+        {page.industriesHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.industriesHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.industriesIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.industries ?? []).map((b) => (
+                <li key={b.title ?? b.text} className={li}>
+                  {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.customHeading}</h2>
         {page.interiorImage && (
@@ -365,54 +517,47 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>
         <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
           {page.customBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
+            <li key={b.title ?? b.text} className={li}>
+              {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
             </li>
           ))}
         </ul>
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.whyUsBullets.map((b) => (
-            <li key={b.title} className={li}>
-              <strong className="text-foreground">{b.title}</strong> — {b.text}
-            </li>
-          ))}
-        </ul>
+        {/* Optional since 2026-10-21 (see CityPage.whyUsHeading): unset = no section. */}
+        {page.whyUsHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.whyUsHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.whyUsIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.whyUsBullets ?? []).map((b) => (
+                <li key={b.title ?? b.text} className={li}>
+                  {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.areasHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.areasText}</p>
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
+        {/* Optional lead-in / closing paragraphs (`howIntro`, `howOutro`); unset = no element. A step
+            with an empty `text` (an owner list of titles only) renders its title alone. */}
+        {page.howIntro && <p className={`${p}${mc("reveal")}`}>{page.howIntro}</p>}
         <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>
           {page.howSteps.map((s0) => (
             <li key={s0.title} className={li}>
-              <strong className="text-foreground">{s0.title}</strong> — {s0.text}
+              <strong className="text-foreground">{s0.title}</strong>{s0.text ? <> — {s0.text}</> : null}
             </li>
           ))}
         </ol>
+        {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
 
-        {/* Optional extra sections (`extraSections`): owner copy with more H2s than the fixed slots
-            hold. Same classes and motion as the sections above; unset = nothing rendered. */}
-        {page.extraSections?.map((sec) => (
-          <section key={sec.heading}>
-            <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
-            {sec.paragraphs?.map((text) => (
-              <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
-            ))}
-            {sec.bullets && sec.bullets.length > 0 && (
-              <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-                {sec.bullets.map((b) => (
-                  <li key={b.title ?? b.text} className={li}>
-                    {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-        ))}
+        {/* Optional extra sections (`extraSections`) without a `placement`: rendered here, after the
+            "how" steps, as on every earlier page; unset = nothing rendered. */}
+        {page.extraSections?.filter((sec) => !sec.placement).map(renderSection)}
 
         <h2 className={`${h2}${mc("reveal")}`}>Frequently Asked Questions (FAQs)</h2>
         {page.faqs.map((f, i) => (
@@ -468,14 +613,51 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </div>
         </section>
 
+        {/* Optional on-page enquiry form (`enquiryForm`): the category enquiry form, posting to the
+            existing /api/enquiries route (which records this page as the source). Only mounted for
+            a category the route accepts; unset = no form, so every other page is unchanged. */}
+        {enquiry && (
+          <div className="mt-10">
+            <CategoryEnquiryForm
+              categorySlug={enquiry.categorySlug}
+              categoryName={enquiry.categoryName}
+              noun={enquiry.noun}
+              models={enquiry.models}
+              heading={enquiry.heading}
+              intro={enquiry.intro}
+            />
+          </div>
+        )}
+
         {/* Optional related-pages block — the page's own internal links (product pages, the
             promotion / blog pages that own neighbouring keywords, sibling city pages). Rendered
-            as a <nav> so crawlers and screen readers read it as navigation, not body copy. */}
+            as a <nav> so crawlers and screen readers read it as navigation, not body copy.
+            `relatedLinksHeading` (optional) renames it; unset = "Related pages", as before. */}
         {page.relatedLinks && page.relatedLinks.length > 0 && (
-          <nav aria-label="Related pages" className={`mt-10${mc("reveal")}`}>
-            <h2 className="mb-3 text-xl font-bold tracking-tight">Related pages</h2>
+          <nav aria-label={page.relatedLinksHeading ?? "Related pages"} className={`mt-10${mc("reveal")}`}>
+            <h2 className="mb-3 text-xl font-bold tracking-tight">{page.relatedLinksHeading ?? "Related pages"}</h2>
             <ul className={`grid gap-2 sm:grid-cols-2${mc("reveal-stagger")}`}>
               {page.relatedLinks.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className={`block rounded-lg border px-4 py-3 text-sm font-medium hover:bg-muted${mc("hover-lift")}`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        {/* Optional nearby-locations block (`nearbyLinks`), same markup as the related links.
+            Unset = nothing rendered. */}
+        {page.nearbyLinks && page.nearbyLinks.links.length > 0 && (
+          <nav aria-label={page.nearbyLinks.heading} className={`mt-10${mc("reveal")}`}>
+            <h2 className="mb-3 text-xl font-bold tracking-tight">{page.nearbyLinks.heading}</h2>
+            <ul className={`grid gap-2 sm:grid-cols-2${mc("reveal-stagger")}`}>
+              {page.nearbyLinks.links.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}

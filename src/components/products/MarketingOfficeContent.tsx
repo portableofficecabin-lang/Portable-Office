@@ -27,7 +27,7 @@ export const MARKETING_OFFICE_FAQS: { question: string; answer: string }[] = [
   {
     question: "How fast can a marketing office be at my site?",
     answer:
-      "A stock unit with standard finish, under a week. A branded sales gallery built to your layout, usually 2 to 4 weeks. Either way, weeks — not the months a built office takes.",
+      "A stock unit bought online is dispatched within 7–15 working days. A branded sales gallery built to your layout follows the timeline in your written quotation. Either way, weeks — not the months a built office takes.",
   },
   {
     question: "Will customers know it's a container?",
@@ -135,8 +135,8 @@ export function MarketingOfficeContent() {
             That&apos;s the argument for containers over civil construction, in one line: a built
             marketing office takes three to four months of masonry, plastering, wiring and finishing
             on your most visible corner. Ours is fabricated off-site while your team works on the
-            launch, and lands finished. Stock units go out in days. Fully custom builds take two to
-            four weeks.
+            launch, and lands finished. Stock units bought online are dispatched within 7–15 working days;
+            fully custom builds follow the timeline in your written quotation.
           </p>
           <p className="rounded-xl border border-accent/30 bg-accent/5 p-4 text-foreground">
             The maths is blunt. If your marketing office opens two months earlier and books even two
@@ -275,7 +275,7 @@ export function MarketingOfficeContent() {
             >
               Prefab Marketing Office
             </Link>
-            {" "}— a clear-span sales gallery built to your floor plan, assembled on site in days.
+            {" "}— a clear-span sales gallery built to your floor plan, with far less time on site than conventional construction.
           </p>
         </div>
       </div>
@@ -342,7 +342,7 @@ export function MarketingOfficeContent() {
         <ol className="space-y-3">
           {[
             ["Tell us the project.", "What you're selling, expected footfall, and where the office will stand."],
-            ["We send a layout and a price.", "Itemised, usually inside 24 hours."],
+            ["We send a layout and a price.", "Itemised, not a range."],
             ["Your branding goes on the drawing.", "You approve the exterior creative and interior finish before fabrication."],
             ["We build and inspect it.", "At our workshop, checked before it moves."],
             ["It lands on site.", "Trailer to your gate, crane down, levelled, connected."],
@@ -378,7 +378,7 @@ export function MarketingOfficeContent() {
         </h2>
         <p className="text-muted-foreground leading-relaxed mb-5">
           Tell us the project, the footfall you expect, and the date your hoarding goes up.
-          You&apos;ll have a layout and a clear price inside a day.
+          You&apos;ll have a layout and a clear price.
         </p>
         <div className="flex flex-wrap gap-3">
           <a

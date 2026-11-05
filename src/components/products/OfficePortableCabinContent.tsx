@@ -25,7 +25,7 @@ import {
 
 const switchReasons = [
   "40–60% cheaper than conventional RCC structures when civil work and approvals are included",
-  "Installation completed in 1–3 days for most standard configurations",
+  "Optional on-site installation, added at checkout",
   "Fully relocatable across project phases and new sites",
   "Compliant electrical planning with insulation and AC-ready provisions",
   "Designed for demanding Indian site conditions across heat, rain, and dust",
@@ -142,7 +142,7 @@ const faqs = [
   {
     question: "How long does it take to deliver and install an office portable cabin?",
     answer:
-      "Most standard designs take about 2–4 weeks for manufacturing after order confirmation, while single-cabin installation is usually completed within 8–24 hours once the cabin reaches site.",
+      "Standard designs bought online are dispatched within 7–15 working days of order confirmation; on-site installation time depends on site readiness.",
   },
   {
     question: "What kind of foundation is needed?",
@@ -210,8 +210,8 @@ export function OfficePortableCabinContent() {
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            "Typical delivery in 10–20 days from design approval for standard configurations",
-            "Installation in 8–24 hours for units such as 20x10 ft office cabins",
+            "Standard configurations bought online are dispatched within 7–15 working days of order confirmation",
+            "Optional on-site installation for units such as 20x10 ft office cabins, added at checkout",
             "Up to 60% lower total project cost compared to conventional construction",
             "Little to no complex foundation work for temporary deployment",
             "Built for Indian conditions across heat, rain, industrial dust, and site movement",
@@ -395,7 +395,7 @@ export function OfficePortableCabinContent() {
             <p><strong className="text-foreground">Consultation:</strong> Requirements, occupant count, utilities, site access, timeline, and budget are reviewed first.</p>
             <p><strong className="text-foreground">Design & pricing:</strong> Layout drawings, doors, windows, furniture planning, and quote approval are completed before production.</p>
             <p><strong className="text-foreground">Manufacturing:</strong> Cutting, welding, panel fixing, wiring, painting, and quality checks happen in the factory.</p>
-            <p><strong className="text-foreground">Delivery & installation:</strong> Trailer transport and crane placement usually make the office usable within one day for single-cabin projects.</p>
+            <p><strong className="text-foreground">Delivery & installation:</strong> Trailer transport and crane placement; on-site time depends on site readiness.</p>
           </div>
         </div>
 
@@ -443,7 +443,7 @@ export function OfficePortableCabinContent() {
           Get Your Office Portable Cabin in Place Now
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-          Whether you need a single site office or a multi-cabin complex, Portable Office Cabin can deliver a fast, professional workspace that fits your budget and timeline. Share your project details and get a design suggestion and quotation within 24–48 hours.
+          Whether you need a single site office or a multi-cabin complex, Portable Office Cabin can deliver a fast, professional workspace that fits your budget and timeline. Share your project details and get a design suggestion and quotation.
         </p>
       </section>
     </div>

@@ -11,7 +11,7 @@
  * Facts policy: every claim below is verifiable elsewhere on this site — ISO 9001:2015 certificate
  * QT-99968/0726 (IsoCertificationBadge), MSME/Udyam registration and our Tamil Nadu factory address
  * (Footer), 15+ years / 500+ projects / up to 60% cheaper (HeroSection, WhatSetsUsApart), client
- * names (TrustedClientsSection), 7–21 working days dispatch (productCommerce DELIVERY). Claims from
+ * names (TrustedClientsSection), 7–15 working days dispatch plus zone transit (shippingZones.ts). Claims from
  * draft copy that could NOT be verified against site data (10×8 ft standard size, business hours,
  * "2–3 week" lead time) were corrected or omitted rather than published.
  *
@@ -23,6 +23,10 @@ import Link from "next/link";
 import { products as catalogProducts, getProductSlug, type Product } from "@/data/products";
 import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
+import { DISPATCH_WORKING_DAYS, TRANSIT_WORKING_DAYS } from "@/data/shippingZones";
+
+/** Dispatch + transit as the product pages, the feed and the JSON-LD state them. Was "7–21 working days". */
+const DISPATCH_AND_TRANSIT = `${DISPATCH_WORKING_DAYS.min}–${DISPATCH_WORKING_DAYS.max} working days of order confirmation, plus ${TRANSIT_WORKING_DAYS.min}–${TRANSIT_WORKING_DAYS.max} working days in transit depending on your delivery zone`;
 
 /**
  * One-H1-per-page overrides, keyed by category slug (used by the listing view). Shared map: it
@@ -86,7 +90,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "How long does delivery and installation take?",
     answer:
-      "Standard models are typically dispatched within 7–21 working days of order confirmation. Because cabins arrive factory-finished — structure, insulation, electricals, doors and windows already fitted — installation at your site is fast: the cabin is craned onto a level base and connected to power and water.",
+      `Standard models are typically dispatched within ${DISPATCH_AND_TRANSIT}. Because cabins arrive factory-finished — structure, insulation, electricals, doors and windows already fitted — installation at your site is fast: the cabin is craned onto a level base and connected to power and water.`,
   },
   {
     question: "Does a portable cabin need a foundation?",
@@ -116,7 +120,7 @@ export const portableCabinsFaqs: { question: string; answer: string }[] = [
   {
     question: "Do you deliver portable cabins outside Bangalore?",
     answer:
-      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is quoted based on distance to your site, and our team manages the crane and placement at delivery.",
+      "Yes — we deliver and install across India from our factory at Kamandoddi, Hosur (Tamil Nadu), just ~40 km from Bangalore city, supported by our Bangalore office in Electronic City. Transport is charged by delivery zone — worked out from your PIN code and shown at checkout before you pay. On-site installation & positioning is optional: added at checkout, it covers base levelling, positioning, crane or hydra for standard single-unit placements, and handover. Foundation and civil work are quoted separately.",
   },
   {
     question: "Are portable cabins cheaper than brick-and-mortar construction?",
@@ -137,8 +141,8 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
       <div className="space-y-4 text-muted-foreground leading-relaxed">
         <p>
           Portable cabins from Portable Office Cabin are complete, ready-to-use buildings —
-          manufactured, insulated, wired and finished in our own factory, then delivered to your
-          site in days instead of months. Whether you need a site office for a construction project,
+          manufactured, insulated, wired and finished in our own factory, then delivered ready to
+          use, with far less time on site than conventional construction. Whether you need a site office for a construction project,
           secure staff accommodation, a sales office or a{" "}
           <Link href="/products/category/security-cabins" className="text-accent hover:underline">security cabin</Link>,
           our portable cabins cost up to 60% less than conventional construction and can be
@@ -298,8 +302,7 @@ export function PortableCabinsCategoryContent({ products }: { products: Product[
           Your cabin is built complete in our factory — structure, insulation, electricals, doors,
           windows and finishes — then transported to your site by trailer and placed by crane onto a
           simple level base. Standard cabins need no RCC foundation: a levelled surface or concrete
-          blocks are enough. Standard models are typically dispatched within 7–21 working days of
-          order confirmation. Also see our{" "}
+          blocks are enough. Standard models are typically dispatched within {DISPATCH_AND_TRANSIT}. Also see our{" "}
           <Link href="/products/category/site-office-containers" className="text-accent hover:underline">site office containers</Link>{" "}
           and <Link href="/products/category/portable-toilet-cabins" className="text-accent hover:underline">portable toilet cabins</Link>{" "}
           for complete site set-ups.

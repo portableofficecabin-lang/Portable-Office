@@ -312,7 +312,7 @@ export default function ContactPage() {
         eyebrow="Get in Touch"
         breadcrumbs={[{ name: "Home", href: "/" }, { name: "Contact" }]}
         title="Contact Us"
-        description="Share your requirements in 4 quick steps. We'll respond within 24 hours with a detailed estimate."
+        description="Share your requirements in 4 quick steps, and we'll respond with a detailed estimate."
       />
 
       <section className="section-padding">
@@ -363,7 +363,7 @@ export default function ContactPage() {
                     </div>
                     <h2 className="font-display text-3xl font-bold text-foreground mb-3">Thank You!</h2>
                     <p className="text-muted-foreground mb-2">Your quote request has been submitted successfully.</p>
-                    <p className="text-muted-foreground mb-6">We'll contact you within 24 hours with a detailed estimate.</p>
+                    <p className="text-muted-foreground mb-6">We'll contact you with a detailed estimate.</p>
                     <div className="bg-secondary/50 rounded-xl p-5 max-w-sm mx-auto mb-6">
                       <div className="text-sm text-muted-foreground mb-1">Reference Number</div>
                       <div className="flex items-center justify-center gap-3">

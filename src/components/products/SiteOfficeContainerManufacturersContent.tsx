@@ -135,7 +135,7 @@ export function SiteOfficeContainerManufacturersContent() {
             Site Office Container Manufacturers: complete guide to prefabricated workspace solutions in India
           </h2>
           <p className="text-base leading-7 text-muted-foreground">
-            Site office containers have become the command centres of modern projects—from metro rail corridors and refinery turnarounds to solar farms and real estate launches. They replace slow brick construction with factory-built, portable, climate-ready workspaces that reach site in days.
+            Site office containers have become the command centres of modern projects—from metro rail corridors and refinery turnarounds to solar farms and real estate launches. They replace slow brick construction with factory-built, portable, climate-ready workspaces that need far less time on site than conventional construction.
           </p>
           <p className="text-base leading-7 text-muted-foreground">
             Portable Office Cabin manufactures turnkey site office containers in India for project managers, EPC contractors, developers, industrial clients, and institutional buyers who need secure, relocatable, and professional workspace infrastructure.
@@ -147,7 +147,7 @@ export function SiteOfficeContainerManufacturersContent() {
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="text-sm text-muted-foreground">Deployment speed</div>
-              <div className="mt-2 font-display text-2xl font-bold text-foreground">Days, not months</div>
+              <div className="mt-2 font-display text-2xl font-bold text-foreground">Far less time on site</div>
             </div>
             <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="text-sm text-muted-foreground">Typical lifespan</div>

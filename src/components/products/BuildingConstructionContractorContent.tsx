@@ -796,8 +796,7 @@ export function BuildingConstructionContractorContent() {
           </Link>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          {COMPANY.businessHours.weekdays.display} · {COMPANY.businessHours.sunday.display} ·
-          Enquiries answered {COMPANY.responseTime.toLowerCase()}.
+          {COMPANY.businessHours.weekdays.display} · {COMPANY.businessHours.sunday.display}
         </p>
       </section>
     </div>

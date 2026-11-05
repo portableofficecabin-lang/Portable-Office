@@ -101,7 +101,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             A modern container office is a modular workspace built from a steel shipping container or fabricated MS (mild steel) container, fully finished in a controlled factory environment. Unlike raw containers used for cargo, these units are engineered specifically for human occupancy, with structural modifications, climate control systems, and interior finishes that rival traditional office construction.
           </p>
           <p>
-            Units arrive at your site ready-to-use, with PVC windows, steel doors, insulation (PUF or rockwool), concealed electrical wiring, LED lighting, and flooring already installed. The fabrication process addresses everything from thermal comfort to data connectivity, so commissioning happens within days rather than months. Common sizes used in India include 10 ft, 20 ft, and 40 ft office containers, each adaptable to different headcounts and layouts.
+            Units arrive at your site ready-to-use, with PVC windows, steel doors, insulation (PUF or rockwool), concealed electrical wiring, LED lighting, and flooring already installed. The fabrication process addresses everything from thermal comfort to data connectivity, so there is far less time on site than conventional construction. Common sizes used in India include 10 ft, 20 ft, and 40 ft office containers, each adaptable to different headcounts and layouts.
           </p>
           <p>
             The difference between a basic site porta cabin and a modern container office lies in structural design, interior finishes, long-term usability, and compliance with Indian safety norms. A well-built container office can serve 15–25 years with minimal upkeep, functioning as a genuine capital asset rather than a temporary workaround. For example, a standard 20x10x8.6 ft container can be configured as a 4–5 seat project office with split AC, multiple power outlets, data points, and ergonomic furniture—everything a team needs to operate productively from day one.
@@ -118,7 +118,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
         <h3 className="font-display text-xl font-semibold text-foreground mb-3">Against Traditional Brick Construction</h3>
         <div className="space-y-4 text-muted-foreground mb-8">
           <p>
-            Traditional offices require 6–12 months of construction time, involving RCC foundations, masonry work, plastering, multiple contractor coordination, and regulatory approvals. A container office achieves the same functional outcome in 4–8 weeks. The capital expenditure for traditional offices runs significantly higher, and once built, the structure cannot be relocated.
+            Traditional offices require 6–12 months of construction time, involving RCC foundations, masonry work, plastering, multiple contractor coordination, and regulatory approvals. A container office achieves the same functional outcome far sooner. The capital expenditure for traditional offices runs significantly higher, and once built, the structure cannot be relocated.
           </p>
           <p>
             Container offices skip the need for full RCC structures. Simple block foundations or levelled pads suffice, reducing site preparation costs and timelines. When the project ends or the lease expires, the office moves to the next location.
@@ -216,7 +216,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
             {
               icon: Truck,
               title: "Speed of Deployment",
-              desc: "Factory production runs parallel to site preparation. A single-container office can be installed and commissioned within one working day.",
+              desc: "Factory production runs parallel to site preparation. Installation and commissioning time depends on site readiness and service connections.",
             },
             {
               icon: CheckCircle,
@@ -465,7 +465,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
           <div>
             <h3 className="font-display text-xl font-semibold text-foreground mb-3">Installation</h3>
             <p className="text-muted-foreground mb-4">
-              A crane or hydra positions units onto prepared foundations—a process taking hours rather than days. Utility connections follow: electrical, plumbing, and telecom. Standard single-container offices achieve full commissioning within one working day.
+              A crane or hydra positions units onto prepared foundations. Utility connections follow: electrical, plumbing, and telecom. Commissioning time depends on site readiness and service connections.
             </p>
 
             <h3 className="font-display text-xl font-semibold text-foreground mb-3">Relocation</h3>
@@ -747,7 +747,7 @@ export function ContainerOfficeContent({ offer }: { offer?: FixedOffer }) {
                 ]),
             {
               q: "How quickly can a container office be deployed?",
-              a: "Factory production takes 4–6 weeks from order. Once delivered, a single-container office can be installed and commissioned within one working day when site preparation is complete.",
+              a: "Standard products bought online are dispatched within 7–15 working days of order confirmation; custom builds follow the timeline in your written quotation. Once delivered, installation and commissioning time depends on site readiness and service connections.",
             },
             {
               q: "Can we relocate the container office to another city?",

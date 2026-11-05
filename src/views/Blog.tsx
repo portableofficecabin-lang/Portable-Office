@@ -91,7 +91,7 @@ const staticBlogPosts: BlogListPost[] = [
   },
   {
     title: "Porta Cabins on Rent – Flexible Portable Space by Portable Office Cabin",
-    description: "Complete guide to renting porta cabins in India. Office cabins, security cabins, labour accommodation, container offices & portable toilets on hire with 3–7 day delivery.",
+    description: "Complete guide to renting porta cabins in India. Office cabins, security cabins, labour accommodation, container offices & portable toilets on hire.",
     slug: "porta-cabins-on-rent",
     date: "February 20, 2025",
     readTime: "18 min read",
