@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   Store, IndianRupee, PackagePlus, Truck, HelpCircle, Images, CheckCircle2, MinusCircle,
   Phone, Ruler, MoveRight, Sparkles,
@@ -204,6 +205,16 @@ const FAQ_GROUPS: { title: string; faqs: Faq[] }[] = [
 
 const ALL_FAQS = FAQ_GROUPS.flatMap((group) => group.faqs);
 
+/**
+ * Portable-shop city landing pages (/cities-we-serve/…), linked from the transport section so a
+ * buyer can reach the page for their area. One entry per LIVE city page: each portable-shop city
+ * branch appends its own entry to this list instead of adding a second block. Empty = no element.
+ */
+const SHOP_LOCATION_LINKS: { label: string; href: string }[] = [
+  { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+  { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
+];
+
 function SectionHeading({
   id,
   icon: Icon,
@@ -357,6 +368,19 @@ export function PortableShopCabinContent({ offer }: { offer?: FixedOffer }) {
             before dispatch.
           </p>
         </div>
+        {SHOP_LOCATION_LINKS.length > 0 && (
+          <nav aria-label="Portable shops by location" className="reveal mt-4 text-sm leading-relaxed text-muted-foreground">
+            <span className="font-semibold text-foreground">Portable shops by location:</span>{" "}
+            {SHOP_LOCATION_LINKS.map((loc, i) => (
+              <span key={loc.href}>
+                {i > 0 && " · "}
+                <Link href={loc.href} className="font-medium text-accent hover:underline">
+                  {loc.label}
+                </Link>
+              </span>
+            ))}
+          </nav>
+        )}
       </div>
 
       {/* ------------------------------------------------ views ---------------------------- */}
