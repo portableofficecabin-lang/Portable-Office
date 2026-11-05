@@ -1,5 +1,22 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { hashOTP, LOCKED_MESSAGE, normaliseEmail, OTP_FORMAT } from "../_shared/otp.ts";
+
+/**
+ * verify-booking-otp — checks a code e-mailed by send-booking-otp (Contact form, product reviews,
+ * appointment booking).
+ *
+ * HARDENED 2026-11-05: the check is now one atomic database call, check_booking_otp()
+ * (supabase/migrations/20261105120000_booking_otp_limits.sql). A match marks the code used; a miss
+ * counts against it, and after 5 wrong guesses the code is dead, so a 6-digit code can no longer be
+ * guessed by brute force within its 10 minutes. Responses keep their earlier shape:
+ * 200 { valid: true, message } or 200 { valid: false, error }; 400 / 500 { error }.
+ * SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided by the Supabase Edge runtime.
+ * DEPLOY MANUALLY, AFTER applying the 2026-11-05 migration:
+ *   supabase functions deploy verify-booking-otp --no-verify-jwt
+ */
+
+/** Every environment read goes through here. */
+const env = (name: string): string | undefined => Deno.env.get(name);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -7,127 +24,58 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Same hash function as send-booking-otp
-async function hashOTP(otp: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(otp + Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+function json(status: number, body: Record<string, unknown>) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json", ...corsHeaders },
+  });
 }
 
-interface VerifyOTPRequest {
-  email: string;
-  otp: string;
+/** Calls a service-role-only database function through PostgREST. */
+async function rpc<T>(fn: string, args: Record<string, unknown>): Promise<T> {
+  const url = env("SUPABASE_URL");
+  const key = env("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !key) throw new Error("SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY are not available");
+  const res = await fetch(`${url}/rest/v1/rpc/${fn}`, {
+    method: "POST",
+    headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify(args),
+  });
+  if (!res.ok) throw new Error(`${fn}: HTTP ${res.status}`);
+  return (await res.json()) as T;
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
+  if (req.method !== "POST") return json(405, { error: "Method not allowed" });
+
+  let email: string | null;
+  let otp: string;
+  try {
+    const raw = await req.text();
+    if (raw.length > 20_000) return json(413, { error: "Request too large" });
+    const body = JSON.parse(raw) as { email?: unknown; otp?: unknown };
+    email = normaliseEmail(body.email);
+    otp = String(body.otp ?? "").trim();
+  } catch {
+    return json(400, { error: "Invalid request" });
+  }
+  if (!email || !otp) return json(400, { error: "Email and OTP are required" });
+  if (!OTP_FORMAT.test(otp)) return json(200, { valid: false, error: "Invalid OTP format" });
 
   try {
-    const { email, otp }: VerifyOTPRequest = await req.json();
-
-    // Validate required fields
-    if (!email || !otp) {
-      throw new Error("Email and OTP are required");
-    }
-
-    // Validate OTP format (6 digits)
-    if (!/^\d{6}$/.test(otp)) {
-      return new Response(
-        JSON.stringify({ valid: false, error: "Invalid OTP format" }),
-        {
-          status: 200,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
-
-    // Create Supabase client
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-    );
-
-    // Hash the provided OTP
-    const otpHash = await hashOTP(otp);
-
-    // Fetch all valid OTPs for this email (to allow constant-time comparison)
-    const { data: otpRecords, error: lookupError } = await supabase
-      .from("booking_otps")
-      .select("*")
-      .eq("email", email.toLowerCase())
-      .gt("expires_at", new Date().toISOString())
-      .eq("verified", false);
-
-    if (lookupError) {
-      console.error("Error looking up OTP:", lookupError);
-      throw new Error("Failed to verify OTP");
-    }
-
-    // Constant-time comparison function to prevent timing attacks
-    function constantTimeCompare(a: string, b: string): boolean {
-      if (a.length !== b.length) {
-        // Still do comparison to maintain constant time
-        let diff = a.length ^ b.length;
-        for (let i = 0; i < Math.max(a.length, b.length); i++) {
-          diff |= (a.charCodeAt(i % a.length) || 0) ^ (b.charCodeAt(i % b.length) || 0);
-        }
-        return false;
-      }
-      let diff = 0;
-      for (let i = 0; i < a.length; i++) {
-        diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-      }
-      return diff === 0;
-    }
-
-    // Find matching OTP using constant-time comparison
-    const otpRecord = otpRecords?.find(record => constantTimeCompare(record.otp_hash, otpHash));
-
-    if (!otpRecord) {
-      return new Response(
-        JSON.stringify({ valid: false, error: "Invalid or expired OTP" }),
-        {
-          status: 200,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
-
-    // Mark OTP as verified
-    await supabase
-      .from("booking_otps")
-      .update({ verified: true })
-      .eq("id", otpRecord.id);
-
-    // Clean up expired OTPs
-    await supabase
-      .from("booking_otps")
-      .delete()
-      .lt("expires_at", new Date().toISOString());
-
-    console.log("OTP verified successfully for:", email);
-
-    return new Response(
-      JSON.stringify({ valid: true, message: "OTP verified successfully" }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
-  } catch (error: any) {
+    const outcome = await rpc<string>("check_booking_otp", {
+      p_email: email,
+      p_otp_hash: await hashOTP(otp, env("SUPABASE_SERVICE_ROLE_KEY") ?? ""),
+    });
+    if (outcome === "valid") return json(200, { valid: true, message: "OTP verified successfully" });
+    if (outcome === "locked") return json(200, { valid: false, error: LOCKED_MESSAGE });
+    return json(200, { valid: false, error: "Invalid or expired OTP" });
+  } catch (error: unknown) {
     console.error("Error in verify-booking-otp function:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
+    return json(500, { error: "Failed to verify OTP" });
   }
 };
 
