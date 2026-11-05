@@ -213,6 +213,7 @@ const ALL_FAQS = FAQ_GROUPS.flatMap((group) => group.faqs);
 const SHOP_LOCATION_LINKS: { label: string; href: string }[] = [
   { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
   { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+  { label: "Portable Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
 ];
 
 function SectionHeading({
