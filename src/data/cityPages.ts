@@ -1584,6 +1584,416 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN NANJANGUD — the portable-shop intent for Nanjangud (Nanjanagud), the KIADB
+   * Thandya Industrial Area at Thandavapura and the Mysuru–Thandya Special Investment Region, Mysuru
+   * district, Karnataka: portable shop cabins, retail kiosks, shop rows for landowners, festival and
+   * jatre stalls and NH 766 travel kiosks. A sibling of Container Office in Mysore (offices, which
+   * lists Nanjangud among its areas and links here) and Shipping Container in Mysore (storage). Not a
+   * container-office cluster location.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Nanjangud Industrial Area"),
+   * mapped onto the template slots in the brief's order wherever the template allows (no template
+   * change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   2 Temple town and factory town → why (one titled bullet per side of the town); the brief's
+   *     "no guaranteed footfall" and gate/bus-stop rules are the whyOutro.
+   *   3 Shop rows for landowners → solutions: the brief's five h3s (retail cluster, straight row,
+   *     L-shaped row, facing rows, shared features), the toilet link on the shared-features card.
+   *   4 Festival, 5 NH 766, 6 Types and sizes, 7 Quality checklist, 8 Weather, 9 Permissions →
+   *     extra sections with `placement: "afterSolutions"`, in that order. As on Hoskote (#202, owner-
+   *     approved), every table size is a planning example subject to an approved drawing and
+   *     quotation; the only catalogue shop cabin is 10 ft × 10 ft. Three short column headers keep the
+   *     table inside a 320 px phone.
+   *   10 Price → features (the factors as a plain list), the quotation rule in the bold sizesNote,
+   *     then the two-image gallery. No ₹ anywhere.
+   *   11 Rental → OMITTED: no shop cabin is offered for rent (the rental page lists none). The
+   *     landowner letting units to tenants is kept apart from it, with no income promised.
+   *   14 Why choose → custom, beside the interior render (whyUs unset); 13 Areas → areas;
+   *   12 Ordering → how (the template renders areas before how); 15 the brief's eight FAQs;
+   *   16 CTA (Request Quote, Call, WhatsApp). No on-page form: shops sit in Portable Cabins, which
+   *   has no category landing copy, so the quote buttons go to the /contact form.
+   * Verified before naming (2026-11-05): the Mysuru–Thandya Special Investment Region was notified
+   * in February 2025 with KIADB as its authority; Thandya (Thandavapura), Immavu and Adakanahalli
+   * are KIADB industrial areas in Nanjangud taluk; NH 766 runs through Nanjangud and Gundlupet. The
+   * region's exact boundaries are not claimed. KIADB is named nominatively, with the non-affiliation
+   * note in the disclaimer. Left out as unverified: rental, timelines, Nanjangud installations,
+   * festival supply or hire, after-sales services and the "Rental Shop Cabin Units" keyword.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Nanjangud
+   * and Thandya. The Mysore pages target offices and storage, and Mysuru is not a keyword here.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Nanjangud Industrial Area portable shop
+   * city page/Nanjangud Industrial Area/cabin (1–5).webp", lossy VP8 with no EXIF/XMP/ICC chunk)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image;
+   * (2) front view = the feature band; (3) rear view and (4) roof view = the two-image gallery after
+   * the price factors; (5) general store interior, 1452×1083 = beside "Why Choose". They show one
+   * blue container-style shop cabin with a glazed display front, a timber-finish counter panel and a
+   * lockable door. Every alt text, both captions and the disclaimer say they are illustrative
+   * renders; no alt text or file name names Nanjangud.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-nanjangud",
+    city: "Nanjangud",
+    listTitle: "Portable Shop Cabins in Nanjangud",
+    metaTitle: "Portable Shop Cabin in Nanjangud | Shop Rows & Retail Kiosks",
+    metaDescription:
+      "Portable shop cabins in Nanjangud for Thandya industrial areas, retail shop rows, festival stalls and NH 766 kiosks. Explore custom sizes and layouts.",
+    keywords:
+      "Portable Shop Cabin in Nanjangud, Portable Shop Nanjangud, Readymade Shop Cabin Nanjangud, Prefabricated Shop Nanjangud, Kiosk Nanjangud Industrial Area, Shop Cabin Thandya Industrial Area, Portable Shop Cabin Manufacturers in Nanjangud, Portable Shop Suppliers Nanjangud, Portable Shop Cabin Price in Nanjangud, Festival Stall Cabin Nanjangud, Highway Kiosk Nanjangud",
+    geo: { region: "IN-KA", placename: "Nanjangud, Mysuru district, Karnataka, India", position: "12.1167;76.6833", icbm: "12.1167, 76.6833" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-three-quarter-view.webp",
+      alt: "Prefabricated portable shop cabin — illustrative render of a blue corrugated steel container-style shop with a four-pane glazed display window above a timber-finish counter panel, wooden shelves visible inside and a lockable ribbed steel door with a long pull handle, on a paved forecourt",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin configuration; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-front-view.webp",
+      alt: "Front view of a portable shop cabin — illustrative render of the glazed display window with wooden shelving behind it, a timber-finish counter panel with a narrow ledge and a full-height lockable steel door set in blue corrugated walls",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render: a glazed display front beside a lockable door. Your shop's front, counter and fittings are set in its approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-nanjangud/portable-general-store-cabin-interior.webp",
+      alt: "Interior of a portable general store cabin — illustrative render with wood-finish wall panels, open shelving and cabinets stocked with packaged snacks, bottled drinks and jars, a long counter under black-framed sliding windows, a navy lockable door and a grey floor",
+      width: 1452,
+      height: 1083,
+      caption:
+        "Illustrative portable shop cabin configuration; final fittings depend on approved specifications. The shelving, counter and stock are shown for illustration.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-rear-view.webp",
+        alt: "Rear view of the portable shop cabin — illustrative render of the closed blue corrugated steel walls between grey corner posts with corner castings, with no openings on this side",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-roof-view.webp",
+        alt: "Roof view of the portable shop cabin — illustrative elevated render of the corrugated steel roof between grey top rails, the glazed display window, the timber-finish counter panel and the lockable side door",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Nanjangud Industrial Area",
+    tagline:
+      "Retail kiosks, food counters and multi-unit shop rows, built at our factory near Hosur for shopkeepers and landowners in Nanjangud and around Thandya.",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for industrial, commercial and retail requirements in Nanjangud (also spelt Nanjanagud) and surrounding areas.",
+      "Nanjangud combines temple-town activity, industrial operations around Thandya, residential development and highway movement.",
+      "Portable shop cabins can be configured for general stores, food counters, cool drinks kiosks, two-wheeler accessory shops, photo and print counters, produce stalls and other permitted retail uses.",
+      "For landowners, multiple cabins can also be arranged as a planned shop row or retail cluster, subject to site suitability and approvals. Each cabin is fabricated at our factory at Kamandoddi, near Hosur, and brought to the site by road.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Temple Town and Factory Town",
+    whyIntro:
+      "Two kinds of retail demand meet in Nanjangud: visitors to a town known for its religious heritage and its temple, and the people working at the industrial facilities around Thandya. Shop cabins that may suit each:",
+    whyBullets: [
+      {
+        title: "Nanjangud temple town",
+        text: "cool drinks and ice cream kiosks, chaat and snack counters, banana and local produce stalls, flower and pooja-item shops, and photo and print kiosks.",
+      },
+      {
+        title: "Thandya Industrial Area",
+        text: "general stores, two-wheeler accessories shops, cool drinks and snacks kiosks, mobile accessory counters and daily essentials shops, at commercial locations that serve the industrial workforce.",
+      },
+    ],
+    whyOutro:
+      "Retail demand depends on the exact location, the season and the permissions, and no location guarantees footfall or sales. A cabin near a factory gate or a bus stop must also meet the access, land-use and safety requirements that apply there.",
+
+    solutionsHeading: "Portable Shop Rows for Landowners",
+    solutionsIntro:
+      "Several shop cabins on one plot can work as a small retail row, each unit locked and run separately. How a row can be planned:",
+    solutions: [
+      {
+        title: "Convert Suitable Land into a Planned Retail Cluster",
+        text: "Landowners with appropriately zoned and approved commercial land may consider arranging several portable shop cabins into a retail row: three or more independent units, depending on the plot dimensions and the approved plans. Potential benefits include independent lockable shop units, flexible shop layouts, a consistent exterior appearance, separate electrical arrangements, shared customer circulation and the possible relocation of suitable cabin designs. Rental income from the units is not guaranteed: it depends on demand, permissions, occupancy, operating costs and the lease arrangements.",
+        link: { label: "See our catalogue 10 ft × 10 ft shop cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Straight Shop Row",
+        text: "Cabins positioned side by side, with every shopfront facing an approved access area.",
+      },
+      {
+        title: "L-Shaped Shop Row",
+        text: "A configuration that may suit certain corner plots, with one arm of the row along each frontage.",
+      },
+      {
+        title: "Facing Shop Rows",
+        text: "Two lines of cabins arranged around a central pedestrian walkway, so that customers walk between the shopfronts.",
+      },
+      {
+        title: "Shared Shop Row Features",
+        text: "Possible features include individual rolling shutters, separate locks, individual electrical meter or sub-meter provisions, a shared canopy, common exterior lighting, uniform exterior colours, signage panels, a waste collection area, accessible pedestrian circulation and suitable toilet facilities. Electrical metering and utility connections must follow the applicable utility provider's rules, and the final shop-row layout must consider setbacks, fire access, sanitation, parking, accessibility and approvals.",
+        link: { label: "Portable toilet cabins for a shop row", href: "/products/portable-toilet-cabin" },
+      },
+    ],
+
+    featuresHeading: "Portable Shop Cabin Price in Nanjangud",
+    featuresIntro: "Each shop cabin is priced from its own specification. Pricing depends on:",
+    features: [
+      "Cabin dimensions",
+      "Number of units",
+      "MS or insulated construction",
+      "Front shutter or glass configuration",
+      "Retail counters",
+      "Shelving",
+      "Electrical fittings",
+      "Freezer and equipment provisions",
+      "Individual metering provisions",
+      "Shared canopies",
+      "Common lighting",
+      "Exterior branding",
+      "Delivery and unloading",
+    ],
+    sizesNote:
+      "Prices are given only in a written quotation. For a shop row, the quotation is prepared from the approved layout and each cabin's own specification.",
+
+    customHeading: "Why Choose Portable Office Cabin?",
+    customIntro: "What we offer a shopkeeper or landowner in Nanjangud, from the first layout to delivery:",
+    customBullets: [
+      { title: "Customized shop cabin dimensions", text: "each cabin sized for your trade and your plot through the approved drawing." },
+      { title: "Single retail kiosks", text: "compact cabins for one counter or one trade." },
+      { title: "Multi-unit shop-row configurations", text: "several cabins built to one approved layout for a planned row." },
+      { title: "Rolling shutter and glass-front options", text: "a shutter, a glazed display front or a serving window, chosen before fabrication." },
+      { title: "Retail counters and shelving", text: "billing counters, display racks and storage, as specified." },
+      { title: "Electrical and ventilation provisions", text: "lighting, sockets, equipment points and exhaust, to the approved design." },
+      { title: "Exterior branding options", text: "your colours, signage and graphics on the outside of the cabin." },
+      { title: "Weather-conscious construction", text: "roof drainage, sealing, finishes and canopies chosen for the site." },
+      { title: "Quotation support", text: "a written quotation from the manufacturer that lists the specification and the inclusions." },
+      { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+    ],
+    customOutro:
+      "We manufacture and deliver the cabins. Footfall, rental income and the date a shop can open depend on the location, the permissions and the owner's own fit-out, so none of them is promised.",
+
+    areasHeading: "Areas Served Around Nanjangud",
+    areasText:
+      "We accept portable shop enquiries from Nanjangud town and the Nanjangud Industrial Area, the KIADB industrial areas at Thandya (Thandavapura), Immavu and Adakanahalli and the wider Mysuru–Thandya Special Investment Region, and from Hullahalli, Hura, the villages along the Kabini, the NH 766 corridor and the Gundlupet direction. Share the exact site address: the route, the transport and the unloading arrangements are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your requirements", text: "the shop type, the number of cabins, the plot dimensions and the intended installation location." },
+      { title: "Discuss the layout", text: "individual cabin designs or a proposed shop-row arrangement." },
+      { title: "Confirm utilities", text: "the electrical requirements, and water, sanitation and drainage where relevant." },
+      { title: "Approve the quotation", text: "the specifications, commercial terms and delivery responsibilities are finalized." },
+      { title: "Manufacture", text: "the approved shop cabins are fabricated at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "The customer completes the applicable permissions and utility connections before the shops operate. Manufacturing and delivery dates are confirmed when the order is finalized.",
+
+    extraSections: [
+      {
+        heading: "Festival and Jatre Shop Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Nanjangud's religious festivals and jatres may create temporary retail requirements. Possible cabin uses include flower and pooja stalls, snack counters, beverage kiosks, souvenir shops and temporary retail counters.",
+          "Possible cabin features for a festival stall:",
+        ],
+        bullets: [
+          { text: "Lockable shutters" },
+          { text: "Weather-protected counters" },
+          { text: "Portable construction" },
+          { text: "A uniform exterior appearance across several stalls" },
+          { text: "Suitable electrical provisions" },
+        ],
+        closing: [
+          "Temporary placement depends on festival permissions, crowd-management requirements, access restrictions and site suitability. The shop cabins on this page are built to order for purchase, so plan a festival requirement well ahead; the manufacturing and delivery schedule is confirmed with the order, and moving a cabin after the event is a separate arrangement.",
+        ],
+      },
+      {
+        heading: "Highway Kiosks on NH 766",
+        placement: "afterSolutions",
+        paragraphs: [
+          "NH 766 runs through Nanjangud and on through Gundlupet towards Kerala. Approved commercial locations near the highway may support traveller-oriented retail: travel essentials kiosks, water and snack counters, banana and produce stalls, cool drinks kiosks, and tea and coffee counters.",
+          "Highway kiosk design considerations:",
+        ],
+        bullets: [
+          { text: "Safe customer access" },
+          { text: "Suitable parking arrangements" },
+          { text: "An appropriate setback from the road" },
+          { text: "Clear signage" },
+          { text: "Exterior lighting" },
+          { text: "Weather protection" },
+          { text: "Suitable waste collection" },
+        ],
+        closing: [
+          "Owning private land beside the highway does not by itself permit roadside commercial use. Verify the commercial land use, the road access, the setbacks and the relevant highway authority's requirements before planning a kiosk there.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Types and Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Planning examples for common shop types around Nanjangud. These are indicative planning sizes, not standard or stock products: each cabin is built only to an approved drawing and quotation.",
+        ],
+        table: {
+          caption:
+            "Planning examples only, subject to an approved drawing and quotation, which confirm the actual dimensions and whether the size can be manufactured. Final dimensions depend on the equipment, occupancy, circulation and utilities.",
+          headers: ["Shop type", "Planning size", "Possible features"],
+          rows: [
+            ["Photo and print kiosk", "6 × 4 ft", "Service window and printer sockets"],
+            ["Chaat counter", "8 × 6 ft", "Serving window and washable counter"],
+            ["Banana and produce stall", "8 × 6 ft", "Open front, awning and display shelving"],
+            ["Cool drinks kiosk", "10 × 8 ft", "Freezer provision and glass front"],
+            ["Two-wheeler accessories shop", "10 × 8 ft", "Wall racks and rolling shutter"],
+            ["Travel essentials kiosk", "10 × 8 ft", "Retail shelving and chiller provision"],
+            ["General store", "20 × 8 ft", "Shelving and billing counter"],
+            ["Shop row unit", "10 × 8 ft", "Individual shutter and electrical provisions"],
+          ],
+        },
+        closing: [
+          "Our catalogue Portable Shop Cabin is 10 ft × 10 ft, with a glazed front and a lockable door, and can be bought online on its product page. Every size in the table, and any other size, is built only to an approved drawing and quotation.",
+        ],
+      },
+      {
+        heading: "Shop Cabin Quality Checklist",
+        placement: "afterSolutions",
+        paragraphs: ["Points to check on any shop cabin before you buy it:"],
+        bullets: [
+          { title: "Structural frame", text: "weld quality, frame alignment and suitable corrosion protection." },
+          { title: "Roofing", text: "the roof joints, the drainage design and the weather sealing." },
+          { title: "Flooring", text: "a floor structure suitable for the expected equipment and storage loads." },
+          { title: "Rolling shutter", text: "the shutter specification, its operation and the locking arrangements." },
+          { title: "Electrical system", text: "wiring, circuit protection, earthing and socket provisions." },
+          { title: "Exterior finish", text: "paint, cladding, sealing and the maintenance they will need." },
+          { title: "Ventilation", text: "suitable airflow and any exhaust arrangement the shop requires." },
+          { title: "Delivery and installation", text: "transport access, lifting arrangements, base preparation and who is responsible for unloading." },
+        ],
+        closing: ["The actual specification of your cabin, covering each of these points, should be documented in the quotation."],
+      },
+      {
+        heading: "Weather Protection for Nanjangud",
+        placement: "afterSolutions",
+        paragraphs: ["Nanjangud experiences warm periods and seasonal rainfall. Possible design features include:"],
+        bullets: [
+          { text: "Properly sealed roof joints" },
+          { text: "A suitable roof slope and drainage" },
+          { text: "Corrosion-protective finishes" },
+          { text: "Weather-protected service windows" },
+          { text: "Canopies and awnings" },
+          { text: "An appropriate base elevation" },
+          { text: "Ventilation" },
+          { text: "Exterior lighting" },
+        ],
+        closing: [
+          "Weather performance depends on the actual design, the installation, the site drainage and maintenance. No cabin is promised to be completely waterproof or floodproof.",
+        ],
+      },
+      {
+        heading: "Permissions and Site Requirements",
+        placement: "afterSolutions",
+        paragraphs: ["Check these before a shop cabin is ordered for a particular site:"],
+        bullets: [
+          {
+            title: "Thandya Industrial Area",
+            text: "verify the permitted commercial use and the installation requirements with the industrial estate authority, KIADB (the Karnataka Industrial Areas Development Board).",
+          },
+          {
+            title: "Mysuru–Thandya Special Investment Region",
+            text: "confirm the region's current status, the authority responsible, the permitted land use and the site approvals before planning a shop there.",
+          },
+          {
+            title: "Temple surroundings",
+            text: "check with the local authority and the temple administration, including any heritage or crowd-management restrictions.",
+          },
+          { title: "NH 766", text: "verify the commercial land use, road access, setbacks and the highway authority's requirements." },
+          {
+            title: "Shop rows",
+            text: "check the building and planning permissions, fire access, sanitation, electricity, tenancy and commercial-use requirements.",
+          },
+          { title: "Food retail", text: "food businesses must obtain the applicable food safety registration or licence." },
+        ],
+        closing: [
+          "Portable Office Cabin manufactures the approved cabin configuration. Operating licences, registrations and site permissions remain the owner's responsibility; we can share the cabin's layout drawing to support your applications.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I arrange portable shop cabins into a rental shop row?",
+        answer:
+          "Multiple cabins can be planned as a retail row on suitable approved land, subject to the plot dimensions, utilities and local permissions. Letting the units to tenants is the landowner's own arrangement, and rental income is not guaranteed.",
+      },
+      {
+        question: "What types of shops may suit Nanjangud temple surroundings?",
+        answer:
+          "Flower, pooja-item, snack, beverage and souvenir kiosks are possible options at permitted locations, after the local authority's and the temple administration's restrictions have been checked.",
+      },
+      {
+        question: "What retail cabins may suit Thandya Industrial Area?",
+        answer:
+          "General stores, two-wheeler accessory shops and convenience kiosks may be considered according to local demand and approvals, at locations where commercial use is permitted.",
+      },
+      {
+        question: "Can shop cabins be used for jatre festival stalls?",
+        answer:
+          "Portable cabins may be suitable for approved temporary retail arrangements, depending on transport, installation and event permissions. Cabins are built to order, so plan the requirement well ahead of the festival.",
+      },
+      {
+        question: "What should I check before purchasing a shop cabin?",
+        answer:
+          "Review the structural frame, roofing, flooring, shutter, electrical fittings, ventilation and exterior finish, and make sure the quotation documents each of them.",
+      },
+      {
+        question: "Can I place a portable shop near NH 766?",
+        answer:
+          "Placement may be possible at a legally permitted site with suitable access and the relevant approvals. Owning land beside the highway does not by itself permit roadside trading.",
+      },
+      {
+        question: "Can a shop row have separate electrical provisions?",
+        answer:
+          "Individual electrical arrangements can be planned, subject to the approved design and the utility provider's requirements for meters and connections.",
+      },
+      {
+        question: "How quickly can portable shop cabins be delivered?",
+        answer:
+          "Manufacturing and delivery timelines depend on the design, quantity, workload, transport and site readiness, so the schedule is confirmed when the order is finalized.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Nanjangud",
+    ctaText: `Planning a retail kiosk at an approved commercial location, a shop serving Thandya industrial workers, a festival stall or a multi-unit shop row on your land? Share your shop type, number of units, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Food Kiosks", href: "/products/container-cafe-restaurant" },
+      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Cargo Containers for Container Shops", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+        { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Nanjangud or Mysuru district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop types, shop-row layouts, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples; the items supplied are confirmed in the approved drawing, specification and quotation for each order. The five images on this page are illustrative renders of one container-style shop cabin design with a glazed display front, outside and inside; the shelving and stock are shown for illustration, other shop designs look different, and the images are not photographs of manufactured units or of installations in Nanjangud. KIADB (the Karnataka Industrial Areas Development Board), its Thandya, Immavu and Adakanahalli industrial areas and the Mysuru–Thandya Special Investment Region are named only to describe locations; Portable Office Cabin is not affiliated with KIADB, any temple administration, the highway authority or any estate or company in the area. The places, festivals and highways named here describe typical uses and places we accept enquiries from, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall, sales or rental income. Permissions, licences, food safety registration, highway setbacks, utility connections and fire, sanitation and accessibility requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN MYSORE (MYSURU) — the Hootagalli / Koorgalli / Metagalli / Hebbal
    * industrial estates, the Nanjangud–Thandya–Adakanahalli belt, the Kadakola–Kochanahalli
    * electronics and logistics cluster, and the Outer Ring Road / Hunsur Road layouts.
@@ -1940,6 +2350,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Prefabricated Office Cabins", href: "/products/prefabricated-portable-cabin" },
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
       { label: "Labour Accommodation Cabins", href: "/products/labour-colony" },
+      // Nanjangud's portable-shop page (2026-11-05), which links back from its nearby locations.
+      { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
