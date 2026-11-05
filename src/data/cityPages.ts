@@ -7495,6 +7495,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+        // The other portable-shop location page (live since #196), which keeps the Krishnagiri intent.
+        { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },

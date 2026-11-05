@@ -211,6 +211,7 @@ const ALL_FAQS = FAQ_GROUPS.flatMap((group) => group.faqs);
  * branch appends its own entry to this list instead of adding a second block. Empty = no element.
  */
 const SHOP_LOCATION_LINKS: { label: string; href: string }[] = [
+  { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
   { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
 ];
 
