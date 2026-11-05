@@ -10565,8 +10565,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
-      { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
       { label: "Portable Shops and Kiosks in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
