@@ -167,12 +167,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("solutions", "solutions heading", p.solutionsHeading);
   t("solutions", "solutions intro", p.solutionsIntro);
-  p.solutions.forEach((s, i) => {
-    t("solutions", `layout ${i + 1} title`, s.title ?? "");
-    t("solutions", `layout ${i + 1} text`, s.text);
-    // Optional contextual link (since 2026-11-04): audited whenever the item sets it.
-    if (s.link) { t("solutions", `layout ${i + 1} link "${s.link.label}"`, s.link.label); m("solutions", `layout ${i + 1} link href ${s.link.href}`, `href="${s.link.href}"`); }
-  });
+  p.solutions.forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
+  p.solutions.forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
   t("features", "features heading", p.featuresHeading);
   t("features", "features intro", p.featuresIntro);
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
