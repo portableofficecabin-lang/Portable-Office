@@ -1588,8 +1588,9 @@ export const CITY_PAGES: CityPage[] = [
    * Thandya Industrial Area at Thandavapura and the Mysuru–Thandya Special Investment Region, Mysuru
    * district, Karnataka: portable shop cabins, retail kiosks, shop rows for landowners, festival and
    * jatre stalls and NH 766 travel kiosks. A sibling of Container Office in Mysore (offices, which
-   * lists Nanjangud among its areas and links here) and Shipping Container in Mysore (storage). Not a
-   * container-office cluster location.
+   * lists Nanjangud among its areas and links here) and Shipping Container in Mysore (storage), and of
+   * Portable Shop Cabins in Hebbal, Mysuru (#212, the city-wide Mysuru shop intent), linked from Nearby
+   * Locations. Not a container-office cluster location.
    *
    * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Nanjangud Industrial Area"),
    * mapped onto the template slots in the brief's order wherever the template allows (no template
@@ -1985,6 +1986,7 @@ export const CITY_PAGES: CityPage[] = [
       links: [
         { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+        { label: "Portable Shops in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
         { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
@@ -2355,6 +2357,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+      { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
     ],
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, with its Bangalore office at Electronic City Phase 1, and does not operate a factory, office or service partner in Mysuru district; transport, unloading and installation are arranged for each project and delivery dates are confirmed at order acceptance. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Mysore. Industrial areas, roads and institutions are named only to describe delivery locations. Permission and approval notes on this page are general guidance, not legal advice; the relevant local authority should be consulted before installation.",
@@ -2699,6 +2702,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+      { label: "Portable Shop and Kiosk Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
@@ -2707,6 +2711,429 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, container depot, office or service partner in Mysore. 20 ft and 40 ft shipping containers are supplied for sale and rental subject to availability; refrigerated, open-top and flat-rack containers are available on request, subject to stock confirmation, and nothing on this page states that they are currently in stock. The specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The photographs on this page are Portable Office Cabin's own product photographs of a representative 20 ft dry shipping container and are not photographs of stock held in Mysore. Container dimensions, volumes and grade descriptions are indicative trade figures, and notes on export suitability, certification, foundations and permissions are general guidance, not legal advice — confirm export requirements with the carrier or operator and permissions with the relevant local authority.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN HEBBAL, MYSURU — the portable-shop intent for Hebbal in Mysuru
+   * (Karnataka): café and filter coffee kiosks, sweet counters, flower stalls, agarbatti kiosks and
+   * everyday retail cabins around the Hebbal industrial area, Hootagalli, Koorgalli, Belavadi,
+   * Belagola, Metagalli, Vijayanagar and the Mysuru Ring Road. Hebbal, Mysuru is NOT Hebbal,
+   * Bengaluru: the title, description, H1, intro, geo tags and first FAQ all say Mysuru. A sibling of
+   * Container Office in Mysore and Shipping Container in Mysore just above (offices and boxes, not
+   * shops), which both link here. The site's first Mysuru shop page, so it also carries the city-wide
+   * "Portable Shop Mysuru / Mysore" terms.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Hebbal Industrial Area,
+   * Mysuru"), mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request a Quote → /contact, Call, WhatsApp). H1 says
+   *     "Serving" (as the owner approved for Hoskote on #202): the factory is near Hosur, not in
+   *     Hebbal, so "Manufacturers in … Hebbal" would read as a local factory.
+   *   2 A day on the Hebbal side → why: whyIntro, the brief's table as whyTable (no bullets), the
+   *     "illustrative, not footfall data" rule as the whyOutro. Then the front-elevation feature band.
+   *   3 Mysuru-flavour shops → solutions (five h3 subsections, the brief's fitting lists as prose).
+   *   4 Café kiosks, 5 Everyday shops, 6 Cleanliness, 7 Styles (table), 8 Sizes (table), 9 Weather →
+   *     extra sections with `placement: "afterSolutions"`, in that order. Sizes are planning examples
+   *     subject to an approved drawing and quotation (owner corrections #201/#202); only the
+   *     10 ft × 10 ft Portable Shop Cabin is a catalogue item.
+   *   10 Permissions → features (+ the bold sizesNote), then the roof / rear gallery.
+   *   11 Price → custom, beside the interior render. No ₹ anywhere.
+   *   12 Rental → OMITTED: no shop cabin is offered for rent (the rental page lists none).
+   *   13 Ordering → how; 14 Areas → areas; 15 Why us → whyUs (the template renders why us, areas,
+   *     then how); 16 the brief's eight FAQs; 17 CTA (Request a Quote, Call, WhatsApp).
+   * The brief's "two-wheeler rental counter" is kept as a service or booking counter supplied to the
+   * business that runs it; the disclaimer says we run no vehicle rental. No on-page enquiry form: the
+   * category form needs a category with landing copy, and shops sit in Portable Cabins, which has
+   * none; the quote buttons go to the /contact form.
+   * The Mysuru–Hebbal Special Investment Region (Hebbal, Hootagalli, Koorgalli, Belavadi, Belagola /
+   * Metagalli; notified February 2025, KIADB the authority) is named from Star of Mysore's report of
+   * the notification; whether a shop may stand on a given plot there is left to the plot and KIADB.
+   *
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Hebbal /
+   * Hootagalli / Metagalli / Mysuru. Sibling shop pages agreed (2026-11-05): Nanjangud (89) keeps
+   * Mysuru and Hebbal out of its copy and this page keeps Nanjangud, Thandya, Immavu, Adakanahalli and
+   * NH 766 out; Hassan (1c) and Sriperumbudur (22) likewise. Cross-links to those pages are added
+   * only once they are live.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Hebbal Industrial Area, Mysuru portable
+   * shop city page/Hebbal Industrial Area, Mysuru/cabin (1–5).webp", 99–239 KB, no EXIF/XMP/ICC/IPTC)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image;
+   * (5) front elevation = the feature band; (2) interior = beside the price factors; (3) roof view and
+   * (4) rear view = the two-image gallery. They show one navy container-style kiosk concept with a
+   * wood-look rolling shutter and a serving ledge. Captions, alt texts and the disclaimer say they are
+   * illustrative renders of a concept, not a confirmed standard design, and no alt text names Hebbal
+   * or Mysuru.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-hebbal-mysuru",
+    city: "Hebbal, Mysuru",
+    listTitle: "Portable Shop Cabins in Hebbal, Mysuru",
+    metaTitle: "Portable Shop Cabin in Hebbal, Mysuru | Kiosks & Café Cabins",
+    metaDescription:
+      "Portable shop cabins in Hebbal, Mysuru for café kiosks, sweet and flower stalls, and retail shops near Hootagalli, Metagalli and Vijayanagar.",
+    keywords:
+      "Portable Shop Cabin in Hebbal Mysuru, Portable Shop Hebbal Mysuru, Portable Shop Mysuru, Portable Shop Mysore, Readymade Shop Cabin Mysuru, Prefabricated Shop Mysuru, Kiosk Hebbal Industrial Area Mysuru, Shop Cabin Hootagalli, Shop Cabin Metagalli Mysuru, Café Kiosk Hebbal Mysuru, Portable Shop Cabin Manufacturers in Mysuru, Portable Shop Cabin Price in Mysuru",
+    geo: { region: "IN-KA", placename: "Hebbal, Mysuru, Karnataka, India", position: "12.3618;76.6000", icbm: "12.3618, 76.6000" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-rolling-shutter-three-quarter-view.webp",
+      alt: "Illustrative render of a prefabricated portable shop kiosk: navy corrugated steel walls with a dark lower band, a wood-look rolling shutter under a timber-look fascia, a serving ledge on steel brackets and a timber-framed window on the end wall, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a kiosk concept with a rolling shutter and a serving ledge, not a confirmed standard design. Your shop's size, front and fittings follow its approved layout and quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-front-elevation.webp",
+      alt: "Front elevation of a portable shop kiosk, illustrative render: the closed wood-look rolling shutter over a full-width serving ledge on three steel brackets, set in navy corrugated steel walls under a flat roof edge",
+      width: 1451,
+      height: 1084,
+      caption:
+        "A serving ledge under a lockable rolling shutter, shown in an illustrative render. The front, counter and finish of your shop are agreed in its layout.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-cafe-kiosk-interior-service-counter.webp",
+      alt: "Illustrative render of a café kiosk interior: a wood-look service counter at the open rolling shutter, grey cabinets, a steel sink with a tap, a coffee machine, paper cups and a snack rack, wood-look wall panels, two ceiling lights, a wall vent and a grey floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a café kiosk interior. The equipment, sink, counter and storage of your shop are priced from its approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-roof-view.webp",
+        alt: "Elevated view of the portable shop kiosk, illustrative render: the sloping corrugated steel roof overhanging the serving side, the wood-look rolling shutter, the serving ledge and the end-wall window",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-rear-view.webp",
+        alt: "Rear view of the portable shop kiosk, illustrative render: the closed navy corrugated steel back wall with a dark lower band, a timber-framed window and a wall light on the end wall",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers Serving Mysuru's Hebbal Industrial Area",
+    tagline: "Café kiosks, sweet counters, flower stalls and retail shop cabins, built to order for Hebbal, Mysuru",
+    intro: [
+      "Mysuru is known for its palace, its Dasara celebrations, its silk and its traditional retail culture. Its Hebbal side also supports industrial and technology work, with the industrial areas of Hootagalli, Koorgalli, Belavadi and Metagalli around it. This page is about Hebbal in Mysuru, Karnataka, not Hebbal in Bengaluru.",
+      "The Mysuru–Hebbal industrial region and the nearby Vijayanagar neighbourhoods offer different settings for commercial kiosks and compact retail shops.",
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, café kiosks, retail counters and customized commercial cabins at its factory near Hosur, for suitable business locations in Hebbal, Mysuru and the surrounding areas.",
+      "Depending on your requirements, a shop cabin can be configured with service windows, rolling shutters, glass fronts, shelving, electrical fittings, branding panels and weather protection.",
+    ],
+    heroCta: true,
+
+    whyHeading: "A Day on the Hebbal Side of Mysuru",
+    whyIntro:
+      "Different businesses see different customers through the day. An illustrative pattern for the area:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Illustrative trading patterns only, not verified footfall data or guaranteed sales opportunities.",
+      // Short words ("daily papers", "mobile chargers", "working people") keep the three columns inside a
+      // 320 px phone without a sideways scroll (measured: 286/286 px).
+      headers: ["Period", "Potential customers", "Possible shop uses"],
+      rows: [
+        ["6–8 AM", "Walkers, early-shift workers and residents", "Coffee, flowers, daily papers and essentials"],
+        ["8–10 AM", "Industrial workers and office staff", "Breakfast, coffee and takeaway snacks"],
+        ["12–2 PM", "Office and industrial lunch-break customers", "Juice, snacks and cool drinks"],
+        ["4–6 PM", "Shift-change customers and students", "Tea, sweets and mobile chargers"],
+        ["6–10 PM", "Families and working people", "Café drinks, groceries and sweets"],
+        ["Weekends", "Local shoppers and visitors", "Souvenirs, sweets and retail products"],
+      ],
+    },
+    whyOutro:
+      "Before choosing a location, assess the actual local demand, the site permissions and the operating hours you can keep. The cabin gives you a lockable, presentable unit; the trade comes from the location and the business.",
+
+    solutionsHeading: "Shop Cabins with a Mysuru Flavour",
+    solutionsIntro:
+      "Each design is built to order; its size, front and fittings are confirmed in the approved layout and quotation.",
+    solutions: [
+      {
+        title: "Filter Coffee Kiosk",
+        text: "A compact coffee kiosk can be designed with a front serving window, a counter for the coffee equipment, suitable electrical provisions, an optional outside standing ledge, a menu board, storage compartments and washable surfaces. The equipment loads, water supply, wastewater handling and ventilation are allowed for in the approved layout.",
+        link: { label: "Container café and takeaway kiosk formats", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Mysore Pak and Sweet Counter",
+        text: "A sweet counter cabin may include a glass display counter, suitable lighting, shelving, a billing area, lockable storage and easy-clean surfaces, so the design can support sweet retail at an appropriately permitted commercial location.",
+        link: { label: "The glazed 10 ft × 10 ft shop cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Mallige and Flower Stall",
+        text: "A flower stall cabin may include an open-front counter, garland display shelves, a weather canopy, suitable storage, an optional water provision and a lockable closure. The design takes account of shade, ventilation and the way the flowers are handled.",
+      },
+      {
+        title: "Agarbatti and Sandalwood Kiosk",
+        text: "A compact retail kiosk may be configured for incense, packaged sandalwood products, souvenirs and gift items, with display shelving and a glass-front retail counter. Retailers remain responsible for sourcing their products and for the trade requirements that apply.",
+        link: { label: "Shelving, counters and interior layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Betel and Paan Kiosk",
+        text: "A small kiosk for betel leaf and paan may include a service counter, shelving, lighting, storage, washable surfaces and a lockable shutter, sized for one person working the counter.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Café-Style Kiosks for Hebbal's Office and IT Areas",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Commercial locations near office and technology workplaces may suit an approved café or quick-service concept. Possible kiosk features include:",
+        ],
+        bullets: [
+          { text: "Wood-look exterior cladding, or optional ACP finishing" },
+          { text: "A large glass front with an outside standing ledge" },
+          { text: "A menu board and a brand signage panel" },
+          { text: "Electrical points for coffee machines and chillers" },
+          { text: "Warm interior lighting" },
+          { text: "A billing and digital-payment counter" },
+          { text: "Suitable ventilation" },
+          { text: "Water and drainage provisions where required" },
+        ],
+        closing: [
+          "These configurations may suit coffee, juice, sandwiches and other permitted food-service operations. The actual equipment specifications must be confirmed before manufacturing starts.",
+        ],
+      },
+      {
+        heading: "Everyday Shops for Workers and Residents",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For the industrial workforce and the residential layouts around Hebbal and Vijayanagar, everyday retail cabins include:",
+        ],
+        bullets: [
+          { title: "General store cabin", text: "grocery shelves, a billing counter, storage and electrical fittings." },
+          { title: "Mobile accessories shop", text: "display counters, lockable storage and charging provisions." },
+          { title: "Juice bar kiosk", text: "space for the equipment, water and wastewater provisions, washable counters and suitable electrical fittings." },
+          { title: "Service or booking counter", text: "a desk, storage and communication provisions for a business such as a two-wheeler rental or booking desk, built for the business that runs it." },
+        ],
+      },
+      {
+        heading: "Keeping Shop Cabins Clean",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Mysuru has a long-standing reputation for clean public spaces, so a tidy shopfront and clean surroundings are a sensible part of the design. Possible shop features include:",
+        ],
+        bullets: [
+          { text: "Waste-bin mounting provisions" },
+          { text: "Covered stock storage" },
+          { text: "Washable counters and easy-clean flooring" },
+          { text: "Proper wastewater outlets and suitable sink provisions" },
+          { text: "Optional grease-management arrangements where required" },
+          { text: "Fixed signage instead of loose boards" },
+          { text: "Appropriate ventilation" },
+        ],
+        closing: [
+          "Food-service cabins should be designed around the actual equipment, the cleaning routine and the hygiene rules that apply. A cabin does not by itself satisfy food safety or municipal requirements.",
+        ],
+      },
+      {
+        heading: "Choose Your Portable Shop Cabin Style",
+        placement: "afterSolutions",
+        paragraphs: ["Four starting points for the look of your shop:"],
+        table: {
+          caption: "All finishes depend on the materials available and the approved specification.",
+          // "Typical use", not the brief's "Suitable applications": the long header word pushed this
+          // table 5 px past a 320 px phone's column.
+          headers: ["Style", "Possible finish", "Typical use"],
+          rows: [
+            ["Classic", "Painted steel, a rolling shutter and simple signage", "General stores and mobile shops"],
+            ["Café", "Wood-look cladding, a glass front and warm lighting", "Coffee kiosks and juice bars"],
+            ["Corporate", "An ACP-style finish, clean lines and suitable lighting", "Office-area retail"],
+            ["Bright and Bold", "Distinctive colours and prominent signage", "Approved high-visibility retail locations"],
+          ],
+        },
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Planning examples to start the discussion. Each size is subject to an approved drawing and quotation:",
+        ],
+        table: {
+          caption:
+            "Planning examples only, not guaranteed standard models. Final dimensions depend on the equipment, the people working inside, circulation, utilities and manufacturing capability.",
+          headers: ["Shop type", "Planning example", "Possible features"],
+          rows: [
+            ["Paan kiosk", "4 × 4 ft", "Counter and shelves"],
+            ["Filter coffee kiosk", "6 × 4 ft", "Service window and ledge"],
+            ["Flower stall", "8 × 6 ft", "Open front, awning and shelves"],
+            ["Sweet counter", "8 × 6 ft", "Glass display and lighting"],
+            ["Café kiosk", "10 × 8 ft", "Glass front and equipment provisions"],
+            ["Agarbatti kiosk", "10 × 8 ft", "Display shelves and glass front"],
+            ["General store", "20 × 8 ft", "Retail shelving and billing counter"],
+          ],
+        },
+        closing: [
+          "Our catalogue cabin is the 10 ft × 10 ft Portable Shop Cabin, with a glazed display front and a lockable door; every other size is built to order. The usable space inside is smaller than the outside dimensions because of the wall thickness.",
+        ],
+      },
+      {
+        heading: "Weather Protection for Mysuru",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Mysuru has seasonal rainfall and periods of warmer weather. Possible shop cabin design features include:",
+        ],
+        bullets: [
+          { text: "A suitable roof slope" },
+          { text: "Sealed roof joints" },
+          { text: "Corrosion-protective finishes" },
+          { text: "Weather-protected service windows" },
+          { text: "Canopies over the serving side" },
+          { text: "An appropriate base height above the ground" },
+          { text: "Ventilation" },
+          { text: "Exterior lighting" },
+        ],
+        closing: [
+          "Weather performance depends on the actual materials, the installation, the site drainage and maintenance. No cabin is promised to be floodproof or completely waterproof.",
+        ],
+      },
+    ],
+
+    featuresHeading: "Permissions and Site Requirements",
+    featuresIntro:
+      "Before the cabin is delivered, check these with the landowner and the authorities concerned:",
+    features: [
+      "Mysuru–Hebbal industrial region: the Hebbal, Hootagalli, Koorgalli, Belavadi and Belagola industrial areas were notified in 2025 as the Mysuru–Hebbal Special Investment Region, with KIADB as the authority. Whether a shop may stand on a particular plot depends on its allotment, its permitted land use and KIADB's requirements",
+      "Outside the industrial areas: the municipal or local planning authority for the exact site",
+      "Mysuru Ring Road: commercial land use, road access, setbacks, parking and the requirements of the road authority",
+      "Food and beverage kiosks: food safety registration or licence, sanitation, water and electrical requirements",
+      "Landowner consent to place and run the shop",
+      "A trade licence and planning permission, where they apply",
+      "An electricity connection sized for the shop's load",
+      "Fire safety requirements and wastewater disposal",
+      "Any approvals specific to your trade",
+    ],
+    sizesNote:
+      "Portable Office Cabin manufactures the cabin to the approved specification. Obtaining the permissions for your site and business is the owner's responsibility, and a portable shop is not exempt from them; we can share the cabin's layout drawing to support your applications.",
+
+    customHeading: "Portable Shop Cabin Price in Mysuru",
+    customIntro: "Each shop cabin is priced from its specification. The main factors:",
+    customBullets: [
+      { title: "Cabin dimensions", text: "the outside size and the floor area." },
+      { title: "Shop layout", text: "counters, storage and room to move behind them." },
+      { title: "Construction", text: "MS or insulated panel construction." },
+      { title: "Shopfront", text: "a rolling shutter or a glass front." },
+      { title: "Service counter", text: "its length and finish." },
+      { title: "Display shelving", text: "the racks and display units you need." },
+      { title: "Equipment provisions", text: "space and points for coffee or food equipment." },
+      { title: "Electrical fittings", text: "lights, sockets and the connected load." },
+      { title: "Sink and drainage", text: "the water inlet and wastewater provisions." },
+      { title: "Exterior cladding", text: "painted steel, wood-look or ACP-style finishes." },
+      { title: "Branding", text: "colours, signage and graphics." },
+      { title: "Canopy", text: "shade over the serving side." },
+      { title: "Delivery and unloading", text: "the distance to Mysuru and the access at your site." },
+      { title: "Order quantity", text: "the number of cabins in the order." },
+    ],
+    customOutro:
+      "Send your shop type, size, front, fittings and delivery location through the contact form, by phone or on WhatsApp. We will prepare a written quotation listing the specification, the inclusions and the applicable charges; prices, any discounts and delivery dates are confirmed only in that quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "Ordering from the manufacturer means one team plans, builds and dispatches your shop cabin:",
+    whyUsBullets: [
+      { title: "Customized shop cabin dimensions", text: "sized for your trade and your plot." },
+      { title: "Café and retail kiosk layouts", text: "counters, shelving and equipment space planned around what you sell." },
+      { title: "Service counters and glass fronts", text: "a serving window, a counter or a glazed display front." },
+      { title: "Rolling shutters", text: "lockable shutters over the front or the serving opening." },
+      { title: "MS and insulated construction options", text: "chosen for the use and the exposure." },
+      { title: "Electrical and ventilation provisions", text: "points, lighting and ventilation for your equipment." },
+      { title: "Exterior cladding and branding", text: "finishes, colours and signage." },
+      { title: "Easy-clean interior finishes", text: "washable surfaces for food and retail use." },
+      { title: "Quotation support", text: "a written quotation for your specification." },
+      { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+    ],
+
+    areasHeading: "Areas Served Around Hebbal, Mysuru",
+    areasText:
+      "We welcome portable shop enquiries from Hebbal in Mysuru, including the Hebbal Industrial Area and Hebbal 2nd Phase, and from Hinkal, Hootagalli, Koorgalli, Belavadi, Belagola, Metagalli, Vijayanagar and plots along the Mysuru Ring Road, in and around the Mysuru–Hebbal Special Investment Region. Share the exact site address: delivery feasibility, the route, transport and unloading are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howIntro: "How a shop cabin order moves from your first message to a cabin on site:",
+    howSteps: [
+      { title: "Share your business requirements", text: "the shop type, intended location, preferred dimensions and equipment needs." },
+      { title: "Select the style and layout", text: "a classic, café, corporate or customized configuration." },
+      { title: "Confirm the utilities", text: "the electrical load, water, drainage, ventilation and equipment provisions." },
+      { title: "Approve the quotation", text: "the cabin specification, commercial terms and delivery responsibilities." },
+      { title: "Manufacture", text: "the approved portable shop cabin is fabricated at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with your site's readiness." },
+    ],
+    howOutro:
+      "Before the shop opens, you complete the permissions and utility connections that apply. Manufacturing and delivery dates are confirmed with the order, not promised in advance.",
+
+    faqs: [
+      {
+        question: "Is this Hebbal in Mysuru or Bengaluru?",
+        answer:
+          "This page is about Hebbal in Mysuru, Karnataka, with its industrial surroundings at Hootagalli, Koorgalli, Belavadi, Belagola and Metagalli and nearby commercial areas such as Vijayanagar and the Ring Road. It is not about Hebbal in Bengaluru.",
+      },
+      {
+        question: "What shop cabin may suit an approved location near Hebbal's IT and office campuses?",
+        answer:
+          "A café-style kiosk with a glass front, a service counter, provisions for the coffee equipment and suitable lighting may be considered, where the landowner and the authority allow a shop at that location.",
+      },
+      {
+        question: "Can I place a shop cabin inside the Mysuru–Hebbal Special Investment Region?",
+        answer:
+          "It depends on the exact plot, its permitted land use and approval from the relevant authority, which for the notified industrial areas is KIADB. Check with the plot owner and KIADB before ordering.",
+      },
+      {
+        question: "What features may suit a food kiosk in Mysuru?",
+        answer:
+          "Washable counters, a suitable sink and wastewater arrangement, covered storage, waste collection and suitable ventilation, planned around your equipment and the hygiene rules that apply.",
+      },
+      {
+        question: "Can a portable shop cabin include a sweet display counter?",
+        answer:
+          "A glass display counter with suitable lighting can be considered, according to the approved layout and manufacturing capability.",
+      },
+      {
+        question: "Can a shop cabin be customized for Kannada and English signage?",
+        answer:
+          "Signage panels and exterior finishes can be customized to your approved requirements, within the local rules that apply to signboards.",
+      },
+      {
+        question: "Can portable shop cabins be relocated?",
+        answer:
+          "Some can, depending on the structural design, the cabin's condition, the lifting arrangements and transport access. The services are disconnected first, the new site needs a prepared base, and the permissions for the old site do not carry over.",
+      },
+      {
+        question: "How quickly can a portable shop cabin be delivered?",
+        answer:
+          "Timelines depend on the selected design, the quantity, the manufacturing workload, transport and how ready your site is. The schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Hebbal, Mysuru",
+    ctaText: `Planning a filter coffee kiosk, café-style shop, sweet counter, flower stall, general store or retail cabin near the Hebbal industrial area? Share your business type, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Shipping Containers and Container Shops in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Mysuru or Hebbal. Delivery to Mysuru, unloading and placement are arranged for each order, subject to feasibility, and manufacturing and delivery dates are not guaranteed. The shop designs, styles, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples, not standard models; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk concept with a rolling shutter and a serving ledge, not a confirmed standard design; the coffee equipment and products are shown for illustration, and the images are not photographs of installations in Hebbal or Mysuru. KIADB (the Karnataka Industrial Areas Development Board) and the Mysuru–Hebbal Special Investment Region are named only to describe the location; Portable Office Cabin is not affiliated with KIADB or with any estate, campus or company in Hebbal. The trading pattern, businesses and localities named here describe typical uses and enquiry locations, not clients, completed projects, footfall data or confirmed delivery areas, and no location guarantees sales. A service or booking counter is supplied to the business that runs it; Portable Office Cabin does not operate vehicle rental services. Permissions, licences, food safety registration, setbacks and electrical, fire and wastewater requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
