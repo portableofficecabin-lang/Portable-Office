@@ -10580,7 +10580,8 @@ export const CITY_PAGES: CityPage[] = [
    * Targets portable shop / shop cabin / kiosk searches for Shivamogga (Shimoga), Machenahalli and
    * Nidige. Kept apart from the sibling intents: the Machenahalli portable CABIN page above (it gains
    * one related link to this page), the Hoskote and Krishnagiri portable-shop pages and the
-   * Shivamogga shipping-container page (none named here; cross-links follow once each is live).
+   * Shivamogga shipping-container page. None of them is targeted here; each is cross-linked only
+   * once it is live (Krishnagiri, #196, is: a related link each way).
    *
    * The brief's fourteen sections, mapped onto the fixed template slots:
    *   1 Hero → intro + heroCta;  2 Commercial applications → why (three groups as bullets);
@@ -10890,6 +10891,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinksHeading: "Related products",
     relatedLinks: [
       { label: "Portable Shop Cabin (10 × 10 ft)", href: "/products/portable-shop-cabin" },
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Shipping and Cargo Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
@@ -21128,6 +21130,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { label: "Portable Shops in Shivamogga, Karnataka", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
