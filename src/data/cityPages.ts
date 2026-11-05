@@ -7183,7 +7183,7 @@ export const CITY_PAGES: CityPage[] = [
     h1: "Portable Shop Manufacturers in Hoskote",
     tagline: "Readymade shop cabins, food kiosks and retail stalls, built to your layout for businesses in and around Hoskote.",
     intro: [
-      "Portable Office Cabin manufactures prefabricated portable shops, retail kiosks and readymade shop cabins for businesses in Hoskote and the industrial and residential areas around it.",
+      "Portable Office Cabin builds readymade shop cabins, retail kiosks and other prefabricated portable shops for traders, food sellers and service businesses in Hoskote and the industrial and residential areas around it.",
       "From a compact petty shop or tea counter to a bakery kiosk, a food stall or a mini mart, a portable shop cabin gives you a customizable commercial space built around the way your business sells.",
       "Each shop cabin can be planned with a rolling shutter, a serving window or a glass display front, together with counters, shelves, lighting and branding to suit your requirements. It is fabricated at our factory at Kamandoddi, near Hosur, and brought to your site by road.",
     ],
@@ -7195,7 +7195,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Prefabricated manufacturing", text: "the cabin is built at our factory while you prepare the site, so less work happens where you will trade." },
       { title: "Customizable shop layouts", text: "the counter, shelving and storage are planned around what you sell." },
       { title: "Different shopfront designs", text: "a rolling shutter, a glass display front, a serving window or an open-front counter." },
-      { title: "Relocation possibilities", text: "the cabin can be lifted and moved with suitable equipment when its construction, condition and the access at both sites allow." },
+      { title: "Relocation possibilities", text: "with a crane or other suitable lifting equipment, the cabin can go to a new site later, if its build, its condition and the road access permit." },
       { title: "Reduced on-site construction work", text: "the site needs a prepared base and the service connections rather than masonry, plastering and roofing." },
       { title: "Professional storefront appearance", text: "a finished front, a name board and lighting give a small business a clean, recognisable shop." },
       { title: "Optional interior fittings", text: "shelves, racks, a billing counter, lighting and sockets, specified in your quotation." },
@@ -7248,7 +7248,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Mini Mart for Residential Layouts",
-        text: "A larger prefabricated shop cabin with shelving, a billing counter, storage and space for suitable refrigeration equipment, sized for a residential layout or an apartment community.",
+        text: "A larger shop cabin laid out with shelves along the walls, a billing counter near the door, storage space and room for suitable refrigeration equipment, sized for a residential layout or an apartment community.",
         link: { label: "Portable cabin sizes and dimensions", href: "/products/portable-cabin/sizes-and-dimensions" },
       },
       {
@@ -7334,7 +7334,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Electrical fitting options", text: "lighting, sockets and circuits for your equipment." },
       { title: "Interior shelving and counters", text: "made to suit your stock and the way you serve." },
       { title: "Branding customization", text: "your colours, logo and name board, in Kannada, English or both." },
-      { title: "Quotation support", text: "a written quotation listing the specification, the inclusions and the applicable charges." },
+      { title: "Quotation support", text: "a written quotation that sets out what is supplied, what is included and what each part costs." },
       { title: "Delivery coordination", text: "transport from our factory near Hosur, with unloading planned with you." },
     ],
 
@@ -7351,7 +7351,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Prepare to open", text: "you arrange the licences, utility connections and approvals your business needs." },
     ],
     howOutro:
-      "Manufacturing and delivery dates depend on the size, the specification, our production schedule and how ready your site is; they are confirmed when the order is finalised.",
+      "Manufacturing and delivery dates depend on the size and specification, the work already in our factory and whether your site is ready; they are confirmed when the order is finalised.",
 
     extraSections: [
       {
@@ -7455,7 +7455,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can a portable shop be relocated?",
         answer:
-          "Many portable shop cabins are designed for relocation, subject to their construction, condition, lifting arrangements and the access at both sites. The services are disconnected first, and the move needs suitable lifting equipment and transport.",
+          "Many portable shop cabins are designed for relocation, subject to their construction, condition, lifting arrangements and the access at both sites. Power and water are disconnected before the move, which needs lifting equipment and a truck suited to the cabin's size.",
       },
       {
         question: "Can the signboard be in Kannada?",
