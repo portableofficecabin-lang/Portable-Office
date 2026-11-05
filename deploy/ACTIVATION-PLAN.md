@@ -6,6 +6,13 @@
 
 **Rule:** the production script `/usr/local/bin/deploy-portable-office` is replaced **only after** the new script has passed its own first deploy by hand (Phase 4). Until then GitHub keeps calling the old script, and the deploy workflow is switched off for the duration so it cannot run mid-migration.
 
+**Approved commit:** activation uses exactly one commit: the full 40-character SHA named in the owner's activation approval. The phases call it `APPROVED_SHA`. It is never "whatever `main` points to when Phase 2 runs".
+- Phase 0 confirms that `main` points at it, and the merge freeze keeps it there.
+- Phase 2 checks it out and verifies the checkout and all four reviewed files.
+- Phases 4 and 5 confirm that every release they build is that commit.
+
+If `main` has to move during the window, or any check names a different commit, **stop** and get a new approval for the new commit. The deploy script always builds `origin/main`, so these checks are what pin it.
+
 `deploy/README.md` explains *why* this script exists (the in-place build window and cached 404s) and how it works. This plan turns its one-time installation into gated phases. Each phase has a backup, a health check, a go/no-go decision and a rollback.
 
 ---
@@ -25,17 +32,52 @@ Read-only checks as the `deploy` user on 13 Oct 2026 at 12:30 UTC:
 | Not yet present | `/srv/apps/portableofficecabin.com/`, `/var/log/deploy-portable-office/` |
 | Tools | node v22.23.3, `flock`, `ss`, `curl`, nginx 1.24, PM2 7.0.4 (root daemon) |
 
-**Reviewed files.** Compare their checksums on the server before installing anything. These are git's LF content at `main` = `c1dcc26`:
+**These facts are three weeks old and could not be re-checked from here (no SSH access).** Phase 0 step 6 re-records them, read-only, before anything changes.
+
+**Reviewed files.** Compare their checksums on the server before installing anything. These are git's LF content as changed by the release-based deployment PR (`infra/release-based-deployment`; the earlier table was for `c1dcc26`):
 
 | File | SHA-256 |
 |---|---|
-| `deploy/deploy-portable-office.sh` | `0a9419263e0b72b46440b9ed5e2d360ebe305885a4601d81323cb858c2ac13e7` |
-| `deploy/nginx/portable-office-upstream.conf` | `100efb227fa1062f0f242fe97e7d981669de259f701ad4591bb7ebf3c59bc53f` |
-| `scripts/deploy/verify-release.mjs` | `30caa3782505f606f998532f662a9f16c2ded3d25169a276ce1323902537f06c` |
+| `deploy/deploy-portable-office.sh` | `b98d926ad4d393ec457477f31445e0b4d5a3339d9725b3c71aeda2ec6e1fd7ce` |
+| `deploy/nginx/portable-office-upstream.conf` | `100efb227fa1062f0f242fe97e7d981669de259f701ad4591bb7ebf3c59bc53f` (unchanged) |
+| `scripts/deploy/verify-release.mjs` | `59d5bb33b38cee2fa3fc47d8d3c83f2fce36af63d905ae4abc2f045f7feb629b` |
+| `scripts/deploy/critical-routes.json` | `d8241c7297213822fcaa6200f39420d77fa3e7f69d8d16218e019b6f5ab7bb29` |
 
-If `main` has changed these files since, re-review them and update the hashes before Phase 3.
+**All four must match, `critical-routes.json` included.** Phase 2 stops on any mismatch, as do the re-checks in Phases 3 and 4.
+- **If any of these files changes before activation:** the change is reviewed, this table is updated in a pull request, and the resulting commit needs a new activation approval. `critical-routes.json` changes as pages change, so this applies to it too.
+- **Where to compute hashes:** from git's content (`git show <sha>:<path> | sha256sum`) or on the Linux server. Never use a Windows working copy: Git for Windows converts line endings on checkout, which changes the hash.
 
-**Already verified without touching the VPS:** `.github/workflows/deploy-script-tests.yml` runs the script as root on Ubuntu 24.04 with real nginx, TLS, PM2, a second tenant and a 0.2 s poller. It passes all scenarios: first release, re-run, failing build, gate blocks a 404, rollback, concurrent lock, prune. Its run on the merge of #99 (`6280524`) was green.
+Phase 2 writes the table to `/root/activation-sha256.txt` once. Every later check reads that file instead of retyping the values.
+
+**Already verified without touching the VPS:** `.github/workflows/deploy-script-tests.yml` runs the script as root on Ubuntu 24.04 with real nginx, TLS, PM2, a second tenant and a 0.2 s poller. It covers these scenarios:
+- first release;
+- re-run of the same commit;
+- failing build;
+- a release that crashes at start-up;
+- the gate blocking a 404, a wrong commit and a soft 404;
+- chunks of the two previous builds still served after a deploy, and the redirect;
+- rollback;
+- concurrent lock;
+- prune (failed releases counted separately);
+- `main` rewound to an older commit (refused);
+- an SSH drop mid-deploy (the deploy completes);
+- `kill -9` before the switch (production untouched, the next run recovers).
+
+Its run on the merge of #99 (`6280524`) was green for the scenarios that existed then. The release-based deployment PR's own CI run covers the rest.
+
+### What changed since this plan was first written (release-based deployment PR)
+
+The architecture is unchanged: releases, two PM2 slots, the nginx upstream switch, `flock`, `rollback`, the same sudoers line and the same workflow trigger. Added:
+
+| Change | Effect on this plan |
+|---|---|
+| The gate fails a 200 that renders the not-found page. It checks `scripts/deploy/critical-routes.json`: the shipping and cargo pages, the Mysore and Mettur-Salem city pages, products, categories and the enquiry page, plus one redirect. It also checks every JS/CSS file and image those pages load, and that the new release serves the live build's chunks. | Phase 4 expects `critical 9, redirects 1, assets …, continuity …` on the gate's summary line. The post-deploy check in GitHub runs the same checks on the public site. |
+| Static files of the live build **and** the other retained releases (up to 3 builds) are carried into each new release. | Tabs opened one or two deploys back keep loading their chunks. About 70 MB more per release at most. |
+| A deploy is refused when `main` does not contain the live commit. | A rewound `main` cannot replace newer code. Going back is `rollback`. After a deliberate rewrite of `main`, run `deploy --allow-non-descendant` once as root. |
+| The script ignores SIGHUP, and its log keeps being written when the SSH channel closes. | A dropped connection no longer cuts a deploy in half. The GitHub run may turn red, but the server log shows the outcome. |
+| Retention: 3 good releases plus the newest failed one (failed ones no longer push good ones out). | About 15 GB steady and 19 GB at the deploy peak (Phase 6). |
+| The workflow job runs only from `main` and names the `production` environment. | See "GitHub environment" below. Optional, but it closes the last branch-to-production path. |
+| Activation is pinned to `APPROVED_SHA`, and all four reviewed files are verified with a stop on any mismatch. | Phase 0 step 7 sets and checks the commit. Phase 2 verifies the checkout and the four checksums. Phases 3–5 re-check them and confirm each release's revision. |
 
 ---
 
@@ -51,8 +93,25 @@ If `main` has changed these files since, re-review them and update the hashes be
    - Every sitemap URL answers 200.
    - Note the public BUILD_ID: `curl -s https://portableofficecabin.com/ | head -c 80`.
    - Note the Built on Trust home status: `curl -sI https://builtontrustconstruction.com/ | head -1`.
+6. **Re-record the facts table** (read-only; the table above dates from 13 Oct):
+   ```bash
+   df -h /srv | tail -1; free -m | sed -n 2,3p; swapon --show
+   ss -ltnp | grep -E ':(3000|3001|3002|3010) '      # 3010 must be free
+   node -v; pm2 -v; nginx -v 2>&1; tee --version | head -1   # coreutils >= 8.24 for `tee -p`
+   cat /srv/apps/portable-office/.next/BUILD_ID; git -C /srv/apps/portable-office log -1 --format='%h %s'
+   ls -la /usr/local/bin/deploy-portable-office; sha256sum /usr/local/bin/deploy-portable-office
+   ```
+   **Stop** if free disk is under 25 GB, available RAM is under 2 GB, port 3010 is taken, or the installed script is no longer the 827-byte legacy one.
+7. **Set and check the approved commit** in the root shell used for the rest of the window. Set it again in any new shell.
+   ```bash
+   APPROVED_SHA=PASTE_THE_FULL_40_CHARACTER_SHA_FROM_THE_ACTIVATION_APPROVAL   # replace before running
+   [[ "$APPROVED_SHA" =~ ^[0-9a-f]{40}$ ]] && echo "format OK" || echo "STOP: not a full 40-character SHA"
+   MAIN_NOW=$(git ls-remote https://github.com/portableofficecabin-lang/Portable-Office.git refs/heads/main | cut -f1)
+   [ "$MAIN_NOW" = "$APPROVED_SHA" ] && echo "main OK: $MAIN_NOW" || echo "STOP: main is $MAIN_NOW, not the approved commit"
+   ```
+   **Stop** unless both lines print OK. A different `main` means a merge happened or the wrong commit was approved.
 
-**Go/no-go:** the snapshot exists, the workflow is disabled, the merge freeze is announced, and the baseline is recorded.
+**Go/no-go:** the snapshot exists, the workflow is disabled, the merge freeze is announced, the baseline is recorded, the facts still hold and `main` points at `APPROVED_SHA`.
 
 ---
 
@@ -92,9 +151,21 @@ install -d -m 755 /srv/apps/portableofficecabin.com /srv/apps/portableofficecabi
   /srv/apps/portableofficecabin.com/shared /srv/apps/portableofficecabin.com/shared/public/bimi
 cp -a /srv/apps/portable-office/public/bimi/logo.svg /srv/apps/portableofficecabin.com/shared/public/bimi/
 git clone https://github.com/portableofficecabin-lang/Portable-Office.git /srv/apps/portableofficecabin.com/repo
-cd /srv/apps/portableofficecabin.com/repo && git log -1 --format='%h %s'
-sha256sum deploy/deploy-portable-office.sh deploy/nginx/portable-office-upstream.conf scripts/deploy/verify-release.mjs
-#   ↑ must equal the table above — STOP on any mismatch
+cd /srv/apps/portableofficecabin.com/repo
+git checkout --quiet --detach "$APPROVED_SHA"                  # APPROVED_SHA from Phase 0 step 7
+[ "$(git rev-parse HEAD)" = "$APPROVED_SHA" ] && [ "$(git rev-parse origin/main)" = "$APPROVED_SHA" ] \
+  && echo "checkout OK: HEAD = origin/main = $APPROVED_SHA" || echo "STOP: the checkout is not the approved commit"
+git status --porcelain | wc -l                                 # expect 0: a clean checkout
+# The four reviewed files: all must match the table above, critical-routes.json included
+cat > /root/activation-sha256.txt <<'EOF'
+b98d926ad4d393ec457477f31445e0b4d5a3339d9725b3c71aeda2ec6e1fd7ce  deploy/deploy-portable-office.sh
+100efb227fa1062f0f242fe97e7d981669de259f701ad4591bb7ebf3c59bc53f  deploy/nginx/portable-office-upstream.conf
+59d5bb33b38cee2fa3fc47d8d3c83f2fce36af63d905ae4abc2f045f7feb629b  scripts/deploy/verify-release.mjs
+d8241c7297213822fcaa6200f39420d77fa3e7f69d8d16218e019b6f5ab7bb29  scripts/deploy/critical-routes.json
+EOF
+sha256sum --check --strict /root/activation-sha256.txt && echo "ALL FOUR CHECKSUMS OK" || echo "STOP: checksum mismatch or missing file"
+#   ↑ STOP unless this block prints "checkout OK", 0, four "OK" lines and "ALL FOUR CHECKSUMS OK".
+#     Do not run 2b after any STOP.
 
 # 2b. nginx upstream that points at the CURRENT app (port 3000) → identical behaviour
 grep -c 'proxy_pass http://127.0.0.1:3000;' /etc/nginx/sites-available/portableofficecabin.com   # expect 1
@@ -117,7 +188,7 @@ cp /root/portableofficecabin.com.nginx.bak /etc/nginx/sites-available/portableof
 rm /etc/nginx/conf.d/portable-office-upstream.conf && nginx -t && systemctl reload nginx
 ```
 
-**Go/no-go:** the site and the other tenant are unchanged, and `nginx -t` is clean.
+**Go/no-go:** the checkout is `APPROVED_SHA` and clean, all four checksums are OK, the site and the other tenant are unchanged, and `nginx -t` is clean.
 
 ---
 
@@ -126,7 +197,8 @@ rm /etc/nginx/conf.d/portable-office-upstream.conf && nginx -t && systemctl relo
 ```bash
 install -o root -g root -m 750 /srv/apps/portableofficecabin.com/repo/deploy/deploy-portable-office.sh \
   /usr/local/sbin/deploy-portable-office.candidate
-sha256sum /usr/local/sbin/deploy-portable-office.candidate        # = 0a9419263e0b72b4…
+echo "b98d926ad4d393ec457477f31445e0b4d5a3339d9725b3c71aeda2ec6e1fd7ce  /usr/local/sbin/deploy-portable-office.candidate" \
+  | sha256sum --check --strict || echo "STOP: the candidate is not the reviewed script"
 /usr/local/sbin/deploy-portable-office.candidate preflight
 #   expect: "preflight OK: live=portable-office:3000 idle=portable-office-b:3010 disk=…G free mem=…MB avail node=v22.23.3"
 ```
@@ -135,16 +207,33 @@ sha256sum /usr/local/sbin/deploy-portable-office.candidate        # = 0a9419263e
 
 **Rollback:** `rm /usr/local/sbin/deploy-portable-office.candidate`.
 
-**Go/no-go:** `preflight OK`.
+**Go/no-go:** the candidate's checksum is OK and `preflight OK`.
 
 ---
 
 ## Phase 4: the first release, run by hand with the candidate (traffic moves only after the gate passes)
 
+**Before the first release:** the script builds `origin/main`, so re-confirm the pin immediately before running it.
+```bash
+MAIN_NOW=$(git ls-remote https://github.com/portableofficecabin-lang/Portable-Office.git refs/heads/main | cut -f1)
+[ "$MAIN_NOW" = "$APPROVED_SHA" ] && echo "main OK" || echo "STOP: main is $MAIN_NOW, not the approved commit"
+cd /srv/apps/portableofficecabin.com/repo && [ "$(git rev-parse HEAD)" = "$APPROVED_SHA" ] && echo "checkout OK" || echo "STOP: checkout moved"
+sha256sum --check --strict /root/activation-sha256.txt && echo "ALL FOUR CHECKSUMS OK" || echo "STOP: checksum mismatch"
+```
+**Stop** unless all three print OK.
+
 ```bash
 /usr/local/sbin/deploy-portable-office.candidate deploy 2>&1 | tee /root/first-release.log
-#   expect in order: "git: cloning"/fetch → build → "verify: PASSED" (on :3010, before any switch)
-#   → nginx switch → verification through nginx → "Deployment successful" → DEPLOYED_BUILD_ID=<id>
+#   expect in order: "git: cloning"/fetch → build → "static: … carried" → "verify: PASSED" (on :3010,
+#   before any switch; its summary shows "critical 9, redirects 1, assets <n>, continuity <n>" with
+#   0 failures) → nginx switch → verification through nginx → "Deployment successful" → DEPLOYED_BUILD_ID=<id>
+grep -E "verify: .*(critical|continuity)|static: " /root/first-release.log   # the new checks, for the record
+# The release that went live must be the approved commit and carry the same four files
+DEPLOYED_REV=$(sed -n 's/^DEPLOYED_REVISION=//p' /root/first-release.log | tail -1)
+[ "$DEPLOYED_REV" = "$APPROVED_SHA" ] && echo "revision OK" || echo "STOP: the release is $DEPLOYED_REV — roll back (below)"
+(cd "$(readlink -e /srv/apps/portableofficecabin.com/current)" && sha256sum --check --strict /root/activation-sha256.txt) \
+  && echo "release files OK" || echo "STOP: the live release's files differ — roll back (below)"
+curl -s https://portableofficecabin.com/api/build-info      # "commit" must be APPROVED_SHA
 /usr/local/sbin/deploy-portable-office.candidate status
 pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>JSON.parse(s).forEach(p=>console.log(p.name,p.pid)))'
 #   expect: portable-office-b (new) + the built-on-trust process(es) with the SAME pids as /root/pm2-before-migration.txt
@@ -157,8 +246,8 @@ cat /etc/nginx/conf.d/portable-office-upstream.conf | grep server   # expect 127
 - If verification through nginx fails after the switch, the script switches nginx straight back to :3000 while the old process is still running.
 
 **Health checks from outside** (the person running this, or Claude on request):
-- The public HTML serves the new `DEPLOYED_BUILD_ID`.
-- Every sitemap URL answers 200, and the city-page SSR audit passes 27/27.
+- The public HTML serves the new `DEPLOYED_BUILD_ID`, and `/api/build-info` names `APPROVED_SHA`.
+- Every sitemap URL answers 200 and none is the not-found page. Every city page (63 on 4 Nov) passes the SSR audit.
 - The SEO live audit shows 0 errors.
 - The anonymous cart → checkout flow at 320 and 1440 px: product page, Add to Cart, cart persists on reload, checkout without login, PIN code → transport, Pay button enabled.
 - No horizontal overflow at 320 / 375 / 390 / 768 / 1440 px.
@@ -181,7 +270,7 @@ pm2 delete portable-office-b && pm2 save
 # then Phase 2's rollback returns nginx to the original proxy_pass line
 ```
 
-**Go/no-go for Phase 5:** every health check above passes.
+**Go/no-go for Phase 5:** "revision OK" and "release files OK" were printed, and every health check above passes.
 
 ---
 
@@ -189,16 +278,18 @@ pm2 delete portable-office-b && pm2 save
 
 ```bash
 install -o root -g root -m 750 /usr/local/sbin/deploy-portable-office.candidate /usr/local/bin/deploy-portable-office
-sha256sum /usr/local/bin/deploy-portable-office          # = 0a9419263e0b72b4…  (legacy copy stays in /root)
+echo "b98d926ad4d393ec457477f31445e0b4d5a3339d9725b3c71aeda2ec6e1fd7ce  /usr/local/bin/deploy-portable-office" \
+  | sha256sum --check --strict || echo "STOP: the installed script is not the reviewed one"   # legacy copy stays in /root
 ```
 
 1. **Re-enable the deploy workflow:** GitHub → Actions → *Deploy Portable Office* → **Enable workflow**.
 2. **Run it by hand:** *Run workflow* → action `deploy`.
+   - **First** re-run Phase 4's `main OK` check. The workflow deploys `main`, so it must still be `APPROVED_SHA`.
    - It builds a fresh release, also for an unchanged commit.
-   - **Expected:** green, and the "Verify the deployed pages" step logs *"The server reported BUILD_ID … every page must come from it"*. The "legacy in-place script" notice must no longer appear.
+   - **Expected:** green, and the "Verify the deployed pages" step logs *"The server reported BUILD_ID … every page must come from it"*. The "legacy in-place script" notice must no longer appear. `/api/build-info` still names `APPROVED_SHA`.
 3. **Rollback drill:** *Run workflow* → action `rollback`.
    - **Expected:** green in about 20 s, and the public BUILD_ID is the Phase 4 release.
-4. **Run `deploy` once more**, so the newest release is live again.
+4. **Run `deploy` once more**, so the newest release is live again. Again, check `main OK` before the run and `/api/build-info` = `APPROVED_SHA` after it.
 5. **Lift the merge freeze.**
 6. **Watch the next real merge's Deploy run** to confirm it shows `DEPLOYED_BUILD_ID` and a green verification.
 
@@ -210,10 +301,24 @@ Use this only together with "Back to the legacy app" above: the legacy script ex
 
 ---
 
+## GitHub environment (owner, in GitHub settings; any time, independent of the VPS phases)
+
+The deploy job names the environment `production` and refuses to run from any branch but `main`. The SSH key is still a **repository** secret, though, and any workflow file pushed on any branch by someone with write access can read repository secrets. To close that path:
+
+1. GitHub → Settings → Environments → **production**. It appears after the first deploy run that names it, or create it there.
+2. **Deployment branches and tags** → *Selected branches and tags* → add `main` only.
+3. Add the secret **`HOSTINGER_SSH_KEY`** to this environment, with the same value as the repository secret.
+4. Run *Deploy Portable Office* → *Run workflow* (from `main`) once, and confirm it is green.
+5. Then, **with separate approval**, delete the repository-level `HOSTINGER_SSH_KEY`. Afterwards only a job running for `main` in `production` can read the key.
+
+**Rollback:** re-add the repository secret. The environment can stay.
+
+---
+
 ## Phase 6: after activation
 
 - For the first three merges, check each Deploy run, `sudo deploy-portable-office status` and `/var/log/deploy-portable-office/`.
-- Disk: three releases are kept, roughly 11 GB. Old ones are pruned automatically.
+- Disk: three good releases plus the newest failed one are kept, about 3.8 GB each: about 15 GB steady and 19 GB while a deploy builds. Old ones are pruned automatically. The preflight refuses a deploy below 8 GB free.
 - **Only with separate approval, after about a week of clean releases:**
   - remove `/srv/apps/portable-office` (about 2.5 GB);
   - delete the Hostinger snapshot.

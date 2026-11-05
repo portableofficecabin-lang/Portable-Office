@@ -10,8 +10,8 @@
 #                   The existing sudoers line (command without arguments) also permits
 #                   `... rollback` / `... status`, so nothing in sudoers changes.
 #
-# Usage:            deploy-portable-office [deploy | rollback [release-id] | status |
-#                                           preflight | list | prune]
+# Usage:            deploy-portable-office [deploy [--allow-non-descendant] | rollback [release-id] |
+#                                           status | preflight | list | prune]
 #
 # WHY (the 2026-10-10/12 incidents): the legacy script ran `next build` INSIDE the live app
 # directory while the old process kept serving from it. A request for a just-merged page that
@@ -23,16 +23,21 @@
 # HOW A DEPLOY WORKS (blue/green on two local ports; nginx decides which one is live)
 #   1. git fetch main into a cached clone and export the commit into a NEW release dir
 #      /srv/apps/portableofficecabin.com/releases/<utc-stamp>-<sha7>/   — EVERY run builds a
-#      fresh release, also when the commit is already live (a re-run genuinely rebuilds)
+#      fresh release, also when the commit is already live (a re-run genuinely rebuilds). A commit
+#      that does not contain the live commit (main rewound / force-pushed) is refused: a deploy
+#      only moves forward; going back is `rollback`
 #   2. link the optional server-only secrets file shared/.env.local, copy the server-only
 #      public files, seed .next/cache from the live release (a COPY: the old process can never
 #      write into the new build), `npm ci --include=dev`, `next build`  -> live app untouched
-#   3. copy the live build's own /_next/static files into the release (browser tabs opened
-#      before the switch can still load their JS/CSS chunks afterwards)
+#   3. copy the own /_next/static files of the live build and of the other retained releases
+#      (up to KEEP_RELEASES builds) into the release: browser tabs opened before the switch, or
+#      a deploy or two earlier, can still load their JS/CSS chunks afterwards
 #   4. start the release under PM2 in the IDLE slot (its own port), wait until it answers,
 #      then run scripts/deploy/verify-release.mjs against it: every city page of the release's
 #      source must be prerendered, answer 200 and come from THIS build; every sitemap URL must
-#      answer 200. Nothing has touched production yet.
+#      answer 200 and none may be the not-found page; the critical pages and redirects
+#      (scripts/deploy/critical-routes.json), their JS/CSS and images, and the LIVE build's
+#      chunks must all be served. Nothing has touched production yet.
 #   5. point the nginx upstream at the idle slot's port, `nginx -t`, graceful reload, then
 #      verify THROUGH nginx (TLS, real server_name) that the new BUILD_ID serves / and every
 #      city page — on any failure nginx is switched straight back to the old port
@@ -60,7 +65,8 @@ CURRENT=$APP_ROOT/current
 PREVIOUS=$APP_ROOT/previous
 REMOTE_URL=${REMOTE_URL:-https://github.com/portableofficecabin-lang/Portable-Office.git}
 BRANCH=${DEPLOY_BRANCH:-main}
-KEEP_RELEASES=${KEEP_RELEASES:-3}
+KEEP_RELEASES=${KEEP_RELEASES:-3}   # good releases kept (current and previous are always kept)
+KEEP_FAILED=${KEEP_FAILED:-1}       # newest *.failed release(s) kept for inspection
 HOST_NAME=${HOST_NAME:-portableofficecabin.com}
 SITE_CONF=${SITE_CONF:-/etc/nginx/sites-enabled/$HOST_NAME}
 UPSTREAM_CONF=${UPSTREAM_CONF:-/etc/nginx/conf.d/portable-office-upstream.conf}
@@ -240,17 +246,32 @@ build_release() {
   log "build OK: BUILD_ID $(cat "$REL/.next/BUILD_ID")"
 }
 
-# Keep the live build's hashed JS/CSS reachable from the new release (no-clobber copy), so a
-# page opened before the switch can still lazy-load its chunks after it.
+# Keep older builds' hashed JS/CSS reachable from the new release (no-clobber copy), so a page
+# opened before the switch can still lazy-load its chunks after it. Sources: the live build, then
+# the other retained releases, newest first (failed releases never), up to KEEP_RELEASES builds
+# in all — a tab opened two or three deploys ago keeps working too, not only the last one.
+# Each source contributes only its OWN files (.static-own.list), so carried files never pile up.
 carry_static_assets() {
-  local src list
-  src=$(live_source_dir) || return 0
-  [ -d "$src/.next/static" ] || return 0
-  if [ -f "$src/.static-own.list" ]; then list="$src/.static-own.list"; else
-    list=$(mktemp); ( cd "$src/.next/static" && find . -type f ) > "$list"
-  fi
-  ( cd "$src/.next/static" && tar -cf - -T "$list" ) | ( cd "$REL/.next/static" && tar -x --skip-old-files -f - )
-  log "static: carried $(wc -l < "$list" | tr -d ' ') files of the live build into the release"
+  local live d list n=0 files=0
+  local -a sources=()
+  live=$(live_source_dir) && [ -d "$live/.next/static" ] && sources+=("$live")
+  for d in $(ls -1d "$RELEASES"/*/ 2>/dev/null | sort -r); do
+    [ "${#sources[@]}" -lt "$KEEP_RELEASES" ] || break
+    d=${d%/}
+    case "$d" in *.failed) continue ;; esac
+    [ "$d" = "$REL" ] || [ "$d" = "${live:-}" ] && continue
+    [ -f "$d/.static-own.list" ] && [ -d "$d/.next/static" ] || continue
+    sources+=("$d")
+  done
+  for d in "${sources[@]}"; do
+    if [ -f "$d/.static-own.list" ]; then list="$d/.static-own.list"; else
+      list=$(mktemp); ( cd "$d/.next/static" && find . -type f ) > "$list"   # legacy checkout
+    fi
+    ( cd "$d/.next/static" && tar -cf - --ignore-failed-read -T "$list" ) | ( cd "$REL/.next/static" && tar -x --skip-old-files -f - )
+    n=$((n + 1)); files=$((files + $(wc -l < "$list" | tr -d ' ')))
+    log "static: carried the static files of $(basename "$d") into the release"
+  done
+  log "static: $files files from $n earlier build(s) are served by the new release as well"
 }
 
 # ── process + traffic management ──────────────────────────────────────────────────────
@@ -395,15 +416,22 @@ retire_slot() { # name port
   log "pm2: process list saved"
 }
 
+# Retention: the newest KEEP_RELEASES good releases and the newest KEEP_FAILED failed ones; the
+# current and previous releases and any directory a PM2 process runs from are never removed.
+# Failed builds do not count against the good ones, so a run of failures cannot prune the
+# releases a rollback (or an open browser tab's chunks) still needs.
 prune_releases() {
-  local cur prev running d n=0
+  local cur prev running d good=0 failed=0
   cur=$(readlink -e "$CURRENT" 2>/dev/null || true)
   prev=$(readlink -e "$PREVIOUS" 2>/dev/null || true)
   running=$(pm2_cwds)
   # newest first by name (ids start with a UTC timestamp)
   for d in $(ls -1d "$RELEASES"/*/ 2>/dev/null | sort -r); do
-    d=${d%/}; n=$((n + 1))
-    [ "$n" -le "$KEEP_RELEASES" ] && continue
+    d=${d%/}
+    case "$d" in
+      *.failed) failed=$((failed + 1)); [ "$failed" -le "$KEEP_FAILED" ] && continue ;;
+      *) good=$((good + 1)); [ "$good" -le "$KEEP_RELEASES" ] && continue ;;
+    esac
     { [ "$d" = "$cur" ] || [ "$d" = "$prev" ]; } && continue
     printf '%s\n' "$running" | grep -qx "$d" && continue
     log "prune: removing $d"
@@ -418,7 +446,31 @@ report() { # release
 }
 
 # ── commands ──────────────────────────────────────────────────────────────────────────
+# Stale-build guard: a deploy may only move production FORWARD. The commit being deployed must
+# contain the live release's commit; otherwise main was rewound (force-push) or the cached clone
+# is behind, and deploying would replace newer code with older code. Going back on purpose is
+# what `rollback` is for. A deliberate history rewrite of main: run, as root on the VPS,
+# `deploy-portable-office deploy --allow-non-descendant` once (the workflow never passes it).
+check_moves_forward() { # live_release sha allow
+  local live_rel=$1 sha=$2 allow=$3 live_rev
+  [ -n "$live_rel" ] || return 0
+  live_rev=$(cat "$live_rel/REVISION" 2>/dev/null || true)
+  [ -n "$live_rev" ] && [ "$live_rev" != "$sha" ] || return 0
+  if git -C "$REPO" merge-base --is-ancestor "$live_rev" "$sha" 2>/dev/null; then return 0; fi
+  if [ "$allow" = 1 ]; then
+    log "deploy: WARNING $sha does not contain the live commit $live_rev — deploying anyway (--allow-non-descendant)"
+    return 0
+  fi
+  die "deploy: $BRANCH @ ${sha:0:12} does not contain the live commit ${live_rev:0:12} — refusing to replace newer code with older or unrelated code (was $BRANCH force-pushed or rewound?). Production is unchanged. To go back on purpose use 'rollback'; after a deliberate rewrite of $BRANCH run 'deploy-portable-office deploy --allow-non-descendant' as root."
+}
+
 cmd_deploy() {
+  local allow_non_descendant=0
+  case "${1:-}" in
+    "") ;;
+    --allow-non-descendant) allow_non_descendant=1 ;;
+    *) die "deploy: unknown option '$1' (only --allow-non-descendant)" ;;
+  esac
   preflight_checks
   local old_port new_port old_name new_name old_rel sha build_id
   old_port=$(active_port); new_port=$(other_port "$old_port")
@@ -426,6 +478,7 @@ cmd_deploy() {
   old_rel=$(readlink -e "$CURRENT" 2>/dev/null || true)
   sha=$(fetch_source)
   log "deploy: $BRANCH @ $sha   live: $old_name:$old_port${old_rel:+ ($old_rel)}"
+  check_moves_forward "$old_rel" "$sha" "$allow_non_descendant"
   if [ -n "$old_rel" ] && [ "$(cat "$old_rel/REVISION" 2>/dev/null)" = "$sha" ]; then
     log "deploy: $sha is already live — building a FRESH release of it anyway (re-run = full rebuild)"
   fi
@@ -530,15 +583,23 @@ CMD=${1:-deploy}
 shift || true
 case "$CMD" in
   deploy|rollback|status|preflight|list|prune) ;;
-  *) echo "usage: deploy-portable-office [deploy | rollback [release-id] | status | preflight | list | prune]" >&2; exit 2 ;;
+  *) echo "usage: deploy-portable-office [deploy [--allow-non-descendant] | rollback [release-id] | status | preflight | list | prune]" >&2; exit 2 ;;
 esac
 require_root
 mkdir -p "$LOG_DIR"
-exec > >(tee -a "$LOG_DIR/$(date -u +%Y%m%dT%H%M%SZ)-$CMD.log") 2>&1
+# A dropped SSH connection (the workflow runs this over ssh) must not kill a deploy half-way:
+# ignore SIGHUP, and let tee keep writing the log file when its stdout (the ssh channel) closes
+# (-p: no SIGPIPE, warn and carry on). The deploy then finishes or fails on its own merits, with
+# the full log in $LOG_DIR. A hard kill (-9, reboot) before the switch leaves production
+# untouched; the next run removes the half-started idle slot.
+trap '' HUP
+tee_flags=(-a)
+if tee -p </dev/null >/dev/null 2>&1; then tee_flags=(-p -a); fi   # GNU coreutils >= 8.24 (Ubuntu 24.04: 9.4)
+exec > >(tee "${tee_flags[@]}" "$LOG_DIR/$(date -u +%Y%m%dT%H%M%SZ)-$CMD.log") 2>&1
 trap on_exit EXIT
 log "=== Portable Office: $CMD ==="
 case "$CMD" in
-  deploy)    with_lock cmd_deploy ;;
+  deploy)    with_lock cmd_deploy "$@" ;;
   rollback)  with_lock cmd_rollback "$@" ;;
   status)    cmd_status ;;
   preflight) preflight_checks ;;

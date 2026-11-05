@@ -1,0 +1,17 @@
+{
+  "description": "Pages and redirects scripts/deploy/verify-release.mjs checks on every deploy, before and after the switch. Each route must answer 200 from the new build, must not be the not-found page, and must render an <h1> and every string in 'contains'; its JS/CSS and images are checked too. Each redirect must answer its status in one hop with exactly 'to' as the Location, and 'to' must be a real page. Keep every entry live: remove one only in the same change that retires the page or the redirect (and a 'contains' only when the page stops rendering that markup), or every deploy will be refused.",
+  "routes": [
+    { "path": "/products/shipping-container-for-sale", "contains": ["Add to Cart"] },
+    { "path": "/products/cargo-container-for-sale", "contains": ["Add to Cart"] },
+    "/products/category/cargo-storage-shipping-containers",
+    "/cities-we-serve/shipping-container-in-mysore",
+    "/cities-we-serve/shipping-container-in-mettur-salem",
+    "/products/portable-cabin",
+    "/products/container-office",
+    "/products/category/portable-cabins",
+    { "path": "/contact", "contains": ["<input"] }
+  ],
+  "redirects": [
+    { "from": "/products/shipping-container", "to": "/products/shipping-container-for-sale", "status": 301 }
+  ]
+}
