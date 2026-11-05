@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, MapPin } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
+import { CATEGORY_LINKS } from "@/data/categoryLandings";
 import { JsonLd } from "@/components/JsonLd";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -18,6 +19,7 @@ const H1 = "Portable Toilet Cabin";
 const DESCRIPTION =
   "Portable toilet cabin manufacturer in India — MS, GI, FRP & bio-toilet units with water tanks, exhaust and western/Indian pans. Single & multi-seater, fast pan-India delivery.";
 const IMAGE = `${SITE}/images/products/portable-toilet.webp`;
+const TOILET_LOCATION_LINKS = CATEGORY_LINKS["portable-toilet-cabins"]?.locationLinks ?? [];
 
 export const revalidate = 1800; // 30 minutes
 
@@ -92,6 +94,35 @@ export default function PortableToiletCabinPage() {
             <p className="text-lg text-muted-foreground">{DESCRIPTION}</p>
           </div>
           <PortableToiletContent />
+
+          {/* Location pages for the range (2026-11-05): the portable-toilet category's location list
+              (CATEGORY_LINKS, the same list the category page and the 4-unit block page show), so
+              every portable-toilet city page is linked from this main toilet page as soon as it is
+              added there. Place-name anchors, as on the category page. Rendered here, not inside
+              PortableToiletContent, which the purchasable 4-unit block page also renders. */}
+          {TOILET_LOCATION_LINKS.length > 0 && (
+            <nav
+              aria-labelledby="toilet-cabin-locations"
+              className="mb-12 rounded-2xl border border-border/60 bg-muted/30 p-5 sm:p-7"
+            >
+              <h2 id="toilet-cabin-locations" className="font-display text-xl sm:text-2xl font-bold text-foreground">
+                Portable Toilet Cabins by Location
+              </h2>
+              <ul className="mt-4 flex flex-wrap gap-2.5">
+                {TOILET_LOCATION_LINKS.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground transition hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      <MapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+                      {l.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
 
           {/* Child tier of the SEO hierarchy — every guide under /products/portable-toilet-cabin/…
               (registry-driven; the grid and the routes can never go out of sync). Renders nothing

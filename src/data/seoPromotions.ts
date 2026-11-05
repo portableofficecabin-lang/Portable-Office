@@ -383,9 +383,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
   ],
   // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
-  // page; the page links back to this hub.
+  // page, then Portable Toilet Cabins in Shoolagiri (2026-11-05); both pages link back to this hub.
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    { name: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
   ],
   // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
   // city page; the page links back to this hub.
