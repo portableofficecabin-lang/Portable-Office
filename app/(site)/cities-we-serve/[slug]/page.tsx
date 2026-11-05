@@ -21,7 +21,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone } from "lucide-react";
 
-import { CITY_PAGES, cityPageBySlug, type CityPageLink } from "@/data/cityPages";
+import {
+  CITY_PAGES,
+  cityPageBySlug,
+  type CityPageLink,
+  type CityPageSection,
+  type CityPageTable,
+} from "@/data/cityPages";
 import { CATEGORY_LANDING_SLUGS, categoryModels } from "@/data/categoryLandings";
 import { categories, products } from "@/data/products";
 import { CategoryEnquiryForm } from "@/components/products/CategoryEnquiryForm";
@@ -127,6 +133,71 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           models: categoryModels(page.enquiryForm.categorySlug, products).map((m) => ({ id: m.id, name: m.name })),
         }
       : undefined;
+
+  /* Optional table (an extra section's `table`, or `whyTable`): header row, first cell of each row as
+     the row header, and a visible caption underneath. The wrapper scrolls only if a table is wider
+     than the column. Below the `sm` breakpoint the cells use px-3 and the row headers may wrap, so a
+     three-column table fits a 320–430 px phone instead of hiding its last column behind a sideways
+     scroll (2026-11-04, Portable Toilets in Krishnagiri); from `sm` up the markup looks exactly as
+     before. */
+  const renderTable = (table: CityPageTable) => (
+    <div className={`mb-4 overflow-x-auto rounded-xl border${mc("reveal")}`}>
+      <table className="w-full border-collapse text-left text-sm">
+        <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4">
+          {table.caption}
+        </caption>
+        <thead className="bg-muted/50">
+          <tr>
+            {table.headers.map((hd) => (
+              <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4">
+                {hd}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row) => (
+            <tr key={row[0]} className="border-t">
+              <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4">
+                {row[0]}
+              </th>
+              {row.slice(1).map((cell, j) => (
+                <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
+     hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, or after
+     the solutions list when `placement` is "afterSolutions". */
+  const renderSection = (sec: CityPageSection) => (
+    <section key={sec.heading}>
+      <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
+      {sec.paragraphs?.map((text) => (
+        <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
+      ))}
+      {sec.table && renderTable(sec.table)}
+      {sec.bullets && sec.bullets.length > 0 && (
+        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+          {sec.bullets.map((b) => (
+            <li key={b.title ?? b.text} className={li}>
+              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
+            </li>
+          ))}
+        </ul>
+      )}
+      {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
+      {sec.closing?.map((text) => (
+        <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
+      ))}
+    </section>
+  );
 
   return (
     /* WRAPPED IN <Layout> — header, nav, footer, WhatsApp button and skip link.
@@ -250,13 +321,18 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.whyBullets.map((b) => (
-            <li key={b.title ?? b.text} className={li}>
-              {b.title && <><strong className="text-foreground">{b.title}:</strong> </>}{b.text}
-            </li>
-          ))}
-        </ul>
+        {/* An empty `whyBullets` (a section carried by `whyTable`) renders no list. */}
+        {page.whyBullets.length > 0 && (
+          <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+            {page.whyBullets.map((b) => (
+              <li key={b.title ?? b.text} className={li}>
+                {b.title && <><strong className="text-foreground">{b.title}:</strong> </>}{b.text}
+              </li>
+            ))}
+          </ul>
+        )}
+        {/* Optional table (`whyTable`); unset = no element. */}
+        {page.whyTable && renderTable(page.whyTable)}
         {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
@@ -304,6 +380,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             )}
           </section>
         ))}
+
+        {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
+        {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
         <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
@@ -422,67 +501,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         </ol>
         {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
 
-        {/* Optional extra sections (`extraSections`): owner copy with more H2s than the fixed slots
-            hold. Same classes and motion as the sections above; unset = nothing rendered. */}
-        {page.extraSections?.map((sec) => (
-          <section key={sec.heading}>
-            <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
-            {sec.paragraphs?.map((text) => (
-              <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
-            ))}
-            {/* Optional table (`table`): header row, first cell of each row as the row header, and a
-                visible caption underneath. The wrapper scrolls only if a table is wider than the
-                column; unset = nothing rendered. Below the `sm` breakpoint the cells use px-3 and
-                the row headers may wrap, so a three-column table fits a 320–430 px phone instead
-                of hiding its last column behind a sideways scroll (2026-11-04, Portable Toilets in
-                Krishnagiri); from `sm` up the markup looks exactly as before. */}
-            {sec.table && (
-              <div className={`mb-4 overflow-x-auto rounded-xl border${mc("reveal")}`}>
-                <table className="w-full border-collapse text-left text-sm">
-                  <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4">
-                    {sec.table.caption}
-                  </caption>
-                  <thead className="bg-muted/50">
-                    <tr>
-                      {sec.table.headers.map((hd) => (
-                        <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4">
-                          {hd}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sec.table.rows.map((row) => (
-                      <tr key={row[0]} className="border-t">
-                        <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4">
-                          {row[0]}
-                        </th>
-                        {row.slice(1).map((cell, j) => (
-                          <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4">
-                            {cell}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            {sec.bullets && sec.bullets.length > 0 && (
-              <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-                {sec.bullets.map((b) => (
-                  <li key={b.title ?? b.text} className={li}>
-                    {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
-            {sec.closing?.map((text) => (
-              <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
-            ))}
-          </section>
-        ))}
+        {/* Optional extra sections (`extraSections`) without a `placement`: rendered here, after the
+            "how" steps, as on every earlier page; unset = nothing rendered. */}
+        {page.extraSections?.filter((sec) => !sec.placement).map(renderSection)}
 
         <h2 className={`${h2}${mc("reveal")}`}>Frequently Asked Questions (FAQs)</h2>
         {page.faqs.map((f, i) => (
