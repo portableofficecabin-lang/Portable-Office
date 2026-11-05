@@ -20827,6 +20827,8 @@ export const CITY_PAGES: CityPage[] = [
    *     guide, not fixture ratios; the checklist closes with "no cabin is automatically audit-ready";
    *     the women's section lists only fittings the catalogue already offers (sanitary disposal
    *     equipment left out, unconfirmed); bio-toilet systems left out (owner decision of 2026-11-05).
+   *     The handwash station is not offered as a product (owner, 2026-11-05: its manufacture is
+   *     unconfirmed); the page offers handwash basins in the cabin only, until the owner confirms it.
    *   8 Types → features (nine types; FRP and bio-toilet left out, owner decision); the bold note says
    *     each is built to order.
    *   9 Cleaning and Maintenance → custom, beside the rear render; the outro says cleaning and tank
@@ -20964,7 +20966,6 @@ export const CITY_PAGES: CityPage[] = [
       "Gents toilet cabin — a toilet block with cubicles and optional urinal provisions",
       "Toilet and bathroom cabin — a combined sanitation unit with toilet and bathing facilities",
       "Bathing cabin — shower cubicles with suitable drainage and water connections",
-      "Handwash station — a multi-tap unit for handwashing beside the toilets",
       "MS toilet cabin — a steel-framed prefabricated toilet unit",
       "PUF toilet cabin — a prefabricated toilet unit with insulated PUF panels",
     ],
@@ -21009,7 +21010,7 @@ export const CITY_PAGES: CityPage[] = [
     howIntro: "How a toilet cabin order moves from your first message to delivery:",
     howSteps: [
       { title: "Share site requirements", text: "your workforce size, site location and sanitation needs." },
-      { title: "Discuss the toilet configuration", text: "cubicle counts, separate facilities, handwash points and bathing requirements." },
+      { title: "Discuss the toilet configuration", text: "cubicle counts, separate facilities, handwash basins and bathing requirements." },
       { title: "Confirm water and waste arrangements", text: "the utilities available, the tanks required and how waste will be disposed of." },
       { title: "Review the quotation", text: "dimensions, fittings, commercial terms and transport are finalised." },
       { title: "Manufacture", text: "the approved toilet cabin configuration is fabricated." },
@@ -21107,7 +21108,7 @@ export const CITY_PAGES: CityPage[] = [
           { title: "MS and insulated construction", text: "steel-framed or PUF-panel cabins." },
           { title: "Sanitary fitting options", text: "Indian or Western toilets, basins and urinals." },
           { title: "Water and waste connection provisions", text: "inlet, outlet and tank connections for the arrangement you choose." },
-          { title: "Handwash and bathing configurations", text: "handwash points and shower cubicles where they are needed." },
+          { title: "Handwash and bathing configurations", text: "handwash basins and shower cubicles where they are needed." },
           { title: "Quotation support", text: "a written quotation for the specification you confirm." },
           { title: "Delivery coordination", text: "transport, unloading and placement planned with your team." },
         ],
@@ -21151,7 +21152,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can portable toilets include handwash facilities?",
         answer:
-          "Handwash basins, or a separate handwash station, can be incorporated where they are offered for the configuration you order.",
+          "Handwash basins can be incorporated in the toilet cabin. The number of basins and where they are placed are confirmed in the approved specification.",
       },
       {
         question: "How quickly can portable toilet cabins be delivered to a Shoolagiri site?",
