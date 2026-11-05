@@ -393,10 +393,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Toilet Cabins in Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
   ],
   // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
-  // city page, then Portable Security Cabins in Salem (2026-11-05); both pages link back to this hub.
+  // city page, then Portable Security Cabins in Salem and in Shoolagiri (2026-11-05); each links back to this hub.
   "Security Cabin|Tamil Nadu": [
     { name: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
     { name: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
+    { name: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
   ],
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
