@@ -5767,7 +5767,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Container office in Mettur and Salem for shutdown contractors, power and chemical plants and site offices. Custom 10 ft to 40 ft cabins. Get a quote.",
     keywords:
-      "Container Office in Mettur, Container Office in Salem, Container Office Mettur Salem, Portable Site Office Salem, Shutdown Contractor Office Mettur, Industrial Container Cabin Salem, Portable Office Cabin Salem, Security Cabin Mettur, Container Office on Rent Salem",
+      "Container Office in Mettur, Container Office in Salem, Container Office Mettur Salem, Portable Site Office Salem, Shutdown Contractor Office Mettur, Industrial Container Cabin Salem, Portable Office Cabin Salem, Container Office on Rent Salem",
     geo: { region: "IN-TN", placename: "Mettur, Salem, Tamil Nadu, India", position: "11.7863;77.8008", icbm: "11.7863, 77.8008" },
     motion: true,
 
@@ -6067,6 +6067,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Site Office", href: "/products/category/site-office-containers" },
       { label: "Portable Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Security Cabins for Salem Industries", href: "/cities-we-serve/portable-security-cabin-salem" },
       { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
@@ -20422,6 +20423,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
       ],
     },
 
@@ -20801,6 +20803,358 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk design with lift-up serving hatches; the coffee machine and jars are shown for illustration, other shop designs look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SECURITY CABINS IN SALEM — the security-cabin intent for Salem and the Salem Industrial
+   * Belt (Tamil Nadu): security cabin, guard room, watchman cabin and check post cabin, for magnesite
+   * mine and quarry check posts, sago factory gates, textile and yarn godowns, Sankagiri truck yards,
+   * steel and engineering units and visitor-screening sites. A sibling of Portable Security Cabins in
+   * Krishnagiri (the gate types of the Krishnagiri belt) and of the Mettur, Salem container-office and
+   * shipping-container pages (offices and storage boxes). Omalur, Mettur, Sankagiri and Attur are
+   * secondary references here, not separate pages. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05, mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → the on-page form, Call, WhatsApp).
+   *   3 Heat protection → why (six titled bullets; the brief's "no indoor temperature is promised"
+   *     rule is the whyOutro). It renders before the industries because the template's "why" slot
+   *     comes first, and the industries keep their h3 subsections and contextual links that way.
+   *   2 Industries → solutions: seven h3 subsections, each with a verified link where one fits.
+   *   4 Dust, 5 Specification options, 6 Types, 7 Sizes → extra sections with `placement:
+   *     "afterSolutions"`, in that order. The specification table has one row per configuration
+   *     (two columns, the typical use closing each cell), so it fits a 320 px phone; every value of
+   *     the brief's table is kept. The sizes are captioned as indicative: the catalogue's Security Cabin
+   *     range is 3 × 3 ft to 10 × 8 ft, and larger gatehouses are built to order (the Guard Security
+   *     Cabin is 20 × 10 ft).
+   *   8 Price → features (the factors as a plain list), the quotation rule in the bold sizesNote,
+   *     then the one-image gallery. No ₹ anywhere.
+   *   9 Rental → left out: security cabin rental in Salem is not confirmed.
+   *   12 Why choose → custom, beside the interior image (whyUs unset); 11 Areas → areas;
+   *   10 Ordering → how (the template renders areas before how); 13 the brief's eight FAQs;
+   *   14 CTA + enquiryForm (security-cabins, posting to /api/enquiries).
+   * Left out as unverified: the Salem Defence Industrial Corridor, rental, timelines, and links to
+   * MS / PUF security cabin or security-cabin-with-toilet product pages (none exists, so the material,
+   * insulation and toilet guides are linked instead). The Shoolagiri security-cabin page (PR #189)
+   * is not linked until it is live, and there is no Shivamogga security-cabin page.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets security cabins in
+   * Salem. The Mettur container-office page's "Security Cabin Mettur" keyword was removed, and link
+   * anchors and the CTA line are this page's own. Salem Steel Plant is named nominatively, with the
+   * non-affiliation note in the disclaimer.
+   *
+   * Images: three owner-dropped webp files ("public/images/Salem Industrial Belt security cabin city
+   * page/…/cabin (1–3).webp", lossy VP8 with no EXIF/XMP/ICC chunk) copied byte-for-byte to
+   * descriptive names: (1) three-quarter view, 1024² = hero / og:image; (2) front view, 1200×896 =
+   * single-image gallery after the price factors; (3) interior, 1200×896 = beside "Why Choose",
+   * captioned. They show one green corrugated MS cabin with a pitched roof in a yard. No alt text
+   * names Salem, and the disclaimer says they do not show an installation in Salem.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-security-cabin-salem",
+    city: "Salem",
+    listTitle: "Portable Security Cabins in Salem",
+    metaTitle: "Portable Security Cabin in Salem | Guard Rooms & Check Posts",
+    metaDescription:
+      "Portable security cabins in Salem for mine check posts, sago factories, truck yards and industrial gates. Explore insulated guard rooms and custom layouts.",
+    keywords:
+      "Portable Security Cabin in Salem, Security Cabin Salem Industrial Belt, Security Guard Cabin Salem, Security Cabin Manufacturers in Salem, Security Cabin Suppliers Salem, Guard Room Salem, Watchman Cabin Salem, Check Post Cabin Salem, Prefabricated Security Cabin Salem, Security Cabin Price in Salem, Security Cabin for Truck Yard, Security Cabin for Mines and Quarries, Heat-Insulated Security Cabin Salem",
+    geo: { region: "IN-TN", placename: "Salem, Tamil Nadu, India", position: "11.6643;78.1460", icbm: "11.6643, 78.1460" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Security Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-three-quarter-view.webp",
+      alt: "Prefabricated portable security cabin — green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
+      width: 1024,
+      height: 1024,
+    },
+    interiorImage: {
+      src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-interior.webp",
+      alt: "Interior of a portable security cabin — wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
+      width: 1200,
+      height: 896,
+      caption:
+        "Inside the cabin shown above. The desk, chair, telephone and fire extinguisher are shown for illustration; the panels, fittings and furniture supplied follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-front-view.webp",
+        alt: "Prefabricated portable security cabin — front view of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Security Cabin Manufacturers in the Salem Industrial Belt",
+    tagline: "Prefabricated guard rooms and check post cabins for mine check posts, sago factory gates, textile godowns, truck yards and engineering units across Salem.",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated security cabins, guard rooms and check post cabins for industrial, commercial, logistics and construction-related requirements in Salem and surrounding areas.",
+      "Salem's industrial landscape includes mineral operations, steel and engineering businesses, sago processing, textile storage and transport activities. Different sites require different gate arrangements, observation points and security provisions.",
+      "Portable security cabins can be customised with observation windows, document counters, electrical fittings, insulated walls, ventilation and optional security-system provisions according to the approved design. We build them at our factory near Hosur and transport them to Salem by road.",
+    ],
+
+    whyHeading: "Heat Protection for Salem Conditions",
+    whyIntro:
+      "Security personnel may work long shifts in warm outdoor conditions, and a guard cabin standing in direct sun gains heat quickly. Suitable cabin design can improve thermal comfort:",
+    whyBullets: [
+      { title: "Insulated walls and roof", text: "PUF-insulated panels can reduce heat transfer compared with uninsulated sheet-metal construction." },
+      { title: "Window sunshades", text: "suitable sunshades over the windows may reduce direct solar exposure and glare." },
+      { title: "Cross-ventilation", text: "well-positioned openings can improve natural airflow where the site conditions permit." },
+      { title: "Exhaust fan", text: "an exhaust fan may support ventilation, depending on the cabin layout." },
+      { title: "Light-coloured roof", text: "a suitable light-coloured roof finish may reduce solar heat absorption." },
+      { title: "AC provision", text: "electrical and structural provisions can be included for an air-conditioning unit where required." },
+    ],
+    whyOutro:
+      "Together these measures can make a long shift more comfortable, but no particular indoor temperature is promised: it depends on the cabin's specification, its orientation, the shade around it and the weather.",
+
+    solutionsHeading: "Security Cabins for Different Salem Industries",
+    solutionsIntro:
+      "Gate security around Salem ranges from check posts on mine and quarry roads to compact booths at godown entrances. Typical arrangements for each type of site, always confirmed against your own requirements:",
+    solutions: [
+      {
+        title: "Mine and Quarry Check Posts",
+        text: "Mineral operations around Salem, including magnesite mining and quarrying, may need entry and exit monitoring for vehicles, equipment and personnel. A check post cabin can be planned with suitable observation windows, a document-pass counter, space for registers, protected electrical fittings and dust-conscious window and door arrangements, with a view toward the approved vehicle-checking area. A raised document window can be considered where the vehicle dimensions and safe traffic arrangements allow. The cabin is not dustproof, and its view covers the checking area rather than the whole site.",
+        link: { label: "MS sheet or PUF panel for a check post", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      },
+      {
+        title: "Sago Factory Gates",
+        text: "Sago processing units may see changing delivery and dispatch activity at the gate. Possible configurations include a two-person security cabin, a visitor register desk, an observation window facing incoming vehicles, suitable lighting, ventilation and optional CCTV and communication provisions.",
+        link: { label: "Compare security cabin models", href: "/products/category/security-cabins" },
+      },
+      {
+        title: "Textile and Yarn Godowns",
+        text: "Storage facilities may need a compact gate-security arrangement: a small-footprint cabin with a lockable door, observation windows, a desk and seating, interior lighting and electrical sockets. The actual dimensions should reflect the entrance space available and leave safe pedestrian access.",
+        link: { label: "Compact guard and watchman cabins", href: "/products/security-cabin" },
+      },
+      {
+        title: "Truck Yards and Transport Companies",
+        text: "Transport yards around Sankagiri and along the NH 44 and NH 544 corridors may need a security booth for vehicle-entry monitoring and recordkeeping. Possible features include a vehicle-entry observation window, a document counter, CCTV and floodlight mounting provisions, space for communication equipment and suitable exterior lighting.",
+        link: { label: "Preparing the base at a yard entrance", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+      {
+        title: "Steel and Engineering Units",
+        text: "Factories that handle large materials, such as the steel and engineering units around Salem, may need separate arrangements for staff movement and goods movement. Possible configurations include a main gate security cabin, a material gate check post, a document-pass window, a visitor counter, and communication and CCTV provisions.",
+        link: { label: "20 × 10 ft guard cabin with all-round windows", href: "/products/guard-security-cabin" },
+      },
+      {
+        title: "High-Security Industrial Sites",
+        text: "Some facilities may require visitor-screening arrangements. Possible design provisions include a visitor identification counter, separate screening spaces where required, privacy-conscious layouts, equipment mounting provisions, lockable storage where offered, and electrical and network connections. All security-specific features follow the customer's approved requirements; the cabin itself does not ensure compliance with defence or industrial security standards.",
+      },
+      {
+        title: "Construction Sites",
+        text: "A portable guard cabin may be used at a temporary project entrance. Whether it can later be relocated depends on its structural design, the lifting arrangements, the cabin's condition and the access at both sites.",
+        link: { label: "Site office containers for the project team", href: "/products/category/site-office-containers" },
+      },
+    ],
+
+    featuresHeading: "Portable Security Cabin Price in Salem",
+    featuresIntro: "There is no single list price: each cabin is quoted for its own specification. The price depends on:",
+    features: [
+      "Cabin dimensions",
+      "MS or insulated construction",
+      "Window and door specifications",
+      "Interior finishing",
+      "Sunshades",
+      "Ventilation and exhaust fans",
+      "AC provisions",
+      "CCTV and network provisions",
+      "Document counters",
+      "An attached toilet",
+      "A visitor-screening layout",
+      "Delivery and unloading requirements",
+      "The number of cabins ordered",
+    ],
+    sizesNote:
+      "Prices are given only in a written quotation for your configuration and site. Share your requirement through the form below, by phone or on WhatsApp.",
+
+    customHeading: "Why Choose Portable Office Cabin?",
+    customIntro: "What we bring to a Salem gatehouse project, from the first layout to unloading at the site:",
+    customBullets: [
+      { title: "Customisable guard cabin designs", text: "the layout, windows, counters and fittings follow your gate and the approved design." },
+      { title: "Compact and larger layouts", text: "from single-guard booths to multi-person gatehouses, at the size confirmed in the quotation." },
+      { title: "MS and insulated construction", text: "MS-framed cabins, or insulated PUF panel walls and roof for exposed, sunny positions." },
+      { title: "Observation windows and counters", text: "window positions, document-pass windows and visitor counters planned around how the gate works." },
+      { title: "Electrical and communication provisions", text: "lighting, fan and socket points, with provisions for CCTV, network and communication equipment." },
+      { title: "Optional AC-ready configurations", text: "the wiring and mounting provision for an air-conditioning unit." },
+      { title: "Industrial and logistics applications", text: "cabins for mines and quarries, factories, godowns, transport yards and project sites." },
+      { title: "Quotation and delivery coordination", text: "a written quotation, then transport, unloading and placement planned with your site team." },
+    ],
+    customOutro:
+      "We manufacture and deliver the cabin. Staffing, security equipment and procedures at the gate remain with your organisation and its security provider.",
+
+    areasHeading: "Areas Served Around Salem",
+    areasText:
+      "Security cabin enquiries are welcome from Salem city and the wider Salem Industrial Belt: the Salem Steel Plant area, Omalur, Mettur, Sankagiri, Attur, Veerapandi, Karuppur, Kanjamalai and the Yercaud foothills, and sites along the NH 44 and NH 544 corridors. Send the full site address so we can check the route, the vehicle access and the unloading space; access to mines, quarries and factories is always subject to the operator's permissions and safety rules.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share gate requirements", text: "the site type, gate dimensions, traffic arrangements and number of security personnel." },
+      { title: "Discuss cabin configuration", text: "the windows, doors, counters, insulation and electrical provisions the post needs." },
+      { title: "Confirm optional fittings", text: "AC, CCTV, network, toilet and visitor-screening provisions." },
+      { title: "Approve the quotation", text: "the cabin specification, commercial terms and delivery requirements are finalised." },
+      { title: "Manufacture", text: "we fabricate the approved security cabin at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "Manufacturing and delivery dates are confirmed when the order is finalised, once the design, the quantity and the readiness of the site are known.",
+
+    extraSections: [
+      {
+        heading: "Dust-Conscious Security Cabin Design",
+        placement: "afterSolutions",
+        paragraphs: ["Industrial yards, mineral operations and unpaved access roads can expose a cabin to dust. Possible features include:"],
+        bullets: [
+          { text: "Well-fitting sliding windows" },
+          { text: "Suitable door seals" },
+          { text: "Protected electrical sockets" },
+          { text: "Concealed wiring where appropriate" },
+          { text: "Washable interior surfaces" },
+          { text: "Easy-clean flooring" },
+          { text: "Appropriate ventilation and filtration provisions where required" },
+        ],
+        closing: [
+          "These features reduce the dust that gets in and make the cabin easier to keep clean. A standard security cabin is not completely dustproof.",
+        ],
+      },
+      {
+        heading: "Security Cabin Specification Options",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Three indicative configurations, not fixed packages. Features can be combined differently to suit the actual requirement.",
+        ],
+        table: {
+          caption: "Indicative configurations only, with no fixed package prices. The features supplied are confirmed in the approved specification and quotation.",
+          headers: ["Option", "Indicative features and typical use"],
+          rows: [
+            ["Basic", "MS-framed cabin; sliding windows; light and fan provisions; basic interior finish. Typical use: temporary checkpoints."],
+            [
+              "Standard",
+              "Insulated panel cabin; sliding windows with suitable grills and sunshades; additional sockets and ventilation provisions; suitable flooring and a desk. Typical use: factory gates and godowns.",
+            ],
+            [
+              "Enhanced",
+              "Insulated cabin with optional exterior cladding; customised glazing and sunshades; AC, CCTV and data provisions; upgraded flooring, ceiling and storage. Typical use: larger or more specialised gatehouses.",
+            ],
+          ],
+        },
+      },
+      {
+        heading: "Types of Portable Security Cabins",
+        placement: "afterSolutions",
+        paragraphs: ["Cabin types we can discuss for a Salem gate, each built to the approved size and specification:"],
+        bullets: [
+          { title: "Compact guard booth", text: "a small cabin for narrow entrances, parking areas or checkpoints." },
+          { title: "Two-guard security cabin", text: "a larger layout with space for two security personnel where feasible." },
+          { title: "Mine check post cabin", text: "configured for vehicle monitoring and document checking." },
+          { title: "Material gate cabin", text: "a security cabin with a register desk and a document-pass window." },
+          { title: "Visitor screening cabin", text: "a specialised layout with appropriate privacy and screening provisions." },
+          { title: "Security cabin with toilet", text: "a larger cabin with an attached toilet compartment where the space and utility arrangements permit." },
+          { title: "AC-ready security cabin", text: "a cabin designed with suitable air-conditioning provisions." },
+          { title: "Watchman cabin", text: "a compact prefabricated guard cabin for commercial or property applications." },
+        ],
+      },
+      {
+        heading: "Security Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: ["A guide to matching the cabin size to the post:"],
+        table: {
+          caption: "Indicative sizes, not a stock list. The size and configuration available for your gate are confirmed in the quotation.",
+          headers: ["Indicative size", "Possible application"],
+          rows: [
+            ["4 × 4 ft", "Compact parking or godown checkpoint"],
+            ["6 × 6 ft", "Small guard cabin"],
+            ["8 × 6 ft", "Material gate or check post"],
+            ["10 × 8 ft", "Larger guard cabin with additional fittings"],
+            ["12 × 8 ft and above", "Visitor-screening or multi-person gatehouse"],
+          ],
+        },
+        closing: [
+          "Final dimensions depend on the occupancy, door clearance, equipment, furniture, any sanitary fittings and the applicable requirements at the site.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a security cabin be designed for Salem's hot weather?",
+        answer:
+          "Yes. Insulated PUF walls and roof, window sunshades, cross-ventilation, an exhaust fan, a light-coloured roof finish and an AC provision can all improve thermal comfort for guards on long shifts. They do not guarantee a specific indoor temperature, which depends on the specification, the cabin's position and the weather.",
+      },
+      {
+        question: "Can you manufacture a mine or quarry check post cabin?",
+        answer:
+          "Yes, a check post layout can be discussed, with observation windows toward the vehicle-checking area, a document counter, space for registers and dust-conscious window, door and socket fittings. Delivery into a mine or quarry is subject to the operator's permissions and safety procedures.",
+      },
+      {
+        question: "What security cabin suits a truck yard?",
+        answer:
+          "A cabin with a clear view of the vehicle entry, space for document checks and registers, suitable interior and exterior lighting, and provisions for CCTV, floodlights and communication equipment. A two-guard layout may suit a yard with round-the-clock movement; the size is confirmed once we know the gate layout.",
+      },
+      {
+        question: "Can a visitor-screening cabin include separate screening spaces?",
+        answer:
+          "Separate spaces can be considered according to your approved security requirements, the area available and our manufacturing capability. The cabin provides the space and the provisions; the screening procedures and equipment are set by your security team.",
+      },
+      {
+        question: "What is the difference between basic and enhanced security cabins?",
+        answer:
+          "They differ in insulation, windows, electrical provisions, interior finish and optional equipment arrangements. A basic cabin is MS-framed, with sliding windows and light and fan provisions; an enhanced cabin can add insulated panels, optional exterior cladding, customised glazing, and AC, CCTV and data provisions. These configurations are indicative, and features can be chosen individually.",
+      },
+      {
+        question: "Can a security cabin include a toilet?",
+        answer:
+          "An attached toilet can be considered for a suitably sized cabin, with appropriate plumbing and site utilities: a water supply and a drainage or waste arrangement at the gate.",
+      },
+      {
+        question: "Can security cabins be relocated?",
+        answer:
+          "Some portable security cabins can be relocated, subject to their structural design, condition, lifting arrangements and transport access. If you expect to move the cabin later, mention it before fabrication so the design allows for lifting.",
+      },
+      {
+        question: "How quickly can a security cabin be delivered in Salem?",
+        answer:
+          "Manufacturing and delivery timelines depend on the design, the quantity, our workload, transport and how ready the site is, so the schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Security Cabin Quote in Salem",
+    ctaText: `Need a mine check post, factory gate cabin, textile godown guard booth, Sankagiri truck yard security cabin or a specialised visitor-screening unit? Share your site location, the cabin dimensions you need, the number of guards and your preferred fittings. Call or WhatsApp ${COMPANY.whatsapp.display}, e-mail ${COMPANY.email.sales}, or use the form below.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "security-cabins",
+      noun: "security cabin",
+      heading: "Request a Quote for a Security Cabin in Salem",
+      intro:
+        "Pick a cabin size, the number of cabins and your site location, and tell us about the gate and any fittings. Our sales team will check the details with you before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "All Security Cabin Models", href: "/products/category/security-cabins" },
+      { label: "Security Guard and Watchman Cabins", href: "/products/security-cabin" },
+      { label: "Guard Security Cabin, 20 × 10 ft", href: "/products/guard-security-cabin" },
+      { label: "Cabins with an Attached Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Insulated Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Security Cabins Across Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mettur and Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+        { label: "Shipping Containers in Mettur and Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
+        { label: "Krishnagiri Security Cabins", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Cabins in Perundurai, Erode", href: "/cities-we-serve/portable-cabin-perundurai" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations and sizes are indicative; what is supplied is set out in the approved specification and quotation for each order. The images show one MS security cabin design with a pitched roof, outside and inside; the desk, chair, telephone and fire extinguisher are shown for illustration, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
   },
 ];
 
