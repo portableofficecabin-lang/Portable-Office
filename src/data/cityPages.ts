@@ -41,10 +41,38 @@ export interface CityPageSection {
   paragraphs?: string[];
   bullets?: CityPageListItem[];
   /**
+   * Optional simple table rendered after the paragraphs and before the bullets (first used by
+   * Portable Security Cabins in Shoolagiri for its indicative sizes). The first cell of each row is
+   * the row header; `caption` renders visibly under the table. Unset = nothing rendered.
+   */
+  table?: CityPageTable;
+  /**
    * Optional paragraphs rendered AFTER the bullets (first used by PUF Panel Cabins in Padalur and
    * Irur, whose thickness and assembly sections close with a note). Unset = nothing rendered.
    */
   closing?: string[];
+}
+
+/** A small data table inside an extra section (see CityPageSection.table). */
+export interface CityPageTable {
+  caption: string;
+  headers: string[];
+  /** Each row has one cell per header; the first cell is rendered as the row header. */
+  rows: string[][];
+}
+
+/**
+ * Optional on-page enquiry form (see CityPage.enquiryForm): the category enquiry form
+ * (src/components/products/CategoryEnquiryForm.tsx) with a city-page heading and intro. It posts to
+ * the existing /api/enquiries route, which records the submitting page in the enquiry message.
+ */
+export interface CityPageEnquiryForm {
+  /** A category with a landing section (CATEGORY_LANDING_SLUGS) — the API rejects any other. */
+  categorySlug: string;
+  /** e.g. "security cabin" — used in the custom-requirement option and the WhatsApp text. */
+  noun: string;
+  heading: string;
+  intro: string;
 }
 
 export interface CityPage {
@@ -181,8 +209,27 @@ export interface CityPage {
    * never from the entry. Shown by default since 2026-10-14 (unset = shown); set `false` to hide.
    */
   ctaContactButtons?: boolean;
+  /**
+   * Optional row of contact buttons under the intro paragraphs: the primary quotation button (to the
+   * on-page enquiry form when `enquiryForm` is set, otherwise /contact) plus Call and WhatsApp from
+   * COMPANY. First used by Portable Security Cabins in Shoolagiri. Unset = no row, as before.
+   */
+  heroCta?: boolean;
+  /**
+   * Optional enquiry form rendered after the CTA box (first used by Portable Security Cabins in
+   * Shoolagiri). Unset = no form, so every other page renders as before.
+   */
+  enquiryForm?: CityPageEnquiryForm;
   /** Optional "Related pages" link block rendered after the CTA, before the disclaimer. */
   relatedLinks?: CityPageLink[];
+  /** Optional heading for the related-links block. Defaults to "Related pages". */
+  relatedLinksHeading?: string;
+  /**
+   * Optional second link block after the related links, for nearby location pages (first used by
+   * Portable Security Cabins in Shoolagiri, which splits related products from nearby service
+   * areas). Same markup as the related-links block. Unset = nothing rendered.
+   */
+  nearbyLinks?: { heading: string; links: CityPageLink[] };
 
   /**
    * Optional legal note rendered muted below the CTA. REQUIRED whenever the page names a
@@ -16539,8 +16586,10 @@ export const CITY_PAGES: CityPage[] = [
     metaTitle: "Portable Cabins in Krishnagiri | Office & Labour Cabins",
     metaDescription:
       "Buy or rent portable cabins in Krishnagiri for factories, warehouses and projects. Custom site offices, security cabins and labour rooms. Get a quote.",
+    // "Portable Toilet Cabin Krishnagiri" moved to the portable-toilet Krishnagiri page (2026-11-04): one
+    // page per intent, so the two Krishnagiri pages do not compete for the same search.
     keywords:
-      "Portable Cabins in Krishnagiri, Portable Cabin Krishnagiri Industrial Area, Site Office Cabin Krishnagiri, Security Cabin Krishnagiri, Labour Accommodation Cabin Krishnagiri, Portable Cabin on Rent Krishnagiri, Prefab Cabin Krishnagiri, Portable Toilet Cabin Krishnagiri",
+      "Portable Cabins in Krishnagiri, Portable Cabin Krishnagiri Industrial Area, Site Office Cabin Krishnagiri, Security Cabin Krishnagiri, Labour Accommodation Cabin Krishnagiri, Portable Cabin on Rent Krishnagiri, Prefab Cabin Krishnagiri",
     geo: { region: "IN-TN", placename: "Krishnagiri, Tamil Nadu, India", position: "12.5266;78.2150", icbm: "12.5266, 78.2150" },
     motion: true,
     serviceJsonLd: { serviceType: "Portable Cabin" },
@@ -16752,6 +16801,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      // Portable-toilet page for Krishnagiri, the sanitation-only sibling of this page (2026-11-04).
+      { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
       { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
@@ -19569,6 +19620,421 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Ranipet, SIPCOT Ranipet or Ranipet district. Delivery, unloading and placement are arranged for each project, the supports depend on the site, and delivery and placement schedules are not guaranteed. Rental is subject to availability and the rental quotation. The cabin types, sizes, layouts, insulation, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and specialist coatings, chemical resistance, fire performance, hazardous-area electrical equipment, laboratory fit-outs and temperature control are supplied only where expressly specified and confirmed. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; they are not photographs of installations in Ranipet. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Ranipet industrial complex are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the plant positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. Notes on placement, hazardous environments, insulation, ventilation, shutdown planning and relocation are general guidance, not engineering, safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET MANUFACTURERS & SUPPLIERS IN KRISHNAGIRI INDUSTRIAL AREA — the portable-toilet
+   * intent for Krishnagiri town, SIPCOT Kurubarapalli and the NH 44 / NH 48 belt (Tamil Nadu): single
+   * and multi-seater toilet cabins, ladies and gents blocks, urinal and toilet-and-bathroom units. The
+   * site's first portable-toilet location page. It does not compete with "Portable Cabins in
+   * Krishnagiri Industrial Area" (cabins of every kind; it lists toilet blocks as one use): this page
+   * is about sanitation units only, and the two pages link to each other.
+   *
+   * Owner brief of 2026-11-04 ("Portable Toilet in Krishnagiri"): slug, meta title and H1 as given;
+   * the meta description is the owner's with "supplying" replaced by a colon, to fit the 160-character
+   * limit (167 → 158 characters). The brief is section guidance rather than finished copy, so the
+   * section text is written from it, keeping its caveats. Mapped onto the template slots:
+   *   • Hero → tagline, intro (the three hero paragraphs) and the hero contact row (`heroCta`).
+   *   • "Why Portable Toilets Matter on Industrial Sites" → why (six bullets) + whyOutro (no legal
+   *     compliance or disease-prevention claims, as the brief requires).
+   *   • "Types of Portable Toilets" → solutions (the eight non-conditional types); the single-seater
+   *     links to the portable toilet cabin guide, the multi-seater block to the 4-unit block product.
+   *   • "How Many Portable Toilets Does a Site Need?" → features: the factors as lines, the 20–25
+   *     workers planning estimate (stated as not a universal legal standard) and the enquiry prompt
+   *     as the bold note.
+   *   • "Portable Toilets for Krishnagiri Industries" → industries (six; events left out).
+   *   • "Where Does Portable Toilet Waste Go?" → custom, beside the rear-elevation render: sewer,
+   *     septic tank and holding tank, with the compliance line in the outro (bio-digester left out).
+   *   • "Why Choose Portable Office Cabin?" → whyUs; "Areas We Serve" → areas, framed as delivery
+   *     enquiries (owner rule of 2026-10-17); "Delivery and Installation" → how (the eight steps).
+   *   • Indian vs Western, Features and Specifications, Common Configurations (the three tables),
+   *     Cleaning and Maintenance and Price → extraSections, in the brief's order.
+   *   • FAQs: the brief's eight. Rental is answered from the rental service page (portable toilets
+   *     are listed there), subject to availability; no rental section, because rental for Krishnagiri
+   *     specifically is unconfirmed. The timeline answer gives no lead time.
+   *   • "Get a Portable Toilet Quote in Krishnagiri" → CTA, then the on-page enquiry form
+   *     (`enquiryForm`, the portable-toilet-cabins category form posting to /api/enquiries).
+   *   • Related products and nearby city pages → relatedLinks / nearbyLinks (verified 200 on
+   *     production 2026-11-04). /products/category/portable-toilets (empty duplicate, retired by the
+   *     404 repair) and /products/category/labour-colony (0 products) are deliberately not linked.
+   * Left out until the owner confirms them (brief: conditional): bio-digester, FRP, wheelchair-
+   * accessible and VIP/event toilets, event applications and a rental section.
+   * Owner wording rules: no ₹, no lead time, no warranty period, no superlatives; specifications are
+   * options confirmed in the quotation; towns are delivery enquiry locations; SIPCOT is named
+   * nominatively, with the non-affiliation note in the disclaimer.
+   *
+   * Images: three owner-dropped 1200×896 webp renders ("public/images/Krishnagiri Industrial Area
+   * portable toilet city page/…/cabin (1–3).webp", 116–135 KB, no EXIF/XMP/ICC), copied
+   * byte-for-byte under descriptive names: (3) front with both doors open = hero / og:image, no
+   * caption (owner rule); (2) three-quarter view = the feature band; (1) rear elevation = beside the
+   * waste section. They show one two-seater cabin with Western seats; the alt texts, captions and the
+   * disclaimer say they are illustrative renders, not installations in Krishnagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (`serviceJsonLd`);
+   * the call / WhatsApp buttons are on by default.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-krishnagiri",
+    city: "Krishnagiri",
+    listTitle: "Portable Toilets in Krishnagiri",
+    metaTitle: "Portable Toilet in Krishnagiri | Mobile Toilet Manufacturers",
+    metaDescription:
+      "Portable toilet manufacturers in Krishnagiri: mobile toilet cabins, multi-seater blocks and washroom units for factories, construction sites and labour camps.",
+    keywords:
+      "Portable Toilet in Krishnagiri, Portable Toilet Manufacturers in Krishnagiri, Portable Toilet Suppliers Krishnagiri, Mobile Toilet Krishnagiri, Portable Toilet Cabin Krishnagiri, Prefabricated Toilet Krishnagiri, Portable Toilet Block Krishnagiri, Portable Toilet Price in Krishnagiri",
+    geo: { region: "IN-TN", placename: "Krishnagiri, Tamil Nadu, India", position: "12.5266;78.2150", icbm: "12.5266, 78.2150" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-krishnagiri/two-seater-portable-toilet-cabin-front.webp",
+      alt: "Two-seater portable toilet cabin with both doors open — illustrative render of a teal cabin with corrugated wall panels and rounded corner trims, showing a Western commode, a wall-mounted dispenser and a ventilation grille in each cubicle",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-krishnagiri/two-seater-portable-toilet-cabin-three-quarter-view.webp",
+      alt: "Two-seater portable toilet cabin — illustrative three-quarter render of the teal cabin with two separate entrance doors, one open to show a Western commode, corrugated side panels and rounded corner trims, on a gravel yard at dusk",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of a two-seater cabin with separate doors. Seat type, fittings and water and drainage provisions follow the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-krishnagiri/portable-toilet-cabin-rear-elevation.webp",
+      alt: "Rear elevation of the two-seater portable toilet cabin — illustrative render of the closed teal corrugated rear wall with a curved roof edge and rounded corner trims, on a gravel yard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative render of the same cabin from the rear. Dimensions, panel finish and service-connection positions are confirmed in the approved drawing.",
+    },
+
+    h1: "Portable Toilet Manufacturers & Suppliers in Krishnagiri Industrial Area",
+    tagline: "Single and Multi-Seater Toilet Cabins for Factories, Sites and Labour Camps",
+    intro: [
+      "Portable Office Cabin manufactures and supplies prefabricated portable toilet cabins for factories, construction sites, industrial projects, warehouses, granite quarries, labour accommodation and other commercial applications in Krishnagiri.",
+      "Our portable sanitation units can be customized with Indian or Western toilet seats, washbasins, plumbing provisions, water storage, ventilation and suitable waste-disposal connections.",
+      "From a compact single-seater toilet cabin to a larger multi-seater toilet block, we help you select a practical sanitation arrangement for your site.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Why Portable Toilets Matter on Industrial Sites",
+    whyIntro: "Accessible sanitation is part of running a workable site. Well-placed portable toilets support:",
+    whyBullets: [
+      { title: "Worker hygiene and comfort", text: "clean, enclosed toilets with handwashing close to the work area." },
+      { title: "Separate facilities", text: "toilets for women and men, with their own entrances where the layout allows." },
+      { title: "Remote work sites", text: "practical sanitation where there is no permanent washroom nearby." },
+      { title: "Less travel", text: "shorter walks instead of trips to distant buildings during a shift." },
+      { title: "Site organisation", text: "a planned location for sanitation that fits the site layout and the servicing route." },
+      { title: "Sanitation planning", text: "a clear starting point for the facilities your workforce and project require." },
+    ],
+    whyOutro:
+      "Portable toilets are one part of workplace sanitation. Cleaning, water supply, waste handling and the requirements that apply to your site still need to be planned.",
+
+    solutionsHeading: "Types of Portable Toilets",
+    solutionsIntro:
+      "Each type is built to order. Sizes, fittings and the number of seats are confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Single-Seater Portable Toilet",
+        text: "A compact portable toilet cabin for smaller sites, security posts, site offices and commercial entrances. Depending on the configuration, it can include a toilet seat, washbasin, ventilation, a light point and an internal door latch.",
+        link: { label: "Read the portable toilet cabin guide", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Multi-Seater Portable Toilet Block",
+        text: "A prefabricated toilet block with multiple separate cubicles for factories, construction sites and labour camps. Configurations can include two, four, six or more seats, subject to manufacturing capability and site requirements.",
+        link: { label: "See the 4-unit portable toilet block", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Ladies and Gents Toilet Block",
+        text: "A portable toilet unit with separate sections and entrances for male and female users, suited to mixed workforces, institutions and commercial facilities.",
+      },
+      {
+        title: "Portable Toilet with Water Tank",
+        text: "A toilet cabin with an overhead or integrated water storage tank for sites without a permanent piped supply. The tank capacity and how it will be refilled are specified for each project.",
+      },
+      {
+        title: "MS Portable Toilet Cabin",
+        text: "A mild steel framed toilet cabin with suitable exterior wall panels, flooring, sanitary fittings and plumbing provisions.",
+      },
+      {
+        title: "PUF Panel Toilet Cabin",
+        text: "A prefabricated toilet cabin with insulated panels for the walls and roof.",
+      },
+      {
+        title: "Portable Urinal Cabin",
+        text: "A compact sanitation unit with urinal fittings for truck yards, warehouses, factories and other high-traffic locations.",
+      },
+      {
+        title: "Toilet and Bathroom Combination",
+        text: "A prefabricated unit combining toilet and shower facilities for labour accommodation and long-duration work sites.",
+      },
+    ],
+
+    featuresHeading: "How Many Portable Toilets Does a Site Need?",
+    featuresIntro: "There is no single number for every site. The quantity depends on:",
+    features: [
+      "The total workforce on site",
+      "The number of workers on each shift",
+      "The number of women and men",
+      "How long the site will run",
+      "How the facilities will be used, and by whom",
+      "The labour and building regulations that apply to the project",
+      "Whether urinals and washing facilities are also provided",
+    ],
+    sizesNote:
+      "As a starting point, some projects plan around one toilet seat for every 20 to 25 workers. This is a planning estimate, not a universal legal standard, so check the final quantity against the regulations that apply to your project. Share your workforce size and shift pattern with your enquiry, and the seat configuration will be proposed in the quotation.",
+
+    industriesHeading: "Portable Toilets for Krishnagiri Industries",
+    industriesIntro: "Typical applications across the Krishnagiri belt:",
+    industries: [
+      {
+        title: "Factories and SIPCOT Kurubarapalli",
+        text: "portable sanitation units for industrial workforces, factory expansions, contractor facilities and temporary work areas.",
+      },
+      {
+        title: "Mango Pulp and Food Processing Units",
+        text: "toilet blocks for seasonal workforce requirements, planned with the hygiene and sanitation arrangements the unit needs.",
+      },
+      {
+        title: "Granite Quarries",
+        text: "portable toilet cabins for remote quarry locations where permanent sanitation infrastructure may be limited.",
+      },
+      {
+        title: "Highway Warehouses and Truck Yards",
+        text: "toilet and urinal units for drivers, logistics staff and warehouse employees.",
+      },
+      {
+        title: "Construction Sites and Residential Layouts",
+        text: "portable sanitation units for labour teams, contractors and project-site personnel.",
+      },
+      {
+        title: "Schools, Hospitals and Public Places",
+        text: "temporary or supplementary sanitation facilities during construction, renovation or expansion.",
+      },
+    ],
+
+    customHeading: "Where Does Portable Toilet Waste Go?",
+    customIntro: "Decide how the cabin's wastewater will be handled before you order. The usual arrangements are:",
+    customBullets: [
+      {
+        title: "Existing sewer connection",
+        text: "the cabin can be connected to an approved existing drainage system where one is available.",
+      },
+      {
+        title: "Existing septic tank",
+        text: "wastewater can be routed to a suitably designed and approved septic system.",
+      },
+      {
+        title: "Sealed holding tank",
+        text: "wastewater is stored temporarily and removed through an authorised servicing arrangement.",
+      },
+    ],
+    customOutro:
+      "No arrangement removes the need for waste management: the chosen system still has to be operated and maintained. All wastewater handling and disposal must comply with applicable local requirements. Tell us which arrangement your site will use, and the cabin's outlet and plumbing provisions will be planned for it.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What you can expect when you order a toilet cabin from us:",
+    whyUsBullets: [
+      { title: "Custom configurations", text: "seat count, layout and fittings planned around your site." },
+      { title: "MS and PUF construction", text: "both build options, selected for the application." },
+      { title: "Single and multi-seater layouts", text: "from one cubicle to larger toilet blocks." },
+      { title: "Water and drainage provisions", text: "tank, inlet and outlet provisions planned for your water supply and waste arrangement." },
+      { title: "Industrial and construction use", text: "cabins configured for factories, quarries, warehouses and project sites." },
+      { title: "Direct quotation", text: "a quotation from the manufacturer, based on your confirmed specification." },
+      { title: "Delivery coordination", text: "transport, unloading and placement planned with you before dispatch." },
+    ],
+
+    areasHeading: "Delivery Enquiries Around Krishnagiri",
+    areasText:
+      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri, Hosur and Dharmapuri, and from sites along NH 44 and NH 48. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
+
+    howHeading: "Delivery and Installation",
+    howIntro: "How an order moves from enquiry to installation:",
+    howSteps: [
+      { title: "Share your requirements", text: "your site location, workforce size and sanitation requirements." },
+      { title: "Water and waste review", text: "the water supply and waste-disposal arrangements are reviewed." },
+      { title: "Specification", text: "cabin size, configuration and fittings are finalised." },
+      { title: "Quotation", text: "a quotation is prepared for the agreed specification." },
+      { title: "Manufacturing", text: "manufacturing begins after order confirmation." },
+      { title: "Transport and unloading", text: "transport and unloading are coordinated with your site." },
+      { title: "Positioning", text: "the cabin is placed on a suitable prepared base." },
+      { title: "Connections", text: "plumbing and electrical connections are completed as agreed in the order." },
+    ],
+    howOutro:
+      "When a cabin can be put into use depends on site readiness, the base and the connections in the agreed scope; delivery and installation dates are confirmed with the order.",
+
+    extraSections: [
+      {
+        heading: "Indian or Western Toilet?",
+        paragraphs: [
+          "Both seat types can be supplied, and one block can include both. The right choice depends on who will use the toilets.",
+        ],
+        table: {
+          caption: "Indian and Western toilet seats compared. The seat type is confirmed in the approved specification.",
+          headers: ["Feature", "Indian toilet", "Western toilet"],
+          rows: [
+            ["Seat design", "Squatting pan", "Sitting commode"],
+            ["Typical use", "Industrial and labour sites", "Offices, visitors and mixed-use sites"],
+            ["User preference", "Depends on the workforce", "Depends on the workforce"],
+            ["Water use", "Depends on the flushing system", "Depends on the flushing system"],
+            ["Ease of access", "Not suitable for many users with mobility limitations", "Accessible layouts may be possible"],
+          ],
+        },
+        closing: [
+          "Neither type always uses less water or is inherently more hygienic: the flushing system, cleaning and maintenance make the difference.",
+        ],
+      },
+      {
+        heading: "Features and Specifications",
+        paragraphs: [
+          "The items below are typical of our toilet cabins. Standard and optional items vary by model and are confirmed in the approved specification for each order.",
+        ],
+        table: {
+          caption: "Typical portable toilet cabin specification. The items supplied are confirmed in the approved specification and quotation.",
+          headers: ["Category", "Items"],
+          rows: [
+            ["Structure", "MS structural frame with anti-corrosion treatment; MS or PUF panel walls; weather-resistant roof; suitable anti-slip flooring"],
+            ["Sanitary fittings", "Indian or Western toilet seat; washbasin with tap; plumbing inlet and outlet; internal door latch; water tank provisions; ventilation"],
+            ["Optional fittings", "Exhaust fan; shower cubicle; urinals; additional water storage; mirror and clothes hooks; interior wall finishing; ladies and gents signage; ACP exterior finishing"],
+          ],
+        },
+      },
+      {
+        heading: "Common Configurations",
+        paragraphs: [
+          "Configurations are customizable and subject to manufacturing availability. These are common starting points:",
+        ],
+        table: {
+          caption: "Common portable toilet configurations. The layout, seat count and fittings are confirmed for each project.",
+          headers: ["Configuration", "Typical application"],
+          rows: [
+            ["Single toilet with washbasin", "Security post or small office"],
+            ["Two-seater toilet block", "Small industrial site"],
+            ["Toilet and urinal combination", "Warehouse or truck yard"],
+            ["Four-to-six-seater block", "Construction or factory site"],
+            ["Ladies and gents sections", "Mixed workforce"],
+            ["Toilet and shower combination", "Labour accommodation"],
+          ],
+        },
+      },
+      {
+        heading: "Cleaning and Maintenance",
+        paragraphs: ["A portable toilet stays usable when it is looked after every day. Practical maintenance includes:"],
+        bullets: [
+          { title: "Cleaning", text: "regular cleaning and disinfection of the seats, floor and washbasin." },
+          { title: "Water supply", text: "checks that the tank, taps and flushing work." },
+          { title: "Holding tank", text: "scheduled servicing of the holding tank, where one is used." },
+          { title: "Doors and lighting", text: "inspection of door latches and lights." },
+          { title: "Ventilation", text: "vents and any exhaust fan kept clear and working." },
+          { title: "Consumables", text: "soap and waste bins provided and refilled." },
+          { title: "Plumbing", text: "periodic inspection of pipes, joints and outlets." },
+        ],
+        closing: [
+          "Plan who will clean and service the toilets before they are installed; any maintenance support is confirmed in writing with your order.",
+        ],
+      },
+      {
+        heading: "Portable Toilet Price in Krishnagiri",
+        paragraphs: ["The price of a portable toilet cabin depends on its specification. The main factors are:"],
+        bullets: [
+          { title: "Seats", text: "the number of toilet seats." },
+          { title: "Size", text: "the cabin dimensions." },
+          { title: "Construction", text: "MS or PUF panel build." },
+          { title: "Seat type", text: "Indian or Western seats." },
+          { title: "Water", text: "the water storage required." },
+          { title: "Waste", text: "a holding tank or a drainage connection." },
+          { title: "Fittings", text: "washbasins, showers and other fittings." },
+          { title: "Finishes", text: "the interior finishes." },
+          { title: "Transport", text: "the distance and route to your site." },
+          { title: "Installation", text: "the base, unloading and connections required." },
+        ],
+        closing: [
+          "Request a quote with your seat configuration, quantity, site location and water and drainage arrangements; the price, transport and installation are confirmed in the written quotation.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a portable toilet in Krishnagiri?",
+        answer:
+          "It depends on the number of seats, cabin size, MS or PUF construction, seat type, water storage, waste arrangement, fittings, finishes, transport and installation. Share your requirement and site location for a quotation.",
+      },
+      {
+        question: "Do portable toilets require a water connection?",
+        answer:
+          "Not always. A toilet cabin can be connected to an existing water supply, or fitted with a water storage tank where piped water is unavailable. With a tank, plan its capacity and how it will be refilled.",
+      },
+      {
+        question: "How is wastewater disposed of?",
+        answer:
+          "Through an approved existing sewer connection, a suitably designed and approved septic system, or a sealed holding tank emptied through an authorised servicing arrangement. Disposal must comply with applicable local requirements.",
+      },
+      {
+        question: "Should I choose an Indian or Western toilet?",
+        answer:
+          "Choose according to your workforce and visitors. Indian squatting pans are common on industrial and labour sites; Western commodes suit offices, visitors and mixed-use sites, and accessible configurations may be possible with them. One block can include both.",
+      },
+      {
+        question: "How many portable toilets does my construction site need?",
+        answer:
+          "It depends on the workforce, shifts, the number of women and men, how long the site will run and the regulations that apply. Some projects start from about one seat for every 20 to 25 workers, but this is not a universal legal standard. Share your workforce size for a proposed configuration.",
+      },
+      {
+        question: "Can I order separate ladies and gents toilet blocks?",
+        answer:
+          "Yes. A toilet unit can be built with separate sections and entrances for women and men, or the two can be supplied as separate blocks, according to the agreed layout.",
+      },
+      {
+        question: "Are portable toilets available for rent?",
+        answer:
+          "Portable toilet units are listed on our rental service page. Rental for a Krishnagiri site is subject to availability, and the duration, deposit, transport and collection charges are confirmed in a rental quotation.",
+      },
+      {
+        question: "How long does manufacturing and delivery take for a Krishnagiri order?",
+        answer:
+          "It depends on the configuration, the quantity, order confirmation and site readiness. The manufacturing and delivery schedule is confirmed with your order.",
+      },
+    ],
+
+    ctaHeading: "Get a Portable Toilet Quote in Krishnagiri",
+    ctaText: `Need a portable toilet cabin for a factory, construction site, quarry, warehouse or labour camp? Share your preferred seat configuration, quantity, site location, water availability and waste-disposal requirements. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Call Now, WhatsApp and Request Quote: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Request a Portable Toilet Quote",
+      intro:
+        "Tell us the seat configuration, quantity, delivery location and water and drainage arrangements. Our sales team will reply to confirm the details before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Products and Guides",
+    relatedLinks: [
+      { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Cabin with Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "G+1 Workmen Accommodation", href: "/products/category/g1-workmen-accommodation" },
+      { label: "Labour Colony in Tamil Nadu", href: "/promotions/labour-colony-in-tamil-nadu" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Container Offices", href: "/products/category/container-offices" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Toilet Cabin in Tamil Nadu", href: "/promotions/portable-toilet-cabin-in-tamil-nadu" },
+      { label: "Cabins and Toilets on Rent", href: "/rental-service" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Service Areas",
+      links: [
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
+        { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, seat counts, sizes, panels, fittings, water storage, plumbing and waste provisions and finishes described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. Rental is subject to availability and the rental quotation. The images on this page are illustrative renders of one two-seater toilet cabin design with Western seats; other configurations look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there. The industries, premises and towns named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas. The planning estimate and the notes on sanitation, water supply, wastewater, cleaning and maintenance are general guidance, not engineering, public-health or legal advice; wastewater handling and disposal must comply with applicable local requirements.`,
   },
 ];
 
