@@ -238,6 +238,14 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <section key={s0.title} className={page.motion ? "reveal" : undefined}>
             <h3 className={h3}>{i + 1}. {s0.title}</h3>
             <p className={p}>{s0.text}</p>
+            {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
+            {s0.link && (
+              <p className={p}>
+                <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+                  {s0.link.label}
+                </Link>
+              </p>
+            )}
           </section>
         ))}
 
