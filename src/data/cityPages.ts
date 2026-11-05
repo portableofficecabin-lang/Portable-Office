@@ -23348,7 +23348,7 @@ export const CITY_PAGES: CityPage[] = [
       headers: ["Project phase", "Typical work", "Possible toilet setup"],
       rows: [
         ["Infrastructure development", "Roads, drains, water lines and utilities", "Compact toilet points near active work areas"],
-        ["Factory construction", "Several vendor and builder sites", "Toilet blocks spread across the site, with washbasins"],
+        ["Factory construction", "Several vendor and builder sites", "Toilet blocks spread across the site, with wash basins"],
         ["Industrial operations", "Staff, visitors and shift workers", "Suitable sanitation blocks with several cubicles"],
       ],
     },
