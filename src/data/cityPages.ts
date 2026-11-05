@@ -20822,9 +20822,9 @@ export const CITY_PAGES: CityPage[] = [
    *   4 Dust, 5 Specification options, 6 Types, 7 Sizes → extra sections with `placement:
    *     "afterSolutions"`, in that order. The specification table has one row per configuration
    *     (two columns, the typical use closing each cell), so it fits a 320 px phone; every value of
-   *     the brief's table is kept. The sizes are captioned as indicative: the catalogue's Security Cabin
-   *     range is 3 × 3 ft to 10 × 8 ft, and larger gatehouses are built to order (the Guard Security
-   *     Cabin is 20 × 10 ft).
+   *     the brief's table is kept. Owner correction of 2026-11-05 (as on #189): no size table, size
+   *     range or size presented as a capability. The sizes section lists what decides a cabin's
+   *     size, and every size is confirmed through the approved drawing and quotation.
    *   8 Price → features (the factors as a plain list), the quotation rule in the bold sizesNote,
    *     then the one-image gallery. No ₹ anywhere.
    *   9 Rental → left out: security cabin rental in Salem is not confirmed.
@@ -20844,8 +20844,10 @@ export const CITY_PAGES: CityPage[] = [
    * page/…/cabin (1–3).webp", lossy VP8 with no EXIF/XMP/ICC chunk) copied byte-for-byte to
    * descriptive names: (1) three-quarter view, 1024² = hero / og:image; (2) front view, 1200×896 =
    * single-image gallery after the price factors; (3) interior, 1200×896 = beside "Why Choose",
-   * captioned. They show one green corrugated MS cabin with a pitched roof in a yard. No alt text
-   * names Salem, and the disclaimer says they do not show an installation in Salem.
+   * captioned. They show one green corrugated MS cabin with a pitched roof in a yard. Owner
+   * correction of 2026-11-05: they are illustrative images unless the owner confirms they are
+   * photographs of manufactured units, so every alt text, both captions and the disclaimer say so.
+   * No alt text names Salem, and the disclaimer says they do not show an installation in Salem.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -20864,22 +20866,23 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-three-quarter-view.webp",
-      alt: "Prefabricated portable security cabin — green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
+      alt: "Prefabricated portable security cabin — illustrative image of a green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
       width: 1024,
       height: 1024,
+      caption: "Illustrative security cabin configuration; final fittings depend on approved specifications.",
     },
     interiorImage: {
       src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-interior.webp",
-      alt: "Interior of a portable security cabin — wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
+      alt: "Interior of a portable security cabin — illustrative image with wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
       width: 1200,
       height: 896,
       caption:
-        "Inside the cabin shown above. The desk, chair, telephone and fire extinguisher are shown for illustration; the panels, fittings and furniture supplied follow the approved specification.",
+        "Illustrative security cabin configuration; final fittings depend on approved specifications. The desk, chair, telephone and fire extinguisher are shown for illustration.",
     },
     gallery: [
       {
         src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-front-view.webp",
-        alt: "Prefabricated portable security cabin — front view of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
+        alt: "Prefabricated portable security cabin — illustrative front view of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
         width: 1200,
         height: 896,
       },
@@ -20934,7 +20937,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         title: "Steel and Engineering Units",
         text: "Factories that handle large materials, such as the steel and engineering units around Salem, may need separate arrangements for staff movement and goods movement. Possible configurations include a main gate security cabin, a material gate check post, a document-pass window, a visitor counter, and communication and CCTV provisions.",
-        link: { label: "20 × 10 ft guard cabin with all-round windows", href: "/products/guard-security-cabin" },
+        link: { label: "Guard cabin with all-round windows", href: "/products/guard-security-cabin" },
       },
       {
         title: "High-Security Industrial Sites",
@@ -20971,7 +20974,7 @@ export const CITY_PAGES: CityPage[] = [
     customIntro: "What we bring to a Salem gatehouse project, from the first layout to unloading at the site:",
     customBullets: [
       { title: "Customisable guard cabin designs", text: "the layout, windows, counters and fittings follow your gate and the approved design." },
-      { title: "Compact and larger layouts", text: "from single-guard booths to multi-person gatehouses, at the size confirmed in the quotation." },
+      { title: "Compact and larger layouts", text: "from single-guard booths to multi-person gatehouses, each sized through the approved drawing and quotation." },
       { title: "MS and insulated construction", text: "MS-framed cabins, or insulated PUF panel walls and roof for exposed, sunny positions." },
       { title: "Observation windows and counters", text: "window positions, document-pass windows and visitor counters planned around how the gate works." },
       { title: "Electrical and communication provisions", text: "lighting, fan and socket points, with provisions for CCTV, network and communication equipment." },
@@ -21041,7 +21044,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Types of Portable Security Cabins",
         placement: "afterSolutions",
-        paragraphs: ["Cabin types we can discuss for a Salem gate, each built to the approved size and specification:"],
+        paragraphs: ["Cabin types we can discuss for a Salem gate, each built to the size and specification confirmed through the approved drawing and quotation:"],
         bullets: [
           { title: "Compact guard booth", text: "a small cabin for narrow entrances, parking areas or checkpoints." },
           { title: "Two-guard security cabin", text: "a larger layout with space for two security personnel where feasible." },
@@ -21056,20 +21059,19 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Security Cabin Sizes",
         placement: "afterSolutions",
-        paragraphs: ["A guide to matching the cabin size to the post:"],
-        table: {
-          caption: "Indicative sizes, not a stock list. The size and configuration available for your gate are confirmed in the quotation.",
-          headers: ["Indicative size", "Possible application"],
-          rows: [
-            ["4 × 4 ft", "Compact parking or godown checkpoint"],
-            ["6 × 6 ft", "Small guard cabin"],
-            ["8 × 6 ft", "Material gate or check post"],
-            ["10 × 8 ft", "Larger guard cabin with additional fittings"],
-            ["12 × 8 ft and above", "Visitor-screening or multi-person gatehouse"],
-          ],
-        },
+        paragraphs: [
+          "There is no standard size list: the dimensions of each security cabin are confirmed through the approved drawing and quotation for your gate. What decides the size:",
+        ],
+        bullets: [
+          { text: "The number of guards on each shift" },
+          { text: "Door clearance and the space the guards need to move" },
+          { text: "Desks, counters, storage and security equipment" },
+          { text: "Any sanitary fittings, such as an attached toilet" },
+          { text: "The space available at the entrance, with safe pedestrian and vehicle movement" },
+          { text: "The requirements that apply at your site" },
+        ],
         closing: [
-          "Final dimensions depend on the occupancy, door clearance, equipment, furniture, any sanitary fittings and the applicable requirements at the site.",
+          "Send the gate dimensions, the number of guards and the fittings you need; the proposed size is shown on the drawing that comes with your quotation.",
         ],
       },
     ],
@@ -21088,7 +21090,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "What security cabin suits a truck yard?",
         answer:
-          "A cabin with a clear view of the vehicle entry, space for document checks and registers, suitable interior and exterior lighting, and provisions for CCTV, floodlights and communication equipment. A two-guard layout may suit a yard with round-the-clock movement; the size is confirmed once we know the gate layout.",
+          "A cabin with a clear view of the vehicle entry, space for document checks and registers, suitable interior and exterior lighting, and provisions for CCTV, floodlights and communication equipment. A two-guard layout may suit a yard with round-the-clock movement; the size is confirmed through the approved drawing and quotation once we know the gate layout.",
       },
       {
         question: "Can a visitor-screening cabin include separate screening spaces?",
@@ -21135,7 +21137,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "All Security Cabin Models", href: "/products/category/security-cabins" },
       { label: "Security Guard and Watchman Cabins", href: "/products/security-cabin" },
-      { label: "Guard Security Cabin, 20 × 10 ft", href: "/products/guard-security-cabin" },
+      { label: "Guard Security Cabin with All-Round Windows", href: "/products/guard-security-cabin" },
       { label: "Cabins with an Attached Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
       { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
       { label: "Insulated Office Portable Cabin", href: "/products/office-portable-cabin" },
@@ -21154,7 +21156,7 @@ export const CITY_PAGES: CityPage[] = [
       ],
     },
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations and sizes are indicative; what is supplied is set out in the approved specification and quotation for each order. The images show one MS security cabin design with a pitched roof, outside and inside; the desk, chair, telephone and fire extinguisher are shown for illustration, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations are indicative; each cabin's size is confirmed through the approved drawing and quotation, and what is supplied is set out in the approved specification and quotation for each order. The three images are illustrative images of one MS security cabin design with a pitched roof, outside and inside; the desk, chair, telephone and fire extinguisher are shown for illustration, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
   },
 ];
 
