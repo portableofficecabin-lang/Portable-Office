@@ -18852,10 +18852,10 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Confirm utilities", text: "discuss electrical load, ventilation, water requirements and drainage where relevant." },
       { title: "Approve the quotation", text: "finalise the specifications, commercial terms and delivery arrangements." },
       { title: "Manufacture", text: "the approved shop cabin configuration is fabricated at our factory." },
-      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with you according to site readiness." },
+      { title: "Arrange delivery", text: "the truck, unloading and placement are planned with you once the site is ready." },
     ],
     howOutro:
-      "Operating permissions and utility connections must be completed as required before the business opens. Manufacturing and delivery dates are confirmed when the order is finalised, not promised in advance.",
+      "Operating permissions and utility connections must be completed as required before the business opens. We fix the manufacturing and delivery dates with the order instead of promising them in advance.",
 
     extraSections: [
       {
@@ -18979,8 +18979,8 @@ export const CITY_PAGES: CityPage[] = [
           { title: "Electrical and ventilation provisions", text: "lighting, sockets and exhaust provisions specified for your equipment." },
           { title: "Exterior branding options", text: "your colours, signage panels and authorized brand graphics." },
           { title: "Weather-protection features", text: "sealed roofing, roof drainage, canopies and protective finishes." },
-          { title: "Quotation support", text: "a written quotation from the manufacturer for your specification." },
-          { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+          { title: "Quotation support", text: "one written quotation covering the cabin, its fittings and the delivery to your site." },
+          { title: "Delivery coordination", text: "the truck, the unloading method and the placement agreed with you before the cabin leaves the factory." },
         ],
       },
     ],
@@ -19024,7 +19024,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "How quickly can a shop cabin be delivered?",
         answer:
-          "Manufacturing and delivery timelines depend on the selected design, quantity, workload, transport and site readiness, so the schedule is confirmed when the order is finalised.",
+          "Manufacturing and delivery timelines depend on the selected design, quantity, workload, transport and site readiness. We give you the schedule once the order is finalised.",
       },
     ],
 
@@ -19036,7 +19036,7 @@ export const CITY_PAGES: CityPage[] = [
     ctaSecondaryLinks: [],
     relatedLinksHeading: "Related Products",
     relatedLinks: [
-      { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Catalogue Shop Cabin, 10 × 10 ft", href: "/products/portable-shop-cabin" },
       { label: "Container Cafe and Takeaway Kiosks", href: "/products/container-cafe-restaurant" },
       { label: "Marketing Office Cabin", href: "/products/marketing-office" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
@@ -19058,7 +19058,7 @@ export const CITY_PAGES: CityPage[] = [
       ],
     },
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Sriperumbudur or Kanchipuram district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop types, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples; the items supplied are confirmed in the approved drawing, specification and quotation for each order. The four images are illustrative concept renders of one container-style kiosk with a lift-up serving hatch; they are not a confirmed standard design, other shop types look different, and they are not photographs of an installation in Sriperumbudur. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial parks are named only to describe locations; Portable Office Cabin is not affiliated with SIPCOT or with any estate, factory, campus, franchise brand or company in the area. The businesses, locations and towns named here describe typical uses and places we accept enquiries from, not clients, completed projects or guaranteed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, telecom and pharmacy requirements, and electrical, fire and EHS compliance depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Sriperumbudur or Kanchipuram district. Transport, unloading and placement are planned for each order around the site's access and base, and no manufacturing or delivery date is guaranteed. The shop types, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples; the items supplied are confirmed in the approved drawing, specification and quotation for each order. The four images are illustrative concept renders of one container-style kiosk with a lift-up serving hatch; they are not a confirmed standard design, other shop types look different, and they are not photographs of an installation in Sriperumbudur. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial parks are named only to describe locations; Portable Office Cabin is not affiliated with SIPCOT or with any estate, factory, campus, franchise brand or company in the area. The shop types, sites and towns mentioned are examples of possible uses and of places we take enquiries from; they are not clients, completed projects or guaranteed delivery areas, and footfall and sales depend on the business and its location. Operating permissions, trade and food safety licences, telecom and pharmacy rules, and electrical, fire and EHS compliance are for the business owner to settle with the authorities concerned; this page gives general guidance only and is not legal, engineering or food-safety advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN SAKKARAKOTTAI AND PATTINAMKATHAN, RAMANATHAPURAM — the portable-cabin intent
