@@ -9554,8 +9554,11 @@ export const CITY_PAGES: CityPage[] = [
    *     contextual product link (`link`, an optional field added for this page).
    *   • "Sizes and Specifications" → features (sizes, materials, electrical fittings, optional
    *     upgrades as list lines; the "indicative" note as sizesNote).
-   *   • "Industrial Applications" → industries (SIPCOT, the Mega Food Park, factories, warehouses,
+   *   • "Industrial Applications" → industries (SIPCOT, food-processing units, factories, warehouses,
    *     construction projects).
+   *   • Unsupported claims removed (owner instruction, 2026-11-05): FRP cabins (an offering not
+   *     confirmed by the owner, also left out of #189 and #192) and "the Mega Food Park" (no source
+   *     confirms one at Tindivanam; SIPCOT's own list names only the Tindivanam Industrial park).
    *   • "Cabins for Local Weather" → custom, beside the office interior render.
    *   • "Why Choose Portable Office Cabin" → whyUs. "Areas Served" → areasText, as delivery enquiry
    *     locations (owner rule). "Manufacturing, Delivery and Installation" → how (seven steps).
@@ -9738,7 +9741,7 @@ export const CITY_PAGES: CityPage[] = [
       "The following sizes, materials and fittings are starting points for planning a cabin for a Tindivanam site:",
     features: [
       "Sizes — 10 × 8 ft, 20 × 10 ft, 30 × 10 ft and 40 × 10 ft, subject to design and transport feasibility; custom dimensions can be assessed according to your layout and delivery access.",
-      "Build types — MS cabin (mild steel frame and sheet walls), PUF panel cabin (insulated panels between steel sheets), container-style cabin (heavy steel body), FRP cabin (light and rust-free, for toilets and guard booths) and ACP exterior cladding for customer-facing cabins.",
+      "Build types — MS cabin (mild steel frame and sheet walls), PUF panel cabin (insulated panels between steel sheets), container-style cabin (heavy steel body) and ACP exterior cladding for customer-facing cabins.",
       "Electrical fittings — lights, fan points, sockets and AC provisions according to the approved electrical specification.",
       "Doors and windows — steel or panel doors, grilled sliding windows, additional windows and wider doors where the layout allows.",
       "Interior options — internal partitions and separate rooms, ceiling and flooring finishes, an attached toilet or pantry, and entrance steps or an access ramp.",
@@ -9754,7 +9757,7 @@ export const CITY_PAGES: CityPage[] = [
         text: "security cabins at the gate, site offices during construction and supervisor or time offices once the unit is operating, subject to the estate's entry and site procedures.",
       },
       {
-        title: "Mega Food Park and food-processing units",
+        title: "Food-processing units",
         text: "security posts, visitor registration, supervisor rooms, rest cabins and store rooms beside processing and cold-storage buildings, planned around the unit's own hygiene and access requirements.",
       },
       {
@@ -9816,7 +9819,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Material options",
-        text: "MS, PUF panel, container-style, FRP and ACP-clad builds are available; the materials supplied are confirmed in the approved specification.",
+        text: "MS, PUF panel, container-style and ACP-clad builds are available; the materials supplied are confirmed in the approved specification.",
       },
       {
         title: "Site coordination",
@@ -9830,7 +9833,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Areas Served Around Tindivanam",
     areasText:
-      "We welcome delivery enquiries from Tindivanam town, SIPCOT Industrial Park Tindivanam, the Mega Food Park, Mailam, Olakkur, Kiliyanur, Vanur, Gingee, Marakkanam, Vikravandi and Viluppuram. For sites towards Puducherry, Acharapakkam or Melmaruvathur, share your exact location so we can confirm delivery feasibility and transport arrangements. Delivery timing depends on fabrication, vehicle availability, access permissions and site readiness.",
+      "We welcome delivery enquiries from Tindivanam town, SIPCOT Industrial Park Tindivanam, Mailam, Olakkur, Kiliyanur, Vanur, Gingee, Marakkanam, Vikravandi and Viluppuram. For sites towards Puducherry, Acharapakkam or Melmaruvathur, share your exact location so we can confirm delivery feasibility and transport arrangements. Delivery timing depends on fabrication, vehicle availability, access permissions and site readiness.",
 
     howHeading: "Manufacturing, Delivery and Installation",
     howIntro: "From enquiry to handover, a cabin for a Tindivanam site follows these steps:",
@@ -9918,7 +9921,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Which areas do you deliver to around Tindivanam?",
         answer:
-          "We welcome delivery enquiries from Tindivanam, SIPCOT Industrial Park, the Mega Food Park, Mailam, Olakkur, Kiliyanur, Vanur, Gingee, Marakkanam, Vikravandi, Viluppuram and Puducherry. Share your exact location so we can confirm feasibility and transport charges.",
+          "We welcome delivery enquiries from Tindivanam, SIPCOT Industrial Park, Mailam, Olakkur, Kiliyanur, Vanur, Gingee, Marakkanam, Vikravandi, Viluppuram and Puducherry. Share your exact location so we can confirm feasibility and transport charges.",
       },
       {
         question: "What is the lead time for a portable cabin in Tindivanam?",
@@ -9988,7 +9991,7 @@ export const CITY_PAGES: CityPage[] = [
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Tindivanam, at SIPCOT Industrial Park Tindivanam or elsewhere in Viluppuram district, and \"manufacturers in Tindivanam\" describes the market this page serves, not a manufacturing location. Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The cabin types, sizes, build types, panel types, fittings and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and any wind-resistance or structural performance must be assessed for the particular cabin. No cabin is described as cyclone-proof or flood-proof. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished office interior; other build types look different, and the images are not photographs of cabins manufactured for, delivered to or installed in Tindivanam. SIPCOT and its Tindivanam industrial park, the Mega Food Park, and the towns and places named here, including Puducherry, are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any industrial estate or premises is subject to its own permissions. Notes on insulation, drainage, coatings, anchoring and site preparation are general guidance, not engineering advice.",
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Tindivanam, at SIPCOT Industrial Park Tindivanam or elsewhere in Viluppuram district, and \"manufacturers in Tindivanam\" describes the market this page serves, not a manufacturing location. Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The cabin types, sizes, build types, panel types, fittings and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and any wind-resistance or structural performance must be assessed for the particular cabin. No cabin is described as cyclone-proof or flood-proof. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished office interior; other build types look different, and the images are not photographs of cabins manufactured for, delivered to or installed in Tindivanam. SIPCOT and its Tindivanam industrial park, and the towns and places named here, including Puducherry, are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any industrial estate or premises is subject to its own permissions. Notes on insulation, drainage, coatings, anchoring and site preparation are general guidance, not engineering advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
