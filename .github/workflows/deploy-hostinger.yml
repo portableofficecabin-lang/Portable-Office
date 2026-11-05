@@ -21,6 +21,13 @@ concurrency:
 jobs:
   deploy:
     name: Deploy to Hostinger VPS
+    # Only main deploys. "Run workflow" lets anyone with write access pick another branch, which
+    # would run THAT branch's copy of this job with the production SSH key (the server itself
+    # always builds origin/main, but the job's other steps come from the branch). Refused here.
+    # The complete fix is a GitHub environment that holds the key and allows main only; this job
+    # already names it (owner step, deploy/ACTIVATION-PLAN.md "GitHub environment").
+    if: github.ref == 'refs/heads/main'
+    environment: production
     runs-on: ubuntu-latest
     timeout-minutes: 30
 

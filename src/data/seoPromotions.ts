@@ -382,6 +382,16 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
   ],
+  // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
+  // page; the page links back to this hub.
+  "Portable Toilet Cabin|Tamil Nadu": [
+    { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+  ],
+  // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
+  // city page; the page links back to this hub.
+  "Security Cabin|Tamil Nadu": [
+    { name: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+  ],
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
   // state hub reaches each local page (TN precedent: every city on all four keyword hubs). The Tumkur
   // page ships on branch feat/city-tumkur; its link resolves once that PR is merged. Hoskote and the

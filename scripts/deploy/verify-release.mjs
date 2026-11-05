@@ -21,6 +21,21 @@
  *                 is exactly what this catches
  *   • new       — routes passed with --new-routes (the ones this deploy introduces), reported first
  *   • sitemap   — every URL of the served /sitemap.xml on this host answers 200 (skipped by --quick)
+ *   • not-found — every HTML page above (and below) that answers 200 must not be the site's
+ *                 not-found page: a branded 404 served with status 200 is a failure, not a success
+ *   • critical  — the routes in scripts/deploy/critical-routes.json of the release / source (the
+ *                 shipping- and cargo-container pages, the Mysore and Mettur city pages, products,
+ *                 categories, the enquiry page) answer 200 from the expected build, render an <h1>
+ *                 and any markup the file requires (enquiry inputs, Add to Cart). Skipped with
+ *                 --no-critical or when the file is absent (releases built before it existed).
+ *   • redirect  — the redirects in the same file answer their status in ONE hop with exactly the
+ *                 declared Location, and the target is a real page (no chain, no loop, no 404)
+ *   • assets    — every /_next/static JS/CSS file, every next/image URL and every /images file that
+ *                 /, /products, the first city page and the critical pages load answers 200 with a
+ *                 file, not an HTML page (skipped with --no-assets)
+ *   • continuity— with --compare-base (the live release, before the switch): every /_next/static file
+ *                 the LIVE build's home page references must also be served by the NEW release, so a
+ *                 page opened before the switch can still load its chunks after it
  *   • compare   — paths in the sitemap at --compare-base (the old release) that are missing from the
  *                 new sitemap are reported as WARNINGS: removing a page can be intentional
  *
@@ -42,6 +57,96 @@ import https from "node:https";
 import { pathToFileURL } from "node:url";
 
 export const HEALTH_PATHS = ["/", "/cities-we-serve", "/products", "/sitemap.xml", "/robots.txt"];
+
+/** Where a release (or a source checkout) lists its critical routes. */
+export const CRITICAL_ROUTES_FILE = "scripts/deploy/critical-routes.json";
+
+/**
+ * Text that only the not-found page renders. "Oops! Page not found" is the site's own page
+ * (src/views/NotFound.tsx, kept in step by verify-release.test.mjs); the second is Next's default.
+ */
+export const NOT_FOUND_MARKERS = ["Oops! Page not found", "This page could not be found"];
+
+/** True when an HTML body is the not-found page (whatever status it was served with). */
+export function isNotFoundPage(body) {
+  return NOT_FOUND_MARKERS.some((m) => body.includes(m));
+}
+
+/** /_next/static JS/CSS files an HTML page references (src= / href=), de-duplicated, in order. */
+export function staticRefs(body) {
+  return [...new Set([...body.matchAll(/(?:src|href)="(\/_next\/static\/[^"?#]+)/g)].map((m) => m[1]))];
+}
+
+/**
+ * The same-site assets an HTML page needs: its /_next/static JS/CSS, every next/image URL exactly
+ * as the page requests it (src="/_next/image?url=…&w=…&q=…": a 200 proves the optimiser works AND
+ * the source image exists), and plain <img src="/images/…"> files. De-duplicated, in order.
+ */
+export function assetRefs(body) {
+  const out = new Set(staticRefs(body));
+  for (const m of body.matchAll(/src="(\/_next\/image\?url=[^"]+)"/g)) {
+    const u = m[1].replace(/&amp;/g, "&");
+    let source = "";
+    try {
+      source = decodeURIComponent((u.match(/[?&]url=([^&]+)/) || [])[1] || "");
+    } catch {
+      continue;
+    }
+    if (source.startsWith("/") && !source.startsWith("//")) out.add(u); // remote images are not ours to check
+  }
+  for (const m of body.matchAll(/src="(\/images\/[^"?#]+)/g)) out.add(m[1]);
+  return [...out];
+}
+
+/**
+ * The critical routes a release or checkout declares (scripts/deploy/critical-routes.json), or null
+ * when it has none. Each route is a path, or { "path": "/x", "contains": ["text", …] } when the page
+ * must also render specific markup (an enquiry form's inputs, an Add to Cart button).
+ * Returns [{ path, contains: [] }].
+ */
+export function loadCriticalPaths(dir) {
+  const c = loadCritical(dir);
+  return c ? c.routes : null;
+}
+
+/**
+ * Both lists of scripts/deploy/critical-routes.json, or null when the file is absent:
+ *   routes    — see loadCriticalPaths
+ *   redirects — [{ from, to, status }]: `from` must answer `status` (default 301) with a Location of
+ *               exactly `to` (one hop), and `to` must answer 200 with a real page
+ */
+export function loadCritical(dir) {
+  if (!dir) return null;
+  const file = join(dir, CRITICAL_ROUTES_FILE);
+  if (!existsSync(file)) return null;
+  const data = JSON.parse(readFileSync(file, "utf8"));
+  const routes = Array.isArray(data) ? data : data && data.routes;
+  if (!Array.isArray(routes)) throw new Error(`${file}: expected { "routes": [ … ] }`);
+  const rawRedirects = (data && !Array.isArray(data) && data.redirects) || [];
+  if (!Array.isArray(rawRedirects)) throw new Error(`${file}: "redirects" must be a list`);
+  const isPath = (p) => typeof p === "string" && p.startsWith("/") && !p.startsWith("//");
+  const redirects = rawRedirects.map((r) => {
+    const status = r && r.status !== undefined ? r.status : 301;
+    if (!r || !isPath(r.from) || !isPath(r.to) || ![301, 302, 307, 308].includes(status) || r.from === r.to) {
+      throw new Error(`${file}: every redirect needs "from" and "to" paths and a 301/302/307/308 status (got ${JSON.stringify(r)})`);
+    }
+    return { from: r.from, to: r.to, status };
+  });
+  return { routes: parseCriticalRoutes(file, routes), redirects };
+}
+
+function parseCriticalRoutes(file, routes) {
+  return routes.map((r) => {
+    const route = typeof r === "string" ? { path: r, contains: [] } : { path: r && r.path, contains: (r && r.contains) || [] };
+    if (typeof route.path !== "string" || !route.path.startsWith("/") || route.path.startsWith("//")) {
+      throw new Error(`${file}: every route needs a path starting with "/" (got ${JSON.stringify(r)})`);
+    }
+    if (!Array.isArray(route.contains) || route.contains.some((c) => typeof c !== "string" || !c)) {
+      throw new Error(`${file}: "contains" of ${route.path} must be a list of non-empty strings`);
+    }
+    return route;
+  });
+}
 
 /** City slugs exactly as the workflow has always read them: `  slug: "<slug>",` lines. */
 export function extractCitySlugs(source) {
@@ -155,7 +260,12 @@ export function get(base, path, { host, resolveTo, timeoutMs = 30000 } = {}) {
       const chunks = [];
       res.on("data", (c) => chunks.push(c));
       res.on("end", () =>
-        done({ status: res.statusCode || 0, body: Buffer.concat(chunks).toString("utf8"), contentType: String(res.headers["content-type"] || "") }),
+        done({
+          status: res.statusCode || 0,
+          body: Buffer.concat(chunks).toString("utf8"),
+          contentType: String(res.headers["content-type"] || ""),
+          location: res.headers.location ? String(res.headers.location) : null,
+        }),
       );
       res.on("error", (e) => done({ status: 0, body: "", contentType: "", error: e.message }));
     });
@@ -192,6 +302,8 @@ export async function verifyRelease(opts) {
     compareBase,
     newRoutes = [],
     quick = false,
+    critical = true,
+    assets = true,
     concurrency = 4,
     timeoutMs = 30000,
     expectCommit,
@@ -200,9 +312,15 @@ export async function verifyRelease(opts) {
   let { buildId } = opts;
   const failures = [];
   const warnings = [];
-  const counts = { build: 0, health: 0, city: 0, new: 0, sitemap: 0, identity: 0 };
+  const counts = { build: 0, health: 0, city: 0, new: 0, sitemap: 0, identity: 0, critical: 0, redirects: 0, assets: 0, continuity: 0 };
   let identity = null;
   const req = (path, b = base) => get(b, path, { host, resolveTo: b === base ? resolveTo : undefined, timeoutMs });
+  const isHtml = (r) => /text\/html/i.test(r.contentType || "");
+  // A 200 that renders the not-found page is a failure (a "soft 404"), never a success.
+  const softNotFound = (kind, p, r) =>
+    r.status === 200 && isHtml(r) && isNotFoundPage(r.body) ? `${kind}: ${p} answered 200 but rendered the not-found page (soft 404)` : null;
+  // HTML of pages whose assets are checked below: /, /products, the first city page, every critical route.
+  const assetPages = new Map();
 
   // ── build: the release's own source + manifest + BUILD_ID ─────────────────────────────────
   const srcDir = releaseDir || sourceDir;
@@ -265,11 +383,14 @@ export async function verifyRelease(opts) {
   // ── health paths + the build marker on / ──────────────────────────────────────────────────
   for (const p of HEALTH_PATHS) {
     const r = await req(p);
+    const soft = softNotFound("health", p, r);
     if (r.status !== 200) failures.push(`health: ${p} answered ${r.status || r.error}`);
+    else if (soft) failures.push(soft);
     else counts.health++;
     if (p === "/" && r.status === 200 && !servedByBuild(r.body, buildId)) {
       failures.push(`health: / is not served by build ${buildId} (another build answered)`);
     }
+    if ((p === "/" || p === "/products") && r.status === 200) assetPages.set(p, r.body);
   }
 
   // ── new routes first, then every city page — 200 AND rendered by this build ───────────────
@@ -278,14 +399,110 @@ export async function verifyRelease(opts) {
   const checkPage = async (p, kind) => {
     const r = await req(p);
     if (r.status !== 200) return `${kind}: ${p} answered ${r.status || r.error}`;
+    const soft = softNotFound(kind, p, r);
+    if (soft) return soft;
     if (!servedByBuild(r.body, buildId)) {
       return `${kind}: ${p} answered 200 but from another build (stale page: ${buildIdOfPage(r.body) || "no build id"}, expected ${buildId})`;
     }
+    if (kind === "city" && p === cityPaths[0]) assetPages.set(p, r.body);
     counts[kind]++;
     return null;
   };
   for (const f of await pool(newPaths, concurrency, (p) => checkPage(p, "new"))) if (f) failures.push(f);
   for (const f of await pool(cityPaths, concurrency, (p) => checkPage(p, "city"))) if (f) failures.push(f);
+
+  // ── critical routes: 200, this build, real content (an <h1>, any required markup) ─────────
+  let criticalRoutes = [];
+  let criticalRedirects = [];
+  if (critical) {
+    try {
+      const c = loadCritical(releaseDir) || loadCritical(sourceDir);
+      if (c) ({ routes: criticalRoutes, redirects: criticalRedirects } = c);
+      else if (srcDir) log(`critical: no ${CRITICAL_ROUTES_FILE} in ${srcDir} — skipped`);
+    } catch (e) {
+      failures.push(`critical: ${e.message}`);
+    }
+  }
+  const criticalResults = await pool(criticalRoutes, concurrency, async ({ path: p, contains }) => {
+    const r = await req(p);
+    if (r.status !== 200) return [`critical: ${p} answered ${r.status || r.error}`];
+    const soft = softNotFound("critical", p, r);
+    if (soft) return [soft];
+    const out = [];
+    if (!isHtml(r)) out.push(`critical: ${p} answered 200 with ${r.contentType || "no content type"}, not an HTML page`);
+    if (!servedByBuild(r.body, buildId)) {
+      out.push(`critical: ${p} answered 200 but from another build (stale page: ${buildIdOfPage(r.body) || "no build id"}, expected ${buildId})`);
+    }
+    if (!/<h1[\s>]/i.test(r.body)) out.push(`critical: ${p} answered 200 but rendered no <h1> (an empty or error page)`);
+    for (const c of contains) if (!r.body.includes(c)) out.push(`critical: ${p} does not contain ${JSON.stringify(c)}`);
+    if (out.length === 0) {
+      counts.critical++;
+      assetPages.set(p, r.body);
+    }
+    return out;
+  });
+  for (const list of criticalResults) failures.push(...list);
+
+  // ── redirects: one hop, the declared status, exactly the declared target, which is a page ──
+  const redirectResults = await pool(criticalRedirects, concurrency, async ({ from, to, status }) => {
+    const r = await req(from);
+    let target = null;
+    try {
+      const u = new URL(r.location || "", new URL(from, base));
+      const siteHost = (host || new URL(base).hostname).replace(/^www\./, "");
+      // Relative, same-origin, or absolute to this site (apex or www): compare the path + query.
+      if (!r.location) target = null;
+      else if (r.location.startsWith("/") || u.hostname.replace(/^www\./, "") === siteHost || u.origin === new URL(base).origin) target = u.pathname + u.search;
+      else target = u.href;
+    } catch {
+      target = r.location;
+    }
+    if (r.status !== status || target !== to) {
+      return `redirect: ${from} answered ${r.status || r.error}${r.location ? ` → ${r.location}` : ""}, expected ${status} → ${to}`;
+    }
+    const d = await req(to);
+    if (d.status !== 200) return `redirect: ${from} → ${to}, which answered ${d.status || d.error} (a redirect to a broken page)`;
+    const soft = softNotFound("redirect", to, d);
+    if (soft) return soft;
+    counts.redirects++;
+    return null;
+  });
+  for (const f of redirectResults) if (f) failures.push(f);
+
+  // ── assets: every JS/CSS file and image those pages load answers 200 ──────────────────────
+  if (assets && assetPages.size) {
+    const refs = [...new Set([...assetPages.values()].flatMap(assetRefs))];
+    const results = await pool(refs, concurrency, async (p) => {
+      const r = await req(p);
+      if (r.status !== 200) return `assets: ${p} answered ${r.status || r.error}`;
+      if (isHtml(r)) return `assets: ${p} answered 200 with an HTML page instead of the file`;
+      counts.assets++;
+      return null;
+    });
+    for (const f of results) if (f) failures.push(f);
+    log(`assets: ${counts.assets}/${refs.length} files referenced by ${assetPages.size} pages answered 200`);
+  }
+
+  // ── continuity: the LIVE build's chunks are still served by the NEW release ───────────────
+  // A tab opened before the switch keeps requesting the old build's /_next/static files; the
+  // deploy script copies them into the new release (carry_static_assets). Checked on the live
+  // home page's own references, which is what every open tab of the old build has loaded.
+  if (assets && compareBase) {
+    const live = await get(compareBase, "/", { host, timeoutMs });
+    if (live.status !== 200) {
+      warnings.push(`continuity: could not read / at ${compareBase} (${live.status || live.error}) — not checked`);
+    } else {
+      const refs = staticRefs(live.body);
+      const results = await pool(refs, concurrency, async (p) => {
+        const r = await req(p);
+        if (r.status !== 200) return `continuity: ${p} (live build) answered ${r.status || r.error} from the new release — open tabs would break after the switch`;
+        counts.continuity++;
+        return null;
+      });
+      for (const f of results) if (f) failures.push(f);
+      log(`continuity: ${counts.continuity}/${refs.length} static files of the live build are served by the new release`);
+    }
+  }
 
   // ── every sitemap URL on this host ────────────────────────────────────────────────────────
   let newSitemapPaths = null;
@@ -293,11 +510,13 @@ export async function verifyRelease(opts) {
   if (sm.status === 200) {
     newSitemapPaths = parseSitemapLocs(sm.body).map((u) => sitePath(u, host || new URL(base).hostname)).filter(Boolean);
     if (!quick) {
-      const already = new Set([...cityPaths, ...newPaths, ...HEALTH_PATHS]);
+      const already = new Set([...cityPaths, ...newPaths, ...HEALTH_PATHS, ...criticalRoutes.map((c) => c.path)]);
       const rest = [...new Set(newSitemapPaths)].filter((p) => !already.has(p));
       const results = await pool(rest, concurrency, async (p) => {
         const r = await req(p);
         if (r.status !== 200) return `sitemap: ${p} answered ${r.status || r.error}`;
+        const soft = softNotFound("sitemap", p, r);
+        if (soft) return soft;
         counts.sitemap++;
         return null;
       });
@@ -339,6 +558,8 @@ function parseArgs(argv) {
     else if (k === "--concurrency") a.concurrency = Number(v());
     else if (k === "--timeout-ms") a.timeoutMs = Number(v());
     else if (k === "--quick") a.quick = true;
+    else if (k === "--no-critical") a.critical = false;
+    else if (k === "--no-assets") a.assets = false;
     else if (k === "--github") a.github = true;
     else throw new Error(`unknown argument ${k}`);
   }
@@ -359,7 +580,7 @@ async function main() {
   const res = await verifyRelease({ ...args, log: (m) => console.log(`verify: ${m}`) });
   const c = res.counts;
   console.log(
-    `verify: ${args.base} — ${args.expectCommit ? `identity ${c.identity}/1, ` : ""}build ${c.build}, health ${c.health}/${HEALTH_PATHS.length}, new ${c.new}, city ${c.city}, sitemap ${c.sitemap} OK` +
+    `verify: ${args.base} — ${args.expectCommit ? `identity ${c.identity}/1, ` : ""}build ${c.build}, health ${c.health}/${HEALTH_PATHS.length}, new ${c.new}, city ${c.city}, critical ${c.critical}, redirects ${c.redirects}, assets ${c.assets}${args.compareBase ? `, continuity ${c.continuity}` : ""}, sitemap ${c.sitemap} OK` +
       ` · ${res.failures.length} failure(s), ${res.warnings.length} warning(s) · ${((Date.now() - started) / 1000).toFixed(1)}s`,
   );
   for (const w of res.warnings) console.log(args.github ? `::warning::${w}` : `verify: WARNING ${w}`);

@@ -231,7 +231,11 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "security-cabins": {
     locationHeading: "Security cabins by location",
-    locationLinks: promotionLocations("security-cabin"),
+    // The four promotion pages, then the security-cabin city page (Krishnagiri, 2026-11-05).
+    locationLinks: [
+      ...promotionLocations("security-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+    ],
     guideLinks: [GUIDE.materials, GUIDE.insulation, GUIDE.installation],
     relatedCategorySlugs: ["portable-cabins", "site-office-containers"],
     // Small standalone cabins a gate or campus buyer also compares: the 10–40 ft steel office
@@ -240,7 +244,11 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "portable-toilet-cabins": {
     locationHeading: "Portable toilet cabins by location",
-    locationLinks: promotionLocations("portable-toilet-cabin"),
+    // The four promotion pages, then the portable-toilet city page (Krishnagiri, 2026-11-04).
+    locationLinks: [
+      ...promotionLocations("portable-toilet-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    ],
     guideLinks: [
       {
         name: "Portable toilet cabin types",
