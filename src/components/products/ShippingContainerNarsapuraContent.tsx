@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CheckCircle, Factory, Truck, Shield, Thermometer, Recycle, Building, MapPin, Wrench } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -11,6 +12,18 @@ import { resolveImageUrl } from "@/utils/resolveImageUrl";
 const NARSAPURA_PRODUCT_ID = "33";
 // Single authoritative customer price — same source as the buy box, cart, checkout and JSON-LD.
 const narsapuraPrice = formatINR(sellPrice(getCommerce(NARSAPURA_PRODUCT_ID)!.basePrice));
+
+// Areas that have their own page link to it; the rest stay plain labels.
+const serviceAreas: { area: string; href?: string }[] = [
+  { area: "Narsapura Industrial Area" },
+  { area: "Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
+  { area: "Malur" },
+  { area: "Hoskote", href: "/cities-we-serve/container-office-in-hoskote" },
+  { area: "Kolar", href: "/cities-we-serve/portable-cabin-kolar" },
+  { area: "KIADB Narsapura" },
+  { area: "Bengaluru East" },
+  { area: "NH-75 Corridor" },
+];
 
 const highlights = [
   { icon: Truck, title: "7–15 Working-Day Dispatch", desc: "Bought online: dispatched from our Tamil Nadu factory near Hosur to Narsapura Industrial Area" },
@@ -277,10 +290,14 @@ export function ShippingContainerNarsapuraContent() {
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">Service Area Coverage</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {["Narsapura Industrial Area", "Vemgal Industrial Area", "Malur", "Hoskote", "Kolar", "KIADB Narsapura", "Bengaluru East", "NH-75 Corridor"].map((area, i) => (
-            <div key={i} className="bg-primary/10 rounded-lg p-3 text-center">
+          {serviceAreas.map(({ area, href }) => (
+            <div key={area} className="bg-primary/10 rounded-lg p-3 text-center">
               <MapPin className="h-4 w-4 text-primary mx-auto mb-1" />
-              <span className="text-sm font-medium text-foreground">{area}</span>
+              {href ? (
+                <Link href={href} className="text-sm font-medium text-accent hover:underline">{area}</Link>
+              ) : (
+                <span className="text-sm font-medium text-foreground">{area}</span>
+              )}
             </div>
           ))}
         </div>
