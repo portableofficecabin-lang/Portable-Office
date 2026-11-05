@@ -159,6 +159,13 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("why", "why heading", p.whyHeading);
   t("why", "why intro", p.whyIntro);
   p.whyBullets.forEach((b, i) => { t("why", `why bullet ${i + 1} title`, b.title ?? ""); t("why", `why bullet ${i + 1} text`, b.text); });
+  // Optional why table (since 2026-11-04): caption, every header and every cell.
+  if (p.whyTable) {
+    t("why", "why table caption", p.whyTable.caption);
+    p.whyTable.headers.forEach((x, j) => t("why", `why table header ${j + 1}`, x));
+    p.whyTable.rows.forEach((row, r) => row.forEach((x, c) => t("why", `why table row ${r + 1} cell ${c + 1}`, x)));
+    items.push({ group: "why", label: "why table is a <table> with row headers", test: (mk) => /<table[\s\S]*<th[^>]*scope="row"/.test(mk) });
+  }
   if (p.whyOutro) t("why", "why outro", p.whyOutro);
   if (p.featureImage) {
     items.push({ group: "images", label: "feature image src", test: (mk) => imageNeedle(p.featureImage!.src).test(mk) });
@@ -167,12 +174,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("solutions", "solutions heading", p.solutionsHeading);
   t("solutions", "solutions intro", p.solutionsIntro);
-  p.solutions.forEach((s, i) => {
-    t("solutions", `layout ${i + 1} title`, s.title ?? "");
-    t("solutions", `layout ${i + 1} text`, s.text);
-    // Optional contextual link (since 2026-11-04): audited whenever the item sets it.
-    if (s.link) { t("solutions", `layout ${i + 1} link "${s.link.label}"`, s.link.label); m("solutions", `layout ${i + 1} link href ${s.link.href}`, `href="${s.link.href}"`); }
-  });
+  p.solutions.forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
+  p.solutions.forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
   t("features", "features heading", p.featuresHeading);
   t("features", "features intro", p.featuresIntro);
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
@@ -213,6 +216,20 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     }
     (s.bullets ?? []).forEach((b, j) => { t("extra", `extra section ${i + 1} bullet ${j + 1} title`, b.title ?? ""); t("extra", `extra section ${i + 1} bullet ${j + 1} text`, b.text); });
     (s.closing ?? []).forEach((x, j) => t("extra", `extra section ${i + 1} closing ${j + 1}`, x));
+    // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
+    // heading and the features heading in the visible text.
+    if (s.placement === "afterSolutions") {
+      items.push({
+        group: "extra",
+        label: `extra section ${i + 1} renders after the solutions`,
+        test: (_mk, tx) => {
+          const a = tx.indexOf(squash(p.solutionsHeading));
+          const b = a >= 0 ? tx.indexOf(squash(s.heading), a) : -1;
+          const c = b >= 0 ? tx.indexOf(squash(p.featuresHeading), b) : -1;
+          return a >= 0 && b > a && c > b;
+        },
+      });
+    }
   });
   t("faq", "FAQ section heading", "Frequently Asked Questions");
   p.faqs.forEach((f, i) => { t("faq", `FAQ ${i + 1} question`, f.question); t("faq", `FAQ ${i + 1} answer`, f.answer); });

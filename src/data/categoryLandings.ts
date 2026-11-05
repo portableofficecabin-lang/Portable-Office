@@ -231,9 +231,10 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "security-cabins": {
     locationHeading: "Security cabins by location",
-    // The four promotion pages, then the security-cabin city page (Shoolagiri, 2026-11-04).
+    // The four promotion pages, then the security-cabin city pages (Krishnagiri, 2026-11-05; Shoolagiri, 2026-11-05).
     locationLinks: [
       ...promotionLocations("security-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { name: "Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
     ],
     guideLinks: [GUIDE.materials, GUIDE.insulation, GUIDE.installation],
@@ -244,7 +245,11 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "portable-toilet-cabins": {
     locationHeading: "Portable toilet cabins by location",
-    locationLinks: promotionLocations("portable-toilet-cabin"),
+    // The four promotion pages, then the portable-toilet city page (Krishnagiri, 2026-11-04).
+    locationLinks: [
+      ...promotionLocations("portable-toilet-cabin"),
+      { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    ],
     guideLinks: [
       {
         name: "Portable toilet cabin types",

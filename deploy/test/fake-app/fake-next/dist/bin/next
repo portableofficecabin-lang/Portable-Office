@@ -7,6 +7,8 @@
 //   • the city pages the build knows (404 otherwise), a sitemap, and /_next/static files from disk
 //   • GET /api/build-info: the commit (REVISION in the release dir, as next.config.ts reads it),
 //     the build id, when it was built, and when this process started
+//   • an <h1> on every page; anything unknown answers 404 with the site's not-found page
+//   • /products/shipping-container 301s to /products (a next.config.ts-style redirect)
 "use strict";
 const http = require("node:http");
 const fs = require("node:fs");
@@ -36,8 +38,15 @@ const readOr = (file, fallback) => {
 };
 const revision = readOr("REVISION", "");
 // fault.txt (committed in the fake app, one fault per line): wrong-commit makes the running app
-// report a commit other than the one it was built from (integration.sh scenario S4b).
+// report a commit other than the one it was built from (integration.sh scenario S4b);
+// soft-404:<slug> serves that city page as the not-found page WITH status 200 (S4c);
+// start-fail makes the process exit at start-up, so it never answers (S3b).
 const faults = readOr("fault.txt", "").split("\n").map((s) => s.trim());
+if (faults.includes("start-fail")) {
+  console.error("fake next: failing at start-up on purpose (fault.txt: start-fail)");
+  process.exit(1);
+}
+const soft404 = faults.filter((f) => f.startsWith("soft-404:")).map((f) => f.slice("soft-404:".length));
 const buildInfo = JSON.stringify({
   commit: faults.includes("wrong-commit") ? "0".repeat(40) : /^[0-9a-f]{40}$/.test(revision) ? revision : "unknown",
   buildId,
@@ -47,7 +56,12 @@ const buildInfo = JSON.stringify({
 
 const page = (title) =>
   `<!DOCTYPE html><html><head><title>${title}</title>` +
-  `<script src="/_next/static/chunks/page-${buildId}.js"></script></head><body>${title}` +
+  `<script src="/_next/static/chunks/page-${buildId}.js"></script></head><body><h1>${title}</h1>` +
+  `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${buildId}\\",\\"p\\":\\"\\"}\\n"])</script></body></html>`;
+
+// The site's not-found page (src/views/NotFound.tsx renders "Oops! Page not found").
+const notFound = () =>
+  `<!DOCTYPE html><html><head><title>Portable Office Cabin</title></head><body><p>404</p><p>Oops! Page not found</p>` +
   `<script>self.__next_f.push([1,"0:{\\"P\\":null,\\"b\\":\\"${buildId}\\",\\"p\\":\\"\\"}\\n"])</script></body></html>`;
 
 const server = http.createServer((req, res) => {
@@ -58,6 +72,11 @@ const server = http.createServer((req, res) => {
     res.end(body);
   };
   if (p === "/" || p === "/cities-we-serve" || p === "/products") return send(200, page(p));
+  if (p === "/products/shipping-container") {
+    // A next.config.ts redirect: one hop, relative Location, as the real server sends it.
+    res.writeHead(301, { location: "/products", "x-fake-build": buildId });
+    return res.end();
+  }
   if (p === "/robots.txt") return send(200, "User-agent: *\nAllow: /\n", "text/plain");
   if (p === "/api/build-info") return send(200, buildInfo, "application/json");
   if (p === "/sitemap.xml") {
@@ -65,7 +84,8 @@ const server = http.createServer((req, res) => {
     return send(200, `<?xml version="1.0"?><urlset>${paths.map((x) => `<url><loc>https://${siteHost}${x}</loc></url>`).join("")}</urlset>`, "application/xml");
   }
   const city = p.match(/^\/cities-we-serve\/([a-z0-9-]+)$/);
-  if (city) return slugs.includes(city[1]) ? send(200, page(city[1])) : send(404, page("not found"));
+  if (city && soft404.includes(city[1])) return send(200, notFound());
+  if (city) return slugs.includes(city[1]) ? send(200, page(city[1])) : send(404, notFound());
   if (p.startsWith("/_next/static/")) {
     const file = path.join(dir, ".next/static", p.slice("/_next/static/".length));
     if (file.startsWith(path.join(dir, ".next/static")) && fs.existsSync(file) && fs.statSync(file).isFile()) {
@@ -73,7 +93,7 @@ const server = http.createServer((req, res) => {
     }
     return send(404, "missing static file", "text/plain");
   }
-  return send(404, page("not found"));
+  return send(404, notFound());
 });
 
 // Like the real server: a short start-up before the port answers.
