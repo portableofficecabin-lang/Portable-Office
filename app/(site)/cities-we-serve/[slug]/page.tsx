@@ -370,17 +370,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           <section key={s0.title} className={page.motion ? "reveal" : undefined}>
             <h3 className={h3}>{i + 1}. {s0.title}</h3>
             <p className={p}>{s0.text}</p>
-            {/* Optional contextual link (`link`), e.g. a cabin type → its product or guide page.
-                Unset = no element, so other pages are unchanged. */}
+            {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
             {s0.link && (
-              <p className="-mt-2 mb-4 text-sm">
-                <Link
-                  href={s0.link.href}
-                  className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
-                >
+              <p className={p}>
+                <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
                   {s0.link.label}
                 </Link>
-                <span aria-hidden> →</span>
               </p>
             )}
           </section>
