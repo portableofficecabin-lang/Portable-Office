@@ -3,6 +3,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
+import { withoutRetiredCategories } from "@/data/retiredCategories";
 
 export const revalidate = 3600; // 1 hour
 
@@ -24,7 +25,8 @@ export const metadata = buildPageMetadata({
 export default async function Page() {
   const [products, categories] = await Promise.all([
     getAllProductsMerged(),
-    getMergedCategories(),
+    // Retired database-only duplicates (0 products) stay out of the grid: their URLs 301.
+    getMergedCategories().then(withoutRetiredCategories),
   ]);
 
   return (
