@@ -7113,9 +7113,10 @@ export const CITY_PAGES: CityPage[] = [
    *   3 Shop ideas → solutions: eleven h3 cards, with a contextual link where a verified page fits.
    *     The container-shop card carries the owner's five container renders (`images`, new optional
    *     field) and links to the cargo-container category, not to a storage page's head term.
-   *   4 Where shops may be used, 6 Sizes → extra sections with `placement: "afterSolutions"`; the
-   *     sizes table is captioned as indicative (the catalogue's shop cabin is 10 × 10 ft and other
-   *     sizes are quoted on request, as the product page says).
+   *   4 Where shops may be used, 6 Sizes → extra sections with `placement: "afterSolutions"`. Per the
+   *     owner's approval of #202, every table size is a planning example subject to an approved drawing
+   *     and quotation (the only catalogue shop cabin is 10 × 10 ft).
+   *   Title and H1 per the same approval: "Portable Shop Cabin Manufacturers Serving Hoskote".
    *   5 Customize → features (front, interior, utilities, branding; every item an option).
    *   7 Weather → custom, beside the overhead render; 13 Why us → whyUs; 12 Areas → areas;
    *   11 Ordering → how; 8 Permissions and 9 Price → extra sections after the steps; 14 FAQs; 15 CTA.
@@ -7147,11 +7148,13 @@ export const CITY_PAGES: CityPage[] = [
     slug: "portable-shop-hoskote",
     city: "Hoskote",
     listTitle: "Portable Shops in Hoskote",
-    metaTitle: "Portable Shop in Hoskote | Readymade Shops, Kiosks & Stalls",
+    // Owner wording of 2026-11-05 (approval of #202): "Serving Hoskote", so the title and H1 do not
+    // suggest a factory in Hoskote; the factory is near Hosur, as the tagline, intro and disclaimer say.
+    metaTitle: "Portable Shop Cabin Manufacturers Serving Hoskote",
     metaDescription:
-      "Portable shop manufacturers in Hoskote offering readymade shop cabins, food kiosks, petty shops, bakery counters and mini marts with customizable designs.",
+      "Portable shop cabin manufacturers serving Hoskote from our factory near Hosur: readymade shop cabins, food kiosks, petty shops, bakery counters and mini marts.",
     keywords:
-      "Portable Shop in Hoskote, Portable Shop Cabin Hoskote, Readymade Shop Hoskote, Prefabricated Shop Hoskote, Movable Shop Hoskote, Portable Shop Manufacturers in Hoskote, Portable Shop Suppliers Hoskote, Portable Shop Hosakote, Portable Shop Price in Hoskote, Retail Kiosk Hoskote, Petty Shop Hoskote, Container Shop Hoskote",
+      "Portable Shop in Hoskote, Portable Shop Cabin Hoskote, Readymade Shop Hoskote, Prefabricated Shop Hoskote, Movable Shop Hoskote, Portable Shop Cabin Manufacturers Serving Hoskote, Portable Shop Suppliers Hoskote, Portable Shop Hosakote, Portable Shop Price in Hoskote, Retail Kiosk Hoskote, Petty Shop Hoskote, Container Shop Hoskote",
     geo: { region: "IN-KA", placename: "Hoskote, Bengaluru Rural, Karnataka, India", position: "13.0707;77.7980", icbm: "13.0707, 77.7980" },
     motion: true,
     serviceJsonLd: { serviceType: "Portable Shop" },
@@ -7180,8 +7183,8 @@ export const CITY_PAGES: CityPage[] = [
         "Illustrative render of the shop cabin from above: the corrugated roof and the raised supports. Roof sealing, drainage and the base are agreed for each site.",
     },
 
-    h1: "Portable Shop Manufacturers in Hoskote",
-    tagline: "Readymade shop cabins, food kiosks and retail stalls, built to your layout for businesses in and around Hoskote.",
+    h1: "Portable Shop Cabin Manufacturers Serving Hoskote",
+    tagline: "Readymade shop cabins, food kiosks and retail stalls, built to your layout at our factory near Hosur and delivered to businesses in and around Hoskote.",
     intro: [
       "Portable Office Cabin builds readymade shop cabins, retail kiosks and other prefabricated portable shops for traders, food sellers and service businesses in Hoskote and the industrial and residential areas around it.",
       "From a compact petty shop or tea counter to a bakery kiosk, a food stall or a mini mart, a portable shop cabin gives you a customizable commercial space built around the way your business sells.",
@@ -7380,11 +7383,11 @@ export const CITY_PAGES: CityPage[] = [
         heading: "Portable Shop Sizes",
         placement: "afterSolutions",
         paragraphs: [
-          "Indicative sizes for common shop types. They are typical configurations, not a stock or availability list.",
+          "Planning examples for common shop types. None of these sizes is a catalogue or stock item: each is built only to an approved drawing and quotation.",
         ],
         table: {
-          caption: "Indicative configurations only. The actual dimensions, and whether a configuration can be manufactured, are confirmed during quotation.",
-          headers: ["Indicative size", "Suitable application"],
+          caption: "Planning examples only, subject to an approved drawing and quotation, which confirm the actual dimensions and whether the size can be manufactured.",
+          headers: ["Planning example", "Suitable application"],
           rows: [
             ["6 × 4 ft", "Recharge kiosk, compact milk counter"],
             ["8 × 6 ft", "Petty shop, juice stall, flower stall"],
@@ -7394,7 +7397,7 @@ export const CITY_PAGES: CityPage[] = [
           ],
         },
         closing: [
-          "Our standard portable shop cabin is 10 ft × 10 ft and can be bought online on its product page; other sizes are quoted on request.",
+          "Our catalogue portable shop cabin is 10 ft × 10 ft and can be bought online on its product page. Any other size, including those above, is built only to an approved drawing and quotation.",
         ],
       },
       {
@@ -7502,7 +7505,7 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the base or supports depend on the site, and manufacturing and delivery dates are not guaranteed. The shop types, sizes, fronts, materials, insulation, fittings, utilities, signage and finishes on this page are options, and the sizes shown are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The portable shop images are illustrative renders of one Portable Office Cabin 10 ft × 10 ft shop cabin design, and the container images are illustrative renders of a plain 20 ft container shell before conversion; none of them is a photograph of an installation in Hoskote. The industrial areas, roads, places and businesses named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or approved shop locations, and Portable Office Cabin is not affiliated with any industrial area, layout or institution named. Notes on permissions, licensing, food safety, electrical and fire safety, weather protection and relocation are general guidance, not legal, engineering or safety advice.",
+      "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the base or supports depend on the site, and manufacturing and delivery dates are not guaranteed. The shop types, sizes, fronts, materials, insulation, fittings, utilities, signage and finishes on this page are options; apart from the 10 ft × 10 ft catalogue cabin, the sizes shown are planning examples subject to an approved drawing and quotation, and the items supplied are confirmed in the approved specification and quotation for each order. The portable shop images are illustrative renders of one Portable Office Cabin 10 ft × 10 ft shop cabin design, and the container images are illustrative renders of a plain 20 ft container shell before conversion; none of them is a photograph of an installation in Hoskote. The industrial areas, roads, places and businesses named here describe the region, typical uses and delivery enquiry locations, not clients, completed projects or approved shop locations, and Portable Office Cabin is not affiliated with any industrial area, layout or institution named. Notes on permissions, licensing, food safety, electrical and fire safety, weather protection and relocation are general guidance, not legal, engineering or safety advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
