@@ -20826,11 +20826,14 @@ export const CITY_PAGES: CityPage[] = [
    *   2 Project phases → why, as a table (`whyTable`, empty whyBullets) + whyOutro. Four cells are
    *     reworded ("arrangement" → "setup", "contractor" → "builder", "distributed" and "multi-cubicle"
    *     spelled out) so the three columns fit a 320 px screen without sideways scrolling.
-   *   3 Road and pipeline crews → solutions (the six options as H3s; the relocation caveat is the
+   *   3 Road and pipeline crews → solutions (five options as H3s; the relocation caveat is the
    *     last one; no "moved in minutes", no trailer-mounted toilet).
    *   4 Shared vendor-park blocks, 5 Comfort table, 6 Heat and Water (two H2s, one per subsection) →
    *     extra sections with `placement: "afterSolutions"`. Waterless urinals left out (not confirmed).
-   *   7 Types → features (ten types; FRP and trailer-mounted toilets left out, owner decision of
+   *     Owner's approval of 2026-11-05: standalone handwash stations are not offered until confirmed
+   *     (left out of 3, 4, 7 and FAQ 7; washbasins in the cabin stay), and ladies' cabins are
+   *     worded as subject to the approved layout and quotation, with no fittings or availability claimed.
+   *   7 Types → features (nine types; FRP and trailer-mounted toilets left out, owner decision of
    *     2026-11-05 on unconfirmed toilet types) + the built-to-order note.
    *   8 Choosing an arrangement → industries (the "not statutory fixture counts" caveat in the intro).
    *   9 Price → custom (cost factors), beside the rear view.
@@ -20890,7 +20893,7 @@ export const CITY_PAGES: CityPage[] = [
       "Portable Office Cabin manufactures prefabricated portable toilet cabins and sanitation blocks for industrial, construction and commercial requirements in Dharmapuri and the surrounding areas.",
       "Industrial park development, infrastructure works and factory construction can need sanitation facilities at several work locations at the same time.",
       "Portable toilet cabins give construction crews, contractors, industrial workers and temporary project facilities a flexible way to provide them.",
-      "Depending on the project, a cabin may include one or more toilet cubicles, handwash facilities, water storage, a waste holding tank and insulated construction.",
+      "Depending on the project, a cabin may include one or more toilet cubicles, a washbasin, water storage, a waste holding tank and insulated construction.",
     ],
     heroCta: true,
 
@@ -20902,7 +20905,7 @@ export const CITY_PAGES: CityPage[] = [
       headers: ["Project phase", "Typical work", "Possible toilet setup"],
       rows: [
         ["Infrastructure development", "Roads, drains, water lines and utilities", "Compact toilet points near active work areas"],
-        ["Factory construction", "Several vendor and builder sites", "Toilet blocks spread across the site, with handwash facilities"],
+        ["Factory construction", "Several vendor and builder sites", "Toilet blocks spread across the site, with washbasins"],
         ["Industrial operations", "Staff, visitors and shift workers", "Suitable sanitation blocks with several cubicles"],
       ],
     },
@@ -20922,10 +20925,6 @@ export const CITY_PAGES: CityPage[] = [
         title: "Double Toilet Cabins",
         text: "Two cubicles with separate doors in one portable structure, for a larger crew or for separate use by women and men where the layout allows.",
         link: { label: "Browse all portable toilet cabins", href: "/products/category/portable-toilet-cabins" },
-      },
-      {
-        title: "Compact Handwash Stations",
-        text: "A small handwashing unit set beside the toilet point and supplied from the water available at that work front.",
       },
       {
         title: "Water Storage Arrangements",
@@ -20948,9 +20947,8 @@ export const CITY_PAGES: CityPage[] = [
       "Double toilet cabin: two toilet cubicles within one portable structure",
       "Multi-seater toilet block: a larger unit for sites with higher sanitation demand",
       "Shared toilet block: a multi-cubicle arrangement for an approved shared-use location",
-      "Ladies toilet cabin: a privacy-focused unit with suitable sanitary fittings",
+      "Ladies toilet cabin: a separate, privacy-focused unit, subject to the approved layout and quotation",
       "Urinal cabin: a prefabricated unit with urinal fixtures",
-      "Handwash station: a separate multi-tap handwashing facility",
       "Toilet and bathing cabin: a combined sanitation unit for suitable worker accommodation sites",
       "MS toilet cabin: steel-framed prefabricated construction",
       "PUF toilet cabin: insulated prefabricated construction",
@@ -20976,7 +20974,7 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Large factory construction site",
-        text: "several toilet blocks, separate facilities for women and men, and suitable handwash points.",
+        text: "several toilet blocks, separate facilities for women and men, and washbasins in the blocks.",
       },
       {
         title: "Operating industrial facility",
@@ -20995,7 +20993,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Ventilation", text: "vents and any exhaust fans." },
       { title: "Water storage", text: "the tank capacity." },
       { title: "Waste holding tanks", text: "where the site needs them." },
-      { title: "Handwash fittings", text: "basins or multi-tap stations." },
+      { title: "Handwash fittings", text: "washbasins and taps in the cabin." },
       { title: "Plumbing", text: "inlets, outlets and internal pipework." },
       { title: "Delivery and unloading", text: "the route to your site and how the cabin is unloaded." },
       { title: "Order quantity", text: "the number of cabins ordered." },
@@ -21009,7 +21007,7 @@ export const CITY_PAGES: CityPage[] = [
       { title: "Customizable configurations", text: "toilet cabin layouts planned around your site." },
       { title: "Single and multi-cubicle options", text: "from one cubicle to larger blocks." },
       { title: "MS and insulated construction", text: "steel-framed cabins, with PUF insulation where it is specified." },
-      { title: "Handwash and bathing arrangements", text: "basins, multi-tap stations and combined toilet-and-bathing units." },
+      { title: "Handwash and bathing arrangements", text: "washbasins in the cabin and combined toilet-and-bathing units." },
       { title: "Water and wastewater provisions", text: "tank, inlet and outlet provisions for your supply and your waste arrangement." },
       { title: "Industrial and construction-site applications", text: "cabins configured for industrial projects and construction sites." },
       { title: "Quotation support", text: "help turning your requirements into a specification and a written quotation." },
@@ -21024,7 +21022,7 @@ export const CITY_PAGES: CityPage[] = [
     howIntro: "From your first enquiry to delivery on site:",
     howSteps: [
       { title: "Share project requirements", text: "workforce numbers, site location, project type and the number of active work areas." },
-      { title: "Discuss the sanitation layout", text: "toilet cubicles, handwash facilities, separate arrangements and possible placement." },
+      { title: "Discuss the sanitation layout", text: "toilet cubicles, washbasins, separate arrangements and possible placement." },
       { title: "Confirm utilities", text: "water availability, waste handling, tank requirements and drainage." },
       { title: "Approve the quotation", text: "specifications, commercial terms and delivery requirements are finalised." },
       { title: "Manufacture", text: "the approved toilet cabin configuration is fabricated." },
@@ -21042,9 +21040,8 @@ export const CITY_PAGES: CityPage[] = [
         ],
         bullets: [
           { title: "Multi-seater toilet blocks", text: "several cubicles in one prefabricated structure." },
-          { title: "Separate ladies facilities", text: "private sanitation facilities in a suitable, safely reached location." },
+          { title: "Separate ladies facilities", text: "private sanitation facilities in a suitable, safely reached location, subject to the approved layout." },
           { title: "Urinal cabins", text: "additional facilities where they suit the workforce." },
-          { title: "Handwash stations", text: "multi-tap handwashing units with suitable water and drainage connections." },
           { title: "Shared maintenance arrangements", text: "cleaning, water supply and waste-management responsibilities clearly assigned." },
         ],
         closing: [
@@ -21091,7 +21088,7 @@ export const CITY_PAGES: CityPage[] = [
         placement: "afterSolutions",
         paragraphs: ["Where water comes from storage or by tanker, plan how much the toilets will use. Options include:"],
         bullets: [
-          { title: "Low-flow taps", text: "for handwashing points." },
+          { title: "Low-flow taps", text: "for washbasins." },
           { title: "Water-efficient flushing fittings", text: "suitable fittings for the chosen seat type." },
           { title: "Properly sized storage tanks", text: "matched to the users and the refill plan." },
           { title: "Planned tanker refills", text: "a refill schedule agreed before the cabins are in use." },
@@ -21131,12 +21128,12 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "Can you provide separate toilet facilities for women workers?",
         answer:
-          "Separate sanitation cabin configurations can be discussed according to the approved layout and the available fittings.",
+          "Separate toilet facilities for women can be discussed for your site; the configuration is confirmed in the approved layout and quotation.",
       },
       {
-        question: "Can portable toilet cabins include handwash stations?",
+        question: "Can a portable toilet cabin include a washbasin?",
         answer:
-          "Handwash basins or separate handwash stations can be included where offered and where suitable water and drainage utilities are available.",
+          "A washbasin with a tap can be included inside the cabin where suitable water and drainage provisions are available. Tell us your handwashing requirement with your enquiry.",
       },
       {
         question: "How quickly can portable toilet cabins be delivered to a Dharmapuri site?",
