@@ -387,10 +387,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
   ],
-  // Security-cabin hub — the security-cabin city pages: Portable Security Cabins in Krishnagiri
-  // (2026-11-05) and in Shoolagiri (2026-11-05); each page links back to this hub.
+  // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
+  // city page, then Portable Security Cabins in Salem and in Shoolagiri (2026-11-05); each links back to this hub.
   "Security Cabin|Tamil Nadu": [
     { name: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+    { name: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
     { name: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
   ],
   // Karnataka hubs — every Karnataka container-office city page built since this map existed, so the
