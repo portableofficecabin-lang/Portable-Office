@@ -17242,6 +17242,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       // Security-cabin page for Krishnagiri, the guard-room sibling of this page (2026-11-04).
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+      // Portable-shop page for Krishnagiri, the retail and food-kiosk sibling of this page (2026-11-05).
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
       { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
@@ -20848,6 +20850,380 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base or supports depend on the site, and production and delivery dates are not guaranteed. Rental is subject to availability and the rental quotation. The cabin types, sizes, materials, insulation, fittings, finishes and other specification items on this page are options, and the sizes shown are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin single-guard cabin design; the desk, CCTV camera, floodlight and intercom panel are shown for illustration, other cabin types look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial complex are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, quarry or company there, and the industries, gates, places and highways described here are typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. Notes on foundations, insulation, ventilation, dust, toilets, relocation and supports are general guidance, not engineering, safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOPS IN KRISHNAGIRI — the retail and food-business shop intent for Krishnagiri town,
+   * SIPCOT Kurubarapalli and the Krishnagiri belt (Tamil Nadu): portable shop, readymade shop, shop
+   * cabin, retail kiosk, petty shop, tea stall cabin and container shop. A sibling of the general
+   * Portable Cabins in Krishnagiri Industrial Area page (every cabin type), the Portable Toilets and
+   * Portable Security Cabins in Krishnagiri pages, and the Shipping Container in Krishnagiri product
+   * page (storage and cargo intent; it links here with the anchor "container shop"). Not a
+   * container-office cluster location.
+   *
+   * Owner brief of 2026-11-05, mapped onto the template slots in the brief's order wherever the
+   * template allows (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request a Quote → /contact, Call, WhatsApp).
+   *   2 Why choose a portable shop → why; the brief's caveat (base, utilities, permits, transport)
+   *     is the whyOutro.
+   *   3 Shop designs → solutions: eight h3 subsections, with a verified link where one fits. "Shop on
+   *     Wheels" is left out: the catalogue has no towable or road-legal shop.
+   *   4 Locations, 5 Features, 6 Sizes, 7 Materials → extra sections with `placement:
+   *     "afterSolutions"`, in that order. Features are standard only on the 10 ft × 10 ft Portable
+   *     Shop Cabin (id 48: glazed front, lockable door, flooring, wiring, LED lights; a shutter,
+   *     shelves, counter, AC and signage on quotation); everything else is specified per order.
+   *     The FRP materials row is left out (not confirmed for shops); the sizes table is captioned
+   *     as indicative.
+   *   8 Permissions and site preparation → features (a plain list), the brief's "no exemption"
+   *     rule in the bold sizesNote.
+   *   9 Price → custom (factors as bullets, quotation route as the outro). No ₹ anywhere.
+   *   10 Rental → left out: the rental range has no shop cabin.
+   *   11 Delivery → how; 12 Areas → areas; 13 Why us → whyUs (the template renders why us, areas,
+   *     then how); 14 the brief's eight FAQs; 15 CTA (Request a Quote, Call, WhatsApp).
+   * No on-page enquiry form: the category form needs a category with landing copy, and shops sit in
+   * Portable Cabins, which has none; the quote buttons go to the /contact form.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Krishnagiri.
+   * No other page claims a shop keyword for Krishnagiri. Storage and cargo containers, security
+   * booths, toilets and offices are left to their own pages, and link anchors and the CTA line are
+   * this page's own. Shoolagiri, Hosur and Dharmapuri have no shop page, so the areas list names them.
+   * SIPCOT is named nominatively, with the non-affiliation note in the disclaimer.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Krishnagiri Industrial Area portable shop
+   * city page/Krishnagiri Industrial Area portable shop/cabin (1–4).webp", 97–224 KB, no
+   * EXIF/XMP/ICC) copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero
+   * / og:image, no caption; (4) front elevation = the feature band, captioned; (2) elevated view and
+   * (3) rear elevation, 1451×1084 = two-image gallery after the permissions list. They show one
+   * container-style kiosk with lift-up serving hatches. The alt texts, caption and disclaimer say they
+   * are illustrative renders, and no alt text names Krishnagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-krishnagiri",
+    city: "Krishnagiri",
+    listTitle: "Portable Shops in Krishnagiri",
+    metaTitle: "Portable Shop in Krishnagiri | Readymade Shop Cabins & Kiosks",
+    metaDescription:
+      "Portable shop manufacturers in Krishnagiri offering readymade shop cabins, tea stalls, retail kiosks and petty shops with shutters and custom display fronts.",
+    keywords:
+      "Portable Shop in Krishnagiri, Portable Shop Cabin Krishnagiri, Prefabricated Shop Krishnagiri, Readymade Shop Cabin Krishnagiri, Movable Shop Krishnagiri, Modular Shop Krishnagiri, Portable Shop Manufacturers in Krishnagiri, Portable Shop Suppliers Krishnagiri, Container Shop Krishnagiri, Portable Shop Price Krishnagiri",
+    geo: { region: "IN-TN", placename: "Krishnagiri, Tamil Nadu, India", position: "12.5266;78.2150", icbm: "12.5266, 78.2150" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-with-serving-hatches.webp",
+      alt: "Portable shop kiosk with two lift-up serving hatches — illustrative render of a charcoal container-style cabin with corrugated steel walls, timber-look hatch awnings on steel stays, a serving counter with a coffee machine and snack jars, and a lockable side door under an LED light strip",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-krishnagiri/prefabricated-tea-stall-kiosk-front-elevation.webp",
+      alt: "Front elevation of a prefabricated tea stall kiosk — illustrative render with the serving hatch raised over a lit, timber-panelled counter holding a coffee machine and snack jars, a full-height lockable door and charcoal corrugated steel walls",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a kiosk with a lift-up serving hatch and a side door. The size, front and fittings of your shop follow its approved layout.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-elevated-view.webp",
+        alt: "Elevated view of the portable shop kiosk — illustrative render of the corrugated steel roof, two open serving hatches with counters and the lockable side door, on a paved courtyard",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-rear-elevation.webp",
+        alt: "Rear elevation of the portable shop kiosk — illustrative render of the closed charcoal corrugated steel walls with corner castings under a pitched roof",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Manufacturers in Krishnagiri Industrial Area",
+    tagline: "Readymade shop cabins, tea stalls and retail kiosks, built to order for shopkeepers and food businesses",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shops, retail kiosks and readymade shop cabins for small businesses, commercial establishments and industrial locations in Krishnagiri.",
+      "Our portable shop cabins can be customized with rolling shutters, display windows, serving counters, shelves, lighting and branding to suit different businesses.",
+      "Whether you need a compact petty shop, tea stall, fruit stall, mobile accessories shop or a larger retail cabin, we can help plan a practical layout.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Why Choose a Portable Shop?",
+    whyIntro:
+      "A portable shop is built as a finished cabin in our factory and then brought to your plot. What that gives a shopkeeper:",
+    whyBullets: [
+      { title: "Prefabricated construction", text: "the cabin is fabricated in the factory while your plot is prepared, instead of being built on site." },
+      { title: "Customizable dimensions", text: "the length, width and front are chosen for your trade and the space you have." },
+      { title: "Relocation possibilities", text: "the cabin can be lifted and moved to another prepared site when its design, its condition and the access at both sites allow." },
+      { title: "Reduced on-site construction work", text: "the work at your plot is mainly the base, the unloading and the service connections." },
+      { title: "Professional storefront appearance", text: "a finished front with display glazing or serving windows, signage and your colours." },
+      { title: "Flexible interior fittings", text: "shelves, counters, racks and lighting arranged around what you sell." },
+      { title: "Different exterior finish options", text: "painted steel sheet, insulated panels or a container-style exterior, chosen before fabrication." },
+    ],
+    whyOutro:
+      "A portable shop still needs a suitable base, an electricity connection and, for food businesses, water and drainage. The permissions for your business and site, and road access for delivery, must be in place before it can open.",
+
+    solutionsHeading: "Portable Shop Designs",
+    solutionsIntro:
+      "Each design is built to order; its size, front and fittings are confirmed in the approved layout and quotation.",
+    solutions: [
+      {
+        title: "Petty Shop / Bunk Shop",
+        text: "A compact prefabricated shop cabin for daily essentials, packaged snacks, bottled drinks, mobile recharges and small retail operations. It can be fitted with a rolling shutter, a counter, shelving and electrical points.",
+        link: { label: "Compare portable cabin sizes", href: "/products/portable-cabin/sizes-and-dimensions" },
+      },
+      {
+        title: "Tea Stall and Snack Kiosk",
+        text: "A portable tea stall cabin with a service counter, a display area and space for suitable equipment. A food preparation layout has to allow for ventilation, water, electrical safety and the fire requirements that apply.",
+        link: { label: "Container cafe and takeaway kiosk formats", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Fast Food and Juice Counter",
+        text: "A prefabricated food kiosk that can include washable surfaces, a service counter, sink provisions and suitable ventilation, planned around the equipment you will use.",
+      },
+      {
+        title: "Mobile and Recharge Shop",
+        text: "A portable retail cabin with glass display panels, lockable storage, lighting and power points for billing equipment.",
+        link: { label: "See the glazed 10 ft × 10 ft Portable Shop Cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Fruit and Mango Stall",
+        text: "A portable fruit shop cabin with display shelves, shading and secure closing arrangements. In a district known for its mangoes, a stall like this can serve the mango season as well as year-round fruit trade.",
+      },
+      {
+        title: "Convenience Store / Mini Supermarket",
+        text: "A larger prefabricated shop layout with shelving, a billing counter, storage and space for refrigeration equipment, where the electrical load and ventilation are designed for it.",
+        link: { label: "Plan the shop layout and interior", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Pharmacy Kiosk",
+        text: "A portable retail unit that may be configured for pharmacy use, subject to the applicable licensing, temperature-control and storage requirements. The cabin itself does not grant any pharmacy approval: the licence, and the conditions it sets for the premises, remain the operator's responsibility.",
+        link: { label: "Insulation and cooling options", href: "/products/portable-cabin/insulation-and-cooling" },
+      },
+      {
+        title: "Container Shop",
+        text: "A retail shop conversion using a shipping container structure, with engineered openings, shutters, display windows and branding. Openings in a container's walls have to be designed for the structure, so the front is fixed before fabrication starts.",
+        link: { label: "Shipping containers in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+      },
+    ],
+
+    featuresHeading: "Permissions and Site Preparation",
+    featuresIntro:
+      "Before the cabin is delivered, check these with the landowner, the local body and the other authorities concerned:",
+    features: [
+      "Landowner consent to place and run the shop",
+      "Local body permission for the structure and the trade",
+      "Highway setback and access restrictions on plots along NH 44, NH 48 and other roads",
+      "The commercial operating licences your business needs",
+      "Food safety registration or licence where you sell food",
+      "An electricity connection sized for the shop's load",
+      "Fire safety and ventilation requirements, especially where there is cooking",
+      "A suitable level base, with drainage away from the cabin",
+      "Safe access for the truck and the lifting equipment that unload the cabin",
+    ],
+    sizesNote:
+      "A portable shop does not automatically exempt a business from any permission. Obtaining the approvals that apply to your site and trade is the owner's responsibility; we can share the cabin's layout drawing to support your applications.",
+
+    customHeading: "Portable Shop Price in Krishnagiri",
+    customIntro: "Each shop is priced from its specification. The main factors:",
+    customBullets: [
+      { title: "Shop size", text: "the outside dimensions and the floor area." },
+      { title: "Construction", text: "MS, PUF panel or shipping container structure." },
+      { title: "Shopfront", text: "a rolling shutter, glass frontage or serving windows." },
+      { title: "Shelving and counters", text: "the racks, shelves and counters you need." },
+      { title: "Electrical fittings", text: "lights, sockets and the load for your equipment." },
+      { title: "Sink and ventilation", text: "water, drainage and exhaust provisions for a food kiosk." },
+      { title: "Exterior branding", text: "colours, signage and graphics." },
+      { title: "Transportation", text: "the distance and route to your site." },
+      { title: "Site installation", text: "the base, unloading and connections in the agreed scope." },
+    ],
+    customOutro:
+      "Send your shop type, size, front, fittings and delivery location through the contact form, by phone or on WhatsApp, and we will prepare a written quotation that lists the specification, the inclusions and the applicable charges.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "Buying from the manufacturer means one team plans, builds and delivers your shop:",
+    whyUsBullets: [
+      { title: "Custom shop layouts", text: "the front, counter and shelving planned around your trade." },
+      { title: "Multiple cabin sizes", text: "from compact kiosks to larger retail cabins." },
+      { title: "MS and PUF construction options", text: "chosen for the use and the exposure." },
+      { title: "Shopfront customization", text: "a rolling shutter, a glazed display front or serving windows." },
+      { title: "Interior fitting options", text: "shelves, counters, lighting and sockets, as specified." },
+      { title: "Branding possibilities", text: "your colours, logo and signage on the exterior." },
+      { title: "Direct quotation", text: "a written quotation from the manufacturer for your specification." },
+      { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+    ],
+
+    areasHeading: "Shop Deliveries Around Krishnagiri",
+    areasText:
+      "We welcome portable shop enquiries from Krishnagiri town, the Krishnagiri industrial area and SIPCOT Kurubarapalli, and from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai and the KRP Dam area. Shopkeepers in Shoolagiri, Hosur and Dharmapuri, and on plots along NH 44 and NH 48, can enquire too. Share the exact site address; the route, transport and unloading arrangements are confirmed in the quotation.",
+
+    howHeading: "Delivery and Setup",
+    howIntro: "How a shop order moves from your first message to a cabin on site:",
+    howSteps: [
+      { title: "Your requirement", text: "you share the shop type, preferred size and site location." },
+      { title: "Layout and fittings", text: "the front, counters, shelving and electrical and water provisions are discussed." },
+      { title: "Quotation", text: "a written quotation is prepared for the agreed layout." },
+      { title: "Order confirmation", text: "you confirm the order and its specification." },
+      { title: "Manufacturing", text: "the shop cabin is built at our factory." },
+      { title: "Delivery and unloading", text: "transport and unloading are arranged with you." },
+      { title: "Placement", text: "the cabin is set on a suitable prepared base." },
+      { title: "Utilities and fit-out", text: "the connections and any remaining fit-out are completed as agreed in the order." },
+    ],
+    howOutro:
+      "When the shop can open depends on the base, the connections, your permissions and your own fit-out. Manufacturing and delivery dates are confirmed with the order, not promised in advance.",
+
+    extraSections: [
+      {
+        heading: "Suitable Locations and Applications",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Portable shops suit places where a small business needs a lockable, presentable unit on a plot it is allowed to use. Around Krishnagiri, typical locations include:",
+        ],
+        bullets: [
+          { title: "Factory gate commercial areas", text: "tea stalls, snack counters and daily-needs shops for workers near factory entrances." },
+          { title: "SIPCOT Kurubarapalli", text: "shops and food counters for the industrial park's workforce, where the estate and the plot owner allow them." },
+          { title: "NH 44 and NH 48", text: "roadside shops and food outlets on plots where the setback, access and land-use rules permit trading." },
+          { title: "Bus stand and town commercial areas", text: "petty shops, recharge counters and fruit stalls in Krishnagiri town and its market areas." },
+          { title: "College and hospital campuses", text: "canteen counters, stationery shops and pharmacy kiosks, with the campus's own approval." },
+          { title: "Apartment and residential layouts", text: "convenience stores and grocery counters for residents." },
+          { title: "Exhibitions and festivals", text: "temporary stalls that can be lifted out after the event, where access allows." },
+          { title: "Agricultural and fruit-selling locations", text: "mango and fruit stalls near orchards, markets and roadside selling points." },
+        ],
+        closing: [
+          "Footfall and sales depend on the location and the business, not on the cabin, and no location here guarantees trade. Every location needs the landowner's consent and the permissions listed below.",
+        ],
+      },
+      {
+        heading: "Portable Shop Features",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Our standard 10 ft × 10 ft Portable Shop Cabin comes with a glazed display front, a lockable entrance door, flooring, internal wiring and LED lights. On every other design, the fittings below are chosen for your trade and listed in the quotation:",
+        ],
+        bullets: [
+          { title: "Front exterior", text: "rolling shutter, glass display front, serving window, shade awning and exterior signage." },
+          { title: "Interior", text: "shelves and display racks, a billing counter, electrical sockets, LED lighting and storage cabinets." },
+          { title: "Food kiosk options", text: "a sink connection, exhaust and ventilation provisions, washable surfaces and space for suitable equipment." },
+        ],
+        closing: [
+          "On the standard cabin, a rolling shutter, shelves, a sales counter, AC and signage are added on quotation. Anything not listed in your approved specification is not included.",
+        ],
+      },
+      {
+        heading: "Portable Shop Sizes",
+        placement: "afterSolutions",
+        paragraphs: ["Start from what you sell and how many people work inside. Indicative starting points:"],
+        table: {
+          caption:
+            "All dimensions are indicative. Manufacturing availability, usable internal dimensions and structural requirements are confirmed before quotation.",
+          headers: ["Indicative size", "Typical application"],
+          rows: [
+            ["6 × 4 ft", "Small recharge kiosk"],
+            ["8 × 6 ft", "Tea stall or petty shop"],
+            ["10 × 8 ft", "Fruit stall or mobile shop"],
+            ["20 × 8 ft", "Food counter or retail shop"],
+            ["20 × 10 ft and above", "Larger convenience shop"],
+          ],
+        },
+        closing: [
+          "The usable space inside is smaller than the outside dimensions because of the wall thickness. A food kiosk also needs room for its equipment, a sink and safe movement behind the counter.",
+        ],
+      },
+      {
+        heading: "Shop Construction Materials",
+        placement: "afterSolutions",
+        paragraphs: ["The structure is chosen for the use, the exposure and the budget:"],
+        table: {
+          caption: "Material options. The frame, wall and roof build of your shop is confirmed in the approved specification.",
+          // Short header words keep the three columns inside a 320 px phone without a sideways scroll.
+          headers: ["Material", "Build", "Suited to"],
+          rows: [
+            ["MS", "Mild steel with a protective finish", "General retail shops"],
+            ["PUF panels", "Insulated sandwich panels", "Shops that need better thermal control"],
+            ["Shipping container", "A reused or modified cargo container", "Container shops"],
+          ],
+        },
+        closing: [
+          "Insulated panels reduce heat gain through the walls and roof, but they do not hold a refrigeration temperature on their own; refrigerated display or storage needs suitable equipment and a design for it.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What is the price of a portable shop in Krishnagiri?",
+        answer:
+          "It depends on the size, MS, PUF or container construction, the shutter or glass front, shelving and counters, electrical fittings, any sink and ventilation provisions, branding, transport and installation. Share your shop type, size and site location and we will send a written quotation.",
+      },
+      {
+        question: "Can a portable shop be relocated?",
+        answer:
+          "Yes, if the shop cabin's design and condition permit it. The services are disconnected first, and the move needs suitable lifting equipment, a truck, road access and a prepared base at the new site. The permissions for the old site do not carry over to the new one.",
+      },
+      {
+        question: "What size is suitable for a tea stall?",
+        answer:
+          "Around 8 × 6 ft is a common starting point for a tea stall or petty shop. The final size depends on your equipment, the number of people working inside and the counter length, and it is confirmed in your layout.",
+      },
+      {
+        question: "Can a shop have a rolling shutter and glass display?",
+        answer:
+          "Yes. A rolling shutter, a glass display front or a combination of the two can be specified, and the arrangement is confirmed in your approved layout. Our standard 10 ft × 10 ft Portable Shop Cabin has a glazed front with a lockable door; a shutter is added on quotation.",
+      },
+      {
+        question: "Do I need permission to install a portable shop?",
+        answer:
+          "Usually, yes. You need the landowner's consent and, depending on the site and the trade, local body permission, a commercial licence, food safety registration for a food business, and compliance with highway setback, electrical and fire requirements. A portable cabin does not exempt a business from these.",
+      },
+      {
+        question: "Can a food kiosk include a sink and exhaust fan?",
+        answer:
+          "Yes. A sink with water inlet and drain provisions, an exhaust fan and washable surfaces can be specified. The water supply, the wastewater drainage and the ventilation for your cooking equipment must suit the site and the requirements that apply.",
+      },
+      {
+        question: "What is the difference between a container shop and an MS portable shop?",
+        answer:
+          "A container shop is converted from a shipping container structure, with openings engineered into its corrugated steel walls for the front and windows. An MS portable shop is fabricated as a new cabin on a mild steel frame, so its size and front are designed from the start. The choice depends on the look you want, the size, the front and your budget.",
+      },
+      {
+        question: "How long does manufacturing and delivery take?",
+        answer:
+          "It depends on the design, the fittings, the quantity, the production schedule and how ready your site is. The schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Start Your Shop in Krishnagiri",
+    ctaText: `Looking for a portable tea stall, petty shop, retail kiosk, fruit stall or customized shop cabin? Share your business type, preferred size, shopfront design, fittings and delivery location to request a quotation. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Shipping Container in Krishnagiri", href: "/products/shipping-container-in-krishnagiri" },
+      { label: "Cargo and Storage Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+      { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
+        { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk design with lift-up serving hatches; the coffee machine and jars are shown for illustration, other shop designs look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
   },
 ];
 
