@@ -248,6 +248,7 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
     locationLinks: [
       ...promotionLocations("portable-toilet-cabin"),
       { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { name: "Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
     ],
     guideLinks: [
       {

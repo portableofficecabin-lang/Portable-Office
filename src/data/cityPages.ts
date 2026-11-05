@@ -19863,7 +19863,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Around Krishnagiri",
     areasText:
-      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri, Hosur and Dharmapuri, and from sites along NH 44 and NH 48. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
+      "Along with Krishnagiri town and SIPCOT Kurubarapalli, we welcome delivery enquiries from Kaveripattinam, Bargur, Pochampalli, Mathur, Uthangarai, Veppanapalli, Rayakottai, the KRP Dam area, Shoolagiri and Hosur, and from sites along NH 44 and NH 48. For Dharmapuri, see the nearby service areas below. Share your exact site location; delivery feasibility, transport and unloading charges are confirmed in the quotation.",
 
     howHeading: "Delivery and Installation",
     howIntro: "How an order moves from enquiry to installation:",
@@ -20048,6 +20048,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        // Dharmapuri's own portable-toilet page (2026-11-05): Dharmapuri left this page's areas list for it.
+        { label: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -20801,6 +20803,384 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk design with lift-up serving hatches; the coffee machine and jars are shown for illustration, other shop designs look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABIN MANUFACTURERS IN DHARMAPURI INDUSTRIAL AREA — the portable-toilet intent for
+   * Dharmapuri town, the Dharmapuri industrial area and the SIPCOT industrial park being developed at
+   * Adhagapadi (Tamil Nadu): toilet points for road, drainage and pipeline crews, shared blocks for
+   * vendor clusters, factory-construction blocks, heat and water planning. It owns "toilet cabin +
+   * Dharmapuri" (and Adhiyamankottai / Nallampalli, which get no page of their own). The Krishnagiri
+   * toilet page keeps Krishnagiri and no longer lists Dharmapuri as a delivery town (no-cannibalisation
+   * rule); the two pages link to each other.
+   *
+   * Owner brief of 2026-11-05 ("Portable Toilet Cabin Manufacturers in Dharmapuri Industrial Area"):
+   * the preferred /cities-we-serve/ slug (no other Dharmapuri toilet route exists), meta title (63
+   * chars), meta description and H1 verbatim. Park checked on 2026-11-05: SIPCOT lists "Adhagapadi
+   * Phase I, Dharmapuri" among its upcoming parks, and the environmental clearance covers Adhagapadi
+   * (Dharmapuri taluk) and Adhiyamankottai, Thadangam and Balajangamanahalli (Nallampalli taluk); it is
+   * named as "being developed", with no area figure and no claim that any factory operates there. The
+   * brief is section guidance; the text is written from it, with its caveats, and is not copied from
+   * the Krishnagiri page. Mapped onto the template slots in the brief's order wherever it allows:
+   *   1 Hero → tagline, intro (four paragraphs), heroCta (Request Quote, Call, WhatsApp).
+   *   2 Project phases → why, as a table (`whyTable`, empty whyBullets) + whyOutro. Four cells are
+   *     reworded ("arrangement" → "setup", "contractor" → "builder", "distributed" and "multi-cubicle"
+   *     spelled out) so the three columns fit a 320 px screen without sideways scrolling.
+   *   3 Road and pipeline crews → solutions (the six options as H3s; the relocation caveat is the
+   *     last one; no "moved in minutes", no trailer-mounted toilet).
+   *   4 Shared vendor-park blocks, 5 Comfort table, 6 Heat and Water (two H2s, one per subsection) →
+   *     extra sections with `placement: "afterSolutions"`. Waterless urinals left out (not confirmed).
+   *   7 Types → features (ten types; FRP and trailer-mounted toilets left out, owner decision of
+   *     2026-11-05 on unconfirmed toilet types) + the built-to-order note.
+   *   8 Choosing an arrangement → industries (the "not statutory fixture counts" caveat in the intro).
+   *   9 Price → custom (cost factors), beside the rear view.
+   *   10 Rental → left out: toilet rental in Dharmapuri is not confirmed (brief: remove), so no rental
+   *     section, keyword, FAQ, link or default "on rent" button.
+   *   11 Ordering → how; 12 Areas → areas, as delivery enquiries; 13 Why us → whyUs (the template
+   *     renders whyUs and areas before how). 14 FAQs: the brief's eight. 15 CTA → CTA + enquiryForm.
+   * Owner wording rules: no ₹, no lead time, no fixture-count rule, no superlatives; specifications are
+   * options confirmed in the quotation; SIPCOT is named nominatively, with the non-affiliation note.
+   *
+   * Images: three owner-dropped 1200×896 webp files ("public/images/Dharmapuri Industrial Area portable
+   * toilet city page/Dharmapuri Industrial Area/cabin (1–3).webp", 87–96 KB, no EXIF/XMP/ICC; source
+   * not stated), copied byte-for-byte under descriptive names: (1) front with both doors open = hero /
+   * og:image, no caption; (2) three-quarter view = the feature band; (3) rear view = beside the price
+   * section. They show one green two-seater cabin (one Western, one Indian seat); the alt texts,
+   * captions and disclaimer call them illustrative images, and no image text names Dharmapuri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-dharmapuri",
+    city: "Dharmapuri",
+    listTitle: "Portable Toilet Cabins in Dharmapuri",
+    metaTitle: "Portable Toilet Cabin in Dharmapuri | SIPCOT Site Toilet Blocks",
+    metaDescription:
+      "Portable toilet cabins in Dharmapuri for SIPCOT projects, road crews, industrial sites and vendor parks. Explore insulated, multi-seat and water-saving options.",
+    keywords:
+      "Portable Toilet Cabin in Dharmapuri, Portable Toilet Dharmapuri, Mobile Toilet Dharmapuri Industrial Area, Toilet Cabin SIPCOT Dharmapuri, Portable Toilet Cabin Manufacturers in Dharmapuri, Portable Toilet Suppliers Dharmapuri, Portable Toilet Adhiyamankottai, Toilet Block Nallampalli, Portable Toilet Cabin Price in Dharmapuri, Prefabricated Toilet Block Dharmapuri",
+    geo: { region: "IN-TN", placename: "Dharmapuri, Tamil Nadu, India", position: "12.1211;78.1582", icbm: "12.1211, 78.1582" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-dharmapuri/double-portable-toilet-cabin-front-doors-open.webp",
+      alt: "Double portable toilet cabin with both doors open — illustrative image of a green corrugated steel cabin with rounded top corners, a Western commode with a health faucet in one cubicle and an Indian squat pan in the other, each with a wall-mounted cistern",
+      width: 1200,
+      height: 896,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-dharmapuri/double-portable-toilet-cabin-three-quarter-view.webp",
+      alt: "Double portable toilet cabin — illustrative three-quarter image of the green corrugated steel cabin with two separate light-grey doors, a curved roof edge and a louvred ventilation panel high on the side wall",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image of a double cabin with separate doors and a side ventilation louvre. Panels, fittings and ventilation follow the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-dharmapuri/double-portable-toilet-cabin-rear-view.webp",
+      alt: "Rear view of the double portable toilet cabin — illustrative image of the closed green corrugated steel rear wall with rounded top corners and a small square fitting near the roof line",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative image of the same cabin from the rear. Panel finish, vents and service-connection positions are fixed in the approved drawing.",
+    },
+
+    h1: "Portable Toilet Cabin Manufacturers in Dharmapuri Industrial Area",
+    tagline: "Toilet Cabins and Sanitation Blocks for Industrial Park Works, Road Crews and Factory Sites",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable toilet cabins and sanitation blocks for industrial, construction and commercial requirements in Dharmapuri and the surrounding areas.",
+      "Industrial park development, infrastructure works and factory construction can need sanitation facilities at several work locations at the same time.",
+      "Portable toilet cabins give construction crews, contractors, industrial workers and temporary project facilities a flexible way to provide them.",
+      "Depending on the project, a cabin may include one or more toilet cubicles, handwash facilities, water storage, a waste holding tank and insulated construction.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Toilet Facilities for Different Project Phases",
+    whyIntro: "An industrial development needs different sanitation arrangements as construction moves forward:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Project phases and the toilet arrangements they may call for. Each site's arrangement follows its own workforce, access, water and requirements.",
+      headers: ["Project phase", "Typical work", "Possible toilet setup"],
+      rows: [
+        ["Infrastructure development", "Roads, drains, water lines and utilities", "Compact toilet points near active work areas"],
+        ["Factory construction", "Several vendor and builder sites", "Toilet blocks spread across the site, with handwash facilities"],
+        ["Industrial operations", "Staff, visitors and shift workers", "Suitable sanitation blocks with several cubicles"],
+      ],
+    },
+    whyOutro:
+      "Base the arrangement on your actual workforce numbers, site access, water availability and the requirements that apply to the project.",
+
+    solutionsHeading: "Portable Toilets for Road and Pipeline Crews",
+    solutionsIntro:
+      "Road construction, drainage and pipeline work can move across several locations. Instead of relying on one distant toilet block, a project may consider smaller sanitation points near the active work areas. Possible options include:",
+    solutions: [
+      {
+        title: "Single Toilet Cabins",
+        text: "A one-cubicle cabin for a small crew at a single work front, placed where workers can reach it safely.",
+        link: { label: "Portable toilet cabin types and options", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Double Toilet Cabins",
+        text: "Two cubicles with separate doors in one portable structure, for a larger crew or for separate use by women and men where the layout allows.",
+        link: { label: "Browse all portable toilet cabins", href: "/products/category/portable-toilet-cabins" },
+      },
+      {
+        title: "Compact Handwash Stations",
+        text: "A small handwashing unit set beside the toilet point and supplied from the water available at that work front.",
+      },
+      {
+        title: "Water Storage Arrangements",
+        text: "Refillable tanks for work fronts without a piped supply, sized for the crew and the planned refill frequency.",
+      },
+      {
+        title: "Waste Holding Tanks",
+        text: "A suitable holding tank where there is no sewer or septic connection, emptied through an authorised servicing arrangement.",
+      },
+      {
+        title: "Relocatable Cabin Configurations",
+        text: "Where approved, a cabin may be repositioned as the work moves on. Whether and how it can be moved depends on its design, its lifting provisions, the condition of its tank, transport access and the safe disconnection of water, drainage and power.",
+      },
+    ],
+
+    featuresHeading: "Portable Toilet Cabin Types",
+    featuresIntro: "Configurations you can discuss with us for a Dharmapuri project:",
+    features: [
+      "Single toilet cabin: a compact unit for smaller teams or remote work locations",
+      "Double toilet cabin: two toilet cubicles within one portable structure",
+      "Multi-seater toilet block: a larger unit for sites with higher sanitation demand",
+      "Shared toilet block: a multi-cubicle arrangement for an approved shared-use location",
+      "Ladies toilet cabin: a privacy-focused unit with suitable sanitary fittings",
+      "Urinal cabin: a prefabricated unit with urinal fixtures",
+      "Handwash station: a separate multi-tap handwashing facility",
+      "Toilet and bathing cabin: a combined sanitation unit for suitable worker accommodation sites",
+      "MS toilet cabin: steel-framed prefabricated construction",
+      "PUF toilet cabin: insulated prefabricated construction",
+    ],
+    sizesNote:
+      "Every configuration is made to order: its size, materials, fittings and cubicle count are set out in the specification you approve with the quotation.",
+
+    industriesHeading: "Choosing a Toilet Arrangement",
+    industriesIntro:
+      "Examples of where a project might start. They are not statutory fixture-count recommendations; final quantities are for your site and compliance teams to decide.",
+    industries: [
+      {
+        title: "Road construction team",
+        text: "compact toilet facilities near the active work location, with safe access and planned servicing.",
+      },
+      {
+        title: "Pipeline team working at multiple locations",
+        text: "sanitation arrangements for each active work front, subject to workforce numbers and legal requirements.",
+      },
+      {
+        title: "Vendor cluster under construction",
+        text: "shared or individual toilet blocks, according to the approved site arrangement.",
+      },
+      {
+        title: "Large factory construction site",
+        text: "several toilet blocks, separate facilities for women and men, and suitable handwash points.",
+      },
+      {
+        title: "Operating industrial facility",
+        text: "sanitation capacity assessed against staffing, shift arrangements and the requirements that apply.",
+      },
+    ],
+
+    customHeading: "Portable Toilet Cabin Price in Dharmapuri",
+    customIntro: "There is no single price list: each cabin is quoted for its own configuration. The price depends on:",
+    customBullets: [
+      { title: "Dimensions", text: "the size of the cabin." },
+      { title: "Toilet cubicles", text: "how many cubicles it has." },
+      { title: "Urinals", text: "how many urinals are included." },
+      { title: "Material", text: "MS, PUF or another available build." },
+      { title: "Insulation", text: "the insulation the site needs." },
+      { title: "Ventilation", text: "vents and any exhaust fans." },
+      { title: "Water storage", text: "the tank capacity." },
+      { title: "Waste holding tanks", text: "where the site needs them." },
+      { title: "Handwash fittings", text: "basins or multi-tap stations." },
+      { title: "Plumbing", text: "inlets, outlets and internal pipework." },
+      { title: "Delivery and unloading", text: "the route to your site and how the cabin is unloaded." },
+      { title: "Order quantity", text: "the number of cabins ordered." },
+    ],
+    customOutro:
+      "Send these details with your enquiry to receive a written quotation. Prices, discounts and delivery dates are fixed only in the confirmed quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What we bring to a sanitation project in the Dharmapuri area:",
+    whyUsBullets: [
+      { title: "Customizable configurations", text: "toilet cabin layouts planned around your site." },
+      { title: "Single and multi-cubicle options", text: "from one cubicle to larger blocks." },
+      { title: "MS and insulated construction", text: "steel-framed cabins, with PUF insulation where it is specified." },
+      { title: "Handwash and bathing arrangements", text: "basins, multi-tap stations and combined toilet-and-bathing units." },
+      { title: "Water and wastewater provisions", text: "tank, inlet and outlet provisions for your supply and your waste arrangement." },
+      { title: "Industrial and construction-site applications", text: "cabins configured for industrial projects and construction sites." },
+      { title: "Quotation support", text: "help turning your requirements into a specification and a written quotation." },
+      { title: "Delivery coordination", text: "transport and unloading arranged with your site team ahead of dispatch." },
+    ],
+
+    areasHeading: "Areas Served Around Dharmapuri",
+    areasText:
+      "We welcome delivery enquiries from Dharmapuri town and the Dharmapuri industrial area, including the SIPCOT industrial park being developed across Adhagapadi, Adhiyamankottai, Thadangam and Balajangamanahalli, and from Nallampalli, Thoppur, Palacode, Karimangalam, Pennagaram, Harur, Morappur, Pappireddipatti and sites along the NH 44 corridor. Share your exact site location; delivery feasibility, transport and unloading are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howIntro: "From your first enquiry to delivery on site:",
+    howSteps: [
+      { title: "Share project requirements", text: "workforce numbers, site location, project type and the number of active work areas." },
+      { title: "Discuss the sanitation layout", text: "toilet cubicles, handwash facilities, separate arrangements and possible placement." },
+      { title: "Confirm utilities", text: "water availability, waste handling, tank requirements and drainage." },
+      { title: "Approve the quotation", text: "specifications, commercial terms and delivery requirements are finalised." },
+      { title: "Manufacture", text: "the approved toilet cabin configuration is fabricated." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with the site's readiness." },
+    ],
+    howOutro:
+      "Delivery dates are confirmed with the order and depend on the configuration, the quantity and when the site is ready to receive the cabins.",
+
+    extraSections: [
+      {
+        heading: "Shared Toilet Blocks for Vendor Parks",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Industrial vendor clusters may benefit from shared sanitation facilities, where this is permitted and properly managed. Possible arrangements include:",
+        ],
+        bullets: [
+          { title: "Multi-seater toilet blocks", text: "several cubicles in one prefabricated structure." },
+          { title: "Separate ladies facilities", text: "private sanitation facilities in a suitable, safely reached location." },
+          { title: "Urinal cabins", text: "additional facilities where they suit the workforce." },
+          { title: "Handwash stations", text: "multi-tap handwashing units with suitable water and drainage connections." },
+          { title: "Shared maintenance arrangements", text: "cleaning, water supply and waste-management responsibilities clearly assigned." },
+        ],
+        closing: [
+          "A shared block has to be evaluated against the applicable regulations, the workforce, accessibility needs and the site operator's rules. It does not automatically replace the toilets that individual workplaces are legally required to provide.",
+        ],
+      },
+      {
+        heading: "Making Site Toilets Practical and Comfortable",
+        placement: "afterSolutions",
+        paragraphs: ["Common concerns about site toilets, and the design or operational points that address each one:"],
+        table: {
+          caption: "Common concerns about site toilets and the matching design or operational consideration.",
+          headers: ["Common concern", "Design or operational consideration"],
+          rows: [
+            ["Odour", "Ventilation and regular cleaning"],
+            ["Poor lighting", "Suitable interior and approach lighting"],
+            ["Limited water", "Properly sized refillable water storage"],
+            ["Long queues", "Adequate fixture capacity"],
+            ["Lack of privacy", "Solid doors and functioning locks"],
+            ["Excessive walking distance", "Suitable distribution of toilet points"],
+            ["Women's safety and privacy", "Separate facilities and safe access"],
+            ["High internal temperatures", "Insulation, shading and ventilation"],
+          ],
+        },
+        closing: [
+          "No design on its own removes odour, heat or sanitation problems: actual comfort and hygiene depend on the design, the installation and the maintenance that follows.",
+        ],
+      },
+      {
+        heading: "Toilet Cabins for Dharmapuri's Heat and Dry Conditions",
+        placement: "afterSolutions",
+        paragraphs: ["Hot weather affects how usable a closed cabin is through the day. Heat management options include:"],
+        bullets: [
+          { title: "PUF insulation", text: "PUF-insulated walls and roofing." },
+          { title: "High-level ventilation", text: "suitable vents placed high on the walls." },
+          { title: "Light-coloured exterior", text: "a lighter external finish." },
+          { title: "Shaded placement", text: "siting the cabin in shade where practical." },
+          { title: "Air circulation", text: "appropriate air movement through the cubicles." },
+        ],
+        closing: ["Insulation can reduce heat transfer, but it does not guarantee a particular indoor temperature."],
+      },
+      {
+        heading: "Water-Efficient Sanitation",
+        placement: "afterSolutions",
+        paragraphs: ["Where water comes from storage or by tanker, plan how much the toilets will use. Options include:"],
+        bullets: [
+          { title: "Low-flow taps", text: "for handwashing points." },
+          { title: "Water-efficient flushing fittings", text: "suitable fittings for the chosen seat type." },
+          { title: "Properly sized storage tanks", text: "matched to the users and the refill plan." },
+          { title: "Planned tanker refills", text: "a refill schedule agreed before the cabins are in use." },
+        ],
+        closing: [
+          "The seat type alone does not decide water use: an Indian pan does not use less water in every installation. Size the tank from the expected number of users, the fixture specifications, cleaning needs and how often it can be refilled.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can portable toilet cabins be used for road construction crews?",
+        answer:
+          "Yes. Portable toilet cabins can provide sanitation near road construction work areas when they are designed and serviced appropriately, with water, waste handling and cleaning planned for each location.",
+      },
+      {
+        question: "What is a shared toilet block?",
+        answer:
+          "It is a sanitation block intended for multiple approved users or neighbouring work areas, with defined access, cleaning and maintenance responsibilities.",
+      },
+      {
+        question: "Are insulated toilet cabins suitable for hot weather?",
+        answer:
+          "Insulation can help reduce heat transfer, particularly when it is combined with ventilation and appropriate placement. It does not guarantee a particular indoor temperature.",
+      },
+      {
+        question: "Can a portable toilet operate without piped water?",
+        answer:
+          "Yes, with a suitable design: refillable water storage for flushing and handwashing, and an approved wastewater handling arrangement.",
+      },
+      {
+        question: "Can toilet cabins be relocated during construction?",
+        answer:
+          "Some cabins can be relocated, subject to their structural design, lifting arrangements and site access, and to the safe disconnection of water and drainage before the move.",
+      },
+      {
+        question: "Can you provide separate toilet facilities for women workers?",
+        answer:
+          "Separate sanitation cabin configurations can be discussed according to the approved layout and the available fittings.",
+      },
+      {
+        question: "Can portable toilet cabins include handwash stations?",
+        answer:
+          "Handwash basins or separate handwash stations can be included where offered and where suitable water and drainage utilities are available.",
+      },
+      {
+        question: "How quickly can portable toilet cabins be delivered to a Dharmapuri site?",
+        answer:
+          "Delivery timelines depend on the selected design, the quantity, the manufacturing workload, transport and site readiness. The schedule is confirmed with your order.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Toilet Cabin Quote in Dharmapuri",
+    ctaText: `Planning sanitation facilities for an industrial project, road construction crew, factory site or vendor cluster? Share your site location, workforce requirements, preferred toilet configuration and water availability. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons (one is "on rent").
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Request a Toilet Cabin Quote for Dharmapuri",
+      intro:
+        "Tell us your site location, workforce size, the toilet configuration you have in mind and how water will be supplied. Our sales team will confirm the details with you before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "All Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Portable Toilet Cabin Types and Options", href: "/products/portable-toilet-cabin" },
+      { label: "4-Unit Portable Toilet Block", href: "/products/portable-toilet-block-4-unit" },
+      { label: "Portable Cabin with Attached Toilet and Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Prefab Labour Colony", href: "/products/labour-colony" },
+      { label: "Workmen Accommodation Camps", href: "/products/workmen-accommodation" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabins Across Tamil Nadu", href: "/promotions/portable-toilet-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Toilet Cabins in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Container Office in Mettur, Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Dharmapuri district. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, cubicle counts, sizes, materials, insulation, fittings, water storage, plumbing and waste provisions described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative images of one double toilet cabin design with one Western and one Indian seat; other configurations look different, and the images are not photographs of installations in Dharmapuri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial park at Adhagapadi are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, contractor or company there, and the project phases, uses and places described here are not clients, completed projects or confirmed delivery areas. The notes on sanitation planning, shared facilities, heat, water use and wastewater are general guidance, not engineering, public-health or legal advice; fixture quantities and wastewater handling must meet the requirements that apply to each site.`,
   },
 ];
 
