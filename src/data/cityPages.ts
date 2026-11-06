@@ -3131,6 +3131,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Containers and Container Shops in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Sugarcane Juice and Roadside Kiosks in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
+        // Nanjangud's shop page (#209, live 2026-11-05) — the brief's location-specific link; it links back here.
+        { label: "Shop Rows and Festival Stalls in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
