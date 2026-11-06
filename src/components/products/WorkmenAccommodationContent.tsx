@@ -307,7 +307,6 @@ export const WorkmenAccommodationContent = () => {
             { icon: Building2, label: "Portable site offices for engineers & managers" },
             { icon: Users, label: "Modular kitchens, dining halls & container cafés" },
             { icon: Shield, label: "Portable toilets & bath blocks (multi-cubicle)" },
-            { icon: Wrench, label: "Handwash stations with sewage solutions" },
             { icon: Truck, label: "Security guard rooms & rooftop sheds" },
           ].map((item) => (
             <div key={item.label} className="flex items-start gap-3 bg-card rounded-xl p-4 shadow-card border border-border">
