@@ -69,6 +69,12 @@ export interface CityPageSection {
    */
   closing?: string[];
   /**
+   * Optional contextual links rendered as a short list after the closing paragraphs (first used by
+   * Shipping Containers in Shivamogga, whose sizes table points at the matching product pages).
+   * Unset = nothing rendered.
+   */
+  links?: CityPageLink[];
+  /**
    * Optional position of the section. Unset = after the "how" steps, where every extra section has
    * always rendered. "afterSolutions" renders it straight after the solutions list instead (first used
    * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
@@ -96,6 +102,12 @@ export interface CityPageEnquiryForm {
   noun: string;
   heading: string;
   intro: string;
+  /**
+   * Optional: leave the category's monthly-rental models out of the form's model list (first used by
+   * Shipping Containers in Shivamogga, where rental is not offered). The API still accepts any model
+   * of the category. Unset = every model, as before.
+   */
+  excludeRentalModels?: boolean;
 }
 
 export interface CityPage {
@@ -147,8 +159,12 @@ export interface CityPage {
    * visible line under it, e.g. to mark a render as illustrative; unset = no caption, as before.
    */
   interiorImage?: { src: string; alt: string; width: number; height: number; caption?: string };
-  /** Optional gallery (rendered as a grid after the features section). */
-  gallery?: { src: string; alt: string; width: number; height: number }[];
+  /**
+   * Optional gallery (rendered as a grid after the features section). `caption` (optional) renders a
+   * visible line under that image, e.g. to mark a render as illustrative (first used by Shipping
+   * Containers in Shivamogga); unset = no caption, as before.
+   */
+  gallery?: { src: string; alt: string; width: number; height: number; caption?: string }[];
 
   h1: string;
   tagline: string;
@@ -189,6 +205,12 @@ export interface CityPage {
   customIntro: string;
   customBullets: CityPageListItem[];
   customOutro: string;
+  /**
+   * Optional contextual links rendered as a short list after `customOutro` (first used by Shipping
+   * Containers in Shivamogga, which points retail and office conversions at their own pages).
+   * Unset = nothing rendered.
+   */
+  customLinks?: CityPageLink[];
 
   /**
    * The "why us" section. Optional since 2026-10-21 on the same terms as the industries section:
@@ -12994,6 +13016,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
+      // Sibling page for the same estate, different product (shipping / storage containers), 2026-11-05.
+      { label: "Shipping Containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
@@ -15000,6 +15024,405 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Athipattu or Tiruvallur district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The photographs show a representative dry shipping container, not a unit at a site in Athipattu. Dimensions and weights on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. Ennore, Kattupalli, Vallur and other locations are named only to describe the service area: Portable Office Cabin is not affiliated with any port, terminal, shipping line, container freight station or power plant operator. Notes on certification, export and local permissions are general guidance, not legal or survey advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS IN SHIVAMOGGA — Machenahalli / Nidige (KIADB) industrial area, Malnad.
+   *
+   * Owner brief of 2026-11-05 (meta title, meta description, H1 and the preferred URL used as
+   * given). The URL has no "-in-", so cityFamily() was widened to "shipping-container-" to keep the
+   * page in the shipping-container family: directory card, Karnataka sibling links both ways.
+   * The draft's fourteen sections mapped onto the fixed template slots, nothing dropped:
+   *   • Hero → tagline + intro (four paragraphs), heroCta row (quote / call / WhatsApp).
+   *   • "Why Choose Portable Office Cabin?" → why (the slot after the hero), its seven verified
+   *     capabilities as bullets, the "no guaranteed grades, stock or dates" rule as whyOutro.
+   *   • "Storage Applications Around Shivamogga" (five H3s) → solutions, kept as H3s.
+   *   • "Shipping Container Sizes" table, "Container Conditions and Grades" and "Malnad Monsoon and
+   *     Container Condensation" → three afterSolutions extra sections, in the draft's order; the
+   *     sizes section links each size to its catalogue page (new optional `links`).
+   *   • "Agricultural and Bagged Goods Storage" → features (seven practices), food-safety line →
+   *     sizesNote.
+   *   • "Shipping Container Modifications" → custom, beside the interior render; "Related
+   *     Applications" → customOutro + the new optional `customLinks` (retail → portable shop cabin,
+   *     office → container office) so this storage page does not compete with either.
+   *   • "Areas Served" → areas, framed as enquiries with delivery confirmed per site.
+   *   • "Delivery and Site Preparation" → how (six steps); "Shipping Container Price in Shivamogga"
+   *     → an extra section after the steps; FAQs (eight) → faqs; final CTA → CTA + enquiry form.
+   *   • "Shipping Container Rental" is OMITTED, as the brief instructs, because rental in
+   *     Shivamogga is not a confirmed service; no rental claim or link appears on the page.
+   * No ₹ figure, no stock, lead time, certification, pallet count or delivery-coverage claim.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage / ISO / 20 ft / 40 ft container × Shivamogga,
+   * Shimoga, Machenahalli, Nidige. The Shivamogga portable-shop page (portable-office-be) keeps
+   * portable shop / container shop; the Machenahalli page keeps portable cabins.
+   *
+   * Images: five owner-dropped webp renders ("public/images/shivamogga cargo shipping container city
+   * page/Shivamogga, Machenahalli, Nidige, Karnataka/cabin (1–5).webp", 1200×896 and 1451×1084 ×4, no
+   * EXIF / XMP / ICC metadata), copied byte-for-byte to descriptive names. They show one
+   * charcoal-grey 20 ft dry container. Alt text describes each render without a place name, every
+   * image carries an "illustrative render" caption, and the disclaimer says none is a photograph of
+   * a container in Shivamogga.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-shivamogga-machenahalli",
+    city: "Shivamogga",
+    listTitle: "Shipping Container in Shivamogga",
+    metaTitle: "Shipping Container in Shivamogga | 20ft & 40ft Cargo Containers",
+    metaDescription:
+      "Explore new and used shipping containers in Shivamogga (Shimoga). 20ft and 40ft cargo containers for industrial storage, areca stock and Machenahalli sites.",
+    keywords:
+      "Shipping Container in Shivamogga, Cargo Container Shivamogga, Shipping Container Shimoga, Shipping Container for Sale in Shivamogga, Used Shipping Container Shivamogga, Storage Container Machenahalli Industrial Area, Shipping Container Nidige, ISO Container Shivamogga, Shipping Container Suppliers in Shivamogga, Shipping Container Dealers Shivamogga, 20ft Container Shivamogga, 40ft Container Shivamogga, Shipping Container Price in Shivamogga",
+    geo: {
+      region: "IN-KA",
+      placename: "Machenahalli Industrial Area, Shivamogga, Karnataka, India",
+      position: "13.8990;75.6300",
+      icbm: "13.8990, 75.6300",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+
+    heroImage: {
+      src: "/images/cities/shipping-container-shivamogga-machenahalli/20ft-shipping-container.webp",
+      alt: "20 ft steel shipping container with cargo doors, illustrative render: charcoal-grey corrugated side wall, corner castings and two cargo doors with four locking bars, cam handles and a central lockbox, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a 20 ft dry shipping container. The grade, condition and finish of a supplied container are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-shivamogga-machenahalli/shipping-container-roof-view.webp",
+      alt: "Roof of a 20 ft shipping container seen from above, illustrative render: corrugated steel roof panel, top corner castings and the cargo-door end, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render. In the monsoon, check the roof, door seals and drainage regularly: a container that keeps rain out can still collect condensation inside.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-shivamogga-machenahalli/shipping-container-interior.webp",
+      alt: "Interior of an empty steel shipping container with both cargo doors open, illustrative render: corrugated steel walls and roof and a plywood floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty, unmodified container interior. Shelving, lining, ventilation and lighting are added only as agreed in the specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-shivamogga-machenahalli/shipping-container-rear-doors.webp",
+        alt: "Shipping container rear doors, illustrative render: two charcoal-grey cargo doors with four vertical locking bars, cam handles, hinges and a central lockbox between the corner castings",
+        width: 1451,
+        height: 1084,
+        caption: "Rear cargo doors with four locking bars and a central lockbox. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-container-shivamogga-machenahalli/20ft-shipping-container-blind-end.webp",
+        alt: "Blind end and side wall of a 20 ft shipping container, illustrative render: corrugated steel end panel between the corner posts, corner castings and the long corrugated side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Blind end and side wall of a 20 ft container. Illustrative render.",
+      },
+    ],
+
+    h1: "Shipping Container & Cargo Container Suppliers in Shivamogga, Machenahalli Industrial Area",
+    tagline: "New and used 20 ft and 40 ft cargo containers for industrial, agricultural and site storage around Machenahalli and Nidige.",
+    intro: [
+      "Portable Office Cabin supplies shipping containers and cargo storage containers for industrial, agricultural, commercial and construction-related requirements in Shivamogga (Shimoga) and surrounding areas.",
+      "Shipping containers can be used for secure equipment storage, foundry patterns, agricultural stock, spare parts, construction materials and other suitable goods.",
+      "Customers can enquire about 20 ft, 40 ft and high-cube container options, subject to current availability and specifications.",
+      "We help customers evaluate container dimensions, condition, modifications and delivery requirements before placing an order.",
+    ],
+
+    whyHeading: "Why Choose Portable Office Cabin for Shipping Containers in Shivamogga?",
+    whyIntro: "What you can expect when you enquire about a container for a site in or around Shivamogga:",
+    whyBullets: [
+      {
+        title: "Container size selection",
+        text: "help comparing 20 ft, 40 ft and high-cube containers against your goods, racks and available space.",
+      },
+      {
+        title: "Condition and specification",
+        text: "a discussion of new, one-trip, cargo-worthy, wind-and-watertight and used options; ask for photographs and condition details of the unit offered.",
+      },
+      {
+        title: "Industrial storage applications",
+        text: "matching the container to what you need to store, from foundry patterns and spares to packaged goods, site tools and records.",
+      },
+      {
+        title: "Modification options",
+        text: "lockboxes, ventilation, insulation, doors, shelving, lighting and other work, each confirmed in the specification.",
+      },
+      {
+        title: "Quotation support",
+        text: "a quotation that identifies the container, its condition, any modifications, GST, transport and unloading.",
+      },
+      { title: "Delivery coordination", text: "transport and lifting arranged for your site and scheduled around access and weather." },
+      {
+        title: "Site-access planning",
+        text: "road access, ground conditions, overhead clearance and placement reviewed before delivery.",
+      },
+    ],
+    whyOutro:
+      "Container grades, certification, stock and delivery dates are not guaranteed in advance: each is confirmed for the specific unit in its quotation.",
+
+    solutionsHeading: "Storage Applications Around Shivamogga",
+    solutionsIntro:
+      "Common uses for a shipping container around Shivamogga and the Nidige–Machenahalli industrial area. Whether a container suits your goods depends on what they are, how they are packed and the moisture controls in place.",
+    solutions: [
+      {
+        title: "Foundry Pattern and Equipment Storage",
+        text: "Manufacturing facilities may require secure storage for patterns, spare parts, tools and maintenance equipment. A suitable shipping container can provide a lockable storage area with optional shelving and organised access. For moisture-sensitive patterns, consider insulation, ventilation and humidity control.",
+      },
+      {
+        title: "Areca Nut and Agricultural Stock",
+        text: "Farmers and traders may consider containers for storing suitable packaged agricultural goods. However, moisture, temperature and ventilation must be carefully managed: a standard unmodified steel container is not automatically suitable for long-term produce storage.",
+      },
+      {
+        title: "Bagged Starch and Other Packaged Goods",
+        text: "Containers can provide enclosed storage for appropriately packaged goods. Use suitable pallets, floor protection, ventilation and moisture-control arrangements according to the material being stored.",
+      },
+      {
+        title: "Construction Site Storage",
+        text: "A shipping container may be used for storing tools, fittings and other suitable equipment at construction sites.",
+      },
+      {
+        title: "Records and Archive Storage",
+        text: "A modified container can provide document storage with shelving, insulation and suitable humidity management. Safe archival conditions need an environmental-control design suited to the records; a container alone does not provide them.",
+      },
+    ],
+
+    featuresHeading: "Agricultural and Bagged Goods Storage",
+    featuresIntro: "Good practice when storing agricultural or bagged goods in a container:",
+    features: [
+      "Confirm that the goods are suitable for container storage.",
+      "Inspect the container's previous use and condition.",
+      "Check the floor treatment and any potential contamination.",
+      "Use suitable pallets or protective flooring.",
+      "Maintain the ventilation and humidity levels the goods require.",
+      "Inspect stored goods regularly.",
+      "Use appropriate pest-control and food-safety practices.",
+    ],
+    sizesNote: "For food-related materials, do not assume that a used cargo container is food-safe.",
+
+    customHeading: "Shipping Container Modifications",
+    customIntro:
+      "Possible modifications, each subject to the container, the approved specification and confirmation in the quotation:",
+    customBullets: [
+      { text: "Security lockbox" },
+      { text: "Ventilation openings" },
+      { text: "Roof ventilators" },
+      { text: "Insulation lining" },
+      { text: "Personnel access door" },
+      { text: "Rolling shutter" },
+      { text: "Shelving and racks" },
+      { text: "Electrical lighting" },
+      { text: "Power points" },
+      { text: "Loading ramp" },
+      { text: "Exterior repainting" },
+    ],
+    customOutro:
+      "All structural openings and modifications must be assessed for their effect on the container's strength and safe use. This page covers storage containers; for a retail conversion or for office accommodation, see these pages instead:",
+    customLinks: [
+      { label: "Portable shop cabins for retail conversions", href: "/products/portable-shop-cabin" },
+      { label: "Container offices for office accommodation", href: "/products/container-office" },
+    ],
+
+    areasHeading: "Areas Served Around Shivamogga",
+    areasText:
+      "We accept shipping container enquiries from Shivamogga (Shimoga) and nearby Malnad locations, including Machenahalli, Nidige, the KIADB Nidige–Machenahalli Industrial Area, Mandli Kallur, Sogane, the Shivamogga Airport area, the Shivamogga–Bhadravathi Road, Bhadravathi, Holehonnur, Ayanur, Kumsi and Gajanur. Delivery to each site depends on the route, site access and the transport and lifting equipment available, and is confirmed with its charges in the quotation.",
+
+    howHeading: "Delivery and Site Preparation",
+    howIntro: "Plan these points before the delivery date is fixed:",
+    howSteps: [
+      { title: "Access road", text: "Verify that the transport vehicle can reach the site and turn safely." },
+      { title: "Ground conditions", text: "Check soil stability and wet-weather access." },
+      { title: "Overhead clearance", text: "Check for electrical lines, trees and other obstructions." },
+      {
+        title: "Supporting base",
+        text: "Arrange an engineered, level and adequately drained supporting surface appropriate to the container and its load.",
+      },
+      {
+        title: "Unloading",
+        text: "Confirm crane, Hydra or other approved lifting requirements with the transport provider.",
+      },
+      {
+        title: "Placement",
+        text: "Check the door-opening direction, drainage and access requirements before final positioning.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Approximate figures for the common container types. Actual dimensions, payload limits and usable capacity vary by manufacturer and model, so confirm them for the specific container before planning your storage.",
+        ],
+        table: {
+          // The owner's four columns (type, approximate internal length, approximate capacity, typical
+          // application) as three: length and capacity share a column so the table fits a 320 px phone
+          // without a sideways scroll (four columns need about 420 px). Every figure is kept; "approximate"
+          // moves to the caption and the paragraph above.
+          caption:
+            "All figures are approximate. The specific container's documentation and identification plate give its actual dimensions and ratings.",
+          headers: ["Container type", "Internal length and capacity", "Typical application"],
+          rows: [
+            ["20 ft standard", "5.9 m; 33 m³", "Tools, equipment and smaller storage requirements"],
+            ["40 ft standard", "12.0 m; 67 m³", "Larger industrial and warehouse storage"],
+            ["40 ft high cube", "12.0 m; 76 m³", "Taller racks and bulkier goods"],
+            ["10 ft container", "Varies", "Compact storage, where a 10 ft unit is available"],
+          ],
+        },
+        closing: [
+          "How many pallets fit depends on the pallet dimensions, the stacking arrangement, the container's specification and its permitted load, so work it out for your own goods rather than relying on a standard count. Specifications of the containers in our catalogue:",
+        ],
+        links: [
+          { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+          { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+          { label: "Cargo storage containers: 20 ft, 40 ft and high-cube dimensions", href: "/products/cargo-storage-containers" },
+        ],
+      },
+      {
+        heading: "Container Conditions and Grades",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Shipping containers are offered in different conditions. Before you order, review the actual photographs, condition report and agreed specification of the unit offered.",
+        ],
+        bullets: [
+          {
+            title: "New or one-trip",
+            text: "containers generally showing limited shipping use, subject to their actual condition and inspection.",
+          },
+          {
+            title: "Cargo-worthy",
+            text: "used containers assessed as suitable for cargo transport under the applicable inspection requirements. A container is described as certified only when valid supporting documentation is available.",
+          },
+          {
+            title: "Wind and watertight",
+            text: "used containers intended to provide weather-resistant storage, subject to inspection and actual condition. Wind-and-watertight status does not by itself mean cargo-worthy certification.",
+          },
+          {
+            title: "Used shipping containers",
+            text: "used containers may show dents, repainting, repairs and surface corrosion.",
+          },
+        ],
+      },
+      {
+        heading: "Malnad Monsoon and Container Condensation",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Shivamogga's seasonal rainfall and humidity make moisture management important for container storage.",
+          "Even a container that keeps rainwater out can develop condensation inside, for example when its steel walls and roof cool at night in humid weather. Measures to discuss for your goods:",
+        ],
+        bullets: [
+          { title: "Ventilation", text: "vents or roof ventilators suited to the goods stored." },
+          { title: "Insulation", text: "lining options that reduce condensation on the steel." },
+          { title: "Desiccants", text: "moisture absorbers suited to the space and the goods." },
+          { title: "Humidity monitoring", text: "regular checks of the humidity inside the container." },
+          { title: "Palletised storage", text: "goods kept off the floor on pallets." },
+          { title: "Separation from the steel", text: "a gap between the goods and the walls and roof." },
+          { title: "Regular inspection", text: "checks of the goods and the container's interior, especially through the monsoon." },
+          { title: "Roof and door-seal maintenance", text: "a roof kept clear of standing water and door seals kept in good condition." },
+        ],
+        closing: [
+          "Ventilation alone will not eliminate condensation, and moisture protection for agricultural produce, paper or electronics cannot be guaranteed without a suitably engineered storage solution.",
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Shivamogga",
+        paragraphs: ["The price of a shipping container in Shivamogga depends on:"],
+        bullets: [
+          { text: "Container size" },
+          { text: "Standard or high-cube specification" },
+          { text: "New or used condition" },
+          { text: "Inspection and certification requirements" },
+          { text: "Modification work" },
+          { text: "Protective finishing" },
+          { text: "Delivery distance" },
+          { text: "Loading and unloading arrangements" },
+          { text: "Site accessibility" },
+          { text: "Current container market conditions" },
+        ],
+        closing: [
+          "Prices, availability and delivery dates are not published on this page. Share your requirement through the form below or a quotation request, and the quotation will confirm the container, its condition, any modifications, GST, transport and unloading.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I store areca nut in a shipping container?",
+        answer:
+          "A container may be considered for suitable packaged agricultural goods, but moisture control, ventilation, cleanliness and product-specific storage requirements must be assessed first.",
+      },
+      {
+        question: "Will a shipping container rust in Shivamogga's rainy conditions?",
+        answer:
+          "Shipping containers are designed for demanding transport environments, but corrosion can still occur. Coating condition, drainage and maintenance are important.",
+      },
+      {
+        question: "Can a shipping container be delivered during the monsoon?",
+        answer: "Delivery depends on road access, ground conditions, weather and transport availability.",
+      },
+      {
+        question: "How many pallets fit in a 20ft container?",
+        answer: "Capacity depends on pallet dimensions, stacking arrangements, container specifications and permitted load.",
+      },
+      {
+        question: "Can I place a container in the Machenahalli industrial area?",
+        answer: "Placement depends on landowner consent, applicable KIADB conditions and local permissions.",
+      },
+      {
+        question: "Is a used shipping container suitable for food-grain storage?",
+        answer:
+          "Not automatically. Previous cargo history, floor treatment, contamination risks and storage conditions must be evaluated.",
+      },
+      {
+        question: "Can a container have a lockbox?",
+        answer: "Lockboxes can be added to suitable containers where offered as part of the approved specification.",
+      },
+      {
+        question: "How quickly can a shipping container be delivered?",
+        answer: "Timelines depend on stock, condition, modifications, transport arrangements and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quote in Shivamogga",
+    ctaText: `Need a 20 ft container for equipment storage, a 40 ft container for industrial stock or a modified cargo container for your site? Share your preferred size, condition, intended use and delivery location. Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the form below.`,
+    ctaButtonLabel: "Request Container Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Choose a container, enter the quantity and your delivery location in or around Shivamogga, and add the condition, intended use and any modifications. Our sales team will reply to confirm the details before sending a written quotation.",
+      // Rental is not offered in Shivamogga (brief, section 10), so the rental model is left out of the list.
+      excludeRentalModels: true,
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby locations",
+      links: [
+        { label: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
+        { label: "Container Office in Haveri", href: "/cities-we-serve/container-office-in-haveri" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Shivamogga, Machenahalli, Nidige or Bhadravathi. Containers are supplied subject to availability: the size, grade, condition, certification and modifications of each unit, and its delivery and unloading arrangements, are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative 20 ft dry shipping container; they are not photographs of a container supplied to, or placed in, Shivamogga or Machenahalli. Dimensions and capacities on this page are approximate; the ratings that apply are those on the specific container's identification plate and documentation. KIADB, the Nidige–Machenahalli Industrial Area and Shivamogga Airport are named only to describe the location; Portable Office Cabin is not affiliated with KIADB, any industrial estate or any airport operator, and the uses and places described here are not clients, completed projects or confirmed delivery areas. Notes on storage, moisture, condensation, food safety, site preparation and permissions are general guidance, not engineering, food-safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
