@@ -3146,6 +3146,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Truck-Driver and Highway Kiosks in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -8942,6 +8943,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF Panels: Material Guide", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
       { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Portable Shops in Shivamogga's Machenahalli Area", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Shop Cabins for Hebbal's Office Areas, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -12917,6 +12920,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin (10 × 10 ft)", href: "/products/portable-shop-cabin" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "NH 48 Kiosks and Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Shipping and Cargo Containers", href: "/products/category/cargo-storage-shipping-containers" },
       { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
