@@ -311,6 +311,15 @@ const nextConfig: NextConfig = {
       // Other legacy aliases that point at the canonical short slugs / products.
       { source: "/products/shipping-container", destination: "/products/shipping-container-for-sale", statusCode: 301 },
       { source: "/products/cargo-storage-container-shipping-container", destination: "/products/20ft-40ft-storage-container-corten-steel", statusCode: 301 },
+      // ── Verified 404 / soft-404 repairs (owner instruction 2026-11-04) ─────────
+      // /products/used-shipping-container-for-sale never had a product record (no catalogue entry,
+      // no database row) and 404'd; the Container Cafe page linked to it from 2026-10-18. The
+      // category page lists the used and refurbished 20 ft containers for sale.
+      { source: "/products/used-shipping-container-for-sale", destination: "/products/category/cargo-storage-shipping-containers", statusCode: 301 },
+      // Database-only duplicate categories with 0 products (src/data/retiredCategories.ts, which
+      // also keeps them out of the rendered category lists; its test keeps this list in step).
+      { source: "/products/category/portable-toilets", destination: "/products/category/portable-toilet-cabins", statusCode: 301 },
+      { source: "/products/category/site-offices", destination: "/products/category/site-office-containers", statusCode: 301 },
       // ── City-page aliases ──────────────────────────────────────────────────
       // The Kudankulam page went live as /cities-we-serve/container-office-in-kudankulam-tirunelveli
       // (#138). The shorter /cities-we-serve/container-office-in-kudankulam (the never-published first
