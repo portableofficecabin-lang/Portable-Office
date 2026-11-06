@@ -142,17 +142,21 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
      than the column. Below the `sm` breakpoint the cells use px-3 and the row headers may wrap, so a
      three-column table fits a 320–430 px phone instead of hiding its last column behind a sideways
      scroll (2026-11-04, Portable Toilets in Krishnagiri); from `sm` up the markup looks exactly as
-     before. */
+     before. On phones narrower than 390 px the table also uses 12 px text and 6 px side padding
+     (`max-[389px]:text-xs` / `max-[389px]:px-1.5`): whole words such as "Commissioning" and
+     "access-control" otherwise set each column's minimum width, and two security-cabin tables still
+     scrolled sideways at 320–360 px (2026-11-06). Words are never broken mid-word. From 390 px up
+     the markup renders exactly as before. */
   const renderTable = (table: CityPageTable) => (
     <div className={`mb-4 overflow-x-auto rounded-xl border${mc("reveal")}`}>
-      <table className="w-full border-collapse text-left text-sm">
-        <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4">
+      <table className="w-full border-collapse text-left text-sm max-[389px]:text-xs">
+        <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4 max-[389px]:px-1.5">
           {table.caption}
         </caption>
         <thead className="bg-muted/50">
           <tr>
             {table.headers.map((hd) => (
-              <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4">
+              <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4 max-[389px]:px-1.5">
                 {hd}
               </th>
             ))}
@@ -161,11 +165,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <tbody>
           {table.rows.map((row) => (
             <tr key={row[0]} className="border-t">
-              <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4">
+              <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4 max-[389px]:px-1.5">
                 {row[0]}
               </th>
               {row.slice(1).map((cell, j) => (
-                <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4">
+                <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4 max-[389px]:px-1.5">
                   {cell}
                 </td>
               ))}
