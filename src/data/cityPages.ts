@@ -22893,9 +22893,13 @@ export const CITY_PAGES: CityPage[] = [
    * city page/Krishnagiri Industrial Area portable shop/cabin (1–4).webp", 97–224 KB, no
    * EXIF/XMP/ICC) copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero
    * / og:image, no caption; (4) front elevation = the feature band, captioned; (2) elevated view and
-   * (3) rear elevation, 1451×1084 = two-image gallery after the permissions list. They show one
-   * container-style kiosk with lift-up serving hatches. The alt texts, caption and disclaimer say they
-   * are illustrative renders, and no alt text names Krishnagiri.
+   * (3) rear elevation, 1451×1084 = two-image gallery after the permissions list. They show a
+   * container-style kiosk concept with lift-up serving hatches. The alt texts, caption and disclaimer say
+   * they are illustrative renders, and no alt text names Krishnagiri.
+   * Owner, 2026-11-05: the pictured design and the listed sizes are NOT confirmed manufacturing
+   * capabilities. The images are therefore called a concept, not a standard design; the sizes are
+   * planning examples; and no rental, FRP or towable-shop section is added without the owner's
+   * confirmation.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -22914,28 +22918,28 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-with-serving-hatches.webp",
-      alt: "Portable shop kiosk with two lift-up serving hatches — illustrative render of a charcoal container-style cabin with corrugated steel walls, timber-look hatch awnings on steel stays, a serving counter with a coffee machine and snack jars, and a lockable side door under an LED light strip",
+      alt: "Portable shop kiosk concept with two lift-up serving hatches — illustrative render of a charcoal container-style cabin with corrugated steel walls, timber-look hatch awnings on steel stays, a serving counter with a coffee machine and snack jars, and a lockable side door under an LED light strip",
       width: 1200,
       height: 896,
     },
     featureImage: {
       src: "/images/cities/portable-shop-krishnagiri/prefabricated-tea-stall-kiosk-front-elevation.webp",
-      alt: "Front elevation of a prefabricated tea stall kiosk — illustrative render with the serving hatch raised over a lit, timber-panelled counter holding a coffee machine and snack jars, a full-height lockable door and charcoal corrugated steel walls",
+      alt: "Front elevation of a tea stall kiosk concept — illustrative render with the serving hatch raised over a lit, timber-panelled counter holding a coffee machine and snack jars, a full-height lockable door and charcoal corrugated steel walls",
       width: 1451,
       height: 1084,
       caption:
-        "Illustrative render of a kiosk with a lift-up serving hatch and a side door. The size, front and fittings of your shop follow its approved layout.",
+        "Illustrative concept render, not a confirmed standard design. The design, size, front and fittings of your shop are confirmed in its approved layout and quotation.",
     },
     gallery: [
       {
         src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-elevated-view.webp",
-        alt: "Elevated view of the portable shop kiosk — illustrative render of the corrugated steel roof, two open serving hatches with counters and the lockable side door, on a paved courtyard",
+        alt: "Elevated view of the portable shop kiosk concept — illustrative render of the corrugated steel roof, two open serving hatches with counters and the lockable side door, on a paved courtyard",
         width: 1451,
         height: 1084,
       },
       {
         src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-rear-elevation.webp",
-        alt: "Rear elevation of the portable shop kiosk — illustrative render of the closed charcoal corrugated steel walls with corner castings under a pitched roof",
+        alt: "Rear elevation of the portable shop kiosk concept — illustrative render of the closed charcoal corrugated steel walls with corner castings under a pitched roof",
         width: 1451,
         height: 1084,
       },
@@ -23046,7 +23050,7 @@ export const CITY_PAGES: CityPage[] = [
     whyUsIntro: "Buying from the manufacturer means one team plans, builds and delivers your shop:",
     whyUsBullets: [
       { title: "Custom shop layouts", text: "the front, counter and shelving planned around your trade." },
-      { title: "Multiple cabin sizes", text: "from compact kiosks to larger retail cabins." },
+      { title: "Size planned per order", text: "the size is chosen for your trade, and the size that can be manufactured is confirmed in your quotation." },
       { title: "MS and PUF construction options", text: "chosen for the use and the exposure." },
       { title: "Shopfront customization", text: "a rolling shutter, a glazed display front or serving windows." },
       { title: "Interior fitting options", text: "shelves, counters, lighting and sockets, as specified." },
@@ -23113,7 +23117,9 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Portable Shop Sizes",
         placement: "afterSolutions",
-        paragraphs: ["Start from what you sell and how many people work inside. Indicative starting points:"],
+        paragraphs: [
+          "Start from what you sell and how many people work inside. The sizes below are planning examples, not a list of standard or confirmed sizes:",
+        ],
         table: {
           caption:
             "All dimensions are indicative. Manufacturing availability, usable internal dimensions and structural requirements are confirmed before quotation.",
@@ -23164,7 +23170,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "What size is suitable for a tea stall?",
         answer:
-          "Around 8 × 6 ft is a common starting point for a tea stall or petty shop. The final size depends on your equipment, the number of people working inside and the counter length, and it is confirmed in your layout.",
+          "As a planning example only, around 8 × 6 ft is a common starting point for a tea stall or petty shop; it is not a confirmed standard size. The size we can manufacture for your shop depends on your equipment, the number of people working inside and the counter length, and it is confirmed in your layout and quotation.",
       },
       {
         question: "Can a shop have a rolling shutter and glass display?",
@@ -23225,7 +23231,7 @@ export const CITY_PAGES: CityPage[] = [
       ],
     },
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk design with lift-up serving hatches; the coffee machine and jars are shown for illustration, other shop designs look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative concept renders of a container-style kiosk with lift-up serving hatches. The pictured design is not a confirmed standard product: the coffee machine and jars are shown for illustration, the design, size and fittings supplied are confirmed only in the approved drawing and quotation for each order, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE SECURITY CABINS IN SALEM — the security-cabin intent for Salem and the Salem Industrial
