@@ -1584,6 +1584,418 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN NANJANGUD — the portable-shop intent for Nanjangud (Nanjanagud), the KIADB
+   * Thandya Industrial Area at Thandavapura and the Mysuru–Thandya Special Investment Region, Mysuru
+   * district, Karnataka: portable shop cabins, retail kiosks, shop rows for landowners, festival and
+   * jatre stalls and NH 766 travel kiosks. A sibling of Container Office in Mysore (offices, which
+   * lists Nanjangud among its areas and links here) and Shipping Container in Mysore (storage), and of
+   * Portable Shop Cabins in Hebbal, Mysuru (#212, the city-wide Mysuru shop intent), linked from Nearby
+   * Locations. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Nanjangud Industrial Area"),
+   * mapped onto the template slots in the brief's order wherever the template allows (no template
+   * change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   2 Temple town and factory town → why (one titled bullet per side of the town); the brief's
+   *     "no guaranteed footfall" and gate/bus-stop rules are the whyOutro.
+   *   3 Shop rows for landowners → solutions: the brief's five h3s (retail cluster, straight row,
+   *     L-shaped row, facing rows, shared features), the toilet link on the shared-features card.
+   *   4 Festival, 5 NH 766, 6 Types and sizes, 7 Quality checklist, 8 Weather, 9 Permissions →
+   *     extra sections with `placement: "afterSolutions"`, in that order. As on Hoskote (#202, owner-
+   *     approved), every table size is a planning example subject to an approved drawing and
+   *     quotation; the only catalogue shop cabin is 10 ft × 10 ft. Three short column headers keep the
+   *     table inside a 320 px phone.
+   *   10 Price → features (the factors as a plain list), the quotation rule in the bold sizesNote,
+   *     then the two-image gallery. No ₹ anywhere.
+   *   11 Rental → OMITTED: no shop cabin is offered for rent (the rental page lists none). The
+   *     landowner letting units to tenants is kept apart from it, with no income promised.
+   *   14 Why choose → custom, beside the interior render (whyUs unset); 13 Areas → areas;
+   *   12 Ordering → how (the template renders areas before how); 15 the brief's eight FAQs;
+   *   16 CTA (Request Quote, Call, WhatsApp). No on-page form: shops sit in Portable Cabins, which
+   *   has no category landing copy, so the quote buttons go to the /contact form.
+   * Verified before naming (2026-11-05): the Mysuru–Thandya Special Investment Region was notified
+   * in February 2025 with KIADB as its authority; Thandya (Thandavapura), Immavu and Adakanahalli
+   * are KIADB industrial areas in Nanjangud taluk; NH 766 runs through Nanjangud and Gundlupet. The
+   * region's exact boundaries are not claimed. KIADB is named nominatively, with the non-affiliation
+   * note in the disclaimer. Left out as unverified: rental, timelines, Nanjangud installations,
+   * festival supply or hire, after-sales services and the "Rental Shop Cabin Units" keyword.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Nanjangud
+   * and Thandya. The Mysore pages target offices and storage, and Mysuru is not a keyword here.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Nanjangud Industrial Area portable shop
+   * city page/Nanjangud Industrial Area/cabin (1–5).webp", lossy VP8 with no EXIF/XMP/ICC chunk)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image;
+   * (2) front view = the feature band; (3) rear view and (4) roof view = the two-image gallery after
+   * the price factors; (5) general store interior, 1452×1083 = beside "Why Choose". They show one
+   * blue container-style shop cabin with a glazed display front, a timber-finish counter panel and a
+   * lockable door. Every alt text, both captions and the disclaimer say they are illustrative
+   * renders; no alt text or file name names Nanjangud.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-nanjangud",
+    city: "Nanjangud",
+    listTitle: "Portable Shop Cabins in Nanjangud",
+    metaTitle: "Portable Shop Cabin in Nanjangud | Shop Rows & Retail Kiosks",
+    metaDescription:
+      "Portable shop cabins in Nanjangud for Thandya industrial areas, retail shop rows, festival stalls and NH 766 kiosks. Explore custom sizes and layouts.",
+    keywords:
+      "Portable Shop Cabin in Nanjangud, Portable Shop Nanjangud, Readymade Shop Cabin Nanjangud, Prefabricated Shop Nanjangud, Kiosk Nanjangud Industrial Area, Shop Cabin Thandya Industrial Area, Portable Shop Cabin Manufacturers in Nanjangud, Portable Shop Suppliers Nanjangud, Portable Shop Cabin Price in Nanjangud, Festival Stall Cabin Nanjangud, Highway Kiosk Nanjangud",
+    geo: { region: "IN-KA", placename: "Nanjangud, Mysuru district, Karnataka, India", position: "12.1167;76.6833", icbm: "12.1167, 76.6833" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-three-quarter-view.webp",
+      alt: "Prefabricated portable shop cabin — illustrative render of a blue corrugated steel container-style shop with a four-pane glazed display window above a timber-finish counter panel, wooden shelves visible inside and a lockable ribbed steel door with a long pull handle, on a paved forecourt",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin configuration; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-front-view.webp",
+      alt: "Front view of a portable shop cabin — illustrative render of the glazed display window with wooden shelving behind it, a timber-finish counter panel with a narrow ledge and a full-height lockable steel door set in blue corrugated walls",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render: a glazed display front beside a lockable door. Your shop's front, counter and fittings are set in its approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-nanjangud/portable-general-store-cabin-interior.webp",
+      alt: "Interior of a portable general store cabin — illustrative render with wood-finish wall panels, open shelving and cabinets stocked with packaged snacks, bottled drinks and jars, a long counter under black-framed sliding windows, a navy lockable door and a grey floor",
+      width: 1452,
+      height: 1083,
+      caption:
+        "Illustrative portable shop cabin configuration; final fittings depend on approved specifications. The shelving, counter and stock are shown for illustration.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-rear-view.webp",
+        alt: "Rear view of the portable shop cabin — illustrative render of the closed blue corrugated steel walls between grey corner posts with corner castings, with no openings on this side",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-nanjangud/portable-shop-cabin-roof-view.webp",
+        alt: "Roof view of the portable shop cabin — illustrative elevated render of the corrugated steel roof between grey top rails, the glazed display window, the timber-finish counter panel and the lockable side door",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Nanjangud Industrial Area",
+    tagline:
+      "Retail kiosks, food counters and multi-unit shop rows, built at our factory near Hosur for shopkeepers and landowners in Nanjangud and around Thandya.",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for industrial, commercial and retail requirements in Nanjangud (also spelt Nanjanagud) and surrounding areas.",
+      "Nanjangud combines temple-town activity, industrial operations around Thandya, residential development and highway movement.",
+      "Portable shop cabins can be configured for general stores, food counters, cool drinks kiosks, two-wheeler accessory shops, photo and print counters, produce stalls and other permitted retail uses.",
+      "For landowners, multiple cabins can also be arranged as a planned shop row or retail cluster, subject to site suitability and approvals. Each cabin is fabricated at our factory at Kamandoddi, near Hosur, and brought to the site by road.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Temple Town and Factory Town",
+    whyIntro:
+      "Two kinds of retail demand meet in Nanjangud: visitors to a town known for its religious heritage and its temple, and the people working at the industrial facilities around Thandya. Shop cabins that may suit each:",
+    whyBullets: [
+      {
+        title: "Nanjangud temple town",
+        text: "cool drinks and ice cream kiosks, chaat and snack counters, banana and local produce stalls, flower and pooja-item shops, and photo and print kiosks.",
+      },
+      {
+        title: "Thandya Industrial Area",
+        text: "general stores, two-wheeler accessories shops, cool drinks and snacks kiosks, mobile accessory counters and daily essentials shops, at commercial locations that serve the industrial workforce.",
+      },
+    ],
+    whyOutro:
+      "Retail demand depends on the exact location, the season and the permissions, and no location guarantees footfall or sales. A cabin near a factory gate or a bus stop must also meet the access, land-use and safety requirements that apply there.",
+
+    solutionsHeading: "Portable Shop Rows for Landowners",
+    solutionsIntro:
+      "Several shop cabins on one plot can work as a small retail row, each unit locked and run separately. How a row can be planned:",
+    solutions: [
+      {
+        title: "Convert Suitable Land into a Planned Retail Cluster",
+        text: "Landowners with appropriately zoned and approved commercial land may consider arranging several portable shop cabins into a retail row: three or more independent units, depending on the plot dimensions and the approved plans. Potential benefits include independent lockable shop units, flexible shop layouts, a consistent exterior appearance, separate electrical arrangements, shared customer circulation and the possible relocation of suitable cabin designs. Rental income from the units is not guaranteed: it depends on demand, permissions, occupancy, operating costs and the lease arrangements.",
+        link: { label: "See our catalogue 10 ft × 10 ft shop cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Straight Shop Row",
+        text: "Cabins positioned side by side, with every shopfront facing an approved access area.",
+      },
+      {
+        title: "L-Shaped Shop Row",
+        text: "A configuration that may suit certain corner plots, with one arm of the row along each frontage.",
+      },
+      {
+        title: "Facing Shop Rows",
+        text: "Two lines of cabins arranged around a central pedestrian walkway, so that customers walk between the shopfronts.",
+      },
+      {
+        title: "Shared Shop Row Features",
+        text: "Possible features include individual rolling shutters, separate locks, individual electrical meter or sub-meter provisions, a shared canopy, common exterior lighting, uniform exterior colours, signage panels, a waste collection area, accessible pedestrian circulation and suitable toilet facilities. Electrical metering and utility connections must follow the applicable utility provider's rules, and the final shop-row layout must consider setbacks, fire access, sanitation, parking, accessibility and approvals.",
+        link: { label: "Portable toilet cabins for a shop row", href: "/products/portable-toilet-cabin" },
+      },
+    ],
+
+    featuresHeading: "Portable Shop Cabin Price in Nanjangud",
+    featuresIntro: "Each shop cabin is priced from its own specification. Pricing depends on:",
+    features: [
+      "Cabin dimensions",
+      "Number of units",
+      "MS or insulated construction",
+      "Front shutter or glass configuration",
+      "Retail counters",
+      "Shelving",
+      "Electrical fittings",
+      "Freezer and equipment provisions",
+      "Individual metering provisions",
+      "Shared canopies",
+      "Common lighting",
+      "Exterior branding",
+      "Delivery and unloading",
+    ],
+    sizesNote:
+      "Prices are given only in a written quotation. For a shop row, the quotation is prepared from the approved layout and each cabin's own specification.",
+
+    customHeading: "Why Choose Portable Office Cabin?",
+    customIntro: "What we offer a shopkeeper or landowner in Nanjangud, from the first layout to delivery:",
+    customBullets: [
+      { title: "Customized shop cabin dimensions", text: "each cabin sized for your trade and your plot through the approved drawing." },
+      { title: "Single retail kiosks", text: "compact cabins for one counter or one trade." },
+      { title: "Multi-unit shop-row configurations", text: "several cabins built to one approved layout for a planned row." },
+      { title: "Rolling shutter and glass-front options", text: "a shutter, a glazed display front or a serving window, chosen before fabrication." },
+      { title: "Retail counters and shelving", text: "billing counters, display racks and storage, as specified." },
+      { title: "Electrical and ventilation provisions", text: "lighting, sockets, equipment points and exhaust, to the approved design." },
+      { title: "Exterior branding options", text: "your colours, signage and graphics on the outside of the cabin." },
+      { title: "Weather-conscious construction", text: "roof drainage, sealing, finishes and canopies chosen for the site." },
+      { title: "Quotation support", text: "a written quotation from the manufacturer that lists the specification and the inclusions." },
+      { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+    ],
+    customOutro:
+      "We manufacture and deliver the cabins. Footfall, rental income and the date a shop can open depend on the location, the permissions and the owner's own fit-out, so none of them is promised.",
+
+    areasHeading: "Areas Served Around Nanjangud",
+    areasText:
+      "We accept portable shop enquiries from Nanjangud town and the Nanjangud Industrial Area, the KIADB industrial areas at Thandya (Thandavapura), Immavu and Adakanahalli and the wider Mysuru–Thandya Special Investment Region, and from Hullahalli, Hura, the villages along the Kabini, the NH 766 corridor and the Gundlupet direction. Share the exact site address: the route, the transport and the unloading arrangements are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your requirements", text: "the shop type, the number of cabins, the plot dimensions and the intended installation location." },
+      { title: "Discuss the layout", text: "individual cabin designs or a proposed shop-row arrangement." },
+      { title: "Confirm utilities", text: "the electrical requirements, and water, sanitation and drainage where relevant." },
+      { title: "Approve the quotation", text: "the specifications, commercial terms and delivery responsibilities are finalized." },
+      { title: "Manufacture", text: "the approved shop cabins are fabricated at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "The customer completes the applicable permissions and utility connections before the shops operate. Manufacturing and delivery dates are confirmed when the order is finalized.",
+
+    extraSections: [
+      {
+        heading: "Festival and Jatre Shop Cabins",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Nanjangud's religious festivals and jatres may create temporary retail requirements. Possible cabin uses include flower and pooja stalls, snack counters, beverage kiosks, souvenir shops and temporary retail counters.",
+          "Possible cabin features for a festival stall:",
+        ],
+        bullets: [
+          { text: "Lockable shutters" },
+          { text: "Weather-protected counters" },
+          { text: "Portable construction" },
+          { text: "A uniform exterior appearance across several stalls" },
+          { text: "Suitable electrical provisions" },
+        ],
+        closing: [
+          "Temporary placement depends on festival permissions, crowd-management requirements, access restrictions and site suitability. The shop cabins on this page are built to order for purchase, so plan a festival requirement well ahead; the manufacturing and delivery schedule is confirmed with the order, and moving a cabin after the event is a separate arrangement.",
+        ],
+      },
+      {
+        heading: "Highway Kiosks on NH 766",
+        placement: "afterSolutions",
+        paragraphs: [
+          "NH 766 runs through Nanjangud and on through Gundlupet towards Kerala. Approved commercial locations near the highway may support traveller-oriented retail: travel essentials kiosks, water and snack counters, banana and produce stalls, cool drinks kiosks, and tea and coffee counters.",
+          "Highway kiosk design considerations:",
+        ],
+        bullets: [
+          { text: "Safe customer access" },
+          { text: "Suitable parking arrangements" },
+          { text: "An appropriate setback from the road" },
+          { text: "Clear signage" },
+          { text: "Exterior lighting" },
+          { text: "Weather protection" },
+          { text: "Suitable waste collection" },
+        ],
+        closing: [
+          "Owning private land beside the highway does not by itself permit roadside commercial use. Verify the commercial land use, the road access, the setbacks and the relevant highway authority's requirements before planning a kiosk there.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Types and Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Planning examples for common shop types around Nanjangud. These are indicative planning sizes, not standard or stock products: each cabin is built only to an approved drawing and quotation.",
+        ],
+        table: {
+          caption:
+            "Planning examples only, subject to an approved drawing and quotation, which confirm the actual dimensions and whether the size can be manufactured. Final dimensions depend on the equipment, occupancy, circulation and utilities.",
+          headers: ["Shop type", "Planning size", "Possible features"],
+          rows: [
+            ["Photo and print kiosk", "6 × 4 ft", "Service window and printer sockets"],
+            ["Chaat counter", "8 × 6 ft", "Serving window and washable counter"],
+            ["Banana and produce stall", "8 × 6 ft", "Open front, awning and display shelving"],
+            ["Cool drinks kiosk", "10 × 8 ft", "Freezer provision and glass front"],
+            ["Two-wheeler accessories shop", "10 × 8 ft", "Wall racks and rolling shutter"],
+            ["Travel essentials kiosk", "10 × 8 ft", "Retail shelving and chiller provision"],
+            ["General store", "20 × 8 ft", "Shelving and billing counter"],
+            ["Shop row unit", "10 × 8 ft", "Individual shutter and electrical provisions"],
+          ],
+        },
+        closing: [
+          "Our catalogue Portable Shop Cabin is 10 ft × 10 ft, with a glazed front and a lockable door, and can be bought online on its product page. Every size in the table, and any other size, is built only to an approved drawing and quotation.",
+        ],
+      },
+      {
+        heading: "Shop Cabin Quality Checklist",
+        placement: "afterSolutions",
+        paragraphs: ["Points to check on any shop cabin before you buy it:"],
+        bullets: [
+          { title: "Structural frame", text: "weld quality, frame alignment and suitable corrosion protection." },
+          { title: "Roofing", text: "the roof joints, the drainage design and the weather sealing." },
+          { title: "Flooring", text: "a floor structure suitable for the expected equipment and storage loads." },
+          { title: "Rolling shutter", text: "the shutter specification, its operation and the locking arrangements." },
+          { title: "Electrical system", text: "wiring, circuit protection, earthing and socket provisions." },
+          { title: "Exterior finish", text: "paint, cladding, sealing and the maintenance they will need." },
+          { title: "Ventilation", text: "suitable airflow and any exhaust arrangement the shop requires." },
+          { title: "Delivery and installation", text: "transport access, lifting arrangements, base preparation and who is responsible for unloading." },
+        ],
+        closing: ["The actual specification of your cabin, covering each of these points, should be documented in the quotation."],
+      },
+      {
+        heading: "Weather Protection for Nanjangud",
+        placement: "afterSolutions",
+        paragraphs: ["Nanjangud experiences warm periods and seasonal rainfall. Possible design features include:"],
+        bullets: [
+          { text: "Properly sealed roof joints" },
+          { text: "A suitable roof slope and drainage" },
+          { text: "Corrosion-protective finishes" },
+          { text: "Weather-protected service windows" },
+          { text: "Canopies and awnings" },
+          { text: "An appropriate base elevation" },
+          { text: "Ventilation" },
+          { text: "Exterior lighting" },
+        ],
+        closing: [
+          "Weather performance depends on the actual design, the installation, the site drainage and maintenance. No cabin is promised to be completely waterproof or floodproof.",
+        ],
+      },
+      {
+        heading: "Permissions and Site Requirements",
+        placement: "afterSolutions",
+        paragraphs: ["Check these before a shop cabin is ordered for a particular site:"],
+        bullets: [
+          {
+            title: "Thandya Industrial Area",
+            text: "verify the permitted commercial use and the installation requirements with the industrial estate authority, KIADB (the Karnataka Industrial Areas Development Board).",
+          },
+          {
+            title: "Mysuru–Thandya Special Investment Region",
+            text: "confirm the region's current status, the authority responsible, the permitted land use and the site approvals before planning a shop there.",
+          },
+          {
+            title: "Temple surroundings",
+            text: "check with the local authority and the temple administration, including any heritage or crowd-management restrictions.",
+          },
+          { title: "NH 766", text: "verify the commercial land use, road access, setbacks and the highway authority's requirements." },
+          {
+            title: "Shop rows",
+            text: "check the building and planning permissions, fire access, sanitation, electricity, tenancy and commercial-use requirements.",
+          },
+          { title: "Food retail", text: "food businesses must obtain the applicable food safety registration or licence." },
+        ],
+        closing: [
+          "Portable Office Cabin manufactures the approved cabin configuration. Operating licences, registrations and site permissions remain the owner's responsibility; we can share the cabin's layout drawing to support your applications.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I arrange portable shop cabins into a rental shop row?",
+        answer:
+          "Multiple cabins can be planned as a retail row on suitable approved land, subject to the plot dimensions, utilities and local permissions. Letting the units to tenants is the landowner's own arrangement, and rental income is not guaranteed.",
+      },
+      {
+        question: "What types of shops may suit Nanjangud temple surroundings?",
+        answer:
+          "Flower, pooja-item, snack, beverage and souvenir kiosks are possible options at permitted locations, after the local authority's and the temple administration's restrictions have been checked.",
+      },
+      {
+        question: "What retail cabins may suit Thandya Industrial Area?",
+        answer:
+          "General stores, two-wheeler accessory shops and convenience kiosks may be considered according to local demand and approvals, at locations where commercial use is permitted.",
+      },
+      {
+        question: "Can shop cabins be used for jatre festival stalls?",
+        answer:
+          "Portable cabins may be suitable for approved temporary retail arrangements, depending on transport, installation and event permissions. Cabins are built to order, so plan the requirement well ahead of the festival.",
+      },
+      {
+        question: "What should I check before purchasing a shop cabin?",
+        answer:
+          "Review the structural frame, roofing, flooring, shutter, electrical fittings, ventilation and exterior finish, and make sure the quotation documents each of them.",
+      },
+      {
+        question: "Can I place a portable shop near NH 766?",
+        answer:
+          "Placement may be possible at a legally permitted site with suitable access and the relevant approvals. Owning land beside the highway does not by itself permit roadside trading.",
+      },
+      {
+        question: "Can a shop row have separate electrical provisions?",
+        answer:
+          "Individual electrical arrangements can be planned, subject to the approved design and the utility provider's requirements for meters and connections.",
+      },
+      {
+        question: "How quickly can portable shop cabins be delivered?",
+        answer:
+          "Manufacturing and delivery timelines depend on the design, quantity, workload, transport and site readiness, so the schedule is confirmed when the order is finalized.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Nanjangud",
+    ctaText: `Planning a retail kiosk at an approved commercial location, a shop serving Thandya industrial workers, a festival stall or a multi-unit shop row on your land? Share your shop type, number of units, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Food Kiosks", href: "/products/container-cafe-restaurant" },
+      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Cargo Containers for Container Shops", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+        { label: "Portable Shops in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Nanjangud or Mysuru district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop types, shop-row layouts, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples; the items supplied are confirmed in the approved drawing, specification and quotation for each order. The five images on this page are illustrative renders of one container-style shop cabin design with a glazed display front, outside and inside; the shelving and stock are shown for illustration, other shop designs look different, and the images are not photographs of manufactured units or of installations in Nanjangud. KIADB (the Karnataka Industrial Areas Development Board), its Thandya, Immavu and Adakanahalli industrial areas and the Mysuru–Thandya Special Investment Region are named only to describe locations; Portable Office Cabin is not affiliated with KIADB, any temple administration, the highway authority or any estate or company in the area. The places, festivals and highways named here describe typical uses and places we accept enquiries from, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall, sales or rental income. Permissions, licences, food safety registration, highway setbacks, utility connections and fire, sanitation and accessibility requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN MYSORE (MYSURU) — the Hootagalli / Koorgalli / Metagalli / Hebbal
    * industrial estates, the Nanjangud–Thandya–Adakanahalli belt, the Kadakola–Kochanahalli
    * electronics and logistics cluster, and the Outer Ring Road / Hunsur Road layouts.
@@ -1938,11 +2350,15 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Site Offices", href: "/products/category/site-office-containers" },
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Prefabricated Office Cabins", href: "/products/prefabricated-portable-cabin" },
+      { label: "Portable Shop Cabins in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
       { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
       { label: "Labour Accommodation Cabins", href: "/products/labour-colony" },
+      // Nanjangud's portable-shop page (2026-11-05), which links back from its nearby locations.
+      { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
       { label: "Container Office in Bangalore", href: "/promotions/container-office-in-bangalore" },
       { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+      { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
     ],
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, with its Bangalore office at Electronic City Phase 1, and does not operate a factory, office or service partner in Mysuru district; transport, unloading and installation are arranged for each project and delivery dates are confirmed at order acceptance. The images on this page show Portable Office Cabin's container office designs, including an optionally furnished interior, and are not photographs of installations in Mysore. Industrial areas, roads and institutions are named only to describe delivery locations. Permission and approval notes on this page are general guidance, not legal advice; the relevant local authority should be consulted before installation.",
@@ -2287,6 +2703,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
       { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
       { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+      { label: "Portable Shop and Kiosk Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
       { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
@@ -2295,6 +2712,430 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures portable cabins at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, container depot, office or service partner in Mysore. 20 ft and 40 ft shipping containers are supplied for sale and rental subject to availability; refrigerated, open-top and flat-rack containers are available on request, subject to stock confirmation, and nothing on this page states that they are currently in stock. The specific container, its grade, condition, dimensions and any certification are identified in the quotation; delivery is arranged for each site and delivery dates are not guaranteed. The photographs on this page are Portable Office Cabin's own product photographs of a representative 20 ft dry shipping container and are not photographs of stock held in Mysore. Container dimensions, volumes and grade descriptions are indicative trade figures, and notes on export suitability, certification, foundations and permissions are general guidance, not legal advice — confirm export requirements with the carrier or operator and permissions with the relevant local authority.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN HEBBAL, MYSURU — the portable-shop intent for Hebbal in Mysuru
+   * (Karnataka): café and filter coffee kiosks, sweet counters, flower stalls, agarbatti kiosks and
+   * everyday retail cabins around the Hebbal industrial area, Hootagalli, Koorgalli, Belavadi,
+   * Belagola, Metagalli, Vijayanagar and the Mysuru Ring Road. Hebbal, Mysuru is NOT Hebbal,
+   * Bengaluru: the title, description, H1, intro, geo tags and first FAQ all say Mysuru. A sibling of
+   * Container Office in Mysore and Shipping Container in Mysore just above (offices and boxes, not
+   * shops), which both link here. The site's first Mysuru shop page, so it also carries the city-wide
+   * "Portable Shop Mysuru / Mysore" terms.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Hebbal Industrial Area,
+   * Mysuru"), mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request a Quote → /contact, Call, WhatsApp). H1 says
+   *     "Serving" (as the owner approved for Hoskote on #202): the factory is near Hosur, not in
+   *     Hebbal, so "Manufacturers in … Hebbal" would read as a local factory.
+   *   2 A day on the Hebbal side → why: whyIntro, the brief's table as whyTable (no bullets), the
+   *     "illustrative, not footfall data" rule as the whyOutro. Then the front-elevation feature band.
+   *   3 Mysuru-flavour shops → solutions (five h3 subsections, the brief's fitting lists as prose).
+   *   4 Café kiosks, 5 Everyday shops, 6 Cleanliness, 7 Styles (table), 8 Sizes (table), 9 Weather →
+   *     extra sections with `placement: "afterSolutions"`, in that order. Sizes are planning examples
+   *     subject to an approved drawing and quotation (owner corrections #201/#202); only the
+   *     10 ft × 10 ft Portable Shop Cabin is a catalogue item.
+   *   10 Permissions → features (+ the bold sizesNote), then the roof / rear gallery.
+   *   11 Price → custom, beside the interior render. No ₹ anywhere.
+   *   12 Rental → OMITTED: no shop cabin is offered for rent (the rental page lists none).
+   *   13 Ordering → how; 14 Areas → areas; 15 Why us → whyUs (the template renders why us, areas,
+   *     then how); 16 the brief's eight FAQs; 17 CTA (Request a Quote, Call, WhatsApp).
+   * The brief's "two-wheeler rental counter" is kept as a service or booking counter supplied to the
+   * business that runs it; the disclaimer says we run no vehicle rental. No on-page enquiry form: the
+   * category form needs a category with landing copy, and shops sit in Portable Cabins, which has
+   * none; the quote buttons go to the /contact form.
+   * The Mysuru–Hebbal Special Investment Region (Hebbal, Hootagalli, Koorgalli, Belavadi, Belagola /
+   * Metagalli; notified February 2025, KIADB the authority) is named from Star of Mysore's report of
+   * the notification; whether a shop may stand on a given plot there is left to the plot and KIADB.
+   *
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Hebbal /
+   * Hootagalli / Metagalli / Mysuru. Sibling shop pages agreed (2026-11-05): Nanjangud (89) keeps
+   * Mysuru and Hebbal out of its copy and this page keeps Nanjangud, Thandya, Immavu, Adakanahalli and
+   * NH 766 out; Hassan (1c) and Sriperumbudur (22) likewise. Cross-links to those pages are added
+   * only once they are live.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Hebbal Industrial Area, Mysuru portable
+   * shop city page/Hebbal Industrial Area, Mysuru/cabin (1–5).webp", 99–239 KB, no EXIF/XMP/ICC/IPTC)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image;
+   * (5) front elevation = the feature band; (2) interior = beside the price factors; (3) roof view and
+   * (4) rear view = the two-image gallery. They show one navy container-style kiosk concept with a
+   * wood-look rolling shutter and a serving ledge. Captions, alt texts and the disclaimer say they are
+   * illustrative renders of a concept, not a confirmed standard design, and no alt text names Hebbal
+   * or Mysuru.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-hebbal-mysuru",
+    city: "Hebbal, Mysuru",
+    listTitle: "Portable Shop Cabins in Hebbal, Mysuru",
+    metaTitle: "Portable Shop Cabin in Hebbal, Mysuru | Kiosks & Café Cabins",
+    metaDescription:
+      "Portable shop cabins in Hebbal, Mysuru for café kiosks, sweet and flower stalls, and retail shops near Hootagalli, Metagalli and Vijayanagar.",
+    keywords:
+      "Portable Shop Cabin in Hebbal Mysuru, Portable Shop Hebbal Mysuru, Portable Shop Mysuru, Portable Shop Mysore, Readymade Shop Cabin Mysuru, Prefabricated Shop Mysuru, Kiosk Hebbal Industrial Area Mysuru, Shop Cabin Hootagalli, Shop Cabin Metagalli Mysuru, Café Kiosk Hebbal Mysuru, Portable Shop Cabin Manufacturers in Mysuru, Portable Shop Cabin Price in Mysuru",
+    geo: { region: "IN-KA", placename: "Hebbal, Mysuru, Karnataka, India", position: "12.3618;76.6000", icbm: "12.3618, 76.6000" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-rolling-shutter-three-quarter-view.webp",
+      alt: "Illustrative render of a prefabricated portable shop kiosk: navy corrugated steel walls with a dark lower band, a wood-look rolling shutter under a timber-look fascia, a serving ledge on steel brackets and a timber-framed window on the end wall, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a kiosk concept with a rolling shutter and a serving ledge, not a confirmed standard design. Your shop's size, front and fittings follow its approved layout and quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-front-elevation.webp",
+      alt: "Front elevation of a portable shop kiosk, illustrative render: the closed wood-look rolling shutter over a full-width serving ledge on three steel brackets, set in navy corrugated steel walls under a flat roof edge",
+      width: 1451,
+      height: 1084,
+      caption:
+        "A serving ledge under a lockable rolling shutter, shown in an illustrative render. The front, counter and finish of your shop are agreed in its layout.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-cafe-kiosk-interior-service-counter.webp",
+      alt: "Illustrative render of a café kiosk interior: a wood-look service counter at the open rolling shutter, grey cabinets, a steel sink with a tap, a coffee machine, paper cups and a snack rack, wood-look wall panels, two ceiling lights, a wall vent and a grey floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a café kiosk interior. The equipment, sink, counter and storage of your shop are priced from its approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-roof-view.webp",
+        alt: "Elevated view of the portable shop kiosk, illustrative render: the sloping corrugated steel roof overhanging the serving side, the wood-look rolling shutter, the serving ledge and the end-wall window",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hebbal-mysuru/portable-shop-kiosk-rear-view.webp",
+        alt: "Rear view of the portable shop kiosk, illustrative render: the closed navy corrugated steel back wall with a dark lower band, a timber-framed window and a wall light on the end wall",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers Serving Mysuru's Hebbal Industrial Area",
+    tagline: "Café kiosks, sweet counters, flower stalls and retail shop cabins, built to order for Hebbal, Mysuru",
+    intro: [
+      "Mysuru is known for its palace, its Dasara celebrations, its silk and its traditional retail culture. Its Hebbal side also supports industrial and technology work, with the industrial areas of Hootagalli, Koorgalli, Belavadi and Metagalli around it. This page is about Hebbal in Mysuru, Karnataka, not Hebbal in Bengaluru.",
+      "The Mysuru–Hebbal industrial region and the nearby Vijayanagar neighbourhoods offer different settings for commercial kiosks and compact retail shops.",
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, café kiosks, retail counters and customized commercial cabins at its factory near Hosur, for suitable business locations in Hebbal, Mysuru and the surrounding areas.",
+      "Depending on your requirements, a shop cabin can be configured with service windows, rolling shutters, glass fronts, shelving, electrical fittings, branding panels and weather protection.",
+    ],
+    heroCta: true,
+
+    whyHeading: "A Day on the Hebbal Side of Mysuru",
+    whyIntro:
+      "Different businesses see different customers through the day. An illustrative pattern for the area:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Illustrative trading patterns only, not verified footfall data or guaranteed sales opportunities.",
+      // Short words ("daily papers", "mobile chargers", "working people") keep the three columns inside a
+      // 320 px phone without a sideways scroll (measured: 286/286 px).
+      headers: ["Period", "Potential customers", "Possible shop uses"],
+      rows: [
+        ["6–8 AM", "Walkers, early-shift workers and residents", "Coffee, flowers, daily papers and essentials"],
+        ["8–10 AM", "Industrial workers and office staff", "Breakfast, coffee and takeaway snacks"],
+        ["12–2 PM", "Office and industrial lunch-break customers", "Juice, snacks and cool drinks"],
+        ["4–6 PM", "Shift-change customers and students", "Tea, sweets and mobile chargers"],
+        ["6–10 PM", "Families and working people", "Café drinks, groceries and sweets"],
+        ["Weekends", "Local shoppers and visitors", "Souvenirs, sweets and retail products"],
+      ],
+    },
+    whyOutro:
+      "Before choosing a location, assess the actual local demand, the site permissions and the operating hours you can keep. The cabin gives you a lockable, presentable unit; the trade comes from the location and the business.",
+
+    solutionsHeading: "Shop Cabins with a Mysuru Flavour",
+    solutionsIntro:
+      "Each design is built to order; its size, front and fittings are confirmed in the approved layout and quotation.",
+    solutions: [
+      {
+        title: "Filter Coffee Kiosk",
+        text: "A compact coffee kiosk can be designed with a front serving window, a counter for the coffee equipment, suitable electrical provisions, an optional outside standing ledge, a menu board, storage compartments and washable surfaces. The equipment loads, water supply, wastewater handling and ventilation are allowed for in the approved layout.",
+        link: { label: "Container café and takeaway kiosk formats", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Mysore Pak and Sweet Counter",
+        text: "A sweet counter cabin may include a glass display counter, suitable lighting, shelving, a billing area, lockable storage and easy-clean surfaces, so the design can support sweet retail at an appropriately permitted commercial location.",
+        link: { label: "The glazed 10 ft × 10 ft shop cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Mallige and Flower Stall",
+        text: "A flower stall cabin may include an open-front counter, garland display shelves, a weather canopy, suitable storage, an optional water provision and a lockable closure. The design takes account of shade, ventilation and the way the flowers are handled.",
+      },
+      {
+        title: "Agarbatti and Sandalwood Kiosk",
+        text: "A compact retail kiosk may be configured for incense, packaged sandalwood products, souvenirs and gift items, with display shelving and a glass-front retail counter. Retailers remain responsible for sourcing their products and for the trade requirements that apply.",
+        link: { label: "Shelving, counters and interior layouts", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Betel and Paan Kiosk",
+        text: "A small kiosk for betel leaf and paan may include a service counter, shelving, lighting, storage, washable surfaces and a lockable shutter, sized for one person working the counter.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Café-Style Kiosks for Hebbal's Office and IT Areas",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Commercial locations near office and technology workplaces may suit an approved café or quick-service concept. Possible kiosk features include:",
+        ],
+        bullets: [
+          { text: "Wood-look exterior cladding, or optional ACP finishing" },
+          { text: "A large glass front with an outside standing ledge" },
+          { text: "A menu board and a brand signage panel" },
+          { text: "Electrical points for coffee machines and chillers" },
+          { text: "Warm interior lighting" },
+          { text: "A billing and digital-payment counter" },
+          { text: "Suitable ventilation" },
+          { text: "Water and drainage provisions where required" },
+        ],
+        closing: [
+          "These configurations may suit coffee, juice, sandwiches and other permitted food-service operations. The actual equipment specifications must be confirmed before manufacturing starts.",
+        ],
+      },
+      {
+        heading: "Everyday Shops for Workers and Residents",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For the industrial workforce and the residential layouts around Hebbal and Vijayanagar, everyday retail cabins include:",
+        ],
+        bullets: [
+          { title: "General store cabin", text: "grocery shelves, a billing counter, storage and electrical fittings." },
+          { title: "Mobile accessories shop", text: "display counters, lockable storage and charging provisions." },
+          { title: "Juice bar kiosk", text: "space for the equipment, water and wastewater provisions, washable counters and suitable electrical fittings." },
+          { title: "Service or booking counter", text: "a desk, storage and communication provisions for a business such as a two-wheeler rental or booking desk, built for the business that runs it." },
+        ],
+      },
+      {
+        heading: "Keeping Shop Cabins Clean",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Mysuru has a long-standing reputation for clean public spaces, so a tidy shopfront and clean surroundings are a sensible part of the design. Possible shop features include:",
+        ],
+        bullets: [
+          { text: "Waste-bin mounting provisions" },
+          { text: "Covered stock storage" },
+          { text: "Washable counters and easy-clean flooring" },
+          { text: "Proper wastewater outlets and suitable sink provisions" },
+          { text: "Optional grease-management arrangements where required" },
+          { text: "Fixed signage instead of loose boards" },
+          { text: "Appropriate ventilation" },
+        ],
+        closing: [
+          "Food-service cabins should be designed around the actual equipment, the cleaning routine and the hygiene rules that apply. A cabin does not by itself satisfy food safety or municipal requirements.",
+        ],
+      },
+      {
+        heading: "Choose Your Portable Shop Cabin Style",
+        placement: "afterSolutions",
+        paragraphs: ["Four starting points for the look of your shop:"],
+        table: {
+          caption: "All finishes depend on the materials available and the approved specification.",
+          // "Typical use", not the brief's "Suitable applications": the long header word pushed this
+          // table 5 px past a 320 px phone's column.
+          headers: ["Style", "Possible finish", "Typical use"],
+          rows: [
+            ["Classic", "Painted steel, a rolling shutter and simple signage", "General stores and mobile shops"],
+            ["Café", "Wood-look cladding, a glass front and warm lighting", "Coffee kiosks and juice bars"],
+            ["Corporate", "An ACP-style finish, clean lines and suitable lighting", "Office-area retail"],
+            ["Bright and Bold", "Distinctive colours and prominent signage", "Approved high-visibility retail locations"],
+          ],
+        },
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Planning examples to start the discussion. Each size is subject to an approved drawing and quotation:",
+        ],
+        table: {
+          caption:
+            "Planning examples only, not guaranteed standard models. Final dimensions depend on the equipment, the people working inside, circulation, utilities and manufacturing capability.",
+          headers: ["Shop type", "Planning example", "Possible features"],
+          rows: [
+            ["Paan kiosk", "4 × 4 ft", "Counter and shelves"],
+            ["Filter coffee kiosk", "6 × 4 ft", "Service window and ledge"],
+            ["Flower stall", "8 × 6 ft", "Open front, awning and shelves"],
+            ["Sweet counter", "8 × 6 ft", "Glass display and lighting"],
+            ["Café kiosk", "10 × 8 ft", "Glass front and equipment provisions"],
+            ["Agarbatti kiosk", "10 × 8 ft", "Display shelves and glass front"],
+            ["General store", "20 × 8 ft", "Retail shelving and billing counter"],
+          ],
+        },
+        closing: [
+          "Our catalogue cabin is the 10 ft × 10 ft Portable Shop Cabin, with a glazed display front and a lockable door; every other size is built to order. The usable space inside is smaller than the outside dimensions because of the wall thickness.",
+        ],
+      },
+      {
+        heading: "Weather Protection for Mysuru",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Mysuru has seasonal rainfall and periods of warmer weather. Possible shop cabin design features include:",
+        ],
+        bullets: [
+          { text: "A suitable roof slope" },
+          { text: "Sealed roof joints" },
+          { text: "Corrosion-protective finishes" },
+          { text: "Weather-protected service windows" },
+          { text: "Canopies over the serving side" },
+          { text: "An appropriate base height above the ground" },
+          { text: "Ventilation" },
+          { text: "Exterior lighting" },
+        ],
+        closing: [
+          "Weather performance depends on the actual materials, the installation, the site drainage and maintenance. No cabin is promised to be floodproof or completely waterproof.",
+        ],
+      },
+    ],
+
+    featuresHeading: "Permissions and Site Requirements",
+    featuresIntro:
+      "Before the cabin is delivered, check these with the landowner and the authorities concerned:",
+    features: [
+      "Mysuru–Hebbal industrial region: the Hebbal, Hootagalli, Koorgalli, Belavadi and Belagola industrial areas were notified in 2025 as the Mysuru–Hebbal Special Investment Region, with KIADB as the authority. Whether a shop may stand on a particular plot depends on its allotment, its permitted land use and KIADB's requirements",
+      "Outside the industrial areas: the municipal or local planning authority for the exact site",
+      "Mysuru Ring Road: commercial land use, road access, setbacks, parking and the requirements of the road authority",
+      "Food and beverage kiosks: food safety registration or licence, sanitation, water and electrical requirements",
+      "Landowner consent to place and run the shop",
+      "A trade licence and planning permission, where they apply",
+      "An electricity connection sized for the shop's load",
+      "Fire safety requirements and wastewater disposal",
+      "Any approvals specific to your trade",
+    ],
+    sizesNote:
+      "Portable Office Cabin manufactures the cabin to the approved specification. Obtaining the permissions for your site and business is the owner's responsibility, and a portable shop is not exempt from them; we can share the cabin's layout drawing to support your applications.",
+
+    customHeading: "Portable Shop Cabin Price in Mysuru",
+    customIntro: "Each shop cabin is priced from its specification. The main factors:",
+    customBullets: [
+      { title: "Cabin dimensions", text: "the outside size and the floor area." },
+      { title: "Shop layout", text: "counters, storage and room to move behind them." },
+      { title: "Construction", text: "MS or insulated panel construction." },
+      { title: "Shopfront", text: "a rolling shutter or a glass front." },
+      { title: "Service counter", text: "its length and finish." },
+      { title: "Display shelving", text: "the racks and display units you need." },
+      { title: "Equipment provisions", text: "space and points for coffee or food equipment." },
+      { title: "Electrical fittings", text: "lights, sockets and the connected load." },
+      { title: "Sink and drainage", text: "the water inlet and wastewater provisions." },
+      { title: "Exterior cladding", text: "painted steel, wood-look or ACP-style finishes." },
+      { title: "Branding", text: "colours, signage and graphics." },
+      { title: "Canopy", text: "shade over the serving side." },
+      { title: "Delivery and unloading", text: "the distance to Mysuru and the access at your site." },
+      { title: "Order quantity", text: "the number of cabins in the order." },
+    ],
+    customOutro:
+      "Send your shop type, size, front, fittings and delivery location through the contact form, by phone or on WhatsApp. We will prepare a written quotation listing the specification, the inclusions and the applicable charges; prices, any discounts and delivery dates are confirmed only in that quotation.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "Ordering from the manufacturer means one team plans, builds and dispatches your shop cabin:",
+    whyUsBullets: [
+      { title: "Customized shop cabin dimensions", text: "sized for your trade and your plot." },
+      { title: "Café and retail kiosk layouts", text: "counters, shelving and equipment space planned around what you sell." },
+      { title: "Service counters and glass fronts", text: "a serving window, a counter or a glazed display front." },
+      { title: "Rolling shutters", text: "lockable shutters over the front or the serving opening." },
+      { title: "MS and insulated construction options", text: "chosen for the use and the exposure." },
+      { title: "Electrical and ventilation provisions", text: "points, lighting and ventilation for your equipment." },
+      { title: "Exterior cladding and branding", text: "finishes, colours and signage." },
+      { title: "Easy-clean interior finishes", text: "washable surfaces for food and retail use." },
+      { title: "Quotation support", text: "a written quotation for your specification." },
+      { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+    ],
+
+    areasHeading: "Areas Served Around Hebbal, Mysuru",
+    areasText:
+      "We welcome portable shop enquiries from Hebbal in Mysuru, including the Hebbal Industrial Area and Hebbal 2nd Phase, and from Hinkal, Hootagalli, Koorgalli, Belavadi, Belagola, Metagalli, Vijayanagar and plots along the Mysuru Ring Road, in and around the Mysuru–Hebbal Special Investment Region. Share the exact site address: delivery feasibility, the route, transport and unloading are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howIntro: "How a shop cabin order moves from your first message to a cabin on site:",
+    howSteps: [
+      { title: "Share your business requirements", text: "the shop type, intended location, preferred dimensions and equipment needs." },
+      { title: "Select the style and layout", text: "a classic, café, corporate or customized configuration." },
+      { title: "Confirm the utilities", text: "the electrical load, water, drainage, ventilation and equipment provisions." },
+      { title: "Approve the quotation", text: "the cabin specification, commercial terms and delivery responsibilities." },
+      { title: "Manufacture", text: "the approved portable shop cabin is fabricated at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated with your site's readiness." },
+    ],
+    howOutro:
+      "Before the shop opens, you complete the permissions and utility connections that apply. Manufacturing and delivery dates are confirmed with the order, not promised in advance.",
+
+    faqs: [
+      {
+        question: "Is this Hebbal in Mysuru or Bengaluru?",
+        answer:
+          "This page is about Hebbal in Mysuru, Karnataka, with its industrial surroundings at Hootagalli, Koorgalli, Belavadi, Belagola and Metagalli and nearby commercial areas such as Vijayanagar and the Ring Road. It is not about Hebbal in Bengaluru.",
+      },
+      {
+        question: "What shop cabin may suit an approved location near Hebbal's IT and office campuses?",
+        answer:
+          "A café-style kiosk with a glass front, a service counter, provisions for the coffee equipment and suitable lighting may be considered, where the landowner and the authority allow a shop at that location.",
+      },
+      {
+        question: "Can I place a shop cabin inside the Mysuru–Hebbal Special Investment Region?",
+        answer:
+          "It depends on the exact plot, its permitted land use and approval from the relevant authority, which for the notified industrial areas is KIADB. Check with the plot owner and KIADB before ordering.",
+      },
+      {
+        question: "What features may suit a food kiosk in Mysuru?",
+        answer:
+          "Washable counters, a suitable sink and wastewater arrangement, covered storage, waste collection and suitable ventilation, planned around your equipment and the hygiene rules that apply.",
+      },
+      {
+        question: "Can a portable shop cabin include a sweet display counter?",
+        answer:
+          "A glass display counter with suitable lighting can be considered, according to the approved layout and manufacturing capability.",
+      },
+      {
+        question: "Can a shop cabin be customized for Kannada and English signage?",
+        answer:
+          "Signage panels and exterior finishes can be customized to your approved requirements, within the local rules that apply to signboards.",
+      },
+      {
+        question: "Can portable shop cabins be relocated?",
+        answer:
+          "Some can, depending on the structural design, the cabin's condition, the lifting arrangements and transport access. The services are disconnected first, the new site needs a prepared base, and the permissions for the old site do not carry over.",
+      },
+      {
+        question: "How quickly can a portable shop cabin be delivered?",
+        answer:
+          "Timelines depend on the selected design, the quantity, the manufacturing workload, transport and how ready your site is. The schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Hebbal, Mysuru",
+    ctaText: `Planning a filter coffee kiosk, café-style shop, sweet counter, flower stall, general store or retail cabin near the Hebbal industrial area? Share your business type, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin, 10 ft × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Shipping Containers and Container Shops in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
+        { label: "Sugarcane Juice and Roadside Kiosks in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Mysuru or Hebbal. Delivery to Mysuru, unloading and placement are arranged for each order, subject to feasibility, and manufacturing and delivery dates are not guaranteed. The shop designs, styles, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples, not standard models; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk concept with a rolling shutter and a serving ledge, not a confirmed standard design; the coffee equipment and products are shown for illustration, and the images are not photographs of installations in Hebbal or Mysuru. KIADB (the Karnataka Industrial Areas Development Board) and the Mysuru–Hebbal Special Investment Region are named only to describe the location; Portable Office Cabin is not affiliated with KIADB or with any estate, campus or company in Hebbal. The trading pattern, businesses and localities named here describe typical uses and enquiry locations, not clients, completed projects, footfall data or confirmed delivery areas, and no location guarantees sales. A service or booking counter is supplied to the business that runs it; Portable Office Cabin does not operate vehicle rental services. Permissions, licences, food safety registration, setbacks and electrical, fire and wastewater requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -5053,6 +5894,10 @@ export const CITY_PAGES: CityPage[] = [
     ctaHeading: "Tell Us About Your Shoolagiri Site",
     ctaText:
       "Give us the size, what you'll use it for, and where the plot is. You'll have a clear price, and there's no obligation attached to it.",
+    // Guard posts for the same estate are covered by the Shoolagiri security-cabin page (2026-11-05).
+    relatedLinks: [
+      { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
+    ],
   },
 
   {
@@ -5767,7 +6612,7 @@ export const CITY_PAGES: CityPage[] = [
     metaDescription:
       "Container office in Mettur and Salem for shutdown contractors, power and chemical plants and site offices. Custom 10 ft to 40 ft cabins. Get a quote.",
     keywords:
-      "Container Office in Mettur, Container Office in Salem, Container Office Mettur Salem, Portable Site Office Salem, Shutdown Contractor Office Mettur, Industrial Container Cabin Salem, Portable Office Cabin Salem, Security Cabin Mettur, Container Office on Rent Salem",
+      "Container Office in Mettur, Container Office in Salem, Container Office Mettur Salem, Portable Site Office Salem, Shutdown Contractor Office Mettur, Industrial Container Cabin Salem, Portable Office Cabin Salem, Container Office on Rent Salem",
     geo: { region: "IN-TN", placename: "Mettur, Salem, Tamil Nadu, India", position: "11.7863;77.8008", icbm: "11.7863, 77.8008" },
     motion: true,
 
@@ -6067,6 +6912,7 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Site Office", href: "/products/category/site-office-containers" },
       { label: "Portable Security Cabin", href: "/products/category/security-cabins" },
+      { label: "Security Cabins for Salem Industries", href: "/cities-we-serve/portable-security-cabin-salem" },
       { label: "Portable Toilet Cabin", href: "/products/category/portable-toilet-cabins" },
       { label: "Container Office in Tamil Nadu", href: "/promotions/container-office-in-tamil-nadu" },
       { label: "Site Office Container in Tamil Nadu", href: "/promotions/site-office-container-in-tamil-nadu" },
@@ -7698,6 +8544,399 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN SIRA — the portable-shop intent for Sira (Tumakuru district, Karnataka)
+   * and KIADB's industrial area at Mudigere Kaval: shop cabins and kiosks for construction-stage and
+   * industrial retail, NH 48 truck-driver services, relocatable shops and hot, dusty sites. Readymade
+   * shop, prefabricated shop and kiosk are synonyms kept on this one page. A sibling of Portable Shops
+   * in Krishnagiri (live) and of the general Portable Shop Cabin product page. The Tumkur pages above
+   * and below (container office, shipping container, portable cabins) and Pavagada name Sira only in
+   * their area lists, for other products, so they keep their own keywords; Portable Cabins in Tumkur
+   * links here.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Sira Industrial Area"), mapped
+   * onto the template slots in the brief's order wherever the template allows (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   2 Retail planning stages → why (three titled bullets); the brief's "not guarantees" rule is the
+   *     whyOutro. The feature band follows it.
+   *   4 NH 48 truck-driver retail → solutions: four h3 subsections, each with a verified link. The
+   *     solutions slot is the only one with h3s and links, so it renders before section 3.
+   *   3 Start here, move later (and its checklist), 5 Hot and dusty conditions, 6 Types and sizes →
+   *     extra sections with `placement: "afterSolutions"`, in that order. The size table follows the
+   *     owner's shop-page wording of 2026-11-05 (#201/#202): every size is a planning example,
+   *     confirmed only by an approved drawing and quotation; the only catalogue shop cabin is
+   *     10 ft × 10 ft. Three short-worded columns, so it fits a 320 px phone.
+   *   7 Permissions → features (a plain list), the responsibility rule in the bold sizesNote, then
+   *     the one-image gallery.
+   *   8 Price → custom, beside the roof-view render. No ₹ anywhere; the catalogue cabin's fixed price
+   *     stays on its own product page.
+   *   9 Rental → left out: the rental range has no shop cabin.
+   *   11 Areas → areas; 10 Ordering → how (the template renders areas before how); 12 Why choose →
+   *     an extra section without a placement, so it renders after the ordering steps; 13 the brief's
+   *     eight FAQs; 14 CTA (Request Quote, Call, WhatsApp).
+   * No on-page enquiry form: the category form needs a category with landing copy, and shops sit in
+   * Portable Cabins, which has none; the quote buttons go to the /contact form.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Sira. Hiriyur
+   * and Madhugiri are left out (delivery coverage not verified), and the Hassan, Hoskote, Shivamogga,
+   * Nanjangud, Hebbal (Mysuru) and Sriperumbudur shop pages are not linked until they are live.
+   * KIADB's industrial area at Mudigere Kaval (Sira taluk) was checked against KIADB's published
+   * pre-feasibility report; its current development status is not stated, only that it is developing.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Sira Industrial Area portable shops city
+   * page/Sira Industrial Area/cabin (1–4).webp", lossy VP8, 70–161 KB, no EXIF/XMP/ICC chunk) copied
+   * byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image, captioned;
+   * (4) front elevation, 1451×1084 = the feature band; (3) rear view with the sliding window,
+   * 1451×1084 = single-image gallery after the permissions list; (2) elevated roof view, 1451×1084 =
+   * beside the price section, captioned. They show one charcoal corrugated-steel kiosk concept with
+   * white trims, two lift-up awning hatches on stay arms, a lockable door and a pitched roof. The alt
+   * texts, captions and disclaimer say they are illustrative concept renders, not a confirmed standard
+   * design, and no file name or alt text names Sira.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-sira",
+    city: "Sira",
+    listTitle: "Portable Shop Cabins in Sira",
+    metaTitle: "Portable Shop Cabin in Sira | NH 48 Kiosks & Industrial Shops",
+    metaDescription:
+      "Portable shop cabins in Sira for NH 48 truck-driver kiosks, industrial retail and relocatable shops near Mudigere Kaval. Explore insulated cabin designs.",
+    keywords:
+      "Portable Shop Cabin in Sira, Portable Shop Sira, Kiosk Sira Industrial Area, Readymade Shop Cabin Sira, Prefabricated Shop Sira, Shop Cabin KIADB Sira, Shop Cabin Mudigere Kaval, Portable Shop Cabin Manufacturers in Sira, Portable Shop Cabin Price in Sira, Relocatable Shop Cabin Sira, Insulated Shop Cabin Sira, NH 48 Shop Cabin Sira",
+    geo: { region: "IN-KA", placename: "Sira, Tumakuru, Karnataka, India", position: "13.745;76.909", icbm: "13.745, 76.909" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-sira/portable-shop-kiosk-twin-awning-hatches.webp",
+      alt: "Prefabricated portable shop cabin with a front service counter — illustrative concept render of a charcoal corrugated steel kiosk with white trims, two lift-up awning hatches on stay arms over the service openings, spotlights inside, a lockable side door and a pitched roof, set on concrete pads",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin concept render, not a confirmed standard design; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-sira/portable-shop-kiosk-front-elevation.webp",
+      alt: "Portable shop kiosk concept seen straight on — illustrative render of a raised awning hatch over a service opening with a counter ledge and spotlights, a sliding window in the wall behind it, and a lockable door in charcoal corrugated steel walls with white trims",
+      width: 1451,
+      height: 1084,
+      caption:
+        "A raised hatch shades the counter, so customers are served from outside while goods stay under cover. Illustrative concept render: your cabin's dimensions, openings and fittings are fixed in the drawing you approve.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-sira/portable-shop-kiosk-roof-view.webp",
+      alt: "Portable shop kiosk concept from above — illustrative render of its pitched corrugated roof with white trims, two raised awning hatches over the service openings, a counter inside and a lockable door, on a paved base",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative concept render, not a confirmed standard design. The roof, hatches, counters and fittings of your shop are priced as part of its specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-sira/portable-shop-kiosk-rear-window-view.webp",
+        alt: "Back wall of the portable shop kiosk concept — illustrative render of a sliding window in the charcoal corrugated steel rear wall, white corner trims and a pitched roof, standing on concrete pads",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Sira Industrial Area",
+    tagline:
+      "Shop cabins and kiosks for NH 48 driver services, construction-stage retail and relocatable shops around Sira, built to order at our factory near Hosur",
+    intro: [
+      "Sira is located along NH 48 in Karnataka's Tumakuru district, on the Bengaluru–Chitradurga transport corridor.",
+      "Industrial development plans around Mudigere Kaval, where KIADB has an industrial area in Sira taluk, create potential opportunities for supporting commercial services, subject to the actual progress of industrial projects and approved land use.",
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for suitable industrial, highway and town locations around Sira. Every cabin is fabricated at our works near Hosur and taken to site by road.",
+      "Shop cabins may be configured for tea and meals counters, truck-driver essentials, vehicle spares, building hardware, mobile accessories and general stores.",
+      "For businesses that may need to change locations later, suitable portable cabin designs can also be planned with relocation requirements in mind.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Retail Planning Around a Developing Industrial Area",
+    whyIntro:
+      "Industrial development can create different potential retail requirements over time. The stages below are illustrative, not confirmed development milestones for Mudigere Kaval:",
+    whyBullets: [
+      {
+        title: "Stage 1 — Infrastructure and construction",
+        text: "construction teams may require tea and snacks, meals, drinking water, mobile services, basic building hardware and worksite consumables. Possible shop cabins: a tea kiosk, a meals counter or a building hardware counter.",
+      },
+      {
+        title: "Stage 2 — Industrial operations",
+        text: "if factories become operational, employees and contractors may require daily essentials, snacks and beverages, mobile accessories and convenience retail. Possible shop cabins: a general store, a mobile shop or a snacks kiosk.",
+      },
+      {
+        title: "Stage 3 — Residential and commercial growth",
+        text: "if approved residential and commercial development proceeds, neighbourhood retail requirements may expand. Possible applications: a grocery store, a medical retail kiosk, a convenience shop or a groundnut and snacks stall.",
+      },
+    ],
+    whyOutro:
+      "These are possible commercial uses, not guarantees of future demand, factory occupancy or project completion. Check the actual progress of the industrial area, the approved land use of your plot and local demand before investing.",
+
+    solutionsHeading: "NH 48 Truck-Driver Retail Kiosks",
+    solutionsIntro:
+      "Approved commercial locations along the NH 48 corridor may be suitable for services used by truck drivers and transport operators. Every kiosk below is made to order, with its dimensions and fittings set out in your quotation.",
+    solutions: [
+      {
+        title: "Truck Spares and Lubricants Shop",
+        text: "Possible features include heavy-duty shelving, a rolling shutter, lockable storage, a counter, suitable lighting and appropriate flooring. Shelving is specified for the expected loads, and lubricants and other regulated or combustible materials must be stored according to the applicable safety requirements.",
+        link: { label: "Planning shelving, counters and storage inside a cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Driver Essentials Kiosk",
+        text: "A compact kiosk for drinking water, snacks, towels, toiletries, phone chargers and basic travel accessories, with a service window, lighting and a provision for a chiller.",
+        link: { label: "See the ready-specified 10 × 10 ft Portable Shop Cabin", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Tea and Snacks Kiosk",
+        text: "Possible features include a serving window, a weather canopy, exterior lighting, a washable counter, suitable electrical provisions, and water and wastewater arrangements.",
+        link: { label: "Container cafe and takeaway kiosk designs", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Highway Location Considerations",
+        text: "A highway kiosk needs legally permitted commercial land, approved access, suitable road setbacks, safe vehicle circulation, appropriate parking, exterior lighting, clear signage and waste management. Customers should reach it through the approved access: a kiosk is never a reason for direct, unauthorized access from NH 48 or for unsafe roadside parking.",
+        link: { label: "Preparing the site and base for a cabin", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+    ],
+
+    featuresHeading: "Permissions and Site Requirements",
+    featuresIntro:
+      "Check the requirements that apply to your site and your business before installing a shop cabin:",
+    features: [
+      "KIADB industrial area — verify the actual site status, land-use designation and the relevant KIADB requirements",
+      "Sira town — check the requirements of the appropriate municipal and planning authority",
+      "NH 48 — confirm permitted commercial use, road access, setbacks, parking and the applicable highway authority requirements",
+      "Medical shops — relevant drug licences, professional supervision and storage requirements may apply",
+      "Food kiosks — applicable food safety registration or licensing, hygiene, water and waste-management requirements may apply",
+      "Depending on the business — landowner consent, a trade licence, planning approval, an electrical connection, fire safety provisions, water and sanitation arrangements and sector-specific licences",
+    ],
+    sizesNote:
+      "Portable Office Cabin manufactures cabins according to approved specifications. Securing the approvals, licences and utility connections for the site and the trade is the business owner's job, not part of the cabin supply.",
+
+    customHeading: "Portable Shop Cabin Price in Sira",
+    customIntro:
+      "Each shop cabin for Sira is quoted for its own specification; only the catalogue 10 ft × 10 ft cabin has a fixed online price, shown on its product page. The quotation depends on:",
+    customBullets: [
+      { text: "Cabin dimensions" },
+      { text: "Structural specifications" },
+      { text: "MS or insulated construction" },
+      { text: "Roof insulation" },
+      { text: "Rolling shutter or glass front" },
+      { text: "Service counters" },
+      { text: "Shelving and racks" },
+      { text: "Electrical fittings" },
+      { text: "Chiller provisions" },
+      { text: "Sink and water storage" },
+      { text: "Shade canopy" },
+      { text: "Exterior signage" },
+      { text: "Delivery and unloading" },
+      { text: "Quantity ordered" },
+      { text: "Optional relocation-related design requirements" },
+    ],
+    customOutro:
+      "Send your business type, the size you have in mind, the fittings you need and the site location through the contact form, by phone or on WhatsApp, and we reply with a written quotation listing the specification, inclusions and applicable charges. No price, discount, relocation cost or delivery date is promised before that quotation.",
+
+    areasHeading: "Areas Served Around Sira",
+    areasText:
+      "We welcome portable shop enquiries from Sira town and the Sira bypass, the Sira industrial area and KIADB's industrial area at Mudigere Kaval, Kallambella, Tavarekere and Bukkapatna in Sira taluk, and sites along the NH 48 corridor in Tumakuru district, Karnataka. Share the exact site address or map pin: the route, vehicle access and unloading arrangements are checked and confirmed in the quotation. Confirm the industrial area's current development status and boundaries with KIADB before choosing a site there.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your requirements", text: "provide your business type, preferred cabin dimensions and intended location." },
+      { title: "Discuss the layout", text: "review counters, shutters, shelving, insulation and equipment space." },
+      { title: "Confirm utilities", text: "discuss electrical requirements, water, drainage and ventilation." },
+      { title: "Approve the quotation", text: "finalise the approved specifications and commercial terms." },
+      { title: "Manufacture", text: "the selected shop cabin configuration is fabricated at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+      {
+        title: "Discuss future relocation",
+        text: "if you expect to move the cabin later, confirm suitable design provisions now; the availability of services for that move is confirmed separately.",
+      },
+    ],
+    howOutro:
+      "Manufacturing and delivery dates are confirmed when the order is finalised, not promised in advance. Operating permissions and utility connections must be in place before the shop opens.",
+
+    extraSections: [
+      {
+        heading: "Start Here, Move Later: Shop Cabins Designed for Possible Relocation",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Some business owners may want to begin operations at one approved commercial location and relocate if a better permitted location becomes available later. A relocatable cabin may provide more flexibility than a permanent building, depending on its structural design.",
+          "Possible planning considerations include:",
+        ],
+        bullets: [
+          { text: "Choosing an approved initial location" },
+          { text: "Planning the cabin dimensions around transport limits" },
+          { text: "Providing suitable lifting points" },
+          { text: "Protecting electrical and plumbing fittings" },
+          { text: "Selecting reusable signage panels" },
+          { text: "Considering future transport and unloading costs" },
+          { text: "Preparing the next site before relocation" },
+        ],
+        closing: [
+          "Whether a cabin can be moved later depends on its design, condition, lifting arrangements and transport access at that time. Crane, transport, disconnection and reconnection services for a later move are not part of a standard order, and their availability is confirmed separately when the move is planned. No future commercial plot or location is guaranteed.",
+        ],
+      },
+      {
+        heading: "Relocation Planning Checklist",
+        placement: "afterSolutions",
+        paragraphs: ["Before a shop cabin is moved to a new location:"],
+        bullets: [
+          { title: "Step 1", text: "Confirm that the destination permits commercial use." },
+          { title: "Step 2", text: "Assess the cabin's condition and lifting suitability." },
+          { title: "Step 3", text: "Arrange qualified lifting and transport services." },
+          { title: "Step 4", text: "Disconnect utilities safely." },
+          { title: "Step 5", text: "Prepare the new supporting base." },
+          { title: "Step 6", text: "Coordinate unloading and placement." },
+          { title: "Step 7", text: "Reconnect utilities through authorized personnel." },
+        ],
+      },
+      {
+        heading: "Shop Cabins for Hot and Dusty Conditions",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Sira's climate makes heat, sunlight, ventilation and dust protection relevant design considerations. Possible features include:",
+        ],
+        bullets: [
+          {
+            title: "Insulated walls and roof",
+            text: "PUF or other verified insulation options may reduce heat transfer. Insulation alone does not guarantee safe storage temperatures for medicines, chocolates, cosmetics or other temperature-sensitive products; use appropriate refrigeration or temperature-controlled equipment where required.",
+          },
+          { title: "Heat-reflective roof finish", text: "a suitable reflective exterior finish may help reduce solar heat absorption." },
+          { title: "Shade canopy", text: "a properly designed canopy may provide shade for customers at the service counter." },
+          { title: "Electrical provisions", text: "appropriate circuits and sockets planned for chillers, refrigerators and other equipment." },
+          { title: "Water-saving features", text: "where offered, low-flow taps, water storage provisions, a suitable sink and drainage arrangements." },
+          {
+            title: "Dust protection",
+            text: "well-fitted shutters, sealed joints, appropriate window seals, enclosed storage and ventilation that can be cleaned and maintained regularly.",
+          },
+        ],
+        closing: [
+          "These features reduce the cabin's exposure to heat and dust; they do not make it airtight or replace active cooling where products need it. The insulation, finish and fittings supplied are confirmed in the approved specification.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Types and Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The sizes below are planning examples to start the conversation, not standard models or confirmed manufacturing sizes:",
+        ],
+        table: {
+          caption:
+            "Planning examples only. The approved drawing and quotation confirm the actual dimensions and whether a size can be manufactured.",
+          headers: ["Shop type", "Planning size", "Possible features"],
+          rows: [
+            ["Driver essentials kiosk", "6 × 4 ft", "Service window, chiller provision, lighting"],
+            ["Roasted groundnut stall", "6 × 4 ft", "Counter, display shelf, canopy"],
+            ["Tea kiosk", "8 × 6 ft", "Serving window, exterior lighting"],
+            ["Building hardware counter", "8 × 6 ft", "Wall racks, rolling shutter"],
+            ["Mobile shop", "8 × 6 ft", "Glass display, electrical sockets"],
+            ["Meals counter", "10 × 8 ft", "Serving counter, sink, water provision"],
+            ["Truck spares shop", "10 × 8 ft", "Suitable shelving, rolling shutter"],
+            ["Medical retail kiosk", "10 × 8 ft", "Lockable shelving, equipment provisions"],
+            ["General store", "20 × 8 ft", "Retail shelving, billing counter"],
+          ],
+        },
+        closing: [
+          "The one shop cabin in our catalogue measures 10 ft × 10 ft and has a glass display front and a lockable door. Every other size on this list needs a drawing you approve first; its final dimensions follow from the equipment, circulation, storage loads, utilities and manufacturing capability.",
+          "Medical retailers must meet the applicable licensing and temperature-control requirements.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["Capabilities we can offer for a shop cabin or kiosk around Sira:"],
+        bullets: [
+          { title: "Customized shop cabin dimensions", text: "length, width and openings worked out for your business and the land available." },
+          { title: "Highway retail kiosk configurations", text: "service windows, counters and secure storage planned for driver-facing retail." },
+          { title: "Retail counters and shelving", text: "counters and racks specified for what you sell and the loads they carry." },
+          { title: "MS and insulated construction options", text: "a plain mild-steel build, or insulated panels in the walls and roof to cut heat gain." },
+          { title: "Suitable electrical provisions", text: "lighting, sockets and circuits for chillers and other equipment." },
+          { title: "Exterior canopies", text: "shade over the service counter where the layout allows." },
+          { title: "Weather-conscious finishing", text: "sealed joints, protective exterior finishes and roof options for heat and dust." },
+          {
+            title: "Relocation-aware design options",
+            text: "dimensions, lifting provisions and reusable signage considered at the design stage if you expect to move.",
+          },
+          { title: "Quotation support", text: "a written quotation from the manufacturer that lists your specification." },
+          { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I plan a shop cabin near Sira's developing industrial area?",
+        answer:
+          "A shop cabin may be considered at a legally permitted commercial location, subject to actual local demand and the relevant approvals. Check the current status of the industrial area and the permitted use of your plot before you order.",
+      },
+      {
+        question: "Can a portable shop cabin be relocated later?",
+        answer:
+          "Some cabins can be relocated depending on their structural design, condition, lifting arrangements and transport access. Services for a later move are confirmed separately, and the new location needs its own permissions.",
+      },
+      {
+        question: "What shop cabins may suit NH 48 truck-driver services?",
+        answer:
+          "Driver essentials kiosks, approved tea and snacks counters, and truck spares shops are possible options, at permitted locations with safe access and parking.",
+      },
+      {
+        question: "Can insulation protect products from Sira's summer heat?",
+        answer:
+          "Insulation may reduce heat transfer, but temperature-sensitive products can still require active cooling and monitored storage.",
+      },
+      {
+        question: "Can I install a shop directly beside NH 48?",
+        answer:
+          "Placement depends on permitted land use, road setbacks, safe access and applicable authority approvals.",
+      },
+      {
+        question: "Can a shop cabin include heavy-duty shelving?",
+        answer:
+          "Suitable shelving can be considered according to the expected loads and approved structural specifications.",
+      },
+      {
+        question: "Can I customize a shop cabin for a medical store?",
+        answer:
+          "A layout with lockable storage and suitable equipment provisions may be discussed, but the operator must meet all pharmacy licensing and storage requirements.",
+      },
+      {
+        question: "How quickly can a portable shop cabin be delivered?",
+        answer:
+          "Manufacturing and delivery timelines depend on design, quantity, workload, transport and site readiness, so the schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Sira",
+    ctaText: `Planning a truck-driver essentials kiosk, building hardware counter, tea shop, general store or relocatable retail cabin near an approved commercial location? Share your business type, dimensions, intended installation location and required fittings. Ring or message us on WhatsApp at ${COMPANY.whatsapp.display}, or write to ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Catalogue Portable Shop Cabin (10 ft × 10 ft)", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Food Kiosks", href: "/products/container-cafe-restaurant" },
+      { label: "Portable Office Cabin Range", href: "/products/category/portable-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Security Cabin Range", href: "/products/category/security-cabins" },
+      { label: "Keeping a Cabin Cool: Insulation Guide", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "MS or PUF Panels: Material Guide", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Portable Cabins for Tumkur Sites", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+        { label: "Container Offices in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
+        { label: "Shipping Containers in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
+        { label: "Container Offices for Pavagada", href: "/cities-we-serve/container-office-in-pavagada" },
+        { label: "Container Offices in Chitradurga", href: "/cities-we-serve/container-office-in-chitradurga" },
+        { label: "All Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Sira or Tumakuru district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed; crane, transport, disconnection and reconnection services for moving a cabin after delivery are not part of a standard order. Everything described here (shop types, dimensions, materials, fronts, fittings and finishes) is an option, every size is a planning example, and what is actually supplied is set out in the drawing, specification and quotation approved for that order. All four pictures are illustrative concept renders of a single kiosk design with lift-up awning hatches: that design is not a confirmed standard product, other shop types differ in appearance, and none of the pictures shows a cabin installed in Sira. KIADB (the Karnataka Industrial Areas Development Board) and its industrial area at Mudigere Kaval are named only to describe locations; Portable Office Cabin is not affiliated with KIADB or with any industrial area, factory, transport operator or company in the area. The development stages on this page are illustrative, not confirmed milestones for Mudigere Kaval, and the businesses, locations and towns named here describe typical uses and places we accept enquiries from, not clients, completed projects or guaranteed delivery areas; no location guarantees demand, footfall or sales. Permissions, licences, food safety registration, drug licences, highway access and setbacks, the storage of lubricants and other combustible materials, and electrical and fire safety depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or regulatory advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINER IN TUMKUR — new and used shipping containers (the box itself: sale,
    * rental, storage, modification) for the NH 48 industrial belt (Vasanthanarasapura, the
    * Machine Tool Park, Gubbi, Kyathsandra–Dabaspet) and the agricultural taluks (Tiptur copra,
@@ -8426,6 +9665,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
       { label: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
       { label: "Container Office in Pavagada", href: "/cities-we-serve/container-office-in-pavagada" },
+      { label: "Portable Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       { label: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
@@ -8992,6 +10232,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Toilet Cabins for Devanahalli Aerospace Park", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { label: "Portable Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
@@ -9276,6 +10517,307 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Devanahalli or at Kempegowda International Airport (Bengaluru Airport). Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, materials, fittings, optional additions and other specification items described on this page are options; the items supplied are confirmed in the approved layout and quotation for each order, and joined or stacked units are subject to structural design, site conditions and applicable approvals. The images on this page are illustrative renders of one Portable Office Cabin design, shown with optional fittings and furniture; they are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, KIADB and its Aerospace Park and Hardware Park, and the places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on site access, supports, height restrictions and approvals are general guidance, not engineering, legal or regulatory advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABINS FOR DEVANAHALLI AEROSPACE PARK — the portable-toilet intent for Devanahalli,
+   * the KIADB Aerospace Park and airport-area projects (Bengaluru Rural, Karnataka): crew, site-office
+   * and visitor toilet cabins. Washroom cabin, toilet block and mobile toilet are synonyms kept on this
+   * one page. The first Karnataka portable-toilet city page, a sibling of Portable Toilets in Krishnagiri
+   * (Tamil Nadu). The three Devanahalli cabin pages above (portable cabin, porta cabin, container
+   * office) keep their own intents and target no toilet keyword; the portable-cabin page links here.
+   *
+   * Owner brief of 2026-11-05 ("Devanahalli Portable Toilet Cabin"), mapped onto the template slots in
+   * the brief's order wherever the template allows (no template change):
+   *   Hero → h1 / tagline / intro + heroCta (Request a Quotation → the on-page form, Call, WhatsApp).
+   *   1 Crew and visitor facilities → why: the table as whyTable, the no-ratio note as whyOutro.
+   *     "Handwashing" in the crew layout row reads "washbasins" (owner rule of 2026-11-05: no wording
+   *     that offers standalone handwash stations; washbasins inside the cabin stay).
+   *     Short cell words so the 3-column table fits a 320 px phone (owner meaning kept): headers "Crew use"
+   *     / "Office and visitor use", "build and fit-out teams", "movement space", "finish", "Position".
+   *   2 Layout and fittings → solutions: seven h3 items; the brief's contextual links sit on items 1, 3
+   *     and 7 (the intro takes no links): portable toilet cabins, portable cabins with toilets,
+   *     portable site office cabins.
+   *   3 Housekeeping, 4 Delivery, 5 Secure campus, 6 Water and waste, 7 Configuration (table, then the
+   *     accessibility note) → extra sections with `placement: "afterSolutions"`, in that order.
+   *   The features slot lists the order-scope responsibilities the brief names in sections 3 and 5
+   *     (no new claim); the bold sizesNote is the brief's "not automatically included" rule. Then the
+   *     one-image gallery.
+   *   8 Price → custom, beside the three-quarter image. No ₹ anywhere: the fed 4-unit block keeps its
+   *     fixed price on its own product page.
+   *   10 Service areas → areas; 9 How to enquire → how (the template renders areas before how); the
+   *     brief's seven FAQs; CTA (Request a Quotation, Call, WhatsApp) and the category enquiry form
+   *     (portable-toilet-cabins, a CATEGORY_LANDING_SLUGS category, so /api/enquiries accepts it).
+   * Left out until the owner confirms them (the brief's conditional additions): rental (2- and 4-unit
+   * toilet blocks are in the rental range, but availability for this location is unconfirmed),
+   * servicing plans, urinal/shower/multi-seater/PUF/ACP variants, detailed accessible-unit claims,
+   * fixed delivery times. The source draft's acreage, tenant, airport-proximity and crane-clearance
+   * claims stay out. Bagaluru and Chikkajala are described as near the airport, and only Vijayapura
+   * as in Devanahalli taluk, so Bagaluru is not confused with Bagalur near Hosur.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets toilet × Devanahalli;
+   * no Devanahalli page carries a toilet keyword. KIADB, the Aerospace Park and Kempegowda
+   * International Airport are named only to describe locations, with the non-affiliation note in the
+   * disclaimer.
+   *
+   * Images: three owner-dropped webp files ("public/images/Devanahalli Portable Toilet Cabin city
+   * page/Devanahalli Portable Toilet Cabin/cabin (1–3).webp", lossy VP8, no EXIF/XMP/ICC chunk) copied
+   * byte-for-byte to descriptive names: (1) front with both doors open, 1200×896 = hero / og:image,
+   * captioned; (3) rear, 1200×896 = single-image gallery after the responsibilities list; (2)
+   * three-quarter view, 600×448 = beside the price section at its own width, captioned. They are AI
+   * renders of one orange two-cubicle cabin with rounded corrugated panels, set in an industrial hall;
+   * the alt texts, captions and disclaimer call them illustrative renders, not photographs of our
+   * factory or of a Devanahalli installation, and no file name or alt text names Devanahalli.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-devanahalli-aerospace-park",
+    city: "Devanahalli",
+    listTitle: "Portable Toilet Cabins in Devanahalli",
+    metaTitle: "Portable Toilet Cabin in Devanahalli | Aerospace Park",
+    metaDescription:
+      "Enquire about portable toilet cabins for Devanahalli Aerospace Park projects. Discuss layouts, fittings, water connections and delivery requirements.",
+    keywords:
+      "Portable Toilet Cabin in Devanahalli, Portable Toilet Cabin Devanahalli Aerospace Park, Toilet Cabin KIADB Aerospace Park, Washroom Cabins Devanahalli, Portable Toilet Cabin Price in Devanahalli",
+    geo: { region: "IN-KA", placename: "Devanahalli, Bengaluru Rural, Karnataka, India", position: "13.2473;77.7128", icbm: "13.2473, 77.7128" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-devanahalli-aerospace-park/portable-toilet-cabin-front.webp",
+      alt: "Front of a two-cubicle portable toilet cabin with both doors open — illustrative render of an orange cabin with corrugated panels and rounded corners, a Western WC in each cubicle, a wall-mounted dispenser and a small panel between the doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable toilet cabin design; final specification varies.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-devanahalli-aerospace-park/portable-toilet-cabin-three-quarter.webp",
+      alt: "Three-quarter view of the two-cubicle portable toilet cabin — illustrative render with one door open to a Western WC, the second door closed and the rounded orange corrugated side wall",
+      width: 600,
+      height: 448,
+      caption: "Illustrative render. The cabin size, layout, fittings and finish are confirmed in the approved drawing and quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-toilet-cabin-devanahalli-aerospace-park/portable-toilet-cabin-rear.webp",
+        alt: "Rear of the portable toilet cabin — illustrative render of a closed orange corrugated wall with rounded edges and small wall-mounted fixtures near the base",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Toilet Cabins for Devanahalli Aerospace Park",
+    tagline: "Crew, site-office and visitor toilet cabins for Devanahalli projects, built to order at our factory near Hosur",
+    intro: [
+      "Planning washroom facilities for a project in Devanahalli? Portable Office Cabin can help you discuss portable toilet cabin requirements for construction teams, project offices and visitor areas. Share your site layout, expected users and water and waste arrangements so the proposed cabin specification can be matched to your project.",
+      "For projects in Devanahalli Aerospace Park, the planning discussion should cover both daily crew use and the facilities required beside the site office. Final layouts, finishes, fittings and delivery arrangements are confirmed in the quotation and approved drawing.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Plan Crew and Visitor Facilities Together",
+    whyIntro:
+      "Different users may need separate facilities. Consider access, privacy, cleaning and service connections before deciding where to place each cabin.",
+    whyBullets: [],
+    whyTable: {
+      caption: "Points to discuss with your project team; the layout and fittings are confirmed in the approved drawing and quotation.",
+      headers: ["Planning point", "Crew use", "Office and visitor use"],
+      rows: [
+        ["Expected use", "Daily use by build and fit-out teams", "Use by office staff, clients and visitors"],
+        ["Layout", "Cubicle count, washbasins and movement space", "Privacy, internal space and washbasin position"],
+        ["Finishes", "Durability and ease of cleaning", "Ease of cleaning, lighting and finish"],
+        ["Position", "Easy access from work areas", "Easy access from office or reception areas"],
+        ["Services", "Water, waste access and who cleans the unit", "Water, waste access and who cleans the unit"],
+      ],
+    },
+    whyOutro:
+      "The number and type of fixtures should be agreed with your project team according to expected occupancy and applicable requirements. A standard headcount-to-seat ratio is not assumed here.",
+
+    solutionsHeading: "Washroom Cabin Layout and Fittings",
+    solutionsIntro: "Start with the facilities your users need, then confirm which options are available for your order:",
+    solutions: [
+      {
+        title: "Cabin size and cubicle layout",
+        text: "Cabin dimensions, the cubicle layout and the door positions.",
+        link: { label: "Portable toilet cabins", href: "/products/portable-toilet-cabin" },
+      },
+      { title: "Toilet fixtures", text: "The toilet fixture type and quantity." },
+      {
+        title: "Washbasin and plumbing",
+        text: "The washbasin location and its plumbing connections.",
+        link: { label: "Portable cabins with toilets", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      },
+      { title: "Lighting, ventilation and electrical", text: "Lighting, ventilation and the electrical requirements of the cabin." },
+      { title: "Floor, drainage and cleaning access", text: "The floor finish, drainage details and access for cleaning." },
+      { title: "Privacy and signage", text: "Privacy, signage and separate facilities where required." },
+      {
+        title: "Office and visitor finishes",
+        text: "Additional finishes or fittings requested for office and visitor use. For an executive washroom requirement, include your preferred appearance and fittings in the enquiry; availability and specification must be confirmed before ordering.",
+        link: { label: "Portable site office cabins", href: "/products/construction-site-portable-office" },
+      },
+    ],
+
+    featuresHeading: "Responsibilities to Agree in the Order Scope",
+    featuresIntro: "Record who is responsible for each of these before the order is confirmed:",
+    features: [
+      "Daily cleaning of the unit",
+      "Replenishing consumables",
+      "Reporting faults",
+      "Tank emptying, where a holding tank is part of the site plan",
+      "Safe access for a third-party waste service",
+      "Maintenance",
+    ],
+    sizesNote:
+      "Cleaning, consumables, tank emptying and maintenance are included only where the agreed scope expressly states them; they are not automatically included with a cabin supply.",
+
+    customHeading: "Portable Toilet Cabin Price in Devanahalli",
+    customIntro: "Pricing depends on:",
+    customBullets: [
+      { text: "The agreed cabin size" },
+      { text: "Layout" },
+      { text: "Fixture quantity" },
+      { text: "Material specification" },
+      { text: "Finishes" },
+      { text: "Plumbing and electrical scope" },
+      { text: "Transport, unloading and placement arrangements" },
+    ],
+    customOutro:
+      "Send your required quantity, site location and preferred layout for an itemised quotation. Ask for the included and excluded items to be stated clearly, including taxes, transport, unloading, connections and any ongoing services.",
+
+    areasHeading: "Service-Area Enquiries",
+    areasText:
+      "For Devanahalli, KIADB Aerospace Park and airport-area projects, share the exact site address when requesting a quotation. For sites around Bagaluru and Chikkajala near the airport, or Vijayapura in Devanahalli taluk, confirm delivery availability and logistics for your location.",
+
+    howHeading: "How to Enquire",
+    howSteps: [
+      { title: "Share your project", text: "the Devanahalli site location, quantity and intended use." },
+      { title: "Describe the users", text: "expected user numbers, layout preferences and required fittings." },
+      { title: "Confirm services and access", text: "water, waste, electricity, access and unloading arrangements." },
+      { title: "Review the documents", text: "the drawing, specification, quotation and order scope." },
+      { title: "Agree the schedule", text: "the production and delivery schedule, before confirming the order." },
+    ],
+
+    extraSections: [
+      {
+        heading: "Housekeeping and Daily Cleaning",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Good facilities need an agreed cleaning routine as well as a suitable cabin layout. During planning, identify who will clean the unit, replenish consumables and report faults.",
+          "If your campus follows a 5S housekeeping system, share its requirements for signage, cleaning records, storage and waste bins, and discuss suitable provisions as part of the cabin specification. Cabin features alone do not establish certification or compliance with a customer's system.",
+        ],
+      },
+      {
+        heading: "Delivery and Placement for Airport-Area Projects",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Before delivery, share the vehicle access route, gate opening, unloading space, ground condition and intended cabin position. Your site team should confirm any permissions, lifting restrictions or equipment clearances that apply to that location.",
+          "Where lifting equipment is required, agree the method and responsibilities in advance. Delivery dates, unloading arrangements and installation scope are confirmed for the individual order.",
+        ],
+      },
+      {
+        heading: "Planning for Secure-Campus Access",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For controlled-access sites, discuss entry requirements before scheduling delivery or any agreed follow-up visit. These may include vehicle details, personnel identification, induction requirements and approved working hours.",
+          "Where a holding tank or third-party waste service is part of the site plan, allow safe access for the responsible service provider. Cleaning, consumables, tank emptying and maintenance responsibilities should be recorded in the order scope.",
+        ],
+      },
+      {
+        heading: "Water Supply and Waste Arrangements",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Confirm how fresh water will reach the cabin and how wastewater will be managed. The arrangement depends on the site, available connections and approved project requirements.",
+          "Discuss fixture selection, water availability, refill arrangements where needed, drainage connections and maintenance access. Ask for water-saving fittings if required; the final quotation will identify any included options.",
+        ],
+      },
+      {
+        heading: "Choosing a Suitable Configuration",
+        placement: "afterSolutions",
+        table: {
+          caption: "Use these points to plan each requirement; the confirmed product specification decides what can be supplied.",
+          headers: ["Project requirement", "Points to discuss"],
+          rows: [
+            ["Construction work area", "User count, shifts, walking distance and cleaning access"],
+            ["Project site office", "Staff and visitor numbers, privacy and finish preferences"],
+            ["Separate facilities", "User requirements, signage and available placement space"],
+            ["Multi-location campus", "Distribution of facilities and service access at each location"],
+            ["Accessibility requirement", "User needs, approach route, dimensions and applicable standards"],
+          ],
+        },
+        closing: [
+          "Accessibility requires a complete design review. A ramp or grab bar alone does not establish that a cabin is accessible or compliant. Confirm feasibility and specifications before ordering.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What information is needed for a toilet cabin quotation?",
+        answer:
+          "Share your site address, required quantity, cabin dimensions or layout, expected users, preferred fittings and available service connections. Include vehicle access and unloading details where possible.",
+      },
+      {
+        question: "Can crew and visitor facilities be planned separately?",
+        answer:
+          "Yes, separate requirements can be discussed during planning. The proposed arrangement depends on your site, available space and the confirmed product specification.",
+      },
+      {
+        question: "Can I request an executive washroom finish?",
+        answer: "Include the finish and fittings you want in the enquiry. Availability, materials and pricing will be confirmed in the quotation.",
+      },
+      {
+        question: "How should we plan delivery near the airport?",
+        answer:
+          "Ask your site team to confirm access, unloading space and any permissions or lifting restrictions that apply. Share these details before agreeing delivery arrangements.",
+      },
+      {
+        question: "Are cleaning and waste servicing included?",
+        answer:
+          "Include these requirements in your enquiry. Cleaning, tank emptying, consumables and maintenance are included only where expressly stated in the agreed scope.",
+      },
+      {
+        question: "Can we request accessibility features?",
+        answer:
+          "Share the complete accessibility requirement for review. Availability and suitability must be confirmed against the proposed layout and applicable standards before ordering.",
+      },
+      {
+        question: "How long will delivery take?",
+        answer:
+          "The schedule depends on the approved design, quantity, production availability and site logistics. Obtain an order-specific schedule with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Toilet Cabin Quotation for Devanahalli",
+    ctaText: `Share your site requirements with Portable Office Cabin to discuss the layout, fittings and delivery scope for your project. Send a drawing or site plan if available, along with the quantity and required date. Call or WhatsApp ${COMPANY.whatsapp.display}, or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call Us, WhatsApp and Request a Quotation: the call and WhatsApp buttons
+    // are on by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Request a Toilet Cabin Quotation",
+      intro:
+        "Tell us the quantity, the Devanahalli site location, the expected users and the water and drainage arrangements. Our sales team will reply to confirm the details before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Models", href: "/products/category/portable-toilet-cabins" },
+      { label: "4-Unit Portable Toilet Block", href: "/products/portable-toilet-block-4-unit" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
+        { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
+        { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru. Devanahalli is a service area: the company has no branch, office, yard or service partner in Devanahalli or Bengaluru Rural district. Delivery, unloading and placement are arranged for each order, and delivery dates are confirmed for the individual order, not guaranteed in advance. The layouts, fixtures, fittings, finishes, sizes and services on this page are options to discuss; the items supplied are confirmed in the approved drawing, specification and quotation. Cleaning, consumables, tank emptying, waste servicing and maintenance are not included unless the agreed scope states them, and no cabin is described as accessible or compliant with an accessibility standard without a complete design review. The three images are illustrative renders of one two-cubicle toilet cabin design; they are not photographs of our factory, a customer installation or a Devanahalli project, and the final specification varies. KIADB (the Karnataka Industrial Areas Development Board), the KIADB Aerospace Park and Kempegowda International Airport are named only to describe locations; Portable Office Cabin is not affiliated with them or with any company or campus in the area, and the projects and places named here are not clients or completed projects. Site permissions, lifting restrictions, campus access rules and water and wastewater arrangements remain the responsibility of the customer's site team; the notes on this page are general guidance, not legal, engineering or regulatory advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -10261,6 +11803,465 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Bangalore office at Electronic City Phase 1; it does not operate a factory, yard or office in Magadi. Delivery, unloading and lifting are arranged for each project, placement requirements and the base depend on the site, and delivery timelines are not guaranteed. Purchase options are subject to unit availability, and rental availability and minimum duration are subject to confirmation. The sizes, layouts, build details, insulation, optional features, fittings, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the furniture, lawn and paving shown are not included unless listed in the quotation, other models look different, and the images are not photographs of installations in Magadi. The towns, roads, reservoirs and hills named here describe the region and delivery enquiry locations only, and the farms, layouts, warehouses, campsites, schools and other uses described are not clients, completed projects or confirmed delivery areas. Notes on permissions, land use, ground conditions, supports, slopes, access roads, insulation and service life are general guidance, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN MANDYA — the portable-shop intent for Mandya town, the KIADB industrial
+   * areas at Thubinakere (Mandya taluk) and Somanahalli and Gejjalagere (Maddur taluk), Maddur and
+   * approved commercial sites on the Bengaluru–Mysuru Expressway corridor (Karnataka): sugarcane juice
+   * kiosks, jaggery and local produce shops, Maddur vada counters, tender coconut stalls, tourist
+   * kiosks and multi-window combo kiosks. Readymade shop, prefabricated shop and kiosk are synonyms
+   * kept on this one page, and Maddur is a secondary target here, not a page of its own. A sibling of
+   * Portable Shops in Krishnagiri (live) and of the general Portable Shop Cabin product page; the
+   * Mysore container-office page links here. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Mandya Industrial Area"), mapped
+   * onto the template slots in the brief's order wherever the template allows (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   2 Expressway → why: the three locations to evaluate as titled bullets; the practical planning
+   *     list and the access-control, relocation and no-guarantee rules are the whyOutro. The feature
+   *     band follows it.
+   *   3 Local shop ideas → solutions: five h3 subsections, with a verified link where one fits (the
+   *     intro takes no links, so the product-page link sits on the jaggery shop).
+   *   4 Juice kiosk design, 5 Combo kiosk (example layout as a 3-column table), 6 Insects and hygiene,
+   *     7 Sizes, 8 Weather, 9 Permissions by location → extra sections with `placement:
+   *     "afterSolutions"`, in that order. The size table follows the owner's shop-page wording of
+   *     2026-11-05 (#201/#202): every size is an indicative planning size, confirmed only by an
+   *     approved drawing and quotation; the only catalogue shop cabin is 10 ft × 10 ft. Short-worded
+   *     cells, so both tables fit a 320 px phone.
+   *   9 General requirements → features (a plain list), the responsibility rule in the bold
+   *     sizesNote, then the one-image gallery.
+   *   10 Price → custom, beside the elevated two-window image. No ₹ anywhere; the catalogue cabin's
+   *     fixed price stays on its own product page.
+   *   11 Rental → left out: the rental range has no shop cabin.
+   *   13 Areas → areas; 12 Ordering → how (the template renders areas before how); 14 Why choose →
+   *     an extra section without a placement, so it renders after the ordering steps; 15 the brief's
+   *     eight FAQs; 16 CTA (Request Quote, Call, WhatsApp).
+   * No on-page enquiry form: the category form needs a category with landing copy, and shops sit in
+   * Portable Cabins, which has none; the quote buttons go to the /contact form.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Mandya (and
+   * Maddur, Thubinakere, Somanahalli, Gejjalagere). No other page claims a shop keyword for them; the
+   * Kanakapura page's "Somanahalli" is a different village near Kanakapura, so the areas text says
+   * "Somanahalli … in Maddur taluk". The Hassan, Nanjangud, Hebbal (Mysuru) and Sira shop pages are not
+   * linked until they are live. KIADB and the expressway are named only to describe locations, with
+   * the non-affiliation note in the disclaimer. The KIADB area names (Thubinakere/Tubinakere,
+   * Somanahalli and Gejjalagere in Maddur taluk) were checked against the Invest Karnataka Mandya
+   * district profile.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Mandya Industrial Area portable shop city
+   * page/Mandya Industrial Area/cabin (1–4).webp", lossy VP8, 78–178 KB, no EXIF/XMP/ICC chunk) copied
+   * byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image, captioned;
+   * (2) front elevation, 1451×1084 = the feature band; (3) rear view, 1451×1084 = single-image gallery
+   * after the requirements list; (4) elevated view showing the roof and two serving windows,
+   * 1451×1084 = beside the price section, captioned. They show one charcoal corrugated-steel kiosk
+   * concept with a gold-finish frame, two lift-up serving hatches and a side door. The alt texts,
+   * captions and disclaimer say they are illustrative concept renders, not a confirmed standard
+   * design, and no file name or alt text names Mandya, Maddur or Thubinakere.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-mandya",
+    city: "Mandya",
+    listTitle: "Portable Shop Cabins in Mandya",
+    metaTitle: "Portable Shop Cabin in Mandya | Juice, Vada & Retail Kiosks",
+    metaDescription:
+      "Portable shop cabins in Mandya for sugarcane juice, jaggery, Maddur vada and combo kiosks near Thubinakere, Maddur and approved expressway exits.",
+    keywords:
+      "Portable Shop Cabin in Mandya, Portable Shop Mandya, Kiosk Mandya Industrial Area, Readymade Shop Cabin Mandya, Prefabricated Shop Mandya, Shop Cabin Thubinakere, Shop Cabin Maddur, Portable Shop Somanahalli, Portable Shop Gejjalagere, Portable Shop Cabin Manufacturers in Mandya, Portable Shop Cabin Price in Mandya, Sugarcane Juice Kiosk Mandya, Combo Kiosk Mandya",
+    geo: { region: "IN-KA", placename: "Mandya, Karnataka, India", position: "12.5218;76.8951", icbm: "12.5218, 76.8951" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-mandya/portable-two-window-shop-kiosk.webp",
+      alt: "Portable retail kiosk with two service windows — illustrative concept render of a charcoal corrugated steel shop cabin with a gold-finish frame, lift-up hatches on steel stays over two steel counters, a glazed window inside and a lockable side door",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin configuration, not a confirmed standard design; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-mandya/portable-shop-kiosk-front-elevation.webp",
+      alt: "Portable shop kiosk concept seen straight on — illustrative render with its lift-up serving hatch raised over a steel counter, a glazed window behind, and a full-height lockable door set in charcoal corrugated steel walls under a pitched roof",
+      width: 1451,
+      height: 1084,
+      caption:
+        "A raised serving hatch shelters the counter while stock and equipment stay inside. Concept render for illustration only: your shop's size, windows and fittings are settled when you approve its drawing and quotation.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-mandya/portable-shop-cabin-roof-view.webp",
+      alt: "Kiosk concept seen from above — illustrative render of the corrugated roof sheets and two lift-up serving hatches on adjoining walls over steel counters, next to a lockable door, raised on concrete blocks",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative concept render of a kiosk with service windows on two walls. The number of windows, counters and fittings is part of your specification and is priced in your quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-mandya/portable-shop-kiosk-rear-view.webp",
+        alt: "The same kiosk concept from behind — illustrative render showing a sliding glazed window in the charcoal corrugated steel wall and the serving hatches raised on both sides, on a paved yard",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Mandya Industrial Area",
+    tagline:
+      "Sugarcane juice kiosks, jaggery shops, Maddur vada counters and multi-window combo kiosks, built to order at our factory near Hosur",
+    intro: [
+      "Mandya is widely known as Sakkare Nadu, the land of sugar, reflecting the district's association with sugarcane farming and jaggery production.",
+      "The district also includes industrial locations such as Thubinakere, Somanahalli and Gejjalagere, along with towns, agricultural communities and commercial corridors. The Bengaluru–Mysuru Expressway has changed travel patterns across the region, making legal access, customer convenience and suitable shop locations important considerations for roadside businesses.",
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for suitable locations in Mandya and surrounding areas. Every cabin is fabricated at our Hosur-area factory and transported to site by road.",
+      "Our shop cabin configurations can be planned for sugarcane juice counters, jaggery retail, Maddur vada stalls, tender coconut kiosks, general stores and multi-service retail counters.",
+    ],
+    heroCta: true,
+
+    whyHeading: "The Expressway Changed Where People Stop",
+    whyIntro:
+      "The Bengaluru–Mysuru Expressway provides a different travel route from the older town-centre corridor. For businesses serving travellers, accessibility matters as much as visibility. Locations to evaluate:",
+    whyBullets: [
+      {
+        title: "Approved locations near expressway exits",
+        text: "commercial sites near legally accessible exits may be considered, subject to local planning and road-access permissions.",
+      },
+      {
+        title: "Permitted service-road locations",
+        text: "where commercial activity and access are legally permitted, service-road locations may support suitable retail activity.",
+      },
+      {
+        title: "Mandya and Maddur town approaches",
+        text: "town locations can serve residents and travellers who deliberately stop for local food and products.",
+      },
+    ],
+    whyOutro:
+      "Practical retail planning comes first: choose a legally permitted commercial site, confirm safe vehicle access, provide suitable parking, use clear and appropriately placed signage, plan convenient customer circulation, select products suited to actual local demand, and check water, electricity and waste-disposal arrangements. The expressway's main carriageway is access-controlled, so a shop belongs only at a permitted site with approved access, never where customers would have to stop on the carriageway. A portable cabin may offer some relocation flexibility, but moving it depends on its structure, transport access, permissions and cost, and no location guarantees customer traffic or profit.",
+
+    solutionsHeading: "Mandya's Local Shop Ideas",
+    solutionsIntro:
+      "Shop types that suit Mandya's sugarcane, jaggery and roadside-food traditions. Every one is made to order; the size and fittings are fixed when you approve the layout and quotation.",
+    solutions: [
+      {
+        title: "Sugarcane Juice Kiosk",
+        text: "A portable sugarcane juice kiosk may include a serving window, an equipment counter, a power provision for the crusher, washable surfaces, a water supply, a drainage outlet, insect mesh, space for bagasse collection and a shade canopy. The crusher's actual electrical load and dimensions must be confirmed before the layout is finalised.",
+        link: { label: "How cabin interiors and layouts are planned", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Jaggery and Local Produce Shop",
+        text: "A jaggery retail cabin may be configured with display shelving, a glass-front option, covered storage, a billing counter, lighting and product display panels. It may also accommodate other packaged local produce, subject to the applicable retail requirements.",
+        link: { label: "The glazed-front 10 ft × 10 ft Portable Shop Cabin from our catalogue", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Maddur Vada Counter",
+        text: "A vada kiosk may include a serving window, a washable counter, suitable ventilation, provisions for food preparation equipment, covered storage, and water and drainage arrangements. Cooking equipment, exhaust, fire safety and hygiene requirements must be addressed in the approved design.",
+        link: { label: "Container cafes and food kiosks", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Tender Coconut Stall",
+        text: "Possible features include an open-front service counter, a shade awning, coconut storage, a husk collection area, washable floor or counter surfaces and suitable drainage.",
+        link: { label: "Preparing the base and drainage on site", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+      {
+        title: "Tourist Kiosk",
+        text: "At legally permitted locations near tourist attractions, a compact retail cabin may support packaged snacks, drinking water, souvenirs, local products and travel essentials. Tourist-site and protected-area permissions must be verified first.",
+      },
+    ],
+
+    featuresHeading: "Requirements to Check Before Opening",
+    featuresIntro: "Depending on the business and the site, the requirements may include:",
+    features: [
+      "Landowner consent",
+      "Trade licence",
+      "Planning approval",
+      "Electrical connection",
+      "Food safety requirements",
+      "Waste-disposal arrangements",
+      "Fire safety provisions",
+      "Other sector-specific licences",
+    ],
+    sizesNote:
+      "We manufacture the cabin to the approved configuration; securing the permissions, licences and utility connections that let the business operate is the owner's job.",
+
+    customHeading: "Portable Shop Cabin Price in Mandya",
+    customIntro:
+      "Our 10 ft × 10 ft catalogue shop cabin carries a fixed price on its own product page; every other shop cabin is priced from its specification. The main price factors are:",
+    customBullets: [
+      { text: "Cabin dimensions" },
+      { text: "Number of service windows" },
+      { text: "Structural specifications" },
+      { text: "MS or insulated construction" },
+      { text: "Rolling shutter or glass-front configuration" },
+      { text: "Crusher power provisions" },
+      { text: "Washable counters" },
+      { text: "Drainage" },
+      { text: "Insect mesh" },
+      { text: "Storage and shelving" },
+      { text: "Water tank and sink" },
+      { text: "Electrical fittings" },
+      { text: "Branding and signage" },
+      { text: "Canopy" },
+      { text: "Delivery and unloading" },
+      { text: "Order quantity" },
+    ],
+    customOutro:
+      "To get a written quotation, tell us the shop type, size, fittings and site location using the contact form, a phone call or WhatsApp. The quotation sets out the specification, the inclusions and every applicable charge; prices, discounts, delivery dates and business returns are never promised before it.",
+
+    areasHeading: "Areas Served Around Mandya",
+    areasText:
+      "We welcome portable shop enquiries from Mandya town and the Mandya industrial area, including KIADB Thubinakere; from Maddur and the Somanahalli and Gejjalagere industrial areas in Maddur taluk; from Malavalli, Srirangapatna, Pandavapura, Krishnarajpet and Nagamangala; and from approved commercial locations along the Bengaluru–Mysuru Expressway corridor. Send the exact site address with your enquiry so that the transport route, vehicle access and unloading can be checked before the quotation is issued.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your business requirements", text: "tell us the type of shop, the intended location, your preferred dimensions and the fittings you need." },
+      {
+        title: "Discuss the layout",
+        text: "review service windows, counters, shelving, storage and customer access. For a sugarcane juice kiosk, share the crusher's dimensions and electrical specifications.",
+      },
+      { title: "Confirm utilities", text: "discuss electricity, water, drainage, ventilation and equipment provisions." },
+      { title: "Approve the quotation", text: "finalise the specifications, commercial terms and delivery responsibilities." },
+      { title: "Manufacture", text: "the approved portable shop cabin is fabricated at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "Permissions and utility connections must be in place before trading starts, and arranging them is the customer's responsibility. Manufacturing and delivery dates are set when the order is confirmed.",
+
+    extraSections: [
+      {
+        heading: "Designing a Sugarcane Juice Kiosk",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Sugarcane juice stalls need more than a simple serving counter. A practical layout for equipment, hygiene and customers considers the crusher, operator movement, clean water, wastewater, waste collection and customer access:",
+        ],
+        bullets: [
+          { title: "Crusher power provision", text: "a properly specified electrical circuit based on the actual crusher's rating." },
+          { title: "Washable counter", text: "a suitable food-contact work surface and a water-resistant finish." },
+          { title: "Drainage outlet", text: "controlled wastewater discharge into an approved drainage arrangement." },
+          { title: "Ice and clean-glass storage", text: "space for suitable ice storage and clean utensils." },
+          {
+            title: "Bagasse collection",
+            text: "a designated area for collecting crushed sugarcane residue in covered or appropriately managed containers.",
+          },
+          { title: "Insect protection", text: "suitable mesh or screened openings where practical." },
+          {
+            title: "Sink and water storage",
+            text: "handwashing and cleaning facilities according to the food operator's requirements, where available and allowed for in the layout.",
+          },
+          { title: "Customer shade", text: "a suitably supported canopy above the serving area." },
+        ],
+        closing: [
+          "Before manufacturing, we ask for the crusher's dimensions and electrical load, your preferred serving arrangement and your water requirements. These fittings are options chosen for your kiosk and priced in its quotation; they are not all included in a base price.",
+        ],
+      },
+      {
+        heading: "A Combo Kiosk for Industrial Areas",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A combo kiosk is a portable retail cabin designed with two or more service points for different products or activities. It may be considered for suitable commercial locations near industrial areas, residential neighbourhoods or transport corridors.",
+          "An example three-window layout:",
+        ],
+        table: {
+          caption: "Example layout only. The windows, counters and provisions of a combo kiosk are confirmed in its approved drawing and quotation.",
+          headers: ["Window", "Use", "Possible provisions"],
+          rows: [
+            ["Window 1", "Tea and coffee", "Serving counter, beverage equipment provisions"],
+            ["Window 2", "Snacks and essentials", "Shelving, display counter, covered storage"],
+            ["Window 3", "Mobile recharge and accessories", "Billing counter, sockets, lockable display"],
+          ],
+        },
+        bullets: [
+          {
+            title: "Possible layouts",
+            text: "three windows along one side; two windows along the front and one on the side; shared storage behind the service counters; separate counter zones for different products; coordinated signage and lighting.",
+          },
+          {
+            title: "Planning considerations",
+            text: "adequate operator space, electrical load, ventilation, food hygiene separation, customer queues, stock storage, waste disposal and safe access.",
+          },
+        ],
+        closing: [
+          "A combo kiosk may reduce the need for separate structures, but it does not guarantee lower operating costs, multiple income streams or business success.",
+        ],
+      },
+      {
+        heading: "Managing Insects and Food Hygiene",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Mandya's agricultural surroundings and food-oriented retail make cleanliness and pest management important design considerations. Possible features include:",
+        ],
+        bullets: [
+          { text: "Insect mesh on suitable openings" },
+          { text: "Covered storage for food products" },
+          { text: "Lidded waste containers" },
+          { text: "Washable counters" },
+          { text: "Appropriate sink provisions" },
+          { text: "Drainage" },
+          { text: "Easy-clean flooring" },
+          { text: "Protected lighting installations" },
+          { text: "Space for regular cleaning" },
+        ],
+        closing: [
+          "Waste from sugarcane, coconuts and food preparation should be collected and disposed of appropriately. Lighting choices may help reduce insect attraction in some circumstances, but no design makes a kiosk insect-free.",
+          "Food businesses must meet the applicable food safety and sanitation requirements.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use these indicative sizes as a starting point for discussion; they are not standard models, and none is a confirmed manufacturing size:",
+        ],
+        table: {
+          caption:
+            "Indicative only: a size is confirmed, and its manufacture agreed, in the approved drawing and quotation for your order.",
+          headers: ["Shop type", "Indicative size", "Possible features"],
+          rows: [
+            ["Recharge counter", "4 × 4 ft", "Service window, sockets"],
+            ["Tender coconut stall", "8 × 6 ft", "Open front, awning, husk collection"],
+            ["Vada counter", "8 × 6 ft", "Serving window, washable counter, ventilation"],
+            ["Sugarcane juice kiosk", "8 × 6 to 10 × 8 ft", "Crusher provision, drainage, insect mesh"],
+            ["Jaggery shop", "10 × 8 ft", "Display shelving, glass-front option"],
+            ["Tourist kiosk", "10 × 8 ft", "Retail display, chiller provision"],
+            ["Combo kiosk", "12 × 8 to 16 × 8 ft", "Several service windows, shared storage"],
+            ["General store", "20 × 8 ft", "Retail shelving, billing counter"],
+          ],
+        },
+        closing: [
+          "The only catalogue shop cabin is our 10 ft × 10 ft Portable Shop Cabin, which has a glazed display front and a lockable door. Every other size in this table needs its own approved drawing; the final dimensions follow from the equipment you install, how many people work inside, the room customers and staff need to move, ventilation, utilities and the plot itself.",
+        ],
+      },
+      {
+        heading: "Weather Protection for Mandya",
+        placement: "afterSolutions",
+        paragraphs: ["Mandya experiences warm periods and seasonal rainfall. Possible shop cabin design considerations include:"],
+        bullets: [
+          { text: "Suitable roof slope" },
+          { text: "Properly sealed roof joints" },
+          { text: "Corrosion-protective finishes" },
+          { text: "Weather-protected service windows" },
+          { text: "Shade canopies" },
+          { text: "Appropriate base elevation" },
+          { text: "Ventilation" },
+          { text: "Exterior lighting" },
+          { text: "Suitable site drainage" },
+        ],
+        closing: [
+          "How well a cabin stands up to sun and rain depends on its materials, the workmanship, the site and regular maintenance. None of these measures makes a shop cabin flood-proof or fully waterproof, which is why the base height and the drainage around the cabin are worked out for each site.",
+        ],
+      },
+      {
+        heading: "Permissions and Site Requirements",
+        placement: "afterSolutions",
+        paragraphs: ["What to verify for each type of location before a shop cabin is placed:"],
+        bullets: [
+          {
+            title: "Thubinakere, Somanahalli and Gejjalagere",
+            text: "check the industrial area's permitted commercial uses, the plot's allotment conditions and the relevant KIADB requirements.",
+          },
+          {
+            title: "Expressway and service roads",
+            text: "verify permitted land use, road access, setbacks, signage, parking and the relevant road authority's requirements.",
+          },
+          { title: "Mandya and Maddur towns", text: "check the applicable municipal and local planning requirements." },
+          {
+            title: "Tourist locations",
+            text: "confirm land-use permissions and any heritage, environmental or protected-area restrictions.",
+          },
+          {
+            title: "Food and beverage kiosks",
+            text: "check the applicable food safety registration or licensing, sanitation, water, wastewater and fire safety requirements.",
+          },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["What a shop owner in Mandya district can plan with us, from the first layout to unloading:"],
+        bullets: [
+          { title: "Customized shop cabin dimensions", text: "matched to your trade and plot, then fixed in the drawing you approve." },
+          { title: "Sugarcane juice kiosk layouts", text: "crusher space, power provision, drainage and bagasse collection planned together." },
+          { title: "Multi-window combo kiosks", text: "two or more service points with shared storage behind them." },
+          { title: "Retail counters and shelving", text: "counters, display shelving and billing positions arranged around what you sell." },
+          { title: "Rolling shutter and glass-front options", text: "a lockable shutter, a glazed display front or both, as specified." },
+          { title: "Electrical and water provisions", text: "lighting, sockets, equipment circuits and water points specified for your equipment." },
+          { title: "Insect mesh and washable surface options", text: "for food and beverage kiosks." },
+          { title: "Exterior signage and branding", text: "your colours and signage panels on the cabin." },
+          { title: "Weather-conscious construction", text: "roof slope, sealed joints, protective finishes and canopies." },
+          { title: "Quotation support", text: "an itemised written quotation for the specification you choose." },
+          { title: "Delivery coordination", text: "the truck, route and unloading agreed with you before the cabin leaves the factory." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can you manufacture a sugarcane juice kiosk?",
+        answer:
+          "A portable shop cabin can be configured for a sugarcane juice counter, subject to the approved design, the crusher's specifications and the available fittings.",
+      },
+      {
+        question: "Where can a shop cabin be placed near the Bengaluru–Mysuru Expressway?",
+        answer:
+          "Only at legally permitted commercial locations with approved access, suitable setbacks and the applicable authority permissions. The expressway's main carriageway is access-controlled.",
+      },
+      {
+        question: "What is a combo kiosk?",
+        answer:
+          "A combo kiosk is a cabin with multiple service windows or counter zones that can accommodate different retail activities within one structure.",
+      },
+      {
+        question: "How can a juice kiosk reduce insect problems?",
+        answer:
+          "Suitable insect mesh, covered storage, lidded bins, washable surfaces and regular cleaning can help manage hygiene risks. No design makes a kiosk completely insect-free.",
+      },
+      {
+        question: "Can I place a shop cabin inside Thubinakere Industrial Area?",
+        answer: "Placement depends on the relevant KIADB rules, the permitted land use and the approvals for the specific site.",
+      },
+      {
+        question: "Can a shop cabin be customized for Maddur vada sales?",
+        answer:
+          "A food-service layout can be discussed with suitable serving, equipment, ventilation, water and drainage provisions. Cooking equipment, exhaust and fire safety are addressed in the approved design.",
+      },
+      {
+        question: "Can a portable shop cabin be relocated?",
+        answer:
+          "Some cabins can be relocated, depending on their structural design, condition, lifting arrangements and transport access. Moving to a new site also means fresh permissions for that site.",
+      },
+      {
+        question: "How quickly can a portable shop cabin be delivered?",
+        answer:
+          "Timelines depend on the selected design, quantity, manufacturing workload, transport and site readiness. We confirm the schedule once your order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Mandya",
+    ctaText: `Planning a sugarcane juice kiosk, a Maddur vada counter, a jaggery shop, a tender coconut stall, a general store or a multi-window retail cabin? Share your shop type, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display}, or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin (10 ft × 10 ft catalogue model)", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafes and Food Kiosks", href: "/products/container-cafe-restaurant" },
+      { label: "Prefabricated Portable Cabins", href: "/products/prefabricated-portable-cabin" },
+      { label: "Portable Office Cabin Range", href: "/products/category/portable-cabins" },
+      { label: "Security Cabins and Guard Booths", href: "/products/category/security-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Insulated PUF or MS: Which Material?", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Shop and Kiosk Cabins for Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        { label: "Container Offices in Mysuru", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Shipping Containers in Mysuru", href: "/cities-we-serve/shipping-container-in-mysore" },
+        { label: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
+        { label: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin builds every shop cabin at its own factory near Hosur (${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, Krishnagiri district, Tamil Nadu) and runs its Karnataka office from Electronic City, Bengaluru. There is no company office, yard, dealer or installer in Mandya district: each order is transported from the factory, and unloading, placement and the base are planned for the specific site, with no guaranteed manufacturing or delivery date. Everything this page describes — shop types, indicative sizes, construction, windows, counters, utilities and finishes — is an option until it appears in the approved drawing, specification and quotation for an order. All four pictures are computer-generated concept renders of a single container-style kiosk with two lift-up serving hatches: the design is not a confirmed standard model, other shops will look different, and none of the pictures was taken in Mandya, Maddur or Thubinakere. KIADB (Karnataka Industrial Areas Development Board), its industrial areas and the Bengaluru–Mysuru Expressway are mentioned only to identify places; Portable Office Cabin has no affiliation with KIADB, any road authority, or any estate, factory or business named or implied here. Towns and businesses are examples of typical uses and of places from which enquiries are welcome, not customers, completed installations or guaranteed delivery areas, and no site guarantees footfall, sales or profit. Land use, road access, KIADB allotment conditions, heritage or protected-area rules, food safety registration, trade licences, and electrical and fire safety compliance depend on the site and the business and are the owner's responsibility; this page offers general guidance only, not legal, engineering or food-safety advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -16304,6 +18305,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
       // Tindivanam / SIPCOT Industrial Park (owner request, 2026-10-23: interlink the new page).
       { label: "Portable Cabins in Tindivanam", href: "/cities-we-serve/portable-cabin-tindivanam" },
+      // Security-cabin page for Shoolagiri, the next town on NH 44 (2026-11-04).
+      { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
       { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
@@ -17168,6 +19171,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
       { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
       { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+      // Security-cabin page for Shoolagiri, in the same district (2026-11-04).
+      { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
       { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
       { label: "Portable Cabins in Cheyyar", href: "/cities-we-serve/portable-cabin-cheyyar" },
       { label: "Portable Cabin in Tamil Nadu", href: "/promotions/portable-cabin-in-tamil-nadu" },
@@ -18975,6 +20980,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Container Office in Chennai", href: "/cities-we-serve/container-office-in-chennai" },
       { label: "Container Office in Kalpakkam", href: "/cities-we-serve/container-office-in-kalpakkam" },
       { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
@@ -18985,6 +20991,421 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not operate a factory, office, yard or service partner in Mambakkam, Sriperumbudur or elsewhere in Kanchipuram district. Delivery, unloading and placement are arranged for each project, the base, supports and anchoring depend on the site, and delivery timelines are not guaranteed. The cabin types, sizes, layouts, insulation, fittings, finishes, documents and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order, and connected or multi-cabin layouts are subject to structural design. No cabin is described as fire-rated or flood-proof; fire performance, wind and flood exposure, occupancy, sanitation and corporate approval requirements are assessed for each project and confirmed by the customer's responsible team. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; other designs look different, and the images are not photographs of installations in Mambakkam or Sriperumbudur. SIPCOT and the SIPCOT Industrial Park at Mambakkam (Sriperumbudur Phase IV) are independent organisations with which Portable Office Cabin is not affiliated; they, the facilities described and the towns named here are mentioned only to describe the region, typical uses and delivery enquiry locations, not as clients, completed projects or confirmed delivery areas, and entry to any estate or premises is subject to its own permissions and procedures. Notes on electrical, fire, insulation, drainage and site preparation are general guidance, not engineering, legal or regulatory advice.",
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN SRIPERUMBUDUR — the portable-shop intent for Sriperumbudur and its
+   * industrial belt (Kanchipuram district, Tamil Nadu): shop cabins and kiosks for the streets around
+   * worker hostels, permitted spots near company bus pickup points and plant gates, approved
+   * employee stores inside factory campuses, and franchise kiosks. Readymade shop, prefabricated
+   * shop and kiosk are synonyms kept on this one page. A sibling of Portable Shops in Krishnagiri
+   * (live) and of the general Portable Shop Cabin product page; Portable Cabins for SIPCOT Mambakkam
+   * (above) owns the site-office and security-cabin intent of the same belt, and the two link to
+   * each other. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05 ("Portable Shop Cabin Manufacturers in Sriperumbudur Industrial Area"),
+   * mapped onto the template slots in the brief's order wherever the template allows (no template
+   * change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   2 Shift timings → why (five titled bullets); the brief's "not a guarantee of footfall" rule is
+   *     the whyOutro. The feature band follows it.
+   *   3 Worker-hostel shop types → solutions: seven h3 subsections, with a verified link where one fits.
+   *   4 Bus pickup points, 5 Factory campuses, 6 Franchise kiosks, 7 Busy periods, 8 Sizes,
+   *     9 Weather → extra sections with `placement: "afterSolutions"`, in that order. The size table
+   *     follows the owner's shop-page wording of 2026-11-05 (#201/#202): every size is a planning
+   *     example, confirmed only by an approved drawing and quotation; the only catalogue shop cabin
+   *     is 10 ft × 10 ft. Three short-worded columns, so it fits a 320 px phone.
+   *   10 Permissions → features (a plain list), the responsibility rule in the bold sizesNote, then
+   *     the one-image gallery.
+   *   11 Price → custom, beside the interior image. No ₹ anywhere; the catalogue cabin's fixed price
+   *     stays on its own product page.
+   *   12 Rental → left out: the rental range has no shop cabin.
+   *   14 Areas → areas; 13 Ordering → how (the template renders areas before how); 15 Why choose →
+   *     an extra section without a placement, so it renders after the ordering steps; 16 the brief's
+   *     eight FAQs; 17 CTA (Request Quote, Call, WhatsApp).
+   * No on-page enquiry form: the category form needs a category with landing copy, and shops sit in
+   * Portable Cabins, which has none; the quote buttons go to the /contact form.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Sriperumbudur.
+   * No other page claims a shop keyword for Sriperumbudur or its belt, the Mambakkam page keeps its
+   * cabin keywords, and link anchors and the CTA line are this page's own. The Hoskote and Shivamogga
+   * shop pages (PRs #202 and #195) are not linked until they are live. SIPCOT is named only to
+   * describe locations, with the non-affiliation note in the disclaimer. The estate names (SIPCOT
+   * Sriperumbudur with Phase IV at Mambakkam, Irungattukottai, Oragadam, Pillaipakkam, Vallam Vadagal)
+   * were checked against SIPCOT's published park list.
+   *
+   * Images: four owner-dropped webp renders ("public/images/sriperumbudur industrial/Sriperumbudur
+   * Industrial Area/cabin (1–4).webp", lossy VP8, 110–150 KB, no EXIF/XMP/ICC chunk) copied
+   * byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image, captioned;
+   * (3) front elevation, 1451×1084 = the feature band; (4) rear view, 1451×1084 = single-image gallery
+   * after the permissions list; (2) interior, 1451×1084 = beside the price section, captioned. They
+   * show one charcoal corrugated-steel kiosk concept with a lift-up serving hatch and a side door. The
+   * alt texts, captions and disclaimer say they are illustrative concept renders, not a confirmed
+   * standard design, and no file name or alt text names Sriperumbudur.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-sriperumbudur",
+    city: "Sriperumbudur",
+    listTitle: "Portable Shop Cabins in Sriperumbudur",
+    metaTitle: "Portable Shop Cabin in Sriperumbudur | Industrial Area Kiosks",
+    metaDescription:
+      "Portable shop cabins in Sriperumbudur for worker hostels, bus pickup points and factory campuses. Explore ironing, salon, tea, retail and franchise kiosks.",
+    keywords:
+      "Portable Shop Cabin in Sriperumbudur, Portable Shop Sriperumbudur, Readymade Shop Cabin Sriperumbudur, Prefabricated Shop Sriperumbudur, Kiosk Sriperumbudur Industrial Area, Shop Cabin SIPCOT Sriperumbudur, Portable Shop Cabin Manufacturers in Sriperumbudur, Portable Shop Suppliers Sriperumbudur, Portable Shop Cabin Price in Sriperumbudur, Ironing Shop Cabin Sriperumbudur, Tea Kiosk Sriperumbudur, Franchise Kiosk Sriperumbudur",
+    geo: { region: "IN-TN", placename: "Sriperumbudur, Kanchipuram, Tamil Nadu, India", position: "12.9675;79.9471", icbm: "12.9675, 79.9471" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-sriperumbudur/portable-shop-kiosk-with-serving-hatch.webp",
+      alt: "Prefabricated portable shop cabin with a front service counter — illustrative concept render of a charcoal corrugated steel kiosk with a lift-up serving hatch on gas struts over a timber-look counter shelf, an exhaust fan, and an open lockable side door",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin concept render, not a confirmed standard design; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-sriperumbudur/portable-shop-kiosk-front-elevation.webp",
+      alt: "Front elevation of a portable shop kiosk concept — illustrative render of the serving hatch raised over a counter shelf, timber-look shelves and panels inside, and a full-height lockable door in charcoal corrugated steel walls",
+      width: 1451,
+      height: 1084,
+      caption:
+        "A lift-up service window lets you serve customers outside while stock stays inside. Illustrative concept render; the size, front and fittings of your shop are confirmed in its approved layout and quotation.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-sriperumbudur/portable-shop-cabin-interior.webp",
+      alt: "Interior of a portable shop cabin concept — illustrative render of the lift-up serving hatch seen from inside, with shelves and an exhaust fan above the counter shelf, a side worktop, light wall panels, a wood-finish floor and an open lockable door",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative concept render of a kiosk interior; final fittings depend on approved specifications. Counters, shelving and electrical points are priced as part of your specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-sriperumbudur/portable-shop-kiosk-rear-view.webp",
+        alt: "Rear view of the portable shop kiosk concept — illustrative render of its closed charcoal corrugated steel walls and flat roof edge, standing on a paved yard",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Sriperumbudur Industrial Area",
+    tagline:
+      "Shop cabins and kiosks for worker-hostel streets, bus pickup points, factory campuses and franchise brands, built to order at our factory near Hosur",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for businesses serving Sriperumbudur's industrial and residential areas. Each cabin is built at our factory near Hosur and delivered to Sriperumbudur by road.",
+      "Sriperumbudur and its surrounding industrial belt include manufacturing facilities, worker accommodation areas, transport routes and commercial activity.",
+      "Portable shop cabins can be configured for tea and snack counters, ironing shops, tailoring services, salons, mobile accessory stores, daily essentials shops and franchise kiosks.",
+      "Depending on requirements, designs may include service windows, retail counters, shelving, electrical provisions, branding panels and weather protection.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Business Opportunities Around Factory Shift Timings",
+    whyIntro:
+      "Industrial workers may require quick access to everyday products and services before and after work shifts. Different business types may experience different customer patterns:",
+    whyBullets: [
+      { title: "Before morning shifts", text: "tea, breakfast and takeaway snacks may be relevant near approved commercial locations." },
+      { title: "During shift changes", text: "fast-service counters may help manage short periods of higher customer demand." },
+      { title: "Evenings near worker accommodation", text: "daily essentials, mobile accessories, laundry collection and personal services may be useful." },
+      { title: "Late-night operations", text: "some locations may support extended-hours food or convenience services, subject to permissions and actual demand." },
+      { title: "Weekends", text: "tailoring, salons, grocery shopping and parcel services may attract customers." },
+    ],
+    whyOutro:
+      "These are potential use cases, not guarantees of sales or customer footfall. Business owners should assess their exact location, permissions and local demand before investing.",
+
+    solutionsHeading: "Shop Cabins for Worker Hostels and Residential Areas",
+    solutionsIntro:
+      "Shop types that may suit the streets around worker accommodation and residential layouts. Each is built to order, and its size and fittings are confirmed in the approved layout and quotation.",
+    solutions: [
+      {
+        title: "Daily Essentials Store Cabin",
+        text: "A compact retail cabin with display shelves, a billing counter, storage compartments, lighting, suitable electrical sockets and a lockable entrance.",
+        link: { label: "Our catalogue 10 ft × 10 ft shop cabin with a glazed display front", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Istri / Ironing Shop Cabin",
+        text: "A portable ironing shop may include a pressing table, a suitable electrical provision for ironing equipment, clothing shelves, a hanging rail, a customer service counter and ventilation. Electrical loads and heat-producing equipment must be assessed during design.",
+        link: { label: "Ventilation, insulation and cooling options", href: "/products/portable-cabin/insulation-and-cooling" },
+      },
+      {
+        title: "Tailoring and Alteration Shop Cabin",
+        text: "Possible features include space for a sewing machine, a worktable, good task lighting, a clothing rail, material storage and electrical sockets.",
+        link: { label: "Planning a workroom layout inside a cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Salon and Barber Shop Cabin",
+        text: "Possible features include mirror and chair space, task lighting, electrical points, storage and ventilation, with an optional washbasin and water connection where offered.",
+      },
+      {
+        title: "Mobile and SIM Shop Cabin",
+        text: "Possible features include a glass display counter, lockable storage, charging points, product display shelves and suitable lighting. SIM-related services remain subject to applicable telecom requirements.",
+      },
+      {
+        title: "Pharmacy Kiosk",
+        text: "A portable retail cabin may be configured with lockable shelving, a service counter, suitable lighting, ventilation and appropriate storage arrangements. Pharmacy licensing, professional supervision and medicine-storage compliance remain the operator's responsibility.",
+      },
+      {
+        title: "Courier and Parcel Counter",
+        text: "Possible features include a parcel receiving counter, sorting shelves, lockable storage, a suitable electrical provision and a customer service window.",
+        link: { label: "Cabin sizes and dimensions explained", href: "/products/portable-cabin/sizes-and-dimensions" },
+      },
+    ],
+
+    featuresHeading: "Permissions Before Opening a Shop",
+    featuresIntro:
+      "Business owners should verify the applicable requirements before placing and operating a shop cabin. These may include:",
+    features: [
+      "Landowner consent or a lease",
+      "Local authority permissions",
+      "Industrial estate or SIPCOT requirements",
+      "Factory management approval for an in-campus shop",
+      "Applicable trade licences",
+      "Food safety registration or licence for a food business",
+      "Electrical connection approvals",
+      "Fire safety requirements where applicable",
+      "Pharmacy or other regulated-business licences where relevant",
+    ],
+    sizesNote:
+      "Portable Office Cabin supplies the cabin according to the approved specification. Obtaining the permissions and licences to place and run the business remains the owner's responsibility; the layout drawing that comes with your quotation can support those applications.",
+
+    customHeading: "Portable Shop Cabin Price in Sriperumbudur",
+    customIntro:
+      "Apart from the catalogue 10 ft × 10 ft cabin, which has a fixed price on its product page, each shop cabin is quoted for its own specification. Pricing depends on:",
+    customBullets: [
+      { text: "Cabin dimensions" },
+      { text: "MS or insulated construction" },
+      { text: "Doors, windows and shutters" },
+      { text: "Service counter configuration" },
+      { text: "Retail shelving" },
+      { text: "Electrical fittings" },
+      { text: "Interior finishing" },
+      { text: "Exterior cladding" },
+      { text: "Franchise branding" },
+      { text: "Water connection provisions" },
+      { text: "Weather canopy" },
+      { text: "Delivery and unloading" },
+      { text: "Quantity ordered" },
+    ],
+    customOutro:
+      "Share your shop type, preferred size, fittings and site location through the contact form, by phone or on WhatsApp. We reply with a written quotation that lists the specification, what is included and the applicable charges.",
+
+    areasHeading: "Areas Served Around Sriperumbudur",
+    areasText:
+      "We welcome portable shop enquiries from Sriperumbudur town, the Sriperumbudur industrial area and SIPCOT Sriperumbudur, and from Irungattukottai, Oragadam, Mambakkam, Pillaipakkam, Vallam Vadagal, Sunguvarchatram, Thandalam and Padappai, along the NH 48 corridor and elsewhere in Kanchipuram district, Tamil Nadu. Share the exact site address: the route, vehicle access and unloading arrangements are checked and confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your business requirements", text: "tell us the shop type, preferred dimensions and intended installation location." },
+      { title: "Discuss the layout", text: "review service windows, counters, storage, equipment space and branding." },
+      { title: "Confirm utilities", text: "discuss electrical load, ventilation, water requirements and drainage where relevant." },
+      { title: "Approve the quotation", text: "finalise the specifications, commercial terms and delivery arrangements." },
+      { title: "Manufacture", text: "the approved shop cabin configuration is fabricated at our factory." },
+      { title: "Arrange delivery", text: "the truck, unloading and placement are planned with you once the site is ready." },
+    ],
+    howOutro:
+      "Operating permissions and utility connections must be completed as required before the business opens. We fix the manufacturing and delivery dates with the order instead of promising them in advance.",
+
+    extraSections: [
+      {
+        heading: "Shop Cabins Near Bus Pickup Points and Plant Gates",
+        placement: "afterSolutions",
+        paragraphs: ["Some permitted commercial locations near worker transport routes may be suitable for quick-service retail:"],
+        bullets: [
+          { title: "Tea and coffee kiosk", text: "a compact cabin with a service counter and appropriate equipment provisions." },
+          { title: "Tiffin counter", text: "a food-service kiosk with space for preparation or dispensing equipment according to the approved layout." },
+          { title: "Snacks and juice kiosk", text: "a retail counter with suitable refrigeration and hygiene provisions." },
+          { title: "Mobile recharge counter", text: "a compact kiosk with electrical and communication provisions." },
+        ],
+        closing: [
+          "Placement near bus stops, roads or factory entrances requires the relevant landowner and authority permissions. A kiosk belongs only where trading is permitted and where it does not obstruct pedestrian or vehicle movement.",
+        ],
+      },
+      {
+        heading: "Shop Cabins Inside Factory Campuses",
+        placement: "afterSolutions",
+        paragraphs: ["Some industrial facilities may permit approved employee retail kiosks within their premises. Possible configurations include:"],
+        bullets: [
+          { text: "Employee convenience store" },
+          { text: "Stationery counter" },
+          { text: "Snacks kiosk" },
+          { text: "Parcel collection point" },
+          { text: "Approved personal-service kiosk" },
+        ],
+        closing: [
+          "Possible design features include corporate-style exterior finishing, optional ACP cladding, concealed electrical wiring, a suitable distribution board, earthing provisions, a fire extinguisher mounting provision, washable interior surfaces and clear customer circulation.",
+          "Actual electrical, fire and EHS compliance must be verified against the customer's site requirements and the applicable standards. The cabin does not make an in-campus shop compliant on its own.",
+        ],
+      },
+      {
+        heading: "Franchise-Ready Portable Kiosks",
+        placement: "afterSolutions",
+        paragraphs: ["Portable kiosks may be customized for approved franchise or branded retail concepts. Possible features include:"],
+        bullets: [
+          { text: "Brand colour combinations" },
+          { text: "Signage panels" },
+          { text: "Menu board provisions" },
+          { text: "Customized counter dimensions" },
+          { text: "Equipment space" },
+          { text: "Lighting" },
+          { text: "Electrical provisions" },
+          { text: "Water connection provisions where applicable" },
+          { text: "Storage compartments" },
+        ],
+        closing: [
+          "Final designs follow the customer's authorized brand guidelines and technical requirements. A brand's name, logo or livery is applied only when the franchisee holds the brand owner's permission to use it.",
+        ],
+      },
+      {
+        heading: "Designing for Busy Customer Periods",
+        placement: "afterSolutions",
+        paragraphs: ["Shop layouts can be planned to improve service flow:"],
+        bullets: [
+          {
+            title: "Twin service windows",
+            text: "two windows may help separate ordering and collection, depending on staffing and workflow. A second window does not by itself double the number of customers served.",
+          },
+          { title: "Wide counter", text: "a suitable counter can support payment, collection and customer interaction." },
+          { title: "Weather canopy", text: "a properly designed canopy may provide shade and rain protection." },
+          { title: "Product display", text: "frequently purchased products can be positioned for convenient access." },
+          { title: "Rear storage", text: "storage space can support replenishment during busy periods." },
+          { title: "Dedicated billing area", text: "a separate billing position may reduce congestion where the cabin size permits." },
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Size and Layout Guide",
+        placement: "afterSolutions",
+        paragraphs: [
+          "The sizes below are planning examples to start the conversation, not standard models or confirmed manufacturing sizes:",
+        ],
+        table: {
+          caption:
+            "Planning examples only. The approved drawing and quotation confirm the actual dimensions and whether a size can be manufactured.",
+          headers: ["Shop type", "Planning size", "Possible features"],
+          rows: [
+            ["Recharge or parcel counter", "6 × 4 ft", "Service window, sockets"],
+            ["Ironing shop", "8 × 6 ft", "Pressing table, shelves"],
+            ["Tea kiosk", "8 × 6 ft", "Counter, optional twin windows"],
+            ["Tailoring shop", "10 × 8 ft", "Sewing machine area, storage"],
+            ["Salon cabin", "10 × 8 ft", "Mirror, chair space, electrical fittings"],
+            ["Franchise kiosk", "10 × 8 ft to 20 × 8 ft", "Branding, equipment provisions"],
+            ["Daily essentials store", "20 × 8 ft", "Shelving, billing counter"],
+            ["Employee store", "20 × 10 ft", "Retail shelving, corporate finish"],
+          ],
+        },
+        closing: [
+          "Our catalogue Portable Shop Cabin is 10 ft × 10 ft, with a glazed display front and a lockable door. Any other size is built only to an approved drawing, and the actual dimensions depend on the equipment, the number of people inside, circulation, ventilation, utilities and the space available on site.",
+        ],
+      },
+      {
+        heading: "Weather Protection for Sriperumbudur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Portable shop cabins in the Sriperumbudur region may need protection from heat, humidity and seasonal heavy rain. Possible design considerations include:",
+        ],
+        bullets: [
+          { text: "Properly sealed roofing" },
+          { text: "Suitable roof drainage" },
+          { text: "Corrosion-protective exterior finishes" },
+          { text: "Insulated wall and roof options" },
+          { text: "Weather-protected service windows" },
+          { text: "Suitable canopies" },
+          { text: "Appropriate base elevation" },
+          { text: "Ventilation" },
+        ],
+        closing: [
+          "The cabin must be placed on a suitable supporting base with appropriate site drainage. These measures reduce the cabin's exposure to the weather; they do not make it flood-proof or completely waterproof, so the base and the drainage around it are planned for each site.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["What we offer a shop owner in the Sriperumbudur belt, from the first layout to unloading:"],
+        bullets: [
+          { title: "Customized shop cabin dimensions", text: "sized for your trade and your plot, and confirmed in the approved drawing." },
+          { title: "Retail counter and service window options", text: "counters, service windows and display fronts planned around how you serve." },
+          { title: "MS and insulated construction options", text: "an MS-framed cabin, or insulated wall and roof panels to reduce heat gain." },
+          { title: "Shop-specific interior layouts", text: "shelving, worktops and storage arranged for what you sell or the service you offer." },
+          { title: "Electrical and ventilation provisions", text: "lighting, sockets and exhaust provisions specified for your equipment." },
+          { title: "Exterior branding options", text: "your colours, signage panels and authorized brand graphics." },
+          { title: "Weather-protection features", text: "sealed roofing, roof drainage, canopies and protective finishes." },
+          { title: "Quotation support", text: "one written quotation covering the cabin, its fittings and the delivery to your site." },
+          { title: "Delivery coordination", text: "the truck, the unloading method and the placement agreed with you before the cabin leaves the factory." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What type of portable shop cabin may suit worker hostel areas?",
+        answer:
+          "Daily essentials stores, ironing shops, tailoring cabins, salons and mobile accessory kiosks are possible options, depending on demand and permissions.",
+      },
+      {
+        question: "Can you manufacture an ironing shop cabin?",
+        answer:
+          "An ironing shop layout can be discussed with a pressing table, shelves, ventilation and suitable electrical provisions. The electrical load of the irons and the heat they give off are assessed during design.",
+      },
+      {
+        question: "Can a salon cabin include a washbasin?",
+        answer:
+          "A washbasin and water connection may be included where offered and supported by the approved layout. The site needs a water supply and a drain for it.",
+      },
+      {
+        question: "Can I place a portable shop inside a factory campus?",
+        answer:
+          "Only with the relevant factory management's approval and in compliance with its site requirements, including its electrical, fire and EHS rules.",
+      },
+      {
+        question: "Can a kiosk match my franchise branding?",
+        answer:
+          "Exterior finishes, signage panels and counter layouts can be customized according to authorized brand guidelines and our manufacturing capability.",
+      },
+      {
+        question: "How can a shop cabin handle busy shift-change periods?",
+        answer:
+          "Suitable counter layouts, service windows, storage and customer circulation may improve service efficiency. Two windows can separate ordering from collection, but they do not by themselves double the number of customers served.",
+      },
+      {
+        question: "Can a portable shop cabin be relocated?",
+        answer:
+          "Some cabins can be relocated, subject to structural design, condition, lifting arrangements and transport access. A new location needs its own permissions.",
+      },
+      {
+        question: "How quickly can a shop cabin be delivered?",
+        answer:
+          "Manufacturing and delivery timelines depend on the selected design, quantity, workload, transport and site readiness. We give you the schedule once the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Sriperumbudur",
+    ctaText: `Planning an ironing shop near worker accommodation, a tea kiosk at an approved commercial location, a salon cabin, a daily essentials store or a branded franchise kiosk? Share your shop type, preferred dimensions, location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display}, or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // The brief's buttons are Request Quote, Call Now and WhatsApp: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Catalogue Shop Cabin, 10 × 10 ft", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Takeaway Kiosks", href: "/products/container-cafe-restaurant" },
+      { label: "Marketing Office Cabin", href: "/products/marketing-office" },
+      { label: "Portable Office Cabins", href: "/products/category/portable-cabins" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Shipping Containers for SIPCOT Estates", href: "/products/shipping-container-in-sipcot" },
+      { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Site and Office Cabins in Mambakkam", href: "/cities-we-serve/portable-cabin-mambakkam" },
+        { label: "Container Offices for Chennai and Oragadam", href: "/cities-we-serve/container-office-in-chennai" },
+        { label: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
+        { label: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
+        { label: "Shop Cabins in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Sriperumbudur or Kanchipuram district. Transport, unloading and placement are planned for each order around the site's access and base, and no manufacturing or delivery date is guaranteed. The shop types, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are planning examples; the items supplied are confirmed in the approved drawing, specification and quotation for each order. The four images are illustrative concept renders of one container-style kiosk with a lift-up serving hatch; they are not a confirmed standard design, other shop types look different, and they are not photographs of an installation in Sriperumbudur. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial parks are named only to describe locations; Portable Office Cabin is not affiliated with SIPCOT or with any estate, factory, campus, franchise brand or company in the area. The shop types, sites and towns mentioned are examples of possible uses and of places we take enquiries from; they are not clients, completed projects or guaranteed delivery areas, and footfall and sales depend on the business and its location. Operating permissions, trade and food safety licences, telecom and pharmacy rules, and electrical, fire and EHS compliance are for the business owner to settle with the authorities concerned; this page gives general guidance only and is not legal, engineering or food-safety advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN SAKKARAKOTTAI AND PATTINAMKATHAN, RAMANATHAPURAM — the portable-cabin intent
@@ -20760,11 +23181,14 @@ export const CITY_PAGES: CityPage[] = [
     nearbyLinks: {
       heading: "Nearby service areas",
       links: [
+        // The Shoolagiri security-cabin page, the sibling for the next town on NH 44 (2026-11-05).
+        { label: "Portable Security Cabins in Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
         { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
         { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
         { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
         { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
         { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "Portable Security Cabins in Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
       ],
     },
 
@@ -21128,6 +23552,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { label: "Portable Shops in Shivamogga, Karnataka", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
@@ -21145,6 +23570,743 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk design with lift-up serving hatches; the coffee machine and jars are shown for illustration, other shop designs look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SECURITY CABINS IN SALEM — the security-cabin intent for Salem and the Salem Industrial
+   * Belt (Tamil Nadu): security cabin, guard room, watchman cabin and check post cabin, for magnesite
+   * mine and quarry check posts, sago factory gates, textile and yarn godowns, Sankagiri truck yards,
+   * steel and engineering units and visitor-screening sites. A sibling of Portable Security Cabins in
+   * Krishnagiri (the gate types of the Krishnagiri belt) and of the Mettur, Salem container-office and
+   * shipping-container pages (offices and storage boxes). Omalur, Mettur, Sankagiri and Attur are
+   * secondary references here, not separate pages. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05, mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → the on-page form, Call, WhatsApp).
+   *   3 Heat protection → why (six titled bullets; the brief's "no indoor temperature is promised"
+   *     rule is the whyOutro). It renders before the industries because the template's "why" slot
+   *     comes first, and the industries keep their h3 subsections and contextual links that way.
+   *   2 Industries → solutions: seven h3 subsections, each with a verified link where one fits.
+   *   4 Dust, 5 Specification options, 6 Types, 7 Sizes → extra sections with `placement:
+   *     "afterSolutions"`, in that order. The specification table has one row per configuration
+   *     (two columns, the typical use closing each cell), so it fits a 320 px phone; every value of
+   *     the brief's table is kept. Owner correction of 2026-11-05 (as on #189): no size table, size
+   *     range or size presented as a capability. The sizes section lists what decides a cabin's
+   *     size, and every size is confirmed through the approved drawing and quotation.
+   *   8 Price → features (the factors as a plain list), the quotation rule in the bold sizesNote,
+   *     then the one-image gallery. No ₹ anywhere.
+   *   9 Rental → left out: security cabin rental in Salem is not confirmed.
+   *   12 Why choose → custom, beside the interior image (whyUs unset); 11 Areas → areas;
+   *   10 Ordering → how (the template renders areas before how); 13 the brief's eight FAQs;
+   *   14 CTA + enquiryForm (security-cabins, posting to /api/enquiries).
+   * Left out as unverified: the Salem Defence Industrial Corridor, rental, timelines, and links to
+   * MS / PUF security cabin or security-cabin-with-toilet product pages (none exists, so the material,
+   * insulation and toilet guides are linked instead). The Shoolagiri security-cabin page (PR #189)
+   * is not linked until it is live, and there is no Shivamogga security-cabin page.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets security cabins in
+   * Salem. The Mettur container-office page's "Security Cabin Mettur" keyword was removed, and link
+   * anchors and the CTA line are this page's own. Salem Steel Plant is named nominatively, with the
+   * non-affiliation note in the disclaimer.
+   *
+   * Images: three owner-dropped webp files ("public/images/Salem Industrial Belt security cabin city
+   * page/…/cabin (1–3).webp", lossy VP8 with no EXIF/XMP/ICC chunk) copied byte-for-byte to
+   * descriptive names: (1) three-quarter view, 1024² = hero / og:image; (2) front view, 1200×896 =
+   * single-image gallery after the price factors; (3) interior, 1200×896 = beside "Why Choose",
+   * captioned. They show one green corrugated MS cabin with a pitched roof in a yard. Owner
+   * correction of 2026-11-05: they are illustrative images unless the owner confirms they are
+   * photographs of manufactured units, so every alt text, both captions and the disclaimer say so.
+   * No alt text names Salem, and the disclaimer says they do not show an installation in Salem.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-security-cabin-salem",
+    city: "Salem",
+    listTitle: "Portable Security Cabins in Salem",
+    metaTitle: "Portable Security Cabin in Salem | Guard Rooms & Check Posts",
+    metaDescription:
+      "Portable security cabins in Salem for mine check posts, sago factories, truck yards and industrial gates. Explore insulated guard rooms and custom layouts.",
+    keywords:
+      "Portable Security Cabin in Salem, Security Cabin Salem Industrial Belt, Security Guard Cabin Salem, Security Cabin Manufacturers in Salem, Security Cabin Suppliers Salem, Guard Room Salem, Watchman Cabin Salem, Check Post Cabin Salem, Prefabricated Security Cabin Salem, Security Cabin Price in Salem, Security Cabin for Truck Yard, Security Cabin for Mines and Quarries, Heat-Insulated Security Cabin Salem",
+    geo: { region: "IN-TN", placename: "Salem, Tamil Nadu, India", position: "11.6643;78.1460", icbm: "11.6643, 78.1460" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Security Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-three-quarter-view.webp",
+      alt: "Prefabricated portable security cabin — illustrative image of a green corrugated MS guard cabin with a dark grey lower band, a pitched roof with a lifting eye, a bulkhead light over the steel door and a glazed sliding window under a sunshade, on a steel base frame in a yard",
+      width: 1024,
+      height: 1024,
+      caption: "Illustrative security cabin configuration; final fittings depend on approved specifications.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-interior.webp",
+      alt: "Interior of a portable security cabin — illustrative image with wood-finish laminate wall and ceiling panels, a glazed sliding window above a built-in desk with a telephone, a task chair, a bulkhead light over the door and a wall-mounted fire extinguisher",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative security cabin configuration; final fittings depend on approved specifications. The desk, chair, telephone and fire extinguisher are shown for illustration.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-security-cabin-salem/portable-security-cabin-front-view.webp",
+        alt: "Prefabricated portable security cabin — illustrative front view of the green MS cabin: a corrugated steel door with a hasp and barrel bolt, a bulkhead light under a drip ledge, a pitched roof with a lifting eye and the side window's sunshade, on a steel base frame",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Security Cabin Manufacturers in the Salem Industrial Belt",
+    tagline: "Prefabricated guard rooms and check post cabins for mine check posts, sago factory gates, textile godowns, truck yards and engineering units across Salem.",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated security cabins, guard rooms and check post cabins for industrial, commercial, logistics and construction-related requirements in Salem and surrounding areas.",
+      "Salem's industrial landscape includes mineral operations, steel and engineering businesses, sago processing, textile storage and transport activities. Different sites require different gate arrangements, observation points and security provisions.",
+      "Portable security cabins can be customised with observation windows, document counters, electrical fittings, insulated walls, ventilation and optional security-system provisions according to the approved design. We build them at our factory near Hosur and transport them to Salem by road.",
+    ],
+
+    whyHeading: "Heat Protection for Salem Conditions",
+    whyIntro:
+      "Security personnel may work long shifts in warm outdoor conditions, and a guard cabin standing in direct sun gains heat quickly. Suitable cabin design can improve thermal comfort:",
+    whyBullets: [
+      { title: "Insulated walls and roof", text: "PUF-insulated panels can reduce heat transfer compared with uninsulated sheet-metal construction." },
+      { title: "Window sunshades", text: "suitable sunshades over the windows may reduce direct solar exposure and glare." },
+      { title: "Cross-ventilation", text: "well-positioned openings can improve natural airflow where the site conditions permit." },
+      { title: "Exhaust fan", text: "an exhaust fan may support ventilation, depending on the cabin layout." },
+      { title: "Light-coloured roof", text: "a suitable light-coloured roof finish may reduce solar heat absorption." },
+      { title: "AC provision", text: "electrical and structural provisions can be included for an air-conditioning unit where required." },
+    ],
+    whyOutro:
+      "Together these measures can make a long shift more comfortable, but no particular indoor temperature is promised: it depends on the cabin's specification, its orientation, the shade around it and the weather.",
+
+    solutionsHeading: "Security Cabins for Different Salem Industries",
+    solutionsIntro:
+      "Gate security around Salem ranges from check posts on mine and quarry roads to compact booths at godown entrances. Typical arrangements for each type of site, always confirmed against your own requirements:",
+    solutions: [
+      {
+        title: "Mine and Quarry Check Posts",
+        text: "Mineral operations around Salem, including magnesite mining and quarrying, may need entry and exit monitoring for vehicles, equipment and personnel. A check post cabin can be planned with suitable observation windows, a document-pass counter, space for registers, protected electrical fittings and dust-conscious window and door arrangements, with a view toward the approved vehicle-checking area. A raised document window can be considered where the vehicle dimensions and safe traffic arrangements allow. The cabin is not dustproof, and its view covers the checking area rather than the whole site.",
+        link: { label: "MS sheet or PUF panel for a check post", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      },
+      {
+        title: "Sago Factory Gates",
+        text: "Sago processing units may see changing delivery and dispatch activity at the gate. Possible configurations include a two-person security cabin, a visitor register desk, an observation window facing incoming vehicles, suitable lighting, ventilation and optional CCTV and communication provisions.",
+        link: { label: "Compare security cabin models", href: "/products/category/security-cabins" },
+      },
+      {
+        title: "Textile and Yarn Godowns",
+        text: "Storage facilities may need a compact gate-security arrangement: a small-footprint cabin with a lockable door, observation windows, a desk and seating, interior lighting and electrical sockets. The actual dimensions should reflect the entrance space available and leave safe pedestrian access.",
+        link: { label: "Compact guard and watchman cabins", href: "/products/security-cabin" },
+      },
+      {
+        title: "Truck Yards and Transport Companies",
+        text: "Transport yards around Sankagiri and along the NH 44 and NH 544 corridors may need a security booth for vehicle-entry monitoring and recordkeeping. Possible features include a vehicle-entry observation window, a document counter, CCTV and floodlight mounting provisions, space for communication equipment and suitable exterior lighting.",
+        link: { label: "Preparing the base at a yard entrance", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+      {
+        title: "Steel and Engineering Units",
+        text: "Factories that handle large materials, such as the steel and engineering units around Salem, may need separate arrangements for staff movement and goods movement. Possible configurations include a main gate security cabin, a material gate check post, a document-pass window, a visitor counter, and communication and CCTV provisions.",
+        link: { label: "Guard cabin with all-round windows", href: "/products/guard-security-cabin" },
+      },
+      {
+        title: "High-Security Industrial Sites",
+        text: "Some facilities may require visitor-screening arrangements. Possible design provisions include a visitor identification counter, separate screening spaces where required, privacy-conscious layouts, equipment mounting provisions, lockable storage where offered, and electrical and network connections. All security-specific features follow the customer's approved requirements; the cabin itself does not ensure compliance with defence or industrial security standards.",
+      },
+      {
+        title: "Construction Sites",
+        text: "A portable guard cabin may be used at a temporary project entrance. Whether it can later be relocated depends on its structural design, the lifting arrangements, the cabin's condition and the access at both sites.",
+        link: { label: "Site office containers for the project team", href: "/products/category/site-office-containers" },
+      },
+    ],
+
+    featuresHeading: "Portable Security Cabin Price in Salem",
+    featuresIntro: "There is no single list price: each cabin is quoted for its own specification. The price depends on:",
+    features: [
+      "Cabin dimensions",
+      "MS or insulated construction",
+      "Window and door specifications",
+      "Interior finishing",
+      "Sunshades",
+      "Ventilation and exhaust fans",
+      "AC provisions",
+      "CCTV and network provisions",
+      "Document counters",
+      "An attached toilet",
+      "A visitor-screening layout",
+      "Delivery and unloading requirements",
+      "The number of cabins ordered",
+    ],
+    sizesNote:
+      "Prices are given only in a written quotation for your configuration and site. Share your requirement through the form below, by phone or on WhatsApp.",
+
+    customHeading: "Why Choose Portable Office Cabin?",
+    customIntro: "What we bring to a Salem gatehouse project, from the first layout to unloading at the site:",
+    customBullets: [
+      { title: "Customisable guard cabin designs", text: "the layout, windows, counters and fittings follow your gate and the approved design." },
+      { title: "Compact and larger layouts", text: "from single-guard booths to multi-person gatehouses, each sized through the approved drawing and quotation." },
+      { title: "MS and insulated construction", text: "MS-framed cabins, or insulated PUF panel walls and roof for exposed, sunny positions." },
+      { title: "Observation windows and counters", text: "window positions, document-pass windows and visitor counters planned around how the gate works." },
+      { title: "Electrical and communication provisions", text: "lighting, fan and socket points, with provisions for CCTV, network and communication equipment." },
+      { title: "Optional AC-ready configurations", text: "the wiring and mounting provision for an air-conditioning unit." },
+      { title: "Industrial and logistics applications", text: "cabins for mines and quarries, factories, godowns, transport yards and project sites." },
+      { title: "Quotation and delivery coordination", text: "a written quotation, then transport, unloading and placement planned with your site team." },
+    ],
+    customOutro:
+      "We manufacture and deliver the cabin. Staffing, security equipment and procedures at the gate remain with your organisation and its security provider.",
+
+    areasHeading: "Areas Served Around Salem",
+    areasText:
+      "Security cabin enquiries are welcome from Salem city and the wider Salem Industrial Belt: the Salem Steel Plant area, Omalur, Mettur, Sankagiri, Attur, Veerapandi, Karuppur, Kanjamalai and the Yercaud foothills, and sites along the NH 44 and NH 544 corridors. Send the full site address so we can check the route, the vehicle access and the unloading space; access to mines, quarries and factories is always subject to the operator's permissions and safety rules.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share gate requirements", text: "the site type, gate dimensions, traffic arrangements and number of security personnel." },
+      { title: "Discuss cabin configuration", text: "the windows, doors, counters, insulation and electrical provisions the post needs." },
+      { title: "Confirm optional fittings", text: "AC, CCTV, network, toilet and visitor-screening provisions." },
+      { title: "Approve the quotation", text: "the cabin specification, commercial terms and delivery requirements are finalised." },
+      { title: "Manufacture", text: "we fabricate the approved security cabin at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "Manufacturing and delivery dates are confirmed when the order is finalised, once the design, the quantity and the readiness of the site are known.",
+
+    extraSections: [
+      {
+        heading: "Dust-Conscious Security Cabin Design",
+        placement: "afterSolutions",
+        paragraphs: ["Industrial yards, mineral operations and unpaved access roads can expose a cabin to dust. Possible features include:"],
+        bullets: [
+          { text: "Well-fitting sliding windows" },
+          { text: "Suitable door seals" },
+          { text: "Protected electrical sockets" },
+          { text: "Concealed wiring where appropriate" },
+          { text: "Washable interior surfaces" },
+          { text: "Easy-clean flooring" },
+          { text: "Appropriate ventilation and filtration provisions where required" },
+        ],
+        closing: [
+          "These features reduce the dust that gets in and make the cabin easier to keep clean. A standard security cabin is not completely dustproof.",
+        ],
+      },
+      {
+        heading: "Security Cabin Specification Options",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Three indicative configurations, not fixed packages. Features can be combined differently to suit the actual requirement.",
+        ],
+        table: {
+          caption: "Indicative configurations only, with no fixed package prices. The features supplied are confirmed in the approved specification and quotation.",
+          headers: ["Option", "Indicative features and typical use"],
+          rows: [
+            ["Basic", "MS-framed cabin; sliding windows; light and fan provisions; basic interior finish. Typical use: temporary checkpoints."],
+            [
+              "Standard",
+              "Insulated panel cabin; sliding windows with suitable grills and sunshades; additional sockets and ventilation provisions; suitable flooring and a desk. Typical use: factory gates and godowns.",
+            ],
+            [
+              "Enhanced",
+              "Insulated cabin with optional exterior cladding; customised glazing and sunshades; AC, CCTV and data provisions; upgraded flooring, ceiling and storage. Typical use: larger or more specialised gatehouses.",
+            ],
+          ],
+        },
+      },
+      {
+        heading: "Types of Portable Security Cabins",
+        placement: "afterSolutions",
+        paragraphs: ["Cabin types we can discuss for a Salem gate, each built to the size and specification confirmed through the approved drawing and quotation:"],
+        bullets: [
+          { title: "Compact guard booth", text: "a small cabin for narrow entrances, parking areas or checkpoints." },
+          { title: "Two-guard security cabin", text: "a larger layout with space for two security personnel where feasible." },
+          { title: "Mine check post cabin", text: "configured for vehicle monitoring and document checking." },
+          { title: "Material gate cabin", text: "a security cabin with a register desk and a document-pass window." },
+          { title: "Visitor screening cabin", text: "a specialised layout with appropriate privacy and screening provisions." },
+          { title: "Security cabin with toilet", text: "a larger cabin with an attached toilet compartment where the space and utility arrangements permit." },
+          { title: "AC-ready security cabin", text: "a cabin designed with suitable air-conditioning provisions." },
+          { title: "Watchman cabin", text: "a compact prefabricated guard cabin for commercial or property applications." },
+        ],
+      },
+      {
+        heading: "Security Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "There is no standard size list: the dimensions of each security cabin are confirmed through the approved drawing and quotation for your gate. What decides the size:",
+        ],
+        bullets: [
+          { text: "The number of guards on each shift" },
+          { text: "Door clearance and the space the guards need to move" },
+          { text: "Desks, counters, storage and security equipment" },
+          { text: "Any sanitary fittings, such as an attached toilet" },
+          { text: "The space available at the entrance, with safe pedestrian and vehicle movement" },
+          { text: "The requirements that apply at your site" },
+        ],
+        closing: [
+          "Send the gate dimensions, the number of guards and the fittings you need; the proposed size is shown on the drawing that comes with your quotation.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a security cabin be designed for Salem's hot weather?",
+        answer:
+          "Yes. Insulated PUF walls and roof, window sunshades, cross-ventilation, an exhaust fan, a light-coloured roof finish and an AC provision can all improve thermal comfort for guards on long shifts. They do not guarantee a specific indoor temperature, which depends on the specification, the cabin's position and the weather.",
+      },
+      {
+        question: "Can you manufacture a mine or quarry check post cabin?",
+        answer:
+          "Yes, a check post layout can be discussed, with observation windows toward the vehicle-checking area, a document counter, space for registers and dust-conscious window, door and socket fittings. Delivery into a mine or quarry is subject to the operator's permissions and safety procedures.",
+      },
+      {
+        question: "What security cabin suits a truck yard?",
+        answer:
+          "A cabin with a clear view of the vehicle entry, space for document checks and registers, suitable interior and exterior lighting, and provisions for CCTV, floodlights and communication equipment. A two-guard layout may suit a yard with round-the-clock movement; the size is confirmed through the approved drawing and quotation once we know the gate layout.",
+      },
+      {
+        question: "Can a visitor-screening cabin include separate screening spaces?",
+        answer:
+          "Separate spaces can be considered according to your approved security requirements, the area available and our manufacturing capability. The cabin provides the space and the provisions; the screening procedures and equipment are set by your security team.",
+      },
+      {
+        question: "What is the difference between basic and enhanced security cabins?",
+        answer:
+          "They differ in insulation, windows, electrical provisions, interior finish and optional equipment arrangements. A basic cabin is MS-framed, with sliding windows and light and fan provisions; an enhanced cabin can add insulated panels, optional exterior cladding, customised glazing, and AC, CCTV and data provisions. These configurations are indicative, and features can be chosen individually.",
+      },
+      {
+        question: "Can a security cabin include a toilet?",
+        answer:
+          "An attached toilet can be considered for a suitably sized cabin, with appropriate plumbing and site utilities: a water supply and a drainage or waste arrangement at the gate.",
+      },
+      {
+        question: "Can security cabins be relocated?",
+        answer:
+          "Some portable security cabins can be relocated, subject to their structural design, condition, lifting arrangements and transport access. If you expect to move the cabin later, mention it before fabrication so the design allows for lifting.",
+      },
+      {
+        question: "How quickly can a security cabin be delivered in Salem?",
+        answer:
+          "Manufacturing and delivery timelines depend on the design, the quantity, our workload, transport and how ready the site is, so the schedule is confirmed when the order is finalised.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Security Cabin Quote in Salem",
+    ctaText: `Need a mine check post, factory gate cabin, textile godown guard booth, Sankagiri truck yard security cabin or a specialised visitor-screening unit? Share your site location, the cabin dimensions you need, the number of guards and your preferred fittings. Call or WhatsApp ${COMPANY.whatsapp.display}, e-mail ${COMPANY.email.sales}, or use the form below.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "security-cabins",
+      noun: "security cabin",
+      heading: "Request a Quote for a Security Cabin in Salem",
+      intro:
+        "Pick a cabin size, the number of cabins and your site location, and tell us about the gate and any fittings. Our sales team will check the details with you before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "All Security Cabin Models", href: "/products/category/security-cabins" },
+      { label: "Security Guard and Watchman Cabins", href: "/products/security-cabin" },
+      { label: "Guard Security Cabin with All-Round Windows", href: "/products/guard-security-cabin" },
+      { label: "Cabins with an Attached Toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "PUF Insulation and Cooling Options", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "Insulated Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "Portable Toilet Cabins", href: "/products/portable-toilet-cabin" },
+      { label: "Security Cabins Across Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mettur and Salem", href: "/cities-we-serve/container-office-in-mettur-salem" },
+        { label: "Shipping Containers in Mettur and Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
+        { label: "Krishnagiri Security Cabins", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Portable Cabins in Perundurai, Erode", href: "/cities-we-serve/portable-cabin-perundurai" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Salem district. Each delivery is planned for its order, including unloading, placement and the base or supports the site needs, and no manufacturing or delivery date is guaranteed. The cabin types, configurations, sizes, materials, insulation, fittings and finishes on this page are options, and the configurations are indicative; each cabin's size is confirmed through the approved drawing and quotation, and what is supplied is set out in the approved specification and quotation for each order. The three images are illustrative images of one MS security cabin design with a pitched roof, outside and inside; the desk, chair, telephone and fire extinguisher are shown for illustration, other cabin types look different, and the images do not show an installation in Salem. Salem Steel Plant (a unit of Steel Authority of India Limited) is named only to describe a location; Portable Office Cabin is not affiliated with it or with any mine, quarry, factory, yard or company in the Salem area, and the industries, sites, places and highways named here describe typical uses and places we accept enquiries from, not customers, finished projects or guaranteed delivery areas. A security cabin provides workspace for security staff; it does not by itself make a site secure or compliant with any security standard. Notes on heat, ventilation, dust, toilets and relocation are general guidance, not engineering, safety or legal advice.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SECURITY CABIN MANUFACTURERS IN SHOOLAGIRI INDUSTRIAL AREA — the security-cabin intent
+   * for Shoolagiri / SIPCOT Shoolagiri on NH 44 (Krishnagiri district, Tamil Nadu): guard cabins,
+   * guard rooms, gatehouses, material check posts and parking booths. A sibling of Portable Security
+   * Cabins in Krishnagiri (which owns the Krishnagiri intent) and of Container Office in SIPCOT
+   * Shoolagiri (container offices); this page is about security posts only and links to both.
+   *
+   * Owner brief of 2026-11-04 (PR #189), rewritten to the owner's master brief of 2026-11-05: meta
+   * title and H1 as given; meta description as given minus one "security" before "booths" (162 → 153
+   * characters, to fit the 160-character limit). Owner rules kept:
+   *   • no keyword cannibalisation (2026-11-05): title, description, keywords, tagline, intro and CTA
+   *     name Shoolagiri / SIPCOT Shoolagiri only; Hosur and Krishnagiri appear only as facts (the
+   *     factory's location, the geo placename) and as nearby links;
+   *   • FRP excluded until confirmed; no size table or size presented as a capability (sizes are
+   *     confirmed in the quotation); no rental offer, keyword or FAQ; no timeline FAQ or lead time;
+   *     no elevated watch cabin (not a confirmed design); no Future Mobility Park (not verified).
+   * Mapped onto the template slots in the brief's order wherever the template allows (no template
+   * change); only "Areas Served" renders earlier than in the brief (before the relocation steps):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote, Call, WhatsApp).
+   *   2 Project life → why, carried by `whyTable` (whyBullets empty); the planning rule is whyOutro.
+   *   3 Multiple gates → solutions (three h3 subsections), each with a verified product link.
+   *   4 Access-control provisions → features; sizesNote says they are provisions, not equipment.
+   *   (gallery) → after the access-control list.
+   *   5 Guard comfort and welfare → industries.  6 Forest-edge and remote sites → custom.
+   *   7 Types → whyUs (MS and PUF only; FRP and the elevated cabin omitted).
+   *   13 Areas → areas.  8 Relocation → how (the brief's seven numbered steps).
+   *   9 Sizes, 10 Price, 12 Ordering process, 14 Why choose us → extra sections after the how steps.
+   *   15 FAQs (the brief's FAQs without the delivery-time question) → faqs.
+   *   16 Final CTA → CTA + enquiryForm, then Related products and guides, and Nearby service areas.
+   * SIPCOT is named nominatively: its website lists the existing Shoolagiri estate and a Shoolagiri
+   * expansion among its upcoming industrial parks (checked 2026-11-04); non-affiliation note in the
+   * disclaimer.
+   *
+   * Images: illustrative renders of two compact security cabin designs, copied byte-for-byte from
+   * the owner's drops (webp, no EXIF/XMP/ICC/IPTC). 2026-11-05 drop ("public/images/shoolagiri
+   * portable security cabin city page/Shoolagiri Industrial Area security cabin/cabin (1–3).webp"):
+   * (1) grey-frame cabin with a pitched roof and counter window (896×1191) = hero / og:image;
+   * (2) its interior (1200×896) and (3) its roof view (1200×896) = gallery. 2026-11-04 drop (the
+   * earlier "Portable Security Cabin in Shoolagiri" folder, already on this branch): the bronze-frame
+   * design's three-quarter, front, rear-ventilation and interior views (gallery). Alt text describes
+   * what each render shows; no image is presented as a photograph or as taken in Shoolagiri.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (security cabin).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-security-cabin-shoolagiri",
+    city: "Shoolagiri",
+    listTitle: "Portable Security Cabins in Shoolagiri",
+    metaTitle: "Portable Security Cabin in Shoolagiri | Gatehouses & Guard Cabins",
+    metaDescription:
+      "Portable security cabin manufacturers in Shoolagiri. Explore guard cabins, gatehouses and access-control-ready booths for industrial and warehouse sites.",
+    keywords:
+      "Portable Security Cabin in Shoolagiri, Security Cabin Shoolagiri Industrial Area, Security Guard Cabin SIPCOT Shoolagiri, Security Cabin Manufacturers in Shoolagiri, Security Cabin Suppliers Shoolagiri, Guard Room Shoolagiri, Gatehouse Cabin Shoolagiri, Prefabricated Security Cabin Shoolagiri, Security Cabin Price in Shoolagiri, Access Control Cabin Shoolagiri, Watchman Cabin Shoolagiri",
+    geo: {
+      region: "IN-TN",
+      placename: "Shoolagiri, Krishnagiri district, Tamil Nadu, India",
+      position: "12.6740;77.9694",
+      icbm: "12.6740, 77.9694",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Security Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-security-cabin-shoolagiri/prefabricated-security-guard-cabin.webp",
+      alt: "Prefabricated security guard cabin with observation windows — illustrative render of a compact cabin with off-white wall panels in a grey steel frame, a pitched corrugated-sheet roof, two grilled sliding windows under small sunshades, a counter shelf below the side window and an open steel door, raised on steel legs",
+      width: 896,
+      height: 1191,
+      caption: "Illustrative security cabin configuration; fittings depend on specifications.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/security-cabin-interior.webp",
+        alt: "Interior of portable security cabin with desk and lighting — illustrative render of the grey-frame cabin: wood-finish wall and ceiling panels, windows on three sides with counter shelves under two of them, a desk with a CCTV monitor, desk lamp and files, a chair, ceiling lights and a split AC unit above the open door",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/security-cabin-roof-view.webp",
+        alt: "Security cabin roof view — illustrative overhead render of the grey-frame cabin: two corrugated-sheet roof slopes in a steel edge frame, a grilled window with a sunshade and counter shelf, and the open door",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri.webp",
+        alt: "MS security cabin with entrance door and side window — illustrative three-quarter render of a second compact design: white flat wall panels in a bronze-coloured steel frame, a flat roof with a slight overhang, a sliding window and a door under a small canopy, beside a factory gate",
+        width: 1024,
+        height: 1024,
+      },
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri-front-elevation.webp",
+        alt: "Security cabin front view — illustrative front elevation of the bronze-frame design: one white door with a lever handle under a small canopy, on a paved path, with a factory gate and boom barrier behind",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri-rear-ventilation.webp",
+        alt: "Security cabin rear view — illustrative rear elevation of the bronze-frame design: a plain white panel wall with four louvred ventilation grilles, two below the roof and two near the floor",
+        width: 1200,
+        height: 896,
+      },
+      {
+        src: "/images/cities/portable-security-cabin-shoolagiri/portable-security-cabin-shoolagiri-interior.webp",
+        alt: "Security cabin interior — illustrative render of the bronze-frame design: wood-tone wall panels, a wide sliding window facing a factory gate, a small desk and chair with a CCTV monitor, a distribution board, switch and socket points, a tube light and a wall-mounted fire extinguisher",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Security Cabin Manufacturers in Shoolagiri Industrial Area",
+    tagline: "Guard cabins, gatehouses and access-control-ready security booths, built to order for SIPCOT Shoolagiri and the Shoolagiri industrial area.",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated security cabins, guard rooms and gatehouse cabins for industrial, warehouse, construction and commercial sites in Shoolagiri and surrounding areas.",
+      "Security cabins can be configured for different operational requirements, from a compact guard booth at a new industrial plot to a larger gatehouse with visitor-management and access-control provisions.",
+      "Our security cabin designs can include insulated walls, observation windows, desks, electrical fittings, network provisions, document counters and optional toilet facilities, according to the approved specification.",
+      "Cabins are fabricated at our factory at Kamandoddi, near Hosur, in Krishnagiri district, the same district as Shoolagiri, and delivered to your site by road.",
+    ],
+
+    whyHeading: "Security Cabins Throughout a Project's Life",
+    whyIntro:
+      "Industrial sites may require different security arrangements as development progresses. A typical sequence on an industrial plot:",
+    whyBullets: [],
+    whyTable: {
+      caption: "An example sequence only. Cabin quantities and positions follow each site's own security plan.",
+      headers: ["Project stage", "Typical requirement", "Possible cabin configuration"],
+      rows: [
+        ["Plot handover", "Initial site monitoring", "Compact guard cabin"],
+        ["Construction", "Contractor and material entry", "Main gate cabin and material check post"],
+        ["Commissioning", "Equipment deliveries and vendor access", "Additional gate or parking booth"],
+        ["Full operation", "Visitor, staff and vehicle management", "Main gatehouse and separate access-control cabins"],
+      ],
+    },
+    whyOutro:
+      "How many cabins a site needs, and where they stand, is decided by the actual site-security plan. Portable cabins may be relocated when site arrangements change, subject to their design, condition and safe lifting requirements.",
+
+    solutionsHeading: "Planning Security Cabins for Multiple Gates",
+    solutionsIntro:
+      "Different sites have different requirements, and no fixed number of cabins suits every site. Share your site plan and access requirements, and the cabin positions can be planned around them.",
+    solutions: [
+      {
+        title: "Small Industrial Units",
+        text: "A compact main-gate cabin may be sufficient where there is a single entrance and limited traffic.",
+        link: { label: "Security Cabin product range and materials", href: "/products/security-cabin" },
+      },
+      {
+        title: "Medium-Sized Factories",
+        text: "Separate arrangements may be needed for visitors, material movement and parking, for example a main gate cabin with a visitor counter and a separate material check post.",
+        link: { label: "Guard Security Cabin with a built-in desk", href: "/products/guard-security-cabin" },
+      },
+      {
+        title: "Large Industrial Campuses",
+        text: "Additional security posts may be required at staff entrances, truck gates, dispatch points, parking areas and perimeter checkpoints.",
+        link: { label: "Security cabin models for multi-gate sites", href: "/products/category/security-cabins" },
+      },
+    ],
+
+    featuresHeading: "Access-Control-Ready Gatehouses",
+    featuresIntro:
+      "Industrial gatehouses often need provisions for electronic security systems. Optional provisions that can be designed into a security cabin include:",
+    features: [
+      "Electrical provisions for boom-barrier controllers",
+      "Space for a CCTV monitor",
+      "Shelves for NVR or DVR equipment",
+      "Data and network conduits",
+      "A visitor-management counter",
+      "Mounting provisions for biometric or RFID readers",
+      "Space for a badge printer",
+      "Space for a UPS",
+      "Intercom provisions",
+      "External camera mounting provisions",
+      "Electrical points for floodlights",
+      "A sliding document-pass window",
+    ],
+    sizesNote:
+      "These are optional provisions, not included equipment. CCTV cameras, boom barriers, access-control readers, networking equipment and software are not part of the cabin unless your quotation lists them, and electrical and data requirements are coordinated with your qualified installers.",
+
+    industriesHeading: "Guard Comfort and Welfare",
+    industriesIntro:
+      "A security cabin is a workplace for every shift. Design considerations to discuss, each included only where the approved layout provides for it:",
+    industries: [
+      { title: "Insulation", text: "insulated walls and roofing can help moderate internal temperatures; insulation reduces heat transfer but does not cool the cabin by itself." },
+      { title: "Ventilation", text: "windows, louvres and suitable ventilation arrangements can improve comfort." },
+      { title: "Lighting", text: "interior lighting and suitable exterior illumination support day and night shifts." },
+      { title: "Desk and seating", text: "a properly positioned work counter can hold visitor registers, communication equipment and security monitoring." },
+      { title: "Rest area", text: "larger cabins may be laid out with a designated rest corner where space and requirements permit." },
+      { title: "Toilet facilities", text: "a security cabin with an attached toilet may suit remote gates or locations far from existing facilities, where the site has water supply and drainage." },
+      { title: "Facilities for women security personnel", text: "where required, the layout can consider privacy, suitable toilet access and changing arrangements, subject to design feasibility." },
+    ],
+
+    customHeading: "Security Cabins for Forest-Edge and Remote Sites",
+    customIntro:
+      "Some sites in the wider Shoolagiri region may be located near forest-influenced areas. For such locations, customers should evaluate:",
+    customBullets: [
+      { text: "Site-specific wildlife risks" },
+      { text: "Local forest department guidance" },
+      { text: "Emergency communication arrangements" },
+      { text: "Suitable observation and lighting" },
+      { text: "Secure doors and windows" },
+      { text: "Safe evacuation procedures" },
+      { text: "Emergency alarms, where appropriate" },
+    ],
+    customOutro:
+      "A portable cabin is not a wildlife-proof shelter. Steel construction, floodlights and alarms do not guarantee protection from elephants or other wildlife, and lighting and alarm arrangements should follow the applicable wildlife and local authority guidance.",
+
+    whyUsHeading: "Types of Portable Security Cabins",
+    whyUsIntro: "Every type is built to order; dimensions, materials and fittings are confirmed in your quotation.",
+    whyUsBullets: [
+      { title: "Compact Security Guard Cabin", text: "suitable for a single checkpoint or small gate." },
+      { title: "Two-Guard Security Cabin", text: "a larger cabin with space for two workstations where the layout permits." },
+      { title: "Gatehouse with Visitor Counter", text: "a cabin with a visitor-registration area, service counter and equipment space." },
+      { title: "Material Gate Check Post", text: "a security cabin with a document-pass window, register counter and visibility toward the material entry." },
+      { title: "Security Cabin with Toilet", text: "a customised cabin with integrated sanitary facilities and suitable utility provisions." },
+      { title: "Security Cabin with Rest Area", text: "a larger layout with a designated break or shift-handover area." },
+      { title: "Parking Security Booth", text: "a compact booth for parking entry or exit monitoring." },
+      { title: "MS and PUF Security Cabins", text: "mild steel sheet construction, or PUF-insulated sandwich panels that reduce heat transfer through the walls and roof." },
+    ],
+
+    areasHeading: "Areas Served Around Shoolagiri",
+    areasText:
+      "We welcome security cabin enquiries from Shoolagiri town, the Shoolagiri industrial area and SIPCOT Shoolagiri, including the Shoolagiri expansion that SIPCOT lists among its upcoming industrial parks, and from sites along the NH 44 industrial corridor near Shoolagiri, Berigai, Uddanapalli, Kelamangalam, Bagalur and Sanamavu. For Hosur and Krishnagiri industrial locations, see the nearby service areas below. For other locations, share the exact site address so we can confirm transport arrangements. Entry into industrial premises remains subject to each site's own permissions and safety procedures.",
+
+    howHeading: "Relocating a Security Cabin",
+    howIntro:
+      "Portable security cabins may be moved from a temporary construction entrance to a permanent gate location. A move typically involves:",
+    howSteps: [
+      { title: "Disconnecting electrical and communication services safely.", text: "" },
+      { title: "Inspecting the cabin and its lifting arrangements.", text: "" },
+      { title: "Planning crane and vehicle access.", text: "" },
+      { title: "Preparing the new supporting base.", text: "" },
+      { title: "Lifting and transporting the cabin using an approved method.", text: "" },
+      { title: "Positioning the cabin at the new location.", text: "" },
+      { title: "Reconnecting services through qualified personnel.", text: "" },
+    ],
+    howOutro:
+      "Relocation feasibility depends on the cabin's construction, condition, access and the applicable safety requirements. A move can involve repairs, modifications or additional cost, so mention any planned move before fabrication.",
+
+    extraSections: [
+      {
+        heading: "Portable Security Cabin Sizes",
+        paragraphs: [
+          "The size of each security cabin is worked out for its gate and confirmed in your quotation. The final configuration depends on:",
+        ],
+        bullets: [
+          { text: "Door clearance" },
+          { text: "The equipment the cabin must house" },
+          { text: "The number of occupants per shift" },
+          { text: "Any attached toilet layout" },
+          { text: "The requirements that apply at your site" },
+        ],
+        closing: [
+          "Share the gate position, the number of guards and what the cabin must hold, and a suitable size is proposed with the quotation.",
+        ],
+      },
+      {
+        heading: "Portable Security Cabin Price in Shoolagiri",
+        paragraphs: [
+          "A security cabin built to order is priced for its configuration. The price depends on:",
+        ],
+        bullets: [
+          { text: "Cabin size" },
+          { text: "MS or insulated construction" },
+          { text: "Number of doors and windows" },
+          { text: "Interior finish" },
+          { text: "Electrical fittings" },
+          { text: "Access-control provisions" },
+          { text: "Network and CCTV provisions" },
+          { text: "Attached toilet" },
+          { text: "Rest area" },
+          { text: "Exterior cladding" },
+          { text: "Company branding" },
+          { text: "Delivery and installation requirements" },
+          { text: "Quantity of cabins" },
+        ],
+        closing: [
+          "Send your requirement through the enquiry form below, by phone or on WhatsApp, and we will prepare a written quotation for your configuration and site.",
+        ],
+      },
+      {
+        heading: "Ordering Process",
+        bullets: [
+          { title: "Step 1 — Share site requirements", text: "the number of gates, intended use, preferred cabin sizes and the site location." },
+          { title: "Step 2 — Review the cabin layout", text: "observation windows, doors, desks, utility provisions and optional fittings." },
+          { title: "Step 3 — Confirm security equipment requirements", text: "the requirements for CCTV, network cabling, boom barriers, intercoms and other systems, coordinated with your installers." },
+          { title: "Step 4 — Approve the quotation", text: "the specification, commercial terms and delivery arrangements are finalised." },
+          { title: "Step 5 — Manufacture", text: "the approved security cabins are fabricated at our factory." },
+          { title: "Step 6 — Delivery and placement", text: "transport, unloading and placement are coordinated according to site readiness." },
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        bullets: [
+          { title: "Customisable security cabin layouts", text: "door, window, counter and desk positions planned around your gate." },
+          { title: "Compact and larger gatehouse configurations", text: "from a single-guard booth to a gatehouse with a visitor counter." },
+          { title: "MS and insulated cabin options", text: "mild steel or PUF-insulated construction, chosen for how the cabin is used." },
+          { title: "Electrical and network provisions", text: "power, lighting and data provisions specified for your equipment." },
+          { title: "Security counter arrangements", text: "register counters, document-pass windows and visitor counters." },
+          { title: "Optional sanitary facilities", text: "an attached toilet where the site's water supply and drainage allow." },
+          { title: "Multi-cabin quotation support", text: "the gate cabins, check posts and booths for one site quoted together." },
+          { title: "Delivery coordination", text: "transport from our factory, with unloading and placement planned with your site team." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "How many security cabins does an industrial plant need?",
+        answer:
+          "The number depends on the site size, entrances, vehicle movement, operating hours and your security plan. A site layout helps to determine suitable cabin locations.",
+      },
+      {
+        question: "Can a security cabin support a boom barrier and CCTV?",
+        answer:
+          "Suitable electrical, equipment-mounting and network provisions can be incorporated into an approved cabin design. The supply and integration of the barrier, cameras and other equipment are confirmed separately; they are not part of the cabin unless your quotation lists them.",
+      },
+      {
+        question: "Can a security cabin be moved from a temporary gate to a permanent gate?",
+        answer:
+          "Many portable cabins can be relocated, subject to their structural condition, lifting provisions, transport access and the safe reconnection of utilities.",
+      },
+      {
+        question: "Can a security cabin include facilities for women security personnel?",
+        answer:
+          "Larger layouts may accommodate appropriate privacy, sanitary and changing provisions, subject to design feasibility.",
+      },
+      {
+        question: "Is a portable security cabin suitable for a forest-edge site?",
+        answer:
+          "Suitability depends on local wildlife risks, site conditions, emergency procedures and the applicable forest department guidance. A portable cabin should not be treated as guaranteed wildlife protection.",
+      },
+      {
+        question: "Can multiple security cabins be ordered for one industrial site?",
+        answer:
+          "Yes. Multiple cabins can be specified together, subject to manufacturing capacity, the approved layouts and commercial terms.",
+      },
+      {
+        question: "Can a security cabin include a toilet?",
+        answer:
+          "An attached toilet can be considered where space, plumbing and site arrangements permit; the site needs a water supply and a drainage or waste arrangement.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Security Cabin Quote in Shoolagiri",
+    ctaText: `Planning a security checkpoint, factory gatehouse, material gate cabin, parking booth or security cabin with toilet? Share your site location, required dimensions, number of cabins and preferred fittings. Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the enquiry form below.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "security-cabins",
+      noun: "security cabin",
+      heading: "Send Your Security Cabin Requirement",
+      intro:
+        "Share the number of cabins, the sizes, the site location in Shoolagiri and any fittings. Our sales team will reply to confirm the details before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related products and guides",
+    relatedLinks: [
+      { label: "Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Security Cabin", href: "/products/security-cabin" },
+      { label: "Guard Security Cabin", href: "/products/guard-security-cabin" },
+      { label: "Portable Toilet Cabin", href: "/products/portable-toilet-cabin" },
+      { label: "Planning a cabin with a toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "Cabin insulation and cooling guide", href: "/products/portable-cabin/insulation-and-cooling" },
+      { label: "MS and PUF cabin materials compared", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+      { label: "Security Cabin in Tamil Nadu", href: "/promotions/security-cabin-in-tamil-nadu" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby service areas",
+      links: [
+        { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+        { label: "Container Office in SIPCOT Shoolagiri", href: "/cities-we-serve/container-office-in-sipcot-shoolagiri" },
+        { label: "Portable Cabin Manufacturers in Hosur", href: "/cities-we-serve/portable-cabin-manufacturers-in-hosur" },
+        { label: "Portable Cabins in Krishnagiri Industrial Area", href: "/cities-we-serve/portable-cabin-krishnagiri-industrial-area" },
+        { label: "Container Office in SIPCOT Hosur", href: "/cities-we-serve/container-office-in-sipcot-hosur" },
+        { label: "Container Office in SIPCOT Krishnagiri", href: "/cities-we-serve/container-office-in-sipcot-krishnagiri" },
+        { label: "Portable Cabins in Attibele", href: "/cities-we-serve/portable-cabin-attibele" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory at Kamandoddi, near Hosur, in Krishnagiri district, Tamil Nadu, and has an office in Electronic City, Bengaluru. Delivery, unloading and placement are arranged for each order, the supports depend on the site, and production and delivery dates are not guaranteed. The cabin types, sizes, materials, insulation, fittings, provisions, finishes and other specification items described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. CCTV cameras, boom barriers, access-control readers, networking equipment and software are not part of a cabin unless the quotation lists them. The images on this page are illustrative renders of two Portable Office Cabin compact security cabin designs, shown with optional furniture and fittings; other cabin types look different, and the images are not photographs of installations in Shoolagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Shoolagiri estate and planned expansion are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate or company there, and the gate positions, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions and safety procedures. A portable cabin is not a wildlife-proof shelter, and the notes on insulation, ventilation, toilets, relocation, wildlife and supports are general guidance, not engineering, safety or legal advice.",
   },
 ];
 

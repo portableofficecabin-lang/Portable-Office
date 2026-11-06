@@ -231,10 +231,12 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   },
   "security-cabins": {
     locationHeading: "Security cabins by location",
-    // The four promotion pages, then the security-cabin city page (Krishnagiri, 2026-11-05).
+    // The four promotion pages, then the security-cabin city pages (Krishnagiri, Salem and Shoolagiri, 2026-11-05).
     locationLinks: [
       ...promotionLocations("security-cabin"),
       { name: "Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
+      { name: "Salem", href: "/cities-we-serve/portable-security-cabin-salem" },
+      { name: "Shoolagiri", href: "/cities-we-serve/portable-security-cabin-shoolagiri" },
     ],
     guideLinks: [GUIDE.materials, GUIDE.insulation, GUIDE.installation],
     relatedCategorySlugs: ["portable-cabins", "site-office-containers"],
@@ -247,6 +249,7 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
     // The four promotion pages, then the portable-toilet city page (Krishnagiri, 2026-11-04).
     locationLinks: [
       ...promotionLocations("portable-toilet-cabin"),
+      { name: "Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
     ],
     guideLinks: [
