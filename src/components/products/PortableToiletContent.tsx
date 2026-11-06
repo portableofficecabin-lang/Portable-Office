@@ -9,7 +9,7 @@ const keyFeatures = [
   { icon: Droplets, title: "Integrated Ventilation", desc: "Exhaust fan options for odour management, inbuilt water tanks, wash basins, and odor control systems." },
   { icon: Wrench, title: "Easily Assembled", desc: "Minimal tools and labour required for installation — designed for rapid on-site deployment." },
   { icon: Leaf, title: "Eco-Friendly Options", desc: "Bio-digester technology and high-quality, weatherproof FRP materials ensure odor-free and hygienic use." },
-  { icon: Lock, title: "Privacy & Hygiene", desc: "Unisex single units with lockable doors, hand sanitizers, and handwashing stations for personal hygiene." },
+  { icon: Lock, title: "Privacy & Hygiene", desc: "Unisex single units with lockable doors, hand sanitizers, and wash basin options inside the cabin for handwashing." },
 ];
 
 const accessibleSpecs = [
@@ -108,7 +108,7 @@ export function PortableToiletContent({ offer }: { offer?: FixedOffer & { produc
         <h3 className="font-display font-bold text-lg text-foreground mb-4">Additional Benefits</h3>
         <div className="grid sm:grid-cols-2 gap-3">
           {[
-            "Modern units include hand sanitizers or handwashing stations",
+            "Modern units include hand sanitizers or a wash basin inside the cabin",
             "Clean, accessible facilities protect client privacy & improve satisfaction",
             "Portable toilets improve productivity by minimizing long worker breaks",
             "Help prevent open defecation, promoting enhanced hygiene & public health",
