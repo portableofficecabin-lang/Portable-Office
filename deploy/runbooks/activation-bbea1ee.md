@@ -11,7 +11,17 @@ The owner chose "Upgrade the server first" on 2026-11-06, and the deploy queue i
 - **Many pages are still on the previous build.** 174 pages are cached from build `9270a047f9d0_mw3qs494`, left by the legacy in-place deploy. They include the home page, `/cities-we-serve`, `/marketplace`, the sitemap and five critical product pages. Because of them, `verify-release` against this commit currently FAILS, and the last *Deploy Portable Office* run (#133, for #214) was red at "Verify the deployed pages". They are expected to refresh around 05:40Z.
 - **Two pages load a deleted script.** The cached `/cities-we-serve` and `/marketplace` each reference one page script that the in-place build deleted, and it answers 404 until they refresh.
 
-**Precondition for Phase 4, the first release:** do not start Phase 4 until the guide confirms that production has healed: the outside sweep shows every page on build `bbea1ee73b74_mw4hh908`, and `verify-release --expect-commit bbea1ee…` passes. The reason is the gate's *continuity* check. It requires the new release to serve every script file the live home page references, and the deploy script can only carry files still on disk in the legacy checkout. A stale home page that references files the in-place build deleted would make the gate refuse the switch. Production stays safe if that happens, but the run is wasted.
+**Precondition for Phase 4, the first release:** do not start Phase 4 until the guide confirms production has healed, meaning:
+- the home page `/` and the critical routes are served from build `bbea1ee73b74_mw4hh908`, with every `/_next/static` file they load answering 200;
+- `verify-release --expect-commit bbea1ee…` passes against the live site.
+
+The reason is the gate's *continuity* check. It requires the new release to serve every script file the live home page references, and the deploy script can only carry files still on disk in the legacy checkout. A stale home page that references files the in-place build deleted would make the gate refuse the switch. Production stays safe if that happens, but the run is wasted.
+
+**Status on 2026-11-06 at 06:02Z: precondition MET.**
+- `/`, `/cities-we-serve`, `/marketplace` and the four critical product pages healed between 05:13 and 05:42Z, with 0 script 404s.
+- `verify-release --expect-commit bbea1ee` PASSED: identity 1/1, city 74, critical 9, redirects 1, assets 133, 0 failures.
+
+**Expected to stay stale until Phase 4:** about 105 *fully static* pages with no runtime revalidation are still from earlier builds. They are the `/promotions/*` pages (including `/promotions/portable-toilet-cabin-in-karnataka`, which lacks the Devanahalli link), several `/blog/*` pages and `/sitemap.xml`, which still has 278 URLs and lacks `/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park`. All of them answer 200, and their assets answer 200. Phase 4's fresh release rewrites them. The outside check after Phase 4 must show every URL served from the new release's build, the Karnataka toilet hub with its Devanahalli link, and the sitemap with that URL.
 
 Phases 0–3 (snapshot, backups, clone and checksums, nginx upstream, candidate preflight) do not depend on this and can run while production heals.
 
