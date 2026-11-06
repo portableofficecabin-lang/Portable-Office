@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 import { categories as staticCategories, getProductDetailPath } from "@/data/products";
 import { getAllProductsMerged, getMergedCategories } from "@/lib/products/server";
+import { withoutRetiredCategories } from "@/data/retiredCategories";
 import { getCommerce, isOutrightSale } from "@/data/productCommerce";
 import { sellPrice } from "@/lib/pricing/gst";
 import { portableCabinsFaqs } from "@/components/products/PortableCabinsCategoryContent";
@@ -161,7 +162,9 @@ export default async function Page({ params }: PageProps) {
 
   const [products, categories] = await Promise.all([
     getAllProductsMerged(),
-    getMergedCategories(),
+    // Retired database-only duplicates (0 products) stay out of the sidebar and grid; their
+    // own URLs 301 in next.config.ts before reaching this route.
+    getMergedCategories().then(withoutRetiredCategories),
   ]);
 
   const category = categories.find((c) => c.slug === slug);
