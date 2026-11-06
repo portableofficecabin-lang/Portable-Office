@@ -10008,10 +10008,12 @@ export const CITY_PAGES: CityPage[] = [
   {
     slug: "portable-cabin-manufacturer-devanahalli-airport",
     city: "Devanahalli",
-    // First published in f45bfe5 (#157, live 19 October 2026). Last content change: #160 (d08ab42,
-    // 22 October 2026: the factory-visit sentence removed); #161 and #162 had added the sibling-page
-    // links on 20 October. Update updatedOn whenever this entry's visible content changes.
-    publication: { publishedOn: "2026-10-19", updatedOn: "2026-10-22" },
+    // First published in f45bfe5 (#157, live 19 October 2026). Last content change: #214 (bbea1ee,
+    // 6 November 2026: the related link to the Devanahalli Aerospace Park toilet cabin page added).
+    // Earlier: #160 (d08ab42, 22 October 2026: the factory-visit sentence removed); #161 and #162
+    // added the sibling-page links on 20 October. Update updatedOn whenever this entry's visible
+    // content changes.
+    publication: { publishedOn: "2026-10-19", updatedOn: "2026-11-06" },
     listTitle: "Portable Cabins near Devanahalli Airport",
     metaTitle: "Portable Cabin Manufacturer Devanahalli Airport | Portable Office Cabin",
     metaDescription:
