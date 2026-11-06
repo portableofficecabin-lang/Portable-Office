@@ -8,7 +8,9 @@
  *
  *   family  container-office    → listed by the cluster's own section (ContainerOfficeLocationCards)
  *           shipping-container  → slug "shipping-container-in-<place>": the box itself (sale / rental /
- *                                 grades), the sibling of that place's container-office page
+ *                                 grades), the sibling of that place's container-office page; also
+ *                                 "shipping-container-<place>" (no "-in-"), the owner's URL for
+ *                                 Shipping Containers in Shivamogga (2026-11-05)
  *           local-service       → everything else (construction and workforce-housing service pages)
  *   state   from the page's own geo.region ("IN-KA" / "IN-TN"), the same field its geo meta tags use.
  */
@@ -34,7 +36,8 @@ export const SHIPPING_CONTAINER_CATEGORY_PATH = "/products/category/cargo-storag
 
 export function cityFamily(page: CityPage): CityFamily {
   if (containerOfficeLocation(page.slug)) return "container-office";
-  if (page.slug.startsWith("shipping-container-in-")) return "shipping-container";
+  // "shipping-container-" covers both slug shapes above; no other city page starts with it.
+  if (page.slug.startsWith("shipping-container-")) return "shipping-container";
   return "local-service";
 }
 
