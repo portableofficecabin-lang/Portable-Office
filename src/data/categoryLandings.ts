@@ -250,6 +250,7 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
     // Shoolagiri, 2026-11-05).
     locationLinks: [
       ...promotionLocations("portable-toilet-cabin"),
+      { name: "Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { name: "Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
     ],

@@ -216,6 +216,7 @@ const SHOP_LOCATION_LINKS: { label: string; href: string }[] = [
   { label: "Portable Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
   { label: "Portable Shop Cabins in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
   { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+  { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
 ];
 
 function SectionHeading({

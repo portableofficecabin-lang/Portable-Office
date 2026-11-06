@@ -388,6 +388,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
     { name: "Portable Toilet Cabins in Shoolagiri", href: "/cities-we-serve/portable-toilet-cabin-shoolagiri" },
   ],
+  // Karnataka portable-toilet hub — Portable Toilet Cabins for Devanahalli Aerospace Park (2026-11-05),
+  // the first Karnataka portable-toilet city page; the page links back to this hub.
+  "Portable Toilet Cabin|Karnataka": [
+    { name: "Portable Toilet Cabins in Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
+  ],
   // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
   // city page, then Portable Security Cabins in Salem and in Shoolagiri (2026-11-05); each links back to this hub.
   "Security Cabin|Tamil Nadu": [
