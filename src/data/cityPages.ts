@@ -10232,6 +10232,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
       { label: "Labour Accommodation Cabins", href: "/products/category/labour-colony" },
       { label: "Portable Toilet Cabins", href: "/products/category/portable-toilet-cabins" },
+      { label: "Toilet Cabins for Devanahalli Aerospace Park", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { label: "Portable Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
@@ -10516,6 +10517,307 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has an office in Bengaluru; it does not operate a factory, workshop, yard or service partner in Devanahalli or at Kempegowda International Airport (Bengaluru Airport). Delivery, unloading and placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to availability. The sizes, layouts, materials, fittings, optional additions and other specification items described on this page are options; the items supplied are confirmed in the approved layout and quotation for each order, and joined or stacked units are subject to structural design, site conditions and applicable approvals. The images on this page are illustrative renders of one Portable Office Cabin design, shown with optional fittings and furniture; they are not photographs of installations in Devanahalli or at the airport. Kempegowda International Airport and its operator, KIADB and its Aerospace Park and Hardware Park, and the places named here are independent of Portable Office Cabin; they are mentioned only to describe the region, delivery enquiry locations and typical uses, not as clients, completed projects or confirmed delivery areas, and entry to any such premises is subject to its own permissions. Notes on site access, supports, height restrictions and approvals are general guidance, not engineering, legal or regulatory advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABINS FOR DEVANAHALLI AEROSPACE PARK — the portable-toilet intent for Devanahalli,
+   * the KIADB Aerospace Park and airport-area projects (Bengaluru Rural, Karnataka): crew, site-office
+   * and visitor toilet cabins. Washroom cabin, toilet block and mobile toilet are synonyms kept on this
+   * one page. The first Karnataka portable-toilet city page, a sibling of Portable Toilets in Krishnagiri
+   * (Tamil Nadu). The three Devanahalli cabin pages above (portable cabin, porta cabin, container
+   * office) keep their own intents and target no toilet keyword; the portable-cabin page links here.
+   *
+   * Owner brief of 2026-11-05 ("Devanahalli Portable Toilet Cabin"), mapped onto the template slots in
+   * the brief's order wherever the template allows (no template change):
+   *   Hero → h1 / tagline / intro + heroCta (Request a Quotation → the on-page form, Call, WhatsApp).
+   *   1 Crew and visitor facilities → why: the table as whyTable, the no-ratio note as whyOutro.
+   *     "Handwashing" in the crew layout row reads "washbasins" (owner rule of 2026-11-05: no wording
+   *     that offers standalone handwash stations; washbasins inside the cabin stay).
+   *     Short cell words so the 3-column table fits a 320 px phone (owner meaning kept): headers "Crew use"
+   *     / "Office and visitor use", "build and fit-out teams", "movement space", "finish", "Position".
+   *   2 Layout and fittings → solutions: seven h3 items; the brief's contextual links sit on items 1, 3
+   *     and 7 (the intro takes no links): portable toilet cabins, portable cabins with toilets,
+   *     portable site office cabins.
+   *   3 Housekeeping, 4 Delivery, 5 Secure campus, 6 Water and waste, 7 Configuration (table, then the
+   *     accessibility note) → extra sections with `placement: "afterSolutions"`, in that order.
+   *   The features slot lists the order-scope responsibilities the brief names in sections 3 and 5
+   *     (no new claim); the bold sizesNote is the brief's "not automatically included" rule. Then the
+   *     one-image gallery.
+   *   8 Price → custom, beside the three-quarter image. No ₹ anywhere: the fed 4-unit block keeps its
+   *     fixed price on its own product page.
+   *   10 Service areas → areas; 9 How to enquire → how (the template renders areas before how); the
+   *     brief's seven FAQs; CTA (Request a Quotation, Call, WhatsApp) and the category enquiry form
+   *     (portable-toilet-cabins, a CATEGORY_LANDING_SLUGS category, so /api/enquiries accepts it).
+   * Left out until the owner confirms them (the brief's conditional additions): rental (2- and 4-unit
+   * toilet blocks are in the rental range, but availability for this location is unconfirmed),
+   * servicing plans, urinal/shower/multi-seater/PUF/ACP variants, detailed accessible-unit claims,
+   * fixed delivery times. The source draft's acreage, tenant, airport-proximity and crane-clearance
+   * claims stay out. Bagaluru and Chikkajala are described as near the airport, and only Vijayapura
+   * as in Devanahalli taluk, so Bagaluru is not confused with Bagalur near Hosur.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets toilet × Devanahalli;
+   * no Devanahalli page carries a toilet keyword. KIADB, the Aerospace Park and Kempegowda
+   * International Airport are named only to describe locations, with the non-affiliation note in the
+   * disclaimer.
+   *
+   * Images: three owner-dropped webp files ("public/images/Devanahalli Portable Toilet Cabin city
+   * page/Devanahalli Portable Toilet Cabin/cabin (1–3).webp", lossy VP8, no EXIF/XMP/ICC chunk) copied
+   * byte-for-byte to descriptive names: (1) front with both doors open, 1200×896 = hero / og:image,
+   * captioned; (3) rear, 1200×896 = single-image gallery after the responsibilities list; (2)
+   * three-quarter view, 600×448 = beside the price section at its own width, captioned. They are AI
+   * renders of one orange two-cubicle cabin with rounded corrugated panels, set in an industrial hall;
+   * the alt texts, captions and disclaimer call them illustrative renders, not photographs of our
+   * factory or of a Devanahalli installation, and no file name or alt text names Devanahalli.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-devanahalli-aerospace-park",
+    city: "Devanahalli",
+    listTitle: "Portable Toilet Cabins in Devanahalli",
+    metaTitle: "Portable Toilet Cabin in Devanahalli | Aerospace Park",
+    metaDescription:
+      "Enquire about portable toilet cabins for Devanahalli Aerospace Park projects. Discuss layouts, fittings, water connections and delivery requirements.",
+    keywords:
+      "Portable Toilet Cabin in Devanahalli, Portable Toilet Cabin Devanahalli Aerospace Park, Toilet Cabin KIADB Aerospace Park, Washroom Cabins Devanahalli, Portable Toilet Cabin Price in Devanahalli",
+    geo: { region: "IN-KA", placename: "Devanahalli, Bengaluru Rural, Karnataka, India", position: "13.2473;77.7128", icbm: "13.2473, 77.7128" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-devanahalli-aerospace-park/portable-toilet-cabin-front.webp",
+      alt: "Front of a two-cubicle portable toilet cabin with both doors open — illustrative render of an orange cabin with corrugated panels and rounded corners, a Western WC in each cubicle, a wall-mounted dispenser and a small panel between the doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable toilet cabin design; final specification varies.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-devanahalli-aerospace-park/portable-toilet-cabin-three-quarter.webp",
+      alt: "Three-quarter view of the two-cubicle portable toilet cabin — illustrative render with one door open to a Western WC, the second door closed and the rounded orange corrugated side wall",
+      width: 600,
+      height: 448,
+      caption: "Illustrative render. The cabin size, layout, fittings and finish are confirmed in the approved drawing and quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-toilet-cabin-devanahalli-aerospace-park/portable-toilet-cabin-rear.webp",
+        alt: "Rear of the portable toilet cabin — illustrative render of a closed orange corrugated wall with rounded edges and small wall-mounted fixtures near the base",
+        width: 1200,
+        height: 896,
+      },
+    ],
+
+    h1: "Portable Toilet Cabins for Devanahalli Aerospace Park",
+    tagline: "Crew, site-office and visitor toilet cabins for Devanahalli projects, built to order at our factory near Hosur",
+    intro: [
+      "Planning washroom facilities for a project in Devanahalli? Portable Office Cabin can help you discuss portable toilet cabin requirements for construction teams, project offices and visitor areas. Share your site layout, expected users and water and waste arrangements so the proposed cabin specification can be matched to your project.",
+      "For projects in Devanahalli Aerospace Park, the planning discussion should cover both daily crew use and the facilities required beside the site office. Final layouts, finishes, fittings and delivery arrangements are confirmed in the quotation and approved drawing.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Plan Crew and Visitor Facilities Together",
+    whyIntro:
+      "Different users may need separate facilities. Consider access, privacy, cleaning and service connections before deciding where to place each cabin.",
+    whyBullets: [],
+    whyTable: {
+      caption: "Points to discuss with your project team; the layout and fittings are confirmed in the approved drawing and quotation.",
+      headers: ["Planning point", "Crew use", "Office and visitor use"],
+      rows: [
+        ["Expected use", "Daily use by build and fit-out teams", "Use by office staff, clients and visitors"],
+        ["Layout", "Cubicle count, washbasins and movement space", "Privacy, internal space and washbasin position"],
+        ["Finishes", "Durability and ease of cleaning", "Ease of cleaning, lighting and finish"],
+        ["Position", "Easy access from work areas", "Easy access from office or reception areas"],
+        ["Services", "Water, waste access and who cleans the unit", "Water, waste access and who cleans the unit"],
+      ],
+    },
+    whyOutro:
+      "The number and type of fixtures should be agreed with your project team according to expected occupancy and applicable requirements. A standard headcount-to-seat ratio is not assumed here.",
+
+    solutionsHeading: "Washroom Cabin Layout and Fittings",
+    solutionsIntro: "Start with the facilities your users need, then confirm which options are available for your order:",
+    solutions: [
+      {
+        title: "Cabin size and cubicle layout",
+        text: "Cabin dimensions, the cubicle layout and the door positions.",
+        link: { label: "Portable toilet cabins", href: "/products/portable-toilet-cabin" },
+      },
+      { title: "Toilet fixtures", text: "The toilet fixture type and quantity." },
+      {
+        title: "Washbasin and plumbing",
+        text: "The washbasin location and its plumbing connections.",
+        link: { label: "Portable cabins with toilets", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      },
+      { title: "Lighting, ventilation and electrical", text: "Lighting, ventilation and the electrical requirements of the cabin." },
+      { title: "Floor, drainage and cleaning access", text: "The floor finish, drainage details and access for cleaning." },
+      { title: "Privacy and signage", text: "Privacy, signage and separate facilities where required." },
+      {
+        title: "Office and visitor finishes",
+        text: "Additional finishes or fittings requested for office and visitor use. For an executive washroom requirement, include your preferred appearance and fittings in the enquiry; availability and specification must be confirmed before ordering.",
+        link: { label: "Portable site office cabins", href: "/products/construction-site-portable-office" },
+      },
+    ],
+
+    featuresHeading: "Responsibilities to Agree in the Order Scope",
+    featuresIntro: "Record who is responsible for each of these before the order is confirmed:",
+    features: [
+      "Daily cleaning of the unit",
+      "Replenishing consumables",
+      "Reporting faults",
+      "Tank emptying, where a holding tank is part of the site plan",
+      "Safe access for a third-party waste service",
+      "Maintenance",
+    ],
+    sizesNote:
+      "Cleaning, consumables, tank emptying and maintenance are included only where the agreed scope expressly states them; they are not automatically included with a cabin supply.",
+
+    customHeading: "Portable Toilet Cabin Price in Devanahalli",
+    customIntro: "Pricing depends on:",
+    customBullets: [
+      { text: "The agreed cabin size" },
+      { text: "Layout" },
+      { text: "Fixture quantity" },
+      { text: "Material specification" },
+      { text: "Finishes" },
+      { text: "Plumbing and electrical scope" },
+      { text: "Transport, unloading and placement arrangements" },
+    ],
+    customOutro:
+      "Send your required quantity, site location and preferred layout for an itemised quotation. Ask for the included and excluded items to be stated clearly, including taxes, transport, unloading, connections and any ongoing services.",
+
+    areasHeading: "Service-Area Enquiries",
+    areasText:
+      "For Devanahalli, KIADB Aerospace Park and airport-area projects, share the exact site address when requesting a quotation. For sites around Bagaluru and Chikkajala near the airport, or Vijayapura in Devanahalli taluk, confirm delivery availability and logistics for your location.",
+
+    howHeading: "How to Enquire",
+    howSteps: [
+      { title: "Share your project", text: "the Devanahalli site location, quantity and intended use." },
+      { title: "Describe the users", text: "expected user numbers, layout preferences and required fittings." },
+      { title: "Confirm services and access", text: "water, waste, electricity, access and unloading arrangements." },
+      { title: "Review the documents", text: "the drawing, specification, quotation and order scope." },
+      { title: "Agree the schedule", text: "the production and delivery schedule, before confirming the order." },
+    ],
+
+    extraSections: [
+      {
+        heading: "Housekeeping and Daily Cleaning",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Good facilities need an agreed cleaning routine as well as a suitable cabin layout. During planning, identify who will clean the unit, replenish consumables and report faults.",
+          "If your campus follows a 5S housekeeping system, share its requirements for signage, cleaning records, storage and waste bins, and discuss suitable provisions as part of the cabin specification. Cabin features alone do not establish certification or compliance with a customer's system.",
+        ],
+      },
+      {
+        heading: "Delivery and Placement for Airport-Area Projects",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Before delivery, share the vehicle access route, gate opening, unloading space, ground condition and intended cabin position. Your site team should confirm any permissions, lifting restrictions or equipment clearances that apply to that location.",
+          "Where lifting equipment is required, agree the method and responsibilities in advance. Delivery dates, unloading arrangements and installation scope are confirmed for the individual order.",
+        ],
+      },
+      {
+        heading: "Planning for Secure-Campus Access",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For controlled-access sites, discuss entry requirements before scheduling delivery or any agreed follow-up visit. These may include vehicle details, personnel identification, induction requirements and approved working hours.",
+          "Where a holding tank or third-party waste service is part of the site plan, allow safe access for the responsible service provider. Cleaning, consumables, tank emptying and maintenance responsibilities should be recorded in the order scope.",
+        ],
+      },
+      {
+        heading: "Water Supply and Waste Arrangements",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Confirm how fresh water will reach the cabin and how wastewater will be managed. The arrangement depends on the site, available connections and approved project requirements.",
+          "Discuss fixture selection, water availability, refill arrangements where needed, drainage connections and maintenance access. Ask for water-saving fittings if required; the final quotation will identify any included options.",
+        ],
+      },
+      {
+        heading: "Choosing a Suitable Configuration",
+        placement: "afterSolutions",
+        table: {
+          caption: "Use these points to plan each requirement; the confirmed product specification decides what can be supplied.",
+          headers: ["Project requirement", "Points to discuss"],
+          rows: [
+            ["Construction work area", "User count, shifts, walking distance and cleaning access"],
+            ["Project site office", "Staff and visitor numbers, privacy and finish preferences"],
+            ["Separate facilities", "User requirements, signage and available placement space"],
+            ["Multi-location campus", "Distribution of facilities and service access at each location"],
+            ["Accessibility requirement", "User needs, approach route, dimensions and applicable standards"],
+          ],
+        },
+        closing: [
+          "Accessibility requires a complete design review. A ramp or grab bar alone does not establish that a cabin is accessible or compliant. Confirm feasibility and specifications before ordering.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What information is needed for a toilet cabin quotation?",
+        answer:
+          "Share your site address, required quantity, cabin dimensions or layout, expected users, preferred fittings and available service connections. Include vehicle access and unloading details where possible.",
+      },
+      {
+        question: "Can crew and visitor facilities be planned separately?",
+        answer:
+          "Yes, separate requirements can be discussed during planning. The proposed arrangement depends on your site, available space and the confirmed product specification.",
+      },
+      {
+        question: "Can I request an executive washroom finish?",
+        answer: "Include the finish and fittings you want in the enquiry. Availability, materials and pricing will be confirmed in the quotation.",
+      },
+      {
+        question: "How should we plan delivery near the airport?",
+        answer:
+          "Ask your site team to confirm access, unloading space and any permissions or lifting restrictions that apply. Share these details before agreeing delivery arrangements.",
+      },
+      {
+        question: "Are cleaning and waste servicing included?",
+        answer:
+          "Include these requirements in your enquiry. Cleaning, tank emptying, consumables and maintenance are included only where expressly stated in the agreed scope.",
+      },
+      {
+        question: "Can we request accessibility features?",
+        answer:
+          "Share the complete accessibility requirement for review. Availability and suitability must be confirmed against the proposed layout and applicable standards before ordering.",
+      },
+      {
+        question: "How long will delivery take?",
+        answer:
+          "The schedule depends on the approved design, quantity, production availability and site logistics. Obtain an order-specific schedule with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Toilet Cabin Quotation for Devanahalli",
+    ctaText: `Share your site requirements with Portable Office Cabin to discuss the layout, fittings and delivery scope for your project. Send a drawing or site plan if available, along with the quantity and required date. Call or WhatsApp ${COMPANY.whatsapp.display}, or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call Us, WhatsApp and Request a Quotation: the call and WhatsApp buttons
+    // are on by default, and an empty list drops the two default (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Request a Toilet Cabin Quotation",
+      intro:
+        "Tell us the quantity, the Devanahalli site location, the expected users and the water and drainage arrangements. Our sales team will reply to confirm the details before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Models", href: "/products/category/portable-toilet-cabins" },
+      { label: "4-Unit Portable Toilet Block", href: "/products/portable-toilet-block-4-unit" },
+      { label: "Container Site Offices", href: "/products/category/site-office-containers" },
+      { label: "Preparing the Site and Base", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
+        { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
+        { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru. Devanahalli is a service area: the company has no branch, office, yard or service partner in Devanahalli or Bengaluru Rural district. Delivery, unloading and placement are arranged for each order, and delivery dates are confirmed for the individual order, not guaranteed in advance. The layouts, fixtures, fittings, finishes, sizes and services on this page are options to discuss; the items supplied are confirmed in the approved drawing, specification and quotation. Cleaning, consumables, tank emptying, waste servicing and maintenance are not included unless the agreed scope states them, and no cabin is described as accessible or compliant with an accessibility standard without a complete design review. The three images are illustrative renders of one two-cubicle toilet cabin design; they are not photographs of our factory, a customer installation or a Devanahalli project, and the final specification varies. KIADB (the Karnataka Industrial Areas Development Board), the KIADB Aerospace Park and Kempegowda International Airport are named only to describe locations; Portable Office Cabin is not affiliated with them or with any company or campus in the area, and the projects and places named here are not clients or completed projects. Site permissions, lifting restrictions, campus access rules and water and wastewater arrangements remain the responsibility of the customer's site team; the notes on this page are general guidance, not legal, engineering or regulatory advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
