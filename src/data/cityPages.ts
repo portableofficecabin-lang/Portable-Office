@@ -52,6 +52,12 @@ export interface CityPageSection {
    */
   closing?: string[];
   /**
+   * Optional contextual links rendered as a short list after the closing paragraphs (first used by
+   * Shipping Containers in Shivamogga, whose sizes table points at the matching product pages).
+   * Unset = nothing rendered.
+   */
+  links?: CityPageLink[];
+  /**
    * Optional position of the section. Unset = after the "how" steps, where every extra section has
    * always rendered. "afterSolutions" renders it straight after the solutions list instead (first used
    * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
@@ -79,6 +85,12 @@ export interface CityPageEnquiryForm {
   noun: string;
   heading: string;
   intro: string;
+  /**
+   * Optional: leave the category's monthly-rental models out of the form's model list (first used by
+   * Shipping Containers in Shivamogga, where rental is not offered). The API still accepts any model
+   * of the category. Unset = every model, as before.
+   */
+  excludeRentalModels?: boolean;
 }
 
 export interface CityPage {
@@ -130,8 +142,12 @@ export interface CityPage {
    * visible line under it, e.g. to mark a render as illustrative; unset = no caption, as before.
    */
   interiorImage?: { src: string; alt: string; width: number; height: number; caption?: string };
-  /** Optional gallery (rendered as a grid after the features section). */
-  gallery?: { src: string; alt: string; width: number; height: number }[];
+  /**
+   * Optional gallery (rendered as a grid after the features section). `caption` (optional) renders a
+   * visible line under that image, e.g. to mark a render as illustrative (first used by Shipping
+   * Containers in Shivamogga); unset = no caption, as before.
+   */
+  gallery?: { src: string; alt: string; width: number; height: number; caption?: string }[];
 
   h1: string;
   tagline: string;
@@ -172,6 +188,12 @@ export interface CityPage {
   customIntro: string;
   customBullets: CityPageListItem[];
   customOutro: string;
+  /**
+   * Optional contextual links rendered as a short list after `customOutro` (first used by Shipping
+   * Containers in Shivamogga, which points retail and office conversions at their own pages).
+   * Unset = nothing rendered.
+   */
+  customLinks?: CityPageLink[];
 
   /**
    * The "why us" section. Optional since 2026-10-21 on the same terms as the industries section:
@@ -12566,12 +12588,358 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Container Offices", href: "/products/category/container-offices" },
       { label: "Cabins on Rent", href: "/rental-service" },
       { label: "Portable Cabin in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Portable Shops and Kiosks in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
       { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
+      // Sibling page for the same estate, different product (shipping / storage containers), 2026-11-05.
+      { label: "Shipping Containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
       { label: "Areas We Serve", href: "/cities-we-serve" },
     ],
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a factory, workshop, yard or service partner in Machenahalli, Shivamogga or Bhadravathi. Delivery, unloading and crane placement are arranged for each project, placement time and the supporting base depend on the site, and delivery timelines are not guaranteed. Rental is subject to stock, location and rental terms. The cabin types, finishes, specifications, inclusions and other items described on this page are options; the items supplied are confirmed in the approved drawing and quotation for each order, and multi-room, joined or specialist cabins are subject to structural design, site conditions and the agreed process requirements. The images on this page are illustrative renders of one Portable Office Cabin container-style design, shown with an optionally furnished interior; the furniture and landscaping shown are not included unless listed in the quotation, other cabin types look different, and the images are not photographs of installations in Machenahalli or Shivamogga. KIADB and the Nidige–Machenahalli industrial area are named only to describe the location; Portable Office Cabin is not affiliated with KIADB or any industrial estate, and the businesses, uses and places described here are not clients, completed projects or confirmed delivery areas. Entry to any premises is subject to its own permissions. Notes on rain, drainage, corrosion protection, supports, access and service connections are general guidance, not engineering or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP IN SHIVAMOGGA — MACHENAHALLI INDUSTRIAL AREA (owner brief of 2026-11-05).
+   *
+   * Targets portable shop / shop cabin / kiosk searches for Shivamogga (Shimoga), Machenahalli and
+   * Nidige. Kept apart from the sibling intents: the Machenahalli portable CABIN page above (it gains
+   * one related link to this page), the Hoskote and Krishnagiri portable-shop pages and the
+   * Shivamogga shipping-container page. None of them is targeted here; each is cross-linked only
+   * once it is live (Krishnagiri, #196, is: a related link each way).
+   *
+   * The brief's fourteen sections, mapped onto the fixed template slots:
+   *   1 Hero → intro + heroCta;  2 Commercial applications → why (three groups as bullets);
+   *   3 Shop designs → solutions (ten H3s; links on Canteen, Mobile and Container Shop);
+   *   5 Sizes and 6 Shopfronts → two "afterSolutions" table sections;  4 Weather → features, its
+   *   "not standard / no leak guarantee" caveat as sizesNote;  7 Permissions → custom;
+   *   12 Why choose → whyUs;  11 Areas → areas;  10 Ordering → how;  8 Price → extra section;
+   *   13 FAQs and 14 CTA → faqs and the CTA box.
+   *   9 Rentals is LEFT OUT, as the brief instructs when portable shops are not rented: the rental
+   *   range (src/views/RentalService.tsx) has no shop cabin, so no rental claim appears anywhere.
+   * No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories, and none of
+   * them is a shop. The quote buttons use the existing /contact quotation flow, plus Call/WhatsApp.
+   * No ₹, lead times or footfall claims. The standard 10 × 10 ft Portable Shop Cabin is mentioned
+   * only by link and as "fixed price on its product page", never with a figure.
+   *
+   * Images: four owner-dropped webp renders ("public/images/shivamogga portable shops/…", 1200×896
+   * and 1451×1084 ×3, no EXIF/XMP/ICC metadata), copied byte-for-byte to descriptive names. They
+   * show one corrugated-steel kiosk with serving hatches under prop-up awnings, so alt text and
+   * captions describe exactly that and carry no place name; the disclaimer says they are renders.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-shivamogga-machenahalli",
+    city: "Shivamogga",
+    listTitle: "Portable Shops in Shivamogga, Machenahalli",
+    metaTitle: "Portable Shop in Shivamogga | Machenahalli Industrial Area Kiosks",
+    metaDescription:
+      "Portable shop manufacturers in Shivamogga (Shimoga). Prefabricated canteen kiosks, tea stalls, PPE shops and rain-protected retail cabins for Machenahalli.",
+    keywords:
+      "Portable Shop in Shivamogga, Portable Shop Machenahalli Industrial Area, Portable Shop Shimoga, Portable Shop Cabin Shivamogga, Readymade Shop Shivamogga, Prefabricated Shop Shivamogga, Movable Shop Shivamogga, Portable Shop Manufacturers in Shivamogga, Portable Shop Suppliers Shivamogga, Portable Shop Nidige, Portable Shop Price in Shivamogga",
+    geo: {
+      region: "IN-KA",
+      placename: "Machenahalli, Shivamogga, Karnataka, India",
+      position: "13.8990;75.6300",
+      icbm: "13.8990, 75.6300",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-shivamogga-machenahalli/portable-shop-kiosk-serving-hatches.webp",
+      alt: "Prefabricated portable shop kiosk with two serving hatches under prop-up awning flaps, a counter behind each hatch, a small glazed window and a lockable door, in dark grey corrugated steel with a navy frame and a pitched roof",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of one kiosk design with serving windows. Openings, fittings and finishes follow the approved specification.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-shivamogga-machenahalli/portable-shop-kiosk-roof-and-awnings.webp",
+      alt: "Overhead view of the portable shop kiosk showing its pitched standing-seam steel roof, corner lifting lugs and two hinged awning flaps propped open over the serving hatches",
+      width: 1451,
+      height: 1084,
+      caption: "From above: a pitched roof and awnings over both serving hatches. Roof, overhang and drainage details are agreed before fabrication.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-shivamogga-machenahalli/portable-shop-kiosk-front-elevation.webp",
+        alt: "Front elevation of the portable shop kiosk: one wide serving hatch with a prop-up awning over a counter, beside a full-height lockable steel door with a lever handle",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-shivamogga-machenahalli/portable-shop-kiosk-rear-walls.webp",
+        alt: "Rear view of the portable shop kiosk with closed corrugated steel back and side walls, navy corner posts with lifting lugs and the pitched roof edge",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Manufacturers in Shivamogga, Machenahalli Industrial Area",
+    tagline: "Canteen kiosks, tea stalls, PPE shops and petty shops, made to order for Machenahalli, Nidige and Shivamogga city.",
+    intro: [
+      "Portable Office Cabin designs and builds prefabricated shops, retail kiosks and custom shop cabins for traders and businesses in Shivamogga (Shimoga), Machenahalli and the industrial locations nearby. Each shop is fabricated at our factory near Hosur and delivered to your site by road.",
+      "The KIADB Nidige–Machenahalli industrial area and the Shivamogga–Bhadravathi corridor host a mix of manufacturing, industrial and transport activity.",
+      "A portable shop cabin gives a tea stall, a canteen counter, a safety-equipment shop, a stationery kiosk, a hardware counter or another small business a space laid out for its own trade.",
+      "Depending on the approved specification, a design can include a rolling shutter, a serving counter, display windows, shelving, electrical fittings, weather protection and branding.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Commercial Applications Around Machenahalli",
+    whyIntro: "Three groups of customers a portable shop can serve here. Every placement depends on permission for the site:",
+    whyBullets: [
+      {
+        title: "Industrial workers and factory premises",
+        text: "near factory gates and industrial facilities, a kiosk can serve workers and visitors as a canteen kiosk, a tea and coffee stall, a juice and buttermilk counter, a safety-equipment shop or a hardware and spares counter.",
+      },
+      {
+        title: "Office staff and commercial premises",
+        text: "beside offices, institutions and commercial buildings, the usual choices are a filter coffee kiosk, a snack counter, a xerox and stationery shop or a mobile accessories shop.",
+      },
+      {
+        title: "Roadside and transport businesses",
+        text: "on legally permitted commercial sites along the Shivamogga–Bhadravathi road, kiosks work as tea stalls, petty shops, convenience kiosks, tool and equipment counters or puncture-service support cabins.",
+      },
+    ],
+    whyOutro:
+      "These are possible uses, not a promise of footfall or sales: how a shop does depends on its location, its permissions and the business run from it.",
+
+    solutionsHeading: "Portable Shop Designs",
+    solutionsIntro: "Ten layouts to start from. The size, openings and fittings of each are fixed in your approved drawing and quotation.",
+    solutions: [
+      {
+        title: "Canteen Kiosk / Meals Counter",
+        text: "A prefabricated food-service kiosk with a customer-facing counter and space planned for suitable food-preparation equipment. A sink connection, ventilation and washable surfaces can be added as options.",
+        link: { label: "Kitchen fittings on the Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Tea and Filter Coffee Kiosk",
+        text: "A compact shop with a serving window, a work counter behind it and an optional shade awning over the window.",
+      },
+      {
+        title: "Juice and Buttermilk Stall",
+        text: "Serving space at the front, electrical points matched to the equipment you plan to run, and storage and room for that equipment behind the counter.",
+      },
+      {
+        title: "Safety Gear and PPE Shop",
+        text: "A portable retail cabin with shelving and display racks for helmets, gloves, goggles, safety shoes and other industrial safety products.",
+      },
+      {
+        title: "Hardware and Spares Counter",
+        text: "A lockable shop with shelving for small tools, fasteners, fittings and suitable industrial consumables.",
+      },
+      {
+        title: "Xerox and Stationery Kiosk",
+        text: "A shop cabin with electrical provisions for copying and printing equipment, display glazing, counter space and storage for paper and stationery.",
+      },
+      {
+        title: "Mobile and Recharge Shop",
+        text: "A compact retail cabin with display glazing, storage shelves and suitable electrical points.",
+        link: { label: "The standard 10 × 10 ft shop cabin with a glass front", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Puncture and Two-Wheeler Service Kiosk",
+        text: "A support cabin for storing tools and equipment, with an optional covered working area alongside.",
+      },
+      {
+        title: "Petty Shop",
+        text: "A small shop cabin with a rolling shutter, a counter and shelves for everyday retail products.",
+      },
+      {
+        title: "Container Shop",
+        text: "A retail shop converted from a steel shipping container, with shopfront openings cut, framed and fitted to an engineered design.",
+        link: { label: "Shipping containers for sale", href: "/products/shipping-container-for-sale" },
+      },
+    ],
+
+    featuresHeading: "Weather Protection for Shivamogga",
+    featuresIntro:
+      "Shivamogga and the surrounding Malnad-influenced areas receive substantial seasonal rainfall, so drainage and weather protection are worth planning before fabrication. Options to discuss:",
+    features: [
+      "Roof overhangs that carry rain clear of the walls and shopfront",
+      "Shade awnings over serving windows and counters",
+      "Sealed roof joints",
+      "Rainwater gutters",
+      "A raised base suited to the ground and drainage at the site",
+      "Corrosion-resistant coatings on the steel",
+      "Ventilation louvres",
+      "Optional PUF insulation in the walls and roof",
+    ],
+    sizesNote:
+      "These are options chosen for each shop, not standard on every cabin. Careful detailing, installation and maintenance reduce the risk of leaks and condensation, but no cabin is guaranteed to stay free of them.",
+
+    customHeading: "Permissions and Site Preparation",
+    customIntro: "A portable shop is still a business premises. Before one is placed, check:",
+    customBullets: [
+      { title: "KIADB or industrial plot permissions", text: "where the shop will stand inside an industrial area or on an allotted plot." },
+      { title: "Landowner consent", text: "for the position and the period the shop will occupy." },
+      { title: "Local authority approvals", text: "from the local body responsible for the site." },
+      { title: "Trade licensing", text: "for the business you will run from the shop." },
+      { title: "Food safety registration", text: "for any food or beverage business, such as a canteen, tea stall or juice counter." },
+      { title: "Electrical and fire safety", text: "a safe power connection and fire precautions suited to the equipment inside." },
+      { title: "Base and drainage", text: "a level base that keeps the shop clear of standing water." },
+      { title: "Road access and setbacks", text: "the distance from the road edge and any setback the site requires." },
+      { title: "Delivery and unloading access", text: "room for the delivery vehicle and the lifting equipment to reach the placement point." },
+    ],
+    customOutro:
+      "Being portable does not exempt a shop from local permissions: arrange the permissions for the site and the licences for the business before the shop is delivered.",
+
+    whyUsHeading: "Why Choose Portable Office Cabin?",
+    whyUsIntro: "What we bring to a portable shop order:",
+    whyUsBullets: [
+      { title: "Customised shop layouts", text: "the counter, shelving, openings and storage are arranged around your trade." },
+      { title: "MS and insulated construction", text: "mild steel construction, with PUF-insulated wall and roof panels as an option." },
+      { title: "Rolling shutters and display fronts", text: "pick a roll-down shutter, a glass display front or serving windows to match the way you sell." },
+      { title: "Counters and shelving", text: "serving counters, display racks and storage shelves sized to your stock." },
+      { title: "Electrical fitting options", text: "lighting, socket and equipment points planned with you." },
+      { title: "Weather protection options", text: "overhangs, awnings, sealed roof joints and protective coatings, as specified." },
+      { title: "Kannada and English branding", text: "signboard text in Kannada, English or both, where signage is part of the approved design." },
+      { title: "Quotation and delivery coordination", text: "one written quotation, then transport from our factory near Hosur planned with your site." },
+    ],
+
+    areasHeading: "Areas Served Around Shivamogga",
+    areasText:
+      "We welcome portable shop enquiries from Shivamogga (Shimoga) city, Machenahalli, Nidige and the KIADB Nidige–Machenahalli Industrial Area, Mandli Kallur, Sogane and the Shivamogga Airport area, sites along the Shivamogga–Bhadravathi Road, Bhadravathi, Holehonnur, Ayanur, Kumsi and Gajanur. We deliver across Karnataka by road from our factory near Hosur; send us the site address, and your quotation will confirm the route, the access and the transport charges.",
+
+    howHeading: "How to Order a Portable Shop",
+    howSteps: [
+      { title: "Share the shop type, dimensions and location.", text: "Tell us the trade, the size you have in mind and the site address." },
+      { title: "Discuss the layout and fittings.", text: "Counter, shelving, shopfront, electrical points and weather options." },
+      { title: "Review the design and quotation.", text: "" },
+      { title: "Confirm the specification and order terms.", text: "" },
+      { title: "We manufacture the approved cabin.", text: "" },
+      { title: "We arrange delivery and placement.", text: "" },
+      { title: "Complete the site utilities and operating permissions.", text: "Power, water and drainage connections, and the licences your business needs." },
+    ],
+    howOutro:
+      "Fabrication and delivery dates are set when the order is confirmed, based on the specification, the factory schedule and how ready your site is.",
+
+    extraSections: [
+      {
+        heading: "Portable Shop Sizes",
+        placement: "afterSolutions",
+        paragraphs: ["Match the floor area to the trade. These sizes are starting points, not a stock list:"],
+        table: {
+          caption:
+            "Indicative sizes. Final dimensions depend on the approved design, what can be fabricated and transported for your order, and the space and access at your site.",
+          headers: ["Indicative size", "Suitable application"],
+          rows: [
+            ["6 × 4 ft", "Small coffee or recharge kiosk"],
+            ["8 × 6 ft", "Tea stall, juice stall or petty shop"],
+            ["10 × 8 ft", "PPE shop or stationery kiosk"],
+            ["20 × 8 ft", "Canteen kiosk or hardware counter"],
+            ["20 × 10 ft and above", "Larger retail or canteen space"],
+          ],
+        },
+      },
+      {
+        heading: "Shopfront Design Options",
+        placement: "afterSolutions",
+        paragraphs: ["The shopfront decides how customers are served and how the shop is secured after hours:"],
+        table: {
+          caption:
+            "Shopfronts are sized and combined for each design. The renders on this page show serving windows with awnings; the other shopfronts look different.",
+          headers: ["Shopfront", "Suitable use"],
+          rows: [
+            ["Rolling shutter", "Petty shops, hardware and PPE retail"],
+            ["Glass display", "Mobile accessories, stationery and snacks"],
+            ["Serving window with counter", "Tea, coffee, canteen and juice kiosks"],
+            ["Open front with awning", "Selected service and seasonal retail uses"],
+          ],
+        },
+      },
+      {
+        heading: "Portable Shop Price in Shivamogga",
+        paragraphs: ["Custom portable shops are priced on quotation for the configuration you choose. The price depends on:"],
+        bullets: [
+          { text: "Shop size" },
+          { text: "MS or insulated construction" },
+          { text: "Weather protection requirements" },
+          { text: "Rolling shutter or glass frontage" },
+          { text: "Counters and storage racks" },
+          { text: "Electrical fittings" },
+          { text: "Sink and ventilation provisions" },
+          { text: "Exterior branding" },
+          { text: "Transportation and installation" },
+        ],
+        closing: [
+          "Use the Request a Quote button, call us or message us on WhatsApp with your requirement; the written quotation lists the specification and every charge. If our standard 10 × 10 ft Portable Shop Cabin suits your plan, its fixed price is shown on its product page and it can be ordered online, with transport to your PIN code calculated at checkout.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I place a portable shop inside the Machenahalli industrial area?",
+        answer:
+          "That depends on the plot. Placement is governed by the plot's permissions, land-use restrictions and any KIADB or local authority requirements, so confirm them with the plot owner and the authorities before you order.",
+      },
+      {
+        question: "Can a portable shop handle Shivamogga's monsoon conditions?",
+        answer:
+          "Suitable roofing, drainage, protective finishes and site preparation improve a shop's weather resistance. How it performs depends on the design, the installation and regular maintenance, so tell us about the site and these can be planned with you.",
+      },
+      {
+        question: "What shop types may suit industrial areas?",
+        answer:
+          "Canteen kiosks, tea counters, safety-equipment shops, hardware counters and convenience retail cabins are possible applications, subject to permission at the site.",
+      },
+      {
+        question: "Can a portable shop be used near office premises?",
+        answer:
+          "Yes, subject to site approval and your business requirements. Coffee kiosks, stationery shops and snack counters are typical examples.",
+      },
+      {
+        question: "Do you deliver to Bhadravathi?",
+        answer:
+          "Share the site address in Bhadravathi and we will confirm the current delivery coverage, the route and the transport arrangements in your quotation.",
+      },
+      {
+        question: "Can the signboard be in Kannada?",
+        answer: "Yes. Kannada, English or bilingual signage can be included when a signboard is part of the approved design.",
+      },
+      {
+        question: "How soon can a portable shop be delivered to Shivamogga?",
+        answer:
+          "Timelines depend on the cabin's specification, the manufacturing workload, transport and how ready the site is. We give you the expected schedule with the quotation once these are known.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Quote in Shivamogga",
+    ctaText: `Looking for a canteen kiosk, tea stall, safety-equipment shop, hardware counter, stationery kiosk or custom retail cabin near Machenahalli? Share your required dimensions, fittings, preferred shopfront and delivery location. Call or WhatsApp ${COMPANY.whatsapp.display}, or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the Call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Portable Shop Cabin (10 × 10 ft)", href: "/products/portable-shop-cabin" },
+      { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
+      { label: "Shipping and Cargo Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "MS or PUF Cabin Materials", href: "/products/portable-cabin/materials-ms-vs-puf" },
+      { label: "Portable Security Cabins", href: "/products/category/security-cabins" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby locations",
+      links: [
+        { label: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Shipping Containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+        { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
+        { label: "Container Office in Haveri", href: "/cities-we-serve/container-office-in-haveri" },
+        { label: "Portable Cabins across Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+        { label: "All areas we serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a factory, showroom, yard or service partner in Shivamogga, Machenahalli, Nidige or Bhadravathi. Transport, unloading and positioning are planned order by order, the base has to suit each site, and fabrication and delivery dates are not guaranteed. Everything described here, including the shop types, sizes, shopfronts, fittings, weather-protection items, finishes and signage, is optional and every size is indicative: what is supplied is fixed by the approved drawing and quotation for each order. All four images are illustrative renders of a single Portable Office Cabin kiosk design with serving windows; the cookware, plants and landscaping in them are not included, other shop designs differ, and none of them is a photograph of a shop in Shivamogga or Machenahalli. KIADB and the Nidige–Machenahalli industrial area appear only to identify the area; Portable Office Cabin has no affiliation with KIADB, any industrial estate or Shivamogga Airport, and the businesses, uses and places mentioned are possible applications and places we accept enquiries from, not clients, finished projects or guarantees of footfall. Permissions, licences and registrations for the site and the business are the buyer's responsibility. Notes on rain, drainage, ventilation, food-service fittings and electrical and fire safety are general guidance, not engineering, safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -14573,6 +14941,406 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin supplies new and used shipping containers subject to availability and does not operate a container yard, depot or office in Athipattu or Tiruvallur district; the grade, condition and delivery of each unit are confirmed in its quotation, and delivery dates are not guaranteed. The photographs show a representative dry shipping container, not a unit at a site in Athipattu. Dimensions and weights on this page are indicative; the ratings that apply are those on the specific container's identification plate and documentation. Ennore, Kattupalli, Vallur and other locations are named only to describe the service area: Portable Office Cabin is not affiliated with any port, terminal, shipping line, container freight station or power plant operator. Notes on certification, export and local permissions are general guidance, not legal or survey advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS IN SHIVAMOGGA — Machenahalli / Nidige (KIADB) industrial area, Malnad.
+   *
+   * Owner brief of 2026-11-05 (meta title, meta description, H1 and the preferred URL used as
+   * given). The URL has no "-in-", so cityFamily() was widened to "shipping-container-" to keep the
+   * page in the shipping-container family: directory card, Karnataka sibling links both ways.
+   * The draft's fourteen sections mapped onto the fixed template slots, nothing dropped:
+   *   • Hero → tagline + intro (four paragraphs), heroCta row (quote / call / WhatsApp).
+   *   • "Why Choose Portable Office Cabin?" → why (the slot after the hero), its seven verified
+   *     capabilities as bullets, the "no guaranteed grades, stock or dates" rule as whyOutro.
+   *   • "Storage Applications Around Shivamogga" (five H3s) → solutions, kept as H3s.
+   *   • "Shipping Container Sizes" table, "Container Conditions and Grades" and "Malnad Monsoon and
+   *     Container Condensation" → three afterSolutions extra sections, in the draft's order; the
+   *     sizes section links each size to its catalogue page (new optional `links`).
+   *   • "Agricultural and Bagged Goods Storage" → features (seven practices), food-safety line →
+   *     sizesNote.
+   *   • "Shipping Container Modifications" → custom, beside the interior render; "Related
+   *     Applications" → customOutro + the new optional `customLinks` (retail → portable shop cabin,
+   *     office → container office) so this storage page does not compete with either.
+   *   • "Areas Served" → areas, framed as enquiries with delivery confirmed per site.
+   *   • "Delivery and Site Preparation" → how (six steps); "Shipping Container Price in Shivamogga"
+   *     → an extra section after the steps; FAQs (eight) → faqs; final CTA → CTA + enquiry form.
+   *   • "Shipping Container Rental" is OMITTED, as the brief instructs, because rental in
+   *     Shivamogga is not a confirmed service; no rental claim or link appears on the page.
+   * No ₹ figure, no stock, lead time, certification, pallet count or delivery-coverage claim.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage / ISO / 20 ft / 40 ft container × Shivamogga,
+   * Shimoga, Machenahalli, Nidige. The Shivamogga portable-shop page (portable-office-be) keeps
+   * portable shop / container shop; the Machenahalli page keeps portable cabins.
+   *
+   * Images: five owner-dropped webp renders ("public/images/shivamogga cargo shipping container city
+   * page/Shivamogga, Machenahalli, Nidige, Karnataka/cabin (1–5).webp", 1200×896 and 1451×1084 ×4, no
+   * EXIF / XMP / ICC metadata), copied byte-for-byte to descriptive names. They show one
+   * charcoal-grey 20 ft dry container. Alt text describes each render without a place name, every
+   * image carries an "illustrative render" caption, and the disclaimer says none is a photograph of
+   * a container in Shivamogga.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-shivamogga-machenahalli",
+    city: "Shivamogga",
+    listTitle: "Shipping Container in Shivamogga",
+    metaTitle: "Shipping Container in Shivamogga | 20ft & 40ft Cargo Containers",
+    metaDescription:
+      "Explore new and used shipping containers in Shivamogga (Shimoga). 20ft and 40ft cargo containers for industrial storage, areca stock and Machenahalli sites.",
+    keywords:
+      "Shipping Container in Shivamogga, Cargo Container Shivamogga, Shipping Container Shimoga, Shipping Container for Sale in Shivamogga, Used Shipping Container Shivamogga, Storage Container Machenahalli Industrial Area, Shipping Container Nidige, ISO Container Shivamogga, Shipping Container Suppliers in Shivamogga, Shipping Container Dealers Shivamogga, 20ft Container Shivamogga, 40ft Container Shivamogga, Shipping Container Price in Shivamogga",
+    geo: {
+      region: "IN-KA",
+      placename: "Machenahalli Industrial Area, Shivamogga, Karnataka, India",
+      position: "13.8990;75.6300",
+      icbm: "13.8990, 75.6300",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+
+    heroImage: {
+      src: "/images/cities/shipping-container-shivamogga-machenahalli/20ft-shipping-container.webp",
+      alt: "20 ft steel shipping container with cargo doors, illustrative render: charcoal-grey corrugated side wall, corner castings and two cargo doors with four locking bars, cam handles and a central lockbox, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a 20 ft dry shipping container. The grade, condition and finish of a supplied container are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-shivamogga-machenahalli/shipping-container-roof-view.webp",
+      alt: "Roof of a 20 ft shipping container seen from above, illustrative render: corrugated steel roof panel, top corner castings and the cargo-door end, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render. In the monsoon, check the roof, door seals and drainage regularly: a container that keeps rain out can still collect condensation inside.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-shivamogga-machenahalli/shipping-container-interior.webp",
+      alt: "Interior of an empty steel shipping container with both cargo doors open, illustrative render: corrugated steel walls and roof and a plywood floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty, unmodified container interior. Shelving, lining, ventilation and lighting are added only as agreed in the specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-shivamogga-machenahalli/shipping-container-rear-doors.webp",
+        alt: "Shipping container rear doors, illustrative render: two charcoal-grey cargo doors with four vertical locking bars, cam handles, hinges and a central lockbox between the corner castings",
+        width: 1451,
+        height: 1084,
+        caption: "Rear cargo doors with four locking bars and a central lockbox. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-container-shivamogga-machenahalli/20ft-shipping-container-blind-end.webp",
+        alt: "Blind end and side wall of a 20 ft shipping container, illustrative render: corrugated steel end panel between the corner posts, corner castings and the long corrugated side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Blind end and side wall of a 20 ft container. Illustrative render.",
+      },
+    ],
+
+    h1: "Shipping Container & Cargo Container Suppliers in Shivamogga, Machenahalli Industrial Area",
+    tagline: "New and used 20 ft and 40 ft cargo containers for industrial, agricultural and site storage around Machenahalli and Nidige.",
+    intro: [
+      "Portable Office Cabin supplies shipping containers and cargo storage containers for industrial, agricultural, commercial and construction-related requirements in Shivamogga (Shimoga) and surrounding areas.",
+      "Shipping containers can be used for secure equipment storage, foundry patterns, agricultural stock, spare parts, construction materials and other suitable goods.",
+      "Customers can enquire about 20 ft, 40 ft and high-cube container options, subject to current availability and specifications.",
+      "We help customers evaluate container dimensions, condition, modifications and delivery requirements before placing an order.",
+    ],
+
+    whyHeading: "Why Choose Portable Office Cabin for Shipping Containers in Shivamogga?",
+    whyIntro: "What you can expect when you enquire about a container for a site in or around Shivamogga:",
+    whyBullets: [
+      {
+        title: "Container size selection",
+        text: "help comparing 20 ft, 40 ft and high-cube containers against your goods, racks and available space.",
+      },
+      {
+        title: "Condition and specification",
+        text: "a discussion of new, one-trip, cargo-worthy, wind-and-watertight and used options; ask for photographs and condition details of the unit offered.",
+      },
+      {
+        title: "Industrial storage applications",
+        text: "matching the container to what you need to store, from foundry patterns and spares to packaged goods, site tools and records.",
+      },
+      {
+        title: "Modification options",
+        text: "lockboxes, ventilation, insulation, doors, shelving, lighting and other work, each confirmed in the specification.",
+      },
+      {
+        title: "Quotation support",
+        text: "a quotation that identifies the container, its condition, any modifications, GST, transport and unloading.",
+      },
+      { title: "Delivery coordination", text: "transport and lifting arranged for your site and scheduled around access and weather." },
+      {
+        title: "Site-access planning",
+        text: "road access, ground conditions, overhead clearance and placement reviewed before delivery.",
+      },
+    ],
+    whyOutro:
+      "Container grades, certification, stock and delivery dates are not guaranteed in advance: each is confirmed for the specific unit in its quotation.",
+
+    solutionsHeading: "Storage Applications Around Shivamogga",
+    solutionsIntro:
+      "Common uses for a shipping container around Shivamogga and the Nidige–Machenahalli industrial area. Whether a container suits your goods depends on what they are, how they are packed and the moisture controls in place.",
+    solutions: [
+      {
+        title: "Foundry Pattern and Equipment Storage",
+        text: "Manufacturing facilities may require secure storage for patterns, spare parts, tools and maintenance equipment. A suitable shipping container can provide a lockable storage area with optional shelving and organised access. For moisture-sensitive patterns, consider insulation, ventilation and humidity control.",
+      },
+      {
+        title: "Areca Nut and Agricultural Stock",
+        text: "Farmers and traders may consider containers for storing suitable packaged agricultural goods. However, moisture, temperature and ventilation must be carefully managed: a standard unmodified steel container is not automatically suitable for long-term produce storage.",
+      },
+      {
+        title: "Bagged Starch and Other Packaged Goods",
+        text: "Containers can provide enclosed storage for appropriately packaged goods. Use suitable pallets, floor protection, ventilation and moisture-control arrangements according to the material being stored.",
+      },
+      {
+        title: "Construction Site Storage",
+        text: "A shipping container may be used for storing tools, fittings and other suitable equipment at construction sites.",
+      },
+      {
+        title: "Records and Archive Storage",
+        text: "A modified container can provide document storage with shelving, insulation and suitable humidity management. Safe archival conditions need an environmental-control design suited to the records; a container alone does not provide them.",
+      },
+    ],
+
+    featuresHeading: "Agricultural and Bagged Goods Storage",
+    featuresIntro: "Good practice when storing agricultural or bagged goods in a container:",
+    features: [
+      "Confirm that the goods are suitable for container storage.",
+      "Inspect the container's previous use and condition.",
+      "Check the floor treatment and any potential contamination.",
+      "Use suitable pallets or protective flooring.",
+      "Maintain the ventilation and humidity levels the goods require.",
+      "Inspect stored goods regularly.",
+      "Use appropriate pest-control and food-safety practices.",
+    ],
+    sizesNote: "For food-related materials, do not assume that a used cargo container is food-safe.",
+
+    customHeading: "Shipping Container Modifications",
+    customIntro:
+      "Possible modifications, each subject to the container, the approved specification and confirmation in the quotation:",
+    customBullets: [
+      { text: "Security lockbox" },
+      { text: "Ventilation openings" },
+      { text: "Roof ventilators" },
+      { text: "Insulation lining" },
+      { text: "Personnel access door" },
+      { text: "Rolling shutter" },
+      { text: "Shelving and racks" },
+      { text: "Electrical lighting" },
+      { text: "Power points" },
+      { text: "Loading ramp" },
+      { text: "Exterior repainting" },
+    ],
+    customOutro:
+      "All structural openings and modifications must be assessed for their effect on the container's strength and safe use. This page covers storage containers; for a retail conversion or for office accommodation, see these pages instead:",
+    customLinks: [
+      { label: "Portable shops and kiosks in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable shop cabins for retail conversions", href: "/products/portable-shop-cabin" },
+      { label: "Container offices for office accommodation", href: "/products/container-office" },
+    ],
+
+    areasHeading: "Areas Served Around Shivamogga",
+    areasText:
+      "We accept shipping container enquiries from Shivamogga (Shimoga) and nearby Malnad locations, including Machenahalli, Nidige, the KIADB Nidige–Machenahalli Industrial Area, Mandli Kallur, Sogane, the Shivamogga Airport area, the Shivamogga–Bhadravathi Road, Bhadravathi, Holehonnur, Ayanur, Kumsi and Gajanur. Delivery to each site depends on the route, site access and the transport and lifting equipment available, and is confirmed with its charges in the quotation.",
+
+    howHeading: "Delivery and Site Preparation",
+    howIntro: "Plan these points before the delivery date is fixed:",
+    howSteps: [
+      { title: "Access road", text: "Verify that the transport vehicle can reach the site and turn safely." },
+      { title: "Ground conditions", text: "Check soil stability and wet-weather access." },
+      { title: "Overhead clearance", text: "Check for electrical lines, trees and other obstructions." },
+      {
+        title: "Supporting base",
+        text: "Arrange an engineered, level and adequately drained supporting surface appropriate to the container and its load.",
+      },
+      {
+        title: "Unloading",
+        text: "Confirm crane, Hydra or other approved lifting requirements with the transport provider.",
+      },
+      {
+        title: "Placement",
+        text: "Check the door-opening direction, drainage and access requirements before final positioning.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Shipping Container Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Approximate figures for the common container types. Actual dimensions, payload limits and usable capacity vary by manufacturer and model, so confirm them for the specific container before planning your storage.",
+        ],
+        table: {
+          // The owner's four columns (type, approximate internal length, approximate capacity, typical
+          // application) as three: length and capacity share a column so the table fits a 320 px phone
+          // without a sideways scroll (four columns need about 420 px). Every figure is kept; "approximate"
+          // moves to the caption and the paragraph above.
+          caption:
+            "All figures are approximate. The specific container's documentation and identification plate give its actual dimensions and ratings.",
+          headers: ["Container type", "Internal length and capacity", "Typical application"],
+          rows: [
+            ["20 ft standard", "5.9 m; 33 m³", "Tools, equipment and smaller storage requirements"],
+            ["40 ft standard", "12.0 m; 67 m³", "Larger industrial and warehouse storage"],
+            ["40 ft high cube", "12.0 m; 76 m³", "Taller racks and bulkier goods"],
+            ["10 ft container", "Varies", "Compact storage, where a 10 ft unit is available"],
+          ],
+        },
+        closing: [
+          "How many pallets fit depends on the pallet dimensions, the stacking arrangement, the container's specification and its permitted load, so work it out for your own goods rather than relying on a standard count. Specifications of the containers in our catalogue:",
+        ],
+        links: [
+          { label: "20 ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+          { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+          { label: "Cargo storage containers: 20 ft, 40 ft and high-cube dimensions", href: "/products/cargo-storage-containers" },
+        ],
+      },
+      {
+        heading: "Container Conditions and Grades",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Shipping containers are offered in different conditions. Before you order, review the actual photographs, condition report and agreed specification of the unit offered.",
+        ],
+        bullets: [
+          {
+            title: "New or one-trip",
+            text: "containers generally showing limited shipping use, subject to their actual condition and inspection.",
+          },
+          {
+            title: "Cargo-worthy",
+            text: "used containers assessed as suitable for cargo transport under the applicable inspection requirements. A container is described as certified only when valid supporting documentation is available.",
+          },
+          {
+            title: "Wind and watertight",
+            text: "used containers intended to provide weather-resistant storage, subject to inspection and actual condition. Wind-and-watertight status does not by itself mean cargo-worthy certification.",
+          },
+          {
+            title: "Used shipping containers",
+            text: "used containers may show dents, repainting, repairs and surface corrosion.",
+          },
+        ],
+      },
+      {
+        heading: "Malnad Monsoon and Container Condensation",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Shivamogga's seasonal rainfall and humidity make moisture management important for container storage.",
+          "Even a container that keeps rainwater out can develop condensation inside, for example when its steel walls and roof cool at night in humid weather. Measures to discuss for your goods:",
+        ],
+        bullets: [
+          { title: "Ventilation", text: "vents or roof ventilators suited to the goods stored." },
+          { title: "Insulation", text: "lining options that reduce condensation on the steel." },
+          { title: "Desiccants", text: "moisture absorbers suited to the space and the goods." },
+          { title: "Humidity monitoring", text: "regular checks of the humidity inside the container." },
+          { title: "Palletised storage", text: "goods kept off the floor on pallets." },
+          { title: "Separation from the steel", text: "a gap between the goods and the walls and roof." },
+          { title: "Regular inspection", text: "checks of the goods and the container's interior, especially through the monsoon." },
+          { title: "Roof and door-seal maintenance", text: "a roof kept clear of standing water and door seals kept in good condition." },
+        ],
+        closing: [
+          "Ventilation alone will not eliminate condensation, and moisture protection for agricultural produce, paper or electronics cannot be guaranteed without a suitably engineered storage solution.",
+        ],
+      },
+      {
+        heading: "Shipping Container Price in Shivamogga",
+        paragraphs: ["The price of a shipping container in Shivamogga depends on:"],
+        bullets: [
+          { text: "Container size" },
+          { text: "Standard or high-cube specification" },
+          { text: "New or used condition" },
+          { text: "Inspection and certification requirements" },
+          { text: "Modification work" },
+          { text: "Protective finishing" },
+          { text: "Delivery distance" },
+          { text: "Loading and unloading arrangements" },
+          { text: "Site accessibility" },
+          { text: "Current container market conditions" },
+        ],
+        closing: [
+          "Prices, availability and delivery dates are not published on this page. Share your requirement through the form below or a quotation request, and the quotation will confirm the container, its condition, any modifications, GST, transport and unloading.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I store areca nut in a shipping container?",
+        answer:
+          "A container may be considered for suitable packaged agricultural goods, but moisture control, ventilation, cleanliness and product-specific storage requirements must be assessed first.",
+      },
+      {
+        question: "Will a shipping container rust in Shivamogga's rainy conditions?",
+        answer:
+          "Shipping containers are designed for demanding transport environments, but corrosion can still occur. Coating condition, drainage and maintenance are important.",
+      },
+      {
+        question: "Can a shipping container be delivered during the monsoon?",
+        answer: "Delivery depends on road access, ground conditions, weather and transport availability.",
+      },
+      {
+        question: "How many pallets fit in a 20ft container?",
+        answer: "Capacity depends on pallet dimensions, stacking arrangements, container specifications and permitted load.",
+      },
+      {
+        question: "Can I place a container in the Machenahalli industrial area?",
+        answer: "Placement depends on landowner consent, applicable KIADB conditions and local permissions.",
+      },
+      {
+        question: "Is a used shipping container suitable for food-grain storage?",
+        answer:
+          "Not automatically. Previous cargo history, floor treatment, contamination risks and storage conditions must be evaluated.",
+      },
+      {
+        question: "Can a container have a lockbox?",
+        answer: "Lockboxes can be added to suitable containers where offered as part of the approved specification.",
+      },
+      {
+        question: "How quickly can a shipping container be delivered?",
+        answer: "Timelines depend on stock, condition, modifications, transport arrangements and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a Shipping Container Quote in Shivamogga",
+    ctaText: `Need a 20 ft container for equipment storage, a 40 ft container for industrial stock or a modified cargo container for your site? Share your preferred size, condition, intended use and delivery location. Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the form below.`,
+    ctaButtonLabel: "Request Container Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Choose a container, enter the quantity and your delivery location in or around Shivamogga, and add the condition, intended use and any modifications. Our sales team will reply to confirm the details before sending a written quotation.",
+      // Rental is not offered in Shivamogga (brief, section 10), so the rental model is left out of the list.
+      excludeRentalModels: true,
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "MS Portable Cabin", href: "/products/ms-portable-cabin" },
+      { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby locations",
+      links: [
+        { label: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
+        { label: "Container Office in Haveri", href: "/cities-we-serve/container-office-in-haveri" },
+      ],
+    },
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Shivamogga, Machenahalli, Nidige or Bhadravathi. Containers are supplied subject to availability: the size, grade, condition, certification and modifications of each unit, and its delivery and unloading arrangements, are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative 20 ft dry shipping container; they are not photographs of a container supplied to, or placed in, Shivamogga or Machenahalli. Dimensions and capacities on this page are approximate; the ratings that apply are those on the specific container's identification plate and documentation. KIADB, the Nidige–Machenahalli Industrial Area and Shivamogga Airport are named only to describe the location; Portable Office Cabin is not affiliated with KIADB, any industrial estate or any airport operator, and the uses and places described here are not clients, completed projects or confirmed delivery areas. Notes on storage, moisture, condensation, food safety, site preparation and permissions are general guidance, not engineering, food-safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -22893,9 +23661,13 @@ export const CITY_PAGES: CityPage[] = [
    * city page/Krishnagiri Industrial Area portable shop/cabin (1–4).webp", 97–224 KB, no
    * EXIF/XMP/ICC) copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero
    * / og:image, no caption; (4) front elevation = the feature band, captioned; (2) elevated view and
-   * (3) rear elevation, 1451×1084 = two-image gallery after the permissions list. They show one
-   * container-style kiosk with lift-up serving hatches. The alt texts, caption and disclaimer say they
-   * are illustrative renders, and no alt text names Krishnagiri.
+   * (3) rear elevation, 1451×1084 = two-image gallery after the permissions list. They show a
+   * container-style kiosk concept with lift-up serving hatches. The alt texts, caption and disclaimer say
+   * they are illustrative renders, and no alt text names Krishnagiri.
+   * Owner, 2026-11-05: the pictured design and the listed sizes are NOT confirmed manufacturing
+   * capabilities. The images are therefore called a concept, not a standard design; the sizes are
+   * planning examples; and no rental, FRP or towable-shop section is added without the owner's
+   * confirmation.
    *
    * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
    * ────────────────────────────────────────────────────────────────────────────────────── */
@@ -22914,28 +23686,28 @@ export const CITY_PAGES: CityPage[] = [
 
     heroImage: {
       src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-with-serving-hatches.webp",
-      alt: "Portable shop kiosk with two lift-up serving hatches — illustrative render of a charcoal container-style cabin with corrugated steel walls, timber-look hatch awnings on steel stays, a serving counter with a coffee machine and snack jars, and a lockable side door under an LED light strip",
+      alt: "Portable shop kiosk concept with two lift-up serving hatches — illustrative render of a charcoal container-style cabin with corrugated steel walls, timber-look hatch awnings on steel stays, a serving counter with a coffee machine and snack jars, and a lockable side door under an LED light strip",
       width: 1200,
       height: 896,
     },
     featureImage: {
       src: "/images/cities/portable-shop-krishnagiri/prefabricated-tea-stall-kiosk-front-elevation.webp",
-      alt: "Front elevation of a prefabricated tea stall kiosk — illustrative render with the serving hatch raised over a lit, timber-panelled counter holding a coffee machine and snack jars, a full-height lockable door and charcoal corrugated steel walls",
+      alt: "Front elevation of a tea stall kiosk concept — illustrative render with the serving hatch raised over a lit, timber-panelled counter holding a coffee machine and snack jars, a full-height lockable door and charcoal corrugated steel walls",
       width: 1451,
       height: 1084,
       caption:
-        "Illustrative render of a kiosk with a lift-up serving hatch and a side door. The size, front and fittings of your shop follow its approved layout.",
+        "Illustrative concept render, not a confirmed standard design. The design, size, front and fittings of your shop are confirmed in its approved layout and quotation.",
     },
     gallery: [
       {
         src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-elevated-view.webp",
-        alt: "Elevated view of the portable shop kiosk — illustrative render of the corrugated steel roof, two open serving hatches with counters and the lockable side door, on a paved courtyard",
+        alt: "Elevated view of the portable shop kiosk concept — illustrative render of the corrugated steel roof, two open serving hatches with counters and the lockable side door, on a paved courtyard",
         width: 1451,
         height: 1084,
       },
       {
         src: "/images/cities/portable-shop-krishnagiri/portable-shop-kiosk-rear-elevation.webp",
-        alt: "Rear elevation of the portable shop kiosk — illustrative render of the closed charcoal corrugated steel walls with corner castings under a pitched roof",
+        alt: "Rear elevation of the portable shop kiosk concept — illustrative render of the closed charcoal corrugated steel walls with corner castings under a pitched roof",
         width: 1451,
         height: 1084,
       },
@@ -23046,7 +23818,7 @@ export const CITY_PAGES: CityPage[] = [
     whyUsIntro: "Buying from the manufacturer means one team plans, builds and delivers your shop:",
     whyUsBullets: [
       { title: "Custom shop layouts", text: "the front, counter and shelving planned around your trade." },
-      { title: "Multiple cabin sizes", text: "from compact kiosks to larger retail cabins." },
+      { title: "Size planned per order", text: "the size is chosen for your trade, and the size that can be manufactured is confirmed in your quotation." },
       { title: "MS and PUF construction options", text: "chosen for the use and the exposure." },
       { title: "Shopfront customization", text: "a rolling shutter, a glazed display front or serving windows." },
       { title: "Interior fitting options", text: "shelves, counters, lighting and sockets, as specified." },
@@ -23113,7 +23885,9 @@ export const CITY_PAGES: CityPage[] = [
       {
         heading: "Portable Shop Sizes",
         placement: "afterSolutions",
-        paragraphs: ["Start from what you sell and how many people work inside. Indicative starting points:"],
+        paragraphs: [
+          "Start from what you sell and how many people work inside. The sizes below are planning examples, not a list of standard or confirmed sizes:",
+        ],
         table: {
           caption:
             "All dimensions are indicative. Manufacturing availability, usable internal dimensions and structural requirements are confirmed before quotation.",
@@ -23164,7 +23938,7 @@ export const CITY_PAGES: CityPage[] = [
       {
         question: "What size is suitable for a tea stall?",
         answer:
-          "Around 8 × 6 ft is a common starting point for a tea stall or petty shop. The final size depends on your equipment, the number of people working inside and the counter length, and it is confirmed in your layout.",
+          "As a planning example only, around 8 × 6 ft is a common starting point for a tea stall or petty shop; it is not a confirmed standard size. The size we can manufacture for your shop depends on your equipment, the number of people working inside and the counter length, and it is confirmed in your layout and quotation.",
       },
       {
         question: "Can a shop have a rolling shutter and glass display?",
@@ -23212,6 +23986,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { label: "Portable Shops in Shivamogga, Karnataka", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -23225,7 +24000,7 @@ export const CITY_PAGES: CityPage[] = [
       ],
     },
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative renders of one container-style kiosk design with lift-up serving hatches; the coffee machine and jars are shown for illustration, other shop designs look different, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a separate office, yard or service partner in Krishnagiri town or its industrial areas. Delivery, unloading and placement are arranged for each order, the base depends on the site, and manufacturing and delivery dates are not guaranteed. The shop designs, sizes, materials, fronts, fittings and finishes on this page are options, and the sizes are indicative; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative concept renders of a container-style kiosk with lift-up serving hatches. The pictured design is not a confirmed standard product: the coffee machine and jars are shown for illustration, the design, size and fittings supplied are confirmed only in the approved drawing and quotation for each order, and the images are not photographs of installations in Krishnagiri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its Kurubarapalli industrial park are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, campus or company there. The locations, businesses and towns named here describe typical uses and delivery enquiry locations, not clients, completed projects or confirmed delivery areas, and no location guarantees footfall or sales. Permissions, licences, food safety registration, highway setbacks and electrical, fire and ventilation requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or food-safety advice.`,
   },
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE SECURITY CABINS IN SALEM — the security-cabin intent for Salem and the Salem Industrial
