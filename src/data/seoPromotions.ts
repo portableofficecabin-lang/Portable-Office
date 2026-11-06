@@ -387,12 +387,15 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
   ],
-  // Portable-toilet hubs for Karnataka and Bangalore — Portable Toilet Cabins in Doddaballapur
-  // (2026-11-05), the first Karnataka portable-toilet city page (Bengaluru Rural district, on the
-  // Bangalore container-office hub as Doddaballapura); the page links back to both hubs.
+  // Karnataka portable-toilet hub — Portable Toilet Cabins for Devanahalli Aerospace Park (2026-11-05),
+  // the first Karnataka portable-toilet city page, then Portable Toilet Cabins in Doddaballapur
+  // (2026-11-05); both pages link back to this hub.
   "Portable Toilet Cabin|Karnataka": [
+    { name: "Portable Toilet Cabins in Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
     { name: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
   ],
+  // Bangalore portable-toilet hub — Portable Toilet Cabins in Doddaballapur (Bengaluru Rural district,
+  // on the Bangalore container-office hub as Doddaballapura); the page links back to this hub.
   "Portable Toilet Cabin|Bangalore": [
     { name: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
   ],
