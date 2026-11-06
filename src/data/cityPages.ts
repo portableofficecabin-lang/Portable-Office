@@ -10816,6 +10816,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
+        // Sibling toilet page (2026-11-06, owner-approved cross-links): Doddaballapur links back here.
+        { label: "Toilet Cabins for Doddaballapur Industrial Units", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -24015,7 +24017,9 @@ export const CITY_PAGES: CityPage[] = [
    * disclaimer.
    * Links: three contextual links (the solutions items); related products and the Karnataka and
    * Bangalore portable-toilet hubs (both list this page); the broader Doddaballapura page (which links
-   * back). The Devanahalli toilet page is not linked until it is live.
+   * back). The Devanahalli toilet page (#214, live 2026-11-06) and this page link to each other in
+   * their nearby-links blocks (owner-approved cross-links, 2026-11-06); neither names the other's town
+   * in its areas line.
    *
    * Images: three owner-dropped webp files ("public/images/Doddaballapur Portable Toilet Cabin city
    * page/Doddaballapur Portable Toilet Cabin/cabin (1–3).webp", no EXIF/XMP/ICC/IPTC; source not
@@ -24286,6 +24290,7 @@ export const CITY_PAGES: CityPage[] = [
     nearbyLinks: {
       heading: "Nearby Service Areas",
       links: [
+        { label: "Toilet Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
         { label: "Container Offices for Doddaballapura Sites", href: "/cities-we-serve/container-office-in-doddaballapura" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
