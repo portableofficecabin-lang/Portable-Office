@@ -21826,6 +21826,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Portable Cabins in Tiruvallur", href: "/cities-we-serve/portable-cabin-tiruvallur" },
         { label: "Portable Cabins in Ranipet", href: "/cities-we-serve/portable-cabin-ranipet" },
         { label: "Shop Cabins in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+        { label: "Shop Cabins in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
