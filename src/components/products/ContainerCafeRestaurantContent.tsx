@@ -388,7 +388,10 @@ export function ContainerCafeRestaurantContent() {
             <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
             <span>
               A{" "}
-              <Link href="/products/used-shipping-container-for-sale" className={linkClass}>
+              {/* /products/used-shipping-container-for-sale never existed (no product record; 404 since
+                  2026-10-18, now a 301 in next.config.ts). The category page lists the used and
+                  refurbished 20 ft containers for sale, as the portable-cabin guide's link does. */}
+              <Link href="/products/category/cargo-storage-shipping-containers" className={linkClass}>
                 refurbished shipping container
               </Link>{" "}
               or a new container-style build
