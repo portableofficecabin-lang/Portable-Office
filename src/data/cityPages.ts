@@ -12930,6 +12930,7 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby locations",
       links: [
         { label: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Shipping Containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
         { label: "Container Office in Davanagere", href: "/cities-we-serve/container-office-in-davanagere" },
         { label: "Container Office in Haveri", href: "/cities-we-serve/container-office-in-haveri" },
         { label: "Portable Cabins across Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
@@ -15139,6 +15140,7 @@ export const CITY_PAGES: CityPage[] = [
     customOutro:
       "All structural openings and modifications must be assessed for their effect on the container's strength and safe use. This page covers storage containers; for a retail conversion or for office accommodation, see these pages instead:",
     customLinks: [
+      { label: "Portable shops and kiosks in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
       { label: "Portable shop cabins for retail conversions", href: "/products/portable-shop-cabin" },
       { label: "Container offices for office accommodation", href: "/products/container-office" },
     ],
