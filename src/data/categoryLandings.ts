@@ -274,6 +274,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
       { name: "Chennai", href: "/promotions/shipping-container-in-chennai" },
       { name: "Cargo storage containers in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
+      // First city page on this list (2026-11-05, owner brief): the Shivamogga shipping-container page.
+      { name: "Shipping containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],
