@@ -247,11 +247,12 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
   "portable-toilet-cabins": {
     locationHeading: "Portable toilet cabins by location",
     // The four promotion pages, then the portable-toilet city pages (Devanahalli, 2026-11-05;
-    // Krishnagiri, 2026-11-04; Doddaballapur, 2026-11-05).
+    // Krishnagiri, 2026-11-04; Dharmapuri, 2026-11-05; Doddaballapur, 2026-11-05).
     locationLinks: [
       ...promotionLocations("portable-toilet-cabin"),
       { name: "Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
       { name: "Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+      { name: "Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
       { name: "Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
     ],
     guideLinks: [
@@ -276,6 +277,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
       { name: "Chennai", href: "/promotions/shipping-container-in-chennai" },
       { name: "Cargo storage containers in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
+      // First city page on this list (2026-11-05, owner brief): the Shivamogga shipping-container page.
+      { name: "Shipping containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],

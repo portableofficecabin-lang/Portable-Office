@@ -386,6 +386,7 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // page; the page links back to this hub.
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    { name: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
   ],
   // Karnataka portable-toilet hub — Portable Toilet Cabins for Devanahalli Aerospace Park (2026-11-05),
   // the first Karnataka portable-toilet city page, then Portable Toilet Cabins in Doddaballapur
@@ -522,6 +523,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
     { name: "Shipping Container in Jigani", href: "/cities-we-serve/shipping-container-in-jigani" },
     { name: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
+    // Shivamogga (Machenahalli / Nidige), 2026-11-05; after Tumkur so the live links keep their positions.
+    { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
   ],
 };
 

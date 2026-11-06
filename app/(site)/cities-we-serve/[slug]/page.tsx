@@ -130,7 +130,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       ? {
           ...page.enquiryForm,
           categoryName: enquiryCategory.name,
-          models: categoryModels(page.enquiryForm.categorySlug, products).map((m) => ({ id: m.id, name: m.name })),
+          models: categoryModels(page.enquiryForm.categorySlug, products)
+            /* `excludeRentalModels` (optional): drop monthly-rental models; unset = every model. */
+            .filter((m) => !(page.enquiryForm!.excludeRentalModels && m.rental))
+            .map((m) => ({ id: m.id, name: m.name })),
         }
       : undefined;
 
@@ -139,17 +142,21 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
      than the column. Below the `sm` breakpoint the cells use px-3 and the row headers may wrap, so a
      three-column table fits a 320–430 px phone instead of hiding its last column behind a sideways
      scroll (2026-11-04, Portable Toilets in Krishnagiri); from `sm` up the markup looks exactly as
-     before. */
+     before. On phones narrower than 390 px the table also uses 12 px text and 6 px side padding
+     (`max-[389px]:text-xs` / `max-[389px]:px-1.5`): whole words such as "Commissioning" and
+     "access-control" otherwise set each column's minimum width, and two security-cabin tables still
+     scrolled sideways at 320–360 px (2026-11-06). Words are never broken mid-word. From 390 px up
+     the markup renders exactly as before. */
   const renderTable = (table: CityPageTable) => (
     <div className={`mb-4 overflow-x-auto rounded-xl border${mc("reveal")}`}>
-      <table className="w-full border-collapse text-left text-sm">
-        <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4">
+      <table className="w-full border-collapse text-left text-sm max-[389px]:text-xs">
+        <caption className="caption-bottom border-t px-3 py-2.5 text-left leading-relaxed text-muted-foreground sm:px-4 max-[389px]:px-1.5">
           {table.caption}
         </caption>
         <thead className="bg-muted/50">
           <tr>
             {table.headers.map((hd) => (
-              <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4">
+              <th key={hd} scope="col" className="px-3 py-2.5 font-semibold text-foreground sm:px-4 max-[389px]:px-1.5">
                 {hd}
               </th>
             ))}
@@ -158,11 +165,11 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         <tbody>
           {table.rows.map((row) => (
             <tr key={row[0]} className="border-t">
-              <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4">
+              <th scope="row" className="px-3 py-2.5 font-medium text-foreground sm:whitespace-nowrap sm:px-4 max-[389px]:px-1.5">
                 {row[0]}
               </th>
               {row.slice(1).map((cell, j) => (
-                <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4">
+                <td key={`${row[0]}-${j}`} className="px-3 py-2.5 text-muted-foreground sm:px-4 max-[389px]:px-1.5">
                   {cell}
                 </td>
               ))}
@@ -171,6 +178,20 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         </tbody>
       </table>
     </div>
+  );
+
+  /* Optional contextual link list (an extra section's `links`, or `customLinks`): same link style as a
+     solution's contextual link, one per list item. Callers render it only when the list is non-empty. */
+  const renderLinks = (links: CityPageLink[]) => (
+    <ul className={`mb-4 list-disc pl-6${mc("reveal-stagger")}`}>
+      {links.map((l) => (
+        <li key={l.href} className={li}>
+          <Link href={l.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+            {l.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 
   /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
@@ -196,6 +217,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
       {sec.closing?.map((text) => (
         <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
       ))}
+      {/* Optional contextual links after the closing paragraphs (`links`); unset = nothing rendered. */}
+      {sec.links && sec.links.length > 0 && renderLinks(sec.links)}
     </section>
   );
 
@@ -412,6 +435,12 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                   className={page.gallery!.length === 1 ? "mx-auto h-auto w-full max-w-2xl" : "h-auto w-full"}
                   loading="lazy"
                 />
+                {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
+                {g.caption && (
+                  <figcaption className="border-t px-3 py-2 text-sm leading-relaxed text-muted-foreground">
+                    {g.caption}
+                  </figcaption>
+                )}
               </figure>
             ))}
           </div>
@@ -469,6 +498,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           ))}
         </ul>
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
+        {/* Optional contextual links after the outro (`customLinks`); unset = nothing rendered. */}
+        {page.customLinks && page.customLinks.length > 0 && renderLinks(page.customLinks)}
 
         {/* Optional since 2026-10-21 (see CityPage.whyUsHeading): unset = no section. */}
         {page.whyUsHeading && (
