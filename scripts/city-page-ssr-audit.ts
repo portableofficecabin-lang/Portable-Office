@@ -176,6 +176,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   t("solutions", "solutions intro", p.solutionsIntro);
   p.solutions.forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
   p.solutions.forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+  // Optional captioned images under a solutions item (since 2026-11-05): src, alt and caption.
+  p.solutions.forEach((s, i) => s.images?.forEach((img, j) => {
+    items.push({ group: "images", label: `layout ${i + 1} image ${j + 1} src`, test: (mk) => imageNeedle(img.src).test(mk) });
+    m("images", `layout ${i + 1} image ${j + 1} alt`, `alt="${img.alt}"`);
+    t("images", `layout ${i + 1} image ${j + 1} caption`, img.caption);
+  }));
   t("features", "features heading", p.featuresHeading);
   t("features", "features intro", p.featuresIntro);
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
@@ -191,6 +197,9 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   }
   t("custom", "custom heading", p.customHeading);
   if (p.interiorImage) { items.push({ group: "images", label: "interior image src", test: (mk) => imageNeedle(p.interiorImage!.src).test(mk) }); m("images", "interior image alt", `alt="${p.interiorImage.alt}"`); }
+  // Optional visible captions on the hero and interior images (audited since 2026-11-05).
+  if (p.heroImage.caption) t("images", "hero caption", p.heroImage.caption);
+  if (p.interiorImage?.caption) t("images", "interior caption", p.interiorImage.caption);
   t("custom", "custom intro", p.customIntro);
   p.customBullets.forEach((b, i) => { t("custom", `custom bullet ${i + 1} title`, b.title ?? ""); t("custom", `custom bullet ${i + 1} text`, b.text); });
   t("custom", "custom outro", p.customOutro);
@@ -406,7 +415,13 @@ async function auditPage(p: CityPage): Promise<PageResult> {
     if (s !== 200) linksBroken.push(`${h} → ${s}`);
   }
   // images: every page-data image must be fetchable as the raw file and through the optimizer URL used in the HTML
-  const imgSrcs = [p.heroImage.src, p.featureImage?.src, p.interiorImage?.src, ...(p.gallery ?? []).map((g) => g.src)].filter(Boolean) as string[];
+  const imgSrcs = [
+    p.heroImage.src,
+    p.featureImage?.src,
+    p.interiorImage?.src,
+    ...(p.gallery ?? []).map((g) => g.src),
+    ...p.solutions.flatMap((s) => (s.images ?? []).map((img) => img.src)),
+  ].filter(Boolean) as string[];
   const imagesBroken: string[] = [];
   for (const src of imgSrcs) {
     const s = await headStatus(origin + src);

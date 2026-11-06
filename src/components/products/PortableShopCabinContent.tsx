@@ -218,6 +218,7 @@ const SHOP_LOCATION_LINKS: { label: string; href: string }[] = [
   { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
   { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
   { label: "Portable Shops in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+  { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
 ];
 
 function SectionHeading({
