@@ -63,6 +63,18 @@ export interface CityPageSection {
    * by Portable Security Cabins in Krishnagiri, whose cabin-selection table follows its industries).
    */
   placement?: "afterSolutions";
+  /**
+   * Optional image rendered straight under the section heading, with the interior image's figure and
+   * caption (first used by Portable Office Cabins in Marathahalli, whose interior render sits in its
+   * layout guide). An image narrower than the 672 px frame is shown at its own width. Unset = no element.
+   */
+  image?: { src: string; alt: string; width: number; height: number; caption?: string };
+  /**
+   * Optional: render the bullets as a numbered list (<ol>) instead of a bulleted one, for owner steps
+   * that must stay in an extra section to keep the brief's order (first used by Portable Office Cabin
+   * in Bellandur, whose "From enquiry to placement" steps come before its areas). Unset = <ul>, as before.
+   */
+  ordered?: boolean;
 }
 
 /** A small data table inside an extra section (see CityPageSection.table). */
@@ -131,6 +143,13 @@ export interface CityPage {
    */
   heroImage: { src: string; alt: string; width: number; height: number; caption?: string };
   /**
+   * Optional: publish the hero's width and height as og:image:width / og:image:height (first used by
+   * Portable Office Cabin in Bellandur, whose brief asks for the social image's actual dimensions).
+   * heroImage.width/height must then be the file's real pixel size. Unset = og:image without
+   * dimensions, as before.
+   */
+  ogImageDimensions?: boolean;
+  /**
    * Optional full-width FEATURE BAND rendered between the "why" bullets and the solutions
    * list — a deliberate visual break in the longest stretch of text on the page, not a second
    * hero. Cropped to 3:2 and carries a short caption over a scrim, so it reads as an editorial
@@ -152,11 +171,22 @@ export interface CityPage {
   h1: string;
   tagline: string;
   intro: string[];
+  /**
+   * Optional contextual links rendered as a short list after the intro paragraphs (first used by
+   * Portable Office Cabins in Marathahalli, whose brief links its introduction to the office cabin
+   * product page). Unset = nothing rendered.
+   */
+  introLinks?: CityPageLink[];
 
-  whyHeading: string;
-  whyIntro: string;
+  /**
+   * The "why" section. Optional since 2026-11-07, for owner copy whose first section after the intro
+   * is the solutions list (first used by Portable Office Cabins in Marathahalli): the section renders
+   * only when `whyHeading` is set, so every earlier page, which sets it, renders as before.
+   */
+  whyHeading?: string;
+  whyIntro?: string;
   /** May be empty when the section is a table (`whyTable`); an empty list renders no <ul>. */
-  whyBullets: CityPageListItem[];
+  whyBullets?: CityPageListItem[];
   /**
    * Optional table rendered after the "why" bullets and before `whyOutro`, with the same markup as an
    * extra section's table (first used by Portable Security Cabins in Krishnagiri for its portable
@@ -167,13 +197,18 @@ export interface CityPage {
   whyOutro?: string;
 
   solutionsHeading: string;
-  solutionsIntro: string;
+  /** Optional since 2026-11-07 (owner copy with no lead-in, first Marathahalli): unset = no paragraph. */
+  solutionsIntro?: string;
   solutions: CityPageListItem[];
 
-  featuresHeading: string;
-  featuresIntro: string;
-  features: string[];
-  sizesNote: string;
+  /**
+   * The features section. Optional since 2026-11-07 on the same terms as the "why" section: it renders
+   * only when `featuresHeading` is set, and every earlier page sets all four fields.
+   */
+  featuresHeading?: string;
+  featuresIntro?: string;
+  features?: string[];
+  sizesNote?: string;
 
   /**
    * The industries (uses) section. Optional since 2026-10-21, for owner copy that has no such section
@@ -184,10 +219,15 @@ export interface CityPage {
   industriesIntro?: string;
   industries?: CityPageListItem[];
 
-  customHeading: string;
-  customIntro: string;
-  customBullets: CityPageListItem[];
-  customOutro: string;
+  /**
+   * The customization section, which also holds `interiorImage`. Optional since 2026-11-07 on the same
+   * terms as the "why" section: it renders only when `customHeading` is set (an unset heading also drops
+   * the interior image), and every earlier page sets all four fields.
+   */
+  customHeading?: string;
+  customIntro?: string;
+  customBullets?: CityPageListItem[];
+  customOutro?: string;
   /**
    * Optional contextual links rendered as a short list after `customOutro` (first used by Shipping
    * Containers in Shivamogga, which points retail and office conversions at their own pages).
@@ -205,8 +245,18 @@ export interface CityPage {
 
   areasHeading: string;
   areasText: string;
+  /**
+   * Optional contextual links rendered as a short list after `areasText` (first used by Portable Office
+   * Cabin in Bellandur, whose areas paragraph points farther along the corridor to the Sarjapur page).
+   * Unset = nothing rendered.
+   */
+  areasLinks?: CityPageLink[];
 
-  howHeading: string;
+  /**
+   * The ordering ("how") section. Optional since 2026-11-07 on the same terms as the "why" section: it
+   * renders only when `howHeading` is set, and every earlier page sets it and `howSteps`.
+   */
+  howHeading?: string;
   /**
    * Optional paragraph between the "how" heading and the numbered steps, and optional paragraph
    * after them (first used by Portable Cabins in Krishnagiri Industrial Area, whose delivery
@@ -214,7 +264,7 @@ export interface CityPage {
    * `text` is empty renders its title alone, without the " — " joiner.
    */
   howIntro?: string;
-  howSteps: CityPageListItem[];
+  howSteps?: CityPageListItem[];
   howOutro?: string;
 
   /**
@@ -244,6 +294,14 @@ export interface CityPage {
    * never from the entry. Shown by default since 2026-10-14 (unset = shown); set `false` to hide.
    */
   ctaContactButtons?: boolean;
+  /**
+   * Optional labels for the Call and WhatsApp buttons (CTA box and `heroCta` row), for owner copy that
+   * names them (first used by Portable Office Cabins in Marathahalli: "Call Us", "WhatsApp Your
+   * Requirements"). The number and link still come from COMPANY. Unset = "Call <number>" and
+   * "WhatsApp Us", as before.
+   */
+  callButtonLabel?: string;
+  whatsappButtonLabel?: string;
   /**
    * Optional row of contact buttons under the intro paragraphs: the primary quotation button (to the
    * on-page enquiry form when `enquiryForm` is set, otherwise /contact) plus Call and WhatsApp from
@@ -25451,6 +25509,228 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Doddaballapur. Delivery, unloading, placement and any connections are planned for each order, and delivery dates are not guaranteed. The layouts, fixtures, fittings, materials and service provisions mentioned on this page are points to discuss; only the items expressly confirmed in the approved specification and quotation form part of a supply. The three images are illustrative images of one two-cubicle toilet cabin design with one Western toilet and one Indian squat pan; other configurations look different, and the images do not show an installation in Doddaballapur or a customer project. The Doddaballapur industrial area, Apparel Park and Textile Park are named only to describe locations; Portable Office Cabin is not affiliated with their developers or operators or with any unit there, and the towns, roads and parks named here are places we accept delivery enquiries from, not clients, completed projects or confirmed delivery areas. The walking-time figures are a hypothetical example. The planning notes are general guidance, not engineering, public-health, legal or compliance advice: a cabin supply does not guarantee the result of any buyer or social-compliance audit, and wastewater handling and disposal must comply with applicable local requirements.`,
+  },
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE OFFICE CABIN IN BELLANDUR — the office-cabin intent for homes, apartment societies and
+   * neighbourhood projects in Bellandur (Bellandur Post, 560103), south-east Bengaluru: residents'
+   * welfare association and facility offices, builder handover and customer care offices, contractor
+   * offices for society repairs, home office cabins in a house compound, and site offices for
+   * authorised lake and stormwater-drain works. It owns "portable office cabin + Bellandur" (one
+   * canonical page; no earlier route served it). Scope split from the owner brief: tech park and
+   * campus project content stays on the Devarabisanahalli page, sales offices on the Marathahalli page
+   * and industrial office content on Belagavi. The Bellandur → Devarabisanahalli routing note ("tech
+   * park project office cabins", after the intro) and its reciprocal wait until BOTH pages are live,
+   * per the brief.
+   *
+   * Owner brief of 2026-11-07 ("Bellandur office cabin page and implementation commands"): the slug,
+   * meta title, meta description and H1 verbatim; every public paragraph, list item, table row, FAQ
+   * and the CTA text are the owner's text, in the brief's order:
+   *   intro → intro; "Office cabins for apartments, home offices and local works" (five H3s) →
+   *   solutions; "Planning delivery inside a gated community", "Suggested cabin layouts", "Portable
+   *   office cabin price and rental in Bellandur" and "From enquiry to placement" → extra sections
+   *   placed after the solutions (the steps as a numbered list, `ordered`); "Areas we serve" → areas,
+   *   with the Sarjapur link (`areasLinks`); FAQs; "Request a Bellandur office cabin quote" → CTA with
+   *   the brief's buttons: Request a Quote (→ /contact), Call and WhatsApp from COMPANY. The why,
+   *   features, custom and how slots are unset (optional since 2026-11-07, the Marathahalli page's
+   *   template shape). The layouts table's lead-in sentences are its visible caption. Each in-copy link
+   *   ("see our …") renders as a link right after its paragraph, with the brief's anchor text.
+   * Composed for owner review: the tagline (the meta description's own list of uses), the image alt
+   * texts and captions of the three images that match no slot in the brief, and the disclaimer.
+   *
+   * Images: four owner-dropped webp files ("public/images/Bellandur office cabin city page/Bellandur
+   * office cabin page and/cabin (1–4).webp", 1983×793, plain VP8, no EXIF/XMP/ICC, source kept),
+   * copied with their image data byte-for-byte (decoded pixels verified identical) under descriptive
+   * names, with an XMP dc:title and dc:description added. They are design renders of one two-tone
+   * container-style office cabin, so every image is captioned as illustrative and none names a
+   * place. Only (2), the exterior with an entrance and three windows, matches a slot in the brief: it
+   * is the hero and og:image, with the brief's alt text and caption and its real dimensions
+   * (`ogImageDimensions`). (1) office interior with two workstations and storage → under "Suggested
+   * cabin layouts" (no reception desk or visitor seating, so not the brief's handover slot); (3) plain
+   * long side and (4) aerial view → gallery. No repair-office, raised-support or garden-office image
+   * was supplied, so those slots are omitted.
+   *
+   * Geo: Bellandur suburb centre, 12.9261 N 77.6758 E.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-office-cabin-bellandur",
+    city: "Bellandur",
+    listTitle: "Portable Office Cabins in Bellandur",
+    metaTitle: "Portable Office Cabin in Bellandur (560103)",
+    metaDescription:
+      "Portable office cabins in Bellandur for apartment associations, builder handovers, society repairs, lake and drain works, and home offices. Request a quote.",
+    keywords:
+      "Portable Office Cabin in Bellandur, Portable Office Cabin Bellandur Post, Office Cabin 560103, Apartment Association Office Cabin, Builder Handover Office Cabin, Society Repair Contractor Office, Lake and Drain Works Site Office, Home Office Cabin, Portable Office Cabin Rental Bellandur",
+    geo: { region: "IN-KA", placename: "Bellandur, Bengaluru, Karnataka, India", position: "12.9261;77.6758", icbm: "12.9261, 77.6758" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Office Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-office-cabin-bellandur/bellandur-association-office-cabin-exterior.webp",
+      alt: "Portable office cabin exterior with an entrance and windows",
+      width: 1983,
+      height: 793,
+      caption: "Illustrative design render of a cabin for an apartment association office.",
+    },
+    ogImageDimensions: true,
+    gallery: [
+      {
+        src: "/images/cities/portable-office-cabin-bellandur/bellandur-office-cabin-side-view.webp",
+        alt: "Plain long side of a two-tone office cabin without doors or windows",
+        width: 1983,
+        height: 793,
+        caption: "Illustrative design render of the cabin's plain long side.",
+      },
+      {
+        src: "/images/cities/portable-office-cabin-bellandur/bellandur-office-cabin-aerial-view.webp",
+        alt: "Aerial view of an office cabin roof with the entrance and windows along one side",
+        width: 1983,
+        height: 793,
+        caption: "Illustrative aerial view of the same office cabin design.",
+      },
+    ],
+
+    h1: "Portable Office Cabins for Bellandur’s Homes, Societies and Neighbourhood Projects",
+    tagline: "Office cabins for apartment associations, builder handovers, society repairs, lake and drain works, and home offices",
+    intro: [
+      "An apartment association needs somewhere residents can bring maintenance queries. A builder handing over a new tower needs a desk for keys, documents and snag lists. A homeowner working from a busy house may simply need a separate room for calls. Portable Office Cabin supplies prefabricated office cabins for these uses in Bellandur, with layouts planned around the available space and delivery access.",
+    ],
+
+    solutionsHeading: "Office cabins for apartments, home offices and local works",
+    solutions: [
+      {
+        title: "Association and facility management office",
+        text: "Give the residents’ welfare association (RWA) and facility team a dedicated base for maintenance requests, vendor records and committee meetings. A typical layout can include a resident-facing desk, filing cabinets and a small meeting table.",
+      },
+      {
+        title: "Builder handover and customer care office",
+        text: "Set up a reception desk for new owners, lockable storage for keys and documents, and a separate place to log snag lists. For busier handovers, plan visitor seating, signage from the tower entrance, lighting and a display wall for explaining building amenities and maintenance procedures.",
+      },
+      {
+        title: "Contractor office for society repairs",
+        text: "During waterproofing, repainting, façade repairs or lift upgrades, a compact cabin gives the contractor a place to store drawings and coordinate daily work. Agree on the location and power arrangements with the association before delivery. A check meter can be discussed if the society wants to track the contractor’s electricity use separately.",
+      },
+      {
+        title: "Home office cabin in your compound",
+        text: "A cabin can provide a dedicated workspace in a garden or house compound. Plan a desk, a window for daylight, sockets, a wired network point and an AC provision where required. If calls are a priority, discuss insulation, door seals and glazing. A wood-look finish can be considered at quotation stage. Confirm plot access and any applicable placement requirements before ordering.",
+      },
+      {
+        title: "Site office for lake and drain works",
+        text: "For authorised lake restoration or stormwater drain projects, a cabin can serve as a base for supervisors, records and crew briefings. Discuss insect screens, a project information board and a suitable raised support with the project team. The project authority must approve the placement, and the site team should confirm ground and drainage conditions before selecting the base.",
+      },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning delivery inside a gated community",
+        placement: "afterSolutions",
+        bullets: [
+          { text: "Get the managing committee’s approval for the proposed location, footprint and work hours." },
+          { text: "Review the approach road, gate clearance, turning space and unloading position. Flag basement slabs, overhead cables and paving restrictions before arranging a lift." },
+          { text: "Agree on how residents will be notified and how the unloading area will be kept clear during placement." },
+          { text: "Keep fire access routes, emergency exits and pedestrian routes clear. Confirm who will arrange the base, electrical connection and any reinstatement work." },
+        ],
+      },
+      {
+        heading: "Suggested cabin layouts",
+        placement: "afterSolutions",
+        image: {
+          src: "/images/cities/portable-office-cabin-bellandur/bellandur-office-cabin-interior.webp",
+          alt: "Office cabin interior with two workstations, storage cabinets, three windows and a door",
+          width: 1983,
+          height: 793,
+          caption: "Illustrative office cabin interior. Furniture and fittings are optional.",
+        },
+        table: {
+          caption: "These dimensions are starting points for layout discussions. Confirm dimensions, fittings and availability in the quotation.",
+          headers: ["Use", "Example footprint", "Layout to discuss"],
+          rows: [
+            ["Home office", "8 × 6 ft or 10 × 8 ft", "Desk, window, sockets and network provision"],
+            ["Society repair contractor office", "10 × 8 ft", "Work desk and drawing storage"],
+            ["Lake or drain works office", "10 × 8 ft to 20 × 10 ft", "Insect screens and site-specific supports"],
+            ["Association and facility office", "20 × 10 ft", "Resident desk, filing and committee seating"],
+            ["Handover and customer care office", "20 × 10 ft to 30 × 10 ft", "Reception, lockable storage and snag-list desk"],
+          ],
+        },
+        closing: ["For a starting point on materials and specifications, see our insulated office portable cabin."],
+        links: [{ label: "Insulated office portable cabin", href: "/products/office-portable-cabin" }],
+      },
+      {
+        heading: "Portable office cabin price and rental in Bellandur",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Pricing depends on the footprint, layout, finish, insulation, electrical provisions, furniture and access for transport and unloading. Share the proposed location, dimensions and fittings for an itemised quotation. For handovers, repair contracts and other temporary work, see our portable cabin rental service. Rental availability, hire period and delivery scope are confirmed for each enquiry.",
+        ],
+        links: [{ label: "Portable cabin rental service", href: "/rental-service" }],
+      },
+      {
+        heading: "From enquiry to placement",
+        placement: "afterSolutions",
+        ordered: true,
+        bullets: [
+          { text: "Share the intended use, number of occupants, site photographs and proposed placement area." },
+          { text: "Review the layout and quotation, including the cabin fittings, transport and unloading scope." },
+          { text: "Confirm the required permissions, access and base arrangements." },
+          { text: "Approve the configuration and agree on the delivery and placement plan." },
+        ],
+      },
+    ],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Bellandur and the Bellandur Post (560103) area, including Green Glen Layout, Bellandur Gate and Ambalipura. We also welcome enquiries from Kasavanahalli, Haralur Road, Iblur, Kaikondrahalli and the nearby Sarjapur Road stretch. For projects farther along the corridor, see our container offices in Sarjapur.",
+    areasLinks: [{ label: "Container offices in Sarjapur", href: "/cities-we-serve/container-office-in-sarjapur" }],
+
+    faqs: [
+      {
+        question: "Can a portable office cabin be placed inside an apartment society?",
+        answer: "Yes, if the association approves the location and work hours, and the site has suitable delivery and unloading access. Share entrance and placement photos when enquiring.",
+      },
+      {
+        question: "Can I place a home office cabin in my compound?",
+        answer: "It depends on available space, access and any local placement requirements. Share your plot dimensions so the cabin layout and delivery approach can be assessed.",
+      },
+      {
+        question: "Will a home office cabin be quiet enough for calls?",
+        answer: "Insulation, sealed openings and suitable glazing can help reduce outside noise. The result depends on the chosen build and the surroundings. Discuss acoustic requirements before approving the specification.",
+      },
+      {
+        question: "What should a builder’s handover office include?",
+        answer: "Start with a reception desk, visitor seating, lockable key and document storage, and a desk to record snag lists. Lighting, AC provision and signage can be specified to suit the layout.",
+      },
+      {
+        question: "Can I enquire about a site office for lake or drain works?",
+        answer: "Yes. Share the authorised placement area, ground conditions, access and any project-specific requirements such as insect screening or a public information board.",
+      },
+      {
+        question: "How is power billed for a contractor’s office inside a society?",
+        answer: "The association and contractor agree on the supply and billing arrangement. If they want separate usage records, discuss a check meter with their electrician.",
+      },
+      {
+        question: "Can I rent a cabin for a handover or repair project?",
+        answer: "Yes, you can enquire about a rental. Share your preferred dates, expected duration, cabin size and access details so availability and terms can be confirmed.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer: "The schedule depends on the specification, production or rental availability, transport and site permissions. Share your target date so the team can confirm a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Bellandur office cabin quote",
+    ctaText:
+      "Send us the intended use, preferred cabin size, site location and photographs of the approach and placement area. Include the number of users and any requirements for storage, furniture, insulation or electrical points.",
+    ctaButtonLabel: "Request a Quote",
+    // The brief's buttons are Request a Quote, Call and WhatsApp: the call and WhatsApp buttons are on by
+    // default (numbers from COMPANY), and an empty list drops the two default container-office buttons.
+    ctaSecondaryLinks: [],
+    relatedLinks: [
+      { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Areas We Serve", href: "/cities-we-serve" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office or yard in Bellandur. Delivery, unloading and placement are arranged for each order, and the schedule is confirmed in the quotation. The layouts, footprints, finishes, insulation, electrical provisions and furniture described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative design renders of one office cabin, not photographs of installations in Bellandur. Bellandur, the Bellandur Post (560103) area and the localities listed are named only to describe where enquiries are welcome; they are not clients, completed projects or confirmed delivery sites. The notes on association approvals, placement, lake and drain works and power billing are general guidance, not legal, engineering or electrical advice; the association, project authority or site team confirms the requirements that apply to each site.`,
   },
 ];
 
