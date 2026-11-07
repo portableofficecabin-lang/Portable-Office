@@ -15540,16 +15540,16 @@ export const CITY_PAGES: CityPage[] = [
         table: {
           caption: "Final fit depends on the unit, delivery vehicle and placement method.",
           headers: ["Size", "Storage use", "Site planning"],
-          // Row headers use a no-break space ( ) so "20 ft" / "40 ft" never split over two lines on a
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
           // 320 px phone, where row headers may wrap.
           rows: [
             [
-              "20 ft",
+              "20\u00a0ft",
               "Contractor tools, turf equipment and smaller showroom overflow",
               "Check gate clearance, turning space, door swing and unloading area.",
             ],
             [
-              "40 ft",
+              "40\u00a0ft",
               "Bulk showroom stock, contractor depots and event equipment",
               "Check the full trailer approach and whether lifting equipment can be positioned safely.",
             ],
