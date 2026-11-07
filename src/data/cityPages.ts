@@ -13612,8 +13612,12 @@ export const CITY_PAGES: CityPage[] = [
    *     closing note as the sizes note; the interior render follows it as the gallery.
    *   8 Price → custom: the first paragraph's two sentences, then the items to be shown separately as
    *     a list; the second paragraph → customOutro. Beside the end-view render.
-   *   9 Delivery enquiries → areas. 10 FAQs: the brief's five; "How long will delivery take?" is
-   *     already asked on another city page, so it reads "…take to a Devarabisanahalli campus?".
+   *   9 Delivery enquiries → areas, without the brief's "or around Bellandur": the owner's Bellandur
+   *     brief gives office cabins in Bellandur their own page (portable-office-cabin-bellandur, homes and
+   *     societies, session cc), and an areas list names no place that has its own page for the same
+   *     product (no-cannibalisation rule). The two pages cross-link once both are live.
+   *   10 FAQs: the brief's five; "How long will delivery take?" is already asked on another city
+   *     page, so it reads "…take to a Devarabisanahalli campus?".
    *   11 Quotation → CTA (+ the configured phone and e-mail) and the on-page enquiry form
    *     (site-office-containers, the accepted category closest to contractor office cabins; no
    *     rental models).
@@ -13741,7 +13745,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Delivery Enquiries Along the Outer Ring Road",
     areasText:
-      "For sites in Devarabisanahalli (also spelled Devarabeesanahalli), Kadubeesanahalli, Kariyammana Agrahara or around Bellandur, share the exact campus entrance and delivery route. The site team can review access and the proposed placement area before a delivery window is agreed.",
+      "For sites in Devarabisanahalli (also spelled Devarabeesanahalli), Kadubeesanahalli or Kariyammana Agrahara, share the exact campus entrance and delivery route. The site team can review access and the proposed placement area before a delivery window is agreed.",
 
     howHeading: "From Enquiry to Delivery Window",
     howSteps: [
