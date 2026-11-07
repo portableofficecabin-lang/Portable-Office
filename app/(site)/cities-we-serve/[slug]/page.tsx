@@ -371,7 +371,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
             >
               <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-              {page.callButtonLabel ?? <>Call {primaryPhone.display}</>}
+              {/* Unset label = the same two text children as before ("Call ", number), so the HTML is unchanged. */}
+              {page.callButtonLabel ?? "Call "}{page.callButtonLabel ? null : primaryPhone.display}
             </a>
             <a
               href={whatsappUrl}
@@ -633,8 +634,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                   className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
                 >
                   <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  {/* Optional owner labels (`callButtonLabel` / `whatsappButtonLabel`); unset = as before. */}
-                  {page.callButtonLabel ?? <>Call {primaryPhone.display}</>}
+                  {/* Optional owner labels (`callButtonLabel` / `whatsappButtonLabel`). Unset = the same two text
+                      children as before ("Call ", number), so the HTML is unchanged. */}
+                  {page.callButtonLabel ?? "Call "}{page.callButtonLabel ? null : primaryPhone.display}
                 </a>
                 <a
                   href={whatsappUrl}
