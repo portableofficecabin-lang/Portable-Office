@@ -12690,6 +12690,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Shop and Kiosk Cabins for Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
         // Nanjangud shop page, live since #209 (owner Mandya brief: link Nanjangud and Hassan once live; Hassan follows).
         { label: "Shop Cabins for Nanjangud Industrial Area", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+        // Hassan shop page, live since #210 (owner Mandya brief: link Nanjangud and Hassan once live).
+        { label: "Shop and Kiosk Cabins for Hassan Industrial Area", href: "/cities-we-serve/portable-shop-cabin-hassan" },
         { label: "Container Offices in Mysuru", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Containers in Mysuru", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
