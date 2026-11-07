@@ -103,6 +103,14 @@ export interface CityPage {
    * "| ..." search qualifier.
    */
   listTitle?: string;
+  /**
+   * Optional anchor text for this page's card in the /cities-we-serve directory and in its siblings'
+   * nearby blocks (src/data/cityDirectory.ts). Unset = the family default ("Shipping containers in
+   * <city>" for a shipping-container page). First used by Shipping Containers for Hydel Power Project
+   * Sites in the Visakhapatnam Region, whose card names the use rather than the city, so it does not
+   * take the general "shipping containers in Visakhapatnam" intent.
+   */
+  directoryLabel?: string;
   /** EXACT meta title (rendered absolute — no site-name suffix appended). */
   metaTitle: string;
   metaDescription: string;
@@ -124,6 +132,12 @@ export interface CityPage {
    * Service block, as before.
    */
   serviceJsonLd?: { serviceType: string };
+  /**
+   * Optional: declare the hero image's `width` / `height` (which must be its actual pixel size) as
+   * og:image:width / og:image:height (first used by Shipping & Storage Containers in Bellandur, whose
+   * brief asks for the social preview's actual dimensions). Unset = no dimension tags, as before.
+   */
+  ogImageDimensions?: boolean;
 
   /**
    * Hero image (also the page's og:image). Root-relative path under /public. `caption` (optional)
@@ -169,6 +183,13 @@ export interface CityPage {
   solutionsHeading: string;
   solutionsIntro: string;
   solutions: CityPageListItem[];
+  /**
+   * Optional table rendered after the solutions intro and items, with the same markup as an extra
+   * section's table (first used by Shipping Containers for Hydel Power Project Sites in the
+   * Visakhapatnam Region, whose stores-yard section is one paragraph and a table). Unset = no table,
+   * so every other page's HTML is unchanged.
+   */
+  solutionsTable?: CityPageTable;
 
   featuresHeading: string;
   featuresIntro: string;
@@ -186,6 +207,7 @@ export interface CityPage {
 
   customHeading: string;
   customIntro: string;
+  /** May be empty for a prose section (first used by Shipping & Storage Containers in Bellandur); an empty list renders no <ul>. */
   customBullets: CityPageListItem[];
   customOutro: string;
   /**
@@ -25861,6 +25883,276 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Doddaballapur. Delivery, unloading, placement and any connections are planned for each order, and delivery dates are not guaranteed. The layouts, fixtures, fittings, materials and service provisions mentioned on this page are points to discuss; only the items expressly confirmed in the approved specification and quotation form part of a supply. The three images are illustrative images of one two-cubicle toilet cabin design with one Western toilet and one Indian squat pan; other configurations look different, and the images do not show an installation in Doddaballapur or a customer project. The Doddaballapur industrial area, Apparel Park and Textile Park are named only to describe locations; Portable Office Cabin is not affiliated with their developers or operators or with any unit there, and the towns, roads and parks named here are places we accept delivery enquiries from, not clients, completed projects or confirmed delivery areas. The walking-time figures are a hypothetical example. The planning notes are general guidance, not engineering, public-health, legal or compliance advice: a cabin supply does not guarantee the result of any buyer or social-compliance audit, and wastewater handling and disposal must comply with applicable local requirements.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS FOR HYDEL POWER PROJECT SITES IN THE VISAKHAPATNAM REGION — project stores
+   * for hydel and pumped storage sites around Upper Sileru (Andhra Pradesh). The first Andhra Pradesh
+   * city page and the first application page in the shipping-container family.
+   *
+   * Owner brief of 2026-11-07 (slug, meta title, meta description, H1 and copy used as given). The
+   * site has no editorial /projects route, so the page uses the location-page route; the slug starts
+   * with "shipping-containers-", which cityFamily() now also accepts, so the page joins the
+   * shipping-container family (directory card under a new "Andhra Pradesh" group, nearby block).
+   * `directoryLabel` gives its card the brief's index anchor, "Shipping containers for hydel project
+   * sites", instead of "Shipping containers in <city>", so the general Visakhapatnam intent stays free
+   * for a future city page. The brief's sections map onto the fixed template slots, nothing dropped:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, the brief's buttons).
+   *   • "Planning delivery to a hill project site" → why: first paragraph as whyIntro, second as
+   *     whyOutro (no bullets).
+   *   • "Setting up a container stores yard" → solutions heading + intro (no items) and the stores
+   *     table as the new optional `solutionsTable`.
+   *   • "Preserving equipment on a humid site" and "Container sizes and procurement" (table, then the
+   *     paragraph) → two afterSolutions extra sections.
+   *   • "Lifting and storage safety" → features: its first sentence as the intro, the next three as
+   *     bullets and the hazardous-materials rule as sizesNote (rendered bold). The features slot renders
+   *     after the extra sections, so this section follows "Container sizes and procurement" instead of
+   *     preceding it — the only change to the brief's order.
+   *   • "Project pricing, rental and close-out" → custom (prose: customBullets is empty), beside the
+   *     interior render; the rental link → customLinks.
+   *   • "Project enquiry areas" → areas.
+   *   • "Request a hydel project container quote" → how: the items to send as title-only steps, the
+   *     documentation sentence as howOutro. FAQs (five) → faqs; CTA box + enquiry form.
+   * Composed (owner review): the tagline, the table captions, the how lead-in, the CTA heading and
+   * text, the enquiry-form heading and intro, and the image alt text and captions.
+   *
+   * INTERLINKS (brief section 5): the rental link is in place (live, 200). The brief's Chennai target
+   * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
+   * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
+   * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
+   * across the site). It is therefore not repeated in the related links. DEFERRED until live: the Vellore
+   * shipping page (/cities-we-serve/shipping-container-vellore answered 404 on 2026-11-07) for
+   * "insulated and air-conditioned storage fit-outs" at the end of the preservation section, and the
+   * link from a future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
+   * (seoPromotions) lists this page, and the page links back to it.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage containers × hydel and pumped storage project sites ×
+   * Visakhapatnam region, Upper Sileru, Sileru. Not "shipping container in Visakhapatnam" or
+   * "shipping container in Andhra Pradesh" (the promotion page keeps the state term).
+   *
+   * Images: five unique owner-dropped webp renders ("public/images/Upper Sileru and Visakhapatnam city
+   * page/Upper Sileru and Visakhapatnam/cabin (1–6).webp"; (4) and (5) are byte-identical; 1200×896
+   * and 1451×1084 ×4; no metadata). None shows a stores yard, a truck, racking or preservation
+   * equipment, so none of the brief's four image slots is used: each render keeps its own descriptive
+   * alt text and an "illustrative render" caption. Copied with a lossless XMP dc:title / dc:description
+   * (pixels identical; no camera, GPS or date data). They show one grey container with green cargo
+   * doors and a glazed side panel, so no alt text names a size, a place or a project.
+   *
+   * No ₹ figure, stock, lead time, capacity, vendor-approval, client or completed-project claim.
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-containers-hydel-project-visakhapatnam",
+    city: "Upper Sileru",
+    directoryLabel: "Shipping containers for hydel project sites",
+    metaTitle: "Shipping Containers for Hydel Projects near Visakhapatnam",
+    metaDescription:
+      "Enquire about storage containers for hydel and pumped storage projects near Visakhapatnam and Sileru. Share your BOQ, site access and delivery phases.",
+    keywords:
+      "Shipping Containers for Hydel Power Projects near Visakhapatnam, Storage Containers Upper Sileru, Pumped Storage Project Site Stores, EPC Container Stores Yard, Hydro Project Equipment Preservation",
+    geo: {
+      region: "IN-AP",
+      placename: "Upper Sileru, Andhra Pradesh, India",
+      position: "18.0491;82.0353",
+      icbm: "18.0491, 82.0353",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-exterior.webp",
+      alt: "Grey steel storage container with green cargo doors and a glazed side panel, illustrative render: four locking bars with cam handles, corrugated side wall and corner castings, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a steel storage container. The size, condition, fit-out and dispatch origin of each unit are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-roof-view.webp",
+      alt: "Steel storage container seen from above, illustrative render: corrugated grey roof, green cargo-door end and a glazed panel in the side wall, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render. Plan each unit's footprint, door clearance and handling space on the yard plan before placement.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-empty-interior.webp",
+      alt: "Empty interior of a steel storage container with both cargo doors open, illustrative render: corrugated grey walls and roof, a plywood floor and a glazed side panel",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty container interior. Racking, lighting and any preservation controls are added only as specified against the BOQ.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-side-wall-glazed-panel.webp",
+        alt: "Side wall of a grey steel storage container, illustrative render: corrugated steel panels, corner castings and a glazed panel set into the wall",
+        width: 1451,
+        height: 1084,
+        caption: "Side wall with a glazed panel, an optional modification. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-cargo-doors.webp",
+        alt: "Cargo doors of a steel storage container, illustrative render: two green doors with four vertical locking bars, cam handles, hinges and a central lockbox inside a grey frame",
+        width: 1451,
+        height: 1084,
+        caption: "Cargo doors with four locking bars and a central lockbox. Illustrative render.",
+      },
+    ],
+
+    h1: "Shipping Containers for Hydel Power Project Sites in the Visakhapatnam Region",
+    tagline:
+      "Project stores for EPC contractors, subcontractors and procurement teams, quoted against your BOQ, site access and delivery phases.",
+    intro: [
+      "Hydel and pumped storage projects need different stores as work moves from enabling works and civil construction to equipment installation and commissioning. Portable Office Cabin welcomes enquiries from EPC contractors, subcontractors and procurement teams for shipping containers used as project stores in the Visakhapatnam region, including enquiries for sites in the Sileru area. Share your bill of quantities (BOQ), package requirements and delivery sequence for a project-specific quote.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Planning Delivery to a Hill Project Site",
+    whyIntro:
+      "Share the exact gate or delivery point, the access route and photographs of tight bends, gradients, overhead restrictions and the unloading area. Ask the transport team to confirm the dispatch yard, route, vehicle configuration and any movement restrictions before finalising the schedule. If a Vizag-area yard is proposed, confirm stock and dispatch origin in the quotation.",
+    whyBullets: [],
+    whyOutro:
+      "A 20 ft container is a starting point where vehicle access is limited. A 40 ft container may suit a larger stores yard if the trailer can reach and turn at the site and the unloading method is approved. For multiple units, request a phased delivery plan based on yard readiness and the number of units the site can safely unload and place in each window. Agree who will arrange lifting, standby and any rescheduled dispatches.",
+
+    solutionsHeading: "Setting Up a Container Stores Yard",
+    solutionsIntro:
+      "Group stores by discipline and assign each container an ID that appears on the yard plan and inventory list. Coordinate the layout with the site team so staff can receive, inspect and issue items without blocking equipment movements. Have the responsible project teams confirm vehicle aisles, emergency access, separation, drainage, lighting, supports and access controls before placement.",
+    solutions: [],
+    solutionsTable: {
+      caption: "Typical stores by discipline. Contents and layout are agreed with the site team for each project.",
+      headers: ["Store", "Typical contents", "Layout requirements to discuss"],
+      rows: [
+        ["Civil works", "Rock bolts, formwork accessories and suitable dry consumables", "Rated racks, pallet positions and handling clearance"],
+        ["Electrical", "Cable fittings, panels and drums", "Manufacturer storage limits and safe handling space for heavy items"],
+        [
+          "Electro-mechanical preservation",
+          "Bearings, seals, instruments and control components",
+          "Approved packaging, environmental controls and monitoring where specified",
+        ],
+        ["Hydro-mechanical spares", "Fasteners, fittings and small gate or penstock spares", "Labelled bins, rated shelving and issue records"],
+        ["PPE and documents", "Helmets, gloves, drawings and manuals", "Segregated shelving, dry storage and controlled access"],
+      ],
+    },
+
+    featuresHeading: "Lifting and Storage Safety",
+    featuresIntro: "Coordinate placement with the site's lifting and safety teams.",
+    features: [
+      "Keep people out of the lifting exclusion zone.",
+      "Use suitable restraints for open cargo doors.",
+      "Follow the approved site plan for emergency access, fire protection and electrical installation.",
+    ],
+    sizesNote:
+      "Keep explosives, fuel and other hazardous materials out of general-purpose stores. Use the project's approved storage arrangements for those materials.",
+
+    customHeading: "Project Pricing, Rental and Close-Out",
+    customIntro:
+      "The quote depends on quantity, size, condition, fit-out, dispatch origin, transport route, unloading and delivery phases. Include any racking, lighting or preservation requirements against each BOQ line. For time-limited works, review our 20 ft and 40 ft shipping container rental options and confirm project-site availability, the hire term and collection scope.",
+    customBullets: [],
+    customOutro:
+      "Decide early which stores may be reassigned or relocated as the work moves from civil construction to installation and commissioning. If you are buying units, plan their next use or disposal. If you are hiring, agree on collection access, condition requirements and the end date in the quotation.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Project Enquiry Areas",
+    areasText:
+      "We welcome enquiries for project sites in the Sileru area and the wider Visakhapatnam region, including Upper and Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu and Narsipatnam. Each delivery is assessed against the actual site location, route and unloading requirements.",
+
+    howHeading: "Request a Hydel Project Container Quote",
+    howIntro: "Send these details with your enquiry:",
+    howSteps: [
+      { title: "Bill of quantities (BOQ)", text: "" },
+      { title: "Site coordinates or gate location", text: "" },
+      { title: "Access photos", text: "" },
+      { title: "Size and quantity mix", text: "" },
+      { title: "Fit-out requirements", text: "" },
+      { title: "Preferred dispatch phases", text: "" },
+    ],
+    howOutro: "Identify any vendor documentation and delivery responsibilities your project requires.",
+
+    extraSections: [
+      {
+        heading: "Preserving Equipment on a Humid Site",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Start with the equipment supplier's preservation instructions. Specify storage limits, inspection intervals, packaging and any recording requirements in the BOQ. Maintain a preservation log and keep packaging sealed when instructed. For sensitive items, specify any required dehumidification, temperature control, monitoring and response to power failure. Have the responsible project team verify that the proposed unit and controls meet the equipment specification before loading.",
+        ],
+        // DEFERRED (brief section 5): "insulated and air-conditioned storage fit-outs" → the Vellore
+        // shipping page, as related fit-out guidance, once /cities-we-serve/shipping-container-vellore is live.
+      },
+      {
+        heading: "Container Sizes and Procurement",
+        placement: "afterSolutions",
+        table: {
+          caption: "Availability, actual dimensions and route clearance are confirmed for each unit in the quotation.",
+          headers: ["Configuration", "Typical enquiry", "Confirm before ordering"],
+          rows: [
+            ["20 ft", "Civil tools, PPE or electrical fittings", "Route access, door clearance, internal layout and unloading"],
+            ["40 ft", "Larger project stores and longer racks", "Trailer access, lifting capacity and yard footprint"],
+            ["40 ft high cube", "Bulky stock or taller racks", "Availability, actual height and route clearance"],
+          ],
+        },
+        closing: [
+          "Ask for the condition and usable dimensions of each proposed unit. For a used container, confirm the floor, doors, seals, roof and locking hardware. Include required drawings, vendor registration documents, inspection records, dispatch lists and unit IDs in the request for quotation so the supplier can confirm which documents are available.",
+          "Before accepting a used unit, see our guide on how to inspect a used container:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I request a bulk quote with phased deliveries?",
+        answer:
+          "Yes. Send the quantity and size mix, delivery milestones, unloading capacity and site contacts. Dispatch origin, availability and the schedule are confirmed in the quotation.",
+      },
+      {
+        question: "Which size should I consider for a hill project?",
+        answer:
+          "Start by comparing the site's storage requirements with the access route. A 20 ft unit may be easier to plan for a constrained approach. Larger units require enough room for the trailer and lifting equipment.",
+      },
+      {
+        question: "Can a container be used to preserve electro-mechanical equipment?",
+        answer:
+          "Only when the proposed unit, packaging and environmental controls meet the equipment supplier's requirements. Include the specified limits and monitoring requirements in your enquiry.",
+      },
+      {
+        question: "What procurement documents can I request?",
+        answer:
+          "Include the vendor documents, technical specifications, inspection records, dispatch list and unit IDs required by your team. Confirm the documents that can be provided for the quoted scope.",
+      },
+      {
+        question: "Can we relocate units or arrange collection at close-out?",
+        answer:
+          "Share the proposed dates and locations. Availability, handling, transport and collection responsibilities should be agreed in writing.",
+      },
+    ],
+
+    ctaHeading: "Share Your BOQ for a Project-Specific Quote",
+    ctaText: `Call or WhatsApp ${COMPANY.whatsapp.display}, email ${COMPANY.email.sales}, or use the form below. Dispatch origin, availability and the delivery schedule are confirmed in the quotation.`,
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send Your Project Container Enquiry",
+      intro:
+        "Choose a container, enter the size, quantity and the delivery town or PIN code nearest your project site, and add your BOQ reference, fit-out requirements and preferred dispatch phases. Our sales team will reply to confirm the details before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
+      { label: "Shipping Container in Andhra Pradesh", href: "/promotions/shipping-container-in-andhra-pradesh" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Visakhapatnam, Sileru or elsewhere in Andhra Pradesh. Containers are supplied subject to availability: the size, grade, condition, documentation and fit-out of each unit, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative steel storage container; they are not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
   },
 ];
 
