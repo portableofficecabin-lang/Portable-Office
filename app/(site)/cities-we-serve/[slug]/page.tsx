@@ -119,6 +119,10 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
      and skips the hover zoom, so it is never shown larger than its natural size. Wider renders keep
      their original sizes and classes, with no style attribute. */
   const interiorNarrow = !!page.interiorImage && page.interiorImage.width < MAX_W_2XL_PX;
+  /* The same rule for the hero (first used by Shipping Containers in Marathahalli, whose exterior render
+     is 600 px wide): a narrower hero is capped at its own width and skips the hover zoom. Every hero at
+     least 672 px wide keeps its original sizes and classes, with no style attribute. */
+  const heroNarrow = page.heroImage.width < MAX_W_2XL_PX;
   /* Optional enquiry form (`enquiryForm`): the category and its models come from the static catalogue,
      the same source /api/enquiries validates the model id against. A category the route does not
      accept renders no form rather than one that can only fail. */
@@ -288,8 +292,15 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             height={page.heroImage.height}
             priority
             fetchPriority="high"
-            sizes="(max-width: 896px) 100vw, 896px"
-            className={`mx-auto h-auto w-full max-w-2xl${mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")}`}
+            sizes={
+              heroNarrow
+                ? `(max-width: ${page.heroImage.width}px) 100vw, ${page.heroImage.width}px`
+                : "(max-width: 896px) 100vw, 896px"
+            }
+            className={`mx-auto h-auto w-full max-w-2xl${
+              heroNarrow ? "" : mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")
+            }`}
+            style={heroNarrow ? { maxWidth: page.heroImage.width } : undefined}
           />
           {/* Optional visible caption, e.g. marking a render as a design option. Unset = no element. */}
           {page.heroImage.caption && (

@@ -525,6 +525,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
     // Shivamogga (Machenahalli / Nidige), 2026-11-05; after Tumkur so the live links keep their positions.
     { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+    // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
+    { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
   ],
 };
 
