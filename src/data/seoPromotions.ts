@@ -276,6 +276,9 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // portable-cabin hub's first city page; the page links back here and to both Karnataka hubs.
   "Portable Cabin|Bangalore": [
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    // Portable office cabins for Marathahalli and the Outer Ring Road (east Bengaluru, owner brief of
+    // 2026-11-07); the page links back to this hub. After Vasanthapura so the live link keeps its position.
+    { name: "Portable Office Cabins in Marathahalli", href: "/cities-we-serve/portable-office-cabin-marathahalli" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
