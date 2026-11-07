@@ -212,6 +212,13 @@ export interface CityPage {
 
   areasHeading: string;
   areasText: string;
+  /**
+   * Optional contextual links rendered as a short list after `areasText` (first used by the Bellandur
+   * and Marathahalli ORR shipping-container pages, which point at each other's local storage intent).
+   * Their hrefs are also skipped by the shipping-container nearby block, so a sibling is not linked
+   * twice. Unset = nothing rendered.
+   */
+  areasLinks?: CityPageLink[];
 
   howHeading: string;
   /**
