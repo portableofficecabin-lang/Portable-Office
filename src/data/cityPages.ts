@@ -8371,8 +8371,10 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Portable Cabins in Vemgal Industrial Area", href: "/cities-we-serve/portable-cabin-vemgal-industrial-area" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Portable Cabin in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
-        // The other portable-shop location page (live since #196), which keeps the Krishnagiri intent.
+        // Sibling portable-shop location pages, which keep their own place intents: Krishnagiri (live since #196)
+        // and Hassan (live since #210, linked both ways at the Hassan brief's request).
         { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+        { label: "Portable Shops in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -10520,6 +10522,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
       { label: "Portable Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       { label: "Portable Shops in Shivamogga, Machenahalli", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shops in Hoskote", href: "/cities-we-serve/portable-shop-hoskote" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
