@@ -13947,17 +13947,17 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Request a Shipping Container Quote",
       intro:
-        "Choose a container or the rental option, then enter the quantity and your delivery town in or around Hubballi or Dharwad. Use the message to tell us the goods you will store, your target dates and any racking, lighting or security needs. Our sales team will reply to confirm the details before sending a written quotation.",
+        "Choose a container or the rental option, then enter the quantity and your delivery town in or around Hubballi or Dharwad. Use the message to tell us the goods you will store, your target dates and any racking, lighting or security needs. We check the requirement with you first, then send the quotation in writing.",
     },
     relatedLinksHeading: "Related products",
     relatedLinks: [
       { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
-      { label: "Cargo storage containers: 20 ft, 40 ft and high-cube dimensions", href: "/products/cargo-storage-containers" },
+      { label: "Dimensions of 20 ft, 40 ft and high-cube cargo containers", href: "/products/cargo-storage-containers" },
       { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
     ],
 
     disclaimer:
-      "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Hubballi or Dharwad. Containers are sold or hired subject to availability: the size, grade, condition and fit-out of each unit, any base work or relocation, and its delivery, unloading and collection arrangements are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative storage container, shown with an optional side window; they are not photographs of a container supplied to, or placed in, Hubballi or Dharwad. Localities, industrial areas and the NH 48 bypass are named only to describe where enquiries are accepted; they are not clients, completed projects or confirmed delivery areas. Portable Office Cabin is not affiliated with any railway authority, railway project, industrial area or estate, and the uses described are examples, not projects it has supplied. A standard container does not provide temperature control, cold-chain performance or rodent exclusion. Notes on stock rotation, pest control, heat, ground conditions and site preparation are general guidance, not engineering, food-safety, pharmaceutical or legal advice.",
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no container yard, depot, workshop or office in Hubballi or Dharwad. Containers are sold or hired subject to availability. Each unit's size, grade, condition and fit-out, any base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render of one representative storage container, drawn with an optional side window, and none was photographed at a site in Hubballi or Dharwad. Localities, industrial areas and the NH 48 bypass are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with a railway authority, railway project, industrial area or estate, and the uses described are examples, not projects we have supplied. A standard container does not provide temperature control, cold-chain performance or rodent exclusion. Notes on stock rotation, pest control, heat, ground conditions and site preparation are general guidance, not engineering, food-safety, pharmaceutical or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
