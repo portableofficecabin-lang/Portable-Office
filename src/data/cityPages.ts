@@ -4188,10 +4188,13 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
     /* Reciprocal links for the Tumkur page (2026-10-11): both pages serve the Dabaspet–NH 48
-       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent). */
+       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent).
+       2026-11-05: plus the Doddaballapur portable-toilet page, which links back here; this page keeps
+       container offices and the toilet page owns the toilet intent for the same town. */
     relatedLinks: [
       { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
     ],
   },
 
@@ -10837,6 +10840,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
+        // Sibling toilet page (2026-11-06, owner-approved cross-links): Doddaballapur links back here.
+        { label: "Toilet Cabins for Doddaballapur Industrial Units", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -25119,6 +25124,335 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Dharmapuri district. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, cubicle counts, sizes, materials, insulation, fittings, water storage, plumbing and waste provisions described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative images of one double toilet cabin design with one Western and one Indian seat; other configurations look different, and the images are not photographs of installations in Dharmapuri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial park at Adhagapadi are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, contractor or company there, and the project phases, uses and places described here are not clients, completed projects or confirmed delivery areas. The notes on sanitation planning, shared facilities, heat, water use and wastewater are general guidance, not engineering, public-health or legal advice; fixture quantities and wastewater handling must meet the requirements that apply to each site.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABINS FOR DODDABALLAPUR INDUSTRIAL UNITS — the portable-toilet intent for
+   * Doddaballapur (also spelled Doddaballapura; one page for both, as the brief asks), Bengaluru Rural
+   * district, Karnataka: additional toilet blocks for operating garment units, weaving and powerloom
+   * sheds, factories and warehouses. It owns "toilet cabin + Doddaballapur". The broader Doddaballapura
+   * page, container-office-in-doddaballapura, covers container offices and has no toilet keywords; the
+   * two pages link to each other. No other page targets toilets in Doddaballapur, and the areas line
+   * names no town that has its own toilet page (owner rule of 2026-11-05, no keyword cannibalisation).
+   *
+   * Owner brief of 2026-11-05 ("Doddaballapur Portable Toilet Cabin — Content and Implementation
+   * Commands"): the proposed slug, meta title (62 chars), meta description and H1 verbatim, and the
+   * section text verbatim except where noted below. Mapped onto the template slots in the brief's
+   * order. The entry is data-only (no template change), so a few sections are adapted to the slot that
+   * carries them:
+   *   • Intro (two paragraphs) → intro + heroCta (Request a Quotation → the on-page form, Call,
+   *     WhatsApp). The tagline is new, made from the intro's list of workplaces.
+   *   • Reduce Unnecessary Walking and Queues → why: the first paragraph, then the brief's
+   *     "illustrative walking-time calculation" as `whyTable` (its figures as rows, its title and two
+   *     caveats verbatim in the caption), then the second paragraph as whyOutro.
+   *   • Solutions → "Toilet Cabin Options to Discuss". NOT in the brief: the template needs a numbered
+   *     H3 section here, and the brief allows catalogue options once checked. Three items, each worded
+   *     only from its own product page and linked to it: toilet cabins built to order
+   *     (/products/portable-toilet-cabin), the four-unit block (/products/portable-toilet-block-4-unit,
+   *     no price named) and a cabin with an attached toilet (/products/portable-cabin/with-toilet-and-
+   *     pantry, the brief's "portable cabins with toilets" link, worded "with an attached toilet" so it
+   *     does not repeat the Devanahalli toilet page's anchor). For owner review.
+   *   • Garment units, Buyer facility reviews, Existing factory (with its table), Seasonal workforce,
+   *     Weaving and powerloom units, Warehouses and logistics yards → extra sections with
+   *     `placement: "afterSolutions"`, in the brief's order and wording. The table caption is new.
+   *   • Configuration Planning Guide → features: the table's five rows as "Site requirement: points"
+   *     items (the features slot is a list), the closing note as sizesNote. Its lead-in line is new.
+   *   • Price → custom, beside the rear view (which shows the connection points): the first
+   *     paragraph's cost factors as three bullets (Cabin / Services / Site, the same items), the second
+   *     paragraph verbatim.
+   *   • Service-area enquiries → areas; How to Enquire → how (the five steps verbatim, as titles). The
+   *     template renders areas before how, so these two swap places.
+   *   • FAQs: the brief's eight, verbatim. CTA heading and text verbatim, plus the sales email from
+   *     COMPANY; the CTA buttons (Request a Quotation, Call, WhatsApp) + the category enquiry form.
+   * Left out (brief section 4): rental (not confirmed for this location, so no section, FAQ, keyword,
+   * link or default "on rent" button), named MS / PUF / urinal / handwash / walkway / vending options,
+   * park acreage, loom counts, workforce figures, audit promises, installation times and lead times.
+   * Apparel Park and the Textile Park were checked on 2026-11-05 (KIADB's Doddaballapur Apparel Park,
+   * Phases I–II; the Doddaballapur Integrated Textile Park, reported functional in parliamentary
+   * replies) and are named only as delivery enquiry locations, with the non-affiliation note in the
+   * disclaimer.
+   * Links: three contextual links (the solutions items); related products and the Karnataka and
+   * Bangalore portable-toilet hubs (both list this page); the broader Doddaballapura page (which links
+   * back). The Devanahalli toilet page (#214, live 2026-11-06) and this page link to each other in
+   * their nearby-links blocks (owner-approved cross-links, 2026-11-06); neither names the other's town
+   * in its areas line.
+   *
+   * Images: three owner-dropped webp files ("public/images/Doddaballapur Portable Toilet Cabin city
+   * page/Doddaballapur Portable Toilet Cabin/cabin (1–3).webp", no EXIF/XMP/ICC/IPTC; source not
+   * stated), copied byte-for-byte under the brief's names: (1) front with both doors open, 600×448 =
+   * hero / og:image, no caption (sibling convention); (2) side view, 1200×896 = the feature band;
+   * (3) rear view with tap, socket, louvres and drain outlets, 1200×896 = beside the price section.
+   * One teal two-cubicle cabin (one Western toilet, one Indian squat pan). The alt texts describe only
+   * what is visible; the captions and the disclaimer call them illustrative images, and no image text
+   * names Doddaballapur.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-doddaballapur",
+    city: "Doddaballapur",
+    listTitle: "Portable Toilet Cabins in Doddaballapur",
+    metaTitle: "Portable Toilet Cabin in Doddaballapur | Factory Toilet Blocks",
+    metaDescription:
+      "Enquire about portable toilet cabins in Doddaballapur for garment units, factories and warehouses. Discuss layouts, fittings, connections and delivery.",
+    keywords:
+      "Portable Toilet Cabin in Doddaballapur, Portable Toilet Cabin Doddaballapura, Toilet Cabin Doddaballapur Apparel Park, Toilet Block Doddaballapur Industrial Area, Portable Washroom Cabin Doddaballapura, Factory Toilet Block Doddaballapur, Portable Toilet Cabin Price in Doddaballapur",
+    geo: { region: "IN-KA", placename: "Doddaballapur, Bengaluru Rural, Karnataka, India", position: "13.2919;77.5388", icbm: "13.2919, 77.5388" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-front.webp",
+      alt: "Front of a teal two-cubicle portable toilet cabin with both doors open, showing a Western toilet in one cubicle and an Indian squat pan in the other, each with a wall-mounted cistern",
+      width: 600,
+      height: 448,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-side.webp",
+      alt: "Side view of a teal portable toilet cabin with a curved roof edge, ribbed wall panels, a grey base band and a roof ventilator",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative side elevation of a portable toilet cabin. The final size, panels and ventilation follow the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-rear.webp",
+      alt: "Rear of a teal portable toilet cabin with an outdoor tap, an electrical socket, two ventilation louvres and two drain outlets at the base",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative rear view of the same cabin. Water, drainage and electrical connection points are confirmed for each site.",
+    },
+
+    h1: "Portable Toilet Cabins for Doddaballapur Industrial Units",
+    tagline: "Toilet blocks for garment units, weaving sheds, factories and warehouses",
+    intro: [
+      "Planning additional washroom facilities for a garment unit, weaving shed, factory or warehouse in Doddaballapur? Portable Office Cabin can help you discuss portable toilet cabin requirements around your workforce, available space and existing service connections.",
+      "For an operating factory, the planning starts with where people work, how they reach the facilities and how the cabins will be cleaned and maintained. Share your site plan and requirements so the proposed layout, fittings and supply scope can be confirmed before ordering.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Reduce Unnecessary Walking and Queues",
+    whyIntro:
+      "A toilet block that is difficult to reach can create unnecessary walking and waiting during a shift. Review the route from each work area, expected use at shift changes and safe access before deciding on a location.",
+    whyBullets: [],
+    whyTable: {
+      caption:
+        "An illustrative walking-time calculation. This is a hypothetical planning example, not a measured result or a promise of savings. Toilet breaks themselves are necessary; the example concerns only avoidable travel time.",
+      headers: ["Hypothetical example", "Figure"],
+      rows: [
+        ["Workers on the shift", "300"],
+        ["Trips per worker during the shift", "2"],
+        ["Avoidable walking per trip", "4 minutes"],
+        ["Avoidable walking per shift", "2,400 minutes, or 40 person-hours"],
+      ],
+    },
+    whyOutro:
+      "Consider whether several smaller facilities would serve the site better than one distant block. Keep routes clear, provide suitable lighting and discuss weather protection where required. Placement must preserve emergency exits, vehicle routes and required clearances. Convenient access should support workers’ wellbeing and unrestricted toilet use.",
+
+    solutionsHeading: "Toilet Cabin Options to Discuss",
+    solutionsIntro:
+      "Our existing product pages give a starting point for the discussion. The size, layout and fittings for your site are confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Toilet Cabins Built to Order",
+        text: "The number of cubicles, the seat types, the fittings and the water and drainage provisions are agreed for the site before the cabin is built.",
+        link: { label: "Compare portable toilet cabin types", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Four-Unit Toilet Block",
+        text: "A catalogue toilet block with four toilet units in separate sections, for a site that needs several toilets in one cabin.",
+        link: { label: "View the four-unit toilet block", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Site Office Cabin with an Attached Toilet",
+        text: "Where a site office also needs its own toilet, a portable cabin can be built with an attached toilet and pantry.",
+        link: { label: "Portable cabins with an attached toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      },
+    ],
+
+    featuresHeading: "Configuration Planning Guide",
+    featuresIntro: "Points to review for each type of site:",
+    features: [
+      "Garment production unit: user numbers, separate facilities, privacy and handwashing",
+      "Existing factory expansion: permitted placement, utility capacity and safe access",
+      "Seasonal increase in workers: peak occupancy, duration and future relocation needs",
+      "Small weaving shed: footprint, ventilation, cleaning and maintenance access",
+      "Warehouse or logistics yard: shift use, driver access and separation from vehicle routes",
+    ],
+    sizesNote:
+      "Fixture quantities and layouts should be checked by the responsible project team against applicable requirements. This guide does not prescribe a universal seats-per-worker ratio.",
+
+    customHeading: "Portable Toilet Cabin Price in Doddaballapur",
+    customIntro: "The quotation depends on what is agreed for the cabin and on your site:",
+    customBullets: [
+      { title: "Cabin", text: "the agreed size, layout, fixture quantity, materials and finish." },
+      { title: "Services", text: "the plumbing and electrical scope." },
+      {
+        title: "Site",
+        text: "the location, transport, unloading, ground preparation and connection requirements, which can also affect the total.",
+      },
+    ],
+    customOutro:
+      "Send your quantity, preferred layout and exact site address for an itemised quotation. Ask for taxes, transport, unloading, connections and any additional services to be identified clearly as included or excluded.",
+
+    areasHeading: "Doddaballapur Service-Area Enquiries",
+    areasText:
+      "For sites in Doddaballapur town, the industrial area, Apparel Park or Textile Park, share the exact address and delivery access details. For enquiries around Rajanukunte, Doddabelavangala, Tubagere, Ghati Subramanya or the Satellite Town Ring Road, confirm delivery availability and logistics for the individual location.",
+
+    howHeading: "How to Enquire",
+    howSteps: [
+      { title: "Share your Doddaballapur site address and intended use.", text: "" },
+      { title: "Provide workforce numbers, shifts and existing facility details.", text: "" },
+      { title: "Send the proposed placement area, site plan or photographs.", text: "" },
+      { title: "Confirm required fittings, service connections and access arrangements.", text: "" },
+      { title: "Review the drawing, quotation, responsibilities and delivery schedule before placing the order.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning Facilities for Garment Units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For garment production and other workplaces, discuss privacy, user numbers and day-to-day maintenance alongside cabin dimensions.",
+        ],
+        bullets: [
+          { text: "Separate facilities where required by the workforce and applicable requirements." },
+          { text: "Doors, privacy provisions and safe access routes." },
+          { text: "Handwashing points and reliable water supply." },
+          { text: "Lighting, ventilation and easy-clean surfaces." },
+          { text: "Suitable sanitary-waste arrangements where needed." },
+          { text: "Cleaning responsibility, consumable replenishment and maintenance access." },
+        ],
+        closing: ["Confirm each fitting and provision in the approved specification rather than assuming it is included."],
+      },
+      {
+        heading: "Preparing for Buyer Facility Reviews",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If a buyer or customer has a facility checklist, share it before requesting a quotation. Your project or compliance team should identify the relevant requirements and confirm the complete arrangement, including toilet numbers, separation, water, hygiene, cleaning and access.",
+          "A cabin supply does not guarantee that a factory will pass a social-compliance audit. The outcome depends on the full workplace arrangement, operating practices and the assessment criteria. Any requested cabin features must be reviewed and expressly included in the order scope.",
+        ],
+      },
+      {
+        heading: "Adding a Toilet Block to an Existing Factory",
+        placement: "afterSolutions",
+        paragraphs: [
+          "An additional cabin may be an option where existing facilities no longer suit the workforce. Start by reviewing the site plan, access, utility connections and intended placement area.",
+        ],
+        table: {
+          caption: "Information to share when planning an additional toilet block at an operating factory.",
+          headers: ["Planning point", "Information to provide"],
+          rows: [
+            ["Available space", "Proposed footprint and nearby structures"],
+            ["Access", "Vehicle route, unloading space and lifting arrangements"],
+            ["Connections", "Fresh water, wastewater and electrical supply"],
+            ["Factory operations", "Delivery windows and routes that must remain open"],
+            ["User access", "Walking route, lighting, privacy and any weather protection"],
+            ["Approvals", "Applicable siting, drainage and other project requirements"],
+          ],
+        },
+        closing: [
+          "Do not assume that a setback, fire-access route or other open space can be used for a cabin. Your project team should confirm permitted placement. Foundations, ground preparation and service connections may be required. Installation scope and any effect on operations must be agreed for the individual site.",
+        ],
+      },
+      {
+        heading: "Plan Ahead for Seasonal Workforce Changes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If additional workers are expected during a peak order period, review toilet capacity before the increase. Share the expected user numbers, shifts and duration when discussing an additional block.",
+          "Consider how the cabin will be connected, cleaned and accessed during that period, and how disconnection or relocation would be handled later. Purchase, relocation support and any rental availability must be confirmed separately in the quotation.",
+        ],
+      },
+      {
+        heading: "Toilet Cabin Requirements for Weaving and Powerloom Units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a compact weaving shed, available space and maintenance access can shape the layout. Discuss cabin dimensions, fixture quantity, lighting, ventilation and cleaning requirements.",
+          "Where lint or dust is present, share the operating conditions during design review. Ventilation must remain suitable for washroom use; vents should not simply be sealed to exclude dust. Any protective screening or ventilation treatment requires an appropriate design and a confirmed specification.",
+        ],
+      },
+      {
+        heading: "Facilities for Warehouses and Logistics Yards",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Warehouse staff, loading teams and visiting drivers may use facilities at different times. Review shift patterns and waiting areas when planning the location and capacity of a toilet block.",
+          "Keep pedestrian access clear of moving vehicles and loading operations. Discuss exterior lighting, water supply, cleaning access and any requested separate urinal or handwash provision. Confirm availability and inclusion of each item in the order.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an existing factory add a portable toilet block?",
+        answer:
+          "An additional cabin may be suitable after reviewing available space, permitted placement, utility connections and access. The proposed arrangement and installation requirements must be confirmed for your site.",
+      },
+      {
+        question: "Will a toilet cabin guarantee a successful buyer audit?",
+        answer:
+          "No. Share your buyer’s checklist for review, but audit outcomes depend on the complete facility and operating practices. Only the features expressly confirmed in the specification form part of the cabin supply.",
+      },
+      {
+        question: "How should we plan facilities for extra seasonal workers?",
+        answer:
+          "Provide the peak workforce, shift pattern and expected duration. Review capacity, connections, cleaning and future disconnection or relocation arrangements before ordering additional cabins.",
+      },
+      {
+        question: "Where should a factory toilet block be placed?",
+        answer:
+          "Choose a permitted location with convenient, safe pedestrian access and suitable service connections. Preserve emergency access and required clearances. The final position should be reviewed with your project team.",
+      },
+      {
+        question: "Can a compact cabin be considered for a weaving unit?",
+        answer:
+          "Share the available dimensions and operating conditions for review. The layout must allow suitable ventilation, plumbing, cleaning and maintenance access.",
+      },
+      {
+        question: "Are sanitary bins, walkways and other accessories included?",
+        answer:
+          "List each required accessory in your enquiry. Availability, supply responsibility and cost must be confirmed in the quotation; they are not assumed to be included.",
+      },
+      {
+        question: "Are cleaning and wastewater services included?",
+        answer:
+          "These responsibilities must be agreed separately. Cleaning, consumables, waste handling and ongoing servicing are included only when expressly stated in the order scope.",
+      },
+      {
+        question: "How soon can delivery be arranged?",
+        answer:
+          "Timing depends on the approved design, quantity, production availability and site logistics. Request an order-specific schedule with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Toilet Cabin Quotation for Doddaballapur",
+    ctaText: `Share your workforce requirements, preferred layout and site details with Portable Office Cabin. Include the required quantity and date so the cabin specification, delivery arrangements and scope can be discussed clearly. You can also email the sales team at ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call Us, WhatsApp and Request a Quotation: the call and WhatsApp buttons
+    // are on by default, and an empty list drops the two default container-office / rental buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Send Your Toilet Cabin Requirements",
+      intro:
+        "Include your workforce numbers, shifts, preferred layout, quantity and site address. We use these details to confirm the scope with you before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Toilet and Cabin Pages",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Range", href: "/products/category/portable-toilet-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
+      { label: "Portable Toilet Cabin in Bangalore", href: "/promotions/portable-toilet-cabin-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Service Areas",
+      links: [
+        { label: "Toilet Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
+        { label: "Container Offices for Doddaballapura Sites", href: "/cities-we-serve/container-office-in-doddaballapura" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Doddaballapur. Delivery, unloading, placement and any connections are planned for each order, and delivery dates are not guaranteed. The layouts, fixtures, fittings, materials and service provisions mentioned on this page are points to discuss; only the items expressly confirmed in the approved specification and quotation form part of a supply. The three images are illustrative images of one two-cubicle toilet cabin design with one Western toilet and one Indian squat pan; other configurations look different, and the images do not show an installation in Doddaballapur or a customer project. The Doddaballapur industrial area, Apparel Park and Textile Park are named only to describe locations; Portable Office Cabin is not affiliated with their developers or operators or with any unit there, and the towns, roads and parks named here are places we accept delivery enquiries from, not clients, completed projects or confirmed delivery areas. The walking-time figures are a hypothetical example. The planning notes are general guidance, not engineering, public-health, legal or compliance advice: a cabin supply does not guarantee the result of any buyer or social-compliance audit, and wastewater handling and disposal must comply with applicable local requirements.`,
   },
 ];
 
