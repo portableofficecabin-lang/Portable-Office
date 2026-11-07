@@ -45,6 +45,8 @@ export function buildPageMetadata({
   image,
   ogImage,
   imageAlt,
+  imageWidth,
+  imageHeight,
   noindex = false,
   ogType = "website",
   geo,
@@ -65,6 +67,13 @@ export function buildPageMetadata({
   ogImage?: string;
   /** Alt text for the social image. Optional. */
   imageAlt?: string;
+  /**
+   * The social image's ACTUAL pixel size, emitted as og:image:width / og:image:height. Optional and
+   * used only when both are given (first used by Shipping & Storage Containers in Bellandur); unset =
+   * no dimension tags, exactly as before.
+   */
+  imageWidth?: number;
+  imageHeight?: number;
   /**
    * Withhold the page from search. Use ONLY for a page that is genuinely not ready to
    * rank — e.g. a standard size whose selling price is not confirmed yet, where
@@ -114,7 +123,12 @@ export function buildPageMetadata({
       description,
       url: canonical,
       siteName: siteConfig.name,
-      images: [imageAlt ? { url: resolvedImage, alt: imageAlt } : { url: resolvedImage }],
+      images: [
+        {
+          ...(imageAlt ? { url: resolvedImage, alt: imageAlt } : { url: resolvedImage }),
+          ...(imageWidth && imageHeight ? { width: imageWidth, height: imageHeight } : {}),
+        },
+      ],
       type: ogType,
       locale: "en_IN",
     },
