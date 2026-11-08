@@ -276,6 +276,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // portable-cabin hub's first city page; the page links back here and to both Karnataka hubs.
   "Portable Cabin|Bangalore": [
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    // Office-cabin page for tech park projects in Devarabisanahalli (Outer Ring Road, 2026-11-07); the page links back here.
+    { name: "Portable Office Cabins for Devarabisanahalli Tech Parks", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -474,6 +476,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+    // Office-cabin page for tech park projects in Devarabisanahalli, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
+    { name: "Portable Office Cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -525,6 +529,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
     // Shivamogga (Machenahalli / Nidige), 2026-11-05; after Tumkur so the live links keep their positions.
     { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+    // Uttara Kannada (Karwar, Sirsi and the coast), 2026-11-07; appended so the live links keep their positions.
+    { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
     // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
     { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
   ],
