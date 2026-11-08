@@ -22,6 +22,7 @@ import {
   cityPlaceLine,
   cityState,
   shippingContainerSiblings,
+  shippingContainerStatesText,
   type CityFamily,
 } from "@/data/cityDirectory";
 import { cityPageBySlug } from "@/data/cityPages";
@@ -121,7 +122,10 @@ export function ShippingContainerNearbyBlock({
       )}
       <p className="text-sm leading-relaxed text-muted-foreground">
         <Link href={SHIPPING_CONTAINER_DIRECTORY_PATH} className="font-medium text-foreground underline underline-offset-4">
-          All shipping container locations in Karnataka and Tamil Nadu
+          {/* Derived from the pages, so the anchor stays accurate as states are added ("Karnataka and
+              Tamil Nadu" until the first Andhra Pradesh page, 2026-11-07). One template string, so it
+              renders as a single text node, exactly as the fixed text did. */}
+          {`All shipping container locations in ${shippingContainerStatesText()}`}
         </Link>
         {showCategory && (
           <>
