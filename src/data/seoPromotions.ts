@@ -389,6 +389,11 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
   ],
+  // Andhra Pradesh hub — the hydel project page near Visakhapatnam and Sileru (owner brief, 2026-11-07),
+  // the first Andhra Pradesh city page; the page links back to this hub.
+  "Shipping Container|Andhra Pradesh": [
+    { name: "Shipping Containers for Hydel Project Sites", href: "/cities-we-serve/shipping-containers-hydel-project-visakhapatnam" },
+  ],
   // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
   // page; the page links back to this hub.
   "Portable Toilet Cabin|Tamil Nadu": [
@@ -536,6 +541,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
     // Uttara Kannada (Karwar, Sirsi and the coast), 2026-11-07; appended so the live links keep their positions.
     { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
+    // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
+    { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
   ],
 };
 

@@ -103,6 +103,14 @@ export interface CityPage {
    * "| ..." search qualifier.
    */
   listTitle?: string;
+  /**
+   * Optional anchor text for this page's card in the /cities-we-serve directory and in its siblings'
+   * nearby blocks (src/data/cityDirectory.ts). Unset = the family default ("Shipping containers in
+   * <city>" for a shipping-container page). First used by Shipping Containers for Hydel Power Project
+   * Sites in the Visakhapatnam Region, whose card names the use rather than the city, so it does not
+   * take the general "shipping containers in Visakhapatnam" intent.
+   */
+  directoryLabel?: string;
   /** EXACT meta title (rendered absolute — no site-name suffix appended). */
   metaTitle: string;
   metaDescription: string;
@@ -175,6 +183,13 @@ export interface CityPage {
   solutionsHeading: string;
   solutionsIntro: string;
   solutions: CityPageListItem[];
+  /**
+   * Optional table rendered after the solutions intro and items, with the same markup as an extra
+   * section's table (first used by Shipping Containers for Hydel Power Project Sites in the
+   * Visakhapatnam Region, whose stores-yard section is one paragraph and a table). Unset = no table,
+   * so every other page's HTML is unchanged.
+   */
+  solutionsTable?: CityPageTable;
 
   featuresHeading: string;
   featuresIntro: string;
@@ -13962,6 +13977,289 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN HUBBALLI–DHARWAD (Hubli) — storage containers for distributor
+   * stockrooms, temporary godowns, heat-sensitive stock and authorised railway project stores.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description, H1 and public copy as given. No
+   * other page targets Hubballi, Hubli or Dharwad (repo routes, redirects and sitemap checked), so
+   * this one canonical covers all three names. The slug starts with "shipping-container-", so
+   * cityFamily() puts it in the shipping-container family: directory card ("Shipping containers in
+   * Hubballi–Dharwad", the hub anchor the brief asks for), Karnataka sibling links both ways and the
+   * nearby block. The brief's sections map onto the fixed template slots:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Stockrooms for FMCG distributors" → why (paragraph + the four titled points).
+   *   • "A temporary godown while your warehouse is being built" → solutions heading + intro (prose,
+   *     no items).
+   *   • "Storage for heat-sensitive stock", "Railway project and industrial stores" and "Container
+   *     sizes and condition" (its table, the condition note and the inspection link) → afterSolutions
+   *     extra sections, in the brief's order.
+   *   • "Preparing a base where black cotton soil is present" → features: the ground-check paragraph
+   *     as the intro, the four pre-delivery checks as the list, "Settlement can affect door alignment
+   *     and access." as the bold note. The template's fixed order puts it after the sizes section,
+   *     next to the price and the steps that confirm base readiness.
+   *   • "Shipping container price and rental in Hubballi–Dharwad" → custom (the quote factors as
+   *     bullets) + customLinks (the brief's rental anchor → /products/shipping-container-rental).
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (seven) → faqs; the closing request → CTA
+   *     + the category enquiry form. The customer may buy or rent, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, the table caption, the custom intro and the
+   * enquiry-form intro. No ₹ figure, stock, lead time, rodent exclusion, cold-chain performance or
+   * standard foundation design; high-cube units, racking, insulation, temperature control, base work
+   * and relocation stay quote-dependent, as the brief says.
+   *
+   * Inspection link: the brief points at the Chennai container page's used-container checklist. The
+   * Container Office in Chennai page has no such checklist; the Chennai-area page that does is
+   * Shipping Container in Athipattu (Ennore–Kattupalli corridor, Tiruvallur district), whose "Used
+   * Container Inspection" section lists seven checks. It is live (HTTP 200) and is linked once.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container, temporary godown container and container
+   * rental × Hubballi, Hubli, Dharwad. The Haveri container-office page names Hubballi only as the
+   * NH-48 destination.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Hubballi–Dharwad shipping
+   * container city page/Hubballi–Dharwad shipping container page/cabin (1–5).webp", 1200×896 and
+   * 1451×1084 ×4, no EXIF / XMP / ICC metadata or provenance to keep) of one rust-orange container
+   * with grey cargo doors and a fixed side window, in a yard. The VP8 bitstreams are copied
+   * byte-for-byte (pixel-identical decode) into the extended format with an XMP dc:title and a
+   * dc:description that calls each an illustrative render. Only the exterior hero matches a slot in
+   * the brief's image table (its filename, alt and caption are used); no image shows racking, a
+   * godown row, raised supports, a shade roof or a fenced project yard, so those slots are left out
+   * and the other four renders carry their own accurate names, alt text and captions. Every caption
+   * says "illustrative", the side window is called an optional modification, and the disclaimer
+   * says none is a photograph taken in Hubballi or Dharwad.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hubballi-dharwad",
+    city: "Hubballi–Dharwad",
+    listTitle: "Shipping Containers in Hubballi–Dharwad",
+    metaTitle: "Shipping Containers in Hubballi–Dharwad (Hubli)",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Hubballi–Dharwad for FMCG stockrooms, temporary godowns, industrial spares and railway project stores.",
+    keywords:
+      "Shipping Container in Hubballi-Dharwad, Shipping Container Hubli, Cargo Container Hubballi, Storage Container Dharwad, Shipping Container Rental Hubli, Temporary Godown Container",
+    geo: {
+      region: "IN-KA",
+      placename: "Hubballi–Dharwad, Karnataka, India",
+      position: "15.3647;75.1240",
+      icbm: "15.3647, 75.1240",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative shipping container exterior for industrial storage. The side window shown is an optional modification.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above, showing its corrugated roof, double cargo doors and a small side window",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render of a storage container seen from above. Placement depends on site conditions.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-interior.webp",
+      alt: "Empty steel shipping container interior with corrugated walls, a plywood floor and both cargo doors open",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty container interior. Racking, lighting, insulation and ventilation are optional and quoted separately.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with four locking bars and cam handles",
+        width: 1451,
+        height: 1084,
+        caption: "Double cargo doors with four locking bars. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-closed-end.webp",
+        alt: "Corrugated steel shipping container seen from its closed end, with a small window in the side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Closed end and side wall. The side window is an optional modification. Illustrative render.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Hubballi–Dharwad",
+    tagline: "20 ft and 40 ft storage containers for distributor stock, temporary godowns, industrial spares and railway project stores.",
+    intro: [
+      "Need more room for distributor stock, packaging while a warehouse is being built, or tools for an industrial or railway project? Portable Office Cabin supplies shipping containers for storage enquiries across Hubballi and Dharwad. Share the goods you plan to store, how often staff need access, and where the unit will sit. We can discuss the size, fit-out, and delivery requirements for your site.",
+    ],
+
+    whyHeading: "Stockrooms for FMCG distributors",
+    whyIntro:
+      "Distributors, super stockists and carrying and forwarding agents can use a container for suitable packaged inventory, cartons and dispatch supplies. If you need to pick stock daily, plan the layout around carton sizes and stock rotation.",
+    whyBullets: [
+      {
+        title: "Stock rotation",
+        text: "Arrange racks so older receipts are accessible first. If goods are date-coded, follow your inventory policy for earliest expiry.",
+      },
+      {
+        title: "Picking space",
+        text: "Label zones by product or batch and keep a clear aisle. Check rack capacity and the container’s usable space before ordering shelving.",
+      },
+      {
+        title: "Storage and housekeeping",
+        text: "Keep cartons on suitable pallets or shelves. Inspect seals and gaps, keep the loading area clear of waste, and follow your pest-control plan.",
+      },
+      { title: "Visibility", text: "Discuss lighting and keep a stock list so staff know where to find each batch." },
+    ],
+
+    solutionsHeading: "A temporary godown while your warehouse is being built",
+    solutionsIntro:
+      "A container can hold suitable packaging, spare parts or dispatch stock while the permanent warehouse is being fitted out. Begin with the volume you need and reserve enough space to unload or add a second unit if demand increases. Once the warehouse opens, the unit can serve as an overflow store or spares room. For rentals, agree on the hire period and collection arrangements. For a unit you plan to move, get relocation quoted separately.",
+    solutions: [],
+
+    extraSections: [
+      {
+        heading: "Storage for heat-sensitive stock",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A steel container in direct sun can get hot. Ask about a light-coloured exterior, shade, insulation or ventilation if those options suit the stock and site. Confirm the storage limits specified by the product supplier. Goods such as some confectionery, cosmetics and medicines may require monitored, temperature-controlled storage. Select the unit and controls around those requirements.",
+        ],
+      },
+      {
+        heading: "Railway project and industrial stores",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A 20 ft container can provide storage for tools, cables, fittings and equipment at an authorised railway project site. The project team should confirm the location, clearances and lifting arrangements. Discuss a lockbox and whether the store will need to move as the work progresses.",
+          "Engineering units can also use containers for spares and tooling, transport yards for parts, and traders for suitable goods awaiting dispatch.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption: "Typical storage uses and site checks by size. The availability of each size is confirmed in the quotation.",
+          headers: ["Size", "Storage use", "What to check"],
+          rows: [
+            ["20 ft", "Distributor overflow, railway project tools or industrial spares", "Door clearance, aisle space and access for unloading"],
+            ["40 ft", "Temporary godowns, packaging and larger stock volumes", "Trailer approach, turning space and unloading position"],
+            ["40 ft high cube", "Taller racking or bulky stock", "Availability, internal height and clearance along the delivery route"],
+          ],
+        },
+        closing: [
+          "Confirm the actual dimensions and condition of the quoted unit. If buying used, ask for the stated grade and the condition of the specific unit.",
+          "Before selecting a unit, see our guide on how to inspect a used container:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    featuresHeading: "Preparing a base where black cotton soil is present",
+    featuresIntro:
+      "Expansive soil can move as moisture changes. If your site has black cotton soil or shows seasonal movement, have the responsible site professional confirm ground conditions, drainage, bearing capacity and the support layout for the unit and its intended load.",
+    features: [
+      "Share photographs of the placement area and approach road before delivery.",
+      "Flag ponding, recent fill or uneven ground.",
+      "Confirm that the approved base is ready and level, with enough room for unloading and door access.",
+      "Include any base work in the agreed project scope.",
+    ],
+    sizesNote: "Settlement can affect door alignment and access.",
+
+    customHeading: "Shipping container price and rental in Hubballi–Dharwad",
+    customIntro: "The quote depends on:",
+    customBullets: [
+      { text: "The container size and condition" },
+      { text: "Optional fit-out" },
+      { text: "Transport" },
+      { text: "Unloading access" },
+    ],
+    customOutro:
+      "If you need a unit during warehouse construction or for a time-limited project, see our rental options below. Share the hire dates and location so the team can confirm availability, delivery and collection terms.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Hubballi (also known as Hubli), Dharwad, Gokul Road, Tarihal, Gamanagatti, Rayapur, Navanagar and Amargol. We also consider sites around Belur, Mummigatti, Kotur, Ittigatti and along the NH 48 bypass. Delivery depends on site access and availability.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      {
+        title: "Share your stock type, storage volume, target dates, and photographs of the plot and approach road.",
+        text: "",
+      },
+      { title: "Review the proposed size, condition, fit-out and itemised quote.", text: "" },
+      { title: "Confirm base readiness, site access, applicable approvals and unloading responsibilities.", text: "" },
+      {
+        title: "Agree on delivery and placement. For a hire or relocation, confirm the associated scope and charges.",
+        text: "",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I place a shipping container directly on black cotton soil?",
+        answer:
+          "Have the site assessed before placement. The support arrangement depends on ground movement, drainage and the load the unit will carry.",
+      },
+      {
+        question: "Can a container work as an FMCG stockroom?",
+        answer:
+          "Yes, for goods compatible with the storage conditions. Plan racks, stock rotation, aisles and pest control around your inventory and handling requirements.",
+      },
+      {
+        question: "Can I use one as a temporary godown?",
+        answer:
+          "Yes. Share the storage volume, expected duration and available placement area. If renting, confirm the hire term and collection arrangements.",
+      },
+      {
+        question: "Can a standard container store heat-sensitive goods?",
+        answer:
+          "Check the product’s required storage conditions first. Shade and insulation may help reduce heat gain. Goods with specified temperature limits may require a monitored, temperature-controlled unit.",
+      },
+      {
+        question: "Can I enquire about a store for a railway project?",
+        answer:
+          "Yes. Share the approved placement area and access conditions. Coordinate clearances, unloading and any future relocation with the responsible project authority.",
+      },
+      {
+        question: "Is Hubli the same as Hubballi?",
+        answer: "Hubli is an older spelling of Hubballi. This page covers enquiries for Hubballi and Dharwad together.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fit-out, transport, site access and base readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Hubballi–Dharwad",
+    ctaText:
+      "Send the intended use, preferred size, site address, target dates and access photos. Tell us if you need to buy or rent, and mention any racking, lighting, security or environmental requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Choose a container or the rental option, then enter the quantity and your delivery town in or around Hubballi or Dharwad. Use the message to tell us the goods you will store, your target dates and any racking, lighting or security needs. We check the requirement with you first, then send the quotation in writing.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Dimensions of 20 ft, 40 ft and high-cube cargo containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+    ],
+
+    disclaimer:
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no container yard, depot, workshop or office in Hubballi or Dharwad. Containers are sold or hired subject to availability. Each unit's size, grade, condition and fit-out, any base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render of one representative storage container, drawn with an optional side window, and none was photographed at a site in Hubballi or Dharwad. Localities, industrial areas and the NH 48 bypass are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with a railway authority, railway project, industrial area or estate, and the uses described are examples, not projects we have supplied. A standard container does not provide temperature control, cold-chain performance or rodent exclusion. Notes on stock rotation, pest control, heat, ground conditions and site preparation are general guidance, not engineering, food-safety, pharmaceutical or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN SARJAPUR — the Sarjapur Road corridor of south-east Bengaluru
    * (Bellandur → Kasavanahalli → Carmelaram → Dommasandra → Sarjapur Town, with Attibele and
    * Bommasandra to the south).
@@ -16308,6 +16606,279 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures at its factory near Hosur, Tamil Nadu, and has its Karnataka office at Electronic City Phase 1, Bengaluru; it does not operate a container yard, depot, workshop or office in Shivamogga, Machenahalli, Nidige or Bhadravathi. Containers are supplied subject to availability: the size, grade, condition, certification and modifications of each unit, and its delivery and unloading arrangements, are confirmed in its quotation, and delivery timelines are not guaranteed. The images on this page are illustrative renders of a representative 20 ft dry shipping container; they are not photographs of a container supplied to, or placed in, Shivamogga or Machenahalli. Dimensions and capacities on this page are approximate; the ratings that apply are those on the specific container's identification plate and documentation. KIADB, the Nidige–Machenahalli Industrial Area and Shivamogga Airport are named only to describe the location; Portable Office Cabin is not affiliated with KIADB, any industrial estate or any airport operator, and the uses and places described here are not clients, completed projects or confirmed delivery areas. Notes on storage, moisture, condensation, food safety, site preparation and permissions are general guidance, not engineering, food-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS IN MARATHAHALLI (ORR) — commercial and infrastructure storage along the
+   * Outer Ring Road: road and metro work zones, showroom overflow, business archives, sports turfs,
+   * restaurants and event teams.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description and H1 used as given; every
+   * section of the publishable copy is kept in the owner's words and order, except where the fixed
+   * template slots force a change (nothing is dropped):
+   *   • Intro → intro (two paragraphs) + heroCta (Request a Quote / Call / WhatsApp).
+   *   • "Commercial storage along the ORR" → why, as `whyTable` (empty whyBullets). The lead-in
+   *     sentence and the table caption are the only composed lines in the body.
+   *   • "Storage for road and metro work zones" → solutionsHeading + solutionsIntro with an empty
+   *     `solutions` list, so it stays an H2 with one paragraph, like the brief's other use sections.
+   *   • "Showroom overflow…", "Archive storage…", "Storage for sports turfs…" and "Choosing between
+   *     20 ft and 40 ft containers" → four afterSolutions extra sections, in the brief's order. The
+   *     size table's caption is the brief's own "Final fit depends on…" sentence.
+   *   • "Condition, security and fittings" → features: the first sentence is the intro, the next
+   *     four are the list, and the rental-fittings sentence is the bold note. The gallery (cargo
+   *     doors with lockbox, fitted interior) follows it.
+   *   • "Shipping container price, purchase and rental in Marathahalli" → custom, with the rental
+   *     link as `customLinks` (anchor as given).
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps, the owner's
+   *     sentences). The template puts areas before the steps, the reverse of the brief.
+   *   • FAQs (six) → faqs; the closing request → CTA + the cargo-category enquiry form (rental models
+   *     kept: rental is in this brief's scope).
+   * DEFERRED LINKS (brief section 5: never link to a route that is not live). Office cabins in
+   * Marathahalli (portable-office-cabin-marathahalli, session cf) and storage containers for homes
+   * and societies in Bellandur (shipping-container-bellandur, session d1) are added, both ways, by
+   * whichever PR merges second.
+   * Not claimed (brief section 3): stacking, night lifting, warning-light mounts, ramps, CCTV, alarms,
+   * lease-to-own, fixed delivery timelines or guaranteed archive protection. No ₹ figure.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Marathahalli and the ORR, for
+   * commercial and infrastructure storage. Bellandur's shipping page keeps household and society
+   * storage; the Marathahalli office-cabin page keeps workspace; Devarabisanahalli keeps campus and
+   * tech-park intent. No Bellandur locality is named in the areas list.
+   *
+   * Images: four owner-dropped webp renders ("public/images/Marathahalli shipping container city
+   * page/Marathahalli ORR shipping and storage container/cabin (1–4).webp": 600×448 and 1452×1083 ×3,
+   * no EXIF/XMP/ICC), copied with descriptive names and a truthful XMP dc:title/dc:description
+   * ("Illustrative render of…") added losslessly: the VP8 bitstream is untouched and the decoded
+   * pixels are identical. Only the exterior matches a slot in the owner's image table, and it is the
+   * hero (the owner's alt text and render caption) and the social preview. The side wall, cargo doors
+   * and lined interior match none of the other slots (work-zone barriers, boxed stock, archive racks,
+   * sports racks), so those slot filenames and alts are not used. They carry their own descriptive
+   * alt text and an "illustrative render" caption, and no alt text names a place.
+   * The hero is 600 px wide, narrower than the 672 px frame, so the template caps it at its own width
+   * (the interior image's narrow rule).
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-marathahalli-orr",
+    city: "Marathahalli",
+    listTitle: "Shipping Containers in Marathahalli (ORR)",
+    metaTitle: "Shipping Containers in Marathahalli (ORR) | 20 & 40 ft",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Marathahalli for road and metro works, showroom overflow, event equipment and sports turf storage.",
+    keywords:
+      "Shipping Container in Marathahalli, Storage Container Marathahalli, Cargo Container ORR, Cargo Container Outer Ring Road, 20 ft Container Marathahalli, 40 ft Container Marathahalli, Shipping Container Rental Marathahalli",
+    geo: {
+      region: "IN-KA",
+      placename: "Marathahalli, Outer Ring Road, Bengaluru, Karnataka, India",
+      position: "12.9569;77.7011",
+      icbm: "12.9569, 77.7011",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+
+    heroImage: {
+      src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 600,
+      height: 448,
+      caption: "Illustrative shipping container exterior for commercial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-side-wall.webp",
+      alt: "Corrugated steel side wall of a 20 ft shipping container with two forklift pockets, on a paved yard",
+      width: 1452,
+      height: 1083,
+      caption: "Illustrative render of the corrugated side wall of a 20 ft shipping container.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-cargo-doors.webp",
+        alt: "Double cargo doors of a steel shipping container with four locking bars, cam handles and a central lockbox",
+        width: 1452,
+        height: 1083,
+        caption: "Illustrative render of the cargo doors, with a lockbox between the locking bars. Fittings vary by unit and are listed in the quotation.",
+      },
+      {
+        src: "/images/cities/shipping-container-marathahalli-orr/marathahalli-orr-shipping-container-lined-interior.webp",
+        alt: "Container interior with cream wall lining, two ceiling lights, a switch and power socket and a wood-effect floor, seen between open cargo doors",
+        width: 1452,
+        height: 1083,
+        caption:
+          "Illustrative render of a lined interior with lighting and power points. These are specification options confirmed in the quotation, not standard fittings.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers for Marathahalli and the Outer Ring Road",
+    tagline: "20 ft and 40 ft containers for project, showroom, archive, sports and event storage along the ORR.",
+    intro: [
+      "A showroom preparing for festive sales, a contractor moving between work zones and a sports turf storing equipment all need space close to where they work.",
+      "Portable Office Cabin supplies shipping containers for commercial and infrastructure storage enquiries in Marathahalli and along the Outer Ring Road (ORR). Share what you need to store, how long you need the space and where the container will sit.",
+    ],
+
+    whyHeading: "Commercial storage along the ORR",
+    whyIntro: "Typical commercial and infrastructure uses, and what each can plan space for:",
+    whyBullets: [],
+    whyTable: {
+      caption: "Examples only. Confirm that your goods suit container storage and the conditions they need.",
+      headers: ["Use", "What you can plan space for"],
+      rows: [
+        ["Road, flyover and metro works", "Tools, cables, fittings, drained pumps and project materials"],
+        ["Showrooms and retailers", "Seasonal inventory, boxed stock and display fixtures"],
+        ["Office and business records", "Archive boxes where the storage environment meets retention and access requirements"],
+        ["Sports turfs and gyms", "Nets, cones, balls, mats and maintenance equipment"],
+        ["Restaurants", "Packaging and suitable non-food supplies"],
+        ["Event and exhibition teams", "Stands, display panels and staging equipment"],
+      ],
+    },
+
+    solutionsHeading: "Storage for road and metro work zones",
+    solutionsIntro:
+      "A 20 ft unit can be considered for an approved work zone or contractor yard where the project team confirms the footprint, unloading area and clearance. If a project moves in stages, ask about the scope and cost of relocation between approved locations. Discuss visibility markings and access control with the project team. Placement and lifting beside a live carriageway depend on the applicable permissions, traffic management and an agreed lifting plan.",
+    // Empty on purpose: the section is the heading and paragraph above (see the header comment).
+    solutions: [],
+
+    featuresHeading: "Condition, security and fittings",
+    featuresIntro: "Ask about the grade and actual condition of the available unit.",
+    features: [
+      "One-trip units generally have seen limited use.",
+      "Used cargo-worthy units can show wear, and units described as wind and watertight should be assessed against their stated condition.",
+      "Check the floor, doors, locking gear and seals before accepting a unit.",
+      "For a busy commercial yard, discuss a lockbox, suitable lighting, shelving and placement with doors facing a controlled area.",
+    ],
+    sizesNote: "Confirm which fittings are included in the quote and whether changes are permitted on rental units.",
+
+    customHeading: "Shipping container price, purchase and rental in Marathahalli",
+    customIntro: "Pricing depends on size, condition, fittings, transport, unloading and site access.",
+    customBullets: [
+      { text: "Compare rental for a project or seasonal overflow with purchase for recurring storage." },
+      { text: "For longer hires, ask about the rental term, extensions and collection." },
+    ],
+    customOutro: "See our rental options and confirm availability for your site and dates:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Marathahalli, the Outer Ring Road corridor around Marathahalli Bridge, Kundalahalli, Munnekollal, AECS Layout, Doddanekundi and Kadubeesanahalli. We also consider sites along Varthur Road, Old Airport Road and around Mahadevapura. Delivery access is assessed for each location.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share the intended use, item sizes, hire duration if applicable and site photographs.", text: "" },
+      { title: "Review the proposed container size, condition, fittings and itemised quote.", text: "" },
+      { title: "Confirm the placement location, base, access and required permissions with the responsible site team.", text: "" },
+      { title: "Agree on the delivery and unloading plan, plus any later relocation or collection in the quotation.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Showroom overflow and festive stock",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Plan racks around carton dimensions and keep a clear aisle for restocking. Ask about shelving, interior lighting and a lockbox for the selected unit. If stock moves on trolleys, share the trolley dimensions and proposed loading arrangement when requesting a quote. Check storage temperature and humidity requirements for the goods you intend to keep inside.",
+        ],
+      },
+      {
+        heading: "Archive storage for business records",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Labelled shelving, clear aisles and controlled access make retrieval easier. Before storing records, confirm your organisation's requirements for humidity, temperature, fire protection, retention and access. An unconditioned steel container can experience heat and condensation. Specify a suitable controlled environment if the records require one.",
+        ],
+      },
+      {
+        heading: "Storage for sports turfs and gyms",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use bins, racks or hooks to separate small kit from long items such as nets and poles. Dry equipment before putting it away and discuss ventilation and door access based on how often staff use the store.",
+        ],
+      },
+      {
+        heading: "Choosing between 20 ft and 40 ft containers",
+        placement: "afterSolutions",
+        table: {
+          caption: "Final fit depends on the unit, delivery vehicle and placement method.",
+          headers: ["Size", "Storage use", "Site planning"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
+          // 320 px phone, where row headers may wrap.
+          rows: [
+            [
+              "20\u00a0ft",
+              "Contractor tools, turf equipment and smaller showroom overflow",
+              "Check gate clearance, turning space, door swing and unloading area.",
+            ],
+            [
+              "40\u00a0ft",
+              "Bulk showroom stock, contractor depots and event equipment",
+              "Check the full trailer approach and whether lifting equipment can be positioned safely.",
+            ],
+          ],
+        },
+        closing: [
+          "If you need more internal height, ask whether a 40 ft high-cube unit is available and confirm its dimensions before designing tall racks. Share entrance measurements, site photos and overhead obstructions.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a container be placed in an ORR road or metro work zone?",
+        answer:
+          "It can be considered where the project authority approves the location and the site team confirms clearance, traffic arrangements and the lifting plan.",
+      },
+      {
+        question: "Will a 40 ft container fit at our showroom?",
+        answer:
+          "The footprint is only one part of the check. Share approach-road and gate dimensions, turning space, overhead restrictions and photos of the unloading area.",
+      },
+      {
+        question: "Can I use a container for business archives?",
+        answer:
+          "That depends on the records and their storage requirements. Check temperature, humidity, fire protection and access requirements before choosing the unit and fit-out.",
+      },
+      {
+        question: "What security options can I ask for?",
+        answer:
+          "Ask about door condition, a lockbox, lighting and placement within a controlled area. Confirm the available fittings for the quoted unit.",
+      },
+      {
+        question: "Should I rent or buy?",
+        answer:
+          "Rental is worth comparing for seasonal inventory and time-limited projects. Purchase may suit ongoing storage. Compare the full quoted cost, including delivery, placement and any collection charges.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on available stock, fittings, transport and site readiness. Share the target date so a schedule can be confirmed in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote for Marathahalli or the ORR",
+    ctaText:
+      "Send the intended use, preferred size, site address, dates, and photos of the approach road, gate and proposed placement area. Mention any racking, lighting or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry",
+      intro:
+        "Tell us which container you have in mind, how many you need and where the site is in Marathahalli or on the ORR. Add what you plan to store, your dates and any racking, lighting or security needs; we confirm the details with you before quoting in writing.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "Cargo Storage Containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container in Bangalore", href: "/promotions/shipping-container-in-bangalore" },
+      { label: "Cargo Storage Container in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and its Karnataka office is in Electronic City Phase 1, Bengaluru. It has no yard, depot or office in Marathahalli or on the Outer Ring Road. Supply depends on stock: the size, grade, condition and fittings of a unit, any rental term, and how it is delivered, unloaded, moved or collected are set out in its quotation, and no delivery date is guaranteed. The pictures here are renders of a typical 20 ft container, not photographs taken in Marathahalli or on the ORR. Marathahalli Bridge, the Outer Ring Road and the other localities are named only to show where enquiries are welcome; Portable Office Cabin has no connection with any road, metro or civic authority, and none of the uses or places mentioned is a client, a finished project or a confirmed delivery location. Guidance here on placement, lifting, permits, traffic management, archives and storage conditions is general, not engineering, fire-safety or legal advice.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
@@ -26706,6 +27277,276 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin manufactures near Hosur, Tamil Nadu, and its Karnataka office is at Electronic City Phase 1, Bengaluru; it has no yard, depot or office anywhere in Uttara Kannada. Each container is supplied subject to availability, and its size, grade, condition, fittings, any hire term and its delivery, unloading, placement and collection are set out in its quotation; no delivery date is guaranteed. The images are illustrative renders of one steel shipping container, not photographs taken in Uttara Kannada or of a supplied unit. Karwar, Sirsi, Gokarna, Dandeli, NH 66 and the other towns, roads and harbours are named only to show where enquiries are welcome: Portable Office Cabin is not affiliated with any port, harbour, forest, tourism or road authority or with any business there, and none of the uses or places mentioned is a client, a completed project or a confirmed delivery location. Notes on routes, slopes, placement, drainage, flood exposure, food storage, monsoon upkeep and permissions are general guidance, not engineering, food-safety or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING CONTAINERS FOR HYDEL POWER PROJECT SITES IN THE VISAKHAPATNAM REGION — project stores
+   * for hydel and pumped storage sites around Upper Sileru (Andhra Pradesh). The first Andhra Pradesh
+   * city page and the first application page in the shipping-container family.
+   *
+   * Owner brief of 2026-11-07 (slug, meta title, meta description, H1 and copy used as given). The
+   * site has no editorial /projects route, so the page uses the location-page route; the slug starts
+   * with "shipping-containers-", which cityFamily() now also accepts, so the page joins the
+   * shipping-container family (directory card under a new "Andhra Pradesh" group, nearby block).
+   * `directoryLabel` gives its card the brief's index anchor, "Shipping containers for hydel project
+   * sites", instead of "Shipping containers in <city>", so the general Visakhapatnam intent stays free
+   * for a future city page. The brief's sections map onto the fixed template slots, nothing dropped:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, the brief's buttons).
+   *   • "Planning delivery to a hill project site" → why: first paragraph as whyIntro, second as
+   *     whyOutro (no bullets).
+   *   • "Setting up a container stores yard" → solutions heading + intro (no items) and the stores
+   *     table as the new optional `solutionsTable`.
+   *   • "Preserving equipment on a humid site" and "Container sizes and procurement" (table, then the
+   *     paragraph) → two afterSolutions extra sections.
+   *   • "Lifting and storage safety" → features: its first sentence as the intro, the next three as
+   *     bullets and the hazardous-materials rule as sizesNote (rendered bold). The features slot renders
+   *     after the extra sections, so this section follows "Container sizes and procurement" instead of
+   *     preceding it — the only change to the brief's order.
+   *   • "Project pricing, rental and close-out" → custom (prose: customBullets is empty), beside the
+   *     interior render; the rental link → customLinks.
+   *   • "Project enquiry areas" → areas.
+   *   • "Request a hydel project container quote" → how: the items to send as title-only steps, the
+   *     documentation sentence as howOutro. FAQs (five) → faqs; CTA box + enquiry form.
+   * Composed (owner review): the tagline, the table captions, the how lead-in, the CTA heading and
+   * text, the enquiry-form heading and intro, and the image alt text and captions.
+   *
+   * INTERLINKS (brief section 5): the rental link is in place (live, 200). The brief's Chennai target
+   * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
+   * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
+   * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
+   * across the site). It is therefore not repeated in the related links. DEFERRED until live: the Vellore
+   * shipping page (/cities-we-serve/shipping-container-vellore answered 404 on 2026-11-07) for
+   * "insulated and air-conditioned storage fit-outs" at the end of the preservation section, and the
+   * link from a future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
+   * (seoPromotions) lists this page, and the page links back to it.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage containers × hydel and pumped storage project sites ×
+   * Visakhapatnam region, Upper Sileru, Sileru. Not "shipping container in Visakhapatnam" or
+   * "shipping container in Andhra Pradesh" (the promotion page keeps the state term).
+   *
+   * Images: five unique owner-dropped webp renders ("public/images/Upper Sileru and Visakhapatnam city
+   * page/Upper Sileru and Visakhapatnam/cabin (1–6).webp"; (4) and (5) are byte-identical; 1200×896
+   * and 1451×1084 ×4; no metadata). None shows a stores yard, a truck, racking or preservation
+   * equipment, so none of the brief's four image slots is used: each render keeps its own descriptive
+   * alt text and an "illustrative render" caption. Copied with a lossless XMP dc:title / dc:description
+   * (pixels identical; no camera, GPS or date data). They show one grey container with green cargo
+   * doors and a glazed side panel, so no alt text names a size, a place or a project.
+   *
+   * No ₹ figure, stock, lead time, capacity, vendor-approval, client or completed-project claim.
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-containers-hydel-project-visakhapatnam",
+    city: "Upper Sileru",
+    directoryLabel: "Shipping containers for hydel project sites",
+    metaTitle: "Shipping Containers for Hydel Projects near Visakhapatnam",
+    metaDescription:
+      "Enquire about storage containers for hydel and pumped storage projects near Visakhapatnam and Sileru. Share your BOQ, site access and delivery phases.",
+    keywords:
+      "Shipping Containers for Hydel Power Projects near Visakhapatnam, Storage Containers Upper Sileru, Pumped Storage Project Site Stores, EPC Container Stores Yard, Hydro Project Equipment Preservation",
+    geo: {
+      region: "IN-AP",
+      placename: "Upper Sileru, Andhra Pradesh, India",
+      position: "18.0491;82.0353",
+      icbm: "18.0491, 82.0353",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-exterior.webp",
+      alt: "Grey steel storage container with green cargo doors and a glazed side panel, illustrative render: four locking bars with cam handles, corrugated side wall and corner castings, on a paved yard",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative render of a steel storage container. The size, condition, fit-out and dispatch origin of each unit are confirmed in its quotation.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-roof-view.webp",
+      alt: "Steel storage container seen from above, illustrative render: corrugated grey roof, green cargo-door end and a glazed panel in the side wall, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render. Plan each unit's footprint, door clearance and handling space on the yard plan before placement.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-empty-interior.webp",
+      alt: "Empty interior of a steel storage container with both cargo doors open, illustrative render: corrugated grey walls and roof, a plywood floor and a glazed side panel",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty container interior. Racking, lighting and any preservation controls are added only as specified against the BOQ.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-side-wall-glazed-panel.webp",
+        alt: "Side wall of a grey steel storage container, illustrative render: corrugated steel panels, corner castings and a glazed panel set into the wall",
+        width: 1451,
+        height: 1084,
+        caption: "Side wall with a glazed panel, an optional modification. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-containers-hydel-project-visakhapatnam/storage-container-cargo-doors.webp",
+        alt: "Cargo doors of a steel storage container, illustrative render: two green doors with four vertical locking bars, cam handles, hinges and a central lockbox inside a grey frame",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the green cargo-door end, closed and locked.",
+      },
+    ],
+
+    h1: "Shipping Containers for Hydel Power Project Sites in the Visakhapatnam Region",
+    tagline:
+      "Project stores for EPC contractors, subcontractors and procurement teams, quoted against your BOQ, site access and delivery phases.",
+    intro: [
+      "Hydel and pumped storage projects need different stores as work moves from enabling works and civil construction to equipment installation and commissioning. Portable Office Cabin welcomes enquiries from EPC contractors, subcontractors and procurement teams for shipping containers used as project stores in the Visakhapatnam region, including enquiries for sites in the Sileru area. Share your bill of quantities (BOQ), package requirements and delivery sequence for a project-specific quote.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Planning Delivery to a Hill Project Site",
+    whyIntro:
+      "Share the exact gate or delivery point, the access route and photographs of tight bends, gradients, overhead restrictions and the unloading area. Ask the transport team to confirm the dispatch yard, route, vehicle configuration and any movement restrictions before finalising the schedule. If a Vizag-area yard is proposed, confirm stock and dispatch origin in the quotation.",
+    whyBullets: [],
+    whyOutro:
+      "A 20 ft container is a starting point where vehicle access is limited. A 40 ft container may suit a larger stores yard if the trailer can reach and turn at the site and the unloading method is approved. For multiple units, request a phased delivery plan based on yard readiness and the number of units the site can safely unload and place in each window. Agree who will arrange lifting, standby and any rescheduled dispatches.",
+
+    solutionsHeading: "Setting Up a Container Stores Yard",
+    solutionsIntro:
+      "Group stores by discipline and assign each container an ID that appears on the yard plan and inventory list. Coordinate the layout with the site team so staff can receive, inspect and issue items without blocking equipment movements. Have the responsible project teams confirm vehicle aisles, emergency access, separation, drainage, lighting, supports and access controls before placement.",
+    solutions: [],
+    solutionsTable: {
+      caption: "Typical stores by discipline. Contents and layout are agreed with the site team for each project.",
+      headers: ["Store", "Typical contents", "Layout requirements to discuss"],
+      rows: [
+        ["Civil works", "Rock bolts, formwork accessories and suitable dry consumables", "Rated racks, pallet positions and handling clearance"],
+        ["Electrical", "Cable fittings, panels and drums", "Manufacturer storage limits and safe handling space for heavy items"],
+        [
+          "Electro-mechanical preservation",
+          "Bearings, seals, instruments and control components",
+          "Approved packaging, environmental controls and monitoring where specified",
+        ],
+        ["Hydro-mechanical spares", "Fasteners, fittings and small gate or penstock spares", "Labelled bins, rated shelving and issue records"],
+        ["PPE and documents", "Helmets, gloves, drawings and manuals", "Segregated shelving, dry storage and controlled access"],
+      ],
+    },
+
+    featuresHeading: "Lifting and Storage Safety",
+    featuresIntro: "Coordinate placement with the site's lifting and safety teams.",
+    features: [
+      "Keep people out of the lifting exclusion zone.",
+      "Use suitable restraints for open cargo doors.",
+      "Follow the approved site plan for emergency access, fire protection and electrical installation.",
+    ],
+    sizesNote:
+      "Keep explosives, fuel and other hazardous materials out of general-purpose stores. Use the project's approved storage arrangements for those materials.",
+
+    customHeading: "Project Pricing, Rental and Close-Out",
+    customIntro:
+      "The quote depends on quantity, size, condition, fit-out, dispatch origin, transport route, unloading and delivery phases. Include any racking, lighting or preservation requirements against each BOQ line. For time-limited works, review our 20 ft and 40 ft shipping container rental options and confirm project-site availability, the hire term and collection scope.",
+    customBullets: [],
+    customOutro:
+      "Decide early which stores may be reassigned or relocated as the work moves from civil construction to installation and commissioning. If you are buying units, plan their next use or disposal. If you are hiring, agree on collection access, condition requirements and the end date in the quotation.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Project Enquiry Areas",
+    areasText:
+      "We welcome enquiries for project sites in the Sileru area and the wider Visakhapatnam region, including Upper and Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu and Narsipatnam. Each delivery is assessed against the actual site location, route and unloading requirements.",
+
+    howHeading: "Request a Hydel Project Container Quote",
+    howIntro: "Send these details with your enquiry:",
+    howSteps: [
+      { title: "Bill of quantities (BOQ)", text: "" },
+      { title: "Site coordinates or gate location", text: "" },
+      { title: "Access photos", text: "" },
+      { title: "Size and quantity mix", text: "" },
+      { title: "Fit-out requirements", text: "" },
+      { title: "Preferred dispatch phases", text: "" },
+    ],
+    howOutro: "Identify any vendor documentation and delivery responsibilities your project requires.",
+
+    extraSections: [
+      {
+        heading: "Preserving Equipment on a Humid Site",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Start with the equipment supplier's preservation instructions. Specify storage limits, inspection intervals, packaging and any recording requirements in the BOQ. Maintain a preservation log and keep packaging sealed when instructed. For sensitive items, specify any required dehumidification, temperature control, monitoring and response to power failure. Have the responsible project team verify that the proposed unit and controls meet the equipment specification before loading.",
+        ],
+        // DEFERRED (brief section 5): "insulated and air-conditioned storage fit-outs" → the Vellore
+        // shipping page, as related fit-out guidance, once /cities-we-serve/shipping-container-vellore is live.
+      },
+      {
+        heading: "Container Sizes and Procurement",
+        placement: "afterSolutions",
+        table: {
+          caption: "Availability, actual dimensions and route clearance are confirmed for each unit in the quotation.",
+          headers: ["Configuration", "Typical enquiry", "Confirm before ordering"],
+          rows: [
+            ["20 ft", "Civil tools, PPE or electrical fittings", "Route access, door clearance, internal layout and unloading"],
+            ["40 ft", "Larger project stores and longer racks", "Trailer access, lifting capacity and yard footprint"],
+            ["40 ft high cube", "Bulky stock or taller racks", "Availability, actual height and route clearance"],
+          ],
+        },
+        closing: [
+          "Ask for the condition and usable dimensions of each proposed unit. For a used container, confirm the floor, doors, seals, roof and locking hardware. Include required drawings, vendor registration documents, inspection records, dispatch lists and unit IDs in the request for quotation so the supplier can confirm which documents are available.",
+          "Before accepting a used unit, see our guide on how to inspect a used container:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I request a bulk quote with phased deliveries?",
+        answer:
+          "Yes. Send the quantity and size mix, delivery milestones, unloading capacity and site contacts. Dispatch origin, availability and the schedule are confirmed in the quotation.",
+      },
+      {
+        question: "Which size should I consider for a hill project?",
+        answer:
+          "Start by comparing the site's storage requirements with the access route. A 20 ft unit may be easier to plan for a constrained approach. Larger units require enough room for the trailer and lifting equipment.",
+      },
+      {
+        question: "Can a container be used to preserve electro-mechanical equipment?",
+        answer:
+          "Only when the proposed unit, packaging and environmental controls meet the equipment supplier's requirements. Include the specified limits and monitoring requirements in your enquiry.",
+      },
+      {
+        question: "What procurement documents can I request?",
+        answer:
+          "Include the vendor documents, technical specifications, inspection records, dispatch list and unit IDs required by your team. Confirm the documents that can be provided for the quoted scope.",
+      },
+      {
+        question: "Can we relocate units or arrange collection at close-out?",
+        answer:
+          "Share the proposed dates and locations. Availability, handling, transport and collection responsibilities should be agreed in writing.",
+      },
+    ],
+
+    ctaHeading: "Share Your BOQ for a Project-Specific Quote",
+    ctaText: `Send your BOQ and site details through the enquiry form, phone or WhatsApp ${COMPANY.whatsapp.display}, or write to ${COMPANY.email.sales}. Dispatch origin, availability and the delivery schedule are confirmed in the quotation.`,
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send Your Project Container Enquiry",
+      intro:
+        "Choose a container, enter the size, quantity and the delivery town or PIN code nearest your project site, and add your BOQ reference, fit-out requirements and preferred dispatch phases. We check the scope with you first, then send a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Containers for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Construction Site Portable Office", href: "/products/construction-site-portable-office" },
+      { label: "Shipping Container in Andhra Pradesh", href: "/promotions/shipping-container-in-andhra-pradesh" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru. It has no container yard, depot, workshop or office in Visakhapatnam, Sileru or anywhere else in Andhra Pradesh. Every unit depends on availability: its size, grade, condition, documentation and fit-out, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are set out in its quotation, and no delivery timeline is guaranteed. This page shows illustrative renders of one representative steel storage container, not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
