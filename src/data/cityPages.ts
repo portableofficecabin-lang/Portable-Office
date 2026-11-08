@@ -3152,6 +3152,8 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      // Shivamogga's shop page (#195, live 2026-11-06): one of the brief's named sibling shop pages.
+      { label: "Machenahalli Industrial Area Shops in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -3161,6 +3163,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Sugarcane Juice and Roadside Kiosks in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
         // Nanjangud's shop page (#209, live 2026-11-05) — the brief's location-specific link; it links back here.
         { label: "Shop Rows and Festival Stalls in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+        // Hassan's shop page (#210, live 2026-11-07) — named in the brief; it already links back here.
+        { label: "Highway and KIADB Retail Kiosks in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
