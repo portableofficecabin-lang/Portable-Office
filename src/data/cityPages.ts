@@ -25965,7 +25965,7 @@ export const CITY_PAGES: CityPage[] = [
       width: 1451,
       height: 1084,
       caption:
-        "Illustrative render of an empty, unmodified container interior. Shelving, insulation, lighting or an AC fit-out is added only as agreed in the quotation.",
+        "Illustrative render of a bare container with no fit-out. Any racking, lining, lights or AC equipment is supplied only as listed in the quotation.",
     },
     gallery: [
       {
@@ -25973,14 +25973,14 @@ export const CITY_PAGES: CityPage[] = [
         alt: "Closed container cargo doors with four locking bars, cam handles and a central lockbox",
         width: 1451,
         height: 1084,
-        caption: "Cargo doors with locking bars and a central lockbox. Illustrative render.",
+        caption: "Illustrative render: closed cargo doors secured by four locking bars, with a lockbox at the centre.",
       },
       {
         src: "/images/cities/shipping-container-vellore/vellore-shipping-container-end-wall.webp",
         alt: "Corrugated steel end wall and side wall of a storage container on a paved area",
         width: 1451,
         height: 1084,
-        caption: "End wall and side wall of a storage container. Illustrative render.",
+        caption: "Illustrative render: the corrugated end wall and side wall, with no doors at this end.",
       },
     ],
 
@@ -26139,7 +26139,7 @@ export const CITY_PAGES: CityPage[] = [
       noun: "shipping container",
       heading: "Request a Shipping Container Quote",
       intro:
-        "Choose a container, enter the quantity and your delivery location in or around Vellore, and add the intended use, target dates and any temperature or humidity range your stock needs. Our sales team will reply to confirm the details before sending a written quotation.",
+        "Pick the container you have in mind, the quantity and the Vellore-area address it goes to, then note what will be stored, your target dates and any temperature or humidity limits. We check these details with you first, then send a written quotation.",
     },
     relatedLinksHeading: "Related products",
     relatedLinks: [
@@ -26149,7 +26149,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
     ],
 
-    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate a container yard, depot or office in Vellore, Katpadi, Gudiyatham or Pernambut. Containers are supplied subject to availability: the size, condition, fit-out, dispatch point, delivery, unloading and any collection are confirmed for each unit in its quotation, and delivery dates are not guaranteed. Insulation, air conditioning, humidity control and monitoring are discussed against the stated requirement; no temperature, humidity or cooling performance is guaranteed unless the approved specification states it, and no container is offered as refrigerated storage or as storage for medicines, biomedical waste or other regulated materials. The images on this page are illustrative renders of a representative dry shipping container, not photographs of a container supplied to, or placed in, Vellore. Healthcare campuses, colleges, hostels, lodges and footwear businesses are described generically: the uses and places named here are not clients, completed projects or confirmed delivery areas, and Portable Office Cabin is not affiliated with any hospital, college, university or business in the Vellore area. The storage notes on this page are general guidance, not engineering, clinical, regulatory or legal advice.`,
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no yard, depot or office in Vellore, Katpadi, Gudiyatham or Pernambut. Each unit's availability, size, condition, fit-out, dispatch point, delivery, unloading and any collection are set out in its quotation, and delivery dates are not guaranteed. Insulation, air conditioning, humidity control and monitoring are discussed against the stated requirement; no temperature, humidity or cooling performance is guaranteed unless the approved specification states it, and no container is offered as refrigerated storage or as storage for medicines, biomedical waste or other regulated materials. Every image here is an illustrative render of a typical dry container; none shows a unit delivered to, or standing at, a site in the Vellore area. Healthcare campuses, colleges, hostels, lodges and footwear businesses are described generically: the uses and localities mentioned are examples of enquiries, not customers, finished projects or confirmed delivery areas, and Portable Office Cabin is not affiliated with any hospital, college, university or business in the Vellore area. The storage notes on this page are general guidance, not engineering, clinical, regulatory or legal advice.`,
   },
 ];
 
