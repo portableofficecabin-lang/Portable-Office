@@ -416,6 +416,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
             )}
           </section>
         ))}
+        {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
+        {page.solutionsTable && renderTable(page.solutionsTable)}
 
         {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
         {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
@@ -503,13 +505,17 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </figure>
         )}
         <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.customBullets.map((b) => (
-            <li key={b.title ?? b.text} className={li}>
-              {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
-            </li>
-          ))}
-        </ul>
+        {/* An empty `customBullets` (a prose section, first used by Shipping & Storage Containers in
+            Bellandur) renders no list; every other page has bullets, so its HTML is unchanged. */}
+        {page.customBullets.length > 0 && (
+          <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+            {page.customBullets.map((b) => (
+              <li key={b.title ?? b.text} className={li}>
+                {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
+              </li>
+            ))}
+          </ul>
+        )}
         <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
         {/* Optional contextual links after the outro (`customLinks`); unset = nothing rendered. */}
         {page.customLinks && page.customLinks.length > 0 && renderLinks(page.customLinks)}
