@@ -14025,6 +14025,267 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE OFFICE CABINS FOR TECH PARK PROJECTS IN DEVARABISANAHALLI — the office-cabin intent for
+   * work inside the managed tech parks of Devarabisanahalli (also spelled Devarabeesanahalli) on
+   * Bengaluru's Outer Ring Road: contractor and facilities offices, PMC offices, temporary swing space
+   * during refurbishment, inspection and review rooms, and contractor office clusters. It owns
+   * "portable office cabin + Devarabisanahalli" for both spellings (one canonical page). The planned
+   * Marathahalli page keeps site and sales offices, road projects and delivery logistics; this page
+   * stays inside the campus. Once BOTH pages are live, the Marathahalli tech-park paragraph links here
+   * ("tech park project office cabins in Devarabisanahalli") — held until then, per the brief.
+   *
+   * Owner brief of 2026-11-07 ("Devarabisanahalli Office Cabins — Website Copy and Implementation
+   * Commands"): the proposed slug (no other route serves this intent), meta title (55 chars), meta
+   * description and H1 verbatim; every public paragraph, the table rows and the five FAQs are the
+   * owner's text. Mapped onto the template slots without a template change (#159 and #202 also edit
+   * the route file):
+   *   1 Intro → intro + heroCta (Request a Quotation, Call, WhatsApp; the call and WhatsApp labels
+   *     are the template's own).
+   *   2 "Office Cabins for Managed Tech Parks" (four H3s) → solutions, so they keep their H3s; the
+   *     contractor item links to the site-office product and the PMC item to the office cabin page.
+   *   3 "Plan a Cluster of Contractor Offices" → why (intro + outro, no list). The template renders
+   *     the why section before the solutions, so this section moves up one place.
+   *   4–6 Approval information, placement area, finishes/power/reuse → extra sections placed after
+   *     the solutions, in the brief's order.
+   *   7 Configuration Guide → features (each table row as "Workspace: layout points") with its
+   *     closing note as the sizes note; the interior render follows it as the gallery.
+   *   8 Price → custom: the first paragraph's two sentences, then the items to be shown separately as
+   *     a list; the second paragraph → customOutro. Beside the end-view render.
+   *   9 Delivery enquiries → areas, without the brief's "or around Bellandur": the owner's Bellandur
+   *     brief gives office cabins in Bellandur their own page (portable-office-cabin-bellandur, homes and
+   *     societies, session cc), and an areas list names no place that has its own page for the same
+   *     product (no-cannibalisation rule). The two pages cross-link once both are live.
+   *   10 FAQs: the brief's five; "How long will delivery take?" is already asked on another city
+   *     page, so it reads "…take to a Devarabisanahalli campus?".
+   *   11 Quotation → CTA (+ the configured phone and e-mail) and the on-page enquiry form
+   *     (site-office-containers, the accepted category closest to contractor office cabins; no
+   *     rental models).
+   * Composed for owner review: the tagline, the solutions lead-in, the features lead-in, the
+   * "how" section (four steps built only from the brief's own requests), the form intro, the
+   * image captions and the disclaimer. Not added (brief: confirm first): rental, colour-matched
+   * cladding, sub-metering, shared amenities or removal as services; no schedule, no ₹, no tech park
+   * or company named. Geo is an approximate point on the Outer Ring Road between Bellandur and
+   * Kadubeesanahalli (no gazetteer lists the locality itself).
+   *
+   * Images: four owner-dropped webp files ("public/images/Devarabisanahalli Office Cabins city
+   * page/Devarabisanahalli Office Cabins/cabin (1–4).webp", plain VP8, no EXIF/XMP/ICC, source not
+   * stated), copied byte-for-byte under descriptive names: (1) 1279×816 front three-quarter view =
+   * hero / og:image; (2) aerial roof view = feature band; (3) interior with one L-shaped desk = the
+   * gallery after the configuration guide; (4) end view = beside the price section. All four are
+   * renders of one sage-green and rust-red cabin, so every image is captioned as illustrative and no
+   * image text names a place. No review-room or multi-cabin image was supplied, so none is claimed.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-office-cabin-devarabisanahalli",
+    city: "Devarabisanahalli",
+    listTitle: "Portable Office Cabins in Devarabisanahalli",
+    metaTitle: "Portable Office Cabin in Devarabisanahalli | Tech Parks",
+    metaDescription:
+      "Plan portable office cabins for Devarabisanahalli tech parks, including contractor offices, PMC workspaces and temporary offices during refurbishment.",
+    keywords:
+      "Portable Office Cabin in Devarabisanahalli, Portable Office Cabin Devarabeesanahalli, Tech Park Contractor Office Cabin, PMC Office Cabin, Temporary Swing Space Office, Contractor Office Cluster, Office Cabin for Tech Park Refurbishment, Portable Office Cabin Price in Devarabisanahalli",
+    geo: { region: "IN-KA", placename: "Devarabisanahalli, Bengaluru, Karnataka, India", position: "12.9310;77.6890", icbm: "12.9310, 77.6890" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Office Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-office-cabin-devarabisanahalli/portable-tech-park-office-cabin-front.webp",
+      alt: "Front exterior of a portable office cabin with windows and an entrance door — illustrative render of a sage-green steel cabin with a rust-red lower band, barred windows and an open steel door",
+      width: 1279,
+      height: 816,
+      caption: "Illustrative portable office cabin design. Final fittings depend on the approved specification.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-office-cabin-devarabisanahalli/portable-office-cabin-roof-aerial-view.webp",
+      alt: "Aerial view of a portable office cabin — illustrative render of the green ribbed steel roof seen from above",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative aerial view of a single cabin roof. The footprint, and the space needed around it, follow the approved drawing.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-office-cabin-devarabisanahalli/portable-office-cabin-end-view.webp",
+      alt: "End view of a portable office cabin — illustrative render of the end wall with one barred window, sage-green upper panels and a rust-red lower band",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative end view of the same cabin. Colours, cladding and openings follow the approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-office-cabin-devarabisanahalli/contractor-office-cabin-interior.webp",
+        alt: "Portable office cabin interior — illustrative render of an L-shaped desk with a computer, an office chair and a drawer unit, wood-finish wall panels, ceiling lights and two barred windows",
+        width: 1200,
+        height: 896,
+        caption: "Illustrative contractor office layout. Final fittings depend on the approved specification.",
+      },
+    ],
+
+    h1: "Portable Office Cabins for Tech Park Projects in Devarabisanahalli",
+    tagline: "Contractor Offices, PMC Workspaces and Temporary Swing Space for Fit-Outs, Refurbishments and Campus Expansion",
+    intro: [
+      "Need a workspace for a fit-out, tenant refurbishment or campus expansion? Portable Office Cabin can help you plan a portable office for your Devarabisanahalli project. Start with the number of teams, the work each team needs to do and the space that campus management has made available.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Plan a Cluster of Contractor Offices",
+    whyIntro:
+      "For a larger campus project, several cabins can be planned together as a contractor office cluster, sometimes called a contractor village. List which teams need their own office, which spaces can be shared and where people will enter and circulate.",
+    whyBullets: [],
+    whyOutro:
+      "Discuss shared meeting space, pantry needs, nearby toilets, signs and external lighting with the campus team. If separate electricity tracking is required, confirm whether the campus permits sub-metering and who supplies, installs and reads the meters. Shared facilities and utility work should be itemised in the quote.",
+
+    solutionsHeading: "Office Cabins for Managed Tech Parks",
+    solutionsIntro: "Workspaces to consider for a project inside a managed campus:",
+    solutions: [
+      {
+        title: "Contractor and facilities offices",
+        text: "Set out desk space, drawing storage and a coordination area for civil, interior or mechanical, electrical and plumbing teams. For a facilities office, include space for service records, computers and staff who need access throughout the project.",
+        link: { label: "Portable site office cabins", href: "/products/construction-site-portable-office" },
+      },
+      {
+        title: "Project management consultant offices",
+        text: "A project management consultant (PMC) office can combine workstations with a review table for schedule, quality and progress meetings. Share the required desk count, display equipment and document storage when you request a drawing.",
+        link: { label: "Portable office cabins", href: "/products/office-portable-cabin" },
+      },
+      {
+        title: "Temporary swing space during refurbishment",
+        text: "Swing space gives a tenant team somewhere to work while its regular office is being refurbished. Confirm user numbers, expected duration, privacy, network access and the campus requirements for occupied workspaces before choosing the layout.",
+      },
+      {
+        title: "Material inspection and client review rooms",
+        text: "If teams need to inspect samples or meet clients close to the work area, plan the review table, lighting and storage around the size of the samples. Include any separation or privacy requirements in the brief.",
+      },
+    ],
+
+    featuresHeading: "Configuration Guide",
+    featuresIntro: "Layout points to discuss for each workspace:",
+    features: [
+      "Contractor office: workstations, drawing storage and printer space",
+      "PMC office: desks, review table, display wall and records storage",
+      "Swing space: user count, meeting area, sockets and data connections",
+      "Material inspection room: inspection table, sample shelves and suitable lighting",
+      "Client review room: seating, display space, circulation and privacy",
+      "Contractor office cluster: cabin count, shared facilities, pedestrian access and utilities",
+    ],
+    sizesNote:
+      "Confirm cabin dimensions and circulation using the approved drawing. Specify furniture, equipment and external connections in the enquiry so each item can be accounted for.",
+
+    customHeading: "Portable Office Cabin Price in Devarabisanahalli",
+    customIntro:
+      "Pricing depends on the number of cabins, dimensions, fit-out, finishes, electrical provisions and any shared facilities. Site access, transport, lifting and placement can affect the total. Ask for these items to be shown separately where applicable:",
+    customBullets: [
+      { text: "Site access and transport" },
+      { text: "Lifting and placement" },
+      { text: "Utility connections" },
+      { text: "Any later removal" },
+    ],
+    customOutro: "Send the campus address, project duration, team sizes and approval checklist for an itemised quotation.",
+
+    areasHeading: "Delivery Enquiries Along the Outer Ring Road",
+    areasText:
+      "For sites in Devarabisanahalli (also spelled Devarabeesanahalli), Kadubeesanahalli or Kariyammana Agrahara, share the exact campus entrance and delivery route. The site team can review access and the proposed placement area before a delivery window is agreed.",
+
+    howHeading: "From Enquiry to Delivery Window",
+    howSteps: [
+      { title: "Share the project brief", text: "the campus address, team sizes, project duration, proposed placement area and required date." },
+      { title: "Send the campus checklist", text: "with a site plan if one is available, so access, placement and utility questions can be reviewed." },
+      { title: "Review the drawing and quotation", text: "confirm dimensions, circulation, fit-out and the items shown separately." },
+      { title: "Agree the delivery window", text: "with the responsible campus and lifting teams, once the approvals and documents in the project scope are in place." },
+    ],
+
+    extraSections: [
+      {
+        heading: "Prepare the Campus Approval Information",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Ask the campus team for its placement and delivery checklist early. It may request the cabin footprint, weight, electrical load and connection details, access and exit arrangements, or information about delivery, lifting and eventual removal.",
+          "Agree who provides each item. The cabin supplier, lifting contractor and campus team may each have different responsibilities. Confirm any drawings, lift plan, method statement and crew documentation in the project scope before scheduling delivery.",
+        ],
+      },
+      {
+        heading: "Choose an Approved Placement Area",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A service yard or designated contractor area may be suitable after the campus team reviews it. Check pedestrian access, emergency routes, building exits, drainage, underground services and space for maintenance. For a podium or terrace, obtain a structural assessment that covers the proposed cabin, occupancy and relevant delivery or lifting loads.",
+          "Share gate widths, internal road and ramp limits, overhead obstacles and unloading space. Agree the delivery window and placement sequence with the responsible campus and lifting teams.",
+        ],
+      },
+      {
+        heading: "Coordinate Finishes, Power and Future Reuse",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If the campus has finish or signage requirements, share its palette and design guidelines before ordering. Discuss lighting, ventilation, cooling and insulation alongside the expected occupancy. Confirm campus power availability, capacity and connection responsibilities before selecting equipment.",
+          "If the cabin is intended to move to another project, discuss how it will be disconnected, lifted and transported and who will restore the placement area. Provide any sustainability reporting requirements upfront so the project team can confirm which information is available.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an office cabin be placed inside a tech park?",
+        answer:
+          "Placement depends on campus approval, a suitable location, safe access and the proposed utility connections. Share the campus requirements before selecting a cabin.",
+      },
+      {
+        question: "What is a contractor office cluster?",
+        answer:
+          "It is a group of office cabins in a designated project area. The arrangement can include separate team offices and shared space where the approved layout and project scope allow.",
+      },
+      {
+        question: "Can we use campus power?",
+        answer:
+          "Ask the campus team to confirm available capacity, the connection point and any metering requirements. The quotation should state which wiring and equipment are included.",
+      },
+      {
+        question: "Who supplies approval documents?",
+        answer:
+          "Agree responsibilities before ordering. Cabin drawings and technical details, structural assessments and lifting documents can come from different parties.",
+      },
+      {
+        question: "How long will delivery take to a Devarabisanahalli campus?",
+        answer:
+          "Confirm the schedule for your order after reviewing design approval, production availability, campus permissions and site readiness.",
+      },
+    ],
+
+    ctaHeading: "Request a Quotation for Your Tech Park Project",
+    ctaText: `Send Portable Office Cabin your campus address, proposed placement area, team size and required date. Include a site plan and the campus checklist if available. Call or WhatsApp ${COMPANY.phones[0].display} or email ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call, WhatsApp and Request a Quotation: the call and WhatsApp buttons are on
+    // by default, and an empty list drops the two default container-office buttons (one is "on rent";
+    // rental is not confirmed for this page).
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "site-office-containers",
+      noun: "portable office cabin",
+      heading: "Request an Office Cabin Quotation",
+      intro:
+        "Tell us the campus address, team sizes, project duration and required date. Our sales team will confirm the details with you before preparing an itemised quotation.",
+      excludeRentalModels: true,
+    },
+    relatedLinks: [
+      { label: "Office Cabins with a Pantry", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      { label: "All Portable Cabins", href: "/products/category/portable-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Cabin Layouts and Interiors", href: "/products/portable-cabin/layouts-and-interiors" },
+      { label: "Portable Cabin Installation and Site Preparation", href: "/products/portable-cabin/installation-and-site-preparation" },
+      { label: "Portable Cabins in Bangalore", href: "/promotions/portable-cabin-in-bangalore" },
+      { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+      { label: "Request an Office Cabin Quotation", href: "/contact" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices on Sarjapur Road", href: "/cities-we-serve/container-office-in-sarjapur" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Devarabisanahalli. Delivery, unloading, lifting and placement are arranged for each order, and delivery dates are not guaranteed. The workspaces, layouts, fit-out, finishes and electrical provisions described on this page are options; the items supplied are confirmed in the approved drawing, specification and quotation for each order, and metering, shared facilities, utility connections and later removal are included only where that quotation lists them. The images on this page are illustrative renders of one portable office cabin design, shown with optional furniture; other layouts look different, and the images are not photographs of installations in Devarabisanahalli or in any tech park. No tech park, campus operator or company is named on this page: Portable Office Cabin is not affiliated with any campus in Devarabisanahalli, and the uses described here are not clients or completed projects. Campus approvals, structural assessments, lift plans, method statements and crew documentation are project-specific and may come from different parties; the notes on approvals, placement, loads, lifting and power are general guidance, not engineering, safety or legal advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN DAVANAGERE — Central Karnataka on the NH-48 (Bengaluru–Hubballi)
    * corridor: Davanagere city, Harihar, the Karur Industrial Area, Lokikere and the taluks of
    * Honnali, Channagiri and Jagalur.
