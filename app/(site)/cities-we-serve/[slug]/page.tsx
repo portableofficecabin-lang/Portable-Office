@@ -78,6 +78,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     geo: page.geo,
     image: page.heroImage.src,
     imageAlt: page.heroImage.alt,
+    /* Optional (`ogImageDimensions`): the hero's declared size as og:image:width / height; unset = no tags. */
+    ...(page.ogImageDimensions ? { imageWidth: page.heroImage.width, imageHeight: page.heroImage.height } : {}),
   });
 }
 
