@@ -180,9 +180,14 @@ export interface CityPage {
   /** Optional closing line rendered after the "why" bullets. */
   whyOutro?: string;
 
-  solutionsHeading: string;
-  solutionsIntro: string;
-  solutions: CityPageListItem[];
+  /**
+   * The solutions section. Optional since 2026-11-08 on the same terms as the industries section (first
+   * left out by Shipping Containers in Dharmapuri, whose sections are all extra sections): it renders
+   * only when `solutionsHeading` is set, and every earlier page sets all three, so its HTML is unchanged.
+   */
+  solutionsHeading?: string;
+  solutionsIntro?: string;
+  solutions?: CityPageListItem[];
   /**
    * Optional table rendered after the solutions intro and items, with the same markup as an extra
    * section's table (first used by Shipping Containers for Hydel Power Project Sites in the
@@ -191,10 +196,15 @@ export interface CityPage {
    */
   solutionsTable?: CityPageTable;
 
-  featuresHeading: string;
-  featuresIntro: string;
-  features: string[];
-  sizesNote: string;
+  /**
+   * The features section (list + bold sizes note). Optional since 2026-11-08 on the same terms as the
+   * solutions section above: it renders only when `featuresHeading` is set, and every earlier page sets
+   * all four, so its HTML is unchanged.
+   */
+  featuresHeading?: string;
+  featuresIntro?: string;
+  features?: string[];
+  sizesNote?: string;
 
   /**
    * The industries (uses) section. Optional since 2026-10-21, for owner copy that has no such section
@@ -7249,9 +7259,11 @@ export const CITY_PAGES: CityPage[] = [
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
    * SHIPPING CONTAINER IN METTUR, SALEM — new and used shipping containers (the box itself:
-   * sale, rental, storage, modification) for Mettur, Salem district and the Erode / Namakkal /
-   * Dharmapuri belt. Sibling of the container-office page above: each owns its own keyword and
-   * they link to each other.
+   * sale, rental, storage, modification) for Mettur, Salem district and the Erode / Namakkal belt.
+   * Sibling of the container-office page above: each owns its own keyword and they link to each other.
+   * Dharmapuri has its own shipping-container page since 2026-11-08 (shipping-container-dharmapuri), so
+   * the areas line no longer lists it and points to the Tamil Nadu nearby block instead (owner rule of
+   * 2026-11-05, no keyword cannibalisation).
    *
    * Owner copy of 2026-10-12, mapped onto the fixed template slots the same way as the Mysore
    * and Athipattu shipping-container pages. The draft has 11 H2 sections for 8 slots, so three
@@ -7499,7 +7511,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Shipping Container Supply Areas in Mettur, Salem and Nearby Locations",
     areasText:
-      "Portable Office Cabin accepts shipping container enquiries across Mettur, Salem district and surrounding locations. Mettur and nearby areas: Mettur Dam, P.N. Patti, Raman Nagar, Kolathur, Mecheri and surrounding industrial and residential areas. Salem district: Salem City, Omalur, Sankagiri, Edappadi, Jalakandapuram, Elampillai, Attur and Yercaud. Nearby districts and locations: Dharmapuri, Bhavani, Erode, Namakkal and surrounding commercial and industrial areas. Delivery availability and transportation charges depend on the actual destination and site access. Transportation and delivery: transportation is an important consideration when buying shipping containers for inland locations, and the total delivered cost may include the container price, transport charges, unloading equipment and any additional site-related requirements. A 20 ft container may be transported using a suitable truck or specialised container vehicle; actual vehicle selection depends on the container's dimensions, weight and site conditions. A 40 ft container normally requires a suitable trailer or container transport vehicle, so check road width, turning radius, overhead obstacles, ground conditions and unloading arrangements. Where a site has restricted road access, two 20 ft containers may be worth considering as an alternative to one 40 ft unit; however, the final decision should account for total purchase cost, transport, unloading, layout and storage requirements. A quotation can separate the container price (the selected container), transportation (delivery from the dispatch location to the customer's site), unloading (a crane, hydra or other suitable lifting arrangement, where applicable), modifications (doors, windows, lighting, painting or other agreed work) and applicable GST, so the total landed cost is clear before order confirmation.",
+      "Portable Office Cabin accepts shipping container enquiries across Mettur, Salem district and surrounding locations. Mettur and nearby areas: Mettur Dam, P.N. Patti, Raman Nagar, Kolathur, Mecheri and surrounding industrial and residential areas. Salem district: Salem City, Omalur, Sankagiri, Edappadi, Jalakandapuram, Elampillai, Attur and Yercaud. Nearby districts and locations: Bhavani, Erode, Namakkal and surrounding commercial and industrial areas. For Dharmapuri, see the other Tamil Nadu locations below. Delivery availability and transportation charges depend on the actual destination and site access. Transportation and delivery: transportation is an important consideration when buying shipping containers for inland locations, and the total delivered cost may include the container price, transport charges, unloading equipment and any additional site-related requirements. A 20 ft container may be transported using a suitable truck or specialised container vehicle; actual vehicle selection depends on the container's dimensions, weight and site conditions. A 40 ft container normally requires a suitable trailer or container transport vehicle, so check road width, turning radius, overhead obstacles, ground conditions and unloading arrangements. Where a site has restricted road access, two 20 ft containers may be worth considering as an alternative to one 40 ft unit; however, the final decision should account for total purchase cost, transport, unloading, layout and storage requirements. A quotation can separate the container price (the selected container), transportation (delivery from the dispatch location to the customer's site), unloading (a crane, hydra or other suitable lifting arrangement, where applicable), modifications (doors, windows, lighting, painting or other agreed work) and applicable GST, so the total landed cost is clear before order confirmation.",
 
     howHeading: "How to Buy or Rent a Shipping Container in Mettur and Salem",
     howSteps: [
@@ -26241,7 +26253,10 @@ export const CITY_PAGES: CityPage[] = [
         ],
         closing: [
           "A shared block has to be evaluated against the applicable regulations, the workforce, accessibility needs and the site operator's rules. It does not automatically replace the toilets that individual workplaces are legally required to provide.",
+          "For separate storage for tools and fittings, see:",
         ],
+        // Reciprocal link (2026-11-08): the Dharmapuri shipping-container page links back here from its contractor-store section.
+        links: [{ label: "Shipping containers in Dharmapuri", href: "/cities-we-serve/shipping-container-dharmapuri" }],
       },
       {
         heading: "Making Site Toilets Practical and Comfortable",
@@ -26373,6 +26388,257 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Dharmapuri district. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, cubicle counts, sizes, materials, insulation, fittings, water storage, plumbing and waste provisions described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative images of one double toilet cabin design with one Western and one Indian seat; other configurations look different, and the images are not photographs of installations in Dharmapuri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial park at Adhagapadi are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, contractor or company there, and the project phases, uses and places described here are not clients, completed projects or confirmed delivery areas. The notes on sanitation planning, shared facilities, heat, water use and wastewater are general guidance, not engineering, public-health or legal advice; fixture quantities and wastewater handling must meet the requirements that apply to each site.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN DHARMAPURI — the storage box itself for supplier buffer and kitting
+   * stores, contractor materials, sericulture equipment between crops and empty Palacode crates.
+   *
+   * Owner brief of 2026-11-08 ("Dharmapuri shipping container page and developer commands"): route,
+   * meta title, meta description, H1 and public copy as given. No other page targets shipping
+   * containers in Dharmapuri (repo routes, redirects and sitemap checked; the route was a live 404).
+   * The slug starts with "shipping-container-", so cityFamily() puts it in the shipping-container
+   * family: directory card ("Shipping containers in Dharmapuri", the hub anchor the brief asks for),
+   * Tamil Nadu sibling links both ways and the nearby block. The brief's sections map onto the
+   * template in the brief's order; this page sets neither the solutions nor the features section
+   * (both optional since 2026-11-08), so every section after "why" is an extra section:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Buffer and kitting stores for industrial suppliers" → why (paragraph, the four bullets, and
+   *     the EV battery note as whyOutro).
+   *   • "Contractor stores for cable, fittings and tools" (two paragraphs + the brief §5 toilet link),
+   *     "Sericulture equipment between crops", "Empty crates and packing supplies in Palacode" and
+   *     "Container sizes, condition and delivery" (table, the used-unit paragraph and the brief §5
+   *     inspection link) → afterSolutions extra sections, followed by the gallery.
+   *   • "Shipping container price and rental in Dharmapuri" → custom (no bullets), with the brief's
+   *     rental anchor as customLinks; the hire-dates sentence follows the pointer to it.
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (six) → faqs; the closing request → CTA + the
+   *     cargo-category enquiry form (rental is mentioned, so the form keeps the rental model).
+   * Lead-ins written where a slot needs one: tagline, the table caption, the two link lead-ins, the
+   * enquiry-form heading and intro. No ₹ figure, stock, lead time, load rating, dispatch origin, park
+   * acreage, construction status, EV hub timeline or supplier affiliation; high-cube availability,
+   * fit-outs, lifting and dispatch stay quote-dependent, and battery storage stays outside the
+   * general-purpose offer, as the brief says. SIPCOT is named only as service-area context.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container and container rental × Dharmapuri,
+   * Adhiyamankottai and Palacode. The Dharmapuri toilet page keeps site sanitation (the two pages link
+   * to each other); the Mettur, Salem shipping page no longer lists Dharmapuri in its areas line. The
+   * Krishnagiri container product page (/products/shipping-container-in-krishnagiri) keeps its own
+   * title, meta and uses; it names Dharmapuri only as a delivery area in its body.
+   *
+   * LINKS (brief §5): the toilet page and /products/shipping-container-rental are live (HTTP 200).
+   * No Chennai page is a used-container inspection guide; the Chennai-area page with a used-container
+   * checklist is Shipping Container in Athipattu (Ennore–Kattupalli corridor), whose "Used Container
+   * Inspection" section lists seven checks, so "How to inspect a used container" points there, as on
+   * the Hubballi–Dharwad page.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Dharmapuri shipping container
+   * city page/Dharmapuri shipping container page/cabin (1–5).webp", 1200×896 and 1451×1084 ×4, no
+   * EXIF / XMP / ICC metadata or provenance to keep) of one charcoal-grey steel container on a paved
+   * yard. The VP8 bitstreams are copied byte-for-byte (pixel-identical decode) into the extended format
+   * with an XMP dc:title and a dc:description that calls each an illustrative render. Only the exterior
+   * hero matches a slot in the brief's image table (its filename, alt and caption are used); the
+   * interior is empty and no image shows bins, shelves, trays or crates, so those four slots are left
+   * out. The roof view is the feature band; the cargo doors, empty interior and side view are the
+   * gallery. Every caption says "illustrative" and the disclaimer says none is a photograph taken in
+   * Dharmapuri or Palacode.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-dharmapuri",
+    city: "Dharmapuri",
+    listTitle: "Shipping & Cargo Containers in Dharmapuri",
+    metaTitle: "Shipping & Storage Containers in Dharmapuri",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Dharmapuri for supplier stock, contractor materials, sericulture equipment and Palacode crates.",
+    keywords:
+      "Shipping Container in Dharmapuri, Storage Container Dharmapuri, Cargo Container Dharmapuri, Shipping Container Rental Dharmapuri, Adhiyamankottai Industrial Storage, Palacode Crate Storage",
+    geo: { region: "IN-TN", placename: "Dharmapuri, Tamil Nadu, India", position: "12.1211;78.1582", icbm: "12.1211, 78.1582" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for industrial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above on a paved yard, showing its corrugated roof and closed double cargo doors",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render from above. Include photos of the drop area, gate and any overhead obstructions with your enquiry.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container, with four vertical locking bars and handles",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors. Ask about a lockbox, and check the seals of the unit quoted.",
+      },
+      {
+        src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-empty-interior.webp",
+        alt: "Empty steel container interior with corrugated walls and a plywood floor, seen through open cargo doors",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative empty interior. Shelving, bins, lighting and any other fit-out are quoted separately.",
+      },
+      {
+        src: "/images/cities/shipping-container-dharmapuri/dharmapuri-shipping-container-side-view.webp",
+        alt: "Corrugated side wall and closed end wall of a steel shipping container on a paved yard",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative side view. The approach and unloading space are checked for each site.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Dharmapuri",
+    tagline:
+      "Storage containers for supplier buffer stock, contractor materials, sericulture equipment and empty crates around Dharmapuri, Adhiyamankottai and Palacode.",
+    intro: [
+      "Need a buffer store for an assembly supplier, somewhere to keep cable fittings on a construction site, or space for empty crates between dispatches? Portable Office Cabin welcomes shipping container enquiries across Dharmapuri district, including sites around Adhiyamankottai and Palacode. Share what you need to store, how your team will handle it and where the unit will sit so we can discuss the size, fittings and delivery.",
+    ],
+
+    whyHeading: "Buffer and kitting stores for industrial suppliers",
+    whyIntro:
+      "A buffer store holds parts between incoming deliveries and the next issue to production. A kitting store gives staff a place to group parts for an assembly batch. For suppliers working around the Dharmapuri SIPCOT area, start with the number of part lines, replenishment frequency and the largest trolley or carton you need to move.",
+    whyBullets: [
+      { text: "Use labelled bins and shelves for harnesses, brackets, fasteners and other suitable non-hazardous parts." },
+      { text: "Allow a clear picking aisle and a separate space for preparing kits." },
+      { text: "Discuss lighting, shelf loads and access for trolleys in the quotation." },
+      { text: "Agree on a reorder and issue process that fits your existing inventory system." },
+    ],
+    whyOutro:
+      "EV battery enquiries: this page covers general-purpose storage for non-hazardous parts and packaging. For lithium-ion cells or battery packs, refer the storage requirement to your qualified fire-safety team.",
+
+    extraSections: [
+      {
+        heading: "Contractor stores for cable, fittings and tools",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A site store can hold suitable tools, valves, pipe fittings and electrical materials during industrial construction. Ask about a lockbox, rated shelving and labelled issue points. Keep an issue register and agree with the site team on lighting, access control and the location of the unit.",
+          "If you need to store cable drums, include their dimensions and loaded weights. Have the responsible technical team verify floor capacity, handling clearances and how drums will be secured before selecting a unit.",
+        ],
+        closing: ["For separate crew sanitation, see:"],
+        // Brief §5: the Dharmapuri toilet page (live), which links back from its shared-toilet-block section.
+        links: [{ label: "Portable toilet cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" }],
+      },
+      {
+        heading: "Sericulture equipment between crops",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Use a separate store for clean, dry rearing trays, mountages and other equipment between batches. Plan racks around the largest pieces and keep access clear for cleaning and inspection. Follow your sericulture adviser’s and treatment supplier’s instructions for cleaning, disinfection and handling treated equipment.",
+        ],
+      },
+      {
+        heading: "Empty crates and packing supplies in Palacode",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For tomato traders and packing teams, a container can hold empty reusable crates, suitable cartons, liners and other dry packing materials between dispatches. Measure nested crate stacks and allow room to retrieve stock without moving everything in front. Use produce-appropriate storage for fresh tomatoes.",
+        ],
+      },
+      {
+        heading: "Container sizes, condition and delivery",
+        placement: "afterSolutions",
+        table: {
+          caption: "Sizes describe typical enquiries; the quotation states the actual dimensions, condition and availability of the unit offered.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Buffer stock, sericulture equipment or empty crates", "Door clearance, aisle space and unloading access"],
+            ["40 ft", "Larger contractor stores or supplier inventory", "Trailer approach, turning area and approved placement"],
+            ["40 ft high cube", "Taller racking or bulky packaging", "Availability, actual dimensions and route height clearance"],
+          ],
+        },
+        closing: [
+          "For a used unit, ask for its stated condition and check the floor, doors, seals, roof and locking gear. Share photos of the final approach, gate and drop area, including overhead obstructions and the space available for unloading. Ask for the dispatch point, transport and lifting scope in the quotation.",
+          "Before selecting a used unit, see our guide:",
+        ],
+        // Brief §5 inspection link: the Chennai-area page whose "Used Container Inspection" section is a seven-point checklist.
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    customHeading: "Shipping container price and rental in Dharmapuri",
+    customIntro: "The price depends on the size, condition, fittings, transport and unloading arrangements.",
+    // Empty on purpose: the section is prose (see the header comment).
+    customBullets: [],
+    customOutro:
+      "For seasonal storage or temporary construction work, see the rental options below. Share your proposed hire dates so the team can confirm availability, delivery and collection terms.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Dharmapuri town, Adhiyamankottai, Adhagapadi, Thadangam, Balajangamanahalli, Nallampalli and Thoppur. We also consider sites in Palacode, Karimangalam, Pennagaram, Harur, Morappur and Pappireddipatti. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      { title: "Share the stock type, quantity, intended use, site address and target dates.", text: "" },
+      { title: "Review the proposed container, fit-out and itemised quote.", text: "" },
+      { title: "Confirm the placement area, route access, base readiness and unloading responsibilities.", text: "" },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    faqs: [
+      {
+        question: "Can a container work as a kitting or buffer store?",
+        answer: "Yes, for suitable stock. Share part sizes, shelf loads and trolley dimensions so the layout can be assessed.",
+      },
+      {
+        question: "Can I use a standard container for EV battery storage?",
+        answer:
+          "The units described here are for general-purpose storage. Refer lithium-ion battery storage to your qualified fire-safety team for a purpose-designed solution.",
+      },
+      {
+        question: "Can I store cable drums in a container?",
+        answer:
+          "That depends on the drum weights, dimensions and handling method. Have the technical team assess the floor, clearances and restraint requirements before ordering.",
+      },
+      {
+        question: "Can I store sericulture equipment between crops?",
+        answer:
+          "You can enquire about shelving for clean, dry trays, mountages and tools. Follow the applicable cleaning and treatment instructions before putting equipment away.",
+      },
+      {
+        question: "Can I rent a container for empty tomato crates in Palacode?",
+        answer:
+          "Yes, you can enquire about rental for empty crates and suitable packing materials. Share your dates, stack dimensions and site access for an availability check.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer: "Timing depends on stock, any fittings, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Dharmapuri",
+    ctaText:
+      "Send the site address, intended use, preferred size, quantity, dates and photos of the access route and unloading area. Include stock dimensions, weights and any racking, lighting or security requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default (the brief's Request a Quote · Call · WhatsApp).
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Send your Dharmapuri container requirement",
+      intro:
+        "Pick a container and quantity, then add your site address or PIN in Dharmapuri district, the stock you plan to store and your dates. Mention racking, lighting, a lockbox or rental; the team reviews the details before sending a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, Tamil Nadu, and has an office in Electronic City, Bengaluru; it does not run a container yard, depot, office or service partner in Dharmapuri district. Each container is offered subject to stock, and its size, condition, grade, dispatch point, any fittings, any rental terms and the transport, lifting, unloading and collection scope are set out in its quotation; no delivery date is guaranteed. All five images are illustrative renders of one steel shipping container; the interior is shown empty, and none is a photograph of a container delivered to or placed in Dharmapuri or Palacode. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) is named only to describe the area served; Portable Office Cabin is not affiliated with SIPCOT or with any supplier, manufacturer, contractor, trader or company there. The suppliers, contractors, sericulture farmers, tomato traders and localities named describe typical enquiries and the area served, not clients, completed projects or confirmed delivery areas. The containers described are for general-purpose storage of suitable non-hazardous goods, not for lithium-ion cells or battery packs. Notes on shelf and floor loads, cable drums, lighting, fire safety, sericulture cleaning and treatment, and produce storage are general guidance, not engineering, fire-safety, agricultural or food-safety advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────

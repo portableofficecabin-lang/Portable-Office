@@ -172,20 +172,26 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     m("images", "feature image alt", `alt="${p.featureImage.alt}"`);
     t("images", "feature image caption", p.featureImage.caption);
   }
-  t("solutions", "solutions heading", p.solutionsHeading);
-  t("solutions", "solutions intro", p.solutionsIntro);
-  p.solutions.forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
-  p.solutions.forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
-  // Optional solutions table (since 2026-11-07): caption, headers and every cell.
-  if (p.solutionsTable) {
-    t("solutions", "solutions table caption", p.solutionsTable.caption);
-    p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
-    p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
+  // Optional section (since 2026-11-08): audited whenever the page sets it.
+  if (p.solutionsHeading) {
+    t("solutions", "solutions heading", p.solutionsHeading);
+    t("solutions", "solutions intro", p.solutionsIntro ?? "");
+    (p.solutions ?? []).forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
+    (p.solutions ?? []).forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+    // Optional solutions table (since 2026-11-07): caption, headers and every cell.
+    if (p.solutionsTable) {
+      t("solutions", "solutions table caption", p.solutionsTable.caption);
+      p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
+      p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
+    }
   }
-  t("features", "features heading", p.featuresHeading);
-  t("features", "features intro", p.featuresIntro);
-  p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
-  t("features", "sizes note", p.sizesNote);
+  // Optional section (since 2026-11-08): audited whenever the page sets it.
+  if (p.featuresHeading) {
+    t("features", "features heading", p.featuresHeading);
+    t("features", "features intro", p.featuresIntro ?? "");
+    (p.features ?? []).forEach((f, i) => t("features", `feature line ${i + 1}`, f));
+    t("features", "sizes note", p.sizesNote ?? "");
+  }
   p.gallery?.forEach((g, i) => { items.push({ group: "images", label: `gallery ${i + 1} src`, test: (mk) => imageNeedle(g.src).test(mk) }); m("images", `gallery ${i + 1} alt`, `alt="${g.alt}"`); });
   // Optional gallery captions (since 2026-11-05): audited whenever an image sets one.
   p.gallery?.forEach((g, i) => { if (g.caption) t("images", `gallery ${i + 1} caption`, g.caption); });
@@ -229,15 +235,19 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     // Optional links (since 2026-11-05): label text and href.
     (s.links ?? []).forEach((l, j) => { t("extra", `extra section ${i + 1} link ${j + 1} "${l.label}"`, l.label); m("extra", `extra section ${i + 1} link ${j + 1} href ${l.href}`, `href="${l.href}"`); });
     // Optional placement (since 2026-11-04): an "afterSolutions" section sits between the solutions
-    // heading and the features heading in the visible text.
+    // heading and the features heading in the visible text. A page without those optional sections
+    // (since 2026-11-08) is checked against the headings either side instead: the why heading before,
+    // and the industries or custom heading after.
     if (s.placement === "afterSolutions") {
+      const before = p.solutionsHeading ?? p.whyHeading;
+      const after = p.featuresHeading ?? p.industriesHeading ?? p.customHeading;
       items.push({
         group: "extra",
         label: `extra section ${i + 1} renders after the solutions`,
         test: (_mk, tx) => {
-          const a = tx.indexOf(squash(p.solutionsHeading));
+          const a = tx.indexOf(squash(before));
           const b = a >= 0 ? tx.indexOf(squash(s.heading), a) : -1;
-          const c = b >= 0 ? tx.indexOf(squash(p.featuresHeading), b) : -1;
+          const c = b >= 0 ? tx.indexOf(squash(after), b) : -1;
           return a >= 0 && b > a && c > b;
         },
       });

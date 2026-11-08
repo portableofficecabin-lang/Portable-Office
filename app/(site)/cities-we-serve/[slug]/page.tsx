@@ -389,36 +389,48 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </figure>
         )}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>
-        {page.solutions.map((s0, i) => (
-          <section key={s0.title} className={page.motion ? "reveal" : undefined}>
-            <h3 className={h3}>{i + 1}. {s0.title}</h3>
-            <p className={p}>{s0.text}</p>
-            {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
-            {s0.link && (
-              <p className={p}>
-                <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
-                  {s0.link.label}
-                </Link>
-              </p>
-            )}
-          </section>
-        ))}
-        {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
-        {page.solutionsTable && renderTable(page.solutionsTable)}
+        {/* Optional since 2026-11-08 (see CityPage.solutionsHeading): unset = no section. The fragment
+            adds no markup, so pages that set it render byte-identical HTML. */}
+        {page.solutionsHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>
+            {(page.solutions ?? []).map((s0, i) => (
+              <section key={s0.title} className={page.motion ? "reveal" : undefined}>
+                <h3 className={h3}>{i + 1}. {s0.title}</h3>
+                <p className={p}>{s0.text}</p>
+                {/* Optional contextual link (`link`, see CityPageListItem); unset = no element. */}
+                {s0.link && (
+                  <p className={p}>
+                    <Link href={s0.link.href} className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+                      {s0.link.label}
+                    </Link>
+                  </p>
+                )}
+              </section>
+            ))}
+            {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
+            {page.solutionsTable && renderTable(page.solutionsTable)}
+          </>
+        )}
 
         {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
         {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.features.map((f) => (
-            <li key={f} className={li}>{f}</li>
-          ))}
-        </ul>
-        <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+        {/* Optional since 2026-11-08 (see CityPage.featuresHeading): unset = no section; pages that
+            set it render byte-identical HTML. */}
+        {page.featuresHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.features ?? []).map((f) => (
+                <li key={f} className={li}>{f}</li>
+              ))}
+            </ul>
+            <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+          </>
+        )}
 
         {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
             1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
