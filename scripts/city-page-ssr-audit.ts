@@ -182,6 +182,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     m("images", `layout ${i + 1} image ${j + 1} alt`, `alt="${img.alt}"`);
     t("images", `layout ${i + 1} image ${j + 1} caption`, img.caption);
   }));
+  // Optional solutions table (since 2026-11-07): caption, headers and every cell.
+  if (p.solutionsTable) {
+    t("solutions", "solutions table caption", p.solutionsTable.caption);
+    p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
+    p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
+  }
   t("features", "features heading", p.featuresHeading);
   t("features", "features intro", p.featuresIntro);
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
