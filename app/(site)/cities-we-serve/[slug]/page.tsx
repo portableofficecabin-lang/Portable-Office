@@ -200,25 +200,63 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
     </ul>
   );
 
+  /* Optional image inside an extra section (`image`, first used by Portable Office Cabins in
+     Marathahalli to show its interior beside the layout guide): the interior image's figure, including
+     its narrow-image rule, so an image narrower than the max-w-2xl frame is never upscaled or zoomed. */
+  const renderSectionImage = (img: NonNullable<CityPageSection["image"]>) => {
+    const narrow = img.width < MAX_W_2XL_PX;
+    return (
+      <figure className={`mb-4 mt-2 overflow-hidden rounded-2xl border bg-muted/30${mc("reveal-scale group")}`}>
+        <Image
+          src={img.src}
+          alt={img.alt}
+          width={img.width}
+          height={img.height}
+          sizes={narrow ? `(max-width: ${img.width}px) 100vw, ${img.width}px` : "(max-width: 896px) 100vw, 896px"}
+          className={`mx-auto h-auto w-full max-w-2xl${
+            narrow ? "" : mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")
+          }`}
+          style={narrow ? { maxWidth: img.width } : undefined}
+          loading="lazy"
+        />
+        {img.caption && (
+          <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
+            {img.caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  };
+
+  /* An extra section's bullets: the bulleted list every section has always rendered, or, with
+     `ordered` (optional, first used by Portable Office Cabin in Bellandur for its numbered steps), a
+     numbered list with the same items. Unset = the <ul>, byte-identical to before. */
+  const renderSectionList = (bullets: NonNullable<CityPageSection["bullets"]>, ordered?: boolean) => {
+    const items = bullets.map((b) => (
+      <li key={b.title ?? b.text} className={li}>
+        {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
+      </li>
+    ));
+    return ordered ? (
+      <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>{items}</ol>
+    ) : (
+      <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>{items}</ul>
+    );
+  };
+
   /* One optional extra section (`extraSections`): owner copy with more H2s than the fixed slots
      hold. Same classes and motion as the fixed sections. Rendered after the "how" steps, or after
      the solutions list when `placement` is "afterSolutions". */
   const renderSection = (sec: CityPageSection) => (
     <section key={sec.heading}>
       <h2 className={`${h2}${mc("reveal")}`}>{sec.heading}</h2>
+      {/* Optional image straight under the heading (`image`); unset = no element. */}
+      {sec.image && renderSectionImage(sec.image)}
       {sec.paragraphs?.map((text) => (
         <p key={text.slice(0, 40)} className={`${p}${mc("reveal")}`}>{text}</p>
       ))}
       {sec.table && renderTable(sec.table)}
-      {sec.bullets && sec.bullets.length > 0 && (
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {sec.bullets.map((b) => (
-            <li key={b.title ?? b.text} className={li}>
-              {b.title && <strong className="text-foreground">{b.title}:</strong>} {b.text}
-            </li>
-          ))}
-        </ul>
-      )}
+      {sec.bullets && sec.bullets.length > 0 && renderSectionList(sec.bullets, sec.ordered)}
       {/* Optional paragraphs after the bullets (`closing`); unset = nothing rendered. */}
       {sec.closing?.map((text) => (
         <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
@@ -315,6 +353,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {page.intro.map((text) => (
           <p key={text.slice(0, 40)} className={`${p} mt-4${mc("reveal")}`}>{text}</p>
         ))}
+        {/* Optional contextual links after the intro (`introLinks`); unset = nothing rendered. */}
+        {page.introLinks && page.introLinks.length > 0 && renderLinks(page.introLinks)}
 
         {/* Optional hero contact row (`heroCta`): quotation (the on-page form when there is one), Call
             and WhatsApp, styled like the CTA box buttons. Not a scroll reveal: it sits near the top
@@ -341,7 +381,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
             >
               <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-              Call {primaryPhone.display}
+              {/* Unset label = the same two text children as before ("Call ", number), so the HTML is unchanged. */}
+              {page.callButtonLabel ?? "Call "}{page.callButtonLabel ? null : primaryPhone.display}
             </a>
             <a
               href={whatsappUrl}
@@ -350,26 +391,32 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
               className={`inline-flex items-center justify-center gap-2 rounded-md bg-[#0B7A43] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#096436]${mc("press")}`}
             >
               <WhatsAppGlyph className="h-4 w-4 shrink-0" />
-              WhatsApp Us
+              {page.whatsappButtonLabel ?? "WhatsApp Us"}
             </a>
           </div>
         )}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
-        {/* An empty `whyBullets` (a section carried by `whyTable`) renders no list. */}
-        {page.whyBullets.length > 0 && (
-          <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-            {page.whyBullets.map((b) => (
-              <li key={b.title ?? b.text} className={li}>
-                {b.title && <><strong className="text-foreground">{b.title}:</strong> </>}{b.text}
-              </li>
-            ))}
-          </ul>
+        {/* Optional since 2026-11-07 (see CityPage.whyHeading): unset = no section. The fragment adds no
+            markup, so pages that set it render byte-identical HTML. */}
+        {page.whyHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.whyHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.whyIntro}</p>
+            {/* An empty `whyBullets` (a section carried by `whyTable`) renders no list. */}
+            {page.whyBullets && page.whyBullets.length > 0 && (
+              <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+                {page.whyBullets.map((b) => (
+                  <li key={b.title ?? b.text} className={li}>
+                    {b.title && <><strong className="text-foreground">{b.title}:</strong> </>}{b.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {/* Optional table (`whyTable`); unset = no element. */}
+            {page.whyTable && renderTable(page.whyTable)}
+            {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
+          </>
         )}
-        {/* Optional table (`whyTable`); unset = no element. */}
-        {page.whyTable && renderTable(page.whyTable)}
-        {page.whyOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.whyOutro}</p>}
 
         {/* Feature band — a single editorial plate breaking the longest text run on the page.
             Cropped 3:2 (sources are square, so object-cover keeps the cabin centred and stops a
@@ -401,7 +448,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         )}
 
         <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>
+        {/* Optional since 2026-11-07 (see CityPage.solutionsIntro): unset = no paragraph. */}
+        {page.solutionsIntro && <p className={`${p}${mc("reveal")}`}>{page.solutionsIntro}</p>}
         {page.solutions.map((s0, i) => (
           <section key={s0.title} className={page.motion ? "reveal" : undefined}>
             <h3 className={h3}>{i + 1}. {s0.title}</h3>
@@ -422,14 +470,19 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
         {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
-        <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
-        <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-          {page.features.map((f) => (
-            <li key={f} className={li}>{f}</li>
-          ))}
-        </ul>
-        <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+        {/* Optional since 2026-11-07 (see CityPage.featuresHeading): unset = no section. */}
+        {page.featuresHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
+            <p className={`${p}${mc("reveal")}`}>{page.featuresIntro}</p>
+            <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+              {(page.features ?? []).map((f) => (
+                <li key={f} className={li}>{f}</li>
+              ))}
+            </ul>
+            <p className={`${p} mt-4${mc("reveal")}`}><strong className="text-foreground">{page.sizesNote}</strong></p>
+          </>
+        )}
 
         {/* gallery — every angle of the cabin, lazy-loaded. Columns follow the item count so a
             1- or 2-image gallery fills the row instead of sitting stranded at a third width. */}
@@ -477,48 +530,54 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
           </>
         )}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.customHeading}</h2>
-        {page.interiorImage && (
-          <figure className={`mb-4 mt-2 overflow-hidden rounded-2xl border bg-muted/30${mc("reveal-scale group")}`}>
-            <Image
-              src={page.interiorImage.src}
-              alt={page.interiorImage.alt}
-              width={page.interiorImage.width}
-              height={page.interiorImage.height}
-              sizes={
-                interiorNarrow
-                  ? `(max-width: ${page.interiorImage.width}px) 100vw, ${page.interiorImage.width}px`
-                  : "(max-width: 896px) 100vw, 896px"
-              }
-              className={`mx-auto h-auto w-full max-w-2xl${
-                interiorNarrow ? "" : mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")
-              }`}
-              style={interiorNarrow ? { maxWidth: page.interiorImage.width } : undefined}
-              loading="lazy"
-            />
-            {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
-            {page.interiorImage.caption && (
-              <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
-                {page.interiorImage.caption}
-              </figcaption>
+        {/* Optional since 2026-11-07 (see CityPage.customHeading): unset = no section, and no interior
+            image, which belongs to it. */}
+        {page.customHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.customHeading}</h2>
+            {page.interiorImage && (
+              <figure className={`mb-4 mt-2 overflow-hidden rounded-2xl border bg-muted/30${mc("reveal-scale group")}`}>
+                <Image
+                  src={page.interiorImage.src}
+                  alt={page.interiorImage.alt}
+                  width={page.interiorImage.width}
+                  height={page.interiorImage.height}
+                  sizes={
+                    interiorNarrow
+                      ? `(max-width: ${page.interiorImage.width}px) 100vw, ${page.interiorImage.width}px`
+                      : "(max-width: 896px) 100vw, 896px"
+                  }
+                  className={`mx-auto h-auto w-full max-w-2xl${
+                    interiorNarrow ? "" : mc("transition-transform duration-700 ease-out group-hover:scale-[1.03]")
+                  }`}
+                  style={interiorNarrow ? { maxWidth: page.interiorImage.width } : undefined}
+                  loading="lazy"
+                />
+                {/* Optional visible caption, e.g. marking a render as illustrative. Unset = no element. */}
+                {page.interiorImage.caption && (
+                  <figcaption className="border-t px-4 py-2.5 text-center text-sm leading-relaxed text-muted-foreground">
+                    {page.interiorImage.caption}
+                  </figcaption>
+                )}
+              </figure>
             )}
-          </figure>
+            <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>
+            {/* An empty `customBullets` (a prose section, first used by Shipping & Storage Containers in
+                Bellandur) renders no list; every other page has bullets, so its HTML is unchanged. */}
+            {(page.customBullets ?? []).length > 0 && (
+              <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
+                {(page.customBullets ?? []).map((b) => (
+                  <li key={b.title ?? b.text} className={li}>
+                    {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
+            {/* Optional contextual links after the outro (`customLinks`); unset = nothing rendered. */}
+            {page.customLinks && page.customLinks.length > 0 && renderLinks(page.customLinks)}
+          </>
         )}
-        <p className={`${p}${mc("reveal")}`}>{page.customIntro}</p>
-        {/* An empty `customBullets` (a prose section, first used by Shipping & Storage Containers in
-            Bellandur) renders no list; every other page has bullets, so its HTML is unchanged. */}
-        {page.customBullets.length > 0 && (
-          <ul className={`list-disc pl-6${mc("reveal-stagger")}`}>
-            {page.customBullets.map((b) => (
-              <li key={b.title ?? b.text} className={li}>
-                {b.title && <><strong className="text-foreground">{b.title}</strong> — </>}{b.text}
-              </li>
-            ))}
-          </ul>
-        )}
-        <p className={`${p}${mc("reveal")}`}>{page.customOutro}</p>
-        {/* Optional contextual links after the outro (`customLinks`); unset = nothing rendered. */}
-        {page.customLinks && page.customLinks.length > 0 && renderLinks(page.customLinks)}
 
         {/* Optional since 2026-10-21 (see CityPage.whyUsHeading): unset = no section. */}
         {page.whyUsHeading && (
@@ -540,18 +599,23 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {/* Optional contextual links after the areas text (`areasLinks`); unset = nothing rendered. */}
         {page.areasLinks && page.areasLinks.length > 0 && renderLinks(page.areasLinks)}
 
-        <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
-        {/* Optional lead-in / closing paragraphs (`howIntro`, `howOutro`); unset = no element. A step
-            with an empty `text` (an owner list of titles only) renders its title alone. */}
-        {page.howIntro && <p className={`${p}${mc("reveal")}`}>{page.howIntro}</p>}
-        <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>
-          {page.howSteps.map((s0) => (
-            <li key={s0.title} className={li}>
-              <strong className="text-foreground">{s0.title}</strong>{s0.text ? <> — {s0.text}</> : null}
-            </li>
-          ))}
-        </ol>
-        {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
+        {/* Optional since 2026-11-07 (see CityPage.howHeading): unset = no section. */}
+        {page.howHeading && (
+          <>
+            <h2 className={`${h2}${mc("reveal")}`}>{page.howHeading}</h2>
+            {/* Optional lead-in / closing paragraphs (`howIntro`, `howOutro`); unset = no element. A step
+                with an empty `text` (an owner list of titles only) renders its title alone. */}
+            {page.howIntro && <p className={`${p}${mc("reveal")}`}>{page.howIntro}</p>}
+            <ol className={`list-decimal pl-6${mc("reveal-stagger")}`}>
+              {(page.howSteps ?? []).map((s0) => (
+                <li key={s0.title} className={li}>
+                  <strong className="text-foreground">{s0.title}</strong>{s0.text ? <> — {s0.text}</> : null}
+                </li>
+              ))}
+            </ol>
+            {page.howOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.howOutro}</p>}
+          </>
+        )}
 
         {/* Optional extra sections (`extraSections`) without a `placement`: rendered here, after the
             "how" steps, as on every earlier page; unset = nothing rendered. */}
@@ -586,7 +650,9 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                   className={`inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90${mc("press")}`}
                 >
                   <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  Call {primaryPhone.display}
+                  {/* Optional owner labels (`callButtonLabel` / `whatsappButtonLabel`). Unset = the same two text
+                      children as before ("Call ", number), so the HTML is unchanged. */}
+                  {page.callButtonLabel ?? "Call "}{page.callButtonLabel ? null : primaryPhone.display}
                 </a>
                 <a
                   href={whatsappUrl}
@@ -595,7 +661,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
                   className={`inline-flex items-center justify-center gap-2 rounded-md bg-[#0B7A43] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#096436]${mc("press")}`}
                 >
                   <WhatsAppGlyph className="h-4 w-4 shrink-0" />
-                  WhatsApp Us
+                  {page.whatsappButtonLabel ?? "WhatsApp Us"}
                 </a>
               </>
             )}
