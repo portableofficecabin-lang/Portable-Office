@@ -279,6 +279,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Cargo storage containers in Bangalore", href: "/promotions/cargo-storage-container-in-bangalore" },
       // First city page on this list (2026-11-05, owner brief): the Shivamogga shipping-container page.
       { name: "Shipping containers in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+      // Uttara Kannada district page (Karwar, Sirsi and the coast), 2026-11-07.
+      { name: "Shipping containers in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
       // Vellore shipping-container page (2026-11-07, owner brief), after Shivamogga so live links keep their positions.
       { name: "Shipping containers in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
     ],
