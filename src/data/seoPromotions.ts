@@ -380,6 +380,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Shipping Container|Tamil Nadu": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
     { name: "Shipping Container in Mettur, Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
+    // Coimbatore (Kovai) and the Pollachi belt, 2026-11-07; after Mettur so the live links keep their positions.
+    { name: "Shipping Container in Coimbatore", href: "/cities-we-serve/shipping-container-coimbatore" },
     // Vellore (with Katpadi), 2026-11-07; after Mettur so the live links keep their positions. Not on the
     // Chennai hub: Vellore is inland, and the page links back to this hub only.
     { name: "Shipping Container in Vellore", href: "/cities-we-serve/shipping-container-vellore" },
