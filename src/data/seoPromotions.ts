@@ -276,6 +276,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   // portable-cabin hub's first city page; the page links back here and to both Karnataka hubs.
   "Portable Cabin|Bangalore": [
     { name: "Portable Cabins in Vasanthapura", href: "/cities-we-serve/portable-cabin-vasanthapura-industrial-area" },
+    // Office-cabin page for tech park projects in Devarabisanahalli (Outer Ring Road, 2026-11-07); the page links back here.
+    { name: "Portable Office Cabins for Devarabisanahalli Tech Parks", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
   ],
   // Tamil Nadu hubs — every Tamil Nadu city page, so the state hub reaches each local page.
   "Container Office|Tamil Nadu": [
@@ -378,19 +380,34 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
   "Shipping Container|Tamil Nadu": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
     { name: "Shipping Container in Mettur, Salem", href: "/cities-we-serve/shipping-container-in-mettur-salem" },
+    // Coimbatore (Kovai) and the Pollachi belt, 2026-11-07; after Mettur so the live links keep their positions.
+    { name: "Shipping Container in Coimbatore", href: "/cities-we-serve/shipping-container-coimbatore" },
   ],
   "Shipping Container|Chennai": [
     { name: "Shipping Container in Athipattu", href: "/cities-we-serve/shipping-container-in-athipattu" },
+  ],
+  // Andhra Pradesh hub — the hydel project page near Visakhapatnam and Sileru (owner brief, 2026-11-07),
+  // the first Andhra Pradesh city page; the page links back to this hub.
+  "Shipping Container|Andhra Pradesh": [
+    { name: "Shipping Containers for Hydel Project Sites", href: "/cities-we-serve/shipping-containers-hydel-project-visakhapatnam" },
   ],
   // Portable-toilet hub — Portable Toilets in Krishnagiri (2026-11-04), the first portable-toilet city
   // page; the page links back to this hub.
   "Portable Toilet Cabin|Tamil Nadu": [
     { name: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
+    { name: "Portable Toilet Cabins in Dharmapuri", href: "/cities-we-serve/portable-toilet-cabin-dharmapuri" },
   ],
   // Karnataka portable-toilet hub — Portable Toilet Cabins for Devanahalli Aerospace Park (2026-11-05),
-  // the first Karnataka portable-toilet city page; the page links back to this hub.
+  // the first Karnataka portable-toilet city page, then Portable Toilet Cabins in Doddaballapur
+  // (2026-11-05); both pages link back to this hub.
   "Portable Toilet Cabin|Karnataka": [
     { name: "Portable Toilet Cabins in Devanahalli", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
+    { name: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
+  ],
+  // Bangalore portable-toilet hub — Portable Toilet Cabins in Doddaballapur (Bengaluru Rural district,
+  // on the Bangalore container-office hub as Doddaballapura); the page links back to this hub.
+  "Portable Toilet Cabin|Bangalore": [
+    { name: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
   ],
   // Security-cabin hub — Portable Security Cabins in Krishnagiri (2026-11-05), the first security-cabin
   // city page, then Portable Security Cabins in Salem and in Shoolagiri (2026-11-05); each links back to this hub.
@@ -466,6 +483,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     // Portable-cabin page (Magadi, 2026-10-21), here and on the other Karnataka portable/porta hub, as for Jigani.
     { name: "Portable Cabins in Magadi", href: "/cities-we-serve/portable-cabin-magadi" },
     { name: "Portable Cabins in Machenahalli, Shivamogga", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+    // Office-cabin page for tech park projects in Devarabisanahalli, Bengaluru (2026-11-07), after the portable-cabin city pages already listed.
+    { name: "Portable Office Cabins in Devarabisanahalli", href: "/cities-we-serve/portable-office-cabin-devarabisanahalli" },
     ...hubLinksFor([
       "container-office-in-bagalkot",
       "container-office-in-belagavi",
@@ -517,6 +536,10 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
     // Shivamogga (Machenahalli / Nidige), 2026-11-05; after Tumkur so the live links keep their positions.
     { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+    // Uttara Kannada (Karwar, Sirsi and the coast), 2026-11-07; appended so the live links keep their positions.
+    { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
+    // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
+    { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
   ],
 };
 
