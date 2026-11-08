@@ -180,6 +180,12 @@ export interface CityPage {
   featuresIntro: string;
   features: string[];
   sizesNote: string;
+  /**
+   * Optional contextual links rendered as a short list right after `sizesNote` (first used by Shipping
+   * & Cargo Containers in Coimbatore, whose controlled-access section points at the Vellore page's
+   * insulated and AC fit-out guidance). Unset = nothing rendered.
+   */
+  featuresLinks?: CityPageLink[];
 
   /**
    * The industries (uses) section. Optional since 2026-10-21, for owner copy that has no such section
@@ -6757,7 +6763,9 @@ export const CITY_PAGES: CityPage[] = [
     featuresIntro: "For traceable parts or customer-owned stock, consider:",
     features: ["Labelled bins", "A stock register", "A record of who can access the unit"],
     sizesNote:
-      "Ask about available door hardware, lockboxes and tamper-evident seals. If your customer specifies access, traceability or environmental controls, include those requirements in the enquiry and confirm that the quoted scope meets them.",
+      "Ask about available door hardware, lockboxes and tamper-evident seals. If your customer specifies access, traceability or environmental controls, include those requirements in the enquiry and confirm that the quoted scope meets them. For stock with specified temperature or humidity limits, see:",
+    // Reciprocal link agreed with the Vellore page (#231, the second page to go live, adds it).
+    featuresLinks: [{ label: "Insulated and air-conditioned storage fit-outs", href: "/cities-we-serve/shipping-container-vellore" }],
 
     customHeading: "Shipping container price and rental in Coimbatore",
     customIntro: "Pricing depends on size, condition, fit-out, transport and unloading.",
