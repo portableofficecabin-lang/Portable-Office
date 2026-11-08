@@ -16283,7 +16283,8 @@ export const CITY_PAGES: CityPage[] = [
    * and workspace; the Marathahalli ORR shipping page keeps commercial and infrastructure storage on
    * the ORR; campus and tech-park intent stays with the Devarabisanahalli page. The brief's reciprocal
    * links with the office page (and the Marathahalli page's) are added by whichever page merges
-   * second, once both routes are live.
+   * second, once both routes are live. The office page merged second and added both office links: "see
+   * our office cabins in Bellandur" closes "Container condition, finish and fittings" below.
    *
    * Images: five owner-dropped webp renders ("public/images/Bellandur shipping city page/Bellandur
    * shipping/cabin (1–5).webp", no EXIF / XMP / ICC metadata). Four are copied byte-for-byte; the hero
@@ -16434,6 +16435,8 @@ export const CITY_PAGES: CityPage[] = [
           "Ask what condition is available and what the stated grade covers. A one-trip container typically shows limited use. A used cargo-worthy unit may show dents or surface wear. A unit described as wind and watertight is offered on that condition basis. Confirm the actual floor, doors, seals and roof condition before accepting a unit for household storage, and ask separately about any certification needed for transport.",
           "For residential placement, ask about a neutral repaint, a lockbox, vents or shelving. Confirm which fittings are available for the specific unit and whether modifications are permitted on a rental.",
         ],
+        closing: ["For a workspace with desks and electrical fittings, see our office cabins in Bellandur."],
+        links: [{ label: "Office cabins in Bellandur", href: "/cities-we-serve/portable-office-cabin-bellandur" }],
       },
     ],
 
@@ -27856,7 +27859,9 @@ export const CITY_PAGES: CityPage[] = [
    * and industrial office content on Belagavi. The brief's routing note to the Devarabisanahalli page
    * ("tech park project office cabins") follows the intro as a second paragraph plus `introLinks`;
    * added once that page was live (#223, d68dfe2, 2026-11-08). Its reciprocal link is a follow-up on
-   * that page once this one is live.
+   * that page once this one is live. The Bellandur shipping-container page went live first (#227,
+   * 02292e2), so this page adds both links: "see our shipping containers in Bellandur" after the
+   * contractor-office item, and "see our office cabins in Bellandur" on that page.
    *
    * Owner brief of 2026-11-07 ("Bellandur office cabin page and implementation commands"): the slug,
    * meta title, meta description and H1 verbatim; every public paragraph, list item, table row, FAQ
@@ -27947,7 +27952,8 @@ export const CITY_PAGES: CityPage[] = [
       },
       {
         title: "Contractor office for society repairs",
-        text: "During waterproofing, repainting, façade repairs or lift upgrades, a compact cabin gives the contractor a place to store drawings and coordinate daily work. Agree on the location and power arrangements with the association before delivery. A check meter can be discussed if the society wants to track the contractor’s electricity use separately.",
+        text: "During waterproofing, repainting, façade repairs or lift upgrades, a compact cabin gives the contractor a place to store drawings and coordinate daily work. Agree on the location and power arrangements with the association before delivery. A check meter can be discussed if the society wants to track the contractor’s electricity use separately. For separate storage for tools, materials or furniture, see our shipping containers in Bellandur.",
+        link: { label: "Shipping containers in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
       },
       {
         title: "Home office cabin in your compound",
