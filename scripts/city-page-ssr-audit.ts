@@ -186,6 +186,12 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
   if (p.solutionsIntro) t("solutions", "solutions intro", p.solutionsIntro);
   p.solutions.forEach((s, i) => { t("solutions", `layout ${i + 1} title`, s.title ?? ""); t("solutions", `layout ${i + 1} text`, s.text); });
   p.solutions.forEach((s, i) => { if (s.link) t("solutions", `layout ${i + 1} link`, s.link.label); });
+  // Optional solutions table (since 2026-11-07): caption, headers and every cell.
+  if (p.solutionsTable) {
+    t("solutions", "solutions table caption", p.solutionsTable.caption);
+    p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
+    p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
+  }
   // Optional section (since 2026-11-07): audited whenever the page sets it.
   if (p.featuresHeading) {
     t("features", "features heading", p.featuresHeading);

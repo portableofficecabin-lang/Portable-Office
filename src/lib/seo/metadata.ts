@@ -68,9 +68,9 @@ export function buildPageMetadata({
   /** Alt text for the social image. Optional. */
   imageAlt?: string;
   /**
-   * The social image's real pixel size, published as og:image:width / og:image:height (first used by
-   * the Bellandur city page). OPTIONAL, and only emitted when both are given; otherwise og:image
-   * carries no dimensions, exactly as before.
+   * The social image's ACTUAL pixel size, emitted as og:image:width / og:image:height. Optional and
+   * used only when both are given (first used by Shipping & Storage Containers in Bellandur); unset =
+   * no dimension tags, exactly as before.
    */
   imageWidth?: number;
   imageHeight?: number;
@@ -125,8 +125,7 @@ export function buildPageMetadata({
       siteName: siteConfig.name,
       images: [
         {
-          url: resolvedImage,
-          ...(imageAlt ? { alt: imageAlt } : {}),
+          ...(imageAlt ? { url: resolvedImage, alt: imageAlt } : { url: resolvedImage }),
           ...(imageWidth && imageHeight ? { width: imageWidth, height: imageHeight } : {}),
         },
       ],
