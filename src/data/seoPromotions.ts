@@ -545,6 +545,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
     // Bellandur (household, society and shop storage), 2026-11-07; appended after the live lines so they keep their positions.
     { name: "Shipping Container in Bellandur", href: "/cities-we-serve/shipping-container-bellandur" },
+    // Chamarajanagar district (granite supplies, packing stores, fairs and resorts; owner brief 2026-11-08), after Bellandur.
+    { name: "Shipping Container in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
   ],
 };
 

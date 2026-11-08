@@ -188,6 +188,8 @@ function expectedItems(p: CityPage, pageUrl: string): Item[] {
     p.solutionsTable.headers.forEach((x, j) => t("solutions", `solutions table header ${j + 1}`, x));
     p.solutionsTable.rows.forEach((row, r) => row.forEach((x, c) => t("solutions", `solutions table row ${r + 1} cell ${c + 1}`, x)));
   }
+  // Optional solutions outro (since 2026-11-08).
+  if (p.solutionsOutro) t("solutions", "solutions outro", p.solutionsOutro);
   t("features", "features heading", p.featuresHeading);
   t("features", "features intro", p.featuresIntro);
   p.features.forEach((f, i) => t("features", `feature line ${i + 1}`, f));
