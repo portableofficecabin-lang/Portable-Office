@@ -534,6 +534,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Tumkur", href: "/cities-we-serve/shipping-container-in-tumkur" },
     // Shivamogga (Machenahalli / Nidige), 2026-11-05; after Tumkur so the live links keep their positions.
     { name: "Shipping Container in Shivamogga", href: "/cities-we-serve/shipping-container-shivamogga-machenahalli" },
+    // Uttara Kannada (Karwar, Sirsi and the coast), 2026-11-07; appended so the live links keep their positions.
+    { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
   ],
 };
 
