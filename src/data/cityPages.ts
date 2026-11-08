@@ -201,6 +201,12 @@ export interface CityPage {
   featuresIntro: string;
   features: string[];
   sizesNote: string;
+  /**
+   * Optional contextual links rendered as a short list right after `sizesNote` (first used by Shipping
+   * & Cargo Containers in Coimbatore, whose controlled-access section points at the Vellore page's
+   * insulated and AC fit-out guidance). Unset = nothing rendered.
+   */
+  featuresLinks?: CityPageLink[];
 
   /**
    * The industries (uses) section. Optional since 2026-10-21, for owner copy that has no such section
@@ -6785,7 +6791,9 @@ export const CITY_PAGES: CityPage[] = [
     featuresIntro: "For traceable parts or customer-owned stock, consider:",
     features: ["Labelled bins", "A stock register", "A record of who can access the unit"],
     sizesNote:
-      "Ask about available door hardware, lockboxes and tamper-evident seals. If your customer specifies access, traceability or environmental controls, include those requirements in the enquiry and confirm that the quoted scope meets them.",
+      "Ask about available door hardware, lockboxes and tamper-evident seals. If your customer specifies access, traceability or environmental controls, include those requirements in the enquiry and confirm that the quoted scope meets them. For stock with specified temperature or humidity limits, see:",
+    // Reciprocal link agreed with the Vellore page (#231, the second page to go live, adds it).
+    featuresLinks: [{ label: "Insulated and air-conditioned storage fit-outs", href: "/cities-we-serve/shipping-container-vellore" }],
 
     customHeading: "Shipping container price and rental in Coimbatore",
     customIntro: "Pricing depends on size, condition, fit-out, transport and unloading.",
@@ -27572,10 +27580,9 @@ export const CITY_PAGES: CityPage[] = [
    * was checked: /products/shipping-container-in-chennai has no inspection checklist, so "how to
    * inspect a used container" points at /products/cargo-storage-containers ("Key Inspection Points"),
    * the same target the Uttara Kannada shipping page uses for this anchor (one anchor, one target
-   * across the site). It is therefore not repeated in the related links. DEFERRED until live: the Vellore
-   * shipping page (/cities-we-serve/shipping-container-vellore answered 404 on 2026-11-07) for
-   * "insulated and air-conditioned storage fit-outs" at the end of the preservation section, and the
-   * link from a future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
+   * across the site). It is therefore not repeated in the related links. The Vellore link (added by #231, the
+   * second merger) sits at the end of the preservation section. DEFERRED until live: the link from a
+   * future Visakhapatnam city container page. The Andhra Pradesh shipping-container hub
    * (seoPromotions) lists this page, and the page links back to it.
    *
    * KEYWORD OWNERSHIP: shipping / storage containers × hydel and pumped storage project sites ×
@@ -27729,8 +27736,8 @@ export const CITY_PAGES: CityPage[] = [
         paragraphs: [
           "Start with the equipment supplier's preservation instructions. Specify storage limits, inspection intervals, packaging and any recording requirements in the BOQ. Maintain a preservation log and keep packaging sealed when instructed. For sensitive items, specify any required dehumidification, temperature control, monitoring and response to power failure. Have the responsible project team verify that the proposed unit and controls meet the equipment specification before loading.",
         ],
-        // DEFERRED (brief section 5): "insulated and air-conditioned storage fit-outs" → the Vellore
-        // shipping page, as related fit-out guidance, once /cities-we-serve/shipping-container-vellore is live.
+        closing: ["For related fit-out planning guidance, see:"],
+        links: [{ label: "Planning insulated and air-conditioned storage fit-outs", href: "/cities-we-serve/shipping-container-vellore" }],
       },
       {
         heading: "Container Sizes and Procurement",
@@ -27805,6 +27812,280 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru. It has no container yard, depot, workshop or office in Visakhapatnam, Sileru or anywhere else in Andhra Pradesh. Every unit depends on availability: its size, grade, condition, documentation and fit-out, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are set out in its quotation, and no delivery timeline is guaranteed. This page shows illustrative renders of one representative steel storage container, not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & STORAGE CONTAINERS IN VELLORE — Vellore and Katpadi, with Gudiyatham and Pernambut as
+   * service areas: non-clinical storage on healthcare campuses, college and hostel stores, lodge
+   * renovations, leather and footwear stock, and insulated or AC fit-out enquiries.
+   *
+   * Owner brief of 2026-11-07 (route, meta title, meta description and H1 used as given). The slug
+   * starts with "shipping-container-", so cityFamily() puts it in the shipping-container family:
+   * directory card under Tamil Nadu, sibling links both ways (Mettur, Athipattu) and the nearby block.
+   * The brief's sections map onto the fixed template slots; where a slot's position is fixed, the
+   * order moves as noted:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Non-clinical storage for healthcare campuses" → why (no bullets): paragraph 1 → whyIntro,
+   *     paragraph 2 → whyOutro.
+   *   • "College, hostel and event storage" → solutions heading + intro (no items). It renders BEFORE
+   *     the AC section: the solutions slot cannot hold a table, so the AC section follows it.
+   *   • "Insulated and air-conditioned storage enquiries", "Lodge and guest house renovation storage"
+   *     and "Container sizes and condition" → three afterSolutions extra sections, copy verbatim; the
+   *     two tables keep the brief's columns (2 and 3, both fit a 320 px phone).
+   *   • "Leather and footwear stock around Gudiyatham and Pernambut" → features: the paragraph's four
+   *     practices as three bullets + the last one as the bold sizesNote. The features slot follows the
+   *     afterSolutions sections, so it renders after "Container sizes and condition".
+   *   • "Shipping container price and rental in Vellore" → custom (prose, so customBullets is empty,
+   *     which renders no <ul>); the brief's inline rental link → customLinks, after the hire sentences.
+   *   • "Areas we serve" → areas (the template renders it before the steps).
+   *   • "From enquiry to placement" → how (four steps, titles only).
+   *   • FAQs (six) → faqs; the closing request → CTA + the category enquiry form. The brief invites
+   *     rental enquiries, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, the two table captions, featuresIntro, the outro
+   * line before the rental link, the line before the inspection link and the enquiry-form intro. No ₹
+   * figure, stock, lead time, refrigeration, regulated-storage suitability or guaranteed temperature,
+   * humidity or AC performance; 10 ft, outdoor-unit cages and the dispatch origin are not mentioned.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage container × Vellore and Katpadi (plus Gudiyatham and
+   * Pernambut for footwear stock). Used-container inspection stays with the Athipattu page (linked
+   * from the sizes section with the brief's anchor); the Krishnagiri product page names Vellore only
+   * in its delivery-area list. A dedicated AC storage product page, if one is published later, gets
+   * the brief's "insulated and air-conditioned storage containers" link from the AC section.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Vellore shipping container city
+   * page/Vellore shipping container page/cabin (1–5).webp", no metadata) copied without re-encoding
+   * (VP8 data byte-identical) plus an XMP dc:title / dc:description that marks each as an
+   * illustrative render. Only the exterior matches a brief slot (hero and og:image, with its actual
+   * size via ogImageDimensions); the overhead view, interior, doors and end wall get their own alt
+   * text and "illustrative" captions. The AC fit-out, equipment staging, furniture and footwear
+   * slots have no matching image and are omitted. No alt text or caption names a size or a place.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-vellore",
+    city: "Vellore",
+    listTitle: "Shipping Container in Vellore",
+    metaTitle: "Shipping & Storage Containers in Vellore",
+    metaDescription:
+      "Enquire about shipping containers in Vellore and Katpadi for campus storage, lodge renovations and footwear stock. Discuss insulated and AC fit-outs.",
+    keywords:
+      "Shipping Container in Vellore, Storage Container Vellore, Shipping Container Katpadi, Used Shipping Container Vellore, Shipping Container Rental Vellore, Insulated Container with AC Vellore",
+    geo: {
+      region: "IN-TN",
+      placename: "Vellore, Tamil Nadu, India",
+      position: "12.9165;79.1325",
+      icbm: "12.9165, 79.1325",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-vellore/vellore-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-vellore/vellore-shipping-container-overhead-view.webp",
+      alt: "Steel shipping container seen from above, showing the corrugated roof, corner castings and the cargo-door end on a paved area",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render. Leave space for the doors to open fully and for items to be moved in and out safely.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-vellore/vellore-storage-container-interior.webp",
+      alt: "Empty steel container interior seen through open cargo doors, with corrugated walls and a plywood floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a bare container with no fit-out. Any racking, lining, lights or AC equipment is supplied only as listed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-vellore/vellore-shipping-container-cargo-doors.webp",
+        alt: "Closed container cargo doors with four locking bars, cam handles and a central lockbox",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: closed cargo doors secured by four locking bars, with a lockbox at the centre.",
+      },
+      {
+        src: "/images/cities/shipping-container-vellore/vellore-shipping-container-end-wall.webp",
+        alt: "Corrugated steel end wall and side wall of a storage container on a paved area",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render: the corrugated end wall and side wall, with no doors at this end.",
+      },
+    ],
+
+    h1: "Shipping & Storage Containers in Vellore",
+    tagline:
+      "Storage containers for non-clinical campus stores, hostel and lodge renovations, footwear stock and insulated or AC fit-out enquiries in Vellore and Katpadi.",
+    intro: [
+      "Need a temporary store while a hostel or lodge is being refurbished, extra room for footwear cartons before dispatch, or a place for maintenance supplies on a healthcare campus? Portable Office Cabin supplies shipping containers for storage enquiries in Vellore and Katpadi. Tell us what you need to store and where the unit will sit so we can discuss the size, fit-out and delivery plan.",
+    ],
+
+    whyHeading: "Non-clinical storage for healthcare campuses",
+    whyIntro:
+      "A container can provide space for spare furniture, boxed linen, stationery or maintenance parts during a refurbishment. Plan the location with the campus facilities and security teams. Keep ambulance routes, emergency access and pedestrian paths clear, and agree on unloading arrangements before dispatch. Keep general-purpose storage limited to suitable non-clinical items.",
+    whyBullets: [],
+    whyOutro:
+      "For equipment waiting to be installed, check the manufacturer's storage and handling requirements before selecting a unit. Share the required temperature and humidity limits, any restrictions on dust or vibration, and the length of time the equipment will be stored.",
+
+    solutionsHeading: "College, hostel and event storage",
+    solutionsIntro:
+      "Colleges and universities can enquire about containers for hostel furniture during renovations, stage and sports equipment between events, or contractor tools during building works. List bulky items and measure the largest pieces before choosing a container. Plan access around the campus timetable and leave space for doors to open and items to be moved safely.",
+    solutions: [],
+
+    featuresHeading: "Leather and footwear stock around Gudiyatham and Pernambut",
+    featuresIntro: "Points to plan when a container holds leather goods or footwear cartons:",
+    features: [
+      "Plan shelf or pallet layouts around carton sizes and keep an aisle for stock checks.",
+      "Confirm the storage conditions recommended for the materials and packaging.",
+      "If heat or humidity limits apply, share those limits so the proposed fit-out can be assessed.",
+    ],
+    sizesNote: "Check stock periodically and keep cartons clear of walls and the floor where appropriate.",
+
+    customHeading: "Shipping container price and rental in Vellore",
+    customIntro:
+      "The quote depends on size, condition, fittings, route, unloading and any specified insulation or cooling.",
+    customBullets: [],
+    customOutro:
+      "Share the hire dates and intended use so the team can confirm unit availability and delivery and collection terms. Ask separately whether an AC-equipped hire can be quoted for your requirements. For renovation or project storage, see our:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Vellore, Katpadi, Sathuvachari, Bagayam, Thorapadi, Gandhi Nagar, Kaniyambadi, Sripuram, Anaicut, Gudiyatham, K.V. Kuppam and Pernambut. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      {
+        title: "Share the site address, what you need to store, the preferred dates and any environmental requirements.",
+        text: "",
+      },
+      { title: "Review the proposed unit, fit-out, available power and itemised quotation.", text: "" },
+      { title: "Confirm site permission, emergency access, base readiness and unloading arrangements.", text: "" },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Insulated and air-conditioned storage enquiries",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If your stock has a specified temperature range, include that range in your enquiry. The design depends on the local conditions, the items being stored, how often doors open and the available power supply. Discuss these requirements before choosing the unit or its air conditioner.",
+        ],
+        table: {
+          caption:
+            "Points to settle before an insulated or AC fit-out is specified. What a unit can support is set by its quoted specification.",
+          headers: ["Requirement", "Details to discuss"],
+          rows: [
+            ["Insulation and cooling", "Wall, roof and door insulation, sealing, and cooling capacity for the expected load"],
+            [
+              "Humidity and monitoring",
+              "Humidity limits, whether separate humidity control is needed, and where to place temperature or humidity loggers",
+            ],
+            ["Power and drainage", "Electrical supply, earthing, outdoor unit clearance and condensate drainage"],
+            ["Continuity", "What happens during a power outage and whether alarms or backup power are required"],
+          ],
+        },
+        closing: [
+          "An air-conditioned fit-out is quoted against the intended use. For goods with strict storage limits, agree on the required controls, monitoring and verification before loading. Medicines, biomedical waste and other regulated materials require purpose-designed storage and approval from the responsible facilities team.",
+        ],
+      },
+      {
+        heading: "Lodge and guest house renovation storage",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A temporary store can keep spare beds, boxed supplies and suitable furniture near a renovation. For buildings off a busy or narrow lane, share photos and measurements of the last stretch of road, gate and proposed unloading area. Confirm the authorised placement area and how guests will move around it during the work.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption: "Typical enquiries only. The size, availability and any fit-out are confirmed for each unit in its quotation.",
+          headers: ["Size or configuration", "Typical enquiry", "What to confirm"],
+          rows: [
+            ["20 ft", "Hostel furniture, lodge renovation supplies or footwear stock", "Item dimensions, door clearance and unloading access"],
+            ["40 ft", "Larger campus stores and event inventory", "Trailer approach, turning room and unloading position"],
+            [
+              "Insulated or AC fit-out",
+              "Equipment and stock with defined storage conditions",
+              "Availability, usable internal space, required controls and site power",
+            ],
+          ],
+        },
+        closing: [
+          "For a used unit, confirm the actual condition of the floor, roof, door seals and locking hardware. Ask the supplier to confirm the dispatch point and quote the route to your site. For deliveries approaching Vellore via NH 48, share the campus gate or building access details as well as the site address.",
+          "Buying a used unit? See our guide:",
+        ],
+        // The brief's inspection link: the Athipattu page's "Used Container Inspection" checklist (seven
+        // points), the used-container inspection content for the Chennai port belt.
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can a healthcare campus use a shipping container for storage?",
+        answer:
+          "Yes, for suitable non-clinical items such as spare furniture, stationery or maintenance parts. Coordinate the location with the campus facilities team and keep emergency routes clear.",
+      },
+      {
+        question: "What is an air-conditioned storage container?",
+        answer:
+          "It is a container fitted for active cooling, usually with insulation and an AC unit. The quoted specification determines which temperatures it can support, and humidity control and monitoring may require additional equipment.",
+      },
+      {
+        question: "Can I store equipment before installation?",
+        answer:
+          "Share the equipment manufacturer's storage limits and packaging requirements. The responsible facilities team should verify that the proposed unit and monitoring meet those requirements before loading.",
+      },
+      {
+        question: "Can I rent a container during a hostel or lodge renovation?",
+        answer:
+          "Yes, you can enquire about rental. Share your dates, largest items and access photos so the team can assess size, availability and delivery.",
+      },
+      {
+        question: "Does footwear stock need air conditioning?",
+        answer:
+          "That depends on the material, packaging and supplier's storage requirements. Share the applicable temperature and humidity limits before selecting a fit-out.",
+      },
+      {
+        question: "How quickly can you deliver to Vellore?",
+        answer:
+          "Timing depends on stock, fit-out, the dispatch location, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Vellore shipping container quote",
+    ctaText:
+      "Send your site address, intended use, target dates, preferred size and photos of the gate and unloading area. Include the required temperature and humidity range if your stock needs environmental control.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the Call and WhatsApp buttons (from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Pick the container you have in mind, the quantity and the Vellore-area address it goes to, then note what will be stored, your target dates and any temperature or humidity limits. We check these details with you first, then send a written quotation.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Cargo Container for Sale", href: "/products/cargo-container-for-sale" },
+      { label: "20 ft Storage Container", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Tamil Nadu", href: "/promotions/shipping-container-in-tamil-nadu" },
+    ],
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no yard, depot or office in Vellore, Katpadi, Gudiyatham or Pernambut. Each unit's availability, size, condition, fit-out, dispatch point, delivery, unloading and any collection are set out in its quotation, and delivery dates are not guaranteed. Insulation, air conditioning, humidity control and monitoring are discussed against the stated requirement; no temperature, humidity or cooling performance is guaranteed unless the approved specification states it, and no container is offered as refrigerated storage or as storage for medicines, biomedical waste or other regulated materials. Every image here is an illustrative render of a typical dry container; none shows a unit delivered to, or standing at, a site in the Vellore area. Healthcare campuses, colleges, hostels, lodges and footwear businesses are described generically: the uses and localities mentioned are examples of enquiries, not customers, finished projects or confirmed delivery areas, and Portable Office Cabin is not affiliated with any hospital, college, university or business in the Vellore area. The storage notes on this page are general guidance, not engineering, clinical, regulatory or legal advice.`,
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
