@@ -401,7 +401,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         )}
 
         {/* Optional since 2026-11-08 (see CityPage.solutionsHeading): unset = no section. The fragment
-            adds no markup, so pages that set it render byte-identical HTML. */}
+            adds no markup, so pages that set it render the same HTML (only React's generated useId
+            values further down, e.g. in the enquiry form, are numbered differently). */}
         {page.solutionsHeading && (
           <>
             <h2 className={`${h2}${mc("reveal")}`}>{page.solutionsHeading}</h2>
@@ -429,7 +430,7 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}
 
         {/* Optional since 2026-11-08 (see CityPage.featuresHeading): unset = no section; pages that
-            set it render byte-identical HTML. */}
+            set it render the same HTML, as above. */}
         {page.featuresHeading && (
           <>
             <h2 className={`${h2}${mc("reveal")}`}>{page.featuresHeading}</h2>
