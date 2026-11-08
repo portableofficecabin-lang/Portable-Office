@@ -2002,6 +2002,11 @@ export const CITY_PAGES: CityPage[] = [
       { label: "MS or PUF: Choosing the Material", href: "/products/portable-cabin/materials-ms-vs-puf" },
       { label: "Site Preparation and Installation", href: "/products/portable-cabin/installation-and-site-preparation" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      // Sibling shop pages named in the owner's brief, linked once live: Shivamogga (#195), Sriperumbudur
+      // (#208) and Hassan (#210, live 2026-11-07; it links back here). Hoskote (#202) is added when it goes live.
+      { label: "Portable Shop Cabins in Shivamogga", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shop Cabins in Sriperumbudur", href: "/cities-we-serve/portable-shop-cabin-sriperumbudur" },
+      { label: "Portable Shop Cabins in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -2009,6 +2014,7 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Office in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Container in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Portable Shops in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        { label: "Portable Shops in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
         { label: "Portable Cabins in Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
@@ -3154,6 +3160,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Containers and Container Shops in Mysore", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Sugarcane Juice and Roadside Kiosks in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
+        // Nanjangud's shop page (#209, live 2026-11-05) — the brief's location-specific link; it links back here.
+        { label: "Shop Rows and Festival Stalls in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -4187,10 +4195,13 @@ export const CITY_PAGES: CityPage[] = [
     ctaText:
       "Set up a professional, secure, and comfortable office at your site — without the wait and cost of construction. Contact Portable Office Cabin now for a free consultation and quotation on your container office in Doddaballapura. Buy or rent, standard or fully customized — we will build it to your requirement and deliver it to your doorstep.",
     /* Reciprocal links for the Tumkur page (2026-10-11): both pages serve the Dabaspet–NH 48
-       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent). */
+       belt, and city↔city links are kept reciprocal (Tamil Nadu cluster precedent).
+       2026-11-05: plus the Doddaballapur portable-toilet page, which links back here; this page keeps
+       container offices and the toilet page owns the toilet intent for the same town. */
     relatedLinks: [
       { label: "Container Office in Tumkur", href: "/cities-we-serve/container-office-in-tumkur" },
       { label: "Container Office in Karnataka", href: "/promotions/container-office-in-karnataka" },
+      { label: "Portable Toilet Cabins in Doddaballapur", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
     ],
   },
 
@@ -9702,6 +9713,412 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE SHOP CABINS IN HASSAN — the retail shop and kiosk intent for Hassan, Karnataka: portable
+   * shop cabin, readymade shop, prefabricated shop and kiosk, for the KIADB industrial areas and the
+   * Hassan Growth Centre, the surroundings of the KIADB textile and pharmaceutical SEZs, Hassan city
+   * streets, permitted NH 75 roadside plots, coffee and spice kiosks, agricultural supply shops and
+   * heritage-area retail around Belur, Halebidu and Shravanabelagola. A sibling of Portable Shops in
+   * Krishnagiri (a related link each way) and of the Hoskote (#202) and Shivamogga (#195) shop pages,
+   * which are linked from here only once they are live. Not a container-office cluster location.
+   *
+   * Owner brief of 2026-11-05, mapped onto the template slots (no template change):
+   *   1 Hero → h1 / tagline / intro + heroCta (Request Quote → /contact, Call, WhatsApp).
+   *   5 Front options → why (four titled bullets and the brief's design caveat as whyOutro), then the
+   *     feature band (the front elevation). It renders before the environments because the template's
+   *     "why" slot comes first; that way the environments keep their h3 subsections and links.
+   *   2 Four commercial environments → solutions: four h3 subsections, each with a verified link;
+   *     the brief's "potential use cases, not guarantees" line closes the solutions intro.
+   *   3 Seasonal planning, 4 Finish, 6 Interior and exterior features, 7 Sizes, 8 Weather → extra
+   *     sections with `placement: "afterSolutions"`, in that order. The seasonal table has no fixed
+   *     peak-season claim and two columns (each planning idea closes its cell), so it fits a 320 px
+   *     phone; the Mahamastakabhisheka note says the event is periodic, with no date. The
+   *     sizes are planning examples, not confirmed standard models (owner wording of 2026-11-05 on
+   *     #201/#202): only the 10 ft × 10 ft Portable Shop Cabin (id 48) is a catalogue item.
+   *   9 Permissions → features (one item per authority, plus the general list), the brief's
+   *     "we manufacture; the owner obtains the permissions" rule in the bold sizesNote.
+   *   10 Price → custom, beside the interior render; no ₹ anywhere.
+   *   11 Rental → left out: the rental range (src/views/RentalService.tsx) has no shop cabin.
+   *   13 Areas → areas; 12 Ordering → how (the template renders areas before how); 14 Why choose →
+   *     an extra section after how (whyUs unset), so it still comes after ordering, as in the brief;
+   *   15 the brief's eight FAQs, worded for Hassan; 16 CTA (Request Quote, Call, WhatsApp).
+   * No on-page form: /api/enquiries accepts only the CATEGORY_LANDING_SLUGS categories, and shops sit
+   * in Portable Cabins, which has none; the quote buttons use the /contact quotation flow.
+   * Left out as unverified: rental, timelines, flood or waterproofing guarantees, SEZ acreages or
+   * unit counts, any event date, and links to pages that do not exist or are not live (a container
+   * shop product, the Hoskote, Shivamogga and Sriperumbudur shop pages, and Belur, Halebidu,
+   * Sakleshpur or Channarayapatna pages). No Hassan parent page exists to link in from.
+   * Owner rule of 2026-11-05, no keyword cannibalisation: this page alone targets shop × Hassan, and
+   * no other page names Hassan. The areas list names only towns with no shop page of their own;
+   * link anchors and the CTA line are this page's own. KIADB is named nominatively, with the
+   * non-affiliation note in the disclaimer.
+   *
+   * Images: six owner-dropped webp renders ("public/images/Hassan Industrial Area portable shop city
+   * page/Hassan Industrial Area/cabin (1–6).webp", lossy VP8 with no EXIF/XMP/ICC chunk, 78–156 KB)
+   * copied byte-for-byte to descriptive names: (1) three-quarter view, 1200×896 = hero / og:image,
+   * captioned; (5) front elevation = the feature band, captioned; (2) interior = beside the price
+   * factors, captioned; (3) elevated view, (4) rear and window side and (6) a closed charcoal
+   * variant with an entry door = the three-image gallery after the permissions. They show one grey
+   * corrugated-steel kiosk with a rolling-shutter serving hatch, plus that closed variant. Every alt
+   * text, caption and the disclaimer say they are illustrative renders, and none names Hassan.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-shop-cabin-hassan",
+    city: "Hassan",
+    listTitle: "Portable Shops in Hassan",
+    metaTitle: "Portable Shop Cabin in Hassan | KIADB, Highway & Retail Kiosks",
+    metaDescription:
+      "Portable shop cabins in Hassan for KIADB areas, highway kiosks, agri-input shops and heritage retail. Explore custom shop designs, sizes and fittings.",
+    keywords:
+      "Portable Shop Cabin in Hassan, Portable Shop Hassan, Readymade Shop Cabin Hassan, Prefabricated Shop Hassan, Kiosk Hassan Industrial Area, Shop Cabin KIADB Hassan, Portable Shop Cabin Manufacturers in Hassan, Portable Shop Suppliers Hassan, Portable Shop Cabin Price in Hassan, Coffee Kiosk Hassan, Agricultural Shop Cabin Hassan, Highway Kiosk Hassan",
+    geo: { region: "IN-KA", placename: "Hassan, Karnataka, India", position: "13.0033;76.1004", icbm: "13.0033, 76.1004" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Shop Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-rolling-shutter-three-quarter-view.webp",
+      alt: "Prefabricated portable shop cabin with a rolling shutter over a fold-down serving counter — illustrative render of a grey corrugated steel kiosk with a black lower band, a pitched corrugated roof and an end-wall window under a prop-up awning, in a paved courtyard",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative portable shop cabin design; final fittings depend on approved specifications.",
+    },
+    featureImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-front-elevation-serving-counter.webp",
+      alt: "Front elevation of a portable shop cabin — illustrative render of a closed rolling shutter under a pelmet, a fold-down serving counter on steel brackets, grey corrugated walls with a black lower band and a pitched roof",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of a rolling-shutter front with a fold-down counter; the pictured design is not a confirmed standard product. Your shop's front, size and fittings follow its approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-interior-shelving-counter.webp",
+      alt: "Interior of a portable shop cabin with shelving and a serving counter — illustrative render with wood-finish wall and ceiling panels, wall shelves and a low rack holding packaged goods, an LED strip light, a sliding window and the open rolling shutter above the counter",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative interior render; the stock is shown for illustration. The shelving, counter and lighting of your shop are set in its approved specification.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-elevated-roof-view.webp",
+        alt: "Elevated view of a portable shop cabin — illustrative render of the pitched corrugated roof, the rolling shutter and fold-down counter on the long side and the awning over the end-wall window",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-rear-and-window-side.webp",
+        alt: "Rear of a portable shop cabin — illustrative render of the plain corrugated long side with a black lower band and the end-wall sliding window under its prop-up awning",
+        width: 1451,
+        height: 1084,
+      },
+      {
+        src: "/images/cities/portable-shop-cabin-hassan/portable-shop-cabin-closed-variant-entry-door.webp",
+        alt: "Closed configuration of a portable shop cabin — illustrative render in charcoal corrugated steel with a hinged entry door in the end wall, a low-pitched roof with an overhang and no serving hatch on this side",
+        width: 1451,
+        height: 1084,
+      },
+    ],
+
+    h1: "Portable Shop Cabin Manufacturers in Hassan Industrial Area",
+    tagline:
+      "Prefabricated shop cabins and kiosks for KIADB industrial areas, Hassan city streets, permitted NH 75 roadside plots, heritage towns and agricultural markets",
+    intro: [
+      "Portable Office Cabin manufactures prefabricated portable shop cabins, retail kiosks and customized commercial cabins for industrial, urban, highway and rural business requirements in Hassan and surrounding areas.",
+      "Hassan combines industrial activity, agricultural trade, residential development, highway movement and heritage tourism.",
+      "Portable shop cabins can be configured for daily essentials stores, coffee and spice kiosks, agricultural supply counters, mobile shops, souvenir stalls and other permitted retail uses.",
+      "Depending on requirements, cabins may include rolling shutters, glass displays, service counters, shelving, electrical fittings, branding panels and weather protection. Each cabin is built at our factory near Hosur and delivered to Hassan by road.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Portable Shop Cabin Front Options",
+    whyIntro: "The front decides how a shop opens, locks and serves its customers. Four common arrangements:",
+    whyBullets: [
+      { title: "Rolling shutter front", text: "suitable for many compact retail applications where lockable closure is required." },
+      {
+        title: "Glass display front",
+        text: "useful for selected fancy stores, mobile shops and display-oriented retail. The catalogue 10 ft × 10 ft Portable Shop Cabin has this front, with a lockable entrance door.",
+      },
+      { title: "Service window front", text: "a possible option for tea, coffee and snack counters." },
+      { title: "Open counter with awning", text: "may suit flower, fruit or vegetable retail at approved locations." },
+    ],
+    whyOutro:
+      "Final designs should account for weather exposure, security, ventilation and customer access. A shutter and a glass front can also be combined; the arrangement is confirmed in your approved layout.",
+
+    solutionsHeading: "Four Commercial Environments in Hassan",
+    solutionsIntro:
+      "Retail needs around Hassan range from counters near factory gates to village stores. Four broad settings, each with possible shop types. These are potential use cases, not guarantees of customer demand or profitability.",
+    solutions: [
+      {
+        title: "Industrial Hassan",
+        text: "Industrial areas and SEZ surroundings, such as the KIADB Hassan Growth Centre and the areas around the KIADB textile and pharmaceutical SEZs, may support permitted retail businesses serving employees, contractors and visitors. Possible shop cabin applications include fancy stores, snacks and daily essentials shops, mobile accessory counters, compact retail kiosks and smart-finish kiosks for approved commercial locations.",
+        link: { label: "Layouts and interiors for a compact retail cabin", href: "/products/portable-cabin/layouts-and-interiors" },
+      },
+      {
+        title: "Hassan City",
+        text: "Residential layouts, colleges, hospitals and commercial streets may require convenient retail facilities. Possible applications include vegetable and fruit shops, daily essentials stores, mobile accessory shops, and snacks and convenience kiosks.",
+        link: { label: "The glazed 10 ft × 10 ft shop cabin in our catalogue", href: "/products/portable-shop-cabin" },
+      },
+      {
+        title: "Highway Hassan",
+        text: "Permitted roadside commercial locations along NH 75 may be suitable for traveller-oriented retail. Possible applications include coffee kiosks, spice retail counters, tea and snack kiosks and local product displays. Roadside placement must follow applicable land-use, access and highway safety requirements.",
+        link: { label: "Container cafe and kiosk formats for a coffee counter", href: "/products/container-cafe-restaurant" },
+      },
+      {
+        title: "Heritage and Agricultural Hassan",
+        text: "The district includes heritage destinations, such as Belur, Halebidu and Shravanabelagola, and agricultural communities. Possible applications include souvenir kiosks, pooja and flower stalls, agricultural input shops and village convenience stores. Heritage-area placement and regulated agricultural product sales require appropriate approvals.",
+        link: { label: "Preparing the base and access at a rural site", href: "/products/portable-cabin/installation-and-site-preparation" },
+      },
+    ],
+
+    featuresHeading: "Permissions for Shop Cabins in Hassan",
+    featuresIntro:
+      "Check these with the authorities concerned before the cabin is delivered. Which of them apply depends on the site and the business:",
+    features: [
+      "Industrial areas and SEZs: permission from the relevant industrial estate operator, landowner or SEZ authority before a commercial cabin is placed. Whether a shop may stand inside a processing zone, or only outside its gates, depends on that zone's own rules.",
+      "KIADB industrial areas: the permitted land use and installation requirements, verified with the relevant authority.",
+      "Heritage locations: the monument-protection, planning and local authority requirements that apply before a kiosk is placed near a protected heritage site.",
+      "Agricultural input shops: the dealer licences and storage compliance needed to sell regulated seeds, fertilisers or pesticides.",
+      "General retail: landowner consent, local body permission, a trade licence, food registration or a food licence, electrical approval, fire safety requirements and any other sector-specific permissions the business needs.",
+    ],
+    sizesNote:
+      "Portable Office Cabin manufactures the cabin according to the approved specification. Obtaining the operating permissions before the shop opens is the business owner's responsibility.",
+
+    customHeading: "Portable Shop Cabin Price in Hassan",
+    customIntro: "There is no list price for a configured shop: each cabin is quoted for its own specification. Pricing depends on:",
+    customBullets: [
+      { text: "Cabin dimensions" },
+      { text: "MS, PUF or other available materials" },
+      { text: "A rolling shutter or a glass front" },
+      { text: "Service windows" },
+      { text: "Interior shelving" },
+      { text: "A billing counter" },
+      { text: "Electrical provisions" },
+      { text: "Exterior cladding" },
+      { text: "Branding and signage" },
+      { text: "A weather canopy" },
+      { text: "Delivery and unloading" },
+      { text: "Order quantity" },
+    ],
+    customOutro:
+      "Share the business type, the dimensions, the front and fittings you want and the installation location, and our sales team will send a written quotation setting out the specification, what is included and the charges that apply.",
+
+    areasHeading: "Areas Served Around Hassan",
+    areasText:
+      "We welcome shop cabin enquiries from Hassan city, the Hassan Industrial Area, the KIADB Hassan Growth Centre and the surroundings of the textile and pharmaceutical SEZs, and from Holenarasipura, Channarayapatna, Arsikere, Belur, Halebidu, Shravanabelagola, Sakleshpur, Alur and sites along the NH 75 corridor. Send the full site address: the route, the transport and the unloading arrangements are confirmed in the quotation.",
+
+    howHeading: "Ordering Process",
+    howSteps: [
+      { title: "Share your business requirements", text: "tell us the shop type, preferred dimensions and intended installation location." },
+      { title: "Discuss the layout", text: "review the front style, counters, shelving, equipment space and exterior finish." },
+      { title: "Confirm utilities", text: "discuss electrical requirements, ventilation, water connections and drainage where relevant." },
+      { title: "Approve the quotation", text: "finalise the specifications, commercial terms and delivery requirements." },
+      { title: "Manufacture", text: "we fabricate the approved shop cabin at our factory." },
+      { title: "Arrange delivery", text: "transport, unloading and placement are coordinated according to site readiness." },
+    ],
+    howOutro:
+      "The business owner must obtain the applicable operating permissions before opening. Manufacturing and delivery dates are confirmed when the order is finalised.",
+
+    extraSections: [
+      {
+        heading: "Hassan's Seasonal Retail Planning",
+        placement: "afterSolutions",
+        paragraphs: ["Different businesses may experience seasonal demand changes. Planning ideas for the year:"],
+        table: {
+          caption: "Planning ideas, not forecasts: demand varies by location and business, and no period guarantees trade.",
+          // Two columns, the planning idea closing each cell, so the table fits a 320 px phone without a
+          // sideways scroll (a three-column version measured 310 px in a 286 px box); every value of the
+          // brief's three-column table is kept.
+          headers: ["Period", "Possible retail consideration and shop planning idea"],
+          rows: [
+            ["October–February", "Tourism and pilgrimage activity may vary. Planning idea: souvenir and beverage displays."],
+            ["Agricultural sowing and harvest periods", "Seasonal demand for agricultural supplies. Planning idea: flexible shelving and secure storage."],
+            ["March–May", "Warmer conditions. Planning idea: provisions for cold beverage equipment."],
+            ["June–September", "Monsoon conditions. Planning idea: weather-protected counters and canopies."],
+            ["Festival periods", "Potential short-term customer activity. Planning idea: temporary retail layouts where permitted."],
+            ["Major pilgrimage events", "Event-specific retail requirements. Planning idea: event kiosks subject to official approvals."],
+          ],
+        },
+        closing: [
+          "Shravanabelagola's Mahamastakabhisheka is a periodic religious event held at intervals of several years, not an annual festival. Kiosks for any major event depend on the official arrangements announced for it, so plan them only once those are confirmed.",
+        ],
+      },
+      {
+        heading: "Choosing a Shop Cabin Finish",
+        placement: "afterSolutions",
+        paragraphs: ["The setting also guides the exterior finish:"],
+        table: {
+          caption: "All finishes are subject to the materials available and the approved specification.",
+          headers: ["Location type", "Possible exterior finish"],
+          rows: [
+            ["Approved retail near offices or industrial units", "ACP-style finish and clean signage"],
+            ["Industrial worker retail areas", "Durable shutter, shelving and canopy"],
+            ["Permitted NH 75 retail locations", "Visible signage and exterior lighting"],
+            ["Heritage surroundings", "Subtle colours and locally appropriate design"],
+            ["Villages and market towns", "Durable MS construction and practical shutters"],
+          ],
+        },
+        closing: ["Heritage locations may impose additional restrictions on appearance, signage and placement."],
+      },
+      {
+        heading: "Interior and Exterior Features",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Apart from the catalogue 10 ft × 10 ft cabin, which comes with a glazed front, a lockable door, flooring, internal wiring and LED lights, each shop cabin's fittings are chosen for its trade and listed in the quotation:",
+        ],
+        bullets: [
+          {
+            title: "Interior options",
+            text: "display shelves, retail racks, a billing counter, storage compartments, LED lighting, electrical sockets, equipment space and ventilation provisions.",
+          },
+          {
+            title: "Exterior options",
+            text: "a canopy or awning, a rolling shutter, a signage panel, exterior lighting, custom colours, optional ACP cladding and weather-resistant finishing.",
+          },
+        ],
+        closing: [
+          "Kannada and English signage may be incorporated according to customer requirements and applicable local rules. Anything not listed in your approved specification is not included.",
+        ],
+      },
+      {
+        heading: "Portable Shop Cabin Sizes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "These are indicative planning sizes, not confirmed standard models. Only the 10 ft × 10 ft Portable Shop Cabin is a catalogue item; every other size is a planning example, subject to an approved drawing and quotation.",
+        ],
+        table: {
+          caption:
+            "Planning examples only. Manufacturing availability, usable internal dimensions and structural requirements are confirmed in the approved drawing and quotation.",
+          headers: ["Indicative size", "Possible application"],
+          rows: [
+            ["6 × 4 ft", "Mobile recharge or coffee counter"],
+            ["8 × 6 ft", "Fancy store, flower or souvenir kiosk"],
+            ["10 × 8 ft", "Snacks, condiments or vegetable shop"],
+            ["20 × 8 ft", "Agricultural supply shop or larger retail kiosk"],
+            ["20 × 10 ft and above", "Mini convenience store"],
+          ],
+        },
+        closing: ["Actual dimensions depend on equipment, occupancy, circulation, storage and site requirements."],
+      },
+      {
+        heading: "Weather Protection for Hassan",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Hassan and surrounding locations may experience seasonal rain and varying local weather conditions. Possible shop cabin design considerations include:",
+        ],
+        bullets: [
+          { text: "Properly sealed roof joints" },
+          { text: "A suitable roof slope and drainage" },
+          { text: "Weather-protected service windows" },
+          { text: "Awnings and canopies" },
+          { text: "Corrosion-protective exterior finishes" },
+          { text: "An appropriate base elevation" },
+          { text: "Exterior lighting" },
+          { text: "Ventilation" },
+        ],
+        closing: [
+          "A suitable foundation and site drainage are important. These measures improve protection against rain; they do not make a cabin flood-proof or completely waterproof, and the protection specified for your shop is set out in its quotation.",
+        ],
+      },
+      {
+        heading: "Why Choose Portable Office Cabin?",
+        paragraphs: ["What a Hassan shop owner gets from ordering directly from the manufacturer:"],
+        bullets: [
+          { title: "Customized shop cabin dimensions", text: "the size is planned per order and shown on the approved drawing." },
+          { title: "Retail-specific front designs", text: "a rolling shutter, a glass display, a service window or an open counter." },
+          { title: "MS and insulated construction options", text: "MS sheet or insulated PUF panels, chosen for the use and the exposure." },
+          { title: "Display shelves and counters", text: "shelving, racks and counters arranged around what you sell." },
+          { title: "Electrical and ventilation provisions", text: "lighting, sockets and ventilation, as specified." },
+          { title: "Exterior branding options", text: "colours, signage panels and optional cladding." },
+          { title: "Weather-conscious designs", text: "roof drainage, sealed joints, awnings and protective finishes." },
+          { title: "Quotation support", text: "a written quotation for your specification." },
+          { title: "Delivery coordination", text: "transport and unloading planned with you before dispatch." },
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "What portable shop cabin types may suit Hassan industrial areas?",
+        answer:
+          "Daily essentials shops, fancy stores, snack kiosks and mobile accessory counters are possible options, depending on the demand at the location and the permissions for the site. Inside an industrial area, the estate operator's or landowner's permission comes first.",
+      },
+      {
+        question: "Can I place a shop cabin inside an SEZ in Hassan?",
+        answer:
+          "Placement depends on the rules of the SEZ concerned, the land-use permissions and approvals from the appropriate authority. Check with that authority before ordering; we build the cabin to the specification that is approved.",
+      },
+      {
+        question: "Can I install a souvenir kiosk near Belur or Halebidu?",
+        answer:
+          "Possibly, but placement near protected monuments may be restricted, and a kiosk's appearance, signage and position may also be controlled. Confirm the permissions with the authorities concerned before installation.",
+      },
+      {
+        question: "What type of kiosk may suit an approved NH 75 retail location?",
+        answer:
+          "A coffee, spice, tea or snack kiosk may be considered, subject to demand, safe site access and the applicable land-use and highway approvals. A service window, or a shutter with a fold-down counter, lets customers be served from outside the cabin.",
+      },
+      {
+        question: "Do agricultural input shops in Hassan require licences?",
+        answer:
+          "Selling regulated seeds, fertilisers or pesticides generally requires the applicable dealer licences and compliance with the relevant storage and sale rules. The licence is the business owner's responsibility; the shelving and secure storage can be planned around the conditions it sets.",
+      },
+      {
+        question: "Can portable shop cabins be designed for Hassan's seasonal rain?",
+        answer:
+          "Yes, within limits. Sealed roof joints, a suitable roof slope and drainage, weather-protected openings, awnings and corrosion-resistant finishing can improve weather protection, and a raised, well-drained base helps. No cabin is promised to be completely waterproof or flood-proof.",
+      },
+      {
+        question: "Can a portable shop cabin be relocated to another site later?",
+        answer:
+          "Some cabins can be relocated, subject to their structural design, condition, lifting arrangements and transport access at both sites. Mention it before fabrication if you expect to move the shop; the permissions for one site do not carry over to another.",
+      },
+      {
+        question: "How quickly can a shop cabin be delivered to Hassan?",
+        answer:
+          "Manufacturing and delivery timelines depend on the selected configuration, the quantity, our workload, transport and how ready the site is. The schedule is confirmed when the order is finalised; no date is promised in advance.",
+      },
+    ],
+
+    ctaHeading: "Request a Portable Shop Cabin Quote in Hassan",
+    ctaText: `Planning a retail kiosk near an industrial area, a coffee counter at a permitted highway location, a souvenir stall or an agricultural supply shop? Share your business type, preferred dimensions, installation location and required fittings. Call or WhatsApp ${COMPANY.whatsapp.display} or e-mail ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request Quote",
+    // Call and WhatsApp buttons are on by default; an empty list drops the two default
+    // (container-office) secondary buttons.
+    ctaSecondaryLinks: [],
+    relatedLinksHeading: "Related Products",
+    relatedLinks: [
+      { label: "Catalogue Portable Shop Cabin (10 ft × 10 ft)", href: "/products/portable-shop-cabin" },
+      { label: "Container Cafe and Kiosk Formats", href: "/products/container-cafe-restaurant" },
+      { label: "Office Portable Cabin", href: "/products/office-portable-cabin" },
+      { label: "Marketing Office Cabins", href: "/products/marketing-office" },
+      { label: "Security Guard Cabins", href: "/products/security-cabin" },
+      { label: "Container Site Office", href: "/products/container-site-office" },
+      { label: "All Portable Cabin Models", href: "/products/category/portable-cabins" },
+      { label: "Cabin Transport and Delivery Guide", href: "/products/portable-cabin/transport-and-delivery" },
+      { label: "Portable Shops in Krishnagiri, Tamil Nadu", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Portable Shop Cabins in Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+      { label: "Portable Shop Cabins in Mandya", href: "/cities-we-serve/portable-shop-cabin-mandya" },
+      { label: "Portable Shop Cabins in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
+      { label: "Portable Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
+      { label: "Portable Shops in Shivamogga, Machenahalli", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Locations",
+      links: [
+        { label: "Container Offices in Mysore", href: "/cities-we-serve/container-office-in-mysore" },
+        { label: "Portable Cabins in Tumkur", href: "/cities-we-serve/portable-cabin-in-tumkur" },
+        { label: "Portable Cabins in Shivamogga, Machenahalli", href: "/cities-we-serve/portable-cabin-shivamogga-machenahalli-industrial-area" },
+        { label: "Container Offices in Chitradurga", href: "/cities-we-serve/container-office-in-chitradurga" },
+        { label: "Portable Cabins Across Karnataka", href: "/promotions/portable-cabin-in-karnataka" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Hassan district. Delivery, unloading and placement are arranged for each order, the base depends on the site, and no manufacturing or delivery date is guaranteed. The shop fronts, finishes, fittings, materials and sizes on this page are options, and the sizes are planning examples; only the 10 ft × 10 ft Portable Shop Cabin is a catalogue item, and what is supplied for each order is confirmed in its approved drawing, specification and quotation. The six images are illustrative renders of one grey corrugated-steel kiosk design with a rolling-shutter serving hatch, outside and inside, and of a closed charcoal variant with an entry door; the pictured design is not a confirmed standard product, the stock is shown for illustration, and the images are not photographs of installations in Hassan. KIADB (the Karnataka Industrial Areas Development Board), its Hassan Growth Centre and the textile and pharmaceutical SEZs are named only to describe locations; Portable Office Cabin is not affiliated with KIADB or with any SEZ, estate, heritage site or company in the district, and the places, highways and businesses named here describe typical uses and enquiry locations, not clients, completed projects or guaranteed delivery areas. No location or season guarantees footfall, demand or sales. Permissions, licences, food registration, heritage-area and highway rules, and electrical and fire requirements depend on the site and the business and remain the owner's responsibility; the notes on this page are general guidance, not legal, engineering or regulatory advice.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * PORTABLE CABINS IN KANAKAPURA — the owner's draft of 2026-10-21 ("Portable Cabins in Kanakapura",
    * meta title "Portable Cabins in Kanakapura | Office, Security & Staff Cabins", suggested URL
    * /portable-cabin-kanakapura) follows the site pattern as /cities-we-serve/portable-cabin-in-kanakapura,
@@ -10838,6 +11255,8 @@ export const CITY_PAGES: CityPage[] = [
         { label: "Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-cabin-manufacturer-devanahalli-airport" },
         { label: "Porta Cabins in Devanahalli", href: "/cities-we-serve/porta-cabin-devanahalli-airport" },
         { label: "Container Offices near Devanahalli Airport", href: "/cities-we-serve/container-office-devanahalli-airport" },
+        // Sibling toilet page (2026-11-06, owner-approved cross-links): Doddaballapur links back here.
+        { label: "Toilet Cabins for Doddaballapur Industrial Units", href: "/cities-we-serve/portable-toilet-cabin-doddaballapur" },
         { label: "Areas We Serve", href: "/cities-we-serve" },
       ],
     },
@@ -12278,6 +12697,8 @@ export const CITY_PAGES: CityPage[] = [
       heading: "Nearby Locations",
       links: [
         { label: "Shop and Kiosk Cabins for Hebbal, Mysuru", href: "/cities-we-serve/portable-shop-cabin-hebbal-mysuru" },
+        // Nanjangud shop page, live since #209 (owner Mandya brief: link Nanjangud and Hassan once live; Hassan follows).
+        { label: "Shop Cabins for Nanjangud Industrial Area", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
         { label: "Container Offices in Mysuru", href: "/cities-we-serve/container-office-in-mysore" },
         { label: "Shipping Containers in Mysuru", href: "/cities-we-serve/shipping-container-in-mysore" },
         { label: "Portable Cabins in Kanakapura", href: "/cities-we-serve/portable-cabin-in-kanakapura" },
@@ -12920,6 +13341,9 @@ export const CITY_PAGES: CityPage[] = [
     relatedLinks: [
       { label: "Portable Shop Cabin (10 × 10 ft)", href: "/products/portable-shop-cabin" },
       { label: "Portable Shops in Krishnagiri", href: "/cities-we-serve/portable-shop-krishnagiri" },
+      { label: "Portable Shops in Hassan", href: "/cities-we-serve/portable-shop-cabin-hassan" },
+      // Reciprocal link to the Nanjangud shop page, which links here (owner's Nanjangud brief, 2026-11-06).
+      { label: "Shop Rows and Kiosks in Nanjangud", href: "/cities-we-serve/portable-shop-cabin-nanjangud" },
       { label: "NH 48 Kiosks and Shop Cabins in Sira", href: "/cities-we-serve/portable-shop-cabin-sira" },
       { label: "Container Cafe and Restaurant", href: "/products/container-cafe-restaurant" },
       { label: "Shipping and Cargo Containers", href: "/products/category/cargo-storage-shipping-containers" },
@@ -23993,6 +24417,7 @@ export const CITY_PAGES: CityPage[] = [
       { label: "Portable Security Cabins in Krishnagiri", href: "/cities-we-serve/portable-security-cabin-krishnagiri" },
       { label: "Portable Toilets in Krishnagiri", href: "/cities-we-serve/portable-toilet-krishnagiri" },
       { label: "Portable Shops in Shivamogga, Karnataka", href: "/cities-we-serve/portable-shop-shivamogga-machenahalli" },
+      { label: "Portable Shop Cabins in Hassan, Karnataka", href: "/cities-we-serve/portable-shop-cabin-hassan" },
     ],
     nearbyLinks: {
       heading: "Nearby Locations",
@@ -25119,6 +25544,335 @@ export const CITY_PAGES: CityPage[] = [
     },
 
     disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it does not operate an office, yard or service partner in Dharmapuri district. Delivery, unloading and placement are arranged for each order, and delivery dates are not guaranteed. The toilet types, cubicle counts, sizes, materials, insulation, fittings, water storage, plumbing and waste provisions described on this page are options; the items supplied are confirmed in the approved specification and quotation for each order. The images on this page are illustrative images of one double toilet cabin design with one Western and one Indian seat; other configurations look different, and the images are not photographs of installations in Dharmapuri. SIPCOT (the State Industries Promotion Corporation of Tamil Nadu) and its industrial park at Adhagapadi are named only to describe the location; Portable Office Cabin is not affiliated with SIPCOT or any estate, contractor or company there, and the project phases, uses and places described here are not clients, completed projects or confirmed delivery areas. The notes on sanitation planning, shared facilities, heat, water use and wastewater are general guidance, not engineering, public-health or legal advice; fixture quantities and wastewater handling must meet the requirements that apply to each site.`,
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * PORTABLE TOILET CABINS FOR DODDABALLAPUR INDUSTRIAL UNITS — the portable-toilet intent for
+   * Doddaballapur (also spelled Doddaballapura; one page for both, as the brief asks), Bengaluru Rural
+   * district, Karnataka: additional toilet blocks for operating garment units, weaving and powerloom
+   * sheds, factories and warehouses. It owns "toilet cabin + Doddaballapur". The broader Doddaballapura
+   * page, container-office-in-doddaballapura, covers container offices and has no toilet keywords; the
+   * two pages link to each other. No other page targets toilets in Doddaballapur, and the areas line
+   * names no town that has its own toilet page (owner rule of 2026-11-05, no keyword cannibalisation).
+   *
+   * Owner brief of 2026-11-05 ("Doddaballapur Portable Toilet Cabin — Content and Implementation
+   * Commands"): the proposed slug, meta title (62 chars), meta description and H1 verbatim, and the
+   * section text verbatim except where noted below. Mapped onto the template slots in the brief's
+   * order. The entry is data-only (no template change), so a few sections are adapted to the slot that
+   * carries them:
+   *   • Intro (two paragraphs) → intro + heroCta (Request a Quotation → the on-page form, Call,
+   *     WhatsApp). The tagline is new, made from the intro's list of workplaces.
+   *   • Reduce Unnecessary Walking and Queues → why: the first paragraph, then the brief's
+   *     "illustrative walking-time calculation" as `whyTable` (its figures as rows, its title and two
+   *     caveats verbatim in the caption), then the second paragraph as whyOutro.
+   *   • Solutions → "Toilet Cabin Options to Discuss". NOT in the brief: the template needs a numbered
+   *     H3 section here, and the brief allows catalogue options once checked. Three items, each worded
+   *     only from its own product page and linked to it: toilet cabins built to order
+   *     (/products/portable-toilet-cabin), the four-unit block (/products/portable-toilet-block-4-unit,
+   *     no price named) and a cabin with an attached toilet (/products/portable-cabin/with-toilet-and-
+   *     pantry, the brief's "portable cabins with toilets" link, worded "with an attached toilet" so it
+   *     does not repeat the Devanahalli toilet page's anchor). For owner review.
+   *   • Garment units, Buyer facility reviews, Existing factory (with its table), Seasonal workforce,
+   *     Weaving and powerloom units, Warehouses and logistics yards → extra sections with
+   *     `placement: "afterSolutions"`, in the brief's order and wording. The table caption is new.
+   *   • Configuration Planning Guide → features: the table's five rows as "Site requirement: points"
+   *     items (the features slot is a list), the closing note as sizesNote. Its lead-in line is new.
+   *   • Price → custom, beside the rear view (which shows the connection points): the first
+   *     paragraph's cost factors as three bullets (Cabin / Services / Site, the same items), the second
+   *     paragraph verbatim.
+   *   • Service-area enquiries → areas; How to Enquire → how (the five steps verbatim, as titles). The
+   *     template renders areas before how, so these two swap places.
+   *   • FAQs: the brief's eight, verbatim. CTA heading and text verbatim, plus the sales email from
+   *     COMPANY; the CTA buttons (Request a Quotation, Call, WhatsApp) + the category enquiry form.
+   * Left out (brief section 4): rental (not confirmed for this location, so no section, FAQ, keyword,
+   * link or default "on rent" button), named MS / PUF / urinal / handwash / walkway / vending options,
+   * park acreage, loom counts, workforce figures, audit promises, installation times and lead times.
+   * Apparel Park and the Textile Park were checked on 2026-11-05 (KIADB's Doddaballapur Apparel Park,
+   * Phases I–II; the Doddaballapur Integrated Textile Park, reported functional in parliamentary
+   * replies) and are named only as delivery enquiry locations, with the non-affiliation note in the
+   * disclaimer.
+   * Links: three contextual links (the solutions items); related products and the Karnataka and
+   * Bangalore portable-toilet hubs (both list this page); the broader Doddaballapura page (which links
+   * back). The Devanahalli toilet page (#214, live 2026-11-06) and this page link to each other in
+   * their nearby-links blocks (owner-approved cross-links, 2026-11-06); neither names the other's town
+   * in its areas line.
+   *
+   * Images: three owner-dropped webp files ("public/images/Doddaballapur Portable Toilet Cabin city
+   * page/Doddaballapur Portable Toilet Cabin/cabin (1–3).webp", no EXIF/XMP/ICC/IPTC; source not
+   * stated), copied byte-for-byte under the brief's names: (1) front with both doors open, 600×448 =
+   * hero / og:image, no caption (sibling convention); (2) side view, 1200×896 = the feature band;
+   * (3) rear view with tap, socket, louvres and drain outlets, 1200×896 = beside the price section.
+   * One teal two-cubicle cabin (one Western toilet, one Indian squat pan). The alt texts describe only
+   * what is visible; the captions and the disclaimer call them illustrative images, and no image text
+   * names Doddaballapur.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`) and the Service JSON-LD (no offers).
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "portable-toilet-cabin-doddaballapur",
+    city: "Doddaballapur",
+    listTitle: "Portable Toilet Cabins in Doddaballapur",
+    metaTitle: "Portable Toilet Cabin in Doddaballapur | Factory Toilet Blocks",
+    metaDescription:
+      "Enquire about portable toilet cabins in Doddaballapur for garment units, factories and warehouses. Discuss layouts, fittings, connections and delivery.",
+    keywords:
+      "Portable Toilet Cabin in Doddaballapur, Portable Toilet Cabin Doddaballapura, Toilet Cabin Doddaballapur Apparel Park, Toilet Block Doddaballapur Industrial Area, Portable Washroom Cabin Doddaballapura, Factory Toilet Block Doddaballapur, Portable Toilet Cabin Price in Doddaballapur",
+    geo: { region: "IN-KA", placename: "Doddaballapur, Bengaluru Rural, Karnataka, India", position: "13.2919;77.5388", icbm: "13.2919, 77.5388" },
+    motion: true,
+    serviceJsonLd: { serviceType: "Portable Toilet Cabin" },
+
+    heroImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-front.webp",
+      alt: "Front of a teal two-cubicle portable toilet cabin with both doors open, showing a Western toilet in one cubicle and an Indian squat pan in the other, each with a wall-mounted cistern",
+      width: 600,
+      height: 448,
+    },
+    featureImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-side.webp",
+      alt: "Side view of a teal portable toilet cabin with a curved roof edge, ribbed wall panels, a grey base band and a roof ventilator",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative side elevation of a portable toilet cabin. The final size, panels and ventilation follow the approved specification.",
+    },
+    interiorImage: {
+      src: "/images/cities/portable-toilet-cabin-doddaballapur/portable-toilet-cabin-rear.webp",
+      alt: "Rear of a teal portable toilet cabin with an outdoor tap, an electrical socket, two ventilation louvres and two drain outlets at the base",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative rear view of the same cabin. Water, drainage and electrical connection points are confirmed for each site.",
+    },
+
+    h1: "Portable Toilet Cabins for Doddaballapur Industrial Units",
+    tagline: "Toilet blocks for garment units, weaving sheds, factories and warehouses",
+    intro: [
+      "Planning additional washroom facilities for a garment unit, weaving shed, factory or warehouse in Doddaballapur? Portable Office Cabin can help you discuss portable toilet cabin requirements around your workforce, available space and existing service connections.",
+      "For an operating factory, the planning starts with where people work, how they reach the facilities and how the cabins will be cleaned and maintained. Share your site plan and requirements so the proposed layout, fittings and supply scope can be confirmed before ordering.",
+    ],
+    heroCta: true,
+
+    whyHeading: "Reduce Unnecessary Walking and Queues",
+    whyIntro:
+      "A toilet block that is difficult to reach can create unnecessary walking and waiting during a shift. Review the route from each work area, expected use at shift changes and safe access before deciding on a location.",
+    whyBullets: [],
+    whyTable: {
+      caption:
+        "An illustrative walking-time calculation. This is a hypothetical planning example, not a measured result or a promise of savings. Toilet breaks themselves are necessary; the example concerns only avoidable travel time.",
+      headers: ["Hypothetical example", "Figure"],
+      rows: [
+        ["Workers on the shift", "300"],
+        ["Trips per worker during the shift", "2"],
+        ["Avoidable walking per trip", "4 minutes"],
+        ["Avoidable walking per shift", "2,400 minutes, or 40 person-hours"],
+      ],
+    },
+    whyOutro:
+      "Consider whether several smaller facilities would serve the site better than one distant block. Keep routes clear, provide suitable lighting and discuss weather protection where required. Placement must preserve emergency exits, vehicle routes and required clearances. Convenient access should support workers’ wellbeing and unrestricted toilet use.",
+
+    solutionsHeading: "Toilet Cabin Options to Discuss",
+    solutionsIntro:
+      "Our existing product pages give a starting point for the discussion. The size, layout and fittings for your site are confirmed in the approved specification and quotation.",
+    solutions: [
+      {
+        title: "Toilet Cabins Built to Order",
+        text: "The number of cubicles, the seat types, the fittings and the water and drainage provisions are agreed for the site before the cabin is built.",
+        link: { label: "Compare portable toilet cabin types", href: "/products/portable-toilet-cabin" },
+      },
+      {
+        title: "Four-Unit Toilet Block",
+        text: "A catalogue toilet block with four toilet units in separate sections, for a site that needs several toilets in one cabin.",
+        link: { label: "View the four-unit toilet block", href: "/products/portable-toilet-block-4-unit" },
+      },
+      {
+        title: "Site Office Cabin with an Attached Toilet",
+        text: "Where a site office also needs its own toilet, a portable cabin can be built with an attached toilet and pantry.",
+        link: { label: "Portable cabins with an attached toilet", href: "/products/portable-cabin/with-toilet-and-pantry" },
+      },
+    ],
+
+    featuresHeading: "Configuration Planning Guide",
+    featuresIntro: "Points to review for each type of site:",
+    features: [
+      "Garment production unit: user numbers, separate facilities, privacy and handwashing",
+      "Existing factory expansion: permitted placement, utility capacity and safe access",
+      "Seasonal increase in workers: peak occupancy, duration and future relocation needs",
+      "Small weaving shed: footprint, ventilation, cleaning and maintenance access",
+      "Warehouse or logistics yard: shift use, driver access and separation from vehicle routes",
+    ],
+    sizesNote:
+      "Fixture quantities and layouts should be checked by the responsible project team against applicable requirements. This guide does not prescribe a universal seats-per-worker ratio.",
+
+    customHeading: "Portable Toilet Cabin Price in Doddaballapur",
+    customIntro: "The quotation depends on what is agreed for the cabin and on your site:",
+    customBullets: [
+      { title: "Cabin", text: "the agreed size, layout, fixture quantity, materials and finish." },
+      { title: "Services", text: "the plumbing and electrical scope." },
+      {
+        title: "Site",
+        text: "the location, transport, unloading, ground preparation and connection requirements, which can also affect the total.",
+      },
+    ],
+    customOutro:
+      "Send your quantity, preferred layout and exact site address for an itemised quotation. Ask for taxes, transport, unloading, connections and any additional services to be identified clearly as included or excluded.",
+
+    areasHeading: "Doddaballapur Service-Area Enquiries",
+    areasText:
+      "For sites in Doddaballapur town, the industrial area, Apparel Park or Textile Park, share the exact address and delivery access details. For enquiries around Rajanukunte, Doddabelavangala, Tubagere, Ghati Subramanya or the Satellite Town Ring Road, confirm delivery availability and logistics for the individual location.",
+
+    howHeading: "How to Enquire",
+    howSteps: [
+      { title: "Share your Doddaballapur site address and intended use.", text: "" },
+      { title: "Provide workforce numbers, shifts and existing facility details.", text: "" },
+      { title: "Send the proposed placement area, site plan or photographs.", text: "" },
+      { title: "Confirm required fittings, service connections and access arrangements.", text: "" },
+      { title: "Review the drawing, quotation, responsibilities and delivery schedule before placing the order.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Planning Facilities for Garment Units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For garment production and other workplaces, discuss privacy, user numbers and day-to-day maintenance alongside cabin dimensions.",
+        ],
+        bullets: [
+          { text: "Separate facilities where required by the workforce and applicable requirements." },
+          { text: "Doors, privacy provisions and safe access routes." },
+          { text: "Handwashing points and reliable water supply." },
+          { text: "Lighting, ventilation and easy-clean surfaces." },
+          { text: "Suitable sanitary-waste arrangements where needed." },
+          { text: "Cleaning responsibility, consumable replenishment and maintenance access." },
+        ],
+        closing: ["Confirm each fitting and provision in the approved specification rather than assuming it is included."],
+      },
+      {
+        heading: "Preparing for Buyer Facility Reviews",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If a buyer or customer has a facility checklist, share it before requesting a quotation. Your project or compliance team should identify the relevant requirements and confirm the complete arrangement, including toilet numbers, separation, water, hygiene, cleaning and access.",
+          "A cabin supply does not guarantee that a factory will pass a social-compliance audit. The outcome depends on the full workplace arrangement, operating practices and the assessment criteria. Any requested cabin features must be reviewed and expressly included in the order scope.",
+        ],
+      },
+      {
+        heading: "Adding a Toilet Block to an Existing Factory",
+        placement: "afterSolutions",
+        paragraphs: [
+          "An additional cabin may be an option where existing facilities no longer suit the workforce. Start by reviewing the site plan, access, utility connections and intended placement area.",
+        ],
+        table: {
+          caption: "Information to share when planning an additional toilet block at an operating factory.",
+          headers: ["Planning point", "Information to provide"],
+          rows: [
+            ["Available space", "Proposed footprint and nearby structures"],
+            ["Access", "Vehicle route, unloading space and lifting arrangements"],
+            ["Connections", "Fresh water, wastewater and electrical supply"],
+            ["Factory operations", "Delivery windows and routes that must remain open"],
+            ["User access", "Walking route, lighting, privacy and any weather protection"],
+            ["Approvals", "Applicable siting, drainage and other project requirements"],
+          ],
+        },
+        closing: [
+          "Do not assume that a setback, fire-access route or other open space can be used for a cabin. Your project team should confirm permitted placement. Foundations, ground preparation and service connections may be required. Installation scope and any effect on operations must be agreed for the individual site.",
+        ],
+      },
+      {
+        heading: "Plan Ahead for Seasonal Workforce Changes",
+        placement: "afterSolutions",
+        paragraphs: [
+          "If additional workers are expected during a peak order period, review toilet capacity before the increase. Share the expected user numbers, shifts and duration when discussing an additional block.",
+          "Consider how the cabin will be connected, cleaned and accessed during that period, and how disconnection or relocation would be handled later. Purchase, relocation support and any rental availability must be confirmed separately in the quotation.",
+        ],
+      },
+      {
+        heading: "Toilet Cabin Requirements for Weaving and Powerloom Units",
+        placement: "afterSolutions",
+        paragraphs: [
+          "For a compact weaving shed, available space and maintenance access can shape the layout. Discuss cabin dimensions, fixture quantity, lighting, ventilation and cleaning requirements.",
+          "Where lint or dust is present, share the operating conditions during design review. Ventilation must remain suitable for washroom use; vents should not simply be sealed to exclude dust. Any protective screening or ventilation treatment requires an appropriate design and a confirmed specification.",
+        ],
+      },
+      {
+        heading: "Facilities for Warehouses and Logistics Yards",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Warehouse staff, loading teams and visiting drivers may use facilities at different times. Review shift patterns and waiting areas when planning the location and capacity of a toilet block.",
+          "Keep pedestrian access clear of moving vehicles and loading operations. Discuss exterior lighting, water supply, cleaning access and any requested separate urinal or handwash provision. Confirm availability and inclusion of each item in the order.",
+        ],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can an existing factory add a portable toilet block?",
+        answer:
+          "An additional cabin may be suitable after reviewing available space, permitted placement, utility connections and access. The proposed arrangement and installation requirements must be confirmed for your site.",
+      },
+      {
+        question: "Will a toilet cabin guarantee a successful buyer audit?",
+        answer:
+          "No. Share your buyer’s checklist for review, but audit outcomes depend on the complete facility and operating practices. Only the features expressly confirmed in the specification form part of the cabin supply.",
+      },
+      {
+        question: "How should we plan facilities for extra seasonal workers?",
+        answer:
+          "Provide the peak workforce, shift pattern and expected duration. Review capacity, connections, cleaning and future disconnection or relocation arrangements before ordering additional cabins.",
+      },
+      {
+        question: "Where should a factory toilet block be placed?",
+        answer:
+          "Choose a permitted location with convenient, safe pedestrian access and suitable service connections. Preserve emergency access and required clearances. The final position should be reviewed with your project team.",
+      },
+      {
+        question: "Can a compact cabin be considered for a weaving unit?",
+        answer:
+          "Share the available dimensions and operating conditions for review. The layout must allow suitable ventilation, plumbing, cleaning and maintenance access.",
+      },
+      {
+        question: "Are sanitary bins, walkways and other accessories included?",
+        answer:
+          "List each required accessory in your enquiry. Availability, supply responsibility and cost must be confirmed in the quotation; they are not assumed to be included.",
+      },
+      {
+        question: "Are cleaning and wastewater services included?",
+        answer:
+          "These responsibilities must be agreed separately. Cleaning, consumables, waste handling and ongoing servicing are included only when expressly stated in the order scope.",
+      },
+      {
+        question: "How soon can delivery be arranged?",
+        answer:
+          "Timing depends on the approved design, quantity, production availability and site logistics. Request an order-specific schedule with your quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a Toilet Cabin Quotation for Doddaballapur",
+    ctaText: `Share your workforce requirements, preferred layout and site details with Portable Office Cabin. Include the required quantity and date so the cabin specification, delivery arrangements and scope can be discussed clearly. You can also email the sales team at ${COMPANY.email.sales}.`,
+    ctaButtonLabel: "Request a Quotation",
+    // The brief's buttons are Call Us, WhatsApp and Request a Quotation: the call and WhatsApp buttons
+    // are on by default, and an empty list drops the two default container-office / rental buttons.
+    ctaSecondaryLinks: [],
+    enquiryForm: {
+      categorySlug: "portable-toilet-cabins",
+      noun: "toilet cabin",
+      heading: "Send Your Toilet Cabin Requirements",
+      intro:
+        "Include your workforce numbers, shifts, preferred layout, quantity and site address. We use these details to confirm the scope with you before preparing a written quotation.",
+    },
+    relatedLinksHeading: "Related Toilet and Cabin Pages",
+    relatedLinks: [
+      { label: "Portable Toilet Cabin Range", href: "/products/category/portable-toilet-cabins" },
+      { label: "Site Office Containers", href: "/products/category/site-office-containers" },
+      { label: "Portable Toilet Cabin in Karnataka", href: "/promotions/portable-toilet-cabin-in-karnataka" },
+      { label: "Portable Toilet Cabin in Bangalore", href: "/promotions/portable-toilet-cabin-in-bangalore" },
+    ],
+    nearbyLinks: {
+      heading: "Nearby Service Areas",
+      links: [
+        { label: "Toilet Cabins for Devanahalli Projects", href: "/cities-we-serve/portable-toilet-cabin-devanahalli-aerospace-park" },
+        { label: "Container Offices for Doddaballapura Sites", href: "/cities-we-serve/container-office-in-doddaballapura" },
+        { label: "Areas We Serve", href: "/cities-we-serve" },
+      ],
+    },
+
+    disclaimer: `Portable Office Cabin manufactures at its factory at ${COMPANY.addresses.tamilNaduFactory.street}, ${COMPANY.addresses.tamilNaduFactory.locality}, in Krishnagiri district near Hosur, and has an office in Electronic City, Bengaluru; it has no office, yard or service partner in Doddaballapur. Delivery, unloading, placement and any connections are planned for each order, and delivery dates are not guaranteed. The layouts, fixtures, fittings, materials and service provisions mentioned on this page are points to discuss; only the items expressly confirmed in the approved specification and quotation form part of a supply. The three images are illustrative images of one two-cubicle toilet cabin design with one Western toilet and one Indian squat pan; other configurations look different, and the images do not show an installation in Doddaballapur or a customer project. The Doddaballapur industrial area, Apparel Park and Textile Park are named only to describe locations; Portable Office Cabin is not affiliated with their developers or operators or with any unit there, and the towns, roads and parks named here are places we accept delivery enquiries from, not clients, completed projects or confirmed delivery areas. The walking-time figures are a hypothetical example. The planning notes are general guidance, not engineering, public-health, legal or compliance advice: a cabin supply does not guarantee the result of any buyer or social-compliance audit, and wastewater handling and disposal must comply with applicable local requirements.`,
   },
 ];
 
