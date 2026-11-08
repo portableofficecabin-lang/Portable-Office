@@ -6698,8 +6698,7 @@ export const CITY_PAGES: CityPage[] = [
       alt: "Elevated view of a steel shipping container on paving, showing its corrugated roof, closed cargo doors and a glazed side door",
       width: 1451,
       height: 1084,
-      caption:
-        "Illustrative elevated view. Plan the placement area, door clearance and handling space around the unit before delivery.",
+      caption: "Illustrative elevated view. Plan door clearance and handling space around the unit.",
     },
     gallery: [
       {
