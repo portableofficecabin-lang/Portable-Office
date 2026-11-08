@@ -10,22 +10,29 @@
  *           shipping-container  → slug "shipping-container-in-<place>": the box itself (sale / rental /
  *                                 grades), the sibling of that place's container-office page; also
  *                                 "shipping-container-<place>" (no "-in-"), the owner's URL for
- *                                 Shipping Containers in Shivamogga (2026-11-05)
+ *                                 Shipping Containers in Shivamogga (2026-11-05); and
+ *                                 "shipping-containers-<use>-<place>", the owner's URL for Shipping
+ *                                 Containers for Hydel Power Project Sites in the Visakhapatnam
+ *                                 Region (2026-11-07)
  *           local-service       → everything else (construction and workforce-housing service pages)
- *   state   from the page's own geo.region ("IN-KA" / "IN-TN"), the same field its geo meta tags use.
+ *   state   from the page's own geo.region ("IN-KA" / "IN-TN" / "IN-AP"), the same field its geo meta
+ *           tags use; any other region is grouped under "Other states".
  */
 import { CITY_PAGES, type CityPage } from "@/data/cityPages";
 import { containerOfficeLocation } from "@/data/containerOfficeCluster";
 
 export type CityFamily = "container-office" | "shipping-container" | "local-service";
-export type DirectoryState = "Karnataka" | "Tamil Nadu" | "Other states";
+export type DirectoryState = "Karnataka" | "Tamil Nadu" | "Andhra Pradesh" | "Other states";
 
 const STATE_BY_REGION: Readonly<Record<string, DirectoryState>> = {
   "IN-KA": "Karnataka",
   "IN-TN": "Tamil Nadu",
+  // First page: the hydel project page near Visakhapatnam (2026-11-07). A state with no page is
+  // omitted from the directory, so this adds no empty group.
+  "IN-AP": "Andhra Pradesh",
 };
 /** Display order of the state groups. */
-export const DIRECTORY_STATES: readonly DirectoryState[] = ["Karnataka", "Tamil Nadu", "Other states"];
+export const DIRECTORY_STATES: readonly DirectoryState[] = ["Karnataka", "Tamil Nadu", "Andhra Pradesh", "Other states"];
 
 /** Section ids on /cities-we-serve — the targets of the "all locations" links. */
 export const SHIPPING_CONTAINER_DIRECTORY_ID = "shipping-container-locations";
@@ -36,8 +43,9 @@ export const SHIPPING_CONTAINER_CATEGORY_PATH = "/products/category/cargo-storag
 
 export function cityFamily(page: CityPage): CityFamily {
   if (containerOfficeLocation(page.slug)) return "container-office";
-  // "shipping-container-" covers both slug shapes above; no other city page starts with it.
-  if (page.slug.startsWith("shipping-container-")) return "shipping-container";
+  // "shipping-container-" covers the first two slug shapes above and "shipping-containers-" the third;
+  // no other city page starts with either.
+  if (/^shipping-containers?-/.test(page.slug)) return "shipping-container";
   return "local-service";
 }
 
@@ -54,9 +62,22 @@ export const cityPlaceLine = (page: CityPage) => page.geo.placename.replace(/,\s
  * Link text for a directory card. Shipping pages get a plain descriptive anchor ("Shipping
  * containers in Mysore") instead of their meta title, several of which end in the brand name.
  * Service pages keep the label they have always had on the index (listTitle, else metaTitle).
+ * A page's own `directoryLabel` (optional) overrides both; no earlier page sets it.
  */
 export function cityDirectoryLabel(page: CityPage): string {
+  if (page.directoryLabel) return page.directoryLabel;
   return cityFamily(page) === "shipping-container" ? `Shipping containers in ${page.city}` : (page.listTitle ?? page.metaTitle);
+}
+
+/**
+ * The named states that have a shipping-container page, as prose ("Karnataka and Tamil Nadu"), for the
+ * "all locations" link. "Other states" is left out because it is not a place name.
+ */
+export function shippingContainerStatesText(): string {
+  const states = cityPagesByState("shipping-container")
+    .map((g) => g.state)
+    .filter((s) => s !== "Other states");
+  return states.length > 1 ? `${states.slice(0, -1).join(", ")} and ${states[states.length - 1]}` : (states[0] ?? "");
 }
 
 /** One family's pages, grouped by state in DIRECTORY_STATES order; empty states are omitted. */
