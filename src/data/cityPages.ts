@@ -13969,6 +13969,289 @@ export const CITY_PAGES: CityPage[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN HUBBALLI–DHARWAD (Hubli) — storage containers for distributor
+   * stockrooms, temporary godowns, heat-sensitive stock and authorised railway project stores.
+   *
+   * Owner brief of 2026-11-07: route, meta title, meta description, H1 and public copy as given. No
+   * other page targets Hubballi, Hubli or Dharwad (repo routes, redirects and sitemap checked), so
+   * this one canonical covers all three names. The slug starts with "shipping-container-", so
+   * cityFamily() puts it in the shipping-container family: directory card ("Shipping containers in
+   * Hubballi–Dharwad", the hub anchor the brief asks for), Karnataka sibling links both ways and the
+   * nearby block. The brief's sections map onto the fixed template slots:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp).
+   *   • "Stockrooms for FMCG distributors" → why (paragraph + the four titled points).
+   *   • "A temporary godown while your warehouse is being built" → solutions heading + intro (prose,
+   *     no items).
+   *   • "Storage for heat-sensitive stock", "Railway project and industrial stores" and "Container
+   *     sizes and condition" (its table, the condition note and the inspection link) → afterSolutions
+   *     extra sections, in the brief's order.
+   *   • "Preparing a base where black cotton soil is present" → features: the ground-check paragraph
+   *     as the intro, the four pre-delivery checks as the list, "Settlement can affect door alignment
+   *     and access." as the bold note. The template's fixed order puts it after the sizes section,
+   *     next to the price and the steps that confirm base readiness.
+   *   • "Shipping container price and rental in Hubballi–Dharwad" → custom (the quote factors as
+   *     bullets) + customLinks (the brief's rental anchor → /products/shipping-container-rental).
+   *   • "Areas we serve" → areas (the template renders it before the steps); "From enquiry to
+   *     placement" → how (four steps, titles only); FAQs (seven) → faqs; the closing request → CTA
+   *     + the category enquiry form. The customer may buy or rent, so the form keeps the rental model.
+   * Lead-ins written where a slot needs one: tagline, the table caption, the custom intro and the
+   * enquiry-form intro. No ₹ figure, stock, lead time, rodent exclusion, cold-chain performance or
+   * standard foundation design; high-cube units, racking, insulation, temperature control, base work
+   * and relocation stay quote-dependent, as the brief says.
+   *
+   * Inspection link: the brief points at the Chennai container page's used-container checklist. The
+   * Container Office in Chennai page has no such checklist; the Chennai-area page that does is
+   * Shipping Container in Athipattu (Ennore–Kattupalli corridor, Tiruvallur district), whose "Used
+   * Container Inspection" section lists seven checks. It is live (HTTP 200) and is linked once.
+   *
+   * KEYWORD OWNERSHIP: shipping / cargo / storage container, temporary godown container and container
+   * rental × Hubballi, Hubli, Dharwad. The Haveri container-office page names Hubballi only as the
+   * NH-48 destination.
+   *
+   * Images: five owner-dropped lossy VP8 webp renders ("public/images/Hubballi–Dharwad shipping
+   * container city page/Hubballi–Dharwad shipping container page/cabin (1–5).webp", 1200×896 and
+   * 1451×1084 ×4, no EXIF / XMP / ICC metadata or provenance to keep) of one rust-orange container
+   * with grey cargo doors and a fixed side window, in a yard. The VP8 bitstreams are copied
+   * byte-for-byte (pixel-identical decode) into the extended format with an XMP dc:title and a
+   * dc:description that calls each an illustrative render. Only the exterior hero matches a slot in
+   * the brief's image table (its filename, alt and caption are used); no image shows racking, a
+   * godown row, raised supports, a shade roof or a fenced project yard, so those slots are left out
+   * and the other four renders carry their own accurate names, alt text and captions. Every caption
+   * says "illustrative", the side window is called an optional modification, and the disclaimer
+   * says none is a photograph taken in Hubballi or Dharwad.
+   *
+   * Opts into the CSS-only motion pass (`motion: true`), the Service JSON-LD and og:image dimensions.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-hubballi-dharwad",
+    city: "Hubballi–Dharwad",
+    listTitle: "Shipping Containers in Hubballi–Dharwad",
+    metaTitle: "Shipping Containers in Hubballi–Dharwad (Hubli)",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Hubballi–Dharwad for FMCG stockrooms, temporary godowns, industrial spares and railway project stores.",
+    keywords:
+      "Shipping Container in Hubballi-Dharwad, Shipping Container Hubli, Cargo Container Hubballi, Storage Container Dharwad, Shipping Container Rental Hubli, Temporary Godown Container",
+    geo: {
+      region: "IN-KA",
+      placename: "Hubballi–Dharwad, Karnataka, India",
+      position: "15.3647;75.1240",
+      icbm: "15.3647, 75.1240",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption:
+        "Illustrative shipping container exterior for industrial storage. The side window shown is an optional modification.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above, showing its corrugated roof, double cargo doors and a small side window",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render of a storage container seen from above. Placement depends on site conditions.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-interior.webp",
+      alt: "Empty steel shipping container interior with corrugated walls, a plywood floor and both cargo doors open",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty container interior. Racking, lighting, insulation and ventilation are optional and quoted separately.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with four locking bars and cam handles",
+        width: 1451,
+        height: 1084,
+        caption: "Double cargo doors with four locking bars. Illustrative render.",
+      },
+      {
+        src: "/images/cities/shipping-container-hubballi-dharwad/hubballi-dharwad-shipping-container-closed-end.webp",
+        alt: "Corrugated steel shipping container seen from its closed end, with a small window in the side wall",
+        width: 1451,
+        height: 1084,
+        caption: "Closed end and side wall. The side window is an optional modification. Illustrative render.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Hubballi–Dharwad",
+    tagline: "20 ft and 40 ft storage containers for distributor stock, temporary godowns, industrial spares and railway project stores.",
+    intro: [
+      "Need more room for distributor stock, packaging while a warehouse is being built, or tools for an industrial or railway project? Portable Office Cabin supplies shipping containers for storage enquiries across Hubballi and Dharwad. Share the goods you plan to store, how often staff need access, and where the unit will sit. We can discuss the size, fit-out, and delivery requirements for your site.",
+    ],
+
+    whyHeading: "Stockrooms for FMCG distributors",
+    whyIntro:
+      "Distributors, super stockists and carrying and forwarding agents can use a container for suitable packaged inventory, cartons and dispatch supplies. If you need to pick stock daily, plan the layout around carton sizes and stock rotation.",
+    whyBullets: [
+      {
+        title: "Stock rotation",
+        text: "Arrange racks so older receipts are accessible first. If goods are date-coded, follow your inventory policy for earliest expiry.",
+      },
+      {
+        title: "Picking space",
+        text: "Label zones by product or batch and keep a clear aisle. Check rack capacity and the container’s usable space before ordering shelving.",
+      },
+      {
+        title: "Storage and housekeeping",
+        text: "Keep cartons on suitable pallets or shelves. Inspect seals and gaps, keep the loading area clear of waste, and follow your pest-control plan.",
+      },
+      { title: "Visibility", text: "Discuss lighting and keep a stock list so staff know where to find each batch." },
+    ],
+
+    solutionsHeading: "A temporary godown while your warehouse is being built",
+    solutionsIntro:
+      "A container can hold suitable packaging, spare parts or dispatch stock while the permanent warehouse is being fitted out. Begin with the volume you need and reserve enough space to unload or add a second unit if demand increases. Once the warehouse opens, the unit can serve as an overflow store or spares room. For rentals, agree on the hire period and collection arrangements. For a unit you plan to move, get relocation quoted separately.",
+    solutions: [],
+
+    extraSections: [
+      {
+        heading: "Storage for heat-sensitive stock",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A steel container in direct sun can get hot. Ask about a light-coloured exterior, shade, insulation or ventilation if those options suit the stock and site. Confirm the storage limits specified by the product supplier. Goods such as some confectionery, cosmetics and medicines may require monitored, temperature-controlled storage. Select the unit and controls around those requirements.",
+        ],
+      },
+      {
+        heading: "Railway project and industrial stores",
+        placement: "afterSolutions",
+        paragraphs: [
+          "A 20 ft container can provide storage for tools, cables, fittings and equipment at an authorised railway project site. The project team should confirm the location, clearances and lifting arrangements. Discuss a lockbox and whether the store will need to move as the work progresses.",
+          "Engineering units can also use containers for spares and tooling, transport yards for parts, and traders for suitable goods awaiting dispatch.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption: "Typical storage uses and site checks by size. The availability of each size is confirmed in the quotation.",
+          headers: ["Size", "Storage use", "What to check"],
+          rows: [
+            ["20 ft", "Distributor overflow, railway project tools or industrial spares", "Door clearance, aisle space and access for unloading"],
+            ["40 ft", "Temporary godowns, packaging and larger stock volumes", "Trailer approach, turning space and unloading position"],
+            ["40 ft high cube", "Taller racking or bulky stock", "Availability, internal height and clearance along the delivery route"],
+          ],
+        },
+        closing: [
+          "Confirm the actual dimensions and condition of the quoted unit. If buying used, ask for the stated grade and the condition of the specific unit.",
+          "Before selecting a unit, see our guide on how to inspect a used container:",
+        ],
+        links: [{ label: "How to inspect a used container", href: "/cities-we-serve/shipping-container-in-athipattu" }],
+      },
+    ],
+
+    featuresHeading: "Preparing a base where black cotton soil is present",
+    featuresIntro:
+      "Expansive soil can move as moisture changes. If your site has black cotton soil or shows seasonal movement, have the responsible site professional confirm ground conditions, drainage, bearing capacity and the support layout for the unit and its intended load.",
+    features: [
+      "Share photographs of the placement area and approach road before delivery.",
+      "Flag ponding, recent fill or uneven ground.",
+      "Confirm that the approved base is ready and level, with enough room for unloading and door access.",
+      "Include any base work in the agreed project scope.",
+    ],
+    sizesNote: "Settlement can affect door alignment and access.",
+
+    customHeading: "Shipping container price and rental in Hubballi–Dharwad",
+    customIntro: "The quote depends on:",
+    customBullets: [
+      { text: "The container size and condition" },
+      { text: "Optional fit-out" },
+      { text: "Transport" },
+      { text: "Unloading access" },
+    ],
+    customOutro:
+      "If you need a unit during warehouse construction or for a time-limited project, see our rental options below. Share the hire dates and location so the team can confirm availability, delivery and collection terms.",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Hubballi (also known as Hubli), Dharwad, Gokul Road, Tarihal, Gamanagatti, Rayapur, Navanagar and Amargol. We also consider sites around Belur, Mummigatti, Kotur, Ittigatti and along the NH 48 bypass. Delivery depends on site access and availability.",
+
+    howHeading: "From enquiry to placement",
+    howSteps: [
+      {
+        title: "Share your stock type, storage volume, target dates, and photographs of the plot and approach road.",
+        text: "",
+      },
+      { title: "Review the proposed size, condition, fit-out and itemised quote.", text: "" },
+      { title: "Confirm base readiness, site access, applicable approvals and unloading responsibilities.", text: "" },
+      {
+        title: "Agree on delivery and placement. For a hire or relocation, confirm the associated scope and charges.",
+        text: "",
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I place a shipping container directly on black cotton soil?",
+        answer:
+          "Have the site assessed before placement. The support arrangement depends on ground movement, drainage and the load the unit will carry.",
+      },
+      {
+        question: "Can a container work as an FMCG stockroom?",
+        answer:
+          "Yes, for goods compatible with the storage conditions. Plan racks, stock rotation, aisles and pest control around your inventory and handling requirements.",
+      },
+      {
+        question: "Can I use one as a temporary godown?",
+        answer:
+          "Yes. Share the storage volume, expected duration and available placement area. If renting, confirm the hire term and collection arrangements.",
+      },
+      {
+        question: "Can a standard container store heat-sensitive goods?",
+        answer:
+          "Check the product’s required storage conditions first. Shade and insulation may help reduce heat gain. Goods with specified temperature limits may require a monitored, temperature-controlled unit.",
+      },
+      {
+        question: "Can I enquire about a store for a railway project?",
+        answer:
+          "Yes. Share the approved placement area and access conditions. Coordinate clearances, unloading and any future relocation with the responsible project authority.",
+      },
+      {
+        question: "Is Hubli the same as Hubballi?",
+        answer: "Hubli is an older spelling of Hubballi. This page covers enquiries for Hubballi and Dharwad together.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fit-out, transport, site access and base readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Hubballi–Dharwad",
+    ctaText:
+      "Send the intended use, preferred size, site address, target dates and access photos. Tell us if you need to buy or rent, and mention any racking, lighting, security or environmental requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Request a Shipping Container Quote",
+      intro:
+        "Choose a container or the rental option, then enter the quantity and your delivery town in or around Hubballi or Dharwad. Use the message to tell us the goods you will store, your target dates and any racking, lighting or security needs. We check the requirement with you first, then send the quotation in writing.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Dimensions of 20 ft, 40 ft and high-cube cargo containers", href: "/products/cargo-storage-containers" },
+      { label: "Shipping Container GP (20 ft)", href: "/products/shipping-container-for-sale" },
+    ],
+
+    disclaimer:
+      "Our factory is near Hosur in Tamil Nadu and our Karnataka office is in Electronic City Phase 1, Bengaluru; Portable Office Cabin has no container yard, depot, workshop or office in Hubballi or Dharwad. Containers are sold or hired subject to availability. Each unit's size, grade, condition and fit-out, any base work or relocation, and the delivery, unloading and collection arrangements are set out in its quotation; no delivery date is guaranteed. Every image here is an illustrative render of one representative storage container, drawn with an optional side window, and none was photographed at a site in Hubballi or Dharwad. Localities, industrial areas and the NH 48 bypass are listed only to show where we accept enquiries: naming them does not mean we have customers, past projects or confirmed delivery there. We have no affiliation with a railway authority, railway project, industrial area or estate, and the uses described are examples, not projects we have supplied. A standard container does not provide temperature control, cold-chain performance or rodent exclusion. Notes on stock rotation, pest control, heat, ground conditions and site preparation are general guidance, not engineering, food-safety, pharmaceutical or legal advice.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
    * CONTAINER OFFICE IN SARJAPUR — the Sarjapur Road corridor of south-east Bengaluru
    * (Bellandur → Kasavanahalli → Carmelaram → Dommasandra → Sarjapur Town, with Attibele and
    * Bommasandra to the south).
