@@ -418,6 +418,8 @@ export default async function CityLandingPage({ params }: { params: Promise<{ sl
         ))}
         {/* Optional table after the solutions (`solutionsTable`); unset = no element. */}
         {page.solutionsTable && renderTable(page.solutionsTable)}
+        {/* Optional closing paragraph (`solutionsOutro`); unset = no element. */}
+        {page.solutionsOutro && <p className={`${p} mt-4${mc("reveal")}`}>{page.solutionsOutro}</p>}
 
         {/* Optional extra sections placed after the solutions (`placement: "afterSolutions"`). */}
         {page.extraSections?.filter((sec) => sec.placement === "afterSolutions").map(renderSection)}

@@ -190,6 +190,12 @@ export interface CityPage {
    * so every other page's HTML is unchanged.
    */
   solutionsTable?: CityPageTable;
+  /**
+   * Optional paragraph rendered after the solutions items and table (first used by Shipping & Cargo
+   * Containers in Chamarajanagar, whose turmeric section is two paragraphs and no list). Unset = no
+   * element, so every other page's HTML is unchanged.
+   */
+  solutionsOutro?: string;
 
   featuresHeading: string;
   featuresIntro: string;
@@ -2650,7 +2656,7 @@ export const CITY_PAGES: CityPage[] = [
 
     areasHeading: "Shipping Container Delivery Areas in Mysore and Surrounding Locations",
     areasText:
-      "Portable Office Cabin accepts shipping container enquiries for Mysore and the surrounding region, including Mysore industrial and commercial areas — Mysore City, Hootagalli, Hebbal, Metagalli, Koorgalli, Belavadi, Bogadi, Kadakola, Kochanahalli and Nanjangud; Mysore district locations — Hunsur, Periyapatna, K.R. Nagar, T. Narasipura, H.D. Kote, Bannur and Thandya; and nearby locations — Srirangapatna, Mandya, Chamarajanagar and locations along the Kodagu Road. Delivery availability and transportation charges are subject to the specific destination and required vehicle arrangements.",
+      "Portable Office Cabin accepts shipping container enquiries for Mysore and the surrounding region, including Mysore industrial and commercial areas — Mysore City, Hootagalli, Hebbal, Metagalli, Koorgalli, Belavadi, Bogadi, Kadakola, Kochanahalli and Nanjangud; Mysore district locations — Hunsur, Periyapatna, K.R. Nagar, T. Narasipura, H.D. Kote, Bannur and Thandya; and nearby locations — Srirangapatna, Mandya and locations along the Kodagu Road. Delivery availability and transportation charges are subject to the specific destination and required vehicle arrangements.",
 
     howHeading: "How to Buy or Rent a Shipping Container in Mysore",
     howSteps: [
@@ -27539,6 +27545,273 @@ export const CITY_PAGES: CityPage[] = [
 
     disclaimer:
       "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru. It has no container yard, depot, workshop or office in Visakhapatnam, Sileru or anywhere else in Andhra Pradesh. Every unit depends on availability: its size, grade, condition, documentation and fit-out, its dispatch origin, transport, lifting and unloading, any climate control, and any rental term or collection are set out in its quotation, and no delivery timeline is guaranteed. This page shows illustrative renders of one representative steel storage container, not photographs of a stores yard, a delivery or an installation at Upper Sileru or any other project site. Upper Sileru, Lower Sileru, Guntawada, Donkarayi, Chintapalli, Paderu, Narsipatnam and Visakhapatnam are named only to describe where enquiries are welcome: Portable Office Cabin is not affiliated with, approved by or registered as a vendor of any power utility, project owner or EPC contractor, and no hydel or pumped storage project is described here as a client, a completed project or a confirmed delivery. Notes on delivery, yard layout, lifting, storage safety and equipment preservation are general guidance, not engineering, safety or legal advice; follow the project's approved plans and the equipment suppliers' instructions.",
+  },
+
+  /* ──────────────────────────────────────────────────────────────────────────────────────
+   * SHIPPING & CARGO CONTAINERS IN CHAMARAJANAGAR — storage containers for granite processing
+   * supplies, turmeric storage planning, factory packing stores at Badanaguppe–Kellamballi, delivery
+   * near forest routes, temple fairs and resort renovations across Chamarajanagar district.
+   *
+   * Owner brief of 2026-11-08 (route, meta title, meta description, H1 and copy used as given). One
+   * canonical serves both spellings: no route, redirect or sitemap entry exists for "Chamrajnagar",
+   * which is carried in the meta keywords only. The slug starts with "shipping-container-", so
+   * cityFamily() puts the page in the shipping-container family: its directory card reads "Shipping
+   * containers in Chamarajanagar" (the brief's hub anchor) and the Karnataka sibling pages link both
+   * ways. The brief's sections map onto the fixed template slots, in the brief's order except where
+   * noted:
+   *   • Opening paragraph → intro; heroCta row (Request a Quote · Call · WhatsApp, the brief's buttons).
+   *   • "Stores for granite processing units" → why: first paragraph = whyIntro, second = whyOutro.
+   *   • "Storage planning for turmeric growers and traders" → solutions heading + intro, with the second
+   *     paragraph as the new optional `solutionsOutro` (no items).
+   *   • "Packaging and spares stores at Badanaguppe–Kellamballi", "Delivery near forest routes and
+   *     wildlife corridors" and "Container sizes and condition" (table, the used-unit paragraph as
+   *     `closing`, then the inspection link) → three afterSolutions extra sections.
+   *   • "Storage for temple fairs, resorts and homestays" → features: the two uses as list items and
+   *     the last two sentences as the bold note. The features slot renders after the afterSolutions
+   *     sections, so this section follows the sizes section (the brief has it before it) and leads into
+   *     the price and rental section, which picks up festivals and renovations. The gallery follows it.
+   *   • "Shipping container price and rental in Chamarajanagar" → custom (prose: customBullets is
+   *     empty), beside the interior render. The dates sentence comes before the rental sentence so the
+   *     rental link (anchor as given) can follow it as `customLinks`.
+   *   • "Areas we serve" → areas; "From enquiry to placement" → how (title-only steps). The template
+   *     puts areas before the steps, the reverse of the brief.
+   *   • FAQs (five) → faqs; the closing request → CTA + the cargo-category enquiry form (rental is in
+   *     scope, so the rental model is kept).
+   * Composed (owner review): the tagline, the features lead-in, the sizes-table caption, the "See:"
+   * lead-in before the inspection link, the enquiry-form heading and intro, the alt text and captions of
+   * the four non-hero images (the hero's are the brief's) and the disclaimer.
+   *
+   * INTERLINKS (brief section 5): the rental link is in place (live, 200). The Chennai shipping-container
+   * page (/products/shipping-container-in-chennai) still has no used-container inspection checklist
+   * (checked live 2026-11-08), so "how to inspect a used container" points at
+   * /products/cargo-storage-containers ("Key Inspection Points"), the target the owner chose for
+   * Coimbatore and the one Uttara Kannada and the hydel page use: one anchor, one target. The Krishnagiri
+   * container page (/products/shipping-container-in-krishnagiri) has no quarry content, so the brief's
+   * optional quarry link is omitted. The Karnataka shipping-container hub (seoPromotions) and the cargo
+   * category's location links list this page.
+   *
+   * KEYWORD OWNERSHIP: shipping / storage / cargo container × Chamarajanagar (Chamrajnagar),
+   * Badanaguppe–Kellamballi, Kollegal, Gundlupet, Yelandur and Hanur. Quarry storage stays off this page
+   * (brief). The Mysore shipping-container page no longer names Chamarajanagar in its areas list; its
+   * sibling block links here instead.
+   *
+   * Images: five owner-dropped webp renders ("public/images/Chamarajanagar shipping container city
+   * page/Chamarajanagar shipping container/cabin (1–5).webp": 1200×896 and 1451×1084 ×4, no EXIF / XMP
+   * / ICC), copied under descriptive names with a truthful XMP dc:title / dc:description ("Illustrative
+   * render of…") added losslessly; the decoded pixels are identical and no camera, GPS or date data is
+   * added. Only the exterior matches a slot in the brief's image table: it is the hero and social
+   * preview, with the brief's alt text and render caption. No image shows granite spares, turmeric sacks,
+   * packing crates or a delivery truck, so those slots are omitted; the roof view (feature band), the
+   * empty interior (beside the price section), the cargo doors and the side wall (gallery) carry their
+   * own descriptive alt text and an "illustrative render" caption, and no alt text names a place or size.
+   *
+   * No ₹ figure, stock, lead time, load rating, dispatch origin, acreage, road-restriction hours, client,
+   * affiliation, food-suitability, shelf-life or hazardous-goods storage claim. Opts into the CSS-only
+   * motion pass (`motion: true`), the Service JSON-LD (no offers) and the og:image dimension tags.
+   * ────────────────────────────────────────────────────────────────────────────────────── */
+  {
+    slug: "shipping-container-chamarajanagar",
+    city: "Chamarajanagar",
+    listTitle: "Shipping & Cargo Containers in Chamarajanagar",
+    metaTitle: "Shipping & Storage Containers in Chamarajanagar",
+    metaDescription:
+      "Enquire about 20 ft and 40 ft shipping containers in Chamarajanagar for granite processing supplies, industrial packing stock, fairs and resort storage.",
+    keywords:
+      "Shipping Container in Chamarajanagar, Storage Container Chamarajanagar, Shipping Container Chamrajnagar, Storage Container Badanaguppe–Kellamballi, Storage Container Kollegal, Shipping Container Gundlupet",
+    geo: {
+      region: "IN-KA",
+      placename: "Chamarajanagar, Karnataka, India",
+      position: "11.9261;76.9437",
+      icbm: "11.9261, 76.9437",
+    },
+    motion: true,
+    serviceJsonLd: { serviceType: "Shipping Container" },
+    // The hero is 1200 × 896 px (checked with sharp); the brief asks for the social preview's actual size.
+    ogImageDimensions: true,
+
+    heroImage: {
+      src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-exterior.webp",
+      alt: "Corrugated steel shipping container with double cargo doors",
+      width: 1200,
+      height: 896,
+      caption: "Illustrative shipping container exterior for industrial storage.",
+    },
+    featureImage: {
+      src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-roof-view.webp",
+      alt: "Steel shipping container seen from above: corrugated roof, corner castings and closed cargo doors, on a paved yard",
+      width: 1451,
+      height: 1084,
+      caption: "Illustrative render. Plan the placement area, door clearance and handling space around the unit.",
+    },
+    interiorImage: {
+      src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-interior.webp",
+      alt: "Empty steel shipping container interior seen through open cargo doors: corrugated walls and roof and a wooden floor",
+      width: 1451,
+      height: 1084,
+      caption:
+        "Illustrative render of an empty, unfitted interior. Shelves, cabinets, racking and a lockbox are included only as agreed in the quotation.",
+    },
+    gallery: [
+      {
+        src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-cargo-doors.webp",
+        alt: "Closed double cargo doors of a steel shipping container with vertical locking bars, handles and a central lockbox",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the cargo doors. Inspect the seals, hinges and locking hardware of the unit offered.",
+      },
+      {
+        src: "/images/cities/shipping-container-chamarajanagar/chamarajanagar-shipping-container-side-wall.webp",
+        alt: "Blind end and corrugated side wall of a brown steel shipping container on a paved yard",
+        width: 1451,
+        height: 1084,
+        caption: "Illustrative render of the blind end and side wall.",
+      },
+    ],
+
+    h1: "Shipping & Cargo Containers in Chamarajanagar",
+    tagline:
+      "Lockable storage containers for granite workshop supplies, factory packing stock, fairs and resort renovations, quoted for your site across Chamarajanagar district.",
+    intro: [
+      "Need a lockable store for granite cutting blades and abrasives, more space for factory packing supplies, or temporary storage during a fair or resort renovation? Portable Office Cabin welcomes shipping container enquiries across Chamarajanagar district. Share what you need to store and where the unit will sit so we can discuss size, fittings, transport and unloading.",
+    ],
+
+    whyHeading: "Stores for granite processing units",
+    whyIntro:
+      "Use labelled shelves or closed cabinets for diamond blades, polishing consumables and spare parts. Set aside space for clean export packing materials such as crates, foam, straps and labels. For boxed tiles or other heavy goods, share the packed weights, stacking plan and handling method so the floor and rack limits can be checked.",
+    whyBullets: [],
+    whyOutro:
+      "Choose a placement area away from slurry channels and wash-down water. Confirm drainage, base readiness and door clearance with the site team. Refer resins, solvents and other potentially hazardous stock to the site safety team for a suitable designated store.",
+
+    solutionsHeading: "Storage planning for turmeric growers and traders",
+    solutionsIntro:
+      "If you plan to hold dried turmeric between dispatches, first confirm the product’s storage requirements with your buyer or a qualified post-harvest adviser. A used container’s previous cargo, floor, interior surfaces and condition should be assessed before it is considered for food. Confirm suitable moisture, temperature, hygiene and pest controls for the proposed storage period.",
+    // Empty on purpose: the section is the two paragraphs (intro + outro), as in the brief.
+    solutions: [],
+    solutionsOutro:
+      "For a unit assessed as suitable, plan clean pallet positions, lot labels, an inspection aisle and a stock register. The quotation can cover storage and fit-out requirements without assuming a particular shelf life or market price.",
+
+    featuresHeading: "Storage for temple fairs, resorts and homestays",
+    featuresIntro: "Typical short-term enquiries:",
+    features: [
+      "Fair organisers can use a temporary store for suitable stall fittings, signage and equipment between events.",
+      "Resorts and homestays can enquire about space for spare furniture, boxed linen and maintenance items during renovation.",
+    ],
+    sizesNote:
+      "Ask whether a neutral repaint or lockbox can be included. Agree on a location that keeps guest paths, service routes and emergency access clear.",
+
+    customHeading: "Shipping container price and rental in Chamarajanagar",
+    customIntro: "Pricing depends on size, condition, fittings, finish, route and unloading arrangements.",
+    // Empty on purpose: a prose section (see the header comment).
+    customBullets: [],
+    customOutro:
+      "Share your dates so availability, the hire period and collection terms can be confirmed. For a festival, renovation or other short-term requirement, see:",
+    customLinks: [{ label: "20 ft and 40 ft shipping container rental options", href: "/products/shipping-container-rental" }],
+
+    areasHeading: "Areas we serve",
+    areasText:
+      "We welcome enquiries from Chamarajanagar town, Badanaguppe, Kellamballi, Santhemarahalli, Yelandur, Kollegal, Hanur and Gundlupet, including sites around MM Hills, Bandipur and the Biligiri Rangana Hills. Delivery is assessed for each site.",
+
+    howHeading: "From enquiry to placement",
+    // Title-only steps: the owner's sentences, unchanged, with no composed lead-ins.
+    howSteps: [
+      { title: "Share your site pin, intended use, preferred size, quantity and target dates.", text: "" },
+      { title: "Review the proposed unit, fit-out, route and itemised quotation.", text: "" },
+      { title: "Confirm site access, base readiness and unloading responsibilities before dispatch.", text: "" },
+      { title: "Agree on delivery and placement, plus collection if included in the hire.", text: "" },
+    ],
+
+    extraSections: [
+      {
+        heading: "Packaging and spares stores at Badanaguppe–Kellamballi",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Factories and contractors around Badanaguppe–Kellamballi can enquire about stores for suitable cartons, finished goods, maintenance spares and tools. Group items by receipt and dispatch frequency, and measure the largest crate or trolley before choosing the layout. Keep flammable or hazardous materials out of general-purpose stores and use storage designated by your site safety team.",
+        ],
+      },
+      {
+        heading: "Delivery near forest routes and wildlife corridors",
+        placement: "afterSolutions",
+        paragraphs: [
+          "Share the site pin, proposed approach and photographs of narrow bends, slopes, gates and overhead obstructions. For sites near Bandipur, MM Hills or the Biligiri Rangana Hills, ask the transport team to check current route restrictions, permitted vehicle movements and delivery windows with the relevant authorities before dispatch. Confirm the authorised placement area and safe unloading arrangements with the site team.",
+        ],
+      },
+      {
+        heading: "Container sizes and condition",
+        placement: "afterSolutions",
+        table: {
+          caption:
+            "High-cube availability, actual dimensions, fittings and lifting arrangements are confirmed for the specific unit in its quotation.",
+          headers: ["Configuration", "Typical enquiry", "What to confirm"],
+          // Row headers use a no-break space (\u00a0) so "20 ft" / "40 ft" never split over two lines on a
+          // 320 px phone, where row headers may wrap.
+          rows: [
+            ["20\u00a0ft", "Granite workshop spares, fair equipment or resort supplies", "Door clearance, floor capacity and unloading access"],
+            ["40\u00a0ft", "Larger packing-material stores or finished-goods buffers", "Trailer approach, turning space and lifting area"],
+            ["40\u00a0ft high cube", "Tall racks or bulky export crates", "Availability, actual dimensions and route clearances"],
+          ],
+        },
+        closing: [
+          "For a used unit, confirm its stated condition and inspect the floor, roof, doors, seals and locking hardware. Ask for the dispatch point and unloading scope in the quote.",
+          "Buying a used unit? See:",
+        ],
+        // Brief section 5 inspection link (no Chennai inspection checklist exists; see the header comment).
+        links: [{ label: "How to inspect a used container", href: "/products/cargo-storage-containers" }],
+      },
+    ],
+
+    faqs: [
+      {
+        question: "Can I store turmeric in a used shipping container?",
+        answer:
+          "Have the unit assessed for food storage before accepting it. Confirm its previous cargo, floor condition and the hygiene, moisture, temperature and pest-control requirements for your product.",
+      },
+      {
+        question: "What can a granite processing unit store in a container?",
+        answer:
+          "Typical enquiries include blades, abrasives, spares and clean packing supplies. Share weights and dimensions for heavy stock, and refer potentially hazardous materials to your safety team.",
+      },
+      {
+        question: "Can you deliver near Bandipur or MM Hills?",
+        answer:
+          "You can enquire for either area. The delivery plan depends on the confirmed route, current access restrictions, vehicle suitability and the unloading location.",
+      },
+      {
+        question: "Can I rent a container during a fair or resort renovation?",
+        answer:
+          "Yes, you can enquire about hire. Share the dates, intended use and site access so the team can confirm a unit and collection terms.",
+      },
+      {
+        question: "How quickly can you deliver?",
+        answer:
+          "Timing depends on stock, fittings, transport and site readiness. Share your target date for a schedule in the quotation.",
+      },
+    ],
+
+    ctaHeading: "Request a shipping container quote in Chamarajanagar",
+    ctaText:
+      "Send your site pin, preferred size, what you will store, target dates and access photos. Include the dimensions and weights of heavy items and any racking, finish or lockbox requirements.",
+    ctaButtonLabel: "Request a Quote",
+    // Not a container-office page: an empty list drops the two container-office secondary buttons;
+    // the call and WhatsApp buttons (numbers from COMPANY) are on by default.
+    ctaSecondaryLinks: [],
+    heroCta: true,
+    enquiryForm: {
+      categorySlug: "cargo-storage-shipping-containers",
+      noun: "shipping container",
+      heading: "Shipping container enquiry for Chamarajanagar",
+      intro:
+        "Select the container you have in mind, the number of units and the nearest town or PIN code in Chamarajanagar district. Tell us what the store will hold, when you need it and whether it needs shelving, racking, a repaint or a lockbox, and we will confirm the details with you before quoting.",
+    },
+    relatedLinksHeading: "Related products",
+    relatedLinks: [
+      { label: "Cargo Storage & Shipping Containers", href: "/products/category/cargo-storage-shipping-containers" },
+      { label: "Shipping Container for Sale", href: "/products/shipping-container-for-sale" },
+      { label: "20ft Storage Container – Corten Steel", href: "/products/20ft-40ft-storage-container-corten-steel" },
+      { label: "Shipping Container in Karnataka", href: "/promotions/shipping-container-in-karnataka" },
+    ],
+
+    disclaimer:
+      "Portable Office Cabin builds at its factory near Hosur, Tamil Nadu, and runs its Karnataka office from Electronic City Phase 1, Bengaluru; it has no container yard, depot or office in Chamarajanagar district. Containers are offered subject to stock. The unit's size, grade, condition, fit-out, finish, any hire period and the transport, unloading, placement and collection arrangements are agreed in writing in the quotation, and delivery timing is never guaranteed. All five images are illustrative renders of one steel container, not photographs taken in Chamarajanagar district or of a unit that has been supplied. Badanaguppe–Kellamballi, Kollegal, Gundlupet, Bandipur, MM Hills, the Biligiri Rangana Hills and the other places named indicate where enquiries are welcome: Portable Office Cabin has no affiliation with any industrial area, forest or wildlife authority, temple, fair organiser, resort or business there, and no use or place on this page is a client, a completed project or a confirmed delivery location. Containers are not offered as food-grade or hazardous-goods storage. Notes on food storage, hazardous materials, floor and rack loads, routes, access restrictions and placement are general guidance, not food-safety, engineering, legal or regulatory advice.",
   },
 ];
 

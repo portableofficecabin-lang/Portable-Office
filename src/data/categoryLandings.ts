@@ -283,6 +283,8 @@ export const CATEGORY_LINKS: Record<string, CategoryLinks> = {
       { name: "Shipping containers in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
       // Marathahalli / Outer Ring Road commercial storage page (owner brief, 2026-11-07).
       { name: "Shipping containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+      // Chamarajanagar district page (owner brief, 2026-11-08).
+      { name: "Shipping containers in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
     ],
     guideLinks: [GUIDE.newVsUsed, GUIDE.transport, GUIDE.maintenance],
     relatedCategorySlugs: ["container-offices", "site-office-containers"],

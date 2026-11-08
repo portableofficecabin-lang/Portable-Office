@@ -540,6 +540,8 @@ const CITY_LINKS_BY_PROMOTION: Record<string, { name: string; href: string }[]> 
     { name: "Shipping Container in Uttara Kannada", href: "/cities-we-serve/shipping-container-uttara-kannada" },
     // Marathahalli / Outer Ring Road commercial storage (owner brief, 2026-11-07), after Shivamogga.
     { name: "Shipping Containers in Marathahalli and on the ORR", href: "/cities-we-serve/shipping-container-marathahalli-orr" },
+    // Chamarajanagar district (granite supplies, packing stores, fairs and resorts; owner brief 2026-11-08), after Marathahalli.
+    { name: "Shipping Container in Chamarajanagar", href: "/cities-we-serve/shipping-container-chamarajanagar" },
   ],
 };
 
